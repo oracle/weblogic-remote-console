@@ -1,0 +1,19 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.management.configuration.MachineMBean
+  value: Machine
+- type: weblogic.management.configuration.UnixMachineMBean
+  value: UnixMachine
+
+properties:
+- name: Name
+  helpHTML: >
+    <p>The name of this machine.</p>
+- name: Type
+  required: true
+  writable: createOnly
+  legalValues:
+  - value: Machine
+  - value: UnixMachine

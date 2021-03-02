@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# manually created based on application/webapp/jsp/core/cluster/ClusterConfigOverload.jsp and consolehelp/docsrc/en-us/xml/pagehelp/core/cluster/ClusterConfigOverload.xml
+
+introductionHTML: >
+  <p>Use this page to configure how WebLogic Server should react in the case
+  of an overload or failure condition.</p>
+
+properties:
+- name: "MaxStuckThreadTime"
+- name: "StuckThreadCount"
+
+helpTasks:
+- "clusters/ConfigureClusters.xml"
+- "monitoring/ConfigureSelfhealthMonitoring.xml"
+- "clusters/ConfigureClusterMigration.xml"
+- "monitoring/ConfigureSelfhealthMonitoring.xml"
+
+helpTopics:
+- label: "Avoiding and Recovering From Server Failure"
+  href: "start/failures.html"
+  type: "edocs"
+- label: "Avoiding and Managing Overload"
+  href: "cnfgd/overload.html"
+  type: "edocs"
+- label: "Configuring WebLogic Server to Avoid Overload Conditions"
+  href: "cnfgd/overload.html#CNFGD147"
+  type: "edocs"

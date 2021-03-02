@@ -1,0 +1,55 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: LoggingEnabled
+  label: HTTP access log file enabled
+
+- name: WebServerLogFileName
+  source: FileName
+  label: Log file name
+
+- name: WebServerLogFileMinSize
+  source: FileMinSize
+  label: Rotation file size
+  # TODO usedIf RotationType == bySize
+
+- name: WebServerLogRotationTime
+  source: RotationTime
+  label: Begin rotation time
+  # TODO usedIf RotationType == byTime
+
+- name: WebServerLogFileTimeSpan
+  source: FileTimeSpan
+  label: Rotation interval
+  # TODO usedIf RotationType == byTime
+
+- name: WebServerLogNumberOfFilesLimited
+  source: NumberOfFilesLimited
+  label: Limit number of retained files
+
+- name: WebServerLogFileCount
+  source: FileCount
+  label: Files to retain
+
+- name: WebServerLogFileRotationDir
+  source: LogFileRotationDir
+  label: Log file rotation directory
+
+- name: WebServerLogRotateLogOnStartup
+  source: RotateLogOnStartup
+  label: Rotate log file on startup
+
+- name: ELFFields
+  label: Extended Logging Format Fields
+
+- name: WebServerLogBufferSizeKB
+  source: BufferSizeKB
+  label: Log File Buffer
+
+- name: WebServerLogDateFormatPattern
+  source: DateFormatPattern
+
+- name: WebServerLogRotationType
+  source: RotationType
+  label: Log Rotation Type

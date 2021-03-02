@@ -1,0 +1,22 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define the monitoring and diagnostics data that this
+        module collects. Diagnostic system modules collect data from attributes in
+        WebLogic Server MBeans. You can configure a metric to collect data from
+        specific MBean instances or from all instances of a single MBean type.</p>
+
+displayedColumns:
+  - name: "Name"
+  - name: "Enabled"
+
+helpTasks:
+  - "diagnostics/ConfigureMetricCollectionForADiagnosticModule"
+  - "diagnostics/ConfigureMetricsToCollectInADiagnosticModule"
+  - "diagnostics/DeleteMetricsFromADiagnosticModule"
+
+helpTopics:
+  - label: "Configuring and Using the Diagnostics Framework for Oracle WebLogic Server"
+    href: "wldfc/index.html"
+    type: "edocs"

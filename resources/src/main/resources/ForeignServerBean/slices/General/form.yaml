@@ -1,0 +1,36 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>A foreign server represents a JNDI provider that resides outside a
+  WebLogic Server. It contains information that allows WebLogic Server
+  to reach the remote JNDI provider. This way, a number of connection
+  factory and destination objects (queues or topics) can be defined on
+  one JNDI directory. Use this page to configure a foreign server.</p>
+
+properties:
+- name: "Name"
+- name: "InitialContextFactory"
+- name: "ConnectionURL"
+- name: "DefaultTargetingEnabled"
+- name: "JNDIPropertiesCredential"
+- name: "SubDeploymentName"
+# Uncomment when customize JNDI properties
+# - name: JNDIProperties
+
+helpTasks:
+- "jms_modules/foreign_servers/CreateForeignConnectionFactories"
+- "jms_modules/foreign_servers/CreateForeignDestinations"
+helpTopics:
+- label: "Using Distributed Destinations "
+  href: "jmspg/dds.html"
+  type: "edocs"
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Enhanced Support for Using WebLogic JMS with EJBs and Servlets"
+  href: "jmspg/j2ee.html"
+  type: "edocs"
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

@@ -1,0 +1,47 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- name: Host
+- name: Port
+- name: Principal
+- name: Credential
+- name: SSLEnabled
+- name: UserBaseDN
+- name: AllUsersFilter
+- name: UserFromNameFilter
+- name: UserSearchScope
+- name: UserNameAttribute
+- name: UserObjectClass
+- name: UseRetrievedUserNameAsPrincipal
+- name: RetrieveUserAccountControl
+- name: GroupBaseDN
+- name: AllGroupsFilter
+- name: GroupFromNameFilter
+- name: GroupSearchScope
+- name: GroupMembershipSearching
+- name: MaxGroupMembershipSearchLevel
+- name: IgnoreDuplicateMembership
+- name: UseTokenGroupsForGroupMembershipLookup
+- name: StaticGroupNameAttribute
+- name: StaticGroupObjectClass
+- name: StaticMemberDNAttribute
+- name: StaticGroupDNsfromMemberDNFilter
+- name: DynamicGroupNameAttribute
+- name: DynamicGroupObjectClass
+- name: DynamicMemberURLAttribute
+- name: UserDynamicGroupDNAttribute
+- name: ConnectionPoolSize
+- name: ConnectTimeout
+- name: ConnectionRetryLimit
+- name: ParallelConnectDelay
+- name: ResultsTimeLimit
+- name: KeepAliveEnabled
+- name: FollowReferrals
+- name: BindAnonymouslyOnReferrals
+- name: PropagateCauseForLoginException
+- name: CacheEnabled
+- name: CacheSize
+- name: CacheTTL
+- name: EnableCacheStatistics
+- name: GuidAttribute
+- name: IdentityDomain

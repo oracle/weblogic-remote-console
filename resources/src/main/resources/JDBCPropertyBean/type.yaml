@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- name: SysPropValue
+  label: System Property Value
+  helpHTML: >
+    <p>A system property passed to the JDBC driver
+    that is used to create physical database connections.
+
+- name: Name
+  writable: createOnly
+
+- name: EncryptedValue
+  label: Encrypted Property Value
+  helpSummaryHTML: >
+    <p>An encrypted property value passed to the JDBC driver
+    that is used to create physical database connections.
+
+- name: Value
+  helpHTML: >
+    <p>An property value passed to the JDBC driver
+    that is used to create physical database connections.

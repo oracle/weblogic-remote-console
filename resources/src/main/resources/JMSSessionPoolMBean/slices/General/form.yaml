@@ -1,0 +1,27 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Use this page to define the configuration of this JMS session pool,
+  a server-managed pool of server sessions that enables an application to process messages concurrently.
+  </p>
+
+properties:
+- name: "Name"
+- name: "ConnectionFactory"
+- name: "ListenerClass"
+- name: "AcknowledgeMode"
+- name: "SessionsMaximum"
+- name: "Transacted"
+
+helpTasks:
+- "jms_servers/CreateJMSConnectionConsumers.xml"
+- "jms_servers/CreateJMSConnectionConsumers.xml"
+- "jms_servers/ConfigureJMSServers.xml"
+helpTopics:
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Deprecated WebLogic JMS Features"
+  href: "jmspg/appc_deprecate.html"
+  type: "edocs"
+

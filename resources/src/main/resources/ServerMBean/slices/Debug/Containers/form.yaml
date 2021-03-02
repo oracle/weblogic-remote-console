@@ -1,0 +1,56 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  Use this page to manage the container-related server debug flags; that is, the flags
+  from the weblogic.servlet, weblogic.jaxrs, weblogic.ejb, weblogic.connector
+  and weblogic.sca debug scopes.
+
+# TBD helpTasks:
+
+# TBD helpTopics:
+
+presentation:
+  singleColumn: true
+  useCheckBoxesForBooleans: true
+
+properties:
+- name: DebugConnectorService
+- name: DebugEjbCaching
+- name: DebugEjbCmpDeployment
+- name: DebugEjbCmpRuntime
+- name: DebugEjbCompilation
+- name: DebugEjbDeployment
+- name: DebugEjbInvoke
+- name: DebugEjbLocking
+- name: DebugEjbMdbConnection
+- name: DebugEjbMetadata
+- name: DebugEjbPooling
+- name: DebugEjbSecurity
+- name: DebugEjbSwapping
+- name: DebugEjbTimers
+- name: DebugHttp
+- name: DebugHttpConcise
+- name: DebugHttpLogging
+- name: DebugHttpSessions
+- name: DebugRA
+- name: DebugRAClassloader
+- name: DebugRAConnEvents
+- name: DebugRAConnections
+- name: DebugRADeployment
+- name: DebugRALifecycle
+- name: DebugRALocalOut
+- name: DebugRAParsing
+- name: DebugRAPooling
+- name: DebugRASecurityCtx
+- name: DebugRAWork
+- name: DebugRAWorkEvents
+- name: DebugRAXAin
+- name: DebugRAXAout
+- name: DebugRAXAwork
+- name: DebugRestJersey1Integration
+- name: DebugRestJersey2Integration
+- name: DebugScaContainer
+- name: DebugURLResolution
+- name: DebugWebAppIdentityAssertion
+- name: DebugWebAppModule
+- name: DebugWebAppSecurity

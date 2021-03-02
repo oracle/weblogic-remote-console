@@ -1,0 +1,30 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  Use this page to manage the management-related server debug flags; that is, the flags
+  from the weblogic.management debug scope.
+
+# TBD helpTasks:
+
+# TBD helpTopics:
+
+presentation:
+  singleColumn: true
+  useCheckBoxesForBooleans: true
+
+properties:
+# deprecated - name: DebugBootstrapServlet
+- name: DebugConfigurationEdit
+- name: DebugConfigurationRuntime
+- name: DebugFileDistributionServlet
+- name: DebugJ2EEManagement
+- name: DebugJMX
+- name: DebugJMXCompatibility
+- name: DebugJMXCore
+- name: DebugJMXCoreConcise
+- name: DebugJMXDomain
+- name: DebugJMXEdit
+- name: DebugJMXRuntime
+- name: DebugManagementServicesResource
+- name: DebugPatchingRuntime
+- name: DebugSituationalConfig

@@ -1,0 +1,79 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  Use this page to manage the diagnostics-related server debug flags; that is, the flags
+  from the weblogic.diagnostics debug scope.
+
+# TBD helpTasks:
+
+# TBD helpTopics:
+
+presentation:
+  singleColumn: true
+  useCheckBoxesForBooleans: true
+
+properties:
+- name: DebugBeanTreeHarvesterControl
+- name: DebugBeanTreeHarvesterDataCollection
+- name: DebugBeanTreeHarvesterResolution
+- name: DebugBeanTreeHarvesterThreading
+- name: DebugDiagnosticAccessor
+- name: DebugDiagnosticArchive
+- name: DebugDiagnosticArchiveRetirement
+- name: DebugDiagnosticCollections
+- name: DebugDiagnosticContext
+- name: DebugDiagnosticDataGathering
+- name: DebugDiagnosticFileArchive
+- name: DebugDiagnosticImage
+- name: DebugDiagnosticInstrumentation
+- name: DebugDiagnosticInstrumentationActions
+- name: DebugDiagnosticInstrumentationConfig
+- name: DebugDiagnosticInstrumentationEvents
+- name: DebugDiagnosticInstrumentationWeaving
+- name: DebugDiagnosticInstrumentationWeavingMatches
+- name: DebugDiagnosticJdbcArchive
+- name: DebugDiagnosticLifecycleHandlers
+- name: DebugDiagnosticQuery
+- name: DebugDiagnosticRuntimeControlDriver
+- name: DebugDiagnosticRuntimeControlService
+- name: DebugDiagnosticWatch
+- name: DebugDiagnosticWatchEvents
+- name: DebugDiagnosticWatchEventsDetails
+- name: DebugDiagnosticWlstoreArchive
+- name: DebugDiagnosticsBeanExtensionResolver
+- name: DebugDiagnosticsBeanInfoProviders
+- name: DebugDiagnosticsELContext
+- name: DebugDiagnosticsELResolver
+- name: DebugDiagnosticsExpressionEvaluators
+- name: DebugDiagnosticsExpressionFunctionMapper
+- name: DebugDiagnosticsExpressionFunctions
+- name: DebugDiagnosticsExpressionMetrics
+- name: DebugDiagnosticsExpressionPoller
+- name: DebugDiagnosticsExpressionPollerBuffer
+- name: DebugDiagnosticsHarvester
+- name: DebugDiagnosticsHarvesterData
+- name: DebugDiagnosticsHarvesterMBeanPlugin
+- name: DebugDiagnosticsHarvesterTreeBeanPlugin
+- name: DebugDiagnosticsMBeanELResolver
+- name: DebugDiagnosticsModule
+- name: DebugDiagnosticsScriptAction
+- name: DebugDiagnosticsUtils
+- name: DebugDiagnosticsValueTracingELResolver
+- name: DebugDomainLogHandler
+- name: DebugElasticActions
+- name: DebugExpressionBeanLocalizer
+- name: DebugExpressionExtensionsManager
+- name: DebugLoggingConfiguration
+- name: DebugMBeanHarvesterControl
+- name: DebugMBeanHarvesterDataCollection
+- name: DebugMBeanHarvesterResolution
+- name: DebugMBeanHarvesterThreading
+- name: DebugMBeanTypeUtilQueue
+- name: DebugMBeanTypeUtilQueuePriority
+- name: DebugMBeanTypeUtilityListener
+- name: DebugMBeanTypingUtility
+- name: DebugRESTNotifications
+- name: DebugSNMPAgent
+- name: DebugSNMPExtensionProvider
+- name: DebugSNMPProtocolTCP
+- name: DebugSNMPToolkit

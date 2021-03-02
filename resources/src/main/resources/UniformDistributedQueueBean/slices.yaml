@@ -1,0 +1,11 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+slices:
+- name: General
+- name: DeliveryFailure
+- name: Logging
+- name: Overrides
+- name: Thresholds
+# - name: Members The on-server console puts members here, but this value
+# is only a config time value some of the time, given the existence of
+# Dynamic Clusters

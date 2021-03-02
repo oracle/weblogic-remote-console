@@ -1,0 +1,24 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# For now, this is not active because it is referenced via the navtree
+# from WebAppComponentRuntimeMBean, which will not exist until incremental
+# navtree is supported
+displayedColumns:
+- name: "Name"
+- name: "Type"
+- name: "ExecutionTimeAverage"
+- name: "ExecutionTimeHigh"
+- name: "ExecutionTimeLow"
+- name: "ExecutionTimeTotal"
+- name: "InvocationCount"
+- name: "LastInvocationTime"
+- name: "StartTime"
+- name: "ClassName"
+- name: "MethodName"
+- name: "MethodStatistics"
+- name: "ParameterTypes"
+- name: "Path"
+- name: "RequestStatistics"
+- name: "ConsumingMediaTypes"
+- name: "HttpMethod"
+- name: "ProducingMediaTypes"

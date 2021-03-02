@@ -1,0 +1,14 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+name: weblogic.management.configuration.JDBCUniversalConnectionPoolSystemResourceMBean
+weblogicBeanType: weblogic.management.configuration.JDBCSystemResourceMBean
+include:
+- identity
+- Name
+- DatasourceType
+- JDBCDriverProperties
+- JNDINames
+- Url
+- DriverName
+- Password
+- Targets

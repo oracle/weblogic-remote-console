@@ -1,0 +1,42 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# Manually created from application/webapp/jsp/snmp/general/SNMPGeneralConfigForm.jsp and consolehelp/docsrc/en-us/xml/pagehelp/snmp/SNMPGeneralConfig.xml
+introductionHTML: >
+  <p>An SNMP agent receives requests from SNMP managers and sends responses and notifications to managers.
+     Use this page to enable and configure an SNMP agent that you can target to one or more servers.</p>
+
+properties:
+  - name: "Name"
+  - name: "Enabled"
+  - name: "SNMPPort"
+  - name: "MasterAgentXPort"
+  - name: "SNMPTrapVersion"
+  - name: "SendAutomaticTrapsEnabled"
+  - name: "SNMPEngineId"
+  - name: "AuthenticationProtocol"
+  - name: "PrivacyProtocol"
+  - name: "InformEnabled"
+  - name: "InformRetryInterval"
+  - name: "MaxInformRetryCount"
+  - name: "LocalizedKeyCacheInvalidationInterval"
+  - name: "SNMPAccessForUserMBeansEnabled"
+  - name: "ListenAddress"
+# deprecated - name: "CommunityBasedAccessEnabled"
+# deprecated - name: CommunityPrefix
+# deprecated - name: MibDataRefreshInterval
+# deprecated - name: ServerStatusCheckIntervalFactor
+# deprecated - name: DebugLevel
+# deprecated - name: TargetedTrapDestinations
+# excluded   - name: "UserDefinedMib"
+helpTasks:
+  - "snmp/ConfigureCounterMonitors"
+  - "snmp/DetermineMBeanInstanceNames"
+  - "snmp/TargetCounterMonitors"
+  - "snmp/VerifyTrapGeneration"
+helpTopics:
+  - label: "Monitoring Oracle WebLogic Server with SNMP "
+    href: "snmpa/index.html"
+    type: "edocs"
+  - label: "Monitoring Oracle WebLogic Server with SNMP"
+    href: "snmpa/index.html"
+    type: "edocs"

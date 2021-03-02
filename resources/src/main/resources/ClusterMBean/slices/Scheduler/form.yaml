@@ -1,0 +1,19 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Job Scheduling makes java commonj timers cluster-aware and provides
+  the ability to execute jobs periodically anywhere in the cluster without
+  a dependency on a particular server. These configuration settings specify
+  how this information is shared across servers in this cluster.</p>
+
+properties:
+- name: "DataSourceForJobScheduler"
+- name: "JobSchedulerTableName"
+helpTasks:
+- "clusters/ConfigureClusters"
+- "jdbc/jdbc_datasources/CreateDataSources"
+helpTopics:
+- label: "Configuration Requirements for Cross Cluster Replication"
+  href: "clust/failover.html#CLUST231"
+  type: "edocs"

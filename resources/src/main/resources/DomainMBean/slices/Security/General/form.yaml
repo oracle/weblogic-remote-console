@@ -1,0 +1,52 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page allows you to define the general security settings for
+  this WebLogic Server domain. Use this page to change the default
+  administrative security realm for the WebLogic domain.</p>
+
+properties:
+- name: "DefaultRealm"
+- name: "AdministrativeIdentityDomain"
+- name: "IdentityDomainAwareProvidersRequired"
+# deprecated - name: "AnonymousAdminLookupEnabled"
+- name: "CrossDomainSecurityEnabled"
+- name: "ExcludedDomainNames"
+advancedProperties:
+- name: "SecurityCredential"
+- name: "NodeManagerUsername"
+- name: "NodeManagerPassword"
+- name: "WebAppFilesCaseInsensitive"
+- name: "EnforceStrictURLPattern"
+- name: "DowngradeUntrustedPrincipals"
+- name: "PrincipalEqualsCaseInsensitive"
+- name: "PrincipalEqualsCompareDnAndGuid"
+- name: "CompatibilityConnectionFiltersEnabled"
+#TODO - name: "security.domain.domainconfiggeneral.securityconfiguration.allowmanagementops"
+- name: "ClearTextCredentialAccessEnabled"
+- name: "UseKSSForDemo"
+#TODO - name: "security.domain.domainconfiggeneral.securityconfiguration.secureMode"
+- name: "SecureModeEnabled"
+- name: "RestrictiveJMXPolicies"
+- name: "WarnOnInsecureSSL"
+- name: "WarnOnInsecureFileSystem"
+- name: "WarnOnAuditing"
+- name: "WarnOnInsecureApplications"
+- name: "WarnOnJavaSecurityManager"
+
+helpTasks:
+- "security/ConfigureNewSecurityRealms"
+- "security/ChangeTheDefaultSecurityRealm"
+- "security/EnableTrustBetweenDomains"
+- "security/CreateCrossDomainCredentialMapping"
+- "security/SetEnforceURLPatternDefault"
+- "domainconfig/ChangeToSecureMode"
+
+helpTopics:
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
+- label: "Enabling Trust Between WebLogic Server Domains"
+  href: "secmg/domain.html#SECMG404"
+  type: "edocs"

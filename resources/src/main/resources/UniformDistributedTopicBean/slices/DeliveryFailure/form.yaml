@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define message delivery failure parameters, like
+  specifying redelivery limits, selecting a message expiration policy,
+  and specifying an error destination for undeliverable or expired
+  messages.</p>
+
+properties:
+  - name: "RedeliveryDelay"
+  - name: "RedeliveryLimit"
+  - name: "ExpirationPolicy"
+  - name: "ExpirationLoggingPolicy"
+  - name: "ErrorDestination"
+helpTasks:
+- "jms_modules/distributed_topics/CreateUniformDistributedTopics"
+- "jms_modules/distributed_topics/ConfigureUDTDeliveryFailure"
+helpTopics:
+- label: "Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server "
+  href: "wllog/index.html"
+  type: "edocs"
+- label: "Configuring Advanced JMS System Resources"
+  href: "jmsad/advance_config.html"
+  type: "edocs"
+- label: "Managing Your Applications"
+  href: "jmspg/manage_apps.html"
+  type: "edocs"

@@ -1,0 +1,30 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define message delivery failure parameters
+  for destinations created from this JMS template, such as specifying
+  redelivery limits, selecting a message expiration policy, and specifying
+  an error destination for undeliverable or expired messages. As with
+  all template options, settings in individual destinations supersede
+  template settings.</p>
+
+properties:
+- name: "RedeliveryDelay"
+- name: "RedeliveryLimit"
+- name: "ExpirationPolicy"
+- name: "ExpirationLoggingPolicy"
+- name: "ErrorDestination"
+helpTasks:
+- "jms_modules/queues/ConfigureQueues"
+- "jms_modules/topics/ConfigureTopics"
+helpTopics:
+- label: "Managing Your Applications "
+  href: "jmspg/manage_apps.html"
+  type: "edocs"
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Managing Your Applications"
+  href: "jmspg/manage_apps.html"
+  type: "edocs"

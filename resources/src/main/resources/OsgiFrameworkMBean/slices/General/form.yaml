@@ -1,0 +1,24 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to modify the configuration of an OSGi framework.</p>
+
+properties:
+- name: "Name"
+- name: "FactoryImplementationClass"
+- name: "RegisterGlobalWorkManagers"
+- name: "RegisterGlobalDataSources"
+- name: "OrgOsgiFrameworkBootdelegation"
+- name: "OrgOsgiFrameworkSystemPackagesExtra"
+- name: "DeployInstallationBundles"
+- name: "InitProperties"
+# TODO CFE_PROPERTIES name: "InitProperties" (text area)
+helpTasks:
+- "osgi/CreateOSGiFrameworks"
+- "osgi/CloneOSGiFrameworks"
+- "osgi/DeleteOSGiFrameworks"
+helpTopics:
+- label: "Using Work Managers to Optimize Scheduled Work"
+  href: "cnfgd/self_tuned.html"
+  type: "edocs"

@@ -1,0 +1,36 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>This page lists the singleton services that are configured to
+  migrate automatically within this cluster. You can use this page to
+  add or remove singleton services from a cluster.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "ClassName"
+- name: "UserPreferredServer"
+- name: "AllCandidateServers"
+hiddenColumns:
+- name: "Cluster"
+- name: "ConstrainedCandidateServers"
+helpTasks:
+- "clusters/DefineSingletonService"
+- "clusters/ConfigureSingletonService"
+- "clusters/ConfigureClusters"
+- "jdbc/ConfigureDataSources"
+helpTopics:
+- label: "Using Work Managers to Optimize Scheduled Work "
+  href: "cnfgd/self_tuned.html"
+  type: "edocs"
+- label: "Automatic Migration of User-Defined Singleton Services"
+  href: "clust/service_migration.html#CLUST373"
+  type: "edocs"
+- label: "Failover and Replication in a Cluster"
+  href: "clust/failover.html"
+  type: "edocs"
+- label: "Whole Server Migration"
+  href: "clust/migration.html"
+  type: "edocs"
+- label: "Managing Transactions"
+  href: "wljta/trxman.html"
+  type: "edocs"

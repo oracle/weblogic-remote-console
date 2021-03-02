@@ -1,0 +1,25 @@
+// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+package com.oracle.weblogic.console.backend.services.runtime;
+
+import javax.ws.rs.Path;
+
+import com.oracle.weblogic.console.backend.services.PerspectiveResource;
+import weblogic.console.backend.pagedesc.PagesPath;
+
+/** Creates the domain's 'monitoring' perspective's JAXRS resources. */
+public class MonitoringResource extends PerspectiveResource {
+
+  /** Creates a JAXRS resource that handles the RDJ for the domain runtime mbean. */
+  @Path("data/DomainRuntime")
+  public MonitoringDomainRuntimeResource getMonitoringDomainRuntimeResource() throws Exception {
+    return copyContext(new MonitoringDomainRuntimeResource());
+  }
+
+  /** This tree of JAXRS resources uses the monitoring perspective's root pages path */
+  @Override
+  protected PagesPath newRootPagesPath() throws Exception {
+    return PagesPath.newMonitoringRootPagesPath(getInvocationContext().getWeblogicBeanTypes());
+  }
+}

@@ -1,0 +1,65 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: RejectEqualOrContainUsername
+  helpSummaryHTML: >
+    <p>Specifies whether the password can contain, or be set to, the
+    username.</p>
+
+- name: MinPasswordLength
+  helpSummaryHTML: >
+    <p>Specifies the minimum number of characters that the password
+    may contain. <b>Note:</b> If the Default Authentication provider is
+    configured in the realm, make sure that this number is consistent with
+    the one configured for that provider.</p>
+
+- name: MaxPasswordLength
+  helpHTML: >
+    <p>Specifies the maximum number of characters that the password may
+    contain. To be accepted, the password may not contain a greater number
+    of characters than the value specified. Specifying 0 results in no
+    restriction on password length.</p>
+    <p><i>12</i> is a recommended value.</p>
+
+- name: MaxInstancesOfAnyCharacter
+  helpSummaryHTML: >
+    <p>Specifies the maximum number of times any one character may appear
+    in the password.</p>
+
+- name: MaxConsecutiveCharacters
+  helpSummaryHTML: >
+    <p>Specifies the maximum number of times that a character may appear
+    consecutively in the password.</p>
+
+- name: MinAlphabeticCharacters
+  helpSummaryHTML: >
+    <p>Specifies the minimum number of alphabetic characters that a password
+    must contain.</p>
+
+- name: MinNumericCharacters
+  helpSummaryHTML: >
+    <p>Specifies the minimum number of numeric characters that must appear
+    in the password.</p>
+
+- name: MinLowercaseCharacters
+  helpSummaryHTML: >
+    <p>Specifies the minimum number of lowercase characters that a password
+    must contain.</p>
+
+- name: MinUppercaseCharacters
+  helpSummaryHTML: >
+    <p>Specifies the minimum number of uppercase characters that a password
+    must contain.</p>
+
+- name: MinNonAlphanumericCharacters
+  helpSummaryHTML: >
+    <p>Specifies the minimum number of non-alphanumeric characters (also
+    known as special characters, such as <code>%</code>, <code>*</code>,
+    <code>#</code>, or <code>}</code>) that must appear in the password.</p>
+
+- name: MinNumericOrSpecialCharacters
+  helpSummaryHTML: >
+    <p>Specifies the minimum number of numeric or special characters (such
+    as <code>%</code>, <code>*</code>, <code>#</code>, or <code>}</code>)
+    that a password must contain.</p>

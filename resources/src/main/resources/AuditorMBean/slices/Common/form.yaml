@@ -1,0 +1,25 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: Name
+- name: Description
+- name: Version
+
+helpTasks:
+- "security/ConfigureAuditingProviders"
+- "logging/EnableConfigurationAuditing"
+- "security/ManageSecurityProviders"
+helpTopics:
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
+- label: "Configuring the WebLogic Auditing Provider"
+  href: "secmg/audit.html"
+  type: "edocs"
+- label: "Developing Security Providers for Oracle WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

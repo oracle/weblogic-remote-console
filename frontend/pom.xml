@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2020, Oracle Corporation and/or its affiliates.  All rights reserved.
+     Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.  -->
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.oracle.weblogic</groupId>
+    <artifactId>console-backend</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <packaging>pom</packaging>
+
+  <artifactId>console-backend-frontend</artifactId>
+
+  <properties>
+    <mocha.executable>./node_modules/mocha/bin/mocha</mocha.executable>
+    <unit-tests.root>src/js/unit-tests</unit-tests.root>
+    <system-tests.root>src/js/system-tests/index.js</system-tests.root>
+    <eslint-js.executable>./node_modules/.bin/eslint</eslint-js.executable>
+    <eslint-js.rulesdir>src/js/eslint-rules/</eslint-js.rulesdir>
+    <eslint-js.formatter>html</eslint-js.formatter>
+    <eslint-js.output>eslint-js.html</eslint-js.output>
+    <eslint-js.root>src/js</eslint-js.root>
+    <eslint-html.executable>node</eslint-html.executable>
+    <eslint-html.module>src/js/eslint-rules/html-copyright.jsx</eslint-html.module>
+    <eslint-html.root>src/js/views</eslint-html.root>
+  </properties>
+
+  <dependencies>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>${version.plugin.maven-clean}</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>.</directory>
+              <includes>
+                <!-- include>node_modules/**</include -->
+                <include>staged-themes/**</include>
+                <include>web/**</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ojet-restore</id>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <phase>test</phase>
+            <configuration>
+              <executable>ojet</executable>
+              <commandlineArgs>restore</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>ojet-build</id>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <phase>test</phase>
+            <configuration>
+              <executable>ojet</executable>
+              <commandlineArgs>build ${ojet.build.user-options}</commandlineArgs>
+            </configuration>
+          </execution>
+
+<!-- Uncomment after doing requisite npm installs on GitLab CLI box
+
+          <execution>
+            <id>run-npm-test</id>
+            <phase>test</phase>
+            <configuration>
+              <executable>${mocha.executable}</executable>
+              <arguments>
+                <argument>${unit-tests.root}</argument>
+                <argument>${system-tests.root}</argument>
+                <argument>&#x002d;&#x002d;recursive</argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>run-eslint-js</id>
+            <phase>test</phase>
+            <configuration>
+              <executable>${eslint-js.executable}</executable>
+              <arguments>
+                <argument>&#x002d;&#x002d;rulesdir</argument>
+                <argument>${eslint-js.rulesdir}</argument>
+                <argument>&#x002d;f</argument>
+                <argument>${eslint-js.formatter}</argument>
+                <argument>&#x002d;o</argument>
+                <argument>${eslint-js.output}</argument>
+                <argument>${eslint-js.root}</argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>run-eslint-html</id>
+            <phase>test</phase>
+            <configuration>
+              <executable>${eslint-html.executable}</executable>
+              <arguments>
+                <argument>${eslint-html.module}</argument>
+                <argument>&#x002d;&#x002d;path</argument>
+                <argument>${eslint-html.root}</argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+-->
+        </executions>
+      </plugin>
+
+    </plugins>
+
+  </build>
+</project>

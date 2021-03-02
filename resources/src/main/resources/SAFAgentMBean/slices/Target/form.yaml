@@ -1,0 +1,29 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to select the server instance, cluster, or migratable
+  target on which you want to deploy this JMS server. Migratable
+  targets define a set of WebLogic Server instances in a cluster that can
+  potentially host a pinned messaging service, such as a JMS server. When
+  a target server or migratable target boots, the JMS server boots as
+  well. If no target server instance or migratable target is specified,
+  the JMS server will not boot.</p>
+
+properties:
+  - name: "Target"
+helpTasks:
+  - "jms_servers/ConfigureJMSServers"
+  - "jms_modules/modules/TargetJMSModules"
+  - "jms_modules/queues/TargetQueues"
+  - "jms_modules/topics/TargetTopics"
+helpTopics:
+  - label: "Configuring Basic JMS System Resources"
+    href: "jmsad/basic_config.html"
+    type: "edocs"
+  - label: "Understanding Migratable Targets In a Cluster"
+    href: "clust/service_migration.html#CLUST292"
+    type: "edocs"
+  - label: "Configuring Messaging"
+    href: "jmsad/basic_config.html"
+    type: "edocs"

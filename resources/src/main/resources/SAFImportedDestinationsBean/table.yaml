@@ -1,0 +1,33 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Store-and-Forward (SAF) imported destinations are collections of
+  SAF queues and topics that locally represent JMS queues or topics
+  on a remote server or cluster.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "SubDeploymentName"
+# TODO CBE_COMPUTED name: "SubDeploymentName",  ( JMSUtils: #859)
+# TODO CBE_COMPUTED name: "Targets", (JMSUtils: #872)
+helpTasks:
+- "jms_modules/quotas/ConfigureQuotas"
+- "jms_modules/templates/ConfigureJMSTemplates"
+- "jms_modules/destination_keys/ConfigureDestinationKeys"
+- "jms_modules/topics/ConfigureTopics"
+- "jms_modules/queues/ConfigureQueues"
+- "jms_modules/connection_factories/ConfigureConnectionFactories"
+- "jms_modules/distributed_topics/ConfigureDistributedTopics"
+- "jms_modules/distributed_queues/ConfigureDistributedQueues"
+- "jms_modules/foreign_servers/ConfigureForeignServers"
+- "jms_modules/store_and_forward/ConfigureJMSSAF"
+helpTopics:
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Administering the Store-and-Forward Service for Oracle WebLogic Server"
+  href: "safmg/index.html"
+  type: "edocs"
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

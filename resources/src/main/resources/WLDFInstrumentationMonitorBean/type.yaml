@@ -1,0 +1,29 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: Name
+  helpSummaryHTML: >
+    <p>The name of this diagnostic monitor.</p>
+
+- name: Description
+  helpSummaryHTML: >
+    <p>A short description for this diagnostic monitor.</p>
+
+- name: Enabled
+  helpSummaryHTML: >
+    <p>Enables this diagnostic monitor.</p>
+
+- name: Actions
+  helpSummaryHTML: >
+    <p>Diagnostic actions attached to this monitor.</p>
+
+- name: Properties
+  helpSummaryHTML: >
+    <p>Name=value pairs of properties used with the diagnostic monitor.</p>
+
+- name: DyeFilteringEnabled
+  label: Enable Dye Filtering
+  helpSummaryHTML: >
+    <p>Enables dye filtering for this diagnostic monitor.</p>
+

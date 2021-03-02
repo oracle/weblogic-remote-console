@@ -1,0 +1,37 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>A server is an instance of WebLogic Server that runs in its own
+  Java Virtual Machine (JVM) and has its own configuration.</p><p>This
+  page summarizes each server that has been configured in the current
+  WebLogic Server domain.</p>
+
+displayedColumns:
+  - name: "Name"
+  - name: "Cluster"
+  - name: "Machine"
+  - name: "ListenPort"
+  - name: "SSLListenPort"
+hiddenColumns:
+  - name: "ListenAddress"
+  - name: "ListenPortEnabled"
+  - name: "SSLListenPortEnabled"
+  - name: "ClusterWeight"
+  - name: "AdministrationPort"
+  - name: "IIOPEnabled"
+  - name: "DefaultIIOPUser"
+  - name: "HttpdEnabled"
+  - name: "ListenThreadStartDelaySecs"
+  - name: "AcceptBacklog"
+  - name: "WeblogicPluginEnabled"
+helpTasks:
+  - "domainconfig/CreateManagedServers"
+  - "domainconfig/CloneManagedServers"
+  - "domainconfig/DeleteManagedServers"
+  - "domainconfig/DeleteTheAdministrationServer"
+  - "startstop/StartAndStopServers"
+  - "jndi/ViewObjectsInTheJNDITree"
+helpTopics:
+  - label: "Monitoring Oracle WebLogic Server with SNMP"
+    href: "snmpa/index.html"
+    type: "edocs"

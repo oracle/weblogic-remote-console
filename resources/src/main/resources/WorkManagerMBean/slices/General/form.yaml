@@ -1,0 +1,26 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define the request classes and constraints for the
+  selected Work Manager.</p>
+
+properties:
+- name: "Name"
+- name: "MinThreadsConstraint"
+- name: "MaxThreadsConstraint"
+- name: "Capacity"
+- name: "FairShareRequestClass"
+- name: "IgnoreStuckThreads"
+
+helpTasks:
+- "work/CreateGlobalConstraint"
+- "work/CreateGlobalRequestClass"
+- "work/CreateGlobalWorkManager"
+helpTopics:
+- label: "Securing WebLogic Web Services for Oracle WebLogic Server "
+  href: "wssov/index.html"
+  type: "edocs"
+- label: "Using Work Managers to Optimize Scheduled Work"
+  href: "cnfgd/self_tuned.html"
+  type: "edocs"

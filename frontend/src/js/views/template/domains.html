@@ -1,0 +1,104 @@
+<!--
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+
+<div id="domains-toolbar-container">
+
+  <div id="domains-toolbar" class="oj-flex oj-sm-flex-items-initial" data-oj-binding-provider="none">
+    <!-- column 1 -->
+    <div id="domains-toolbar-left" class="oj-flex-item">
+      <oj-button
+        id="[[i18n.toolbar.menu.home.id]]"
+        on-oj-action="[[domainsHomeButtonClickHandler]]"
+        chroming="borderless"
+        disabled="[[domainsConnectState() !== 'CONNECTED']]"
+      >
+        <!-- NOTE: Normally we put all styling in app.css, but we need it inline here in this case -->
+        <img style="margin: 0 5px 0 5px;" slot="startIcon" data-bind="attr: {src: '../../images/' + i18n.toolbar.menu.home.image + '.png'}" />
+        <span style="font-size: 12pt; font-weight: 500;" data-bind="text: [[i18n.toolbar.menu.home.label]]"></span>
+      </oj-button>
+
+      <oj-bind-if test="[[i18n.toolbar.menu.preferences.visible]]">
+        <oj-button
+          id="[[i18n.toolbar.menu.preferences.id]]"
+          on-oj-action="[[domainsPreferencesButtonClickHandler]]"
+          chroming="borderless"
+          disabled="[[i18n.toolbar.menu.preferences.disabled]]"
+        >
+          <!-- NOTE: Normally we put all styling in app.css, but we need it inline here in this case -->
+          <img style="margin: 0 5px 0 5px;" slot="startIcon" data-bind="attr: {src: '../../images/' + i18n.toolbar.menu.preferences.image + '.png'}" />
+          <span style="font-size: 12pt; font-weight: 500;" data-bind="text: [[i18n.toolbar.menu.preferences.label]]"></span>
+        </oj-button>
+      </oj-bind-if>
+    </div>
+
+    <!-- column 2, right-aligned -->
+    <div id="domains-toolbar-right" class="oj-flex-item">
+      <!--
+      NOTE: This right-side of this toolbar is for icons
+            associated with the entire app, a form or
+            table. The left-side of this toolbar is for
+            buttons, which may or may not have an icon
+            associated with them. This is consistant with
+            the toolbars for the form and table - buttons
+            on the left, icons on the right.
+      -->
+    </div>
+  </div>
+
+  <oj-dialog
+    id="dialog1"
+    cancel-behavior="icon"
+    position.at.horizontal="center"
+    position.at.vertical="center"
+    modality="modal"
+  >
+    <div id="connection-dialog" slot="header">
+      <span data-bind="text: [[i18n.dialog1.title]]"></span>
+    </div>
+
+    <div id="connection-dialog-body" slot="body">
+      <div id="connection-dialog-instructions" class="oj-flex-item">
+        <span data-bind="text: [[i18n.dialog1.instructions]]"></span>
+      </div>
+
+      <oj-form-layout
+        id="connection-dialog-form"
+        label-edge="start"
+      >
+        <div class="connection-dialog-body-container">
+          <img id="username-icon" data-bind="attr: {src: '../../images/' + [[i18n.dialog1.fields.username.image]] + '.png'}"/>
+          <oj-input-text id="username-field" value='{{dialogEntry.username}}'></oj-input-text>
+        </div>
+        <div class="connection-dialog-body-container oj-sm-justify-content-center">
+          <img id="password-icon" data-bind="attr: {src: '.../../images/' + [[i18n.dialog1.fields.password.image]] + '.png'}"/>
+          <oj-input-password id="password-field" value='{{dialogEntry.password}}'></oj-input-password>
+        </div>
+        <div class="connection-dialog-body-container">
+          <span id="url-field-label" data-bind="text: [[i18n.dialog1.labels.url]]"></span>
+          <oj-input-text id="url-field" value='{{dialogEntry.url}}'></oj-input-text>
+        </div>
+      </oj-form-layout>
+
+      <div id="connection-dialog-text" class="oj-flex-item">
+        <span data-bind="text: [[dialogText.display()]]"></span>
+      </div>
+
+    </div>
+
+    <div slot="footer" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end">
+      <div class="oj-flex-item">
+        <oj-button
+          id="connection-dialog-connect"
+          on-oj-action="[[domainsConnectClickListener]]"
+          chroming="borderless"
+        >
+          <img id="connection-dialog-button-image" data-bind="attr: {src: '../../images/' + [[i18n.dialog1.buttons.connect.image]] + '.png'}"/>
+          <span id="connection-dialog-button-label" data-bind="text: [[i18n.dialog1.buttons.connect.label]]"></span>
+        </oj-button>
+      </div>
+    </div>
+  </oj-dialog>
+
+</div>

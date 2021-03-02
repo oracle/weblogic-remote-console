@@ -1,0 +1,26 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: DefaultPersistenceMode
+  helpHTML: >
+    <p>Specifies the default persistence mode.</p>
+
+- name: ActiveDirectory
+  helpHTML: >
+    <p>The active directory for the default persistence environment. If
+    no value is specified, the directory which will be used is the
+    coherence/active sub-directory under Domain Home directory.</p>
+
+- name: SnapshotDirectory
+  helpHTML: >
+    <p>The snapshot directory for the default persistence environment. If
+    no value is specified, the directory which will be used is
+    coherence/snapshot sub-directory under Domain Home directory.</p>
+
+- name: TrashDirectory
+  helpHTML: >
+    <p>The trash directory for the default persistence environment. If no
+    value is specified, the directory which will be used is coherence/trash
+    sub-directory under Domain Home directory.</p>
+

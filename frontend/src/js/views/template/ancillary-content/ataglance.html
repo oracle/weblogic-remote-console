@@ -1,0 +1,49 @@
+<!--
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+<div id="ataglance-tab-container">
+  <div id="ataglance-tab-container-toolbar">
+    <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end cfe-flex-items-pad">
+      <div class="oj-flex-item">
+      </div>
+    </div>
+  </div>
+
+  <div id="ataglance-tab-container-header">
+  </div>
+
+  <oj-accordion
+    id="ataglance-tab"
+    multiple="true"
+  >
+    <oj-collapsible
+      id="serversGlance"
+      on-oj-before-expand="[[atAGlanceSectionBeforeExpand]]"
+      expanded="[[serversGlanceExpanded]]"
+    >
+      <span slot="header">
+        <span data-bind="text: atAGlanceSections()[0].label"></span>
+      </span>
+      <div id="serversGlance-dom">
+        <oj-bind-dom config="[[serversGlanceDom]]" />
+      </div>
+    </oj-collapsible>
+
+    <oj-collapsible
+      id="systemStatus"
+      on-oj-before-expand="[[atAGlanceSectionBeforeExpand]]"
+      on-oj-collapse="[[atAGlanceSectionCollapse]]"
+      expanded="[[systemGlanceExpanded]]"
+    >
+      <span slot="header">
+        <span data-bind="text: atAGlanceSections()[1].label"></span>
+      </span>
+      <div id="systemStatus-dom">
+        <oj-bind-dom config="[[systemStatusDom]]" />
+      </div>
+    </oj-collapsible>
+
+  </oj-accordion>
+
+</div>

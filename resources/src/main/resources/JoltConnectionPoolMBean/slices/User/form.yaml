@@ -1,0 +1,17 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to establish user credentials for accessing this connection pool. If you have enabled this connection pool to pass its security context to Tuxedo, the user name and password must be the name of an authorized Tuxedo user.</p>
+
+properties:
+- name: "UserName"
+- name: "UserRole"
+- name: "UserPassword"
+- name: "ApplicationPassword"
+helpTasks:
+- "jolt/ConfigureAUserSecurityIdentity"
+helpTopics:
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

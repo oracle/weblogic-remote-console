@@ -1,0 +1,19 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure properties for the selected capacity
+  constraint.</p>
+
+properties:
+- name: "Name"
+- name: "Count"
+helpTasks:
+- "work/CreateGlobalWorkManager"
+- "work/CreateGlobalRequestClass"
+- "work/CreateGlobalConstraint"
+- "work/DeleteGlobalWorkManager"
+helpTopics:
+- label: "Using Work Managers to Optimize Scheduled Work"
+  href: "cnfgd/self_tuned.html"
+  type: "edocs"

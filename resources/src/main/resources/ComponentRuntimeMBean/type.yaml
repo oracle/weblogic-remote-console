@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.management.runtime.JDBCReplayStatisticsRuntimeMBean
+  value: JDBCReplayStatisticsRuntime
+- type: weblogic.management.runtime.InterceptionComponentRuntimeMBean
+  value: InterceptionComponentRuntime
+- type: weblogic.management.runtime.JDBCMultiDataSourceRuntimeMBean
+  value: JDBCMultiDataSourceRuntime
+- type: weblogic.management.runtime.SCAPojoComponentRuntimeMBean
+  value: SCAPojoComponentRuntime
+- type: weblogic.management.runtime.SCASpringComponentRuntimeMBean
+  value: SCASpringComponentRuntime
+- type: weblogic.management.runtime.JMSComponentRuntimeMBean
+  value: JMSComponentRuntime
+- type: weblogic.management.runtime.AppClientComponentRuntimeMBean
+  value: AppClientComponentRuntime
+- type: weblogic.management.runtime.ComponentConcurrentRuntimeMBean
+  value: ComponentConcurrentRuntime
+- type: weblogic.management.runtime.JDBCDataSourceRuntimeMBean
+  value: JDBCDataSourceRuntime
+- type: weblogic.management.runtime.ConnectorComponentRuntimeMBean
+  value: ConnectorComponentRuntime
+- type: weblogic.management.runtime.EJBComponentRuntimeMBean
+  value: EJBComponentRuntime
+- type: weblogic.management.runtime.WebAppComponentRuntimeMBean
+  value: WebAppComponentRuntime

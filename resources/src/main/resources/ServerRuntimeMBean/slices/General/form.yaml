@@ -1,0 +1,16 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- name: Name
+- name: AdminServer
+- name: State
+- name: HealthState
+- name: OverallHealthState
+- name: RestartRequired
+- name: ActivationTime
+- name: CurrentMachine
+- name: WeblogicVersion
+- name: WeblogicHome
+- name: MiddlewareHome
+- name: PatchList
+- name: JACCEnabled

@@ -1,0 +1,17 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: Targets
+  optionsSources:
+    - /Clusters
+    - /Servers
+
+# SourcePath needs to be specified when creating a deployment
+- name: SourcePath
+  required: true
+  writable: createOnly
+
+collectionResourceClass: com.oracle.weblogic.console.backend.services.plugins.LibraryMBeanCollectionResource
+instanceResourceClass: com.oracle.weblogic.console.backend.services.plugins.LibraryMBeanCollectionChildResource
+createFormPropertiesMethod: weblogic.console.backend.driver.plugins.LibraryMBeanCustomizer.customizeCreateFormProperties

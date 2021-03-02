@@ -1,0 +1,31 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+displayedColumns:
+- name: "Name"
+- name: "ApplicationName"
+- name: "ApplicationVersion"
+# TODO : app.deploymentscontrol.state
+# TODO : HealthState
+
+actions:
+
+- name: "start"
+  asynchronous: true
+  actions:
+  - name: "start"
+    label: "Servicing all requests"
+  - name: "startInAdminMode"
+    label: "Servicing only administration requests"
+    actionMethod: weblogic.console.backend.driver.plugins.AppDeploymentRuntimeMBeanCustomizer.customizeStartInAdminMode
+
+- name: "stop"
+  asynchronous: true
+  actions:
+  - name: "stop"
+    label: "When work completes"
+  - name: "forceStop"
+    label: "Force stop now"
+    actionMethod: weblogic.console.backend.driver.plugins.AppDeploymentRuntimeMBeanCustomizer.customizeForceStop
+  - name: "stopToAdminMode"
+    label: "Stop, but continue servicing administration requests"
+    actionMethod: weblogic.console.backend.driver.plugins.AppDeploymentRuntimeMBeanCustomizer.customizeStopToAdminMode

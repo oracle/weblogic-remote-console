@@ -1,0 +1,43 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: Name
+  helpHTML: >
+    <p>The administrative name of this certificate authority override.</p>
+
+- name: CheckingDisabled
+  label: Disable Revocation Checking For This Certificate Authority
+
+- name: MethodOrder
+  label: Revocation Checks
+
+- name: FailOnUnknownRevocStatus
+  label: Fail On Unknown Revocation Status
+
+- name: OcspNonceEnabled
+  label: Enable Nonce
+
+- name: OcspResponseCacheEnabled
+  label: Enable Response Cache
+
+- name: OcspResponseTimeout
+  label: Response Timeout (seconds)
+
+- name: OcspTimeTolerance
+  label: Time Tolerance (seconds)
+
+- name: OcspResponderUrl
+  label: Responder URL
+
+- name: OcspResponderUrlUsage
+  label: Responder URL Usage
+
+- name: OcspResponderCertSubjectName
+  label: Subject Name
+
+- name: OcspResponderCertIssuerName
+  label: Issuer Name
+
+- name: OcspResponderCertSerialNumber
+  label: Serial Number

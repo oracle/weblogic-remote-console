@@ -1,0 +1,13 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+displayedColumns:
+- name: "Name"
+- name: "AllocatedIoBufferBytes"
+- name: "AllocatedWindowBufferBytes"
+- name: "CreateCount"
+- name: "DeleteCount"
+- name: "HealthState"
+- name: "ObjectCount"
+- name: "PhysicalWriteCount"
+- name: "ReadCount"
+- name: "UpdateCount"

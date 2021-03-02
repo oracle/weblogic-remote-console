@@ -1,0 +1,27 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: MinimumPasswordLength
+  helpHTML: >
+    <p>This password is the password used to define users in the embedded
+    LDAP server used by the WebLogic Authentication provider to store user
+    and group information.</p>
+
+- name: IdentityDomain
+  helpHTML: >
+    <p>The name of the identity domain.</p>
+
+- name: IdentityDomains
+  helpHTML: >
+    <p>Names of the identity domains.</p>
+
+- name: UseRetrievedUserNameAsPrincipal
+  helpHTML: >
+    <p>Specifies whether we should use the user name retrieved from the
+    embedded LDAP server as the Principal in the Subject.</p>
+
+- name: PropagateCauseForLoginException
+  helpHTML: >
+    <p>Specifies whether the providers should propagate the cause of the
+    LoginException.</p>

@@ -1,0 +1,17 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: ReplicatedCacheEnabled
+  helpSummaryHTML: >
+    <p>Specifies whether the replicated cache is used.</p>
+
+- name: NameMapperClassName
+  helpSummaryHTML: >
+    <p>The custom Java class that overrides the default SAML 2.0 assertion
+    name mapper class, which maps identity information contained in
+    assertions to local Subjects.</p>
+
+- name: IdentityDomain
+  helpHTML: >
+    <p>The name of the identity domain.</p>

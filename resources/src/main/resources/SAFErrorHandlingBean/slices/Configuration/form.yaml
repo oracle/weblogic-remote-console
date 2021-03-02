@@ -1,0 +1,25 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure error handling policy properties for SAF
+  imported destinations.</p>
+
+properties:
+- name: "Name"
+- name: "Policy"
+- name: "LogFormat"
+- name: "SAFErrorDestination"
+helpTasks:
+- "jms_modules/store_and_forward/error_handling/ConfigureErrorHandling"
+helpTopics:
+- label: "Configuring Messaging "
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Understanding the Store-and-Forward Service"
+  href: "safmg/overview.html"
+  type: "edocs"
+- label: "Understanding JMS Resource Configuration"
+  href: "jmsad/overview.html"
+  type: "edocs"
+

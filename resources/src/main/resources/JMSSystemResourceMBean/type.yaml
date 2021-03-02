@@ -1,0 +1,17 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: JMSResource
+  label: Name
+  helpSummaryHTML: >
+    <p>The name of this JMS system module.</p>
+
+- name: DescriptorFileName
+  helpSummaryHTML: >
+    <p>The name of the JMS module descriptor file.</p>
+
+- name: Targets
+  optionsSources:
+    - /Clusters
+    - /Servers

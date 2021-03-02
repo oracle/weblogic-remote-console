@@ -1,0 +1,47 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>JMS servers act as management containers for the queues and topics
+  in JMS modules that are targeted to them. A JMS server's primary
+  responsibility for its destinations is to maintain information on what
+  persistent store is used for any persistent messages that arrive on
+  the destinations, and to maintain the states of durable subscribers
+  created on the destinations.</p><p>Use this page to define the general
+  configuration parameters for this JMS server.</p>
+
+properties:
+- name: "Name"
+- name: "PersistentStore"
+- name: "PagingFileLockingEnabled"
+- name: "PagingDirectory"
+- name: "MessageBufferSize"
+- name: "HostingTemporaryDestinations"
+- name: "TemporaryTemplateResource"
+- name: "TemporaryTemplateName"
+- name: "ExpirationScanInterval"
+advancedProperties:
+- name: "MessageCompressionOptions"
+- name: "StoreMessageCompressionEnabled"
+- name: "PagingMessageCompressionEnabled"
+- name: "StoreEnabled"
+- name: "InsertionPausedAtStartup"
+- name: "ProductionPausedAtStartup"
+- name: "ConsumptionPausedAtStartup"
+- name: "AllowsPersistentDowngrade"
+- name: "PagingMinWindowBufferSize"
+- name: "PagingMaxWindowBufferSize"
+- name: "PagingIoBufferSize"
+- name: "PagingMaxFileSize"
+- name: "PagingBlockSize"
+helpTasks:
+- "jms_modules/modules/ConfigureJMSModules"
+- "stores/ConfigureStores"
+- "jms_modules/templates/ConfigureJMSTemplates"
+helpTopics:
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

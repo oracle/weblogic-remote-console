@@ -1,0 +1,22 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# Manually created from application/webapp/jsp/webapp/WebAppTargetsForm.jsp and consolehelp/docsrc/en-us/xml/pagehelp/webapp/WebAppTargets.xml
+introductionHTML: >
+  <p>Use this page to select the WebLogic Server instances, clusters, and
+         virtual hosts on which you would like to deploy this Web application.</p>
+properties:
+  - name: "Targets"
+
+helpTasks:
+  - "web_applications/DeployWebApplications"
+  - "web_applications/ViewDeployedWebApplications"
+  - "web_applications/StopDeployedWebApplications"
+  - "web_applications/DeleteWebApplications"
+  - "applications/TargetEnterpriseApplication"
+helpTopics:
+  - label: "Developing Web Applications, Servlets, and JSPs for Oracle WebLogic Server"
+    href: "wbapp/index.html"
+    type: "edocs"
+  - label: "Deploying Applications to Oracle WebLogic Server"
+    href: "depgd/index.html"
+    type: "edocs"

@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: InitialContextFactory
+  label: JNDI Initial Context Factory
+
+- name: ConnectionURL
+  label: JNDI Connection URL
+
+- name: JNDIPropertiesCredential
+  helpSummaryHTML: >
+    <p>Any Credentials that must be set for the JNDI provider. These
+    Credentials will be part of the properties will be passed directly to the
+    constructor for the JNDI provider's InitialContext class. <i>Note:</i>
+    For secure credential management, use the Credential field. Using the
+    Properties field results in the credential being stored and displayed
+    as originally entered</p>
+
+  helpDetailsHTML: >
+    <p>Some foreign providers require other properties to be set while
+    obtaining an initial naming context. These properties can be set with
+    a property bean</p>
+
+- name: SubDeploymentName
+  label: Sub Deployment Name
+  optionsSources:
+    - ../SubDeployments

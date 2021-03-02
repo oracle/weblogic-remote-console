@@ -1,0 +1,19 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to select the servers or clusters on which you would like
+  to deploy this virtual host. You can reconfigure deployment targets later
+  if you wish.</p>
+
+properties:
+  - name: "Targets"
+
+helpTasks:
+  - "virtual_hosts/TargetVirtualHosts.xml"
+
+helpTopics:
+  - label: "Creating and Configuring Web Applications"
+    href: "wbapp/configurewebapp.html"
+    type: "edocs"
+

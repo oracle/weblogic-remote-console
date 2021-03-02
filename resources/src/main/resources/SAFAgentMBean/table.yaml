@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>There are two sides involved in the process of storing and
+  forwarding messages: a local sending side and a remote receiving
+  endpoint. SAF agents are responsible to store-and-forward messages
+  between local sending and remote receiving endpoints. A SAF agent can be
+  configured to have only sending capabilities, receiving capabilities,
+  or both.</p><p>This page summarizes the SAF agents that have been
+  created for this domain.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "ServiceType"
+- name: "Store"
+- name: "Target"
+helpTasks:
+- "saf_agents/CreateSAFAgents"
+helpTopics:
+- label: "Developing Security Providers for Oracle WebLogic Server "
+  href: "devsp/index.html"
+  type: "edocs"
+- label: "Administering the Store-and-Forward Service for Oracle WebLogic Server"
+  href: "safmg/index.html"
+  type: "edocs"
+- label: "Configuring the Store-and-Forward Service"
+  href: "safmg/config_jms.html"
+  type: "edocs"

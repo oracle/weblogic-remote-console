@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>This page summarizes the OSGi Frameworks that have been configured
+  in the current WebLogic Server domain.</p><p>An OSGi Framework provides
+  an OSGi runtime environment to support applications which make use of
+  OSGi features, such as packaging, lifecycle management, and an active
+  registry. </p>
+
+displayedColumns:
+- name: "Name"
+- name: "FactoryImplementationClass"
+- name: "RegisterGlobalWorkManagers"
+- name: "RegisterGlobalDataSources"
+- name: "Targets"
+hiddenColumns:
+- name: "InitProperties"
+- name: "OrgOsgiFrameworkBootdelegation"
+- name: "OrgOsgiFrameworkSystemPackagesExtra"
+- name: "DeployInstallationBundles"
+helpTasks:
+- "osgi/CreateOSGiFrameworks"
+- "osgi/CloneOSGiFrameworks"
+- "osgi/DeleteOSGiFrameworks"
+helpTopics:
+- label: "Managing Transactions"
+  href: "wljta/trxman.html"
+  type: "edocs"

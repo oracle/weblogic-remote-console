@@ -1,0 +1,17 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+displayedColumns:
+- name: "Name"
+- name: "FailedReplayCount"
+- name: "ReplayDisablingCount"
+- name: "SuccessfulReplayCount"
+- name: "TotalCalls"
+- name: "TotalCallsAffectedByOutages"
+- name: "TotalCallsAffectedByOutagesDuringReplay"
+- name: "TotalCallsTriggeringReplay"
+- name: "TotalCompletedRequests"
+- name: "TotalProtectedCalls"
+- name: "TotalReplayAttempts"
+- name: "TotalRequests"
+- name: "DeploymentState"
+- name: "ModuleId"

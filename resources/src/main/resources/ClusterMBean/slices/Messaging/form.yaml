@@ -1,0 +1,44 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  p>This page allows you to define the messaging settings for this cluster.
+      Clusters use messaging for sharing session, load balancing and failover,
+      JMS, and other information between cluster members. Clusters can use
+      either Unicast or Multicast messaging. Multicast is a simple broadcast
+      technology that enables multiple applications to subscribe to a given IP
+      address and port number and listen for messages, but requires hardware
+      configuration and support. Unicast does not have these requirements.</p>
+
+properties:
+  - name: "ClusterMessagingMode"
+  - name: "ClusterBroadcastChannel"
+  - name: "MulticastAddress"
+  - name: "MulticastPort"
+  - name: "MemberDeathDetectorEnabled"
+  - name: "MemberDiscoveryTimeout"
+advancedProperties:
+  - name: "MulticastSendDelay"
+  - name: "MulticastTTL"
+  - name: "IdlePeriodsUntilTimeout"
+  - name: "MulticastDataEncryption"
+helpTasks:
+  - "clusters/ConfigureClusters"
+  - "clusters/ConfigureClusterMigration"
+  - "clusters/SpecifyClusterReplicationGroups"
+  - "clusters/ConfigureClusterHTTP"
+helpTopics:
+  - label: "Using IP Multicast for Backward Compatibility"
+    href: "clust/features.html#CLUST129"
+    type: "edocs"
+  - label: "One-to-Many Communication Using Unicast"
+    href: "clust/features.html#CLUST135"
+    type: "edocs"
+  - label: "Managed Server Addresses and Listen Ports"
+    href: "clust/setup.html#CLUST446"
+    type: "edocs"
+  - label: "Configure Multicast Time-To-Live (TTL)"
+    href: "clust/setup.html#CLUST498"
+    type: "edocs"
+  - label: "Configure Multicast Time-To-Live (TTL)"
+    href: "clust/setup.html#CLUST499"
+    type: "edocs"

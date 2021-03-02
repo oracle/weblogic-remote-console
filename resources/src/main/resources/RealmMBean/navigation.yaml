@@ -1,0 +1,12 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+contents:
+- property: RDBMSSecurityStore
+- property: Adjudicator
+- property: Auditors
+- property: AuthenticationProviders
+- property: Authorizers
+- property: CertPathProviders
+- property: CredentialMappers
+- property: PasswordValidators
+- property: RoleMappers

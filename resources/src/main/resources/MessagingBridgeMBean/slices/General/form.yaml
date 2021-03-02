@@ -1,0 +1,36 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>A messaging bridge instance transfers messages between two messaging
+  providers. The providers may be another implementation of WebLogic JMS
+  or a 3rd-party JMS messaging provider.</p><p>Use this page to configure
+  the general settings for this messaging bridge instance to interoperate
+  between messaging providers.</p>
+
+properties:
+- name: "Name"
+- name: "SourceDestination"
+- name: "TargetDestination"
+- name: "Selector"
+- name: "QualityOfService"
+- name: "QOSDegradationAllowed"
+- name: "IdleTimeMaximum"
+- name: "AsyncEnabled"
+- name: "DurabilityEnabled"
+- name: "Started"
+- name: "PreserveMsgProperty"
+helpTasks:
+- "bridge/bridge_instance/ConfigureGeneralAttributes"
+- "bridge/bridge_instance/TargetMessagingBridgesToServers"
+- "bridge/manage/ManageMsgBridge"
+helpTopics:
+- label: "Understanding the Messaging Bridge"
+  href: "brdge/basics.html"
+  type: "edocs"
+- label: "Designing a Messaging Bridge"
+  href: "brdge/design.html"
+  type: "edocs"
+- label: "Configuring Messaging Bridges"
+  href: "brdge/basics.html"
+  type: "edocs"

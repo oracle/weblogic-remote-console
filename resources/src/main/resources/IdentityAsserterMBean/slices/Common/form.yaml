@@ -1,0 +1,30 @@
+# Copyright 2020, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+properties:
+- name: Name
+- name: Description
+- name: Version
+- name: ActiveTypes
+- name: Base64DecodingRequired
+helpTasks:
+- "security/ConfigureAuthenticationProviders"
+- "security/ConfigurePasswordValidationProviders"
+- "security/SetTheJAASControlFlag"
+- "security/ManageSecurityProviders"
+helpTopics:
+- label: "Configuring the WebLogic Authentication Provider"
+  href: "secmg/default_atn.html"
+  type: "edocs"
+- label: "Setting the JAAS Control Flag Option"
+  href: "secmg/atn_intro.html#SECMG172"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
+- label: "Developing Security Providers for Oracle WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

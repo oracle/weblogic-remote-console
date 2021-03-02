@@ -1,0 +1,24 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Requests to a WebLogic Server instance are placed in an execute
+  queue. Each request is assigned to a thread within the queue that
+  performs the work.</p><p>Execute queues are provided for backward
+  compatibility, but are turned off by default.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "QueueLength"
+- name: "QueueLengthThresholdPercent"
+- name: "ThreadCount"
+- name: "ThreadsIncrease"
+- name: "ThreadsMaximum"
+- name: "ThreadsMinimum"
+- name: "ThreadPriority"
+helpTopics:
+- label: "Monitoring Oracle WebLogic Server with SNMP "
+  href: "snmpa/index.html"
+  type: "edocs"
+- label: "Using Work Managers to Optimize Scheduled Work"
+  href: "cnfgd/self_tuned.html"
+  type: "edocs"

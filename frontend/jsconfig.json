@@ -1,0 +1,15 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "rootDirs": [
+      "src",
+      "tests/src"
+    ],
+    "outDir": "dist"
+  },
+  "paths": {
+    "ojs/*":["./node_modules/@oracle/oraclejet/dist/types/*"],
+    "knockout": ["./node_modules/knockout"],
+    "dotenv": ["./node_modules/dotenv/types/*"]
+  }
+}

@@ -1,0 +1,39 @@
+# Copyright 2020, 2021, Oracle and/or its affiliates.  All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+name: "WebLogic Server Remote Console"
+version: ""
+console-backend:
+  name: "Oracle WebLogic Console Backend Microprofile Server"
+  version: "1.0"
+  baseUrl: "http://localhost:8012"
+  pollingMillis: 60000
+  services:
+    - id: configuring
+      path: "/configuration"
+      enabled: true
+      components:
+        changeManager:
+          - id: view
+            uri: "/changeManager"
+          - id: edit
+            uri: "/changeManager/changes"
+          - id: commit
+            uri: "/changeManager/activate"
+          - id: discard
+            uri: "/changeManager/cancelEdit"
+    - id: monitoring
+      path: "/monitoring"
+      enabled: true
+      components:
+        lifecycle:
+          - id: view
+            uri: "DomainRuntime/ServerStates"
+settings:
+  logging:
+    defaultLevel: "INFO"
+  autoSync:
+    minimumSecs: 30
+  themes:
+    dark: ["#413e3c", "#624f4f"]
+    light: ["#dcd6d1", "#b6a29a"]

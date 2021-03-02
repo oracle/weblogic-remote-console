@@ -1,0 +1,25 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: Name
+  helpSummaryHTML: >
+    <p>The name of this gauge monitor.</p>
+
+  helpDetailsHTML: >
+    <p>Each monitor within a domain must have a unique name.</p><p>The
+    name displays in the Administration Console, and if you use WebLogic
+    Server command-line utilities or APIs, you use this name to identify
+    the gauge monitor.</p><p>After you have created a gauge monitor, you
+    cannot change its name. Instead, clone the gauge monitor and provide
+    a new name for the clone.</p>
+
+- name: EnabledServers
+  optionsSources:
+    - /Servers
+
+- name: "MonitoredMBeanType"
+  required: true
+
+- name: "MonitoredAttributeName"
+  required: true

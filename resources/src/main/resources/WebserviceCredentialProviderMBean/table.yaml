@@ -1,0 +1,26 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>This page lists the credential providers that have been created for
+  the Web service security configuration. Click on the credential provider
+  name to modify its configuration and to add properties. Click New to
+  create a new credential provider. To delete a credential provider,
+  check the box next to its name and click Delete.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "ClassName"
+- name: "TokenType"
+helpTasks:
+- "webservices/webservicesecurity/CreateDefaultWSSConfig"
+- "webservices/webservicesecurity/CreateDigitalSignatureKeystore"
+- "webservices/webservicesecurity/CreateEncryptionKeystore"
+- "webservices/webservicesecurity/UsePasswordDigest"
+- "webservices/webservicesecurity/UseX509ForIdentity"
+helpTopics:
+- label: "Securing WebLogic Web Services for Oracle WebLogic Server "
+  href: "wssov/index.html"
+  type: "edocs"
+- label: "Securing WebLogic Web Services for Oracle WebLogic Server"
+  href: "wssov/index.html"
+  type: "edocs"

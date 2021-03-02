@@ -1,0 +1,25 @@
+# Copyright (c) 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure DataSource logging for the server.</p>
+
+properties:
+- name: DataSourceLogFileName
+- name: DataSourceLogRotationType
+- name: DataSourceLogFileMinSize
+- name: DataSourceLogRotationTime
+- name: DataSourceLogFileTimeSpan
+- name: DataSourceLogNumberOfFilesLimited
+- name: DataSourceLogFileCount
+- name: DataSourceLogFileRotationDir
+- name: DataSourceLogRotateLogOnStartup
+
+helpTasks:
+- "jdbc/jdbc_datasources/ConfigureDiagnosticsForADataSource.xml"
+- "logging/ConfigureAndViewLogs.xml"
+
+helpTopics:
+- label: "Setting Up DataSource Profile Logs"
+  href: "cnfgd/web_server.html#CNFGD204"
+  type: "edocs"

@@ -1,0 +1,9 @@
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+collectionLinks:
+- label: Node Manager Runtime Data
+  resourceData: monitoring/data/DomainRuntime/NodeManagerRuntimes
+instanceLinks:
+- label: Node Manager Runtime Data
+  resourceData: monitoring/data/DomainRuntime/NodeManagerRuntimes/<Machine>

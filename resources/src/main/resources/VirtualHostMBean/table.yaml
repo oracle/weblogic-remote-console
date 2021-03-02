@@ -1,0 +1,43 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>A virtual host is a set of host names to which WebLogic Server
+  instances (servers) or clusters respond. When you use virtual hosting,
+  you use DNS to specify one or more host names that map to the IP address
+  of a server or cluster. You also specify which Web applications are
+  served by each virtual host.</p><p>This page summarizes the virtual
+  host instances that have been configured for the current domain.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "VirtualHostNames"
+- name: "NetworkAccessPoint"
+- name: "FrontendHost"
+- name: "FrontendHTTPPort"
+- name: "LoggingEnabled"
+- name: "WebServerLogFileName"
+hiddenColumns:
+- name: "FrontendHTTPSPort"
+- name: "KeepAliveEnabled"
+- name: "KeepAliveSecs"
+- name: "HttpsKeepAliveSecs"
+- name: "PostTimeoutSecs"
+- name: "MaxPostTimeSecs"
+- name: "MaxPostSize"
+- name: "SendServerHeaderEnabled"
+- name: "DefaultWebAppContextRoot"
+- name: "ChunkedTransferDisabled"
+- name: "UseHighestCompatibleHTTPVersion"
+- name: "UseHeaderEncoding"
+- name: "AuthCookieEnabled"
+- name: "WAPEnabled"
+helpTasks:
+- "virtual_hosts/VirtualHosts"
+- "virtual_hosts/DeleteVirtualHosts"
+helpTopics:
+- label: "Deploying Applications to Oracle WebLogic Server "
+  href: "depgd/index.html"
+  type: "edocs"
+- label: "Creating and Configuring Web Applications"
+  href: "wbapp/configurewebapp.html"
+  type: "edocs"

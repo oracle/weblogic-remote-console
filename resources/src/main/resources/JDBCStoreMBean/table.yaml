@@ -1,0 +1,24 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>A persistent store is a physical repository for storing subsystem
+  data, such as persistent JMS messages. It can be a JDBC-accessible
+  database, disk-based file, or replicated memory storage. This page
+  summarizes the persistent stores that have been created for this
+  domain.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "Target"
+helpTasks:
+- "stores/CreateJDBCStores"
+helpTopics:
+- label: "JMS System Module Configuration "
+  href: "jmsad/basic_config.html#JMSAD156"
+  type: "edocs"
+- label: "Administering the WebLogic Persistent Store"
+  href: "store/overview.html"
+  type: "edocs"
+- label: "Using the Replicated Store"
+  href: "wlexa/rs.html"
+  type: "edocs"

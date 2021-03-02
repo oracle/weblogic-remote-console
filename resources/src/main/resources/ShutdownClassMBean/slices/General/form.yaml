@@ -1,0 +1,27 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to modify the configuration of a shutdown class.</p>
+
+properties:
+- name: "Name"
+- name: "ClassName"
+- name: "DeploymentOrder"
+- name: "Arguments"
+helpTasks:
+- "startup_shutdown/UseStartupAndShutdownClasses"
+- "startup_shutdown/ConfigureStartupAndShutdownClasses"
+- "startup_shutdown/ConfigureShutdownClasses"
+- "startup_shutdown/AssignStartupAndShutdownClasses"
+- "startup_shutdown/AddStartupAndShutdownClassesToTheClasspath"
+helpTopics:
+- label: "Understanding Web Applications, Servlets, and JSPs "
+  href: "wbapp/basics.html"
+  type: "edocs"
+- label: "Developing Applications for Oracle WebLogic Server"
+  href: "wlprg/index.html"
+  type: "edocs"
+- label: "Deploying Applications to Oracle WebLogic Server"
+  href: "depgd/index.html"
+  type: "edocs"

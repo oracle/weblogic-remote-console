@@ -1,0 +1,25 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure the timestamp properties of a Web service
+  security configuration.</p>
+
+properties:
+- name: "ClockSynchronized"
+- name: "ClockSkew"
+- name: "MaxProcessingDelay"
+- name: "ValidityPeriod"
+helpTasks:
+- "webservices/webservicesecurity/CreateDefaultWSSConfig"
+- "webservices/webservicesecurity/CreateDigitalSignatureKeystore"
+- "webservices/webservicesecurity/CreateEncryptionKeystore"
+- "webservices/webservicesecurity/UsePasswordDigest"
+- "webservices/webservicesecurity/UseX509ForIdentity"
+helpTopics:
+- label: "Securing WebLogic Web Services for Oracle WebLogic Server "
+  href: "wssov/index.html"
+  type: "edocs"
+- label: "Securing WebLogic Web Services for Oracle WebLogic Server"
+  href: "wssov/index.html"
+  type: "edocs"

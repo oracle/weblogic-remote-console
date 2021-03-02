@@ -1,0 +1,25 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define the multicast settings for JMS topics that are
+  based on this template. Multicasting enables the delivery of messages
+  to a select group of hosts that subsequently forward the messages to
+  subscribers.</p>
+
+properties:
+- name: "MulticastAddress"
+- name: "MulticastTimeToLive"
+- name: "MulticastPort"
+helpTasks:
+- "jms_modules/topics/ConfigureTopics"
+helpTopics:
+- label: "Configuring Advanced JMS System Resources "
+  href: "jmsad/advance_config.html"
+  type: "edocs"
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Using Multicast with WebLogic JMS"
+  href: "jmspg/multicast.html"
+  type: "edocs"

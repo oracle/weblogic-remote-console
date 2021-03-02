@@ -1,0 +1,75 @@
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: MaxCapacity
+  label: Maximum Capacity
+
+- name: MinCapacity
+  label: Minimum Capacity
+
+- name: TestFrequencySeconds
+  label: Test Frequency
+
+- name: ShrinkFrequencySeconds
+  label: Shrink Frequency
+
+- name: ConnectionCreationRetryFrequencySeconds
+  label: Connection Creation Retry Frequency
+
+- name: LoginDelaySeconds
+  label: Login Delay
+
+- name: InactiveConnectionTimeoutSeconds
+  label: Inactive Connection Timeout
+
+- name: HighestNumWaiters
+  label: Maximum Waiting for Connection
+
+- name: ConnectionReserveTimeoutSeconds
+  label: Connection Reserve Timeout
+
+- name: IgnoreInUseConnectionsEnabled
+  label: Ignore In-Use Connections
+
+- name: PinnedToThread
+  label: Pinned-To-Thread
+
+- name: RemoveInfectedConnections
+  label: Remove Infected Connections Enabled
+
+- name: WrapTypes
+  label: Wrap Data Types
+
+- name: CountOfRefreshFailuresTillDisable
+  label: Connection Count of Refresh Failures Till Disable
+
+- name: JDBCXADebugLevel
+  label: XA Debug Level
+
+- name: ProfileType
+  label: Profile Connection Usage
+  helpSummaryHTML: >
+    <p>Specifies in hex the type of profile data to be collected for the JDBC subsystem.</p>
+  helpDetailsHTML: >
+    <p>Specifies the type of profile data to be collected for the JDBC subsystem. </p>
+    <p>To enable a multiple profiling options, the value should be set to the sum of each option's numeric value. </p>
+    <p>For example, to enable the Connection Usage, Connection Leak and Connection Unwrap Usage options the value would be set to 261 (1 + 4 + 256) or 0x105 (0x001 + 0x004 + 0x100).</p>
+    <p>You can specify combinations of the following profile types:</p><ul>
+    <li>None (<b>0/0x000</b>): Disable profiling for the data source.</li>
+    <li>Connection Usage (<b>1/0x001</b>): Profile threads currently using connections from the pool of connections in the data source.</li>
+    <li>Connection Reserve Wait (<b>2/0x002</b>): Profile threads currently waiting to reserve a connection from the data source.</li>
+    <li>Connection Leak (<b>4/0x004</b>): Profile threads that have reserved a connection from the data source and the connection leaked (was not properly returned to the pool of connections</b>).</li>
+    <li>Connection Reserve Fail (<b>8/0x008</b>): Profile threads that attempt to reserve a connection from the data source but fail.</li>
+    <li>Statement Cache Entry (<b>16/0x010</b>): Profile prepared and callable statements added to the statement cache, and profile the threads that originated the cached statements.</li>
+    <li>Statement Usage (<b>32/0x020</b>): Profile threads currently executing SQL statements from the statement cache.</li>
+    <li>Connection Last Usage (<b>64/0x040</b>): Profile the previous thread that last used the connection. This information is useful when debugging problems with connections infected with pending transactions that cause subsequent XA operations on the connections to fail.</li>
+    <li>Connection Multi-thread Usage (<b>128/0x080</b>): Profile threads that erroneously use a connection previously obtained by a different thread.</li>
+    <li>Connection Unwrap Usage (<b>256/0x100</b>): Profile threads that have obtained the JDBC delegate object by invoking unwrap or <code>weblogic.common.wrapper.Wrapper.getVendorObj</code> on the connection.</li>
+    <li>Connection Local Transaction Leak (<b>512/0x200</b>): Profile threads that close JDBC connections that have an active local database transaction.</li></ul>
+
+- name: CredentialMappingEnabled
+  label: Set Client ID On Connection
+
+- name: IdentityBasedConnectionPoolingEnabled
+  label: Enable Identity Based Connection Pooling

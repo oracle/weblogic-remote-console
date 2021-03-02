@@ -1,0 +1,122 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: WantTransportLayerSecurityClientAuthentication
+  label: Transport Layer Client Authentication Enabled
+
+- name: WantBasicAuthClientAuthentication
+  label: Basic Client Authentication Enabled
+
+- name: BasicAuthUsername
+  label: Basic Authentication User Name
+
+- name: BasicAuthPassword
+  label: Basic Authentication Password
+
+- name: WantArtifactRequestsSigned
+  label: Only Accept Signed Artifact Requests
+
+- name: ArtifactMaxCacheSize
+  label: Artifact Cache Size
+
+- name: ArtifactTimeout
+  label: Artifact Cache Timeout
+
+- name: SSOSigningKeyAlias
+  label: Single Sign-on Signing Key Alias
+
+- name: SSOSigningKeyPassPhrase
+  label: Single Sign-on Signing Key Pass Phrase
+
+- name: IdentityProviderEnabled
+  label: Enabled
+
+- name: WantAuthnRequestsSigned
+  label: Only Accept Signed Authentication Requests
+
+- name: LoginURL
+  label: Login Customized
+  helpSummaryHTML: >
+    <p>Specifies whether a customized login web application is used. If
+    you use a customized login web application, you must specify a login
+    URL. If you do not customize the login, the login URL and login return
+    query parameter are cleared when you save the changes.</p>
+
+  helpDetailsHTML: >
+    <p>If you use a customized login web application, you must specify a
+    login URL. If you do not use a customized login web application, the
+    login URL and login return query parameter are cleared when you save
+    the changes to this page.</p>
+
+- name: IdentityProviderPOSTBindingEnabled
+  label: POST Binding Enabled
+
+- name: IdentityProviderRedirectBindingEnabled
+  label: Redirect Binding Enabled
+
+- name: IdentityProviderArtifactBindingEnabled
+  label: Artifact Binding Enabled
+
+- name: IdentityProviderPreferredBinding
+  label: Preferred Binding
+  # Customize the legal value labels so that
+  # 'HTTP/Artifact' doesn't get split into 'HTTP/ Artifact'
+  legalValues:
+  - value: None
+    label: None
+  - value: HTTP/POST
+    label: HTTP/POST
+  - value: HTTP/Artifact
+    label: HTTP/Artifact
+  - value: HTTP/Redirect
+    label: HTTP/Redirect
+
+- name: ReplicatedCacheEnabled
+  label: Replicated Cache
+
+- name: AssertionEncryptionEnabled
+  label: Assertion Encryption
+
+- name: ServiceProviderEnabled
+  label: Enabled
+
+- name: SignAuthnRequests
+  label: Always Sign Authentication Requests
+
+- name: ForceAuthn
+  label: Force Authentication
+
+- name: WantAssertionsSigned
+  label: Only Accept Signed Assertions
+
+- name: AuthnRequestMaxCacheSize
+  label: Authentication Request Cache Size
+
+- name: AuthnRequestTimeout
+  label: Authentication Request Cache Timeout
+
+- name: ServiceProviderPOSTBindingEnabled
+  label: POST Binding Enabled
+
+- name: ServiceProviderArtifactBindingEnabled
+  label: Artifact Binding Enabled
+
+- name: ServiceProviderPreferredBinding
+  label: Preferred Binding
+
+- name: AssertionEncryptionDecryptionKeyPassPhrase
+  label: Assertion Key Pass Phrase
+
+- name: AssertionEncryptionDecryptionKeyAlias
+  label: Assertion Key Alias
+
+- name: MetadataEncryptionAlgorithms
+  helpHTML: >
+    <p> The list of data, key encryption algorithms, separated by line
+    breaks, to be published in a WebLogic Service Partner's metadata. Default
+    list includes: aes128-gcm, aes192-gcm, aes256-gcm, aes128-cbc,
+    aes192-cbc, aes256-cbc, rsa-oaep, rsa-oaep-mgf1p </p>
+
+- name: SingleSignOnServicesPOSTOneUseCheckEnabled
+  source: POSTOneUseCheckEnabled

@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: MinThreadsConstraint
+  label: Minimum Threads Constraint
+  optionsSources:
+    - /MinThreadsConstraints
+
+- name: MaxThreadsConstraint
+  label: Maximum Threads Constraint
+  optionsSources:
+    - /MaxThreadsConstraints
+
+- name: Capacity
+  label: Capacity Constraint
+  optionsSources:
+    - /Capacities
+
+- name: FairShareRequestClass
+  label: Request Class
+  optionsSources:
+    - /FairShareRequestClasses
+
+- name: Targets
+  optionsSources:
+    - /Clusters
+    - /Servers

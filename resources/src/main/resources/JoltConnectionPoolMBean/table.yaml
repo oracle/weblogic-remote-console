@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Jolt is a Java-based client API that manages requests from generic Java clients and applications on any Java EE Web server to Oracle Tuxedo services. Jolt connection pools enable applications on WebLogic Server to connect to Oracle Tuxedo domains.</p>
+  <p>This page summarizes the Jolt connection pools that have been configured in the current WebLogic Server domain.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "PrimaryAddresses"
+- name: "FailoverAddresses"
+- name: "MinimumPoolSize"
+- name: "MaximumPoolSize"
+- name: "Targets"
+hiddenColumns:
+- name: "UserRole"
+- name: "SecurityContextEnabled"
+- name: "UserRole"
+- name: "UserName"
+helpTasks:
+- "jolt/ConnectToTuxedoViaJolt"
+- "jolt/MonitorActiveJoltConnectionPoolInstances"
+- "jolt/ResetJoltConnectionPools"
+- "jolt/DeleteJoltConnectionPools"
+helpTopics:
+- label: "Configuring WebLogic JDBC Resources"
+  href: "jdbca/config.html"
+  type: "edocs"

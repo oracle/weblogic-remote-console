@@ -1,0 +1,21 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure the default persistence properties for this Coherence
+  cluster.</p>
+properties:
+- name: "DefaultPersistenceMode"
+- name: "ActiveDirectory"
+- name: "SnapshotDirectory"
+- name: "TrashDirectory"
+helpTasks:
+- "coherence/ConfigurePersistence"
+- "coherence/ConfigureCoherenceClusters"
+helpTopics:
+- label: "Configuring and Managing Coherence Clusters "
+  href: "clust/coherence.html"
+  type: "edocs"
+- label: "Configuring and Managing Coherence Clusters"
+  href: "clust/coherence.html"
+  type: "edocs"

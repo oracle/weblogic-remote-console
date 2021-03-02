@@ -1,0 +1,32 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure a counter monitor, which periodically polls
+  an attribute whose value is an integer and compares the attribute value
+  with a high threshold that you define. A counter monitor generates
+  a notification if the attribute value equals or exceeds the high
+  threshold. You can also configure an offset or modulus, which increases
+  or decreases the threshold each time the threshold is crossed.</p>
+
+properties:
+- name: "Name"
+- name: "MonitoredMBeanType"
+- name: "MonitoredAttributeName"
+- name: "MonitoredMBeanName"
+- name: "PollingInterval"
+- name: "Threshold"
+- name: "Offset"
+- name: "Modulus"
+helpTasks:
+- "snmp/ConfigureCounterMonitors"
+- "snmp/DetermineMBeanInstanceNames"
+- "snmp/TargetCounterMonitors"
+- "snmp/VerifyTrapGeneration"
+helpTopics:
+- label: "Monitoring Oracle WebLogic Server with SNMP "
+  href: "snmpa/index.html"
+  type: "edocs"
+- label: "Monitoring Oracle WebLogic Server with SNMP"
+  href: "snmpa/index.html"
+  type: "edocs"

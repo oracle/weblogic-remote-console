@@ -1,0 +1,40 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: SecureModeEnabled
+  label: Secured Production Mode
+  helpSummaryHTML: >
+    <p>Specifies whether the domain will run in secured production mode. The
+    domain must be in production mode to enable secured production mode.</p>
+
+- name: RestrictiveJMXPolicies
+  helpSummaryHTML: >
+    <p>Specifies whether restrictive policies will be used for JMX
+    authorization.</p>
+
+- name: WarnOnInsecureSSL
+  helpSummaryHTML: >
+    <p>Specifies whether warnings should be logged if the SSL configuration
+    is not secure.</p>
+
+- name: WarnOnInsecureFileSystem
+  helpSummaryHTML: >
+    <p>Specifies whether warnings should be logged if the File System is
+    not secure.</p>
+
+- name: WarnOnAuditing
+  helpSummaryHTML: >
+    <p>Specifies whether warnings should be logged if auditing not
+    enabled.</p>
+
+- name: WarnOnInsecureApplications
+  helpSummaryHTML: >
+    <p>Specifies whether warnings should be logged if applications are
+    secure.</p>
+
+- name: WarnOnJavaSecurityManager
+  helpSummaryHTML: >
+    <p>Specifies whether warnings should be logged if the Java Security
+    Manager is not enabled.</p>
+

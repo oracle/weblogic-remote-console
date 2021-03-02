@@ -1,0 +1,30 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Redirections are used to configure a one-to-one connection between the JMS interface and Tuxedo application environment.</p>
+  <p>This page summarizes the redirections that have been configured for the current WTC server.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "Direction"
+hiddenColumns:
+- name: "MetaDataFile"
+- name: "ReplyQ"
+- name: "SourceAccessPoint"
+- name: "SourceName"
+- name: "SourceQspace"
+- name: "TargetAccessPoint"
+- name: "TargetName"
+- name: "TargetQspace"
+- name: "TranslateFML"
+  label: "Translation Type"
+helpTasks:
+- "wtc/CreateATuxedoQueuingBridgeRedirection"
+- "wtc/DeleteATuxedoQueuingBridgeRedirection"
+helpTopics:
+  - label: "How to Configure the Oracle Tuxedo Queuing Bridge "
+    href: "wtccf/tbridge.html"
+    type: "edocs"
+  - label: "How to Configure the Oracle Tuxedo Queuing Bridge"
+    href: "wtccf/tbridge.html"
+    type: "edocs"

@@ -1,0 +1,11 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+collectionLinks:
+- label: Channel Monitoring
+  resourceData: monitoring/data/DomainRuntime/RunningServers/<Server>/ServerChannelRuntimes
+  notFoundMessage: There is no monitoring data available.  Usually, this indicates that the server instance is not reachable (e.g. not running).
+instanceLinks:
+- label: Channel Monitoring
+  resourceData: monitoring/data/DomainRuntime/RunningServers/<Server>/ServerChannelRuntimes/<NetworkAccessPoint>
+  notFoundMessage: There is no monitoring data available.  Usually, this indicates that the server instance is not reachable (e.g. not running).

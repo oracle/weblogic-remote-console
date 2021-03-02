@@ -1,0 +1,20 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+contents:
+- property: Watches
+  label: Policies
+- property: HarvestedTypes
+  label: Collected Metrics
+- property: HeapDumpActions
+- property: ImageNotifications
+- property: JMSNotifications
+- property: JMXNotifications
+- property: LogActions
+- property: SMTPNotifications
+  label: SMTP(e-mail) Notifications
+- property: SNMPNotifications
+- property: ScaleDownActions
+- property: ScaleUpActions
+- property: ScriptActions
+- property: RESTNotifications
+- property: ThreadDumpActions

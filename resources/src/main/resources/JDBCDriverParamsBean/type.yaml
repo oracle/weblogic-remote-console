@@ -1,0 +1,11 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: DriverName
+  label: Driver Class Name
+  helpSummaryHTML: >
+    <p>The full package name of JDBC driver class used to create the physical
+    database connections in the connection pool. (Note that this driver class
+    must be in the classpath of any server to which it is deployed.)</p>
+

@@ -1,0 +1,1020 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: ClassChangeNotifier
+  label: ClassChangeNotifier
+
+- name: ClassLoader
+  label: ClassLoader
+
+- name: ClassLoaderVerbose
+  label: ClassLoaderVerbose
+
+- name: ClassloaderWebApp
+  label: ClassloaderApp
+
+- name: DebugAppAnnotations
+  label: DebugAppAnnotations
+
+- name: DebugAppContainer
+  label: DebugAppContainer
+
+- name: DebugAsyncQueue
+  label: DebugAsyncQueue
+
+- name: DebugBeanTreeHarvesterControl
+  label: DebugBeanTreeHarvesterControl
+
+- name: DebugBeanTreeHarvesterDataCollection
+  label: DebugBeanTreeHarvesterDataCollection
+
+- name: DebugBeanTreeHarvesterResolution
+  label: DebugBeanTreeHarvesterResolution
+
+- name: DebugBeanTreeHarvesterThreading
+  label: DebugBeanTreeHarvesterThreading
+
+# deprecated
+# - name: DebugBootstrapServlet
+#   label: DebugBootstrapServlet
+
+- name: DebugBuzzProtocol
+  label: DebugBuzzProtocol
+
+- name: DebugBuzzProtocolDetails
+  label: DebugBuzzProtocolDetails
+
+- name: DebugBuzzProtocolHttp
+  label: DebugBuzzProtocolHttp
+
+- name: DebugCertRevocCheck
+  label: DebugCertRevocCheck
+
+- name: DebugClassLoadingContextualTrace
+  label: DebugClassLoadingContextualTrace
+
+- name: DebugClassLoadingVerbose
+  label: DebugClassLoadingVerbose
+
+- name: DebugClassRedef
+  label: DebugClassRedef
+
+- name: DebugClassSize
+  label: DebugClassSize
+
+- name: DebugCluster
+  label: DebugCluster
+
+- name: DebugClusterAnnouncements
+  label: DebugClusterAnnouncements
+
+- name: DebugClusterFragments
+  label: DebugClusterFragments
+
+- name: DebugClusterHeartbeats
+  label: DebugClusterHeartbeats
+
+- name: DebugConcurrent
+  label: DebugConcurrent
+
+- name: DebugConcurrentContext
+  label: DebugConcurrentContext
+
+- name: DebugConcurrentMES
+  label: DebugConcurrentMES
+
+- name: DebugConcurrentMSES
+  label: DebugConcurrentMSES
+
+- name: DebugConcurrentMTF
+  label: DebugConcurrentMTF
+
+- name: DebugConcurrentTransaction
+  label: DebugConcurrentTransaction
+
+- name: DebugConfigurationEdit
+  label: DebugConfigurationEdit
+
+- name: DebugConfigurationRuntime
+  label: DebugConfigurationRuntime
+
+- name: DebugConnectorService
+  label: DebugConnectorService
+
+- name: DebugConsensusLeasing
+  label: DebugConsensusLeasing
+
+- name: DebugDRSCalls
+  label: DebugDRSCalls
+
+- name: DebugDRSHeartbeats
+  label: DebugDRSHeartbeats
+
+- name: DebugDRSMessages
+  label: DebugDRSMessages
+
+- name: DebugDRSQueues
+  label: DebugDRSQueues
+
+- name: DebugDRSStateTransitions
+  label: DebugDRSStateTransitions
+
+- name: DebugDRSUpdateStatus
+  label: DebugDRSUpdateStatus
+
+# excluded
+# - name: DebugDefaultStoreVerbose
+#   label: DebugDefaultStoreVerbose
+
+- name: DebugDeploy
+  label: DebugDeploy
+
+- name: DebugDeployment
+  label: DebugDeployment
+
+- name: DebugDeploymentConcise
+  label: DebugDeploymentConcise
+
+- name: DebugDeploymentPlan
+  label: DebugDeploymentPlan
+
+- name: DebugDeploymentService
+  label: DebugDeploymentService
+
+- name: DebugDeploymentServiceInternal
+  label: DebugDeploymentServiceInternal
+
+- name: DebugDeploymentServiceStatusUpdates
+  label: DebugDeploymentServiceStatusUpdates
+
+- name: DebugDeploymentServiceTransport
+  label: DebugDeploymentServiceTransport
+
+- name: DebugDeploymentServiceTransportHttp
+  label: DebugDeploymentServiceTransportHttp
+
+- name: DebugDescriptor
+  label: DebugDescriptor
+
+- name: DebugDiagnosticAccessor
+  label: DebugDiagnosticAccessor
+
+- name: DebugDiagnosticArchive
+  label: DebugDiagnosticArchive
+
+- name: DebugDiagnosticArchiveRetirement
+  label: DebugDiagnosticArchiveRetirement
+
+- name: DebugDiagnosticCollections
+  label: DebugDiagnosticCollections
+
+- name: DebugDiagnosticContext
+  label: DebugDiagnosticContext
+
+- name: DebugDiagnosticDataGathering
+  label: DebugDiagnosticDataGathering
+
+- name: DebugDiagnosticFileArchive
+  label: DebugDiagnosticFileArchive
+
+- name: DebugDiagnosticImage
+  label: DebugDiagnosticImage
+
+- name: DebugDiagnosticInstrumentation
+  label: DebugDiagnosticInstrumentation
+
+- name: DebugDiagnosticInstrumentationActions
+  label: DebugDiagnosticInstrumentationActions
+
+- name: DebugDiagnosticInstrumentationConfig
+  label: DebugDiagnosticInstrumentationConfig
+
+- name: DebugDiagnosticInstrumentationEvents
+  label: DebugDiagnosticInstrumentationEvents
+
+- name: DebugDiagnosticInstrumentationWeaving
+  label: DebugDiagnosticInstrumentationWeaving
+
+- name: DebugDiagnosticInstrumentationWeavingMatches
+  label: DebugDiagnosticInstrumentationWeavingMatches
+
+- name: DebugDiagnosticJdbcArchive
+  label: DebugDiagnosticJdbcArchive
+
+- name: DebugDiagnosticLifecycleHandlers
+  label: DebugDiagnosticLifecycleHandlers
+
+- name: DebugDiagnosticQuery
+  label: DebugDiagnosticQuery
+
+- name: DebugDiagnosticRuntimeControlDriver
+  label: DebugDiagnosticRuntimeControlDriver
+
+- name: DebugDiagnosticRuntimeControlService
+  label: DebugDiagnosticRuntimeControlService
+
+- name: DebugDiagnosticWatch
+  label: DebugDiagnosticWatch
+
+- name: DebugDiagnosticWatchEvents
+  label: DebugDiagnosticWatchEvents
+
+- name: DebugDiagnosticWatchEventsDetails
+  label: DebugDiagnosticWatchEventsDetails
+
+- name: DebugDiagnosticWlstoreArchive
+  label: DebugDiagnosticWlstoreArchive
+
+- name: DebugDiagnosticsBeanExtensionResolver
+  label: DebugDiagnosticsBeanExtensionResolver
+
+- name: DebugDiagnosticsBeanInfoProviders
+  label: DebugDiagnosticsBeanInfoProviders
+
+- name: DebugDiagnosticsELContext
+  label: DebugDiagnosticsELContext
+
+- name: DebugDiagnosticsELResolver
+  label: DebugDiagnosticsELResolver
+
+- name: DebugDiagnosticsExpressionEvaluators
+  label: DebugDiagnosticsExpressionEvaluators
+
+- name: DebugDiagnosticsExpressionFunctionMapper
+  label: DebugDiagnosticsExpressionFunctionMapper
+
+- name: DebugDiagnosticsExpressionFunctions
+  label: DebugDiagnosticsExpressionFunctions
+
+- name: DebugDiagnosticsExpressionMetrics
+  label: DebugDiagnosticsExpressionMetrics
+
+- name: DebugDiagnosticsExpressionPoller
+  label: DebugDiagnosticsExpressionPoller
+
+- name: DebugDiagnosticsExpressionPollerBuffer
+  label: DebugDiagnosticsExpressionPollerBuffer
+
+- name: DebugDiagnosticsHarvester
+  label: DebugDiagnosticsHarvester
+
+- name: DebugDiagnosticsHarvesterData
+  label: DebugDiagnosticsHarvesterData
+
+- name: DebugDiagnosticsHarvesterMBeanPlugin
+  label: DebugDiagnosticsHarvesterMBeanPlugin
+
+- name: DebugDiagnosticsHarvesterTreeBeanPlugin
+  label: DebugDiagnosticsHarvesterTreeBeanPlugin
+
+- name: DebugDiagnosticsMBeanELResolver
+  label: DebugDiagnosticsMBeanELResolver
+
+- name: DebugDiagnosticsModule
+  label: DebugDiagnosticsModule
+
+- name: DebugDiagnosticsScriptAction
+  label: DebugDiagnosticsScriptAction
+
+- name: DebugDiagnosticsUtils
+  label: DebugDiagnosticsUtils
+
+- name: DebugDiagnosticsValueTracingELResolver
+  label: DebugDiagnosticsValueTracingELResolver
+
+- name: DebugDomainLogHandler
+  label: DebugDomainLogHandler
+
+- name: DebugDynamicSingletonServices
+  label: DebugDynamicSingletonServices
+
+- name: DebugEjbCaching
+  label: DebugEjbCaching
+
+- name: DebugEjbCmpDeployment
+  label: DebugEjbCmpDeployment
+
+- name: DebugEjbCmpRuntime
+  label: DebugEjbCmpRuntime
+
+- name: DebugEjbCompilation
+  label: DebugEjbCompilation
+
+- name: DebugEjbDeployment
+  label: DebugEjbDeployment
+
+- name: DebugEjbInvoke
+  label: DebugEjbInvoke
+
+- name: DebugEjbLocking
+  label: DebugEjbLocking
+
+- name: DebugEjbMdbConnection
+  label: DebugEjbMdbConnection
+
+- name: DebugEjbMetadata
+  label: DebugEjbMetadata
+
+- name: DebugEjbPooling
+  label: DebugEjbPooling
+
+- name: DebugEjbSecurity
+  label: DebugEjbSecurity
+
+- name: DebugEjbSwapping
+  label: DebugEjbSwapping
+
+# excluded
+# - name: DebugEjbTimerStore
+#   abel: DebugEjbTimerStore
+
+- name: DebugEjbTimers
+  label: DebugEjbTimers
+
+- name: DebugElasticActions
+  label: DebugElasticActions
+
+- name: DebugElasticServices
+  label: DebugElasticServices
+
+- name: DebugEmbeddedLDAP
+  label: DebugEmbeddedLDAP
+
+- name: DebugEmbeddedLDAPWriteOverrideProps
+  label: DebugEmbeddedLDAPWriteOverrideProps
+
+- name: DebugExpressionBeanLocalizer
+  label: DebugExpressionBeanLocalizer
+
+- name: DebugExpressionExtensionsManager
+  label: DebugExpressionExtensionsManager
+
+- name: DebugFileDistributionServlet
+  label: DebugFileDistributionServlet
+
+- name: DebugHttp
+  label: DebugHttp
+
+- name: DebugHttpConcise
+  label: DebugHttpConcise
+
+- name: DebugHttpLogging
+  label: DebugHttpLogging
+
+- name: DebugHttpSessions
+  label: DebugHttpSessions
+
+# deprecated
+# - name: DebugIIOP
+#   label: DebugIIOP
+
+- name: DebugIIOPNaming
+  label: DebugIIOPNaming
+
+- name: DebugIIOPTunneling
+  label: DebugIIOPTunneling
+
+- name: DebugInterceptors
+  label: DebugInterceptors
+
+- name: DebugJ2EEManagement
+  label: DebugJ2EEManagement
+
+- name: DebugJDBCConn
+  label: DebugJDBCConn
+
+# deprecated
+# - name: DebugJDBCDriverLogging
+#   abel: DebugJDBCDriverLogging
+
+- name: DebugJDBCInternal
+  label: DebugJDBCInternal
+
+- name: DebugJDBCONS
+  label: DebugJDBCONS
+
+- name: DebugJDBCRAC
+  label: DebugJDBCRAC
+
+- name: DebugJDBCRMI
+  label: DebugJDBCRMI
+
+- name: DebugJDBCReplay
+  label: DebugJDBCReplay
+
+- name: DebugJDBCSQL
+  label: DebugJDBCSQL
+
+- name: DebugJDBCUCP
+  label: DebugJDBCUCP
+
+# deprecated
+# - name: DebugJMSAME
+#   label: DebugJMSAME
+
+- name: DebugJMSBackEnd
+  label: DebugJMSBackEnd
+
+- name: DebugJMSBoot
+  label: DebugJMSBoot
+
+- name: DebugJMSCDS
+  label: DebugJMSCDS
+
+- name: DebugJMSCommon
+  label: DebugJMSCommon
+
+- name: DebugJMSConfig
+  label: DebugJMSConfig
+
+# excluded
+# - name: DebugJMSCrossDomainSecurity
+#   label: DebugJMSCrossDomainSecurity
+
+- name: DebugJMSDispatcher
+  label: DebugJMSDispatcher
+
+- name: DebugJMSDispatcherProxy
+  label: DebugJMSDispatcherProxy
+
+# excluded
+# - name: DebugJMSDispatcherUtilsVerbose
+#  label: DebugJMSDispatcherUtilsVerbose
+
+# excluded
+# - name: DebugJMSDispatcherVerbose
+#   label: DebugJMSDispatcherVerbose
+
+- name: DebugJMSDistTopic
+  label: DebugJMSDistTopic
+
+# excluded
+# - name: DebugJMSDotNetProxy
+#   label: DebugJMSDotNetProxy
+
+# excluded
+# - name: DebugJMSDotNetT3Server
+#   label: DebugJMSDotNetT3Server
+
+# excluded
+# - name: DebugJMSDotNetTransport
+#   label: DebugJMSDotNetTransport
+
+# excluded
+# - name: DebugJMSDurSub
+#  label: DebugJMSDurSub
+
+# deprecated
+# - name: DebugJMSDurableSubscribers
+#   label: DebugJMSDurableSubscribers
+
+- name: DebugJMSFrontEnd
+  label: DebugJMSFrontEnd
+
+# deprecated
+# - name: DebugJMSJDBCScavengeOnFlush
+#   label: DebugJMSJDBCScavengeOnFlush
+
+# excluded
+# - name: DebugJMSJNDI
+#   label: DebugJMSJNDI
+
+# deprecated
+# - name: DebugJMSLocking
+#   label: DebugJMSLocking
+
+- name: DebugJMSMessagePath
+  label: DebugJMSMessagePath
+
+- name: DebugJMSModule
+  label: DebugJMSModule
+
+# excluded
+# - name: DebugJMSOBS
+#   label: DebugJMSOBS
+
+- name: DebugJMSPauseResume
+  label: DebugJMSPauseResume
+
+- name: DebugJMSSAF
+  label: DebugJMSSAF
+
+# deprecated
+# - name: DebugJMSStore
+#   label: DebugJMSStore
+
+- name: DebugJMST3Server
+  label: DebugJMST3Server
+
+- name: DebugJMSWrappers
+  label: DebugJMSWrappers
+
+# deprecated
+# - name: DebugJMSXA
+#   label: DebugJMSXA
+
+- name: DebugJMX
+  label: DebugJMX
+
+- name: DebugJMXCompatibility
+  label: DebugJMXCompatibility
+
+- name: DebugJMXCore
+  label: DebugJMXCore
+
+- name: DebugJMXCoreConcise
+  label: DebugJMXCoreConcise
+
+- name: DebugJMXDomain
+  label: DebugJMXDomain
+
+- name: DebugJMXEdit
+  label: DebugJMXEdit
+
+- name: DebugJMXRuntime
+  label: DebugJMXRuntime
+
+- name: DebugJTA2PC
+  label: DebugJTA2PC
+
+# excluded
+# - name: DebugJTA2PCDetail
+#   label: DebugJTA2PCDetail
+
+- name: DebugJTA2PCStackTrace
+  label: DebugJTA2PCStackTrace
+
+# deprecated
+# - name: DebugJTAAPI
+#   label: DebugJTAAPI
+
+- name: DebugJTACDI
+  label: DebugJTACDI
+
+- name: DebugJTAGateway
+  label: DebugJTAGateway
+
+- name: DebugJTAGatewayStackTrace
+  label: DebugJTAGatewayStackTrace
+
+- name: DebugJTAHealth
+  label: DebugJTAHealth
+
+- name: DebugJTAJDBC
+  label: DebugJTAJDBC
+
+- name: DebugJTALLR
+  label: DebugJTALLR
+
+- name: DebugJTALifecycle
+  label: DebugJTALifecycle
+
+- name: DebugJTAMigration
+  label: DebugJTAMigration
+
+- name: DebugJTANaming
+  label: DebugJTANaming
+
+- name: DebugJTANamingStackTrace
+  label: DebugJTANamingStackTrace
+
+- name: DebugJTANonXA
+  label: DebugJTANonXA
+
+- name: DebugJTAPropagate
+  label: DebugJTAPropagate
+
+# deprecated
+# - name: DebugJTARMI
+#   label: DebugJTARMI
+
+- name: DebugJTARecovery
+  label: DebugJTARecovery
+
+# deprecated
+# - name: DebugJTARecoveryStackTrace
+#   label: DebugJTARecoveryStackTrace
+
+- name: DebugJTAResourceHealth
+  label: DebugJTAResourceHealth
+
+# deprecated
+# - name: JTATransactionName
+#   label: JTATransactionName
+
+- name: DebugJTATLOG
+  label: DebugJTATLOG
+
+- name: DebugJTAXA
+  label: DebugJTAXA
+
+- name: DebugJTAXAStackTrace
+  label: DebugJTAXAStackTrace
+
+- name: DebugJpaDataCache
+  label: DebugJpaDataCache
+
+- name: DebugJpaEnhance
+  label: DebugJpaEnhance
+
+- name: DebugJpaJdbcJdbc
+  label: DebugJpaJdbcJdbc
+
+- name: DebugJpaJdbcSchema
+  label: DebugJpaJdbcJdbc
+
+- name: DebugJpaJdbcSql
+  label: DebugJpaJdbcSql
+
+- name: DebugJpaManage
+  label: DebugJpaManage
+
+- name: DebugJpaMetaData
+  label: DebugJpaMetaData
+
+- name: DebugJpaProfile
+  label: DebugJpaProfile
+
+- name: DebugJpaQuery
+  label: DebugJpaQuery
+
+- name: DebugJpaRuntime
+  label: DebugJpaQuery
+
+- name: DebugJpaTool
+  label: DebugJpaTool
+
+- name: DebugLeaderElection
+  label: DebugLeaderElection
+
+- name: DebugLibraries
+  label: DebugLibraries
+
+- name: DebugLoggingConfiguration
+  label: DebugLoggingConfiguration
+
+- name: DebugMBeanHarvesterControl
+  label: DebugMBeanHarvesterControl
+
+- name: DebugMBeanHarvesterDataCollection
+  label: DebugMBeanHarvesterDataCollection
+
+- name: DebugMBeanHarvesterResolution
+  label: DebugMBeanHarvesterResolution
+
+- name: DebugMBeanHarvesterThreading
+  label: DebugMBeanHarvesterThreading
+
+- name: DebugMBeanTypeUtilQueue
+  label: DebugMBeanTypeUtilQueue
+
+- name: DebugMBeanTypeUtilQueuePriority
+  label: DebugMBeanTypeUtilQueuePriority
+
+- name: DebugMBeanTypeUtilityListener
+  label: DebugMBeanTypeUtilityListener
+
+- name: DebugMBeanTypingUtility
+  label: DebugMBeanTypingUtility
+
+- name: DebugManagementServicesResource
+  label: DebugManagementServicesResource
+
+# excluded
+# - name: DebugMessagingBridgeDumpToConsole
+#   label: DebugMessagingBridgeDumpToConsole
+
+# excluded
+# - name: DebugMessagingBridgeDumpToLog
+#   label: DebugMessagingBridgeDumpToLog
+
+- name: DebugMessagingBridgeRuntime
+  label: DebugMessagingBridgeRuntime
+
+- name: DebugMessagingBridgeRuntimeVerbose
+  label: DebugMessagingBridgeRuntimeVerbose
+
+- name: DebugMessagingBridgeStartup
+  label: DebugMessagingBridgeStartup
+
+- name: DebugMessagingKernel
+  label: DebugMessagingKernel
+
+- name: DebugMessagingKernelBoot
+  label: DebugMessagingKernelBoot
+
+- name: DebugMessagingOwnableLock
+  label: DebugMessagingOwnableLock
+
+- name: DebugNodeManagerRuntime
+  label: DebugNodeManagerRuntime
+
+- name: DebugPatchingRuntime
+  label: DebugPatchingRuntime
+
+- name: DebugPathSvc
+  label: DebugPathSvc
+
+- name: DebugPathSvcVerbose
+  label: DebugPathSvcVerbose
+
+# excluded
+# - name: DebugPersistentStoreManager
+#   label: DebugPersistentStoreManager
+
+- name: DebugRA
+  label: DebugRA
+
+- name: DebugRAClassloader
+  label: DebugRAClassloader
+
+- name: DebugRAConnEvents
+  label: DebugRAConnEvents
+
+- name: DebugRAConnections
+  label: DebugRAConnections
+
+- name: DebugRADeployment
+  label: DebugRADeployment
+
+- name: DebugRALifecycle
+  label: DebugRALifecycle
+
+- name: DebugRALocalOut
+  label: DebugRALocalOut
+
+- name: DebugRAParsing
+  label: DebugRAParsing
+
+- name: DebugRAPoolVerbose
+  label: DebugRAPoolVerbose
+
+- name: DebugRAPooling
+  label: DebugRAPooling
+
+- name: DebugRASecurityCtx
+  label: DebugRASecurityCtx
+
+- name: DebugRAWork
+  label: DebugRAWork
+
+- name: DebugRAWorkEvents
+  label: DebugRAWorkEvents
+
+- name: DebugRAXAin
+  label: DebugRAXAin
+
+- name: DebugRAXAout
+  label: DebugRAXAout
+
+- name: DebugRAXAwork
+  label: DebugRAXAwork
+
+- name: DebugRESTNotifications
+  label: DebugRESTNotifications
+
+- name: DebugReadyApp
+  label: DebugReadyApp
+
+- name: DebugReplication
+  label: DebugReplication
+
+- name: DebugReplicationDetails
+  label: DebugReplicationDetails
+
+- name: DebugReplicationSize
+  label: DebugReplicationSize
+
+- name: DebugRestJersey1Integration
+  label: DebugRestJersey1Integration
+
+- name: DebugRestJersey2Integration
+  label: DebugRestJersey2Integration
+
+- name: DebugRestartInPlace
+  label: DebugRestartInPlace
+
+- name: DebugSAFAdmin
+  label: DebugSAFAdmin
+
+# deprecated
+# - name: DebugSAFLifeCycle
+#   label: DebugSAFLifeCycle
+
+- name: DebugSAFManager
+  label: DebugSAFManager
+
+# deprecated
+# - name: DebugSAFMessagePath
+#   label: DebugSAFMessagePath
+
+- name: DebugSAFReceivingAgent
+  label: DebugSAFReceivingAgent
+
+- name: DebugSAFSendingAgent
+  label: DebugSAFSendingAgent
+
+- name: DebugSAFStore
+  label: DebugSAFStore
+
+- name: DebugSAFTransport
+  label: DebugSAFTransport
+
+- name: DebugSAFVerbose
+  label: DebugSAFVerbose
+
+- name: DebugSNMPAgent
+  label: DebugSNMPAgent
+
+- name: DebugSNMPExtensionProvider
+  label: DebugSNMPExtensionProvider
+
+- name: DebugSNMPProtocolTCP
+  label: DebugSNMPProtocolTCP
+
+- name: DebugSNMPToolkit
+  label: DebugSNMPToolkit
+
+- name: DebugScaContainer
+  label: DebugScaContainer
+
+# excluded
+# - name: DebugSecurity
+#   label: DebugSecurity
+
+- name: DebugSecurityAdjudicator
+  label: DebugSecurityAdjudicator
+
+- name: DebugSecurityAtn
+  label: DebugSecurityAtn
+
+- name: DebugSecurityAtz
+  label: DebugSecurityAtz
+
+- name: DebugSecurityAuditor
+  label: DebugSecurityAuditor
+
+- name: DebugSecurityCertPath
+  label: DebugSecurityCertPath
+
+- name: DebugSecurityCredMap
+  label: DebugSecurityCredMap
+
+- name: DebugSecurityEEngine
+  label: DebugSecurityEEngine
+
+- name: DebugSecurityEncryptionService
+  label: DebugSecurityEncryptionService
+
+- name: DebugSecurityJACC
+  label: DebugSecurityJACC
+
+- name: DebugSecurityJACCNonPolicy
+  label: DebugSecurityJACCNonPolicy
+
+- name: DebugSecurityJACCPolicy
+  label: DebugSecurityJACCPolicy
+
+- name: DebugSecurityKeyStore
+  label: DebugSecurityKeyStore
+
+- name: DebugSecurityPasswordPolicy
+  label: DebugSecurityPasswordPolicy
+
+- name: DebugSecurityPredicate
+  label: DebugSecurityPredicate
+
+# obsolete
+# - name: DebugSecurityProfiler
+#   label: DebugSecurityProfiler
+
+- name: DebugSecurityRealm
+  label: DebugSecurityRealm
+
+- name: DebugSecurityRoleMap
+  label: DebugSecurityRoleMap
+
+- name: DebugSecuritySAML2Atn
+  label: DebugSecuritySAML2Atn
+
+- name: DebugSecuritySAML2CredMap
+  label: DebugSecuritySAML2CredMap
+
+- name: DebugSecuritySAML2Lib
+  label: DebugSecuritySAML2Lib
+
+- name: DebugSecuritySAML2Service
+  label: DebugSecuritySAML2Service
+
+- name: DebugSecuritySAMLAtn
+  label: DebugSecuritySAMLAtn
+
+- name: DebugSecuritySAMLCredMap
+  label: DebugSecuritySAMLCredMap
+
+- name: DebugSecuritySAMLLib
+  label: DebugSecuritySAMLLib
+
+- name: DebugSecuritySAMLService
+  label: DebugSecuritySAMLService
+
+- name: DebugSecuritySSL
+  label: DebugSecuritySSL
+
+- name: DebugSecuritySSLEaten
+  label: DebugSecuritySSLEaten
+
+- name: DebugSecurityService
+  label: DebugSecurityService
+
+- name: DebugSecurityUserLockout
+  label: DebugSecurityUserLockout
+
+- name: DebugSelfTuning
+  label: DebugSelfTuning
+
+- name: DebugServerLifeCycle
+  label: DebugServerLifeCycle
+
+- name: DebugServerMigration
+  label: SDebugServerMigration
+
+- name: DebugServerStartStatistics
+  label: DebugServerStartStatistics
+
+- name: DebugSituationalConfig
+  label: DebugSituationalConfig
+
+# excluded
+# - name: DebugStore
+#   label: DebugStore
+
+- name: DebugStoreAdmin
+  label: DebugStoreAdmin
+
+# excluded
+# - name: DebugStoreCache
+#   label: DebugStoreCache
+
+- name: DebugStoreIOLogical
+  label: DebugStoreIOLogical
+
+- name: DebugStoreIOLogicalBoot
+  label: DebugStoreIOLogicalBoot
+
+- name: DebugStoreIOPhysical
+  label: DebugStoreIOPhysical
+
+- name: DebugStoreIOPhysicalVerbose
+  label: DebugStoreIOPhysicalVerbose
+
+# deprecated
+# - name: DebugStoreXA
+#   label: DebugStoreXA
+
+# deprecated
+# - name: DebugStoreXAVerbose
+#   label: DebugStoreXAVerbose
+
+- name: DebugURLResolution
+  label: DebugURLResolution
+
+- name: DebugWTCConfig
+  label: DebugWTCConfig
+
+- name: DebugWTCCorbaEx
+  label: DebugWTCCorbaEx
+
+- name: DebugWTCGwtEx
+  label: DebugWTCGwtEx
+
+- name: DebugWTCJatmiEx
+  label: DebugWTCJatmiEx
+
+- name: DebugWTCTDomPdu
+  label: DebugWTCTDomPdu
+
+- name: DebugWTCUData
+  label: DebugWTCUData
+
+- name: DebugWTCtBridgeEx
+  label: DebugWTCtBridgeEx
+
+- name: DebugWebAppIdentityAssertion
+  label: DebugWebAppIdentityAssertion
+
+- name: DebugWebAppModule
+  label: DebugWebAppModule
+
+- name: DebugWebAppSecurity
+  label: DebugWebAppSecurity
+
+- name: DefaultStore
+  label: DefaultStore
+
+- name: ListenThreadDebug
+  label: ListenThreadDebug
+
+- name: RedefiningClassLoader
+  label: RedefiningClassLoader

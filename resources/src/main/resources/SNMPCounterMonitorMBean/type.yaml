@@ -1,0 +1,23 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: Name
+  helpSummaryHTML: >
+    <p>The name of this counter monitor.</p>
+
+  helpDetailsHTML: >
+    <p>Each monitor within a domain must have a unique name.</p><p>The
+    name displays in the Administration Console, and if you use WebLogic
+    Server command-line utilities or APIs, you use this name to identify
+    the monitor.</p><p>After you have created a monitor, you cannot change
+    its name. Instead, delete it and create a new one.</p>
+
+- name: EnabledServers
+  optionsSources:
+    - /Servers
+
+- name: "MonitoredMBeanType"
+  required: true
+- name: "MonitoredAttributeName"
+  required: true

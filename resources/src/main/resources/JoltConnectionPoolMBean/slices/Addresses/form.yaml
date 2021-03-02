@@ -1,0 +1,15 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define a preferred (primary) list of Jolt Service Listener (JSL) addresses and a failover list.</p>
+
+properties:
+- name: "PrimaryAddresses"
+- name: "FailoverAddresses"
+helpTasks:
+- "jolt/ConfigureConnectionFailureHandling"
+helpTopics:
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

@@ -1,0 +1,94 @@
+<!--
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+<div id="shoppingcart-tab-container">
+  <div id="shoppingcart-tab-container-toolbar">
+    <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end cfe-flex-items-pad">
+      <div class="oj-flex-item">
+        <oj-bind-if test="[[changeManagerSections()[0].count() > 0]]">
+          <oj-bind-for-each data="[[i18n.tabstrip.tabs]]" as="tab">
+            <template>
+              <oj-bind-if test="[[tab.data.visible]]">
+                <a href="#" tabindex="0"
+                   on-click="[[shoppingCartTabButtonClickHandler]]"
+                >
+                  <img data-bind="attr: {id: tab.data.id, src: '../../images/' + tab.data.iconFile + '.png', 'data-title': tab.data.label}"/>
+                </a>
+              </oj-bind-if>
+            </template>
+          </oj-bind-for-each>
+        </oj-bind-if>
+      </div>
+    </div>
+  </div>
+
+  <oj-accordion
+    id="shoppingcart-tab"
+    multiple="true"
+  >
+    <oj-collapsible
+      id="changeManager"
+      on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
+    >
+      <span slot="header">
+        <span data-bind="text: changeManagerSections()[0].label"></span>
+      </span>
+      <div id="change-manager-dom">
+        <oj-bind-dom config="[[changeManagerDom]]" />
+      </div>
+    </oj-collapsible>
+
+    <oj-collapsible
+      id="additions"
+      on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
+    >
+      <span slot="header">
+        <span id="additions-count" data-bind="text: changeManagerSections()[1].label"></span>
+      </span>
+      <div id="additions-dom">
+        <oj-bind-dom config="[[additionsDom]]" />
+      </div>
+    </oj-collapsible>
+
+    <oj-collapsible
+      id="modifications"
+      on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
+    >
+      <span slot="header">
+        <span id="modifications-count" data-bind="text: changeManagerSections()[2].label"></span>
+      </span>
+      <div id="modifications-dom">
+        <oj-bind-dom config="[[modificationsDom]]" />
+      </div>
+    </oj-collapsible>
+
+    <oj-collapsible
+      id="removals"
+      on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
+    >
+      <span slot="header">
+        <span id="removals-count" data-bind="text: changeManagerSections()[3].label"></span>
+      </span>
+      <div id="removals-dom">
+        <oj-bind-dom config="[[removalsDom]]" />
+      </div>
+    </oj-collapsible>
+
+    <oj-bind-if test="[[changeManagerSections()[4].count() > 0]]">
+      <oj-collapsible
+        id="restart"
+        on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
+      >
+        <span slot="header">
+          <span id="restart-count" data-bind="text: changeManagerSections()[4].label"></span>
+        </span>
+        <div id="restart-dom">
+          <oj-bind-dom config="[[restartDom]]" />
+        </div>
+      </oj-collapsible>
+    </oj-bind-if>
+
+  </oj-accordion>
+
+</div>

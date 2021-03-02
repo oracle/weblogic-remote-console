@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>JMS system resources are configured and stored as modules similar
+  to standard Java EE modules. Such resources include queues, topics,
+  connection factories, templates, destination keys, quota, distributed
+  queues, distributed topics, foreign servers, and JMS store-and-forward
+  (SAF) parameters. You can administratively configure and manage JMS
+  system modules as global system resources.</p><p>This page summarizes
+  the JMS system modules that have been created for this domain.</p>
+
+displayedColumns:
+- name: "Name"
+
+helpTasks:
+- "jms_modules/modules/ConfigureJMSModules"
+- "jms_modules/modules/ConfigureJMSModuleResources"
+helpTopics:
+- label: "Configuring Messaging "
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Administering the Store-and-Forward Service for Oracle WebLogic Server"
+  href: "safmg/index.html"
+  type: "edocs"

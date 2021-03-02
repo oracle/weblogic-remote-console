@@ -1,0 +1,18 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# copied from ForeignServerBean's JNDIProperties' javadoc:
+introductionHTML:
+  <p>
+  Any additional properties that must be set for the JNDI provider. 
+  These properties will be passed directly to the constructor for the 
+  JNDI provider's InitialContext class.
+  </p>
+  <p>
+  Some foreign providers require other properties to be set while
+  obtaining an initial naming context. These properties can be set
+  with a property bean
+  </p>
+
+displayedColumns:
+- name: "Key"
+- name: "Value"

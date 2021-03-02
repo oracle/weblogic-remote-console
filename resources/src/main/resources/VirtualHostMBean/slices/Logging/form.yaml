@@ -1,0 +1,32 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define the logging configuration for this virtual
+  host.</p>
+
+properties:
+- name: "LoggingEnabled"
+- name: "WebServerLogFileName"
+- name: "WebServerLogRotationType"
+- name: "WebServerLogFileMinSize"
+- name: "WebServerLogRotationTime"
+- name: "WebServerLogFileTimeSpan"
+- name: "WebServerLogNumberOfFilesLimited"
+- name: "WebServerLogFileCount"
+- name: "WebServerLogFileRotationDir"
+- name: "WebServerLogRotateLogOnStartup"
+advancedProperties:
+- name: "LogFileFormat"
+- name: "ELFFields"
+- name: "WebServerLogBufferSizeKB"
+- name: "LogTimeInGMT"
+helpTasks:
+- "virtual_hosts/ConfigureVirtualHostLogging"
+helpTopics:
+- label: "Understanding Web Applications, Servlets, and JSPs "
+  href: "wbapp/basics.html"
+  type: "edocs"
+- label: "Creating and Configuring Web Applications"
+  href: "wbapp/configurewebapp.html"
+  type: "edocs"

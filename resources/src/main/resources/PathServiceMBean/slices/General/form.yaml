@@ -1,0 +1,36 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>A path service is persistent map that can be used to store the mapping
+  of a group of messages in a Message Unit-of-Order to a messaging resource
+  in a cluster. It provides a way to enforce ordering by pinning messages
+  to a member of a cluster hosting servlets, distributed queue members,
+  or store-and-forward agents.</p><p>Use this page to configure a path
+  service for your cluster.</p>
+
+properties:
+- name: "Name"
+- name: "PersistentStore"
+# TODO CBE_DROPDOWN_STORE name: "PersistentStore"
+helpTasks:
+- "pathservice/ConfigurePathService"
+helpTopics:
+- label: "Using Work Managers to Optimize Scheduled Work "
+  href: "cnfgd/self_tuned.html"
+  type: "edocs"
+- label: "Using the WebLogic Path Service"
+  href: "jmsad/advance_config.html#JMSAD191"
+  type: "edocs"
+- label: "Using the WebLogic Persistent Store"
+  href: "store/overview.html"
+  type: "edocs"
+- label: "Using Message Unit-of-Order"
+  href: "jmspg/uoo.html"
+  type: "edocs"
+- label: "Configuring SAF for JMS Messages"
+  href: "safmg/config_jms.html"
+  type: "edocs"
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

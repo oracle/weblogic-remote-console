@@ -1,0 +1,15 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: NonPersistentQos
+  label: Non-Persistent QOS
+
+- name: UseSAFTimeToLiveDefault
+  label: Enable SAF Default Time-to-Live
+
+- name: TimeToLiveDefault
+  label: SAF Default Time-to-Live
+
+- name: UnitOfOrderRouting
+  label: Message Unit-of-Order Routing

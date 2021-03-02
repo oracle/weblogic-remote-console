@@ -1,0 +1,17 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: PlaintextPasswordsEnabled
+  helpHTML: >
+    <p>Specifies whether plaintext passwords are allowed to be used.</p>
+
+- name: DataSourceName
+  helpSummaryHTML: >
+    <p>The name of the JDBC data source used for database access.</p>
+  helpDetailsHTML: >
+    <p><b>Note:</b> Specifying the JDBC data source is required.</p>
+
+- name: IdentityDomain
+  helpHTML: >
+    <p>The name of the identity domain.</p>

@@ -1,0 +1,30 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure a remote SAF context, which specifies the
+  login context that an imported SAF queue or SAF topic uses to connect
+  to the remote Destination.</p>
+
+properties:
+- name: "Name"
+- name: "LoginURL"
+- name: "Username"
+- name: "Password"
+- name: "CompressionThreshold"
+- name: "ReplyToSAFRemoteContextName"
+helpTasks:
+- "jms_modules/store_and_forward/remote_context/ConfigureRemoteContext"
+helpTopics:
+- label: "Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server "
+  href: "wllog/index.html"
+  type: "edocs"
+- label: "Understanding the Store-and-Forward Service"
+  href: "safmg/overview.html"
+  type: "edocs"
+- label: "Understanding JMS Resource Configuration"
+  href: "jmsad/overview.html"
+  type: "edocs"
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

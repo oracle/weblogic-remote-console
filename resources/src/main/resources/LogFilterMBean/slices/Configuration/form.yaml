@@ -1,0 +1,29 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  Add expressions to create the rule for your Log Filter
+
+properties:
+- name: "Name"
+- name: "FilterExpression"
+#TODO - The page has a bunch of stuff to help you write an expression
+
+helpTasks:
+- "domain_log_filters/ConstructLogFilterExpressions"
+- "diagnostics/UseQueryLanguageforPolicies"
+- "domain_log_filters/SpecifyMessagesToForwardToTheDomainLog"
+- "domain_log_filters/FilterLogMessages"
+- "domain_log_filters/DeleteLogFilters"
+- "logging/SpecifyMessagesForStandardOut"
+
+helpTopics:
+- label: "How a Server Instance Forwards Messages to the Domain Log"
+  href: "wllog/logging_services.html#WLLOG125"
+  type: "edocs"
+- label: "Filtering WebLogic Server Log Messages"
+  href: "wllog/filtering.html"
+  type: "edocs"
+- label: "WLDF Query Language"
+  href: "wldfc/appendix_query.html"
+  type: "edocs"

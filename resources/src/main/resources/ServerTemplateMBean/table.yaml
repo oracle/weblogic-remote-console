@@ -1,0 +1,59 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>A server is an instance of WebLogic Server that runs in its own
+  Java Virtual Machine (JVM) and has its own configuration.</p><p>This
+  page summarizes each server that has been configured in the current
+  WebLogic Server domain.</p>
+
+displayedColumns:
+- name: "Name"
+# TODO server.table.servertype
+- name: "Cluster"
+- name: "Machine"
+# TODO State
+- name: "ListenPort"
+- name: "SSLListenPort"
+hiddenColumns:
+# deprecated - name: "VirtualMachineName"
+# TODO CurrentMachine
+# TODO server.table.transitionactivity
+- name: "ListenAddress"
+- name: "ListenPortEnabled"
+- name: "SSLListenPortEnabled"
+- name: "ClusterWeight"
+# excluded - name: "ExpectedToRun"
+- name: "AdministrationPort"
+- name: "IIOPEnabled"
+- name: "DefaultIIOPUser"
+- name: "HttpdEnabled"
+- name: "ListenThreadStartDelaySecs"
+- name: "AcceptBacklog"
+# TODO OpenSocketsCurrentCount
+# TODO SocketsOpenedTotalCount
+# TODO ActivationTime
+# TODO HeapSizeCurrent
+# TODO HeapFreeCurrent
+# TODO JavaVersion
+# TODO OSVersion
+# TODO server.table.processorload
+# TODO WeblogicVersion
+# TODO UserLockoutTotalCount
+# TODO InvalidLoginAttemptsTotalCount
+# TODO LoginAttemptsWhileLockedTotalCount
+# TODO InvalidLoginUsersHighCount
+# TODO UnlockedUsersTotalCount
+# TODO LockedUsersCurrentCount
+# TODO JACCEnabled
+- name: "WeblogicPluginEnabled"
+helpTasks:
+- "domainconfig/CreateManagedServers"
+- "domainconfig/CloneManagedServers"
+- "domainconfig/DeleteManagedServers"
+- "domainconfig/DeleteTheAdministrationServer"
+- "startstop/StartAndStopServers"
+- "jndi/ViewObjectsInTheJNDITree"
+helpTopics:
+- label: "Monitoring Oracle WebLogic Server with SNMP"
+  href: "snmpa/index.html"
+  type: "edocs"

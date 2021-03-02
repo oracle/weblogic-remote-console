@@ -1,0 +1,39 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: ReconnectDelayMinimum
+  label: Minimum Delay
+
+- name: ReconnectDelayIncrease
+  label: Incremental Delay
+
+- name: ReconnectDelayMaximum
+  label: Maximum Delay
+
+- name: SourceDestination
+  label: Source Bridge Destination
+  allowNullReference: false
+  optionsSources:
+    - /JMSBridgeDestinations
+
+- name: TargetDestination
+  label: Target Bridge Destination
+  allowNullReference: false
+  optionsSources:
+    - /JMSBridgeDestinations
+
+- name: IdleTimeMaximum
+  label: Maximum Idle Time
+
+- name: AsyncEnabled
+  label: Asynchronous Mode Enabled
+
+- name: InitialBootDelaySeconds
+  label: Initial Boot Delay Secconds
+
+- name: Targets
+  optionsSources:
+    - /Clusters
+    - /Servers
+    - /MigratableTargets

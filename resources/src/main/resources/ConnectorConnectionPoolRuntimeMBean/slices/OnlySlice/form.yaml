@@ -1,0 +1,21 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- name: "Name"
+- name: "ActiveConnectionsCurrentCount"
+- name: "ActiveConnectionsHighCount"
+- name: "CloseCount"
+- name: "ConnectionsCreatedTotalCount"
+- name: "ConnectionsDestroyedByErrorTotalCount"
+- name: "ConnectionsDestroyedByShrinkingTotalCount"
+- name: "ConnectionsMatchedTotalCount"
+- name: "ConnectionsRejectedTotalCount"
+- name: "FreeConnectionsCurrentCount"
+- name: "FreeConnectionsHighCount"
+- name: "HealthState"
+- name: "LastShrinkTime"
+- name: "NumWaitersCurrentCount"
+- name: "PoolName"
+- name: "RecycledTotal"
+- name: "RuntimeTransactionSupport"
+- name: "State"

@@ -1,0 +1,23 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# Manually created from application/webapp/jsp/mail/MailSessionTargetdeployForm.jsp and consolehelp/docsrc/en-us/xml/pagehelp/mail/MailSessionTargetdeploy.xml
+
+introductionHTML: >
+  <p>This page indicates on which WebLogic Server instances or clusters the
+      mail session is accessible. Only applications that have been deployed to
+      the selected servers or clusters can use this mail session.</p>
+      <p>When you target all or part of a cluster, the Administration Console
+      initiates a two-phase deployment. In general, such a deployment ensures
+      that if the deployment fails for one active server, it fails for all
+      active servers.</p>
+
+properties:
+  - name: "Targets"
+
+helpTasks:
+  - "mail/TargetMailSessions.xml"
+  - "mail/DeleteMailSessions.xml"
+helpTopics:
+  - label: "Programming JavaMail with WebLogic Server"
+    href: "wlprg/javamail.html"
+    type: "edocs"

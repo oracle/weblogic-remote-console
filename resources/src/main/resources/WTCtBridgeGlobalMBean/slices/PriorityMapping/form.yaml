@@ -1,0 +1,21 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>A Tuxedo queuing bridge provides a bidirectional JMS interface that allows WTC applications to communicate with Tuxedo application environments.</p>
+  <p>Use this page to define the priority mapping for this Tuxedo queuing bridge.</p>
+
+properties:
+- name: "JmsToTuxPriorityMap"
+  label: "JMS To Tux Priority Map"
+- name: "TuxToJmsPriorityMap"
+  label: "Tux to JMS Priority Map"
+helpTasks:
+- "wtc/ConfigurePriorityMappingForTuxedoQueuingBridgeConnections"
+helpTopics:
+- label: "How to Configure the Oracle Tuxedo Queuing Bridge "
+  href: "wtccf/tbridge.html"
+  type: "edocs"
+- label: "How to Configure the Oracle Tuxedo Queuing Bridge"
+  href: "wtccf/tbridge.html"
+  type: "edocs"

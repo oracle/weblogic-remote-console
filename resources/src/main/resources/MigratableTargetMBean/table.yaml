@@ -1,0 +1,42 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>This page allows you to customize the column display in the table,
+  create a new migratable target, and delete a migratable target. A
+  migratable target is a target that is active on at-most one server of a
+  cluster at a time and which controls the servers that can host a pinned
+  migratable service. Migratable services include JMS servers, SAF agents,
+  path service, and custom persistent stores. You can manually migrate
+  a migratable target or you configure it for automatic migration.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "MigrationPolicy"
+- name: "Cluster"
+- name: "UserPreferredServer"
+hiddenColumns:
+- name: "AllCandidateServers"
+- name: "PreScript"
+- name: "PostScript"
+- name: "PostScriptFailureFatal"
+- name: "NonLocalPostAllowed"
+- name: "RestartOnFailure"
+- name: "SecondsBetweenRestarts"
+- name: "NumberOfRestartAttempts"
+helpTasks:
+- "clusters/ConfigureClusterMigration"
+- "jms_servers/ConfigureJMSMigration"
+- "jta/ConfigureTRSMigration"
+helpTopics:
+- label: "Configuring Messaging Bridges "
+  href: "brdge/basics.html"
+  type: "edocs"
+- label: "Service Migration"
+  href: "clust/service_migration.html"
+  type: "edocs"
+- label: "Whole Server Migration"
+  href: "clust/migration.html"
+  type: "edocs"
+- label: "Managing Transactions"
+  href: "wljta/trxman.html"
+  type: "edocs"

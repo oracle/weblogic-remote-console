@@ -1,0 +1,23 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: UnitOfOrderRouting
+  label: Unit-of-Order Message Routing
+
+- name: Name
+  helpSummaryHTML: >
+    <p>The name of this distributed topic.</p>
+
+- name: JNDIName
+  helpSummaryHTML: >
+    <p>The JNDI name used to look up this topic within the JNDI
+    namespace.</p>
+
+  helpDetailsHTML: >
+    <p>If the JNDI Name is not specified, the topic destination name is
+    not advertised through the JNDI namespace and cannot be looked up
+    and used.</p>
+
+- name: DefaultUnitOfOrder
+  label: Unit-of-Order

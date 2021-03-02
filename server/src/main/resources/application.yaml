@@ -1,0 +1,10 @@
+# Copyright (c) 2020, Oracle and/or its affiliates.
+
+console:
+  name: "Oracle WebLogic Server Remote Console"
+  version: "1.0-SNAPSHOT"
+  connectTimeoutMillis: 10000
+  readTimeoutMillis: 20000
+  disableHostnameVerification: false
+  enableSameSiteCookieValue: false
+  valueSameSiteCookie: "Lax"

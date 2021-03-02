@@ -1,0 +1,29 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define the security configuration of a local Tuxedo access point that will be used with this WTC server.</p>
+
+properties:
+- name: "Security"
+- name: "MinEncryptBits"
+  label: "Min Encryption Level"
+- name: "MaxEncryptBits"
+  label: "Max Encryption Level"
+- name: "UseSSL"
+- name: "PrivateKeyAlias"
+- name: "PrivateKeyPassPhrase"
+- name: "KeyStoresLocation"
+- name: "IdentityKeyStoreFileName"
+- name: "IdentityKeyStorePassPhrase"
+- name: "TrustKeyStoreFileName"
+- name: "TrustKeyStorePassPhrase"
+helpTasks:
+- "wtc/ConfigureLocalTuxedoAccessPointSecurity"
+helpTopics:
+- label: "Configuring Oracle WebLogic Tuxedo Connector "
+  href: "wtccf/install.html"
+  type: "edocs"
+- label: "Configuring Oracle WebLogic Tuxedo Connector"
+  href: "wtccf/install.html"
+  type: "edocs"

@@ -1,0 +1,20 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure message life cycle logging options for
+  a distributed destination.</p>
+
+properties:
+- name: "MessageLoggingEnabled"
+#TODO CFE_MULTI_SELECT - name: "MessageLoggingFormat"
+helpTasks:
+- "jms_servers/ConfigureJMSServerLogging"
+- "logging/ConfigureAndViewLogs"
+helpTopics:
+- label: "Administering JMS Resources for Oracle WebLogic Server"
+  href: "jmsad/index.html"
+  type: "edocs"
+- label: "Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server"
+  href: "wllog/index.html"
+  type: "edocs"

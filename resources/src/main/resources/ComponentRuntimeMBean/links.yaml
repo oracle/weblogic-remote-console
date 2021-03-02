@@ -1,0 +1,17 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+# Yes, these are both the same.  Until we have a feature to find the real
+# matches, it is best just to jump to the possible collections.
+
+collectionLinks:
+- label: JDBC System Resources
+  resourceData: configuration/data/Domain/JDBCSystemResources
+- label: JMS System Resources
+  resourceData: configuration/data/Domain/JMSSystemResources
+
+instanceLinks:
+- label: JDBC System Resources
+  resourceData: configuration/data/Domain/JDBCSystemResources
+- label: JMS System Resources
+  resourceData: configuration/data/Domain/JMSSystemResources

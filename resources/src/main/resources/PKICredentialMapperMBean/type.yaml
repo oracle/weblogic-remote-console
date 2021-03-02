@@ -1,0 +1,32 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: KeyStoreProvider
+  helpHTML: >
+    <p>Represents a provider for the Java Security API that should be
+    used.</p>
+
+- name: KeyStoreType
+  helpHTML: >
+    <p>The provider will generate a keystore object of this type. Default is
+    'JKS'.</p>
+
+- name: KeyStoreFileName
+  helpHTML: >
+    <p>Location of the keystore relative to the directory where the server
+    was started.</p>
+
+- name: KeyStorePassPhrase
+  helpHTML: >
+    <p>The Keystore password.</p>
+
+- name: UseResourceHierarchy
+  helpHTML: >
+    <p>Enables selection of credential mappings by traversing up the resource
+    hierarchy for each type of resource.</p>
+
+- name: UseInitiatorGroupNames
+  helpHTML: >
+    <p>Enables selection of credential mappings based on the group names
+    of the initiator.</p>

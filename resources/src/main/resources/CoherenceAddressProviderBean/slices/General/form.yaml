@@ -1,0 +1,24 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# extensions/coherence/webapp/bea-helpsets/en-us/xml/pagehelp/coherence/ConfigCoherenceAddressProvider.xml
+
+introductionHTML: >
+  <p>Use this page to configure the Socket Addresses for this Coherence
+  Address Provider.</p>
+
+properties:
+- name: "Name"
+helpTasks:
+- "coherence/CreateCoherenceClusters"
+- "coherence/ConfigureCoherenceClusters"
+- "coherence/ConfigureCoherenceLogging"
+helpTopics:
+- label: "Configuring and Managing Coherence Clusters"
+  href: "clust/coherence.html#CLUST629"
+  type: "edocs"
+- label: "Deploying Coherence Applications in WebLogic Server"
+  href: "wlcoh/deploy-wls-coherence.html#WLCOH775"
+  type: "edocs"
+- label: "Overriding a Cache Configuration File"
+  href: "clust/coherence.html#CLUST643"
+  type: "edocs"

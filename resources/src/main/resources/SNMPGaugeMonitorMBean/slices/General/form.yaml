@@ -1,0 +1,28 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure a gauge monitor, which periodically checks
+  the value of an integer or floating-point attribute and generates a
+  notification if the value equals or exceeds a threshold.</p>
+
+properties:
+- name: "Name"
+- name: "MonitoredMBeanType"
+- name: "MonitoredAttributeName"
+- name: "MonitoredMBeanName"
+- name: "PollingInterval"
+- name: "ThresholdHigh"
+- name: "ThresholdLow"
+helpTasks:
+- "snmp/ConfigureGaugeMonitors"
+- "snmp/DetermineMBeanInstanceNames"
+- "snmp/TargetGaugeMonitors"
+- "snmp/DisableTrapGeneration"
+helpTopics:
+- label: "Monitoring Oracle WebLogic Server with SNMP "
+  href: "snmpa/index.html"
+  type: "edocs"
+- label: "Monitoring Oracle WebLogic Server with SNMP"
+  href: "snmpa/index.html"
+  type: "edocs"

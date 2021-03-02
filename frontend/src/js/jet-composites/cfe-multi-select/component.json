@@ -1,0 +1,55 @@
+{
+  "name": "cfe-multi-select",
+  "version": "1.0.0",
+  "jetVersion": "^9.0.0",
+  "displayName": "multi selection component",
+  "description": "A component that displays items for two groups of selection boxes and allows swapping.",
+  "properties": {
+    "availableHeader": {
+      "description": "Header of the available box",
+      "type": "string"
+    },
+    "chosenHeader": {
+      "description": "Header of the chosen box",
+      "type": "string"
+    },
+    "availableItems": {
+      "description": "The items that are available to be moved to the chosen list.",
+      "type": "array"
+    },
+    "checkedAvailableItems": {
+      "description": "The items that are initially checked in the available list",
+      "type": "array"
+    },
+    "chosenItems": {
+      "description": "The items that have already been chosen",
+      "type": "array"
+    },
+    "checkedChosenItems": {
+      "description": "The items that are initially checked in the chosen list",
+      "type": "array"
+    },
+    "readonly": {
+      "description": "Display only",
+      "type": "boolean"
+    }
+  },
+  "methods": {
+
+  }, 
+  "events": {
+    "chosenItemsChanged": {
+      "description": "Triggered when an item is added or removed from the chosen list.",
+      "bubbles": true,
+      "detail": {
+        "value": {
+          "description": "The items currently in the chosen list.",
+          "type": "array"
+        }
+      }
+    }
+  },
+  "slots": {
+
+  }
+}

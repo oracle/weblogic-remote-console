@@ -1,0 +1,40 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: PostTimeoutSecs
+  label: Post Timeout
+
+- name: KeepAliveEnabled
+  label: Enable Keepalives
+
+- name: KeepAliveSecs
+  label: Duration
+
+- name: HttpsKeepAliveSecs
+  label: HTTPS Duration
+
+- name: ClientIpHeader
+  label: Remote Address Override
+  helpHTML: >
+    <p>Specifies the Client IP Header from WebServerMBean.</p> 
+    <p>If specified, this IP address is returned in calls to getRemoteAddr()
+    to support environments with external load balancers.</p>
+
+- name: SendServerHeaderEnabled
+  label: Send Server Header
+
+- name: LogFileFormat
+  label: Format
+  helpSummaryHTML: >
+    <p>This specifies the format of the HTTP log file. Both formats
+    are defined by the W3C. With the extended log format, you use server
+    directives in the log file to customize the information that the server
+    records.</p>
+
+- name: LogTimeInGMT
+  helpSummaryHTML: >
+    <p>Specifies whether the time stamps for HTTP log messages are in
+    Greenwich Mean Time (GMT) regardless of the local time zone that the
+    host computer specifies.</p>
+

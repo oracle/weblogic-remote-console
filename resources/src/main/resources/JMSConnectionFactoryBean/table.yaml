@@ -1,0 +1,26 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>JMS Connection factories are objects that enable JMS clients
+   to create JMS connections. </p>
+
+displayedColumns:
+- name: "Name"
+- name: "JNDIName"
+- name: "SubDeploymentName"
+# TODO CBE_COMPUTED name: "SubDeploymentName",  ( JMSUtils: #760)
+# TODO CBE_COMPUTED name: "Targets", (JMSUtils: #773)
+
+helpTasks:
+- "jms_modules/connection_factories/ConfigureConnectionFactories"
+
+helpTopics:
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Administering the Store-and-Forward Service for Oracle WebLogic Server"
+  href: "safmg/index.html"
+  type: "edocs"
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

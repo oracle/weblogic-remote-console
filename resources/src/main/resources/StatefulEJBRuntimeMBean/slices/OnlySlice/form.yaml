@@ -1,0 +1,19 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- name: "Name"
+- name: "Type"
+- name: "ActivationCount"
+- name: "CacheAccessCount"
+- name: "CacheHitCount"
+- name: "CacheMissCount"
+- name: "CachedBeansCurrentCount"
+- name: "PassivationCount"
+- name: "Name"
+- name: "LockEntriesCurrentCount"
+- name: "LockManagerAccessCount"
+- name: "TimeoutTotalCount"
+- name: "WaiterCurrentCount"
+- name: "Name"
+- name: "EJBName"
+- name: "Resources"

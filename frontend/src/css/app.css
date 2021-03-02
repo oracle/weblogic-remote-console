@@ -1,0 +1,1680 @@
+/*! Copyright (c) 2020, 2021, Oracle and/or its affiliates. All rights reserved. */
+
+:root {
+  /*
+   * START: CFE code will make adjustments to the
+   *        following custom CSS variables, at runtime.
+   */
+  --slideup-popup-calc-min-height: 980px;
+  --content-area-container-min-width: 55px;
+  --domains-toolbar-right-margin-right: 0;
+  --form-container-calc-max-width: 10px;
+  --form-container-calc-min-width: 310px;
+  --form-container-calc-max-height: 395px;
+  --servers-glance-dom-calc-min-height: 448px;
+  /*
+   * END:   CFE code will make adjustments to the
+   *        following custom CSS variables, at runtime.
+   */
+
+  --form-container-fixed-min-width: 1120px;
+  --content-area-header-height: 70px;
+  --table-container-offset-height: 395px;
+  --form-container-offset-height: 405px;
+  --padding-30: 30px;
+  --padding-40: 40px;
+
+  --form-tabstrip-converyor-calc-max-width: 10px;
+  --form-table-container-min-width: 310px;
+  --instructions-calc-max-width: 335px;
+  --paging-bottom: 32px;
+  --form-input-min-width: 15em;
+  --form-input-max-width: 15em;
+
+  --landing-page-cards-min-width: 1040px;
+  --landing-page-panel-subtree-max-height: 295px;
+  --landing-page-panel-subtree-max-width: 55px;
+  --landing-page-conveyor-calc-max-width: 55px;
+  --landing-page-hover-color: #f2f2f2;
+  --landing-page-subtree-color: #83837f;
+  --landing-page-subtree-card-color: #70706c;
+
+  --ancillary-content-area-width: 300px;
+  --instructions-max-height: 120px;
+  --system-status-collapse-min-height: 340px;
+  --system-status-expand-min-height: 448px;
+  --servers-glance-dom-max-height: 448px;
+  --table-dom-max-height: 500px;
+  --navstrip-max-width: 45px;     /* DON'T CHANGE THIS!! Needs to be 45px, or else left edge of control will be cut off and dnd feature on MyHome will go bonkers */
+  --navstrip-min-height: 60px;
+  --navstrip-resizer-width: 55px;
+  --panel-resizer-width: 10px;
+  --resizer-left-panel-min-width: 200px;
+  --resizer-left-panel-max-width: 490px;
+  --navtree-calc-min-height: 70px;
+  --navtree-calc-max-height: 70px;
+  --navtree-min-width: 410px;
+  --navtree-max-width: 490px;
+  --tab-container-toolbar-min-width: 306px;
+  --spacing-medium: 5px;
+  --body-background-color: #faf8f7;
+  --header-background-color: #e0dbd7;
+
+  --slideup-popup-width: 400px;
+  --slideup-popup-content-width: 330px;
+  --slideup-popup-height: 36px;
+  --slideup-popup-min-height: 980px;
+  --slideup-popup-offset-top: 200px;
+  --slideup-box-shadow-color: #dfdad7;
+
+  --fixed-header-background-color: #f6f6f6;
+  --table-gridline-color: #eceaec;
+  --table-background-color: #f7f7f7;
+  --navtree-label-color: #161513;
+  --navtree-background-color: #c3b2ab;
+  --navstrip-background-color: #b6a29a;
+  --panel-card-width: 215px;
+  --panel-card-label-color: #161513;
+  --detail-popup-background-color: #cae4ef;
+  --sideways-tabstrip-min-width: 24px;
+  --sideways-tabstrip-min-height: 140px;
+  --sideways-tabstrip-max-height: 140px;
+  --sideways-tabstrip-color: #e3e3e3;
+  --sideways-tabstrip-hover-color: #cfcfcf;
+  --sideways-tabstrip-tab-background-color: #f0f0f0;
+  --breadcrumb-link-color: #0275d8;
+  --breadcrumb-hover-color: #01447e;
+  --dialog-background-color: #dbd5d0;
+  --dialog1-width: 360px;
+  --dialog1-height: 355px;
+  --dialog2-width: 330px;
+  --dialog2-height: 232px;
+  --dialog3-width: 300px;
+  --dialog3-height: 168px;
+  --dialog4-width: 475px;
+  --dialog4-height: 392px;
+  --input-text-wide-width: 18rem;
+  --single-select-one-wide-width: 630px;
+  --app-info-container-height: 35px;
+
+  --scrollbar-thumb-color: #837670;
+  --scrollbar-track-color: #faf8f7;
+  --scrollbar-track-color1: #bba9a1;
+}
+
+html, body {
+  min-width: 100vw;
+  height: 100vh; /* needed for proper layout */
+  overflow: hidden;
+}
+
+header, footer {
+  background-color: var(--header-background-color);
+}
+
+footer {
+  font-size: 11px;
+  padding: 5px;
+}
+
+body {
+  touch-action: manipulation;
+}
+
+#oracle-jet-icon {
+  height: 16px;
+  width: 16px;
+  padding-right: 5px;
+}
+
+/* get rid of blue border with image buttons */
+a:focus {
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .3);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .3);
+}
+
+#app-info-container {
+  min-height: var(--app-info-container-height);
+}
+
+#navtreeToggle,
+#app-info-logo,
+#app-info-title {
+  margin-top: 7px;
+}
+
+#navtreeToggle {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#oracleLogo {
+  width: 109px;
+  height: 16px;
+  margin: 0 3px 0 7px;
+  vertical-align: text-top;
+}
+
+.branding-area-title-sm,
+.branding-area-title-md,
+.branding-area-title-lg{
+  font-weight: 400;
+}
+
+.branding-area-title-sm {
+  font-size: 10pt;
+}
+
+.branding-area-title-md {
+  font-size: 14pt;
+}
+
+.branding-area-title-lg {
+  font-size: 16pt;
+}
+
+#middle-container {
+  width: 100vw;
+  margin-top: var(--app-info-container-height); /* Sets top of navtree-container and content-area-container */
+}
+
+#spa-resizer {
+  min-width: calc(100vw - var(--form-container-calc-min-width));
+}
+
+.resizer_panel .vertical-gripper {
+  min-width: 10px;
+  height: 100vh;
+  background: url("../images/splitter-bkgrd-image-vert-gry_7x28.png");
+  background-repeat: repeat;
+  cursor: col-resize;
+  z-index:20;
+}
+
+.resizer_panel .left_panel,
+.resizer_panel .right_panel {
+  width: 100vw;
+}
+
+.resizer_panel .left_panel
+{
+  min-width: var(--resizer-left-panel-min-width);
+}
+
+#navstrip-container {
+  max-width: var(--navstrip-max-width);
+  min-height: calc(100vh - var(--navstrip-min-height));
+}
+
+#navstrip-header {
+  background-color: var(--navstrip-background-color);
+}
+
+#navstrip-builtins {
+  max-width: var(--navstrip-max-width);
+}
+
+.navstrip-icon {
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  padding: 2px 0 2px 0;
+  cursor: pointer;
+}
+
+#navtree-container {
+  background-color: var(--navtree-background-color);
+  display: none;
+  min-height: calc(100vh - var(--navtree-calc-min-height));
+  max-height: calc(100vh - var(--navtree-calc-max-height));   /* Show vertical scrollbar when height of expanded content goes past 840px */
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color1);
+}
+
+#navtree {
+  min-width: var(--navtree-min-width);
+  visibility: hidden;
+}
+
+.navtree-node-label {
+  padding-right: 10px;
+}
+
+oj-menu[id="moreMenu"] {
+  display: none;
+}
+
+.oj-menu-dropdown .oj-menu-item > a {
+  height: 2.15rem;
+  line-height: 2.15rem;
+  color: rgb(22, 21, 19);
+  border-top-width: 0;
+  border-top-color: transparent;
+  border-top-style: solid;
+}
+
+.toolbar-separator-vertical {
+  vertical-align: bottom;
+}
+
+
+li.oj-navigationlist-focused-element.oj-navigationlist-item-element {
+  padding: 2px 0 1px 2px;
+}
+
+.toolbar-separator-horizontal {
+  text-align: center;
+}
+
+#landing-page-icon {
+  vertical-align: middle;
+}
+
+.toolbar-icon {
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+}
+
+.toolbar-label {
+  cursor: pointer;
+  font-size: 12pt;
+  font-weight: 400;
+  text-align: center;
+}
+
+#domains-toolbar-container {
+  height: 25px;
+}
+
+#domains-toolbar-right {
+  margin-left: auto !important;
+  margin-right: var(--domains-toolbar-right-margin-right);
+}
+
+#domain-connect-info,
+#domains-toolbar {
+  font-size: 12pt;
+  height: 25px;
+}
+
+#domain-connect-info > img {
+  margin-top: 5px;
+}
+
+#domain-connect-info > oj-button {
+  width: 24px;
+  margin: 5px 5px 0 5px;
+}
+
+#connection-type-image {
+  width: 18px;
+  height: 18px;
+}
+
+#not-connected-label
+{
+  margin: 8px 8px 0 0;
+}
+
+#connected-to-label
+{
+  margin: 8px 0 0 0;
+}
+
+#welcome-label,
+#welcome-variable
+{
+  margin: 8px 5px 0 0;
+}
+
+#connected-to-variable
+{
+  margin: 8px 5px 0 5px;
+}
+
+#connected-to-variable,
+#welcome-variable
+{
+  font-weight: 600;
+  font-size: 12pt;
+  color: black;
+}
+
+#domain-url {
+  margin: 0 0 0 3px;
+}
+
+oj-button[id="readonly"],
+oj-button[id="readwrite"]
+{
+  width: 20px;
+  margin: 0 0 0 3px;
+}
+
+img#readonly-image,
+img#readwrite-image
+{
+  width: 20px;
+  height: 20px;
+}
+
+img#connect-disconnect-image
+{
+  width: 18px;
+  height: 18px;
+}
+
+.cfe-file-chooser {
+  display: none;
+}
+
+img.choose-file-icon,
+img.clear-chosen-file-icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin: 10px 2px 0 3px;
+}
+
+oj-button[id="connect"],
+oj-button[id="disconnect"]
+{
+  margin: 0 5px 0 3px;
+}
+
+img#connect-disconnect-image
+{
+  vertical-align: inherit;
+}
+
+canvas#console-state-bar {
+  vertical-align: middle;
+  width: 12px;
+  height: 24px;
+  padding: 4px 5px 0 5px;
+}
+
+.right_panel {
+  min-width: calc(100vw - var(--content-area-container-min-width));
+}
+
+#content-area-header-domains {
+  margin: 0 0 10px 0;
+}
+
+#content-area-header {
+  max-height: var(--content-area-header-height);
+}
+
+#content-area-header-container {
+  min-height: var(--content-area-header-height);
+  background-image: url('../images/content-area-header-background_1080x80.png');
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: cover;
+}
+
+#content-area-header-title {
+  font-size: 20pt;
+  font-weight: 400;
+  padding-left: 5px;
+}
+
+#ancillary-content-area {
+  display: none;
+  max-width: var(--ancillary-content-area-width);
+}
+
+#ataglance-tab-container,
+#shoppingcart-tab-container {
+  min-width: var(--ancillary-content-area-width);
+/*  overflow: auto; */
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+#ataglance-tab-container-toolbar,
+#shoppingcart-tab-container-toolbar {
+  height: 24px;
+  min-width: var(--tab-container-toolbar-min-width);
+  font-size: 10pt;
+  background-color: white;
+}
+
+#ataglance-tab-container-toolbar img,
+#shoppingcart-tab-container-toolbar img {
+  height: 18px;
+  width: 18px;
+  padding: 3px 5px;
+}
+
+div.ataglance-col .oj-statusmetergauge
+{
+  width: 90px;
+  height: 100px;
+  vertical-align: middle;
+}
+
+table#servers-glance-table,
+table#change-manager-table
+{
+  border-collapse: collapse;  /* puts grid lines around table */
+  border: 1px solid var(--table-gridline-color);  /* color of grid lines around table */
+}
+
+table#servers-glance-table {
+  width: 100%;
+}
+
+div#serversGlance-dom
+{
+  padding-top: 3px;
+  min-height: calc(100vh - var(--servers-glance-dom-calc-min-height));
+  max-height: calc(100vh - var(--servers-glance-dom-max-height));
+  overflow: auto;
+}
+
+div#serversGlance-dom,
+div#systemStatus-dom
+{
+  font-size: 9pt;
+  font-family: inherit;
+  background-color: white;
+}
+
+div#serversGlance-dom .ataglance-row:after,
+div#systemStatus-dom .ataglance-row:after
+{
+  content: "";
+  display: table;
+  clear: both;  /* clear floats after ataglance-row */
+}
+
+div#serversGlance-dom .ataglance-col,
+div#systemStatus-dom .ataglance-col
+{
+  float: left;
+  margin-left: 3px;
+}
+
+div#systemStatus-dom > div#status-description {
+  padding: 1px 5px 2px 5px;
+  margin-bottom: 3px;
+  background-color: var(--fixed-header-background-color);
+}
+
+.fixed-header > thead {
+  background-color: var(--fixed-header-background-color);
+}
+
+.fixed-header > thead,
+.fixed-header > tbody {
+  display: block;
+}
+
+tr.servers-glance-table-hdr > th {
+  width: calc(100vw - 17.5%);
+}
+
+table#servers-glance-table > tbody {
+  overflow: auto;
+  max-height: 400px;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+table#servers-glance-table > tr.servers-glance-table-hdr {
+  background-color: var(--fixed-header-background-color);
+}
+
+table#servers-glance-table > tr.servers-glance-table-row {
+  background-color: white;
+}
+
+table#servers-glance-table,
+table#change-manager-table {
+  font-size: 8pt;
+  width: 100%;
+}
+
+table#servers-glance-table th
+{
+  background-color: var(--fixed-header-background-color);
+  text-align: left;
+  font-weight: 400;
+}
+
+table#servers-glance-table td,
+table#change-manager-table td
+{
+  border: 1px solid var(--table-gridline-color);  /* color of grid lines around table cells */
+  padding-left: 2px;
+  vertical-align: top;
+}
+
+td.table-key
+{
+  background-color: var(--fixed-header-background-color);
+}
+
+table#additions-table,
+table#modifications-table,
+table#removals-table,
+table#restart-table
+{
+  table-layout: auto;
+  font-size: 8pt;
+  width: 100%;
+}
+
+div#additions-dom,
+div#modifications-dom,
+div#removals-dom,
+div#restart-dom
+{
+  max-height: var(--table-dom-max-height);
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+table#modifications-table {
+  border-spacing: 0;
+}
+
+table#additions-table th,
+table#modifications-table th,
+table#removals-table th,
+table#restart-table th
+{
+  background-color: var(--fixed-header-background-color);
+  text-align: left;
+  font-weight: 400;
+}
+
+table#additions-table td,
+table#modifications-table td,
+table#removals-table td,
+table#restart-table td
+{
+  background-color: var(--table-background-color);
+}
+
+pre.table-key-content {
+  display: none;
+  font-size: 8pt;
+  font-family: inherit;
+  min-width: var(--tab-container-toolbar-min-width);
+  max-width: var(--tab-container-toolbar-min-width);
+  resize: both;
+  background-color: white;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+  overflow: auto;
+  margin: 3px 0 2px 0;
+}
+
+oj-accordion#ataglance-tab > oj-collapsible,
+oj-accordion#shoppingcart-tab > oj-collapsible
+{
+  background-color: var(--sideways-tabstrip-tab-background-color);
+}
+
+oj-accordion#ataglance-tab > oj-collapsible span,
+oj-accordion#shoppingcart-tab > oj-collapsible span {
+  font-size: 10pt;
+}
+
+.oj-accordion-collapsible > .oj-collapsible-wrapper > .oj-collapsible-content {
+  padding: 0; /* No padding around change manager section tables */
+}
+
+.oj-collapsible {
+  margin: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.oj-accordion-collapsible > .oj-collapsible-header {
+  padding: 0;
+  border: 0 solid rgb(222, 218, 214);
+  border-width: 0;
+}
+
+oj-collapsible div#change-manager-dom {
+  padding: 0;
+  font-size: 9pt;
+  background-color: white;
+}
+
+a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabbar-item-no-icon {
+  height: 16px;
+  margin: 5px 2px;
+}
+
+#desktop-container {
+  min-width: calc(100vw - var(--form-container-calc-min-width));
+  height: 720px;
+  background-image: url('../images/myhome-background_1080x720.png');
+  background-repeat: no-repeat;
+  background-position: left;
+}
+
+#form-help-container {
+  display: none;
+}
+
+#table-form-container {
+/*  min-width: calc(100vw - var(--form-container-calc-min-width)); */
+  max-width: calc(100vw - var(--form-container-calc-max-width));
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.cfe-table-form-container {
+  margin: 5px 5px 0 0;
+  /*
+  DON'T THINK WE NEED THE SCROLLBARS HERE, BECAUSE THE TABLES
+  ALREADY HAVE THEM. KEEPING IT AROUND UNTIL ALL THE NEW ELASTIC
+  STUFF HAS BEEN VERIFIED TO WORK CORRECTLY !!!
+   */
+  /*  overflow: auto; */
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.cfe-table-form-content-header
+{
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+#table-toolbar,
+#form-toolbar {
+  margin-right: 10px;
+}
+
+#form-toolbar-container,
+#table-toolbar-container
+{
+  height: 36px;
+}
+
+
+#form-toolbar-save-button,
+#form-toolbar-new-button,
+#form-toolbar-delete-button
+{
+  display: none;
+}
+
+div#formMessages {
+  margin-top: .5rem;
+}
+
+.cfe-table-form-instructions
+{
+  min-height: 30px;
+  max-height: var(--instructions-max-height); /* Show vertical scrollbar, if height > 76px */
+  max-width: calc(100vw - var(--instructions-calc-max-width));
+  overflow-wrap: break-word;  /* Wraps really long instructions */
+  font-size: 11pt;
+  margin: 5px 0 10px 10px;
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.cfe-table-form-content {
+/*  min-width: calc(100vw - var(--form-container-calc-min-width)); */
+  min-width: var(--form-container-fixed-min-width);
+  max-width: calc(100vw - var(--form-container-calc-max-width));    /* Any form, table or article wider than var(--content-area-max-width) will have a horizontal scroll bar */
+  max-height: calc(100vh - var(--form-container-calc-max-height));
+  margin: 5px 0 0 0;
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+oj-table.wlstable {
+  overflow: auto;
+  z-index: 1;
+}
+
+#wlsform > div > div:nth-child(+n+0) {
+  padding-left: 8px;
+  padding-top: 3px;
+}
+
+.cfe-form-field {
+  height: 54px;
+}
+
+.cfe-form-input-text,
+.cfe-form-input-textarea,
+.cfe-form-input-password,
+.cfe-form-select-one
+{
+  line-height: 1rem;
+}
+
+.cfe-form-input-textarea > div.oj-text-field-container > div.oj-text-field-middle > textarea
+{
+  white-space: pre;
+}
+
+.cfe-form-readonly-text > div.oj-text-field-container,
+.cfe-form-readonly-select-one > div.oj-text-field-container
+{
+  margin-top: 9px;
+}
+
+.cfe-form-switch {
+  line-height: 1.2rem;
+}
+
+.cfe-form-input-text,
+.cfe-form-input-textarea,
+.cfe-form-readonly-text,
+.cfe-form-input-password,
+.cfe-form-switch
+{
+  min-width: var(--form-input-min-width);
+}
+
+.cfe-form-input-text,
+.cfe-form-input-textarea,
+.cfe-form-readonly-text,
+.cfe-form-input-password,
+.cfe-form-switch,
+.cfe-form-select-one,
+.cfe-form-readonly-select-one
+{
+  max-width: var(--form-input-max-width);
+}
+
+.cfe-form-select-one,
+.cfe-form-readonly-select-one
+{
+  min-width: var(--form-input-min-width);
+}
+
+/* Make readonly field for file chooser wider than normal fields */
+.cfe-file-picker {
+  width: var(--form-input-min-width);
+  max-width: var(--form-input-max-width);
+}
+
+/* Removes top margin from readonly fields to achieve proper layout on page */
+.oj-form-layout .oj-form.oj-enabled .oj-text-field.oj-read-only .oj-text-field-container {
+  border-width: 1px 1px 1px 1px;
+  border-color: rgba(22, 21, 19, .1);
+  background-color: transparent;
+  margin-top: 0;
+}
+
+/* Set height of readonly fields to achieve proper layout on page */
+oj-input-text.cfe-file-picker > div > div > div.oj-text-field-readonly-div,
+oj-input-text.cfe-form-readonly-text > div > div > div.oj-text-field-readonly-div
+{
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  font-weight: normal;
+  white-space: pre-wrap;
+  background-color: transparent;
+  border-color: transparent;
+  border-left-width: 0;
+  border-right-width: 0;
+  color: rgb(22, 21, 19);
+  font-size: 1rem;
+  font-weight: normal;
+  line-height: 1.25;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 40px;
+}
+
+.oj-form-layout .oj-form.oj-enabled .oj-text-field:not(.oj-form-control-label-inside) .oj-text-field-readonly-div, .oj-form-control-inherit:not(.oj-form-control-default) .oj-text-field:not(.oj-form-control-label-inside) .oj-text-field-readonly-div {
+  justify-content: center;
+  min-height: 40px;
+}
+
+oj-input-text.cfe-form-readonly-text > div > div > div.oj-text-field-readonly-div .oj-text-field.oj-read-only .oj-text-field-container
+{
+  border-width: 0;
+  background-color: transparent;
+  height: auto;
+  margin: 0;
+}
+
+.cfe-form-select-one-wide {
+  width: var(--single-select-one-wide-width);
+}
+
+.cfe-form-checkboxset {
+  margin-left: 10px;
+}
+
+.cfe-form-checkboxset .oj-form.oj-enabled .oj-user-assistance-inline-container.oj-efficient, .oj-form-control:not(.oj-read-only):not(.oj-disabled) .oj-user-assistance-inline-container.oj-efficient {
+  min-height: .5rem;
+}
+
+.cfe-delete-row-button {
+  height: 1.25rem;
+  width: 1.75rem;
+  font-size: 11pt;
+}
+
+div#show-hidden-columns-checkboxset,
+div#show-advanced-fields-checkboxset {
+  margin-right: 10px;
+}
+
+div#show-hidden-columns-checkboxset span,
+div#show-advanced-fields-checkboxset span {
+  margin-right: 5px;
+}
+
+oj-option#show-hidden-columns,
+oj-option#show-advanced-fields {
+  font-size: 11pt;
+}
+
+.cfe-form-tabstrip > div > oj-conveyor-belt {
+  margin: 5px 0 0 5px;
+  max-width: calc(100vw - var(--form-tabstrip-converyor-calc-max-width));
+}
+
+.title-label-18pt {
+  font-size: 18pt;
+  font-weight: 500;
+  padding-left: 5px;
+}
+
+.title-label-16pt {
+  font-size: 16pt;
+  font-weight: 500;
+}
+
+.title-label-14pt {
+  font-size: 14pt;
+  font-weight: 500;
+}
+
+.title-label-12pt {
+  font-size: 12pt;
+  font-weight: 500;
+}
+
+.restart-required-icon {
+  padding: 8px 6px 0 2px;
+  width: 18px;
+}
+
+.more-vertical-icon {
+  padding-top: 12px;
+  padding-left: 8px;
+}
+
+.restart-required-icon,
+.more-vertical-icon {
+  height: 18px;
+}
+
+.button-icon {
+  width: 18px;
+  height: 18px;
+  padding-right: 5px;
+}
+
+img.oj-button-icon.oj-start {
+  margin: 0;
+  padding: 0;
+}
+
+img.option-icon
+{
+  height: 20px;
+  width: 20px;
+  margin: 0 10px 0 0;
+}
+
+.button-label {
+  font-size: 10pt;
+}
+
+/* Style the breadcrumb list */
+ul.breadcrumb {
+  list-style: none;
+  min-height: 24px;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+  font-size: 11pt;
+  display: inline;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+  padding: 2px;
+  content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+  color: var(--breadcrumb-link-color);
+  text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+  color: var(--breadcrumb-hover-color);
+  text-decoration: underline;
+}
+
+/* For weblogic.beanpath-history dropdown */
+div#beanpath-history-container {
+  min-width: 100%;
+  font-weight: 400;
+  padding: 5px 5px 5px 0;
+  display: none;
+}
+
+div#beanpath-history {
+  min-width: 100%;
+}
+
+div#beanpath-history,
+div#beanpath-history-count {
+  background-color: var(--navtree-background-color);
+}
+
+div#beanpath-history-count {
+  padding: 0 10px 0 10px;
+}
+
+div#beanpath-container {
+  width: 100%;    /* for the dropdown section of beanpath history */
+}
+
+#beanpath-history-icon {
+  width: 18px;
+  height: 18px;
+  margin: 5px 5px 0 5px;
+}
+
+div#ojChoiceId_beanpath {
+  background-color: var(--navtree-background-color);
+  overflow: hidden;
+  height: 26px;
+}
+
+div#oj-combobox-choice-beanpath.oj-combobox-choice {
+  border-style: none;
+  background-color: var(--navtree-background-color);
+  color: inherit;
+  font-weight: 400;
+  padding-left: 0;
+  height: 30px;
+}
+
+#toggle-history-toolbar-icon {
+  margin-top: 2px;   /* Use margin (as opposed to padding) when right-aligining with oj-flex stuff */
+}
+
+#shoppingCartImage,
+#saveToShoppingCartImage
+{
+  height: 28px;
+  width: 28px;
+}
+
+#moreImage {
+  height: 24px;
+  width: 18px;
+  margin-top: 2px;
+}
+
+#shoppingCartMenu,
+#linksToolbarMenu,
+#suspendMenu,
+#shutdownMenu
+{
+  display: none;
+}
+
+oj-dialog[id="dialog1"] {
+  width: var(--dialog1-width);
+  height: var(--dialog1-height);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog#dialog1 > div.oj-dialog-content.oj-dialog-default-content {
+  font-size: 11pt;
+  background-color: white;
+}
+
+oj-dialog#dialog1 div.oj-dialog-header.oj-dialog-header-close {
+  padding: 0.5rem .75rem 0.5rem .75rem;
+}
+
+html:not([dir="rtl"]) .oj-dialog-header-close-wrapper {
+  margin-right: -1rem;  /* to properly position "X" in header, which closes the */
+}
+
+oj-dialog[id="syncIntervalDialog"] {
+  display: none;
+  width: var(--dialog2-width);
+  height: var(--dialog2-height);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog#actionsDialog div.oj-dialog-body,
+oj-dialog#syncIntervalDialog div.oj-dialog-body,
+oj-dialog#confirmDialog div.oj-dialog-body
+{
+  position: relative;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 0.5rem .75rem 1rem .75rem;
+  text-align: start;
+  font-size: 11pt;
+  background-color: white;
+}
+
+oj-dialog#actionsDialog div.oj-dialog-header,
+oj-dialog#syncIntervalDialog div.oj-dialog-header,
+oj-dialog#confirmDialog div.oj-dialog-header
+{
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem .5rem 0.25rem .5rem;
+  background-color: transparent;
+  background-image: none;
+  border-bottom-color: transparent;
+  font-size: 12pt;
+  line-height: 1.4;
+  color: rgb(22, 21, 19);
+  font-weight: 900;
+  min-height: 2.25rem;
+}
+
+oj-dialog#actionsDialog div.oj-dialog-body {
+  background-color: #f8f6f5;
+}
+
+oj-dialog#actionsDialog div.oj-dialog-footer,
+oj-dialog#syncIntervalDialog div.oj-dialog-footer,
+oj-dialog#confirmDialog div.oj-dialog-footer {
+  background-color: white;
+  padding: .25rem .5rem .5rem .5rem;
+}
+
+oj-dialog#actionsDialog div.oj-dialog-body oj-form-layout,
+oj-dialog#syncIntervalDialog div.oj-dialog-body oj-form-layout
+{
+  margin-top: 10px;
+}
+
+oj-dialog[id="confirmDialog"] {
+  width: var(--dialog3-width);
+  height: var(--dialog3-height);
+  background-color: var(--dialog-background-color);
+}
+
+
+oj-dialog[id="actionsDialog"] {
+  width: var(--dialog4-width);
+  height: var(--dialog4-height);
+  background-color: var(--dialog-background-color);
+  border: 1px none #f8f6f5;
+}
+
+#connection-dialog {
+  margin-top: 10px;
+  font-size: 13pt;
+}
+
+#connection-dialog-instructions,
+#connection-dialog-text {
+  margin-left: 15px;
+}
+
+#connection-dialog-body.oj-dialog-body {
+  padding: 10px 0 0 0;
+}
+
+.connection-dialog-body-container {
+  margin: 15px;
+}
+
+#connection-dialog-body img#username-icon,
+#connection-dialog-body img#password-icon
+{
+  height: 24px;
+  width: 24px;
+  vertical-align: middle;
+  padding: 0 15px 0 0;
+}
+
+#url-field-label {
+  font-size: 10pt;
+  margin-right: 10px;
+}
+
+#connection-dialog-body oj-input-text#username-field,
+#connection-dialog-body oj-input-password#password-field,
+#connection-dialog-body oj-input-text#url-field
+{
+  font-size: 11pt;
+  width: 272px;
+}
+
+#connection-dialog-button-image,
+#connection-dialog-button-label {
+  vertical-align: middle;
+  padding: 0 5px 0 0;
+}
+
+.cfe-draggable {
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  padding: 20px;
+  z-index: 3;
+  text-align: center;
+}
+
+.cfe-draggable img {
+  height: 32px;
+  width: 32px;
+}
+
+.cfe-draggable span {
+  display: block;
+  font-size: 10pt;
+  font-weight: 500;
+}
+
+#home-page {
+  max-height: calc(100vh - var(--content-area-header-height));
+}
+
+div#tab-module.oj-flex-bar-end {
+  margin-left: 0;
+}
+
+#gallery-container {
+  background-color: white;
+}
+
+.site-panel-padding {
+  padding: 10px;
+}
+
+.site-panel {
+  padding: 0;
+  background: var(--landing-page-hover-color);
+  border: 0;
+  outline: none;
+  display: block;
+  font-size: 10pt;
+  text-align: center;
+}
+
+.site-panel,
+.site-panel:hover,
+.site-panel:active,
+.site-panel:focus {
+  text-decoration: none;
+}
+
+.site-panel-card-header img {
+  margin-top: 14px;
+  width: 36px;
+  height: 36px;
+}
+
+.site-panel-card-title {
+  color: var(--panel-card-label-color);
+  font-size: 12pt;
+  font-weight: 500;
+}
+
+.site-panel-card-content {
+  color: var(--panel-card-label-color);
+  overflow-wrap: break-word;  /* Wraps long descriptions */
+  padding: 14px;
+}
+
+.site-sideways-tabstrip {
+  min-height: calc(100vh - var(--sideways-tabstrip-min-height));
+  max-height: calc(100vh - var(--sideways-tabstrip-max-height));
+  min-width: var(--sideways-tabstrip-min-width);
+  max-width: var(--sideways-tabstrip-min-width);
+  font-size: 11pt;
+  background-color: var(--sideways-tabstrip-color);
+  writing-mode: vertical-lr;
+}
+
+.site-sideways-tabstrip span a {
+  text-decoration: none;
+}
+
+.site-sideways-tabstrip span a img {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+
+.site-sideways-tabstrip span a span {
+  padding: 0 2px 8px 0;
+  margin-bottom: 3px;
+  vertical-align: middle;
+  color: var(--panel-card-label-color);
+}
+
+.site-sideways-tabstrip span:hover{
+  background-color: var(--sideways-tabstrip-hover-color);
+}
+
+.oj-sm-web-padding-horizontal, .oj-web-padding {
+  padding: 0;
+}
+
+#landing-page > section {
+  background-color: white;
+  max-width: calc(100vw - var(--form-container-calc-max-width));
+}
+
+#landing-page-cards > div > oj-conveyor-belt {
+  min-width: var(--landing-page-cards-min-width);
+  max-width: calc(100vw - var(--landing-page-conveyor-calc-max-width));
+}
+
+.landing-page-padding {
+  margin-top: 20px;
+}
+
+.landing-page-panel {
+  padding: 5px;
+  border: 0;
+  outline: none;
+  display: block;
+  font-size: 11pt;
+  font-weight: 500;
+  width: var(--panel-card-width);
+  color: var(--panel-card-label-color);
+}
+
+.landing-page-panel,
+.landing-page-panel:hover,
+.landing-page-panel:active,
+.landing-page-panel:focus {
+  text-decoration: none;
+}
+
+.landing-page-panel:hover {
+  background: var(--landing-page-hover-color);
+}
+
+.landing-page-panel-footer,
+.landing-page-panel-header span {
+  color: var(--panel-card-label-color);
+  margin-top: 14px;
+}
+
+.landing-page-panel-header span.landing-page-icon {
+  color: var(--panel-card-label-color);
+  font-size: 24pt;
+}
+
+.landing-page-panel span.landing-page-panel-chevron {
+  float: right;
+}
+
+.landing-page-panel-separator {
+  border-style: solid;
+  border-color: var(--panel-card-label-color);
+  border-width: 2px;
+  margin-top: 5px;
+}
+
+#landing-page-panel-subtree {
+  display: none;
+  max-width: calc(100vw - var(--landing-page-panel-subtree-max-width));
+  max-height: calc(100vh - var(--landing-page-panel-subtree-max-height));
+  color: var(--landing-page-subtree-color);
+  padding: 5px 5px 5px 10px;
+  font-size: 10pt;
+  font-weight: 500;
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.landing-page-panel-subtree-card,
+.landing-page-panel-subtree-card:hover,
+.landing-page-panel-subtree-card:active,
+.landing-page-panel-subtree-card:focus {
+  text-decoration: none;
+  color: var(--panel-card-label-color);
+}
+
+.landing-page-panel-subtree-card a span,
+.landing-page-panel-subtree-card a p {
+  color: var(--landing-page-subtree-card-color);
+  font-size: 11pt;
+}
+
+.landing-page-panel-subtree-card a span {
+  color: var(--panel-card-label-color);
+  font-weight: 600;
+}
+
+.cfe-detail-popup {
+  background-color: var(--detail-popup-background-color);
+  overflow-wrap: break-word;
+}
+
+.cfe-detail-popup .oj-label-help-popup-container {
+  max-width: 480px;
+}
+
+#cfe-help-footer {
+  margin: 15px 0 0 10px;
+}
+
+#cfe-help-footer ul {
+  margin: 0 0 0 15px;
+}
+
+/* Only overrides to redwood.css allowed beyond here!!! Be sure to provide a reason for each override!! */
+
+/*
+cfe-flex-items-pad class was removed in 9.0.0, but we need it.
+The workaround is to create our own cfe-flex-items-pad class
+*/
+.cfe-flex-items-pad > .oj-flex > .oj-flex-item,
+.oj-flex.cfe-flex-items-pad > .oj-flex-item
+{
+  padding-left: var(--spacing-medium);
+  padding-right: var(--spacing-medium);
+}
+
+.cfe-flex-items-pad > .oj-flex > .oj-flex-item > .oj-flex,
+.oj-flex.cfe-flex-items-pad > .oj-flex-item > .oj-flex
+{
+  margin-left: calc(0px - var(--spacing-medium));
+  margin-right: calc(0px - var(--spacing-medium));
+}
+
+/*
+9.0.0 changes font-size of tabbar items, which messes up label
+for "slices". The workaround is to control it here.
+*/
+.oj-tabbar-horizontal .oj-tabbar-item-label {
+  font-size: .875rem;
+  text-align: center;
+  min-height: 1.2rem;
+}
+
+.oj-tabbar-horizontal .oj-tabbar-item-element {
+  box-sizing: border-box;
+  min-height: 2.125rem;  /* Set height of tabbar item (includes bottom green bar) */
+  margin-right: .875rem; /* Set size of margin between tabbar items */
+}
+
+/*
+Don't delete. We will need it to write code that changes background of
+advanced fields, when/if that JIRA gets created/assigned to CFE team.
+
+#wlsform > div > div:nth-child(+n+4) {
+  padding-top: 3px;
+  background-color: #ebebeb;
+}
+*/
+
+/* Used to control layout for form labels */
+.oj-formlayout-labels-inline > .oj-flex > .oj-flex-item:nth-child(odd) > .oj-label .oj-label-group {
+  overflow: inherit;
+  text-align: left;
+  text-overflow: inherit;
+  line-height: 1em;
+  font-size: 11pt;
+}
+
+/* Used to control layout for form values */
+.oj-formlayout-labels-inline > .oj-flex > .oj-flex-item:nth-child(even) {
+  text-align: left;
+  font-size: 11pt;
+  line-height: 1em;
+  height: 2.3em;    /* Controls height of rows */
+}
+
+html:not([dir="rtl"]) .oj-navigationlist-collapsible ul.oj-navigationlist-has-icons > .oj-navigationlist-item-element > ul, html:not([dir="rtl"]) .oj-navigationlist-expanded:not(.oj-navigationlist-icon-only).oj-navigationlist-vertical ul.oj-navigationlist-has-icons > .oj-navigationlist-item-element > ul {
+  padding-left: 18px;   /* indentation used in navtree */
+}
+
+html:not([dir="rtl"]) .oj-navigationlist-group-item {
+  padding-right: 0;  /* space between expand/collapse arrow icon and right edge of navtree */
+}
+
+.oj-navigationlist-item-icon {
+  color: var(--navtree-label-color);  /* color of icon used in navtree list item */
+}
+
+html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-end .oj-button-text, html:not([dir="rtl"]) .oj-button-text-icon-end .oj-button-text {
+  padding: 0; /* remove padding around menu button */
+  margin: 0;
+}
+
+html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-end .oj-button-icon.oj-end, html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icons .oj-button-icon.oj-end, html:not([dir="rtl"]) .oj-button-text-icon-end .oj-button-icon.oj-end, html:not([dir="rtl"]) .oj-button-text-icons .oj-button-icon.oj-end {
+  display: inline-flex;
+  margin-right: 0;  /* reduce space after down arrow in menu button */
+  margin-left: .3rem;  /* reduce space before down arrow in menu button */
+}
+
+a.oj-navigationlist-item-content .oj-navigationlist-item-label {
+  color: var(--navtree-label-color); /* color of navtree list items */
+}
+html:not([dir="rtl"]) .oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item {
+  padding-left: .55rem;  /* space before icon in navstrip and navtree list items */
+}
+
+html:not([dir="rtl"]) .oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item-icon {
+  margin-right: 0.525rem; /* space between icon and label in navtree list item */
+}
+
+a.oj-navigationlist-focused-element.oj-navigationlist-item-content {
+  font-size: 12pt;    /* Set size of font used for text of navtree list item */
+}
+
+span.oj-navigationlist-item-label {
+  font-size: 11pt;    /* Set size of font used for navtree list item */
+}
+
+.oj-navigationlist-vertical .oj-navigationlist-item::before {
+  min-height: 1.5rem;  /* Set height of navtree list item */
+}
+
+/*
+For beanpath-history
+*/
+input.oj-combobox-input {
+  background-color: var(--navtree-background-color);
+  color: inherit;
+  font-weight: 400;
+  font-size: 11pt;
+  margin-bottom: 2px;
+}
+
+.oj-text-field-container .oj-component-icon.oj-clickable-icon-nocontext:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-clickable-icon-nocontext.oj-popup-tail.oj-popup-tail-simple:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-clickable-icon-nocontext.oj-radiocheckbox-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-clickable-icon-nocontext.oj-menucheckbox-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-collapsed > .oj-treeview-item-content > .oj-clickable-icon-nocontext.oj-treeview-item-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-expanded > .oj-treeview-item-content > .oj-clickable-icon-nocontext.oj-treeview-item-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-treeview-leaf > .oj-treeview-item-content > .oj-clickable-icon-nocontext.oj-treeview-item-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon) {
+  width: 1.125rem;
+}
+
+/*
+9.0.0 changes empty right-side field of forms, to be an unsightly
+bordered box. This hides the unsightly bordered box.
+*/
+html:not([dir="rtl"]) .oj-formlayout-max-cols-2 .oj-formlayout-form-across > .oj-flex > .oj-formlayout-label-comp-flex-item.oj-flex-item,
+html:not([dir="rtl"]) .oj-formlayout-max-cols-2 .oj-formlayout-form-across > .oj-flex > .oj-formlayout-no-label-flex-item.oj-flex-item:nth-child(2) {
+  padding-left: 0.75rem;
+  display: none;
+}
+
+/*
+For controlling the styling of oj-table column header
+*/
+html:not([dir="rtl"]) .oj-table-column-header-cell,
+.oj-table-data-cell {
+  font-size: 11pt;        /* Set font-size used for header labels */
+  padding: 0 3px 0 8px;   /* Control excessive padding redwood uses in header rows */
+  height: 1rem;
+  line-height: 1rem;
+}
+
+.oj-table-column-header {
+  position: relative;
+  float: none;
+  text-overflow: inherit;
+  overflow: inherit;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+#paging {
+  position: fixed;
+  bottom: var(--paging-bottom);
+  z-index: 2;
+}
+
+/*
+For controlling the padding used in pagination control beneath tables.
+*/
+.oj-pagingcontrol-nav {
+  padding: 0;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/*
+For controlling the styling of oj-button used with most of our clickable icons
+*/
+.oj-button, .oj-button-nocomp {
+  height: 1.5rem;        /* Reduce default cell height used in redwood, in order to get more visible rows */
+  margin: 5px 0 0 0;
+  font-size: 11pt;       /* Set font-size to same as one for header labels */
+  display: inline-flex;
+  vertical-align: baseline;
+}
+
+div#connection-dialog-body > .oj-dialog-body {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: .2rem .2rem .2rem .2rem;
+  text-align: start;
+}
+
+html:not([dir="rtl"]) .oj-dialog-footer {
+  text-align: right;
+  position: relative;
+  box-sizing: border-box;
+  padding: .5rem;
+}
+
+/* For combobox-one used in bean path history */
+oj-combobox-one#beanpath > div.oj-text-field-container {
+  position: relative;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: rgba(22, 21, 19, .3);
+  border-width: 1px 1px 1px 1px;
+  border-radius: 4px;
+  background-color: var(--navtree-background-color);  /* set background color of combobox-one field */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  height: 1.75rem;  /* set height of comboxbox-one field */
+}
+
+html:not([dir="rtl"]) .oj-conveyorbelt-overflow-indicator.oj-start {
+  box-shadow: 0.25rem 0 0.25rem -0.25rem hsla(30, 8.3%, 9.4%,0.2);
+  margin: 0 0 0 0;
+}
+
+/*
+9.0.0 has text box display problem on Firefox when the number of characters
+exceeds the width of the text box. Firefox writes over the next element where
+Chrome displays correctly by scrolling the text inside the box.
+
+To reproduce, go to application deplpoyments using the test server, the
+first deployment name uses the archive's filename which is longer than
+the name field width on the generated form.
+
+Unsetting flex from the follow oj-redwood.css:10221 entry results in
+the text characters limited to the text box width along with scrolling.
+*/
+.oj-form-layout .oj-form.oj-enabled .oj-text-field-middle,
+.oj-text-field:not(.oj-read-only) .oj-text-field-middle {
+  position: relative;
+  display: inline-flex;
+  flex: unset;
+}
+
+#slideup-popup {
+  height:  var(--slideup-popup-height);
+  max-height: var(--slideup-popup-height);
+  min-height: calc(100vh - var(--slideup-popup-calc-min-height));
+  z-index: 3;
+}
+
+.non-modal-slideup {
+  position: fixed;
+  bottom: var(--slideup-popup-height);
+  right: 0;
+  background-color: rgba(250,248,247,1.00);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: var(--slideup-box-shadow-color) 0 0 15px, var(--slideup-box-shadow-color) 0 0 3px 1px;
+  margin-right: 10px;
+  max-width: var(--slideup-popup-content-width);
+  min-width: var(--slideup-popup-content-width);
+  width: var(--slideup-popup-width);
+}
+
+#slideup-title
+{
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 5px 5px 0 10px;
+}
+
+#slideup-toggle {
+  margin-left: auto !important;
+  margin: 5px 5px 0 0;
+}
+
+#slideup-container > div > a
+{
+  text-decoration: none;
+}
+
+#slideup-toggle img {
+  height: 24px;
+  width: 24px;
+}

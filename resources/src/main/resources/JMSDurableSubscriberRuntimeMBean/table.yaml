@@ -1,0 +1,21 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+displayedColumns:
+- name: "Name"
+- name: "Type"
+- name: "Active"
+- name: "SubscriberBytesCurrentCount"
+- name: "SubscriberBytesPendingCount"
+- name: "ClientID"
+- name: "ClientIDPolicy"
+- name: "LastMessagesReceivedTime"
+- name: "SubscriberMessagesCurrentCount"
+- name: "SubscriberMessagesPendingCount"
+- name: "NoLocal"
+- name: "Selector"
+- name: "SubscribersCurrentCount"
+- name: "SubscribersHighCount"
+- name: "SubscribersTotalCount"
+- name: "SubscriptionLimitDeletedCount"
+- name: "SubscriptionName"
+- name: "SubscriptionSharingPolicy"

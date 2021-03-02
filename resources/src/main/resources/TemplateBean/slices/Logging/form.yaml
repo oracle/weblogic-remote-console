@@ -1,0 +1,21 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to enable the logging of message life cycle information
+  for destinations that are based on this template.</p>
+
+properties:
+- name: "MessageLoggingEnabled"
+#TODO:  CFE_MUTLI_SELECT, COMPUTED - name: "MessageLoggingFormat"
+
+helpTasks:
+- "jms_servers/ConfigureJMSServerLogging"
+- "logging/ConfigureAndViewLogs"
+helpTopics:
+- label: "Managing Your Applications "
+  href: "jmspg/manage_apps.html"
+  type: "edocs"
+- label: "Configuring Advanced JMS System Resources"
+  href: "jmsad/advance_config.html"
+  type: "edocs"

@@ -1,0 +1,23 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# Manually edited from application/webapp/jsp/jms/pathservice/PathServiceTargetsForm.jsp and consolehelp/docsrc/en-us/xml/pagehelp/jms/pathservice/PathServiceTargets.xml
+
+introductionHTML: >
+  <p>Use this page to target the path service to a cluster, cluster member
+   or to a migratable target. </p>
+
+properties:
+- name: "Target"
+helpTasks:
+- "pathservice/ConfigurePathService"
+- "pathservice/TargetPathServices"
+helpTopics:
+- label: "Using the WebLogic Path Service"
+  href: "jmsad/advance_config.html#JMSAD191"
+  type: "edocs"
+- label: "Migration of JMS-related Services"
+  href: "jmsad/advance_config.html#JMSAD187"
+  type: "edocs"
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

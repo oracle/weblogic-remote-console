@@ -1,0 +1,30 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to view or update the configuration for a particular
+  Parser Select entry. The values entered on this page override the
+  implementation class specified for the default parser factories;
+  this means that when WebLogic Server parses XML documents of the type
+  specified by this page, it uses the parser factory specified by this
+  page.</p>
+
+properties:
+- name: "PublicId"
+- name: "SystemId"
+- name: "RootElementTag"
+- name: "DocumentBuilderFactory"
+- name: "SAXParserFactory"
+helpTasks:
+- "xml/ConfigureParsersAccordingToDocumentType"
+- "xml/ConfigureExternalEntityResolution"
+- "xml/ConfigureXMLResources"
+- "xml/UpdateExistingXMLRegistry"
+- "xml/ViewAssociatedXMLRegistry"
+helpTopics:
+- label: "Developing XML Applications for Oracle WebLogic Server "
+  href: "xmlpg/index.html"
+  type: "edocs"
+- label: "Developing XML Applications for Oracle WebLogic Server"
+  href: "xmlpg/index.html"
+  type: "edocs"

@@ -1,0 +1,87 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.security.providers.authentication.ActiveDirectoryAuthenticatorMBean
+  value: weblogic.security.providers.authentication.ActiveDirectoryAuthenticator
+- type: weblogic.security.providers.authentication.CustomDBMSAuthenticatorMBean
+  value: weblogic.security.providers.authentication.CustomDBMSAuthenticator
+- type: weblogic.security.providers.authentication.DefaultAuthenticatorMBean
+  value: weblogic.security.providers.authentication.DefaultAuthenticator
+- type: weblogic.security.providers.authentication.DefaultIdentityAsserterMBean
+  value: weblogic.security.providers.authentication.DefaultIdentityAsserter
+- type: weblogic.security.providers.authentication.IPlanetAuthenticatorMBean
+  value: weblogic.security.providers.authentication.IPlanetAuthenticator
+- type: weblogic.security.providers.authentication.LDAPAuthenticatorMBean
+  value: weblogic.security.providers.authentication.LDAPAuthenticator
+- type: weblogic.security.providers.authentication.LDAPX509IdentityAsserterMBean
+  value: weblogic.security.providers.authentication.LDAPX509IdentityAsserter
+- type: weblogic.security.providers.authentication.NegotiateIdentityAsserterMBean
+  value: weblogic.security.providers.authentication.NegotiateIdentityAsserter
+- type: weblogic.security.providers.authentication.NovellAuthenticatorMBean
+  value: weblogic.security.providers.authentication.NovellAuthenticator
+- type: weblogic.security.providers.authentication.OpenLDAPAuthenticatorMBean
+  value: weblogic.security.providers.authentication.OpenLDAPAuthenticator
+- type: weblogic.security.providers.authentication.OracleIdentityCloudIntegratorMBean
+  value: weblogic.security.providers.authentication.OracleIdentityCloudIntegrator
+- type: weblogic.security.providers.authentication.OracleInternetDirectoryAuthenticatorMBean
+  value: weblogic.security.providers.authentication.OracleInternetDirectoryAuthenticator
+- type: weblogic.security.providers.authentication.OracleUnifiedDirectoryAuthenticatorMBean
+  value: weblogic.security.providers.authentication.OracleUnifiedDirectoryAuthenticator
+- type: weblogic.security.providers.authentication.OracleVirtualDirectoryAuthenticatorMBean
+  value: weblogic.security.providers.authentication.OracleVirtualDirectoryAuthenticator
+- type: weblogic.security.providers.authentication.ReadOnlySQLAuthenticatorMBean
+  value: weblogic.security.providers.authentication.ReadOnlySQLAuthenticator
+- type: weblogic.security.providers.saml.SAMLAuthenticatorMBean
+  value: weblogic.security.providers.saml.SAMLAuthenticator
+- type: weblogic.security.providers.saml.SAMLIdentityAsserterV2MBean
+  value: weblogic.security.providers.saml.SAMLIdentityAsserterV2
+- type: com.bea.security.saml2.providers.SAML2IdentityAsserterMBean
+  value: com.bea.security.saml2.providers.SAML2IdentityAsserter
+- type: weblogic.security.providers.authentication.SQLAuthenticatorMBean
+  value: weblogic.security.providers.authentication.SQLAuthenticator
+- type: weblogic.security.providers.authentication.VirtualUserAuthenticatorMBean
+  value: weblogic.security.providers.authentication.VirtualUserAuthenticator
+properties:
+- name: Type
+  legalValues:
+  - value: weblogic.security.providers.authentication.ActiveDirectoryAuthenticator
+    label: Active Directory Authenticator
+  - value: weblogic.security.providers.authentication.CustomDBMSAuthenticator
+    label: Custom DBMS Authenticator
+  - value: weblogic.security.providers.authentication.DefaultAuthenticator
+    label: Default Authenticator
+  - value: weblogic.security.providers.authentication.DefaultIdentityAsserter
+    label: Default Identity Asserter
+  - value: weblogic.security.providers.authentication.IPlanetAuthenticator
+    label: IPlanet Authenticator
+  - value: weblogic.security.providers.authentication.LDAPAuthenticator
+    label: LDAP Authenticator
+  - value: weblogic.security.providers.authentication.LDAPX509IdentityAsserter
+    label: LDAP X509 Identity Asserter
+  - value: weblogic.security.providers.authentication.NegotiateIdentityAsserter
+    label: Negotiate Identity Asserter
+  - value: weblogic.security.providers.authentication.NovellAuthenticator
+    label: Novell Authenticator
+  - value: weblogic.security.providers.authentication.OpenLDAPAuthenticator
+    label: Open LDAP Authenticator
+  - value: weblogic.security.providers.authentication.OracleIdentityCloudIntegrator
+    label: Oracle Identity Cloud Integrator
+  - value: weblogic.security.providers.authentication.OracleInternetDirectoryAuthenticator
+    label: Oracle Internet Directory Authenticator
+  - value: weblogic.security.providers.authentication.OracleUnifiedDirectoryAuthenticator
+    label: Oracle Unified Directory Authenticator
+  - value: weblogic.security.providers.authentication.OracleVirtualDirectoryAuthenticator
+    label: Oracle Virtual Directory Authenticator
+  - value: weblogic.security.providers.authentication.ReadOnlySQLAuthenticator
+    label: Read Only SQL Authenticator
+  - value: weblogic.security.providers.saml.SAMLAuthenticator
+    label: SAML Authenticator
+  - value: weblogic.security.providers.saml.SAMLIdentityAsserterV2
+    label: SAML Identity Asserter V2
+  - value: com.bea.security.saml2.providers.SAML2IdentityAsserter
+    label: SAML2 Identity Asserter
+  - value: weblogic.security.providers.authentication.SQLAuthenticator
+    label: SQL Authenticator
+  - value: weblogic.security.providers.authentication.VirtualUserAuthenticator
+    label: Virtual User Authenticator

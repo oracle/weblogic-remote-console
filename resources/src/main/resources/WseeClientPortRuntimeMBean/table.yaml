@@ -1,0 +1,27 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+displayedColumns:
+- name: "Name"
+- name: "Type"
+- name: "AuthenticationSuccesses"
+- name: "AuthenticationViolations"
+- name: "AuthorizationSuccesses"
+- name: "AuthorizationViolations"
+- name: "ConfidentialitySuccesses"
+- name: "ConfidentialityViolations"
+- name: "IntegritySuccesses"
+- name: "IntegrityViolations"
+- name: "LastRoutingFailure"
+- name: "LastRoutingFailureTime"
+# - name: "PolicyFaults" TODO - fix conflict
+- name: "PortName"
+- name: "PortPolicy"
+- name: "RequestCount"
+# - name: "ResponseCount" TODO - fix conflict
+- name: "RoutedRequestCount"
+- name: "RoutedResponseCount"
+- name: "RoutingFailureCount"
+- name: "StartTime"
+# - name: "TotalSecurityFaults" TODO - fix conflict
+- name: "TotalViolations"
+- name: "TransportProtocolType"

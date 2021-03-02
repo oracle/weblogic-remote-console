@@ -1,0 +1,50 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: DataSourceLogFileName
+  source: FileName
+  label: Log file name
+
+- name: DataSourceLogFileMinSize
+  source: FileMinSize
+  label: Rotation file size
+  # TODO usedIf RotationType == bySize
+
+- name: DataSourceLogRotationTime
+  source: RotationTime
+  label: Begin rotation time
+  # TODO usedIf RotationType == byTime
+
+- name: DataSourceLogFileTimeSpan
+  source: FileTimeSpan
+  label: Rotation interval
+  # TODO usedIf RotationType == byTime
+
+- name: DataSourceLogNumberOfFilesLimited
+  source: NumberOfFilesLimited
+  label: Limit number of retained files
+
+- name: DataSourceLogFileCount
+  source: FileCount
+  label: Files to retain
+
+- name: DataSourceLogFileRotationDir
+  source: LogFileRotationDir
+  label: Log file rotation directory
+
+- name: DataSourceLogRotateLogOnStartup
+  source: RotateLogOnStartup
+  label: Rotate log file on startup
+
+- name: DataSourceLogBufferSizeKB
+  source: BufferSizeKB
+  label: Log File Buffer
+
+- name: DataSourceLogDateFormatPattern
+  source: DateFormatPattern
+  label: Data Format Pattern
+
+- name: DataSourceLogRotationType
+  source: RotationType
+  label: Rotation Type

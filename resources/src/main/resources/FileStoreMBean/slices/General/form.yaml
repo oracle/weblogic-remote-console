@@ -1,0 +1,32 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure a disk-based file store for storing
+  subsystem data, such as persistent JMS messages or Store-and-Forward
+  messages.</p>
+
+properties:
+- name: "Name"
+- name: "Directory"
+- name: "SynchronousWritePolicy"
+- name: "CacheDirectory"
+advancedProperties:
+- name: "LogicalName"
+- name: "MinWindowBufferSize"
+- name: "MaxWindowBufferSize"
+- name: "IoBufferSize"
+- name: "MaxFileSize"
+- name: "BlockSize"
+- name: "InitialSize"
+- name: "FileLockingEnabled"
+helpTasks:
+- "stores/CreateFileStores"
+- "stores/MonitorStores"
+helpTopics:
+- label: "Using Work Managers to Optimize Scheduled Work "
+  href: "cnfgd/self_tuned.html"
+  type: "edocs"
+- label: "Administering the WebLogic Persistent Store"
+  href: "store/overview.html"
+  type: "edocs"

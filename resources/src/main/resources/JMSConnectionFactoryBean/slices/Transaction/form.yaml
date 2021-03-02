@@ -1,0 +1,24 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define the transaction configuration for this JMS
+  connection factory. You can define a transaction time-out value, and
+  also indicate whether an XA queue or XA topic connection factory is
+  returned, which create sessions that are JTA user-transaction aware.</p>
+
+properties:
+- name: "TransactionTimeout"
+- name: "XAConnectionFactoryEnabled"
+helpTasks:
+- "jms_modules/connection_factories/ConfigureConnectionFactories"
+helpTopics:
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Using Transactions with WebLogic JMS"
+  href: "jmspg/transactions.html"
+  type: "edocs"
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

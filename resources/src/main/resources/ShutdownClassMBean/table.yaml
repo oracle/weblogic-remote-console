@@ -1,0 +1,34 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Startup and shutdown classes are Java programs that you create to
+  provide custom, system-wide services for your applications. You add the
+  classes to the WebLogic Server class path and then configure them to load
+  and run when a server starts or shuts down.</p><p>This page summarizes
+  the startup and shutdown classes that have been configured in the current
+  domain. You must deploy each class on one or more specific servers.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "Type"
+- name: "ClassName"
+- name: "DeploymentOrder"
+- name: "Arguments"
+# hiddenColumns:
+# TODO core.classes.classdeployment.table.targetlist
+helpTasks:
+- "startup_shutdown/UseStartupAndShutdownClasses"
+- "startup_shutdown/ConfigureStartupAndShutdownClasses"
+- "startup_shutdown/ConfigureShutdownClasses"
+- "startup_shutdown/AssignStartupAndShutdownClasses"
+- "startup_shutdown/AddStartupAndShutdownClassesToTheClasspath"
+helpTopics:
+- label: "Managing Transactions "
+  href: "wljta/trxman.html"
+  type: "edocs"
+- label: "Developing Applications for Oracle WebLogic Server"
+  href: "wlprg/index.html"
+  type: "edocs"
+- label: "Deploying Applications to Oracle WebLogic Server"
+  href: "depgd/index.html"
+  type: "edocs"

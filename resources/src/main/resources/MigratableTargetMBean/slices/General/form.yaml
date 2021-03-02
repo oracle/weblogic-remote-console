@@ -1,0 +1,26 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page allows you to define the cluster association of this
+  migratable target.</p>
+
+properties:
+- name: "Name"
+- name: "Cluster"
+
+helpTasks:
+- "clusters/ConfigureClusterMigration"
+- "jms_servers/ConfigureJMSMigration"
+- "jta/ConfigureTRSMigration"
+
+helpTopics:
+- label: "Service Migration"
+  href: "clust/service_migration.html"
+  type: "edocs"
+- label: "Whole Server Migration"
+  href: "clust/migration.html"
+  type: "edocs"
+- label: "Managing Transactions"
+  href: "wljta/trxman.html"
+  type: "edocs"

@@ -1,0 +1,29 @@
+<!--
+Copyright (c) 2020 Oracle Corporation and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+<div id="home-page-container">
+  <div id="home-page" class="oj-flex-bar">
+    <div class="oj-flex-bar-middle site-sideways-tabstrip">
+      <oj-bind-for-each data="[[i18n.tabstrip.tabs]]" as="tab">
+        <template>
+          <oj-bind-if test="[[tab.data.visible]]">
+            <span>
+              <a href="#" tabindex="-1"
+                 on-click="[[tabstripButtonClickHandler]]"
+              >
+                <img data-bind="attr: {src: '../../images/' + tab.data.iconFile + '.png'}"/>
+                <span :id="[[tab.data.id]]" data-bind="text: tab.data.label"></span>
+              </a>
+            </span>
+          </oj-bind-if>
+        </template>
+      </oj-bind-for-each>
+    </div>
+
+    <div id="tab-module" class="oj-flex-bar-end">
+      <oj-module config="[[tabModuleConfig]]"></oj-module>
+    </div>
+
+  </div>
+</div>

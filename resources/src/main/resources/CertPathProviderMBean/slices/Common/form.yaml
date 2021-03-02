@@ -1,0 +1,27 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: Name
+- name: Description
+- name: Version
+
+helpTasks:
+- "security/ConfigureCertPathProviders"
+- "security/ManageSecurityProviders"
+helpTopics:
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring the Certificate Lookup and Validation Framework"
+  href: "secmg/clv.html"
+  type: "edocs"
+- label: "CertPath Provider"
+  href: "secmg/clv.html#SECMG166"
+  type: "edocs"
+- label: "Configuring WebLogic Security Providers"
+  href: "secmg/providers.html"
+  type: "edocs"
+- label: "Developing Security Providers for WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

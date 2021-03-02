@@ -1,0 +1,33 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure the cluster-wide defaults that control
+  how WebLogic Servers in this cluster should react in the case of an
+  overload or failure condition.</p>
+
+properties:
+- name: "SharedCapacityForWorkManagers"
+- name: "FailureAction"
+- name: "PanicAction"
+- name: "FreeMemoryPercentHighThreshold"
+- name: "FreeMemoryPercentLowThreshold"
+
+helpTasks:
+- "clusters/ConfigureClusters"
+- "clusters/ConfigureClusterMigration"
+- "clusters/SpecifyClusterReplicationGroups"
+- "monitoring/ConfigureSelfhealthMonitoring"
+helpTopics:
+- label: "Whole Server Migration with Dynamic and Mixed Clusters "
+  href: "clust/migration.html#CLUST726"
+  type: "edocs"
+- label: "Setting up Weblogic Clusters"
+  href: "clust/setup.html"
+  type: "edocs"
+- label: "Avoiding and Managing Overload"
+  href: "cnfgd/overload.html"
+  type: "edocs"
+- label: "Configuring WebLogic Server to Avoid Overload Conditions"
+  href: "cnfgd/overload.html#CNFGD147"
+  type: "edocs"

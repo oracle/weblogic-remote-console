@@ -1,0 +1,18 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page lists all servers that have been configured in the domain. If
+      you use an SNMP agent on the Administration Server to listen for log
+      messages from all servers in the domain, then you must select the servers
+      on which you want to activate this log filter.</p>
+properties:
+  - name: "EnabledServers"
+helpTasks:
+  - "snmp/ConfigureNotificationLogFilters"
+  - "snmp/TargetNotificationLogFilters"
+  - "snmp/VerifyTrapGeneration"
+helpTopics:
+  - label: "Monitoring Oracle WebLogic Server with SNMP"
+    href: "snmpa/index.html"
+    type: "edocs"

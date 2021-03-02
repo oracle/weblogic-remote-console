@@ -1,0 +1,38 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define the security configuration of a remote Tuxedo access point that will be used with this WTC server.</p>
+
+properties:
+- name: "AclPolicy"
+  label: "ACL Policy"
+- name: "CredentialPolicy"
+- name: "MinEncryptBits"
+  label: "Min Encryption Level"
+- name: "MaxEncryptBits"
+  label: "Max Encryption Level"
+- name: "AllowAnonymous"
+- name: "DefaultAppKey"
+  label: "Default AppKey"
+- name: "AppKey"
+  label: "AppKey Generator"
+- name: "TpUsrFile"
+  label: "Tp User File"
+- name: "TuxedoUidKw"
+  label: "Tuxedo UID Keyword"
+- name: "TuxedoGidKw"
+  label: "Tuxedo GID Keyword"
+- name: "CustomAppKeyClass"
+  label: "Custom AppKey Class"
+- name: "CustomAppKeyClassParam"
+  label: "Custom AppKey Param"
+helpTasks:
+- "wtc/ConfigureRemoteTuxedoAccessPointSecurity"
+helpTopics:
+- label: "Configuring Oracle WebLogic Tuxedo Connector "
+  href: "wtccf/install.html"
+  type: "edocs"
+- label: "Configuring Oracle WebLogic Tuxedo Connector"
+  href: "wtccf/install.html"
+  type: "edocs"

@@ -1,0 +1,20 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure an existing metric. A metric represents data
+      from one or more attributes of the specified MBean type. The metric can
+      collect data from all instances of the MBean type or from specified
+      instances of the type.</p>
+properties:
+  - name: "Name"
+  - name: "Enabled"
+  - name: "Namespace"
+  - name: "HarvestedAttributes"
+  - name: "HarvestedInstances"
+  - name: "KnownType"
+
+helpTasks:
+  - "diagnostics/ConfigureMetricCollectionForADiagnosticModule"
+  - "diagnostics/ConfigureMetricsToCollectInADiagnosticModule"
+  - "diagnostics/DeleteMetricsFromADiagnosticModule"

@@ -1,0 +1,19 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to select the server or cluster on which you would like
+  to deploy this JMS system module. You can reconfigure targets later if you wish.</p>
+
+properties:
+  - name: "Targets"
+
+helpTasks:
+  - "jms_modules/modules/TargetJMSModules.xml"
+helpTopics:
+  - label: "Configuring Basic JMS System Resources"
+    href: "jmsad/basic_config.html"
+    type: "edocs"
+  - label: "Configuring Messaging"
+    href: "jmsad/basic_config.html"
+    type: "edocs"

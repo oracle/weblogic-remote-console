@@ -1,0 +1,15 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+collectionLinks:
+- label: Server Channel Configurations
+  resourceData: configuration/data/Domain/Servers/<ServerRuntime>/Channels
+
+# It would be good to get to the particular channel, but we can't without a
+# customizer, because the names are different.  The runtime mbeans have
+# names like "Default[t3][1]", as opposed to the configuration which is just
+# t3.  It is not a big deal, though, because we can get to the right table
+# and clicking on "t3" is not a huge burden.
+instanceLinks:
+- label: Server Channel Configurations
+  resourceData: configuration/data/Domain/Servers/<ServerRuntime>/Channels

@@ -1,0 +1,15 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- name: "Name"
+- name: "Type"
+- name: "ImplementationType"
+- name: "PolicyFaults"
+- name: "ServiceName"
+- name: "StartTime"
+- name: "TotalSecurityFaults"
+- name: "URI"
+- name: "WebserviceDescriptionName"
+# It's either JAXWS or JAX-RPC - might be useful but will require custom code
+# - name: "WsType"
+- name: "ContextPath"

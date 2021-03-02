@@ -1,0 +1,35 @@
+# Copyright (c) 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page allows you to define the IIOP (Internet Inter-ORB Protocol)
+  settings for this server. IIOP makes it possible for distributed programs
+  written in different programming languages to communicate over the Internet.</p>
+
+properties:
+- name: IIOPEnabled
+
+advancedProperties:
+- name: DefaultMinorVersion
+- name: TxMechanism
+- name: DefaultCharCodeset
+- name: DefaultWideCharCodeset
+- name: SystemSecurity
+- name: DefaultIIOPUser
+- name: DefaultIIOPPassword
+- name: UseStatefulAuthentication
+- name: UseFullRepositoryIdList
+- name: UseSerialFormatVersion2
+
+helpTasks:
+- "channels/EnableAndConfigureIIOP.xml"
+- "channels/ConfigureCustomNetworkChannelsForNonclusteredServers.xml"
+- "channels/ConfigureDefaultNetworkConnections.xml"
+
+helpTopics:
+- label: "Using RMI over IIOP"
+  href: "wlrmi/iiop_basic.html"
+  type: "edocs"
+- label: "Configuring WebLogic Server for RMI-IIOP"
+  href: "wlrmi/iiop_config.html"
+  type: "edocs"

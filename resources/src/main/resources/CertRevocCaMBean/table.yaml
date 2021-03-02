@@ -1,0 +1,30 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>This page allows you to specify whether mappings from inbound
+  EIS principals to WebLogic principals is required for this resource
+  adapter. If mappings are required, this page also lets you create or
+  delete those mappings.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "DistinguishedName"
+
+helpTasks:
+- "security/ConfigureCAOverrides"
+- "security/ConfigureX509CertificateRevocationChecking"
+- "security/ConfigureIdentityAndTrust"
+
+helpTopics:
+- label: "X.509 Certificate Revocation Checking"
+  href: "secmg/ssl_cert_revoc_check.html"
+  type: "edocs"
+- label: "SSL Certificate Validation"
+  href: "secmg/ssl_certval.html"
+  type: "edocs"
+- label: "Configuring Keystores"
+  href: "secmg/identity_trust.html"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"

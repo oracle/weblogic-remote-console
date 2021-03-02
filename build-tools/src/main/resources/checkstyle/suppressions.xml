@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- Copyright 2020, Oracle Corporation and/or its affiliates.  All rights reserved.
+     Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.  -->
+
+<!DOCTYPE suppressions PUBLIC
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.1//EN"
+    "https://checkstyle.org/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+  <!-- Ignore the javadoc stuff for everything for now -->
+  <suppress checks="(JavadocMethod|SingleLineJavadoc|JavadocParagraphCheck|NonEmptyAtclauseDescriptionChec|SummaryJavadocCheck|AtclauseOrder|JavadocTagContinuationIndentation)" files=".*.java"/>
+  <!-- Ignore the javadoc stuff for tests -->
+  <suppress checks="(JavadocMethod|JavadocParagraphCheck|NonEmptyAtclauseDescriptionChec|SummaryJavadocCheck)" files=".*Test.java"/>
+  <suppress checks="(JavadocMethod|JavadocParagraphCheck|NonEmptyAtclauseDescriptionChec|SummaryJavadocCheck)" files=".*IT.java"/>
+  <suppress checks="(JavadocMethod|JavadocParagraphCheck|NonEmptyAtclauseDescriptionChec|SummaryJavadocCheck)" files=".*[/\\](?:test|integTest|arquillianJetty9)[/\\].*"/>
+
+  <!-- There's nothing wrong with these - ignore them b/c they generate noise -->
+  <suppress checks="AbbreviationAsWordInName" files=".*"/>
+
+  <suppress checks="VariableDeclarationUsageDistanceCheck" files=".*"/>
+</suppressions>

@@ -1,0 +1,14 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: Name
+  helpSummaryHTML: >
+    <p>The name of this proxy configuration.</p>
+
+  helpDetailsHTML: >
+    <p>Enter a name that describes the agent that the requests will be
+    forwarded to, such as "SQLDBAgent."</p>
+
+- name: "OidRoot"
+  required: true

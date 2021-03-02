@@ -1,0 +1,30 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: MulticastAddress
+  helpSummaryHTML: >
+    <p>The multicast address used by this topic.</p>
+
+  helpDetailsHTML: >
+    <p>This address is used to transmit messages to multicast consumers.</p>
+
+- name: MulticastTTL
+  helpSummaryHTML: >
+    <p>The number of network hops that a multicast message is allowed
+    to travel.</p>
+
+  helpDetailsHTML: >
+    <p>This is the Time-To-Live value used for multicasting, which specifies
+    the number of routers that the message can traverse en route to the
+    consumers. A value of 1 indicates that the message will not traverse any
+    routers and is limited to one subnet.</p><p>This value is independent
+    of the <b>JMSExpirationTime</b> value.</p>
+
+- name: MulticastPort
+  helpSummaryHTML: >
+    <p>The multicast port for this topic.</p>
+
+  helpDetailsHTML: >
+    <p>This port is used to transmit messages to multicast consumers.</p>
+

@@ -1,0 +1,33 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: ProductionPausedAtStartup
+  label: Pause Message Production At Startup
+
+- name: ConsumptionPausedAtStartup
+  label: Pause Message Consumption At Startup
+
+- name: InsertionPausedAtStartup
+  label: Pause Message Insertion At Startup
+
+- name: DefaultUnitOfOrder
+  label: Auto-generate Unit-of-Order Name
+
+- name: AttachSender
+  label: Attach Sender Credential
+
+- name: Quota
+  optionsSources:
+    - ../Quotas
+
+- name: SubDeployments
+  source: GroupParams
+
+- name: ErrorDestination
+  source: DeliveryFailureParams.ErrorDestination
+  optionsSources:
+  -  ../Queues
+  -  ../Topics
+  -  ../UniformDistributedQueues
+  -  ../UniformDistributedTopics

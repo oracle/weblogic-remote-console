@@ -1,0 +1,15 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define properties for this Heap Dump action.</p>
+
+properties:
+- name: "LiveSetOnly"
+helpTasks:
+- "diagnostics/ConfigureHeapDumpAction"
+- "diagnostics/ModifyExistingActionsInADiagnosticModule"
+helpTopics:
+- label: "Configuring Actions"
+  href: "wldfc/config_notifications.html#WLDFC204"
+  type: "edocs"

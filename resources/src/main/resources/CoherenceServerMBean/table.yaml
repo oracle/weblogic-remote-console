@@ -1,0 +1,27 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+displayedColumns:
+- name: "Name"
+# TODO coherence.serversconfig.clustername
+# TODO coherence.serversconfig.machinename
+- name: "UnicastListenAddress"
+- name: "UnicastListenPort"
+hiddenColumns:
+- name: "UnicastPortAutoAdjust"
+- name: "RestartIntervalSeconds"
+- name: "RestartMax"
+- name: "RestartDelaySeconds"
+
+helpTasks:
+- "coherence/CreateCoherenceServers"
+- "coherence/ConfigureCoherenceServers"
+- "coherence/ConfigureStartupArgumentsForCoherenceServers"
+- "coherence/StartCoherenceServers"
+
+helpTopics:
+- label: "Developing Oracle Coherence Applications for Oracle WebLogic Server"
+  href: "wlcoh/index.html"
+  type: "edocs"
+- label: "Allowable Coherence Server Startup Parameters"
+  href: "http://docs.oracle.com/cd/E14526_01/coh.350/e14509/appoverride.html#CHDEIIBJ"
+  type: "generic"

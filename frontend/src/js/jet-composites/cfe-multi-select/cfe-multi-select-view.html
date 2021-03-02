@@ -1,0 +1,67 @@
+<!--
+  Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+  The Universal Permissive License (UPL), Version 1.0
+
+-->
+
+<div id="available-chosen-wrapper" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+
+  <!-- nest 3 columns -->
+  <div id="available-chosen-container" class="oj-flex oj-sm-flex-items-initial">
+    <div id="available-container" class="oj-flex-item">
+      <oj-label for="availableCheckboxset">
+        <span data-bind="text: availableHeader"></span>
+      </oj-label>
+      <div>
+        <oj-checkboxset id="availableCheckboxset" options="{{availableArrayDataProvider}}"
+          value="{{checkedAvailableItems}}" disabled="[[readonly()]]">
+        </oj-checkboxset>
+      </div>
+    </div>
+    <div id="available-chosen-buttonset" class="oj-flex oj-sm-justify-content-center oj-sm-align-self-center">
+      <div>
+        <oj-button id='addToChosen' display="icons" chroming="outlined"
+           disabled="[[checkedAvailableItemsIsEmpty() || readonly()]]"
+          on-click='[[addToChosenButtonClick]]'>
+          <span slot='startIcon' class="oj-fwk-icon oj-fwk-icon-caret-e"></span>
+        </oj-button>
+      </div>
+      <div>
+        <oj-button id='addAllToChosen' display="icons" chroming="outlined"
+          disabled="[[availableArrayDataProvider.isEmpty() === 'yes' || readonly()]]"
+           on-click='[[addAllToChosenButtonClick]]'>
+          <span slot='startIcon' class="oj-fwk-icon oj-fwk-icon-caret02end-e"></span>
+        </oj-button>
+      </div>
+      <div>
+        <oj-button id='addToAvailable' display="icons" chroming="outlined"
+           disabled="[[checkedChosenItemsIsEmpty() || readonly()]]"
+          on-click='[[addToAvailableButtonClick]]'>
+          <span slot='startIcon' class="oj-fwk-icon oj-fwk-icon-caret-w"></span>
+        </oj-button>
+      </div>
+      <div>
+        <oj-button id='addAllToAvailable' display="icons" chroming="outlined"
+          disabled="[[chosenArrayDataProvider.isEmpty() === 'yes' || readonly()]]"
+           on-click='[[addAllToAvailableButtonClick]]'>
+          <span slot='startIcon' class="oj-fwk-icon oj-fwk-icon-caret02end-w"></span>
+        </oj-button>
+      </div>
+    </div>
+
+    <div id="chosen-container" class="oj-flex-item">
+      <oj-label for="chosenCheckboxset">
+        <span data-bind="text: chosenHeader"></span>
+      </oj-label>
+      <div>
+        <oj-checkboxset
+          id="chosenCheckboxset"
+          options="{{chosenArrayDataProvider}}"
+          value="{{checkedChosenItems}}"
+          disabled="[[readonly()]]"
+        >
+        </oj-checkboxset>
+      </div>
+    </div>
+  </div>   <!-- closing div for nest 3 columns -->
+</div>

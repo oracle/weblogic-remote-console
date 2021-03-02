@@ -1,0 +1,56 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: BatchJobsDataSourceJndiName
+  label: Data Source JNDI Name
+
+- name: BatchJobsExecutorServiceName
+  label: Executor Service Template
+
+- name: MaxConcurrentLongRunningRequests
+  label: Max Concurrent Long Requests
+
+- name: Name
+  helpSummaryHTML: >
+    <p>The name of this WebLogic Server domain.</p>
+
+- name: AdministrationPortEnabled
+  label: Enable Administration Port
+
+- name: ProductionModeEnabled
+  label: Production Mode
+
+- name: ExalogicOptimizationsEnabled
+  label: Enable Exalogic Optimizations
+
+- name: ClusterConstraintsEnabled
+  label: Enable Cluster Constraints
+
+- name: InternalAppsDeployOnDemandEnabled
+  label: Enable on-demand deployment of internal applications
+
+- name: ConfigBackupEnabled
+  label: Configuration Archive Enabled
+
+- name: LogFormatCompatibilityEnabled
+  label: Server Log Format Compatibility Enabled
+
+- name: DiagnosticContextCompatibilityModeEnabled
+  label: Diagnostic Context Compatibility Mode
+
+- name: EmbeddedLDAPCredential
+  source: EmbeddedLDAP.Credential
+
+- name: SecurityCredential
+  source: SecurityConfiguration.Credential
+
+- name: Callouts
+  ordered: true
+
+- name: DomainSNMPAgent
+  source: SNMPAgent
+  nonCreatableOptionalSingleton: true
+
+- name: JTA
+  nonCreatableOptionalSingleton: true

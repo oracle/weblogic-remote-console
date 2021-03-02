@@ -1,0 +1,21 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Use this page to create and configure policies and actions for this
+      diagnostic module.</p>
+
+properties:
+  - name: "Name"
+  - name: "Severity"
+  - name: "LogWatchSeverity"
+  - name: "Enabled"
+helpTasks:
+  - "diagnostics/ConfigureDiagnosticModules"
+  - "diagnostics/ConfigurePoliciesAndActions"
+helpTopics:
+  - label: "Elastic Actions"
+    href: "elast/elastic_actions.html#ELAST514"
+    type: "edocs"
+  - label: "Configuring Policies and Actions"
+    href: "wldfc/config_watch_notif.html#WLDFC188"
+    type: "edocs"

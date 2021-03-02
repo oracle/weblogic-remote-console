@@ -1,0 +1,26 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Destinations can override some of the settings (such as priority)
+  that a message producer includes with its messages. Use this page to
+  configure such overrides for this queue.</p>
+
+properties:
+- name: "Priority"
+- name: "TimeToLive"
+- name: "TimeToDeliver"
+- name: "DeliveryMode"
+helpTasks:
+- "jms_modules/queues/ConfigureQueues"
+- "jms_modules/templates/ConfigureJMSTemplates"
+helpTopics:
+- label: "Configuring Basic JMS System Resources"
+  href: "jmsad/basic_config.html"
+  type: "edocs"
+- label: "Managing Your Applications"
+  href: "jmspg/manage_apps.html"
+  type: "edocs"
+- label: "Configuring Messaging"
+  href: "jmsad/basic_config.html"
+  type: "edocs"

@@ -1,0 +1,2541 @@
+JDBC-Drivers:
+  Driver:
+    - '@Database': Adabas for z/OS
+      '@Vendor': NEON
+      '@Type': Type 2
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.neon.jdbc.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.NeonJDBCDriverURLHelper
+      '@TestSql': call shadow_adabas('select * from employees')
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+          '@Description': Unused
+        - '@Name': DbmsHost
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DataSource
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@Description': DataSource name
+    - '@Database': Cache
+      '@Vendor': Intersystems
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.intersys.jdbc.CacheDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.CacheSysJDBC4DriverURLHelper
+      '@TestSql': ' '
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1972'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': CICS/TS for z/OS
+      '@Vendor': NEON
+      '@Type': Type 2
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.neon.jdbc.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.NeonJDBCDriverURLHelper
+      '@TestSql': ''
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+          '@Description': Unused
+        - '@Name': DbmsHost
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DataSource
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@Description': DataSource name
+    - '@Database': Cloudscape
+      '@Vendor': IBM
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': COM.cloudscape.core.JDBCDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.CloudscapeJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2
+      '@Vendor': Oracle
+      '@Type': Type 4
+      '@Cert': 'true'
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': weblogic.jdbc.db2.DB2Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.WLDB2JDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '50000'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2
+      '@Vendor': Oracle
+      '@Type': Type 4
+      '@Cert': 'true'
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': weblogic.jdbcx.db2.DB2DataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.WLDB2JDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '50000'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2
+      '@Vendor': IBM
+      '@Type': Type 2
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': COM.ibm.db2.jdbc.app.DB2Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.DB2JDBC2DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '50000'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.ddtek.jdbc.db2.DB2Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.DDDB2JDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '50000'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.ddtek.jdbcx.db2.DB2DataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.DDDB2JDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '50000'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2
+      '@Vendor': IBM
+      '@Type': Type 2
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': COM.ibm.db2.jdbc.DB2XADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.DB2JDBC2DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '50000'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2
+      '@Vendor': IBM
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.ibm.db2.jcc.DB2Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.DB2JDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      '@Description': for JDBC and SQLJ;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '50000'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2
+      '@Vendor': IBM
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.ibm.db2.jcc.DB2XADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.DB2JDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      '@Description': for JDBC and SQLJ;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '50000'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2 for z/OS
+      '@Vendor': NEON
+      '@Type': Type 2
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.neon.jdbc.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.NeonJDBCDriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+          '@Description': Unused
+        - '@Name': DbmsHost
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DataSource
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@Description': DataSource name
+    - '@Database': DB2 for i5/OS
+      '@Vendor': JTOpen
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.ibm.as400.access.AS400JDBCDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.JTOpenDB2JDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      '@Description': IBM Toolkit for Java;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': DB2 for i5/OS
+      '@Vendor': JTOpen
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.ibm.as400.access.AS400JDBCXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.JTOpenDB2JDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSIBM.SYSTABLES
+      '@Description': IBM Toolkit for Java;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Derby
+      '@Vendor': Derby
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': org.apache.derby.jdbc.ClientDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.DerbyJDBCDriverURLHelper
+      '@TestSql': SELECT 1 FROM SYS.SYSTABLES
+      '@Description': for client driver;
+      Attribute:
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1527'
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Derby
+      '@Vendor': Derby
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': org.apache.derby.jdbc.ClientDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.DerbyJDBCDriverURLHelper
+      '@TestSql': SELECT 1 FROM SYS.SYSTABLES
+      '@Description': for client datasource;
+      Attribute:
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1527'
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Derby
+      '@Vendor': Derby
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': org.apache.derby.jdbc.ClientXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.DerbyJDBCDriverURLHelper
+      '@TestSql': SELECT 1 FROM SYS.SYSTABLES
+      Attribute:
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1527'
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Derby
+      '@Vendor': Derby
+      '@Type': Type 4 embedded
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': org.apache.derby.jdbc.EmbeddedDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.EmbeddedDerbyJDBCDriverURLHelper
+      '@TestSql': SELECT 1 FROM SYS.SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': EnterpriseDB
+      '@Vendor': EnterpriseDB
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.edb.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.EDBJDBCDriverURLHelper
+      '@TestSql': SELECT 1 FROM pg_database
+      Attribute:
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '5444'
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': FirstSQL
+      '@Vendor': FirstSQL
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': COM.FirstSQL.Dbcp.DbcpDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.FirstSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '8000'
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': FirstSQL
+      '@Vendor': FirstSQL
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': COM.FirstSQL.Dbcp.DbcpXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.FirstSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '8000'
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': IMS/DB for z/OS
+      '@Vendor': NEON
+      '@Type': Type 2
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.neon.jdbc.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.NeonJDBCDriverURLHelper
+      '@TestSql': ''
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+          '@Description': Unused
+        - '@Name': DbmsHost
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DataSource
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@Description': DataSource name
+    - '@Database': IMS/TM for z/OS
+      '@Vendor': NEON
+      '@Type': Type 2
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.neon.jdbc.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.NeonJDBCDriverURLHelper
+      '@TestSql': call shadow_ims('otm','/dis','cctl')
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+          '@Description': Unused
+        - '@Name': DbmsHost
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DataSource
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@Description': DataSource name
+    - '@Database': Informix
+      '@Vendor': Oracle
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': weblogic.jdbc.informix.InformixDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.WLInformixJDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1543'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': InformixServer
+          '@Required': 'true'
+          '@InURL': 'true'
+    - '@Database': Informix
+      '@Vendor': Oracle
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'true'
+      '@ClassName': weblogic.jdbcx.informix.InformixDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.WLInformixJDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1543'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': InformixServer
+          '@Required': 'true'
+          '@InURL': 'true'
+    - '@Database': Informix
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.ddtek.jdbc.informix.InformixDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.DDInformixJDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1543'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': InformixServer
+          '@Required': 'true'
+          '@InURL': 'true'
+    - '@Database': Informix
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.ddtek.jdbcx.informix.InformixDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.DDInformixJDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1543'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': InformixServer
+          '@Required': 'true'
+          '@InURL': 'true'
+    - '@Database': Informix
+      '@Vendor': IBM
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.informix.jdbc.IfxDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.InformixJDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1543'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': InformixServer
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Informix
+      '@Vendor': IBM
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.informix.jdbcx.IfxXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.InformixJDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1543'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': InformixServer
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Ingres
+      '@Vendor': Ingres
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': ca.ingres.jdbc.IngresDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.IngresJDBC4DriverURLHelper
+      '@TestSql': SELECT 1 FROM iitables
+      Attribute:
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '21071'
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'true'
+    - '@Database': Ingres
+      '@Vendor': Ingres
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': ca.ingres.jdbc.IngresXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.IngresJDBC4DriverURLHelper
+      '@TestSql': SELECT 1 FROM iitables
+      Attribute:
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '21071'
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'true'
+    - '@Database': MaxDB
+      '@Vendor': MaxDB
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.sap.dbtech.jdbc.DriverSapDB
+      '@URLHelperClassname': weblogic.jdbc.utils.MaxDBJDBC4DriverURLHelper
+      '@TestSql': SELECT 1 FROM DOMAIN.TABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '7210'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': Oracle
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': weblogic.jdbc.sqlserver.SQLServerDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.WLDDMSSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': Oracle
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'true'
+      '@ClassName': weblogic.jdbcx.sqlserver.SQLServerDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.WLDDMSSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.ddtek.jdbc.sqlserver.SQLServerDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.DDMSSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.ddtek.jdbcx.sqlserver.SQLServerDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.DDMSSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': I-NET
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.inet.tds.TdsDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.InetMSSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': J-NetDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.jnetdirect.jsql.JSQLDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.JnetDirectJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': J-NetDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.jnetdirect.jsql.JSQLXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.JnetDirectJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': Microsoft
+      '@Type': Type 4
+      '@DatabaseVersion': Pre-2005
+      '@ForXA': 'false'
+      '@ClassName': com.microsoft.jdbc.sqlserver.SQLServerDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.MSSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': Microsoft
+      '@Type': Type 4
+      '@DatabaseVersion': Pre-2005
+      '@ForXA': 'true'
+      '@ClassName': com.microsoft.jdbcx.sqlserver.SQLServerDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.MSSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'false'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': Microsoft
+      '@Type': Type 4
+      '@DatabaseVersion': 2005 and later
+      '@ForXA': 'false'
+      '@ClassName': com.microsoft.sqlserver.jdbc.SQLServerDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.MSSQL2005JDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MS SQL Server
+      '@Vendor': Microsoft
+      '@Type': Type 4
+      '@DatabaseVersion': 2005 and later
+      '@ForXA': 'true'
+      '@ClassName': com.microsoft.sqlserver.jdbc.SQLServerXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.MSSQL2005JDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'false'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MySQL
+      '@Vendor': MySQL
+      '@Type': Type 4
+      '@DatabaseVersion': using org.gjt.mm.mysql.Driver
+      '@ForXA': 'false'
+      '@ClassName': org.gjt.mm.mysql.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.MySQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '3306'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MySQL
+      '@Vendor': MySQL
+      '@Type': Type 4
+      '@DatabaseVersion': using com.mysql.jdbc.Driver
+      '@ForXA': 'false'
+      '@ClassName': com.mysql.jdbc.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.MySQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '3306'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MySQL
+      '@Vendor': MySQL
+      '@Type': Type 4
+      '@DatabaseVersion': using com.mysql.cj.jdbc.Driver
+      '@ForXA': 'false'
+      '@ClassName': com.mysql.cj.jdbc.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.MySQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '3306'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': MySQL
+      '@Vendor': MySQL
+      '@Type': Type 4
+      '@DatabaseVersion': using com.mysql.cj.jdbc.MysqlXADataSource
+      '@ForXA': 'true'
+      '@ClassName': com.mysql.cj.jdbc.MysqlXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.MySQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '3306'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.ddtek.jdbc.oracle.OracleDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.DDOracleJDBC4DriverURLHelper
+      '@TestSql': SELECT 1 FROM DUAL
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.ddtek.jdbcx.oracle.OracleDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.DDOracleJDBC4DriverURLHelper
+      '@TestSql': SELECT 1 FROM DUAL
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.OracleDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DriverURLHelper$SIDHelper
+      '@TestSql': ISVALID
+      '@Description': for Instance connections;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.xa.client.OracleXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DriverURLHelper$SIDHelper
+      '@TestSql': ISVALID
+      '@Description': for Instance connections;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.OracleDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DriverURLHelper$ServiceHelper
+      '@TestSql': ISVALID
+      '@Description': for Service connections;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.xa.client.OracleXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DriverURLHelper$ServiceHelper
+      '@TestSql': ISVALID
+      '@Description': for Service connections;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.replay.OracleDataSourceImpl
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DriverURLHelper$ServiceHelper
+      '@TestSql': ISVALID
+      '@Description': for Application Continuity;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.replay.OracleXADataSourceImpl
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DriverURLHelper$ServiceHelper
+      '@TestSql': ISVALID
+      '@Description': for Application Continuity;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.OracleDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleRACJDBC4DriverURLHelper
+      '@TestSql': ISVALID
+      '@Description': for RAC Service-Instance connections;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': Protocol
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': TCP
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': ServiceName
+          '@Required': 'true'
+          '@InURL': 'true'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.xa.client.OracleXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleRACJDBC4DriverURLHelper
+      '@TestSql': ISVALID
+      '@Description': for RAC Service-Instance connections;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': ServiceName
+          '@Required': 'true'
+          '@InURL': 'true'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.pool.OracleDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DriverURLHelper$SIDHelper
+      '@TestSql': ISVALID
+      '@Description': for pooled instance connections;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1521'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle BI Server
+      '@Vendor': Oracle BI Server
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': oracle.bi.jdbc.AnaJdbcDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleBIServerURLHelper
+      '@TestSql': '{call NQSGetSQLCatalogs()}'
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': Catalog
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': 'False'
+        - '@Name': Ssl
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': 'False'
+        - '@Name': SslKeyStoreFileName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': SslKeyStorePassword
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': TrustAnyServer
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': 'False'
+        - '@Name': TrustStoreFileName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': TrustStorePassword
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': LogLevel
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': LogFilePath
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': PrimaryCcs
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': localhost
+        - '@Name': PrimaryCcsPort
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': '9706'
+        - '@Name': SecondaryCcs
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': localhost
+        - '@Name': SecondaryCcsPort
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': '9706'
+        - '@Name': ServerHost
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': localhost
+        - '@Name': ServerPort
+          '@Required': 'false'
+          '@InURL': 'true'
+          '@DefaultValue': '9703'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.replay.OracleDataSourceImpl
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DescriptorURLHelper
+      '@TestSql': ISVALID
+      '@Description': for GridLink Application Continuity Connections;
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': ServiceName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': Protocol
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': TCP
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.replay.OracleXADataSourceImpl
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DescriptorURLHelper
+      '@TestSql': ISVALID
+      '@Description': for GridLink Application Continuity Connections;
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': ServiceName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': Protocol
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': TCP
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.OracleDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DescriptorURLHelper
+      '@TestSql': ISVALID
+      '@Description': for GridLink Connections;
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': ServiceName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': Protocol
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': TCP
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'true'
+      '@ClassName': oracle.jdbc.xa.client.OracleXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleJDBC4DescriptorURLHelper
+      '@TestSql': ISVALID
+      '@Description': for GridLink Connections
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': ServiceName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': Protocol
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': TCP
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'false'
+      '@ClassName': oracle.jdbc.pool.OracleDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleUCPHelper
+      '@TestSql': ISVALID
+      '@Description': for UCP Connections;
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': AbandonedConnectionTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionFactoryClassName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionFactoryProperties
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionFactoryProperty
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionHarvestMaxCount
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionHarvestTriggerCount
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionPoolName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionProperties
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionProperty
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionWaitTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DatabaseName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DataSourceName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': Description
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': FastConnectionFailoverEnabled
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': InactiveConnectionTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': InitialPoolSize
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': LoginTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxConnectionReuseCount
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxConnectionReuseTime
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxIdleTime
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxPoolSize
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxStatements
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MinPoolSize
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': NetworkProtocol
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ONSConfiguration
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': PortNumber
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': PropertyCycle
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': RoleName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ServerName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': SQLForValidateConnection
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': TimeoutCheckInterval
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': TimeToLiveConnectionTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ValidateConnectionOnBorrow
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': XmlConfigFile
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DataSourceFromConfiguration
+          '@Required': 'false'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'false'
+      '@ClassName': oracle.jdbc.replay.OracleDataSourceImpl
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleUCPHelper
+      '@TestSql': ISVALID
+      '@Description': for UCP Application Continuity Connections;
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': AbandonedConnectionTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionFactoryClassName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionFactoryProperties
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionFactoryProperty
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionHarvestMaxCount
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionHarvestTriggerCount
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionPoolName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionProperties
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionProperty
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionWaitTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DatabaseName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DataSourceName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': Description
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': FastConnectionFailoverEnabled
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': InactiveConnectionTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': InitialPoolSize
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': LoginTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxConnectionReuseCount
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxConnectionReuseTime
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxIdleTime
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxPoolSize
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxStatements
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MinPoolSize
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': NetworkProtocol
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ONSConfiguration
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': PortNumber
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': PropertyCycle
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': RoleName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ServerName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': SQLForValidateConnection
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': TimeoutCheckInterval
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': TimeToLiveConnectionTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ValidateConnectionOnBorrow
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': XmlConfigFile
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DataSourceFromConfiguration
+          '@Required': 'false'
+          '@InURL': 'false'
+    - '@Database': Oracle
+      '@Vendor': Oracle
+      '@Type': Thin
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'false'
+      '@ClassName': oracle.jdbc.xa.client.OracleXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.OracleUCPHelper
+      '@TestSql': ISVALID
+      '@Description': for UCP Connections
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': AbandonedConnectionTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionFactoryClassName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionFactoryProperties
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionFactoryProperty
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionHarvestMaxCount
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionHarvestTriggerCount
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionPoolName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionProperties
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionProperty
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ConnectionWaitTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DatabaseName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DataSourceName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': Description
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': FastConnectionFailoverEnabled
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': InactiveConnectionTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': InitialPoolSize
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': LoginTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxConnectionReuseCount
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxConnectionReuseTime
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxIdleTime
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxPoolSize
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MaxStatements
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': MinPoolSize
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': NetworkProtocol
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ONSConfiguration
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': PortNumber
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': PropertyCycle
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': RoleName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ServerName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': SQLForValidateConnection
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': TimeoutCheckInterval
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': TimeToLiveConnectionTimeout
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': ValidateConnectionOnBorrow
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': XmlConfigFile
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DataSourceFromConfiguration
+          '@Required': 'false'
+          '@InURL': 'false'
+    - '@Database': OrientDB
+      '@Vendor': Orient Technologies
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.orientechnologies.orient.jdbc.OrientJdbcDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.OrientDBJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'false'
+          '@InURL': 'false'
+    - '@Database': PointBase
+      '@Vendor': PointBase
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@Cert': 'true'
+      '@ClassName': com.pointbase.xa.xaDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.PointBaseJDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': localhost
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '9092'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': PointBase
+      '@Vendor': PointBase
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@Cert': 'true'
+      '@ClassName': com.pointbase.jdbc.jdbcUniversalDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.PointBaseJDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': localhost
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '9092'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': PostgreSQL
+      '@Vendor': PostgreSQL
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': org.postgresql.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.PostgreSQLJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '5432'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Progress
+      '@Vendor': Progress
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.progress.sql.jdbc.JdbcProgressDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.ProgressJDBC4DriverURLHelper
+      '@TestSql': SELECT COUNT(*) FROM SYSTABLES
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@DefaultValue': '1433'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Sybase
+      '@Vendor': Oracle
+      '@Type': Type 4
+      '@Cert': 'true'
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': weblogic.jdbc.sybase.SybaseDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.WLSybaseJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Sybase
+      '@Vendor': Oracle
+      '@Type': Type 4
+      '@Cert': 'true'
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': weblogic.jdbcx.sybase.SybaseDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.WLSybaseJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Sybase
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.ddtek.jdbc.sybase.SybaseDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.DDSybaseJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Sybase
+      '@Vendor': DataDirect
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.ddtek.jdbcx.sybase.SybaseDataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.DDSybaseJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Sybase
+      '@Vendor': Sybase
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.sybase.jdbc.SybDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.SybaseJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      '@Description': using jConnect.jar;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Sybase
+      '@Vendor': Sybase
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.sybase.jdbc2.jdbc.SybDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.SybaseJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      '@Description': using jconn2.jar;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Sybase
+      '@Vendor': Sybase
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.sybase.jdbc2.jdbc.SybXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.SybaseJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      '@Description': using jconn2.jar;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Sybase
+      '@Vendor': Sybase
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.sybase.jdbc3.jdbc.SybDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.SybaseJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      '@Description': using jconn3.jar;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Sybase
+      '@Vendor': Sybase
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.sybase.jdbc3.jdbc.SybXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.SybaseJDBC4DriverURLHelper
+      '@TestSql': SELECT 1
+      '@Description': using jconn3.jar;
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': DbmsHost
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPort
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+    - '@Database': Oracle TimesTen Direct Connection
+      '@Vendor': Oracle TimesTen Direct Connection
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.timesten.jdbc.TimesTenDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.TimesTenDirectJDBC4DriverURLHelper
+      '@TestSql': SELECT 1 from DUAL
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DSN
+          '@Required': 'false'
+          '@InURL': 'true'
+    - '@Database': Oracle TimesTen Direct Connection
+      '@Vendor': Oracle TimesTen Direct Connection
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.timesten.jdbc.xa.TimesTenXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.TimesTenDirectJDBC4DriverURLHelper
+      '@TestSql': SELECT 1 from DUAL
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DSN
+          '@Required': 'false'
+          '@InURL': 'true'
+    - '@Database': Oracle TimesTen Client Connection
+      '@Vendor': Oracle TimesTen Client Connection
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.timesten.jdbc.TimesTenClientDriver
+      '@URLHelperClassname': weblogic.jdbc.utils.TimesTenClientJDBC4DriverURLHelper
+      '@TestSql': SELECT 1 from DUAL
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DSN
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': TTC_SERVER
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': TCP_PORT
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': TTC_SERVER_DSN
+          '@Required': 'false'
+          '@InURL': 'true'
+    - '@Database': Oracle TimesTen Client Connection
+      '@Vendor': Oracle TimesTen Client Connection
+      '@Type': Type 4
+      '@DatabaseVersion': Any
+      '@ForXA': 'true'
+      '@ClassName': com.timesten.jdbc.xa.TimesTenXADataSource
+      '@URLHelperClassname': weblogic.jdbc.utils.TimesTenClientJDBC4DriverURLHelper
+      '@TestSql': SELECT 1 from DUAL
+      Attribute:
+        - '@Name': DbmsUsername
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPassword
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DSN
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': TTC_SERVER
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': TCP_PORT
+          '@Required': 'false'
+          '@InURL': 'true'
+        - '@Name': TTC_SERVER_DSN
+          '@Required': 'false'
+          '@InURL': 'true'
+    - '@Database': VSAM for z/OS
+      '@Vendor': NEON
+      '@Type': Type 2
+      '@DatabaseVersion': Any
+      '@ForXA': 'false'
+      '@ClassName': com.neon.jdbc.Driver
+      '@URLHelperClassname': weblogic.jdbc.utils.NeonJDBCDriverURLHelper
+      '@TestSql': ''
+      Attribute:
+        - '@Name': DbmsName
+          '@Required': 'false'
+          '@InURL': 'false'
+          '@Description': Unused
+        - '@Name': DbmsHost
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsPort
+          '@Required': 'false'
+          '@InURL': 'false'
+        - '@Name': DbmsUsername
+          '@Required': 'true'
+          '@InURL': 'true'
+        - '@Name': DbmsPassword
+          '@Required': 'true'
+          '@InURL': 'false'
+        - '@Name': DataSource
+          '@Required': 'true'
+          '@InURL': 'true'
+          '@Description': DataSource name

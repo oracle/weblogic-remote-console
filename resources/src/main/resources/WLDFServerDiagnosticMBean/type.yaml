@@ -1,0 +1,41 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: Name
+  label: Server
+  helpSummaryHTML: >
+    <p>The name of the server.</p>
+
+- name: DiagnosticDataArchiveType
+  label: Type
+
+- name: DiagnosticStoreDir
+  label: Directory
+
+- name: DiagnosticStoreFileLockingEnabled
+  label: Diagnostics Store File Locking Enabled
+
+- name: DiagnosticJDBCSchemaName
+  label: Schema Name
+
+- name: PreferredStoreSizeLimit
+  label: Preferred Store Size
+
+- name: DiagnosticStoreMinWindowBufferSize
+  label: Diagnostics Store Min Window Buffer Size
+
+- name: DiagnosticStoreMaxWindowBufferSize
+  label: Diagnostics Store Max Window Buffer Size
+
+- name: DiagnosticStoreIoBufferSize
+  label: Diagnostics Store IO Buffer Size
+
+- name: DiagnosticStoreMaxFileSize
+  label: Diagnostics Store Max File Size
+
+- name: DiagnosticStoreBlockSize
+  label: Diagnostics Store Block Size
+
+- name: WLDFDiagnosticVolume
+  label: Diagnostic Volume

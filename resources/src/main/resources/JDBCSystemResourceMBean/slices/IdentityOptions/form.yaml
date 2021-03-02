@@ -1,0 +1,25 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page enables you to choose the security identity option
+  used when mapping WebLogic Server user credentials to database user
+  credentials.</p>
+
+properties:
+- name: "CredentialMappingEnabled"
+- name: "IdentityBasedConnectionPoolingEnabled"
+- name: "OracleProxySession"
+- name: "UseDatabaseCredentials"
+helpTasks:
+- "jdbc/jdbc_datasources/ConfigureCredentialMappingForADataSource"
+- "jdbc/jdbc_datasources/EnableSetClientId"
+- "jdbc/jdbc_datasources/EnableIdentityBasedConnectionPooling"
+- "security/UseRolesAndPoliciesToSecureResources"
+helpTopics:
+- label: "Configuring the Harvester for Metric Collection "
+  href: "wldfc/config_harvester.html"
+  type: "edocs"
+- label: "Configuring JDBC Data Sources"
+  href: "jdbca/jdbc_datasources.html"
+  type: "edocs"

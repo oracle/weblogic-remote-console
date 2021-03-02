@@ -1,0 +1,17 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- name: Host
+- name: Port
+- name: Principal
+- name: Credential
+- name: SSLEnabled
+- name: UsernameAttribute
+- name: UserFilterAttributes
+- name: CertificateAttribute
+- name: CertificateMapping
+- name: ConnectionRetryLimit
+- name: CacheEnabled
+- name: CacheSize
+- name: CacheTTL
+- name: IdentityDomain

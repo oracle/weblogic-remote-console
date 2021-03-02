@@ -1,0 +1,26 @@
+# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to associate this WebLogic Server cluster with a
+      Coherence cluster. After this WebLogic Server cluster is associated with a
+      Coherence cluster, configure Coherence cluster member properties as
+      required. All server instances that are managed together as part of this
+      WebLogic Server cluster share the same Coherence cluster configuration</p>
+
+properties:
+  - name: "CoherenceClusterSystemResource"
+  - name: "LocalStorageEnabled"
+  - name: "CoherenceWebLocalStorageEnabled"
+  - name: "CoherenceWebFederatedStorageEnabled"
+
+helpTasks:
+  - "clusters/ConfigureClusters"
+  - "clusters/SpecifyClusterReplicationGroups"
+helpTopics:
+  - label: "Setting Up WebLogic Clusters "
+    href: "clust/setup.html"
+    type: "edocs"
+  - label: "Configure Network Resources"
+    href: "cnfgd/network.html"
+    type: "edocs"
