@@ -10,6 +10,10 @@ The following features are not available in this release of the Remote Console:
 
 ## Known Issues
 The following list summarizes the known issues at the time of this release.
+
+### Limited Support for Users in a Non-Administrative Role
+The Remote Console fully supports only users in the Administrator role. If you are not logged in as an Administrator, unexpected behavior may occur. For example, the Deployer, Monitor and Operator roles are not sufficient for most configuration pages and will result in empty pages and error messages.
+
 ### Minimum Web Browser Viewport Size
 **Issue** The font sizes in the WebLogic Server Remote Console are governed by the Oracle JET Redwood style. They are larger than the ones used in the WebLogic Server Administration Console, and the entry fields are a bit larger in height and width. As a result, the overall viewing area inside your web browser's viewport (the portion where all the web content appears), needs to be of a minimum size to have an enjoyable experience using the Remote Console.
 

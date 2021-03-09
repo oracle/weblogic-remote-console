@@ -75,7 +75,7 @@ java -Djavax.net.ssl.trustStore="/home/user/mytrust.jks" -Djavax.net.ssl.trustSt
 In this command, ``<console_home>`` is the directory where you unzipped the installer.
 
 ## Connect to a WebLogic Domain Running on Kubernetes<a name ="k8s"></a>
-One of the benefits of the WebLogic Server Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For complete details, see <link to Operator doc>.
+One of the benefits of the WebLogic Server Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For details, see the Oracle WebLogic Server Kubernetes Operator documentation.
 
 ## Stop the Remote Console <a name ="stop"></a>
 To stop the Remote Console, kill the console process (for example, `Ctrl+c` ).
