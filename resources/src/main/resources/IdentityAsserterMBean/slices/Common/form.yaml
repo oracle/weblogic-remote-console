@@ -1,8 +1,15 @@
-# Copyright 2020, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+    <p>This page displays basic information about this Identity
+    Assertion provider. You can also use this page to define the active token
+    types this provider is configured to process and whether they will be
+    base64 decoded first.</p>
 
 properties:
 - name: Name
+- name: Type
 - name: Description
 - name: Version
 - name: ActiveTypes

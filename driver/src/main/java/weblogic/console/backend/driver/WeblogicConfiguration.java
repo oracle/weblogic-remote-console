@@ -120,7 +120,6 @@ public class WeblogicConfiguration implements ConnectionCached {
   }
 
   public void saveChanges(InvocationContext invocationContext) throws BadRequestException, Exception {
-    // TBD - aggregate messages?
     getWeblogicConfigurationImpl().saveChanges(invocationContext);
   }
 

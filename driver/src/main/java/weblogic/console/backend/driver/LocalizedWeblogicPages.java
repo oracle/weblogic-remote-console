@@ -155,7 +155,6 @@ public class LocalizedWeblogicPages {
       String name = e.getKey();
       Object value = e.getValue();
       if (LOCALIZABLE_STRING_PROPERTY_NAMES.contains(name)) {
-        // TBD - is it OK to modify a map while iterating over it?
         map.put(name, localizeString((String) value, localizer));
       } else if (LOCALIZABLE_STRING_LIST_PROPERTY_NAMES.contains(name)) {
         @SuppressWarnings("unchecked")

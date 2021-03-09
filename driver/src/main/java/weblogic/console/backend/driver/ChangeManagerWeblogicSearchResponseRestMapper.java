@@ -88,8 +88,6 @@ public class ChangeManagerWeblogicSearchResponseRestMapper extends BaseWeblogicS
   }
 
   private JsonObject formatChanges(JsonObject weblogicChanges) throws Exception {
-    // TBD, e.g. convert WLS REST identities to folded bean paths,
-    // WLS REST property names to folded bean property names
     JsonObjectBuilder bldr = Json.createObjectBuilder();
     addModificationsToChanges(bldr, weblogicChanges);
     addAdditionsToChanges(bldr, weblogicChanges);
@@ -172,8 +170,6 @@ public class ChangeManagerWeblogicSearchResponseRestMapper extends BaseWeblogicS
         .add("restartRequired", weblogicVal.getBoolean("restartRequired"))
         .add(
           "property",
-          // TBD - if we could find a page that displays this property,
-          // we could use it to return the localized property name on that page
           beanProp.getName()
       );
 
@@ -216,7 +212,6 @@ public class ChangeManagerWeblogicSearchResponseRestMapper extends BaseWeblogicS
   }
 
   private JsonObjectBuilder formatRestart(JsonObject weblogicVal) throws Exception {
-    // TBD
     return Json.createObjectBuilder(weblogicVal);
   }
 
@@ -253,7 +248,6 @@ public class ChangeManagerWeblogicSearchResponseRestMapper extends BaseWeblogicS
     } else if (beanProp.isDate()) {
       responseValue = beanProp.isDateAsLong() ? formatDateAsLong(weblogicValue) : formatDate(weblogicValue);
     } else {
-      // TBD - could have special rules for stuff like secret, properties
       responseValue = weblogicValue;
     }
     return ExpandedValue.fromValue(responseValue).copySet(weblogicEV).getJson();

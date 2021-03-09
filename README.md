@@ -22,12 +22,12 @@ The WebLogic Server Remote Console provides an alternative WebLogic Server admin
 ## Differences With the WebLogic Server Administration Console
 If you are already familiar with the WebLogic Server Administration Console deployed as part of your WebLogic domain, you'll notice these key differences in the WebLogic Server Remote Console:
 * The user interface has been completely redesigned to conform to the Oracle Alta UI Design system and the Oracle Redwood theme included with Oracle JET.
-* The configuration and monitoring content is separated into separate pages in the Remote Console. In the WebLogic Server Administration Console, the configuration and runtime information is presented on one page.
+* The configuration and monitoring content is separated into separate pages in the Remote Console. In the WebLogic Server Administration Console, the configuration and runtime information is presented on one page. See [Separation of Configuration and Runtime Data](site/console_uidesign.md#separation).
 * The Change Center is now expressed as a shopping cart.
 * Instead of logging directly into the Administration Console deployed in a WebLogic domain, the Remote Console connects to the Administration Server in a WebLogic domain, with the credentials supplied by the user, using WebLogic REST APIs.
 
 ## Get Started
-The Oracle WebLogic Server Remote Console project repository is located at GitHub-URL. You can download a `console.zip` installer, or build the console from source. In this version, the console consists of the Remote Console JAR file, associated libraries necessary to use the console, and a web application that provides an extension that you can configure in your WebLogic Server domain. The extension provides additional functionality that is not available with the console only. Although installing the extension is optional, we recommend that you install it to get the optimum functionality from the Remote Console.
+You can download a `console.zip` installer, or build the console from source. In this version, the console consists of the Remote Console JAR file, associated libraries necessary to use the console, and a web application that provides an extension that you can configure in your WebLogic Server domain. The extension provides additional functionality that is not available with the console only. Although installing the extension is optional, we recommend that you install it to get the optimum functionality from the Remote Console.
 
 To install the software, simply unzip the `console.zip` installer on a machine that has JDK 11 installed. After unzipping the archive, the console is ready to use. You simply start the console application, enter the console URL in a browser, and provide the Administration credentials and URL for the domain of your choice.
 

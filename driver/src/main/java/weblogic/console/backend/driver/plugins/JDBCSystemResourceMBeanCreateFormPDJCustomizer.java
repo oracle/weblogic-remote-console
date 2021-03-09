@@ -428,7 +428,6 @@ import static weblogic.console.backend.utils.JDBCSystemResourceMBeanCustomizerUt
         CREATE_FORM_PROPERTY_DATABASE_DRIVER,
         TYPE_STRING
       );
-    // TBD - sort them?
     List<LegalValue> legalValues = new ArrayList<>();
     for (JDBCDriverInfo driverInfo : driverInfos) {
       String driverName = driverName(driverInfo);
@@ -540,7 +539,6 @@ import static weblogic.console.backend.utils.JDBCSystemResourceMBeanCustomizerUt
     String datasourceType,
     JDBCDriverInfo driverInfo
   ) throws Exception {
-    // TBD sort them?
     for (JDBCDriverAttribute driverAttribute : getDriverAttributes(driverInfo).values()) {
       if (isCustomDriverAttribute(driverAttribute)) {
         // This is a custom attribute. Add a property for it to the PDJ.

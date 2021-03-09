@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package com.oracle.weblogic.console.backend.services.runtime;
@@ -29,14 +29,18 @@ public class MonitoringDomainRuntimeResource extends WeblogicRootBeanResource {
 
   /**
    * Creates a JAXRS resource that handles the RDJ for a child mbean of the domain runtime mbean.
-   * <p>
    * It uses the url path to figure out the child's type (collection, collection child,
    * creatable optional singleton, non-creatable optional singleton) and creates a
    * corresponding JAXRS resource.
+   *
+   * @param is a comma-separated list of properties to return.
+   * If null, then all properties for the form/table are returned.  Otherwise
+   * only properties that are on the form/table AND in properties are returned.
    */
   @javax.ws.rs.Path("{pathSegments: .+}")
   public WeblogicBeanResource getChildResource(
-    @PathParam("pathSegments") List<PathSegment> pathSegments
+    @PathParam("pathSegments") List<PathSegment> pathSegments,
+    @QueryParam("properties") String properties
   ) throws Exception {
     WeblogicBeanIdentity identity = createIdentity(getPathFromPathSegments(pathSegments));
     WeblogicBeanResource resource = null;
@@ -65,6 +69,8 @@ public class MonitoringDomainRuntimeResource extends WeblogicRootBeanResource {
     // (which happens to be the invocation resource for all jaxrs resources
     // servicing this request)
     getInvocationContext().setIdentity(identity);
+    // also store which properties to return
+    getInvocationContext().setProperties(properties);
     return copyContext(resource);
   }
 

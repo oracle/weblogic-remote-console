@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.backend.integration;
@@ -104,7 +104,6 @@ public interface WebLogicRestRequest {
      */
     public Builder asynchronous(boolean asynchronous) {
       // Synchronously wait for 2 seconds if case the operation returns quickly.
-      // TBD - should the wait time be configurable?
       if (asynchronous) {
         return header("Prefer", "wait=2");
       } else {

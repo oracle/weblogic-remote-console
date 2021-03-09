@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.backend.driver;
@@ -75,6 +75,23 @@ public class ExpandedValue {
     return fromValue(Json.createValue(value));
   }
 
+  // long : long maps to JsonNumber's long value
+  public static long getLongValue(JsonValue expandedValue) {
+    return getLongValue(expandedValue.asJsonObject());
+  }
+
+  public static long getLongValue(JsonObject expandedValue) {
+    return wrap(expandedValue).getLongValue();
+  }
+
+  public long getLongValue() {
+    return getJson().getJsonNumber(PROP_VALUE).longValue();
+  }
+
+  public static ExpandedValue fromLong(long value) {
+    return fromValue(Json.createValue(value));
+  }
+
   // mbean reference : null maps to JsonValue.NULL, reference maps to JsonArray
   public static JsonArray getReferenceValue(JsonValue expandedValue) {
     return getReferenceValue(expandedValue.asJsonObject());
@@ -139,7 +156,6 @@ public class ExpandedValue {
   }
 
   private ExpandedValue(JsonObject jsonExpandedValue) {
-    // TBD - make sure the json has the right fields ... ?
     this.json = jsonExpandedValue;
   }
 

@@ -75,8 +75,6 @@ public class DeploymentManager extends ConfigurationTreeManager {
         + " data=" + StringUtils.cleanStringForLogging(data)
       );
 
-      // TBD - validate all the inputs?
-
       // Note: unwrap the expanded values since the multipart form app deployment
       // WLS REST api doesn't support expanded values
       JsonObjectBuilder modelBldr =
@@ -106,6 +104,9 @@ public class DeploymentManager extends ConfigurationTreeManager {
       startEdit();
 
       // Deploy the application
+      // Note: The WLS REST deployment api never sends back field-scoped
+      // messages, therefore we don't need to worry about converting
+      // WLS field names to RDJ field names.
       JsonArray messages =
         getWeblogicConfiguration()
           .createBean(
@@ -115,20 +116,10 @@ public class DeploymentManager extends ConfigurationTreeManager {
             true // async
           );
 
-      // The WLS REST deployment api never sends back field-scoped
-      // messages, therefore we don't need to worry about converting
-      // WLS field names to RDJ field names.
-
-      // Send back a 201 plus any messages we've collected.
-      Response response =
-        Response
-          .status(Response.Status.CREATED)
-          .entity(newResponseBody(messages))
-          .build();
-
       saveChanges();
 
-      return response;
+      return createdBeanResponse(newCreateFormPagePath(), requestBody, messages);
+
     } catch (Throwable t) {
       throw toServiceException(t);
     }
@@ -182,8 +173,6 @@ public class DeploymentManager extends ConfigurationTreeManager {
       );
       FormDataMultiPart parts = new FormDataMultiPart();
 
-      // TBD - validate all the inputs?
-
       // Note: unwrap the expanded values since the multipart form app deployment
       // WLS REST api doesn't support expanded values
       JsonObjectBuilder modelBldr =
@@ -201,12 +190,13 @@ public class DeploymentManager extends ConfigurationTreeManager {
         parts.bodyPart(new StreamDataBodyPart(WEBLOGIC_PROPERTY_PLAN_PATH, planInputStream, planPath));
       }
 
-      // TBD - what about cleanup if anything goes wrong
-
       // Don't start the config transaction until after we've validated everything we can
       startEdit();
 
       // Upload and deploy the application
+      // Note: The WLS REST deployment api never sends back field-scoped
+      // messages, therefore we don't need to worry about converting
+      // WLS field names to RDJ field names.
       JsonArray messages =
         getWeblogicConfiguration()
           .createBean(
@@ -216,20 +206,12 @@ public class DeploymentManager extends ConfigurationTreeManager {
             true // async
           );
 
-      // Send back a 201 plus any messages we've collected.
-      Response response =
-        Response
-          .status(Response.Status.CREATED)
-          .entity(newResponseBody(messages))
-          .build();
-
-      // The WLS REST deployment api never sends back field-scoped
-      // messages, therefore we don't need to worry about converting
-      // WLS field names to RDJ field names.
-
       saveChanges();
 
-      return response;
+      // Wrap data so that it looks like a normal request body since that's the form createdBeanResponse needs
+      JsonObject requestBody = Json.createObjectBuilder().add("data", data).build();
+      return createdBeanResponse(newCreateFormPagePath(), requestBody, messages);
+
     } catch (Throwable t) {
       throw toServiceException(t);
     } finally {
@@ -237,10 +219,6 @@ public class DeploymentManager extends ConfigurationTreeManager {
       closeInputStream(planInputStream);
     }
   }
-
-  // TBD - redeploy an app on the admin server's file system?
-
-  // TBD - upload and redeploy an app
 
   // undeploy an app
   public static Response undeployApplication(
@@ -293,8 +271,6 @@ public class DeploymentManager extends ConfigurationTreeManager {
         + " data=" + StringUtils.cleanStringForLogging(data)
       );
 
-      // TBD - validate all the inputs?
-
       // Note: unwrap the expanded values since the multipart form app deployment
       // WLS REST api doesn't support expanded values
       JsonObjectBuilder modelBldr =
@@ -310,6 +286,9 @@ public class DeploymentManager extends ConfigurationTreeManager {
       startEdit();
 
       // Deploy the application
+      // Note: The WLS REST deployment api never sends back field-scoped
+      // messages, therefore we don't need to worry about converting
+      // WLS field names to RDJ field names.
       JsonArray messages =
         getWeblogicConfiguration()
           .createBean(
@@ -319,20 +298,10 @@ public class DeploymentManager extends ConfigurationTreeManager {
             true // async
           );
 
-      // The WLS REST deployment api never sends back field-scoped
-      // messages, therefore we don't need to worry about converting
-      // WLS field names to RDJ field names.
-
-      // Send back a 201 plus any messages we've collected.
-      Response response =
-        Response
-          .status(Response.Status.CREATED)
-          .entity(newResponseBody(messages))
-          .build();
-
       saveChanges();
 
-      return response;
+      return createdBeanResponse(newCreateFormPagePath(), requestBody, messages);
+
     } catch (Throwable t) {
       throw toServiceException(t);
     }
@@ -378,8 +347,6 @@ public class DeploymentManager extends ConfigurationTreeManager {
       );
       FormDataMultiPart parts = new FormDataMultiPart();
 
-      // TBD - validate all the inputs?
-
       // Note: unwrap the expanded values since the multipart form library deployment
       // WLS REST api doesn't support expanded values
       JsonObjectBuilder modelBldr =
@@ -393,12 +360,13 @@ public class DeploymentManager extends ConfigurationTreeManager {
 
       parts.bodyPart(new StreamDataBodyPart(WEBLOGIC_PROPERTY_SOURCE_PATH, sourceInputStream, sourcePath));
 
-      // TBD - what about cleanup if anything goes wrong
-
       // Don't start the config transaction until after we've validated everything we can
       startEdit();
 
-      // Upload and deploy the application
+      // Upload and deploy the application.
+      // Note: The WLS REST deployment api never sends back field-scoped
+      // messages, therefore we don't need to worry about converting
+      // WLS field names to RDJ field names.
       JsonArray messages =
         getWeblogicConfiguration()
           .createBean(
@@ -408,30 +376,18 @@ public class DeploymentManager extends ConfigurationTreeManager {
             true // async
           );
 
-      // Send back a 201 plus any messages we've collected.
-      Response response =
-        Response
-          .status(Response.Status.CREATED)
-          .entity(newResponseBody(messages))
-          .build();
-
-      // The WLS REST deployment api never sends back field-scoped
-      // messages, therefore we don't need to worry about converting
-      // WLS field names to RDJ field names.
-
       saveChanges();
 
-      return response;
+      // Wrap data so that it looks like a normal request body since that's the form createdBeanResponse needs
+      JsonObject requestBody = Json.createObjectBuilder().add("data", data).build();
+      return createdBeanResponse(newCreateFormPagePath(), requestBody, messages);
+
     } catch (Throwable t) {
       throw toServiceException(t);
     } finally {
       closeInputStream(sourceInputStream);
     }
   }
-
-  // TBD - redeploy a library on the admin server's file system?
-
-  // TBD - upload and redeploy a library
 
   // undeploy a library
   public static Response undeployLibrary(

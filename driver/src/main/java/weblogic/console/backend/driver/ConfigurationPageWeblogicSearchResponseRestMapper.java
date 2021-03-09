@@ -528,8 +528,6 @@ public class ConfigurationPageWeblogicSearchResponseRestMapper extends BasePageW
         addOptionsSources(builder, propertyMapping);
         return builder.build();
       } else {
-        // TBD - Temporarily return the identity until we add build time support
-        // that verifies that all reference properties have a corresponding options property.
         return rdjIdentities;
       }
     } else {
@@ -648,7 +646,7 @@ public class ConfigurationPageWeblogicSearchResponseRestMapper extends BasePageW
         String lastComponent = weblogicReference.getString(size-1);
         if (key.equals(lastComponent)) {
           if (match != null) {
-            // TBD - do we need to pick the 'nearest' match path-wise?
+            // Do we need to pick the 'nearest' match path-wise?
             // i.e. a scoped reference over a global reference with the same key?
             throw
               new AssertionError(

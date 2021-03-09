@@ -9,7 +9,6 @@ displayedColumns:
 - name: "Name"
 - name: "PersistentStore"
 - name: "Target"
-# TODO CBE_COMPUTED CurrentTargetName (JMSServerTableAction.java #91)
 hiddenColumns:
 - name: "TemporaryTemplateResource"
 - name: "TemporaryTemplateName"

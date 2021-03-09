@@ -9,3 +9,4 @@ require('./tests/machineAndCluster_test.js');
 require('./tests/monitoring_test.js');
 require('./tests/monitoringPanel_test.js');
 require('./tests/utilities_test');
+require('./tests/services_test');

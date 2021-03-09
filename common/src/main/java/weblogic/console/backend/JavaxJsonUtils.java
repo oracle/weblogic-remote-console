@@ -76,11 +76,25 @@ public abstract class JavaxJsonUtils {
       list.add(new Message(text, severity));
     }
     if (throwable != null) {
-      String text1 = throwable.getLocalizedMessage();
+      String text1 = getExceptionMessage(throwable);
       if (text1 != null && !text1.equals(text)) {
         list.add(new Message(text1, severity));
       }
     }
     return createMessagesJsonArray(list);
+  }
+
+  private static String getExceptionMessage(Throwable t) {
+    if (t == null) {
+      return "";
+    }
+    String message = t.getLocalizedMessage();
+    if (StringUtils.isEmpty(message)) {
+      message = t.toString();
+    }
+    if (StringUtils.isEmpty(message)) {
+      message = t.getClass().getName();
+    }
+    return message;
   }
 }

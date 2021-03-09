@@ -85,7 +85,6 @@ public class JDBCSystemResourceMBeanCreateFormPropertiesCustomizer extends BaseC
     // Get all the JDBCSystemResources so we can compute the MDS DatasourceList property's options.
     // For each one, also its datasource list and global transactions protocol so that when we compute
     // the available datasources, we can weed out the MDS ones and can separate the XA and non-XA ones.
-    // TBD - add constants to JDBCSystemResourceMBeanCustomizerUtils for some of these?
     domainBldr.getOrCreateChild(WEBLOGIC_PROPERTY_JDBC_SYSTEM_RESOURCES)
       .addField("identity")
       .getOrCreateChild("JDBCResource")
@@ -289,7 +288,6 @@ public class JDBCSystemResourceMBeanCreateFormPropertiesCustomizer extends BaseC
         // But the remote console doesn't have access to the driver class.
         // But it does have access to the configured globalTransactionsProtocol.
         // Use it to see if the data source is XA instead.
-        // TBD - should we allow GLOBAL_TRANSACTIONS_PROTOCOL_EMULATE_TWO_PHASE_COMMIT too?
         String protocol = ExpandedValue.getStringValue(params.get("globalTransactionsProtocol"));
         boolean isXA = GLOBAL_TRANSACTIONS_PROTOCOL_TWO_PHASE_COMMIT.equals(protocol);
         if (isXA == wantXA) {
@@ -310,7 +308,7 @@ public class JDBCSystemResourceMBeanCreateFormPropertiesCustomizer extends BaseC
   }
 
   private void addSelectDriverProperty(String driverPropertyName, JDBCDriverInfo[] driverInfos) {
-    String defaultDriverName = driverName(driverInfos[0]); // TBD - how should we pick it?  Sort the names first?
+    String defaultDriverName = driverName(driverInfos[0]);
     getInitialPropertyValues().add(
       driverPropertyName,
       ExpandedValue.fromString(defaultDriverName).getJson()
@@ -324,8 +322,6 @@ public class JDBCSystemResourceMBeanCreateFormPropertiesCustomizer extends BaseC
       // The user can't configure any transaction-related properties for
       // XA drivers since we lock down the global transactions protocol
       // as TwoPhaseCommit.
-      // TBD - should we add a read-only property to show this to the user?
-      // (v.s. a section title)
       return;
     }
     getInitialPropertyValues().add(

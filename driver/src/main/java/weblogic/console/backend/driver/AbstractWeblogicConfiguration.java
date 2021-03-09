@@ -46,9 +46,6 @@ public abstract class AbstractWeblogicConfiguration implements WeblogicConfigura
 
   protected void broadcastConfigChanged(String weblogicConfigurationVersion) {
     synchronized (this.configEventListenerRegistrations) {
-      // TBD - should we broadcast in parallel (v.s. serially?)
-      // Not an issue since ChangeManagerResource only registers one listener
-      // regardless of how many CFE SSE listeners connect to it.
       for (ConfigEventListenerRegistration registration : this.configEventListenerRegistrations) {
         registration.getListener().configurationChanged(weblogicConfigurationVersion);
       }
@@ -57,9 +54,6 @@ public abstract class AbstractWeblogicConfiguration implements WeblogicConfigura
 
   protected void broadcastChangesCancelled(String weblogicConfigurationVersion) {
     synchronized (this.configEventListenerRegistrations) {
-      // TBD - should we broadcast in parallel (v.s. serially?)
-      // Not an issue since ChangeManagerResource only registers one listener
-      // regardless of how many CFE SSE listeners connect to it.
       for (ConfigEventListenerRegistration registration : this.configEventListenerRegistrations) {
         registration.getListener().changesCancelled(weblogicConfigurationVersion);
       }

@@ -1,13 +1,10 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
   <p>Use this page to define properties for this JMS action.</p>
 
 properties:
-#TODO - name: "diagnostics.jmsnotificationconfigproperties.jmsmodule"
-#TODO - name: "diagnostics.jmsnotificationconfigproperties.jmsdestination"
-#TODO - name: "diagnostics.jmsnotificationconfigproperties.connectionfactory"
 - name: "DestinationJNDIName"
 - name: "ConnectionFactoryJNDIName"
 helpTasks:

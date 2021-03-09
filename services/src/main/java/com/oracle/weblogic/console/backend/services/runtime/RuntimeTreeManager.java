@@ -85,7 +85,6 @@ public class RuntimeTreeManager extends BaseTreeManager {
           + " arguments="
           + StringUtils.cleanStringForLogging(arguments)
       );
-      // TBD - convert arguments from RDJ terms to WLS REST terms (e.g. identities)
 
       // Find out how to invoke the action
       ActionInfo actionInfo = findAction(action);
@@ -112,8 +111,6 @@ public class RuntimeTreeManager extends BaseTreeManager {
         // results contain the status (i.e. statusCode) (which should be 200)
         // and the return value from action (i.e. body)
         // For now, aways return a 200 and the return value.
-        // TBD - convert the return value from wls terms to RDJ terms
-        // (in case it contains any bean references)?
         return Response.ok().entity(results.getJsonObject("body")).build();
       }
     } catch (Throwable t) {

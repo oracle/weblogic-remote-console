@@ -7,15 +7,12 @@ properties:
 
 - name: FileMinSize
   label: Rotation file size
-  # TODO usedIf RotationType == bySize
 
 - name: RotationTime
   label: Begin rotation time
-  # TODO usedIf RotationType == byTime
 
 - name: FileTimeSpan
   label: Rotation interval
-  # TODO usedIf RotationType == byTime
 
 - name: NumberOfFilesLimited
   label: Limit number of retained files

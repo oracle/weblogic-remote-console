@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A Certification Path provider completes and validates certificate
@@ -13,9 +13,6 @@ displayedColumns:
 - name: "Name"
 - name: "Description"
 - name: "Version"
-# TODO certpathprovider.table.validator
-# TODO certpathprovider.table.potentialbuilder
-# TODO certpathprovider.table.currentbuilder
 helpTasks:
 - "security/ConfigureCertPathProviders"
 - "security/ManageSecurityProviders"

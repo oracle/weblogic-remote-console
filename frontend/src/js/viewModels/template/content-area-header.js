@@ -63,10 +63,15 @@ define(["knockout", 'ojs/ojarraydataprovider', 'ojs/ojmodule-element-utils', '..
       });
 
       viewParams.signaling.popupMessageSent.add((message, autoTimeout) => {
-        if (typeof message.severity !== "undefined" && message.severity === "confirmation") {
-          message.autoTimeout = autoTimeout || 1500;
+        if (!message) {
+          self.messages.removeAll();
+        } else {
+
+          if (typeof message.severity !== "undefined" && message.severity === "confirmation") {
+            message.autoTimeout = autoTimeout || 1500;
+          }
+          self.messages.push(message);
         }
-        self.messages.push(message);
       });
 
       viewParams.signaling.modeChanged.add((newMode) => {

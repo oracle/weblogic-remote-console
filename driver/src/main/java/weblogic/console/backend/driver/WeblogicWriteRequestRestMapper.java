@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.backend.driver;
@@ -126,7 +126,6 @@ public class WeblogicWriteRequestRestMapper {
     // always create a request body for the top level bean since some mbeans support no-arg creators
     JsonObjectBuilder bldr = isCreate ? Json.createObjectBuilder() : null;
     for (PropertyRestMapping propMapping : segmentMapping.getProperties()) {
-      // TBD - what about keyProp & identity?
       String rdjPropName = propMapping.getBeanProperty().getName();
       if (this.rdjWriteRequestBody.containsKey(rdjPropName)) {
         if (bldr == null) {

@@ -1,5 +1,8 @@
 # Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>This page displays a list of outbound connection pools for this resource adapter, with statistics about the pool's connections.</p>
+
 displayedColumns:
 - name: "Name"
 - name: "ActiveConnectionsCurrentCount"

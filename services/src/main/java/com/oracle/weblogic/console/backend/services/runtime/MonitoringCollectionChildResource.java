@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package com.oracle.weblogic.console.backend.services.runtime;
@@ -50,7 +50,6 @@ public class MonitoringCollectionChildResource extends WeblogicBeanResource {
     return RuntimeTreeManager.viewBean(getInvocationContext(), slice);
   }
 
-  // TBD - this should be on the ControlCollectionChildResource
   /**
    * Invokes one the bean's actions
    *

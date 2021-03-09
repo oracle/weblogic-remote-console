@@ -159,8 +159,6 @@ public class WeblogicPageSources {
     if (navigationSource == null) {
       navigationSource = new NavigationSource(); // create an empty one if we don't find one
     }
-    // TBD - validate navigation source follows the NavigationSource and NavigationNodeSource
-    // comments that say what's allowed
     return navigationSource;
   }
 

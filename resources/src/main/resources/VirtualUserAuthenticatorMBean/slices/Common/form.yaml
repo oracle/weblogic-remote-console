@@ -1,0 +1,39 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+    <p>This page displays basic information about this WebLogic Authentication
+    provider. You use the Virtual User Authentication provider to authenticate
+    users who are not defined in the identity store that is configured in the
+    security realm.</p>
+
+properties:
+- name: Name
+- name: Type
+- name: Description
+- name: Version
+- name: ControlFlag
+helpTasks:
+- "security/ConfigureAuthenticationProviders"
+- "security/ConfigurePasswordValidationProviders"
+- "security/SetTheJAASControlFlag"
+- "security/ManageSecurityProviders"
+helpTopics:
+- label: "Authenticating a User Not Defined in the Identity Store"
+  href: "secmg/ia_atn.html#SECMG753"
+  type: "edocs"
+- label: "Configuring the Virtual User Authentication Provider"
+  href: "secmg/atn_virtual.html"
+  type: "edocs"
+- label: "Setting the JAAS Control Flag Option"
+  href: "secmg/atn_intro.html#SECMG172"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
+- label: "Developing Security Providers for Oracle WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

@@ -15,6 +15,8 @@ import javax.json.JsonValue;
 
 import weblogic.console.backend.pagedesc.Localizer;
 import weblogic.console.backend.pagedesc.PerspectivePath;
+import weblogic.console.backend.typedesc.WeblogicBeanIdentity;
+import weblogic.console.backend.typedesc.WeblogicBeanIdentitySegment;
 import weblogic.console.backend.typedesc.WeblogicBeanProperty;
 import weblogic.console.backend.typedesc.WeblogicBeanType;
 import weblogic.console.backend.typedesc.WeblogicBeanTypes;
@@ -208,6 +210,35 @@ public class IdentityUtils {
   }
 
   /**
+   * Convert a weblogic bean identity into an RDJ identity.
+   *
+   * Need to pass in the perspective since it's part of the RDJ identity
+   * but not part of the weblogic bean identity.
+   *
+   * Need to pass in the Localizer so that the labels in the
+   * RDJ identity can be localized.
+   */
+  public static JsonValue weblogicBeanIdentityToResponseIdentity(
+    WeblogicBeanIdentity beanIdentity,
+    PerspectivePath perspectivePath,
+    Localizer localizer
+  ) throws Exception {
+    ResponseIdentityBuilder identityBuilder = 
+      new ResponseIdentityBuilder(perspectivePath, localizer);
+    for (WeblogicBeanIdentitySegment segment : beanIdentity.getSegments()) {
+      if (segment.isFoldedSingleton()) {
+        continue;
+      }
+      if (segment.getKey() != null) {
+        identityBuilder.addProperty(segment.getProperty(), segment.getKey());
+      } else {
+        identityBuilder.addProperty(segment.getProperty());
+      }
+    }
+    return identityBuilder.build();
+  }
+
+  /**
    * Converts an RDJ property value (not in expanded value format) that contains a single
    * RDJ identity into a Weblogic property value (not in expanded value format) that
    * contains a corresponding weblogic identity.
@@ -230,7 +261,6 @@ public class IdentityUtils {
     return pathToJsonArray(unfoldedBeanPathWithIdentities);
   }
 
-  // TBD - should this method move to the Path class?
   private static JsonArray pathToJsonArray(Path path) {
     JsonArrayBuilder bldr = Json.createArrayBuilder();
     for (String component : path.getComponents()) {

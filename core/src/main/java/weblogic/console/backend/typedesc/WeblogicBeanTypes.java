@@ -565,14 +565,6 @@ public class WeblogicBeanTypes {
     Map<String, ConsoleWeblogicBeanProperty> consoleProperties, // hprop name -> cprop
     List<UsedIfInfo> usedIfInfos
   ) throws Exception {
-    // TBD - consider baseTypes so that we have one stop shopping
-    // note - or should we? i.e. do we want the entire set of wl/console prop pairs thru the inh
-    // tree
-    // in case different aspects of the prop can be set at different levels? e.g.
-    // could helpSummary be defined at the server level and helpDetails be defined as the server
-    // template level?
-    // I don't think we have this - i think you just take the nearest prop on both the weblogic and
-    // console type sides
     Map<String, HarvestedWeblogicBeanProperty> harvestedProperties = getHarvestedProperties(type);
     Set<String> hpropNames = new HashSet<>(harvestedProperties.keySet());
     for (ConsoleWeblogicBeanProperty cprop : consoleProperties.values()) {
@@ -832,7 +824,6 @@ public class WeblogicBeanTypes {
     boolean extension
   ) {
     for (HarvestedWeblogicBeanProperty hprop : hprops) {
-      // TBD - worry about duplicates?
       hprop.setExtension(extension);
       properties.put(hprop.getName(), hprop);
     }
@@ -1100,6 +1091,13 @@ public class WeblogicBeanTypes {
     // since we don't have any use cases for this.
     if (prop.isRequired()) {
       merged.setRequired(prop.isRequired());
+    }
+
+    // Same rational for 'useUnlocalizedNameAsLabel' (boolean that defaults to false)
+    {
+      if (prop.isUseUnlocalizedNameAsLabel()) {
+        merged.setUseUnlocalizedNameAsLabel(prop.isUseUnlocalizedNameAsLabel());
+      }
     }
 
     // Same rational for 'ordered' (boolean that defaults to false)

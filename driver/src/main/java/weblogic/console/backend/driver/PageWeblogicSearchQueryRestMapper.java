@@ -120,7 +120,9 @@ public class PageWeblogicSearchQueryRestMapper extends BaseRestMapper {
     ) throws Exception {
       // Add the page's properties to the query:
       for (PropertyRestMapping propMapping : segmentMapping.getProperties()) {
-        bldr.addField(propMapping.getBeanProperty().getRestName());
+        if (includeProperty(propMapping)) {
+          bldr.addField(propMapping.getBeanProperty().getRestName());
+        }
       }
       // Add those properties' options to the query:
       addOptionsToQuery(bldr, segmentMapping);
@@ -154,8 +156,19 @@ public class PageWeblogicSearchQueryRestMapper extends BaseRestMapper {
     protected boolean usesPlugin(
       PluginBeanPropertyRestMapping pluginBeanProperty
     ) throws Exception {
+      PluginRestMapping referringPlugin = pluginBeanProperty.getReferringPlugin();
       // Use all GetProperty plugins
-      return pluginBeanProperty.getReferringPlugin().isGetPropertyPlugin();
+      if (!referringPlugin.isGetPropertyPlugin()) {
+        return false;
+      }
+      // If this property is used to compute a property that the client said to return
+      // (or if the client didn't list which properties to return), then we need this property.
+      if (includeProperty(referringPlugin.asGetPropertyPlugin().getReferringProperty())) {
+        return true;
+      }
+      // The user listed which properties to return, and this property isn't needed
+      // to compute any of them.  SKip it.
+      return false;
     }
 
     private void addOptionsToQuery(
@@ -163,16 +176,32 @@ public class PageWeblogicSearchQueryRestMapper extends BaseRestMapper {
       PathSegmentRestMapping segmentMapping
     ) throws Exception {
       for (OptionsRestMapping optionsMapping : segmentMapping.getOptions()) {
-        String optionsRestName = optionsMapping.getBeanProperty().getRestName();
-        if (optionsMapping.getBeanProperty().isContainedCollection()) {
-          // For contained collections, we need to add a child for the collection
-          // and fetch its identity property.
-          bldr.getOrCreateChild(optionsRestName).addField("identity");
-        } else {
-          // For other options (e.g. reference collections), just fetch the property
-          bldr.addField(optionsRestName);
+        if (includeProperty(optionsMapping.getReferringProperty())) {
+          String optionsRestName = optionsMapping.getBeanProperty().getRestName();
+          if (optionsMapping.getBeanProperty().isContainedCollection()) {
+            // For contained collections, we need to add a child for the collection
+            // and fetch its identity property.
+            bldr.getOrCreateChild(optionsRestName).addField("identity");
+          } else {
+            // For other options (e.g. reference collections), just fetch the property
+            bldr.addField(optionsRestName);
+          }
         }
       }
+    }
+
+    // Whether to include this property in the query.
+    // Basically, return it if the page uses it unless
+    // the client said to not return it.
+    private boolean includeProperty(PropertyRestMapping propMapping) {
+      WeblogicBeanProperty beanProp = propMapping.getBeanProperty();
+      PropertyRestMapping discriminator = getPageRestMapping().getSubTypeDiscriminatorProperty();
+      if (discriminator != null && beanProp == discriminator.getBeanProperty()) {
+        // We always include the sub type discriminator for heterogeneous types
+        return true;
+      }
+      // Let the client decide
+      return getInvocationContext().includeProperty(beanProp.getName());
     }
   }
 

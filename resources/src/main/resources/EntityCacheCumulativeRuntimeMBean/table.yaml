@@ -1,5 +1,23 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+    <p>For each XML entity cache, you can monitor a set of statistics that
+    describes how the cache is being used and its effectiveness. These
+    statistics describe:</p>
+    <ul>
+      <li>The current state of the cache, such as how much memory and disk
+      space is currently being used, the current number of entries in the
+      cache, and so on.</li>
+      <li>The cumulative activity for the current session, typically since the
+      server started, such as the total number of entries that have lived in
+      the cache, the total number of memory and disk page purges, and so
+      on.</li>
+      <li>The cumulative activity since the cache was created. The type of
+      data is the same as the cumulative activity for a session, although the
+      numbers reflect historical data since the cache was created.</li>
+    </ul>
+
 displayedColumns:
 - name: "Name"
 - name: "AvgPercentPersistent"

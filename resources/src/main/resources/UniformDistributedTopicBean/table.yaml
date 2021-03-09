@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A distributed topic is a topic that can be load-balanced across a cluster or set of servers.</p>
@@ -6,8 +6,6 @@ introductionHTML: >
 displayedColumns:
 - name: "Name"
 - name: "JNDIName"
-# TODO CBE_COMPUTED name: "SubDeploymentName",  (JMSUtils: #930)
-# TODO CBE_COMPUTED name: "Targets", (JMSUtils: #944)
 
 helpTasks:
 - "jms_modules/quotas/ConfigureQuotas"

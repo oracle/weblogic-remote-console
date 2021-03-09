@@ -114,8 +114,6 @@ public class PageRestMappingGenerator {
         // can't find the definition of the child property (i.e. this is a PDY problem)
         // a warning has already been reported.
         // skip it
-        // TBD - someday the warning will become a build failure
-        // so we won't have to worry about null here.
         return parentSegmentMapping;
       }
     }
@@ -159,8 +157,6 @@ public class PageRestMappingGenerator {
           // can't find the definition of the child property (i.e. this is a PDY problem)
           // a warning has already been reported.
           // skip it
-          // TBD - someday the warning will become a build failure
-          // so we won't have to worry about anything here.
           return parentMapping;
         }
       }
@@ -223,7 +219,6 @@ public class PageRestMappingGenerator {
     if (!segment.isRoot()) {
       WeblogicBeanType type = getPageRestMapping().getPageSource().getType();
       if (!type.isHomogeneous()) {
-        // TBD - will this work if the sub type discriminator property gets aliased?
         if (beanProp.getName().equals(type.getSubTypeDiscriminatorPropertyName())) {
           getPageRestMapping().setSubTypeDiscriminatorProperty(propertyMapping);
           LOGGER.finest("Recording sub type discriminator property " + propertyMapping);
@@ -302,7 +297,6 @@ public class PageRestMappingGenerator {
 
     // plugins in the configuration perspective can access the WeblogicConfiguration
     if (param == null && "configuration".equals(perspective)) {
-      // TBD - WeblogicConfiguration v.s WeblogicRuntime depending on the perspective:
       param = createBuiltinParameter(plugin, parameter, WeblogicConfiguration.class);
     }
 
@@ -362,8 +356,6 @@ public class PageRestMappingGenerator {
     PluginRestMapping plugin,
     Parameter parameter
   ) throws Exception {
-    // TBD This needs a revamp! For now, do just enough to get the test to pass and the current
-    // plugins to work.
     Source source = parameter.getSource();
     if (source == null) {
       throw

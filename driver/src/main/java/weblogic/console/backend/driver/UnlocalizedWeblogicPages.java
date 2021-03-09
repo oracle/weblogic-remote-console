@@ -264,9 +264,7 @@ public class UnlocalizedWeblogicPages {
     }
     WeblogicProperty prop = new WeblogicProperty();
     prop.setName(property);
-    prop.setLabel(
-      LocalizationUtils.propertyLabelKey(pageSource, beanProp, propertySource.getLabel())
-    );
+    prop.setLabel(getPropertyLabelKey(pageSource, beanProp, propertySource.getLabel()));
     // don't need beanProp.isKey, nullable, encrypted, transient, isArray, creators yet
     prop.setArray(isArray(beanProp));
     prop.setType(getPropertyType(pageSource, beanProp));
@@ -275,7 +273,7 @@ public class UnlocalizedWeblogicPages {
       prop.setReadOnly(true);
     }
     prop.setRestartNeeded(beanProp.isRestartNeeded());
-    prop.setRedeployNeeded(beanProp.isRedeployNeeded()); // TBD - does this ever make sense for config mbeans?
+    prop.setRedeployNeeded(beanProp.isRedeployNeeded());
     prop.setHelpSummaryHTML(LocalizationUtils.helpSummaryHTMLKey(pageSource, beanProp));
     prop.setDetailedHelpHTML(LocalizationUtils.detailedHelpHTMLKey(pageSource, beanProp));
     prop.setLegalValues(getLegalValues(pageSource, beanProp));
@@ -343,9 +341,7 @@ public class UnlocalizedWeblogicPages {
     }
     WeblogicColumn column = new WeblogicColumn();
     column.setName(property);
-    column.setLabel(
-      LocalizationUtils.propertyLabelKey(pageSource, beanProp, columnSource.getLabel())
-    );
+    column.setLabel(getPropertyLabelKey(pageSource, beanProp, columnSource.getLabel()));
     column.setLegalValues(getLegalValues(pageSource, beanProp));
     column.setKey(beanProp.isKey());
     column.setHelpSummaryHTML(LocalizationUtils.helpSummaryHTMLKey(pageSource, beanProp));
@@ -355,6 +351,18 @@ public class UnlocalizedWeblogicPages {
     column.setUsedIf(copyUsedIf(beanProp.getUsedIf()));
     column.setMBeanInfo(getMBeanInfo(beanProp));
     return column;
+  }
+
+  private String getPropertyLabelKey(
+    WeblogicPageSource pageSource,
+    WeblogicBeanProperty beanProp,
+    String pageLevelPropertyLabel
+  ) {
+    if (beanProp.isUseUnlocalizedNameAsLabel()) {
+      return LocalizationUtils.unlocalizedTextKey(beanProp.getName());
+    } else {
+      return LocalizationUtils.propertyLabelKey(pageSource, beanProp, pageLevelPropertyLabel);
+    }
   }
 
   private List<WeblogicAction> createActions(
@@ -484,7 +492,6 @@ public class UnlocalizedWeblogicPages {
   ) throws Exception {
     List<LegalValue> legalValues = new ArrayList<>();
     if (WeblogicBeanProperty.PROPERTY_TYPE_HEALTH_STATE.equals(prop.getPropertyType())) {
-      // TBD HealthState - temporarily represent as a localized enum
       addHealthStateLegalValue(legalValues, HealthStateUtils.OK);
       addHealthStateLegalValue(legalValues, HealthStateUtils.WARN);
       addHealthStateLegalValue(legalValues, HealthStateUtils.CRITICAL);
@@ -511,7 +518,6 @@ public class UnlocalizedWeblogicPages {
   }
 
   private void setBasePageProperties(WeblogicPage page, WeblogicPageSource pageSource) {
-    // TBD - shouldn't this be weblogic version + console backend version?
     page.setWeblogicVersion(getPageSources().getWeblogicVersion());
     page.setHelpPageTitle(LocalizationUtils.helpPageTitleKey(pageSource));
     page.setIntroductionHTML(LocalizationUtils.introductionHTMLKey(pageSource));
@@ -572,7 +578,6 @@ public class UnlocalizedWeblogicPages {
     WeblogicBeanProperty beanProp
   ) throws Exception {
     String propertyType = beanProp.getPropertyType();
-    // TBD HealthState - temporarily represent as a localized enum
     if (WeblogicBeanProperty.PROPERTY_TYPE_HEALTH_STATE.equals(propertyType)) {
       propertyType = WeblogicBeanProperty.PROPERTY_TYPE_STRING;
     }

@@ -73,7 +73,7 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
    */
   protected String getSubTypeDiscriminator() throws Exception {
     SegmentWeblogicData lastSegmentWeblogicData =
-      findSegmentWeblogicData(this.pageRestMapping.getPagePathSegment());
+      findSegmentWeblogicData(getPageRestMapping().getPagePathSegment());
     return getSubTypeDiscriminator(lastSegmentWeblogicData);
   }
 
@@ -90,7 +90,7 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
   /** Adds the table or form to the RDJ - i.e. the bean(s)' data/properties. */
   protected void addDataToResponse() throws Exception {
     SegmentWeblogicData lastSegmentWeblogicData =
-      findSegmentWeblogicData(this.pageRestMapping.getPagePathSegment());
+      findSegmentWeblogicData(getPageRestMapping().getPagePathSegment());
     addLinksContentsToResponse(lastSegmentWeblogicData.identity);
     if (getPageSource().isTable()) {
       getResponseBuilder().add("data", createTableRDJData(lastSegmentWeblogicData));
@@ -227,9 +227,6 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
     path.addComponent(getPerspectivePath().getPerspective());
     path.addComponent("data");
     JsonObject identity = rdjItem.getJsonObject("identity");
-    // TBD - should we convert identity to a WeblogicBeanIdentity
-    // and add the url rules there?
-    // For now, just process it here in json terms.
     JsonArray segments = identity.getJsonArray("path");
     for (int i = 0; i < segments.size(); i++) {
       JsonObject segment = segments.getJsonObject(i);
@@ -488,6 +485,9 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
     PropertyRestMapping propertyMapping,
     SegmentWeblogicData instanceWeblogicData
   ) throws Exception {
+    if (!includeProperty(propertyMapping)) {
+      return null;
+    }
     PluginRestMapping getMethod = propertyMapping.getGetMethod();
     if (getMethod != null) {
       return usePluginToComputePropertyValue(instanceWeblogicData, getMethod);
@@ -497,6 +497,23 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
           .getWeblogicData()
           .get(propertyMapping.getBeanProperty().getRestName());
     }
+  }
+
+  // Determines whether the property should be included.
+  private boolean includeProperty(PropertyRestMapping propertyMapping) {
+    WeblogicBeanProperty beanProp = propertyMapping.getBeanProperty();
+    if ("identity".equals(beanProp.getName())) {
+      // always return the identity
+      return true;
+    }
+    PropertyRestMapping discriminatorMapping =
+      getPageRestMapping().getSubTypeDiscriminatorProperty();
+    if (discriminatorMapping != null && discriminatorMapping.getBeanProperty() == beanProp) {
+      // This is the subtype discriminator.  Get it anyway since the CBE needs it later.
+      return true;
+    }
+    // See if the client excluded the property
+    return getInvocationContext().includeProperty(beanProp.getName());
   }
 
   /** Calls a plugin method to get a property's WLS REST value. */
@@ -603,7 +620,6 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
       collectionParentWeblogicData.getJsonObject(
         parameterMapping.getParent().getBeanProperty().getRestName()
       );
-    // TBD - trim out properties the param didn't ask for
     return collectionWeblogicData;
   }
 
@@ -612,7 +628,6 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
     SegmentWeblogicData instanceWeblogicData,
     BeanPluginParameterRestMapping parameterMapping
   ) throws Exception {
-    // TBD - trim out properties the param didn't ask for
     return
       findSegmentWeblogicData(
         parameterMapping.getParent(),
@@ -626,8 +641,6 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
     PropertyPluginParameterRestMapping parameterMapping
   ) throws Exception {
     // passes in null if we can't find the property.
-    // TBD - should we skip calling the plugin instead?
-    // Should the behavior be configurable in the Source annotation?
     return
       findSegmentWeblogicData(
         parameterMapping.getPluginBeanProperty().getParent(),
@@ -707,20 +720,9 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
     }
     if (WeblogicBeanProperty.PROPERTY_TYPE_HEALTH_STATE.equals(beanProp.getPropertyType())) {
       if (weblogicValue != JsonValue.NULL) {
-        // TBD HealthState
-        // WLS REST returns:
-        // {
-        //   "state": "ok",
-        //   "subsystemName": "ServerRuntime",
-        //   "partitionName": null,
-        //   "symptoms": []
-        // }
-        // Long term: return all of it except for partitionName
-        // Short term: just return state as a localized enum
         return weblogicValue.asJsonObject().get("state");
       }
     }
-    // TBD - could have special rules for stuff like ipAddress, secret, ...
     return weblogicValue;
   }
 
@@ -886,8 +888,19 @@ public abstract class BasePageWeblogicSearchResponseRestMapper extends BaseWeblo
     if (value != null) {
       return value.asJsonObject();
     }
-    if (parentWeblogicData.getSegmentMapping().getBeanProperty().isContainedOptionalSingleton()) {
-      // This property is a child of an optional singleton that doesn't exist. That's OK.
+    PathSegmentRestMapping parentSegmentMapping = parentWeblogicData.getSegmentMapping();
+    if (parentSegmentMapping != null) {
+      WeblogicBeanProperty parentBeanProp = parentSegmentMapping.getBeanProperty();
+      if (parentBeanProp != null && parentBeanProp.isContainedOptionalSingleton()) {
+        // This property is a child of an optional singleton that doesn't exist. That's OK.
+        return createEmptyWeblogicData(beanProp);
+      }
+    }
+    if (getInvocationContext().filtersProperties()) {
+      // The client specified which properties to return.
+      // Most likely, the client didn't include any properties
+      // from this bean or any of its children.
+      // That's ok.
       return createEmptyWeblogicData(beanProp);
     }
     // Some types are recursive, e.g.

@@ -205,8 +205,10 @@ public class EnglishResourceBundleCreator extends PageSourceWalker {
     String detailedHelpKey = LocalizationUtils.detailedHelpHTMLKey(pageSource, prop);
     String detailedHelpHTML = StringUtils.nonNull(getDetailedHelpHTML(pageSource, prop));
     processDetailedHelpHTML(detailedHelpKey, detailedHelpHTML);
-    String labelKey = LocalizationUtils.propertyLabelKey(pageSource, prop, pageLevelPropertyLabel);
-    processPageLevelProperty(labelKey, getPropertyLabel(prop, pageLevelPropertyLabel));
+    if (!prop.isUseUnlocalizedNameAsLabel()) {
+      String labelKey = LocalizationUtils.propertyLabelKey(pageSource, prop, pageLevelPropertyLabel);
+      processPageLevelProperty(labelKey, getPropertyLabel(prop, pageLevelPropertyLabel));
+    }
     collectLegalValues(pageSource, prop);
   }
 
@@ -303,6 +305,9 @@ public class EnglishResourceBundleCreator extends PageSourceWalker {
   }
 
   private String getPropertyLabel(WeblogicBeanProperty prop, String pageLevelPropertyLabel) {
+    if (prop.isUseUnlocalizedNameAsLabel()) {
+      return prop.getName();
+    }
     String val = pageLevelPropertyLabel;
     if (StringUtils.isEmpty(val)) {
       val = prop.getLabel();
@@ -458,13 +463,29 @@ public class EnglishResourceBundleCreator extends PageSourceWalker {
       WeblogicSliceFormPageSource slicePageSource = pageSource.asSliceForm();
       SlicePagePath slicePagePath = slicePageSource.getSlicePagePath();
       List<SliceSource> sliceSources = slicePageSource.getSliceSources();
-      for (String sliceName : slicePagePath.getSlicePath().getComponents()) {
+      Path slicePath = slicePagePath.getSlicePath();
+      for (String sliceName : slicePath.getComponents()) {
         SliceSource sliceSource = findSliceSource(sliceName, sliceSources);
         if (sliceSource == null) {
           throw new AssertionError("Can't find slice " + sliceName + " " + pageSource.getPagePath());
         }
-        sb.append(": ");
-        sb.append(getSliceLabel(sliceSource));
+        // See if this page only has one slice
+        boolean onlySlice = false;
+        if (slicePath.length() == 1) { // top level
+          if (sliceSources.size() == 1) { // no peers
+            if (sliceSource.getSlices().isEmpty()) { // no children
+              onlySlice = true;
+            }
+          }
+        }
+        if (!onlySlice) {
+          // Add the name of this slice to the title
+          sb.append(": ");
+          sb.append(getSliceLabel(sliceSource));
+        } else {
+          // Don't add the name of this slice to the title
+          // since the CFE doesn't display any tabs when there is just one slice.
+        }
         sliceSources = sliceSource.getSlices();
       }
     }

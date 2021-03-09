@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>The WebLogic Tuxedo Connector (WTC) enables WebLogic Server clients to
@@ -10,10 +10,7 @@ introductionHTML: >
 
 displayedColumns:
 - name: "Name"
-# TODO CBE_COMPUTED wtc.wtcservertable.table.deployed (DeploymentUtils.isResourceTargeted)
-# TODO CBE_COMPUTED wtc.wtcservertable.table.activeconnections (WTCServerTableAction)
 # hiddenColumns:
-# TODO CBE_COMPUTED wtc.wtcservertable.table.active
 helpTasks:
 - "wtc/CreateWTCServices"
 - "wtc/DeleteWTCServices"

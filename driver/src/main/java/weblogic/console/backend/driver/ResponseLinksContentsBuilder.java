@@ -9,6 +9,7 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 
 import weblogic.console.backend.pagedesc.LinkSource;
 import weblogic.console.backend.pagedesc.LocalizationUtils;
@@ -117,21 +118,11 @@ public class ResponseLinksContentsBuilder {
     PerspectivePath perspectivePath =
       PerspectivePath.newPerspectivePath(types, url.getFirstComponent());
     WeblogicBeanType root = perspectivePath.getRootBeanType();
-    WeblogicBeanIdentity resourceIdentity = types.getWeblogicBeanIdentityFromFoldedBeanPathWithIdentities(
+    WeblogicBeanIdentity beanIdentity = types.getWeblogicBeanIdentityFromFoldedBeanPathWithIdentities(
           root, url.subPath(3, -1));
-    ResponseIdentityBuilder identityBuilder = 
-      new ResponseIdentityBuilder(perspectivePath, localizer);
-    for (WeblogicBeanIdentitySegment segment : resourceIdentity.getSegments()) {
-      if (segment.isFoldedSingleton()) {
-        continue;
-      }
-      if (segment.getKey() != null) {
-        identityBuilder.addProperty(segment.getProperty(), segment.getKey());
-      } else {
-        identityBuilder.addProperty(segment.getProperty());
-      }
-    }
-    bldr.add("resourceIdentity", identityBuilder.build());
+    JsonValue resourceIdentity =
+      IdentityUtils.weblogicBeanIdentityToResponseIdentity(beanIdentity, perspectivePath, localizer);
+    bldr.add("resourceIdentity", resourceIdentity);
   }
 
   /**

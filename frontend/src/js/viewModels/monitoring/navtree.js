@@ -36,6 +36,19 @@ define(['jquery', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout-keyset', 'ojs/ojar
 
       this.signalBindings = [];
 
+
+      this.beforeExpand = e => { self.navtreeManager.populateNode(e.detail.key) };
+
+      this.beforeCollapse = event => {
+        if (self.selectedItem() === event.detail.key) {
+          // when something node is already open and it is selected, don't close it...
+          // ... except if they click on the expanded icon (as opposed to clicking on the label)
+          let cl = event.detail.originalEvent.path[0].className;
+
+          if (!cl.includes('oj-navigationlist-expand-icon')) event.preventDefault();
+        }
+      };
+      
       this.connected = function () {
         let binding = viewParams.signaling.navtreeUpdated.add(function (treeaction) {
           if (typeof treeaction === 'undefined' || treeaction === null) {
@@ -70,7 +83,6 @@ define(['jquery', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout-keyset', 'ojs/ojar
         self.signalBindings = [];
       };
 
-      this.beforeExpand = e => { self.navtreeManager.populateNode(e.detail.key) };
 
       this.selectedItem.subscribe(function (id) {
         if (id != null) {

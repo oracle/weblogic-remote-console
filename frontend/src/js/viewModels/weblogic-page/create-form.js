@@ -647,7 +647,10 @@ define(['jquery', 'knockout', 'ojs/ojhtmlutils', '../../cfe/common/runtime', '..
 
           // Check for no value and update the payload.
           if (value === null) {
-            value = this.getBackingDataAttributeDefault(name);
+            let defaultValue = this.getBackingDataAttributeDefault(name);
+            if (typeof defaultValue !== 'undefined') {
+              value = defaultValue;
+            }
             if (value === null && pdjTypes.isStringType(name) || pdjTypes.isSecretType(name)) {
               value = "";
             }
@@ -729,11 +732,9 @@ define(['jquery', 'knockout', 'ojs/ojhtmlutils', '../../cfe/common/runtime', '..
             processData: false,
             contentType: false,
             cache: false,
-            success: function (data) {
-              resolve(data);
-            },
-            error: function (data) {
-              resolve(data);
+            dataType: 'json',
+            complete: function (data) {
+              resolve({ responseJSON: data.responseJSON });
             }
           });
         });

@@ -393,7 +393,7 @@ public class JDBCSystemResourceMBeanCreateCustomizer {
   private void populateDriverInfo(String datasourceType, JDBCDriverInfo driverInfo) throws Exception {
     // createDriverInfo returned a new unpopulated JDBCDriverInfo instance.
     // Fill in its properties so we can use it later to convert them to their corresponding mbean properties
-    driverInfo.setFillRequired(false); // TBD - allow default values?
+    driverInfo.setFillRequired(false);
     collectWellKnownConnectionProperties(datasourceType, driverInfo);
     collectCustomConnectionProperties(datasourceType, driverInfo);
   }
@@ -468,7 +468,6 @@ public class JDBCSystemResourceMBeanCreateCustomizer {
         );
       } else {
         // The attribute isn't required and the client didn't specify it.
-        // TBD - do we need to set it to its default value?  Probably not ...
       }
     }
   }
@@ -597,11 +596,6 @@ public class JDBCSystemResourceMBeanCreateCustomizer {
             CREATE_FORM_PROPERTY_MDS_XA_DATASOURCE_LIST
           :
             CREATE_FORM_PROPERTY_MDS_NON_XA_DATASOURCE_LIST;
-
-      // TBD - should have utilities to convert between the data source list in the RDJ,
-      // which is an array of identities, and the data source list in the WLS mbeans,
-      // which is a string containing a comma separated list of data source names.
-      // i.e. this is a case where a string property really contains a list of references.
       JsonArray rdjIdentities =
         ExpandedValue.getReferencesValue(getRequiredProperty(propertyName));
       StringBuilder sb = new StringBuilder();
@@ -657,7 +651,6 @@ public class JDBCSystemResourceMBeanCreateCustomizer {
     String propertyRDJName = null;
     String propertyWeblogicName = weblogicMessage.getString("field");
     if (propertyWeblogicName != null) {
-      // TBD - convert propertyWeblogicName to propertyRDJName
       propertyRDJName = propertyWeblogicName;
     }
     if (propertyRDJName == null) {

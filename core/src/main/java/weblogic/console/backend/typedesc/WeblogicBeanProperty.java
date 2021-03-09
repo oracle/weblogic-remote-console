@@ -463,6 +463,10 @@ public class WeblogicBeanProperty {
     return getConsoleProperty().getLabel();
   }
 
+  public boolean isUseUnlocalizedNameAsLabel() {
+    return getConsoleProperty().isUseUnlocalizedNameAsLabel();
+  }
+
   public String getHelpSummaryHTML() {
     return getConsoleProperty().getHelpSummaryHTML();
   }

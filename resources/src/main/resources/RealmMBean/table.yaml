@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A security realm is a container for the mechanisms--including users,
@@ -12,11 +12,11 @@ introductionHTML: >
 
 displayedColumns:
 - name: "Name"
-# TODO security.realm.realm.table.defaultrealm
-# hiddenColumns:
-# TODO security.realm.realm.table.deployroleignored
-# TODO security.realm.realm.table.deploypolicyignored
-# TODO security.realm.realm.table.deploycredentialmappingignored
+# Followings are deprecated
+#- name: "DefaultRealm"
+#- name: "DeployPolicyIgnored"
+#- name: "DeployRoleIgnored"
+#- name: "DeployCredentialMappingIgnored"
 
 helpTasks:
 - "security/ConfigureNewSecurityRealms"

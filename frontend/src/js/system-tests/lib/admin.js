@@ -369,7 +369,7 @@ module.exports = function (driver, file) {
         // Create new MBean Object from container landing page
         createNewMBeanFromLandingPage: async function(driver,objName)
         {
-            await driver.findElement(By.xpath("//img[@alt=\'New\']")).click();
+            await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/img")).click();
             await driver.findElement(By.id("Name|input")).click();
             await driver.findElement(By.id("Name|input")).sendKeys(objName);
         },
@@ -379,7 +379,7 @@ module.exports = function (driver, file) {
             await driver.sleep(1400);
             await driver.findElement(
                 By.xpath("//oj-button[@id=\'Domain/"+scrumName+"/"+objName+"\']/button/div/span")).click();
-            await driver.sleep(300);
+            await driver.sleep(900);
         },
 
 
@@ -742,9 +742,12 @@ module.exports = function (driver, file) {
         },
 
         // Save modified elements to Shopping Cart
-        saveToShoppingCart: async function(driver) {
+        saveToShoppingCart: async function(driver,buttonId) {
             console.log("Click save to shopping cart");
-            element = driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.save.id]]\']/button/div/span"));
+            if (buttonId == "finish")
+                element = driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons."+buttonId+".id]]\']/button/div/span"));
+            else
+                element = driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.save.id]]\']/button/div/span"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(5400);
             if (element.isEnabled()) {
@@ -767,15 +770,15 @@ module.exports = function (driver, file) {
         // View changes in Shopping Cart
         viewChanges: async function(driver) {
             console.log("Click view changes link from shopping cart");
-            await driver.sleep(300);
+            await driver.sleep(1200);
             element = driver.findElement(By.id("shoppingCartImage"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
                 await element.click();
             }
-            await driver.sleep(300);
+            await driver.sleep(1200);
             await driver.findElement(By.linkText("View Changes")).click();
-            await driver.sleep(300);
+            await driver.sleep(1200);
         },
 
         // Discard changes in Shopping Cart
@@ -786,11 +789,11 @@ module.exports = function (driver, file) {
             if (element.isEnabled()) {
                 await element.click();
             }
-            await driver.sleep(300);
+            await driver.sleep(1200);
             await driver.findElement(By.xpath("//a[@id=\'shoppingCartMenuLauncher\']/img")).click();
-            await driver.sleep(300);
+            await driver.sleep(1200);
             await driver.findElement(By.xpath("//span[contains(.,\'Discard Changes\')]")).click();
-            await driver.sleep(900);
+            await driver.sleep(1200);
         },
         // Commit changes in Shopping Cart
         commitChanges: async function(driver) {
@@ -800,19 +803,18 @@ module.exports = function (driver, file) {
             if (element.isEnabled()) {
                 await element.click();
             }
-            await driver.sleep(300);
+            await driver.sleep(1200);
             await driver.findElement(By.xpath("//a[@id=\'shoppingCartMenuLauncher\']/img")).click();
-            await driver.sleep(300);
+            await driver.sleep(1200);
             await driver.findElement(By.xpath("//span[contains(.,\'Commit Changes\')]")).click();
-            await driver.sleep(3600);
+            await driver.sleep(1200);
         },
 
         // Save modified elements then commit changes
-        saveAndCommitChanges: async function(driver) {
-            await driver.sleep(3600);
-            await this.saveToShoppingCart(driver);
-            await driver.sleep(1400);
-            //await this.saveToShoppingCartImage(driver);
+        saveAndCommitChanges: async function(driver,buttonId) {
+            await driver.sleep(1200);
+            await this.saveToShoppingCart(driver,buttonId);
+            await driver.sleep(1200);
             await this.commitChanges(driver);
         },
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package com.oracle.weblogic.console.backend.services.search;
@@ -55,8 +55,6 @@ public class SearchResource extends BaseResource {
     return searcher.search(directory.normalize().toString(), query);
   }
 
-  // TBD - we need to use the same algorithm that ResourceBundles do to
-  // match up the locale with the language:
   private Path findIndexDir() throws Exception {
     Locale locale = getInvocationContext().getLocalizer().getLocale();
     String language = (locale != null) ? locale.getLanguage() : null;

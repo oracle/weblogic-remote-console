@@ -8,9 +8,17 @@ import org.glassfish.admin.rest.utils.JsonFilter;
 import weblogic.management.rest.lib.bean.resources.CustomSingletonChildResource;
 
 /**
- * The console provides the tree of resources that the console needs
+ * The remote console provides the tree of resources that the console needs
  * for managing weblogic configuration transactions that the WLS REST
  * changeManager tree of resources doesn't provide.
+ *
+ * Long term, this functionality should be moved into the WLS REST api.
+ *
+ * Currently, it just adds one endpoint:
+ *   management/weblogic/<version>/edit/consoleChangeManager/changes
+ *
+ * This endpoint is only visible if the client specifies the
+ * enableConsoleRestExtension query parameter.
  */
 public class ConsoleChangeManagerResource extends CustomSingletonChildResource {
 

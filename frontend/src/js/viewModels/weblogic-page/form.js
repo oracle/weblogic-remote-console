@@ -574,6 +574,29 @@ define(['knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarrayda
 
         let sliceParam = getQualifiedSlice(level);
 
+        // Double check if the top level slice really exists in the PDJ data.
+        // IFF the slice is not found, use the first slice listed in the PDJ.
+        // Perform this sanity check because the form subscribes to RDJ data
+        // observable updates and there are cases where the subscription is
+        // called and the current tab data has not been updated yet!
+        if (sliceParam !== '') {
+          if ((typeof self.pdjData.sliceForm !== 'undefined') &&
+              (typeof self.pdjData.sliceForm.slices !== 'undefined')) {
+            let found = false;
+            let sliceName = (sliceParam.split('.'))[0];
+            let pdjSlices = self.pdjData.sliceForm.slices;
+            for (let i = 0; i < pdjSlices.length; i++) {
+              if (sliceName === pdjSlices[i].name ) {
+                found = true;
+                break;
+              }
+            }
+            if (!found && (pdjSlices.length > 0)) {
+              sliceParam = pdjSlices[0].name;
+            }
+          }
+        }
+
         // slice has changed, reget the pdj/rdj for the selected slice
         $.getJSON(viewParams.parentRouter.data.rdjUrl() + "?slice=" + sliceParam)
           .then(function (rdjData) {
@@ -814,11 +837,14 @@ define(['knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarrayda
       }
 
       function renderPageData(toolbarButton, render) {
-        reloadRdjData();
-
-        // When specified skip the render call as the RDJ reload will trigger observable subscription
-        if ((typeof render === 'undefined') || render) {
-          renderPage();
+        // Only reload data for an edit form as create form would result in table data!
+        const isEdit = typeof self.pdjData.sliceForm !== 'undefined';
+        if (isEdit) {
+          reloadRdjData();
+          // When specified skip the render call as the RDJ reload will trigger observable subscription
+          if ((typeof render === 'undefined') || render) {
+            renderPage();
+          }
         }
 
         self.formToolbarModuleConfig
@@ -1077,6 +1103,9 @@ define(['knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarrayda
       function handleSaveResponse(data, dataAction, dataPayload, eventType, isEdit) {
         clearDynamicFieldMessages();
 
+        // clear the popup messages as they may have lingered from a previous save action
+        viewParams.signaling.popupMessageSent.dispatch();
+
         let responseMessages = [];
 
         if (typeof data.responseJSON !== "undefined") {
@@ -1095,7 +1124,7 @@ define(['knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarrayda
           saveFailedNoMessages(dataAction, dataPayload, isEdit);
         }
         else if (responseMessages.length === 0) {
-          saveSuceededNoMessages(eventType, dataPayload, isEdit);
+          saveSuceededNoMessages(eventType, dataPayload, isEdit, data.responseJSON.data.identity);
         } else {
           // response code of 200 with responseMessages doesn't make sense
           Logger.log(`[FORM] Unknown state: HTTP_STATUS=200, hadResponseMessages=true`);
@@ -1166,7 +1195,7 @@ define(['knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarrayda
         }
       }
 
-      function saveSuceededNoMessages(eventType, dataPayload, isEdit) {
+      function saveSuceededNoMessages(eventType, dataPayload, isEdit, identity) {
         updateMultiSelectControls(dataPayload);
         cacheDataPayload(dataPayload);
         self.dirtyFields.clear();
@@ -1200,20 +1229,26 @@ define(['knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarrayda
           // clear treenav selection
           viewParams.signaling.navtreeSelectionCleared.dispatch();
           const routerData = viewParams.parentRouter.data;
-          let pathLeafName = "";
-          let dataPayloadName = dataPayload['Name'];
-          if (typeof dataPayloadName !== 'undefined') pathLeafName = dataPayloadName.value;
+          
+          const pathSegments = Utils.pathSegmentsFromIdentity(identity);
 
-          const path = decodeURIComponent(routerData.rawPath()) + "/" + encodeURIComponent(pathLeafName);
+          const path = pathSegments.join("/");
+
           const editPage = "/" + viewParams.perspective.id + "/" + encodeURIComponent(path);
 
-          Router.rootInstance.go(editPage)
-            .then((hasChanged) => {
-              self.formToolbarModuleConfig
-                .then((moduleConfig) => {
-                  const changeManager = moduleConfig.viewModel.changeManager();
-                  moduleConfig.viewModel.changeManager({ isLockOwner: changeManager.isLockOwner, hasChanges: changeManager.hasChanges, supportsChanges: changeManager.supportsChanges });
-                  moduleConfig.viewModel.renderToolbarButtons(eventType);
+          // go to e.g. /configuration/ first and then go to the edit page.
+          // this forces a state change on the Router that would not happen
+          // in the case of a singleton because the create/edit URLs are the same
+          Router.rootInstance.go("/" + viewParams.perspective.id + "/")
+            .then(() => {
+              Router.rootInstance.go(editPage)
+                .then((hasChanged) => {
+                  self.formToolbarModuleConfig
+                    .then((moduleConfig) => {
+                      const changeManager = moduleConfig.viewModel.changeManager();
+                      moduleConfig.viewModel.changeManager({ isLockOwner: changeManager.isLockOwner, hasChanges: changeManager.hasChanges, supportsChanges: changeManager.supportsChanges });
+                      moduleConfig.viewModel.renderToolbarButtons(eventType);
+                    });
                 });
             });
         }

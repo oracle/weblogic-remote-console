@@ -3,6 +3,7 @@
 
 package weblogic.console.backend.driver;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
@@ -75,6 +76,34 @@ public class InvocationContext {
     this.identity = identity;
   }
 
+  // Lists the form/table properties that a GET operation should return.
+  // If null, all of the form/table properties are returned.
+  // If not, only properties that are on the form/table AND in
+  // this list are returned.
+  private HashSet<String> properties;
+
+  public boolean filtersProperties() {
+    return this.properties != null;
+  }
+
+  public boolean includeProperty(String propertyName) {
+    if (!filtersProperties()) {
+      return true;
+    }
+    return this.properties.contains(propertyName);
+  }
+
+  public void setProperties(String commaSeparatedPropertyNames) {
+    if (commaSeparatedPropertyNames == null) {
+      this.properties = null;
+    } else {
+      this.properties = new HashSet<>();
+      for (String property : commaSeparatedPropertyNames.split(",")) {
+        this.properties.add(property.trim());
+      }
+    }
+  }
+
   // convenience method:
   public WeblogicBeanTypes getWeblogicBeanTypes() {
     return getVersionedWeblogicPages().getWeblogicBeanTypes();
@@ -98,8 +127,6 @@ public class InvocationContext {
   public VersionedWeblogicPages getVersionedWeblogicPages() {
     return this.versionedWeblogicPages;
   }
-
-  // TBD - should these static methods be moved to another class?
 
   private static VersionedWeblogicPages getVersionedWeblogicPages(Connection connection) {
     if (connection == null) {

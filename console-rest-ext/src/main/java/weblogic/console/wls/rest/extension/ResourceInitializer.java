@@ -31,6 +31,7 @@ public class ResourceInitializer implements weblogic.management.rest.lib.utils.R
     registerConsoleBackendResource(registry, "weblogic.management.runtime.ServerRuntimeMBean");
   }
 
+  // Register the endpoint that returns info about the console REST extension
   private void registerConsoleBackendResource(BeanResourceRegistry registry, String mbeanType) {
     registry.customResources().register(
       mbeanType,
@@ -39,6 +40,7 @@ public class ResourceInitializer implements weblogic.management.rest.lib.utils.R
     );
   }
 
+  // Register the endpoint that returns the pending configuration changes.
   private void registerConsoleChangeManagerResource(BeanResourceRegistry registry) {
     // The edit tree is only on the admin server, so we don't need to also check
     // that this is the admin server.
@@ -50,6 +52,7 @@ public class ResourceInitializer implements weblogic.management.rest.lib.utils.R
     );
   }
 
+  // Customize all of the security provider mbean endpoints to add a 'type' property
   private void customizeRealmProviders(BeanResourceRegistry registry) {
     customizeRealmProviderCollectionChild(registry, "auditors");
     customizeRealmProviderCollectionChild(registry, "authenticationProviders");

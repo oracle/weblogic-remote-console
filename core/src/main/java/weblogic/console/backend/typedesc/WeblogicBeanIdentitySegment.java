@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.backend.typedesc;
@@ -9,8 +9,6 @@ import java.util.logging.Logger;
  * This class represents a segment of a weblogic bean's identity, i.e. the unfolded
  * WeblogicBeanProperty of the parent bean that contains this bean, and an optional key
  * (i.e. if this bean is a contained collection child)
- * <p>
- * TBD - pointer to parent segment Remove key - just record whether you expect a key
  */
 public class WeblogicBeanIdentitySegment {
 

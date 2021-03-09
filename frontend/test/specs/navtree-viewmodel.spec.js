@@ -145,11 +145,11 @@ define(['viewModels/modules/navtree-manager', 'sinon', 'knockout'],
 
           let testGroupResponse = { data: { foo: "bar" } }
 
-          this.server.respondWith("GET", /api\/test\/data\/$/,
+          this.server.respondWith("GET", /api\/test\/data\/\?properties=$/,
             [200, { "Content-Type": "application/json" },
               JSON.stringify(rootObject)]);
 
-          this.server.respondWith("GET", /api\/test\/data\/Foo\/Bar$/, [200, { "Content-Type": "application/json" },
+          this.server.respondWith("GET", /api\/test\/data\/Foo\/Bar\?properties=$/, [200, { "Content-Type": "application/json" },
             JSON.stringify(testGroupResponse)]);
 
           let serversResponse = {
@@ -166,13 +166,13 @@ define(['viewModels/modules/navtree-manager', 'sinon', 'knockout'],
             }]
           }
 
-          this.server.respondWith("GET", /api\/test\/data\/Domain\/Servers$/, [200, { "Content-Type": "application/json" },
+          this.server.respondWith("GET", /api\/test\/data\/Domain\/Servers\?properties=$/, [200, { "Content-Type": "application/json" },
             JSON.stringify(serversResponse)]);
 
-          this.server.respondWith("GET", /api\/test\/data\/Domain$/, [200, { "Content-Type": "application/json" },
+          this.server.respondWith("GET", /api\/test\/data\/Domain\?properties=$/, [200, { "Content-Type": "application/json" },
             JSON.stringify({})]);
 
-          this.server.respondWith("GET", /api\/test\/data\/Domain\/Servers\/MyServer$/, [200, { "Content-Type": "application/json" },
+          this.server.respondWith("GET", /api\/test\/data\/Domain\/Servers\/MyServer\?properties=$/, [200, { "Content-Type": "application/json" },
             JSON.stringify({})]);
 
           this.nm = new NavtreeManager({ id: 'test', name: 'test-perspective' });

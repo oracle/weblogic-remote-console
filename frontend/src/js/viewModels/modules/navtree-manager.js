@@ -53,7 +53,7 @@ define(['knockout', 'ojs/ojarraytreedataprovider', 'ojs/ojkeyset', '../../cfe/co
         }
 
         let baseUrl = Runtime.getBaseUrl() + "/" + self.perspective.id + "/data/";
-        let url = baseUrl + pathToExpand;
+        let url = baseUrl + pathToExpand + "?properties="
 
         if (!(pathToExpand in self.jsonCache)) {
           return $.getJSON({ url: url }).then(function (childrenJson) {
@@ -323,7 +323,7 @@ define(['knockout', 'ojs/ojarraytreedataprovider', 'ojs/ojkeyset', '../../cfe/co
         let path = Utils.pathEncodedFromIdentity(item.identity);
 
         if (path !== "") {
-          let url = Runtime.getBaseUrl() + "/" + self.perspective.id + "/data/" + path;
+          let url = Runtime.getBaseUrl() + "/" + self.perspective.id + "/data/" + path + "?properties="
 
           $.ajax({
             type: "GET",
@@ -435,7 +435,8 @@ define(['knockout', 'ojs/ojarraytreedataprovider', 'ojs/ojkeyset', '../../cfe/co
 
           if (node.kind !== 'group' && collectionCount == 0) {
             if (node.children().length >= MAX_CHILDREN) {
-              node.children.slice(0, MAX_CHILDREN);
+              let slicedArray = node.children.slice(0, MAX_CHILDREN);
+              node.children(slicedArray);
               node.children.push({ label: "...", name: "...", breadcrumbs: node.breadcrumbs, path: node.path + "/...", kind: "condensed" });
             }
           }

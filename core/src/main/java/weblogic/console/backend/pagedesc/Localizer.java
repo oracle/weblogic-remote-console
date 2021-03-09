@@ -25,18 +25,11 @@ public class Localizer {
   }
 
   // Create a localizer for this weblogic version and the client's preferred language
-  //
-  // TBD - should we take an Enumeration<Locale> to match javax.servlet.ServletRequest.getLocales(),
-  // which takes into account all the acceptable languages in the Accept-Language header,
-  // or should we just take a locale, to match javax.servlet.Request.getLocale(), which
-  // returns the most preferred language in the Accept-Language header?
   public Localizer(String weblogicVersion, Locale locale) {
     if (locale == null) {
       locale = Locale.getDefault();
     }
     this.locale = locale;
-    // TBD - double check that this fall back to the default locale
-    // if a bundle for the specific locale isn't found
     this.resourceBundle =
       ResourceBundle.getBundle(
         LocalizationUtils.getResourceBundleName(weblogicVersion),

@@ -42,3 +42,4 @@ client.log.*
 weblogic-bean-info-harvester/build-*
 run/work
 fortify-output/**
+owasp-output/**

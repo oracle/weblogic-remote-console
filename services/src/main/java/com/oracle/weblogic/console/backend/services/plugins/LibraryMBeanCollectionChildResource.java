@@ -18,10 +18,6 @@ public class LibraryMBeanCollectionChildResource extends ConfigurationCollection
 
   private static final Logger LOGGER = Logger.getLogger(LibraryMBeanCollectionChildResource.class.getName());
 
-  // TBD - redeploy an app on the admin server's file system?
-
-  // TBD - upload and redeploy an app
-
   @Override
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)

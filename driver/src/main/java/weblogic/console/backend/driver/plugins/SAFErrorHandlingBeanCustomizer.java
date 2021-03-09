@@ -27,7 +27,6 @@ public abstract class SAFErrorHandlingBeanCustomizer {
   private static final String SAF_QUEUES = "SAFQueues";
   private static final String SAF_TOPICS = "SAFTopics";
 
-  // TBD - put this in some common constants class?
   private static final String IDENTITY = "identity";
 
   // Get the options for a SAFErrorHandlingBean's ErrorDestination property.

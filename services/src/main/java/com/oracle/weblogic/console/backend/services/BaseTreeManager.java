@@ -214,22 +214,24 @@ public abstract class BaseTreeManager /* extends TreeManager */ {
    * messages.
    */
   protected JsonObject newResponseBody(JsonArray messages) {
+    return newResponseBody(messages, Json.createObjectBuilder().build());
+  }
+
+  /**
+   * Create the final response body to return to the client for an operation that can return
+   * messages and data.
+   */
+  protected JsonObject newResponseBody(JsonArray messages, JsonObject data) {
     JsonObjectBuilder responseBody = Json.createObjectBuilder();
     if (!messages.isEmpty()) {
       responseBody.add("messages", messages);
     }
-
-    // TBD - Why are we adding an empty data property to the
-    // response body when creating, updating or deleting a bean?
-    // Currently the CFE requires it.  Why?
-    responseBody.add("data", Json.createObjectBuilder());
-
+    responseBody.add("data", data);
     return addWeblogicVersionToResponseBody(responseBody.build());
   }
 
   /**
-   * Adds the connection's domain's weblogic version to the response body. TBD - why are we adding
-   * this? Does the CFE need/use it?
+   * Adds the connection's domain's weblogic version to the response body.
    */
   protected JsonObject addWeblogicVersionToResponseBody(JsonObject responseBody) {
     return

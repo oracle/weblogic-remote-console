@@ -9,17 +9,14 @@ properties:
 - name: DataSourceLogFileMinSize
   source: FileMinSize
   label: Rotation file size
-  # TODO usedIf RotationType == bySize
 
 - name: DataSourceLogRotationTime
   source: RotationTime
   label: Begin rotation time
-  # TODO usedIf RotationType == byTime
 
 - name: DataSourceLogFileTimeSpan
   source: FileTimeSpan
   label: Rotation interval
-  # TODO usedIf RotationType == byTime
 
 - name: DataSourceLogNumberOfFilesLimited
   source: NumberOfFilesLimited

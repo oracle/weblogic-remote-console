@@ -32,11 +32,6 @@ import weblogic.console.backend.utils.Path;
  * It isolates the console back end from interacting with the mbeans directly so that we can swap
  * in different implementations (e.g. online WLS REST, testing mock mbeans).
  * <p>
- * TBD - can/should we share any code with WeblogicRestConfiguration? Should they share a common
- * reading interface so that we can have a shared mapper that converts the WLS REST response to an
- * RDJ response? Maybe not, especially if that mapper needs to be expanded values aware for
- * configuration but not for runtime.
- * <p>
  * Note:
  * <p>
  * At the WLS bean tree level, each server has its own tree of server runtime mbeans, and the
@@ -178,7 +173,6 @@ public class WeblogicRestRuntime extends AbstractWeblogicRuntime implements Webl
     if (weblogicRestRequestBody == null) {
       throw new BadRequestException("Weblogic REST request body is null");
     }
-    // TBD - special handling for 202? (i.e. the action hasn't completed yet)
     return
       createWeblogicRestResponse(
         WebLogicRestClient.post(
@@ -276,7 +270,7 @@ public class WeblogicRestRuntime extends AbstractWeblogicRuntime implements Webl
   }
 
   private List<String> getTreeRelativePath(Path path, boolean isRuntime) throws Exception {
-    String tree = (isRuntime) ? "domainRuntime" : "domainConfig";
+    String tree = (isRuntime) ? "domainRuntime" : "serverConfig";
     return ((new Path(tree)).childPath(path)).getComponents();
   }
 

@@ -1,9 +1,21 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  This page allows you to configure provider specific attributes for this WebLogic Credential Mapping Provider.
 properties:
-- name: JWTTokenExpiration
-- name: "Name"
-- name: "Description"
 - name: "JWTTokenExpiration"
-- name: "Version"
-- name: "CredentialMappingDeploymentEnabled"
+
+helpTasks:
+- "security/ConfigureCredentialMappingProviders"
+- "security/ManageSecurityProviders"
+
+helpTopics:
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring a WebLogic Credential Mapping Provider"
+  href: "secmg/credmapper.html#SECMG148"
+  type: "edocs"
+- label: "Developing Security Providers for Oracle WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

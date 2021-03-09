@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.backend.filter;
@@ -16,7 +16,6 @@ public class CorsFilter implements ContainerResponseFilter {
   // From https://www.baeldung.com/cors-in-jax-rs
   @Override
   public void filter(ContainerRequestContext req, ContainerResponseContext res) throws IOException {
-    // TODO: These settings are not for production use!
     List<String> origin = req.getHeaders().get("Origin");
 
     // whitelist localhost:8000 - ojet serve

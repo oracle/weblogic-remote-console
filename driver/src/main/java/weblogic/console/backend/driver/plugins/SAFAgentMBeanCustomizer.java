@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.backend.driver.plugins;
@@ -17,7 +17,6 @@ public abstract class SAFAgentMBeanCustomizer {
 
   private static final Logger LOGGER = Logger.getLogger(SAFAgentMBeanCustomizer.class.getName());
 
-  // TBD - put these in some common constants class?
   private static final String IDENTITY = "identity";
   private static final String TARGETS = "targets";
 

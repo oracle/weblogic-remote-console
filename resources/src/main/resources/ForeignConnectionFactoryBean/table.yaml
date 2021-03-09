@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A foreign connection factory represents a connection factory that
@@ -15,7 +15,6 @@ displayedColumns:
 hiddenColumns:
 - name: "Username"
 - name: "Password"
-# TODO CBE_PSWD_ENCRYPTION - name: "PasswordEncrypted"
 - name: "ConnectionHealthChecking"
 
 helpTasks:

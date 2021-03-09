@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.wls.rest.extension;
@@ -12,7 +12,6 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.glassfish.admin.rest.utils.JsonFilter;
 import weblogic.descriptor.BeanUpdateEvent;
-import weblogic.management.rest.lib.bean.Constants;
 import weblogic.management.rest.lib.bean.utils.AttributeType;
 import weblogic.management.rest.lib.bean.utils.BeanType;
 import weblogic.management.rest.lib.bean.utils.BeanUtils;
@@ -362,7 +361,7 @@ public class ChangesFormatter {
       return ((PropertyType)attrType).getMarshaller().marshal(ic, null, attrType, true);
     }
     if (this.attrType instanceof ReferencedBeanType) {
-      return wrapIfExpandedValues(ic, getIdentity(value));
+      return wrapIfExpandedValuesEnabled(ic, getIdentity(value));
     }
     if (this.attrType instanceof ReferencedBeansType) {
       JSONArray refs = new JSONArray();
@@ -371,7 +370,7 @@ public class ChangesFormatter {
         identity.put("identity", getIdentity(ref));
         refs.put(identity);
       }
-      return wrapIfExpandedValues(ic, refs);
+      return wrapIfExpandedValuesEnabled(ic, refs);
     }
     throw
       new AssertionError(
@@ -486,12 +485,10 @@ public class ChangesFormatter {
   // Converts an unexpanded property value into an expanded value
   // if the client asked for expanded values (including finding
   // out whether the property is set).  Otherwise returns the unexpanded value.
-  private Object wrapIfExpandedValues(InvocationContext ic, Object unwrappedValue) throws Exception {
+  private Object wrapIfExpandedValuesEnabled(InvocationContext ic, Object unwrappedValue) throws Exception {
     if (ic.expandedValues()) {
-      JSONObject wrappedValue = new JSONObject();
-      wrappedValue.put(Constants.PROP_VALUE, unwrappedValue);
-      wrappedValue.put(Constants.PROP_SET, BeanUtils.isBeanPropertySet(ic, this.attrType, true));
-      return wrappedValue;
+      boolean set =  BeanUtils.isBeanPropertySet(ic, this.attrType, true);
+      return ConsoleUtils.createExpandedValue(unwrappedValue, set);
     } else {
       return unwrappedValue;
     }

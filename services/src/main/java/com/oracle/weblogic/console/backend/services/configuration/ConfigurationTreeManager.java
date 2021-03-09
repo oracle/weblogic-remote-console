@@ -11,6 +11,8 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 import javax.ws.rs.core.Response;
 
 import com.oracle.weblogic.console.backend.services.BaseTreeManager;
@@ -19,6 +21,7 @@ import weblogic.console.backend.Message;
 import weblogic.console.backend.driver.BadRequestException;
 import weblogic.console.backend.driver.ConfigurationPageWeblogicSearchResponseRestMapper;
 import weblogic.console.backend.driver.ExpandedValue;
+import weblogic.console.backend.driver.IdentityUtils;
 import weblogic.console.backend.driver.InvocationContext;
 import weblogic.console.backend.driver.PageRestMapping;
 import weblogic.console.backend.driver.PageWeblogicSearchQueryRestMapper;
@@ -29,6 +32,7 @@ import weblogic.console.backend.driver.WeblogicWriteRequest;
 import weblogic.console.backend.driver.WeblogicWriteRequestRestMapper;
 import weblogic.console.backend.pagedesc.LocalizationUtils;
 import weblogic.console.backend.pagedesc.PagePath;
+import weblogic.console.backend.typedesc.WeblogicBeanIdentity;
 import weblogic.console.backend.typedesc.WeblogicBeanProperty;
 import weblogic.console.backend.utils.Path;
 import weblogic.console.backend.utils.PluginInvocationUtils;
@@ -185,12 +189,85 @@ public class ConfigurationTreeManager extends BaseTreeManager {
         :
           customCreateBean(createMethod, requestBody);
 
-    // Send back a 201 plus any messages we've collected.
+    return createdBeanResponse(pagePath, requestBody, messages);
+  }
+
+  protected Response createdBeanResponse(
+    PagePath pagePath,
+    JsonObject requestBody,
+    JsonArray messages
+  ) throws Exception {
+    WeblogicBeanIdentity createdBeanIdentity = getCreatedBeanIdentity(pagePath, requestBody);
+    JsonValue createdBeanResponseIdentity =
+      IdentityUtils.weblogicBeanIdentityToResponseIdentity(
+        createdBeanIdentity,
+        pagePath.getPagesPath().getPerspectivePath(),
+        getInvocationContext().getLocalizer()
+      );
+    JsonObjectBuilder dataBldr = Json.createObjectBuilder();
+    dataBldr.add("identity", createdBeanResponseIdentity);
+
+    // Send back a 201 plus any messages we've collected and the identity of the new bean
     return
        Response
         .status(Response.Status.CREATED)
-        .entity(newResponseBody(messages))
+        .entity(newResponseBody(messages, dataBldr.build()))
         .build();
+  }
+
+  // Compute the identity of the bean that just got created
+  protected WeblogicBeanIdentity getCreatedBeanIdentity(PagePath pagePath, JsonObject requestBody) throws Exception {
+    WeblogicBeanIdentity creatorIdentity = getIdentity();
+
+    if (creatorIdentity.isCreatableOptionalUnfoldedSingleton()) {
+      // It's an optional singleton, so it has the same identity as the one used to create it.
+      return creatorIdentity;
+    }
+    if (!creatorIdentity.isCollection()) {
+      throw new AssertionError("Creator is not a creatable optional singleton or collection: " + pagePath);
+    }
+
+    // It's a collection child, so it has the same identity as the collection except that
+    // the name of the new child gets added to the last segment
+    // (actually, the value of the key property, which is usually the Name property)
+
+    // Get the collection's folded bean path and add the key to it.
+    Path creatorFoldedBeanPath = creatorIdentity.getFoldedBeanPathWithIdentities();
+    Path createdFoldedBeanPath = creatorFoldedBeanPath.childPath(getKeyAsString(pagePath, requestBody));
+
+    // Convert the folded bean path to a WeblogicBeanIdentity
+    return
+      pagePath
+        .getPagesPath()
+        .getBeanType()
+        .getTypes()
+        .getWeblogicConfigBeanIdentityFromFoldedBeanPathWithIdentities(createdFoldedBeanPath);
+  }
+
+  /** Get the value of the key property in the request body as a string */
+  private String getKeyAsString(PagePath pagePath, JsonObject requestBody) throws Exception {
+    // Find the key property
+    WeblogicBeanProperty keyProperty = pagePath.getPagesPath().getBeanType().getKeyProperty();
+    if (keyProperty == null) {
+      throw new AssertionError("No key property for collection: " + pagePath);
+    }
+
+    // Find the value of the key property in the request body.
+    JsonObject wrappedKey = requestBody.getJsonObject("data").getJsonObject(keyProperty.getName());
+    if (wrappedKey == null) {
+      throw new AssertionError("Key property not in request body: " + requestBody + " " + pagePath);
+    }
+
+    String propertyType = keyProperty.getPropertyType();
+    if (WeblogicBeanProperty.PROPERTY_TYPE_STRING.equals(propertyType)) {
+      return ExpandedValue.getStringValue(wrappedKey);
+    } else if (WeblogicBeanProperty.PROPERTY_TYPE_INT.equals(propertyType)) {
+      return "" + ExpandedValue.getIntValue(wrappedKey);
+    } else if (WeblogicBeanProperty.PROPERTY_TYPE_LONG.equals(propertyType)) {
+      return "" + ExpandedValue.getLongValue(wrappedKey);
+    } else {
+      throw new AssertionError("Key property is not a string or an int: " + pagePath + " " + keyProperty);
+    }
   }
 
   private JsonArray standardCreateBean(
@@ -424,7 +501,6 @@ public class ConfigurationTreeManager extends BaseTreeManager {
           // Don't roll back so that the user doesn't lose the prior edits.
           // There's a good chance the user will need to roll back all the
           // changes to correct the problem.
-          // TBD - should we also tell the user that the user might need to roll back?
         }
 
         // Send back a 400 and all the messages.
@@ -475,7 +551,7 @@ public class ConfigurationTreeManager extends BaseTreeManager {
   }
 
   /** We're getting a create form or creating a bean. Create a page path for the create form. */
-  private PagePath newCreateFormPagePath() throws Exception {
+  protected PagePath newCreateFormPagePath() throws Exception {
     return PagePath.newCreateFormPagePath(newPagesPath(getIdentity().getBeanType()));
   }
 
@@ -546,9 +622,6 @@ public class ConfigurationTreeManager extends BaseTreeManager {
    * body that the client sent in.
    * <p>
    * That is, the request body should look like: { data: { ListenPort: ... } }
-   * <p>
-   * TBD: why are we wrapping the properties in a "data" json object? For symmetry with GET? The
-   * underlying WLS REST api doesn't wrap them.
    */
   private JsonObject getFoldedPropertiesToSet(JsonObject requestBody) {
     return requestBody.getJsonObject("data");
@@ -614,9 +687,6 @@ public class ConfigurationTreeManager extends BaseTreeManager {
       if (propertyMapping == null) {
         // Weird - the Weblogic REST api returned a property-scoped message
         // for a property that doesn't appear on the page.
-        // TBD - throw an AssertionError for now.  Later on we might want to just
-        // turn this into a global message (andy maybe prepend the WLS property name
-        // to the message).
         throw
           new AssertionError(
             "Can't find RDJ property for "

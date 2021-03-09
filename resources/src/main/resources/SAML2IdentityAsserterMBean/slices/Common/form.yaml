@@ -1,0 +1,47 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+    <p>This page displays basic information about this SAML 2.0 Identity
+    Assertion Provider.</p>
+
+properties:
+- name: Name
+- name: Type
+- name: Description
+- name: Version
+- name: ActiveTypes
+- name: Base64DecodingRequired
+helpTasks:
+- "security/ConfigureAuthenticationProviders"
+- "security/ConfigurePasswordValidationProviders"
+- "security/SetTheJAASControlFlag"
+- "security/ManageSecurityProviders"
+helpTopics:
+- label: "Configuring a SAML 2.0 Identity Assertion Provider"
+  href: "secmg/ia_atn.html#SECMG223"
+  type: "edocs"
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html"
+  type: "edocs"
+- label: "Configuring Keystores"
+  href: "secmg/identity_trust.html"
+  type: "edocs"
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: "edocs"
+- label: "Configuring the WebLogic Authentication Provider"
+  href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"
+  type: "generic"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Using Security Assertion Markup Language (SAML) Tokens For Identity"
+  href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"
+  type: "generic"
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
+- label: "Developing Security Providers for Oracle WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

@@ -1,0 +1,32 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+    <p>This page displays basic information about this DBMS Authentication
+    provider. You can also use this page to set the JAAS Control Flag to
+    control how this provider is used in the login sequence.</p>
+
+properties:
+- name: Name
+- name: Type
+- name: Description
+- name: Version
+- name: ControlFlag
+helpTasks:
+- "security/ConfigureAuthenticationProviders"
+- "security/ConfigurePasswordValidationProviders"
+- "security/SetTheJAASControlFlag"
+- "security/ManageSecurityProviders"
+helpTopics:
+- label: "Setting the JAAS Control Flag Option"
+  href: "secmg/atn_intro.html#SECMG172"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring RDBMS Authentication Providers"
+  href: "secmg/rdbms_atn.html#SECMG190"
+  type: "edocs"
+- label: "Developing Security Providers for Oracle WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

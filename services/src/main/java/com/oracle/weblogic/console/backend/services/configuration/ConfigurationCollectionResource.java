@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package com.oracle.weblogic.console.backend.services.configuration;
@@ -31,15 +31,12 @@ public class ConfigurationCollectionResource extends WeblogicBeanResource {
   //
   // I'd prefer to use an enum, but that's tricky with @QueryParam and @DefaultValue annotations
   private static final String VIEW_TABLE = "table";
-  // TBD rename this when the CFE can catch up:
   private static final String VIEW_CREATE_FORM = "new";
 
   /**
    * Get the RDJ for the collection's table or the collection's create form
    *
    * @param action - which action ("table" or "new")
-   *     TBD rename dataAction to something else and
-   *     'new' to 'createForm' when the CBE can catch up.
    *
    * @return an HTTP response.
    *     Response codes:

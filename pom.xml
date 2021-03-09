@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2020, Oracle Corporation and/or its affiliates.  All rights reserved.
+<!-- Copyright 2020, 2021, Oracle and/or its affiliates.
      Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.  -->
 <project
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -18,6 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java_version>11</java_version>
+        <dependency-check.skip>false</dependency-check.skip>
         <maven.compiler.source>${java_version}</maven.compiler.source>
         <maven.compiler.target>${java_version}</maven.compiler.target>
         <maven.compiler.testSource>${java_version}</maven.compiler.testSource>
@@ -35,6 +36,7 @@
         <version.jersey-rx-client-rxjava>2.31</version.jersey-rx-client-rxjava>
         <version.console.backend>1.0-SNAPSHOT</version.console.backend>
 
+        <version.plugin.dependency-check>6.0.2</version.plugin.dependency-check>
         <version.plugin.maven-compiler>3.7.0</version.plugin.maven-compiler>
         <version.plugin.maven-jar>2.5</version.plugin.maven-jar>
         <version.plugin.maven-clean>3.1.0</version.plugin.maven-clean>
@@ -175,6 +177,26 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>3.0.0-M3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${version.plugin.dependency-check}</version>
+                    <configuration>
+                        <skip>${dependency-check.skip}</skip>
+                        <skipTestScope>true</skipTestScope>
+                        <failBuildOnAnyVulnerability>false</failBuildOnAnyVulnerability>
+                        <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        <formats>
+                            <format>HTML</format>
+                            <format>CSV</format>
+                        </formats>
+                        <suppressionFiles>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <suppressionFile>build-tools/dependency-check-suppression.xml</suppressionFile>
+                        </suppressionFiles>
+                        <outputDirectory>owasp-output</outputDirectory>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

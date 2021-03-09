@@ -1,1020 +1,1020 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
 - name: ClassChangeNotifier
-  label: ClassChangeNotifier
+  useUnlocalizedNameAsLabel: true
 
 - name: ClassLoader
-  label: ClassLoader
+  useUnlocalizedNameAsLabel: true
 
 - name: ClassLoaderVerbose
-  label: ClassLoaderVerbose
+  useUnlocalizedNameAsLabel: true
 
 - name: ClassloaderWebApp
-  label: ClassloaderApp
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugAppAnnotations
-  label: DebugAppAnnotations
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugAppContainer
-  label: DebugAppContainer
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugAsyncQueue
-  label: DebugAsyncQueue
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugBeanTreeHarvesterControl
-  label: DebugBeanTreeHarvesterControl
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugBeanTreeHarvesterDataCollection
-  label: DebugBeanTreeHarvesterDataCollection
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugBeanTreeHarvesterResolution
-  label: DebugBeanTreeHarvesterResolution
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugBeanTreeHarvesterThreading
-  label: DebugBeanTreeHarvesterThreading
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugBootstrapServlet
-#   label: DebugBootstrapServlet
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugBuzzProtocol
-  label: DebugBuzzProtocol
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugBuzzProtocolDetails
-  label: DebugBuzzProtocolDetails
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugBuzzProtocolHttp
-  label: DebugBuzzProtocolHttp
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugCertRevocCheck
-  label: DebugCertRevocCheck
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugClassLoadingContextualTrace
-  label: DebugClassLoadingContextualTrace
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugClassLoadingVerbose
-  label: DebugClassLoadingVerbose
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugClassRedef
-  label: DebugClassRedef
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugClassSize
-  label: DebugClassSize
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugCluster
-  label: DebugCluster
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugClusterAnnouncements
-  label: DebugClusterAnnouncements
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugClusterFragments
-  label: DebugClusterFragments
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugClusterHeartbeats
-  label: DebugClusterHeartbeats
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConcurrent
-  label: DebugConcurrent
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConcurrentContext
-  label: DebugConcurrentContext
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConcurrentMES
-  label: DebugConcurrentMES
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConcurrentMSES
-  label: DebugConcurrentMSES
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConcurrentMTF
-  label: DebugConcurrentMTF
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConcurrentTransaction
-  label: DebugConcurrentTransaction
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConfigurationEdit
-  label: DebugConfigurationEdit
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConfigurationRuntime
-  label: DebugConfigurationRuntime
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConnectorService
-  label: DebugConnectorService
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugConsensusLeasing
-  label: DebugConsensusLeasing
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDRSCalls
-  label: DebugDRSCalls
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDRSHeartbeats
-  label: DebugDRSHeartbeats
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDRSMessages
-  label: DebugDRSMessages
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDRSQueues
-  label: DebugDRSQueues
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDRSStateTransitions
-  label: DebugDRSStateTransitions
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDRSUpdateStatus
-  label: DebugDRSUpdateStatus
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugDefaultStoreVerbose
-#   label: DebugDefaultStoreVerbose
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugDeploy
-  label: DebugDeploy
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDeployment
-  label: DebugDeployment
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDeploymentConcise
-  label: DebugDeploymentConcise
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDeploymentPlan
-  label: DebugDeploymentPlan
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDeploymentService
-  label: DebugDeploymentService
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDeploymentServiceInternal
-  label: DebugDeploymentServiceInternal
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDeploymentServiceStatusUpdates
-  label: DebugDeploymentServiceStatusUpdates
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDeploymentServiceTransport
-  label: DebugDeploymentServiceTransport
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDeploymentServiceTransportHttp
-  label: DebugDeploymentServiceTransportHttp
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDescriptor
-  label: DebugDescriptor
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticAccessor
-  label: DebugDiagnosticAccessor
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticArchive
-  label: DebugDiagnosticArchive
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticArchiveRetirement
-  label: DebugDiagnosticArchiveRetirement
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticCollections
-  label: DebugDiagnosticCollections
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticContext
-  label: DebugDiagnosticContext
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticDataGathering
-  label: DebugDiagnosticDataGathering
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticFileArchive
-  label: DebugDiagnosticFileArchive
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticImage
-  label: DebugDiagnosticImage
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticInstrumentation
-  label: DebugDiagnosticInstrumentation
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticInstrumentationActions
-  label: DebugDiagnosticInstrumentationActions
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticInstrumentationConfig
-  label: DebugDiagnosticInstrumentationConfig
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticInstrumentationEvents
-  label: DebugDiagnosticInstrumentationEvents
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticInstrumentationWeaving
-  label: DebugDiagnosticInstrumentationWeaving
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticInstrumentationWeavingMatches
-  label: DebugDiagnosticInstrumentationWeavingMatches
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticJdbcArchive
-  label: DebugDiagnosticJdbcArchive
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticLifecycleHandlers
-  label: DebugDiagnosticLifecycleHandlers
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticQuery
-  label: DebugDiagnosticQuery
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticRuntimeControlDriver
-  label: DebugDiagnosticRuntimeControlDriver
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticRuntimeControlService
-  label: DebugDiagnosticRuntimeControlService
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticWatch
-  label: DebugDiagnosticWatch
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticWatchEvents
-  label: DebugDiagnosticWatchEvents
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticWatchEventsDetails
-  label: DebugDiagnosticWatchEventsDetails
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticWlstoreArchive
-  label: DebugDiagnosticWlstoreArchive
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsBeanExtensionResolver
-  label: DebugDiagnosticsBeanExtensionResolver
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsBeanInfoProviders
-  label: DebugDiagnosticsBeanInfoProviders
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsELContext
-  label: DebugDiagnosticsELContext
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsELResolver
-  label: DebugDiagnosticsELResolver
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsExpressionEvaluators
-  label: DebugDiagnosticsExpressionEvaluators
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsExpressionFunctionMapper
-  label: DebugDiagnosticsExpressionFunctionMapper
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsExpressionFunctions
-  label: DebugDiagnosticsExpressionFunctions
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsExpressionMetrics
-  label: DebugDiagnosticsExpressionMetrics
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsExpressionPoller
-  label: DebugDiagnosticsExpressionPoller
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsExpressionPollerBuffer
-  label: DebugDiagnosticsExpressionPollerBuffer
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsHarvester
-  label: DebugDiagnosticsHarvester
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsHarvesterData
-  label: DebugDiagnosticsHarvesterData
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsHarvesterMBeanPlugin
-  label: DebugDiagnosticsHarvesterMBeanPlugin
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsHarvesterTreeBeanPlugin
-  label: DebugDiagnosticsHarvesterTreeBeanPlugin
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsMBeanELResolver
-  label: DebugDiagnosticsMBeanELResolver
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsModule
-  label: DebugDiagnosticsModule
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsScriptAction
-  label: DebugDiagnosticsScriptAction
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsUtils
-  label: DebugDiagnosticsUtils
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsValueTracingELResolver
-  label: DebugDiagnosticsValueTracingELResolver
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDomainLogHandler
-  label: DebugDomainLogHandler
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDynamicSingletonServices
-  label: DebugDynamicSingletonServices
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbCaching
-  label: DebugEjbCaching
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbCmpDeployment
-  label: DebugEjbCmpDeployment
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbCmpRuntime
-  label: DebugEjbCmpRuntime
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbCompilation
-  label: DebugEjbCompilation
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbDeployment
-  label: DebugEjbDeployment
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbInvoke
-  label: DebugEjbInvoke
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbLocking
-  label: DebugEjbLocking
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbMdbConnection
-  label: DebugEjbMdbConnection
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbMetadata
-  label: DebugEjbMetadata
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbPooling
-  label: DebugEjbPooling
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbSecurity
-  label: DebugEjbSecurity
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbSwapping
-  label: DebugEjbSwapping
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugEjbTimerStore
 #   abel: DebugEjbTimerStore
 
 - name: DebugEjbTimers
-  label: DebugEjbTimers
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugElasticActions
-  label: DebugElasticActions
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugElasticServices
-  label: DebugElasticServices
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEmbeddedLDAP
-  label: DebugEmbeddedLDAP
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEmbeddedLDAPWriteOverrideProps
-  label: DebugEmbeddedLDAPWriteOverrideProps
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugExpressionBeanLocalizer
-  label: DebugExpressionBeanLocalizer
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugExpressionExtensionsManager
-  label: DebugExpressionExtensionsManager
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugFileDistributionServlet
-  label: DebugFileDistributionServlet
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugHttp
-  label: DebugHttp
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugHttpConcise
-  label: DebugHttpConcise
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugHttpLogging
-  label: DebugHttpLogging
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugHttpSessions
-  label: DebugHttpSessions
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugIIOP
-#   label: DebugIIOP
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPNaming
-  label: DebugIIOPNaming
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPTunneling
-  label: DebugIIOPTunneling
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugInterceptors
-  label: DebugInterceptors
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJ2EEManagement
-  label: DebugJ2EEManagement
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCConn
-  label: DebugJDBCConn
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJDBCDriverLogging
 #   abel: DebugJDBCDriverLogging
 
 - name: DebugJDBCInternal
-  label: DebugJDBCInternal
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCONS
-  label: DebugJDBCONS
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCRAC
-  label: DebugJDBCRAC
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCRMI
-  label: DebugJDBCRMI
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCReplay
-  label: DebugJDBCReplay
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCSQL
-  label: DebugJDBCSQL
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCUCP
-  label: DebugJDBCUCP
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJMSAME
-#   label: DebugJMSAME
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSBackEnd
-  label: DebugJMSBackEnd
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSBoot
-  label: DebugJMSBoot
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSCDS
-  label: DebugJMSCDS
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSCommon
-  label: DebugJMSCommon
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSConfig
-  label: DebugJMSConfig
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJMSCrossDomainSecurity
-#   label: DebugJMSCrossDomainSecurity
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSDispatcher
-  label: DebugJMSDispatcher
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSDispatcherProxy
-  label: DebugJMSDispatcherProxy
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJMSDispatcherUtilsVerbose
-#  label: DebugJMSDispatcherUtilsVerbose
+#  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJMSDispatcherVerbose
-#   label: DebugJMSDispatcherVerbose
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSDistTopic
-  label: DebugJMSDistTopic
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJMSDotNetProxy
-#   label: DebugJMSDotNetProxy
+#   useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJMSDotNetT3Server
-#   label: DebugJMSDotNetT3Server
+#   useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJMSDotNetTransport
-#   label: DebugJMSDotNetTransport
+#   useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJMSDurSub
-#  label: DebugJMSDurSub
+#  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJMSDurableSubscribers
-#   label: DebugJMSDurableSubscribers
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSFrontEnd
-  label: DebugJMSFrontEnd
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJMSJDBCScavengeOnFlush
-#   label: DebugJMSJDBCScavengeOnFlush
+#   useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJMSJNDI
-#   label: DebugJMSJNDI
+#   useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJMSLocking
-#   label: DebugJMSLocking
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSMessagePath
-  label: DebugJMSMessagePath
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSModule
-  label: DebugJMSModule
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJMSOBS
-#   label: DebugJMSOBS
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSPauseResume
-  label: DebugJMSPauseResume
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSSAF
-  label: DebugJMSSAF
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJMSStore
-#   label: DebugJMSStore
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMST3Server
-  label: DebugJMST3Server
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSWrappers
-  label: DebugJMSWrappers
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJMSXA
-#   label: DebugJMSXA
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMX
-  label: DebugJMX
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMXCompatibility
-  label: DebugJMXCompatibility
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMXCore
-  label: DebugJMXCore
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMXCoreConcise
-  label: DebugJMXCoreConcise
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMXDomain
-  label: DebugJMXDomain
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMXEdit
-  label: DebugJMXEdit
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJMXRuntime
-  label: DebugJMXRuntime
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTA2PC
-  label: DebugJTA2PC
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugJTA2PCDetail
-#   label: DebugJTA2PCDetail
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJTA2PCStackTrace
-  label: DebugJTA2PCStackTrace
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJTAAPI
-#   label: DebugJTAAPI
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJTACDI
-  label: DebugJTACDI
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTAGateway
-  label: DebugJTAGateway
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTAGatewayStackTrace
-  label: DebugJTAGatewayStackTrace
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTAHealth
-  label: DebugJTAHealth
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTAJDBC
-  label: DebugJTAJDBC
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTALLR
-  label: DebugJTALLR
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTALifecycle
-  label: DebugJTALifecycle
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTAMigration
-  label: DebugJTAMigration
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTANaming
-  label: DebugJTANaming
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTANamingStackTrace
-  label: DebugJTANamingStackTrace
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTANonXA
-  label: DebugJTANonXA
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTAPropagate
-  label: DebugJTAPropagate
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJTARMI
-#   label: DebugJTARMI
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJTARecovery
-  label: DebugJTARecovery
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugJTARecoveryStackTrace
-#   label: DebugJTARecoveryStackTrace
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJTAResourceHealth
-  label: DebugJTAResourceHealth
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: JTATransactionName
-#   label: JTATransactionName
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJTATLOG
-  label: DebugJTATLOG
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTAXA
-  label: DebugJTAXA
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJTAXAStackTrace
-  label: DebugJTAXAStackTrace
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaDataCache
-  label: DebugJpaDataCache
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaEnhance
-  label: DebugJpaEnhance
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaJdbcJdbc
-  label: DebugJpaJdbcJdbc
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaJdbcSchema
-  label: DebugJpaJdbcJdbc
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaJdbcSql
-  label: DebugJpaJdbcSql
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaManage
-  label: DebugJpaManage
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaMetaData
-  label: DebugJpaMetaData
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaProfile
-  label: DebugJpaProfile
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaQuery
-  label: DebugJpaQuery
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaRuntime
-  label: DebugJpaQuery
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugJpaTool
-  label: DebugJpaTool
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugLeaderElection
-  label: DebugLeaderElection
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugLibraries
-  label: DebugLibraries
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugLoggingConfiguration
-  label: DebugLoggingConfiguration
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMBeanHarvesterControl
-  label: DebugMBeanHarvesterControl
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMBeanHarvesterDataCollection
-  label: DebugMBeanHarvesterDataCollection
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMBeanHarvesterResolution
-  label: DebugMBeanHarvesterResolution
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMBeanHarvesterThreading
-  label: DebugMBeanHarvesterThreading
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMBeanTypeUtilQueue
-  label: DebugMBeanTypeUtilQueue
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMBeanTypeUtilQueuePriority
-  label: DebugMBeanTypeUtilQueuePriority
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMBeanTypeUtilityListener
-  label: DebugMBeanTypeUtilityListener
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMBeanTypingUtility
-  label: DebugMBeanTypingUtility
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugManagementServicesResource
-  label: DebugManagementServicesResource
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugMessagingBridgeDumpToConsole
-#   label: DebugMessagingBridgeDumpToConsole
+#   useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugMessagingBridgeDumpToLog
-#   label: DebugMessagingBridgeDumpToLog
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugMessagingBridgeRuntime
-  label: DebugMessagingBridgeRuntime
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMessagingBridgeRuntimeVerbose
-  label: DebugMessagingBridgeRuntimeVerbose
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMessagingBridgeStartup
-  label: DebugMessagingBridgeStartup
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMessagingKernel
-  label: DebugMessagingKernel
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMessagingKernelBoot
-  label: DebugMessagingKernelBoot
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMessagingOwnableLock
-  label: DebugMessagingOwnableLock
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugNodeManagerRuntime
-  label: DebugNodeManagerRuntime
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugPatchingRuntime
-  label: DebugPatchingRuntime
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugPathSvc
-  label: DebugPathSvc
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugPathSvcVerbose
-  label: DebugPathSvcVerbose
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugPersistentStoreManager
-#   label: DebugPersistentStoreManager
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugRA
-  label: DebugRA
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAClassloader
-  label: DebugRAClassloader
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAConnEvents
-  label: DebugRAConnEvents
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAConnections
-  label: DebugRAConnections
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRADeployment
-  label: DebugRADeployment
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRALifecycle
-  label: DebugRALifecycle
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRALocalOut
-  label: DebugRALocalOut
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAParsing
-  label: DebugRAParsing
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAPoolVerbose
-  label: DebugRAPoolVerbose
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAPooling
-  label: DebugRAPooling
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRASecurityCtx
-  label: DebugRASecurityCtx
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAWork
-  label: DebugRAWork
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAWorkEvents
-  label: DebugRAWorkEvents
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAXAin
-  label: DebugRAXAin
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAXAout
-  label: DebugRAXAout
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRAXAwork
-  label: DebugRAXAwork
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRESTNotifications
-  label: DebugRESTNotifications
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugReadyApp
-  label: DebugReadyApp
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugReplication
-  label: DebugReplication
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugReplicationDetails
-  label: DebugReplicationDetails
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugReplicationSize
-  label: DebugReplicationSize
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRestJersey1Integration
-  label: DebugRestJersey1Integration
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRestJersey2Integration
-  label: DebugRestJersey2Integration
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRestartInPlace
-  label: DebugRestartInPlace
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSAFAdmin
-  label: DebugSAFAdmin
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugSAFLifeCycle
-#   label: DebugSAFLifeCycle
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugSAFManager
-  label: DebugSAFManager
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugSAFMessagePath
-#   label: DebugSAFMessagePath
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugSAFReceivingAgent
-  label: DebugSAFReceivingAgent
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSAFSendingAgent
-  label: DebugSAFSendingAgent
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSAFStore
-  label: DebugSAFStore
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSAFTransport
-  label: DebugSAFTransport
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSAFVerbose
-  label: DebugSAFVerbose
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSNMPAgent
-  label: DebugSNMPAgent
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSNMPExtensionProvider
-  label: DebugSNMPExtensionProvider
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSNMPProtocolTCP
-  label: DebugSNMPProtocolTCP
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSNMPToolkit
-  label: DebugSNMPToolkit
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugScaContainer
-  label: DebugScaContainer
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugSecurity
-#   label: DebugSecurity
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityAdjudicator
-  label: DebugSecurityAdjudicator
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityAtn
-  label: DebugSecurityAtn
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityAtz
-  label: DebugSecurityAtz
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityAuditor
-  label: DebugSecurityAuditor
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityCertPath
-  label: DebugSecurityCertPath
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityCredMap
-  label: DebugSecurityCredMap
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityEEngine
-  label: DebugSecurityEEngine
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityEncryptionService
-  label: DebugSecurityEncryptionService
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityJACC
-  label: DebugSecurityJACC
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityJACCNonPolicy
-  label: DebugSecurityJACCNonPolicy
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityJACCPolicy
-  label: DebugSecurityJACCPolicy
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityKeyStore
-  label: DebugSecurityKeyStore
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityPasswordPolicy
-  label: DebugSecurityPasswordPolicy
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityPredicate
-  label: DebugSecurityPredicate
+  useUnlocalizedNameAsLabel: true
 
 # obsolete
 # - name: DebugSecurityProfiler
-#   label: DebugSecurityProfiler
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityRealm
-  label: DebugSecurityRealm
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityRoleMap
-  label: DebugSecurityRoleMap
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAML2Atn
-  label: DebugSecuritySAML2Atn
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAML2CredMap
-  label: DebugSecuritySAML2CredMap
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAML2Lib
-  label: DebugSecuritySAML2Lib
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAML2Service
-  label: DebugSecuritySAML2Service
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAMLAtn
-  label: DebugSecuritySAMLAtn
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAMLCredMap
-  label: DebugSecuritySAMLCredMap
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAMLLib
-  label: DebugSecuritySAMLLib
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAMLService
-  label: DebugSecuritySAMLService
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySSL
-  label: DebugSecuritySSL
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySSLEaten
-  label: DebugSecuritySSLEaten
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityService
-  label: DebugSecurityService
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityUserLockout
-  label: DebugSecurityUserLockout
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSelfTuning
-  label: DebugSelfTuning
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugServerLifeCycle
-  label: DebugServerLifeCycle
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugServerMigration
-  label: SDebugServerMigration
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugServerStartStatistics
-  label: DebugServerStartStatistics
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSituationalConfig
-  label: DebugSituationalConfig
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugStore
-#   label: DebugStore
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugStoreAdmin
-  label: DebugStoreAdmin
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 # - name: DebugStoreCache
-#   label: DebugStoreCache
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugStoreIOLogical
-  label: DebugStoreIOLogical
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugStoreIOLogicalBoot
-  label: DebugStoreIOLogicalBoot
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugStoreIOPhysical
-  label: DebugStoreIOPhysical
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugStoreIOPhysicalVerbose
-  label: DebugStoreIOPhysicalVerbose
+  useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugStoreXA
-#   label: DebugStoreXA
+#   useUnlocalizedNameAsLabel: true
 
 # deprecated
 # - name: DebugStoreXAVerbose
-#   label: DebugStoreXAVerbose
+#   useUnlocalizedNameAsLabel: true
 
 - name: DebugURLResolution
-  label: DebugURLResolution
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWTCConfig
-  label: DebugWTCConfig
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWTCCorbaEx
-  label: DebugWTCCorbaEx
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWTCGwtEx
-  label: DebugWTCGwtEx
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWTCJatmiEx
-  label: DebugWTCJatmiEx
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWTCTDomPdu
-  label: DebugWTCTDomPdu
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWTCUData
-  label: DebugWTCUData
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWTCtBridgeEx
-  label: DebugWTCtBridgeEx
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWebAppIdentityAssertion
-  label: DebugWebAppIdentityAssertion
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWebAppModule
-  label: DebugWebAppModule
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWebAppSecurity
-  label: DebugWebAppSecurity
+  useUnlocalizedNameAsLabel: true
 
 - name: DefaultStore
-  label: DefaultStore
+  useUnlocalizedNameAsLabel: true
 
 - name: ListenThreadDebug
-  label: ListenThreadDebug
+  useUnlocalizedNameAsLabel: true
 
 - name: RedefiningClassLoader
-  label: RedefiningClassLoader
+  useUnlocalizedNameAsLabel: true

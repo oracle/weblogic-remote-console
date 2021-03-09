@@ -1,5 +1,9 @@
 # Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>A server is an instance of WebLogic Server that runs in its own Java Virtual Machine (JVM) and has its own configuration.</p>
+  <p>This page includes the monitoring data for each running server in the current WebLogic Server domain.</p>
+
 displayedColumns:
 - name: "Name"
 - name: "RestartRequired"
@@ -36,7 +40,6 @@ displayedColumns:
 - name: "MinThreadsConstraintsCompleted"
 - name: "MinThreadsConstraintsPending"
 - name: "OverloadRejectedRequestsCount"
-- name: "PatchList"
 - name: "SSLListenPort"
 - name: "SharedCapacityForWorkManagers"
 - name: "StandbyThreadCount"

@@ -1,0 +1,41 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+    <p>This page displays the common configuration information for this SAML
+    Identity Asserter Version 2.</p>
+
+properties:
+- name: Name
+- name: Type
+- name: Description
+- name: Version
+- name: ActiveTypes
+- name: Base64DecodingRequired
+helpTasks:
+- "security/ConfigureAuthenticationProviders"
+- "security/ConfigurePasswordValidationProviders"
+- "security/SetTheJAASControlFlag"
+- "security/ManageSecurityProviders"
+helpTopics:
+- label: "Configuring Keystores"
+  href: "secmg/identity_trust.html"
+  type: "edocs"
+- label: "Configuring a SAML Identity Assertion Provider for SAML 1.1"
+  href: "secmg/ia_atn.html#SECMG220"
+  type: "edocs"
+- label: "Configuring SAML 1.1 Services"
+  href: "secmg/saml11.html"
+  type: "edocs"
+- label: "Configuring a SAML 1.1 Destination Site for Single Sign-On"
+  href: "secmg/saml11.html#SECMG264"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
+- label: "Developing Security Providers for Oracle WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

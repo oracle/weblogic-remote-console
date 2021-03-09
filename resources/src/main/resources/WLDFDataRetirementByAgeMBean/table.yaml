@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Use this page to configure how and where the current server archives
@@ -8,7 +8,7 @@ displayedColumns:
 - name: "Name"
 - name: "Type"
 - name: "ArchiveName"
-# TODO archive.dataretirement.enabled
+- name: "Enabled"
 - name: "RetirementAge"
 - name: "RetirementTime"
 - name: "RetirementPeriod"

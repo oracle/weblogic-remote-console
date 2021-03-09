@@ -40,9 +40,6 @@ public interface WeblogicConfigurationSPI {
    *
    * @param query specifies the 'slice' of the edit bean tree that this operation should return.
    *     It uses the same format as latest/edit/search, minus the 'links' property.
-   *     <p>
-   *     TBD - describe how it must also support a consoleChangeManager property at the
-   *     top level that mirrors the consoleChangeManager console REST extension resource.
    *
    * @throws Exception if something unexpected happened that the user cannot directly fix.
    *
@@ -250,10 +247,6 @@ public interface WeblogicConfigurationSPI {
    * grabs the lock from the previous user and gives it to the current user.
    * <p>
    * If the current user already holds the lock, this operation does nothing and succeeds.
-   * <p>
-   * TBD - what if another user holds an exclusive lock such that we can't grab it? BadRequest?
-   * <p>
-   * TBD - should we return a message if we grabbed the lock from someone else?
    *
    * @param invocationContext the invocation context for this request
    * 
@@ -318,7 +311,6 @@ public interface WeblogicConfigurationSPI {
    *
    * @throws BadRequestException if the user is not editing the configuration or
    *     if the user holds the lock but there are conflicting changes.
-   *     TBD - should we return a different exception if there are conflicting changes?
    *
    * @throws Exception if something unexpected happened that the user cannot directly fix.
    */
@@ -396,7 +388,7 @@ public interface WeblogicConfigurationSPI {
  *     hasChanges - whether there are any changes in the default edit session
  *     <p>
  *     only returned if the current user holds the lock
- *     TBD - is this true? What if another user holds the lock?
+ *     Is this true? What if another user holds the lock?
  *   </li>
  * </ul>
  */
@@ -406,9 +398,9 @@ public interface WeblogicConfigurationSPI {
  * <p>
  * If the operation succeeds, "statusCode" will be 200 and "body" will have the following fields:
  * <ul>
- *   <li>TBD - document them here once we finalize the design ...</li>
+ *   <li>Document them here once we finalize the design ...</li>
  * </ul>
  * <p>
  * If the current user doesn't hold the default edit session lock, "statusCode" will be 400.
- * TBD - currently returns a 500
+ * Currently returns a 500?
  */

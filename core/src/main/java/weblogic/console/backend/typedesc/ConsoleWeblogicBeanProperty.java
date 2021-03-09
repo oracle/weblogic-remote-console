@@ -34,6 +34,16 @@ public class ConsoleWeblogicBeanProperty {
     this.source = source;
   }
 
+  private boolean useUnlocalizedNameAsLabel = false;
+
+  public boolean isUseUnlocalizedNameAsLabel() {
+    return this.useUnlocalizedNameAsLabel;
+  }
+
+  public void setUseUnlocalizedNameAsLabel(boolean useUnlocalizedNameAsLabel) {
+    this.useUnlocalizedNameAsLabel = useUnlocalizedNameAsLabel;
+  }
+
   private String label = "";
 
   public String getLabel() {
@@ -149,7 +159,7 @@ public class ConsoleWeblogicBeanProperty {
   // They can either be one of the following:
   // 1) a local property, e.g. fooOptions,
   // 2) a property on the domain mbean, e.g. /Machines
-  // 3) TBD a property on a parent mbean, e.g. ../Machines
+  // 3) a property on a parent mbean, e.g. ../Machines
   private List<String> optionsSources = new ArrayList<>();
 
   public List<String> getOptionsSources() {

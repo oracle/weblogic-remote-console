@@ -2,12 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 properties:
-#TODO the WLS console has:
-#  Security Framework Enabled
-#  Private Key Alias
-#  Private Key Pass Phrase
-#  Identity Asserter Class
-#  Identity Asserter Constructor Arguments
+
 helpTasks:
 - "coherence/CreateCoherenceClusters"
 - "coherence/ConfigureCoherenceClusters"

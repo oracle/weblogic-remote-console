@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package com.oracle.weblogic.console.backend.services.configuration;
@@ -32,7 +32,7 @@ public class ConfigurationCreatableOptionalSingletonResource extends WeblogicBea
   //
   // I'd prefer to use an enum, but that's tricky with @QueryParam and @DefaultValue annotations
   private static final String VIEW_SLICE = "view";
-  private static final String VIEW_CREATE_FORM = "new"; // TBD rename this when the CFE can catch up
+  private static final String VIEW_CREATE_FORM = "new";
 
   // The POST  http method can be used to either update a slice of the optional singleton
   // or to create the optional singleton.
@@ -41,13 +41,12 @@ public class ConfigurationCreatableOptionalSingletonResource extends WeblogicBea
   //
   // I'd prefer to use an enum, but that's tricky with @QueryParam and @DefaultValue annotations
   private static final String UPDATE = "update";
-  private static final String CREATE = "create"; // TBD rename this when the CFE can catch up?
+  private static final String CREATE = "create";
 
   /**
    * Get the RDJ for a slice of the bean
    *
    * @param action - which action ("view" or "new")
-   *     TBD rename dataAction to something else when the CBE can catch up.
    *     Also, consider removing this parameter and automatically viewing the bean
    *     if it exists and automatically returning the create form if it doesn't exist.
    *
@@ -117,7 +116,6 @@ public class ConfigurationCreatableOptionalSingletonResource extends WeblogicBea
    * Creates the bean or updates a slice of the bean
    *
    * @param action - which action ("update" or "create")
-   *     TBD rename dataAction to something else when the CBE can catch up.
    *     Also, consider removing this parameter and automatically updating the bean
    *     if it exists and automatically creating it if it doesn't exist.
    *
@@ -192,7 +190,7 @@ public class ConfigurationCreatableOptionalSingletonResource extends WeblogicBea
   @Produces(MediaType.APPLICATION_JSON)
   public Response post(
     @HeaderParam("X-Weblogic-Configuration-Version") String weblogicConfigurationVersion,
-    @QueryParam("dataAction") @DefaultValue(UPDATE) String action, // TBD - should there be a default value?
+    @QueryParam("dataAction") @DefaultValue(UPDATE) String action,
     @QueryParam("slice") @DefaultValue("") String slice,
     JsonObject requestBody
   ) throws Exception {

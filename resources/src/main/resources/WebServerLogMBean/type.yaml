@@ -12,17 +12,14 @@ properties:
 - name: WebServerLogFileMinSize
   source: FileMinSize
   label: Rotation file size
-  # TODO usedIf RotationType == bySize
 
 - name: WebServerLogRotationTime
   source: RotationTime
   label: Begin rotation time
-  # TODO usedIf RotationType == byTime
 
 - name: WebServerLogFileTimeSpan
   source: FileTimeSpan
   label: Rotation interval
-  # TODO usedIf RotationType == byTime
 
 - name: WebServerLogNumberOfFilesLimited
   source: NumberOfFilesLimited

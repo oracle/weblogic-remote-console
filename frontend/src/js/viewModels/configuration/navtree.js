@@ -38,14 +38,15 @@ define(['jquery', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout-keyset', 'ojs/ojar
 
       this.signalBindings = [];
 
-      this.beforeSelect = function(event) {
-
-      }
-
-      this.beforeCollapse = function(event) {
+      this.beforeSelect = event =>  {}
+      
+      this.beforeCollapse = event => {
         if (self.selectedItem() === event.detail.key) {
           // when something node is already open and it is selected, don't close it...
-          event.preventDefault();
+          // ... except if they click on the expanded icon (as opposed to clicking on the label)
+          let cl = event.detail.originalEvent.path[0].className;
+
+          if (!cl.includes('oj-navigationlist-expand-icon'))   event.preventDefault();
         }
       }
 

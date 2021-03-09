@@ -181,7 +181,6 @@ public class WeblogicRestConfiguration extends AbstractWeblogicConfiguration {
     FormDataMultiPart parts,
     boolean asynchronous
   ) throws NoDataFoundException, BadRequestException, Exception {
-    // TBD - log more info about each part?
     LOGGER.fine(
       "createBean containingProperty=" + containingProperty + " parts=" + parts.getFields().keySet()
     );
@@ -643,18 +642,6 @@ public class WeblogicRestConfiguration extends AbstractWeblogicConfiguration {
   }
 
   private JsonObject expandInlineValues(JsonObject inlineValues) {
-    // TBD: ideally, we'd walk the corresponding WeblogicBeanTypes/Properties
-    // to distinguish between contained beans, referenced beans, etc
-    //
-    // the only patterns we should see are:
-    //
-    // foo: scalar == scalar ->  foo: { value: <scalar> }
-    // foo: { items: [ {...}, ] } == contained collection -> foo: { items: { expandInlineValues(...)
-    // } ] }
-    // foo: {...(not items)} == contained singleton -> foo: { expandedInlineValues(...) }
-    // foo: [...] = reference, references, array of scalars -> foo: { value:[...] }
-    // identity: [...] = this bean's identity - don't wrap it! -> identity: [ ... ]
-    // changeManager: {...} = WLS REST change manager - don't wrap it! -> changeManager: {...}
     JsonObjectBuilder bldr = Json.createObjectBuilder();
     for (Map.Entry<String, JsonValue> e : inlineValues.entrySet()) {
       String property = e.getKey();

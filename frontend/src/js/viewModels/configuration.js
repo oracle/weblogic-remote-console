@@ -156,6 +156,11 @@ define(['knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarrayda
       });
 
       function renderPage(rawPath, slice) {
+
+        // if the requested path is undefined, do nothing. 
+        // sometimes this is done to force a state change on the Router  
+        if (!rawPath) return;
+
         let pathParam = decodeURIComponent(rawPath);
 
         // The raw path is decoded but individual segments
