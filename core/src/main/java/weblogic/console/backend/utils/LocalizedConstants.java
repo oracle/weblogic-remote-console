@@ -15,7 +15,8 @@ public class LocalizedConstants {
   public static final String MSG_DOMAIN_VER_NOT_SUPPORTED =
     "Unsupported WebLogic domain version";
   public static final String MSG_USER_NOT_ADMIN =
-    "Connected user is not a WebLogic Administrator. Content requiring administrator privileges is not displayed.";
+    "Connected user is not a WebLogic Administrator."
+    + " Pages requiring administrator privileges will experience unexpected behavior.";
   public static final String MSG_DELETE_REFERENCES_FIRST =
     "We recommend that you remove references to an object before you delete it.";
 

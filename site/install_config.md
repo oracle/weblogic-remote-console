@@ -21,7 +21,7 @@ java -version
 The Oracle WebLogic Server Remote Console installer is available for download at [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases). The Remote Console is delivered as a ZIP archive that, when extracted, creates a `console` directory that includes:
 * The console executable file `console.jar`
 * The libraries required to use the console in the `libs` subdirectory
-* The console extension, `console-rest-ext.war`, that you install in the WebLogic Server domain
+* The console extension, `console-rest-ext-1.0.war`, that you install in the WebLogic Server domain
 
 After you have downloaded the installer, extract the ZIP archive to a directory of your choice.
 
@@ -31,7 +31,7 @@ To get the most functionality when using the WebLogic Server Remote Console, we 
 **Note:** The extension is supported for WebLogic Server 12.2.1.3, 12.2.1.4, and 14.1.1 domains.
 
 1. Create a `management-services-ext` directory under the domain home.
-2. Copy the `console-rest-ext.war` included in the ZIP archive to the `management-services-ext` directory you created in the previous step.
+2. Copy the `console-rest-ext-1.0.war` included in the ZIP archive to the `management-services-ext` directory you created in the previous step.
 3. Reboot the Administration Server if it is already running.
 
 ## Start the Remote Console and Connect to a Domain <a name ="start-connect"></a>
