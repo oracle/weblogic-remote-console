@@ -6,8 +6,8 @@
 ## Separation of Configuration and Runtime Data <a name ="separation"></a>
 Unlike the WebLogic Server Administration Console, which has pages that combine the configuration and runtime data, the Remote Console has separate pages for each. For example, in the Remote Console:
   * The Servers table under Environment in the Configuration perspective shows all the configured servers (in the 'edit' tree), but does not show whether each server is running.
+  * The Server States table in the Monitoring perspective lists all the servers, both configured and dynamic, (in the Administration Server's 'server config' tree) and the status of each server. This page also provides control operations to change the state of the servers.
   * The Running Servers table in the Monitoring perspective lists the servers (in the Administration Server's 'server config' tree) that are currently running.
-  * The Server States table in the Monitoring perspective lists all the servers, both configured and dynamic, (in the Administration Server's 'server config' tree) and the status of each server.
 
 You can navigate easily between the two perspectives using the drop-down list in the breadcrumbs and the icons in the NavStrip on the left.
 
@@ -54,6 +54,7 @@ Consider the following usage notes when using the WebLogic Server Remote Console
 - [Use the Tool Bar Icons in the Content Pane](#tool_bar)
 - [Use the Shopping Cart](#cart)
 - [Use the Remote Console Help](#help)
+- [Use the Remote Console Control Operations](#controls)
 
 ### Create MBeans <a name ="create"></a>
 The Remote Console includes simplified wizards for deploying applications and creating JDBC system resources.
@@ -79,16 +80,31 @@ You can use the shopping cart to:
 * Discard all the changes currently in the shopping cart. There is currently no support for removing an individual shopping cart item.
 
 If you installed the [Remote Console extension](install_config.md#extension) in your domain, you can:
+* View the status of the lock in the Change Manager.
 * View additions and deletions of configuration objects.
 * View the before and after values of fields modified through forms.
 * Navigate to the form associated with the addition or change.
 
-This content is visible in a Kiosk pop-up, accessible by clicking View Changes from the Shopping Cart menu, or by clicking the Kiosk tab on the bottom right side of the page.
+These pending changes and lock status are visible in a Kiosk window, accessible by clicking View Changes from the Shopping Cart menu, or by clicking the Kiosk tab on the bottom right side of the page.
 
-Note that when you activate nondynamic changes, you need to navigate to the 'Running Servers' table in the Monitoring perspective to see which servers need to be rebooted so that they can start using the new configuration.
+**Difference Between the Change Center and Change Manager**
+In the WebLogic Server Administration Console, the Change Center provides a way to lock a domain configuration so you can make changes to the configuration while preventing other accounts from making changes during your edit session. It can be enabled or disabled in a development domain, and is enabled by default in a production domain. When locking is enabled, you start the edit process by obtaining a lock. When you finish making changes, you save the changes. The changes do not take effect, however, until you activate them, distributing them to all server instances in the domain.
+
+The WebLogic Server Remote Console provides similar locking functionality in the shopping cart. In the Remote Console, in both development and production domains, the pages are always read/writeable. When you create an MBean or save a change to page, the Remote Console automatically grabs the lock. To view details about the lock, expand the Change Manager in the Kiosk. The changes are not activated until you click Commit Changes.
+
+When you activate nondynamic changes, you need to navigate to the 'Running Servers' table in the Monitoring perspective to see which servers need to be rebooted so that they can start using the new configuration.
+
+In both consoles, the configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock using the WebLogic Server Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the Remote Console and you will not be locked out of making changes with the other tools.
+
+**Note:** Oracle recommends against making changes using multiple tools because when one of the sessions activates their changes, it releases the lock and the other session will not be able to save or activate their changes.
 
 ### Use the Remote Console Help <a name ="help"></a>
 
 The Remote Console provides several types of online help on each page.
-* Use the ? icon to the left of each field to access summary and detailed help for the field. If you place the mouse over the ?, a summary help description displays. Click the ? icon to display a more detailed help description, if available.
-* Click the ![Help icon](../frontend/src/images/help-icon-blk_24x24.png) in the top left of the content pane to view reference information about all of the fields displayed on the page.
+* Use the ? icon to the left of each field to access summary and detailed help for the field. If you hover over the ?, a summary help description displays. Click the ? icon to display a more detailed help description, if available.
+* Click the ? icon in the top right of the content pane to toggle the view of the reference information for all of the fields displayed on the page.
+
+### Use the Remote Console Control Operations <a name ="controls"></a>
+The Remote Console provides control operations in the Monitoring perspective.
+* The Server States page contains the control operations to change the state of a server. Server state signifies the specific condition of a server in the life cycle management. To change the server state, click the desired control at the top of the table. Then, in the next window, select the servers on which you want to perform the control operation. Consistent with the WebLogic Server Administration Console, the Remote Console includes support for graceful shutdowns.
+* The App Deployments Runtimes page, under Domain Information in the Navigation tree, provides controls to start and stop applications. To start or stop an application, select the control, then in the next window, select the applications on which you want to perform the operation.  
