@@ -9,14 +9,17 @@ slices:
   - name: Http
   - name: IIOP
 - name: Cluster
-# - name: Services
+- name: WebServices
+  slices:
+  - name: Buffering
+  - name: ReliableMessage
 - name: FederationServices
   slices:
   - name: FederationServicesSAML20General
   - name: FederationServicesSAML20IdentityProvider
   - name: FederationServicesSAML20ServiceProvider
 - name: Deployment
-- name: HealthMonitoring
+- name: Health
 - name: Logging
   slices:
   - name: General
@@ -28,12 +31,6 @@ slices:
 - name: Concurrency
 - name: Coherence
 - name: Start
-# - name: ControlStartstop
-# - name: WebServices
-#   slices:
-#   - name: Buffering
-#   - name: ReliableMessaging
-#   - name: Coherence
 - name: Debug
   slices:
   - name: Application

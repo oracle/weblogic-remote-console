@@ -6,17 +6,17 @@
  */
 "use strict";
 
-define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', './cfe/common/runtime', 'ojs/ojcontext', './cfe/services/perspective/perspective-manager', './cfe/services/preferences/preferences', 'ojs/ojlogger', './panel_resizer', 'ojs/ojarraydataprovider', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmessages'],
-  function ($, ko, ModuleElementUtils, Router, signals, ResponsiveUtils, ResponsiveKnockoutUtils, Runtime, Context, PerspectiveManager, Preferences, Logger) {
+define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', './apis/message-displaying', './core/runtime', 'ojs/ojcontext', './microservices/perspective/perspective-manager', './microservices/perspective/perspective-memory-manager', './microservices/preferences/preferences', './viewModels/utils', 'ojs/ojlogger', './panel_resizer', 'ojs/ojarraydataprovider', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmessages'],
+  function ($, oj, ko, ModuleElementUtils, Router, signals, ResponsiveUtils, ResponsiveKnockoutUtils, MessageDisplaying, Runtime, Context, PerspectiveManager, PerspectiveMemoryManager, Preferences, ViewModelUtils, Logger) {
     function ControllerViewModel() {
       const PANEL_RESIZER_WIDTH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--panel-resizer-width"), 10);
       const NAVSTRIP_WIDTH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--navstrip-max-width"), 10);
       const NAVTREE_MIN_WIDTH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--resizer-left-panel-min-width"), 10);
       const NAVTREE_MAX_WIDTH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--navtree-max-width"), 10);
 
-      var self = this;
+      const self = this;
 
-      var signaling = {
+      const signaling = {
         modeChanged: new signals.Signal(),
         domainChanged: new signals.Signal(),
         perspectiveChanged: new signals.Signal(),
@@ -36,7 +36,11 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
         readonlyChanged: new signals.Signal()
       };
 
-      if (Preferences.hasThemePreference()) Runtime.setProperty(Runtime.PropertyName.CFE_CURRENT_THEME, Preferences.themePreference());
+      MessageDisplaying.setPopupMessageSentSignal(signaling["popupMessageSent"]);
+
+      Runtime.setProperty(Runtime.PropertyName.CFE_NAME, oj.Translations.getTranslatedString("wrc-header.text.appName"));
+
+      if (Preferences.general.hasThemePreference()) Runtime.setProperty(Runtime.PropertyName.CFE_CURRENT_THEME, Preferences.general.themePreference());
 
       // Media queries for responsive layouts
       const smQuery = ResponsiveUtils.getFrameworkQuery(ResponsiveUtils.FRAMEWORK_QUERY_KEY.SM_ONLY);
@@ -44,18 +48,9 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
       const mdQuery = ResponsiveUtils.getFrameworkQuery(ResponsiveUtils.FRAMEWORK_QUERY_KEY.MD_UP);
       this.mdScreen = ResponsiveKnockoutUtils.createMediaQueryObservable(mdQuery);
 
-      this.i18n = {
-        footer: {
-          text: {
-            copyrightLegal: "Copyright © 2020, 2021, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
-            builtWith: "Built with Oracle JET"
-          }
-        }
-      };
-
       this.navTreeModuleConfig = ko.observable({ view: [], viewModel: null });
 
-      var router = Router.rootInstance;
+      const router = Router.rootInstance;
       this.router = router;
       Router.defaults['urlAdapter'] = new Router.urlParamAdapter();
 
@@ -68,6 +63,10 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
         "configuration/{path}": { label: "WebLogic", value: "configuration", title: Runtime.getName() },
         "monitoring/{path}": { label: "Monitoring", value: "monitoring", title: Runtime.getName() }
       });
+
+      this.getSignal = function (key) {
+        return (key in signaling ? signaling[key] : undefined);
+      };
 
       this.loadModule = function () {
         self.moduleConfig = ko.pureComputed(function () {
@@ -96,9 +95,9 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
 
       this.loadHeaderTemplate = function () {
         self.headerModuleConfig = ko.pureComputed(function () {
-          var name = 'header';
-          var viewPath = 'views/template/' + name + '.html';
-          var modelPath = 'viewModels/template/' + name;
+          const name = 'header';
+          const viewPath = 'views/branding-area/' + name + '.html';
+          const modelPath = 'viewModels/branding-area/' + name;
           return ModuleElementUtils.createConfig({
             viewPath: viewPath,
             viewModelPath: modelPath,
@@ -117,8 +116,8 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
       this.loadNavStripTemplate = function () {
         self.navStripModuleConfig = ko.pureComputed(function () {
           var name = 'navstrip';
-          var viewPath = 'views/template/' + name + '.html';
-          var modelPath = 'viewModels/template/' + name;
+          var viewPath = 'views/navigation-area/' + name + '.html';
+          var modelPath = 'viewModels/navigation-area/' + name;
           return ModuleElementUtils.createConfig({
             viewPath: viewPath,
             viewModelPath: modelPath,
@@ -132,13 +131,32 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
       };
       this.loadNavStripTemplate();
 
+      this.loadFooterTemplate = function () {
+        self.footerModuleConfig = ko.pureComputed(function () {
+          var name = 'footer';
+          var viewPath = 'views/footer/' + name + '.html';
+          var modelPath = 'viewModels/footer/' + name;
+          return ModuleElementUtils.createConfig({
+            viewPath: viewPath,
+            viewModelPath: modelPath,
+            params: {
+              parentRouter: self.router,
+              smQuery: smQuery,
+              mdQuery: mdQuery,
+              signaling: signaling
+            }
+          });
+        });
+      };
+      this.loadFooterTemplate();
+
       this.loadNavTree = function (perspectiveId) {
-        let name = perspectiveId + "/navtree";
-        let perspective = PerspectiveManager.getById(perspectiveId);
+        const name = "navtree";
+        const perspective = PerspectiveManager.getById(perspectiveId);
 
         ModuleElementUtils.createConfig({
-          viewPath: 'views/' + name + '.html',
-          viewModelPath: 'viewModels/' + name,
+          viewPath: 'views/navigation-area/' + name + '.html',
+          viewModelPath: 'viewModels/navigation-area/' + name,
           params: {
             parentRouter: self.router,
             signaling: signaling,
@@ -154,9 +172,9 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
 
       this.loadContentAreaHeaderTemplate = function () {
         self.contentAreaHeaderModuleConfig = ko.pureComputed(function () {
-          var name = "content-area-header";
-          var viewPath = 'views/template/' + name + '.html';
-          var modelPath = 'viewModels/template/' + name;
+          const name = "content-area-header";
+          const viewPath = 'views/content-area/header/' + name + '.html';
+          const modelPath = 'viewModels/content-area/header/' + name;
           return ModuleElementUtils.createConfig({
             viewPath: viewPath,
             viewModelPath: modelPath,
@@ -171,17 +189,16 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
 
       this.loadAncillaryContentAreaTemplate = function () {
         self.ancillaryContentAreaModuleConfig = ko.pureComputed(function () {
-          var name = "ancillary-content-area";
-          var viewPath = 'views/template/' + name + '.html';
-          var modelPath = 'viewModels/template/' + name;
+          var name = "ancillary-content";
+          var viewPath = 'views/content-area/' + name + '.html';
+          var modelPath = 'viewModels/content-area/' + name;
           return ModuleElementUtils.createConfig({
             viewPath: viewPath,
             viewModelPath: modelPath,
             params: {
               parentRouter: self.router,
               signaling: signaling,
-              onAncillaryContentAreaToggled: toggledAncillaryContentArea,
-              onResized: resizeTriggered
+              onAncillaryContentAreaToggled: toggledAncillaryContentArea
             }
           });
         });
@@ -189,34 +206,7 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
       this.loadAncillaryContentAreaTemplate();
 
       function setThemePreference(theme) {
-        setFooter(theme);
         signaling.themeChanged.dispatch(theme);
-      }
-
-      function setFooter(theme) {
-        let ele = document.querySelector("footer");
-        if (ele !== null) {
-          ele.style.backgroundColor = Runtime.getConfig().settings.themes[theme][0];
-
-          let ele1 = document.getElementById("copyright-legal");
-          if (ele1 !== null) ele1.innerHTML = self.i18n.footer.text.copyrightLegal;
-
-          ele1 = document.getElementById("oracle-jet-label");
-          if (ele1 !== null) ele1.innerHTML = self.i18n.footer.text.builtWith;
-
-          ele1 = document.getElementById("oracle-jet-icon");
-
-          switch (theme) {
-            case "light":
-              ele.style.color = "black";
-              if (ele1 !== null) ele1.src = "../../images/oracle-jet-logo-blk_16x16.png"
-              break;
-            case "dark":
-              ele.style.color = "white";
-              if (ele1 !== null) ele1.src = "../../images/oracle-jet-logo-wht_16x16.png"
-              break;
-          }
-        }
       }
 
       function toggledAncillaryContentArea(visible) {
@@ -247,7 +237,7 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
           }
         }
         else {
-          Logger.info(`[APPCONTROLLER] newOffsetWidth=0`);
+          Logger.info(`newOffsetWidth=0`);
         }
 
         resizeContentAreaElements(source, newOffsetLeft, newOffsetWidth);
@@ -255,7 +245,7 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
 
       function resizeContentAreaElements(source, newOffsetLeft, newOffsetWidth) {
         const viewPortValues = getBrowserViewPortValues();
-        Logger.info(`[APPCONTROLLER] window.width=${viewPortValues.width}, window.height=${viewPortValues.height}`);
+        Logger.info(`window.width=${viewPortValues.width}, window.height=${viewPortValues.height}`);
         if (newOffsetWidth !== viewPortValues.width) resizeDomainsToolbarRight(source, newOffsetLeft, newOffsetWidth);
         resizeTableFormContainer(source);
       }
@@ -273,12 +263,12 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
         } else if (source === "navtree") {
           marginRightVariable = 0;
         }
-        document.documentElement.style.setProperty("--domains-toolbar-right-margin-right", `${marginRightVariable}px`);
+        document.documentElement.style.setProperty("--content-area-header-toolbar-right-margin-right", `${marginRightVariable}px`);
       }
 
       function resizeTableFormContainer(source) {
         if (source === "opener") {
-          let maxWidthVariable = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--domains-toolbar-right-margin-right"), 10);
+          let maxWidthVariable = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--content-area-header-toolbar-right-margin-right"), 10);
           maxWidthVariable += (NAVSTRIP_WIDTH + PANEL_RESIZER_WIDTH);
           document.documentElement.style.setProperty("--form-container-calc-max-width", `${maxWidthVariable}px`);
         }
@@ -290,7 +280,7 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
 
       signaling.perspectiveSelected.add((newPerspective) => {
         if (typeof newPerspective === "undefined") {
-          Logger.info(`[APPCONTROLLER] newPerspective is undefined`);
+          Logger.info(`newPerspective is undefined`);
           newPerspective = PerspectiveManager.getDefault();
         }
         let active = PerspectiveManager.current();
@@ -355,7 +345,7 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
             case "ONLINE":
               ele.style.display = "inline-flex";
               break;
-            case "OFFLINE":
+            case "DETACHED":
               ele.style.display = "none";
               router.go("home");
               break;
@@ -364,13 +354,15 @@ define(['jquery', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'sig
       });
 
       Context.getPageContext().getBusyContext().whenReady()
-      .then(function () {
-        setThemePreference(Preferences.themePreference());
-        $('#spa-resizer').split({limit: 10});
-      })
-      .catch((err) => {
-        Logger.error(err);
-      });
+        .then(function () {
+          setThemePreference(Preferences.general.themePreference());
+          $('#spa-resizer').split({limit: 10});
+          // Pass the mode changed signal so that memory can be cleared
+          PerspectiveMemoryManager.setModeChangedSignal(signaling.modeChanged);
+        })
+        .catch((err) => {
+          Logger.error(err);
+        });
     }
 
     return new ControllerViewModel();

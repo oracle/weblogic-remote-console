@@ -1,10 +1,13 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
   <p>Use this page to configure an existing XML entity cache, such as
   increase the cache memory size, increase the number of external entities
   that can be cached in a given moment, and so on.</p>
+
+presentation:
+  singleColumn: true
 
 properties:
 - name: "Name"

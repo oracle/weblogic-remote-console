@@ -26,14 +26,14 @@
         <skipTests>false</skipTests>
 
         <version.commons-lang>2.4</version.commons-lang>
-        <version.helidon>2.0.2</version.helidon>
-        <version.jackson>2.11.2</version.jackson>
+        <version.helidon>2.2.1</version.helidon>
+        <version.jackson>2.12.1</version.jackson>
         <version.jsoup>1.13.1</version.jsoup>
         <version.junit.jupiter>5.5.1</version.junit.jupiter>
         <version.lucene>8.5.1</version.lucene>
         <version.reflections>0.9.11</version.reflections>
         <version.snakeyaml>1.26</version.snakeyaml>
-        <version.jersey-rx-client-rxjava>2.31</version.jersey-rx-client-rxjava>
+        <version.jersey-rx-client-rxjava>2.33</version.jersey-rx-client-rxjava>
         <version.console.backend>1.0</version.console.backend>
 
         <version.plugin.dependency-check>6.0.2</version.plugin.dependency-check>
@@ -57,6 +57,12 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${version.jackson}</version>
+            </dependency>
+            <dependency>
+              <!-- Explicitly force jackson-annotations to use proper version -->
+              <groupId>com.fasterxml.jackson.core</groupId>
+              <artifactId>jackson-annotations</artifactId>
+              <version>${version.jackson}</version>
             </dependency>
 
             <dependency>

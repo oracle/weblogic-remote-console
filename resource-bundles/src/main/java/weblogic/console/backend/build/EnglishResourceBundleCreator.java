@@ -31,6 +31,7 @@ import weblogic.console.backend.pagedesc.WeblogicCreateFormSource;
 import weblogic.console.backend.pagedesc.WeblogicPageSource;
 import weblogic.console.backend.pagedesc.WeblogicPropertyPresentationSource;
 import weblogic.console.backend.pagedesc.WeblogicPropertySource;
+import weblogic.console.backend.pagedesc.WeblogicSectionSource;
 import weblogic.console.backend.pagedesc.WeblogicSliceFormPageSource;
 import weblogic.console.backend.pagedesc.WeblogicSliceFormSource;
 import weblogic.console.backend.pagedesc.WeblogicTablePageSource;
@@ -134,8 +135,7 @@ public class EnglishResourceBundleCreator extends PageSourceWalker {
     // This is a build utility and, therefore, such an issue is irrelevant
     FileOutputStream os = new FileOutputStream(fileName);
     try {
-      resourceDefinitions.store(
-        os,
+      PropertiesSorter.store(resourceDefinitions, os,
         "Console backend " + weblogicVersion + " " + language + " resource definitions"
       );
     } finally {
@@ -569,15 +569,31 @@ public class EnglishResourceBundleCreator extends PageSourceWalker {
   private void processSliceFormPage(WeblogicSliceFormPageSource pageSource) throws Exception {
     LOGGER.finest("processSliceFormPage " + pageSource.getPagePath());
     WeblogicSliceFormSource sliceFormSource = pageSource.getSliceFormSource();
-    for (WeblogicPropertySource propSource : sliceFormSource.getProperties()) {
-      collectFormProperty(pageSource, propSource);
-    }
-    for (WeblogicPropertySource propSource : sliceFormSource.getAdvancedProperties()) {
+    for (WeblogicPropertySource propSource : sliceFormSource.getAllProperties()) {
       collectFormProperty(pageSource, propSource);
     }
     processSliceSources(new Path(), pageSource.getSliceSources());
     processNavigationContents(pageSource, pageSource.getNavigationContents());
     processLinks(pageSource, pageSource.getInstanceLinks(), false);
+    processSectionTitles(pageSource, pageSource.getSliceFormSource().getSections(), false);
+  }
+
+  // Note that we don't need to do anything for section properties, since
+  // those are part of getAllProperties
+  private void processSectionTitles(
+      WeblogicPageSource pageSource,
+      List<WeblogicSectionSource> sectionCollection,
+      boolean isCollection
+  ) throws Exception {
+    for (WeblogicSectionSource section : sectionCollection) {
+      addResourceDefinition(
+        LocalizationUtils.sectionTitleKey(
+          pageSource,
+          section.getTitle()
+        ),
+        section.getTitle()
+      );
+    }
   }
 
   private void processLinks(

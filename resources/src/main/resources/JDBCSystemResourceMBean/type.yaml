@@ -7,7 +7,7 @@ properties:
   - /Clusters
   - /Servers
 
-- name: InternaProperties
+- name: InternalProperties
   source: JDBCResource.InternalProperties.Properties
 
 - name: JDBCDriverProperties

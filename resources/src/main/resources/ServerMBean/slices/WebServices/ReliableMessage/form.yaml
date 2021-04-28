@@ -1,0 +1,33 @@
+# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Configure Web services reliable messaging.</p>
+  <p>Web service reliable messaging is a framework that enables an application running on one application server to reliably invoke a Web service running on another application server, assuming that both servers implement the WS-Reliable Messaging specification. Reliable is defined as the ability to guarantee message delivery between the two Web services.
+  Use this page to customize reliable messaging configuration on the Web service endpoint.</p>
+
+properties:
+  - name: "BaseRetransmissionInterval"
+  - name: "RetransmissionExponentialBackoff"
+  - name: "NonBufferedSource"
+  - name: "NonBufferedDestination"
+  - name: "AcknowledgementInterval"
+  - name: "InactivityTimeout"
+  - name: "SequenceExpiration"
+helpTasks:
+  - "webservices/InstallAWebService"
+  - "webservices/StartAndStopAWebService"
+  - "webservices/ConfigureWSPolicyFile"
+  - "webservices/UpdateWebServiceConfiguration"
+  - "webservices/ViewSoapMessageHandlers"
+  - "webservices/ViewWsdl"
+  - "webservices/TestAWebService"
+  - "webservices/MonitorAWebService"
+  - "webservices/MonitorAWebServiceClient"
+helpTopics:
+  - label: "Using Web Services Reliable Messaging (JAX-WS)"
+    href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSADV275"
+    type: "generic"
+  - label: "Using Web Services Reliable Messaging (JAX-RPC)"
+    href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSRPA124"
+    type: "generic"

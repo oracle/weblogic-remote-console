@@ -1,0 +1,127 @@
+<!--
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+The Universal Permissive License (UPL), Version 1.0
+-->
+<div id="intro" class="cfe-table-form-instructions">
+  <oj-bind-dom config="[[introductionHTML]]" />
+</div>
+
+<oj-module config="[[tableToolbarModuleConfig]]"></oj-module>
+
+<oj-dialog id="syncIntervalDialog" dialog-title="[[i18n.dialogSync.title]]" cancel-behavior="icon">
+  <div slot="body">
+    <span data-bind="text: [[i18n.dialogSync.instructions]]"></span>
+    <oj-form-layout label-edge="start" label-width="72%">
+      <oj-label slot="label" for="interval-field"><span data-bind="text: [[i18n.dialogSync.fields.interval.label]]"></span>
+      </oj-label>
+      <oj-input-text id="interval-field" value='{{i18n.dialogSync.fields.interval.value}}'></oj-input-text>
+    </oj-form-layout>
+  </div>
+
+  <div slot="footer">
+    <oj-button :id="[[i18n.dialogSync.buttons.ok.id]]">
+      <span class="button-label" data-bind="text: [[i18n.dialogSync.buttons.ok.label]]"></span>
+    </oj-button>
+    <oj-button :id="[[i18n.dialogSync.buttons.cancel.id]]">
+      <span class="button-label" data-bind="text: [[i18n.dialogSync.buttons.cancel.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog id="actionsDialog" dialog-title="[[i18n.actionsDialog.title]]" cancel-behavior="icon">
+  <div slot="body">
+    <span data-bind="text: [[i18n.actionsDialog.instructions()]]"></span>
+    <oj-bind-dom config="[[actionsDialog.formLayout.html]]"></oj-bind-dom>
+  </div>
+
+  <div slot="footer">
+    <oj-button :id="[[i18n.actionsDialog.buttons.ok.id]]" disabled="[[i18n.actionsDialog.buttons.ok.disabled]]">
+      <span class="button-label" data-bind="text: [[i18n.actionsDialog.buttons.ok.label()]]"></span>
+    </oj-button>
+    <oj-button :id="[[i18n.actionsDialog.buttons.cancel.id]]">
+      <span class="button-label" data-bind="text: [[i18n.actionsDialog.buttons.cancel.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<!-- Position "show-hidden-columns" checkboxset on the right side -->
+<div id="show-hidden-columns-container" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end oj-flex-items-pad">
+  <oj-bind-if test="[[hasHiddenColumns()]]">
+    <div id="show-hidden-columns-checkboxset" class="oj-flex-item">
+      <oj-checkboxset value="{{showHiddenColumns}}" on-value-changed="[[showHiddenColumnsValueChanged]]">
+        <oj-option :id="[[i18n.checkboxes.showHiddenColumns.id]]" value="[[i18n.checkboxes.showHiddenColumns.id]]">
+          <span><oj-bind-text value="[[i18n.checkboxes.showHiddenColumns.label]]"></oj-bind-text></span>
+        </oj-option>
+      </oj-checkboxset>
+    </div>
+  </oj-bind-if>
+</div>
+
+<div id="table-container" class="oj-flex-item cfe-table-form-content">
+  <oj-bind-if test="[[!showHelp()]]">
+    <oj-table
+      id='table'
+      class='wlstable'
+      aria-label='Table'
+      data='[[rdjDataProvider]]'
+      scroll-policy='loadMoreOnScroll'
+      scroll-policy-options='{"fetchSize": 10}'
+      columns='[[columnDataProvider]]'
+      display='grid'
+      selection-mode='{"row": "single"}'
+      selected.row='{{selectedRows}}'
+      on-selected-changed='[[selectedListener]]'
+      class=".oj-table-data-cell-no-padding"
+    >
+      <oj-bind-if test="[[ perspective.id === 'configuration' ]]">
+        <template slot="deleteCellTemplate">
+          <oj-bind-if test="[[!readonly()]]">
+            <oj-button :id="[[$current.data._id]]" :class="cfe-delete-row-button" display="icons" chroming="borderless"
+              on-oj-action="[[deleteListener]]">
+              <span class="oj-ux-ico-trash"></span>
+            </oj-button>
+          </oj-bind-if>
+        </template>
+      </oj-bind-if>
+    
+      <template slot="cellTemplate" data-oj-as="cell">
+        <oj-bind-text value="[[cell.data]]"></oj-bind-text>
+      </template>
+    </oj-table>
+    <oj-paging-control id="paging" data="[[rdjDataProvider]]" page-size="[[rowsPerPage()]]" slot="bottom">
+    </oj-paging-control>
+  </oj-bind-if>
+
+  <oj-bind-if test="[[showHelp()]]">
+    <oj-table
+      id='help-table'
+      aria-label='[[i18n.tables.help.label]]'
+      data='[[helpDataProvider]]'
+      scroll-policy='loadMoreOnScroll'
+      scroll-policy-options='{"fetchSize": 10}'
+      columns-default='{"sortable": "disabled", "resizable":"disabled"}'
+      columns='[
+        {
+          "headerText": "Name",
+          "headerStyle": "font-weight:bold;text-align:left;min-width: 8em; width: 8em;",
+          "style": "white-space:normal;padding:5px;min-width: 8em; width: 8em;",
+          "name": "Name",
+          "field": "Name"
+        },
+        {
+          "headerText": "Description",
+          "headerStyle": "font-weight:bold;text-align:left;",
+          "style": "white-space:normal;padding:5px;",
+          "name": "Description",
+          "field": "Description",
+          "template": "domTemplate"
+          }
+        ]'
+    >
+      <template slot="domTemplate" data-oj-as="cell">
+        <oj-bind-dom config="[[cell.data]]"></oj-bind-dom>
+      </template>
+    </oj-table>
+    <oj-bind-dom config="[[helpFooterDom]]"></oj-bind-dom>
+  </oj-bind-if>
+</div>

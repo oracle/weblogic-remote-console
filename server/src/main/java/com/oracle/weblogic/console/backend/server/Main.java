@@ -5,6 +5,7 @@ package com.oracle.weblogic.console.backend.server;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -12,6 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import io.helidon.microprofile.server.Server;
 import weblogic.console.backend.ConsoleBackendRuntime;
@@ -22,9 +26,82 @@ public final class Main {
 
   public static final String WLS_CONSOLE_BACKEND = "WebLogic Console Backend";
 
+  private static void readPropertyFile(String file) throws IOException {
+    // FortifyIssueSuppression Path Manipulation
+    // This is a command-line argument.  It's fine.
+    File propfile = new File(file);
+    if (!propfile.exists()) {
+      return;
+    }
+    FileReader reader = new FileReader(propfile);
+    JsonReader jsReader = Json.createReader(reader);
+    try {
+      JsonObject obj = jsReader.readObject();
+      for (String prop : obj.keySet()) {
+        // FortifyIssueSuppression Setting Manipulation
+        // This is intentional
+        System.setProperty(prop, obj.getString(prop));
+      }
+    } finally {
+      jsReader.close();
+      reader.close();
+    }
+  }
+
+  private static void readStandardInput() {
+    java.io.BufferedReader reader = new java.io.BufferedReader(
+      new java.io.InputStreamReader(System.in));
+    // java.io.PrintStream out = new java.io.PrintStream(
+    // new java.io.FileOutputStream("/dev/tty"));
+    while (true) {
+      try {
+        // FortifyIssueSuppression Denial of Service
+        // This is reading stdin - not an issue
+        String line = reader.readLine();
+        if (line == null) {
+          // FortifyIssueSuppression J2EE Bad Practices: JVM Termination
+          // This isn't Java EE
+          System.exit(0);
+        }
+      } catch (IOException eof) {
+        // FortifyIssueSuppression J2EE Bad Practices: JVM Termination
+        // This isn't Java EE
+        System.exit(0);
+      }
+    }
+  }
+
+  private static void usage() {
+    System.err.println(
+      "Usage: console.jar [--properties <property-file-path>] [--stdin] [-s server] [-p port] [-u url]");
+    // FortifyIssueSuppression J2EE Bad Practices: JVM Termination
+    // This isn't Java EE
+    System.exit(1);
+  }
+
   public static void main(final String[] args) throws Exception {
+    boolean stdin = false;
+    for (int i = 0; i < args.length; i++) {
+      if (args[i].equals("-p")) {
+        i++;
+        if (args.length == i) {
+          usage();
+        }
+        // FortifyIssueSuppression Setting Manipulation
+        // This is intentional
+        System.setProperty("server.port", args[1]);
+      } else if (args[i].equals("--stdin")) {
+        stdin = true;
+      } else if (args[i].equals("--properties")) {
+        i++;
+        if (args.length == i) {
+          usage();
+        }
+        readPropertyFile(args[i]);
+      }
+    }
     Logger logger = configureLogging();
-    ConsoleBackendRuntime.INSTANCE.init(args);
+    ConsoleBackendRuntime.INSTANCE.init(new String[0]);
 
     // The ConsoleBackendRuntime will attempt to connect
     // to the WebLogic Domain when WebLogic RESTful Management
@@ -53,6 +130,9 @@ public final class Main {
           + "' is "
           + state
           + " <<<<");
+    }
+    if (stdin) {
+      readStandardInput();
     }
   }
 

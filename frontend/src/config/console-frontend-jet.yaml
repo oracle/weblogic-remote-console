@@ -1,39 +1,50 @@
-# Copyright 2020, 2021, Oracle and/or its affiliates.  All rights reserved.
-# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
-
-name: "WebLogic Server Remote Console"
-version: ""
+name: WebLogic Remote Console
+version: '1.1.0'
 console-backend:
-  name: "Oracle WebLogic Console Backend Microprofile Server"
-  version: "1.0"
-  baseUrl: "http://localhost:8012"
+  name: Oracle WebLogic Console Backend Microprofile Server
+  version: '1.0'
+  baseUrl: 'http://localhost:8012'
   pollingMillis: 60000
+  retryAttempts: 5
   services:
-    - id: configuring
-      path: "/configuration"
+    - id: configuration
+      path: /configuration
       enabled: true
       components:
+        data: null
+        pages: null
         changeManager:
           - id: view
-            uri: "/changeManager"
+            uri: /changeManager
           - id: edit
-            uri: "/changeManager/changes"
+            uri: /changeManager/changes
           - id: commit
-            uri: "/changeManager/activate"
+            uri: /changeManager/activate
           - id: discard
-            uri: "/changeManager/cancelEdit"
+            uri: /changeManager/cancelEdit
     - id: monitoring
-      path: "/monitoring"
+      path: /monitoring
       enabled: true
       components:
+        data: null
+        pages: null
         lifecycle:
           - id: view
-            uri: "DomainRuntime/ServerStates"
+            prefix: /data
+            uri: /DomainRuntime/ServerStates
+    - id: information
+      path: /about
+    - id: connecting
+      path: /connection
 settings:
   logging:
-    defaultLevel: "INFO"
+    defaultLevel: INFO
   autoSync:
     minimumSecs: 30
   themes:
-    dark: ["#413e3c", "#624f4f"]
-    light: ["#dcd6d1", "#b6a29a"]
+    dark:
+      - '#413e3c'
+      - '#624f4f'
+    light:
+      - '#dcd6d1'
+      - '#b6a29a'

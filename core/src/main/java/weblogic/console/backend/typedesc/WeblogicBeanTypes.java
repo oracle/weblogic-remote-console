@@ -1112,12 +1112,12 @@ public class WeblogicBeanTypes {
 
     // Same rational for 'dateAsLong' (boolean that defaults to false)
     if (prop.isDateAsLong()) {
-      merged.setReference(prop.isDateAsLong());
+      merged.setDateAsLong(prop.isDateAsLong());
     }
 
     // Same rational for 'allowNullReference' (boolean that defaults to true)
     if (!prop.isAllowNullReference()) {
-      merged.setReference(prop.isAllowNullReference());
+      merged.setAllowNullReference(prop.isAllowNullReference());
     }
   }
 

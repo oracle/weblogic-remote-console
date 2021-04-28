@@ -91,6 +91,16 @@ public class StringUtils {
   }
 
   /**
+   * Determines whether a single letter is a vowel
+   *
+   * @param letter
+   * @return true if letter is a vowel
+   */
+  private static boolean isVowel(String letter) {
+    return "aeiou".contains(letter);
+  }
+
+  /**
    * Converts a singular string to a plural string
    *
    * @param singular
@@ -99,9 +109,15 @@ public class StringUtils {
   public static String getPlural(String singular) {
     String plural = replaceEnding(singular, "ss", "sses");
     if (plural == null) {
-      plural = replaceEnding(singular, "y", "ies");
+      int len = singular.length();
+      // Check whether the letter before a 'y' is a vowel or not
+      if (singular.endsWith("y") && !isVowel(singular.substring(len - 2, len - 1))) {
+        // not a vowel, so replace 'y' with 'ies'
+        plural = replaceEnding(singular, "y", "ies");
+      }
     }
     if (plural == null) {
+      // includes case where singular ends in 'y' and preceding letter is a vowel
       plural = singular + "s";
     }
     return plural;
@@ -205,7 +221,7 @@ public class StringUtils {
           } else {
             // in a normal word - continue
             // e.g. ...1b..., ...#b...
-          }  
+          }
         } else {
           if (wasUpperCase) {
             // in an acronym - continue
@@ -216,7 +232,7 @@ public class StringUtils {
           } else {
             // in an acronym or normal word - continue
             // e.g. ...11..., ...#1..., ...##..., ...1#...
-          }  
+          }
         }
       }
     }

@@ -17,3 +17,9 @@ properties:
   legalValues:
   - value: Machine
   - value: UnixMachine
+
+- name: "NMType"
+- name: "ListenAddress"
+- name: "ListenPort"
+- name: "NodeManagerHome"
+- name: "ShellCommand"

@@ -50,4 +50,20 @@ public class WeblogicSliceForm {
   public void setPresentation(WeblogicSliceFormPresentation presentation) {
     this.presentation = presentation;
   }
+
+  private List<FormSection> sections = new ArrayList<>();
+
+  public List<FormSection> getSections() {
+    return sections;
+  }
+
+  public void setSections(List<FormSection> sections) {
+    this.sections = sections;
+  }
+
+  public FormSection addSection() {
+    FormSection section = new FormSection();
+    sections.add(section);
+    return section;
+  }
 }

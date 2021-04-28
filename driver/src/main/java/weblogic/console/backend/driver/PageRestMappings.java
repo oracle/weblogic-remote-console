@@ -132,11 +132,7 @@ public class PageRestMappings {
     Set<String> propertyNames,
     WeblogicSliceFormPageSource pageSource
   ) throws Exception {
-    for (WeblogicPropertySource propertySource : pageSource.getSliceFormSource().getProperties()) {
-      propertyNames.add(propertySource.getName());
-    }
-    for (WeblogicPropertySource propertySource :
-        pageSource.getSliceFormSource().getAdvancedProperties()) {
+    for (WeblogicPropertySource propertySource : pageSource.getSliceFormSource().getAllProperties()) {
       propertyNames.add(propertySource.getName());
     }
   }

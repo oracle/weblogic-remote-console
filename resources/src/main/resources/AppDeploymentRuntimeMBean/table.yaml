@@ -1,5 +1,10 @@
 # Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page displays the list of Java EE applications and standalone application modules installed to this domain.</p>
+  <p>You can start and stop applications and modules from the domain using the controls on this page. Select the control, then in the next window, select the applications on which you want to perform the operation.</p>
+
 displayedColumns:
 - name: "Name"
 - name: "ApplicationName"

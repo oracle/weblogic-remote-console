@@ -1,4 +1,4 @@
-# Known Issues and Limitations for the Oracle WebLogic Server Remote Console
+# Known Issues and Limitations for the WebLogic Remote Console
 This page lists the known issues and workarounds, if available,
 as well as the limitations of the console in this release.
 
@@ -15,7 +15,7 @@ The following list summarizes the known issues at the time of this release.
 The Remote Console fully supports only users in the Administrator role. If you are not logged in as an Administrator, unexpected behavior may occur. For example, the Deployer, Monitor and Operator roles are not sufficient for most configuration pages and will result in empty pages and error messages.
 
 ### Minimum Web Browser Viewport Size
-**Issue** The font sizes in the WebLogic Server Remote Console are governed by the Oracle JET Redwood style. They are larger than the ones used in the WebLogic Server Administration Console, and the entry fields are a bit larger in height and width. As a result, the overall viewing area inside your web browser's viewport (the portion where all the web content appears), needs to be of a minimum size to have an enjoyable experience using the Remote Console.
+**Issue** The font sizes in the WebLogic Remote Console are governed by the Oracle JET Redwood style. They are larger than the ones used in the WebLogic Server Administration Console, and the entry fields are a bit larger in height and width. As a result, the overall viewing area inside your web browser's viewport (the portion where all the web content appears), needs to be of a minimum size to have an enjoyable experience using the Remote Console.
 
 We have determined that the recommended minimum web browser viewport size is 1592 x 900 pixels. If you resize your web browser to be smaller than 1592 x 900 pixels, then scroll bars appear when the mouse hovers over certain areas. However, some form data may still not be visible until the web browser's viewport height is at least 900 pixels.
 

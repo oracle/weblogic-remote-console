@@ -1,0 +1,33 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page allows you to define the Node Manager configuration
+  for this machine. To control a Managed Server from the console, Node
+  Manager must be configured and running on the machine where the Managed
+  Servers are installed.</p><p>The settings defined on this page are used
+  to configure communication between the current domain and Node Manager
+  instances that control Managed Servers. This page does not control the
+  configuration of the Node Manager instances.</p>
+
+properties:
+- name: "NMType"
+- name: "ListenAddress"
+- name: "ListenPort"
+- name: "NodeManagerHome"
+- name: "ShellCommand"
+- name: "DebugEnabled"
+helpTasks:
+- "machines/ConfigureMachines"
+- "machines/MonitorNodeManagerStatus"
+- "machines/MonitorNodeManagerLogs"
+helpTopics:
+- label: "Administering Node Manager for Oracle WebLogic Server "
+  href: "nodem/index.html"
+  type: "edocs"
+- label: "Understanding WebLogic Server Domains"
+  href: "domcf/understand_domains.html"
+  type: "edocs"
+- label: "Administering Node Manager for Oracle WebLogic Server"
+  href: "nodem/index.html"
+  type: "edocs"

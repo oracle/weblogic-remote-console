@@ -1,6 +1,64 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
 - name: BufferSizeKB
   label: Log File Buffer
+
+- name: FileName
+  label: Log file name
+
+- name: FileMinSize
+  label: Rotation file size
+  usedIf:
+    property: RotationType
+    values:
+      - "bySize"
+
+- name: RotationTime
+  label: Begin rotation time
+  usedIf:
+    property: RotationType
+    values:
+      - "byTime"
+
+- name: FileTimeSpan
+  label: Rotation interval
+  usedIf:
+    property: RotationType
+    values:
+      - "byTime"
+
+- name: NumberOfFilesLimited
+  label: Limit number of retained files
+  usedIf:
+    property: RotationType
+    values:
+      - "bySize"
+      - "byTime"
+      - "none"
+
+- name: FileCount
+  label: Files to retain
+  usedIf:
+    property: NumberOfFilesLimited
+    values:
+      - true
+
+- name: LogFileRotationDir
+  label: Log file rotation directory
+  usedIf:
+    property: RotationType
+    values:
+      - "bySize"
+      - "byTime"
+      - "none"
+
+- name: RotateLogOnStartup
+  label: Rotate log file on startup
+  usedIf:
+    property: RotationType
+    values:
+      - "bySize"
+      - "byTime"
+      - "none"

@@ -14,9 +14,11 @@ You can navigate easily between the two perspectives using the drop-down list in
 **Note:** Because the Configuration perspective shows the 'edit' tree (that is, the changes you're currently making and haven't activated yet), and the Monitoring perspective shows the Administration Server's 'server config' tree (that is, the configuration from the last time the Administration Server was booted plus any activated dynamic changes), unactivated changes that you made in the Configuration perspective won't show up in the Monitoring perspective.  For example, if you add a server and have not activated the change yet, it does not show up in the Monitoring 'Running Servers' and 'Server States' tables.  Also, if you make any nondynamic changes, and activate them, they won't show up in the Monitoring pages until you reboot the appropriate servers.
 
 ## User Interface Description <a name ="new_ui"></a>
-The primary areas and design features of the  WebLogic Server Remote Console user interface are as follows:
+The primary areas and design features of the  WebLogic Remote Console user interface are as follows:
 
-* **Branding Area**   The Branding area is the fixed area at the very top of the page. The Oracle logo and application name are located on the left; the connected user and connect/disconnect icon are on the right. In addition to the connect/disconnect icon, you can click the Oracle logo to re-establish a domain connection.
+* **Branding Area**   The Branding area is the fixed area at the very top of the page. The application name is located on the left; the connected user and connect/disconnect icon are on the right. In addition to the connect/disconnect icon, you can click the application name to re-establish a domain connection.
+
+  You can click on the domain name in the branding area to see the URL for the domain that you are connected to and the version of the WebLogic Server domain.
 
 * **Home Page** The Home page uses a card-based design to represent functional areas such as Configuration and Monitoring. When you select a card on the Home page, a perspective for the functional area displays. Perspectives separate administration tasks and behaviors.
 
@@ -33,7 +35,7 @@ The primary areas and design features of the  WebLogic Server Remote Console use
 
   You can return to a landing page by clicking ![Home icon](../frontend/src/images/home-icon-blk_24x24.png) on the right side of the content pane.
 
-* **Navigation Tree** The Domain Structure panel in the WebLogic Server Administration Console is represented in the WebLogic Server Remote Console as a dynamic navigation tree pane. Different navigation trees are loaded based on the perspective that you are using. For example, if you are using the Configuration perspective, the navigation tree lists the root-level nodes in the domain structure.
+* **Navigation Tree** The Domain Structure panel in the WebLogic Server Administration Console is represented in the WebLogic Remote Console as a dynamic navigation tree pane. Different navigation trees are loaded based on the perspective that you are using. For example, if you are using the Configuration perspective, the navigation tree lists the root-level nodes in the domain structure.
 
     An ellipse (...) in the Navigation Tree in a list indicates that there are more than ten entities of a particular type defined in the domain. When you click the ellipse, the table view for the first ten entities displays in the main content area. You can then access all the entities in the table view using the arrows at the bottom of the table. For example, if you have 20 server instances defined in a domain, only the first ten are listed in the navigation tree. Clicking the ellipse displays the Server table in the main content area, where you can view the first ten servers and navigate to the remaining servers.
 
@@ -49,7 +51,7 @@ The primary areas and design features of the  WebLogic Server Remote Console use
     * Main content area - Contains the tables and forms data. The topmost section is a fixed header that contains page descriptions and instructions, tabs (if applicable), perspective-scoped navigation history, toolbar buttons such as **Save** on the left, toolbar icons (on the right) and the **Show advanced fields** check box. The content area beneath the fixed header contains the tables, forms, and help fields. Horizontal and vertical scrollbars appear for tables, forms and help when the page is not large enough to display its entire contents.
 
 ## Usage Notes <a name ="usage"></a>
-Consider the following usage notes when using the WebLogic Server Remote Console:
+Consider the following usage notes when using the WebLogic Remote Console:
 - [Create MBeans](#create)
 - [Use the Tool Bar Icons in the Content Pane](#tool_bar)
 - [Use the Shopping Cart](#cart)
@@ -90,13 +92,13 @@ These pending changes and lock status are visible in a Kiosk window, accessible 
 **Difference Between the Change Center and Change Manager**
 In the WebLogic Server Administration Console, the Change Center provides a way to lock a domain configuration so you can make changes to the configuration while preventing other accounts from making changes during your edit session. It can be enabled or disabled in a development domain, and is enabled by default in a production domain. When locking is enabled, you start the edit process by obtaining a lock. When you finish making changes, you save the changes. The changes do not take effect, however, until you activate them, distributing them to all server instances in the domain.
 
-The WebLogic Server Remote Console provides similar locking functionality in the shopping cart. In the Remote Console, in both development and production domains, the pages are always read/writeable. When you create an MBean or save a change to page, the Remote Console automatically grabs the lock. To view details about the lock, expand the Change Manager in the Kiosk. The changes are not activated until you click Commit Changes.
+The WebLogic Remote Console provides similar locking functionality in the shopping cart. In the Remote Console, in both development and production domains, the pages are always read/writeable. When you create an MBean or save a change to page, the Remote Console automatically grabs the lock. To view details about the lock, expand the Change Manager in the Kiosk. The changes are not activated until you click Commit Changes.
 
 When you activate nondynamic changes, you need to navigate to the 'Running Servers' table in the Monitoring perspective to see which servers need to be rebooted so that they can start using the new configuration.
 
-In both consoles, the configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock using the WebLogic Server Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the Remote Console and you will not be locked out of making changes with the other tools.
+In both consoles, the configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock using the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the Remote Console and you will not be locked out of making changes with the other tools.
 
-**Note:** Oracle recommends against making changes using multiple tools because when one of the sessions activates their changes, it releases the lock and the other session will not be able to save or activate their changes.
+**Note:** We recommend against making changes using multiple tools because when one of the sessions activates their changes, it releases the lock and the other session will not be able to save or activate their changes.
 
 ### Use the Remote Console Help <a name ="help"></a>
 

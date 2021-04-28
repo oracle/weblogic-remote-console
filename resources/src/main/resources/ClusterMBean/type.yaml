@@ -103,10 +103,18 @@ properties:
     - /Machines
 
 - name: DataSourceForAutomaticMigration
+  usedIf:
+    property: MigrationBasis
+    values:
+      - database
   optionsSources:
     - /JDBCSystemResources
 
 - name: DataSourceForSessionPersistence
+  usedIf:
+    property: ClusterType
+    values:
+      - wan
   optionsSources:
     - /JDBCSystemResources
 
@@ -124,3 +132,83 @@ properties:
   helpDetailsHTML: >
     <p>The selected coherence cluster must also specify this
     cluster as the target in its Members slice.</p>
+
+- name: AutoMigrationTableName
+  usedIf:
+    property: MigrationBasis
+    values:
+      - database
+
+- name: AutoMigrationTableCreationDDLFile
+  usedIf:
+    property: MigrationBasis
+    values:
+      - database
+
+- name: MemberDeathDetectorEnabled
+  usedIf:
+    property: MigrationBasis
+    values:
+      - database
+
+- name: MemberDiscoveryTimeout
+  usedIf:
+    property: MigrationBasis
+    values:
+      - consensus
+
+- name: ClusterBroadcastChannel
+  usedIf:
+    property: ClusterMessagingMode
+    values:
+      - unicast
+
+- name: MulticastAddress
+  usedIf:
+    property: ClusterMessagingMode
+    values:
+      - multicast
+
+- name: MulticastPort
+  usedIf:
+    property: ClusterMessagingMode
+    values:
+      - multicast
+
+- name: MulticastSendDelay
+  usedIf:
+    property: ClusterMessagingMode
+    values:
+      - multicast
+
+- name: MulticastTTL
+  usedIf:
+    property: ClusterMessagingMode
+    values:
+      - multicast
+
+- name: MulticastBufferSize
+  usedIf:
+    property: ClusterMessagingMode
+    values:
+      - multicast
+
+- name: RemoteClusterAddress
+  usedIf:
+    property: ClusterType
+    values:
+      - man
+      - wan
+
+- name: PersistSessionsOnShutdown
+  usedIf:
+    property: ClusterType
+    values:
+      - wan
+
+- name: SecureReplicationEnabled
+  usedIf:
+    property: ClusterType
+    values:
+      - none
+      - man

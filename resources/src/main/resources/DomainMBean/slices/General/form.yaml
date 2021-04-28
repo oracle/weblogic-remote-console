@@ -10,8 +10,8 @@ introductionHTML: >
 properties:
 - name: "Name"
 - name: "AdministrationPortEnabled"
-- name: "AdministrationPort"
 - name: "ProductionModeEnabled"
+- name: "AdministrationPort"
 - name: "ExalogicOptimizationsEnabled"
 - name: "ClusterConstraintsEnabled"
 - name: "InternalAppsDeployOnDemandEnabled"

@@ -6,17 +6,13 @@
  */
 "use strict";
 
-define(['knockout', 'ojs/ojhtmlutils', '../cfe/common/runtime', './modules/navtree-manager', '../cfe/services/perspective/perspective-manager', '../cfe/services/perspective/perspective-memory-manager', 'ojs/ojlogger', '../cfe/common/utils', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojmodule', 'ojs/ojconveyorbelt'],
-  function(ko, HtmlUtils, Runtime, NavtreeManager, PerspectiveManager, PerspectiveMemoryManager, Logger, Utils){
+/**
+ * @module
+ */
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../core/runtime', '../microservices/navtree/navtree-manager', '../microservices/perspective/perspective-manager', '../microservices/perspective/perspective-memory-manager', 'ojs/ojlogger', '../microservices/page-definition/utils', '../core/utils', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojmodule', 'ojs/ojconveyorbelt'],
+  function(oj, ko, HtmlUtils, Runtime, NavtreeManager, PerspectiveManager, PerspectiveMemoryManager, Logger, PageDefinitionUtils, CoreUtils){
     function LandingPageTemplate(viewParams) {
       const self = this;
-
-      this.i18n = {
-        cards: [
-          { id: "configuration", label: "Configuration", description: "<p>Maintain configuration of WebLogic domain you are currently working with.</p>"},
-          { id: "monitoring", label: "Monitoring", description: "<p>View runtime MBean information for select resources in WebLogic domain you are currently working with.</p>"}
-        ]
-      };
 
       this.perspectiveGroups = ko.observableArray();
       this.perspectiveGroup = ko.observable({name: "", description: "<p/>"});
@@ -72,12 +68,29 @@ define(['knockout', 'ojs/ojhtmlutils', '../cfe/common/runtime', './modules/navtr
               self.perspectiveGroups(convertPathModelsToGroups(pathModels));
             }
 
-            setPagePanelSubtreeVisibility(false);
+            const expandableName = self.perspectiveMemory.expandableName.call(self.perspectiveMemory);
+            if (expandableName !== null) {
+              const fauxEvent = {currentTarget: {children: [{id: expandableName, attributes: []}]}};
+              self.landingPanelClickHandler(fauxEvent);
+            }
+            else {
+              setPagePanelSubtreeVisibility(false);
+            }
           });
         });
       }
 
       function convertPathModelsToGroups(pathModels) {
+        // This function can be remove once Mason resolves
+        // the issue where the fulfillment value returned by
+        // navtree-manager.getPathChildrenModels() has
+        // duplicates in it.
+        function removeDuplicates(groups, key) {
+          return [
+            ...new Map(groups.map(obj => [key(obj), obj])).values()
+          ];
+        }
+
         let groups = [];
         pathModels.forEach((pathModel) => {
           if (typeof pathModel === "string") {
@@ -93,16 +106,6 @@ define(['knockout', 'ojs/ojhtmlutils', '../cfe/common/runtime', './modules/navtr
         // TODO: Switch this to just return groups, once Mason
         // resolves the duplicates issue
         return removeDuplicates(groups, group => group.name);
-      }
-
-      // This function can be remove once Mason resolves
-      // the issue where the fulfillment value returned by
-      // navtree-manager.getPathChildrenModels() has
-      // duplicates in it.
-      function removeDuplicates(groups, key) {
-        return [
-          ...new Map(groups.map(obj => [key(obj), obj])).values()
-        ];
       }
 
       function setPagePanelSubtreeVisibility(visible) {
@@ -122,7 +125,6 @@ define(['knockout', 'ojs/ojhtmlutils', '../cfe/common/runtime', './modules/navtr
           else {
             ele.style.display = "block";
             if (ele1 !== null) ele1.setAttribute("class", "landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-n");
-            self.perspectiveMemory.landingPage.subtreeItem = subtreeName;
           }
         }
       }
@@ -150,11 +152,20 @@ define(['knockout', 'ojs/ojhtmlutils', '../cfe/common/runtime', './modules/navtr
         // child element (e.g. children[0]) of that is a
         // <div> tag.
         const value = event.currentTarget.children[0].id;
-        if (typeof value === "undefined") return;
+        if (CoreUtils.isUndefinedOrNull(value)) return;
 
+        let pathValue;
         const path = event.currentTarget.children[0].attributes["data-path"];
-        if (typeof path !== "undefined") {
-          const fauxEvent = {currentTarget: {children: [{id: path.value}]}};
+        if (CoreUtils.isNotUndefinedNorNull(path)) {
+          pathValue = path.value;
+        }
+        else {
+          const item = self.perspectiveGroups().find(item => item.name === value);
+          if (CoreUtils.isNotUndefinedNorNull(item)) pathValue = item.path;
+        }
+
+        if (CoreUtils.isNotUndefinedNorNull(pathValue)) {
+          const fauxEvent = {currentTarget: {children: [{id: pathValue}]}};
           self.perspectiveGroupSubtreeItemClickHandler(fauxEvent);
         }
         else {
@@ -166,23 +177,25 @@ define(['knockout', 'ojs/ojhtmlutils', '../cfe/common/runtime', './modules/navtr
 
           if (name !== previousName) {
             let subtreePageItems = [];
-            self.navtreeManager.getGroupContents(name).then(groupContents => {
-              groupContents.forEach((item) => {
-                const itemHTML = (typeof item.descriptionHTML !== "undefined" ? item.descriptionHTML : "<p>CBE did not provide a description for this item.</p>");
-                subtreePageItems.push({
-                  type: item.identity.kind,
-                  path: Utils.pathEncodedFromIdentity(item.identity),
-                  label: Utils.displayNameFromIdentity(item.identity),
-                  descriptionHTML: { view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`) }
+            self.navtreeManager.getGroupContents(name)
+              .then(groupContents => {
+                groupContents.forEach((item) => {
+                  const itemHTML = (typeof item.descriptionHTML !== "undefined" ? item.descriptionHTML : "<p>CBE did not provide a description for this item.</p>");
+                  subtreePageItems.push({
+                    type: item.identity.kind,
+                    path: PageDefinitionUtils.pathEncodedFromIdentity(item.identity),
+                    label: PageDefinitionUtils.displayNameFromIdentity(item.identity),
+                    descriptionHTML: { view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`) }
+                  });
                 });
-              });
-            }).then(() => {
-              self.subtreeItemChildren(subtreePageItems);
-              toggleSubtreePageVisibility(name);
+              }).then(() => {
+                self.perspectiveMemory.setExpandableName.call(self.perspectiveMemory, name);
+                self.subtreeItemChildren(subtreePageItems);
+                toggleSubtreePageVisibility(name);
 
-              // expand navtree group
-              viewParams.signaling.navtreeUpdated.dispatch({ path: name, unlock: true });
-            });
+                // expand navtree group
+                viewParams.signaling.navtreeUpdated.dispatch({ path: name, unlock: true });
+              });
           }
           else {
             // Reinitialize perspectiveGroup, so previousName const

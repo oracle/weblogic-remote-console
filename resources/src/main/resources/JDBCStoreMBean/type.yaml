@@ -11,11 +11,15 @@ properties:
   label: Data Source
   optionsSources:
     - /JDBCSystemResources
-  helpHTML: >
-    <p>The JDBC data source used by this JDBC store to access its backing
-    table. You cannot configure a JDBC store to use a JDBC data source
-    that is configured to use an XA JDBC driver or configured to support
-    global transactions.</p>
+  helpSummaryHTML: >
+    <p>The JDBC data source used by this JDBC store to access its backing table.</p>
+    <ul>
+      <li>You cannot configure a JDBC store to use a JDBC data source
+          that is configured to use an XA JDBC driver or configured to support
+          global transactions.</li>
+      <li>The data source should be targeted to the 
+          same WebLogic Server or cluster as the JDBC store.</li>
+    </ul>
 
 - name: ConnectionCachingPolicy
   helpSummaryHTML: >

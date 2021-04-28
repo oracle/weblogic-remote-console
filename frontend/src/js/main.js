@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -49,9 +49,15 @@
         'regenerator-runtime' : 'libs/regenerator-runtime/runtime',
         'js-yaml' : 'libs/js-yaml/js-yaml.min'
       }
-      // endinjector
-    }
-  );
+      //endinjector
+      , config: {
+        ojL10n: {
+          merge: {
+            'ojtranslations/nls/ojtranslations': 'resources/nls/frontend'
+          }
+        }
+      }
+    });
 }());
 
 /**
@@ -65,7 +71,7 @@
  * file to set the default logging level used by ojs/ojlogger. We configure our frontend JET web application
  * to use that instead of the built-in console.log mechanism.
  */
-require(['ojs/ojcore', 'ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojrouter', './cfe/common/runtime',
+require(['ojs/ojcore', 'ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojrouter', './core/runtime',
     'ojs/ojknockout', 'ojs/ojnavigationlist'],
   function (oj, Bootstrap, ko, app, Router, Runtime) {
     // this callback gets executed when all required modules are loaded

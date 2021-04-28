@@ -1,0 +1,71 @@
+<!--
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div id="ancillary-content-area-icons-tabstrip" class="oj-flex-bar">
+  <!-- This is a horizontal toolbar of icons that we're calling a tabstrip -->
+  <div class="oj-flex-bar-end">
+    <oj-bind-for-each data="[[i18n.tabstrip.tabs]]" as="tab">
+      <template>
+        <oj-bind-if test="[[tab.data.visible()]]">
+          <a href="#" tabindex="-1"
+             on-click="[[iconsTabstripTabClickHandler]]"
+             data-state="closed"
+          >
+            <img class="tabstrip-tab-icon" data-bind="attr: {id: tab.data.id + '_tabstripTab', src: '../../images/' + tab.data.iconFile + '.png', title: tab.data.label}"/>
+          </a>
+        </oj-bind-if>
+      </template>
+    </oj-bind-for-each>
+  </div>
+</div>
+
+<oj-dialog
+  id="icons-tabstrip-tab-overlay-dialog"
+  position.at.horizontal="[[i18n.dialog1.position.at.horizontal()]]"
+  position.at.vertical="[[i18n.dialog1.position.at.vertical()]]"
+  position.offset.y="[[i18n.dialog1.position.offset.y()]]"
+  resize-behavior="resizable"
+  cancel-behavior="escape"
+>
+  <div slot="body" class="oj-flex oj-sm-flex-items-initial">
+    <!-- column 1, sideways (i.e. vertical) title for tab  -->
+    <div class="oj-flex-item site-sideways-tabstrip">
+      <span>
+        <img data-bind="attr: {src: '../../images/' + i18n.tabstrip.tabs[2].iconFile + '.png'}"/>
+        <span data-bind="text: i18n.tabstrip.tabs[2].label"></span>
+      </span>
+    </div>
+    <!-- column 2 -->
+    <div id="tab-module" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+      <!-- row 1, right-aligned icons for controlling the overlay -->
+      <div class="oj-flex-item">
+        <a id="detach-overlay" href="#" tabindex="-1"
+           on-click="[[tabstripTabOverlayClickHandler]]"
+        >
+          <img data-bind="attr: {src: '../../images/' + i18n.dialog1.icons.detach.iconFile + '.png', title: i18n.dialog1.icons.detach.tooltip}"/>
+        </a>
+      </div>
+      <div class="oj-flex-item">
+        <a id="reattach-overlay" href="#" tabindex="-1"
+           on-click="[[tabstripTabOverlayClickHandler]]"
+        >
+          <img data-bind="attr: {src: '../../images/' + i18n.dialog1.icons.reattach.iconFile + '.png', title: i18n.dialog1.icons.reattach.tooltip}"/>
+        </a>
+      </div>
+      <div class="oj-flex-item">
+        <a id="close-overlay" href="#" tabindex="-1"
+           on-click="[[tabstripTabOverlayClickHandler]]"
+        >
+          <img data-bind="attr: {src: '../../images/' + i18n.dialog1.icons.close.iconFile + '.png', title: i18n.dialog1.icons.close.tooltip}"/>
+        </a>
+      </div>
+
+      <div class="oj-flex-item">
+        <!-- row 2, content panel for selected tab -->
+        <oj-module config="[[tabOverlayModuleConfig]]"></oj-module>
+      </div>
+    </div>
+
+  </div>
+</oj-dialog>

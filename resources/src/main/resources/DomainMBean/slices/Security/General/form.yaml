@@ -9,9 +9,9 @@ introductionHTML: >
 properties:
 - name: "DefaultRealm"
 - name: "AdministrativeIdentityDomain"
+- name: "CrossDomainSecurityEnabled"
 - name: "IdentityDomainAwareProvidersRequired"
 # deprecated - name: "AnonymousAdminLookupEnabled"
-- name: "CrossDomainSecurityEnabled"
 - name: "ExcludedDomainNames"
 advancedProperties:
 - name: "SecurityCredential"

@@ -1,0 +1,1594 @@
+{
+  "/":{
+    "navigation":[
+      {
+        "descriptionHTML":"<p>Domain Runtime general monitoring info</p>\n",
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"root",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"ServerRuntime",
+              "typeLabel":"Server Runtime",
+              "property":"ServerRuntimes",
+              "propertyLabel":"Server Runtimes"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"MigrationDataRuntime",
+              "typeLabel":"Migration Data Runtime",
+              "property":"MigrationDataRuntimes",
+              "propertyLabel":"Migration Data Runtimes"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"NodeManagerRuntime",
+              "typeLabel":"Node Manager Runtime",
+              "property":"NodeManagerRuntimes",
+              "propertyLabel":"Node Manager Runtimes"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"ServerLifeCycleRuntime",
+              "typeLabel":"Server Life Cycle Runtime",
+              "property":"ServerStatuses",
+              "propertyLabel":"Server Statuses"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"ServiceMigrationDataRuntime",
+              "typeLabel":"Service Migration Data Runtime",
+              "property":"ServiceMigrationDataRuntimes",
+              "propertyLabel":"Service Migration Data Runtimes"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"SystemComponentLifeCycleRuntime",
+              "typeLabel":"System Component Life Cycle Runtime",
+              "property":"SystemComponentLifeCycleRuntimes",
+              "propertyLabel":"System Component Life Cycle Runtimes"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"AppDeploymentRuntime",
+              "typeLabel":"App Deployment Runtime",
+              "property":"AppDeploymentRuntimes",
+              "propertyLabel":"App Deployment Runtimes"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"DeploymentProgressObject",
+              "typeLabel":"Deployment Progress Object",
+              "property":"DeploymentProgressObjects",
+              "propertyLabel":"Deployment Progress Objects"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"LibDeploymentRuntime",
+              "typeLabel":"Lib Deployment Runtime",
+              "property":"LibDeploymentRuntimes",
+              "propertyLabel":"Lib Deployment Runtimes"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"EditSessionConfigurationRuntime",
+              "typeLabel":"Edit Session Configuration Runtime",
+              "property":"EditSessionConfigurations",
+              "propertyLabel":"Edit Session Configurations"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"ScalingTaskRuntime",
+              "typeLabel":"Scaling Task Runtime",
+              "property":"ScalingTasks",
+              "propertyLabel":"Scaling Tasks"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"WorkflowTaskRuntime",
+              "typeLabel":"Workflow Task Runtime",
+              "property":"AllWorkflows",
+              "propertyLabel":"All Workflows"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"WorkflowTaskRuntime",
+              "typeLabel":"Workflow Task Runtime",
+              "property":"InactiveWorkflows",
+              "propertyLabel":"Inactive Workflows"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collection",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"WorkflowTaskRuntime",
+              "typeLabel":"Workflow Task Runtime",
+              "property":"StoppedWorkflows",
+              "propertyLabel":"Stopped Workflows"
+            }
+          ]
+        }
+      },
+      {
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"nonCreatableOptionalSingleton",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"SNMPAgentRuntime",
+              "typeLabel":"SNMP Agent Runtime",
+              "property":"SNMPAgentRuntime",
+              "propertyLabel":"SNMP Agent Runtime"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/DomainRuntime/ServerRuntimes":{
+    "data":[
+      {
+        "ActivationTime":1599657531708,
+        "AdminServer":true,
+        "DefaultURL":"t3://172.17.0.2:7001",
+        "Name":"AdminServer",
+        "AdministrationURL":"t3://172.17.0.2:7001",
+        "identity":{
+          "perspective":"monitoring",
+          "kind":"collectionChild",
+          "path":[
+            {
+              "type":"DomainRuntime",
+              "typeLabel":"Domain Runtime"
+            },
+            {
+              "type":"ServerRuntime",
+              "typeLabel":"Server Runtime",
+              "property":"ServerRuntimes",
+              "propertyLabel":"Server Runtimes",
+              "key":"AdminServer"
+            }
+          ]
+        },
+        "CurrentMachine":"Machine1",
+        "AdminServerListenPort":7001,
+        "StateVal":2,
+        "OpenSocketsCurrentCount":1,
+        "Type":"ServerRuntime",
+        "PatchList":[
+          "No patches installed"
+        ],
+        "WeblogicHome":"/u01/oracle/wlserver",
+        "State":"RUNNING",
+        "MiddlewareHome":"/u01/oracle",
+        "WeblogicVersion":"WebLogic Server 14.1.1.0.0  Thu Mar 26 03:15:09 GMT 2020 2000885",
+        "Throughput":11.994002998500749,
+        "StandbyThreadCount":15,
+        "CompletedRequestCount":487639,
+        "Suspended":false,
+        "PendingUserRequestCount":0,
+        "OverloadRejectedRequestsCount":0,
+        "QueueLength":0,
+        "MinThreadsConstraintsPending":0,
+        "HoggingThreadCount":0,
+        "SharedCapacityForWorkManagers":65536,
+        "MinThreadsConstraintsCompleted":21399,
+        "StuckThreadCount":0,
+        "JACCEnabled":false
+      }
+    ],
+    "pageDefinition":"ServerRuntimeMBean?view=table",
+    "weblogicVersion":"14.1.1.0.0"
+  },
+  "/DomainRuntime/ServerRuntimes/AdminServer":{
+    "data":{
+      "ActivationTime":1599657531708,
+      "AdminServer":true,
+      "DefaultURL":"t3://172.17.0.2:7001",
+      "Name":"AdminServer",
+      "AdministrationURL":"t3://172.17.0.2:7001",
+      "identity":{
+        "perspective":"monitoring",
+        "kind":"collectionChild",
+        "path":[
+          {
+            "type":"DomainRuntime",
+            "typeLabel":"Domain Runtime"
+          },
+          {
+            "type":"ServerRuntime",
+            "typeLabel":"Server Runtime",
+            "property":"ServerRuntimes",
+            "propertyLabel":"Server Runtimes",
+            "key":"AdminServer"
+          }
+        ]
+      },
+      "CurrentMachine":"Machine1",
+      "AdminServerListenPort":7001,
+      "StateVal":2,
+      "OpenSocketsCurrentCount":1,
+      "Type":"ServerRuntime",
+      "PatchList":[
+        "No patches installed"
+      ],
+      "WeblogicHome":"/u01/oracle/wlserver",
+      "State":"RUNNING",
+      "MiddlewareHome":"/u01/oracle",
+      "WeblogicVersion":"WebLogic Server 14.1.1.0.0  Thu Mar 26 03:15:09 GMT 2020 2000885",
+      "Throughput":11.994002998500749,
+      "StandbyThreadCount":15,
+      "CompletedRequestCount":487643,
+      "Suspended":false,
+      "PendingUserRequestCount":0,
+      "OverloadRejectedRequestsCount":0,
+      "QueueLength":0,
+      "MinThreadsConstraintsPending":0,
+      "HoggingThreadCount":0,
+      "SharedCapacityForWorkManagers":65536,
+      "MinThreadsConstraintsCompleted":21399,
+      "StuckThreadCount":0,
+      "JACCEnabled":false
+    },
+    "navigation":[
+      {
+        "groupLabel":"Environment",
+        "contents":[
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"nonCreatableOptionalSingleton",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"JVMRuntime",
+                  "typeLabel":"JVM Runtime",
+                  "property":"JVMRuntime",
+                  "propertyLabel":"JVM Runtime"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"nonCreatableOptionalSingleton",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"ClusterRuntime",
+                  "typeLabel":"Cluster Runtime",
+                  "property":"ClusterRuntime",
+                  "propertyLabel":"Cluster Runtime"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"ServerChannelRuntime",
+                  "typeLabel":"Server Channel Runtime",
+                  "property":"ServerChannelRuntimes",
+                  "propertyLabel":"Server Channel Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"WLDFSystemResourceControlRuntime",
+                  "typeLabel":"WLDF System Resource Control Runtime",
+                  "property":"SystemResourceControls",
+                  "propertyLabel":"System Resource Controls"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "groupLabel":"Scheduling",
+        "contents":[
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"ExecuteQueueRuntime",
+                  "typeLabel":"Execute Queue Runtime",
+                  "property":"ExecuteQueueRuntimes",
+                  "propertyLabel":"Execute Queue Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"MinThreadsConstraintRuntime",
+                  "typeLabel":"Min Threads Constraint Runtime",
+                  "property":"MinThreadsConstraintRuntimes",
+                  "propertyLabel":"Min Threads Constraint Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"MaxThreadsConstraintRuntime",
+                  "typeLabel":"Max Threads Constraint Runtime",
+                  "property":"MaxThreadsConstraintRuntimes",
+                  "propertyLabel":"Max Threads Constraint Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"RequestClassRuntime",
+                  "typeLabel":"Request Class Runtime",
+                  "property":"RequestClassRuntimes",
+                  "propertyLabel":"Request Class Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"WorkManagerRuntime",
+                  "typeLabel":"Work Manager Runtime",
+                  "property":"WorkManagerRuntimes",
+                  "propertyLabel":"Work Manager Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"ManagedExecutorServiceRuntime",
+                  "typeLabel":"Managed Executor Service Runtime",
+                  "property":"ManagedExecutorServiceRuntimes",
+                  "propertyLabel":"Managed Executor Service Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"ManagedScheduledExecutorServiceRuntime",
+                  "typeLabel":"Managed Scheduled Executor Service Runtime",
+                  "property":"ManagedScheduledExecutorServiceRuntimes",
+                  "propertyLabel":"Managed Scheduled Executor Service Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"ManagedThreadFactoryRuntime",
+                  "typeLabel":"Managed Thread Factory Runtime",
+                  "property":"ManagedThreadFactoryRuntimes",
+                  "propertyLabel":"Managed Thread Factory Runtimes"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "groupLabel":"Deployments",
+        "contents":[
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"ApplicationRuntime",
+                  "typeLabel":"Application Runtime",
+                  "property":"ApplicationRuntimes",
+                  "propertyLabel":"Application Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"LibraryRuntime",
+                  "typeLabel":"Library Runtime",
+                  "property":"LibraryRuntimes",
+                  "propertyLabel":"Library Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"WebServerRuntime",
+                  "typeLabel":"Web Server Runtime",
+                  "property":"WebServerRuntimes",
+                  "propertyLabel":"Web Server Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "groupLabel":"Web Services",
+            "contents":[
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"nonCreatableOptionalSingleton",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"WseeClusterFrontEndRuntime",
+                      "typeLabel":"Wsee Cluster Front End Runtime",
+                      "property":"WseeClusterFrontEndRuntime",
+                      "propertyLabel":"Wsee Cluster Front End Runtime"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"nonCreatableOptionalSingleton",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"WseeWsrmRuntime",
+                      "typeLabel":"Wsee Wsrm Runtime",
+                      "property":"WseeWsrmRuntime",
+                      "propertyLabel":"Wsee Wsrm Runtime"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"nonCreatableOptionalSingleton",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"EntityCacheCurrentStateRuntime",
+                      "typeLabel":"Entity Cache Current State Runtime",
+                      "property":"EntityCacheCurrentStateRuntime",
+                      "propertyLabel":"Entity Cache Current State Runtime"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"nonCreatableOptionalSingleton",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"EntityCacheCumulativeRuntime",
+                      "typeLabel":"Entity Cache Cumulative Runtime",
+                      "property":"EntityCacheCumulativeRuntime",
+                      "propertyLabel":"Entity Cache Cumulative Runtime"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "groupLabel":"Resource Adapters",
+            "contents":[
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"ConnectorComponentRuntime",
+                      "typeLabel":"Connector Component Runtime",
+                      "property":"ActiveRAs",
+                      "propertyLabel":"Active RAs"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"ConnectorComponentRuntime",
+                      "typeLabel":"Connector Component Runtime",
+                      "property":"InactiveRAs",
+                      "propertyLabel":"Inactive RAs"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"ConnectorComponentRuntime",
+                      "typeLabel":"Connector Component Runtime",
+                      "property":"RAs",
+                      "propertyLabel":"RAs"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "groupLabel":"Services",
+        "contents":[
+          {
+            "groupLabel":"Messaging",
+            "contents":[
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"nonCreatableOptionalSingleton",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"JMSRuntime",
+                      "typeLabel":"JMS Runtime",
+                      "property":"JMSRuntime",
+                      "propertyLabel":"JMS Runtime"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"nonCreatableOptionalSingleton",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"SAFRuntime",
+                      "typeLabel":"SAF Runtime",
+                      "property":"SAFRuntime",
+                      "propertyLabel":"SAF Runtime"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"PathServiceRuntime",
+                      "typeLabel":"Path Service Runtime",
+                      "property":"PathServiceRuntimes",
+                      "propertyLabel":"Path Service Runtimes"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"MessagingBridgeRuntime",
+                      "typeLabel":"Messaging Bridge Runtime",
+                      "property":"MessagingBridgeRuntimes",
+                      "propertyLabel":"Messaging Bridge Runtimes"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "groupLabel":"Datasource",
+            "contents":[
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"JDBCDataSourceRuntime",
+                      "typeLabel":"JDBC Data Source Runtime",
+                      "property":"JDBCDataSourceRuntimeMBeans",
+                      "propertyLabel":"JDBC Data Source Runtime MBeans"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"JDBCDriverRuntime",
+                      "typeLabel":"JDBC Driver Runtime",
+                      "property":"JDBCDriverRuntimeMBeans",
+                      "propertyLabel":"JDBC Driver Runtime MBeans"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"JDBCMultiDataSourceRuntime",
+                      "typeLabel":"JDBC Multi Data Source Runtime",
+                      "property":"JDBCMultiDataSourceRuntimeMBeans",
+                      "propertyLabel":"JDBC Multi Data Source Runtime MBeans"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "groupLabel":"Transactions",
+            "contents":[
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"NonXAResourceRuntime",
+                      "typeLabel":"Non XA Resource Runtime",
+                      "property":"NonXAResourceRuntimeMBeans",
+                      "propertyLabel":"Non XA Resource Runtime MBeans"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"JTARecoveryRuntime",
+                      "typeLabel":"JTA Recovery Runtime",
+                      "property":"RecoveryRuntimeMBeans",
+                      "propertyLabel":"Recovery Runtime MBeans"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"TransactionNameRuntime",
+                      "typeLabel":"Transaction Name Runtime",
+                      "property":"TransactionNameRuntimeMBeans",
+                      "propertyLabel":"Transaction Name Runtime MBeans"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"TransactionResourceRuntime",
+                      "typeLabel":"Transaction Resource Runtime",
+                      "property":"TransactionResourceRuntimeMBeans",
+                      "propertyLabel":"Transaction Resource Runtime MBeans"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "groupLabel":"Persistence",
+            "contents":[
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"PersistentStoreRuntime",
+                      "typeLabel":"Persistent Store Runtime",
+                      "property":"PersistentStoreRuntimes",
+                      "propertyLabel":"Persistent Store Runtimes"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"PersistentStoreConnectionRuntime",
+                      "typeLabel":"Persistent Store Connection Runtime",
+                      "property":"Connections",
+                      "propertyLabel":"Connections"
+                    }
+                  ]
+                }
+              },
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"DataAccessRuntime",
+                      "typeLabel":"Data Access Runtime",
+                      "property":"DataAccessRuntimes",
+                      "propertyLabel":"Data Access Runtimes"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "groupLabel":"Other",
+            "contents":[
+              {
+                "identity":{
+                  "perspective":"monitoring",
+                  "kind":"collection",
+                  "path":[
+                    {
+                      "type":"DomainRuntime",
+                      "typeLabel":"Domain Runtime"
+                    },
+                    {
+                      "type":"ServerRuntime",
+                      "typeLabel":"Server Runtime",
+                      "property":"ServerRuntimes",
+                      "propertyLabel":"Server Runtimes",
+                      "key":"AdminServer"
+                    },
+                    {
+                      "type":"MailSessionRuntime",
+                      "typeLabel":"Mail Session Runtime",
+                      "property":"MailSessionRuntimes",
+                      "propertyLabel":"Mail Session Runtimes"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "groupLabel":"Security",
+        "contents":[
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"RealmRuntime",
+                  "typeLabel":"Realm Runtime",
+                  "property":"RealmRuntimes",
+                  "propertyLabel":"Realm Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"AuthenticatorRuntime",
+                  "typeLabel":"Authenticator Runtime",
+                  "property":"AuthenticatorRuntimes",
+                  "propertyLabel":"Authenticator Runtimes"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "groupLabel":"Interoperability",
+        "contents":[
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"nonCreatableOptionalSingleton",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"JoltConnectionServiceRuntime",
+                  "typeLabel":"Jolt Connection Service Runtime",
+                  "property":"JoltRuntime",
+                  "propertyLabel":"Jolt Runtime"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "groupLabel":"Diagnostics",
+        "contents":[
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"nonCreatableOptionalSingleton",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"SNMPAgentRuntime",
+                  "typeLabel":"SNMP Agent Runtime",
+                  "property":"SNMPAgentRuntime",
+                  "propertyLabel":"SNMP Agent Runtime"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"WLDFArchiveRuntime",
+                  "typeLabel":"WLDF Archive Runtime",
+                  "property":"WLDFArchiveRuntimes",
+                  "propertyLabel":"WLDF Archive Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"WLDFInstrumentationRuntime",
+                  "typeLabel":"WLDF Instrumentation Runtime",
+                  "property":"WLDFInstrumentationRuntimes",
+                  "propertyLabel":"WLDF Instrumentation Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"WLDFDataAccessRuntime",
+                  "typeLabel":"WLDF Data Access Runtime",
+                  "property":"WLDFDataAccessRuntimes",
+                  "propertyLabel":"WLDF Data Access Runtimes"
+                }
+              ]
+            }
+          },
+          {
+            "identity":{
+              "perspective":"monitoring",
+              "kind":"collection",
+              "path":[
+                {
+                  "type":"DomainRuntime",
+                  "typeLabel":"Domain Runtime"
+                },
+                {
+                  "type":"ServerRuntime",
+                  "typeLabel":"Server Runtime",
+                  "property":"ServerRuntimes",
+                  "propertyLabel":"Server Runtimes",
+                  "key":"AdminServer"
+                },
+                {
+                  "type":"WLDFDebugPatchTaskRuntime",
+                  "typeLabel":"WLDF Debug Patch Task Runtime",
+                  "property":"DebugPatchTasks",
+                  "propertyLabel":"Debug Patch Tasks"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "pageDefinition":"ServerRuntimeMBean?view=OnlySlice",
+    "weblogicVersion":"14.1.1.0.0"
+  }
+}

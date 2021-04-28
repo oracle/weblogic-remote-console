@@ -26,6 +26,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
 import org.jsoup.Jsoup;
+import weblogic.console.backend.driver.FormSection;
 import weblogic.console.backend.driver.VersionedWeblogicPagesFactory;
 import weblogic.console.backend.driver.WeblogicCreateForm;
 import weblogic.console.backend.driver.WeblogicPage;
@@ -172,8 +173,9 @@ public class PageIndexer extends PageSourceWalker {
 
     WeblogicSliceForm sf = page.getSliceForm();
     if (sf != null) {
-      addPropertyHelpFields(document, sf.getProperties());
-      addPropertyHelpFields(document, sf.getAdvancedProperties());
+      for (FormSection section : sf.getSections()) {
+        addPropertyHelpFields(document, section.getProperties());
+      }
     }
 
     WeblogicCreateForm cf = page.getCreateForm();

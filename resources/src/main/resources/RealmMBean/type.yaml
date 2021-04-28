@@ -69,6 +69,10 @@ properties:
     <p>The maximum size of the LRU cache for holding WebLogic Principal
     signatures. The default is 500.</p>
 
+- name: CertPathBuilder
+  optionsSources:
+  - CertPathProviders
+
 - name: Auditors
   ordered: true
 

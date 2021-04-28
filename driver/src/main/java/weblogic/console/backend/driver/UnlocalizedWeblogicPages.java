@@ -24,6 +24,7 @@ import weblogic.console.backend.pagedesc.WeblogicPageSource;
 import weblogic.console.backend.pagedesc.WeblogicPageSources;
 import weblogic.console.backend.pagedesc.WeblogicPropertyPresentationSource;
 import weblogic.console.backend.pagedesc.WeblogicPropertySource;
+import weblogic.console.backend.pagedesc.WeblogicSectionSource;
 import weblogic.console.backend.pagedesc.WeblogicSliceFormPageSource;
 import weblogic.console.backend.pagedesc.WeblogicSliceFormPresentationSource;
 import weblogic.console.backend.pagedesc.WeblogicSliceFormSource;
@@ -134,6 +135,19 @@ public class UnlocalizedWeblogicPages {
     sliceForm.setProperties(
       createProperties(pageSource, sliceFormSource.getProperties(), isCreate)
     );
+    // I'm gonna do this for now to get things back working while waiting
+    // for the CFE to catch up:
+    List<WeblogicProperty> tempAllNormalProperties = new ArrayList<>();
+    tempAllNormalProperties.addAll(createProperties(pageSource, sliceFormSource.getProperties(), isCreate));
+    for (WeblogicSectionSource section : sliceFormSource.getSections()) {
+      FormSection formSection = sliceForm.addSection();
+      if (StringUtils.notEmpty(section.getTitle())) {
+        formSection.setTitle(LocalizationUtils.sectionTitleKey(pageSource, section.getTitle()));
+      }
+      formSection.setProperties(createProperties(pageSource, section.getProperties(), isCreate));
+      tempAllNormalProperties.addAll(createProperties(pageSource, section.getProperties(), isCreate));
+    }
+    sliceForm.setProperties(tempAllNormalProperties);
     sliceForm.setAdvancedProperties(
       createProperties(pageSource, sliceFormSource.getAdvancedProperties(), isCreate)
     );
@@ -199,7 +213,7 @@ public class UnlocalizedWeblogicPages {
     // Force the form to be single column if it doesn't have many properties:
     if (!singleColumn) {
       WeblogicSliceFormSource sliceFormSource = pageSource.getSliceFormSource();
-      int propCount = sliceFormSource.getProperties().size() + sliceFormSource.getAdvancedProperties().size();
+      int propCount = sliceFormSource.getAllProperties().size();
       if (propCount <= MAX_SINGLE_COLUMN_PROPERTY_COUNT) {
         singleColumn = true;
       }

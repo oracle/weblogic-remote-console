@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
  -->
 <div id="configuration-table-form-container" class="cfe-table-form-container">
@@ -8,11 +8,11 @@
 
       <oj-bind-dom config="[[breadcrumbs.html]]"></oj-bind-dom>
 
-      <div id="beanpath-history-container" class="oj-flex-item" data-oj-binding-provider="none">
+      <div id="beanpath-history-container" class="oj-flex-item">
 
         <div id="beanpath-history" class="oj-flex oj-md-flex-items-initial oj-md-flex-wrap-nowrap">
           <div class="oj-flex-item">
-            <img id="beanpath-history-icon" data-bind="attr: {src: '../../images/' + i18n.icons.history.iconFile + '.png', 'data-title': i18n.icons.history.tooltip}"/>
+            <img id="beanpath-history-icon" data-bind="attr: {src: '../../images/' + i18n.icons.history.iconFile + '.png', 'title': i18n.icons.history.tooltip}"/>
           </div>
 
           <div id="beanpath-container" class="oj-flex-item">
@@ -39,14 +39,6 @@
               on-oj-action="[[moreMenuClickListener]]"
               open-options.launcher="moreMenuLauncher"
             >
-              <!--
-                !! DO NOT REMOVE !!
-                !! THIS IS PART OF THE DESKTOP "PERSONALIZATION" SCHEME THAT HAS !!
-                !! BEEN PARTIALLY IMPLEMENTED AND MADE INVISIBLE, FOR NOW !!
-                <oj-option id="save" value="save">Save to Desktop Folder...</oj-option>
-                <oj-option id="restore" value="restore">Load from Desktop Folder...</oj-option>
-                <oj-option>---</oj-option>
-              -->
               <oj-option id="clear" value="clear">
                 <img id="[[i18n.menus.history.clear.id]]" class="option-icon" data-bind="attr: {src: '../images/' + i18n.menus.history.clear.iconFile + '.png'}"/>
                 <span class="button-label"><oj-bind-text value="[[i18n.menus.history.clear.value]]"></oj-bind-text></span>

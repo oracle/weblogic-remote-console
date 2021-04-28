@@ -1,0 +1,20 @@
+<!--
+Copyright (c) 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+<a
+  href="#" tabindex="-1"
+  on-click="[[navtreeToggleClick]]"
+>
+  <oj-bind-if test="[[navtreeDisabled()]]">
+    <img data-bind="attr: {src: '../../images/navigation-icon-toggle-greyed_24x24.png'}"/>
+  </oj-bind-if>
+  <oj-bind-if test="[[!navtreeDisabled()]]">
+    <oj-bind-if test="[[navtreeVisible()]]">
+      <img data-bind="attr: {src: '../../images/' + [[navTreeToggleThemeIcon('on')]] + '.png'}"/>
+    </oj-bind-if>
+    <oj-bind-if test="[[!navtreeVisible()]]">
+      <img data-bind="attr: {src: '../../images/' + [[navTreeToggleThemeIcon('off')]] + '.png'}"/>
+    </oj-bind-if>
+  </oj-bind-if>
+</a>

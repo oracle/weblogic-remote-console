@@ -1,0 +1,60 @@
+<!--
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+
+<div id="content-area-header-container" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+  <!-- row 1 -->
+  <div class="oj-flex-item">
+    <span id="content-area-header-title" data-bind="text: [[headerTitle()]]"></span>
+    <oj-bind-if test="[[readonly()]]">
+      <oj-button
+        id="readonly"
+        on-oj-action="[[readonlyButtonClickHandler]]"
+        chroming="borderless"
+        disabled="[[i18n.buttons.readonly.disabled]]"
+      >
+        <img id="readonly-image" slot="startIcon" data-bind="attr: {src: '../../images/' + i18n.buttons.readonly.image + '.png', 'title': i18n.buttons.readonly.label}" />
+      </oj-button>
+    </oj-bind-if>
+
+    <oj-bind-if test="[[!readonly()]]">
+      <oj-button
+        id="readwrite"
+        on-oj-action="[[readonlyButtonClickHandler]]"
+        chroming="borderless"
+        disabled="[[i18n.buttons.readwrite.disabled]]"
+      >
+        <img id="readwrite-image" slot="startIcon" data-bind="attr: {src: '../../images/' + i18n.buttons.readwrite.image + '.png', 'title': i18n.buttons.readwrite.label}" />
+      </oj-button>
+    </oj-bind-if>
+  </div>
+
+  <!-- row 2 -->
+  <div id="content-area-header-toolbars" class="oj-flex-item">
+    <div id="content-area-header-toolbar" class="oj-flex oj-sm-flex-items-initial">
+      <!-- column 1, left-aligned -->
+      <oj-module config="[[contentAreaHeaderButtonsToolbarModuleConfig]]"></oj-module>
+      <!-- column 2, right-aligned -->
+      <oj-module config="[[contentAreaHeaderIconsTabstripModuleConfig]]"></oj-module>
+    </div>
+  </div>
+</div>
+
+<div id="message-container" class="oj-flex-item">
+  <oj-messages
+    messages="[[messagesDataProvider]]"
+    position="[[messagePosition]]"
+    display="general"
+  >
+    <template slot="messageTemplate" data-oj-as="message">
+      <oj-message message="[[message.data]]">
+        <oj-bind-if test="[[typeof message.data.html !== 'undefined']]">
+          <div slot="detail">
+            <oj-bind-dom config="[[message.data.html]]"></oj-bind-dom>
+          </div>
+        </oj-bind-if>
+      </oj-message>
+    </template>
+  </oj-messages>
+</div>

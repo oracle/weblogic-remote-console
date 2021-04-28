@@ -15,10 +15,11 @@
     "@types/node": "^12.11.7",
     "@types/sinon": "^9.0.0",
     "chai": "^4.2.0",
-    "chromedriver": "^85.0.0",
+    "chromedriver": "^85.0.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.9.0",
-    "geckodriver": "^1.20.0",
+    "fixture": "^0.1.2",
+    "geckodriver": "^1.22.3",
     "jquery-ui": "^1.12.1",
     "js-yaml": "^3.13.1",
     "karma": "^4.3.0",
@@ -43,7 +44,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "npx karma start test/karma.conf.js"
+    "test": "npx karma start unit-tests/karma.conf.js"
   },
   "private": true
 }

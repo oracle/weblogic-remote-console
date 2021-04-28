@@ -43,3 +43,10 @@ weblogic-bean-info-harvester/build-*
 run/work
 fortify-output/**
 owasp-output/**
+frontend/seleniumTest.log
+
+electron/build/**
+electron/dist/**
+electron/extraFiles/**
+electron/node_modules/**
+electron/package-lock.json

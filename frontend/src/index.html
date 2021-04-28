@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
- Copyright (c) 2020,2021 Oracle Corp. and/or its affiliates.
+ Copyright (c) 2020, 2021, Oracle Corp. and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <html lang="en">
@@ -63,14 +63,7 @@
       </div> <!-- ending div for "middle-container" -->
 
       <footer class="oj-applayout-fixed-bottom">
-        <div class="oj-flex-bar">
-          <div id="copyright-legal" class="oj-flex-bar-start">
-          </div>
-          <div id="built-with-jet" class="oj-flex-bar-end">
-            <img id="oracle-jet-icon" slot="startIcon" data-bind="attr: {src: '../../images/oracle-jet-logo-blk_16x16.png'}" />
-            <span id="oracle-jet-label"></span>
-          </div>
-        </div>
+        <oj-module config="[[footerModuleConfig]]" />
       </footer>
     </div>
 

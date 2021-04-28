@@ -1,17 +1,29 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 # Manually created application/webapp/jsp/jms/stores/JMSJDBCStoreTargetdeployForm.jsp and consolehelp/docsrc/en-us/xml/pagehelp/jms/stores/JMSJDBCStoreTargetDeploy.xml
 
 introductionHTML: >
-  <p>This page indicates on which WebLogic Server instances or clusters the
-      JDBC store is accessible. Only applications that have been deployed to the
-      selected servers or clusters can use this JDBC store.</p>
-      <p>When you target all or part of a cluster, the Administration Console
-      initiates a two-phase deployment. In general, such a deployment ensures
-      that if the deployment fails for one active server, it fails for all
-      active servers.</p>
+  <p>This page configures which WebLogic Server, migratable target, or cluster
+     hosts this JDBC store. The target must match the target of the
+     JMS Servers, SAF Agents, or Path Services that use the store. </p>
+  <p><strong>Policy Best Practice:</strong></p>
+          <ul>
+            <li>The Distribution and Migration policies only apply when targeting to a cluster.</li>
+            <li>A 'Distributed' Distribution Policy is required for JDBC Stores that
+                will host JMS Server distributed or SAF Agent imported destinations. This
+                creates an instance of the store for each cluster member.</li>
+            <li>A 'Singleton' Distribution Policy is required for JDBC Stores that will
+                host Singleton JMS Server destinations or the Path Service. This
+                creates a single instance of the store in the cluster.</li>
+            <li>An 'On-Failure' or 'Always' Migration Policy is required when setting a 'Singleton'
+                Distribution policy, or when enabling automatic service migration.</li>
+            <li>An 'On-Failure' or 'Always' migration policy requires configuring leasing on the cluster.</li>
+          </ul>
+
 properties:
   - name: "Target"
+  - name: "DistributionPolicy"
+  - name: "MigrationPolicy"
 helpTasks:
   - "stores/TargetJDBCStores.xml"
 helpTopics:

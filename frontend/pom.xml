@@ -18,17 +18,10 @@
   <artifactId>console-backend-frontend</artifactId>
 
   <properties>
-    <mocha.executable>./node_modules/mocha/bin/mocha</mocha.executable>
-    <unit-tests.root>src/js/unit-tests</unit-tests.root>
-    <system-tests.root>src/js/system-tests/index.js</system-tests.root>
     <eslint-js.executable>./node_modules/.bin/eslint</eslint-js.executable>
-    <eslint-js.rulesdir>src/js/eslint-rules/</eslint-js.rulesdir>
-    <eslint-js.formatter>html</eslint-js.formatter>
-    <eslint-js.output>eslint-js.html</eslint-js.output>
+    <eslint-js.rulesdir>eslint-rules/</eslint-js.rulesdir>
+    <eslint-js.formatter>compact</eslint-js.formatter>
     <eslint-js.root>src/js</eslint-js.root>
-    <eslint-html.executable>node</eslint-html.executable>
-    <eslint-html.module>src/js/eslint-rules/html-copyright.jsx</eslint-html.module>
-    <eslint-html.root>src/js/views</eslint-html.root>
   </properties>
 
   <dependencies>
@@ -45,7 +38,6 @@
             <fileset>
               <directory>.</directory>
               <includes>
-                <!-- include>node_modules/**</include -->
                 <include>staged-themes/**</include>
                 <include>web/**</include>
               </includes>
@@ -81,18 +73,12 @@
             </configuration>
           </execution>
 
-<!-- Uncomment after doing requisite npm installs on GitLab CLI box
-
           <execution>
             <id>run-npm-test</id>
             <phase>test</phase>
             <configuration>
-              <executable>${mocha.executable}</executable>
-              <arguments>
-                <argument>${unit-tests.root}</argument>
-                <argument>${system-tests.root}</argument>
-                <argument>&#x002d;&#x002d;recursive</argument>
-              </arguments>
+              <executable>npm</executable>
+              <commandlineArgs>test</commandlineArgs>
             </configuration>
             <goals>
               <goal>exec</goal>
@@ -109,8 +95,6 @@
                 <argument>${eslint-js.rulesdir}</argument>
                 <argument>&#x002d;f</argument>
                 <argument>${eslint-js.formatter}</argument>
-                <argument>&#x002d;o</argument>
-                <argument>${eslint-js.output}</argument>
                 <argument>${eslint-js.root}</argument>
               </arguments>
             </configuration>
@@ -119,22 +103,6 @@
             </goals>
           </execution>
 
-          <execution>
-            <id>run-eslint-html</id>
-            <phase>test</phase>
-            <configuration>
-              <executable>${eslint-html.executable}</executable>
-              <arguments>
-                <argument>${eslint-html.module}</argument>
-                <argument>&#x002d;&#x002d;path</argument>
-                <argument>${eslint-html.root}</argument>
-              </arguments>
-            </configuration>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
--->
         </executions>
       </plugin>
 

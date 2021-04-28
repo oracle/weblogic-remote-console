@@ -1,10 +1,10 @@
 # Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
-  <p>A server is an instance of WebLogic Server that runs in its own
-  Java Virtual Machine (JVM) and has its own configuration.</p><p>This
-  page summarizes each server that has been configured in the current
-  WebLogic Server domain.</p>
+  <p>A server template contains common, non-default attributes that you can apply to a set of server instances,
+  which then inherit the template configuration. Server templates enable you to easily manage configuration for a
+  group of server instances in one centralized location.</p>
+  <p> This page summarizes each server template that has been configured in the current WebLogic Server domain.</p>
 
 displayedColumns:
 - name: "Name"

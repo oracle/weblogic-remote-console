@@ -10,28 +10,28 @@
   --domains-toolbar-right-margin-right: 0;
   --form-container-calc-max-width: 10px;
   --form-container-calc-min-width: 310px;
-  --form-container-calc-max-height: 395px;
-  --servers-glance-dom-calc-min-height: 448px;
+  --form-container-calc-max-height: 385px;
+  --servers-glance-dom-calc-min-height: 460px;
+  --form-input-min-width: 15em;
+  --form-input-min-switch-width: 7.25em;
+  --dialog1-calc-height: 345px;
   /*
    * END:   CFE code will make adjustments to the
-   *        following custom CSS variables, at runtime.
+   *        above custom CSS variables, at runtime.
    */
 
   --form-container-fixed-min-width: 1120px;
   --content-area-header-height: 70px;
-  --table-container-offset-height: 395px;
-  --form-container-offset-height: 405px;
-  --padding-30: 30px;
-  --padding-40: 40px;
 
-  --form-tabstrip-converyor-calc-max-width: 10px;
+  --form-tabstrip-converyor-calc-max-width: 275px;
   --form-table-container-min-width: 310px;
   --instructions-calc-max-width: 335px;
   --paging-bottom: 32px;
-  --form-input-min-width: 15em;
   --form-input-max-width: 15em;
+  --min-width-35em: 35em;
+  --min-width-15em: 15em;
 
-  --landing-page-cards-min-width: 1040px;
+  --landing-page-cards-min-width: 1095px;
   --landing-page-panel-subtree-max-height: 295px;
   --landing-page-panel-subtree-max-width: 55px;
   --landing-page-conveyor-calc-max-width: 55px;
@@ -40,10 +40,10 @@
   --landing-page-subtree-card-color: #70706c;
 
   --ancillary-content-area-width: 300px;
-  --instructions-max-height: 120px;
+  --instructions-max-height: 160px;
   --system-status-collapse-min-height: 340px;
-  --system-status-expand-min-height: 448px;
-  --servers-glance-dom-max-height: 448px;
+  --system-status-expand-min-height: 460px;
+  --servers-glance-dom-max-height: 460px;
   --table-dom-max-height: 500px;
   --navstrip-max-width: 45px;     /* DON'T CHANGE THIS!! Needs to be 45px, or else left edge of control will be cut off and dnd feature on MyHome will go bonkers */
   --navstrip-min-height: 60px;
@@ -67,13 +67,14 @@
   --slideup-popup-offset-top: 200px;
   --slideup-box-shadow-color: #dfdad7;
 
+  --app-info-label-color: #161513;
   --fixed-header-background-color: #f6f6f6;
   --table-gridline-color: #eceaec;
   --table-background-color: #f7f7f7;
   --navtree-label-color: #161513;
   --navtree-background-color: #c3b2ab;
   --navstrip-background-color: #b6a29a;
-  --panel-card-width: 215px;
+  --panel-card-min-width: 195px;
   --panel-card-label-color: #161513;
   --detail-popup-background-color: #cae4ef;
   --sideways-tabstrip-min-width: 24px;
@@ -85,21 +86,33 @@
   --breadcrumb-link-color: #0275d8;
   --breadcrumb-hover-color: #01447e;
   --dialog-background-color: #dbd5d0;
+
   --dialog1-width: 360px;
-  --dialog1-height: 355px;
-  --dialog2-width: 330px;
-  --dialog2-height: 232px;
-  --dialog3-width: 300px;
-  --dialog3-height: 168px;
-  --dialog4-width: 475px;
-  --dialog4-height: 392px;
+  --dialog1-fixed-min-height: 345px;
+  --syncIntervalDialog-width: 330px;
+  --syncIntervalDialog-min-height: 236px;
+  --confirmDialog-width: 300px;
+  --confirmDialog-min-height: 168px;
+  --actionDialog-width: 475px;
+  --actionDialog-min-height: 390px;
+
   --input-text-wide-width: 18rem;
   --single-select-one-wide-width: 630px;
-  --app-info-container-height: 35px;
+  --single-select-one-md-width: 250px;
+  --header-container-height: 34px;
+  --app-info-container-height: 34px;
 
   --scrollbar-thumb-color: #837670;
   --scrollbar-track-color: #faf8f7;
   --scrollbar-track-color1: #bba9a1;
+
+  --form-input-integer-max-width: 110px;
+
+  --form-layout-row-height: 2.4em;
+  --field-highlight-border-color: black;
+  --field-highlight-border-style: solid;
+
+  --form-section-title-background-color: #dfdcda; /* #ede7e4 #dfdcda; */
 }
 
 html, body {
@@ -117,8 +130,16 @@ footer {
   padding: 5px;
 }
 
+#footer-container {
+  min-height: 26px;
+}
+
 body {
   touch-action: manipulation;
+}
+
+#header-container {
+  height: var(--header-container-height);
 }
 
 #oracle-jet-icon {
@@ -147,6 +168,21 @@ a:focus {
   min-height: var(--app-info-container-height);
 }
 
+div#header-title a:hover,
+div#header-title a:active,
+div#header-title a:focus
+{
+  text-decoration: none;
+}
+
+#app-name {
+  color: var(--app-info-label-color);
+}
+
+#app-version {
+  margin-left: 2px;
+}
+
 #navtreeToggle,
 #app-info-logo,
 #app-info-title {
@@ -157,7 +193,7 @@ a:focus {
   width: 24px;
   height: 24px;
   cursor: pointer;
-  margin-left: 10px;
+  margin: 5px 10px 0 10px;
 }
 
 #oracleLogo {
@@ -322,6 +358,7 @@ li.oj-navigationlist-focused-element.oj-navigationlist-item-element {
 #connection-type-image {
   width: 18px;
   height: 18px;
+  margin-left: 3px;
 }
 
 #not-connected-label
@@ -338,6 +375,17 @@ li.oj-navigationlist-focused-element.oj-navigationlist-item-element {
 #welcome-variable
 {
   margin: 8px 5px 0 0;
+}
+
+div#domain-menu-dropdown {
+  margin-top: 8px;
+}
+
+div#domain-menu-dropdown a:hover,
+div#domain-menu-dropdown a:active,
+div#domain-menu-dropdown a:focus
+{
+  text-decoration: none;
 }
 
 #connected-to-variable
@@ -438,10 +486,16 @@ canvas#console-state-bar {
   max-width: var(--ancillary-content-area-width);
 }
 
+.tabstrip-tab-icon {
+  padding: 10px;
+  height: 24px;
+  width: 24px;
+  vertical-align: middle;
+}
+
 #ataglance-tab-container,
 #shoppingcart-tab-container {
   min-width: var(--ancillary-content-area-width);
-/*  overflow: auto; */
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
@@ -660,20 +714,11 @@ a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabbar-item-no-icon {
   margin: 5px 2px;
 }
 
-#desktop-container {
-  min-width: calc(100vw - var(--form-container-calc-min-width));
-  height: 720px;
-  background-image: url('../images/myhome-background_1080x720.png');
-  background-repeat: no-repeat;
-  background-position: left;
-}
-
 #form-help-container {
   display: none;
 }
 
 #table-form-container {
-/*  min-width: calc(100vw - var(--form-container-calc-min-width)); */
   max-width: calc(100vw - var(--form-container-calc-max-width));
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
@@ -681,12 +726,6 @@ a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabbar-item-no-icon {
 
 .cfe-table-form-container {
   margin: 5px 5px 0 0;
-  /*
-  DON'T THINK WE NEED THE SCROLLBARS HERE, BECAUSE THE TABLES
-  ALREADY HAVE THEM. KEEPING IT AROUND UNTIL ALL THE NEW ELASTIC
-  STUFF HAS BEEN VERIFIED TO WORK CORRECTLY !!!
-   */
-  /*  overflow: auto; */
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
@@ -726,13 +765,12 @@ div#formMessages {
   max-width: calc(100vw - var(--instructions-calc-max-width));
   overflow-wrap: break-word;  /* Wraps really long instructions */
   font-size: 11pt;
-  margin: 5px 0 10px 10px;
+  margin: 10px 0 10px 10px;
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 .cfe-table-form-content {
-/*  min-width: calc(100vw - var(--form-container-calc-min-width)); */
   min-width: var(--form-container-fixed-min-width);
   max-width: calc(100vw - var(--form-container-calc-max-width));    /* Any form, table or article wider than var(--content-area-max-width) will have a horizontal scroll bar */
   max-height: calc(100vh - var(--form-container-calc-max-height));
@@ -751,10 +789,67 @@ oj-table.wlstable {
   padding-top: 3px;
 }
 
-.cfe-form-field {
-  height: 54px;
+#cfe-form > oj-form-layout > div > div:nth-child(+n+0) {
+  padding-left: 8px;
+  padding-top: 3px;
 }
 
+#cfe-form > oj-form-layout > div > div:nth-child(+n+1) {
+  margin-bottom: 0px;
+}
+
+#cfe-form > .oj-form-layout > .oj-form > .oj-flex > .oj-formlayout-nested-formlayout > .oj-form-layout > .oj-form, .oj-form-layout > .oj-form.oj-formlayout-form-across > .oj-flex > .oj-formlayout-no-label-flex-item.oj-formlayout-nested-formlayout.oj-flex-item {
+  height: 100%;
+}
+
+.cfe-sections-form-layout-title {
+  width: 99%;
+  padding: 0 3px 3px 0;
+  background-color: var(--form-section-title-background-color);
+}
+
+.cfe-sections-form-layout-title-arrow,
+.cfe-sections-form-layout-title-arrow:hover,
+.cfe-sections-form-layout-title-arrow:active,
+.cfe-sections-form-layout-title-arrow:focus {
+  text-decoration: none;
+}
+
+.cfe-sections-form-layout-title-arrow,
+.cfe-sections-form-layout-title-text {
+  vertical-align: middle;
+}
+
+.cfe-sections-form-layout-title-arrow {
+  font-size: 14pt;
+}
+
+.cfe-sections-form-layout-title-text {
+  font-size: 12pt;
+}
+
+/* Style for highlighting of form fields */
+.cfe-field-highlight
+{
+  border-color: var(--field-highlight-border-color);
+  border-style: var(--field-highlight-border-style);
+  border-width: 2px;
+  border-radius: 8px;
+}
+
+/* Adjust the margin to allow for a cfe-field-highlight */
+.cfe-form-field > .oj-form-control.oj-component > .oj-text-field-container,
+.cfe-form-field > .oj-form-control.oj-component > .oj-switch-container
+{
+  margin: 1px 1px 0 2px;
+  min-height: 2.65rem;
+}
+
+.cfe-form-input-integer-sm {
+  max-width: var(--form-input-integer-max-width);
+}
+
+.cfe-form-input-integer-sm,
 .cfe-form-input-text,
 .cfe-form-input-textarea,
 .cfe-form-input-password,
@@ -781,10 +876,22 @@ oj-table.wlstable {
 .cfe-form-input-text,
 .cfe-form-input-textarea,
 .cfe-form-readonly-text,
-.cfe-form-input-password,
-.cfe-form-switch
+.cfe-form-input-password
 {
   min-width: var(--form-input-min-width);
+}
+
+.cfe-form-input-single-column {
+  min-width: var(--min-width-35em);
+}
+
+.cfe-form-input-two-columns {
+  min-width: var(--min-width-15em);
+}
+
+.cfe-form-switch
+{
+  min-width: var(--form-input-min-switch-width);
 }
 
 .cfe-form-input-text,
@@ -858,11 +965,25 @@ oj-input-text.cfe-form-readonly-text > div > div > div.oj-text-field-readonly-di
   width: var(--single-select-one-wide-width);
 }
 
+.cfe-form-select-one-md,
+.cfe-form-readonly-select-one-md {
+  width: var(--single-select-one-md-width);
+}
+
 .cfe-form-checkboxset {
   margin-left: 10px;
 }
 
-.cfe-form-checkboxset .oj-form.oj-enabled .oj-user-assistance-inline-container.oj-efficient, .oj-form-control:not(.oj-read-only):not(.oj-disabled) .oj-user-assistance-inline-container.oj-efficient {
+/* Height for the user-assistance area in the form controls */
+.cfe-form-checkboxset.oj-form-control.oj-component > .oj-user-assistance-inline-container.oj-efficient,
+.cfe-form-field > .oj-form-control.oj-component:not(.oj-switch) .oj-user-assistance-inline-container.oj-efficient
+{
+  min-height: 0rem;
+}
+
+/* Height for the user-assistance area for a switch in the form to ensure uniform highlight */
+.cfe-form-field > .oj-form-control.oj-component.oj-switch .oj-user-assistance-inline-container.oj-efficient
+{
   min-height: .5rem;
 }
 
@@ -887,7 +1008,7 @@ oj-option#show-advanced-fields {
   font-size: 11pt;
 }
 
-.cfe-form-tabstrip > div > oj-conveyor-belt {
+.cfe-form-tabstrip {
   margin: 5px 0 0 5px;
   max-width: calc(100vw - var(--form-tabstrip-converyor-calc-max-width));
 }
@@ -914,7 +1035,7 @@ oj-option#show-advanced-fields {
 }
 
 .restart-required-icon {
-  padding: 8px 6px 0 2px;
+  padding: 11px 6px 0 2px;
   width: 18px;
 }
 
@@ -1053,17 +1174,71 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
 
 oj-dialog[id="dialog1"] {
   width: var(--dialog1-width);
-  height: var(--dialog1-height);
+  height: var(--dialog1-calc-height);
   background-color: var(--dialog-background-color);
 }
 
-oj-dialog#dialog1 > div.oj-dialog-content.oj-dialog-default-content {
+oj-dialog[id="dialog1"] div.oj-dialog-content.oj-dialog-default-content {
   font-size: 11pt;
   background-color: white;
 }
 
-oj-dialog#dialog1 div.oj-dialog-header.oj-dialog-header-close {
+oj-dialog[id="dialog1"] div.oj-dialog-header.oj-dialog-header-close {
   padding: 0.5rem .75rem 0.5rem .75rem;
+}
+
+#connection-dialog {
+  margin-top: 10px;
+  font-size: 13pt;
+}
+
+#connection-dialog-instructions,
+#connection-dialog-text {
+  margin-left: 15px;
+}
+
+#connection-dialog-text {
+  min-height: 30px;
+}
+
+#connection-dialog-body.oj-dialog-body {
+  padding: 10px 0 0 0;
+}
+
+.connection-dialog-body-container {
+  margin: 15px;
+}
+
+#connection-dialog-body img#username-icon,
+#connection-dialog-body img#password-icon
+{
+  height: 24px;
+  width: 24px;
+  vertical-align: top;
+  padding: 0 15px 0 0;
+}
+
+#url-field-label {
+  font-size: 10pt;
+  margin-right: 10px;
+}
+
+oj-input-text#url-field .oj-user-assistance-inline-container.oj-efficient, .oj-form-control:not(.oj-read-only):not(.oj-disabled) .oj-user-assistance-inline-container.oj-efficient {
+  min-height: 5px;
+}
+
+#connection-dialog-body oj-input-text#username-field,
+#connection-dialog-body oj-input-password#password-field,
+#connection-dialog-body oj-input-text#url-field
+{
+  font-size: 11pt;
+  width: 272px;
+}
+
+#connection-dialog-button-image,
+#connection-dialog-button-label {
+  vertical-align: middle;
+  padding: 0 5px 0 0;
 }
 
 html:not([dir="rtl"]) .oj-dialog-header-close-wrapper {
@@ -1072,8 +1247,8 @@ html:not([dir="rtl"]) .oj-dialog-header-close-wrapper {
 
 oj-dialog[id="syncIntervalDialog"] {
   display: none;
-  width: var(--dialog2-width);
-  height: var(--dialog2-height);
+  width: var(--syncIntervalDialog-width);
+  min-height: var(--syncIntervalDialog-min-height);
   background-color: var(--dialog-background-color);
 }
 
@@ -1128,63 +1303,18 @@ oj-dialog#syncIntervalDialog div.oj-dialog-body oj-form-layout
 }
 
 oj-dialog[id="confirmDialog"] {
-  width: var(--dialog3-width);
-  height: var(--dialog3-height);
+  width: var(--confirmDialog-width);
+  min-height: var(--confirmDialog-min-height);
+  margin-bottom: 5px;
   background-color: var(--dialog-background-color);
 }
 
 
 oj-dialog[id="actionsDialog"] {
-  width: var(--dialog4-width);
-  height: var(--dialog4-height);
+  width: var(--actionDialog-width);
+  min-height: var(--actionDialog-min-height);
   background-color: var(--dialog-background-color);
   border: 1px none #f8f6f5;
-}
-
-#connection-dialog {
-  margin-top: 10px;
-  font-size: 13pt;
-}
-
-#connection-dialog-instructions,
-#connection-dialog-text {
-  margin-left: 15px;
-}
-
-#connection-dialog-body.oj-dialog-body {
-  padding: 10px 0 0 0;
-}
-
-.connection-dialog-body-container {
-  margin: 15px;
-}
-
-#connection-dialog-body img#username-icon,
-#connection-dialog-body img#password-icon
-{
-  height: 24px;
-  width: 24px;
-  vertical-align: middle;
-  padding: 0 15px 0 0;
-}
-
-#url-field-label {
-  font-size: 10pt;
-  margin-right: 10px;
-}
-
-#connection-dialog-body oj-input-text#username-field,
-#connection-dialog-body oj-input-password#password-field,
-#connection-dialog-body oj-input-text#url-field
-{
-  font-size: 11pt;
-  width: 272px;
-}
-
-#connection-dialog-button-image,
-#connection-dialog-button-label {
-  vertical-align: middle;
-  padding: 0 5px 0 0;
 }
 
 .cfe-draggable {
@@ -1272,6 +1402,7 @@ div#tab-module.oj-flex-bar-end {
   text-decoration: none;
 }
 
+.site-sideways-tabstrip span img,
 .site-sideways-tabstrip span a img {
   margin-top: 3px;
   width: 18px;
@@ -1279,6 +1410,7 @@ div#tab-module.oj-flex-bar-end {
   vertical-align: middle;
 }
 
+.site-sideways-tabstrip span span,
 .site-sideways-tabstrip span a span {
   padding: 0 2px 8px 0;
   margin-bottom: 3px;
@@ -1309,24 +1441,29 @@ div#tab-module.oj-flex-bar-end {
 }
 
 .landing-page-panel {
+  margin: 5px 0 5px 5px;
+  min-width: var(--panel-card-min-width);
+}
+
+.landing-page-card {
   padding: 5px;
   border: 0;
   outline: none;
   display: block;
   font-size: 11pt;
   font-weight: 500;
-  width: var(--panel-card-width);
+  min-width: var(--panel-card-min-width);
   color: var(--panel-card-label-color);
 }
 
-.landing-page-panel,
-.landing-page-panel:hover,
-.landing-page-panel:active,
-.landing-page-panel:focus {
+.landing-page-card,
+.landing-page-card:hover,
+.landing-page-card:active,
+.landing-page-card:focus {
   text-decoration: none;
 }
 
-.landing-page-panel:hover {
+.landing-page-card:hover {
   background: var(--landing-page-hover-color);
 }
 
@@ -1436,16 +1573,6 @@ for "slices". The workaround is to control it here.
   margin-right: .875rem; /* Set size of margin between tabbar items */
 }
 
-/*
-Don't delete. We will need it to write code that changes background of
-advanced fields, when/if that JIRA gets created/assigned to CFE team.
-
-#wlsform > div > div:nth-child(+n+4) {
-  padding-top: 3px;
-  background-color: #ebebeb;
-}
-*/
-
 /* Used to control layout for form labels */
 .oj-formlayout-labels-inline > .oj-flex > .oj-flex-item:nth-child(odd) > .oj-label .oj-label-group {
   overflow: inherit;
@@ -1460,7 +1587,7 @@ advanced fields, when/if that JIRA gets created/assigned to CFE team.
   text-align: left;
   font-size: 11pt;
   line-height: 1em;
-  height: 2.3em;    /* Controls height of rows */
+  height: var(--form-layout-row-height); /* Controls height of rows */
 }
 
 html:not([dir="rtl"]) .oj-navigationlist-collapsible ul.oj-navigationlist-has-icons > .oj-navigationlist-item-element > ul, html:not([dir="rtl"]) .oj-navigationlist-expanded:not(.oj-navigationlist-icon-only).oj-navigationlist-vertical ul.oj-navigationlist-has-icons > .oj-navigationlist-item-element > ul {

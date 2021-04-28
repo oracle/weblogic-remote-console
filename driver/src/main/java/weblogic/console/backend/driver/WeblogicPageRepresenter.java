@@ -99,6 +99,9 @@ public class WeblogicPageRepresenter extends Representer {
       if ("slices".equals(name) && ListUtils.isEmpty(prop.getSlices())) {
         return true;
       }
+      if ("sections".equals(name) && ListUtils.isEmpty(prop.getSections())) {
+        return true;
+      }
       if ("advancedProperties".equals(name) && ListUtils.isEmpty(prop.getAdvancedProperties())) {
         return true;
       }

@@ -6,6 +6,7 @@ introductionHTML: >
   reconfigure targets later if you wish.</p>
 
 properties:
+- name: Targets
 
 helpTasks:
   - "jms_modules/modules/ConfigureJMSModuleSubdeploys"

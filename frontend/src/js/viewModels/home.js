@@ -6,16 +6,17 @@
  */
 "use strict";
 
-define(['knockout', 'ojs/ojmodule-element-utils', '../cfe/common/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojmodule-element', 'ojs/ojknockout',  'ojs/ojnavigationlist'],
-  function(ko, ModuleElementUtils, Runtime, Context, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../core/runtime', 'ojs/ojcontext', 'ojs/ojmodule-element', 'ojs/ojknockout',  'ojs/ojnavigationlist'],
+  function(oj, ko, ModuleElementUtils, Runtime, Context) {
     function HomeViewModel(viewParams) {
       const self = this;
 
       this.i18n = {
         tabstrip: {
           tabs: [
-            {id: "gallery", label: "Gallery", iconFile: "gallery-tabstrip-icon_24x24", disabled: false, visible: true, isDefault: true},
-            {id: "desktop", label: "Desktop", iconFile: "desktop-tabstrip-icon_24x24", disabled: true, visible: false}
+            {id: "gallery", iconFile: "gallery-tabstrip-icon_24x24", disabled: false, visible: true, isDefault: true,
+              label: oj.Translations.getTranslatedString("wrc-home.tabstrip.tabs.gallery.label")
+            }
           ]
         }
       };
@@ -25,16 +26,15 @@ define(['knockout', 'ojs/ojmodule-element-utils', '../cfe/common/runtime', 'ojs/
       if (typeof this.router !== "undefined") this.router.dispose();
 
       this.router = viewParams.parentRouter.createChildRouter("home").configure({
-        "gallery": {label: "Gallery", value: "gallery", isDefault: true},
-        "desktop": {label: "Desktop", value: "desktop"}
+        "gallery": {label: "Gallery", value: "gallery", isDefault: true}
       });
 
       this.router.currentValue.subscribe(function (value) {
         if (value) {
           ModuleElementUtils.createConfig({
-            name: 'template/' + value,
-            viewPath: 'views/template/' + value + '.html',
-            modelPath: 'viewModels/template/' + value,
+            name: value,
+            viewPath: 'views/' + value + '.html',
+            modelPath: 'viewModels/' + value,
             params: {
               parentRouter: this.router,
               signaling: viewParams.signaling

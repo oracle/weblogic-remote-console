@@ -336,7 +336,7 @@ public class ConfigurationPageWeblogicSearchResponseRestMapper extends BasePageW
   // Gets the default value to use based solely on the property's type.
   // Used when the bean info doesn't have a default value for the property.
   private JsonValue getPropertyTypeDefaultJsonValue(WeblogicBeanProperty beanProp) throws Exception {
-    if (beanProp.isArray()) {
+    if (beanProp.isArray() && !beanProp.isReferenceAsReferences()) {
       return JsonValue.EMPTY_JSON_ARRAY;
     }
     String type = beanProp.getPropertyType();
@@ -396,7 +396,8 @@ public class ConfigurationPageWeblogicSearchResponseRestMapper extends BasePageW
     JsonArray rdjOptions = getRDJIdentitiesFromWeblogicIdentities(weblogicOptions);
 
     // See if we need to add a None option
-    boolean allowNullReference = beanProp.isReference() && beanProp.isAllowNullReference();
+    boolean allowNullReference = (beanProp.isReferenceAsReferences() || beanProp.isReference())
+        && beanProp.isAllowNullReference();
 
     // Sort the references and add a None options if needed
     JsonArray sortedRDJOptions = sortRDJReferences(rdjOptions, allowNullReference);

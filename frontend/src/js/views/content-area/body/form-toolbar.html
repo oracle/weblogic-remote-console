@@ -1,0 +1,186 @@
+<!--
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+<div id="form-toolbar-container" class="oj-flex">
+
+  <div id="form-toolbar-buttons" class="oj-flex-bar">
+    <oj-bind-if test="[[!isWizardForm()]]">
+      <div id="form-toolbar-save-button" class="oj-flex-bar-start">
+        <oj-button id="[[i18n.buttons.save.id]]" on-oj-action="[[onSave]]" chroming="borderless"
+          disabled="[[i18n.buttons.save.disabled()]]">
+          <img class="button-icon" slot="startIcon"
+            data-bind="attr: {src: '../images/' + i18n.buttons.save.iconFile() + '.png'}" />
+          <span class="button-label">
+            <oj-bind-text value="[[i18n.buttons.save.label()]]"></oj-bind-text>
+          </span>
+        </oj-button>
+      </div>
+    </oj-bind-if>
+
+    <oj-bind-if test="[[isWizardForm()]]">
+      <oj-bind-if test="[[createFormMode() === 'PAGING']]">
+        <oj-button id="[[i18n.buttons.back.id]]" on-oj-action="[[backAction]]" chroming="borderless"
+          disabled="[[i18n.buttons.back.disabled]]">
+          <img class="button-icon" slot="startIcon"
+            data-bind="attr: {src: '../images/' + i18n.buttons.back.iconFile + '.png'}" />
+          <span class="button-label">
+            <oj-bind-text value="[[i18n.buttons.back.label]]"></oj-bind-text>
+          </span>
+        </oj-button>
+
+        <oj-button
+          id="[[i18n.buttons.next.id]]"
+          on-oj-action="[[nextAction]]"
+          chroming="borderless"
+          disabled="[[i18n.buttons.next.disabled]]"
+        >
+          <img class="button-icon" slot="startIcon" data-bind="attr: {src: '../images/' + i18n.buttons.next.iconFile + '.png'}"/>
+          <span class="button-label" ><oj-bind-text value="[[i18n.buttons.next.label]]"></oj-bind-text></span>
+        </oj-button>
+      </oj-bind-if>
+
+      <oj-button id="[[i18n.buttons.finish.id]]" on-oj-action="[[finishAction]]" chroming="borderless"
+        disabled="[[i18n.buttons.finish.disabled]]">
+        <img class="button-icon" slot="startIcon"
+          data-bind="attr: {src: '../images/' + i18n.buttons.finish.iconFile + '.png'}" />
+        <span class="button-label">
+          <oj-bind-text value="[[i18n.buttons.finish.label]]"></oj-bind-text>
+        </span>
+      </oj-button>
+    </oj-bind-if>
+
+    <oj-bind-if test="[[!readonly()]]">
+
+      <div id="form-toolbar-delete-button" class="oj-flex-bar-middle">
+        <oj-button id="[[i18n.i18n.buttons.delete.id]]" on-oj-action="[[deleteAction]]" chroming="borderless"
+          disabled="[[i18n.buttons.delete.disabled]]">
+          <img class="button-icon" slot="startIcon"
+            data-bind="attr: {src: '../images/' + i18n.buttons.delete.iconFile + '.png'}" />
+          <span class="button-label">
+            <oj-bind-text value="[[i18n.buttons.delete.label]]"></oj-bind-text>
+          </span>
+        </oj-button>
+      </div>
+    </oj-bind-if>
+    <oj-bind-if test="[[!readonly()]]">
+      <div id="form-toolbar-new-button" class="oj-flex-bar-start">
+        <oj-button id="[[i18n.buttons.new.id]]" on-oj-action="[[newAction]]" chroming="borderless"
+          disabled="[[i18n.buttons.new.disabled]]">
+          <img class="button-icon" slot="startIcon"
+            data-bind="attr: {src: '../images/' + i18n.buttons.new.iconFile + '.png'}" />
+          <span class="button-label">
+            <oj-bind-text value="[[i18n.buttons.new.label]]"></oj-bind-text>
+          </span>
+        </oj-button>
+      </div>
+    </oj-bind-if>
+  </div>
+
+  <div id="form-toolbar-icons" class="oj-flex-item">
+    <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end cfe-flex-items-pad">
+
+      <div id="landing-page-toolbar-icon" class="oj-flex-item">
+        <a on-click="[[landingPageClick]]"
+          data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.landing.tooltip}">
+          <img id="landing-page-icon" data-bind="attr: {src: '../../images/' + i18n.icons.landing.iconFile + '.png'}" />
+        </a>
+      </div>
+
+      <div class="toolbar-separator-vertical">
+        <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
+        <img data-bind="attr: {src: '../../images/separator-vertical_10x24.png'}" />
+      </div>
+
+      <div id="toggle-history-toolbar-icon" class="oj-flex-item">
+        <a on-click="[[toggleHistoryClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.history.tooltip}">
+          <img id="toggle-history" data-bind="attr: {src: '../../images/' + [[!showBeanPathHistory() ? 'toggle-beanpath-history-on-blk_24x24' : 'toggle-beanpath-history-off-blk_24x24']] + '.png'}" />
+        </a>
+      </div>
+<!--
+      <div id="toggle-instructions-toolbar-icon" class="oj-flex-item">
+        <a on-click="[[toggleInstructionsClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.instructions.tooltip}">
+          <img id="toggle-instructions" data-bind="attr: {src: '../../images/' + [[!showInstructions() ? 'toggle-instructions-on-blk_24x24' : 'toggle-instructions-off-blk_24x24']] + '.png'}"/>
+        </a>
+      </div>
+-->
+      <div id="page-help-toolbar-icon" class="oj-flex-item">
+        <a on-click="[[helpPageClick]]"
+          data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.help.tooltip}">
+          <img id="page-help-icon"
+            data-bind="attr: {src: '../../images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png'}" />
+        </a>
+      </div>
+
+      <div class="toolbar-separator-vertical">
+        <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
+        <img data-bind="attr: {src: '../../images/separator-vertical_10x24.png'}" />
+      </div>
+
+      <div id="sync-toolbar-icon" class="oj-flex-item">
+        <a on-click="[[syncClick]]"
+          data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.sync.tooltip}">
+          <img id="sync-icon"
+            data-bind="attr: {src: '../../images/' + [[autoSyncEnabled() ? 'sync-on-icon-blk_24x24' : 'sync-off-icon-blk_24x24' ]] + '.png'}"
+            data-interval="0" />
+        </a>
+      </div>
+
+      <div id="sync-interval-toolbar-icon" class="oj-flex-item">
+        <a on-click="[[syncIntervalClick]]"
+          data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.syncInterval.tooltip}">
+          <img id="sync-interval-icon"
+            data-bind="attr: {src: '../../images/' + i18n.icons.syncInterval.iconFile + '.png'}" />
+        </a>
+      </div>
+
+      <div class="toolbar-separator-vertical">
+        <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
+        <img data-bind="attr: {src: '../../images/separator-vertical_10x24.png'}" />
+      </div>
+
+      <div id="shoppingcart-toolbar-icon" class="oj-flex-item">
+        <a id="shoppingCartMenuLauncher" href="#" tabindex="-1" on-click="[[launchShoppingCartMenu]]">
+          <img id="shoppingCartImage"
+            data-bind="attr: {src: '../../images/shopping-cart-' + [[(changeManager().isLockOwner && changeManager().hasChanges ? 'non-empty' : 'empty')]] + '-tabstrip_24x24.png'}" />
+        </a>
+
+        <oj-menu id="shoppingCartMenu" aria-labelledby="shoppingCartMenuLauncher"
+          on-oj-action="[[shoppingCartMenuClickListener]]" open-options.launcher="shoppingCartMenuLauncher">
+          <oj-bind-if
+            test="[[changeManager().isLockOwner && changeManager().hasChanges && changeManager().supportsChanges]]">
+            <oj-option :id="[[i18n.menus.shoppingcart.view.id]]" value="[[i18n.menus.shoppingcart.view.id]]">
+              <span>
+                <oj-bind-text value="[[i18n.menus.shoppingcart.view.label]]"></oj-bind-text>
+              </span>
+            </oj-option>
+            <oj-bind-if test="[[!readonly()]]">
+              <oj-option>---</oj-option>
+            </oj-bind-if>
+          </oj-bind-if>
+          <oj-bind-if test="[[!readonly()]]">
+            <oj-option :id="[[i18n.menus.shoppingcart.discard.id]]" value="[[i18n.menus.shoppingcart.discard.id]]"
+              disabled="[[!changeManager().hasChanges]]">
+              <img id="discard-changes" class="option-icon"
+                data-bind="attr: {src: '../images/' + [[i18n.menus.shoppingcart.discard.iconFile]] + '.png'}" />
+              <span>
+                <oj-bind-text value="[[i18n.menus.shoppingcart.discard.label]]"></oj-bind-text>
+              </span>
+            </oj-option>
+          </oj-bind-if>
+          <oj-bind-if test="[[!readonly()]]">
+            <oj-option :id="[[i18n.menus.shoppingcart.commit.id]]" value="[[i18n.menus.shoppingcart.commit.id]]"
+              disabled="[[!changeManager().hasChanges]]">
+              <img id="commit-changes" class="option-icon"
+                data-bind="attr: {src: '../images/' + [[i18n.menus.shoppingcart.commit.iconFile]] + '.png'}" />
+              <span>
+                <oj-bind-text value="[[i18n.menus.shoppingcart.commit.label]]"></oj-bind-text>
+              </span>
+            </oj-option>
+          </oj-bind-if>
+        </oj-menu>
+      </div>
+
+    </div>
+  </div>
+</div>

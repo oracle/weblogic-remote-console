@@ -1,0 +1,9 @@
+# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure the CertPath Builder of the security
+  realm.</p>
+
+properties:
+- name: "CertPathBuilder"

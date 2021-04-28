@@ -58,3 +58,21 @@ properties:
 
 - name: AllowUnencryptedNullCipher
   label: Unencrypted Null Ciphers
+
+- name: Protocol
+  usedIf:
+    property: Enabled
+    values:
+      - false
+
+- name: ListenAddress
+  usedIf:
+    property: Enabled
+    values:
+      - false
+
+- name: ListenPort
+  usedIf:
+    property: Enabled
+    values:
+      - false

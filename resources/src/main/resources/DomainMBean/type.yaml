@@ -54,3 +54,15 @@ properties:
 
 - name: JTA
   nonCreatableOptionalSingleton: true
+
+- name: AdministrationPort
+  usedIf:
+    property: AdministrationPortEnabled
+    values:
+      - true
+
+- name: ArchiveConfigurationCount
+  usedIf:
+    property: ConfigBackupEnabled
+    values:
+      - true

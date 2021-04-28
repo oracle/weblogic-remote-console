@@ -1,4 +1,4 @@
-# Install and Configure the WebLogic Server Remote Console
+# Install and Configure the WebLogic Remote Console
 - [Console Prerequisites](#prerequisites)
 - [Download the Remote Console](#download)
 - [Install the Remote Console Extension in the WebLogic Server Domain](#extension)
@@ -18,42 +18,50 @@ java -version
 ```
 
 ## Download the Remote Console <a name ="download"></a>
-The Oracle WebLogic Server Remote Console installer is available for download at [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases). The Remote Console is delivered as a ZIP archive that, when extracted, creates a `console` directory that includes:
-* The console executable file `console.jar`
-* The libraries required to use the console in the `libs` subdirectory
-* The console extension, `console-rest-ext-1.0.war`, that you install in the WebLogic Server domain
 
-After you have downloaded the installer, extract the ZIP archive to a directory of your choice.
+The installers for the WebLogic Remote Console desktop applications are available for download at [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases). Applications are available for the Linux, macOS, and Windows operating systems.
+
+To run the Remote Console in your browser instead, download `console.zip` and extract the ZIP archive to a directory of your choice. Once its contents are extracted, it creates a `console` directory that includes:
+  * The console executable file `console.jar`
+  * The libraries required to use the console in the `libs` subdirectory
+  * The console extension, `console-rest-ext-1.0.war`, that you install in the WebLogic Server domain
+
 
 ## Install the Remote Console Extension in the WebLogic Server Domain <a name ="extension"></a>
-To get the most functionality when using the WebLogic Server Remote Console, we recommend that you install the Remote Console extension in your domain.
+To get the most functionality when using the WebLogic Remote Console, we recommend that you install the Remote Console extension in your domain.
 
 **Note:** The extension is supported for WebLogic Server 12.2.1.3, 12.2.1.4, and 14.1.1 domains.
 
 1. Create a `management-services-ext` directory under the domain home.
-2. Copy the `console-rest-ext-1.0.war` included in the ZIP archive to the `management-services-ext` directory you created in the previous step.
+2. Download the `console-rest-ext-1.0.war` from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases) and save it in the `management-services-ext` directory you created in the previous step.
 3. Reboot the Administration Server if it is already running.
 
-## Start the Remote Console and Connect to a Domain <a name ="start-connect"></a>
+## Start the Remote Console and Connect to a Domain <a name ="start-connect"></a> 
+Make sure the Administration Server in the domain to which you want to connect is running.
+### Remote Console Application
+To start the Remote Console on a local machine using the default settings:
 
+1. Open the Remote Console desktop application.
+
+1. In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain, then click Connect.
+
+### Remote Console in the Browser
 To start the Remote Console on a local machine using the default settings - localhost (127.0.0.1) and port 8012:
 
-1. Start the Administration Server in the domain to which you want to connect.
-
-2. Open a command window and on the command line, enter:
+1. Open a command window and on the command line, enter:
 
     ```
     java -jar <console_home>/console.jar
     ```
     In this command, ``<console_home>`` is the directory where you unzipped the installer.
 
-3. To connect to a domain, open a browser window and enter:
+1. Open a browser window and enter:
     ```
     http://localhost:8012
     ```
-4. In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain, then click Connect.
+1. In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain, then click Connect.
 
-    To connect to a domain using the HTTPS protocol, see [Connect to a WebLogic Domain using SSL/TLS](#SSL).
+To connect to a domain using the HTTPS protocol, see [Connect to a WebLogic Domain using SSL/TLS](#SSL).
 
 Note the following in this release:
 * Only one active WebLogic Domain connection or session is allowed at a time. If another browser tab is opened, the console loads and reuses the existing WebLogic Domain connection from the new tab.
@@ -62,32 +70,52 @@ Note the following in this release:
 * The original connection/session is terminated if another user and/or another domain is used when the connection is made.
 
 ## Connect to a WebLogic Domain using SSL/TLS <a name ="SSL"></a>
-If you specify HTTPS for the domain URL in the Connect to WebLogic Domain window, then the WebLogic Server Remote Console uses SSL/TLS to communicate with the WebLogic domain.
+If you specify HTTPS for the domain URL in the Connect to WebLogic Domain window, then the WebLogic Remote Console uses SSL/TLS to communicate with the WebLogic domain.
 
 The SSL/TLS connection requires trust in the WebLogic domain, where the trust configuration is handled by the underlying JDK JSSE support. By default, the JDK uses the `cacerts` truststore provided with the JDK. If the WebLogic domain requires additional trust, separate trust, or is using the WebLogic demo trust (`demotrust.jks`), then you can use the JDK system properties when starting the Remote Console.
 
-You can configure SSL/TLS trust with the JDK using either of these options:
+You can configure SSL/TLS trust with the JDK using one of these options:
 - Import the required trust certificates into the `cacerts` truststore supplied with the JDK using the [`keytool`](https://docs.oracle.com/en/java/javase/11/tools/keytool.html) command.
-- Configure the location and type of the truststore using the JDK Java system properties for JSSE support. For example:
-```
-java -Djavax.net.ssl.trustStore="/home/user/mytrust.jks" -Djavax.net.ssl.trustStoreType="JKS" -jar <console_home>/console.jar
-```
-In this command, ``<console_home>`` is the directory where you unzipped the installer.
+
+- Update the JDK Java system properties for JSSE support at the command line (browser only). For example:
+  ```
+  java -Djavax.net.ssl.trustStore="/home/user/mytrust.jks" -Djavax.net.ssl.trustStoreType="JKS" -jar <console_home>/console.jar
+  ```
+  In this command, `<console_home>` is the directory where you unzipped the installer.
+
+- Update the JDK Java system properties for JSSE support in a properties file to configure the location and type of truststore (application only).
+  1. Create a file named `config.json` and save it in the applicable location for your operating system: 
+      - Linux: `$HOME/.config/weblogic-remote-console/`
+      - macOS: `/Users/<user>/Library/Application Support/weblogic-remote-console/`
+      - Windows: `C:\Users\<user>\AppData\Roaming\weblogic-remote-console\`
+  1. Add the following properties.
+      ```
+      {
+        "javax.net.ssl.trustStore": "/home/user/mytrust.jks",
+        "javax.net.ssl.trustStoreType": "JKS"
+      }
+      ```
+  1. Save your changes and open the Remote Console application.
 
 ## Connect to a WebLogic Domain Running on Kubernetes<a name ="k8s"></a>
-One of the benefits of the WebLogic Server Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For details about how to setup access to WebLogic Server domains running on Kubernetes, see [Use the Remote Console](https://oracle.github.io/weblogic-kubernetes-operator/userguide/managing-domains/accessing-the-domain/admin-console/) in the *Oracle WebLogic Kubernetes Operator User Guide*.
+One of the benefits of the WebLogic Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For details about how to setup access to WebLogic Server domains running on Kubernetes, see [Use the Remote Console](https://oracle.github.io/weblogic-kubernetes-operator/userguide/managing-domains/accessing-the-domain/admin-console/) in the *WebLogic Kubernetes Operator User Guide*.
 
 ## Stop the Remote Console <a name ="stop"></a>
-To stop the Remote Console, kill the console process (for example, `Ctrl+c` ).
+To stop the Remote Console in the desktop application, close the desktop application.
+To stop the Remote Console in the browser, kill the console process (for example, `Ctrl+c` ).
 
-**Note:** When you stop the Remote Console process, close the corresponding browser tab or window.
+**Note:** When you stop the Remote Console process in the browser, close the corresponding browser tab or window.
 
 ## Advanced Configuration<a name ="advanced"></a>
 - [Specify a Listen Address for the Remote Console Host](#remote)
 - [Disable Host Name Verification in the Connections to the WebLogic Domain](#hostname)
 
+See [Tune the Remote Console Environment](tuning.md) for other possible configuration changes.
+
 ### Specify a Listen Address for the Remote Console Host<a name ="remote"></a>
-To connect to a WebLogic Server Remote Console that is not running on the same machine as the browser, you can specify non-default values for the Remote Console host and port using Java system properties. To do so:
+To connect to a WebLogic Remote Console that is not running on the same machine as the browser, you can specify non-default values for the Remote Console host and port using Java system properties. You can do this directly at the command line or by editing a properties file.
+
+To specify a listen address at the command line:
 
 1. On the host where the Remote Console is installed, open a command window.
 
@@ -114,16 +142,44 @@ To connect to a WebLogic Server Remote Console that is not running on the same m
 
       When the Remote Console is not running on the same machine as the browser, the WebLogic domain URL must be accessible to the machine running the Remote Console process.
 
+To specify a listen address in a separate properties file:
+
+1. On the host where the Remote Console is installed, create a `config.json` file in the location applicable to your operating system.
+    - Linux: `$HOME/.config/weblogic-remote-console/`
+    - macOS: `/Users/<user>/Library/Application Support/weblogic-remote-console/`
+    - Windows: `C:\Users\<user>\AppData\Roaming\weblogic-remote-console\`
+1. In `config.json`, add the following properties, updating the values to reflect the hostname and port you want. 
+    ```
+    {
+      "server.host": "0.0.0.0", 
+      "server.port": "8092"
+    }
+    ```
+1. On the local machine, open the Remote Console application.
+
+1. In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain.
+
+      When the Remote Console is not running on the same machine as the browser, the WebLogic domain URL must be accessible to the machine running the Remote Console process.
 
 ### Disable Host Name Verification in the Connections to the WebLogic Domain <a name ="hostname"></a>
 When using WebLogic demo trust to connect to the WebLogic domain, you may need to disable host name verification. Disabling host name verification causes the Remote Console to skip the verification check of ensuring that the host name in the URL to which a connection is made matches the host name in the digital certificate that the server sends back as part of the SSL connection.
 
-To disable host name verification, set the `-Dconsole.disableHostnameVerification` property to `true` when required. The default is `false`.
+To disable host name verification, set the `console.disableHostnameVerification` property to `true` when required. The default is `false`.
 
 For example, to connect to the domain using SSL/TLS with host name verification disabled:
 ```
-java -Dconsole.disableHostnameVerification=true -Djavax.net.ssl.trustStore="${WL_HOME}/server/lib/DemoTrust.jks" -Djavax.net.ssl.trustStoreType="JKS" -jar <console_home>/console.jar
+java -Dconsole.disableHostnameVerification=true -Djavax.net.ssl.trustStore="/<path-to-wl-home>/server/lib/DemoTrust.jks" -Djavax.net.ssl.trustStoreType="JKS" -jar <console_home>/console.jar
 ```
+or in the `config.json` file, add 
+
+```
+  {
+    "console.disableHostnameVerification": "true", 
+    "javax.net.ssl.trustStore": "/<path-to-wl-home>/server/lib/DemoTrust.jks",
+    "javax.net.ssl.trustStoreType": "JKS"
+  }
+```
+
 **Note:**
-Oracle does not recommend using the demo certificates or turning off host
+We do not recommend using the demo certificates or turning off host
 name verification in production environments.

@@ -55,6 +55,10 @@ properties:
     this domain.</p>
 
 - name: ExcludedDomainNames
+  usedIf:
+    property: CrossDomainSecurityEnabled
+    values:
+      - true
   helpSummaryHTML: >
     <p>The remote domain names that are to be excluded from the cross-domain
     checks.</p>

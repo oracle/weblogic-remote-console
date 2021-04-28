@@ -14,9 +14,28 @@ import weblogic.console.backend.utils.ListUtils;
  */
 public class WeblogicSliceFormSource extends BaseWeblogicPageSource {
   private List<WeblogicPropertySource> properties = new ArrayList<>();
+  private List<WeblogicSectionSource> sections = new ArrayList<>();
+
+  public List<WeblogicSectionSource> getSections() {
+    return sections;
+  }
+
+  public void setSections(List<WeblogicSectionSource> sections) {
+    this.sections = ListUtils.nonNull(sections);
+  }
 
   public List<WeblogicPropertySource> getProperties() {
     return properties;
+  }
+
+  public List<WeblogicPropertySource> getAllProperties() {
+    List<WeblogicPropertySource> ret = new ArrayList<>();
+    for (WeblogicSectionSource section : getSections()) {
+      ret.addAll(section.getProperties());
+    }
+    ret.addAll(getProperties());
+    ret.addAll(getAdvancedProperties());
+    return ret;
   }
 
   public void setProperties(List<WeblogicPropertySource> properties) {

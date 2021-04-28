@@ -88,6 +88,10 @@ properties:
 
 - name: ThreadPoolPercentSocketReaders
   label: JavaSocketMuxer Socket Readers
+  usedIf:
+    property: NativeIOEnabled
+    values:
+      - false
 
 - name: MaxOpenSockCount
   label: Maximum Open Sockets
@@ -142,10 +146,39 @@ properties:
 - name: CoherenceClusterSystemResource
   optionsSources:
     - /CoherenceClusterSystemResources
-
   helpSummaryHTML: >
     <p>Coherence cluster associated with this server or server template.</p>
-
   helpDetailsHTML: >
     <p>The selected coherence cluster must also specify this
     server or server template as the target in its Members slice.</p>
+
+- name: "RestartMax"
+  label: Max Restarts Within Interval
+  usedIf:
+    property: AutoRestart
+    values:
+      - true
+
+- name: "RestartDelaySeconds"
+  usedIf:
+    property: AutoRestart
+    values:
+      - true
+
+- name: "RestartIntervalSeconds"
+  usedIf:
+    property: AutoRestart
+    values:
+      - true
+
+- name: "GatheredWritesEnabled"
+  usedIf:
+    property: NativeIOEnabled
+    values:
+      - true
+
+- name: "ScatteredReadsEnabled"
+  usedIf:
+    property: NativeIOEnabled
+    values:
+      - true
