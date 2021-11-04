@@ -1,9 +1,0 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
-# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
-
-collectionLinks:
-- label: Work Manager Configurations
-  resourceData: configuration/data/Domain/WorkManagers
-instanceLinks:
-- label: Work Manager Configuration
-  resourceData: configuration/data/Domain/WorkManagers/<WorkManagerRuntime>

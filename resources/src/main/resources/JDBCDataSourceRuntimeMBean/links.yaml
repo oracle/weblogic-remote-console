@@ -1,9 +1,0 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
-# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
-
-collectionLinks:
-- label: JDBC Datasources
-  resourceData: configuration/data/Domain/JDBCSystemResources
-instanceLinks:
-- label: JDBC Datasource
-  resourceData: configuration/data/Domain/JDBCSystemResources/<JDBCDataSourceRuntime>

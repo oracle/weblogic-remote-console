@@ -1,5 +1,0 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
-# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
-# The public oracle mbean javadocs for JMSConnectionFactoryBean are broken.
-# It's probably because they confuse it with JmsConnectionFactoryBean.
-disableMBeanJavadoc: true

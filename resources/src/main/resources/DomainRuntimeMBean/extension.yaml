@@ -1,8 +1,0 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
-# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
-properties:
-- array: true
-  descriptionHTML: '<p>The <code>ServerRuntimeMBean</code> for all running servers in the domain.</p> '
-  name: ServerRuntimes
-  relationship: containment
-  type: weblogic.management.runtime.ServerRuntimeMBean
