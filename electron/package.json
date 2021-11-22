@@ -45,13 +45,7 @@
     "extraFiles": {
       "from": "extraFiles/.",
       "to": "."
-    },
-    "publish": [
-      {
-        "provider": "generic",
-        "url": "http://lcr01022.us.oracle.com/weblogic-remote-console-updates"
-      }
-    ]
+    }
   },
   "author": {
     "name": "WebLogic Remote Console Team",
