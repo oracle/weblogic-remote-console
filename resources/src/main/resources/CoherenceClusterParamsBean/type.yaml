@@ -6,8 +6,32 @@ properties:
   helpSummaryHTML: >
     <p>The listen port of the Coherence Cluster which is acting as the local participant.</p>
 
-# Hide this name.  It confuses the parser, because we really want:
-# CoherenceClusterParamsBean.getCoherenceClusterWellKnownAddresses().getCoherenceClusterWellKnownAddresses()
-# rather than CoherenceClusterParamsBean.getCoherenceClusterWellKnownAddresses().
-- name: CoherenceClusterWellKnownAddressesBean
-  source: CoherenceClusterWellKnownAddresses
+- name: Transport
+  legalValues:
+  - value: udp
+    label: UDP
+  - value: tcp
+    label: TCP
+  - value: ssl
+    label: SSL
+  - value: tmb
+    label: TMB
+  - value: sdmb
+    label: SDMB
+  - value: imb
+    label: IMB
+
+- name: ClusteringMode
+  legalValues:
+  - value: multicast
+    label: Multicast
+  - value: unicast
+    label: Unicast
+
+children:
+- name: CoherenceClusterWellKnownAddresses
+  offlineName: CoherenceClusterWellKnownAddress
+  collapsedInWDT: true
+
+- name: CoherenceClusterWellKnownAddresses.CoherenceClusterWellKnownAddresses
+  label: Coherence Cluster Well Known Addresses Bean

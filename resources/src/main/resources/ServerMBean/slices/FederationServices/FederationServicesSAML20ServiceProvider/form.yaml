@@ -1,4 +1,4 @@
-# Copyright (c) 2020,2021 Oracle and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,24 +6,21 @@ introductionHTML: >
   properties.</p>
 
 properties:
-- name: "ServiceProviderEnabled"
-- name: "SignAuthnRequests"
-- name: "ForceAuthn"
-- name: "Passive"
-- name: "WantAssertionsSigned"
-- name: "AuthnRequestMaxCacheSize"
-- name: "AuthnRequestTimeout"
-- name: "FederationServicesPOSTOneUseCheckEnabled"
-- name: "ServiceProviderPOSTBindingEnabled"
-- name: "ServiceProviderArtifactBindingEnabled"
-- name: "ServiceProviderPreferredBinding"
-- name: "DefaultURL"
-- name: "AssertionEncryptionDecryptionKeyPassPhrase"
-- name: "AssertionEncryptionDecryptionKeyAlias"
-- name: "MetadataEncryptionAlgorithms"
-helpTasks:
-- "security/ConfigureFederationServices"
-- "security/ConfigureSAML20ServiceProviderServices"
+- name: "SingleSignOnServices.ServiceProviderEnabled"
+- name: "SingleSignOnServices.SignAuthnRequests"
+- name: "SingleSignOnServices.ForceAuthn"
+- name: "SingleSignOnServices.Passive"
+- name: "SingleSignOnServices.WantAssertionsSigned"
+- name: "SingleSignOnServices.AuthnRequestMaxCacheSize"
+- name: "SingleSignOnServices.AuthnRequestTimeout"
+- name: "FederationServices.POSTOneUseCheckEnabled"
+- name: "SingleSignOnServices.ServiceProviderPOSTBindingEnabled"
+- name: "SingleSignOnServices.ServiceProviderArtifactBindingEnabled"
+- name: "SingleSignOnServices.ServiceProviderPreferredBinding"
+- name: "SingleSignOnServices.DefaultURL"
+- name: "SingleSignOnServices.AssertionEncryptionDecryptionKeyPassPhrase"
+- name: "SingleSignOnServices.AssertionEncryptionDecryptionKeyAlias"
+- name: "SingleSignOnServices.MetadataEncryptionAlgorithms"
 helpTopics:
 - label: "Using Security Assertion Markup Language (SAML) Tokens For Identity "
   href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"

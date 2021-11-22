@@ -7,17 +7,14 @@ introductionHTML: >
       default time to live, etc.</p>
 
 properties:
-- name: "DefaultPriority"
-- name: "DefaultTimeToDeliver"
-- name: "DefaultTimeToLive"
-- name: "DefaultDeliveryMode"
-- name: "DefaultRedeliveryDelay"
-- name: "DefaultCompressionThreshold"
-- name: "SendTimeout"
-- name: "DefaultUnitOfOrder"
-
-helpTasks:
-- "jms_modules/connection_factories/ConfigureConnectionFactories"
+- name: "DefaultDeliveryParams.DefaultPriority"
+- name: "DefaultDeliveryParams.DefaultTimeToDeliver"
+- name: "DefaultDeliveryParams.DefaultTimeToLive"
+- name: "DefaultDeliveryParams.DefaultDeliveryMode"
+- name: "DefaultDeliveryParams.DefaultRedeliveryDelay"
+- name: "DefaultDeliveryParams.DefaultCompressionThreshold"
+- name: "DefaultDeliveryParams.SendTimeout"
+- name: "DefaultDeliveryParams.DefaultUnitOfOrder"
 
 helpTopics:
 - label: "Configuring Basic JMS System Resources"

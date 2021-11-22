@@ -15,13 +15,13 @@ properties:
   label: Source Bridge Destination
   allowNullReference: false
   optionsSources:
-    - /JMSBridgeDestinations
+    - Domain/JMSBridgeDestinations
 
 - name: TargetDestination
   label: Target Bridge Destination
   allowNullReference: false
   optionsSources:
-    - /JMSBridgeDestinations
+    - Domain/JMSBridgeDestinations
 
 - name: IdleTimeMaximum
   label: Maximum Idle Time
@@ -34,9 +34,9 @@ properties:
 
 - name: Targets
   optionsSources:
-    - /Clusters
-    - /Servers
-    - /MigratableTargets
+    - Domain/Clusters
+    - Domain/Servers
+    - Domain/MigratableTargets
 
 - name: SecondsBetweenRestarts
   usedIf:
@@ -49,3 +49,6 @@ properties:
     property: RestartInPlace
     values:
       - true
+
+- name: QOSDegradationAllowed
+  offlineName: QosDegradationAllowed

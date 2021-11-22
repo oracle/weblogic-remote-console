@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -15,33 +15,32 @@ properties:
 
 - name: Notifications
   optionsSources:
-  - ../HeapDumpActions
-  - ../JMSNotifications
-  - ../ScaleDownActions
-  - ../ImageNotifications
-  - ../JMXNotifications
-  - ../SMTPNotifications
-  - ../SNMPNotifications
-  - ../RESTNotifications
-  - ../ScaleDownActions
-  - ../ScaleUpActions
-  - ../ScriptActions
-  - ../ThreadDumpActions
-
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/HeapDumpActions
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/JMSNotifications
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/ScaleDownActions
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/ImageNotifications
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/JMXNotifications
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/SMTPNotifications
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/SNMPNotifications
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/RESTNotifications
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/ScaleDownActions
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/ScaleUpActions
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/ScriptActions
+  - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/WatchNotification/ThreadDumpActions
 
 ## the following is for Actions slices
 # - name: Actions
 #   label: Actions
 #   optionsSources:
-#   - ../HeapDumpActions
-#   - ../ImageNotifications
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/HeapDumpActions
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/ImageNotifications
 #   - ../LogActions
 #   - ../MSNotifications
-#   - ../JMXNotifications
-#   - ../SMTPNotifications
-#   - ../SNMPNotifications
-#   - ../ScaleDownActions
-#   - ../ScaleUpActions
-#   - ../ScriptActions
-#   - ../RESTNotifications
-#   - ../ThreadDumpActions
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/JMXNotifications
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/SMTPNotifications
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/SNMPNotifications
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/ScaleDownActions
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/ScaleUpActions
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/ScriptActions
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/RESTNotifications
+#   - Domain/WLDFSystemResources/<WLDFSystemResource>/WLDFResource/ThreadDumpActions

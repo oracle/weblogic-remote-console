@@ -26,11 +26,6 @@ properties:
 - name: "NumberOfRestartAttempts"
 - name: "ConstrainedCandidateServers"
 
-helpTasks:
-- "clusters/ConfigureClusterMigration"
-- "jms_servers/ConfigureJMSMigration"
-- "jta/ConfigureTRSMigration"
-
 helpTopics:
 - label: "Service Migration"
   href: "clust/service_migration.html"

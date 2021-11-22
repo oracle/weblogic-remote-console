@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,10 +6,5 @@ introductionHTML: >
 
 properties:
   - name: "Name"
-  - name: "HarvesterEnabled"
-  - name: "SamplePeriod"
-
-helpTasks:
-  - "diagnostics/ConfigureMetricCollectionForADiagnosticModule"
-  - "diagnostics/ConfigureMetricsToCollectInADiagnosticModule"
-  - "diagnostics/DeleteMetricsFromADiagnosticModule"
+  - name: "WLDFResource.Harvester.Enabled"
+  - name: "WLDFResource.Harvester.SamplePeriod"

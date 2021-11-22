@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -8,17 +8,11 @@ properties:
 - name: "Name"
 - name: "UsingCustomClusterConfigurationFile"
 - name: "CustomClusterConfigurationFileName"
-- name: "ClusteringMode"
-- name: "ClusterListenPort"
-- name: "MulticastListenAddress"
-- name: "Transport"
-- name: "TimeToLive"
-helpTasks:
-- "coherence/CreateCoherenceClusters"
-- "coherence/ConfigureCoherenceClusters"
-- "coherence/ConfigureWellKnownAddresses"
-- "coherence/TargetCoherenceClusters"
-- "coherence/ConfigureCoherenceLogging"
+- name: "CoherenceClusterResource.CoherenceClusterParams.ClusteringMode"
+- name: "CoherenceClusterResource.CoherenceClusterParams.ClusterListenPort"
+- name: "CoherenceClusterResource.CoherenceClusterParams.MulticastListenAddress"
+- name: "CoherenceClusterResource.CoherenceClusterParams.Transport"
+- name: "CoherenceClusterResource.CoherenceClusterParams.TimeToLive"
 helpTopics:
 - label: "Configuring and Managing Coherence Clusters"
   href: "clust/coherence.html#CLUST629"

@@ -16,12 +16,6 @@ properties:
 - name: "CacheDiskSize"
 - name: "CacheTimeoutInterval"
 - name: "MaxSize"
-helpTasks:
-- "xml/CreateXMLEntityCache"
-- "xml/DeleteXMLEntityCache"
-- "xml/ConfigureXMLResources"
-- "xml/ConfigureExternalEntityResolution"
-- "xml/ConfigureParsersAccordingToDocumentType"
 helpTopics:
 - label: "Using Work Managers to Optimize Scheduled Work "
   href: "cnfgd/self_tuned.html"

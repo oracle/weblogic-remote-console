@@ -7,8 +7,22 @@
 
 "use strict";
 
-define(['knockout', 'ojs/ojhtmlutils', '../../../microservices/page-definition/types', 'ojs/ojlogger'],
-  function (ko, HtmlUtils, PageDataTypes, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/page-definition/types', '../../../core/utils', 'ojs/ojlogger'],
+  function (oj, ko, HtmlUtils, PageDataTypes, CoreUtils, Logger) {
+
+    const i18n = {
+      tables: {
+        help: {
+          label: oj.Translations.getTranslatedString("wrc-help-form.tables.help.label"),
+          columns: {
+            header: {
+              name: oj.Translations.getTranslatedString("wrc-help-form.tables.help.columns.header.name"),
+              description: oj.Translations.getTranslatedString("wrc-help-form.tables.help.columns.header.description")
+            }
+          }
+        }
+      }
+    };
 
     /**
      *
@@ -21,27 +35,33 @@ define(['knockout', 'ojs/ojhtmlutils', '../../../microservices/page-definition/t
       this.perspective = viewParams.perspective;
     }
 
+    /**
+     * Create <div> element that contains the help displayed when the help icon is clicked.
+     * @returns {HTMLElement}
+     */
     function createHelp() {
-      var div = document.createElement("div");
+      const div = document.createElement("div");
 
-      if (typeof this.pdjData.helpTopics !== 'undefined') {
+      if (CoreUtils.isNotUndefinedNorNull(this.pdjData.helpTopics)) {
         div.setAttribute("id", "cfe-help-footer");
-        let title = document.createElement("p");
+        const title = document.createElement("p");
         title.innerHTML = "<b>Related Topics:</b>";
         div.append(title);
-        let list = document.createElement("ul");
+        const list = document.createElement("ul");
         div.append(list);
 
-        for (var j in this.pdjData.helpTopics) {
-          var topic = this.pdjData.helpTopics[j];
+        let topic, listElement, ref;
 
-          let listElement = document.createElement("li");
-          let ref = document.createElement("a");
+        for (let j = 0; j < this.pdjData.helpTopics.length; j++) {
+          topic = this.pdjData.helpTopics[j];
+
+          ref = document.createElement("a");
           ref.setAttribute("href", topic.href);
           ref.setAttribute("target", "_blank");
           ref.setAttribute("rel", "noopener");
           ref.innerText = topic.label;
 
+          listElement = document.createElement("li");
           listElement.append(ref);
           list.append(listElement);
         }
@@ -51,27 +71,71 @@ define(['knockout', 'ojs/ojhtmlutils', '../../../microservices/page-definition/t
     }
 
     HelpForm.prototype = {
+      i18n: i18n,
+      tableHelpColumns: [
+        {
+          "headerText": i18n.tables.help.columns.header.name,
+          "headerStyle": "font-weight:bold;text-align:left;min-width: 8em; width: 8em;",
+          "style": "white-space:normal;padding:5px;min-width: 8em; width: 8em;",
+          "name": i18n.tables.help.columns.header.name,
+          "field": i18n.tables.help.columns.header.name
+        },
+        {
+          "headerText": i18n.tables.help.columns.header.description,
+          "headerStyle": "font-weight:bold;text-align:left;",
+          "style": "white-space:normal;padding:5px;",
+          "name": i18n.tables.help.columns.header.description,
+          "field": i18n.tables.help.columns.header.description,
+          "template": "domTemplate"
+        }
+      ],
+      handleHelpIconClicked: (event) => {
+        const instructionHelp = event.currentTarget.attributes['help.definition'].value;
+        const detailedHelp = event.currentTarget.attributes['data-detailed-help'].value;
+
+        if (!detailedHelp) {
+          return;
+        }
+
+        const popup = document.getElementById(event.target.getAttribute("aria-describedby"))
+
+        if (popup != null) {
+          const content = popup.getElementsByClassName("oj-label-help-popup-container")[0];
+          if (content != null) {
+            if (popup.classList.contains("cfe-detail-popup")) {
+              content.innerText = instructionHelp;
+              popup.classList.remove("cfe-detail-popup");
+            }
+            else {
+              content.innerHTML = detailedHelp;
+              popup.classList.add("cfe-detail-popup");
+            }
+          }
+        }
+      },
+
       setPDJData: function(pdjData) {
         this.pdjData = pdjData;
       },
 
-      getHelpData: function (properties) {
-        var helpData = [];
+      getHelpData: function (properties, column1, column2) {
+        const helpData = [];
 
         // Create PageDataTypes instance using the form's slice
         // properties and perspective
-        var pdjTypes = new PageDataTypes(properties, this.perspective.id);
+        const pdjTypes = new PageDataTypes(properties, this.perspective.id);
 
-        for (var i in properties) {
-          var name = properties[i].name;
-          var label = pdjTypes.getLabel(name);
-
+        for (let i = 0; i < properties.length; i++) {
+          const name = properties[i].name;
+          const label = pdjTypes.getLabel(name);
           // Determine the help description for the property
-          var fullHelp = pdjTypes.getFullHelp(name);
+          const fullHelp = pdjTypes.getFullHelp(name);
+          const description = {view: HtmlUtils.stringToNodeArray(fullHelp)};
+          // Use Map to set value of "Name" and "Description"
+          // columns, in a way that honors the language locale
+          const entries = new Map([[column1, label], [column2, description]]);
 
-          var description = {view: HtmlUtils.stringToNodeArray(fullHelp)};
-
-          helpData.push({Name: label, Description: description});
+          helpData.push(Object.fromEntries(entries));
         }
 
         return helpData;
@@ -83,6 +147,7 @@ define(['knockout', 'ojs/ojhtmlutils', '../../../microservices/page-definition/t
         }
         return createHelp.call(this);
       }
+
     };
 
     // Return HelpForm constructor function

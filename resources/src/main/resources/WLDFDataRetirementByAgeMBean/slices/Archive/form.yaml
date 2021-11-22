@@ -1,31 +1,26 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
-  <p>Use this page to configure how and where the current server archives
-  its monitoring and diagnostics data.</p>
-
+  <p>Use this page to configure a diagnostic archive data retirement policy.<br>
+  A diagnostic data retirement policy specifies when records will be removed from specific archives in the diagnostic data store,
+  based on their age.
+  Note that data retirement for the server instance must be enabled for individual data retirement policies to be enabled.
+  </p>
 properties:
 - name: "Name"
-- name: "DiagnosticDataArchiveType"
-- name: "DiagnosticStoreDir"
-- name: "DiagnosticStoreFileLockingEnabled"
-- name: "DiagnosticJDBCSchemaName"
-- name: "PreferredStoreSizeLimit"
-- name: "StoreSizeCheckPeriod"
-- name: "DataRetirementEnabled"
-advancedProperties:
-- name: "DiagnosticStoreMinWindowBufferSize"
-- name: "DiagnosticStoreMaxWindowBufferSize"
-- name: "DiagnosticStoreIoBufferSize"
-- name: "DiagnosticStoreMaxFileSize"
-- name: "DiagnosticStoreBlockSize"
-helpTasks:
-- "diagnostics/ConfigureDiagnositcArchives"
+- name: "Type"
+- name: "ArchiveName"
+- name: "Enabled"
+- name: "RetirementAge"
+- name: "RetirementTime"
+- name: "RetirementPeriod"
+
 helpTopics:
-- label: "Monitoring Oracle WebLogic Server with SNMP "
-  href: "snmpa/index.html"
-  type: "edocs"
-- label: "Configuring Diagnostic Archives"
-  href: "wldfc/config_diag_archives.html"
-  type: "edocs"
+  - label: "Retiring Data from the Archive"
+    href: "wldfc/config_diag_archives.html"
+    type: "edocs"
+  - label: "Configuring Diagnostic Archives"
+    href: "wldfc/config_diag_archives.html"
+    type: "edocs"
+

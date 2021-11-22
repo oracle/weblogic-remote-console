@@ -71,10 +71,12 @@ describe.only('Test Suite: serverAndTemplate_test for Configuration-Servers-And-
         async function () {
         file = "server1.png";
         try {
-            await admin.createNewMBeanObject(driver,"server-1",2,"configuration","Environment","Servers")
+            await admin.createNewMBeanObject(driver,"server-1",2,"configuration","Environment","Servers");
             await driver.sleep(1200);
+            //await admin.deleteMBeanObject(driver,"server-1","Servers",2,"configuration",
+              //  "Environment","Servers");
             await admin.deleteMBeanObject(driver,"server-1","Servers",2,"configuration",
-                "Environment","Servers");
+                "Environment","Servers","","","",5);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -85,17 +87,19 @@ describe.only('Test Suite: serverAndTemplate_test for Configuration-Servers-And-
     //Test Case:
     // Create->modify(general tab)->delete serverTemplate-1
     //
-    it('4. Test Category: GAT/Risk1\n \t Test Scenario: for create->modify->delete a new serverTemplate-1 ',
+    it('4. Test Category: GAT/Risk1\n \t Test Scenario: for create->modify->delete a new testServerTemplate-1 ',
         async function() {
-        file = "serverTemplate-1.png";
+        file = "testServerTemplate-1.png";
         try {
-            await admin.createNewMBeanObject(driver,"serverTemplate-1",2,"configuration","Environment","Server Templates");
-            await driver.sleep(1200);
-            await server.modifyServerTemplateGeneralTab(driver,"serverTemplate-1","ui-id-2240","ui-id-2297","localhost",
-                "ListenPortEnabled","9991","SSLListenPortEnabled","9992","ClientCertProxyEnabled","javac");
-            await driver.sleep(1200);
-            await admin.deleteMBeanObject(driver,"serverTemplate-1","ServerTemplates",2,"configuration",
+            await admin.createNewMBeanObject(driver,"testServerTemplate-1",2,"configuration",
                 "Environment","Server Templates");
+            await driver.sleep(1200);
+            await server.modifyServerTemplateGeneralTab(driver,"testServerTemplate-1","Machine1",
+                "Cluster2","localhost", "ListenPortEnabled","7771", "SSL_Enabled",
+                "9992","ClientCertProxyEnabled","javac");
+            await driver.sleep(1200);
+            await admin.deleteMBeanObject(driver,"testServerTemplate-1","ServerTemplates",2,"configuration",
+                "Environment","Server Templates","","","",2);
             await driver.sleep(1200);
             console.log("TEST PASS ");
         } catch (e) {
@@ -107,16 +111,50 @@ describe.only('Test Suite: serverAndTemplate_test for Configuration-Servers-And-
     //Test Case:
     // Create->modify(migration tab)->delete serverTemplate-2
     //
-    it('5. Test Category: GAT/Risk1\n \t Test Scenario: for create->modify(migration) ->delete a new serverTemplate-2 ', async function() {
+    it('5. Test Category: GAT/Risk1\n \t Test Scenario: for create->modify(migration) ->delete a new serverTemplate-2 ',
+        async function() {
         file = "serverTemplate-2.png";
         try {
             await admin.createNewMBeanObject(driver,"testServerTemplate-2",2,"configuration","Environment","Server Templates");
             await driver.sleep(1200);
             await server.modifyServerTemplateMigrationTab(driver,"testServerTemplate-2","AutoMigrationEnabled");
-            //*[@id="AutoMigrationEnabled"]/div[1]/div
             await driver.sleep(1200);
             await admin.deleteMBeanObject(driver,"testServerTemplate-2","ServerTemplates",2,"configuration",
-                "Environment","Server Templates");
+                "Environment","Server Templates","","","",2);
+            await driver.sleep(1200);
+            console.log("TEST PASS ");
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+    //Test Case:
+    // Config AdminServer Debug properties for
+    //    Application, Containers, Core, Diagnostics, Management, Messaging, Networking, Persistence, Security, Transaction, ALL
+    it('6. Test Category: GAT/Risk1\n \t Test Scenario: for Config AdminServer Debug Application properties ', async function() {
+        file = "configAdminServerApplicationDebug-1.png";
+        try {
+            await server.modifyServerDebugTab(driver,"AdminServer","Application",
+                "ClassChangeNotifier","ClassLoader","ClassLoaderVerbose");
+            await driver.sleep(1200);
+
+            await server.modifyServerDebugTab(driver,"AdminServer","Containers",
+                "DebugConnectorService","DebugEjbCaching","DebugEjbCmpDeployment");
+            await driver.sleep(1200);
+
+            await server.modifyServerDebugTab(driver,"AdminServer","Core",
+                "DebugAsyncQueue","DebugCluster","DebugClusterAnnouncements");
+            await driver.sleep(1200);
+
+            await server.modifyServerDebugTab(driver,"AdminServer","Diagnostics",
+                "DebugBeanTreeHarvesterControl","DebugBeanTreeHarvesterDataCollection","DebugBeanTreeHarvesterResolution",
+                "DebugBeanTreeHarvesterThreading","DebugDiagnosticAccessor");
+            await driver.sleep(1200);
+
+            //TODO: Management, Messaging, Networking, Persistence and Security
+            await server.modifyServerDebugTab(driver,"AdminServer","Transactions",
+                "DebugJTA2PC","DebugJTA2PCStackTrace");
             await driver.sleep(1200);
             console.log("TEST PASS ");
         } catch (e) {

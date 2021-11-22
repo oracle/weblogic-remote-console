@@ -10,21 +10,16 @@ properties:
 - name: IIOPEnabled
 
 advancedProperties:
-- name: DefaultMinorVersion
-- name: TxMechanism
-- name: DefaultCharCodeset
-- name: DefaultWideCharCodeset
-- name: SystemSecurity
+- name: IIOP.DefaultMinorVersion
+- name: IIOP.TxMechanism
+- name: IIOP.DefaultCharCodeset
+- name: IIOP.DefaultWideCharCodeset
+- name: IIOP.SystemSecurity
 - name: DefaultIIOPUser
 - name: DefaultIIOPPassword
-- name: UseStatefulAuthentication
-- name: UseFullRepositoryIdList
-- name: UseSerialFormatVersion2
-
-helpTasks:
-- "channels/EnableAndConfigureIIOP.xml"
-- "channels/ConfigureCustomNetworkChannelsForNonclusteredServers.xml"
-- "channels/ConfigureDefaultNetworkConnections.xml"
+- name: IIOP.UseStatefulAuthentication
+- name: IIOP.UseFullRepositoryIdList
+- name: IIOP.UseSerialFormatVersion2
 
 helpTopics:
 - label: "Using RMI over IIOP"

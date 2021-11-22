@@ -22,19 +22,19 @@ module.exports = function (driver, file) {
                                                  weblogicPluginEnabledCB,serviceAgeThresholdSecondTF,
                                                  serviceActivationRequestResponseTimeoutTF,memberWarmupTimeoutSecondTF)
         {
-            await admin.goToLandingPanelSubTreeCard(driver,"Configuration","EnvironmentChevron","Domain/Clusters");
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Clusters");
             await driver.sleep(2400);
             console.log("Click " +clusterName+" NavTree link.");
             element = driver.findElement(By.xpath("//td[contains(.,\'"+clusterName+"\')]"));
             if (element.isEnabled()) {
                 await element.click();
             }
-            //await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Clusters",
-            //    clusterName,tabName);
             await driver.sleep(1200);
             await admin.enableCheckBox(driver,idName='show-advanced-fields');
             await driver.sleep(900);
-            await admin.selectDropDownValue(driver,"DefaultLoadAlgorithm|input",loadAlgorithmDL);
+            //await admin.selectDropDownValue(driver,"oj-searchselect-filter-DefaultLoadAlgorithm|input",loadAlgorithmDL);
+            await admin.selectDropDownList(driver,"DefaultLoadAlgorithm",
+                "oj-searchselect-filter-DefaultLoadAlgorithm|input",loadAlgorithmDL);
             await admin.setFieldValue(driver, "ClusterAddress|input",clusterAddressTF);
             await admin.setFieldValue(driver, "NumberOfServersInClusterAddress|input",numberServersInClusterTF);
             await admin.enableOjSwitchCheckBox(driver,txnAffinityEnabledCB,"3");
@@ -72,11 +72,11 @@ module.exports = function (driver, file) {
 
         deleteCluster: async function(driver,clusterName) 
         {
-            await admin.goToLandingPanelSubTreeCard(driver,"Configuration","EnvironmentChevron","Domain/Clusters");
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Clusters");
             await driver.sleep(1200);
             console.log("Click Configuration-> Environment-> Clusters-> "+clusterName+" delete row button");
-            await driver.findElement(By.xpath("//oj-button[@id=\'Domain/Clusters/"+clusterName+
-                        "\']/button/div/span")).click();
+            // 3 in the row = <clusterName>
+            await driver.findElement(By.xpath("//tr[3]/td/oj-button/button/div/span/span/span")).click();
             await driver.sleep(1200);
             await admin.commitChanges(driver);
             await driver.sleep(1200);

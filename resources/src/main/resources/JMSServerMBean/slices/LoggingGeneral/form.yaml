@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -7,20 +7,15 @@ introductionHTML: >
   to a separate file.</p>
 
 properties:
-- name: "FileName"
-- name: "RotationType"
-- name: "FileMinSize"
-- name: "RotationTime"
-- name: "FileTimeSpan"
-- name: "NumberOfFilesLimited"
-- name: "FileCount"
-- name: "LogFileRotationDir"
-- name: "RotateLogOnStartup"
-helpTasks:
-- "jms_modules/queues/ConfigureQueueLogging"
-- "jms_modules/topics/ConfigureTopicLogging"
-- "jms_modules/templates/ConfigureJMSTemplateLogging"
-- "logging/ConfigureAndViewLogs"
+- name: "JMSMessageLogFile.FileName"
+- name: "JMSMessageLogFile.RotationType"
+- name: "JMSMessageLogFile.FileMinSize"
+- name: "JMSMessageLogFile.RotationTime"
+- name: "JMSMessageLogFile.FileTimeSpan"
+- name: "JMSMessageLogFile.NumberOfFilesLimited"
+- name: "JMSMessageLogFile.FileCount"
+- name: "JMSMessageLogFile.LogFileRotationDir"
+- name: "JMSMessageLogFile.RotateLogOnStartup"
 helpTopics:
 - label: "Troubleshooting WebLogic JMS"
   href: "jmsad/troubleshoot.html"

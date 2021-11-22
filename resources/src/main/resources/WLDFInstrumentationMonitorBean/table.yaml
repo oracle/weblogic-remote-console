@@ -13,9 +13,3 @@ displayedColumns:
 - name: "Enabled"
 - name: "Actions"
 
-helpTasks:
-- "diagnostics/ConfigureInstrumentationForADiagnosticModule"
-- "diagnostics/ConfigureDiagnosticMonitorsInADiagnosticModule"
-- "diagnostics/ConfigureDiagnosticModules"
-- "diagnostics/AddDiagnosticMonitorsToADiagnosticModule"
-- "diagnostics/ConfigureInstrumentationForApplications"

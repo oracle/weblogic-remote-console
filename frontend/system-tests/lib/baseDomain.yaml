@@ -1,0 +1,27 @@
+domainInfo:
+    AdminUserName: '@@SECRET:__weblogic-credentials__:username@@'
+    AdminPassword: '@@SECRET:__weblogic-credentials__:password@@'
+topology:
+    Name: base_domain
+    DomainVersion: 12.2.1.4.0
+    Server:
+        AdminServer:
+resources:
+    JDBCSystemResource:
+        testDS:
+            JdbcResource:
+                JDBCDriverParams:
+                    Properties:
+                        user:
+                            Value: system
+                    DriverName: oracle.jdbc.replay.OracleXADataSourceImpl
+                    URL: 'jdbc:oracle:thin:@//provencelx.us.oracle.com:1521/orcl'
+                    PasswordEncrypted: oracle
+                JDBCDataSourceParams:
+                    JNDIName: [
+                        hndk]
+                    GlobalTransactionsProtocol: TwoPhaseCommit
+                DatasourceType: GENERIC
+            Target: [
+                AdminServer]
+            

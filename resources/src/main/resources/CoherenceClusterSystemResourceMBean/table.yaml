@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Coherence provides replicated and distributed data management and
@@ -11,21 +11,16 @@ introductionHTML: >
 
 displayedColumns:
 - name: "Name"
-- name: "Enabled"
+- name: "CoherenceClusterResource.CoherenceLoggingParams.Enabled"
 - name: "Targets"
 hiddenColumns:
 - name: "CustomClusterConfigurationFileName"
-- name: "ClusteringMode"
-- name: "Transport"
-- name: "SecurityFrameworkEnabled"
-- name: "ClusterListenPort"
-- name: "MulticastListenAddress"
-- name: "TimeToLive"
-helpTasks:
-- "coherence/CreateCoherenceClusters"
-- "coherence/ConfigureCoherenceClusters"
-- "coherence/ImportExternalConfiguration"
-- "coherence/ConfigureCoherenceLogging"
+- name: "CoherenceClusterResource.CoherenceClusterParams.ClusteringMode"
+- name: "CoherenceClusterResource.CoherenceClusterParams.Transport"
+- name: "CoherenceClusterResource.CoherenceClusterParams.SecurityFrameworkEnabled"
+- name: "CoherenceClusterResource.CoherenceClusterParams.ClusterListenPort"
+- name: "CoherenceClusterResource.CoherenceClusterParams.MulticastListenAddress"
+- name: "CoherenceClusterResource.CoherenceClusterParams.TimeToLive"
 helpTopics:
 - label: "Deploying Coherence Applications in WebLogic Server"
   href: "wlcoh/deploy-wls-coherence.html#WLCOH775"

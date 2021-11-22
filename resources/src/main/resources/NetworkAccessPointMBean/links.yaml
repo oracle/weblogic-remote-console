@@ -3,9 +3,9 @@
 
 collectionLinks:
 - label: Channel Monitoring
-  resourceData: monitoring/data/DomainRuntime/RunningServers/<Server>/ServerChannelRuntimes
+  resourceData: DomainRuntime/ServerRuntimes/<Server>/ServerChannelRuntimes
   notFoundMessage: There is no monitoring data available.  Usually, this indicates that the server instance is not reachable (e.g. not running).
 instanceLinks:
 - label: Channel Monitoring
-  resourceData: monitoring/data/DomainRuntime/RunningServers/<Server>/ServerChannelRuntimes/<NetworkAccessPoint>
+  resourceData: DomainRuntime/ServerRuntimes/<Server>/ServerChannelRuntimes/<NetworkAccessPoint>
   notFoundMessage: There is no monitoring data available.  Usually, this indicates that the server instance is not reachable (e.g. not running).

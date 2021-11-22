@@ -8,8 +8,6 @@ introductionHTML: >
 properties:
 - name: Targets
 
-helpTasks:
-  - "jms_modules/modules/ConfigureJMSModuleSubdeploys"
 helpTopics:
   - label: "JMS System Module Configuration"
     href: "jmsad/basic_config.html#JMSAD156"

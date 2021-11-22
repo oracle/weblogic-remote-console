@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: DeploymentState
@@ -13,27 +13,27 @@ properties:
     label: New
 subTypeDiscriminatorProperty: Type
 subTypes:
-- type: weblogic.management.runtime.JDBCReplayStatisticsRuntimeMBean
+- type: JDBCReplayStatisticsRuntimeMBean
   value: JDBCReplayStatisticsRuntime
-- type: weblogic.management.runtime.InterceptionComponentRuntimeMBean
+- type: InterceptionComponentRuntimeMBean
   value: InterceptionComponentRuntime
-- type: weblogic.management.runtime.JDBCMultiDataSourceRuntimeMBean
+- type: JDBCMultiDataSourceRuntimeMBean
   value: JDBCMultiDataSourceRuntime
-- type: weblogic.management.runtime.SCAPojoComponentRuntimeMBean
+- type: SCAPojoComponentRuntimeMBean
   value: SCAPojoComponentRuntime
-- type: weblogic.management.runtime.SCASpringComponentRuntimeMBean
+- type: SCASpringComponentRuntimeMBean
   value: SCASpringComponentRuntime
-- type: weblogic.management.runtime.JMSComponentRuntimeMBean
+- type: JMSComponentRuntimeMBean
   value: JMSComponentRuntime
-- type: weblogic.management.runtime.AppClientComponentRuntimeMBean
+- type: AppClientComponentRuntimeMBean
   value: AppClientComponentRuntime
-- type: weblogic.management.runtime.ComponentConcurrentRuntimeMBean
+- type: ComponentConcurrentRuntimeMBean
   value: ComponentConcurrentRuntime
-- type: weblogic.management.runtime.JDBCDataSourceRuntimeMBean
+- type: JDBCDataSourceRuntimeMBean
   value: JDBCDataSourceRuntime
-- type: weblogic.management.runtime.ConnectorComponentRuntimeMBean
+- type: ConnectorComponentRuntimeMBean
   value: ConnectorComponentRuntime
-- type: weblogic.management.runtime.EJBComponentRuntimeMBean
+- type: EJBComponentRuntimeMBean
   value: EJBComponentRuntime
-- type: weblogic.management.runtime.WebAppComponentRuntimeMBean
+- type: WebAppComponentRuntimeMBean
   value: WebAppComponentRuntime

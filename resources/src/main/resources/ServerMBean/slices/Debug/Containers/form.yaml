@@ -5,8 +5,6 @@ introductionHTML: >
   from the weblogic.servlet, weblogic.jaxrs, weblogic.ejb, weblogic.connector
   and weblogic.sca debug scopes.
 
-# TBD helpTasks:
-
 # TBD helpTopics:
 
 presentation:
@@ -14,43 +12,43 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
-- name: DebugConnectorService
-- name: DebugEjbCaching
-- name: DebugEjbCmpDeployment
-- name: DebugEjbCmpRuntime
-- name: DebugEjbCompilation
-- name: DebugEjbDeployment
-- name: DebugEjbInvoke
-- name: DebugEjbLocking
-- name: DebugEjbMdbConnection
-- name: DebugEjbMetadata
-- name: DebugEjbPooling
-- name: DebugEjbSecurity
-- name: DebugEjbSwapping
-- name: DebugEjbTimers
-- name: DebugHttp
-- name: DebugHttpConcise
-- name: DebugHttpLogging
-- name: DebugHttpSessions
-- name: DebugRA
-- name: DebugRAClassloader
-- name: DebugRAConnEvents
-- name: DebugRAConnections
-- name: DebugRADeployment
-- name: DebugRALifecycle
-- name: DebugRALocalOut
-- name: DebugRAParsing
-- name: DebugRAPooling
-- name: DebugRASecurityCtx
-- name: DebugRAWork
-- name: DebugRAWorkEvents
-- name: DebugRAXAin
-- name: DebugRAXAout
-- name: DebugRAXAwork
-- name: DebugRestJersey1Integration
-- name: DebugRestJersey2Integration
-- name: DebugScaContainer
-- name: DebugURLResolution
-- name: DebugWebAppIdentityAssertion
-- name: DebugWebAppModule
-- name: DebugWebAppSecurity
+- name: ServerDebug.DebugConnectorService
+- name: ServerDebug.DebugEjbCaching
+- name: ServerDebug.DebugEjbCmpDeployment
+- name: ServerDebug.DebugEjbCmpRuntime
+- name: ServerDebug.DebugEjbCompilation
+- name: ServerDebug.DebugEjbDeployment
+- name: ServerDebug.DebugEjbInvoke
+- name: ServerDebug.DebugEjbLocking
+- name: ServerDebug.DebugEjbMdbConnection
+- name: ServerDebug.DebugEjbMetadata
+- name: ServerDebug.DebugEjbPooling
+- name: ServerDebug.DebugEjbSecurity
+- name: ServerDebug.DebugEjbSwapping
+- name: ServerDebug.DebugEjbTimers
+- name: ServerDebug.DebugHttp
+- name: ServerDebug.DebugHttpConcise
+- name: ServerDebug.DebugHttpLogging
+- name: ServerDebug.DebugHttpSessions
+- name: ServerDebug.DebugRA
+- name: ServerDebug.DebugRAClassloader
+- name: ServerDebug.DebugRAConnEvents
+- name: ServerDebug.DebugRAConnections
+- name: ServerDebug.DebugRADeployment
+- name: ServerDebug.DebugRALifecycle
+- name: ServerDebug.DebugRALocalOut
+- name: ServerDebug.DebugRAParsing
+- name: ServerDebug.DebugRAPooling
+- name: ServerDebug.DebugRASecurityCtx
+- name: ServerDebug.DebugRAWork
+- name: ServerDebug.DebugRAWorkEvents
+- name: ServerDebug.DebugRAXAin
+- name: ServerDebug.DebugRAXAout
+- name: ServerDebug.DebugRAXAwork
+- name: ServerDebug.DebugRestJersey1Integration
+- name: ServerDebug.DebugRestJersey2Integration
+- name: ServerDebug.DebugScaContainer
+- name: ServerDebug.DebugURLResolution
+- name: ServerDebug.DebugWebAppIdentityAssertion
+- name: ServerDebug.DebugWebAppModule
+- name: ServerDebug.DebugWebAppSecurity

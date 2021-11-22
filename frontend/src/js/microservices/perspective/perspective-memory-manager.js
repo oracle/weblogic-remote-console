@@ -18,11 +18,14 @@ define(['./perspective-manager', './perspective-memory'],
      * @param {string} newMode - The name of the new mode
      */
     function onModeChanged(newMode) {
+/*
+//MLW
       if (newMode === "DETACHED") {
         for (let id in perspectiveMemories) {
           perspectiveMemories[id] = new PerspectiveMemory(id);
         }
       }
+*/
     }
 
     return {

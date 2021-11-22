@@ -31,7 +31,39 @@ define(['ojs/ojcore', '../microservices/preferences/preferences', '../apis/messa
         );
       },
 
-    /**
+      getResponseBodyMessages: function (response, properties) {
+        let bodyMessages = [], errorMessage;
+        if (CoreUtils.isError(response)) {
+          errorMessage = {
+            severity: "error",
+            summary: i18n.labels.unexpectedErrorResponse.value,
+            detail: response.stack
+          };
+          bodyMessages.push(errorMessage);
+        }
+        else if (CoreUtils.isNotUndefinedNorNull(response.body) && CoreUtils.isNotUndefinedNorNull(response.body.messages)) {
+          response.body.messages.forEach((message) => {
+            if (CoreUtils.isUndefinedOrNull(message.property)) {
+              errorMessage = {
+                severity: message.severity.toLowerCase(),
+                summary: response.failureReason,
+                detail: message.message
+              };
+              bodyMessages.push(errorMessage);
+            }
+            else {
+              errorMessage = { severity: message.severity };
+              const property = properties.find(property => property.name === message.property);
+              if (typeof property !== "undefined") errorMessage["summary"] = property.label;
+              errorMessage["detail"] = message.message;
+              bodyMessages.push(errorMessage);
+            }
+          });
+        }
+        return bodyMessages;
+      },
+
+      /**
        * Provides default handling of responses passed in Promise rejections.
        * <p>User preferences govern the behavior of this method:<p>
        *   <ul>
@@ -62,7 +94,7 @@ define(['ojs/ojcore', '../microservices/preferences/preferences', '../apis/messa
           // preference setting has a value of true, so
           // display the message. Use response.failureReason
           // to craft the summary property.
-          const messageSummary = (CoreUtils.isError(response.failureReason) ? response.failureReason.name : i18n.labels.unexpectedError.value);
+          const messageSummary = (CoreUtils.isError(response.failureReason) ? response.failureReason.name : i18n.labels.unexpectedErrorResponse.value);
 
           // Assign default value to severity, if
           // parameter wasn't provided
@@ -79,7 +111,7 @@ define(['ojs/ojcore', '../microservices/preferences/preferences', '../apis/messa
           MessageDisplaying.displayMessage({
               severity: severity,
               summary: messageSummary,
-              detail: MessageDisplaying.messages.seeJavascriptConsole.detail
+              detail: response.failureReason
             }, Preferences.notifications.autoCloseInterval()
           );
         }
@@ -106,8 +138,78 @@ define(['ojs/ojcore', '../microservices/preferences/preferences', '../apis/messa
         // just for the "default" handling of a failure
         // response.
         return response;
-      }
+      },
 
+      /**
+       * Sets the cursor to a given ``type``
+       * <p>Nothing will happen if the value of ``type`` is not "progress", "wait" or "default".</p>
+       * @param {"progress"|"wait"|"default"} type
+       */
+      setCursorType: (type) => {
+        if (["progress", "wait", "default"].includes(type)) {
+          document.body.style.cursor = type;
+        }
+      },
+
+      /**
+       * Returns whether CFE is running inside an Electron app, or not.
+       * @returns {boolean}
+       */
+      isElectronApiAvailable: () => {
+        return (CoreUtils.isNotUndefinedNorNull(window.electron_api));
+      },
+
+      /**
+       *
+       * @param {string} name
+       * @returns {string}
+       * @example
+       * const minHeight = ViewModelUtils.getCssCustomProperty("slideup-popup-offset-top");
+       */
+      getCustomCssProperty: (name) => {
+        if (name[0] !== '-') name = `--${name}`;
+        return getComputedStyle(document.documentElement).getPropertyValue(name);
+      },
+
+      setCustomCssProperty: (name, value) => {
+        if (name[0] !== '-') name = `--${name}`;
+        document.documentElement.style.setProperty(name, value);
+      },
+
+      /**
+       * Use ``download`` attribute on an ``<a>`` HTML tag, to download a file to the local filesystem.
+       * @param {{filepath: string, fileContents: string, mediaType: string}} options - JS object with properties containing data for the file to be downloaded.
+       */
+      downloadFile: (options) => {
+        // Define "click" event handler that releases the
+        // object URL after the element has been clicked.
+        function clickHandler(event) {
+          setTimeout(() => {
+            // Here, "this" is referring to the link
+            if (CoreUtils.isNotUndefinedNorNull(this)) {
+              this.removeEventListener('click', clickHandler);
+            }
+            // Release object URL from memory
+            URL.revokeObjectURL(url);
+          }, 1500);
+        }
+        const blob = new Blob([options.fileContents], {type: options.mediaType});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = options.filepath;
+        Object.assign(link.style, {
+          visibility: 'hidden',
+          width: 0,
+          height: 0,
+          overflow: 'hidden',
+          position: 'absolute'
+        });
+        // Add "click" event listener.
+        link.addEventListener('click', clickHandler, false);
+        // Open the file saver programmatically
+        link.click();
+      }
     }
   }
 );

@@ -2,14 +2,13 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
-- name: Target
+- name: Targets
   label: Target
-  source: Targets
-  reference: true
+  referenceAsReferences: true
   optionsSources:
-    - /Servers
-    - /Clusters
-    - /MigratableTargets
+    - Domain/Servers
+    - Domain/Clusters
+    - Domain/MigratableTargets
   helpSummaryHTML: >
     <p>The list of all WebLogic Server instances, clusters, and migratable
     targets that have been defined in the current domain and that are
@@ -27,5 +26,20 @@ properties:
 
 - name: PersistentStore
   optionsSources:
-  - /FileStores
-  - /JDBCStores
+  - Domain/FileStores
+  - Domain/JDBCStores
+
+- name: MessageCompressionOptions
+  label: Message Compression Options
+  legalValues:
+  - value: GZIP_DEFAULT_COMPRESSION
+    label: Default
+  - value: GZIP_BEST_COMPRESSION
+    label: Best
+  - value: GZIP_BEST_SPEED
+    label: Fastest
+  - value: LZF
+    label: Open Source LZF
+
+- name: JMSMessageLogFile
+  offlineName: JmsMessageLogFile

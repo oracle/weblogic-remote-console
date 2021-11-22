@@ -9,13 +9,11 @@
 /**
  * module
  */
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', '../core/runtime', '../apis/data-operations', '../apis/message-displaying',  '../microservices/perspective/perspective-manager', '../microservices/beanpath/beanpath-manager', '../microservices/breadcrumb/breadcrumbs-manager', '../microservices/page-definition/crosslinks', '../microservices/page-definition/utils', './utils', '../core/types', '../core/cbe-types', 'ojs/ojlogger', 'ojs/ojmodule-element', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojselectcombobox', 'ojs/ojbutton', 'ojs/ojmenu', 'ojs/ojtoolbar'],
-  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, Runtime, DataOperations, MessageDisplaying, PerspectiveManager, BeanPathManager, BreadcrumbsManager, PageDefinitionCrossLinks, PageDefinitionUtils, ViewModelUtils, CoreTypes, CbeTypes, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', '../apis/data-operations', '../apis/message-displaying', '../microservices/provider-management/data-provider-manager',  '../microservices/perspective/perspective-manager', '../microservices/beanpath/beanpath-manager', '../microservices/breadcrumb/breadcrumbs-manager', '../microservices/page-definition/crosslinks', '../microservices/page-definition/utils', './utils', '../core/runtime', '../core/types', '../core/cbe-types', '../core/utils', 'ojs/ojlogger', 'ojs/ojmodule-element', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojselectcombobox', 'ojs/ojbutton', 'ojs/ojmenu', 'ojs/ojtoolbar'],
+  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, DataOperations, MessageDisplaying, DataProviderManager, PerspectiveManager, BeanPathManager, BreadcrumbsManager, PageDefinitionCrossLinks, PageDefinitionUtils, ViewModelUtils, Runtime, CoreTypes, CbeTypes, CoreUtils, Logger) {
 
     function MonitoringViewModel(viewParams) {
       var self = this;
-
-      viewParams.signaling.perspectiveChanged.dispatch(viewParams.perspective);
 
       this.i18n = {
         icons: {
@@ -42,23 +40,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       // Declare observables used in monitoring.html
       this.selectedBeanPath = ko.observable();
       this.beanPathHistoryCount = ko.observable();
-      this.beanPathManager = new BeanPathManager(viewParams.perspective.id, this.beanPathHistoryCount);
+      const dataProvider = DataProviderManager.getLastActivatedDataProvider();
+      const beanTree = dataProvider.getBeanTreeByPerspectiveId(viewParams.perspective.id);
+      this.beanPathManager = new BeanPathManager(beanTree, this.beanPathHistoryCount);
       this.historyVisible = this.beanPathManager.getHistoryVisibility();
       this.beanPathHistoryOptions = this.beanPathManager.getHistoryOptions();
       this.breadcrumbs = {html: ko.observable({}), crumbs: ko.observableArray([])};
-      this.breadcrumbsManager = new BreadcrumbsManager(viewParams.perspective, this.breadcrumbs.crumbs);
+      this.breadcrumbsManager = new BreadcrumbsManager(beanTree, this.breadcrumbs.crumbs);
 
       this.path = ko.observable();
-//      this.columnDataProvider = ko.observable();
-//      this.rdjDataProvider = ko.observable();
       this.introductionHTML = ko.observable();
 
-      this.router = Router.rootInstance.getChildRouter(viewParams.perspective.id);
+      this.router = Router.rootInstance.getChildRouter(viewParams.beanTree.type);
 
-      if (typeof this.router === "undefined") {
-        this.router = Router.rootInstance.createChildRouter(viewParams.perspective.id).configure({
+      if (CoreUtils.isUndefinedOrNull(this.router)) {
+        this.router = Router.rootInstance.createChildRouter(viewParams.beanTree.type).configure({
           'table': { label: 'Table', value: 'table', title: Runtime.getName() },
-          'form': { label: 'Form', value: 'form', title: Runtime.getName() }
+          'form/{placement}': { label: 'Form', value: 'form', title: Runtime.getName() }
         });
       }
 
@@ -69,6 +67,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             parentRouter: this.router,
             signaling: viewParams.signaling,
             perspective: viewParams.perspective,
+            beanTree: viewParams.beanTree,
             onBeanPathHistoryToggled: toggleBeanPathHistory,
             onLandingPageSelected: selectedLandingPage
           };
@@ -94,7 +93,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // clear treenav selection
         viewParams.signaling.navtreeSelectionCleared.dispatch();
         path = PageDefinitionUtils.removeTrailingSlashes(path);
-        self.router.go("/" + viewParams.perspective.id + "/" + encodeURIComponent(path));
+        self.router.go("/" + viewParams.beanTree.type + "/" + encodeURIComponent(path));
       }
 
       // Breadcrumb navigation
@@ -103,29 +102,30 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }.bind(this);
 
       this.breadcrumbMenuClickListener = function (event) {
-        const kind = event.target.attributes["data-kind"].value;
         const perspectiveId = event.target.attributes["data-perspective"].value;
         const path = event.target.attributes["data-path"].value;
-        const breadcrumbs = event.target.attributes["data-breadcrumbs"].value;
+        
+        viewParams.signaling.navtreeSelectionCleared.dispatch();
+        
         if (viewParams.perspective.id === perspectiveId) {
           self.router.go("/" + perspectiveId + "/" + encodeURIComponent(path));
         }
         else {
           const perspective = PerspectiveManager.getById(perspectiveId);
-          if (typeof perspective !== "undefined") {
-            const testUrl = Runtime.getBaseUrl() + "/" + perspectiveId + "/data/" + decodeURIComponent(path);
-            DataOperations.mbean.test(testUrl)
+          if (CoreUtils.isNotUndefinedNorNull(perspective)) {
+            ViewModelUtils.setCursorType("progress");
+            DataOperations.mbean.test(path)
               .then(reply => {
+                viewParams.signaling.beanTreeChanged.dispatch(dataProvider.getBeanTreeByPerspectiveId(perspectiveId));
                 viewParams.signaling.perspectiveSelected.dispatch(perspective);
-                viewParams.signaling.perspectiveChanged.dispatch(perspective);
-                viewParams.parentRouter.go("/" + perspectiveId + "/" + encodeURIComponent(path));
+                viewParams.parentRouter.go("/" + perspectiveId + "/" + encodeURIComponent(path))
               })
               .catch(response => {
-                if (response.failureType === CoreTypes.FailureType.NOT_FOUND) {
+                if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
                   MessageDisplaying.displayMessage(
                     {
                       severity: 'info',
-                      summary: self.i18n.messages.dataNotAvailable,
+                      summary: self.i18n.messages.dataNotAvailable.summary,
                       detail: event.target.attributes["data-notFoundMessage"].value
                     },
                     2500
@@ -134,6 +134,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 else {
                   ViewModelUtils.failureResponseDefaultHandling(response);
                 }
+              })
+              .finally(() => {
+                ViewModelUtils.setCursorType("default");
               });
           }
         }
@@ -164,7 +167,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function selectedLandingPage(debugMessage) {
         Logger.log(debugMessage);
-        viewParams.parentRouter.go("/landing/" + viewParams.perspective.id);
+        viewParams.parentRouter.go("/landing/" + viewParams.beanTree.type);
       }
 
       this.moreMenuItem = ko.observable('(None selected yet)');
@@ -181,14 +184,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       viewParams.signaling.domainChanged.add((source) => {
         const domainConnectState = Runtime.getProperty(Runtime.PropertyName.CBE_DOMAIN_CONNECT_STATE);
         Logger.log(`domainConnectState=${domainConnectState}`);
-        setBreadcrumbsVisibility((domainConnectState === "CONNECTED"));
+        setBreadcrumbsVisibility((domainConnectState === CoreTypes.Domain.ConnectState.CONNECTED.name));
         setBeanPathHistoryVisibility(false);
       });
 
-      async function addBeanPath(reply, pathParam) {
-        return self.breadcrumbsManager.createBreadcrumbs(pathParam)
+      async function addBeanPath(reply) {
+        return self.breadcrumbsManager.createBreadcrumbs(reply.body.data.name)
           .then((breadcrumbLabels) => {
-            self.beanPathManager.addBeanPath(pathParam, breadcrumbLabels);
+            self.beanPathManager.addBeanPath(reply.body.data.name, breadcrumbLabels);
             return reply;
           });
       }
@@ -200,9 +203,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // remain encoded to form proper URIs for the beantree
         self.path(pathParam);
 
-        DataOperations.mbean.get(CbeTypes.serviceTypeFromName(viewParams.perspective.id), pathParam)
+        ViewModelUtils.setCursorType("progress");
+        DataOperations.mbean.get(pathParam)
           .then(reply => {
-            return addBeanPath(reply, pathParam);
+            return addBeanPath(reply);
           })
           .then(reply => {
             const pageTitle = `${Runtime.getName()} - ${reply.body.data.get("pdjData").helpPageTitle}`;
@@ -225,11 +229,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             else {
               ViewModelUtils.failureResponseDefaultHandling(response);
             }
+          })
+          .finally(() => {
+            ViewModelUtils.setCursorType("default");
           });
       }
 
       function setRouterData(pageTitle, rdjUrl, rdjData, pdjUrl, pdjData, rawPath) {
-        if (typeof self.router.data === 'undefined') {
+        if (CoreUtils.isUndefinedOrNull(self.router.data)) {
           self.router.data = {
             pageTitle: ko.observable(pageTitle),
             rdjUrl: ko.observable(rdjUrl),
@@ -260,7 +267,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function processRelatedLinks(rdjData) {
-        PageDefinitionCrossLinks.getBreadcrumbsLinksData(rdjData, self.breadcrumbs.crumbs().length)
+        PageDefinitionCrossLinks.getBreadcrumbsLinksData(rdjData, viewParams.perspective.id, self.breadcrumbs.crumbs().length)
           .then((linksData) => {
             const div = self.breadcrumbsManager.renderBreadcrumbs(linksData);
             Logger.log(`breadcrumbs.html=${div.outerHTML}`);
@@ -269,11 +276,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function chooseChildRouter(pdjData) {
-        if (pdjData.table !== undefined) {
+        if (CoreUtils.isNotUndefinedNorNull(pdjData.table)) {
           self.router.go("table");
         }
         else {
-          self.router.go("form");
+          self.router.go("form/embedded");
         }
       }
 
@@ -284,11 +291,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       // perspective isn't "auto-loaded" when the app starts.
       let stateParamsPath = stateParams.path();
 
-      if (typeof stateParamsPath !== "undefined" && stateParamsPath !== "form") {
+      if (CoreUtils.isNotUndefinedNorNull(stateParamsPath) && stateParamsPath !== "form") {
         renderPage(stateParamsPath);
       }
 
       this.connected = function () {
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, viewParams.beanTree.readOnly);
+
+        viewParams.signaling.beanTreeChanged.dispatch(viewParams.beanTree);
+
         this.pathSubscription = Router.rootInstance.observableModuleConfig().params.ojRouter.parameters.path.subscribe(renderPage.bind(this))
 
         this.routerSubscription = this.router.currentValue.subscribe(function (value) {
@@ -298,6 +309,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               parentRouter: this.router,
               signaling: viewParams.signaling,
               perspective: viewParams.perspective,
+              beanTree: viewParams.beanTree,
               onBeanPathHistoryToggled: toggleBeanPathHistory,
               onLandingPageSelected: selectedLandingPage
             };
@@ -316,7 +328,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         this.selectedBeanPathSubscription = this.selectedBeanPath.subscribe(function (newValue) {
           const oldValue = PageDefinitionUtils.removeTrailingSlashes(self.path());
-          if (typeof newValue !== 'undefined' && newValue !== null && newValue !== "") {
+          if (CoreUtils.isNotUndefinedNorNull(newValue) && newValue !== null && newValue !== "") {
             if (newValue !== oldValue) {
               if (self.beanPathManager.isHistoryOption(newValue)) clickedBreadCrumb(newValue);
             }
@@ -347,7 +359,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         dispose(this.routerSubscription)
         dispose(this.moreMenuItemSubscription)
       }.bind(this);
-
     }
 
     /*

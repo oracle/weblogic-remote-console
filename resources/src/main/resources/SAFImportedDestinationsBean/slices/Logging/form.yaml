@@ -6,14 +6,9 @@ introductionHTML: >
   for a SAF Imported Destination, queue or topic.</p>
 
 properties:
-- name: "MessageLoggingEnabled"
-- name: "MessageLoggingFormat"
+- name: "MessageLoggingParams.MessageLoggingEnabled"
+- name: "MessageLoggingParams.MessageLoggingFormat"
 
-helpTasks:
-- "jms_modules/store_and_forward/imported_destinations/topics/ConfigureTopicLogging"
-- "jms_modules/store_and_forward/imported_destinations/queues/ConfigureSAFQueueLogging"
-- "saf_agents/ConfigureSAFAgentLogging"
-- "logging/ConfigureAndViewLogs"
 helpTopics:
 - label: "Configuring Messaging "
   href: "jmsad/basic_config.html"

@@ -1,4 +1,4 @@
-# Copyright (c) 2020,2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -7,12 +7,10 @@ introductionHTML: >
   parameters in your application environment.</p>
 
 properties:
-- name: "ConnectionInitializationCallback"
-- name: "OracleProxySession"
-- name: "UseDatabaseCredentials"
-- name: "ReplayInitiationTimeout"
-helpTasks:
-- "jdbc/jdbc_datasources/ConfigureOracleParameters"
+- name: "JDBCResource.JDBCOracleParams.ConnectionInitializationCallback"
+- name: "JDBCResource.JDBCOracleParams.OracleProxySession"
+- name: "JDBCResource.JDBCOracleParams.UseDatabaseCredentials"
+- name: "JDBCResource.JDBCOracleParams.ReplayInitiationTimeout"
 helpTopics:
 - label: "Tuning Data Source Connection Pools "
   href: "jdbca/ds_tuning.html"

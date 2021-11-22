@@ -15,12 +15,6 @@ properties:
 - name: "Name"
 - name: "ClassName"
 - name: "TokenType"
-helpTasks:
-- "webservices/webservicesecurity/CreateDefaultWSSConfig"
-- "webservices/webservicesecurity/CreateDigitalSignatureKeystore"
-- "webservices/webservicesecurity/CreateEncryptionKeystore"
-- "webservices/webservicesecurity/UsePasswordDigest"
-- "webservices/webservicesecurity/UseX509ForIdentity"
 helpTopics:
 - label: "Securing WebLogic Web Services for Oracle WebLogic Server "
   href: "wssov/index.html"

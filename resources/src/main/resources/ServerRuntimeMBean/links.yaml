@@ -3,11 +3,11 @@
 
 collectionLinks:
 - label: Server Configuration
-  resourceData: configuration/data/Domain/Servers
-- label: Server Status
-  resourceData: monitoring/data/DomainRuntime/ServerStates
+  resourceData: Domain/Servers
+- label: Server States
+  resourceData: DomainRuntime/ServerLifeCycleRuntimes
 instanceLinks:
 - label: Server Configuration
-  resourceData: configuration/data/Domain/Servers/<ServerRuntime>
-- label: Server Status
-  resourceData: monitoring/data/DomainRuntime/ServerStates/<ServerRuntime>
+  resourceData: Domain/Servers/<ServerRuntime>
+- label: Server States
+  resourceData: DomainRuntime/ServerLifeCycleRuntimes/<ServerRuntime>

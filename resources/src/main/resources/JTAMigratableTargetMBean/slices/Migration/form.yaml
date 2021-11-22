@@ -13,19 +13,12 @@ introductionHTML: >
   settings are available only after being assigned to a cluster.</p>
 
 properties:
-- name: "JTAMigrationPolicy"
+- name: "MigrationPolicy"
 - name: "PreScript"
 - name: "PostScript"
 - name: "PostScriptFailureFatal"
 - name: "NonLocalPostAllowed"
 - name: "StrictOwnershipCheck"
-helpTasks:
-- "startstop/StartAndStopServers"
-- "clusters/AssignServersToClusters"
-- "clusters/ConfigureClusterMigration"
-- "clusters/SpecifyClusterReplicationGroups"
-- "jms_servers/ConfigureJMSMigration"
-- "jta/ConfigureTRSMigration"
 helpTopics:
 - label: "Managing the Server Life Cycle "
   href: "wlstg/manage_servers.html"

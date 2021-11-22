@@ -8,7 +8,7 @@ introductionHTML: >
 displayedColumns:
 - name: "Name"
 - name: "PersistentStore"
-- name: "Target"
+- name: "Targets"
 hiddenColumns:
 - name: "TemporaryTemplateResource"
 - name: "TemporaryTemplateName"
@@ -24,9 +24,6 @@ hiddenColumns:
 - name: "ProductionPausedAtStartup"
 - name: "InsertionPausedAtStartup"
 - name: "ConsumptionPausedAtStartup"
-helpTasks:
-- "jms_servers/ConfigureJMSServers"
-- "jms_modules/modules/ConfigureJMSModules"
 helpTopics:
 - label: "Configuring Messaging Bridges "
   href: "brdge/basics.html"

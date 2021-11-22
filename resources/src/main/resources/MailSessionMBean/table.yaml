@@ -14,10 +14,6 @@ displayedColumns:
 - name: "Properties"
 hiddenColumns:
 - name: "SessionUsername"
-helpTasks:
-- "mail/CreateMailSessions"
-- "mail/TargetMailSessions"
-- "mail/DeleteMailSessions"
 helpTopics:
 - label: "JMS System Module Configuration "
   href: "jmsad/basic_config.html#JMSAD156"

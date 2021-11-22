@@ -35,8 +35,6 @@ advancedProperties:
   - name: "FailbackDelaySeconds"
   - name: "PartialClusterStabilityDelaySeconds"
   - name: "FailOverLimit"
-helpTasks:
-  - "stores/ConfigureJDBCStoreHAAttributes.xml"
 helpTopics:
   - label: "Administering the WebLogic Persistent Store"
     href: "store/overview.html"

@@ -10,14 +10,12 @@ introductionHTML: >
   profiling options for this JDBC data source.</p>
 
 properties:
-- name: "ProfileType"
+- name: "JDBCResource.JDBCConnectionPoolParams.ProfileType"
   presentation:
     displayAsHex: true
-- name: "ProfileHarvestFrequencySeconds"
-- name: "ProfileConnectionLeakTimeoutSeconds"
-- name: "DriverInterceptor"
-helpTasks:
-- "jdbc/jdbc_datasources/ConfigureDiagnosticsForADataSource"
+- name: "JDBCResource.JDBCConnectionPoolParams.ProfileHarvestFrequencySeconds"
+- name: "JDBCResource.JDBCConnectionPoolParams.ProfileConnectionLeakTimeoutSeconds"
+- name: "JDBCResource.JDBCConnectionPoolParams.DriverInterceptor"
 helpTopics:
 - label: "JDBC Data Source Transaction Options "
   href: "jdbca/transactions.html"

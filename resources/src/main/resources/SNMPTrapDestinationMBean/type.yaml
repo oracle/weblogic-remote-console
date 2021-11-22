@@ -7,9 +7,9 @@ properties:
     <p>The name of this trap destination. This value is for your
     identification purposes only.</p>
 
-- name: "Host"
+- name: Host
   required: true
-- name: "Port"
+- name: Port
   required: true
-- name: "SecurityName"
+- name: SecurityName
   required: true

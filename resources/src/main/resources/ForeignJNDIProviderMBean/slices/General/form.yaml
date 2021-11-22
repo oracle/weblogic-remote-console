@@ -17,10 +17,6 @@ properties:
 - name: "User"
 - name: "Password"
 - name: "Properties"
-helpTasks:
-- "jndi/ManageForeignJNDI"
-- "jndi/ConfigureForeignJNDIProvider"
-- "jndi/DeleteForeignJNDIProvider"
 helpTopics:
 - label: "Understanding WebLogic JNDI "
   href: "wjndi/index.html#WJNDI115"

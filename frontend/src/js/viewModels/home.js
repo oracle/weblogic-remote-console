@@ -6,8 +6,8 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../core/runtime', 'ojs/ojcontext', 'ojs/ojmodule-element', 'ojs/ojknockout',  'ojs/ojnavigationlist'],
-  function(oj, ko, ModuleElementUtils, Runtime, Context) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojcontext', '../core/utils', 'ojs/ojmodule-element', 'ojs/ojknockout',  'ojs/ojnavigationlist'],
+  function(oj, ko, ModuleElementUtils, Context, CoreUtils) {
     function HomeViewModel(viewParams) {
       const self = this;
 
@@ -23,7 +23,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../core/runtime
 
       this.router = viewParams.parentRouter.getChildRouter("home");
 
-      if (typeof this.router !== "undefined") this.router.dispose();
+      if (CoreUtils.isNotUndefinedNorNull(this.router)) this.router.dispose();
 
       this.router = viewParams.parentRouter.createChildRouter("home").configure({
         "gallery": {label: "Gallery", value: "gallery", isDefault: true}
@@ -67,19 +67,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../core/runtime
 
         const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === id);
         setTabNode(tabNode);
-      }
+      };
 
       function setTabNode(tabNode) {
         if (!tabNode.disabled) self.router.go(tabNode.id);
       }
 
       Context.getPageContext().getBusyContext().whenReady()
-      .then(function () {
-        const newPerspective = {id: "home", label: "Home"};
-        viewParams.signaling.perspectiveChanged.dispatch(newPerspective);
-        document.title = Runtime.getName() + " - " + newPerspective.label;
-        setTabNode(self.i18n.tabstrip.tabs[0]);    // "gallery"
-      });
+        .then(function () {
+          setTabNode(self.i18n.tabstrip.tabs[0]);    // "gallery"
+        });
 
     }
   

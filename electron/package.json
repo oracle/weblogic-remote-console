@@ -1,0 +1,66 @@
+{
+  "name": "weblogic-remote-console",
+  "productName": "WebLogic Remote Console",
+  "homepage": "https://github.com/oracle/weblogic-remote-console",
+  "version": "2.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron . dev",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder -p never"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:oracle/weblogic-remote-console.git"
+  },
+  "build": {
+    "appId": "remote.console",
+    "rpm": {
+      "fpm": [
+        "--rpm-rpmbuild-define",
+        "_build_id_links none"
+      ]
+    },
+    "mac": {
+      "category": "Utility",
+      "target": "default",
+      "darkModeSupport": false,
+      "type": "distribution",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "./entitlements.mac.plist"
+    },
+    "linux": {
+      "target": [
+        "rpm",
+        "deb",
+        "appimage"
+      ],
+      "category": "Utility"
+    },
+    "nsis": {
+      "runAfterFinish": "false"
+    },
+    "extraFiles": {
+      "from": "extraFiles/.",
+      "to": "."
+    }
+  },
+  "author": {
+    "name": "WebLogic Remote Console Team",
+    "email": "wls-remote-console_us@oracle.com"
+  },
+  "license": "UPL",
+  "description": "A remote console for WebLogic",
+  "copyright": "Copyright (c) 2021, Oracle and/or its affiliates.",
+  "dependencies": {
+    "electron-prompt": "^1.6.2",
+    "electron-updater": "^4.6.2",
+    "keytar": "^7.7.0"
+  },
+  "devDependencies": {
+    "electron": "^13.1.9",
+    "electron-builder": "^22.13.1"
+  }
+}

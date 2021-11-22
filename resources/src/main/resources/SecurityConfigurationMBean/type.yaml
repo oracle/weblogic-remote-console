@@ -5,7 +5,7 @@ properties:
 - name: DefaultRealm
   allowNullReference: false
   optionsSources:
-    - /Realms
+    - Domain/SecurityConfiguration/Realms
 
   helpSummaryHTML: >
     <p>The security realm that should be used as the default administrative
@@ -78,6 +78,13 @@ properties:
     when upgrading from pre-9.0 versions of WebLogic Server. On Unix
     platforms, setting this value to <code>true</code> causes undesired
     behavior.</p>
+  legalValues:
+  - value: os
+    label: OS
+  - value: "true"
+    label: True
+  - value: "false"
+    label: False
 
   helpDetailsHTML: >
     <p>When the value is set to <code>os</code>, the pattern matching is case
@@ -143,5 +150,21 @@ properties:
     <p>Specifies whether the Demo Identity and Demo Trust keystores should
     be obtained from the Oracle Key Store Service (KSS).</p>
 
+- name: PrincipalEqualsCompareDnAndGuid
+  label: Use LDAP DN & GUID In Principal Matching
+
+- name: PrincipalEqualsCaseInsensitive
+  label: Use Case-insensitive Principal Name Matching
+
+- name: RemoteAnonymousJNDIEnabled
+  offlineName: RemoteAnonymousJndiEnabled
+
+- name: RemoteAnonymousRMIIIOPEnabled
+  offlineName: RemoteAnonymousRmiiiopEnabled
+
+- name: RemoteAnonymousRMIT3Enabled
+  offlineName: RemoteAnonymousRmit3Enabled
+
+children:
 - name: JASPIC
-  nonCreatableOptionalSingleton: true
+

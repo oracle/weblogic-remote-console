@@ -15,12 +15,6 @@ displayedColumns:
 - name: "ListenPort"
 - name: "PublicAddress"
 - name: "PublicPort"
-helpTasks:
-- "channels/ConfigureCustomNetworkChannelsForNonclusteredServers"
-- "security/ConfigureKeystoresAndSSLAttributesForChannel"
-- "channels/ConfigureDefaultNetworkConnections"
-- "channels/ConfigureListenPorts"
-- "channels/ConfigureProtocols"
 helpTopics:
 - label: "Configuring Network Resources"
   href: "cnfgd/network.html"

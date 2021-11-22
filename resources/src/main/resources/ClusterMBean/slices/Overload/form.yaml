@@ -7,17 +7,12 @@ introductionHTML: >
   overload or failure condition.</p>
 
 properties:
-- name: "SharedCapacityForWorkManagers"
-- name: "FreeMemoryPercentHighThreshold"
-- name: "FreeMemoryPercentLowThreshold"
-- name: "FailureAction"
-- name: "PanicAction"
+- name: "OverloadProtection.SharedCapacityForWorkManagers"
+- name: "OverloadProtection.FreeMemoryPercentHighThreshold"
+- name: "OverloadProtection.FreeMemoryPercentLowThreshold"
+- name: "OverloadProtection.FailureAction"
+- name: "OverloadProtection.PanicAction"
 
-helpTasks:
-- "clusters/ConfigureClusters"
-- "clusters/ConfigureClusterMigration"
-- "clusters/SpecifyClusterReplicationGroups"
-- "monitoring/ConfigureSelfhealthMonitoring"
 helpTopics:
 - label: "Whole Server Migration with Dynamic and Mixed Clusters "
   href: "clust/migration.html#CLUST726"

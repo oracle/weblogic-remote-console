@@ -1,0 +1,41 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+<!--
+    Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+    The Universal Permissive License (UPL), Version 1.0
+-->
+  <id>zip</id>
+  <formats>
+    <!-- output of assembly should be a JAR file -->
+    <format>jar</format>
+  </formats>
+
+  <includeBaseDirectory>false</includeBaseDirectory>
+
+  <fileSets>
+    <fileSet> <!-- include the OJET frontend code -->
+      <directory>../frontend/web</directory>
+      <excludes>
+        <exclude>index.html</exclude>
+      </excludes>
+      <outputDirectory>frontend</outputDirectory> <!-- remove the "web" folder -->
+    </fileSet>
+  </fileSets>
+
+  <files> <!-- include the OJET frontend code -->
+    <file>
+      <source>../frontend/web/index.html</source>
+      <outputDirectory>frontend</outputDirectory>
+      <destName>index.html.in</destName>
+    </file>
+  </files>
+
+  <dependencySets>
+    <dependencySet> <!-- include the module jars (configured as dependencies in this project) -->
+      <unpack>true</unpack> <!-- re-pack the other module jar (NOT just package the existing JAR) -->
+      <useTransitiveDependencies>false</useTransitiveDependencies> <!-- leave out transitive dependencies -->
+      <useProjectArtifact>false</useProjectArtifact>
+    </dependencySet>
+  </dependencySets>
+</assembly>

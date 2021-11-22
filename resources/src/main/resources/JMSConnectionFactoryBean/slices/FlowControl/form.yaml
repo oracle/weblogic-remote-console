@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -11,18 +11,13 @@ introductionHTML: >
   factory.</p>
 
 properties:
-- name: "FlowMaximum"
-- name: "FlowMinimum"
-- name: "FlowInterval"
-- name: "FlowSteps"
-- name: "FlowControlEnabled"
-- name: "OneWaySendMode"
-- name: "OneWaySendWindowSize"
-
-helpTasks:
-- "jms_servers/ConfigureJMSServerThresholds"
-- "jms_modules/queues/ConfigureQueueThresholds"
-- "jms_modules/topics/ConfigureTopicThresholds"
+- name: "FlowControlParams.FlowMaximum"
+- name: "FlowControlParams.FlowMinimum"
+- name: "FlowControlParams.FlowInterval"
+- name: "FlowControlParams.FlowSteps"
+- name: "FlowControlParams.FlowControlEnabled"
+- name: "FlowControlParams.OneWaySendMode"
+- name: "FlowControlParams.OneWaySendWindowSize"
 
 helpTopics:
 - label: "Tuning WebLogic JMS"

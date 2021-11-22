@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -8,15 +8,11 @@ introductionHTML: >
   messages.</p>
 
 properties:
-  - name: "RedeliveryDelay"
-  - name: "RedeliveryLimit"
-  - name: "ExpirationPolicy"
-  - name: "ExpirationLoggingPolicy"
-  # Uncomment when we fix inherited folded property merging
-  # - name: "ErrorDestination"
-helpTasks:
-- "jms_modules/distributed_queues/ConfigureUDQDeliveryFailure"
-- "jms_modules/distributed_queues/CreateUniformDistributedQueues"
+  - name: "DeliveryParamsOverrides.RedeliveryDelay"
+  - name: "DeliveryFailureParams.RedeliveryLimit"
+  - name: "DeliveryFailureParams.ExpirationPolicy"
+  - name: "DeliveryFailureParams.ExpirationLoggingPolicy"
+  - name: "DeliveryFailureParams.ErrorDestination"
 helpTopics:
 - label: "Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server "
   href: "wllog/index.html"

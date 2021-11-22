@@ -11,8 +11,8 @@
  * @description This module contains functions for managing instances of the ``Perspective`` class.
  * @module
  */
-define(['../../core/adapters/file-adapter', './perspective', '../../core/cfe-errors', 'ojs/ojlogger'],
-  function(FileAdapter, Perspective, CfeErrors, Logger){
+define(['../../core/adapters/file-adapter', './perspective', '../../core/cfe-errors', '../../core/utils', 'ojs/ojlogger'],
+  function(FileAdapter, Perspective, CfeErrors, CoreUtils, Logger){
     const i18n = {
       "errors": {
         "IsAlreadyActivatedError": {
@@ -29,7 +29,7 @@ define(['../../core/adapters/file-adapter', './perspective', '../../core/cfe-err
         let perspective;
         config['perspectives'].forEach((entry) => {
           Logger.log(`id=${entry.id}`);
-          perspective = new Perspective(entry.id, entry.type, entry.iconFiles);
+          perspective = new Perspective(entry.id, entry.type, entry.iconFiles, entry.beanTree);
           if (typeof entry.navtree !== 'undefined') {
             perspective.setNavTree(entry.navtree);
           }
@@ -38,6 +38,22 @@ define(['../../core/adapters/file-adapter', './perspective', '../../core/cfe-err
 
         Logger.log(`Number perspectives defined in config: ${perspectives.length}`);
       });
+
+    /**
+     *
+     * @param {["configuration" | "monitoring" | "view" | "modeling"]} beanTreeTypes
+     * @returns {Perspective[]}
+     * @private
+     */
+    function getByBeanTreeTypes(beanTreeTypes) {
+      let rtnval = ["configuration", "view", "monitoring", "modeling"];
+      beanTreeTypes.forEach((beanTreeType) => {
+        const perspective = this.getById(beanTreeType);
+        const index = rtnval.indexOf(perspective.id);
+        if (index !== -1) rtnval[index] = perspective;
+      });
+      return rtnval.filter(item => typeof item !== "string");
+    }
 
     return {
       /**
@@ -59,7 +75,7 @@ define(['../../core/adapters/file-adapter', './perspective', '../../core/cfe-err
        * @param {Perspective} perspective
        */
       register: function (perspective) {
-        if (this.getById(perspective.id) === undefined) {
+        if (CoreUtils.isUndefinedOrNull(this.getById(perspective.id))) {
           perspectives.push(perspective);
         }
       },
@@ -74,7 +90,7 @@ define(['../../core/adapters/file-adapter', './perspective', '../../core/cfe-err
        */
       activate: function (perspectiveId){
         let result;
-        if (typeof this.activePerspectiveId !== "undefined" && this.activePerspectiveId === perspectiveId) {
+        if (CoreUtils.isNotUndefinedNorNull(this.activePerspectiveId) && this.activePerspectiveId === perspectiveId) {
           throw new this.IsAlreadyActivatedError(`${perspectiveId} has already been activated! Call the deactivate() method or select a different perspective.`);
         }
 
@@ -122,6 +138,30 @@ define(['../../core/adapters/file-adapter', './perspective', '../../core/cfe-err
         });
       },
 
+      // FortifyIssueSuppression Password Management: Password in Comment
+      // This is not a password, but just a parameter
+      /**
+       *
+       * @param {{string: id, name: string, type: "adminserver", url: string, username: string, password: string, beanTrees: [string], status?: string, class?: string} | {id:string, name:string, type: "model", file: string, beanTrees: [string], status?: string, class?: string}} dataProvider
+       * @returns {Perspective[]}
+       */
+      getByDataProvider: function(dataProvider) {
+        // Extract bean tree types from beanTrees property of
+        // dataProvider parameter.
+        const beanTreeTypes = CoreUtils.getValues(dataProvider.beanTrees, "type");
+        // Use beanTreeTypes to load perspectives.
+        return getByBeanTreeTypes.call(this, beanTreeTypes);
+      },
+
+      /**
+       *
+       * @param {string} beanTreeType
+       * @returns {Perspective}
+       */
+      getByBeanTreeType: function(beanTreeType) {
+        return this.getById(beanTreeType);
+      },
+
       /**
        *
        * @returns {Perspective[]}
@@ -144,7 +184,7 @@ define(['../../core/adapters/file-adapter', './perspective', '../../core/cfe-err
        */
       current: function(){
         let active;
-        if (typeof activePerspectiveId !== 'undefined') {
+        if (CoreUtils.isNotUndefinedNorNull(activePerspectiveId)) {
           active = this.getById(activePerspectiveId);
         }
         return active;
@@ -156,7 +196,7 @@ define(['../../core/adapters/file-adapter', './perspective', '../../core/cfe-err
        * @returns {boolean} Returns ``true`` if the ``id`` property of the current perspective is ``perspectiveId``. If not, or no perspective is currently activated, ``false`` is returned.
        */
       iscurrent: function (perspectiveId){
-        let result = (typeof activePerspectiveId !== 'undefined');
+        let result = (CoreUtils.isNotUndefinedNorNull(activePerspectiveId));
         return (result ? perspectiveId === activePerspectiveId : false);
       }
     };

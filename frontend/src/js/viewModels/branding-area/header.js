@@ -6,8 +6,8 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../core/runtime', '../../microservices/preferences/preferences', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule'],
-  function(oj, ko, ModuleElementUtils, Runtime, Preferences) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../core/runtime', '../../microservices/preferences/preferences', '../../core/types', '../../core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojradioset'],
+  function(oj, ko, ModuleElementUtils, Runtime, Preferences, CoreTypes) {
     function HeaderTemplate(viewParams){
       var self = this;
 
@@ -16,30 +16,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../core/runt
           app: {
             version: { value: Runtime.getProperty(Runtime.PropertyName.CFE_VERSION) }
           },
-          keyPairs: {
-            domain: {
-              version: {label: "", value: ko.observable()},
-              url: {label: "", value: ko.observable()}
-            },
-            connectedTo: {
-              label: oj.Translations.getTranslatedString("wrc-header.keyPairs.connected.label"),
-              value: ko.observable()
-            },
-            welcome: {
-              label: oj.Translations.getTranslatedString("wrc-header.keyPairs.welcome.label", ""),
-              value: ko.observable()
-            },
-            notConnected: {
-              label: oj.Translations.getTranslatedString("wrc-header.keyPairs.disconnected.label"),
-              value: ""
-            },
-            connectionType: {
-              iconFile: ko.observable("connection-nonsecure-blk_24x24"),
-              tooltip: ko.observable("")
-            }
-          },
           icons: {
-            separator: {iconFile: "separator-vertical_10x24"},
+            wrcApp: {iconFile: "wrc-app-icon-color_88x78"},
             connectivity: {
               online: {iconFile: "console-state-bar-grn_13x30",
                 tooltip: oj.Translations.getTranslatedString("wrc-header.icons.connectivity.online.tooltip")
@@ -50,38 +28,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../core/runt
               detached: {iconFile: "console-state-bar-red_13x30",
                 tooltip: oj.Translations.getTranslatedString("wrc-header.icons.connectivity.detached.tooltip")
               }
-            },
-            connectionType: {
-              nonsecure: {iconFile: "connection-nonsecure-blk_24x24",
-                tooltip: oj.Translations.getTranslatedString("wrc-header.icons.connectionType.nonsecure.tooltip")
-              },
-              secure: {iconFile: "connection-secure-blk_24x24",
-                tooltip: oj.Translations.getTranslatedString("wrc-header.icons.connectionType.secure.tooltip")
-              }
             }
-          },
-          buttons: {
-            connect: {image: "domain-connect2-icon-blk_24x24", disabled: false,
-              label: oj.Translations.getTranslatedString("wrc-header.buttons.connect.label")
-            },
-            disconnect: {image: "domain-disconnect2-icon-blk_24x24", disabled: false,
-              label: oj.Translations.getTranslatedString("wrc-header.buttons.disconnect.label")
-            }
-          },
-          menus: {
-            domain: {
-              "url": {
-                id: "domain-url", iconFile: "", disabled: false, visible: ko.observable(true),
-                label: oj.Translations.getTranslatedString("wrc-header.menus.domain.url.label"),
-                value: ko.observable("")
-              },
-              "version": {
-                id: "domain-version", iconFile: "", disabled: false, visible: ko.observable(true),
-                label: oj.Translations.getTranslatedString("wrc-header.menus.domain.version.label"),
-                value: ko.observable("")
-              }
-            }
-          },
+          }
         }
       };
 
@@ -91,11 +39,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../core/runt
       this.domainsConnectState = ko.observable();
 
       this.domainConnectionModuleConfig = ModuleElementUtils.createConfig({
-        name: "branding-area/domain-connection",
+        name: "branding-area/console-backend-connection",
         params: {
           parentRouter: viewParams.parentRouter,
           signaling: viewParams.signaling,
-          onDomainConnectStateChanged: changedDomainConnectState
+          onDataProvidersEmpty: viewParams.onDataProvidersEmpty
         }
       });
 
@@ -109,9 +57,42 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../core/runt
         }
       });
 
+      this.signalBindings = [];
+
       this.connected = function () {
         setThemePreference(Preferences.general.themePreference());
-      };
+
+        let binding = viewParams.signaling.modeChanged.add((newMode) => {
+          setConsoleStateBar(newMode) ;
+          self.domainsConnectState(Runtime.getDomainConnectState());
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderRemoved.add((removedDataProvider) => {
+          if (removedDataProvider.id === Runtime.getDataProviderId()) {
+            setConsoleStateBar(CoreTypes.Console.RuntimeMode.DETACHED.name);
+          }
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.themeChanged.add((newTheme) => {
+          setThemePreference(newTheme);
+        });
+
+        self.signalBindings.push(binding);
+      }.bind(this);
+
+      this.disconnected = function () {
+        // Detach all signal "add" bindings
+        self.signalBindings.forEach(binding => { binding.detach(); });
+
+        // Reinitialize module-scoped array for storing
+        // signal "add" bindings, so it can be GC'd by
+        // the JS engine.
+        self.signalBindings = [];
+      }.bind(this);
 
       function setThemePreference(theme) {
         let ele = document.querySelector("header");
@@ -132,102 +113,36 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../core/runt
         }
       }
 
-      /**
-       * Called when user clicks the domain value field, to
-       * launch the domainMenu
-       * @param event
-       */
-      this.launchDomainMenu = function(event) {
-        event.preventDefault();
-        document.getElementById('domainMenu').open(event);
-      };
-
-      /**
-       * Called when user clicks the "Connect" or "Disconnect" icon
-       * in the branding area
-       * @param event
-       */
-      this.domainConnectButtonClickHandler = function(event) {
-        viewParams.signaling.domainConnectionInitiated.dispatch();
+      this.wrcAppIconClick = (event) => {
+        viewParams.signaling.showStartupTasksTriggered.dispatch("triggered");
       };
 
       function changedDomainConnectState() {
         self.domainsConnectState(Runtime.getDomainConnectState());
-        setDomainConnectState();
       }
 
-      function setDomainConnectState() {
-        if (self.domainsConnectState() === "DISCONNECTED") {
-          const ele = document.getElementById("domains-connected-to-label");
-          if (ele !== null) ele.innerHTML = self.i18n.header.keyPairs.notConnected.label;
-        }
-      }
-
-      function setConnectionDomainInfo(domainInfo) {
-        // Set connection type icon and tooltip based on scheme of domainInfo.url.
-        if ((typeof domainInfo.url === 'undefined') || !domainInfo.url.toLowerCase().startsWith('https')) {
-          self.i18n.header.keyPairs.connectionType.iconFile(self.i18n.header.icons.connectionType.nonsecure.iconFile);
-          self.i18n.header.keyPairs.connectionType.tooltip(self.i18n.header.icons.connectionType.nonsecure.tooltip);
-        }
-        else {
-          self.i18n.header.keyPairs.connectionType.iconFile(self.i18n.header.icons.connectionType.secure.iconFile);
-          self.i18n.header.keyPairs.connectionType.tooltip(self.i18n.header.icons.connectionType.secure.tooltip);
-        }
-
-        self.i18n.header.menus.domain.version.value(domainInfo.version);
-        self.i18n.header.menus.domain.url.value(domainInfo.url);
-
-        self.i18n.header.keyPairs.connectedTo.value(domainInfo.name);
-        if (domainInfo.name === "") {
-          const ele = document.getElementById("connected-to-label");
-          if (ele !== null) ele.innerHTML = "";
-        }
-
-        self.i18n.header.keyPairs.welcome.value(domainInfo.username);
-        if (domainInfo.username === "") {
-          const ele = document.getElementById("welcome-label");
-          if (ele !== null) ele.innerHTML = "";
-        }
-      }
-
-      function setDomainConsoleMode(newMode){
+      function setConsoleStateBar(newMode){
         let img;
         const canvas = document.getElementById("console-state-bar");
         if (canvas !== null) {
           canvas.setAttribute("title", newMode);
           const ctx = canvas.getContext("2d");
           switch(newMode){
-            case "ONLINE":
+            case CoreTypes.Console.RuntimeMode.ONLINE.name:
               img = document.getElementById("online-icon");
               ctx.drawImage(img, 0, 0);
               break;
-            case "OFFLINE":
+            case CoreTypes.Console.RuntimeMode.OFFLINE.name:
               img = document.getElementById("offline-icon");
               ctx.drawImage(img, 0, 0);
               break;
-            case "DETACHED":
+            case CoreTypes.Console.RuntimeMode.DETACHED.name:
               img = document.getElementById("detached-icon");
               ctx.drawImage(img, 0, 0);
               break;
           }
         }
       }
-
-      viewParams.signaling.domainChanged.add((source, domainInfo) => {
-        setConnectionDomainInfo(domainInfo);
-      });
-
-      viewParams.signaling.modeChanged.add((newMode) => {
-        setDomainConsoleMode(newMode) ;
-        self.domainsConnectState(Runtime.getDomainConnectState());
-        if (newMode === "DETACHED") {
-          setConnectionDomainInfo({name: "", username: ""});
-        }
-      });
-
-      viewParams.signaling.themeChanged.add((newTheme) => {
-        setThemePreference(newTheme);
-      });
 
     }
 

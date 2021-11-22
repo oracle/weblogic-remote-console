@@ -11,16 +11,12 @@ introductionHTML: >
   configuration of the Node Manager instances.</p>
 
 properties:
-- name: "NMType"
-- name: "ListenAddress"
-- name: "ListenPort"
-- name: "NodeManagerHome"
-- name: "ShellCommand"
-- name: "DebugEnabled"
-helpTasks:
-- "machines/ConfigureMachines"
-- "machines/MonitorNodeManagerStatus"
-- "machines/MonitorNodeManagerLogs"
+- name: "NodeManager.NMType"
+- name: "NodeManager.ListenAddress"
+- name: "NodeManager.ListenPort"
+- name: "NodeManager.NodeManagerHome"
+- name: "NodeManager.ShellCommand"
+- name: "NodeManager.DebugEnabled"
 helpTopics:
 - label: "Administering Node Manager for Oracle WebLogic Server "
   href: "nodem/index.html"

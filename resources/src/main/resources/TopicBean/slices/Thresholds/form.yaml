@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -10,17 +10,13 @@ introductionHTML: >
   messages that the topic is allowed to store to conserve memory use.</p>
 
 properties:
-- name: "BytesHigh"
-- name: "BytesLow"
-- name: "MessagesHigh"
-- name: "MessagesLow"
+- name: "Thresholds.BytesHigh"
+- name: "Thresholds.BytesLow"
+- name: "Thresholds.MessagesHigh"
+- name: "Thresholds.MessagesLow"
 - name: "Quota"
 - name: "MaximumMessageSize"
-- name: "MessagesLimitOverride"
-helpTasks:
-- "jms_modules/topics/ConfigureTopics"
-- "jms_modules/templates/ConfigureJMSTemplates"
-- "jms_servers/ConfigureJMSServers"
+- name: "TopicSubscriptionParams.MessagesLimitOverride"
 helpTopics:
 - label: "Configuring Messaging "
   href: "jmsad/basic_config.html"

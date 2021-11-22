@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page summarizes the clusters that have been configured in
@@ -45,15 +45,6 @@ hiddenColumns:
 - name: "MillisToSleepBetweenAutoMigrationAttempts"
 - name: "ReplicationTimeoutEnabled"
 # excluded - name: "UnicastDiscoveryPeriodMillis"
-
-helpTasks:
-- "clusters/ConfigureClusters"
-- "clusters/AssignServersToClusters"
-- "clusters/ConfigureClusterMigration"
-- "clusters/SpecifyClusterReplicationGroups"
-- "clusters/CreateDynamicClusters"
-- "clusters/ConfigureElasticityForDynamicClusters"
-- "clusters/ConfigureOnDemandScaling"
 
 helpTopics:
 - label: "Setting up Weblogic Clusters"

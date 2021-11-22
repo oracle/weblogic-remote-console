@@ -16,10 +16,6 @@ properties:
 - name: "TunnelingClientPingSecs"
 - name: "TunnelingClientTimeoutSecs"
 - name: "MaxMessageSize"
-helpTasks:
-- "channels/ConfigureT3Protocol"
-- "channels/ConfigureHTTPProtocol"
-- "channels/EnableAndConfigureIIOP"
 helpTopics:
 - label: "Redirecting JVM Output "
   href: "wllog/config_logs.html#WLLOG163"

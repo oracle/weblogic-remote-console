@@ -5,6 +5,15 @@ properties:
 - name: FederationTopology
   helpHTML: >
     <p>Specify the federation topology.</p>
+  legalValues:
+  - value: none
+    label: None
+  - value: active-active
+    label: Active-Active
+  - value: active-passive
+    label: Active-Passive
+  - value: passive-active
+    label: Passive-Active 
 
 - name: RemoteCoherenceClusterName
   helpHTML: >

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -18,10 +18,6 @@ properties:
 - name: "FailbackDelaySeconds"
 - name: "PartialClusterStabilityDelaySeconds"
 - name: "FailOverLimit"
-helpTasks:
-- "bridge/bridge_instance/ConfigureGeneralAttributes"
-- "bridge/bridge_instance/ConfigureHAAttributes"
-- "bridge/bridge_instance/TargetMessagingBridgesToServers"
 helpTopics:
 - label: "Understanding the Messaging Bridge"
   href: "brdge/basics.html"

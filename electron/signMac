@@ -1,0 +1,80 @@
+#!/bin/bash
+set -ex
+JAR="$PWD/CSS-Client.jar"
+if [ -z "$1" -o -z "$2" ]
+then
+  echo Usage: $0 source-dir destination-dir >&2
+  exit 1
+fi
+export SIGN_USER=weblogic_remote_console_grp
+export SIGN_GLOBAL_ID=lfeigen
+
+# Signing a directory requires zipping up the directory (using ditto),
+# running the signing command and unzipping it back again.
+signDir() {
+    set -ex
+    zip="$tmp/${1##*/}.zip"
+    rm -f "$zip"
+    ditto -c -k --sequesterRsrc --keepParent "$1" "$zip"
+    java -jar "$JAR" sign -hardened_runtime -entitlement_file_path entitlements.mac.plist -signed_location $tmp -sign_method apple -file_to_sign "$zip" -deep -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID
+    ditto -x -k "$zip" "${1%/*}"
+}
+
+# Notarizing a directory requires zipping up the directory (using ditto),
+# running the notarizing command and unzipping it back again.
+notarizeDir() {
+    zip="$tmp/${1##*/}.zip"
+    rm -f "$zip"
+    ditto -c -k --sequesterRsrc --keepParent "$1" "$zip"
+    java -jar "$JAR" mac_notarize -file_to_notarize "$zip" -download_location "$tmp" -bundle_id remote.console -server_timeout 40 -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID
+    ditto -x -k "$zip" "${1%/*}"
+    rm -f $tmp/*
+}
+src="$1"
+target="$2"
+rm -rf "$target"
+mkdir -p "$target"
+
+tmp="/tmp/${0##*/}"
+rm -rf "$tmp"
+mkdir -p "$tmp"
+
+# Notice the use of -RP - that says (with the version of cp on the Mac) to
+# maintain symbolic links as symbolic links.  The Mac OS signing software is
+# sensitive to files and their locations.  A symbolic link to an executable may
+# be placed in a location where an executable should not be placed.  As you will
+# see below, we do not sign symbolic links, but only files and directories.
+cp -RP "$src/." "$target"
+
+# This part is seriously weird. The legal directory contains some directories
+# that contain nothing but symbolic links.  The Mac OS signing software does not
+# like signing a directory with nothing but symbolic links in it.  However, if
+# we don't sign it, it doesn't like it either.  So, what we do here is make all
+# of the files in here not symbolic links by copying them with -rp instead.
+rm -rf "$target/Contents/MacOS/customjre/legal"
+cp -rp "$src/Contents/MacOS/customjre/legal" "$target/Contents/MacOS/customjre"
+
+(
+  cd "$target/Contents/MacOS/customjre" && zip -qmr "$tmp"/legal.zip legal
+)
+
+# Find all of the files that represent code.  The electron-builder software uses
+# file names and some guessing, but the use of file here seems more reliable.
+find "$target/Contents/"[FMR]* -type f -print0 | xargs -0 file | grep :.*x86_64 | cut -f1 -d: | while read i
+do
+    java -jar "$JAR" sign -hardened_runtime -entitlement_file_path entitlements.mac.plist -signed_location "$tmp" -sign_method binary -file_to_sign "$i" -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID
+    mv -f "$tmp/${i##*/}" "$i"
+    chmod a+x "$i"
+    # Checks to see that the signing worked
+    codesign -d "$i"
+done
+
+find "$target/Contents/"[FMR]* -type d \( -name '*.app' -o -name '*.framework' \) -depth | while read i
+do
+    # Try three times because it fails sometimes
+    signDir "$i" || signDir "$i" || signDir "$i"
+    codesign -d "$i"
+done
+signDir "$target"
+# Try three times because it fails sometimes
+notarizeDir "$target" || notarizeDir "$target" || notarizeDir "$target"

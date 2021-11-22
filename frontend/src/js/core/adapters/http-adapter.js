@@ -57,20 +57,24 @@ define(['ojs/ojcore'],
     function get(url) {
       const reply = {};
       return fetch(url, {
-          method: "get",
-          credentials: "include",
-          headers: {
-            "User-Agent": USER_AGENT
-          }
-        })
-        .then(status)
-        .then(response => {
-          return asJson(response);
-        })
-        .then((data) => {
-          reply["responseJSON"] = data;
-          return reply;
-        });
+        method: "get",
+        credentials: "include",
+        headers: {"User-Agent": USER_AGENT}
+      })
+      .then(status)
+      .then(response => {
+        return response.json()
+          .then(data => {
+            reply["responseJSON"] = data;
+            return reply;
+          })
+          .catch(error => {
+            // Response body does not contain JSON and
+            // reply is already an empty object, so just
+            // return reply
+             return reply;
+          });
+      });
     }
 
     function getPostHeaders(contentType, authorization) {
@@ -93,11 +97,11 @@ define(['ojs/ojcore'],
       // we intentionally want Promise rejections
       // to bubble up.
       return fetch(url, {
-          method: "post",
-          credentials: "include",
-          headers: headers,
-          body: JSON.stringify(content)
-        })
+        method: "post",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify(content)
+      })
         .then(status)
         .then(response => {
           // Add a "transport" property to the reply
@@ -122,12 +126,12 @@ define(['ojs/ojcore'],
     function _delete(url) {
       const reply = {};
       return fetch(url, {
-          method: "delete",
-          credentials: "include",
-          headers: {
-            "User-Agent": USER_AGENT
-          }
-        })
+        method: "delete",
+        credentials: "include",
+        headers: {
+          "User-Agent": USER_AGENT
+        }
+      })
         .then(status)
         .then(response => {
           // Add a "transport" property to the reply

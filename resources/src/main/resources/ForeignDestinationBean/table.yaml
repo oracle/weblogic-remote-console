@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A foreign destination (topic or queue) can be found on a remote
@@ -11,10 +11,6 @@ displayedColumns:
 - name: "Name"
 - name: "LocalJNDIName"
 - name: "RemoteJNDIName"
-
-helpTasks:
-- "jms_modules/foreign_servers/ConfigureForeignServers"
-- "jms_modules/foreign_servers/CreateForeignConnectionFactories"
 
 helpTopics:
 - label: "Configuring Advanced JMS System Resources"

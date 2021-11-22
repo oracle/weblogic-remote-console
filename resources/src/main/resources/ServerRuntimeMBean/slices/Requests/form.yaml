@@ -5,7 +5,7 @@ introductionHTML: >
     server.</p>
 
 properties:
-- name: CompletedRequestCount
-- name: OverloadRejectedRequestsCount
-- name: PendingUserRequestCount
-- name: SharedCapacityForWorkManagers
+- name: ThreadPoolRuntime.CompletedRequestCount
+- name: ThreadPoolRuntime.OverloadRejectedRequestsCount
+- name: ThreadPoolRuntime.PendingUserRequestCount
+- name: ThreadPoolRuntime.SharedCapacityForWorkManagers

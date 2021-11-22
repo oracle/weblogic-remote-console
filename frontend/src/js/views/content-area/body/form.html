@@ -4,40 +4,8 @@
 -->
 <div class="cfe-table-form-container">
 
-  <oj-dialog id="confirmDialog" dialog-title="[[i18n.confirmDialog.title]]" initial-visibility="hide" cancel-behavior="icon">
-    <div>
-      <span id="confirmDialogPrompt" data-bind="text: [[i18n.confirmDialog.prompt()]]"></span>
-    </div>
-
-    <div slot="footer">
-      <oj-button :id="[[i18n.confirmDialog.buttons.yes.id]]">
-        <span class="button-label" data-bind="text: [[i18n.confirmDialog.buttons.yes.label]]"></span>
-      </oj-button>
-      <oj-button :id="[[i18n.confirmDialog.buttons.no.id]]">
-        <span class="button-label" data-bind="text: [[i18n.confirmDialog.buttons.no.label]]"></span>
-      </oj-button>
-    </div>
-  </oj-dialog>
-
-  <oj-dialog id="syncIntervalDialog" dialog-title="[[i18n.dialogSync.title]]" cancel-behavior="icon">
-    <div slot="body">
-      <span data-bind="text: [[i18n.dialogSync.instructions]]"></span>
-      <oj-form-layout label-edge="start" label-width="72%">
-        <oj-label slot="label" for="interval-field"><span data-bind="text: [[i18n.dialogSync.fields.interval.label]]"></span>
-        </oj-label>
-        <oj-input-text id="interval-field" value='{{i18n.dialogSync.fields.interval.value}}'></oj-input-text>
-      </oj-form-layout>
-    </div>
-
-    <div slot="footer">
-      <oj-button :id="[[i18n.dialogSync.buttons.ok.id]]">
-        <span class="button-label" data-bind="text: [[i18n.dialogSync.buttons.ok.label]]"></span>
-      </oj-button>
-      <oj-button :id="[[i18n.dialogSync.buttons.cancel.id]]">
-        <span class="button-label" data-bind="text: [[i18n.dialogSync.buttons.cancel.label]]"></span>
-      </oj-button>
-    </div>
-  </oj-dialog>
+  <oj-module config="[[overlayFormDialogModuleConfig]]">
+  </oj-module>
 
   <div class="cfe-table-form-content-header oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
 
@@ -63,48 +31,89 @@
         </div>
       </oj-bind-if>
     </div>
+  </div>
 
-    <div id="form-container" class="cfe-table-form-content">
-      <!--
-        FortifyIssueSuppression Often Misused: File Upload
-      -->
-      <input class="cfe-file-chooser" id="file-chooser" type="file"/>
+  <div id="form-container" class="cfe-table-form-content">
+    <!--
+      FortifyIssueSuppression Often Misused: File Upload
+    -->
+    <input class="cfe-file-chooser" id="file-chooser" type="file"/>
 
-      <oj-bind-if test="[[!showHelp()]]">
-        <oj-bind-dom label-edge="inside" config="[[ formDom ]]" />
-      </oj-bind-if>
-      <oj-bind-if test="[[showHelp()]]">
-        <oj-table
-          id='help-table'
-          aria-label='[[i18n.tables.help.label]]'
-          data='[[helpDataProvider]]'
-          scroll-policy='loadMoreOnScroll'
-          scroll-policy-options='{"fetchSize": 10}'
-          columns-default='{"sortable": "disabled", "resizable":"disabled"}'
-          columns='[
-        {
-          "headerText": "Name",
-          "headerStyle": "font-weight:bold;text-align:left;min-width: 8em; width: 8em;",
-          "style": "white-space:normal;padding:5px;min-width: 8em; width: 8em;",
-          "name": "Name",
-          "field": "Name"
-        },
-        {
-          "headerText": "Description",
-          "headerStyle": "font-weight:bold;text-align:left;",
-          "style": "white-space:normal;padding:5px;",
-          "name": "Description",
-          "field": "Description",
-          "template": "domTemplate"
-          }
-        ]'
-        >
-          <template slot="domTemplate" data-oj-as="cell">
-            <oj-bind-dom config="[[cell.data]]" />
-          </template>
-        </oj-table>
-        <oj-bind-dom config="[[helpFooterDom]]" />
-      </oj-bind-if>
+    <oj-bind-if test="[[!showHelp()]]">
+      <oj-bind-dom label-edge="inside" config="[[ formDom ]]" />
+    </oj-bind-if>
+    <oj-bind-if test="[[showHelp()]]">
+      <oj-table
+              id='help-table'
+              data='[[helpDataProvider]]'
+              scroll-policy='loadMoreOnScroll'
+              scroll-policy-options='{"fetchSize": 10}'
+              columns-default='{"sortable": "disabled", "resizable":"disabled"}'
+              columns='[[tableHelpColumns]]'
+      >
+        <template slot="domTemplate" data-oj-as="cell">
+          <oj-bind-dom config="[[cell.data]]" />
+        </template>
+      </oj-table>
+      <oj-bind-dom config="[[helpFooterDom]]" />
+    </oj-bind-if>
+  </div>
+
+</div>
+
+<oj-dialog id="confirmDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide">
+  <div slot="body">
+    <div class="cfe-dialog-prompt">
+      <span id="confirmDialogPrompt" data-bind="html: [[i18n.dialog.prompt()]]"></span>
     </div>
   </div>
-</div>
+
+  <div slot="footer">
+    <oj-button id="dlgYesBtn">
+      <span class="button-label" data-bind="text: [[i18n.buttons.yes.label]]"></span>
+    </oj-button>
+    <oj-button id="dlgNoBtn">
+      <span class="button-label" data-bind="text: [[i18n.buttons.no.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog id="syncIntervalDialog" dialog-title="[[i18n.dialogSync.title]]" initial-visibility="hide" cancel-behavior="icon">
+  <div slot="body">
+    <div class="cfe-dialog-prompt">
+      <span data-bind="text: [[i18n.dialogSync.instructions]]"></span>
+    </div>
+
+    <oj-form-layout label-edge="start" label-width="72%">
+      <oj-label slot="label" for="interval-field"><span data-bind="text: [[i18n.dialogSync.fields.interval.label]]"></span>
+      </oj-label>
+      <oj-input-text id="interval-field" value='{{i18n.dialogSync.fields.interval.value}}'></oj-input-text>
+    </oj-form-layout>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgOkBtn1">
+      <span class="button-label" data-bind="text: [[i18n.buttons.ok.label]]"></span>
+    </oj-button>
+    <oj-button id="dlgCancelBtn1">
+      <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog id="wdtOptionsDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide">
+  <div slot="body">
+    <div class="cfe-dialog-prompt">
+      <oj-bind-dom config="[[wdtOptionsDialogHTML]]" />
+    </div>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgOkBtn22">
+      <span class="button-label" data-bind="text: [[i18n.buttons.ok.label]]"></span>
+    </oj-button>
+    <oj-button id="dlgCancelBtn22">
+      <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>

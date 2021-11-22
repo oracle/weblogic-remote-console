@@ -1,0 +1,26 @@
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+contents:
+- child: EJBRuntimes
+- child: JaxRsApplications
+- child: Servlets
+- child: WseeClientRuntimes
+- child: WseeV2Runtimes
+- child: WebsocketApplicationRuntimeMBean
+  label: WebSocket Application Runtimes
+- child: LibraryRuntimes
+- child: WorkManagerRuntimes
+- child: ManagedExecutorServiceRuntimes
+- child: ManagedScheduledExecutorServiceRuntimes
+- child: ManagedThreadFactoryRuntimes
+- label: Spring
+  type: group
+  contents:
+  - child: SpringRuntimeMBean.SpringBeanDefinitionRuntimeMBeans
+  - child: SpringRuntimeMBean.SpringApplicationContextRuntimeMBeans
+  - child: SpringRuntimeMBean.SpringTransactionManagerRuntimeMBeans
+  - child: SpringRuntimeMBean.SpringTransactionTemplateRuntimeMBeans
+  - child: SpringRuntimeMBean.SpringViewRuntimeMBeans
+  - child: SpringRuntimeMBean.SpringViewResolverRuntimeMBeans
+
+

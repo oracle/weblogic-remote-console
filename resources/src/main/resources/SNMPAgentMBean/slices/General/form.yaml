@@ -28,11 +28,6 @@ properties:
   # deprecated - name: DebugLevel
   # deprecated - name: TargetedTrapDestinations
   # excluded   - name: "UserDefinedMib"
-helpTasks:
-  - "snmp/ConfigureCounterMonitors"
-  - "snmp/DetermineMBeanInstanceNames"
-  - "snmp/TargetCounterMonitors"
-  - "snmp/VerifyTrapGeneration"
 helpTopics:
   - label: "Monitoring Oracle WebLogic Server with SNMP "
     href: "snmpa/index.html"

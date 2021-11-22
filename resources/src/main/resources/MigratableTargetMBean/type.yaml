@@ -22,11 +22,11 @@ properties:
   label: Service Migration Policy
 
 - name: UserPreferredServer
+  label: User-Preferred Server
   required: true
   label: User-Preferred Server
-  # optionsMethod: weblogic.console.backend.driver.plugins.MigratableTargetMBeanCustomizer.getServersOfSameCluster
   optionsSources:
-  - /Servers
+  - Domain/Servers
   helpHTML: >
     <p>The server member in the cluster that you prefer the migratable
     target to be active on. Only Configured servers may be specified as a
@@ -34,9 +34,8 @@ properties:
 
 - name: ConstrainedCandidateServers
   label: Constrained Candidate Servers
-  # optionsMethod: weblogic.console.backend.driver.plugins.MigratableTargetMBeanCustomizer.getServersOfSameCluster
   optionsSources:
-  - /Servers
+  - Domain/Servers
   helpSummaryHTML: >
     <p>Configured server members in the cluster to use as a backup for services on this migratable target.
     If no servers are selected,
@@ -45,5 +44,5 @@ properties:
 - name: Cluster
   required: true
   optionsSources:
-    - /Clusters
+    - Domain/Clusters
 

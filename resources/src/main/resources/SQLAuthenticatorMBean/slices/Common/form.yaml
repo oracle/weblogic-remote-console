@@ -12,11 +12,6 @@ properties:
 - name: Description
 - name: Version
 - name: ControlFlag
-helpTasks:
-- "security/ConfigureAuthenticationProviders"
-- "security/ConfigurePasswordValidationProviders"
-- "security/SetTheJAASControlFlag"
-- "security/ManageSecurityProviders"
 helpTopics:
 - label: "Configuring the SQL Authentication Provider"
   href: "secmg/rdbms_atn.html#SECMG195"

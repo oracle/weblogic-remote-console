@@ -2,31 +2,26 @@
  Copyright (c) 2020, 2021, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
  -->
-<div id="ancillary-content-area-icons-tabstrip" class="oj-flex-bar">
-  <!-- This is a horizontal toolbar of icons that we're calling a tabstrip -->
-  <div class="oj-flex-bar-end">
-    <oj-bind-for-each data="[[i18n.tabstrip.tabs]]" as="tab">
-      <template>
-        <oj-bind-if test="[[tab.data.visible()]]">
-          <a href="#" tabindex="-1"
-             on-click="[[iconsTabstripTabClickHandler]]"
-             data-state="closed"
-          >
-            <img class="tabstrip-tab-icon" data-bind="attr: {id: tab.data.id + '_tabstripTab', src: '../../images/' + tab.data.iconFile + '.png', title: tab.data.label}"/>
-          </a>
-        </oj-bind-if>
-      </template>
-    </oj-bind-for-each>
-  </div>
-</div>
+<oj-bind-for-each data="[[i18n.tabstrip.tabs]]" as="tab">
+  <template>
+    <oj-bind-if test="[[tab.data.visible()]]">
+      <a href="#" tabindex="-1"
+         on-click="[[iconsTabstripTabClickHandler]]"
+         :data-icon-id="[[tab.data.id]]"
+      >
+        <img class="tabstrip-tab-icon" data-bind="attr: {id: tab.data.id + '_tabstripTab', src: '../../images/' + tab.data.iconFile + '.png', title: tab.data.label}"/>
+      </a>
+    </oj-bind-if>
+  </template>
+</oj-bind-for-each>
 
 <oj-dialog
-  id="icons-tabstrip-tab-overlay-dialog"
-  position.at.horizontal="[[i18n.dialog1.position.at.horizontal()]]"
-  position.at.vertical="[[i18n.dialog1.position.at.vertical()]]"
-  position.offset.y="[[i18n.dialog1.position.offset.y()]]"
-  resize-behavior="resizable"
-  cancel-behavior="escape"
+        id="icons-tabstrip-tab-overlay-dialog"
+        position.at.horizontal="[[i18n.dialog1.position.at.horizontal()]]"
+        position.at.vertical="[[i18n.dialog1.position.at.vertical()]]"
+        position.offset.y="[[i18n.dialog1.position.offset.y()]]"
+        resize-behavior="resizable"
+        cancel-behavior="escape"
 >
   <div slot="body" class="oj-flex oj-sm-flex-items-initial">
     <!-- column 1, sideways (i.e. vertical) title for tab  -->

@@ -42,7 +42,7 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     //Test Case:
     // Create->modify(general tab)->delete testJMSServer-1
     //
-    it('1. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete a new testJMSServer-1 ', async function() {
+    it.skip('1. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete a new testJMSServer-1 ', async function() {
         file = "testJMSServer-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testJMSServer-1",2,"configuration","Services","JMS Servers");
@@ -50,7 +50,7 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             await services.modifyJMSServerGeneralTab(driver,"testJMSServer-1","General","","PagingFileLockingEnabled");
             await driver.sleep(1200);
             await admin.deleteMBeanObject(driver,"testJMSServer-1","JMSServers",2,"configuration",
-                "Services","JMS Servers");
+                "Services","JMS Servers","","","",4);
             await driver.sleep(1200);
             console.log("TEST PASS ");
         } catch (e) {
@@ -64,14 +64,14 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     //
     it('2. Test Category: GAT/Risk1\n \t Test Scenario: Create->assign(All Target) to testJMSSystemRes-1, ' +
         'validate the operation then delete testJMSSystemRes-1 ', async function() {
-        file = "testJMSServer-1.png";
+        file = "testJMSSystemRes-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testJMSSysRes-1",2,"configuration","Services","JMS System Resources");
             await driver.sleep(1200);
             await services.modifyJMSSysResTargetsTab(driver,"testJMSSysRes-1","Targets","All");
             await driver.sleep(1200);
             await admin.deleteMBeanObject(driver,"testJMSSysRes-1","JMSSystemResources",2,"configuration",
-                "Services","JMS System Resources");
+                "Services","JMS System Resources","","","",3);
             await driver.sleep(1200);
             console.log("TEST PASS ");
         } catch (e) {
@@ -86,7 +86,7 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     it('3. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete a new testFileStore-1 ', async function() {
         file = "testFileStore-1.png";
         try {
-            await admin.goToLandingPanelSubTreeCard(driver,"Configuration","ServicesChevron","Domain/FileStores");
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","File Stores");
             await admin.createNewMBeanFromLandingPage(driver,"testFileStore-1");
             await driver.sleep(2400);
             await admin.saveToShoppingCart(driver);
@@ -95,15 +95,19 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             await driver.findElement(By.id("Directory|input")).click();
             await driver.findElement(By.id("Directory|input")).sendKeys("temp");
             await admin.saveToShoppingCart(driver);
-            await admin.goToFirstCompTab(driver,"Configuration","ServicesChevron","Domain/FileStores",1,
+            await admin.goToFirstCompTab(driver,"Edit Tree","ServicesChevron","File Stores",1,
                 "testFileStore-1","Target");
-            await admin.selectDropDownValue(driver,"Target","AdminServer");
+            await admin.selectDropDownValue(driver,"Targets","AdminServer");
+
+            //await admin.selectTarget(driver,"AdminServer");
             console.log("Select Target for testFileStore-1 as AdminServer");
             await admin.saveToShoppingCart(driver);
             await admin.commitChanges(driver);
-            await admin.goToLandingPanelSubTreeCard(driver,"Configuration","ServicesChevron","Domain/FileStores");
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","File Stores");
             await driver.sleep(2400);
-            await admin.deleteMBeanFromLandingPage(driver,"FileStores","testFileStore-1");
+            //await admin.deleteMBeanFromLandingPage(driver,"File Stores","testFileStore-1");
+            await admin.deleteMBeanObject(driver,"testFileStore-1","File Stores",2,"configuration",
+                "Services","File Stores","","","",3);
             await driver.sleep(800);
             await admin.commitChanges(driver);
             console.log("TEST PASS ");
@@ -122,7 +126,7 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             await services.createJDBCSystemResource(driver,"testJDBCSysRes-1","testJdbcJNDIName-1","All","Generic Data Source",
                 "Oracle","GENERIC_Oracle_DatabaseDriver","orcl","provencelx.us.oracle.com","1521","system","oracle");
             await admin.saveToShoppingCart(driver,"finish");
-            await admin.goToLandingPanelSubTreeCard(driver,"Configuration","ServicesChevron","Domain/JDBCSystemResources");
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","JDBC System Resources");
             await driver.sleep(1200);
             await admin.discardChanges(driver);
             console.log("TEST PASS ");
@@ -147,16 +151,17 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             await admin.saveToShoppingCart(driver,"finish");
             console.log("Create a new JDBC Store");
             await admin.createNewMBeanObject(driver,"testJDBCStore-2",2,"configuration","Services",
-                "JDBC Stores","","","searchselect","oj-searchselect-filter-Target|input","Target","AdminServer");
+                "JDBC Stores","","","searchselect","oj-searchselect-filter-Targets|input","Targets","AdminServer");
 
             await services.modifyJDBCStoreGeneralTab(driver,"testJDBCStore-2","General","OFF","testJDBCSysRes-2");
-            await driver.sleep(2400);
+            await driver.sleep(4800);
             await admin.saveAndCommitChanges(driver);
 
-            await admin.deleteMBeanObject(driver,"testJDBCStore-2","JDBCStores",2,"configuration",
-                "Services","JDBC Stores");
-            await admin.deleteMBeanObject(driver,"testJDBCSysRes-2","JDBCSystemResources",2,"configuration",
-                "Services","JDBC System Resources");
+            await admin.deleteMBeanObject(driver,"testJDBCStore-2","JDBC Stores",2,"configuration",
+                "Services","JDBC Stores","","","",4);
+            await admin.deleteMBeanObject(driver,"testJDBCSysRes-2","JDBC System Resources",2,"configuration",
+                "Services","JDBC System Resources","","","",7);
+
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -171,8 +176,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         file = "testXMLRegistry-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testXMLRegistry-1",2,"configuration","Services","XML Registries");
-            await admin.deleteMBeanObject(driver,"testXMLRegistry-1","XMLRegistries",2,"configuration",
-                "Services","XML Registries");
+            //await admin.deleteMBeanObject(driver,"testXMLRegistry-1","XMLRegistries",2,"configuration",
+              //  "Services","XML Registries");
+            await admin.deleteMBeanObject(driver,"testXMLRegistry-1","XML Registries",2,"configuration",
+                "Services","XML Registries","","","",2);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -187,8 +194,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         file = "testXMLEntityCahe-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testEntityCache-1",2,"configuration","Services","XML Entity Caches");
-            await admin.deleteMBeanObject(driver,"testEntityCache-1","XMLEntityCaches",2,"configuration",
-                "Services","XML Entity Caches");
+            //await admin.deleteMBeanObject(driver,"testEntityCache-1","XMLEntityCaches",2,"configuration",
+              //  "Services","XML Entity Caches");
+            await admin.deleteMBeanObject(driver,"testEntityCache-1","XML Entity Caches",2,"configuration",
+                "Services","XML Entity Caches","","","",2);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -204,8 +213,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         try {
             await admin.createNewMBeanObject(driver,"testMailSession-1",2,"configuration","Services","Mail Sessions",
                     "","","input","JNDIName|input","testJNDIName");
-            await admin.deleteMBeanObject(driver,"testMailSession-1","MailSessions",2,"configuration",
-                "Services","Mail Sessions");
+            //await admin.deleteMBeanObject(driver,"testMailSession-1","MailSessions",2,"configuration",
+              //  "Services","Mail Sessions");
+            await admin.deleteMBeanObject(driver,"testMailSession-1","Mail Sessions",2,"configuration",
+                "Services","Mail Sessions","","","",3);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -220,8 +231,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         file = "testMessagingBridge-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testMessagingBridge-1",2,"configuration","Services","Messaging Bridges");
-            await admin.deleteMBeanObject(driver,"testMessagingBridge-1","MessagingBridges",2,"configuration",
-                "Services","Messaging Bridges");
+            //await admin.deleteMBeanObject(driver,"testMessagingBridge-1","MessagingBridges",2,"configuration",
+              //  "Services","Messaging Bridges");
+            await admin.deleteMBeanObject(driver,"testMessagingBridge-1","Messaging Bridges",2,"configuration",
+                "Services","Messaging Bridges","","","",2);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -239,8 +252,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         try {
             await admin.createNewMBeanObject(driver,"testForeignJNDIProviders-1",2,"configuration","Services",
                 "Foreign JNDI Providers");
-            await admin.deleteMBeanObject(driver,"testForeignJNDIProviders-1","ForeignJNDIProviders",2,"configuration",
-                "Services","Foreign JNDI Providers");
+            //await admin.deleteMBeanObject(driver,"testForeignJNDIProviders-1","ForeignJNDIProviders",2,"configuration",
+              //  "Services","Foreign JNDI Providers");
+            await admin.deleteMBeanObject(driver,"testForeignJNDIProviders-1","Foreign JNDI Providers",2,"configuration",
+                "Services","Foreign JNDI Providers","","","",2);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -257,8 +272,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             try {
                 await admin.createNewMBeanObject(driver,"testOsgiFrameworks-1",2,"configuration","Services",
                     "Osgi Frameworks");
-                await admin.deleteMBeanObject(driver,"testOsgiFrameworks-1","OsgiFrameworks",2,"configuration",
-                    "Services","Osgi Frameworks");
+                //await admin.deleteMBeanObject(driver,"testOsgiFrameworks-1","OsgiFrameworks",2,"configuration",
+                  //  "Services","Osgi Frameworks");
+                await admin.deleteMBeanObject(driver,"testOsgiFrameworks-1","Osgi Frameworks",2,"configuration",
+                    "Services","Osgi Frameworks","","","",1);
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
                 console.log(e.toString() + " TEST FAIL");
@@ -276,12 +293,58 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             try {
                 await admin.createNewMBeanObject(driver,"testJMSBridgeDestinations-1",2,"configuration","Services",
                     "JMS Bridge Destinations");
-                await admin.deleteMBeanObject(driver,"testJMSBridgeDestinations-1","JMSBridgeDestinations",2,
-                    "configuration","Services","JMS Bridge Destinations");
+                //await admin.deleteMBeanObject(driver,"testJMSBridgeDestinations-1","JMSBridgeDestinations",2,
+                  //  "configuration","Services","JMS Bridge Destinations");
+                await admin.deleteMBeanObject(driver,"testJMSBridgeDestinations-1","JMS Bridge Destinations",2,"configuration",
+                    "Services","JMS Bridge Destinations","","","",3);
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
                 console.log(e.toString() + " TEST FAIL");
             }
+    })
+
+    //Test Case:
+    // Create FileStore with Eclipse... menu from JMSServer
+    //
+    it.skip('14. Test Category: GAT/Risk1\n \t Test Scenario: create->fileStore->EclipseMenu from testJMSServer-2 ', async function() {
+        file = "testFileStoreFromJMSServer-2.png";
+        try {
+            await admin.createNewMBeanObject(driver,"testJMSServer-2",2,"configuration","Services","JMS Servers");
+            await driver.sleep(4800);
+            await services.createFileStoreFromJMSServerEclipseMenu(driver,"testJMSServer-2","testFileStore-2");
+            await admin.deleteMBeanObject(driver,"testJMSServer-2","JMSServers",2,"configuration",
+                "Services","JMS Servers");
+            await driver.sleep(4800);
+            await admin.deleteMBeanObject(driver,"testFileStore-2","FileStores",2,"configuration",
+                "Services","File Stores");
+            await driver.sleep(800);
+            console.log("TEST PASS ");
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+    //Test Case:
+    // Create JDBCStore with Eclipse... menu from JMSServer
+    //
+    it.skip('15. Test Category: GAT/Risk1\n \t Test Scenario: create->JDBCStore->EclipseMenu from testJMSServer-3 ', async function() {
+        file = "testJDBCStoreFromJMSServer-3.png";
+        try {
+            await admin.createNewMBeanObject(driver,"testJMSServer-3",2,"configuration","Services","JMS Servers");
+            await driver.sleep(4800);
+            await services.createJDBCStoreFromJMSServerEclipseMenu(driver,"testJMSServer-3","testJDBCStore-3");
+            await admin.deleteMBeanObject(driver,"testJMSServer-3","JMSServers",2,"configuration",
+                "Services","JMS Servers");
+            await driver.sleep(4800);
+            await admin.deleteMBeanObject(driver,"testJDBCStore-3","JDBCStores",2,"configuration",
+                "Services","JDBC Stores");
+            await driver.sleep(800);
+            console.log("TEST PASS ");
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
     })
 
 })

@@ -24,6 +24,9 @@ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
     </div>
 
     <div id="header-title" class="oj-sm-align-self-flex-start">
+      <a on-click="[[wrcAppIconClick]]" data-bind="attr: {href: '#', tabindex: '-1'}">
+        <img id="wrc-app-icon" data-bind="attr: {src: '../../images/' + i18n.header.icons.wrcApp.iconFile + '.png'}"/>
+      </a>
       <a href="/">
         <span id="app-name" :class="[[appInfoTitleClass]]">
           <oj-bind-text value="[[appName]]"></oj-bind-text>
@@ -35,71 +38,7 @@ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
     </div>
 
     <div id="domain-connect-info" class="oj-flex-bar-end">
-
-      <oj-bind-if test="[[i18n.header.keyPairs.welcome.value() !== '']]">
-        <span id="welcome-label" data-bind="text: i18n.header.keyPairs.welcome.label"></span>
-        <span id="welcome-variable" data-bind="text: i18n.header.keyPairs.welcome.value()"></span>
-
-        <img data-bind="attr: {src: '../../images/' + i18n.header.icons.separator.iconFile + '.png'}"/>
-
-        <img id="connection-type-image" data-bind="attr: {src: '../../images/' + i18n.header.keyPairs.connectionType.iconFile() + '.png', 'title': i18n.header.keyPairs.connectionType.tooltip()}"/>
-        <span id="connected-to-label" data-bind="text: i18n.header.keyPairs.connectedTo.label"></span>
-
-        <div id="domain-menu-dropdown" style="margin-top: 8px;">
-          <a id="domainMenuLauncher" href="#" tabindex="-1"
-             on-click="[[launchDomainMenu]]"
-          >
-            <span id="connected-to-variable" data-bind="text: i18n.header.keyPairs.connectedTo.value()"></span>
-          </a>
-        </div>
-
-        <oj-menu
-          id="domainMenu"
-          aria-labelledby="domainMenuLauncher"
-          open-options.launcher="domainMenuLauncher"
-        >
-          <oj-option :id="[[i18n.header.menus.domain.version.id]]" value="[[i18n.header.menus.domain.url.id]]">
-            <span><b><oj-bind-text value="[[i18n.header.menus.domain.url.label]]"></oj-bind-text></b>
-              <span><oj-bind-text value="[[i18n.header.menus.domain.url.value()]]"></oj-bind-text></span>
-            </span>
-          </oj-option>
-          <oj-option :id="[[i18n.header.menus.domain.version.id]]" value="[[i18n.header.menus.domain.version.id]]">
-            <span><b><oj-bind-text value="[[i18n.header.menus.domain.version.label]]"></oj-bind-text></b>
-              <span><oj-bind-text value="[[i18n.header.menus.domain.version.value()]]"></oj-bind-text></span>
-            </span>
-          </oj-option>
-        </oj-menu>
-
-        <img data-bind="attr: {src: '../../images/' + i18n.header.icons.separator.iconFile + '.png'}"/>
-
-        <oj-button
-          id="disconnect"
-          on-oj-action="[[domainConnectButtonClickHandler]]"
-          chroming="borderless"
-          disabled="[[i18n.header.buttons.disconnect.disabled]]"
-        >
-          <img id="connect-disconnect-image" slot="startIcon" data-bind="attr: {src: '../../images/' + i18n.header.buttons.disconnect.image + '.png', 'title': i18n.header.buttons.disconnect.label}"/>
-        </oj-button>
-
-        <canvas id="console-state-bar" width="12" height="24" data-bind="attr: {title: i18n.header.icons.connectivity.online.tooltip}"></canvas>
-      </oj-bind-if>
-
-      <oj-bind-if test="[[i18n.header.keyPairs.welcome.value() === '']]">
-        <span id="not-connected-label" data-bind="text: i18n.header.keyPairs.notConnected.label"></span>
-
-        <img data-bind="attr: {src: '../../images/' + i18n.header.icons.separator.iconFile + '.png'}"/>
-
-        <oj-button
-          id="connect"
-          on-oj-action="[[domainConnectButtonClickHandler]]"
-          chroming="borderless"
-          disabled="[[i18n.header.buttons.connect.disabled]]"
-        >
-          <img id="connect-disconnect-image" slot="startIcon" data-bind="attr: {src: '../../images/' + i18n.header.buttons.connect.image + '.png', 'title': i18n.header.buttons.connect.label}"/>
-        </oj-button>
-
-        <canvas id="console-state-bar" width="12" height="24" title=""></canvas>
-      </oj-bind-if>
+      <canvas id="console-state-bar" width="12" height="24" data-bind="attr: {title: i18n.header.icons.connectivity.online.tooltip}"></canvas>
 
       <oj-module config="[[domainConnectionModuleConfig]]"></oj-module>
     </div>

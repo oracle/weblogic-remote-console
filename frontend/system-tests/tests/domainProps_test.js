@@ -148,7 +148,9 @@ describe.only('Test Suite: domainProps_test for Domain Configuration properties'
     it('8. Test Category: GAT/Risk1\n \t Test Scenario: Modify Environment->Domain->Security->SSL->OCSP Properties Pages', async function () {
         file = "modifyDomainSSLOCSPProp.png";
         try {
-            await domain.modifyDomainSecuritySSLOCSPTab(driver,'OcspNonceEnabled','OcspResponseCacheEnabled');
+            //*[@id="SecurityConfiguration_CertRevoc_OcspNonceEnabled"]/div[1]/div/div
+            await domain.modifyDomainSecuritySSLOCSPTab(driver,'SecurityConfiguration_CertRevoc_OcspNonceEnabled',
+                'SecurityConfiguration_CertRevoc_OcspResponseCacheEnabled');
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -162,7 +164,8 @@ describe.only('Test Suite: domainProps_test for Domain Configuration properties'
     it('9. Test Category: GAT/Risk1\n \t Test Scenario: Modify Environment->Domain->Security->SSL->CRL Page Properties', async function () {
         file = "modifyDomainSecuritySSLCRProp.png";
         try {
-            await domain.modifyDomainSecuritySSLCRLTab(driver,'CrlDpEnabled','25','111');
+            await domain.modifyDomainSecuritySSLCRLTab(driver,'SecurityConfiguration_CertRevoc_CrlDpEnabled',
+                '25','111');
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -190,12 +193,19 @@ describe.only('Test Suite: domainProps_test for Domain Configuration properties'
     it('11. Test Category: GAT/Risk1\n \t Test Scenario: Modify Environment->Domain->Web Application Properties Pages', async function () {
         file = "modifyDomainWebAppProp.png";
         try {
-            await domain.modifyDomainWebApplicationTab(driver,'ReloginEnabled','AllowAllRoles','FilterDispatchedRequestsEnabled',
-                'OverloadProtectionEnabled','FULL','./config/mimemapping-2.properties','OptimisticSerialization',
-                'RtexprvalueJspParamName','ClientCertProxyEnabled','HttpTraceSupportEnabled','WeblogicPluginEnabled',
-                'AuthCookieEnabled','ChangeSessionIDOnAuthentication','WAPEnabled','11','5','555','WorkContextPropagationEnabled',
-                'None','JSPCompilerBackwardsCompatible','ShowArchivedRealPathEnabled','GzipCompressionEnabled','4444',
+            await domain.modifyDomainWebApplicationTab(driver,'WebAppContainer_ReloginEnabled','WebAppContainer_AllowAllRoles',
+                'WebAppContainer_FilterDispatchedRequestsEnabled', 'WebAppContainer_OverloadProtectionEnabled',
+                'Full','./config/mimemapping-2.properties',
+                'WebAppContainer_OptimisticSerialization', 'WebAppContainer_RtexprvalueJspParamName',
+                'WebAppContainer_ClientCertProxyEnabled', 'WebAppContainer_HttpTraceSupportEnabled',
+                'WebAppContainer_WeblogicPluginEnabled', 'WebAppContainer_AuthCookieEnabled',
+                'WebAppContainer_ChangeSessionIDOnAuthentication','WebAppContainer_WAPEnabled','11','5','555',
+                'WebAppContainer_WorkContextPropagationEnabled', 'None','WebAppContainer_JSPCompilerBackwardsCompatible',
+                'WebAppContainer_ShowArchivedRealPathEnabled','WebAppContainer_GzipCompression_GzipCompressionEnabled','4444',
                 'text/html,text/xml,text/plain,jsp/json,text/yaml','6666','999','75537','26384','147483647');
+
+            //*[@id="WebAppContainer_GzipCompression_GzipCompressionEnabled"]/div[1]/div/div
+
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -209,9 +219,11 @@ describe.only('Test Suite: domainProps_test for Domain Configuration properties'
     it('12. Test Category: GAT/Risk1\n \t Test Scenario: Modify Environment->Domain->Logging Properties Pages', async function () {
         file = "modifyDomainLoggingProp.png";
         try {
-            await domain.modifyDomainLoggingTab(driver,'logs/domain1-1.log','By Time','555','01:05',
-                '35','NumberOfFilesLimited','9999','./tmp','RotateLogOnStartup','MMM d, y, h:mm:ss,SSS a zzzz',
+            await domain.modifyDomainLoggingTab(driver,'logs/domain1-1.log','byTime','555','01:05',
+                '35','Log_NumberOfFilesLimited','999','./tmp',
+                'Log_RotateLogOnStartup','MMM d, y, h:mm:ss,SSS a zzzz',
                 '444');
+            //*[@id="Log_RotateLogOnStartup"]/div[1]/div/div
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

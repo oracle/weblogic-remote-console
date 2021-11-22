@@ -21,60 +21,46 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
       // Create instance-scope variable for PDJ data from
       // data assigned to viewParams.parentRouter.
       this.pdjData = viewParams.parentRouter.data.pdjData();
-      // Get raw path from viewParams.parentRouter.data
-      let path = viewParams.parentRouter.data.rawPath();
-      if (CoreUtils.isNotUndefinedNorNull(path)) {
-        getPathModelKind(PageDefinitionUtils.removeTrailingSlashes(decodeURIComponent(path)), viewParams.perspective)
-          .then((pathModel) => {
-            if (typeof this.pdjData.createForm === "undefined") {
-              // Not working with a create form, which is okay as
-              // long as kind === "creatableOptionalSingleton"
-              if (pathModel.kind !== "creatableOptionalSingleton") throw new Error("pdjData argument must be a Javascript object with a createForm property, or a creatableOptionalSingleton.");
-            }
-          });
+      this.rdjData = viewParams.parentRouter.data.rdjData();
 
-        // No error was raised, so use viewParams to create the
-        // remaining instance-scope variables.
-        this.viewParams = viewParams;
-        this.viewParams.onRerender = rerenderCallback;
-        this.rdjData = viewParams.parentRouter.data.rdjData();
-        this.perspective = viewParams.perspective;
-        this.pageDefinitionPages = undefined;
-        // Initialize instance-scope variable used as the
-        // backing data for a wizard.
-        this.backingData = {
-          mode: (typeof mode === "undefined" ? this.Mode.SCROLLING : mode),
-          attributes: {},
-          fileUploads: {}
-        };
-        // this.pdjData.createForm will be "undefined" if
-        // kind === "creatableOptionalSingleton", so make
-        // sure this.pdjData.createForm and
-        // this.pdjData.createForm.sections aren't "undefined"
-        // before calling PageDefinitionUsedIfs.getSections().
-        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm) && CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm.sections)) {
-          // This is a new create form instance for a wizard, so
-          // go ahead and populate this.backingData using values
-          // from this.pdjData
-          const sections = PageDefinitionUsedIfs.getSections(this.pdjData.createForm);
-          if (sections.length === 1) {
-            this.backingData.title = this.pdjData.helpPageTitle;
-            this.backingData.introductionHTML = this.pdjData.introductionHTML;
-            this.pageDefinitionPages = new PageDefinitionPages(sections[0].properties, this.backingData.mode);
-          }
+      if (CoreUtils.isUndefinedOrNull(this.pdjData.createForm)) {
+        // Not working with a create form, which is okay as
+        // long as kind === "creatableOptionalSingleton".
+        const kind = (CoreUtils.isNotUndefinedNorNull(this.rdjData) && CoreUtils.isNotUndefinedNorNull(this.rdjData.self) && CoreUtils.isNotUndefinedNorNull(this.rdjData.self.kind) ? this.rdjData.self.kind : undefined);
+        if (CoreUtils.isNotUndefinedNorNull(kind)) {
+          if (kind !== "creatableOptionalSingleton") throw new Error("pdjData argument must be a Javascript object with a createForm property, or a creatableOptionalSingleton.");
         }
       }
-    }
 
-    async function getPathModelKind(path, perspective) {
-      const navtreeManager = new NavtreeManager(perspective);
-      // Use getPathModel(path) of NavtreeManager to get
-      // kind of PDJ object we're working with. We need
-      // to do this because the pdjData for
-      // "creatableOptionalSingleton" kind doesn't have
-      // a createForm, but we need to allow creation of
-      // CreateForm instances for it.
-      return await navtreeManager.getPathModel(path);
+      // No error was raised, so use viewParams to create the
+      // remaining instance-scope variables.
+      this.viewParams = viewParams;
+      this.viewParams.onRerender = rerenderCallback;
+      this.beanTree = viewParams.beanTree;
+      this.pageDefinitionPages = undefined;
+      // Initialize instance-scope variable used as the
+      // backing data for a wizard.
+      this.backingData = {
+        mode: (CoreUtils.isUndefinedOrNull(mode) ? this.Mode.SCROLLING : mode),
+        attributes: {},
+        fileUploads: {}
+      };
+      // this.pdjData.createForm will be "undefined" if
+      // kind === "creatableOptionalSingleton", so make
+      // sure this.pdjData.createForm and
+      // this.pdjData.createForm.sections aren't "undefined"
+      // before calling PageDefinitionUsedIfs.getSections().
+      if (CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm) && CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm.sections)) {
+        // This is a new create form instance for a wizard, so
+        // go ahead and populate this.backingData using values
+        // from this.pdjData
+        const sections = PageDefinitionUsedIfs.getSections(this.pdjData.createForm);
+        if (sections.length === 1) {
+          this.backingData.title = this.pdjData.helpPageTitle;
+          this.backingData.introductionHTML = this.pdjData.introductionHTML;
+          this.pageDefinitionPages = new PageDefinitionPages(sections[0].properties, this.backingData.mode);
+        }
+      }
     }
 
     function getBackingDataProperty(fieldName) {
@@ -379,7 +365,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
       else
         properties = this.pageDefinitionPages.getBackingDataProperties();
 
-      const pdjTypes = new PageDataTypes(properties, this.perspective.id);
+      const pdjTypes = new PageDataTypes(properties, this.beanTree.type);
       for (const [key, tdvrdu] of Object.entries(this.backingData.attributes)) {
         const filtered = properties.filter(property => property.name === key);
         if (tdvrdu.required && filtered.length > 0) {
@@ -401,21 +387,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
         pageState.summary = oj.Translations.getTranslatedString("wrc-create-form.pageState.error.summary");
       }
       return pageState;
-    }
-
-    function scrubDataPayload(results) {
-      // CBE example from TM in test.sh has no "UploadFiles"
-      // field in the dataPayload, so we need to remove it
-      // before we create the multipart section for it.
-      delete results.data["UploadFiles"];
-      // Remove "wizard":true field from dataPayload
-      delete results.data["wizard"];
-      // Remove "PlanPath" field, if the value is empty
-      if (typeof results.data["PlanPath"] !== "undefined" && results.data["PlanPath"].value === "") {
-        delete results.data["PlanPath"];
-      }
-      // Return scrubbed results.data
-      return results;
     }
 
     //public:
@@ -511,7 +482,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
       getBackingDataAttributeDefault: function(fieldName) {
         let rtnval;
         const attrValues = getBackingDataAttributeValues.call(this, fieldName);
-        if (typeof attrValues !== "undefined") rtnval = attrValues.default;
+        if (typeof attrValues !== "undefined") {
+          rtnval = attrValues.default;
+        } else {
+          if (fieldName === "Upload") {
+            rtnval = this.rdjData.data[fieldName].value;
+          }
+        }
         return rtnval;
       },
 
@@ -548,12 +525,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
       },
 
       getBackingDataAttributeReplacer: function(fieldName) {
-        let replacer, delimPos = fieldName.indexOf(" ");
+        let replacer, delimPos = fieldName.indexOf("_COLON_");
         if (delimPos !== -1) {
-          // We can't use a fieldName with space (" ") characters
-          // in it, when creating ko.observable objects. The name for
-          // every database driver has space characters, so we need
-          // to create a replacer for fieldName.
           delimPos = fieldName.lastIndexOf("_");
           replacer = fieldName.substring(delimPos + 1);
         }
@@ -575,8 +548,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
        * Returns object used to create payload for HTTP POST to CBE
        * @param {[object]} properties Array of property objects for the create form.
        * @param {object} fieldValues An object containing knockout observables, for each property in  properties
+       * @param {object} fieldValuesFrom An object containing knockout observables, for where each property in properties is from.
+       * This will be null if not WDT.
        */
-      getDataPayload: function (properties, fieldValues){
+      getDataPayload: function (properties, fieldValues, fieldValuesFrom){
         if (this.isWizard()) {
           this.backingData.hasMultiFormData = false;
 
@@ -600,17 +575,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
         // composed for an HTTP POST.
         let dataPayload = {};
 
-        const pdjTypes = new PageDataTypes(properties, this.perspective.id);
+        const pdjTypes = new PageDataTypes(properties, this.beanTree.type);
 
         // Fill in the payload from each property that
-        // appears in the list of create form properties...
+        // appears in the list of create form properties.
         properties.forEach((property, index) => {
           let value = null;
           const name = property.name;
 
           if (this.isWizard()) {
             if (!this.backingData.hasMultiFormData) {
-              this.backingData.hasMultiFormData = (property.type === "uploadedFile");
+              this.backingData.hasMultiFormData = (property.type === "fileContents");
             }
 
             if (typeof this.backingData.removed !== "undefined") {
@@ -623,14 +598,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
                 }
               }
             }
-            else {
-              // Get the value from this.backingData.attributes
-              value = this.getBackingDataAttributeDefault(name);
-            }
 
             if (typeof this.backingData.attributes[name] !== "undefined") {
               if (typeof this.backingData.attributes[name].value !== "undefined") {
-                value = pdjTypes.getConvertedObservableValue(name, this.backingData.attributes[name].value);
+                if (CoreUtils.isUndefinedOrNull(fieldValuesFrom)) {
+                  value = pdjTypes.getConvertedObservableValue(name, this.backingData.attributes[name].value);
+                }
+                else {
+                  let from = "fromRegValue";
+                  if (CoreUtils.isNotUndefinedNorNull(fieldValuesFrom[name])){
+                    from = fieldValuesFrom[name]();
+                  }
+                  value = pdjTypes.getConvertedObservableValue_WDT(name, this.backingData.attributes[name].value, from);
+                }
               }
             }
           }
@@ -639,7 +619,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
             // in fieldValues parameter.
             const fieldObv = fieldValues[name];
             if (typeof fieldObv !== "undefined") {
-              value = pdjTypes.getConvertedObservableValue(name, fieldObv());
+              if (CoreUtils.isUndefinedOrNull(fieldValuesFrom))
+                value = pdjTypes.getConvertedObservableValue(name, fieldObv());
+              else
+                value = pdjTypes.getConvertedObservableValue_WDT(name, fieldObv(), fieldValuesFrom[name]());
             }
           }
 
@@ -653,12 +636,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
               value = "";
             }
           }
-
-          dataPayload[name] = { value: value };
+          if (CoreUtils.isUndefinedOrNull(fieldValuesFrom))
+            dataPayload[name] = { value: value };
+          else {
+            if (CoreUtils.isNotUndefinedNorNull(fieldValuesFrom[name])  && fieldValuesFrom[name]() === "fromModelToken"){
+              dataPayload[name] = value;
+            } else
+              dataPayload[name] = { value: value };
+          }
         });
 
         if (this.isWizard()) {
-          if (Object.keys(dataPayload).length > 0) dataPayload["wizard"] = true;
           if (typeof this.backingData.removed !== "undefined") delete this.backingData.removed;
           this.pageDefinitionPages.addBackingDataPagingPageProperties([...properties]);
           if (!this.pageDefinitionPages.getCanFinish()) properties = this.pageDefinitionPages.getBackingDataPagingProperties();
@@ -668,14 +656,59 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
       },
 
       hasDeploymentPathData: function () {
-        return (typeof this.backingData.attributes["SourcePath"] !== "undefined");
+        let rtnval = (typeof this.backingData.attributes["SourcePath"] !== "undefined");
+        if (!rtnval && CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm) &&  CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm.properties)) {
+          const index = this.pdjData.createForm.properties.map(property => property.name).indexOf("SourcePath");
+          rtnval = (index !== -1);
+        }
+        return rtnval;
+      },
+
+      scrubDataPayload: function(dataPayload) {
+        let dataPayload1;
+        if (CoreUtils.isNotUndefinedNorNull(dataPayload)) {
+          dataPayload1 = JSON.parse(JSON.stringify(dataPayload));
+          // Remove any field that has '' as a value.
+          const arr = Object.entries(dataPayload1);
+          const filtered = arr.filter(([key, value]) => value !== null && value.value !== '');
+          dataPayload1 = Object.fromEntries(filtered);
+          // CBE everypage examples have no "Upload" field in
+          // the dataPayload, so we need to remove it before
+          // we create the multipart section for it.
+          delete dataPayload1["Upload"];
+          // Remove "label" field from "Targets"
+          if (CoreUtils.isNotUndefinedNorNull(dataPayload1["Targets"])) {
+            if (CoreUtils.isUndefinedOrNull(dataPayload1["Targets"].value)) {
+              // Remove "Targets" field itself
+              delete dataPayload1["Targets"];
+            }
+            else {
+              // Remove "label" field from "Targets" field
+              for (let i = 0; i < dataPayload1["Targets"].value.length; i++) {
+                delete dataPayload1["Targets"].value[i].label;
+                //if this is in WDT, it maybe using model token, and value will not exist.
+                if (CoreUtils.isNotUndefinedNorNull(dataPayload1["Targets"].value[i].value)){
+                  delete dataPayload1["Targets"].value[i].value.label;
+                }
+              }
+            }
+          }
+          // Remove "PlanPath" field, if the value is empty
+          if (CoreUtils.isNotUndefinedNorNull(dataPayload1["PlanPath"]) && dataPayload1["PlanPath"].value === "") {
+            delete dataPayload1["PlanPath"];
+          }
+
+        }
+        // Return scrubbed dataPayload
+        return dataPayload1;
       },
 
       getDeploymentDataPayload: function (properties, fieldValues) {
         // Get the dataPayload
         const results = this.getDataPayload(properties, fieldValues);
         // Remove extraneous fields from results.data and return it
-        return scrubDataPayload.call(this, results);
+        results.data = this.scrubDataPayload(results.data);
+        return results;
       },
 
       hasMultiFormData: function () {
@@ -688,12 +721,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
           // Get the dataPayload
           let results = self.getDataPayload(properties, fieldValues);
           // Remove extraneous fields from results.data
-          results = scrubDataPayload.call(this, results);
+          results.data = self.scrubDataPayload(results.data);
           // Create FormData object that we'll be populating
-          // from scratch
+          // from scratch.
           const formData = new FormData();
-          // Find properties with "type": "uploadedFile" field
-          const fields = properties.filter(property => property.type === "uploadedFile");
+          // Find properties with "type": "fileContents" field
+          const fields = properties.filter(property => property.type === "fileContents");
           // Use property.name to get File onject that was saved
           // in this.backingData.fileUploads map.
           fields.forEach((field) => {
@@ -704,6 +737,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
                 self.backingData.fileUploads[field.name],
                 results.data[field.name].value
               );
+              delete results.data[field.name];
             }
             else {
               // Remove field.name from results.data, if there
@@ -713,15 +747,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
               delete results.data[field.name];
             }
           });
-          // Add multipart section using the current state of
-          // the results.data object.
-          formData.append('data', JSON.stringify(results.data));
 
-          Logger.info(`[CREATEFORM] formData.data=${formData.get("data")}`);
+          // Add multipart section for 'requestBody' part, using
+          // the current state of the results.data object.
+
+          formData.append(
+            'requestBody',
+            new Blob([JSON.stringify({
+              data: results.data
+            })], {type: "application/json"})
+          );
+
+          Logger.info(`[CREATEFORM] formData.requestBody=${formData.get("requestBody")}`);
           Logger.info(`[CREATEFORM] formData.Source=${formData.get("Source")}`);
           Logger.info(`[CREATEFORM] formData.Plan=${formData.get("Plan")}`);
 
-          // Create the multipart request and POST it
+          // Create the multipart request and POST it.
           DataOperations.mbean.upload(self.viewParams.parentRouter.data.rdjUrl(), formData)
             .then(reply => {
               resolve(reply);
@@ -735,32 +776,50 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../microservices/pre
       newBean: function() {
         const self = this;
         return new Promise(function (resolve) {
-          const uri = CbeUtils.extractBeanPath(self.viewParams.parentRouter.data.rdjUrl());
-          DataOperations.mbean.new(CbeTypes.ServiceType.CONFIGURATION, uri + "?dataAction=new")
+          const newUri = `${self.rdjData.self.resourceData}?view=createForm`;
+          return DataOperations.mbean.new(newUri)
             .then(reply => {
-              reply["properties"] = reply.body.data.get("pdjData").createForm.properties;
-              resolve(reply);
+              const rdjData = reply.body.data.get("rdjData");
+              const kind = (CoreUtils.isNotUndefinedNorNull(rdjData) && CoreUtils.isNotUndefinedNorNull(rdjData.self) && CoreUtils.isNotUndefinedNorNull(rdjData.self.kind) ? rdjData.self.kind : undefined);
+              const isRdjData = (CoreUtils.isNotUndefinedNorNull(rdjData) && CoreUtils.isNotUndefinedNorNull(rdjData.data) && (Object.keys(rdjData.data).length !== 0) ? true : false);
+              if (!isRdjData && CoreUtils.isNotUndefinedNorNull(kind) && kind === "creatableOptionalSingleton") {
+                const createUrl = `${Runtime.getBackendUrl()}${rdjData.self.resourceData}?action=create`;
+                return DataOperations.mbean.save(createUrl, rdjData.data);
+              }
+              else {
+                return Promise.resolve(reply);
+              }
+            })
+            .then(reply => {
+              // Look for the uri of the created singleton which had no create form
+              // Otherwise fallback to the uri that is found in the create form
+              let getUri = reply.body.data.resourceData?.resourceData;
+              if (CoreUtils.isUndefinedOrNull(getUri)) {
+                getUri = reply.body.data.get("rdjData").createForm.resourceData;
+              }
+              DataOperations.mbean.get(getUri)
+                .then(reply => {
+                  resolve(reply);
+                });
             });
         });
       },
 
-      deleteBean: function(deleteUrl) {
+      deleteBean: function(resourceData) {
         const self = this;
         return new Promise(function (resolve) {
-          DataOperations.mbean.delete(deleteUrl)
+          DataOperations.mbean.delete(resourceData)
             .then(reply => {
               // The "Delete" button can appear on a form when the identity
               // kind is "creatableOptionalSingleton". If that's the case,
               // we need to use the CbeUtils.extractBeanPath() function, so
               // we have what we need when signaling that the shopping cart
               // was modified.
-              const uri = CbeUtils.extractBeanPath(deleteUrl);
-
               self.viewParams.signaling.shoppingCartModified.dispatch("form", "delete", {
                 isLockOwner: true,
                 hasChanges: true,
                 supportsChanges: true
-              }, uri);
+              }, resourceData);
 
               resolve(reply);
             });

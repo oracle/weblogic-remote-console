@@ -11,9 +11,7 @@ displayedColumns:
 - name: "Name"
 - name: "PrefixName"
 - name: "DataSource"
-- name: "Target"
-helpTasks:
-- "stores/CreateJDBCStores"
+- name: "Targets"
 helpTopics:
 - label: "Administering the WebLogic Persistent Store"
   href: "store/overview.html"

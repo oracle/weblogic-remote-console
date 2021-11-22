@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,14 +6,10 @@ introductionHTML: >
   List) SSL certificate revocation checking properties for this domain.</p>
 
 properties:
-- name: "CrlDpEnabled"
+- name: "SecurityConfiguration.CertRevoc.CrlDpEnabled"
 advancedProperties:
-- name: "CrlCacheRefreshPeriodPercent"
-- name: "CrlDpDownloadTimeout"
-helpTasks:
-- "security/CustomizeDomainWideCRLSettings"
-- "security/ConfigureX509CertificateRevocationChecking"
-- "security/ConfigureIdentityAndTrust"
+- name: "SecurityConfiguration.CertRevoc.CrlCacheRefreshPeriodPercent"
+- name: "SecurityConfiguration.CertRevoc.CrlDpDownloadTimeout"
 helpTopics:
 - label: "X.509 Certificate Revocation Checking"
   href: "secmg/ssl_cert_revoc_check.html"

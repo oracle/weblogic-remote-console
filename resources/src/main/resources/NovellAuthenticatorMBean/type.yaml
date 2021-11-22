@@ -59,13 +59,6 @@ properties:
     a negative performance impact on the LDAP server, so Oracle recommends
     that you limit their use.</p>
 
-- name: UserSearchScope
-  helpSummaryHTML: >
-    <p>Specifies how deep in the LDAP directory tree the LDAP Authentication
-    provider should search for users.</p>
-  helpDetailsHTML: >
-    <p>Valid values are <code>subtree</code> and <code>onelevel</code>.</p>
-
 - name: AllGroupsFilter
   helpSummaryHTML: >
     <p>An LDAP search filter for finding all groups beneath the base group
@@ -181,3 +174,6 @@ properties:
 - name: IdentityDomain
   helpHTML: >
     <p>The name of the identity domain.</p>
+
+- name: StaticGroupDNsfromMemberDNFilter
+  label: Static Group DNs From Member DN Filter

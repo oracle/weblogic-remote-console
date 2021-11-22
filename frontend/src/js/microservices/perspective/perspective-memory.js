@@ -38,6 +38,13 @@ define(['./perspective-manager'],
       this.navtree = {
         keySet: null
       };
+      this.tabstrip = {
+        tab: {
+          "shoppingcart": {cachedState: {}},
+          "dataproviders": {cachedState: {}},
+          "ataglance": {cachedState: {}}
+        }
+      };
     }
 
     function getNthChildrenIndex(name) {
@@ -174,6 +181,12 @@ define(['./perspective-manager'],
       setNthChildMinHeight: function (name, minHeight) {
         const index = getNthChildrenIndex.call(this, name);
         if (index !== -1) this.contentPage.nthChildren[index].minHeight = minHeight;
+      },
+      getTabstripTabCachedState: function (tabId) {
+        return this.tabstrip.tab[tabId].cachedState;
+      },
+      setTabstripTabCachedState: function (tabId, value) {
+        this.tabstrip.tab[tabId] = {cachedState: value};
       }
     };
 

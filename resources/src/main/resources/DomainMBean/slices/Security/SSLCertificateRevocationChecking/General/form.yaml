@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,13 +6,10 @@ introductionHTML: >
   checking properties for this domain.</p>
 
 properties:
-- name: "CheckingEnabled"
-- name: "MethodOrder"
-- name: "FailOnUnknownRevocStatus"
+- name: "SecurityConfiguration.CertRevoc.CheckingEnabled"
+- name: "SecurityConfiguration.CertRevoc.MethodOrder"
+- name: "SecurityConfiguration.CertRevoc.FailOnUnknownRevocStatus"
 
-helpTasks:
-- "security/ConfigureX509CertificateRevocationChecking"
-- "security/ConfigureIdentityAndTrust"
 helpTopics:
 - label: "X.509 Certificate Revocation Checking"
   href: "secmg/ssl_cert_revoc_check.html"

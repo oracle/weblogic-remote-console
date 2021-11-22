@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -8,25 +8,20 @@ introductionHTML: >
   determine the number and characteristics for these dynamic servers.</p>
 
 properties:
-- name: "ServerTemplate"
-- name: "ServerNamePrefix"
-- name: "DynamicClusterSize"
-- name: "MaxDynamicClusterSize"
-- name: "MinDynamicClusterSize"
-- name: "DynamicClusterCooloffPeriodSeconds"
-- name: "DynamicClusterShutdownTimeoutSeconds"
-- name: "IgnoreSessionsDuringShutdown"
-- name: "WaitForAllSessionsDuringShutdown"
-- name: "CalculatedListenPorts"
-- name: "CalculatedMachineNames"
-- name: "MachineNameMatchExpression"
-- name: "MachineMatchType"
-- name: "MachineMatchExpression"
-helpTasks:
-- "clusters/ConfigureClusters"
-- "clusters/AssignServersToClusters"
-- "clusters/StartOrStopAServer"
-- "clusters/ConfigureElasticityForDynamicClusters"
+- name: "DynamicServers.ServerTemplate"
+- name: "DynamicServers.ServerNamePrefix"
+- name: "DynamicServers.DynamicClusterSize"
+- name: "DynamicServers.MaxDynamicClusterSize"
+- name: "DynamicServers.MinDynamicClusterSize"
+- name: "DynamicServers.DynamicClusterCooloffPeriodSeconds"
+- name: "DynamicServers.DynamicClusterShutdownTimeoutSeconds"
+- name: "DynamicServers.IgnoreSessionsDuringShutdown"
+- name: "DynamicServers.WaitForAllSessionsDuringShutdown"
+- name: "DynamicServers.CalculatedListenPorts"
+- name: "DynamicServers.CalculatedMachineNames"
+- name: "DynamicServers.MachineNameMatchExpression"
+- name: "DynamicServers.MachineMatchType"
+- name: "DynamicServers.MachineMatchExpression"
 helpTopics:
 - label: "Configuration Requirements for Cross Cluster Replication "
   href: "clust/failover.html#CLUST231"

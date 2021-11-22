@@ -6,32 +6,62 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', '../../core/runtime', "ojs/ojcontext", '../../microservices/perspective/perspective-manager', '../../microservices/perspective/perspective', '../../microservices/preferences/preferences', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
-  function(oj, ko, Router, ArrayDataProvider, Runtime, Context, PerspectiveManager, Perspective, Preferences, Logger){
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', '../../microservices/perspective/perspective-manager', '../../microservices/perspective/perspective', '../../microservices/preferences/preferences', '../../microservices/provider-management/data-provider-manager', '../../core/runtime', '../../core/utils', '../../core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
+  function(oj, ko, Router, ArrayDataProvider, PerspectiveManager, Perspective, Preferences, DataProviderManager, Runtime, CoreUtils, CoreTypes, Logger){
     function NavStripTemplate(viewParams){
       var self = this;
 
       var builtIns = ko.observableArray();
 
-      builtIns(loadBuiltInPerspectives(
+      this.builtInsDataProvider = loadBuiltInPerspectives(
         Preferences.general.themePreference(),
         Runtime.getDomainConnectState()
-      ));
+      );
 
       setThemePreference(Preferences.general.themePreference());
 
-      function loadBuiltInPerspectives(theme, connectState){
-        let dataArray = PerspectiveManager.getByType(Perspective.prototype.Type.BUILT_IN.name);
-        dataArray.forEach((perspective) => {
-          if (connectState === "CONNECTED") {
-            perspective["iconFile"] = perspective.iconFiles[theme];
+      function loadBuiltInPerspectives(theme, connectState, dataProvider){
+        let dataArray = [];
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+          dataArray = dataProvider.beanTrees;
+        }
+        else {
+          dataProvider = DataProviderManager.getLastActivatedDataProvider();
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            dataArray = dataProvider.beanTrees;
           }
-          else {
-            perspective["iconFile"] = perspective.iconFiles["greyed"];
-          }
-          perspective["label"] = oj.Translations.getTranslatedString(`wrc-navstrip.icons.${perspective.id}.tooltip`);
-        });
-        return dataArray;
+        }
+
+        // dataArray will be empty if:
+        //
+        //  1. There is no default project, or
+        //  2. No dataProvider parameter was passed into this function, or
+        //  3. The default project did not have any data providers
+
+        if (dataArray.length > 0) {
+          dataArray.forEach((beanTree) => {
+            const perspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
+            if (connectState === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+              beanTree["iconFile"] = perspective.iconFiles[theme];
+            }
+            else {
+              beanTree["iconFile"] = perspective.iconFiles["greyed"];
+            }
+            beanTree["label"] = oj.Translations.getTranslatedString(`wrc-navstrip.icons.${beanTree.type}.tooltip`);
+            beanTree["provider"] = {id: dataProvider.id, name: dataProvider.name};
+          });
+        }
+
+        builtIns(dataArray);
+
+        if (CoreUtils.isUndefinedOrNull(self.builtInsDataProvider)) {
+          return new ArrayDataProvider(
+            builtIns, { keyAttributes: 'type' }
+          );
+        }
+        else {
+          return self.builtInsDataProvider;
+        }
       }
 
       this.i18n = {
@@ -39,14 +69,92 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', '..
           "configuration": { iconFile: "navstrip-icon-readwrite-configuration-blk_48x48",
             tooltip: oj.Translations.getTranslatedString("wrc-navstrip.icons.configuration.tooltip")
           },
-          "view": { iconFile: "navstrip-icon-readonly-configuration--blk_48x48",
+          "view": { iconFile: "navstrip-icon-readonly-configuration-blk_48x48",
             tooltip: oj.Translations.getTranslatedString("wrc-navstrip.icons.view.tooltip")
           },
           "monitoring": { iconFile: "navstrip-icon-monitoring-blk_48x48",
             tooltip: oj.Translations.getTranslatedString("wrc-navstrip.icons.monitoring.tooltip")
+          },
+          "modeling": { iconFile: "navstrip-icon-wdt-blk_48x48",
+            tooltip: oj.Translations.getTranslatedString("wrc-navstrip.icons.modeling.tooltip")
+          },
+          "nodata": { iconFile: "navstrip-icon-nodata-blk_48x48",
+            tooltip: ""
           }
         }
       };
+
+      this.builtInsSelectedItem = ko.observable('');
+
+      this.signalBindings = [];
+
+      this.connected = function () {
+        // Be sure to create a binding for any signaling add in
+        // this module. In fact, the code for the add needs to
+        // be moved here physically.
+
+        let binding = viewParams.signaling.navtreeToggled.add((expanded) => {
+          if (expanded) {
+            clearBuiltInsSelection();
+          }
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderSelected.add((dataProvider, connectState) => {
+          self.builtInsSelectedItem('');
+          self.builtInsDataProvider = loadBuiltInPerspectives(
+            Preferences.general.themePreference(),
+            connectState || Runtime.getDomainConnectState(),
+            dataProvider
+          );
+          viewParams.signaling.beanTreeChanged.dispatch({type: "home", label: oj.Translations.getTranslatedString("wrc-content-area-header.toolbar.buttons.home.label"), provider: {id: dataProvider.id, name: dataProvider.name}});
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderRemoved.add((dataProvider) => {
+          const beanTree = builtIns().find(item => item.provider.id === dataProvider.id);
+          const clearNavstripIcons = (CoreUtils.isNotUndefinedNorNull(beanTree));
+          if (clearNavstripIcons) {
+            clearNavStripIcons();
+            clearBuiltInsSelection();
+            viewParams.onDataProviderRemoved(false);
+          }
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.modeChanged.add((newMode) => {
+          if (newMode === CoreTypes.Console.RuntimeMode.DETACHED.name) {
+            clearBuiltInsSelection();
+            viewParams.onDataProviderRemoved(false);
+          }
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.themeChanged.add((newTheme) => {
+          setThemePreference(newTheme);
+        });
+
+        self.signalBindings.push(binding);
+
+        setThemePreference(Preferences.general.themePreference());
+      }.bind(this);
+
+      this.disconnected = function() {
+        const navstripContainer = document.getElementById("navstrip-container");
+        if (navstripContainer !== null) navstripContainer.removeEventListener("click", onNavigationListItemClick);
+
+        // Detach all signal "add" bindings
+        self.signalBindings.forEach(binding => { binding.detach(); });
+
+        // Reinitialize module-scoped array for storing
+        // signal "add" bindings, so it can be GC'd by
+        // the JS engine.
+        self.signalBindings = [];
+      }.bind(this);
 
       /**
        * Returns the NLS translated string for the tooltip of a navstrip item.
@@ -62,74 +170,74 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', '..
         return self.i18n.icons[id].tooltip;
       };
 
-      this.disconnected = function() {
-        const navstripContainer = document.getElementById("navstrip-container");
-        if (navstripContainer !== null) navstripContainer.removeEventListener("click", onNavigationListItemClick);
+      this.builtInsBeforeSelectEventHandler = function(event) {
+        const connectState = Runtime.getDomainConnectState();
+        if (connectState === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
+          event.preventDefault();
+          return false;
+        }
       };
-
-      this.builtInsDataProvider = new ArrayDataProvider(
-        builtIns, { keys: builtIns().map((value) => {
-            return value.id;
-          })
-        });
-
-      var addIns = PerspectiveManager.getByType(Perspective.prototype.Type.ADD_IN.name);
-
-      this.addInsDataProvider = new ArrayDataProvider(
-        addIns, { keys: addIns.map((value) => {
-            return value.id;
-          })
-        });
-
-      this.builtInsSelectedItem = ko.observable('');
 
       this.builtInsSelectedItemChanged = function(event) {
         const connectState = Runtime.getDomainConnectState();
-        if (connectState === "DISCONNECTED") {
+        if (connectState === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
           event.preventDefault();
           return false;
         }
-        else if (event.target.currentItem === "view") {
-          const newPerspective = builtIns().find(item => item.id === event.target.currentItem);
+
+        const beanTree = getSelectedBeanTree(event.target.currentItem);
+        if (CoreUtils.isUndefinedOrNull(beanTree)) {
+          event.preventDefault();
+          return false;
+        }
+
+        if (self.builtInsSelectedItem() !== "") {
+          viewParams.signaling.beanTreeChanged.dispatch(beanTree);
+        }
+
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, CoreUtils.isUndefinedOrNull(beanTree.readOnly) ? false : beanTree.readOnly);
+        viewParams.signaling.readonlyChanged.dispatch(Runtime.isReadOnly());
+
+        const newPerspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
+        if (CoreUtils.isNotUndefinedNorNull(newPerspective)) {
+          // Signal that a new perspective was selected
+          // from the builtIns navstrip
+          viewParams.signaling.perspectiveSelected.dispatch(newPerspective);
           viewParams.signaling.perspectiveChanged.dispatch(newPerspective);
-          event.preventDefault();
-          return false;
-        }
 
-        if (event.detail.value !== '') {
-          const newPerspective = builtIns().find(item => item.id === event.target.currentItem);
-          // newPerspective can (and will) be undefined, if the user
-          // clicks in the navstrip, but not on a navstrip icon
-          if (typeof newPerspective !== "undefined") {
-            // Signal that a new perspective was selected
-            // from the builtIns navstrip
-            viewParams.signaling.perspectiveSelected.dispatch(newPerspective);
-            viewParams.signaling.perspectiveChanged.dispatch(newPerspective);
-
-            // Unselect any selected addIns navstrip item
-            self.addInsSelectedItem('');
-
-            switch (viewParams.parentRouter.stateId()) {
-              case "landing":
-                viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId(newPerspective.id);
-                // Don't break, just fall through to case for "home" stateId
-              case "home":
+          switch (viewParams.parentRouter.stateId()) {
+            case "landing":
+              viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId(newPerspective.id);
+            // Don't break, just fall through to case for "home" stateId
+            case "home":
+              viewParams.parentRouter.go("landing/" + newPerspective.id);
+              break;
+            default:
+              if (viewParams.parentRouter.stateId() !== newPerspective.id) {
+                // Go to landing page for newPerspective.id
                 viewParams.parentRouter.go("landing/" + newPerspective.id);
-                break;
-              default:
-                if (viewParams.parentRouter.stateId() !== newPerspective.id) {
-                  // Go to landing page for newPerspective.id
-                  viewParams.parentRouter.go("landing/" + newPerspective.id);
-                }
-                break;
-            }
+              }
+              break;
           }
         }
       };
 
+      function clearNavStripIcons() {
+        builtIns.valueWillMutate();
+        builtIns.removeAll();
+        builtIns.valueHasMutated();
+      }
+
+      function getSelectedBeanTree(beanTreeType) {
+        let beanTree;
+        const index = CoreUtils.getLastIndex(builtIns(), "type", beanTreeType);
+        if (index !== -1) beanTree = builtIns()[index];
+        return beanTree;
+      }
+
       function onNavigationListItemClick(event) {
         const connectState = Runtime.getDomainConnectState();
-        if (connectState === "DISCONNECTED") {
+        if (connectState === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
           event.preventDefault();
           return false;
         }
@@ -142,67 +250,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', '..
         self.builtInsSelectedItemChanged(event);
       }
 
-      this.builtInsBeforeSelectEventHandler = function(event) {
-        const connectState = Runtime.getDomainConnectState();
-        if (connectState === "DISCONNECTED") {
-          event.preventDefault();
-          return false;
-        }
-        else if (event.target.currentItem === "view") {
-          event.preventDefault();
-          return false;
-        }
-      };
-
-      this.addInsSelectedItem = ko.observable('');
-
-      this.addInsSelectedItemChanged = function(event) {
-        event.preventDefault();
-        if (event.detail.value !== '') {
-          let newPerspective = addIns.find(item => item.id === event.target.currentItem);
-          viewParams.signaling.perspectiveSelected.dispatch(newPerspective);
-          self.builtInsSelectedItem('');
-        }
-      };
-
-      viewParams.signaling.navtreeToggled.add((expanded) => {
-        if (expanded) {
-          clearBuiltInsSelection();
-          clearAddInsSelection();
-        }
-      });
-
-      viewParams.signaling.modeChanged.add((newMode) => {
-        const theme = Preferences.general.themePreference();
-
-        builtIns.valueWillMutate();
-        builtIns().forEach(item => {
-          item.iconFile = (newMode === "ONLINE" ? item.iconFiles[theme] : item.iconFiles["greyed"]);
-        });
-        builtIns.valueHasMutated();
-/*
-        addIns.valueWillMutate();
-        addIns().forEach(item => {
-          item.iconFile = (newMode === "ONLINE" ? item.iconFiles[theme] : item.iconFiles["greyed"]);
-        });
-        addIns.valueHasMutated();
-*/
-        if (newMode === "DETACHED") {
-          self.builtInsSelectedItem('');
-        }
-      });
-
       function clearBuiltInsSelection(){
         self.builtInsSelectedItem('');
       }
-
-      function clearAddInsSelection(){
-        self.addInsSelectedItem('');
-      }
-
-      viewParams.signaling.themeChanged.add((newTheme) => {
-        setThemePreference(newTheme);
-      });
 
       function setThemePreference(theme) {
         let ele = document.getElementById("navstrip-header");
@@ -218,11 +268,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', '..
           }
         }
       }
-
-      Context.getPageContext().getBusyContext().whenReady()
-      .then(function () {
-        setThemePreference(Preferences.general.themePreference());
-      });
 
     }
 

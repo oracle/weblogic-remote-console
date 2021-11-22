@@ -12,11 +12,6 @@ properties:
 - name: Version
 - name: ActiveTypes
 - name: Base64DecodingRequired
-helpTasks:
-- "security/ConfigureAuthenticationProviders"
-- "security/ConfigurePasswordValidationProviders"
-- "security/SetTheJAASControlFlag"
-- "security/ManageSecurityProviders"
 helpTopics:
 - label: "Configuring an LDAP X509 Identity Assertion Provider: Main Steps"
   href: "secmg/ia_atn.html#SECMG217"

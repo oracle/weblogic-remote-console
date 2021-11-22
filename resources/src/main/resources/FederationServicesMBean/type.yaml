@@ -1,6 +1,39 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
-- name: FederationServicesPOSTOneUseCheckEnabled
-  source: POSTOneUseCheckEnabled
+- name: POSTOneUseCheckEnabled
+  offlineName: PostOneUseCheckEnabled
   label: POST One Use Check Enabled
+
+- name: ACSRequiresSSL
+  offlineName: AcsRequiresSsl
+
+- name: ARSRequiresSSL
+  offlineName: ArsRequiresSsl
+
+- name: ARSRequiresTwoWaySSL
+  offlineName: ArsRequiresTwoWaySsl
+
+- name: AssertionConsumerURIs
+  offlineName: AssertionConsumerUri
+
+- name: AssertionRetrievalURIs
+  offlineName: AssertionRetrievalUri
+
+- name: IntersiteTransferURIs
+  offlineName: IntersiteTransferUri
+
+- name: ITSRequiresSSL
+  offlineName: ItsRequiresSsl
+
+- name: POSTRecipientCheckEnabled
+  offlineName: PostRecipientCheckEnabled
+
+- name: SourceSiteURL
+  offlineName: SourceSiteUrl
+
+- name: SSLClientIdentityAlias
+  offlineName: SslClientIdentityAlias
+
+- name: SSLClientIdentityPassPhrase
+  offlineName: SslClientIdentityPassPhraseEncrypted

@@ -9,25 +9,23 @@ introductionHTML: >
   transaction options for this JDBC data source.</p>
 
 properties:
-- name: "GlobalTransactionsProtocol"
-- name: "UseXaDataSourceInterface"
-- name: "XaSetTransactionTimeout"
-- name: "XaTransactionTimeout"
-- name: "XaRetryDurationSeconds"
-- name: "XaRetryIntervalSeconds"
-- name: "KeepXaConnTillTxComplete"
+- name: "JDBCResource.JDBCDataSourceParams.GlobalTransactionsProtocol"
+- name: "JDBCResource.JDBCDriverParams.UseXaDataSourceInterface"
+- name: "JDBCResource.JDBCXAParams.XaSetTransactionTimeout"
+- name: "JDBCResource.JDBCXAParams.XaTransactionTimeout"
+- name: "JDBCResource.JDBCXAParams.XaRetryDurationSeconds"
+- name: "JDBCResource.JDBCXAParams.XaRetryIntervalSeconds"
+- name: "JDBCResource.JDBCXAParams.KeepXaConnTillTxComplete"
 # deprecated - name: "KeepConnAfterLocalTx"
-- name: "KeepConnAfterGlobalTx"
-- name: "NeedTxCtxOnClose"
+- name: "JDBCResource.JDBCDataSourceParams.KeepConnAfterGlobalTx"
+- name: "JDBCResource.JDBCXAParams.NeedTxCtxOnClose"
 # deprecated - name: "XaEndOnlyOnce"
-- name: "KeepLogicalConnOpenOnRelease"
-- name: "ResourceHealthMonitoring"
-- name: "RecoverOnlyOnce"
+- name: "JDBCResource.JDBCXAParams.KeepLogicalConnOpenOnRelease"
+- name: "JDBCResource.JDBCXAParams.ResourceHealthMonitoring"
+- name: "JDBCResource.JDBCXAParams.RecoverOnlyOnce"
 # deprecated - name: "RollbackLocalTxUponConnClose"
-- name: "JDBCXADebugLevel"
+- name: "JDBCResource.JDBCConnectionPoolParams.JDBCXADebugLevel"
 
-helpTasks:
-- "jdbc/jdbc_datasources/ConfigureTransactionOptionsForADataSource"
 helpTopics:
 - label: "Configuring WebLogic JDBC Resources "
   href: "jdbca/config.html"

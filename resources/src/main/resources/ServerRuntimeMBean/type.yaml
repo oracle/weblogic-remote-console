@@ -1,31 +1,7 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
-- name: SNMPAgentRuntime
-  nonCreatableOptionalSingleton: true
-- name: ClusterRuntime
-  nonCreatableOptionalSingleton: true
 - name: CurrentMachine
   writable: never
-- name: JoltRuntime
-  nonCreatableOptionalSingleton: true
-- name: JTARuntime
-  nonCreatableOptionalSingleton: true
-- name: JMSRuntime
-  nonCreatableOptionalSingleton: true
-- name: JVMRuntime
-  nonCreatableOptionalSingleton: true
-- name: SAFRuntime
-  nonCreatableOptionalSingleton: true
-- name: WTCRuntime
-  nonCreatableOptionalSingleton: true
-- name: WseeClusterFrontEndRuntime
-  nonCreatableOptionalSingleton: true
-- name: WseeWsrmRuntime
-  nonCreatableOptionalSingleton: true
-- name: EntityCacheCurrentStateRuntime
-  nonCreatableOptionalSingleton: true
-- name: EntityCacheCumulativeRuntime
-  nonCreatableOptionalSingleton: true
 - name: ActivationTime
   dateAsLong: true

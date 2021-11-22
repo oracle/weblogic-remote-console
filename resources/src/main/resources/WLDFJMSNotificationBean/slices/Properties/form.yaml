@@ -7,8 +7,6 @@ introductionHTML: >
 properties:
 - name: "DestinationJNDIName"
 - name: "ConnectionFactoryJNDIName"
-helpTasks:
-- "diagnostics/CreateActionsForPolicies"
 helpTopics:
 - label: "Configuring Policies and Actions"
   href: "wldfc/config_watch_notif.html#WLDFC188"

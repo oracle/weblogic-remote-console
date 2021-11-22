@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -7,6 +7,15 @@ properties:
 
 - name: XPoweredByHeaderLevel
   label: X-Powered-By Header
+  legalValues:
+  - value: NONE
+    label: None
+  - value: SHORT
+    label: Short
+  - value: MEDIUM
+    label: Medium
+  - value: FULL
+    label: Full
 
 - name: RtexprvalueJspParamName
   label: Error on Name request time value

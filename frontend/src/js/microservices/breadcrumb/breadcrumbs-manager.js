@@ -6,13 +6,12 @@
  */
 "use strict";
 
-define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memory-manager', '../navtree/navtree-manager', 'ojs/ojlogger', '../page-definition/utils'],
-  function (ko, ArrayDataProvider, PerspectiveMemoryManager, NavtreeManager, Logger, PageDefinitionUtils) {
+define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memory-manager', '../navtree/navtree-manager', '../page-definition/utils', '../../core/utils', 'ojs/ojlogger'],
+  function (ko, ArrayDataProvider, PerspectiveMemoryManager, NavtreeManager, PageDefinitionUtils, CoreUtils, Logger) {
 
-    function BreadcrumbsManager(perspective, breadcrumbsObservableArray){
-      this.perspective = perspective;
-      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(perspective.id);
-      this.navtreeManager = new NavtreeManager(perspective);
+    function BreadcrumbsManager(beanTree, breadcrumbsObservableArray){
+      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(beanTree.type);
+      this.navtreeManager = new NavtreeManager(beanTree);
       this.breadcrumbs = breadcrumbsObservableArray;
     }
 
@@ -32,16 +31,14 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
           option = document.createElement("oj-option");
           option.setAttribute("id", link.name);
           option.setAttribute("value", link.label);
-          option.setAttribute("data-kind", link.identity.kind);
-          option.setAttribute("data-perspective", link.identity.perspective);
-          option.setAttribute("data-path", PageDefinitionUtils.pathEncodedFromIdentity(link.identity));
-          option.setAttribute("data-breadcrumbs", PageDefinitionUtils.breadcrumbsFromIdentity(link.identity));
+          option.setAttribute("data-perspective", link.beanTreeType);
+          option.setAttribute("data-path", link.identity);
+          option.setAttribute("data-breadcrumbs", link.identity);
           option.setAttribute("data-notFoundMessage", link.message);
           const span = document.createElement("span");
           span.innerText = link.label;
           option.append(span);
           menu.append(option);
-
         }
       });
       return menu;
@@ -58,8 +55,12 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
             self.navtreeManager.getPathModel(pathParam)
             .then((pathModel) => {
               Logger.info(`[BREADCRUMB-MANAGER] pathModel=${JSON.stringify(pathModel)}`);
-              if (typeof pathModel.breadcrumbs !== "undefined") {
-                breadcrumbLabels = self.getBreadcrumbLabels(pathParam, pathModel.breadcrumbs);
+
+              let rdj = pathModel.data.get("rdjData");
+              let breadCrumbs = rdj?.breadCrumbs;
+              if (CoreUtils.isNotUndefinedNorNull(breadCrumbs)) {
+                breadCrumbs.push(rdj.self);
+                breadcrumbLabels = self.getBreadcrumbLabels(breadCrumbs);
                 resolve(breadcrumbLabels);
               }
               else {
@@ -73,26 +74,16 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
         });
       },
 
-      getBreadcrumbLabels: function(pathParam, breadcrumbs) {
+      getBreadcrumbLabels: function(breadcrumbs) {
         const self = this;
-        let breadcrumbLabels = breadcrumbs.split("/");
         self.breadcrumbs([]);
-        const actualPathParam = pathParam;
-        actualPathParam.split("/").forEach((pathElement, index) => {
-          let breadcrumbPath = actualPathParam.split("/", index + 1).join("/");
+        let breadcrumbLabels = [];
 
-          let label = (breadcrumbLabels.length > 0 ? breadcrumbLabels[index] : pathElement);
-          let breadcrumb = {
-            name: pathElement,
-            label: decodeURIComponent(label),
-            path: breadcrumbPath
-          };
-
-          // ignore empty elements that are the result of extra :'s in path
-          if (pathElement !== "") {
-            self.breadcrumbs.push(breadcrumb);
-          }
+        breadcrumbs.forEach(breadcrumb => {
+          self.breadcrumbs.push(breadcrumb);
+          breadcrumbLabels.push(breadcrumb.label);
         });
+
         return breadcrumbLabels;
       },
 
@@ -105,7 +96,7 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
         this.breadcrumbs().forEach((item, index) => {
           crumb = document.createElement("li");
           if (index === this.breadcrumbs().length-1) {
-            if (typeof linksData !== "undefined" && linksData.length > 0) {
+            if (CoreUtils.isNotUndefinedNorNull(linksData) && linksData.length > 0) {
               const button = document.createElement("oj-menu-button");
               button.setAttribute("chroming", "borderless");
               button.innerText = item.label;
@@ -119,7 +110,7 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
           }
           else {
             const anchor = document.createElement("a");
-            anchor.setAttribute("id", item.path);
+            anchor.setAttribute("id", item.resourceData);
             anchor.setAttribute("href", "#");
             anchor.setAttribute("on-click", "[[breadcrumbClick]]");
             anchor.innerText = item.label;
@@ -127,7 +118,7 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
           }
           ul.append(crumb);
         });
-        if (typeof menu !== "undefined") {
+        if (CoreUtils.isNotUndefinedNorNull(menu)) {
           ul.style.margin = "0 0 0 10px";
           ul.style.padding = "0 0 2px 0";
         }

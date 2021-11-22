@@ -1,0 +1,27 @@
+# Copyright (c) 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: Security
+  legalValues:
+  - value: NONE
+    label: None
+  - value: APP_PW
+    label: Application Password
+  - value: DM_PW
+    label: Domain Password
+
+- name: ConnectionPolicy
+  legalValues:
+  - value: ON_DEMAND
+    label: On Demand
+  - value: ON_STARTUP
+    label: On Startup
+  - value: INCOMING_ONLY
+    label: Incoming Only
+
+- name: SSLProtocolVersion
+  offlineName: SslProtocolVersion
+
+- name: UseSSL
+  offlineName: UseSsl

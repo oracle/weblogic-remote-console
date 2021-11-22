@@ -1,0 +1,9 @@
+[
+  {"key": "Name", "value": "domain1"},
+  {"key":  "EnableAdministrationPort", "value":  false},
+  {"key":  "ProductionMode", "value":  false},
+  {"key":  "AdministrationPort", "value":  9002},
+  {"key":  "EnableExalogicOptimizations", "value":  true},
+  {"key":  "EnableClusterConstraints", "value":  false},
+  {"key":  "InternalAppsDeployOnDemandEnabled", "value":  false}
+]

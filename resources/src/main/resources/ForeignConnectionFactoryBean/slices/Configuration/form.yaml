@@ -16,9 +16,6 @@ properties:
 - name: "Username"
 - name: "Password"
 - name: "ConnectionHealthChecking"
-helpTasks:
-- "jms_modules/foreign_servers/ConfigureForeignServers"
-- "jms_modules/foreign_servers/CreateForeignDestinations"
 helpTopics:
 - label: "Configuring Basic JMS System Resources"
   href: "jmsad/basic_config.html"

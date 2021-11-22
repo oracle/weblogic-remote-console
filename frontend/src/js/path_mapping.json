@@ -4,11 +4,11 @@
 
   "cdns": {
     "jet": {
-      "prefix": "https://static.oracle.com/cdn/jet/9.1.0/default/js",
-      "css": "https://static.oracle.com/cdn/jet/9.0.1/default/css",
+      "prefix": "https://static.oracle.com/cdn/jet/10.1.0/default/js",
+      "css": "https://static.oracle.com/cdn/jet/10.1.0/default/css",
       "config": "bundles-config.js"
     },
-    "3rdparty": "https://static.oracle.com/cdn/jet/9.1.0/3rdparty"
+    "3rdparty": "https://static.oracle.com/cdn/jet/10.1.0/3rdparty"
   },
 
   "libs": {
@@ -79,12 +79,12 @@
       "debug": {
         "src": "hammer.js",
         "path": "libs/hammer/hammer-#{version}.js",
-        "cdnPath": "hammer/hammer-2.0.36"
+        "cdnPath": "hammer/hammer-2.0.8"
       },
       "release": {
         "src": "hammer.min.js",
         "path": "libs/hammer/hammer-#{version}.min.js",
-        "cdnPath": "hammer/hammer-2.0.36.min"
+        "cdnPath": "hammer/hammer-2.0.8.min"
       }
     },
 
@@ -110,21 +110,21 @@
         "src": ["debug*/**"],
         "path": "libs/oj/v#{version}",
         "pathSuffix": "/debug' + (_ojNeedsES5 ? '_es5' : '')",
-        "cdnPath": "debug"
+        "cdnPath": ""
       },
       "release": {
         "src": ["min*/**"],
         "path": "libs/oj/v#{version}",
-        "pathSuffix": "/min'",
+		    "pathSuffix": "/min'",
         "cdnPath": "min"
       },
       "release_es5": {
-        "cwd": "min_es5",
+		    "cwd": "min_es5",
         "src": ["**"],
         "path": "libs/oj/v#{version}/min_es5",
         "cdnPath": "min_es5"
       }
-    },
+    },    
 
     "ojL10n": {
       "cdn": "jet",
@@ -246,8 +246,8 @@
         "path": "libs/corejs/shim.min.js",
         "cdnPath": "corejs/shim.min"
       }
-    },
-
+    },    
+    
     "customElements": {
       "cdn": "3rdparty",
       "cwd": "node_modules/@webcomponents/custom-elements",
@@ -268,7 +268,7 @@
       "cwd": "proj4/dist",
       "debug": {
         "src":  "proj4-src.js",
-        "path": "libs/proj4js/dist/proj4-src.js",
+        "path": "libs/proj4js/dist/proj4-src.js", 
         "cdnPath": "proj4js/dist/proj4"
       },
       "release": {
@@ -277,7 +277,7 @@
         "cdnPath": "proj4js/dist/proj4"
       }
     },
-
+    
     "css": {
       "cdn": "3rdparty",
       "cwd": "node_modules/require-css",
@@ -293,20 +293,43 @@
       }
     },
 
-    "js-yaml": {
-      "cdn": "3rdparty",
-      "cwd": "node_modules/js-yaml/dist",
+    "ojcss": {
+      "cdn": "jet",
+      "cwd": "node_modules/@oracle/oraclejet/dist/js/libs/oj",
       "debug": {
-        "src": ["js-yaml.js", "js-yaml.map"],
-        "path": "libs/js-yaml/js-yaml.js",
-        "cdnPath": "js-yaml/js-yaml"
+        "src": ["debug/ojcss.js"],
+        "path": "libs/oj/v#{version}",
+        "pathSuffix": "/debug' + (_ojNeedsES5 ? '_es5/ojcss.js' : '/ojcss.js')",
+        "cdnPath": "ojcss"
       },
       "release": {
-        "src": ["js-yaml.min.js", "js-yaml.min.map"],
-        "path": "libs/js-yaml/js-yaml.min.js",
-        "cdnPath": "js-yaml/js-yaml.min"
+        "src": ["min/ojcss.js"],
+        "path": "libs/oj/v#{version}",
+        "pathSuffix": "/min/ojcss'",
+        "cdnPath": "ojcss"
+      },
+      "release_es5": {
+        "cwd": "min_es5",
+        "src": ["ojcss.js"],
+        "path": "libs/oj/v#{version}/min_es5/ojcss.js",
+        "cdnPath": "ojcss"
       }
-    }
+    },
 
+       "js-yaml": {
+          "cdn": "3rdparty",
+           "cwd": "node_modules/js-yaml/dist",
+             "debug": {
+              "src": ["js-yaml.js", "js-yaml.map"],
+              "path": "libs/js-yaml/js-yaml.js",
+             "cdnPath": "js-yaml/js-yaml"
+             },
+             "release": {
+              "src": ["js-yaml.min.js", "js-yaml.min.map"],
+             "path": "libs/js-yaml/js-yaml.min.js",
+            "cdnPath": "js-yaml/js-yaml.min"
+             }
+           }
+      
   }
 }

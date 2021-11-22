@@ -6,8 +6,8 @@
  */
 "use strict";
 
-define([],
-  function () {
+define(['../../core/utils'],
+  function (CoreUtils) {
 
     function parseQueryString(url) {
       let queryString = url.split("?").pop(), qd = {};
@@ -21,28 +21,29 @@ define([],
     }
 
     function pathSegmentsFromIdentity(id) {
-      var pathSegments = [];
+      let pathSegments = [];
 
-      for (let i = 0; i < id.path.length; i++) {
-        var pathSegment = id.path[i];
-        if (typeof pathSegment.key !== 'undefined' && pathSegment.key != null) {
-          pathSegments.push(pathSegment.property);
-          pathSegments.push(pathSegment.key);
-        }
-        else if (typeof pathSegment.property !== 'undefined' && pathSegment.property != null) {
-          pathSegments.push(pathSegment.property);
-        }
-        else {
-          pathSegments.push(pathSegment.type);
-        }
+      if (typeof id !== "undefined" && typeof id.resourceData !== "undefined" && id.resourceData !== null) {
+        pathSegments = id.resourceData.split("/");
+        pathSegments = pathSegments.filter((e) => {return e});
       }
 
       return pathSegments;
     }
 
+    function filterPathSegments(path, segment) {
+      let pathSegments = [];
+      if (CoreUtils.isNotUndefinedNorNull(path) && CoreUtils.isNotUndefinedNorNull(segment)) {
+        pathSegments = path.split("/").filter(e => e);
+        const index = pathSegments.indexOf(segment);
+        if (index !== -1) pathSegments = pathSegments.slice(index + 1);
+      }
+      return pathSegments;
+    }
+
     function pathEncodedFromIdentity(id) {
-      var path = "";
-      var pathSegments = pathSegmentsFromIdentity(id);
+      let path = "";
+      const pathSegments = pathSegmentsFromIdentity(id);
 
       if (pathSegments.length > 0) {
         for (let i = 0; i < pathSegments.length; i++) {
@@ -92,8 +93,104 @@ define([],
       return displayName;
     }
 
+    /**
+     * Returns the value assigned to the ``property`` field of the last path segment in ``id``, or an empty string.
+     * @param {{kind: string, perspective: string, path: Array}[]} id
+     * @returns {string} - The value assigned to the ``property`` field of the last path segment in ``id``, or an empty string.
+     */
+    function propertyNameFromIdentity(id) {
+      let propertyName = "";
+
+      if (typeof id !== "undefined" && typeof id.path !== "undefined" && id.path !== null) {
+        const lastPathSegment = id.path[id.path.length - 1];
+
+        if (typeof lastPathSegment !== "undefined" && typeof lastPathSegment.propertyLabel !== 'undefined') {
+          propertyName = lastPathSegment.property;
+        }
+      }
+      return propertyName;
+    }
+
+    /**
+     * Returns the value assigned to the ``label`` field of the ``id``, or an empty string.
+     * @param {{label: string, resourceData: string}} id
+     * @returns {string} - The value assigned to the ``propertyLabel`` field of the last path segment in ``id``, or an empty string.
+     */
+    function propertyLabelFromIdentity(id) {
+      let propertyLabel = "";
+
+      if (typeof id !== "undefined" && typeof id.label !== "undefined" && id.label !== null) {
+        propertyLabel = id.label;
+      }
+
+      return propertyLabel;
+    }
+
+    /**
+     * Returns the value assigned to the last path segment in ``resourceData`` minus the last character, or an empty string.
+     * @param {{label: string, resourceData: string}} id
+     * @returns {string} - The value assigned to the last path segment in ``resourceData`` minus the last character, or an empty string.
+     * @private
+     */
+    function propertyValueTypeFromIdentity(id) {
+      let propertyValueType = "";
+
+      if (typeof id !== "undefined" && typeof id.resourceData !== "undefined" && id.resourceData !== null) {
+        const resourceData = decodeURIComponent(id.resourceData);
+        const label = decodeURIComponent(id.label);
+        let pathSegments = resourceData.split("/");
+        pathSegments = pathSegments.filter((e) => {return e});
+        propertyValueType = pathSegments[pathSegments.indexOf(label) - 1];
+        if (typeof propertyValueType !== "undefined") {
+          propertyValueType = propertyValueType.slice(0, -1);
+        }
+      }
+
+      return propertyValueType;
+    }
+
+    /**
+     * Returns the value assigned to the ``type`` field of the last path segment in ``id`` minus the last character, or an empty string.
+     * @param {{label: string, resourceData: string}} id
+     * @returns {string} - The value assigned to the ``type`` field of the last path segment in ``id`` minus the last character, or an empty string.
+     * @private
+     */
+    function typeNameFromIdentity(id) {
+      let typeName = "";
+
+      if (typeof id !== "undefined" && typeof id.resourceData !== "undefined" && id.resourceData !== null) {
+        let pathSegments = id.resourceData.split("/");
+        typeName = pathSegments[pathSegments.length - 1];
+        typeName = typeName.slice(0, -1);
+      }
+
+      return typeName;
+    }
+
+    /**
+     * Returns the value assigned to the ``label`` field of the ``id`` minus the last character, or an empty string.
+     * @param {{label: string, resourceData: string}} id
+     * @returns {string} - The value assigned to the ``label`` field of the ``id`` minus the last character, or an empty string.
+     * @private
+     */
+    function typeLabelFromIdentity(id) {
+      let typeLabel = "";
+
+      if (typeof id !== "undefined" && typeof id.label !== "undefined" && id.label !== null) {
+        typeLabel = id.label;
+        typeLabel = typeLabel.slice(0, -1);
+      }
+
+      return typeLabel;
+    }
+
+    /**
+     * Returns the value assigned to the ``property`` or ``type`` field of the last path segment in ``id``, depending on which one is present in ``id``.
+     * @param {{kind: string, perspective: string, path: Array}[]} id
+     * @returns {string} - The value assigned to the ``property`` or ``type`` field of the last path segment in ``id``, depending on which one is present in ``id``. An empty string is returned, if neither is present.
+     */
     function parentPropertyFromIdentity(id) {
-      let parentProperty;
+      let parentProperty = "";
       const lastPathSegment = id.path[id.path.length-1];
 
       if (typeof lastPathSegment.property !== "undefined") {
@@ -122,32 +219,39 @@ define([],
 
     function getArrayOfNamesFromCollectionChild(rdjDataValue) {
       let list = [];
-      for (var i in rdjDataValue) {
-        // Chaeck if array element null
-        if (rdjDataValue[i] == null) {
-          list.push('<NULL>');
-          continue;
+      if (Array.isArray(rdjDataValue)) {
+        for (var i in rdjDataValue) {
+          // Chaeck if array element null
+          if (rdjDataValue[i] == null) {
+            list.push('<NULL>');
+            continue;
+          }
+          // Check for collectionChild
+          //       if ((typeof rdjDataValue[i].kind === 'undefined') || (rdjDataValue[i].kind !== 'collectionChild')) {
+          //         list.push('<UNKNOWN>');
+          //         continue;
+          //       }
+          // Get the value for this element from the path
+
+          if (CoreUtils.isUndefinedOrNull(rdjDataValue[i].value)) {
+            if (CoreUtils.isUndefinedOrNull(rdjDataValue[i].label)) {
+              list.push("");
+            } else {
+              list.push(rdjDataValue[i].label);
+            }
+          }
+          else {
+            let path = rdjDataValue[i].value.label;
+            list.push(path);
+            // list.push(path[path.length - 1].key);
+          }
         }
-        // Check for collectionChild
-        if ((typeof rdjDataValue[i].kind === 'undefined') || (rdjDataValue[i].kind !== 'collectionChild')) {
-          list.push('<UNKNOWN>');
-          continue;
-        }
-        // Get the value for this element from the path
-        let path = rdjDataValue[i].path;
-        list.push(path[path.length - 1].key);
       }
       return list;
     }
-
+    
     function getNameFromCollectionChild(rdjDataValue) {
-      // Check for collectionChild
-      if ((typeof rdjDataValue.kind === 'undefined') || (rdjDataValue.kind !== 'collectionChild')) {
-        return '<UNKNOWN>';
-      }
-      // Get the value for this collectionChild from the path
-      let path = rdjDataValue.path;
-      return path[path.length - 1].key;
+      return rdjDataValue.label;
     }
 
     function getPropertiesDisplayValue(dataValue, sep) {
@@ -193,7 +297,8 @@ define([],
       let result = "";
       for (let i in dataValue) {
         if (result.length > 0) result = result + separator;
-        result = result + dataValue[i];
+        result =
+          result + (dataValue[i].value ? dataValue[i].value : dataValue[i]);
       }
       return result;
     }
@@ -202,7 +307,12 @@ define([],
       // Split a comma separated list of values
       let result = null;
       if (!Array.isArray(readValue) && readValue !== "") {
-        result = readValue.split(separator).map(value => value.trim()).filter(value => value != "");
+        result = readValue
+          .split(separator)
+          .map((value) => {
+            return { set: true, value: value.trim() };
+          })
+          .filter((value) => value !== "");
       }
       return result;
     }
@@ -223,23 +333,45 @@ define([],
       return printableList;
     }
 
+    function getPlacementRouterParameter(router) {
+      let placement;
+      if (CoreUtils.isNotUndefinedNorNull(router.observableModuleConfig().params.ojRouter.parameters.placement)) {
+        placement = router.observableModuleConfig().params.ojRouter.parameters.placement();
+      }
+      return placement;
+    }
+
+    function setPlacementRouterParameter(router, value) {
+      if (CoreUtils.isNotUndefinedNorNull(router.observableModuleConfig().params.ojRouter.parameters.placement)) {
+        router.observableModuleConfig().params.ojRouter.parameters.placement(value);
+      }
+    }
+
     return {
       getSliceFromPDJUrl: getSliceFromPDJUrl,
       parseQueryString: parseQueryString,
       getFirstHTMLParagraph: getFirstHTMLParagraph,
       removeTrailingSlashes: removeTrailingSlashes,
       displayNameFromIdentity: displayNameFromIdentity,
+      propertyNameFromIdentity: propertyNameFromIdentity,
+      propertyLabelFromIdentity: propertyLabelFromIdentity,
+      propertyValueTypeFromIdentity: propertyValueTypeFromIdentity,
+      typeNameFromIdentity: typeNameFromIdentity,
+      typeLabelFromIdentity: typeLabelFromIdentity,
       parentPropertyFromIdentity: parentPropertyFromIdentity,
       pathSegmentsFromIdentity: pathSegmentsFromIdentity,
       pathEncodedFromIdentity: pathEncodedFromIdentity,
       breadcrumbsFromIdentity: breadcrumbsFromIdentity,
+      filterPathSegments: filterPathSegments,
       getArrayOfNamesFromCollectionChild: getArrayOfNamesFromCollectionChild,
       getNameFromCollectionChild: getNameFromCollectionChild,
       getPropertiesDisplayValue: getPropertiesDisplayValue,
       getPropertiesConvertedValue: getPropertiesConvertedValue,
       getArrayOfStringDisplayValue: getArrayOfStringDisplayValue,
       getArrayOfStringConvertedValue: getArrayOfStringConvertedValue,
-      convertArrayToPrintableList: convertArrayToPrintableList
+      convertArrayToPrintableList: convertArrayToPrintableList,
+      getPlacementRouterParameter: getPlacementRouterParameter,
+      setPlacementRouterParameter: setPlacementRouterParameter
     };
   }
 );

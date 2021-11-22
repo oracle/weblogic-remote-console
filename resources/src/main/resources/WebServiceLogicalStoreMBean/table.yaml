@@ -14,13 +14,3 @@ displayedColumns:
 - name: "CleanerInterval"
 - name: "DefaultMaximumObjectLifetime"
 
-helpTasks:
-- "webservices/InstallAWebService"
-- "webservices/StartAndStopAWebService"
-- "webservices/ConfigureWSPolicyFile"
-- "webservices/UpdateWebServiceConfiguration"
-- "webservices/ViewSoapMessageHandlers"
-- "webservices/ViewWsdl"
-- "webservices/TestAWebService"
-- "webservices/MonitorAWebService"
-- "webservices/MonitorAWebServiceClient"

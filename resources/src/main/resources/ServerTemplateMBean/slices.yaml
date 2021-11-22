@@ -27,6 +27,7 @@ slices:
   - name: General
   - name: HTTP
   - name: DataSource
+- name: DiagnosticArchive
 - name: Migration
 - name: Tuning
 - name: Overload

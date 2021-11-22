@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -6,5 +6,6 @@ properties:
   label: Message Handling Policy
 
 - name: SAFErrorDestination
+  offlineName: SafErrorDestination
   label: Error Destination
-  optionsMethod: weblogic.console.backend.driver.plugins.SAFErrorHandlingBeanCustomizer.getErrorDestinationOptions
+  # TBD - needs to implement: optionsMethod: weblogic.remoteconsole.customizers.SAFErrorHandlingBeanCustomizer.getErrorDestinationOptions

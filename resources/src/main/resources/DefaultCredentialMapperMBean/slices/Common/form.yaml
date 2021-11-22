@@ -11,10 +11,6 @@ properties:
 - name: Version
 - name: CredentialMappingDeploymentEnabled
 
-helpTasks:
-- "security/ConfigureCredentialMappingProviders"
-- "security/ManageSecurityProviders"
-
 helpTopics:
 - label: "Understanding Security for Oracle WebLogic Server"
   href: "scovr/index.html"

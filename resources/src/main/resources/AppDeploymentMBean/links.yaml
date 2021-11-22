@@ -1,11 +1,9 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
-- label: Runtime Data
-  resourceData: monitoring/data/DomainRuntime/AppDeploymentRuntimes
-instanceLinks:
-- label: Runtime Data
-  resourceData: monitoring/data/DomainRuntime/AppDeploymentRuntimes/<AppDeployment>
 - label: Status
-  resourceData: monitoring/data/DomainRuntime/AppDeploymentRuntimes/<AppDeployment>
+  resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes
+instanceLinks:
+- label: Status
+  resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<AppDeployment>

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -8,13 +8,10 @@ introductionHTML: >
   template.</p>
 
 properties:
-- name: "Priority"
-- name: "TimeToLive"
-- name: "TimeToDeliver"
-- name: "DeliveryMode"
-helpTasks:
-- "jms_modules/queues/ConfigureQueues"
-- "jms_modules/topics/ConfigureTopics"
+- name: "DeliveryParamsOverrides.Priority"
+- name: "DeliveryParamsOverrides.TimeToLive"
+- name: "DeliveryParamsOverrides.TimeToDeliver"
+- name: "DeliveryParamsOverrides.DeliveryMode"
 helpTopics:
 - label: "Managing Your Applications "
   href: "jmspg/manage_apps.html"

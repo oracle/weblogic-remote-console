@@ -17,17 +17,6 @@ properties:
 - name: "CleanerInterval"
 - name: "DefaultMaximumObjectLifetime"
 
-helpTasks:
-- "webservices/InstallAWebService"
-- "webservices/StartAndStopAWebService"
-- "webservices/ConfigureWSPolicyFile"
-- "webservices/UpdateWebServiceConfiguration"
-- "webservices/ViewSoapMessageHandlers"
-- "webservices/ViewWsdl"
-- "webservices/TestAWebService"
-- "webservices/MonitorAWebService"
-- "webservices/MonitorAWebServiceClient"
-
 helpTopics:
 - label: "Manually Configuring the Logical Store"
   href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSADV316"

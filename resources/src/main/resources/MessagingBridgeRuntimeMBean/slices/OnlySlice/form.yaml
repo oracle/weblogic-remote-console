@@ -6,4 +6,4 @@ introductionHTML: >
 properties:
 - name: "Name"
 - name: "Description"
-- name: "MessagingBridgeState"
+- name: "State"
