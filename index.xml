@@ -99,8 +99,8 @@ Limitations The following features are not available in this release of the Remo
       
       <guid>/weblogic-remote-console/reference/troubleshoot/</guid>
       <description>This page provides guidelines to help troubleshoot console issues.
-Diagnose invalid WebLogic configuration issues Administration Server The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.
-If you installed the console extension, you can view the contents of the shopping cart to see all of the pending changes.</description>
+Check log files for errors The WebLogic Remote Console provides log files for both front and back end processes. For instructions on how to access these log files, see Check Log Files.
+Diagnose invalid WebLogic configuration issues Administration Server The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.</description>
     </item>
     
     <item>
@@ -134,9 +134,21 @@ $ git checkout -b &amp;lt;your-branch&amp;gt;   Make your changes to the documen
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>/weblogic-remote-console/userguide/upgrade/</guid>
-      <description>While not required, it&amp;rsquo;s recommended that you keep WebLogic Remote Console up to date as it is updated to work with the latest versions of WebLogic Server, including patches.
-Desktop application If you regularly use config.json to customize the default connection settings of the WebLogic Remote Console, consider backing up config.json in a separate location to easily restore it following the upgrade.
- Download the latest version from https://github.com/oracle/weblogic-remote-console/releases. Stop the WebLogic Remote Console.</description>
+      <description>We encourage you to stay up to date with the latest version of the WebLogic Remote Console since it is regularly updated to work with the latest versions of WebLogic Server, including patches.
+Desktop application To check for newer versions of the desktop application, go to Help &amp;gt; Check For Updates. If a newer version is available, a dialog box will open where you can choose to go to the GitHub webpage for the latest WebLogic Remote Console release.</description>
+    </item>
+    
+    <item>
+      <title>Check Log Files</title>
+      <link>/weblogic-remote-console/userguide/logging/</link>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/weblogic-remote-console/userguide/logging/</guid>
+      <description>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.
+Front end To view the log file for issues related to the front end of the WebLogic Remote Console:
+Desktop application Open View &amp;gt; Toggle Developer Tools and select the Console tab.
+Browser application In the browser tab with WebLogic Remote Console, open the Developer Tools and select the Console tab.
+Back end To view the log file for issues related to the back end of the WebLogic Remote Console:</description>
     </item>
     
     <item>

@@ -35,8 +35,8 @@ Limitations The following features are not available in this release of the Remo
       
       <guid>/weblogic-remote-console/reference/troubleshoot/</guid>
       <description>This page provides guidelines to help troubleshoot console issues.
-Diagnose invalid WebLogic configuration issues Administration Server The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.
-If you installed the console extension, you can view the contents of the shopping cart to see all of the pending changes.</description>
+Check log files for errors The WebLogic Remote Console provides log files for both front and back end processes. For instructions on how to access these log files, see Check Log Files.
+Diagnose invalid WebLogic configuration issues Administration Server The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.</description>
     </item>
     
   </channel>
