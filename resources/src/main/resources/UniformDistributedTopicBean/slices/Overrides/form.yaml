@@ -7,12 +7,10 @@ introductionHTML: >
   configure such overrides for the distributed topic members.</p>
 
 properties:
-- name: "Priority"
-- name: "TimeToLive"
-- name: "TimeToDeliver"
-- name: "DeliveryMode"
-helpTasks:
-- "jms_modules/topics/ConfigureTopics"
+- name: "DeliveryParamsOverrides.Priority"
+- name: "DeliveryParamsOverrides.TimeToLive"
+- name: "DeliveryParamsOverrides.TimeToDeliver"
+- name: "DeliveryParamsOverrides.DeliveryMode"
 helpTopics:
 - label: "Configuring Basic JMS System Resources"
   href: "jmsad/basic_config.html"

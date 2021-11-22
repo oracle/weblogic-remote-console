@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -19,15 +19,16 @@ properties:
 
 - name: Quota
   optionsSources:
-    - ../Quotas
+    - Domain/JMSSystemResources/<JMSSystemResource>/JMSResource/Quotas
 
-- name: SubDeployments
-  source: GroupParams
-
-- name: ErrorDestination
-  source: DeliveryFailureParams.ErrorDestination
+- name: DeliveryFailureParams.ErrorDestination
   optionsSources:
-  -  ../Queues
-  -  ../Topics
-  -  ../UniformDistributedQueues
-  -  ../UniformDistributedTopics
+  -  Domain/JMSSystemResources/<JMSSystemResource>/JMSResource/Queues
+  -  Domain/JMSSystemResources/<JMSSystemResource>/JMSResource/Topics
+  -  Domain/JMSSystemResources/<JMSSystemResource>/JMSResource/UniformDistributedQueues
+  -  Domain/JMSSystemResources/<JMSSystemResource>/JMSResource/UniformDistributedTopics
+children:
+- name: GroupParams
+  offlineName: GroupParams
+  label: Sub Deployments
+

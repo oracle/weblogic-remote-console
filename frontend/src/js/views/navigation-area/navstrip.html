@@ -8,55 +8,30 @@ Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 
     <div id="navstrip-builtins" class="cfe-droppable">
       <oj-navigation-list aria-label="Click image for built-in perspective type"
-        data="[[builtInsDataProvider]]"
-        drill-mode="none"
-        edge="start"
-        display="icons"
-        selection="{{builtInsSelectedItem}}"
-        on-oj-before-select="[[builtInsBeforeSelectEventHandler]]"
-        on-selection-changed="[[builtInsSelectedItemChanged]]"
+                          data="[[builtInsDataProvider]]"
+                          drill-mode="none"
+                          edge="start"
+                          display="icons"
+                          selection="{{builtInsSelectedItem}}"
+                          on-oj-before-select="[[builtInsBeforeSelectEventHandler]]"
+                          on-selection-changed="[[builtInsSelectedItemChanged]]"
       >
         <template slot="itemTemplate" data-oj-as="item">
           <div>
-            <!-- The class="oj-disabled" attribute is suppose to disable the item...but it doesn't!!--->
-            <li data-bind="attr: {id: item.data.id, 'title': getTooltip(item.data.id)}">
-              <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
+            <li data-bind="attr: {id: item.data.type, 'title': getTooltip(item.data.type)}">
               <img class="navstrip-icon" data-bind="attr: {src: '../../images/' + item.data.iconFile + '.png'}"/>
+            </li>
+          </div>
+        </template>
+        <template slot="noData">
+          <div>
+            <li id="nodata">
+              <img data-bind="attr: {src: '../../images/' + i18n.icons.nodata.iconFile + '.png'}"/>
             </li>
           </div>
         </template>
       </oj-navigation-list>
     </div>
-
-    <oj-bind-if test="[[addInsDataProvider.isEmpty() === 'no']]">
-
-      <div class="toolbar-separator-horizontal">
-        <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
-        <img data-bind="attr: {src: '../../images/separator-horizontal_24x10.png'}"/>
-      </div>
-
-      <div id="navstrip-addins" class="cfe-droppable">
-        <oj-navigation-list aria-label="Click image for add-in perspective type"
-          id="addins-navigationlist"
-          data="[[addInsDataProvider]]"
-          drill-mode="none"
-          edge="start"
-          display="icons"
-          selection="{{addInsSelectedItem}}"
-          on-selection-changed="{{addInsSelectedItemChanged}}"
-        >
-          <template slot="itemTemplate" data-oj-as="item">
-            <div title="item.data.label" >
-              <li data-bind="attr: {id: 'item.data.id'}">
-                <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
-                <img class="navstrip-icon" data-bind="attr: {src: '../../images/' + item.data.iconFile + '.png', alt: item.data.label}"/>
-              </li>
-            </div>
-          </template>
-        </oj-navigation-list>
-      </div>
-
-    </oj-bind-if>
 
   </div>
 </div>

@@ -11,9 +11,6 @@ properties:
 - name: Description
 - name: Version
 
-helpTasks:
-- "security/ConfigurePasswordValidationProviders"
-- "security/ManageSecurityProviders"
 helpTopics:
 - label: "Configuring the Password Validation Provider"
   href: "secmg/password_atn.html"

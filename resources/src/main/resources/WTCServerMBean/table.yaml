@@ -11,9 +11,6 @@ introductionHTML: >
 displayedColumns:
 - name: "Name"
 # hiddenColumns:
-helpTasks:
-- "wtc/CreateWTCServices"
-- "wtc/DeleteWTCServices"
 helpTopics:
 - label: "Monitoring Oracle WebLogic Server with SNMP"
   href: "snmpa/index.html"

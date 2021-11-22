@@ -6,28 +6,18 @@ introductionHTML: >
 
 sections:
   - properties:
-    - name: "RetryCount"
-    - name: "RetryDelay"
+    - name: "WebService.WebServiceResiliency.RetryCount"
+    - name: "WebService.WebServiceResiliency.RetryDelay"
   - title: Request Buffering Queue
     properties:
-      - name: "RequestBufferingQueueEnabled"
-      - name: "RequestBufferingQueueJndi"
-      - name: "RequestBufferingQueueTransactionEnabled"
+      - name: "WebService.WebServiceBuffering.WebServiceRequestBufferingQueue.Enabled"
+      - name: "WebService.WebServiceBuffering.WebServiceRequestBufferingQueue.ConnectionFactoryJndiName"
+      - name: "WebService.WebServiceBuffering.WebServiceRequestBufferingQueue.TransactionEnabled"
   - title: Response Buffering Queue
     properties:
-      - name: "ResponseBufferingQueueEnabled"
-      - name: "ResponseBufferingQueueJndi"
-      - name: "ResponseBufferingQueueTransactionEnabled"
-helpTasks:
-  - "webservices/InstallAWebService"
-  - "webservices/StartAndStopAWebService"
-  - "webservices/ConfigureWSPolicyFile"
-  - "webservices/UpdateWebServiceConfiguration"
-  - "webservices/ViewSoapMessageHandlers"
-  - "webservices/ViewWsdl"
-  - "webservices/TestAWebService"
-  - "webservices/MonitorAWebService"
-  - "webservices/MonitorAWebServiceClient"
+      - name: "WebService.WebServiceBuffering.WebServiceResponseBufferingQueue.Enabled"
+      - name: "WebService.WebServiceBuffering.WebServiceResponseBufferingQueue.ConnectionFactoryJndiName"
+      - name: "WebService.WebServiceBuffering.WebServiceResponseBufferingQueue.TransactionEnabled"
 helpTopics:
   - label: "Deploying Applications to Oracle WebLogic Server "
     href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSADV337"

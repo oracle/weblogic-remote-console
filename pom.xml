@@ -10,7 +10,7 @@
 
     <groupId>com.oracle.weblogic</groupId>
     <artifactId>console-backend</artifactId>
-    <version>1.0</version>
+    <version>2.0.0</version>
     <description>Oracle WebLogic Console Backend Parent</description>
     <packaging>pom</packaging>
 
@@ -26,15 +26,14 @@
         <skipTests>false</skipTests>
 
         <version.commons-lang>2.4</version.commons-lang>
-        <version.helidon>2.2.1</version.helidon>
-        <version.jackson>2.12.1</version.jackson>
+        <version.helidon>2.3.4</version.helidon>
+        <version.jackson>2.12.5</version.jackson>
         <version.jsoup>1.13.1</version.jsoup>
         <version.junit.jupiter>5.5.1</version.junit.jupiter>
         <version.lucene>8.5.1</version.lucene>
         <version.reflections>0.9.11</version.reflections>
-        <version.snakeyaml>1.26</version.snakeyaml>
-        <version.jersey-rx-client-rxjava>2.33</version.jersey-rx-client-rxjava>
-        <version.console.backend>1.0</version.console.backend>
+        <version.snakeyaml>1.29</version.snakeyaml>
+        <version.console.backend>2.0.0</version.console.backend>
 
         <version.plugin.dependency-check>6.0.2</version.plugin.dependency-check>
         <version.plugin.maven-compiler>3.7.0</version.plugin.maven-compiler>
@@ -44,7 +43,6 @@
         <version.plugin.maven-dependency>3.1.0</version.plugin.maven-dependency>
         <version.plugin.maven-exec>1.6.0</version.plugin.maven-exec>
         <version.plugin.maven-antrun>1.6</version.plugin.maven-antrun>
-        <version.plugin.jandex>1.0.6</version.plugin.jandex>
         <version.plugin.jsonschema2pojo>1.0.1</version.plugin.jsonschema2pojo>
         <version.plugin.maven-surefire>2.22.2</version.plugin.maven-surefire>
 
@@ -155,7 +153,7 @@
                         <dependency>
                             <groupId>com.oracle.weblogic.console-backend</groupId>
                             <artifactId>build-tools</artifactId>
-                            <version>1.0</version>
+                            <version>2.0.0</version>
                         </dependency>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
@@ -238,11 +236,6 @@
                 <version>${version.plugin.maven-surefire}</version>
             </plugin>
             <plugin>
-                <groupId>org.jboss.jandex</groupId>
-                <artifactId>jandex-maven-plugin</artifactId>
-                <version>${version.plugin.jandex}</version>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.plugin.maven-compiler}</version>
@@ -259,18 +252,12 @@
 
     <modules>
         <module>build-tools</module>
-        <module>common</module>
-        <module>core</module>
-        <module>index</module>
-        <module>search</module>
-        <module>services</module>
-        <module>server</module>
         <module>weblogic-bean-types</module>
         <module>resources</module>
-        <module>driver</module>
+        <module>server</module>
         <module>resource-bundles</module>
         <module>frontend</module>
-        <module>console-assembly</module>
+        <module>assembly</module>
         <module>installer</module>
     </modules>
 

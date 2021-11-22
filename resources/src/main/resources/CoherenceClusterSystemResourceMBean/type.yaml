@@ -2,8 +2,8 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
-- name: HiddenFederationTopology
-  source: FederationTopology
+- name: CoherenceClusterResource.CoherenceFederationParams.FederationTopology
+  label: Hidden Federation Topology
   helpSummaryHTML: >
     <p>Specify the federation topology.</p>
 
@@ -31,11 +31,15 @@ properties:
 
 - name: Targets
   optionsSources:
-    - /Clusters
-    - /Servers
+    - Domain/Clusters
+    - Domain/Servers
   helpSummaryHTML: >
     <p>Select the servers or clusters on which you can deploy the Coherence cluster.</p>
   helpDetailsHTML: >
     <p>In almost all cases, you should deploy the Coherence cluster to an entire cluster,
     not individual servers in a cluster.</p>
     <p>Ensure that this Coherence Cluster is selected in the Coherence slice of the server or cluster. </p>
+
+children:
+- name: CoherenceClusterResource
+  offlineName: CoherenceResource

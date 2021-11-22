@@ -20,26 +20,27 @@ module.exports = function (driver, file) {
         //
         createRealm: async function (driver,realmName)
         {
-            await admin.goToLandingPanelSubTreeCard(driver,"Configuration","SecurityChevron","Domain/Realms",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","SecurityChevron","Realms",5);
             await driver.sleep(2400);
 
-            element = await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/img"));
+            element = await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img"));
             await driver.sleep(4800);
             if (element.isEnabled()) {
                 await element.click();
             }
+            console.log("Enter object name: " + realmName);
             await driver.sleep(4800);
             await driver.findElement(By.id("Name|input")).click();
             await driver.sleep(4800);
-            console.log("Enter object name: " + realmName);
+            await driver.findElement(By.id("Name|input")).clear();
             await driver.findElement(By.id("Name|input")).sendKeys(realmName);
             await driver.sleep(900);
             await admin.saveToShoppingCart(driver);
-
+            /*
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Security","Realms",realmName);
             await driver.sleep(3600);
             await admin.createMBeanFromMenuDropDown(driver,"Adjudicator","testAdjudicator-1");
-
+             */
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Security","Realms",realmName);
             await driver.sleep(3600);
             await admin.createMBeanFromMenuDropDown(driver,"Authentication Providers","testAuthenticatorProvider-1",

@@ -1,4 +1,4 @@
-# Copyright (c) 2020,2021 Oracle and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,21 +6,18 @@ introductionHTML: >
   properties.</p>
 
 properties:
-- name: "IdentityProviderEnabled"
-- name: "WantAuthnRequestsSigned"
-- name: "LoginURL"
-- name: "LoginReturnQueryParameter"
-- name: "IdentityProviderPOSTBindingEnabled"
-- name: "IdentityProviderRedirectBindingEnabled"
-- name: "IdentityProviderArtifactBindingEnabled"
-- name: "IdentityProviderPreferredBinding"
-- name: "ReplicatedCacheEnabled"
-- name: "AssertionEncryptionEnabled"
-- name: "KeyEncryptionAlgorithm"
-- name: "DataEncryptionAlgorithm"
-helpTasks:
-- "security/ConfigureFederationServices"
-- "security/ConfigureSAML20IdentityProviderServices"
+- name: "SingleSignOnServices.IdentityProviderEnabled"
+- name: "SingleSignOnServices.WantAuthnRequestsSigned"
+- name: "SingleSignOnServices.LoginURL"
+- name: "SingleSignOnServices.LoginReturnQueryParameter"
+- name: "SingleSignOnServices.IdentityProviderPOSTBindingEnabled"
+- name: "SingleSignOnServices.IdentityProviderRedirectBindingEnabled"
+- name: "SingleSignOnServices.IdentityProviderArtifactBindingEnabled"
+- name: "SingleSignOnServices.IdentityProviderPreferredBinding"
+- name: "SingleSignOnServices.ReplicatedCacheEnabled"
+- name: "SingleSignOnServices.AssertionEncryptionEnabled"
+- name: "SingleSignOnServices.KeyEncryptionAlgorithm"
+- name: "SingleSignOnServices.DataEncryptionAlgorithm"
 helpTopics:
 - label: "Using Security Assertion Markup Language (SAML) Tokens For Identity "
   href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"

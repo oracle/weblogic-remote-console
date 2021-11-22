@@ -8,10 +8,6 @@ introductionHTML: >
 
 displayedColumns:
 - name: "Name"
-helpTasks:
-- "coherence/ImportExternalConfiguration"
-- "coherence/ConfigureCoherenceClusters"
-- "coherence/ConfigureCoherenceLogging"
 helpTopics:
 - label: "Configuring and Managing Coherence Clusters"
   href: "clust/coherence.html"

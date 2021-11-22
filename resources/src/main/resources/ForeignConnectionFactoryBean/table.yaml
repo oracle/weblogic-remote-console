@@ -17,9 +17,6 @@ hiddenColumns:
 - name: "Password"
 - name: "ConnectionHealthChecking"
 
-helpTasks:
-- "jms_modules/foreign_servers/ConfigureForeignServers"
-- "jms_modules/foreign_servers/CreateForeignDestinations"
 helpTopics:
 - label: "Configuring Advanced JMS System Resources"
   href: "jmsad/advance_config.html"

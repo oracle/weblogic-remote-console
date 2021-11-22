@@ -11,8 +11,6 @@ properties:
 - name: "MessagesThresholdHigh"
 - name: "MessagesThresholdLow"
 
-helpTasks:
-- "saf_agents/ConfigureThresholdsandQuotas"
 helpTopics:
 - label: "Configuring the Store-and-Forward Service "
   href: "safmg/config_jms.html"

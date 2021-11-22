@@ -20,9 +20,6 @@ advancedProperties:
 - name: "BlockSize"
 - name: "InitialSize"
 - name: "FileLockingEnabled"
-helpTasks:
-- "stores/CreateFileStores"
-- "stores/MonitorStores"
 helpTopics:
 - label: "Using Work Managers to Optimize Scheduled Work "
   href: "cnfgd/self_tuned.html"

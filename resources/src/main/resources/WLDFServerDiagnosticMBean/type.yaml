@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -12,12 +12,34 @@ properties:
 
 - name: DiagnosticStoreDir
   label: Directory
+  usedIf:
+    property: DiagnosticDataArchiveType
+    values:
+      - FileStoreArchive
 
 - name: DiagnosticStoreFileLockingEnabled
   label: Diagnostics Store File Locking Enabled
+  usedIf:
+    property: DiagnosticDataArchiveType
+    values:
+      - FileStoreArchive
+
+- name: DiagnosticJDBCResource
+  label: JDBC Data Source
+  usedIf:
+    property: DiagnosticDataArchiveType
+    values:
+      - JDBCArchive
+  optionsSources:
+    - Domain/JDBCSystemResources
 
 - name: DiagnosticJDBCSchemaName
+  offlineName: DiagnosticJdbcSchemaName
   label: Schema Name
+  usedIf:
+    property: DiagnosticDataArchiveType
+    values:
+      - JDBCArchive
 
 - name: PreferredStoreSizeLimit
   label: Preferred Store Size
@@ -38,4 +60,8 @@ properties:
   label: Diagnostics Store Block Size
 
 - name: WLDFDiagnosticVolume
+  offlineName: WldfDiagnosticVolume
   label: Diagnostic Volume
+
+- name: WLDFBuiltinSystemResourceType
+  offlineName: WldfBuiltinSystemResourceType

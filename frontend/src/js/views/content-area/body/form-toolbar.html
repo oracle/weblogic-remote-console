@@ -7,14 +7,26 @@
   <div id="form-toolbar-buttons" class="oj-flex-bar">
     <oj-bind-if test="[[!isWizardForm()]]">
       <div id="form-toolbar-save-button" class="oj-flex-bar-start">
-        <oj-button id="[[i18n.buttons.save.id]]" on-oj-action="[[onSave]]" chroming="borderless"
-          disabled="[[i18n.buttons.save.disabled()]]">
-          <img class="button-icon" slot="startIcon"
-            data-bind="attr: {src: '../images/' + i18n.buttons.save.iconFile() + '.png'}" />
-          <span class="button-label">
-            <oj-bind-text value="[[i18n.buttons.save.label()]]"></oj-bind-text>
-          </span>
-        </oj-button>
+        <oj-bind-if test="[[i18n.buttons.save.visible]]">
+          <oj-button id="[[i18n.buttons.save.id]]" on-oj-action="[[onSave]]" chroming="borderless"
+           disabled="[[i18n.buttons.save.disabled]]">
+            <img class="button-icon" slot="startIcon"
+             data-bind="attr: {src: '../images/' + i18n.buttons.save.iconFile() + '.png'}" />
+            <span class="button-label">
+              <oj-bind-text value="[[i18n.buttons.save.label()]]"></oj-bind-text>
+            </span>
+          </oj-button>
+        </oj-bind-if>
+        <oj-bind-if test="[[i18n.buttons.write.visible]]">
+          <oj-button id="[[i18n.buttons.write.id]]" on-oj-action="[[onUpdateModelFile]]" chroming="borderless"
+           disabled="[[i18n.buttons.write.disabled]]">
+            <img class="button-icon" slot="startIcon"
+             data-bind="attr: {src: '../images/' + i18n.buttons.write.iconFile + '.png'}" />
+            <span class="button-label">
+              <oj-bind-text value="[[i18n.buttons.write.label]]"></oj-bind-text>
+            </span>
+          </oj-button>
+        </oj-bind-if>
       </div>
     </oj-bind-if>
 
@@ -134,19 +146,28 @@
         </a>
       </div>
 
-      <div class="toolbar-separator-vertical">
-        <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
-        <img data-bind="attr: {src: '../../images/separator-vertical_10x24.png'}" />
-      </div>
+      <oj-bind-if test="[[!isWdtForm()]]">
+        <div class="toolbar-separator-vertical">
+          <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
+          <img data-bind="attr: {src: '../../images/separator-vertical_10x24.png'}" />
+        </div>
+      </oj-bind-if>
 
       <div id="shoppingcart-toolbar-icon" class="oj-flex-item">
-        <a id="shoppingCartMenuLauncher" href="#" tabindex="-1" on-click="[[launchShoppingCartMenu]]">
-          <img id="shoppingCartImage"
-            data-bind="attr: {src: '../../images/shopping-cart-' + [[(changeManager().isLockOwner && changeManager().hasChanges ? 'non-empty' : 'empty')]] + '-tabstrip_24x24.png'}" />
-        </a>
+        <oj-bind-if test="[[!isWdtForm()]]">
+          <a id="shoppingCartMenuLauncher" href="#" tabindex="-1"
+             on-click="[[launchShoppingCartMenu]]"
+          >
+            <img id="shoppingCartImage" data-bind="attr: {src: '../../images/shopping-cart-' + [[(changeManager().isLockOwner && changeManager().hasChanges ? 'non-empty' : 'empty')]] + '-tabstrip_24x24.png'}" />
+          </a>
+        </oj-bind-if>
 
-        <oj-menu id="shoppingCartMenu" aria-labelledby="shoppingCartMenuLauncher"
-          on-oj-action="[[shoppingCartMenuClickListener]]" open-options.launcher="shoppingCartMenuLauncher">
+        <oj-menu
+          id="shoppingCartMenu"
+          aria-labelledby="shoppingCartMenuLauncher"
+          on-oj-action="[[shoppingCartMenuClickListener]]"
+          open-options.launcher="shoppingCartMenuLauncher"
+        >
           <oj-bind-if
             test="[[changeManager().isLockOwner && changeManager().hasChanges && changeManager().supportsChanges]]">
             <oj-option :id="[[i18n.menus.shoppingcart.view.id]]" value="[[i18n.menus.shoppingcart.view.id]]">
@@ -161,21 +182,14 @@
           <oj-bind-if test="[[!readonly()]]">
             <oj-option :id="[[i18n.menus.shoppingcart.discard.id]]" value="[[i18n.menus.shoppingcart.discard.id]]"
               disabled="[[!changeManager().hasChanges]]">
-              <img id="discard-changes" class="option-icon"
-                data-bind="attr: {src: '../images/' + [[i18n.menus.shoppingcart.discard.iconFile]] + '.png'}" />
-              <span>
-                <oj-bind-text value="[[i18n.menus.shoppingcart.discard.label]]"></oj-bind-text>
-              </span>
+              <img id="discard-changes" class="option-icon" data-bind="attr: {src: '../images/' + [[i18n.menus.shoppingcart.discard.iconFile]] + '.png'}" />
+              <span><oj-bind-text value="[[i18n.menus.shoppingcart.discard.label]]"></oj-bind-text></span>
             </oj-option>
           </oj-bind-if>
           <oj-bind-if test="[[!readonly()]]">
-            <oj-option :id="[[i18n.menus.shoppingcart.commit.id]]" value="[[i18n.menus.shoppingcart.commit.id]]"
-              disabled="[[!changeManager().hasChanges]]">
-              <img id="commit-changes" class="option-icon"
-                data-bind="attr: {src: '../images/' + [[i18n.menus.shoppingcart.commit.iconFile]] + '.png'}" />
-              <span>
-                <oj-bind-text value="[[i18n.menus.shoppingcart.commit.label]]"></oj-bind-text>
-              </span>
+            <oj-option :id="[[i18n.menus.shoppingcart.commit.id]]" value="[[i18n.menus.shoppingcart.commit.id]]" disabled="[[!changeManager().hasChanges]]">
+              <img id="commit-changes" class="option-icon" data-bind="attr: {src: '../images/' + [[i18n.menus.shoppingcart.commit.iconFile]] + '.png'}" />
+              <span><oj-bind-text value="[[i18n.menus.shoppingcart.commit.label]]"></oj-bind-text></span>
             </oj-option>
           </oj-bind-if>
         </oj-menu>

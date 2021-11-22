@@ -1,7 +1,7 @@
 # Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-deleteMethod: weblogic.console.backend.driver.plugins.ClusterMBeanCustomizer.deleteCluster
+deleteMethod: weblogic.remoteconsole.customizers.ClusterMBeanCustomizer.deleteCluster
 
 properties:
 
@@ -85,6 +85,13 @@ properties:
 
 - name: ClusterType
   label: Cross-cluster Replication Type
+  legalValues:
+  - value: none
+    label: None
+  - value: wan
+    label: Wide Area Network (WAN)
+  - value: man
+    label: Metro Area Network (MAN)
 
 - name: SessionStateQueryProtocolEnabled
   label: Enable Session State Query Protocol
@@ -100,7 +107,7 @@ properties:
 
 - name: CandidateMachinesForMigratableServers
   optionsSources:
-    - /Machines
+    - Domain/Machines
 
 - name: DataSourceForAutomaticMigration
   usedIf:
@@ -108,7 +115,7 @@ properties:
     values:
       - database
   optionsSources:
-    - /JDBCSystemResources
+    - Domain/JDBCSystemResources
 
 - name: DataSourceForSessionPersistence
   usedIf:
@@ -116,15 +123,15 @@ properties:
     values:
       - wan
   optionsSources:
-    - /JDBCSystemResources
+    - Domain/JDBCSystemResources
 
 - name: DataSourceForJobScheduler
   optionsSources:
-    - /JDBCSystemResources
+    - Domain/JDBCSystemResources
 
 - name: CoherenceClusterSystemResource
   optionsSources:
-    - /CoherenceClusterSystemResources
+    - Domain/CoherenceClusterSystemResources
 
   helpSummaryHTML: >
     <p>Coherence cluster associated with this cluster.</p>
@@ -140,6 +147,7 @@ properties:
       - database
 
 - name: AutoMigrationTableCreationDDLFile
+  offlineName: AutoMigrationTableCreationDdlFile
   usedIf:
     property: MigrationBasis
     values:
@@ -151,7 +159,7 @@ properties:
     values:
       - database
 
-- name: MemberDiscoveryTimeout
+- name: DatabaseLessLeasingBasis.MemberDiscoveryTimeout
   usedIf:
     property: MigrationBasis
     values:
@@ -212,3 +220,6 @@ properties:
     values:
       - none
       - man
+
+- name: HTTPPingRetryCount
+  offlineName: HttpPingRetryCount

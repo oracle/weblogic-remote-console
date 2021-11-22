@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -10,9 +10,6 @@ properties:
 - name: "FrontendHost"
 - name: "FrontendHTTPPort"
 - name: "FrontendHTTPSPort"
-helpTasks:
-- "clusters/ConfigureClusters"
-- "clusters/SpecifyClusterReplicationGroups"
 helpTopics:
 - label: "Setting Up WebLogic Clusters "
   href: "clust/setup.html"

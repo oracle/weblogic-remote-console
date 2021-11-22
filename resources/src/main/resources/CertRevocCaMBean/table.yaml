@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page allows you to specify whether mappings from inbound
@@ -9,11 +9,6 @@ introductionHTML: >
 displayedColumns:
 - name: "Name"
 - name: "DistinguishedName"
-
-helpTasks:
-- "security/ConfigureCAOverrides"
-- "security/ConfigureX509CertificateRevocationChecking"
-- "security/ConfigureIdentityAndTrust"
 
 helpTopics:
 - label: "X.509 Certificate Revocation Checking"

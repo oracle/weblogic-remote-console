@@ -1,9 +1,9 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
-- name: HidePolicyFaults
+- name: PolicyFaults
+  label: Hide Policy Faults
   # We want the PolicyFaults from WseeBasePortRuntimeMBean not here
-  source: PolicyFaults
-- name: HideTotalSecurityFaults
+- name: TotalSecurityFaults
+  label: Hide Total Security Faults
   # We want the TotalSecurityFaults from WseeBasePortRuntimeMBean not here
-  source: TotalSecurityFaults

@@ -3,4 +3,4 @@
 introductionHTML: >
   <p>This page manages the authentication configuration providers for this domain.</p>
 # It's required to have at least 1 slice to pass the build.  So, just provide an empty slice here.
-properties:
+

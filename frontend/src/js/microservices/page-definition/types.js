@@ -6,8 +6,11 @@
  */
 "use strict";
 
-define(['ojs/ojlogger', './utils'],
-  function (Logger, PageDefinitionUtils) {
+define(['ojs/ojlogger', './utils' , '../../core/utils'],
+  function (Logger, PageDefinitionUtils, CoreUtils) {
+
+    //This is also defined in fields.js
+    const NULL_VALUE = Object.freeze("___NULL___");
 
     /**
      * PageDataTypes Constructor
@@ -16,7 +19,8 @@ define(['ojs/ojlogger', './utils'],
      * @parm perspectiveId containing the current perspective
      */
     function PageDataTypes(pdjTypes, perspectiveId) {
-      this.isConfigData = (perspectiveId === 'configuration');
+//MLW      this.isConfigData = (perspectiveId === "configuration");
+      this.isConfigData = true;
 
       // Index the types by the property name one time
       let types = {};
@@ -43,7 +47,7 @@ define(['ojs/ojlogger', './utils'],
       getHelpInstruction: function(propertyName) {
         let retval = null;
         if (this.pdjTypes[propertyName].helpSummaryHTML !== undefined)
-           retval = this.pdjTypes[propertyName].helpSummaryHTML;
+          retval = this.pdjTypes[propertyName].helpSummaryHTML;
         return retval;
       },
 
@@ -51,15 +55,15 @@ define(['ojs/ojlogger', './utils'],
       getHelpDetailed: function(propertyName) {
         let retval = null;
         if (this.pdjTypes[propertyName].detailedHelpHTML !== undefined)
-           retval = this.pdjTypes[propertyName].detailedHelpHTML;
+          retval = this.pdjTypes[propertyName].detailedHelpHTML;
         return retval;
       },
 
-      /** Return the MBeanInfo object for the property */
-      getMBeanInfo: function(propertyName) {
+      /** Return the externalHelp object for the property */
+      getExternalHelp: function(propertyName) {
         let retval = null;
-        if (this.pdjTypes[propertyName].MBeanInfo !== undefined)
-           retval = this.pdjTypes[propertyName].MBeanInfo;
+        if (this.pdjTypes[propertyName].externalHelp !== undefined)
+          retval = this.pdjTypes[propertyName].externalHelp;
         return retval;
       },
 
@@ -72,11 +76,11 @@ define(['ojs/ojlogger', './utils'],
         }
 
         let result = helpDetailed;
-        let mbeanInfo = this.getMBeanInfo(propertyName);
-        if (mbeanInfo != null) {
-          let label = mbeanInfo.type + "." + mbeanInfo.attribute;
-          let javadocHref = mbeanInfo.javadocHref;
+        let externalHelp = this.getExternalHelp(propertyName);
+        if (externalHelp != null) {
+          let label = externalHelp.label;
           let link = label;
+          let javadocHref = externalHelp.href;
           if (javadocHref !== undefined) {
             link = "<a target=_blank rel=noopener href=" + javadocHref + ">" + label + "</a>";
           }
@@ -89,7 +93,7 @@ define(['ojs/ojlogger', './utils'],
       getType: function(propertyName) {
         let retval = 'string';
         if (this.pdjTypes[propertyName].type !== undefined)
-           retval = this.pdjTypes[propertyName].type;
+          retval = this.pdjTypes[propertyName].type;
         return retval;
       },
 
@@ -108,6 +112,44 @@ define(['ojs/ojlogger', './utils'],
         return (this.pdjTypes[propertyName].restartNeeded === true);
       },
 
+      /** Check if the property supports Model Tokens */
+      isSupportsModelTokens: function(propertyName) {
+        const rtnval = this.pdjTypes[propertyName].supportsModelTokens;
+        return CoreUtils.isNotUndefinedNorNull(rtnval) ? rtnval : false;
+      },
+
+      /** Check if the property supports unresolved references */
+      isSupportsUnresolvedReferences: function(propertyName) {
+        const rtnval = this.pdjTypes[propertyName].supportsUnresolvedReferences;
+        return CoreUtils.isNotUndefinedNorNull(rtnval) ? rtnval : false;
+      },
+
+      /** Check where the value comes from **/
+      valueFrom: function(propertyName, rdjDataObject, alternateDataObject) {
+        let rdjObject = rdjDataObject;
+
+        if (alternateDataObject !== undefined) {
+          rdjObject = alternateDataObject.value;
+        }
+        // Get the configuration data value as the monitoring
+        // perspective data does not have an rdjDataObject.value
+        if ((rdjObject != null) && (this.isConfigData)) {
+          let value = rdjObject.value;
+          if (CoreUtils.isNotUndefinedNorNull(value)){
+            if (typeof value === 'string'  || typeof value === 'number' || typeof value === 'boolean'
+              || value.value !== undefined || value.resourceData != undefined) {
+              return "fromRegValue";
+            }
+            else if ( value.unresolvedReference !== undefined){
+              return "fromUnresolvedReference";
+            }
+          }else if (CoreUtils.isNotUndefinedNorNull(rdjObject.modelToken)){
+            return "fromModelToken";
+          }
+        }
+      },
+
+
       /** Check if the property is required */
       isRequired: function(propertyName) {
         let rtnval = false;
@@ -121,7 +163,7 @@ define(['ojs/ojlogger', './utils'],
       getLabel: function(propertyName) {
         let retval = propertyName;
         if (this.pdjTypes[propertyName].label !== undefined)
-           retval = this.pdjTypes[propertyName].label;
+          retval = this.pdjTypes[propertyName].label;
         return retval;
       },
 
@@ -183,9 +225,15 @@ define(['ojs/ojlogger', './utils'],
       getLegalValueLabel: function(propertyName, propertyValue) {
         let retval = propertyValue;
         if (this.hasLegalValues(propertyName)) {
+          if (propertyValue === null){
+            propertyValue = NULL_VALUE;
+          }
           let values = this.getLegalValues(propertyName);
           for (let i in values) {
             let legalValue = values[i];
+            if (legalValue.value === null){
+              legalValue.value = NULL_VALUE;
+            }
             if (legalValue.value === propertyValue) {
               retval = legalValue.label;
               break;
@@ -253,7 +301,7 @@ define(['ojs/ojlogger', './utils'],
 
       /** Check if the property is a uploadedFile */
       isUploadedFileType: function(propertyName) {
-        return (this.getType(propertyName) === 'uploadedFile');
+        return (this.getType(propertyName) === 'fileContents');
       },
 
       /** Return the converted value for the property that was read from the observable */
@@ -298,6 +346,78 @@ define(['ojs/ojlogger', './utils'],
             break;
 
           default:
+            if (readValue === NULL_VALUE){
+              result = null;
+            }
+            else
+            // Remaining types are correct when not an empty string
+            // and the empty string represents no value...
+            if (readValue !== "") result = readValue;
+            break;
+        }
+        return result;
+      },
+
+      getConvertedObservableValue_WDT: function(propertyName, readValue, from) {
+        let result = null;
+
+        // Ensure a value was obtained in order to convert
+        if ((readValue === undefined) || (readValue === null))
+          return result;
+
+        // This is multiselect, such as Targets field.
+        if (this.isArray(propertyName) &&  this.isReferenceType(propertyName)){
+          return readValue;
+        }
+
+        // Check for array type that is a string, eg. JNDI Names
+        // Note: reference types are identity values
+        if (this.isArray(propertyName) && this.isStringType(propertyName)) {
+          return PageDefinitionUtils.getArrayOfStringConvertedValue(readValue, "\n");
+        }
+
+        if (from === "fromModelToken"){
+          return {modelToken: readValue};
+        }
+        if (from === "fromUnresolvedReference"){
+          return {
+            label: readValue,
+            unresolvedReference: readValue
+          };
+        }
+
+        // Address the remaining types where needed...
+        switch(this.getType(propertyName)) {
+          case 'int':
+          case 'long':
+          case 'double':
+            if (isNaN(readValue)) {
+              // Provides better error message
+              result = readValue;
+            }
+            else {
+              // Convert to a number
+              result = Number(readValue);
+            }
+            break;
+
+          case 'boolean':
+            // Field returns a true or false
+            result = readValue;
+            break;
+
+          case 'properties':
+            if (readValue !== "") {
+              // Convert to the JSON object of key = value
+              result = PageDefinitionUtils.getPropertiesConvertedValue(readValue, "\n");
+            }
+            break;
+
+          default:
+            if (readValue === NULL_VALUE){
+              result = null;
+            }
+            else
             // Remaining types are correct when not an empty string
             // and the empty string represents no value...
             if (readValue !== "") result = readValue;
@@ -313,22 +433,23 @@ define(['ojs/ojlogger', './utils'],
 
         if (alternateDataObject !== undefined) {
           value = alternateDataObject.value;
-        }else{
+        }
+        else {
           // Get the configuration data value as the monitoring
           // perspective data does not have an rdjDataObject.value
           if ((value != null) && (this.isConfigData)) {
-              value = rdjDataObject.value;
+            value = rdjDataObject.value;
           }
         }
 
         // No data value, simply return the display value
-        if (value == null) {
+        if (value === null) {
           return displayValue;
         }
 
         switch(this.getType(propertyName)) {
           case 'reference':
-            if (displayValue == null) {
+            if (displayValue === null) {
               // When there is no display value then return the actual value
               result = value;
             }
@@ -338,7 +459,7 @@ define(['ojs/ojlogger', './utils'],
             }
             break;
           case 'properties':
-            if (displayValue == null) {
+            if (displayValue === null) {
               // When there is no display value then return the actual value
               result = value;
             }
@@ -349,14 +470,14 @@ define(['ojs/ojlogger', './utils'],
             break;
           case 'string':
             result = value;
-            if ((displayValue != null) && this.isArray(propertyName)) {
+            if ((displayValue !== null) && this.isArray(propertyName)) {
               // For a string array, get a display value for a text area
               result = PageDefinitionUtils.getArrayOfStringDisplayValue(value, "\n");
             }
             break;
           case 'int':
             result = value;
-            if ((displayValue != null) && this.isDisplayAsHexPresentation(propertyName)) {
+            if ((displayValue !== null) && this.isDisplayAsHexPresentation(propertyName)) {
               // For integer type with displayAsHex, get a display value for a text area
               result = displayValue;
             }
@@ -368,33 +489,144 @@ define(['ojs/ojlogger', './utils'],
         return result;
       },
 
+      getObservableValue_WDT : function(propertyName, rdjDataObject, displayValue, alternateDataObject) {
+        let result, value;
+        let rdjObject = rdjDataObject;
+
+        if (alternateDataObject !== undefined) {
+          rdjObject = alternateDataObject;
+        }
+        if (CoreUtils.isNotUndefinedNorNull(rdjObject)) {
+          if (CoreUtils.isNotUndefinedNorNull(rdjObject.modelToken)){
+            return rdjObject.modelToken;
+          }
+          const valObject = rdjObject.value;
+          if (typeof valObject !== "undefined") {
+            // valObject can be null, so guard against that
+            if (valObject !== null && CoreUtils.isNotUndefinedNorNull(valObject.unresolvedReference)) {
+              return valObject.unresolvedReference;
+            }
+            if (valObject !== null && CoreUtils.isNotUndefinedNorNull(valObject.value)) {
+              value = valObject.value;
+            }
+            else {
+              value = valObject;
+            }
+          }
+        }
+
+        // No data value, simply return the display value
+        if (value === null) {
+          return displayValue;
+        }
+
+        switch(this.getType(propertyName)) {
+          case 'reference':
+            if (displayValue === null) {
+              // When there is no display value then return the actual value
+              result = value;
+            }
+            else {
+              Logger.log("INFO: Observable using display value of property: " + propertyName);
+              result = displayValue;
+            }
+            break;
+          case 'properties':
+            if (displayValue === null) {
+              // When there is no display value then return the actual value
+              result = value;
+            }
+            else {
+              // For properties type, get a display value for a text area
+              result = PageDefinitionUtils.getPropertiesDisplayValue(value, "\n");
+            }
+            break;
+          case 'string':
+            result = value;
+            if ((displayValue !== null) && this.isArray(propertyName)) {
+              // For a string array, get a display value for a text area
+              result = PageDefinitionUtils.getArrayOfStringDisplayValue(value, "\n");
+            }
+            break;
+          case 'int':
+            result = value;
+            if ((displayValue !== null) && this.isDisplayAsHexPresentation(propertyName)) {
+              // For integer type with displayAsHex, get a display value for a text area
+              result = displayValue;
+            }
+            break;
+          default:
+            result = value;
+            break;
+        }
+        return result;
+      },
+
+      getObservableValueFrom : function(rdjDataObject) {
+        if (CoreUtils.isNotUndefinedNorNull(rdjDataObject)) {
+          if (CoreUtils.isNotUndefinedNorNull(rdjDataObject.modelToken)){
+            return "fromModelToken";
+          }
+          const valObject = rdjDataObject.value;
+          if (typeof valObject !== "undefined") {
+            // valObject can still be null, so guard against it
+            if (valObject !== null && CoreUtils.isNotUndefinedNorNull(valObject.unresolvedReference)) {
+              return "fromUnresolvedReference";
+            }
+          }
+        }
+        return "fromRegValue";
+      },
+
       /** Determine if the data value for the property indicates the value is actually set vs. defaulted */
       isValueSet: function (propertyName, rdjDataObject) {
         let result = false;
 
         // Only config data indicates when data value is set
-        if (this.isConfigData && (rdjDataObject != undefined) && (rdjDataObject.set != undefined)) {
+        if (this.isConfigData && (rdjDataObject != null) && (rdjDataObject.set != null)) {
           result = (rdjDataObject.set === true);
         }
 
         return result;
       },
 
-      /** Return the displayed value for the property */
-      getDisplayValue: function(propertyName, rdjDataObject, alternateDataObject) {
-        let displayValue = null;
-        let value = rdjDataObject;
+      /** Determine if the data value for the property contains the options sources */
+      hasOptionsSources: function (propertyName, rdjDataObject) {
+        let result = false;
 
+        // Only config data provides the options sources
+        if (this.isConfigData && (rdjDataObject != null) && (rdjDataObject.optionsSources != null)) {
+          result = (rdjDataObject.optionsSources.length > 0);
+        }
+        return result;
+      },
+
+      /** Return the displayed value for the property.  We probably should clear a
+       * getDisplayValue_WDT like what we did for getObserveredValue.
+       */
+      getDisplayValue: function(propertyName, rdjDataObject, alternateDataObject) {
+        let displayValue = null, value = null;
+        let rdjObject = rdjDataObject;
         if (alternateDataObject !== undefined) {
-          value = alternateDataObject.value;
-        }else{
+          value = rdjObject = alternateDataObject;
+        } else {
           // Get the configuration data value as the monitoring
           // perspective data does not have an rdjDataObject.value
-          if ((value != null) && (this.isConfigData)) {
-            value = rdjDataObject.value
+          if ((rdjObject != null) && (this.isConfigData)) {
+            value = rdjObject;
           }
         }
-
+        if (CoreUtils.isUndefinedOrNull(rdjObject)){
+          return "";
+        }
+        if (CoreUtils.isNotUndefinedNorNull(rdjObject.modelToken)) {
+          return rdjObject.modelToken;
+        }
+        else
+        if (CoreUtils.isNotUndefinedNorNull(rdjObject.value) && (CoreUtils.isNotUndefinedNorNull(rdjObject.value.unresolvedReference))){
+          return rdjObject.value.unresolvedReference;
+        }
+        value = rdjObject.value;
         // Determine the display value based on the property type
         if (value != null) {
           if (this.isArray(propertyName)) {
@@ -409,7 +641,8 @@ define(['ojs/ojlogger', './utils'],
             if (this.isReferenceType(propertyName)) {
               displayValue = PageDefinitionUtils.getNameFromCollectionChild(value);
             }
-            else if (this.isPropertiesType(propertyName)) {
+            else
+            if (this.isPropertiesType(propertyName)) {
               displayValue = PageDefinitionUtils.getPropertiesDisplayValue(value, ", ");
             } else if (this.isDisplayAsHexPresentation(propertyName)) {
               displayValue = this.decConvertToHexString(value);
@@ -425,6 +658,10 @@ define(['ojs/ojlogger', './utils'],
             // Covert the value to the legal value display name when available
             displayValue = this.getLegalValueLabel(propertyName, displayValue);
           }
+        }
+        else
+        if (this.hasLegalValues(propertyName) && this.isValueSet(propertyName,rdjObject)){
+          displayValue = this.getLegalValueLabel(propertyName, displayValue);
         }
         return displayValue;
       }

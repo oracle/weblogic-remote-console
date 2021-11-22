@@ -16,7 +16,8 @@ const password = require('../lib/admin').credential.password;
 const Cluster = require('../lib/machineAndClusterProps');
 
 // NavTree Form, Table, Create, Shopping Cart Test Suite
-describe.only('Test Suite: basic_test for Navtree structure view, Object creation/modification from Landing page ' +
+describe.only('Test Suite: basic_test: Add WLS Domain Connection/WDT Model file and Save/Load ' +
+    'Domain Connection and WDT file projects, view Navtree structure, Object creation/modification from Landing page ' +
     'and Shopping Cart functionality', function () {
     let driver;
     let file = "sanityTest.png";
@@ -35,53 +36,26 @@ describe.only('Test Suite: basic_test for Navtree structure view, Object creatio
         await driver.quit();
     })
 
-    //Test Login and logout with credential
-    it('1. Test Category: GAT/Risk1\n \t Test Scenario: Login with credential - Connect-Disconnect Utilities ', async function () {
+    //Test Add Domain Admin Server Connection
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: Create WLS Domain Connection, Vew Configuration Tree, ' +
+        'Valid navTree Environment -> AdminServer ', async function () {
+        file = "domainConnectionTest.png";
         try {
-            await admin.goToHomePageUrl(driver);
+            await admin.goToHomePageUrl(driver,"","Cancel");
             await driver.sleep(4800);
-            element = driver.findElement(By.id("connect-disconnect-image"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            if (element.isEnabled()) {
-                await element.click();
-                console.log("Click Disconnect Image link.");
-            }
+            console.log("Click Configuration View Tree Image");
+            //await driver.findElement(By.xpath("//img[@alt=\'Configuration View Tree\']")).click();
+            await driver.findElement(By.xpath("//*[@id=\'view\']/img")).click();
+            console.log("Click Navtree Environment");
+            await driver.sleep(2400);
+            await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+            console.log("Click Navtree Server");
+            await driver.sleep(2400);
+            await driver.findElement(By.xpath("//span[contains(.,\'Servers\')]")).click();
+            console.log("Click Navtree AdminServer");
             await driver.sleep(4800);
-            element = driver.findElement(By.id("connect-disconnect-image"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            if (element.isEnabled()) {
-                await element.click();
-                console.log("Click Connect Image link.");
-            }
-            await driver.sleep(4800);
-            element = driver.findElement(By.id("username-field|input"));
-            if (element.isEnabled()) {
-                await element.clear();
-                await element.sendKeys(user);
-                console.log("Enter userName: " + user);
-            }
-            await driver.sleep(200);
-            element = driver.findElement(By.id("password-field|input"));
-            if (element.isEnabled()) {
-                await element.clear();
-                await element.sendKeys(password);
-                console.log("Enter Password: " + password);
-            }
-            await driver.sleep(300);
-            element = driver.findElement(By.id("url-field|input"));
-            await driver.sleep(400);
-            if (element.isEnabled()) {
-                await element.clear();
-                await element.sendKeys(adminUrl);
-                console.log("Enter adminUrl: " + adminUrl);
-            }
-            element =  driver.findElement(By.id("connection-dialog-button-label"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await driver.sleep(600);
-            if (element.isEnabled()) {
-                await element.click();
-                console.log("Connect to AdminServer " + adminUrl + " successful");
-            }
+            await driver.findElement(By.xpath("//span[contains(.,\'AdminServer\')]")).click();
+
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -89,16 +63,30 @@ describe.only('Test Suite: basic_test for Navtree structure view, Object creatio
         }
     })
 
-    //
-    // NavTree Configuration -> Environments Menu Elements:
-    //    Domain, Servers, Clusters, ServerTemplates, Machines, MigrationTargets,
-    //    VirtualHosts, SingletonServices, StartupClasses, ShutdownClasses,
-    //    CoherenceClusterSystemResources, CoherenceServers
-    //
-    it('2. Test Category: GAT/Risk1\n \t Test Scenario: NavTree Configuration Menu Elements Test', async function () {
-        file = "navConfigEnv.png";
+    //Test Add WDT Model File Connection
+    it('2. Test Category: GAT/Risk1\n \t Test Scenario: Add WDT Model File Connection, Vew Configuration Tree, ' +
+        'Valid navTree Environment', async function () {
+        file = "WDTFileConnectionTest.png";
         try {
-            await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Servers");
+            let modelName = "baseDomain";
+            const file = "frontend/system-tests/lib/baseDomain.yaml";
+            const path = require('path');
+            const wdtModelFile = process.env.OLDPWD + path.sep + file;
+            await admin.addWDTModelExistingFile(driver,modelName,wdtModelFile);
+            await driver.sleep(2400);
+
+            console.log("Click WDT Model Tree");
+            await driver.findElement(By.xpath("//*[@id=\"modeling\"]/img")).click();
+            await driver.sleep(2400);
+            console.log("Click Navtree Environment");
+            await driver.sleep(2400);
+            await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+            console.log("Click Navtree Server");
+            await driver.sleep(2400);
+            await driver.findElement(By.xpath("//span[contains(.,\'Servers\')]")).click();
+            console.log("Click Navtree AdminServer");
+            await driver.sleep(4800);
+            await driver.findElement(By.xpath("//span[contains(.,\'AdminServer\')]")).click();
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -112,10 +100,10 @@ describe.only('Test Suite: basic_test for Navtree structure view, Object creatio
     it('3. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete the recently created TestCluster-1 ', async function() {
        file = "TestCluster-1.png";
        try {
-            await admin.createNewMBeanObject(driver,"TestCluster-1",2,"configuration","Environment","Clusters");
-            await driver.sleep(2400);
             //Test: Table, Tab and Form
-            await cluster.modifyClusterGeneralTab(driver,"TestCluster-1","general","Random",
+           await admin.createNewMBeanObject(driver,"TestCluster-1",2,"configuration","Environment","Clusters");
+           await driver.sleep(2400);
+           await cluster.modifyClusterGeneralTab(driver,"TestCluster-1","general","round-robin-affinity",
                 "localhost",4,"TxnAffinityEnabled","ConcurrentSingletonActivationEnabled",
                 "WeblogicPluginEnabled","360","2","3");
             await driver.sleep(1400);
@@ -127,4 +115,5 @@ describe.only('Test Suite: basic_test for Navtree structure view, Object creatio
             console.log(e.toString() + " TEST FAIL");
        }
     })
+
 })

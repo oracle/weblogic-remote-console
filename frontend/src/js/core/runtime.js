@@ -15,13 +15,14 @@
  * @see module:core/cbe-types
  * @see module:core/types
  */
-define(['ojs/ojlogger', './adapters/file-adapter', './cbe-types', './types', 'text!../baseUrl'],
-  function (Logger, FileAdapter, CbeTypes, CoreTypes, BaseUrl) {
+define(['ojs/ojlogger', './adapters/file-adapter', './cbe-types', './types', './utils', 'text!../baseUrl'],
+  function (Logger, FileAdapter, CbeTypes, CoreTypes, CoreUtils, BaseUrl) {
     var properties = {};
     var config = {};
 
     properties['console-frontend.mode'] = CoreTypes.Console.RuntimeMode.DETACHED.name;
     properties['console-frontend.isReadOnly'] = false;
+    properties['console-backend.providerId'] = "";
     properties['console-backend.domain'] = "";
     properties['console-backend.domainConnectState'] = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
     properties['console-backend.weblogic.username'] = "weblogic";
@@ -38,13 +39,27 @@ define(['ojs/ojlogger', './adapters/file-adapter', './cbe-types', './types', 'te
         properties['console-backend.pollingMillis'] = config['console-backend']['pollingMillis'];
         properties['console-backend.retryAttempts'] = config['console-backend']['retryAttempts'];
         properties['settings.autoSync.minimumSecs'] = config['settings']['autoSync']['minimumSecs'];
+        properties['settings.projectManagement.location'] = config['settings']['projectManagement']['location'];
+        properties['settings.projectManagement.startup.task'] = config['settings']['projectManagement']['startup']['task'];
+        properties['settings.projectManagement.startup.project'] = config['settings']['projectManagement']['startup']['project'];
+        properties['settings.projectManagement.startup.config'] = config['settings']['projectManagement']['startup']['config'];
+        properties['settings.projectManagement.newModel.domain.fileContents'] = config['settings']['projectManagement']['newModel']['domain']['fileContents'];
+        properties['settings.projectManagement.newModel.sparse.fileContents'] = config['settings']['projectManagement']['newModel']['sparse']['fileContents'];
       });
 
     function getBaseUrl() {
       return BaseUrl + "/api";
     }
 
-  //public:
+    /**
+     * return backend URL
+     * @returns URL to backend (i.e. no /api)
+     */
+    function getBackendUrl() {
+      return BaseUrl;
+    }
+
+    //public:
     return {
       PropertyName: Object.freeze({
         CFE_MODE : {name: "console-frontend.mode"},
@@ -52,7 +67,12 @@ define(['ojs/ojlogger', './adapters/file-adapter', './cbe-types', './types', 'te
         CFE_VERSION : {name: "console-frontend.version"},
         CFE_LOGGING_DEFAULT_LEVEL: {name: "console-frontend.logging.defaultLevel"},
         CFE_AUTO_SYNC_SECS: {name: "settings.autoSync.minimumSecs"},
+        CFE_PROJECT_MANAGEMENT_LOCATION: {name: "settings.projectManagement.location"},
         CFE_IS_READONLY: {name: "console-frontend.isReadOnly"},
+        CFE_STARTUP_PROJECT: {name: "settings.projectManagement.startup.project"},
+        CFE_STARTUP_TASK: {name: "settings.projectManagement.startup.task"},
+        CFE_STARTUP_CONFIG: {name: "settings.projectManagement.startup.config"},
+        CBE_PROVIDER_ID: {name: "console-backend.providerId"},
         CBE_NAME : {name: "console-backend.name"},
         CBE_VERSION : {name: "console-backend.version"},
         CBE_WLS_VERSION_ONLINE: {name: "weblogic.version.online"},
@@ -65,43 +85,69 @@ define(['ojs/ojlogger', './adapters/file-adapter', './cbe-types', './types', 'te
         CBE_MODE: {name: "console-backend.mode"}
       }),
 
-      getBaseUrl: getBaseUrl,
+      getBaseUrl: function() {
+        return getBaseUrl();
+      },
 
-      getPollingMillis: function() {
+      getBackendUrl: getBackendUrl,
+
+      getDataProviderId: () => {
+        return properties["console-backend.providerId"];
+      },
+
+      setDataProviderId: (value) => {
+        properties["console-backend.providerId"] = value;
+      },
+
+      getStartupProject: () => {
+        return properties["settings.projectManagement.startup.project"];
+      },
+
+      getStartupTask: () => {
+        return properties["settings.projectManagement.startup.task"];
+      },
+
+      getPollingMillis: function () {
         return parseInt(this.getProperty(this.PropertyName.CBE_POLLING_MILLIS));
       },
 
-      getRetryAttempts: function() {
+      getRetryAttempts: function () {
         return parseInt(this.getProperty(this.PropertyName.CBE_RETRY_ATTEMPTS));
       },
 
-      getAutoSyncMinimumSecs: function() {
+      getAutoSyncMinimumSecs: function () {
         return parseInt(this.getProperty(this.PropertyName.CFE_AUTO_SYNC_SECS));
+      },
+
+      getProjectManagementLocation: function() {
+        return this.getProperty(this.PropertyName.CFE_PROJECT_MANAGEMENT_LOCATION);
       },
 
       getDomainConnectState: function() {
         return this.getProperty(this.PropertyName.CBE_DOMAIN_CONNECT_STATE);
       },
 
-      getLoggingLevel: function() {
-        const level = this.getProperty(this.PropertyName.CFE_LOGGING_DEFAULT_LEVEL);
-        const levelSwitch = (level) => ({
-          "NONE": 0,
-          "ERROR": 1,
-          "WARN": 2,
-          "INFO": 3,
-          "DEBUG": 4
-        })[level];
+      getLoggingLevel: function () {
+        const level = this.getProperty(
+          this.PropertyName.CFE_LOGGING_DEFAULT_LEVEL
+        );
+        const levelSwitch = (level) =>
+          ({
+            NONE: 0,
+            ERROR: 1,
+            WARN: 2,
+            INFO: 3,
+            DEBUG: 4,
+          }[level]);
         return levelSwitch(level);
       },
 
       getProperty: function (name) {
         let property;
-        if (typeof name !== "undefined") {
-          if (typeof name.name !== "undefined") {
+        if (CoreUtils.isNotUndefinedNorNull(name)) {
+          if (CoreUtils.isNotUndefinedNorNull(name.name)) {
             property = properties[name.name];
-          }
-          else if (typeof name === "string" && name.length > 0) {
+          } else if (typeof name === "string" && name.length > 0) {
             property = properties[name];
           }
         }
@@ -109,54 +155,53 @@ define(['ojs/ojlogger', './adapters/file-adapter', './cbe-types', './types', 'te
       },
 
       setProperty: function(name, value) {
-        if (typeof name !== "undefined" && typeof value !== "undefined") {
-          if (typeof name.name !== "undefined") {
+        if (CoreUtils.isNotUndefinedNorNull(name) && CoreUtils.isNotUndefinedNorNull(value)) {
+          if (CoreUtils.isNotUndefinedNorNull(name.name)) {
             properties[name.name] = value;
-          }
-          else if (typeof name === "string" && name.length > 0) {
+          } else if (typeof name === "string" && name.length > 0) {
             properties[name] = value;
           }
         }
       },
 
-      isReadOnly: function() {
+      isReadOnly: function () {
         return this.getProperty(this.PropertyName.CFE_IS_READONLY);
       },
 
-      // TODO: Have this return a 'deep frozen' copy of this.config 
+      // TODO: Have this return a 'deep frozen' copy of this.config
       getConfig: function () {
         return config;
       },
 
-      getMode: function() {
+      getMode: function () {
         return this.getProperty(this.PropertyName.CFE_MODE);
       },
 
-      getName: function() {
+      getName: function () {
         return this.getProperty(this.PropertyName.CFE_NAME);
       },
 
-      getVersion: function() {
+      getVersion: function () {
         return this.getProperty(this.PropertyName.CBE_VERSION);
       },
 
-      getDomainName: function() {
+      getDomainName: function () {
         return this.getProperty(this.PropertyName.CBE_DOMAIN);
       },
 
-      getDomainVersion: function() {
+      getDomainVersion: function () {
         return this.getProperty(this.PropertyName.CBE_WLS_VERSION_ONLINE);
       },
 
-      getWebLogicUsername: function() {
+      getWebLogicUsername: function () {
         return this.getProperty(this.PropertyName.CBE_WLS_USERNAME);
       },
 
-      getDomainUrl: function() {
+      getDomainUrl: function () {
         return this.getProperty(this.PropertyName.CBE_DOMAIN_URL);
       },
 
-      getBackendMode: function() {
+      getBackendMode: function () {
         return this.getProperty(this.PropertyName.CBE_MODE);
       },
 
@@ -169,12 +214,12 @@ define(['ojs/ojlogger', './adapters/file-adapter', './cbe-types', './types', 'te
        * const serviceConfig = Runtime.getServiceConfig(CbeTypes.ServiceType.CONFIGURATION);
        */
       getServiceConfig: function(serviceType) {
-        if (typeof serviceType === "undefined") {
+        if (CoreUtils.isUndefinedOrNull(serviceType)) {
           throw new Error("Value assigned to 'serviceType' parameter cannot be undefined.");
         }
-        let services = config['console-backend']['services'];
+        let services = config["console-backend"]["services"];
         return services.find((service) => {
-          return service['id'] === serviceType.name;
+          return service["id"] === serviceType.name;
         });
       },
 
@@ -184,13 +229,15 @@ define(['ojs/ojlogger', './adapters/file-adapter', './cbe-types', './types', 'te
        * @param {ServiceComponentType} serviceComponentType
        * @returns {string} The path uri associated with ``serviceType`` and ``serviceComponentType``. Returns ``undefined``, if no association exists.
        * @throws {Error} When values assigned to ``serviceType`` or ``serviceComponentId`` parameters are undefined.
+       * @example
+       * const pathUri = Runtime.getPathUri(CbeTypes.ServiceType.CONFIGURATION, CbeTypes.ServiceComponentType.CHANGE_MANAGER);
        */
       getPathUri: function(serviceType, serviceComponentType) {
-        if (typeof serviceType === "undefined" || typeof serviceComponentType === "undefined") {
+        if (CoreUtils.isUndefinedOrNull(serviceType) || CoreUtils.isUndefinedOrNull(serviceComponentType)) {
           throw new Error("Values assigned to 'serviceType' and 'serviceComponentId' arguments cannot be undefined.");
         }
         let service = this.getServiceConfig(serviceType);
-        return (typeof service !== "undefined" ? service['path'] + "/" + serviceComponentType.name : undefined);
+        return (CoreUtils.isNotUndefinedNorNull(service) ? service['path'] + "/" + serviceComponentType.name : undefined);
       }
     };
   }

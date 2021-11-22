@@ -6,7 +6,7 @@ introductionHTML: >
 
 properties:
 - name: "Name"
-- name: "DatasourceType"
-- name: "JNDINames"
+- name: "JDBCResource.DatasourceType"
+- name: "JDBCResource.JDBCDataSourceParams.JNDINames"
   presentation:
     inlineFieldHelp: "e.g. jdbc/myDS"

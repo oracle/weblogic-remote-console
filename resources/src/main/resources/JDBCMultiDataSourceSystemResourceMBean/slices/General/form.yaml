@@ -6,10 +6,10 @@ introductionHTML: >
 
 properties:
 - name: "Name"
-- name: "AlgorithmType"
-- name: "FailoverRequestIfBusy"
-- name: "ConnectionPoolFailoverCallbackHandler"
-- name: "TestFrequencySeconds"
-- name: "JNDINames"
+- name: "JDBCResource.JDBCDataSourceParams.AlgorithmType"
+- name: "JDBCResource.JDBCDataSourceParams.FailoverRequestIfBusy"
+- name: "JDBCResource.JDBCDataSourceParams.ConnectionPoolFailoverCallbackHandler"
+- name: "JDBCResource.JDBCConnectionPoolParams.TestFrequencySeconds"
+- name: "JDBCResource.JDBCDataSourceParams.JNDINames"
   presentation:
     inlineFieldHelp: "e.g. jdbc/myDS"

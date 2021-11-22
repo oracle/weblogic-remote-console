@@ -18,7 +18,42 @@
  */
 define(['ojs/ojcore', '../microservices/data-management/cbe-data-manager', '../core/runtime', '../core/types', '../core/utils' , '../core/cfe-errors', '../core/cbe-types'],
   function (oj, CbeDataManager, Runtime, CoreTypes, CoreUtils, CfeErrors, CbeTypes) {
-  //public:
+    function getConnectionErrorMessage(status) {
+      let msg = oj.Translations.getTranslatedString("wrc-data-operations.messages.connectFailed.detail");
+      // Create message to display for connection error
+      switch (status) {
+        case 400:
+          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.badRequest.detail");
+          break;
+        case 401:
+        case 403:
+          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.invalidCredentials.detail");
+          break;
+        case 404:
+          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.invalidUrl.detail");
+          break;
+        case 501:
+          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.notSupported.detail");
+          break;
+        default:
+          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.unexpectedStatus.detail", "{0}").replace("{0}", status);
+          break;
+      }
+      return msg;
+    }
+
+    async function createAuthorizationHeader(dataProvider) {
+      // Use built-in, global btoa() method to create
+      // an Authorization HTTP request header.
+      //
+      // If btoa() throws an error, control will pass
+      // to the ".catch(reason => {})" chain link below.
+      // Otherwise, we just return the base64 encoded
+      // value for the Authorization HTTP header.
+      return "Basic " + btoa(dataProvider.username + ":" + dataProvider.password);
+    }
+
+    //public:
     return {
       mbean: {
         messages: {
@@ -33,13 +68,13 @@ define(['ojs/ojcore', '../microservices/data-management/cbe-data-manager', '../c
           }
         },
 
-      /**
-       *
-       * @param {string} url
-       * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
-       */
-        test: function(url) {
-          return CbeDataManager.testUri({url: url})
+        /**
+         *
+         * @param {string} uri
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        test: function(uri) {
+          return CbeDataManager.testUri(uri)
             .then(reply => {
               // Here, we show how to remove fields from reply when
               // you need to adhere to SoC between the architectural
@@ -56,26 +91,22 @@ define(['ojs/ojcore', '../microservices/data-management/cbe-data-manager', '../c
         },
         /**
          *
-         * @param {ServiceType} serviceType
          * @param {string} uri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        get: function(serviceType, uri) {
-          return CbeDataManager.getAggregatedData(serviceType, uri);
-        },
-        /**
-         *
-         * @param {string} url
-         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
-         */
-        reload: function(url) {
-          return CbeDataManager.reloadData({url: url})
+        get: function(uri) {
+          return CbeDataManager.getAggregatedData(uri)
             .catch(response =>{
-              // Try to make FailureType more accurate, if
-              // it was a CBE_REST_API generated failure
-              if (response.transport.status === 404) {
-                // Switch it to FailureType.NOT_FOUND
-                response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+              if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                response["failureReason"] = response.failureReason.stack;
+              }
+              else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                // Try to make FailureType more accurate, if
+                // it was a CBE_REST_API generated failure
+                if (response.transport.status === 404) {
+                  // Switch it to FailureType.NOT_FOUND
+                  response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+                }
               }
               // Rethrow updated (or not updated) reject
               return Promise.reject(response);
@@ -83,30 +114,43 @@ define(['ojs/ojcore', '../microservices/data-management/cbe-data-manager', '../c
         },
         /**
          *
-         * @param {ServiceType} serviceType
          * @param {string} uri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        new: function(serviceType, uri) {
-          return CbeDataManager.putData(serviceType, uri);
-        },
-        /**
-         * Use a ``multipart/form-data`` POST request to upload deployment-related files to a CBE REST endpoint
-         * @param {string} url - URL for resource at CBE REST endpoint
-         * @param {object} formData - Data to use in ``multipart/form-data`` POST request sent to CBE REST API endpoint
-         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
-         */
-        upload: function (url, formData) {
-          return CbeDataManager.postMultipartFormData(url, formData);
+        reload: function(uri) {
+          return CbeDataManager.reloadData(uri)
+            .catch(response =>{
+              if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                response["failureReason"] = response.failureReason.stack;
+              }
+              else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                // Try to make FailureType more accurate, if
+                // it was a CBE_REST_API generated failure
+                if (response.transport.status === 404) {
+                  // Switch it to FailureType.NOT_FOUND
+                  response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+                }
+              }
+              // Rethrow updated (or not updated) reject
+              return Promise.reject(response);
+            });
         },
         /**
          *
-         * @param {string} url
-         * @param {object} dataPayload
+         * @param {string} uri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        update: function(url, dataPayload) {
-          return CbeDataManager.postData({url: url}, dataPayload);
+        new: function(uri) {
+          return CbeDataManager.putData(uri);
+        },
+        /**
+         * Use a ``multipart/form-data`` POST request to upload deployment-related files to a CBE REST endpoint
+         * @param {string} uri - URI for endpoint accepting ``multipart/form-data`` POST requests
+         * @param {object} formData - Data to use in ``multipart/form-data`` POST request sent to CBE REST API endpoint
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        upload: function (uri, formData) {
+          return CbeDataManager.postMultipartFormData(uri, formData);
         },
         /**
          *
@@ -119,17 +163,22 @@ define(['ojs/ojcore', '../microservices/data-management/cbe-data-manager', '../c
         },
         /**
          *
-         * @param {string} url
+         * @param {string} uri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        delete: function(url) {
-          return CbeDataManager.deleteData(url)
+        delete: function(uri) {
+          return CbeDataManager.deleteData(uri)
             .catch(response =>{
-              // Try to make FailureType more accurate, if
-              // it was a CBE_REST_API generated failure
-              if (response.transport.status === 404) {
-                // Switch it to FailureType.NOT_FOUND
-                response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+              if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                response["failureReason"] = response.failureReason.stack;
+              }
+              else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                // Try to make FailureType more accurate, if
+                // it was a CBE_REST_API generated failure
+                if (response.transport.status === 404) {
+                  // Switch it to FailureType.NOT_FOUND
+                  response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+                }
               }
               // Rethrow updated (or not updated) reject
               return Promise.reject(response);
@@ -137,49 +186,81 @@ define(['ojs/ojcore', '../microservices/data-management/cbe-data-manager', '../c
         }
       },
 
+      tabstrip: {
+        getSlice: function(uri) {
+          return CbeDataManager.getSliceData(uri);
+        }
+      },
+
+      navtree: {
+        /**
+         * Returns navtree data for a given ``navtreeUri`` and ``navtreeData`` object.
+         * <p>Note that this uses an HTTP POST to get data, not an HTTP GET. Assign ``{}`` (and empty JS object) to ``navtreeData`` to get the "root" nodes of a given navtree.</p>
+         * @param {string} navtreeUri - Value assigned to ``navtree`` field of dataProvider.beanTrees[index] JS object
+         * @param {object} treeModel - JS object representing the "parent" node in a navtree
+         * @returns {Promise<{contents: [object]}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        refreshNavtreeData: function(navtreeUri, treeModel) {
+          return CbeDataManager.getNavtreeData(navtreeUri, treeModel)
+            .then(reply => {
+              return reply.body.data;
+            });
+        },
+        isNavTreeLeaf: function(url) {
+          return CbeDataManager.isNavTreeLeaf(url)
+            .then(reply => {
+              return reply.body.data.navigation;
+            });
+        }
+      },
+
       ataglance: {
         /**
-         *
+         * @param {string} uri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        getServersGlance: function() {
-          return CbeDataManager.getData(CbeTypes.ServiceType.MONITORING, CbeTypes.ServiceComponentSubType.LIFECYCLE, {id: "view"});
+        getServersGlance: function(uri) {
+          return CbeDataManager.getData(uri);
         }
       },
 
       changeManager: {
         SessionAction: Object.freeze({
-          EDIT: {name: "edit"},
-          COMMIT: {name: "commit"},
-          DISCARD: {name: "discard"}
+          VIEW_CHANGES: {name: "changes"},
+          COMMIT_CHANGES: {name: "commitChanges"},
+          DISCARD_CHANGES: {name: "discardChanges"}
         }),
         /**
          * Returns a Promise containing the lock state of the edit session the CBE has with WLS domain
+         * @param {string} changeManagerUri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        getLockState: function() {
-          return CbeDataManager.getChangeManagerData("view");
+        getLockState: function(changeManagerUri) {
+          return CbeDataManager.getChangeManagerData(changeManagerUri);
         },
         /**
          *
+         * @param {string} changeManagerUri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        getData: function() {
-          return CbeDataManager.getChangeManagerData("edit");
+        getData: function(changeManagerUri) {
+          return CbeDataManager.getChangeManagerData(`${changeManagerUri}/${this.SessionAction.VIEW_CHANGES.name}`);
         },
         /**
          *
+         * @param {string} changeManagerUri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        commitChanges: function() {
-          return CbeDataManager.postChangeManagerData("commit");
+        commitChanges: function(changeManagerUri) {
+          return CbeDataManager.postChangeManagerData(`${changeManagerUri}/${this.SessionAction.COMMIT_CHANGES.name}`);
         },
         /**
          *
+         * @param {string} changeManagerUri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        discardChanges: function() {
-          return CbeDataManager.postChangeManagerData("discard");
+        discardChanges: function(changeManagerUri) {
+          return CbeDataManager.postChangeManagerData(`${changeManagerUri}/${this.SessionAction.DISCARD_CHANGES.name}`);
         }
       },
 
@@ -203,74 +284,30 @@ define(['ojs/ojcore', '../microservices/data-management/cbe-data-manager', '../c
           return CbeDataManager.getConnectionData(CbeTypes.ServiceType.INFORMATION)
         },
 
-        /**
-         * Try to establish a connection to the CBE.
-         * <p>It takes no parameters because the connectivity info is being (or has already been) gotten from elsewhere.</p>
-         * <p>The possible choices for the state are:</p>
-         * <ul>
-         *   <li>CONNECTED>/li>
-         *   <li>DISCONNECTED</li>
-         * </ul>
-         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
-         */
-        getConnectivityMode: function () {
-          return CbeDataManager.getConnectionData(CbeTypes.ServiceType.CONNECTING);
-        },
-
         // FortifyIssueSuppression Password Management: Password in Comment
         // The comment below is not referencing a password
         /**
-         * Ask CBE to make a connection to a WebLogic REST API endpoint, using the given WebLogic ``user``, WebLogic ``password`` and WebLogic admin ``url``.       *
-         * @param {{username: string, password: string, adminUrl: string}} connectivityInfo user - Information to use when attempting to connect to the WebLogic REST API endpoint.
+         * Ask CBE to make a connection to a WebLogic REST API endpoint, using the given WebLogic ``user``, WebLogic ``password`` and WebLogic admin ``url``.
+         * @param {{string: id, name: string, type: "adminserver", url: string, username: string, password: string, beanTrees: [string], status?: string, class?: string} | {id:string, name:string, type: "model", file: string, beanTrees: [string], status?: string, class?: string}} dataProvider
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        makeConnection: function (connectivityInfo) {
-          function getErrorMessage(status) {
-            let msg = this.messages.connectFailed.detail;
-            // Create message to display for connection error
-            switch (status) {
-              case 400:
-                msg = msg + this.messages.badRequest.detail;
-                break;
-              case 401:
-              case 403:
-                msg = msg + this.messages.invalidCredentials.detail;
-                break;
-              case 404:
-                msg = msg + this.messages.invalidUrl.detail;
-                break;
-              case 501:
-                msg = msg + this.messages.notSupported.detail;
-                break;
-              default:
-                msg = msg + this.messages.unexpectedStatus.detail.replace("{0}", status);
-                break;
-            }
-            return msg;
-          }
-
-          async function createAuthorizationHeader(connectivityInfo) {
-            // Use built-in, global btoa() method to create
-            // an Authorization HTTP request header.
-            //
-            // If btoa() throws an error, control will pass
-            // to the ".catch(reason => {})" chain link below.
-            // Otherwise, we just return the base64 encoded
-            // value for the Authorization HTTP header.
-            return "Basic " + btoa(connectivityInfo.username + ":" + connectivityInfo.password);
-          }
-
-          const dataPayload = {"domainUrl": connectivityInfo.adminUrl};
+        stageConnection: function (dataProvider) {
+          const dataPayload = {
+            name: dataProvider.id,
+            providerType: "AdminServerConnection",
+            domainUrl: dataProvider.url
+          };
 
           // Use Promise chain to do the work
           return new Promise((resolve, reject) => {
-            createAuthorizationHeader(connectivityInfo)
+            createAuthorizationHeader(dataProvider)
               .then(authorization => {
                 // Creation of Authorization header succeeded, so
                 // go ahead and make the call on the CbeDataManager
                 // micro-service.
-                CbeDataManager.postReplyConnectionData(dataPayload, authorization)
+                CbeDataManager.stageConnectionData(dataPayload, authorization)
                   .then(reply => {
+                    reply.body.data["connectivity"] = CoreTypes.Console.RuntimeMode.DETACHED.name;
                     resolve(reply);
                   })
                   .catch(response => {
@@ -278,11 +315,16 @@ define(['ojs/ojcore', '../microservices/data-management/cbe-data-manager', '../c
                     // failure type!! Check and see what failure
                     // type it actually is, before you alter the
                     // response :-)
-                    if (response.failureType === CoreTypes.FailureType.UNEXPECTED && response.failureReason.message === "Failed to fetch") {
-                      response["failureReason"] = this.messages.backendNotReachable.detail;
+                    if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                      if (response.failureReason.message === "Failed to fetch") {
+                        response["failureReason"] = this.messages.backendNotReachable.detail;
+                      }
+                      else {
+                        response["failureReason"] = response.failureReason.stack;
+                      }
                     }
                     else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                      response["failureReason"] = getErrorMessage.call(this, response.transport.status);
+                      response["failureReason"] = getConnectionErrorMessage.call(this, response.transport.status);
                     }
                     reject(response);
                   });
@@ -297,15 +339,188 @@ define(['ojs/ojcore', '../microservices/data-management/cbe-data-manager', '../c
           });
         },
 
+        useConnection: function (dataProvider) {
+          return CbeDataManager.useConnectionData(dataProvider.id)
+            .then(response => {
+              response.body.data["connectivity"] = CoreTypes.Console.RuntimeMode.ONLINE.name;
+
+              if (CoreUtils.isNotUndefinedNorNull(response.failureType)) {
+                if (response.transport.status === 400) response.transport.status = 401;
+                response["failureReason"] = getConnectionErrorMessage.call(this, response.transport.status);
+                response.body.data["connectivity"] = CoreTypes.Console.RuntimeMode.DETACHED.name;
+              }
+              return response;
+            });
+
+        },
+
         /**
          * Ask CBE to disconnect from the WebLogic REST API endpoint it is currently connected to.
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        removeConnection: function() {
-          return CbeDataManager.deleteConnectionData();
+        removeConnection: function(dataProvider) {
+          return CbeDataManager.deleteConnectionData(dataProvider.id)
+            .catch(response =>{
+              // If it was a CBE_REST_API generated failure
+              // with a 403 (Forbidden) status code, we
+              // view this as a recoverable exception, likely
+              // caused by the CBE not getting completely into
+              // the state where the provider stuff works. This
+              // "incomplete state" can be demostrated using
+              // the curl commands in the bescen shell script.
+              // The recovery action involves switching the
+              // Promise reject to a Promise resolve.
+              if (response.transport.status === 403) {
+                const reply = { body: { data: {} } };
+                return Promise.resolve(reply);
+              }
+              else {
+                // Rethrow response as a reject Promise.
+                return Promise.reject(response);
+              }
+            });
+        }
+      },
+
+      model: {
+        messages: {
+          "connectionMessage": {summary: oj.Translations.getTranslatedString("wrc-data-operations.messages.connectionMessage.summary")},
+          "backendNotReachable": {detail: oj.Translations.getTranslatedString("wrc-data-operations.messages.backendNotReachable.detail")}
+        },
+
+        createModel: function(dataProviderId, formData) {
+          return new Promise((resolve, reject) => {
+            CbeDataManager.uploadWDTModel(formData)
+              .then(reply => {
+                const messages = [];
+                // Check for any messages in the connection reply
+                if (CoreUtils.isNotUndefinedNorNull(reply.body.message)) {
+                  messages.push({
+                    severity: "warn",
+                    summary: this.messages.connectionMessage.summary,
+                    detail: reply.body.message
+                  });
+                }
+                return messages;
+              })
+              .then(messages => {
+                if (messages.length === 0) {
+                  CbeDataManager.useModelData(dataProviderId)
+                    .then(reply => {
+                      // The /api/providers API doesn't currently return
+                      // anything that will allow us to set the CFE runtime
+                      // mode to OFFLINE. For now, we'll just add a
+                      // "connectivity": "offline" field to the reply.
+                      reply.body.data["connectivity"] = CoreTypes.Console.RuntimeMode.OFFLINE.name;
+                      // The /api/providers API doesn't currently return
+                      // a "state" field, but we need that to set the CBE
+                      // connect state to "connected". The CBE connect
+                      // state drives a lot of the behavior in the CFE.
+                      reply.body.data["state"] = CoreTypes.Domain.ConnectState.CONNECTED.name;
+                      if (CoreUtils.isNotUndefinedNorNull(reply.body.message)) {
+                        messages.push({
+                          severity: "warn",
+                          summary: this.messages.connectionMessage.summary,
+                          detail: reply.body.message
+                        });
+                      }
+                      reply.body.messages = messages;
+                      resolve(reply);
+                    })
+                    .catch(response => {
+                      // Catch to avoid getting an Uncaught (in Promise),
+                      // but rethrow so the consumer can handle it however
+                      // it sees fit.
+                      if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                        if (response.failureReason.message === "Failed to fetch") {
+                          response["failureReason"] = this.messages.backendNotReachable.detail;
+                        }
+                        else {
+                          response["failureReason"] = response.failureReason.stack;
+                        }
+                      }
+                      else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                        response["failureReason"] = getConnectionErrorMessage.call(this, response.transport.status);
+                      }
+                      reject(response);
+                    });
+                }
+              })
+              .catch(response => {
+                // Catch to avoid getting an Uncaught (in Promise),
+                // but rethrow so the consumer can handle it however
+                // it sees fit.
+                if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                  if (response.failureReason.message === "Failed to fetch") {
+                    response["failureReason"] = this.messages.backendNotReachable.detail;
+                  }
+                  else {
+                    response["failureReason"] = response.failureReason.stack;
+                  }
+                }
+                else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                  if (CoreUtils.isNotUndefinedNorNull(response.body.messages)) {
+                    response["failureReason"] = response.body.messages[0].message;
+                  }
+                  else {
+                    response["failureReason"] = getConnectionErrorMessage.call(this, response.transport.status);
+                  }
+                }
+                reject(response);
+              });
+          });
+        },
+
+        /**
+         *
+         * @param {string} dataProviderId
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        removeModel: function(dataProviderId) {
+          return CbeDataManager.deleteModelData(dataProviderId)
+            .catch(response =>{
+              // If it was a CBE_REST_API generated failure
+              // with a 403 (Bad Request) status code, we
+              // view this as a recoverable exception, likely
+              // caused by the CBE not getting completely into
+              // the state where the provider stuff works.
+              // The recovery action involves switching the
+              // Promise reject to a Promise resolve.
+              if (response.transport.status === 403) {
+                const reply = { body: { data: {} } };
+                return Promise.resolve(reply);
+              }
+              else {
+                // Rethrow response as a reject Promise.
+                return Promise.reject(response);
+              }
+            });
+        },
+
+        downloadModel: function(dataProvider) {
+          const uri = dataProvider.getBeanTreeDownloadUri();
+          return CbeDataManager.downloadModelData(uri);
+        }
+      },
+
+      providers: {
+        /**
+         *
+         * @returns {Promise<{body: {data: *, messages: [*]}} |{failureType: string, failureReason: *}>}
+         */
+        listing: function() {
+          return CbeDataManager.listDataProviders()
+            .catch(response => {
+              // Just set response.body.data to an empty
+              // array, and convert to a Promise resolve.
+              // Leave everything else in tact, so caller
+              // has everything they need to treat it as
+              // an error condition.
+              response["body"] = {data: []};
+              return Promise.resolve(response);
+            });
         }
       }
-
     }
   }
 );

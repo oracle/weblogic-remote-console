@@ -13,11 +13,6 @@ properties:
 - name: Description
 - name: Version
 - name: ControlFlag
-helpTasks:
-- "security/ConfigureAuthenticationProviders"
-- "security/ConfigurePasswordValidationProviders"
-- "security/SetTheJAASControlFlag"
-- "security/ManageSecurityProviders"
 helpTopics:
 - label: "Authenticating a User Not Defined in the Identity Store"
   href: "secmg/ia_atn.html#SECMG753"

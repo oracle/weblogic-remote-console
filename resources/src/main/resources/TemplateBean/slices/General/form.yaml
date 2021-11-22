@@ -17,10 +17,6 @@ advancedProperties:
 - name: "AttachSender"
 - name: "SafExportPolicy"
 - name: "MessagingPerformancePreference"
-helpTasks:
-- "jms_modules/destination_keys/ConfigureDestinationKeys"
-- "jms_modules/queues/ConfigureQueues"
-- "jms_modules/topics/ConfigureTopics"
 helpTopics:
 - label: "Configuring Messaging "
   href: "jmsad/basic_config.html"

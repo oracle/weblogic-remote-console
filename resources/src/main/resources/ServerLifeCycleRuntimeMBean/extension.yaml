@@ -1,0 +1,28 @@
+# Copyright (c) 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+
+- name: "start"
+  type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+
+- name: "resume"
+  type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+
+- name: "suspend"
+  type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+
+- name: "forceSuspend"
+  type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+
+- name: "shutdown_timeout_ignoreSessions"
+  remoteName: "shutdown"
+  type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+  parameters:
+  - name: "timeout"
+    type: "int"
+  - name: "ignoreSessions"
+    type: "boolean"
+
+- name: "forceShutdown"
+  type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"

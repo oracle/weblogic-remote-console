@@ -11,8 +11,6 @@ properties:
 - name: "MessagesMaximum"
 - name: "MaximumMessageSize"
 
-helpTasks:
-  - "saf_agents/ConfigureThresholdsandQuotas"
 helpTopics:
   - label: "Configuring the Store-and-Forward Service "
     href: "safmg/config_jms.html"

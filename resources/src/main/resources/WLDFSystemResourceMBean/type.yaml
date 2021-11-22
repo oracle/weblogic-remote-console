@@ -13,6 +13,6 @@ properties:
 
 - name: Targets
   optionsSources:
-    - /Servers
-    - /Clusters
+    - Domain/Servers
+    - Domain/Clusters
 

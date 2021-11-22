@@ -1,15 +1,11 @@
 # Copyright (c) 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
+- name: Enabled
+  label: Response Queue Enabled
 
-  - name: ResponseBufferingQueueEnabled
-    source: Enabled
-    label: Response Queue Enabled
+- name: ConnectionFactoryJndiName
+  label: Response Queue Connection Factory Jndi Name
 
-  - name: ResponseBufferingQueueJndi
-    source: ConnectionFactoryJndiName
-    label: Response Queue Connection Factory Jndi Name
-
-  - name: ResponseBufferingQueueTransactionEnabled
-    source: TransactionEnabled
-    label: Response Queue Transaction Enabled
+- name: TransactionEnabled
+  label: Response Queue Transaction Enabled

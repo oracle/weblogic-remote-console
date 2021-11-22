@@ -1,17 +1,25 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
-- name: SSLListenPortEnabled
-  source: Enabled
+- name: Enabled
+  label: SSL Listen Port Enabled
 
-- name: SSLListenPort
-  source: ListenPort
+- name: ListenPort
+  label: SSL Listen Port
   usedIf:
-    property: SSLListenPortEnabled
+    property: Enabled
     values:
     - true
 
-- name: SSLLoginTimeoutMillis
-  source: LoginTimeoutMillis
+- name: LoginTimeoutMillis
   label: SSL Login Timeout
+
+- name: AcceptKSSDemoCertsEnabled
+  offlineName: AcceptKssDemoCertsEnabled
+
+- name: MinimumTLSProtocolVersion
+  offlineName: MinimumTlsProtocolVersion
+
+- name: SSLv2HelloEnabled
+  offlineName: SsLv2HelloEnabled

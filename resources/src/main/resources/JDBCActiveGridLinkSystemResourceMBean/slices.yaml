@@ -5,6 +5,9 @@ alternateSliceSources:
 slices:
 - name: General
 - name: ConnectionPool
+  slices:
+    - name: General
+    - name: Advanced
 - name: Oracle
 - name: ONS
 - name: Transaction

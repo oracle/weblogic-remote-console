@@ -6,18 +6,18 @@
  */
 "use strict";
 
-define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memory-manager', 'ojs/ojlogger', '../page-definition/utils'],
-  function (ko, ArrayDataProvider, PerspectiveMemoryManager, Logger, PageDefinitionUtils) {
+define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memory-manager', 'ojs/ojlogger', '../page-definition/utils', '../../core/utils'],
+  function (ko, ArrayDataProvider, PerspectiveMemoryManager, Logger, PageDefinitionUtils, CoreUtils) {
 
-    function BeanPathManager(perspectiveId, countObservable){
-      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(perspectiveId);
+    function BeanPathManager(beanTree, countObservable){
+      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(beanTree.type);
       this.beanPathHistory = ko.observableArray(this.perspectiveMemory.history());
       this.beanPathHistoryOptions = new ArrayDataProvider(this.beanPathHistory, { keyAttributes: 'value' });
       this.beanPathHistoryCount = countObservable;
     }
 
     function isValidBeanPathHistoryPath(path) {
-      return (typeof path !== "undefined" && path !== "undefined" && !path.startsWith("form")  && !path.startsWith("table"));
+      return (CoreUtils.isNotUndefinedNorNull(path) && CoreUtils.isNotUndefinedNorNull(path) && !path.startsWith("form")  && !path.startsWith("table"));
     }
 
     function trimPathParam(pathParam) {
@@ -25,9 +25,6 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
 
       if (pathParam.startsWith("//")) {
         pathParam = pathParam.substring(2);
-      }
-      else if (":/".includes(pathParam.charAt(0))) {
-        pathParam = pathParam.substring(1);
       }
       return pathParam;
     }
@@ -39,7 +36,7 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
        * @param {[string]} breadcrumbLabels
        */
       addBeanPath: function (pathParam, breadcrumbLabels) {
-        if (typeof pathParam === "undefined" || pathParam.startsWith("undefined")) pathParam = "";
+        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith("undefined")) pathParam = "";
 
         const actualPathParam = trimPathParam(pathParam);
         const breadcrumbsPath = (breadcrumbLabels.length > 0 ? breadcrumbLabels.join("/") : actualPathParam);
@@ -49,7 +46,7 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
         });
 
         const breadcrumbsLabel = decodeURIComponent(breadcrumbsPath.replace(/\//g, " | "));
-        if (typeof result !== "undefined") {
+        if (CoreUtils.isNotUndefinedNorNull(result)) {
           result.label = breadcrumbsLabel;
         }
         else if (isValidBeanPathHistoryPath(actualPathParam) && actualPathParam !== "/") {
@@ -66,7 +63,7 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
        * @param {string} pathParam
        */
       removeBeanPath: function (pathParam) {
-        if (typeof pathParam === "undefined" || pathParam.startsWith("undefined")) pathParam = "";
+        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith("undefined")) pathParam = "";
 
         pathParam = trimPathParam(pathParam);
 
@@ -79,7 +76,7 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
 
       isHistoryOption: function (value) {
         const option = this.beanPathHistory().find(item => item.value === value);
-        return (typeof option !== "undefined");
+        return (CoreUtils.isNotUndefinedNorNull(option));
       },
 
       resetHistory: function () {
@@ -90,12 +87,12 @@ define(['knockout', 'ojs/ojarraydataprovider', '../perspective/perspective-memor
       },
 
       getBreadcrumbsPath: function (pathParam) {
-        if (typeof pathParam === "undefined" || pathParam.startsWith("undefined")) pathParam = "";
+        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith("undefined")) pathParam = "";
 
         pathParam = trimPathParam(pathParam);
 
         const option = this.beanPathHistory().find(item => item.value === pathParam);
-        return (typeof option !== "undefined" ? option.label : pathParam);
+        return (CoreUtils.isNotUndefinedNorNull(option) ? option.label : pathParam);
       },
 
       getHistoryOptions: function () {

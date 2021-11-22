@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Use this page to configure a credential provider of a Web service
@@ -10,12 +10,6 @@ displayedColumns:
 - name: "Name"
 - name: "Value"
 - name: "EncryptValueRequired"
-helpTasks:
-- "webservices/webservicesecurity/CreateDefaultWSSConfig"
-- "webservices/webservicesecurity/CreateDigitalSignatureKeystore"
-- "webservices/webservicesecurity/CreateEncryptionKeystore"
-- "webservices/webservicesecurity/UsePasswordDigest"
-- "webservices/webservicesecurity/UseX509ForIdentity"
 helpTopics:
 - label: "Securing WebLogic Web Services for Oracle WebLogic Server "
   href: "wssov/index.html"

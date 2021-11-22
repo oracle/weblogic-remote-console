@@ -20,11 +20,6 @@ advancedProperties:
 - name: "WorkerPreferredBatchSize"
 # deprecated - name: "OraclePiggybackCommitEnabled"
 
-helpTasks:
-- "stores/CreateJDBCStores"
-- "stores/MonitorStores"
-- "jdbc/jdbc_datasources/CreateDataSources"
-
 helpTopics:
 - label: "Administering the WebLogic Persistent Store"
   href: "store/overview.html"

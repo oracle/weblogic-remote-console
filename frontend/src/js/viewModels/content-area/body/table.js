@@ -7,8 +7,8 @@
 
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojpagingdataproviderview', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', '../../../core/runtime', '../../../apis/data-operations', '../../../apis/message-displaying', './container-resizer', '../../../microservices/page-definition/types', '../../../microservices/page-definition/actions', '../../../microservices/page-definition/fields', '../../../microservices/page-definition/utils', '../../utils', '../../../core/types', '../../../core/utils', '../../../core/cbe-types', '../../../core/cbe-utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojpagingcontrol', 'cfe-multi-select/loader'],
-  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, PagingDataProviderView, HtmlUtils, keySet, Runtime, DataOperations, MessageDisplaying, ContentAreaContainerResizer, PageDataTypes, PageDefinitionActions, PageDefinitionFields, PageDefinitionUtils, ViewModelUtils, CoreTypes, CoreUtils, CbeTypes, CbeUtils, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojpagingdataproviderview', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', '../../../core/runtime', '../../../apis/data-operations', '../../../apis/message-displaying', './actions-dialog', './unsaved-changes-dialog', './set-sync-interval-dialog', './container-resizer', '../../../microservices/page-definition/types', '../../../microservices/page-definition/actions', '../../../microservices/page-definition/fields', '../../../microservices/page-definition/utils', './help-form', './wdt-form', '../../utils', '../../../core/types', '../../../core/utils', '../../../core/cbe-types', '../../../core/cbe-utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojpagingcontrol', 'cfe-multi-select/loader'],
+  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, PagingDataProviderView, HtmlUtils, keySet, Runtime, DataOperations, MessageDisplaying, ActionsDialog, UnsavedChangesDialog, SetSyncIntervalDialog, ContentAreaContainerResizer, PageDataTypes, PageDefinitionActions, PageDefinitionFields, PageDefinitionUtils, HelpForm, WdtForm, ViewModelUtils, CoreTypes, CoreUtils, CbeTypes, CbeUtils, Logger) {
     function TableViewModel(viewParams) {
       // Declare reference to instance of the ViewModel
       // that JET creates/manages the lifecycle of. This
@@ -23,32 +23,36 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             label: oj.Translations.getTranslatedString("wrc-table.checkboxes.showHiddenColumns.label")
           }
         },
-        tables: {
-          help: {
-            label: oj.Translations.getTranslatedString("wrc-table.tables.label"),
-            column: {
-              header: {
-                name: oj.Translations.getTranslatedString("wrc-table.tables.help.column.header.name"),
-                description: oj.Translations.getTranslatedString("wrc-table.tables.help.column.header.description")
-              }
-            }
+        buttons: {
+          yes: {disabled: false,
+            label: oj.Translations.getTranslatedString("wrc-common.buttons.yes.label")
+          },
+          no: {disabled: false,
+            label: oj.Translations.getTranslatedString("wrc-common.buttons.no.label")
+          },
+          ok: {disabled: false,
+            label: oj.Translations.getTranslatedString("wrc-common.buttons.ok.label")
+          },
+          cancel: {disabled: false,
+            label: oj.Translations.getTranslatedString("wrc-common.buttons.cancel.label")
           }
         },
+        prompts: {
+          unsavedChanges: {
+            needDownloading: {value: oj.Translations.getTranslatedString("wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value")}
+          }
+        },
+        dialog: {
+          title: ko.observable(""),
+          instructions: ko.observable(""),
+          prompt: ko.observable("")
+        },
         dialogSync: {
-          title: oj.Translations.getTranslatedString("wrc-table.dialogSync.title"),
-          instructions: oj.Translations.getTranslatedString("wrc-table.dialogSync.instructions"),
+          title: oj.Translations.getTranslatedString("wrc-sync-interval.dialogSync.title"),
+          instructions: oj.Translations.getTranslatedString("wrc-sync-interval.dialogSync.instructions"),
           fields: {
-            interval: {
-              value: ko.observable(''),
-              label: oj.Translations.getTranslatedString("wrc-table.dialogSync.fields.interval.label")
-            }
-          },
-          buttons: {
-            ok: { id: "dlgOkBtn1", disabled: false,
-              label: oj.Translations.getTranslatedString("wrc-table.dialogSync.buttons.ok.label")
-            },
-            cancel: { id: "dlgCancelBtn1", disabled: false,
-              label: oj.Translations.getTranslatedString("wrc-table.dialogSync.buttons.cancel.label")
+            interval: {value: ko.observable(''),
+              label: oj.Translations.getTranslatedString("wrc-sync-interval.dialogSync.fields.interval.label")
             }
           }
         },
@@ -56,10 +60,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           title: ko.observable(""),
           instructions: ko.observable(""),
           buttons: {
-            ok: { id: "dlgOkBtn2", disabled: ko.observable(true),
+            ok: {disabled: ko.observable(true),
               label: ko.observable("")
             },
-            cancel: { id: "dlgCancelBtn2", disabled: false,
+            cancel: {disabled: false,
               label: oj.Translations.getTranslatedString("wrc-table.actionsDialog.buttons.cancel.label")
             }
           }
@@ -78,6 +82,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           perspective: viewParams.perspective,
           pageDefinitionActions: getPageDefinitionActions,
           newAction: newBean,
+          onWriteModelFile: writeModelFile,
+          isWdtTable: isWdtTable,
           onConnected: setFormContainerMaxHeight,
           onLandingPageSelected: selectLandingPage,
           onBeanPathHistoryToggled: toggleBeanPathHistory,
@@ -86,7 +92,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           onShoppingCartViewed: viewShoppingCart,
           onShoppingCartDiscarded: discardShoppingCart,
           onSyncClicked: setSyncInterval,
-          onSyncIntervalClicked: showSetSyncInterval,
+          onSyncIntervalClicked: captureSyncInterval,
           onActionButtonClicked: renderActionsDialog
         }
       });
@@ -108,19 +114,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.helpDataSource = ko.observableArray([]);
       this.helpDataProvider = new ArrayDataProvider(this.helpDataSource);
       this.helpFooterDom = ko.observable({});
+      this.tableHelpColumns = ko.observableArray([]);
 
       // END: Declare instance variables used in the ViewModel's view
-
-      // Declare instance-scoped variable used to
-      // determine if the table is in delete mode,
-      // or not. It is generally not a good idea to
-      // use "magic" instance-scoped variable to do
-      // something like that, but will just provide
-      // private functions to access it, for now.
-      var _deleteMode = false;
-      this.setDeleteMode = function (value) { _deleteMode = value; };
-      this.inDeleteMode = function () { return _deleteMode; };
-
       this.contentAreaContainerResizer = new ContentAreaContainerResizer(viewParams.perspective);
       this.signalBindings = [];
       this.syncTimerId = undefined;
@@ -143,18 +139,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         renderPage();
         this.subscription = viewParams.parentRouter.data.rdjData.subscribe(renderPage.bind(self));
         cancelSyncTimer();
+
+        if (isWdtTable()) {
+          self.wdtForm = new WdtForm(viewParams);
+        }
       };
 
       self.disconnected = function () {
-        self.subscription.dispose();
+        if (CoreUtils.isNotUndefinedNorNull(self.subscription)) {
+          self.subscription.dispose();
+        }
         cancelSyncTimer();
 
         self.signalBindings.forEach(function (binding) {
           binding.detach();
         });
-        self.signalBindings = [];
 
-       };
+        self.signalBindings = [];
+      };
 
       this.canExit = function () {
         return true;
@@ -163,6 +165,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.showHiddenColumnsValueChanged = function (event) {
         renderPage();
       };
+
+      function isWdtTable() {
+        return (viewParams.perspective.id === "modeling");
+      }
 
       function getPageDefinitionActions() {
         return self.pageDefinitionActions;
@@ -194,72 +200,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         //renderPage();
       }
 
-      function showSetSyncInterval(currentValue) {
-        return new Promise(function (resolve, reject) {
-          // The dialog will contain current value when sync interval is set
-          if (parseInt(currentValue) > 0) self.i18n.dialogSync.fields.interval.value(currentValue);
-
-          const okBtn = document.getElementById(self.i18n.dialogSync.buttons.ok.id);
-          const cancelBtn = document.getElementById(self.i18n.dialogSync.buttons.cancel.id);
-          const inputText = document.getElementById("interval-field");
-          const dialogSync = document.getElementById("syncIntervalDialog");
-
-          // Check the specified sync interval where anything other
-          // than a positive value returns zero for the saved value
-          function sanityCheckInput(syncInterval) {
-            if (syncInterval === "")
-              syncInterval = "0";
-            else {
-              const value = parseInt(syncInterval);
-              if (isNaN(value)) {
-                syncInterval = "0";
-              }
-              else {
-                if (value <= 0)
-                  syncInterval = "0";
-                else
-                  syncInterval = `${value}`;
-              }
-            }
-            return syncInterval;
-          }
-
-          function okClickHandler() {
-            const inputValue = self.i18n.dialogSync.fields.interval.value();
-            const syncInterval = sanityCheckInput(inputValue);
-            setSyncInterval(parseInt(syncInterval));
-            resolve({ exitAction: self.i18n.dialogSync.buttons.ok.label, interval: syncInterval });
-            dialogSync.close();
-          }
-          okBtn.addEventListener('click', okClickHandler);
-
-          function cancelClickHandler() {
-            reject({ exitAction: self.i18n.dialogSync.buttons.cancel.label, interval: currentValue });
-            dialogSync.close();
-          }
-          cancelBtn.addEventListener('click', cancelClickHandler);
-
-          function onKeyUp(event) {
-            if (event.key === "Enter") {
-              // Treat pressing the "Enter" key as clicking the "OK" button
-              okClickHandler();
-              // Suppress default handling of keyup event
-              event.preventDefault();
-              // Veto the keyup event, so JET will update the knockout
-              // observable associated with the <oj-input-text> element
-              return false;
-            }
-          }
-          inputText.addEventListener("keyup", onKeyUp);
-
-          dialogSync.addEventListener('ojClose', function (event) {
-            okBtn.removeEventListener('click', okClickHandler);
-            cancelBtn.removeEventListener('click', cancelClickHandler);
-            inputText.removeEventListener('keyup', onKeyUp);
+      function captureSyncInterval(currentValue) {
+        return SetSyncIntervalDialog.showSetSyncIntervalDialog(currentValue, self.i18n)
+          .then(result => {
+            setSyncInterval(parseInt(result.interval));
+            return Promise.resolve(result);
           });
-
-          dialogSync.open();
-        });
       }
 
       function setSyncInterval(syncInterval) {
@@ -284,59 +230,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         return cancelled;
       }
 
-      function showActionsDialog(dialogParams) {
-        return new Promise(function (resolve, reject) {
-          self.chosenItems = [];
-          const okBtn = document.getElementById(self.i18n.actionsDialog.buttons.ok.id);
-          const cancelBtn = document.getElementById(self.i18n.actionsDialog.buttons.cancel.id);
-          const actionsDialog = document.getElementById("actionsDialog");
-
-          self.i18n.actionsDialog.title(dialogParams.title);
-          self.i18n.actionsDialog.instructions(dialogParams.instructions);
-          self.i18n.actionsDialog.buttons.ok.label(dialogParams.label);
-          self.i18n.actionsDialog.buttons.ok.disabled(true);
-
-          function okClickHandler() {
-            resolve({exitAction: self.i18n.actionsDialog.buttons.ok.label, chosenItems: self.chosenItems});
-            actionsDialog.close();
-          }
-          okBtn.addEventListener('click', okClickHandler);
-
-          function cancelClickHandler() {
-            reject({exitAction: self.i18n.actionsDialog.buttons.cancel.label, chosenItems: self.chosenItems});
-            actionsDialog.close();
-          }
-          cancelBtn.addEventListener('click', cancelClickHandler);
-
-          function onKeyUp(event) {
-            if (event.key === "Enter") {
-              // Treat pressing the "Enter" key as clicking the "OK" button
-              okClickHandler();
-              // Suppress default handling of keyup event
-              event.preventDefault();
-              // Veto the keyup event
-              return false;
-            }
-          }
-
-          actionsDialog.addEventListener('ojClose', function (event) {
-            okBtn.removeEventListener('click', okClickHandler);
-            cancelBtn.removeEventListener('click', cancelClickHandler);
+      function cancelAutoSync() {
+        cancelSyncTimer();
+        self.tableToolbarModuleConfig
+          .then(moduleConfig => {
+            moduleConfig.viewModel.cancelAutoSync();
           });
-
-          actionsDialog.open();
-        });
       }
 
       function renderActionsDialog(dialogParams) {
         return new Promise(function (resolve, reject) {
-          const data = self.pageDefinitionActions.createActionsDialog(dialogParams.action);
+          const data = self.pageDefinitionActions.createActionsDialog(dialogParams.id);
           data.field.setAttribute("on-chosen-items-changed", "[[chosenItemsChanged]]");
           data.field.setAttribute("readonly", dialogParams.isReadOnly);
           self.availableItems = data.availableItems;
           self.actionsDialog.formLayout.html({ view: HtmlUtils.stringToNodeArray(data.formLayout.outerHTML), data: self });
-          showActionsDialog(dialogParams)
+          self.chosenItems = [];
+          return ActionsDialog.showActionsDialog(dialogParams, self.i18n)
             .then((result) => {
+              result["chosenItems"] =  self.chosenItems;
               result["urls"] = data.urls;
               resolve(result);
             })
@@ -392,8 +304,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function newBean(event) {
-        const uri = CbeUtils.extractBeanPath(viewParams.parentRouter.data.rdjUrl());
-        DataOperations.mbean.new(CbeTypes.ServiceType.CONFIGURATION, uri + "?dataAction=new")
+        const createFormUrl = viewParams.parentRouter.data.rdjData().createForm.resourceData;
+        DataOperations.mbean.new(createFormUrl)
           .then(reply => {
             Logger.log(`reply=${JSON.stringify(reply)}`);
             viewParams.parentRouter.data.pdjUrl(reply.body.data.get("pdjUrl"));
@@ -407,8 +319,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       this.selectedListener = function (event) {
-        if (self.inDeleteMode()) return;
-
         var id = null;
 
         if (event.type === "selectedChanged") {
@@ -428,7 +338,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }.bind(this);
 
       function reloadRdjData() {
-        DataOperations.mbean.reload(viewParams.parentRouter.data.rdjUrl())
+        return DataOperations.mbean.reload(viewParams.parentRouter.data.rdjUrl())
           .then(reply => {
             viewParams.parentRouter.data.rdjData(reply.body.data);
           })
@@ -447,71 +357,130 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               case CoreTypes.FailureType.CBE_REST_API.name:
                 MessageDisplaying.displayResponseMessages(response.body.messages);
                 break;
+              default:
+                ViewModelUtils.failureResponseDefaultHandling(response);
+                break;
             }
           });
       }
 
+      function writeModelFile(eventType = "autoSave") {
+        function downloadWdtModelFile() {
+          self.wdtForm.getModelFileChanges()
+            .then(reply => {
+              if (reply.succeeded) {
+                MessageDisplaying.displayMessage({
+                  severity: 'confirmation',
+                  summary: self.wdtForm.getSummaryMessage(ViewModelUtils.isElectronApiAvailable() ? "changesSaved": "changesDownloaded")
+                }, 2500);
+              }
+              else {
+                // This means wdtForm.getModelFileChanges() was
+                // able to download, but not write out the model
+                // file. Call writeModelFile passing in the
+                // filepath and fileContents in reply.
+                self.wdtForm.writeModelFile({filepath: reply.filepath, fileContents: reply.fileContents})
+                  .then(reply => {
+                    Logger.log(`[TABLE] self.wdtForm.writeModelFile(options) returned ${reply.succeeded}`);
+                  });
+              }
+            })
+            .catch(response => {
+              ViewModelUtils.failureResponseDefaultHandling(response);
+            });
+        }
+
+        if (!ViewModelUtils.isElectronApiAvailable()) {
+          switch (eventType) {
+            case "autoSave": {
+              self.i18n.dialog.title(oj.Translations.getTranslatedString("wrc-unsaved-changes.titles.changesNeedDownloading.value"));
+              self.i18n.dialog.prompt(self.i18n.prompts.unsavedChanges.needDownloading.value);
+              UnsavedChangesDialog.showConfirmDialog("ChangesNotDownloaded", self.i18n)
+                .then(reply => {
+                  if (reply) downloadWdtModelFile(eventType);
+                });
+            }
+              break;
+            case "navigation":
+            case "download":
+              downloadWdtModelFile(eventType);
+              break;
+          }
+        }
+        else {
+          downloadWdtModelFile(eventType);
+        }
+      }
+
       this.deleteListener = function (event) {
-        // Set module-scope variable for indicating that
-        // we are in delete mode, to true
-        self.setDeleteMode(true);
+        // prevent row from being selected as a result of the delete button being clicked
+        event.stopPropagation();
 
-        const deleteUrl = Runtime.getBaseUrl() + "/" + self.perspective.id + "/data/" + event.srcElement.id;
+        self.selectedRows.clear();
 
-        DataOperations.mbean.delete(deleteUrl)
-          .then(reply => {
-            MessageDisplaying.displayResponseMessages(reply.body.messages);
+        DataOperations.mbean.delete(event.currentTarget.id)
+          .then((reply) => {
+            if (CoreUtils.isNotUndefinedNorNull(reply.body.messages) && reply.body.messages.length > 0) {
+              MessageDisplaying.displayResponseMessages(reply.body.messages);
+            }
+            else if (CoreUtils.isNotUndefinedNorNull(self.wdtForm)) {
+              writeModelFile();
+            }
           })
           .then(() => {
-            viewParams.signaling.shoppingCartModified.dispatch("table", "delete", {
-              isLockOwner: true,
-              hasChanges: true,
-              supportsChanges: true
-            }, event.srcElement.id);
-            // refresh navtree
+            viewParams.signaling.shoppingCartModified.dispatch("table", "delete", {isLockOwner: true, hasChanges: true, supportsChanges: true,}, event.srcElement.id);
             return {
               isEdit: false,
-              path: decodeURIComponent(viewParams.parentRouter.data.rawPath())
+              path: decodeURIComponent(viewParams.parentRouter.data.rawPath()),
             };
           })
-          .then(treeaction => {
+          .then((treeaction) => {
             if (typeof viewParams.parentRouter.data.breadcrumbs !== "undefined") {
-              treeaction["breadcrumbs"] = viewParams.parentRouter.data.breadcrumbs();
+              treeaction["breadcrumbs"] =
+                viewParams.parentRouter.data.breadcrumbs();
             }
 
             // fix the navtree
             viewParams.signaling.navtreeUpdated.dispatch(treeaction);
           })
           .then(() => {
-            reloadRdjData();
-            renderPage();
-          })
-          .then(() => {
-            self.tableToolbarModuleConfig
-              .then((moduleConfig) => {
-                moduleConfig.viewModel.changeManager({ isLockOwner: true, hasChanges: true, supportsChanges: true });
+            reloadRdjData()
+              .then(() => {
+                renderPage();
               });
           })
-          .catch(response => {
+          .then(() => {
+            self.tableToolbarModuleConfig.then((moduleConfig) => {
+              moduleConfig.viewModel.changeManager({
+                isLockOwner: true,
+                hasChanges: true,
+                supportsChanges: true,
+              });
+            });
+          })
+          .catch((response) => {
             // Announce that shopping cart icon and menu need to
             // be refreshed, because the delete rejection may have
             // caused a roll back of the removal.
-            viewParams.signaling.shoppingCartModified.dispatch("table", "refresh", undefined, event.srcElement.id);
+            viewParams.signaling.shoppingCartModified.dispatch(
+              "table",
+              "refresh",
+              undefined,
+              event.srcElement.id
+            );
 
             if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
               MessageDisplaying.displayResponseMessages(response.body.messages);
             }
           })
-          .then(() => {
-            // NOTE FOR NON-JAVASCRIPT DEVELOPERS:
-            //  You can think of this .then(() => {}) link in the
-            //  chain, as being equivalent to a finally clause in
-            //  a try-catch-finally expression.
-            //
-            self.setDeleteMode(false);
+          .finally(() => {
             // Announce that tabstrip item for "Shopping Cart Viewer"
             // has been unselected
-            viewParams.signaling.tabStripTabSelected.dispatch("table", "shoppingcart", false);
+            viewParams.signaling.tabStripTabSelected.dispatch(
+              "table",
+              "shoppingcart",
+              false
+            );
           });
       }.bind(this);
 
@@ -521,7 +490,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           const column = tableColumns[i];
           // append some non-breaking spaces to the headertext so the sorting
           // arrows don't overlap.
-          let cheaderText = column.label;
+          let cheaderText = column.label ? column.label: column.name;
 
           for (i = 1; i < 7; i++) {
             cheaderText += '\xa0';
@@ -538,7 +507,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         let columnMetadata = [];
 
         // Add table column containing delete icon as the first column
-        if (perspectiveId === "configuration") columnMetadata.push({ name: "_delete", field: "_delete", template: "deleteCellTemplate", sortable: "disabled" });
+        if (["configuration","modeling"].indexOf(perspectiveId) !== -1) {
+          columnMetadata.push({ name: "_delete", field: "_delete", readonly: self.readonly, template: "deleteCellTemplate", sortable: "disabled" });
+        }
 
         columnMetadata = appendTableColumnMetadata(displayedColumns, columnMetadata);
 
@@ -588,10 +559,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
           }
 
-          rowObj['_id'] = PageDefinitionUtils.pathEncodedFromIdentity(row.identity);
-
-          rowObj['_delete'] = { _id: rowObj['_id'], headerText: 'Delete', name: '_delete', field: '_delete', template: 'deleteCellTemplate' }
-          rows.push(rowObj);
+          if (CoreUtils.isNotUndefinedNorNull(row.identity)) {
+            rowObj['_id'] = row.identity.value.resourceData;
+            rowObj['_delete'] = { _id: rowObj['_id'], headerText: 'Delete', name: '_delete', field: '_delete', template: 'deleteCellTemplate', listener: self.deleteListener }
+            rows.push(rowObj);
+          }
         }
 
         const arrayDataProvider = new ArrayDataProvider(rows, { keyAttributes: '_id', implicitSort: [{ attribute: 'Name', direction: 'ascending' }] });
@@ -637,18 +609,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         let pdjTypes, helpData = [];
 
+        const helpForm = new HelpForm(viewParams),
+          column1 = helpForm.i18n.tables.help.columns.header.name,
+          column2 = helpForm.i18n.tables.help.columns.header.description;
+
+        self.tableHelpColumns(helpForm.tableHelpColumns);
+
         if (typeof pdjData.table.displayedColumns !== "undefined") {
           pdjTypes = new PageDataTypes(pdjData.table.displayedColumns, perspectiveId);
 
           for (const i in pdjData.table.displayedColumns) {
             const name = pdjData.table.displayedColumns[i].name;
             const label = pdjTypes.getLabel(name);
-
             // Determine the help description for the property
             const fullHelp = pdjTypes.getFullHelp(name);
             const description = { view: HtmlUtils.stringToNodeArray(fullHelp) };
+            // Use Map to set value of "Name" and "Description"
+            // columns, in a way that honors the language locale
+            const entries = new Map([[column1, label], [column2, description]]);
 
-            helpData.push({ Name: label, Description: description });
+            helpData.push(Object.fromEntries(entries));
           }
         }
 
@@ -663,8 +643,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               // Determine the help description for the property
               const fullHelp = pdjTypes.getFullHelp(name);
               const description = { view: HtmlUtils.stringToNodeArray(fullHelp) };
+              const entries = new Map([[column1, label], [column2, description]]);
 
-              helpData.push({ Name: label, Description: description });
+              helpData.push(Object.fromEntries(entries));
             }
           }
         }

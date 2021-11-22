@@ -4,8 +4,6 @@ introductionHTML: >
   Use this page to manage the management-related server debug flags; that is, the flags
   from the weblogic.management debug scope.
 
-# TBD helpTasks:
-
 # TBD helpTopics:
 
 presentation:
@@ -13,18 +11,18 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
-# deprecated - name: DebugBootstrapServlet
-- name: DebugConfigurationEdit
-- name: DebugConfigurationRuntime
-- name: DebugFileDistributionServlet
-- name: DebugJ2EEManagement
-- name: DebugJMX
-- name: DebugJMXCompatibility
-- name: DebugJMXCore
-- name: DebugJMXCoreConcise
-- name: DebugJMXDomain
-- name: DebugJMXEdit
-- name: DebugJMXRuntime
-- name: DebugManagementServicesResource
-- name: DebugPatchingRuntime
-- name: DebugSituationalConfig
+# deprecated - name: ServerDebug.DebugBootstrapServlet
+- name: ServerDebug.DebugConfigurationEdit
+- name: ServerDebug.DebugConfigurationRuntime
+- name: ServerDebug.DebugFileDistributionServlet
+- name: ServerDebug.DebugJ2EEManagement
+- name: ServerDebug.DebugJMX
+- name: ServerDebug.DebugJMXCompatibility
+- name: ServerDebug.DebugJMXCore
+- name: ServerDebug.DebugJMXCoreConcise
+- name: ServerDebug.DebugJMXDomain
+- name: ServerDebug.DebugJMXEdit
+- name: ServerDebug.DebugJMXRuntime
+- name: ServerDebug.DebugManagementServicesResource
+- name: ServerDebug.DebugPatchingRuntime
+- name: ServerDebug.DebugSituationalConfig

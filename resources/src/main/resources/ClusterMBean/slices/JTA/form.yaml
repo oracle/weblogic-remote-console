@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -7,33 +7,30 @@ introductionHTML: >
   JTA configuration for this cluster.</p>
 
 properties:
-- name: "TimeoutSeconds"
-- name: "AbandonTimeoutSeconds"
-- name: "BeforeCompletionIterationLimit"
-- name: "MaxTransactions"
-- name: "MaxUniqueNameStatistics"
-- name: "CheckpointIntervalSeconds"
-- name: "TLOGWriteWhenDeterminerExistsEnabled"
-- name: "Determiners"
-- name: "ForgetHeuristics"
-- name: "UnregisterResourceGracePeriod"
-- name: "ParallelXAEnabled"
-- name: "TwoPhaseEnabled"
-- name: "TightlyCoupledTransactionsEnabled"
-- name: "ClusterwideRecoveryEnabled"
+- name: "JTACluster.TimeoutSeconds"
+- name: "JTACluster.AbandonTimeoutSeconds"
+- name: "JTACluster.BeforeCompletionIterationLimit"
+- name: "JTACluster.MaxTransactions"
+- name: "JTACluster.MaxUniqueNameStatistics"
+- name: "JTACluster.CheckpointIntervalSeconds"
+- name: "JTACluster.TLOGWriteWhenDeterminerExistsEnabled"
+- name: "JTACluster.Determiners"
+- name: "JTACluster.ForgetHeuristics"
+- name: "JTACluster.UnregisterResourceGracePeriod"
+- name: "JTACluster.ParallelXAEnabled"
+- name: "JTACluster.TwoPhaseEnabled"
+- name: "JTACluster.TightlyCoupledTransactionsEnabled"
+- name: "JTACluster.ClusterwideRecoveryEnabled"
 advancedProperties:
-- name: "SecurityInteropMode"
-- name: "CompletionTimeoutSeconds"
-- name: "MaxXACallMillis"
-- name: "MaxResourceUnavailableMillis"
-- name: "MaxResourceRequestsOnServer"
+- name: "JTACluster.SecurityInteropMode"
+- name: "JTACluster.CompletionTimeoutSeconds"
+- name: "JTACluster.MaxXACallMillis"
+- name: "JTACluster.MaxResourceUnavailableMillis"
+- name: "JTACluster.MaxResourceRequestsOnServer"
 # deprecated - name: "RecoverySiteName"
 # deprecated - name: "CrossSiteRecoveryRetryInterval"
 # deprecated - name: "CrossSiteRecoveryLeaseExpiration"
 # deprecated - name: "CrossSiteRecoveryLeaseUpdate"
-
-helpTasks:
-- "jta/ConfigureClusterJTA"
 
 helpTopics:
 - label: "Configure Network Resources "

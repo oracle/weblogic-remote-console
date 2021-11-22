@@ -9,5 +9,5 @@ properties:
 
 - name: Targets
   optionsSources:
-    - /Clusters
-    - /Servers
+    - Domain/Clusters
+    - Domain/Servers

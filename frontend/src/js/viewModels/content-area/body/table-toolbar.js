@@ -21,6 +21,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
           "new": { id: "new", iconFile: "new-icon-blk_24x24", disabled: false,
             label: oj.Translations.getTranslatedString("wrc-table-toolbar.buttons.new.label")
           },
+          "write": { id: "write", iconFile: "write-wdt-model-blk_24x24", disabled: false,
+            label: ko.observable(oj.Translations.getTranslatedString("wrc-common.buttons.write.label"))
+          },
           "clone": { id: "clone", iconFile: "clone-icon-blk_24x24", disabled: true,
             label: oj.Translations.getTranslatedString("wrc-table-toolbar.buttons.clone.label")
           },
@@ -110,27 +113,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
       this.actionButtons = {html: ko.observable({}), buttons: []};
 
       this.signalBindings=[];
-      this.readonly = ko.observable(Runtime.isReadOnly());
-
-      // autoSyncCancelled is for stopping auto-sync when the user presses the
-      // "Disconnect" icon in the toolbar icon of domain.js, or
-      // the CFE notices that the CBE process is stopped.
-      this.disconnected = function () {
-        viewParams.signaling.autoSyncCancelled.remove(autoSyncCancelledCallback);
-        
-        self.signalBindings.forEach(function (binding) {
-          binding.detach();
-        });
-        self.signalBindings = [];
-      };
+      this.readonly = ko.observable();
 
       this.connected = function () {
-        self.signalBindings.push(viewParams.signaling.readonlyChanged.add((newRO) => {
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !["configuration","modeling"].includes(self.perspective.id));
+        self.readonly(Runtime.isReadOnly());
+
+        let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
           self.readonly(newRO);
           self.i18n.menus.shoppingcart.discard.visible(!newRO);
           self.i18n.menus.shoppingcart.commit.visible(!newRO);
           updateActionButtonsState(newRO);
-        }));
+        });
+
+        const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? "savenow" : "write"}.label`);
+        self.i18n.buttons.write.label(label);
+
+        self.signalBindings.push(binding);
 
         // Get auto-sync interval from perspectiveMemory
         const syncInterval = self.perspectiveMemory.contentPage.syncInterval;
@@ -139,7 +138,34 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
           if (ele !== null) ele.setAttribute("data-interval", syncInterval);
         }
 
-        viewParams.signaling.autoSyncCancelled.add(autoSyncCancelledCallback);
+        binding = viewParams.signaling.autoSyncCancelled.add(autoSyncCancelledCallback);
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager) => {
+          // For refresh event, issue a request to check then set the current state
+          if (eventType === "refresh") {
+            ChangeManager.getLockState()
+              .then((data) => {
+                self.changeManager(data.changeManager);
+              })
+              .catch(response => {
+                ViewModelUtils.failureResponseDefaultHandling(response);
+              });
+            return;
+          }
+
+          // Handle the event based on the supplied changeManager
+          Logger.info(`[TABLE-TOOLBAR] self.changeManager()=${self.changeManager()}`);
+          changeManager.supportsChanges = self.changeManager().supportsChanges;
+          if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
+            ChangeManager.putMostRecent(changeManager);
+            self.changeManager(changeManager);
+            if (eventType === "discard") viewParams.onShoppingCartDiscarded();
+          }
+        });
+
+        self.signalBindings.push(binding);
 
         // The establishment of this subscription will happen
         // BEFORE the Promise for ChangeManager.getLockState()
@@ -152,19 +178,31 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
 
         // Get value of changeManager properties asynchronously
         ChangeManager.getLockState()
-        .then((data) => {
-          self.changeManager(data.changeManager);
-        })
-        .catch(response => {
-          ViewModelUtils.failureResponseDefaultHandling(response);
-        })
-        .then(() => {
-          self.renderToolbarButtons();
-          self.showBeanPathHistory(self.perspectiveMemory.beanPathHistory.visibility);
-          self.showInstructions(self.perspectiveMemory.instructions.visibility);
-          viewParams.onConnected(self.perspectiveMemory.beanPathHistory.visibility);
-        });
+          .then((data) => {
+            self.changeManager(data.changeManager);
+          })
+          .catch(response => {
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          })
+          .then(() => {
+            self.renderToolbarButtons();
+            self.showBeanPathHistory(self.perspectiveMemory.beanPathHistory.visibility);
+            self.showInstructions(self.perspectiveMemory.instructions.visibility);
+            viewParams.onConnected(self.perspectiveMemory.beanPathHistory.visibility);
+          });
 
+      };
+
+      this.disconnected = function () {
+        // autoSyncCancelled is for stopping auto-sync when the user presses the
+        // "Disconnect" icon in the toolbar icon of domain.js, or
+        // the CFE notices that the CBE process is stopped.
+        viewParams.signaling.autoSyncCancelled.remove(autoSyncCancelledCallback);
+
+        self.signalBindings.forEach(function (binding) {
+          binding.detach();
+        });
+        self.signalBindings = [];
       };
 
       this.launchShoppingCartMenu = function(event) {
@@ -173,37 +211,48 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
       };
 
       this.shoppingCartMenuClickListener = function (event) {
-
         if (event.target.value === "view") {
           viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", ChangeManager.Entity.SHOPPING_CART.name, true);
         }
         else {
           switch (event.target.value){
             case "commit":
+              ViewModelUtils.setCursorType("progress");
               ChangeManager.commitChanges()
-              .then((changeManager) => {
-                self.changeManager(changeManager);
-                viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", ChangeManager.Entity.SHOPPING_CART.name, false);
-              })
-              .catch(response => {
-                ViewModelUtils.failureResponseDefaultHandling(response);
-              });
+                .then((changeManager) => {
+                  self.changeManager(changeManager);
+                  viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", ChangeManager.Entity.SHOPPING_CART.name, false);
+                })
+                .catch(response => {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                })
+                .finally(() => {
+                  ViewModelUtils.setCursorType("default");
+                });
               break;
             case "discard":
+              ViewModelUtils.setCursorType("progress");
               ChangeManager.discardChanges()
-              .then((changeManager) => {
-                self.changeManager(changeManager);
-                viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", ChangeManager.Entity.SHOPPING_CART.name, false);
-                viewParams.onShoppingCartDiscarded();
-              })
-              .catch(response => {
-                ViewModelUtils.failureResponseDefaultHandling(response);
-              });
+                .then((changeManager) => {
+                  self.changeManager(changeManager);
+                  viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", ChangeManager.Entity.SHOPPING_CART.name, false);
+                  viewParams.onShoppingCartDiscarded();
+                })
+                .catch(response => {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                })
+                .finally(() => {
+                  ViewModelUtils.setCursorType("default");
+                });
               break;
           }
         }
 
       }.bind(this);
+
+      this.isWdtTable = function() {
+        return viewParams.isWdtTable();
+      };
 
       function shoppingCartContentsChanged(changeManager) {
         let ele = document.getElementById("shoppingCartImage");
@@ -211,29 +260,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
           ele.src = "../../images/shopping-cart-" + (changeManager.isLockOwner && changeManager.hasChanges ? "non-empty" : "empty") + "-tabstrip_24x24.png";
         }
       }
-
-      // can this move to connect function?
-      viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager) => {
-        // For refresh event, issue a request to check then set the current state
-        if (eventType === "refresh") {
-          ChangeManager.getLockState()
-          .then((data) => {
-            self.changeManager(data.changeManager);
-          })
-          .catch(response => {
-            ViewModelUtils.failureResponseDefaultHandling(response);
-          });
-          return;
-        }
-
-        // Handle the event based on the supplied changeManager
-        changeManager.supportsChanges = self.changeManager().supportsChanges;
-        if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
-          ChangeManager.putMostRecent(changeManager);
-          self.changeManager(changeManager);
-          if (eventType === "discard") viewParams.onShoppingCartDiscarded();
-        }
-      });
 
       this.renderToolbarButtons = function () {
         const pageDefinitionActions = viewParams.pageDefinitionActions();
@@ -246,12 +272,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
 
       function updateActionButtonsState(isReadOnly) {
         const pageDefinitionActions = viewParams.pageDefinitionActions();
+
         if (isReadOnly) {
           self.actionButtons.buttons = pageDefinitionActions.disableAllActionsButtons(self.actionButtons.buttons);
         }
         else {
           self.actionButtons.buttons = pageDefinitionActions.populateActionsButtonsStates(self.actionButtons.buttons);
         }
+
+        self.actionButtons.buttons = pageDefinitionActions.populateActionsButtonsStates(self.actionButtons.buttons);
       }
 
       this.toggleHistoryClick = function (event) {
@@ -346,6 +375,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
         viewParams.newAction(event);
       };
 
+      this.writeModelAction = function (event) {
+        viewParams.onWriteModelFile("download");
+      };
+
       this.actionsDialogButtonClicked = function (result) {
         Logger.info(`[TABLE] okBtn was clicked, or ENTER key was pressed!`);
       };
@@ -353,11 +386,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
       this.actionButtonClicked = function (event) {
         const label = self.i18n.labels[event.currentTarget.attributes['data-action'].value].value;
         const dialogParams = {
+          id: event.currentTarget.id,
           action: event.currentTarget.attributes['data-action'].value,
           title: label,
           instructions: self.i18n.instructions.selectItems.value.replace("{0}", label),
           label: label,
-          isReadOnly: self.readonly()
+          isReadOnly: false
         };
 
         viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", "shoppingcart", false);
@@ -373,39 +407,41 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../../apis/message-disp
 
         viewParams.onActionButtonClicked(dialogParams)
           .then((result) => {
-            document.body.style.cursor = "progress";
+            ViewModelUtils.setCursorType("progress");
             const pageDefinitionActions = viewParams.pageDefinitionActions();
             pageDefinitionActions.performActionOnChosenItems(result.chosenItems, result.urls)
-            .then(replies => {
-              document.body.style.cursor = "default";
-              replies.forEach((reply) => {
-                if (reply.succeeded) {
-                  Logger.info(`[TABLETOOLBAR] actionUrl=${reply.data.actionUrl}`);
-                }
-                else {
-                  if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
-                    MessageDisplaying.displayResponseMessages(reply.messages);
+              .then(replies => {
+                replies.forEach((reply) => {
+                  if (reply.succeeded) {
+                    Logger.info(`[TABLETOOLBAR] actionUrl=${reply.data.actionUrl}`);
                   }
                   else {
-                    MessageDisplaying.displayMessage(reply.data, 5000);
+                    if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
+                      MessageDisplaying.displayResponseMessages(reply.messages);
+                    }
+                    else {
+                      MessageDisplaying.displayMessage(reply.data, 5000);
+                    }
                   }
+                }); // end-of forEach
+                const successes = replies.filter(reply => reply.succeeded);
+                if (successes.length > 0 && self.actionButtons.buttons[dialogParams.action].asynchronous) {
+                  self.syncClick({target: {attributes: {"data-interval": {
+                          value: "10"
+                        }}}});
                 }
-              }); // end-of forEach
-              const successes = replies.filter(reply => reply.succeeded);
-              if (successes.length > 0 && self.actionButtons.buttons[dialogParams.action].asynchronous) {
-                self.syncClick({target: {attributes: {"data-interval": {
-                  value: "10"
-                }}}});
-              }
-              else {
-                self.syncClick({target: {attributes: {"data-interval": {
-                  value: "0"
-                }}}});
-              }
-            })
-            .catch(reason => {
-              document.body.style.cursor = "default";
-            });
+                else {
+                  self.syncClick({target: {attributes: {"data-interval": {
+                          value: "0"
+                        }}}});
+                }
+              })
+              .catch(response => {
+                ViewModelUtils.failureResponseDefaultHandling(response);
+              })
+              .finally(() => {
+                ViewModelUtils.setCursorType("default");
+              });
 
           });
       };

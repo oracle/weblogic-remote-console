@@ -6,11 +6,8 @@ introductionHTML: >
   a distributed destination.</p>
 
 properties:
-- name: "MessageLoggingEnabled"
-- name: "MessageLoggingFormat"
-helpTasks:
-- "jms_servers/ConfigureJMSServerLogging"
-- "logging/ConfigureAndViewLogs"
+- name: "MessageLoggingParams.MessageLoggingEnabled"
+- name: "MessageLoggingParams.MessageLoggingFormat"
 helpTopics:
 - label: "Administering JMS Resources for Oracle WebLogic Server"
   href: "jmsad/index.html"

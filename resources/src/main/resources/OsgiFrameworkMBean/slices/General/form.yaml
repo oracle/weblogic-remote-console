@@ -13,10 +13,6 @@ properties:
 - name: "OrgOsgiFrameworkSystemPackagesExtra"
 - name: "DeployInstallationBundles"
 - name: "InitProperties"
-helpTasks:
-- "osgi/CreateOSGiFrameworks"
-- "osgi/CloneOSGiFrameworks"
-- "osgi/DeleteOSGiFrameworks"
 helpTopics:
 - label: "Using Work Managers to Optimize Scheduled Work"
   href: "cnfgd/self_tuned.html"

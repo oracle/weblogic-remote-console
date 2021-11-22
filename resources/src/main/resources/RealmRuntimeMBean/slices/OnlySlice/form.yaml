@@ -1,12 +1,12 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: "Name"
 - name: "Name"
 - name: "Name"
-- name: "InvalidLoginAttemptsTotalCount"
-- name: "InvalidLoginUsersHighCount"
-- name: "LockedUsersCurrentCount"
-- name: "LoginAttemptsWhileLockedTotalCount"
-- name: "UnlockedUsersTotalCount"
-- name: "UserLockoutTotalCount"
+- name: "UserLockoutManagerRuntime.InvalidLoginAttemptsTotalCount"
+- name: "UserLockoutManagerRuntime.InvalidLoginUsersHighCount"
+- name: "UserLockoutManagerRuntime.LockedUsersCurrentCount"
+- name: "UserLockoutManagerRuntime.LoginAttemptsWhileLockedTotalCount"
+- name: "UserLockoutManagerRuntime.UnlockedUsersTotalCount"
+- name: "UserLockoutManagerRuntime.UserLockoutTotalCount"

@@ -3,8 +3,6 @@
 introductionHTML: >
   Use this page to manage all the server debug flags.
 
-# TBD helpTasks:
-
 # TBD helpTopics:
 
 presentation:
@@ -12,338 +10,338 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
-- name: ClassChangeNotifier
-- name: ClassLoader
-- name: ClassLoaderVerbose
-- name: ClassloaderWebApp
-- name: DebugAppAnnotations
-- name: DebugAppContainer
-- name: DebugAsyncQueue
-- name: DebugBeanTreeHarvesterControl
-- name: DebugBeanTreeHarvesterDataCollection
-- name: DebugBeanTreeHarvesterResolution
-- name: DebugBeanTreeHarvesterThreading
-# deprecated - name: DebugBootstrapServlet
-- name: DebugBuzzProtocol
-- name: DebugBuzzProtocolDetails
-- name: DebugBuzzProtocolHttp
-- name: DebugCertRevocCheck
-- name: DebugClassLoadingContextualTrace
-- name: DebugClassLoadingVerbose
-- name: DebugClassRedef
-- name: DebugClassSize
-- name: DebugCluster
-- name: DebugClusterAnnouncements
-- name: DebugClusterFragments
-- name: DebugClusterHeartbeats
-- name: DebugConcurrent
-- name: DebugConcurrentContext
-- name: DebugConcurrentMES
-- name: DebugConcurrentMSES
-- name: DebugConcurrentMTF
-- name: DebugConcurrentTransaction
-- name: DebugConfigurationEdit
-- name: DebugConfigurationRuntime
-- name: DebugConnectorService
-- name: DebugConsensusLeasing
-- name: DebugDRSCalls
-- name: DebugDRSHeartbeats
-- name: DebugDRSMessages
-- name: DebugDRSQueues
-- name: DebugDRSStateTransitions
-- name: DebugDRSUpdateStatus
-# excluded - name: DebugDefaultStoreVerbose
-- name: DebugDeploy
-- name: DebugDeployment
-- name: DebugDeploymentConcise
-- name: DebugDeploymentPlan
-- name: DebugDeploymentService
-- name: DebugDeploymentServiceInternal
-- name: DebugDeploymentServiceStatusUpdates
-- name: DebugDeploymentServiceTransport
-- name: DebugDeploymentServiceTransportHttp
-- name: DebugDescriptor
-- name: DebugDiagnosticAccessor
-- name: DebugDiagnosticArchive
-- name: DebugDiagnosticArchiveRetirement
-- name: DebugDiagnosticCollections
-- name: DebugDiagnosticContext
-- name: DebugDiagnosticDataGathering
-- name: DebugDiagnosticFileArchive
-- name: DebugDiagnosticImage
-- name: DebugDiagnosticInstrumentation
-- name: DebugDiagnosticInstrumentationActions
-- name: DebugDiagnosticInstrumentationConfig
-- name: DebugDiagnosticInstrumentationEvents
-- name: DebugDiagnosticInstrumentationWeaving
-- name: DebugDiagnosticInstrumentationWeavingMatches
-- name: DebugDiagnosticJdbcArchive
-- name: DebugDiagnosticLifecycleHandlers
-- name: DebugDiagnosticQuery
-- name: DebugDiagnosticRuntimeControlDriver
-- name: DebugDiagnosticRuntimeControlService
-- name: DebugDiagnosticWatch
-- name: DebugDiagnosticWatchEvents
-- name: DebugDiagnosticWatchEventsDetails
-- name: DebugDiagnosticWlstoreArchive
-- name: DebugDiagnosticsBeanExtensionResolver
-- name: DebugDiagnosticsBeanInfoProviders
-- name: DebugDiagnosticsELContext
-- name: DebugDiagnosticsELResolver
-- name: DebugDiagnosticsExpressionEvaluators
-- name: DebugDiagnosticsExpressionFunctionMapper
-- name: DebugDiagnosticsExpressionFunctions
-- name: DebugDiagnosticsExpressionMetrics
-- name: DebugDiagnosticsExpressionPoller
-- name: DebugDiagnosticsExpressionPollerBuffer
-- name: DebugDiagnosticsHarvester
-- name: DebugDiagnosticsHarvesterData
-- name: DebugDiagnosticsHarvesterMBeanPlugin
-- name: DebugDiagnosticsHarvesterTreeBeanPlugin
-- name: DebugDiagnosticsMBeanELResolver
-- name: DebugDiagnosticsModule
-- name: DebugDiagnosticsScriptAction
-- name: DebugDiagnosticsUtils
-- name: DebugDiagnosticsValueTracingELResolver
-- name: DebugDomainLogHandler
-- name: DebugDynamicSingletonServices
-- name: DebugEjbCaching
-- name: DebugEjbCmpDeployment
-- name: DebugEjbCmpRuntime
-- name: DebugEjbCompilation
-- name: DebugEjbDeployment
-- name: DebugEjbInvoke
-- name: DebugEjbLocking
-- name: DebugEjbMdbConnection
-- name: DebugEjbMetadata
-- name: DebugEjbPooling
-- name: DebugEjbSecurity
-- name: DebugEjbSwapping
-# excluded - name: DebugEjbTimerStore
-- name: DebugEjbTimers
-- name: DebugElasticActions
-- name: DebugElasticServices
-- name: DebugEmbeddedLDAP
-- name: DebugEmbeddedLDAPWriteOverrideProps
-- name: DebugExpressionBeanLocalizer
-- name: DebugExpressionExtensionsManager
-- name: DebugFileDistributionServlet
-- name: DebugHttp
-- name: DebugHttpConcise
-- name: DebugHttpLogging
-- name: DebugHttpSessions
-- name: DebugIIOPConnection
+- name: ServerDebug.ClassChangeNotifier
+- name: ServerDebug.ClassLoader
+- name: ServerDebug.ClassLoaderVerbose
+- name: ServerDebug.ClassloaderWebApp
+- name: ServerDebug.DebugAppAnnotations
+- name: ServerDebug.DebugAppContainer
+- name: ServerDebug.DebugAsyncQueue
+- name: ServerDebug.DebugBeanTreeHarvesterControl
+- name: ServerDebug.DebugBeanTreeHarvesterDataCollection
+- name: ServerDebug.DebugBeanTreeHarvesterResolution
+- name: ServerDebug.DebugBeanTreeHarvesterThreading
+# deprecated - name: ServerDebug.DebugBootstrapServlet
+- name: ServerDebug.DebugBuzzProtocol
+- name: ServerDebug.DebugBuzzProtocolDetails
+- name: ServerDebug.DebugBuzzProtocolHttp
+- name: ServerDebug.DebugCertRevocCheck
+- name: ServerDebug.DebugClassLoadingContextualTrace
+- name: ServerDebug.DebugClassLoadingVerbose
+- name: ServerDebug.DebugClassRedef
+- name: ServerDebug.DebugClassSize
+- name: ServerDebug.DebugCluster
+- name: ServerDebug.DebugClusterAnnouncements
+- name: ServerDebug.DebugClusterFragments
+- name: ServerDebug.DebugClusterHeartbeats
+- name: ServerDebug.DebugConcurrent
+- name: ServerDebug.DebugConcurrentContext
+- name: ServerDebug.DebugConcurrentMES
+- name: ServerDebug.DebugConcurrentMSES
+- name: ServerDebug.DebugConcurrentMTF
+- name: ServerDebug.DebugConcurrentTransaction
+- name: ServerDebug.DebugConfigurationEdit
+- name: ServerDebug.DebugConfigurationRuntime
+- name: ServerDebug.DebugConnectorService
+- name: ServerDebug.DebugConsensusLeasing
+- name: ServerDebug.DebugDRSCalls
+- name: ServerDebug.DebugDRSHeartbeats
+- name: ServerDebug.DebugDRSMessages
+- name: ServerDebug.DebugDRSQueues
+- name: ServerDebug.DebugDRSStateTransitions
+- name: ServerDebug.DebugDRSUpdateStatus
+# excluded - name: ServerDebug.DebugDefaultStoreVerbose
+- name: ServerDebug.DebugDeploy
+- name: ServerDebug.DebugDeployment
+- name: ServerDebug.DebugDeploymentConcise
+- name: ServerDebug.DebugDeploymentPlan
+- name: ServerDebug.DebugDeploymentService
+- name: ServerDebug.DebugDeploymentServiceInternal
+- name: ServerDebug.DebugDeploymentServiceStatusUpdates
+- name: ServerDebug.DebugDeploymentServiceTransport
+- name: ServerDebug.DebugDeploymentServiceTransportHttp
+- name: ServerDebug.DebugDescriptor
+- name: ServerDebug.DebugDiagnosticAccessor
+- name: ServerDebug.DebugDiagnosticArchive
+- name: ServerDebug.DebugDiagnosticArchiveRetirement
+- name: ServerDebug.DebugDiagnosticCollections
+- name: ServerDebug.DebugDiagnosticContext
+- name: ServerDebug.DebugDiagnosticDataGathering
+- name: ServerDebug.DebugDiagnosticFileArchive
+- name: ServerDebug.DebugDiagnosticImage
+- name: ServerDebug.DebugDiagnosticInstrumentation
+- name: ServerDebug.DebugDiagnosticInstrumentationActions
+- name: ServerDebug.DebugDiagnosticInstrumentationConfig
+- name: ServerDebug.DebugDiagnosticInstrumentationEvents
+- name: ServerDebug.DebugDiagnosticInstrumentationWeaving
+- name: ServerDebug.DebugDiagnosticInstrumentationWeavingMatches
+- name: ServerDebug.DebugDiagnosticJdbcArchive
+- name: ServerDebug.DebugDiagnosticLifecycleHandlers
+- name: ServerDebug.DebugDiagnosticQuery
+- name: ServerDebug.DebugDiagnosticRuntimeControlDriver
+- name: ServerDebug.DebugDiagnosticRuntimeControlService
+- name: ServerDebug.DebugDiagnosticWatch
+- name: ServerDebug.DebugDiagnosticWatchEvents
+- name: ServerDebug.DebugDiagnosticWatchEventsDetails
+- name: ServerDebug.DebugDiagnosticWlstoreArchive
+- name: ServerDebug.DebugDiagnosticsBeanExtensionResolver
+- name: ServerDebug.DebugDiagnosticsBeanInfoProviders
+- name: ServerDebug.DebugDiagnosticsELContext
+- name: ServerDebug.DebugDiagnosticsELResolver
+- name: ServerDebug.DebugDiagnosticsExpressionEvaluators
+- name: ServerDebug.DebugDiagnosticsExpressionFunctionMapper
+- name: ServerDebug.DebugDiagnosticsExpressionFunctions
+- name: ServerDebug.DebugDiagnosticsExpressionMetrics
+- name: ServerDebug.DebugDiagnosticsExpressionPoller
+- name: ServerDebug.DebugDiagnosticsExpressionPollerBuffer
+- name: ServerDebug.DebugDiagnosticsHarvester
+- name: ServerDebug.DebugDiagnosticsHarvesterData
+- name: ServerDebug.DebugDiagnosticsHarvesterMBeanPlugin
+- name: ServerDebug.DebugDiagnosticsHarvesterTreeBeanPlugin
+- name: ServerDebug.DebugDiagnosticsMBeanELResolver
+- name: ServerDebug.DebugDiagnosticsModule
+- name: ServerDebug.DebugDiagnosticsScriptAction
+- name: ServerDebug.DebugDiagnosticsUtils
+- name: ServerDebug.DebugDiagnosticsValueTracingELResolver
+- name: ServerDebug.DebugDomainLogHandler
+- name: ServerDebug.DebugDynamicSingletonServices
+- name: ServerDebug.DebugEjbCaching
+- name: ServerDebug.DebugEjbCmpDeployment
+- name: ServerDebug.DebugEjbCmpRuntime
+- name: ServerDebug.DebugEjbCompilation
+- name: ServerDebug.DebugEjbDeployment
+- name: ServerDebug.DebugEjbInvoke
+- name: ServerDebug.DebugEjbLocking
+- name: ServerDebug.DebugEjbMdbConnection
+- name: ServerDebug.DebugEjbMetadata
+- name: ServerDebug.DebugEjbPooling
+- name: ServerDebug.DebugEjbSecurity
+- name: ServerDebug.DebugEjbSwapping
+# excluded - name: ServerDebug.DebugEjbTimerStore
+- name: ServerDebug.DebugEjbTimers
+- name: ServerDebug.DebugElasticActions
+- name: ServerDebug.DebugElasticServices
+- name: ServerDebug.DebugEmbeddedLDAP
+- name: ServerDebug.DebugEmbeddedLDAPWriteOverrideProps
+- name: ServerDebug.DebugExpressionBeanLocalizer
+- name: ServerDebug.DebugExpressionExtensionsManager
+- name: ServerDebug.DebugFileDistributionServlet
+- name: ServerDebug.DebugHttp
+- name: ServerDebug.DebugHttpConcise
+- name: ServerDebug.DebugHttpLogging
+- name: ServerDebug.DebugHttpSessions
+- name: ServerDebug.DebugIIOPConnection
 # deprecated DebugIIOP
-- name: DebugIIOPMarshal
-- name: DebugIIOPNaming
-- name: DebugIIOPOTS
-- name: DebugIIOPReplacer
-- name: DebugIIOPSecurity
-- name: DebugIIOPStartup
-- name: DebugIIOPTransport
-- name: DebugIIOPTunneling
-- name: DebugInterceptors
-- name: DebugJ2EEManagement
-- name: DebugJDBCConn
-# deprecated - name: DebugJDBCDriverLogging
-- name: DebugJDBCInternal
-- name: DebugJDBCONS
-- name: DebugJDBCRAC
-- name: DebugJDBCRMI
-- name: DebugJDBCReplay
-- name: DebugJDBCSQL
-- name: DebugJDBCUCP
-# deprecated - name: DebugJMSAME
-- name: DebugJMSBackEnd
-- name: DebugJMSBoot
-- name: DebugJMSCDS
-- name: DebugJMSCommon
-- name: DebugJMSConfig
-# excluded - name: DebugJMSCrossDomainSecurity
-- name: DebugJMSDispatcher
-- name: DebugJMSDispatcherProxy
-# excluded - name: DebugJMSDispatcherUtilsVerbose
-# excluded - name: DebugJMSDispatcherVerbose
-- name: DebugJMSDistTopic
-# excluded - name: DebugJMSDotNetProxy
-# excluded - name: DebugJMSDotNetT3Server
-# excluded - name: DebugJMSDotNetTransport
-# excluded - name: DebugJMSDurSub
-# deprecated - name: DebugJMSDurableSubscribers
-- name: DebugJMSFrontEnd
-# deprecated - name: DebugJMSJDBCScavengeOnFlush
-# excluded - name: DebugJMSJNDI
-# deprecated - name: DebugJMSLocking
-- name: DebugJMSMessagePath
-- name: DebugJMSModule
-# excluded - name: DebugJMSOBS
-- name: DebugJMSPauseResume
-- name: DebugJMSSAF
-# deprecated - name: DebugJMSStore
-- name: DebugJMST3Server
-- name: DebugJMSWrappers
-# deprecated - name: DebugJMSXA
-- name: DebugJMX
-- name: DebugJMXCompatibility
-- name: DebugJMXCore
-- name: DebugJMXCoreConcise
-- name: DebugJMXDomain
-- name: DebugJMXEdit
-- name: DebugJMXRuntime
-- name: DebugJTA2PC
-# excluded - name: DebugJTA2PCDetail
-- name: DebugJTA2PCStackTrace
-# deprecated - name: DebugJTAAPI
-- name: DebugJTACDI
-- name: DebugJTAGateway
-- name: DebugJTAGatewayStackTrace
-- name: DebugJTAHealth
-- name: DebugJTAJDBC
-- name: DebugJTALLR
-- name: DebugJTALifecycle
-- name: DebugJTAMigration
-- name: DebugJTANaming
-- name: DebugJTANamingStackTrace
-- name: DebugJTANonXA
-- name: DebugJTAPropagate
-# deprecated - name: DebugJTARMI
-- name: DebugJTARecovery
-# deprecated - name: DebugJTARecoveryStackTrace
-- name: DebugJTAResourceHealth
-- name: DebugJTATLOG
-- name: DebugJTAXA
-- name: DebugJTAXAStackTrace
-- name: DebugJpaDataCache
-- name: DebugJpaEnhance
-- name: DebugJpaJdbcJdbc
-- name: DebugJpaJdbcSchema
-- name: DebugJpaJdbcSql
-- name: DebugJpaManage
-- name: DebugJpaMetaData
-- name: DebugJpaProfile
-- name: DebugJpaQuery
-- name: DebugJpaRuntime
-- name: DebugJpaTool
-- name: DebugLeaderElection
-- name: DebugLibraries
-- name: DebugLoggingConfiguration
-- name: DebugMBeanHarvesterControl
-- name: DebugMBeanHarvesterDataCollection
-- name: DebugMBeanHarvesterResolution
-- name: DebugMBeanHarvesterThreading
-- name: DebugMBeanTypeUtilQueue
-- name: DebugMBeanTypeUtilQueuePriority
-- name: DebugMBeanTypeUtilityListener
-- name: DebugMBeanTypingUtility
-# excluded - name: MagicThreadDumpEnabled
-- name: DebugManagementServicesResource
-# excluded - name: DebugMessagingBridgeDumpToConsole
-# excluded - name: DebugMessagingBridgeDumpToLog
-- name: DebugMessagingBridgeRuntime
-- name: DebugMessagingBridgeRuntimeVerbose
-- name: DebugMessagingBridgeStartup
-- name: DebugMessagingKernel
-- name: DebugMessagingKernelBoot
-- name: DebugMessagingOwnableLock
-- name: DebugNodeManagerRuntime
-- name: DebugPatchingRuntime
-- name: DebugPathSvc
-- name: DebugPathSvcVerbose
-# excluded - name: DebugPersistentStoreManager
-- name: DebugRA
-- name: DebugRAClassloader
-- name: DebugRAConnEvents
-- name: DebugRAConnections
-- name: DebugRADeployment
-- name: DebugRALifecycle
-- name: DebugRALocalOut
-- name: DebugRAParsing
-- name: DebugRAPoolVerbose
-- name: DebugRAPooling
-- name: DebugRASecurityCtx
-- name: DebugRAWork
-- name: DebugRAWorkEvents
-- name: DebugRAXAin
-- name: DebugRAXAout
-- name: DebugRAXAwork
-- name: DebugRESTNotifications
-- name: DebugReadyApp
-- name: DebugReplication
-- name: DebugReplicationDetails
-- name: DebugReplicationSize
-- name: DebugRestJersey1Integration
-- name: DebugRestJersey2Integration
-- name: DebugRestartInPlace
-- name: DebugSAFAdmin
-# deprecated - name: DebugSAFLifeCycle
-- name: DebugSAFManager
-# deprecated - name: DebugSAFMessagePath
-- name: DebugSAFReceivingAgent
-- name: DebugSAFSendingAgent
-- name: DebugSAFStore
-- name: DebugSAFTransport
-- name: DebugSAFVerbose
-- name: DebugSNMPAgent
-- name: DebugSNMPExtensionProvider
-- name: DebugSNMPProtocolTCP
-- name: DebugSNMPToolkit
-- name: DebugScaContainer
-# excluded - name: DebugSecurity
-- name: DebugSecurityAdjudicator
-- name: DebugSecurityAtn
-- name: DebugSecurityAtz
-- name: DebugSecurityAuditor
-- name: DebugSecurityCertPath
-- name: DebugSecurityCredMap
-- name: DebugSecurityEEngine
-- name: DebugSecurityEncryptionService
-- name: DebugSecurityJACC
-- name: DebugSecurityJACCNonPolicy
-- name: DebugSecurityJACCPolicy
-- name: DebugSecurityKeyStore
-- name: DebugSecurityPasswordPolicy
-- name: DebugSecurityPredicate
-# obsolete - name: DebugSecurityProfiler
-- name: DebugSecurityRealm
-- name: DebugSecurityRoleMap
-- name: DebugSecuritySAML2Atn
-- name: DebugSecuritySAML2CredMap
-- name: DebugSecuritySAML2Lib
-- name: DebugSecuritySAML2Service
-- name: DebugSecuritySAMLAtn
-- name: DebugSecuritySAMLCredMap
-- name: DebugSecuritySAMLLib
-- name: DebugSecuritySAMLService
-- name: DebugSecuritySSL
-- name: DebugSecuritySSLEaten
-- name: DebugSecurityService
-- name: DebugSecurityUserLockout
-- name: DebugSelfTuning
-- name: DebugServerLifeCycle
-- name: DebugServerMigration
-- name: DebugServerStartStatistics
-- name: DebugSituationalConfig
-# excluded - name: DebugStore
-- name: DebugStoreAdmin
-# excluded - name: DebugStoreCache
-- name: DebugStoreIOLogical
-- name: DebugStoreIOLogicalBoot
-- name: DebugStoreIOPhysical
-- name: DebugStoreIOPhysicalVerbose
-# deprecated - name: DebugStoreXA
-# deprecated - name: DebugStoreXAVerbose
-- name: DebugURLResolution
-- name: DebugWTCConfig
-- name: DebugWTCCorbaEx
-- name: DebugWTCGwtEx
-- name: DebugWTCJatmiEx
-- name: DebugWTCTDomPdu
-- name: DebugWTCUData
-- name: DebugWTCtBridgeEx
-- name: DebugWebAppIdentityAssertion
-- name: DebugWebAppModule
-- name: DebugWebAppSecurity
-- name: DebugWorkContext
-- name: DefaultStore
-- name: ListenThreadDebug
-- name: RedefiningClassLoader
+- name: ServerDebug.DebugIIOPMarshal
+- name: ServerDebug.DebugIIOPNaming
+- name: ServerDebug.DebugIIOPOTS
+- name: ServerDebug.DebugIIOPReplacer
+- name: ServerDebug.DebugIIOPSecurity
+- name: ServerDebug.DebugIIOPStartup
+- name: ServerDebug.DebugIIOPTransport
+- name: ServerDebug.DebugIIOPTunneling
+- name: ServerDebug.DebugInterceptors
+- name: ServerDebug.DebugJ2EEManagement
+- name: ServerDebug.DebugJDBCConn
+# deprecated - name: ServerDebug.DebugJDBCDriverLogging
+- name: ServerDebug.DebugJDBCInternal
+- name: ServerDebug.DebugJDBCONS
+- name: ServerDebug.DebugJDBCRAC
+- name: ServerDebug.DebugJDBCRMI
+- name: ServerDebug.DebugJDBCReplay
+- name: ServerDebug.DebugJDBCSQL
+- name: ServerDebug.DebugJDBCUCP
+# deprecated - name: ServerDebug.DebugJMSAME
+- name: ServerDebug.DebugJMSBackEnd
+- name: ServerDebug.DebugJMSBoot
+- name: ServerDebug.DebugJMSCDS
+- name: ServerDebug.DebugJMSCommon
+- name: ServerDebug.DebugJMSConfig
+# excluded - name: ServerDebug.DebugJMSCrossDomainSecurity
+- name: ServerDebug.DebugJMSDispatcher
+- name: ServerDebug.DebugJMSDispatcherProxy
+# excluded - name: ServerDebug.DebugJMSDispatcherUtilsVerbose
+# excluded - name: ServerDebug.DebugJMSDispatcherVerbose
+- name: ServerDebug.DebugJMSDistTopic
+# excluded - name: ServerDebug.DebugJMSDotNetProxy
+# excluded - name: ServerDebug.DebugJMSDotNetT3Server
+# excluded - name: ServerDebug.DebugJMSDotNetTransport
+# excluded - name: ServerDebug.DebugJMSDurSub
+# deprecated - name: ServerDebug.DebugJMSDurableSubscribers
+- name: ServerDebug.DebugJMSFrontEnd
+# deprecated - name: ServerDebug.DebugJMSJDBCScavengeOnFlush
+# excluded - name: ServerDebug.DebugJMSJNDI
+# deprecated - name: ServerDebug.DebugJMSLocking
+- name: ServerDebug.DebugJMSMessagePath
+- name: ServerDebug.DebugJMSModule
+# excluded - name: ServerDebug.DebugJMSOBS
+- name: ServerDebug.DebugJMSPauseResume
+- name: ServerDebug.DebugJMSSAF
+# deprecated - name: ServerDebug.DebugJMSStore
+- name: ServerDebug.DebugJMST3Server
+- name: ServerDebug.DebugJMSWrappers
+# deprecated - name: ServerDebug.DebugJMSXA
+- name: ServerDebug.DebugJMX
+- name: ServerDebug.DebugJMXCompatibility
+- name: ServerDebug.DebugJMXCore
+- name: ServerDebug.DebugJMXCoreConcise
+- name: ServerDebug.DebugJMXDomain
+- name: ServerDebug.DebugJMXEdit
+- name: ServerDebug.DebugJMXRuntime
+- name: ServerDebug.DebugJTA2PC
+# excluded - name: ServerDebug.DebugJTA2PCDetail
+- name: ServerDebug.DebugJTA2PCStackTrace
+# deprecated - name: ServerDebug.DebugJTAAPI
+- name: ServerDebug.DebugJTACDI
+- name: ServerDebug.DebugJTAGateway
+- name: ServerDebug.DebugJTAGatewayStackTrace
+- name: ServerDebug.DebugJTAHealth
+- name: ServerDebug.DebugJTAJDBC
+- name: ServerDebug.DebugJTALLR
+- name: ServerDebug.DebugJTALifecycle
+- name: ServerDebug.DebugJTAMigration
+- name: ServerDebug.DebugJTANaming
+- name: ServerDebug.DebugJTANamingStackTrace
+- name: ServerDebug.DebugJTANonXA
+- name: ServerDebug.DebugJTAPropagate
+# deprecated - name: ServerDebug.DebugJTARMI
+- name: ServerDebug.DebugJTARecovery
+# deprecated - name: ServerDebug.DebugJTARecoveryStackTrace
+- name: ServerDebug.DebugJTAResourceHealth
+- name: ServerDebug.DebugJTATLOG
+- name: ServerDebug.DebugJTAXA
+- name: ServerDebug.DebugJTAXAStackTrace
+- name: ServerDebug.DebugJpaDataCache
+- name: ServerDebug.DebugJpaEnhance
+- name: ServerDebug.DebugJpaJdbcJdbc
+- name: ServerDebug.DebugJpaJdbcSchema
+- name: ServerDebug.DebugJpaJdbcSql
+- name: ServerDebug.DebugJpaManage
+- name: ServerDebug.DebugJpaMetaData
+- name: ServerDebug.DebugJpaProfile
+- name: ServerDebug.DebugJpaQuery
+- name: ServerDebug.DebugJpaRuntime
+- name: ServerDebug.DebugJpaTool
+- name: ServerDebug.DebugLeaderElection
+- name: ServerDebug.DebugLibraries
+- name: ServerDebug.DebugLoggingConfiguration
+- name: ServerDebug.DebugMBeanHarvesterControl
+- name: ServerDebug.DebugMBeanHarvesterDataCollection
+- name: ServerDebug.DebugMBeanHarvesterResolution
+- name: ServerDebug.DebugMBeanHarvesterThreading
+- name: ServerDebug.DebugMBeanTypeUtilQueue
+- name: ServerDebug.DebugMBeanTypeUtilQueuePriority
+- name: ServerDebug.DebugMBeanTypeUtilityListener
+- name: ServerDebug.DebugMBeanTypingUtility
+# excluded - name: ServerDebug.MagicThreadDumpEnabled
+- name: ServerDebug.DebugManagementServicesResource
+# excluded - name: ServerDebug.DebugMessagingBridgeDumpToConsole
+# excluded - name: ServerDebug.DebugMessagingBridgeDumpToLog
+- name: ServerDebug.DebugMessagingBridgeRuntime
+- name: ServerDebug.DebugMessagingBridgeRuntimeVerbose
+- name: ServerDebug.DebugMessagingBridgeStartup
+- name: ServerDebug.DebugMessagingKernel
+- name: ServerDebug.DebugMessagingKernelBoot
+- name: ServerDebug.DebugMessagingOwnableLock
+- name: ServerDebug.DebugNodeManagerRuntime
+- name: ServerDebug.DebugPatchingRuntime
+- name: ServerDebug.DebugPathSvc
+- name: ServerDebug.DebugPathSvcVerbose
+# excluded - name: ServerDebug.DebugPersistentStoreManager
+- name: ServerDebug.DebugRA
+- name: ServerDebug.DebugRAClassloader
+- name: ServerDebug.DebugRAConnEvents
+- name: ServerDebug.DebugRAConnections
+- name: ServerDebug.DebugRADeployment
+- name: ServerDebug.DebugRALifecycle
+- name: ServerDebug.DebugRALocalOut
+- name: ServerDebug.DebugRAParsing
+- name: ServerDebug.DebugRAPoolVerbose
+- name: ServerDebug.DebugRAPooling
+- name: ServerDebug.DebugRASecurityCtx
+- name: ServerDebug.DebugRAWork
+- name: ServerDebug.DebugRAWorkEvents
+- name: ServerDebug.DebugRAXAin
+- name: ServerDebug.DebugRAXAout
+- name: ServerDebug.DebugRAXAwork
+- name: ServerDebug.DebugRESTNotifications
+- name: ServerDebug.DebugReadyApp
+- name: ServerDebug.DebugReplication
+- name: ServerDebug.DebugReplicationDetails
+- name: ServerDebug.DebugReplicationSize
+- name: ServerDebug.DebugRestJersey1Integration
+- name: ServerDebug.DebugRestJersey2Integration
+- name: ServerDebug.DebugRestartInPlace
+- name: ServerDebug.DebugSAFAdmin
+# deprecated - name: ServerDebug.DebugSAFLifeCycle
+- name: ServerDebug.DebugSAFManager
+# deprecated - name: ServerDebug.DebugSAFMessagePath
+- name: ServerDebug.DebugSAFReceivingAgent
+- name: ServerDebug.DebugSAFSendingAgent
+- name: ServerDebug.DebugSAFStore
+- name: ServerDebug.DebugSAFTransport
+- name: ServerDebug.DebugSAFVerbose
+- name: ServerDebug.DebugSNMPAgent
+- name: ServerDebug.DebugSNMPExtensionProvider
+- name: ServerDebug.DebugSNMPProtocolTCP
+- name: ServerDebug.DebugSNMPToolkit
+- name: ServerDebug.DebugScaContainer
+# excluded - name: ServerDebug.DebugSecurity
+- name: ServerDebug.DebugSecurityAdjudicator
+- name: ServerDebug.DebugSecurityAtn
+- name: ServerDebug.DebugSecurityAtz
+- name: ServerDebug.DebugSecurityAuditor
+- name: ServerDebug.DebugSecurityCertPath
+- name: ServerDebug.DebugSecurityCredMap
+- name: ServerDebug.DebugSecurityEEngine
+- name: ServerDebug.DebugSecurityEncryptionService
+- name: ServerDebug.DebugSecurityJACC
+- name: ServerDebug.DebugSecurityJACCNonPolicy
+- name: ServerDebug.DebugSecurityJACCPolicy
+- name: ServerDebug.DebugSecurityKeyStore
+- name: ServerDebug.DebugSecurityPasswordPolicy
+- name: ServerDebug.DebugSecurityPredicate
+# obsolete - name: ServerDebug.DebugSecurityProfiler
+- name: ServerDebug.DebugSecurityRealm
+- name: ServerDebug.DebugSecurityRoleMap
+- name: ServerDebug.DebugSecuritySAML2Atn
+- name: ServerDebug.DebugSecuritySAML2CredMap
+- name: ServerDebug.DebugSecuritySAML2Lib
+- name: ServerDebug.DebugSecuritySAML2Service
+- name: ServerDebug.DebugSecuritySAMLAtn
+- name: ServerDebug.DebugSecuritySAMLCredMap
+- name: ServerDebug.DebugSecuritySAMLLib
+- name: ServerDebug.DebugSecuritySAMLService
+- name: ServerDebug.DebugSecuritySSL
+- name: ServerDebug.DebugSecuritySSLEaten
+- name: ServerDebug.DebugSecurityService
+- name: ServerDebug.DebugSecurityUserLockout
+- name: ServerDebug.DebugSelfTuning
+- name: ServerDebug.DebugServerLifeCycle
+- name: ServerDebug.DebugServerMigration
+- name: ServerDebug.DebugServerStartStatistics
+- name: ServerDebug.DebugSituationalConfig
+# excluded - name: ServerDebug.DebugStore
+- name: ServerDebug.DebugStoreAdmin
+# excluded - name: ServerDebug.DebugStoreCache
+- name: ServerDebug.DebugStoreIOLogical
+- name: ServerDebug.DebugStoreIOLogicalBoot
+- name: ServerDebug.DebugStoreIOPhysical
+- name: ServerDebug.DebugStoreIOPhysicalVerbose
+# deprecated - name: ServerDebug.DebugStoreXA
+# deprecated - name: ServerDebug.DebugStoreXAVerbose
+- name: ServerDebug.DebugURLResolution
+- name: ServerDebug.DebugWTCConfig
+- name: ServerDebug.DebugWTCCorbaEx
+- name: ServerDebug.DebugWTCGwtEx
+- name: ServerDebug.DebugWTCJatmiEx
+- name: ServerDebug.DebugWTCTDomPdu
+- name: ServerDebug.DebugWTCUData
+- name: ServerDebug.DebugWTCtBridgeEx
+- name: ServerDebug.DebugWebAppIdentityAssertion
+- name: ServerDebug.DebugWebAppModule
+- name: ServerDebug.DebugWebAppSecurity
+- name: ServerDebug.DebugWorkContext
+- name: ServerDebug.DefaultStore
+- name: ServerDebug.ListenThreadDebug
+- name: ServerDebug.RedefiningClassLoader

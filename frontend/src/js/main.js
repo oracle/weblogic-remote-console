@@ -70,8 +70,11 @@
  * template) in the require list, because the Runtime module reads the src/config/console-frontend-jet.yaml
  * file to set the default logging level used by ojs/ojlogger. We configure our frontend JET web application
  * to use that instead of the built-in console.log mechanism.
+ *
+ * The console-project-manager.js module is preloaded to trigger the reading of the "wrc-projects"
+ * localStorage object.
  */
-require(['ojs/ojcore', 'ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojrouter', './core/runtime',
+require(['ojs/ojcore', 'ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojrouter', './core/runtime', './microservices/project-management/console-project-manager',
     'ojs/ojknockout', 'ojs/ojnavigationlist'],
   function (oj, Bootstrap, ko, app, Router, Runtime) {
     // this callback gets executed when all required modules are loaded

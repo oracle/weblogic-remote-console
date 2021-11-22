@@ -11,10 +11,6 @@ properties:
 - name: Description
 - name: Version
 
-helpTasks:
-- "security/ConfigureCredentialMappingProviders"
-- "security/ManageSecurityProviders"
-
 helpTopics:
 - label: "Configuring a PKI Credential Mapping Provider"
   href: "secmg/credmapper.html#SECMG149"

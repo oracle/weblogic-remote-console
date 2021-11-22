@@ -8,14 +8,6 @@ properties:
 - name: "Name"
 - name: "FilterExpression"
 
-helpTasks:
-- "domain_log_filters/ConstructLogFilterExpressions"
-- "diagnostics/UseQueryLanguageforPolicies"
-- "domain_log_filters/SpecifyMessagesToForwardToTheDomainLog"
-- "domain_log_filters/FilterLogMessages"
-- "domain_log_filters/DeleteLogFilters"
-- "logging/SpecifyMessagesForStandardOut"
-
 helpTopics:
 - label: "How a Server Instance Forwards Messages to the Domain Log"
   href: "wllog/logging_services.html#WLLOG125"

@@ -4,6 +4,9 @@
 slices:
 - name: General
 - name: ConnectionPool
+  slices:
+    - name: General
+    - name: Advanced
 - name: Diagnostics
 - name: IdentityOptions
 - name: Oracle

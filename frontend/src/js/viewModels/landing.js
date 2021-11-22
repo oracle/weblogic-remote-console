@@ -9,82 +9,107 @@
 /**
  * @module
  */
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../core/runtime', '../microservices/navtree/navtree-manager', '../microservices/perspective/perspective-manager', '../microservices/perspective/perspective-memory-manager', 'ojs/ojlogger', '../microservices/page-definition/utils', '../core/utils', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojmodule', 'ojs/ojconveyorbelt'],
-  function(oj, ko, HtmlUtils, Runtime, NavtreeManager, PerspectiveManager, PerspectiveMemoryManager, Logger, PageDefinitionUtils, CoreUtils){
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../apis/data-operations', '../microservices/provider-management/data-provider-manager', '../microservices/perspective/perspective-manager', '../microservices/perspective/perspective-memory-manager', '../microservices/page-definition/utils', './utils', '../core/runtime', '../core/utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojmodule', 'ojs/ojconveyorbelt'],
+  function(oj, ko, HtmlUtils, DataOperations, DataProviderManager, PerspectiveManager, PerspectiveMemoryManager, PageDefinitionUtils, ViewModelUtils, Runtime, CoreUtils, Logger){
     function LandingPageTemplate(viewParams) {
       const self = this;
 
+      // START: knockout observables referenced in landing.html
       this.perspectiveGroups = ko.observableArray();
       this.perspectiveGroup = ko.observable({name: "", description: "<p/>"});
       this.subtreeItemChildren = ko.observableArray();
+      // END:   knockout observables referenced in landing.html
 
-      // The router's state parameter contains the perspectiveId
-      // associated with the landing page. Use that to obtain the
-      // actual perspective.
-      this.perspective = selectPerspective(viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId());
+      this.perspective = PerspectiveManager.getById(viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId());
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(this.perspective.id);
-      this.navtreeManager = new NavtreeManager(this.perspective);
+      this.dataProvider = DataProviderManager.getLastActivatedDataProvider();
+      this.treeModel = {};
+
+      this.signalBindings = [];
 
       this.connected = function() {
-        loadPerspectiveGroups(self.perspective.id);
-
         // Next, we need to subscribe to the parameters.perspectiveId
         // observable, so we get notified when we need to switch landing
         // pages.
         viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId.subscribe((value) => {
-          // Clicking the "Home" navbar menu item puts you in "home mode".
-          // That's the mode that causes the navstrip to treat navstrip
-          // icon clicks as requests to load a perspective's navtree, as
-          // well as a request to show it's landing page. In "home mode",
-          // the user is switching between perspective, so we need to
-          // reinitialize the ko.observables referenced in landing.html.
+          // Clicking the "Home" button toolbar menu item in the content
+          // area header, puts you in "home mode". That's the mode that
+          // causes the navstrip to treat navstrip icon clicks as requests
+          // to load a perspective's navtree, as well as a request to show
+          // it's landing page. In "home mode", the user is switching between
+          // perspectives, so we need to reinitialize the ko.observables
+          // that are referenced in landing.html.
           self.perspectiveGroup({name: "", description: "<p/>"});
           // Hiding the subtree displayed for a perspectiveGroup, is also
           // part of the reinitialization sequence.
           setPagePanelSubtreeVisibility(false);
-          Logger.info(`[LANDING] selected landing: ${value}`);
+          Logger.info(`[LANDING] current landing: ${value}`);
           // Only reload the perspectiveGroups, if value isn't the
           // id of the perspective landing page we're working with.
           if (value !== self.perspective.id) {
-            Logger.info(`[LANDING] previous landing: ${self.perspective.id}, current landing: ${value}`);
-            self.perspective = selectPerspective(value);
-            self.navtreeManager = new NavtreeManager(self.perspective);
-            loadPerspectiveGroups(self.perspective.id);
+            Logger.info(`[LANDING] previous landing: ${self.perspective.id}`);
+            switchPerspective(value);
           }
         });
-      };
 
-      function loadPerspectiveGroups(perspectiveId) {
-        self.navtreeManager.populateNode("")
-        .then(() => {
-          self.navtreeManager.getPathChildrenModels("/")
-          .then((navgroups) => {
-            const pathModels = [];
-            navgroups.forEach((group) => {
-              pathModels.push(group);
-            });
+        // Be sure to create a binding for any signaling add in
+        // this module. In fact, the code for the add needs to
+        // be moved here physically.
 
-            if (pathModels.length > 0) {
-              self.perspectiveGroups(convertPathModelsToGroups(pathModels));
+        let binding = viewParams.signaling.beanTreeChanged.add(newBeanTree => {
+          if (newBeanTree.type !== "home") {
+            switchPerspective(newBeanTree.type);
+          }
+        });
+
+        self.signalBindings.push(binding);
+
+        switchPerspective(self.perspective.id);
+      }.bind(this);
+
+      this.disconnected = function () {
+        self.signalBindings.forEach(binding => { binding.detach(); });
+
+        self.signalBindings = [];
+      }.bind(this);
+
+      function loadPerspectiveGroups() {
+        ViewModelUtils.setCursorType("progress");
+        const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(
+          self.perspective.id
+        );
+        getRootContents(beanTree)
+          .then((rootContents) => {
+            return expandGroups(beanTree, rootContents);
+          })
+          .then((rootContents) => {
+            self.treeModel = rootContents;
+            if (rootContents.contents.length > 0) {
+              self.perspectiveGroups(
+                convertRootContentsToGroups(rootContents.contents)
+              );
             }
 
-            const expandableName = self.perspectiveMemory.expandableName.call(self.perspectiveMemory);
+            const expandableName = self.perspectiveMemory.expandableName.call(
+              self.perspectiveMemory
+            );
             if (expandableName !== null) {
-              const fauxEvent = {currentTarget: {children: [{id: expandableName, attributes: []}]}};
+              const fauxEvent = {
+                currentTarget: {
+                  children: [{ id: expandableName, attributes: [] }],
+                },
+              };
               self.landingPanelClickHandler(fauxEvent);
-            }
-            else {
+            } else {
               setPagePanelSubtreeVisibility(false);
             }
+          })
+          .finally(() => {
+            ViewModelUtils.setCursorType("default");
           });
-        });
       }
 
-      function convertPathModelsToGroups(pathModels) {
-        // This function can be remove once Mason resolves
-        // the issue where the fulfillment value returned by
-        // navtree-manager.getPathChildrenModels() has
-        // duplicates in it.
+      function convertRootContentsToGroups(pathModels) {
         function removeDuplicates(groups, key) {
           return [
             ...new Map(groups.map(obj => [key(obj), obj])).values()
@@ -93,15 +118,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../core/runtime', '../micr
 
         let groups = [];
         pathModels.forEach((pathModel) => {
-          if (typeof pathModel === "string") {
-            groups.push({name: pathModel, label: pathModel});
-          }
-          else if (typeof pathModel.group !== "undefined") {
-            groups.push({name: pathModel.group, label: pathModel.group});
-          }
-          else {
-            groups.push({name: pathModel.label, label: pathModel.label, path: pathModel.path});
-          }
+          pathModels.forEach((pathModel) => {
+            if (pathModel.type === "group") {
+              groups.push({name: pathModel.name, label: pathModel.label});
+            }
+            else if (pathModel.type === "collection") {
+              groups.push({name: pathModel.resourceData.label, label: pathModel.resourceData.label, path: pathModel.resourceData.resourceData});
+            }
+          });
         });
         // TODO: Switch this to just return groups, once Mason
         // resolves the duplicates issue
@@ -109,8 +133,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../core/runtime', '../micr
       }
 
       function setPagePanelSubtreeVisibility(visible) {
-        let ele = document.getElementById("landing-page-panel-subtree");
-        if (ele !== null) ele.style.display = (visible ? "block" : "none");
+        $("#landing-page-panel-subtree").css({"display": (visible ? "block" : "none")});
       }
 
       function toggleSubtreePageVisibility(subtreeName){
@@ -129,15 +152,172 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../core/runtime', '../micr
         }
       }
 
-      this.perspectiveGroupSubtreeItemClickHandler = function(event) {
-        const path = event.currentTarget.children[0].id;
-        if (typeof path === "undefined") return;
+      /**
+       * <p>This is like the one in navtree-manager.js, except it doesn't use instance variables. Not using instance variables allows it to be moved to a utility module.</p>
+       * @param {[{label: string, name: string, selectable: boolean, expanded?: boolean, type: "root|group|collection", children?: any}]} contents
+       * @param {undefined|any} treeModel
+       * @returns {[{identifier: string, label: string, name: string, selectable: boolean, expanded?: boolean, type: "root|group|collection", children?: [any], contents?: any}]}
+       * @private
+       */
+      function processContents(contents, treeModel) {
+        let tree = [];
 
-        Logger.log(`[LANDING] data-path=${path}, perspective-group=${self.perspectiveGroup().name}`);
+        contents?.forEach((item) => {
+          // [{"name":"Environment","label":"Environment","expandable":true,"type":"group"},
+          let identifier = (treeModel ? treeModel + "/" : "") + item.name;
+
+          let node = item;
+          node.identifier = identifier;
+
+          // tree nodes are not marked as expanding because they do not have landing pages
+          if (node.expandable !== false) {
+            node.children = ko.observableArray([]);
+          }
+
+          node.children?.removeAll();
+
+          if (item.contents) {
+            processContents(item.contents, node.identifier)
+              ?.forEach((n) => {
+                node.children.push(n);
+              });
+
+            node.children.valueHasMutated();
+          }
+
+          tree.push(node);
+        });
+        return tree;
+      }
+
+      /**
+       *
+       * @param {{actionsEnabled: boolean, content?: {view: Array}, iconFile: string, label: string, name: "edit|serverConfig|domainRuntime", type: "configuration|monitoring|view|modeling", navtree: string, changeManager?: string, readOnly?: boolean, provider?: {id: string, name: string}}} beanTree
+       * @returns {Promise<{contents: [{identifier: string, label: string, name: string, type: "configuration|monitoring|view|modeling", selectable: boolean, expanded?: boolean, type: "root|group|collection", children?: [any], contents?: any}]}>}
+       * @private
+       */
+      function getRootContents(beanTree, treeModel={}) {
+        return new Promise((resolve) => {
+          if (CoreUtils.isUndefinedOrNull(self.treeModel.contents)) {
+            return DataOperations.navtree.refreshNavtreeData(beanTree.navtree, treeModel)
+              .then( rootTreeModel => {
+                rootTreeModel = processContents(rootTreeModel.contents);
+                resolve({contents: rootTreeModel});
+              });
+          }
+          else {
+            resolve(self.treeModel);
+          }
+        });
+      }
+
+      function expandGroups(beanTree, root) {
+        root.contents.forEach((content) => {
+          content.expanded = true;
+        });
+
+        return getRootContents(beanTree, root);
+      }
+
+      /**
+       *
+       * @param {{actionsEnabled: boolean, content?: {view: Array}, iconFile: string, label: string, name: "edit|serverConfig|domainRuntime", type: "configuration|monitoring|view|modeling", navtree: string, changeManager?: string, readOnly?: boolean, provider?: {id: string, name: string}}} beanTree
+       * @param {any} treeModel
+       * @param {string} groupName
+       * @returns {Promise<{contents: [{identifier: string, label: string, name: string, type: "configuration|monitoring|view|modeling", selectable: boolean, expanded?: boolean, type: "root|group|collection", children?: [any], contents?: any}]}>}
+       * @private
+       */
+      function getGroupContents(beanTree, treeModel, groupName) {
+        return new Promise((resolve) => {
+          const group = treeModel.contents.find(
+            (group) => group.name === groupName
+          );
+          if (CoreUtils.isUndefinedOrNull(group.contents)) {
+            let p;
+
+            if (group.expanded !== true) {
+              group.expanded = true;
+              p = DataOperations.navtree.refreshNavtreeData(
+                beanTree.navtree,
+                treeModel
+              );
+            } else {
+              p = Promise.resolve(group);
+            }
+
+            return p.then((groupTreeModel) => {
+              groupTreeModel = processContents(groupTreeModel.contents);
+              resolve({ contents: groupTreeModel });
+            });
+          } else {
+            resolve(treeModel);
+          }
+        });
+      }
+
+      /**
+       *
+       * @param {[{label: string, name: string, selectable: boolean, expanded?: boolean, type: "root|group|collection", children?: any}]} contents
+       * @param {string} groupName
+       * @returns {Promise<[]|[{label: string, type: "root|group|collection", path: string, descriptionHTML: any}]>}
+       * @private
+       */
+      function getGroupContentsChildren(contents, groupName) {
+        function getSubtreePageItem(item) {
+          return DataOperations.mbean.get(item.resourceData.resourceData)
+            .then(reply => {
+              const pdjData = reply.body.data.get("pdjData");
+              const itemHTML = (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML) ? pdjData.introductionHTML : "<p>CBE did not provide a description for this item.</p>");
+              return {
+                type: item.type,
+                path: item.resourceData.resourceData,
+                label: item.resourceData.label,
+                descriptionHTML: {view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`)}
+              };
+            });
+        }
+
+        // Initialize index and array used as
+        // the return value.
+        let i = 0, results = [];
+
+        const group = contents.find(group => group.name === groupName);
+
+        let nextPromise = () => {
+          if (CoreUtils.isUndefinedOrNull(group.contents)) {
+            // We're done, so return the results
+            // array in a Promise.resolve()
+            return Promise.resolve(results);
+          }
+          else {
+            if (i >= group.contents.length) {
+              // We're done, so return the results
+              // array in a Promise.resolve()
+              return Promise.resolve(results);
+            }
+
+            let newPromise = Promise.resolve(getSubtreePageItem(group.contents[i]))
+              .then(result => {
+                results.push(result);
+              });
+            i++;
+            return newPromise.then(nextPromise);
+          }
+        };
+
+        // Kick off the chain by calling the
+        // nextPromise function.
+        return Promise.resolve().then(nextPromise);
+      }
+
+      this.perspectiveGroupSubtreeItemClickHandler = function(event) {
+        const resourceData = event.currentTarget.children[0].id;
+        if (CoreUtils.isUndefinedOrNull(resourceData)) return;
+
+        Logger.log(`[LANDING] data-path=${resourceData}, perspective-group=${self.perspectiveGroup().name}`);
 
         // expand the navtree nodes
-        viewParams.parentRouter.go("/" + self.perspective.id + "/" + encodeURIComponent(path));
-        viewParams.signaling.navtreeUpdated.dispatch({path:path});
+        viewParams.parentRouter.go("/" + self.perspective.id + "/" + encodeURIComponent(resourceData));
       };
 
       /**
@@ -145,6 +325,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../core/runtime', '../micr
        * @param event
        */
       this.landingPanelClickHandler = function(event) {
+        // The Kiosk will more than likely just be in the
+        // way from here on out, so go ahead and hide it.
+        viewParams.signaling.ancillaryContentAreaToggled.dispatch(false);
         // The id attribute with the perspectiveId assigned
         // to it, is on the first child element of the
         // click event's current target. The click event's
@@ -171,30 +354,33 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../core/runtime', '../micr
         else {
           const previousName = self.perspectiveGroup().name;
           self.perspectiveGroup(self.perspectiveGroups().find(item => item.name === value));
+          if (CoreUtils.isUndefinedOrNull(self.perspectiveGroup())) {
+            self.perspectiveGroup({name: "", description: "<p/>"});
+          }
           const name = self.perspectiveGroup().name;
 
           if (previousName !== "") toggleSubtreePageVisibility(previousName);
 
           if (name !== previousName) {
-            let subtreePageItems = [];
-            self.navtreeManager.getGroupContents(name)
+            const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(self.perspective.id);
+            ViewModelUtils.setCursorType("progress");
+            getGroupContents(beanTree, self.treeModel, name)
               .then(groupContents => {
-                groupContents.forEach((item) => {
-                  const itemHTML = (typeof item.descriptionHTML !== "undefined" ? item.descriptionHTML : "<p>CBE did not provide a description for this item.</p>");
-                  subtreePageItems.push({
-                    type: item.identity.kind,
-                    path: PageDefinitionUtils.pathEncodedFromIdentity(item.identity),
-                    label: PageDefinitionUtils.displayNameFromIdentity(item.identity),
-                    descriptionHTML: { view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`) }
-                  });
-                });
-              }).then(() => {
+                self.treeModel = groupContents;
+                if (CoreUtils.isNotUndefinedNorNull(groupContents.contents)) {
+                  return getGroupContentsChildren(groupContents.contents, name)
+                }
+                else {
+                  return [];
+                }
+              })
+              .then(subtreePageItems => {
                 self.perspectiveMemory.setExpandableName.call(self.perspectiveMemory, name);
                 self.subtreeItemChildren(subtreePageItems);
                 toggleSubtreePageVisibility(name);
-
-                // expand navtree group
-                viewParams.signaling.navtreeUpdated.dispatch({ path: name, unlock: true });
+              })
+              .finally(() => {
+                ViewModelUtils.setCursorType("default");
               });
           }
           else {
@@ -207,15 +393,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../core/runtime', '../micr
 
       };
 
-      function selectPerspective(perspectiveId){
-        const perspective = PerspectiveManager.getById(perspectiveId);
-        if (typeof perspective !== "undefined") {
-          viewParams.signaling.perspectiveSelected.dispatch(perspective);
-          viewParams.signaling.perspectiveChanged.dispatch(perspective);
-          document.title = Runtime.getName() + " - " + perspective.label;
-        }
-
-        return perspective;
+      function switchPerspective(perspectiveId){
+        self.perspective = PerspectiveManager.getById(perspectiveId);
+        viewParams.signaling.perspectiveSelected.dispatch(self.perspective);
+        viewParams.signaling.perspectiveChanged.dispatch(self.perspective);
+        document.title = Runtime.getName() + " - " + self.perspective.label;
+        self.treeModel = {};
+        loadPerspectiveGroups();
       }
 
     }

@@ -5,12 +5,12 @@ properties:
 - name: Name
   helpHTML: >
     <p>The name of this Unix machine.</p>
-- name: "PostBindUID"
+- name: PostBindUID
   usedIf:
     property: "PostBindUIDEnabled"
     values:
     - true
-- name: "PostBindGID"
+- name: PostBindGID
   usedIf:
     property: "PostBindGIDEnabled"
     values:

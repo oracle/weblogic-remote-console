@@ -1,0 +1,20 @@
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+contents:
+- child: WLDFResource.WatchNotification.Watches
+  label: Policies
+- child: WLDFResource.Harvester.HarvestedTypes
+  label: Collected Metrics
+- child: WLDFResource.WatchNotification.HeapDumpActions
+- child: WLDFResource.WatchNotification.ImageNotifications
+- child: WLDFResource.WatchNotification.JMSNotifications
+- child: WLDFResource.WatchNotification.JMXNotifications
+- child: WLDFResource.WatchNotification.LogActions
+- child: WLDFResource.WatchNotification.SMTPNotifications
+  label: SMTP(e-mail) Notifications
+- child: WLDFResource.WatchNotification.SNMPNotifications
+- child: WLDFResource.WatchNotification.ScaleDownActions
+- child: WLDFResource.WatchNotification.ScaleUpActions
+- child: WLDFResource.WatchNotification.ScriptActions
+- child: WLDFResource.WatchNotification.RESTNotifications
+- child: WLDFResource.WatchNotification.ThreadDumpActions

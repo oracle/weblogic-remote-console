@@ -45,5 +45,16 @@ properties:
 - name: OcspResponseCacheRefreshPeriodPercent
   label: Refresh Period (percent)
 
-- name: CertificateAuthorityOverrides
-  source: CertRevocCas
+- name: OcspResponderExplicitTrustMethod
+  label: Explicit Trust Method
+  legalValues:
+    - value: OCSP_EXPLICIT_TRUST_METHOD_NONE 
+      label: None
+    - value: OCSP_EXPLICIT_TRUST_METHOD_USE_SUBJECT 
+      label: Use Subject
+    - value: OCSP_EXPLICIT_TRUST_METHOD_USE_ISSUER_SERIAL_NUMBER    
+      label: Use Issuer Serial Number
+
+children:
+- name: CertRevocCas
+  label: Certificate Authority Overrides

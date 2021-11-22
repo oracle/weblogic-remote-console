@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 # Manually created application/webapp/jsp/jms/stores/JMSFileStoreTargetdeployForm.jsp and consolehelp/docsrc/en-us/xml/pagehelp/jms/stores/JMSFileStoreTargetDeploy.xml
 introductionHTML: >
@@ -10,9 +10,7 @@ introductionHTML: >
       that if the deployment fails for one active server, it fails for all
       active servers.</p>
 properties:
-  - name: "Target"
-helpTasks:
-  - "stores/TargetFileStores.xml"
+  - name: "Targets"
 helpTopics:
   - label: "Administering the WebLogic Persistent Store"
     href: "store/overview.html"

@@ -34,6 +34,8 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'unit-tests/karma-fixture.conf.js',
+
       // RequireJS bootstrap
       'unit-tests/test-main.js',
 
@@ -46,6 +48,9 @@ module.exports = function (config) {
 
       // Test files
       { pattern: 'unit-tests/specs/**', included: false },
+
+      // .json files for fixtures
+      { pattern: 'unit-tests/fixtures/**'},
 
       // project files
       { pattern: 'web/js/**', included: false },
@@ -73,9 +78,14 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 
+    // for serving JSON fixtures, see
+    // https://www.npmjs.com/package/karma-fixture
+    jsonFixturesPreprocessor: {
+      variableName: '__json__'
+    },
 
     preprocessors: {
-      //  'test/**/*.ts': ['karma-typescript'],
+      'unit-tests/fixtures/**/*.json': ['json_fixtures'],
       'web/js/core/**/*.js': sourcePreprocessors,
       'web/js/apis/**/*.js': sourcePreprocessors,
       'web/js/microservices/**/*.js': sourcePreprocessors,
@@ -99,6 +109,7 @@ module.exports = function (config) {
     },
 
     client: {
+      captureConsole: true,
       mocha: {
         timeout: 30000
       }

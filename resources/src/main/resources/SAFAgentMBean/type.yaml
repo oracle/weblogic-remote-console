@@ -1,10 +1,13 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
 - name: Store
   label: Persistent Store
-  optionsMethod: weblogic.console.backend.driver.plugins.SAFAgentMBeanCustomizer.getStoreOptions
+  optionsSources:
+  - Domain/FileStores
+  - Domain/JDBCStores
+#  optionsMethod: weblogic.console.backend.driver.plugins.SAFAgentMBeanCustomizer.getStoreOptions
 
 - name: ServiceType
   label: Agent Type
@@ -30,10 +33,13 @@ properties:
 - name: ReceivingPausedAtStartup
   label: Pause Receiving Messages At Startup
 
-- name: Target
-  source: Targets
-  reference: true
+- name: Targets
+  label: Target
+  referenceAsReferences: true
   optionsSources:
-  - /Servers
-  - /Clusters
-  - /MigratableTargets
+  - Domain/Servers
+  - Domain/Clusters
+  - Domain/MigratableTargets
+
+- name: JMSSAFMessageLogFile
+  offlineName: JmssafMessageLogFile

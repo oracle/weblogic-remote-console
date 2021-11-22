@@ -5,19 +5,15 @@ introductionHTML: >
   <p>Use this page to configure DataSource logging for the server.</p>
 
 properties:
-- name: DataSourceLogFileName
-- name: DataSourceLogRotationType
-- name: DataSourceLogFileMinSize
-- name: DataSourceLogRotationTime
-- name: DataSourceLogFileTimeSpan
-- name: DataSourceLogNumberOfFilesLimited
-- name: DataSourceLogFileCount
-- name: DataSourceLogFileRotationDir
-- name: DataSourceLogRotateLogOnStartup
-
-helpTasks:
-- "jdbc/jdbc_datasources/ConfigureDiagnosticsForADataSource.xml"
-- "logging/ConfigureAndViewLogs.xml"
+- name: DataSource.DataSourceLogFile.FileName
+- name: DataSource.DataSourceLogFile.RotationType
+- name: DataSource.DataSourceLogFile.FileMinSize
+- name: DataSource.DataSourceLogFile.RotationTime
+- name: DataSource.DataSourceLogFile.FileTimeSpan
+- name: DataSource.DataSourceLogFile.NumberOfFilesLimited
+- name: DataSource.DataSourceLogFile.FileCount
+- name: DataSource.DataSourceLogFile.LogFileRotationDir
+- name: DataSource.DataSourceLogFile.RotateLogOnStartup
 
 helpTopics:
 - label: "Setting Up DataSource Profile Logs"

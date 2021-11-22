@@ -35,8 +35,18 @@
     }
   },
   "methods": {
-
-  }, 
+    "addNewChosenItem": {
+      "description": "Add a new item to the chosen items list.",
+      "internalName" : "_addNewChosenItem",
+      "params" : [
+        {
+          "description": "The new item to add",
+          "name" : "newChosenItem",
+          "type": "object"
+        }
+      ]
+    }
+  },
   "events": {
     "chosenItemsChanged": {
       "description": "Triggered when an item is added or removed from the chosen list.",

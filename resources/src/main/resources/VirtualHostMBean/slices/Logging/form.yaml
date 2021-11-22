@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,23 +6,21 @@ introductionHTML: >
   host.</p>
 
 properties:
-- name: "LoggingEnabled"
-- name: "WebServerLogFileName"
-- name: "WebServerLogRotationType"
-- name: "WebServerLogFileMinSize"
-- name: "WebServerLogRotationTime"
-- name: "WebServerLogFileTimeSpan"
-- name: "WebServerLogNumberOfFilesLimited"
-- name: "WebServerLogFileCount"
-- name: "WebServerLogFileRotationDir"
-- name: "WebServerLogRotateLogOnStartup"
+- name: "WebServerLog.LoggingEnabled"
+- name: "WebServerLog.FileName"
+- name: "WebServerLog.RotationType"
+- name: "WebServerLog.FileMinSize"
+- name: "WebServerLog.RotationTime"
+- name: "WebServerLog.FileTimeSpan"
+- name: "WebServerLog.NumberOfFilesLimited"
+- name: "WebServerLog.FileCount"
+- name: "WebServerLog.LogFileRotationDir"
+- name: "WebServerLog.RotateLogOnStartup"
 advancedProperties:
-- name: "LogFileFormat"
-- name: "ELFFields"
-- name: "WebServerLogBufferSizeKB"
-- name: "LogTimeInGMT"
-helpTasks:
-- "virtual_hosts/ConfigureVirtualHostLogging"
+- name: "WebServerLog.LogFileFormat"
+- name: "WebServerLog.ELFFields"
+- name: "WebServerLog.BufferSizeKB"
+- name: "WebServerLog.LogTimeInGMT"
 helpTopics:
 - label: "Understanding Web Applications, Servlets, and JSPs "
   href: "wbapp/basics.html"

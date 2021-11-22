@@ -21,12 +21,6 @@ advancedProperties:
 - name: "AllowUnencryptedNullCipher"
 - name: "InboundCertificateValidation"
 - name: "OutboundCertificateValidation"
-helpTasks:
-- "channels/ConfigureCustomNetworkChannelsForNonclusteredServers"
-- "security/ConfigureKeystoresAndSSLAttributesForChannel"
-- "channels/ConfigureDefaultNetworkConnections"
-- "channels/ConfigureListenPorts"
-- "channels/ConfigureProtocols"
 helpTopics:
 - label: "Configuring an Identity Keystore Specific to a Network Channel "
   href: "secmg/channel.html"

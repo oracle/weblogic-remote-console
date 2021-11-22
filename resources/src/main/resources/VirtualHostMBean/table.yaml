@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A virtual host is a set of host names to which WebLogic Server
@@ -14,8 +14,8 @@ displayedColumns:
 - name: "NetworkAccessPoint"
 - name: "FrontendHost"
 - name: "FrontendHTTPPort"
-- name: "LoggingEnabled"
-- name: "WebServerLogFileName"
+- name: "WebServerLog.LoggingEnabled"
+- name: "WebServerLog.FileName"
 hiddenColumns:
 - name: "FrontendHTTPSPort"
 - name: "KeepAliveEnabled"
@@ -31,9 +31,6 @@ hiddenColumns:
 - name: "UseHeaderEncoding"
 - name: "AuthCookieEnabled"
 - name: "WAPEnabled"
-helpTasks:
-- "virtual_hosts/VirtualHosts"
-- "virtual_hosts/DeleteVirtualHosts"
 helpTopics:
 - label: "Deploying Applications to Oracle WebLogic Server "
   href: "depgd/index.html"

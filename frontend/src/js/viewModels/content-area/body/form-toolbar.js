@@ -16,8 +16,11 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
 
       this.i18n = {
         buttons: {
-          "save": { id: "save", iconFile: ko.observable("save-icon-blk_24x24"), disabled: ko.observable(false),
+          "save": { id: "save", iconFile: ko.observable("save-icon-blk_24x24"), disabled: ko.observable(false), visible: ko.observable(false),
             label: ko.observable(oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.save.label"))
+          },
+          "write": { id: "write", iconFile: "write-wdt-model-blk_24x24", disabled: false, visible: ko.observable(false),
+            label: ko.observable(oj.Translations.getTranslatedString("wrc-common.buttons.write.label"))
           },
           "new": { id: "new", iconFile: "add-icon-blk_24x24", disabled: false,
             label: oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.new.label")
@@ -38,6 +41,12 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
         icons: {
           "save": { id: "save", iconFile: "save-icon-blk_24x24",
             tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.save.tooltip")
+          },
+          "submit": { id: "submit", iconFile: "submit-changes-blk_24x24",
+            tooltip: oj.Translations.getTranslatedString("wrc-common.tooltips.submit.value")
+          },
+          "write": { id: "write", iconFile: "write-wdt-model-blk_24x24",
+            tooltip: oj.Translations.getTranslatedString("wrc-common.tooltips.write.value")
           },
           "create": { id: "create", iconFile: "add-icon-blk_24x24",
             tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.create.tooltip")
@@ -93,37 +102,35 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
       this.autoSyncEnabled = ko.observable(false);
 
       // Need initial values because form-toolbar.html has binding
-      // expressions that reference changeManager
+      // expressions that reference changeManager.
       this.changeManager = ko.observable({isLockOwner: false, hasChanges: false, supportsChanges: false});
 
       // This instance-scope variable is used to remember and
-      // recall the value of the auto-sync interval
+      // recall the value of the auto-sync interval.
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(self.perspective.id);
       this.showInstructions = ko.observable(true);
       this.showBeanPathHistory = ko.observable(this.perspectiveMemory.beanPathHistory.visibility);
 
       this.signalBindings=[];
-      this.readonly = ko.observable(Runtime.isReadOnly());
-
-      // autoSyncCancelled is for stopping auto-sync when the user presses the
-      // "Disconnect" icon in the toolbar icon of domain.js, or
-      // the CFE notices that the CBE process is stopped.
-      this.disconnected = function () {
-        viewParams.signaling.autoSyncCancelled.remove(autoSyncCancelledCallback);
-
-        self.signalBindings.forEach(function (binding) {
-          binding.detach();
-        });
-        self.signalBindings = [];
-      };
+      this.readonly = ko.observable();
 
       this.connected = function () {
-        self.signalBindings.push(viewParams.signaling.readonlyChanged.add((newRO) => {
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !["configuration","modeling"].includes(self.perspective.id));
+        self.readonly(Runtime.isReadOnly());
+
+        let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
           self.readonly(newRO);
           self.i18n.menus.shoppingcart.discard.visible(!newRO);
           self.i18n.menus.shoppingcart.commit.visible(!newRO);
-          if (self.perspective.id === "configuration") setToolbarButtonsVisibility("save", (!newRO ? "inline-flex" : "none"));
-        }));
+          if (["modeling","configuration"].indexOf(self.perspective.id) !== -1) {
+            setToolbarButtonsVisibility("save", (!newRO ? "inline-flex" : "none"));
+          }
+        });
+
+        const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? "savenow" : "write"}.label`);
+        self.i18n.buttons.write.label(label);
+
+        self.signalBindings.push(binding);
 
         // Get auto-sync interval from perspectiveMemory
         const syncInterval = self.perspectiveMemory.contentPage.syncInterval;
@@ -132,7 +139,21 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
           if (ele !== null) ele.setAttribute("data-interval", syncInterval);
         }
 
-        viewParams.signaling.autoSyncCancelled.add(autoSyncCancelledCallback);
+        binding = viewParams.signaling.autoSyncCancelled.add(autoSyncCancelledCallback);
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager) => {
+          changeManager.supportsChanges = self.changeManager().supportsChanges;
+          if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
+            ChangeManager.putMostRecent(changeManager);
+            self.changeManager(changeManager);
+            if (eventType === "discard") viewParams.onShoppingCartDiscarded(self.toolbarButton);
+            if (eventType === "commit") viewParams.onShoppingCartCommitted(self.toolbarButton);
+          }
+        });
+
+        self.signalBindings.push(binding);
 
         // The establishment of this subscription will happen
         // BEFORE the Promise for ChangeManager.getLockState()
@@ -152,10 +173,22 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
           .catch(response => {
             ViewModelUtils.failureResponseDefaultHandling(response);
           })
-          .then(() => {
+          .finally(() => {
             self.showBeanPathHistory(self.perspectiveMemory.beanPathHistory.visibility);
             self.showInstructions(self.perspectiveMemory.instructions.visibility);
           });
+      };
+
+      this.disconnected = function () {
+        // autoSyncCancelled is for stopping auto-sync when the user presses the
+        // "Disconnect" icon in the toolbar icon of domain.js, or
+        // the CFE notices that the CBE process is stopped.
+        viewParams.signaling.autoSyncCancelled.remove(autoSyncCancelledCallback);
+
+        self.signalBindings.forEach(function (binding) {
+          binding.detach();
+        });
+        self.signalBindings = [];
       };
 
       this.launchShoppingCartMenu = function (event) {
@@ -173,6 +206,7 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
               viewParams.onUnsavedChangesDecision()
                 .then(function (proceed) {
                   if (proceed) {
+                    ViewModelUtils.setCursorType("progress");
                     ChangeManager.commitChanges()
                       .then((changeManager) => {
                         self.changeManager(changeManager);
@@ -183,11 +217,15 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
                       })
                       .catch(response => {
                         ViewModelUtils.failureResponseDefaultHandling(response);
+                      })
+                      .finally(() => {
+                        ViewModelUtils.setCursorType("default");
                       });
                   }
                 }.bind(viewParams));
               break;
             case "discard":
+              ViewModelUtils.setCursorType("progress");
               ChangeManager.discardChanges()
                 .then((changeManager) => {
                   self.changeManager(changeManager);
@@ -198,6 +236,9 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
                 })
                 .catch(response => {
                   ViewModelUtils.failureResponseDefaultHandling(response);
+                })
+                .finally(() => {
+                  ViewModelUtils.setCursorType("default");
                 });
               break;
           }
@@ -205,22 +246,17 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
 
       }.bind(this);
 
+
+      this.isWdtForm = function() {
+        return viewParams.isWdtForm();
+      };
+
       function shoppingCartContentsChanged(changeManager) {
         let ele = document.getElementById("shoppingCartImage");
         if (ele !== null) {
           ele.src = "../../images/shopping-cart-" + (changeManager.isLockOwner && changeManager.hasChanges ? "non-empty" : "empty") + "-tabstrip_24x24.png";
         }
       }
-
-      viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager) => {
-        changeManager.supportsChanges = self.changeManager().supportsChanges;
-        if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
-          ChangeManager.putMostRecent(changeManager);
-          self.changeManager(changeManager);
-          if (eventType === "discard") viewParams.onShoppingCartDiscarded(self.toolbarButton);
-          if (eventType === "commit") viewParams.onShoppingCartCommitted(self.toolbarButton);
-        }
-      });
 
       this.resetButtonsDisabledState = function (buttons) {
         buttons.forEach((button) => {
@@ -236,70 +272,58 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
       }
 
       this.renderToolbarButtons = async function (eventType, hasNonReadOnlyFields) {
-        if (self.perspective.id === "configuration" && !self.readonly()) {
+        if ((["modeling","configuration"].indexOf(self.perspective.id) !== -1) && !self.readonly()) {
           const renderingInfo = await viewParams.onToolbarRendering(eventType);
-          resetSaveButtonDisplayState([{id: renderingInfo.mode}]);
+          let buttonId = ((eventType === "update" || renderingInfo.mode === "save") && self.perspective.id === "modeling" ? "write" : renderingInfo.mode);
 
-          if (renderingInfo.kind === "creatableOptionalSingleton"){
-            getPendingEventType(eventType, renderingInfo.kind, renderingInfo.path)
-              .then ((pendingEventType) => {
-                if (pendingEventType === "removal") {
-                  self.toolbarButton = "delete";
-                  // "Save" button is invalid for pendingEventType value, so hide it
-                  setToolbarButtonsVisibility("save", "none");
-                  // "New" button is invalid for pendingEventType value, so hide it
-                  setToolbarButtonsVisibility("new", "none");
-                  // "Delete" button is invalid for pendingEventType value, so hide it
-                  setToolbarButtonsVisibility("delete", "none");
-                }
-                else if (pendingEventType === "addition") {
-                  // Reset toolbarButton to "new", because reloadRdjData() method in form.js
-                  // has reloaded the page and set it to ""
-                  self.toolbarButton = "new";
-                  // "Save" button is valid for pendingEventType value, so show or hide it
-                  setToolbarButtonsVisibility("save", (renderingInfo.formDataExists ? "inline-flex" : "none"));
-                  // "New" button is invalid for pendingEventType value, so hide it
-                  setToolbarButtonsVisibility("new", "none");
-                  // "Delete" button is invalid for pendingEventType value, so hide it
-                  setToolbarButtonsVisibility("delete", "none");
-                }
-                else if (pendingEventType === "create") {
-                  // "Save" button is valid for pendingEventType value, so show or hide it
-                  setToolbarButtonsVisibility("save", (renderingInfo.formDataExists ? "inline-flex" : "none"));
-                  // "New" button is invalid for pendingEventType value, so hide it
-                  setToolbarButtonsVisibility("new", "none");
-                  // "Delete" button is invalid for pendingEventType value, so hide it
-                  setToolbarButtonsVisibility("delete", "none");
-                }
-                else if (pendingEventType === "discard") {
-                  // Need to show a blank form if discard happened after clicking the "New" button
-                  if (self.toolbarButton === "new") showBlankForm();
-                  hasNonReadOnlyFields = (typeof hasNonReadOnlyFields !== "undefined" ? hasNonReadOnlyFields : false);
-                  // "Save" button is valid for pendingEventType value, so show or hide it
-                  setToolbarButtonsVisibility("save", (hasNonReadOnlyFields ? "inline-flex" : "none"));
-                  // "New" button is invalid for pendingEventType value, so hide it
-                  setToolbarButtonsVisibility("new", (!hasNonReadOnlyFields ? "inline-flex" : "none"));
-                  // "Delete" button is valid for pendingEventType value, so show or hide it
-                  setToolbarButtonsVisibility("delete", (hasNonReadOnlyFields ? "inline-flex" : "none"));
-                }
-                else if (pendingEventType === "commit") {
-                  hasNonReadOnlyFields = (typeof hasNonReadOnlyFields !== "undefined" ? hasNonReadOnlyFields : false);
-                  // "Save" button is valid for pendingEventType value, so show or hide it
-                  setToolbarButtonsVisibility("save", (hasNonReadOnlyFields ? "inline-flex" : "none"));
-                  // "New" button is invalid for pendingEventType value, so hide it
-                  setToolbarButtonsVisibility("new", (!hasNonReadOnlyFields ? "inline-flex" : "none"));
-                  // "Delete" button is valid for pendingEventType value, so show or hide it
-                  setToolbarButtonsVisibility("delete", (hasNonReadOnlyFields ? "inline-flex" : "none"));
-                }
-                else {
-                  // "Save" button is valid for pendingEventType value, so show or hide it
-                  setToolbarButtonsVisibility("save", (renderingInfo.formDataExists ? "inline-flex" : "none"));
-                  // "New" button is valid for pendingEventType value, so show or hide it
-                  setToolbarButtonsVisibility("new", (!renderingInfo.formDataExists ? "inline-flex" : "none"));
-                  // "Delete" button is valid for pendingEventType value, so show or hide it
-                  setToolbarButtonsVisibility("delete", (renderingInfo.formDataExists ? "inline-flex" : "none"));
-                }
-              });
+          resetSaveButtonDisplayState([{id: buttonId}]);
+
+          self.i18n.buttons.save.visible(buttonId !== "write");
+          self.i18n.buttons.write.visible(buttonId !== "create" && self.perspective.id === "modeling");
+
+          if (renderingInfo.kind === "creatableOptionalSingleton") {
+            if (eventType === "create") {
+              // "Save" button is valid for pendingEventType value, so show or hide it
+              setToolbarButtonsVisibility("save", (renderingInfo.formDataExists ? "inline-flex" : "none"));
+              // "New" button is invalid for pendingEventType value, so hide it
+              setToolbarButtonsVisibility("new", "none");
+              // "Delete" button is invalid for pendingEventType value, so hide it
+              setToolbarButtonsVisibility("delete", "none");
+            }
+            else if (eventType === "discard") {
+              // Need to show a blank form if discard happened after clicking the "New" button
+              if (self.toolbarButton === "new") showBlankForm();
+              hasNonReadOnlyFields = (typeof hasNonReadOnlyFields !== "undefined" ? hasNonReadOnlyFields : false);
+              // "Save" button is valid for pendingEventType value, so show or hide it
+              setToolbarButtonsVisibility("save", (hasNonReadOnlyFields ? "inline-flex" : "none"));
+              // "New" button is invalid for pendingEventType value, so hide it
+              setToolbarButtonsVisibility("new", (!hasNonReadOnlyFields ? "inline-flex" : "none"));
+              // "Delete" button is valid for pendingEventType value, so show or hide it
+              setToolbarButtonsVisibility("delete", (hasNonReadOnlyFields ? "inline-flex" : "none"));
+              // Allow for the tab strip to be displayed again
+              if (hasNonReadOnlyFields) allowTabStrip();
+            }
+            else if (eventType === "commit") {
+              hasNonReadOnlyFields = (typeof hasNonReadOnlyFields !== "undefined" ? hasNonReadOnlyFields : false);
+              // "Save" button is valid for pendingEventType value, so show or hide it
+              setToolbarButtonsVisibility("save", (hasNonReadOnlyFields ? "inline-flex" : "none"));
+              // "New" button is invalid for pendingEventType value, so hide it
+              setToolbarButtonsVisibility("new", (!hasNonReadOnlyFields ? "inline-flex" : "none"));
+              // "Delete" button is valid for pendingEventType value, so show or hide it
+              setToolbarButtonsVisibility("delete", (hasNonReadOnlyFields ? "inline-flex" : "none"));
+              // Allow for the tab strip to be displayed again
+              if (hasNonReadOnlyFields) allowTabStrip();
+            }
+            else {
+              // "Save" button is valid for pendingEventType value, so show or hide it
+              setToolbarButtonsVisibility("save", (renderingInfo.formDataExists ? "inline-flex" : "none"));
+              // "New" button is valid for pendingEventType value, so show or hide it
+              setToolbarButtonsVisibility("new", (!renderingInfo.formDataExists ? "inline-flex" : "none"));
+              // "Delete" button is valid for pendingEventType value, so show or hide it
+              setToolbarButtonsVisibility("delete", (renderingInfo.formDataExists ? "inline-flex" : "none"));
+              // Allow for the tab strip to be displayed again
+              if (renderingInfo.formDataExists) allowTabStrip();
+            }
           }
           else if (renderingInfo.kind === "nonCreatableOptionalSingleton") {
             // "Save" button is valid for kind value, so show it only when there is RDJ data
@@ -327,54 +351,16 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
 
       }.bind(this);
 
-      function getPendingEventType(eventType, kind, path) {
-        return new Promise((resolve) => {
-          const properties = ChangeManager.getMostRecent();
-          const hasChanges = properties[ChangeManager.Property.HAS_CHANGES.name];
-          if (hasChanges) {
-            ChangeManager.getData()
-              .then((data) => {
-                let item;
-                if (data.data.additions.length > 0) {
-                  item = data.data.additions.find(item => item.identity.kind === kind);
-                  if (typeof item !== "undefined") {
-                    const identityPath = PageDefinitionUtils.pathEncodedFromIdentity(item.identity);
-                    if (identityPath === path)
-                      resolve("addition");
-                    else
-                      resolve(eventType);
-                  }
-                  else
-                    resolve(eventType);
-                }
-                else if (data.data.removals.length > 0) {
-                  item = data.data.removals.find(item => item.identity.kind === kind);
-                  if (typeof item !== "undefined") {
-                    const identityPath = PageDefinitionUtils.pathEncodedFromIdentity(item.identity);
-                    if (identityPath === path)
-                      resolve("removal");
-                    else
-                      resolve(eventType);
-                  }
-                  else
-                    resolve(eventType);
-                }
-                else {
-                  resolve(eventType);
-                }
-              })
-              .catch(response => {
-                ViewModelUtils.failureResponseDefaultHandling(response);
-              });
-          }
-          else
-            resolve(eventType);
-        });
-      }
-
       function showBlankForm(){
         const ele = document.getElementById("cfe-form");
         if (ele !== null) ele.style.display = "none";
+        const eleTabs = document.getElementById("cfe-form-tabstrip-container");
+        if (eleTabs !== null) eleTabs.style.display = "none";
+      }
+
+      function allowTabStrip(){
+        const eleTabs = document.getElementById("cfe-form-tabstrip-container");
+        if (eleTabs !== null) eleTabs.style = "";
       }
 
       function setToolbarButtonsVisibility(button, displayValue) {
@@ -513,7 +499,12 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
         // clear treenav selection
         viewParams.signaling.navtreeSelectionCleared.dispatch();
         self.changeManager(ChangeManager.getMostRecent());
-        viewParams.deleteAction(viewParams.parentRouter.data.rdjUrl());
+        // The "delete" toolbar button is only available for
+        // a "creatableOptionalSingleton", so we need to use
+        // viewParams.parentRouter.data.rdjData.self.resourceData
+        // as the delete uri.
+        const uri = viewParams.parentRouter.data.rdjData().self.resourceData;
+        viewParams.deleteAction(uri);
       };
 
       this.onSave = ko.observable(
@@ -527,6 +518,14 @@ define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../microservic
         }
       );
 
+      this.onUpdateModelFile = ko.observable(
+        function (event) {
+          // event.target.id;
+          self.toolbarButton = "write";
+          // clear treenav selection
+          viewParams.onUpdateModelFile("download");
+        }
+      );
     }
 
     return FormToolbar;

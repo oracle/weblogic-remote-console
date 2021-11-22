@@ -6,13 +6,10 @@ introductionHTML: >
   general configuration options for ONS client.</p>
 
 properties:
-  - name: "FanEnabled"
-  - name: "OnsNodeList"
-  - name: "OnsWalletFile"
-  - name: "OnsWalletPassword"
-helpTasks:
-  - "jdbc/jdbc_datasources/ConfigureONSClientParameters"
-  - "jdbc/jdbc_datasources/ConfigureONSWallet"
+  - name: "JDBCResource.JDBCOracleParams.FanEnabled"
+  - name: "JDBCResource.JDBCOracleParams.OnsNodeList"
+  - name: "JDBCResource.JDBCOracleParams.OnsWalletFile"
+  - name: "JDBCResource.JDBCOracleParams.OnsWalletPassword"
 helpTopics:
   - label: "Advanced Configurations for Oracle Drivers and Databases "
     href: "jdbca/ds_oracledriver.html#JDBCA478"

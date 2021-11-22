@@ -66,6 +66,24 @@ properties:
     Authentication provider should search for users.</p>
   helpDetailsHTML: >
     <p>Valid values are <code>subtree</code> and <code>onelevel</code>.</p>
+  legalValues:
+    - value: subtree
+      label: Sub Tree
+    - value: onelevel
+      label: One Level
+
+- name: GroupSearchScope
+  helpSummaryHTML: >
+    <p>Specifies how deep in the LDAP directory tree to search for groups.</p>
+  helpDetailsHTML: >
+    <p>Valid values are <code>subtree</code> and <code>onelevel</code>.</p>
+  legalValues:
+    - value: subtree
+      label: Sub Tree
+    - value: onelevel
+      label: One Level
+
+
 
 - name: AllGroupsFilter
   helpSummaryHTML: >
@@ -182,3 +200,12 @@ properties:
 - name: IdentityDomain
   helpHTML: >
     <p>The name of the identity domain.</p>
+
+- name: UserBaseDN
+  offlineName: UserBaseDn
+
+- name: RetrievePrincipalFromUserDN
+  offlineName: RetrievePrincipalFromUserDn
+
+- name: MatchGroupBaseDN
+  offlineName: MatchGroupBaseDn

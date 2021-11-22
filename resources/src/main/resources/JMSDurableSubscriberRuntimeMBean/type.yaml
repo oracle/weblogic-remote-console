@@ -1,11 +1,11 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
-- name: "SubscriberBytesCurrentCount"
-  source: "BytesCurrentCount"
-- name: "SubscriberBytesPendingCount"
-  source: "BytesPendingCount"
-- name: "SubscriberMessagesCurrentCount"
-  source: "MessagesCurrentCount"
-- name: "SubscriberMessagesPendingCount"
-  source: "MessagesPendingCount"
+- name: DestinationRuntime.BytesCurrentCount
+  label: Subscriber Bytes Current Count
+- name: DestinationRuntime.BytesPendingCount
+  label: Subscriber Bytes Pending Count
+- name: DestinationRuntime.MessagesCurrentCount
+  label: Subscriber Messages Current Count
+- name: DestinationRuntime.MessagesPendingCount
+  label: Subscriber Messages Pending Count

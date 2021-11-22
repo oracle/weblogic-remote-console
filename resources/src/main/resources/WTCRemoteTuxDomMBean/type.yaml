@@ -1,0 +1,60 @@
+# Copyright (c) 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: AclPolicy
+  legalValues:
+  - value: GLOBAL
+    label: Global
+  - value: LOCAL
+    label: Local
+
+- name: CredentialPolicy
+  legalValues:
+  - value: GLOBAL
+    label: Global
+  - value: LOCAL
+    label: Local
+
+- name: TpUsrFile
+  usedIf:
+    property: AppKey
+    values:
+      - TpUsrFile
+
+- name: TuxedoUidKw
+  label: Tuxedo UID Keyword
+  usedIf:
+    property: AppKey
+    values:
+      - LDAP
+
+- name: TuxedoGidKw
+  label: Tuxedo GID Keyword
+  usedIf:
+    property: AppKey
+    values:
+      - LDAP
+
+- name: CustomAppKeyClass
+  label: "Custom AppKey Class"
+  usedIf:
+    property: AppKey
+    values:
+      - Custom
+
+- name: CustomAppKeyClassParam
+  label: Custom AppKey Param
+  usedIf:
+    property: AppKey
+    values:
+      - Custom
+
+- name: MinEncryptBits
+  useUnlocalizedLegalValuesAsLabels: true
+
+- name: MaxEncryptBits
+  useUnlocalizedLegalValuesAsLabels: true
+
+- name: SSLProtocolVersion
+  offlineName: SslProtocolVersion

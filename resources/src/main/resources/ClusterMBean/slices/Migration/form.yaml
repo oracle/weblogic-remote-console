@@ -13,16 +13,11 @@ properties:
 - name: "AutoMigrationTableName"
 - name: "AutoMigrationTableCreationDDLFile"
 - name: "MemberDeathDetectorEnabled"
-- name: "MemberDiscoveryTimeout"
+- name: "DatabaseLessLeasingBasis.MemberDiscoveryTimeout"
 # excluded - name: "LeaderHeartbeatPeriod"
 - name: "AdditionalAutoMigrationAttempts"
 - name: "MillisToSleepBetweenAutoMigrationAttempts"
 - name: "CandidateMachinesForMigratableServers"
-helpTasks:
-- "clusters/ConfigureClusters"
-- "clusters/ConfigureClusterMigration"
-- "jdbc/jdbc_datasources/CreateDataSources"
-- "clusters/SpecifyClusterReplicationGroups"
 helpTopics:
 - label: "Developing JTA Applications for Oracle WebLogic Server "
   href: "wljta/index.html"

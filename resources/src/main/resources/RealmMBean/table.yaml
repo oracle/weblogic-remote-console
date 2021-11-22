@@ -18,12 +18,6 @@ displayedColumns:
 #- name: "DeployRoleIgnored"
 #- name: "DeployCredentialMappingIgnored"
 
-helpTasks:
-- "security/ConfigureNewSecurityRealms"
-- "security/ConfigureAutomaticRealmRestart"
-- "security/DeleteSecurityRealms"
-- "security/ChangeTheDefaultSecurityRealm"
-
 helpTopics:
 - label: "Security Realms in WebLogic Server"
   href: "secmg/overview.html#SECMG117"

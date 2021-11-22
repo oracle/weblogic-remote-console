@@ -13,10 +13,6 @@ properties:
 - name: NameMapperClassName
 - name: GenerateAttributes
 
-helpTasks:
-- "security/ConfigureCredentialMappingProviders"
-- "security/ManageSecurityProviders"
-
 helpTopics:
 - label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
   href: "secmg/saml.html"

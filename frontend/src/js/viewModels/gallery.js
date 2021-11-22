@@ -6,16 +6,83 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../microservices/perspective/perspective-manager', 'ojs/ojknockout', 'ojs/ojbinddom'],
-  function (oj, ko, HtmlUtils, PerspectiveManager) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../microservices/perspective/perspective-manager', '../microservices/provider-management/data-provider-manager', '../core/runtime', '../core/types', '../core/utils', 'ojs/ojknockout', 'ojs/ojbinddom'],
+  function (oj, ko, HtmlUtils, PerspectiveManager, DataProviderManager, Runtime, CoreTypes, CoreUtils) {
     function GalleryTabTemplate(viewParams) {
-      var self = this;
+      const self = this;
 
-      this.galleryItems = PerspectiveManager.getAll();
-      this.galleryItems.forEach((perspective) => {
-        perspective.iconFile = perspective.iconFiles["light"];
-        perspective.content = { view: HtmlUtils.stringToNodeArray(oj.Translations.getTranslatedString(`wrc-gallery.cards.${perspective.id}.description`))};
-      });
+      this.galleryItems = ko.observableArray();
+
+      function loadGalleryItems(dataProvider) {
+        let dataArray = [];
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+          dataArray = dataProvider.beanTrees;
+        }
+        else {
+          dataProvider = DataProviderManager.getLastActivatedDataProvider();
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            dataArray = dataProvider.beanTrees;
+          }
+        }
+
+        // dataArray will be empty if:
+        //
+        //  1. There is no default project, or
+        //  2. No dataProvider parameter was passed into this function, or
+        //  3. The default project did not have any data providers
+
+        if (dataArray.length > 0) {
+          dataArray.forEach((beanTree) => {
+            const perspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
+            beanTree["iconFile"] = perspective.iconFiles["light"];
+            beanTree["content"] = { view: HtmlUtils.stringToNodeArray(oj.Translations.getTranslatedString(`wrc-gallery.cards.${beanTree.type}.description`))};
+            beanTree["provider"] = {id: dataProvider.id, name: dataProvider.name};
+          });
+        }
+
+        return dataArray;
+      }
+
+      this.signalBindings = [];
+
+      this.connected = function () {
+        // Be sure to create a binding for any signaling add in
+        // this module. In fact, the code for the add needs to
+        // be moved here physically.
+
+        let binding = viewParams.signaling.dataProviderSelected.add(dataProvider => {
+          self.galleryItems(loadGalleryItems(dataProvider));
+          signalDataProviderChanged(dataProvider);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderRemoved.add(removedDataProvider => {
+          const beanTree = self.galleryItems().find(item => item.provider.id === removedDataProvider.id);
+          if (CoreUtils.isNotUndefinedNorNull(beanTree)) {
+            // This means removedDataProvider is for the
+            // gallery items being displayed on the "Home"
+            // page, so they need to be removed.
+            self.galleryItems.valueWillMutate();
+            self.galleryItems.removeAll();
+            self.galleryItems.valueHasMutated();
+          }
+        });
+
+        self.signalBindings.push(binding);
+
+        self.galleryItems(loadGalleryItems());
+      }.bind(this);
+
+      this.disconnected = function () {
+        // Detach all signal "add" bindings
+        self.signalBindings.forEach(binding => { binding.detach(); });
+
+        // Reinitialize module-scoped array for storing
+        // signal "add" bindings, so it can be GC'd by
+        // the JS engine.
+        self.signalBindings = [];
+      }.bind(this);
 
       /**
        * Returns the NLS translated string for the tooltip of a navstrip item.
@@ -43,13 +110,42 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../microservices/perspecti
         // child element (e.g. children[0]) of that is a
         // <div> tag.
         let value = event.currentTarget.children[0].id;
-        if (typeof value === "undefined") {
+
+        if (CoreUtils.isUndefinedOrNull(value)) {
           return;
         }
-        else if (value === "view") {
+
+        const beanTree = getSelectedBeanTree(value);
+        if (CoreUtils.isUndefinedOrNull(beanTree)) {
           return;
         }
-        viewParams.parentRouter.go("/landing/" + value);
+
+        const dataProvider = DataProviderManager.getDataProviderById(beanTree.provider.id);
+        if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+          viewParams.signaling.beanTreeChanged.dispatch(beanTree);
+
+          Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, CoreUtils.isUndefinedOrNull(beanTree.readOnly) ? false : beanTree.readOnly);
+          viewParams.signaling.readonlyChanged.dispatch(Runtime.isReadOnly());
+
+          // Tell root router to navigate to the landing
+          // page associated with the selected beanTree.
+          viewParams.parentRouter.go("/landing/" + value);
+
+          // The Kiosk will more than likely just be in the
+          // way going forward, so go ahead and collapse it.
+          viewParams.signaling.ancillaryContentAreaToggled.dispatch(false);
+        }
+      };
+
+      function getSelectedBeanTree(beanTreeType) {
+        let beanTree;
+        const index = CoreUtils.getLastIndex(self.galleryItems(), "type", beanTreeType);
+        if (index !== -1) beanTree = self.galleryItems()[index];
+        return beanTree;
+      }
+
+      function signalDataProviderChanged(dataProvider) {
+        viewParams.signaling.beanTreeChanged.dispatch({type: "home", label: oj.Translations.getTranslatedString("wrc-content-area-header.toolbar.buttons.home.label"), provider: {id: dataProvider.id, name: dataProvider.name}});
       }
 
     }

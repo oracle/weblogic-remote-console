@@ -3,12 +3,12 @@
 
 collectionLinks:
 - label: Runtime Data
-  resourceData: monitoring/data/DomainRuntime/RunningServers
+  resourceData: DomainRuntime/ServerRuntimes
 - label: Status
-  resourceData: monitoring/data/DomainRuntime/ServerStates
+  resourceData: DomainRuntime/ServerLifeCycleRuntimes
 instanceLinks:
 - label: Runtime Data
-  resourceData: monitoring/data/DomainRuntime/RunningServers/<Server>
+  resourceData: DomainRuntime/ServerRuntimes/<Server>
   notFoundMessage: There is no monitoring data available.  Usually, this indicates that the server instance is not reachable (e.g. not running).
 - label: Status
-  resourceData: monitoring/data/DomainRuntime/ServerStates/<Server>
+  resourceData: DomainRuntime/ServerLifeCycleRuntimes/<Server>

@@ -4,8 +4,6 @@ introductionHTML: >
   Use this page to manage the networking-related server debug flags; that is, the flags
   from the weblogic.protocol, weblogic.iiop, weblogic.t3 and weblogic.workarea debug scopes.
 
-# TBD helpTasks:
-
 # TBD helpTopics:
 
 presentation:
@@ -13,19 +11,19 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
-- name: DebugBuzzProtocol
-- name: DebugBuzzProtocolDetails
-- name: DebugBuzzProtocolHttp
-# deprecated - name: DebugIIOP
-- name: DebugIIOPConnection
-- name: DebugIIOPMarshal
-- name: DebugIIOPNaming
-- name: DebugIIOPOTS
-- name: DebugIIOPReplacer
-- name: DebugIIOPSecurity
-- name: DebugIIOPStartup
-- name: DebugIIOPTransport
-- name: DebugIIOPTunneling
-- name: DebugServerLifeCycle
-- name: DebugServerStartStatistics
-- name: DebugWorkContext
+- name: ServerDebug.DebugBuzzProtocol
+- name: ServerDebug.DebugBuzzProtocolDetails
+- name: ServerDebug.DebugBuzzProtocolHttp
+# deprecated - name: ServerDebug.DebugIIOP
+- name: ServerDebug.DebugIIOPConnection
+- name: ServerDebug.DebugIIOPMarshal
+- name: ServerDebug.DebugIIOPNaming
+- name: ServerDebug.DebugIIOPOTS
+- name: ServerDebug.DebugIIOPReplacer
+- name: ServerDebug.DebugIIOPSecurity
+- name: ServerDebug.DebugIIOPStartup
+- name: ServerDebug.DebugIIOPTransport
+- name: ServerDebug.DebugIIOPTunneling
+- name: ServerDebug.DebugServerLifeCycle
+- name: ServerDebug.DebugServerStartStatistics
+- name: ServerDebug.DebugWorkContext

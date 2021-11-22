@@ -12,9 +12,6 @@ properties:
 - name: Version
 - name: RoleDeploymentEnabled
 
-helpTasks:
-- "security/ConfigureRoleMappingProviders"
-- "security/ManageSecurityProviders"
 helpTopics:
 - label: "Understanding Security for Oracle WebLogic Server"
   href: "scovr/index.html"

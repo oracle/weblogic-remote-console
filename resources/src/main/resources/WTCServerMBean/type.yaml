@@ -7,24 +7,25 @@ properties:
 
 - name: Targets
   optionsSources:
-    - /Servers
+    - Domain/Servers
   helpSummaryHTML: >
     <p>The list of all WebLogic Server instances in the current domain that
     are candidates for hosting this WTC server.</p>
 
-- name: LocalAPs
-  source: WTCLocalTuxDoms
-- name: RemoteAPs
-  source: WTCRemoteTuxDoms
-- name: Exported
-  source: WTCExports
-- name: Imported
-  source: WTCImports
-- name: Passwords
-  source: WTCPasswords
-- name: Resources
-  source: WTCResources
-- name: QueuingBridge
-  source: WTCtBridgeGlobal
-- name: Redirections
-  source: WTCtBridgeRedirects
+children:
+- name: WTCPasswords
+  label: Passwords
+- name: WTCExports
+  label: Exported
+- name: WTCImports
+  label: Imported
+- name: WTCtBridgeRedirects
+  label: Redirections
+- name: WTCResources
+  label: Resources
+- name: WTCLocalTuxDoms
+  label: Local APs
+- name: WTCtBridgeGlobal
+  label: Queuing Bridge
+- name: WTCRemoteTuxDoms
+  label: Remote APs

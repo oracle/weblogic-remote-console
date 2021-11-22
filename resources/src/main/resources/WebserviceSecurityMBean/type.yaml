@@ -1,0 +1,22 @@
+# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: PolicySelectionPreference
+  label: PolicySelectionPreference
+  legalValues:
+  - value: NONE
+    label: None
+  - value: SCP
+    label: SCP
+  - value: SPC
+    label: SPC
+  - value: CSP
+    label: CSP
+  - value: CPS
+    label: CPS
+  - value: PCS
+    label: PCS
+  - value: PSC
+    label: PSC
+

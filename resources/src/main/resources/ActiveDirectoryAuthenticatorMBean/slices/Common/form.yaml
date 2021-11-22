@@ -13,11 +13,6 @@ properties:
 - name: Description
 - name: Version
 - name: ControlFlag
-helpTasks:
-- "security/ConfigureAuthenticationProviders"
-- "security/ConfigurePasswordValidationProviders"
-- "security/SetTheJAASControlFlag"
-- "security/ManageSecurityProviders"
 helpTopics:
 - label: "Setting the JAAS Control Flag Option"
   href: "secmg/atn_intro.html#SECMG172"

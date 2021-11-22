@@ -3,6 +3,7 @@
 properties:
 
 - name: BufferSizeKB
+  offlineName: BufferSizeKb
   label: Log File Buffer
 
 - name: FileName

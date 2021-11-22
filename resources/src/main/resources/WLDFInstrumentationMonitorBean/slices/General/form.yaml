@@ -16,7 +16,3 @@ properties:
 - name: "Properties"
 - name: "DyeFilteringEnabled"
 - name: "DyeMask"
-helpTasks:
-- "diagnostics/ConfigureInstrumentationForADiagnosticModule"
-- "diagnostics/ConfigureDiagnosticMonitorsInADiagnosticModule"
-- "diagnostics/ConfigureDiagnosticModules"

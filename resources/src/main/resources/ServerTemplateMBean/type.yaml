@@ -111,7 +111,7 @@ properties:
 - name: TunnelingClientTimeoutSecs
   label: Tunneling Client Timeout
 
-- name: MaxMessageSize
+- name: IIOP.MaxMessageSize
   label: Maximum Message Size
 
 - name: MaxHTTPMessageSize
@@ -119,66 +119,84 @@ properties:
 
 - name: Machine
   optionsSources:
-  - /Machines
+  - Domain/Machines
 
 - name: Cluster
   optionsSources:
-  - /Clusters
+  - Domain/Clusters
 
 - name: CandidateMachines
   ordered: true
   optionsSources:
-  - /Machines
-
-- name: JTAMigratableTarget
-  nonCreatableOptionalSingleton: true
-
-- name: Channels
-  source: NetworkAccessPoints
+  - Domain/Machines
 
 - name: XMLRegistry
   optionsSources:
-    - /XMLRegistries
+    - Domain/XMLRegistries
 
 - name: IIOPEnabled
   label: Enable IIOP
 
 - name: CoherenceClusterSystemResource
   optionsSources:
-    - /CoherenceClusterSystemResources
+    - Domain/CoherenceClusterSystemResources
   helpSummaryHTML: >
     <p>Coherence cluster associated with this server or server template.</p>
   helpDetailsHTML: >
     <p>The selected coherence cluster must also specify this
     server or server template as the target in its Members slice.</p>
 
-- name: "RestartMax"
+- name: RestartMax
   label: Max Restarts Within Interval
   usedIf:
     property: AutoRestart
     values:
       - true
 
-- name: "RestartDelaySeconds"
+- name: RestartDelaySeconds
   usedIf:
     property: AutoRestart
     values:
       - true
 
-- name: "RestartIntervalSeconds"
+- name: RestartIntervalSeconds
   usedIf:
     property: AutoRestart
     values:
       - true
 
-- name: "GatheredWritesEnabled"
+- name: GatheredWritesEnabled
+  label: Enable Gathered Writes
   usedIf:
     property: NativeIOEnabled
     values:
       - true
 
-- name: "ScatteredReadsEnabled"
+- name: ScatteredReadsEnabled
+  label: Enable Scattered Reads
   usedIf:
     property: NativeIOEnabled
     values:
       - true
+
+- name: StagingMode
+  legalValues:
+  - value: null
+    label: default
+
+- name: JMSConnectionFactoryUnmappedResRefMode
+  offlineName: JmsConnectionFactoryUnmappedResRefMode
+
+- name: NumOfRetriesBeforeMSIMode
+  offlineName: NumOfRetriesBeforeMsiMode
+
+- name: RetryIntervalBeforeMSIMode
+  offlineName: RetryIntervalBeforeMsiMode
+
+children:
+
+- name: JTAMigratableTarget
+  nonCreatableOptionalSingleton: true
+
+- name: NetworkAccessPoints
+  label: Channels

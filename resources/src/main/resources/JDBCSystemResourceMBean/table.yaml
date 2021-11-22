@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A JDBC data source is an object bound to the JNDI tree that provides
@@ -9,21 +9,14 @@ introductionHTML: >
 
 displayedColumns:
 - name: "Name"
-- name: "DatasourceType"
-- name: "JNDINames"
+- name: "JDBCResource.DatasourceType"
+- name: "JDBCResource.JDBCDataSourceParams.JNDINames"
 - name: "Targets"
 hiddenColumns:
-- name: "AlgorithmType"
+- name: "JDBCResource.JDBCDataSourceParams.AlgorithmType"
 # deprecated - name: "RowPrefetch"
 # deprecated - name: "StreamChunkSize"
 # deprecated - name: "RowPrefetchSize"
-
-helpTasks:
-- "jdbc/jdbc_datasources/CreateDataSources"
-- "jdbc/jdbc_datasources/CreateGridLinkDataSources"
-- "jdbc/jdbc_multidatasources/CreateMultiDataSources"
-- "jdbc/jdbc_datasources/CreateUCPDataSources"
-- "jdbc/jdbc_datasources/CreateProxyDataSources"
 
 helpTopics:
 - label: "Understanding WebLogic JNDI "

@@ -10,9 +10,6 @@ properties:
 - name: Description
 - name: Version
 
-helpTasks:
-- "security/ConfigureTheWebLogicAdjudicationProvider.xml"
-- "security/ManageSecurityProviders"
 helpTopics:
 - label: "Understanding Security for Oracle WebLogic Server"
   href: "scovr/index.html"

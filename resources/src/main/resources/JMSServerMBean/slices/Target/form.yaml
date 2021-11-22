@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -11,12 +11,7 @@ introductionHTML: >
   the JMS server will not boot.</p>
 
 properties:
-- name: "Target"
-helpTasks:
-- "jms_servers/ConfigureJMSServers"
-- "jms_modules/modules/TargetJMSModules"
-- "jms_modules/queues/TargetQueues"
-- "jms_modules/topics/TargetTopics"
+- name: "Targets"
 helpTopics:
 - label: "Configuring Basic JMS System Resources"
   href: "jmsad/basic_config.html"

@@ -6,8 +6,10 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojlogger'],
-  function (oj, ko, ArrayDataProvider, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', '../../core/utils', 'ojs/ojlogger', './unset'],
+  function (oj, ko, ArrayDataProvider, CoreUtils, Logger, Unset) {
+
+    const NULL_VALUE = Object.freeze("___NULL___");
 
     const i18n = {
       "cfe-multi-select": {
@@ -18,25 +20,125 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojlogger'],
       }
     };
 
-  //public:
+    function selectCommon(pdjTypes, value, dataValues, options, field) {
+      let optionsArray = [];
+      const name = options["name"];
+      let warning = null;
+
+      if (pdjTypes.isReadOnly(name) || options["isReadOnly"] || false) {
+        //field.setAttribute("readonly", "readonly");
+
+        field.setAttribute("readonly", "true");
+        field.className = (options["isSingleColumn"]) ? "cfe-form-readonly-select-one-md" : "cfe-form-readonly-select-one" ;
+      } else {
+        field.className = (options["isSingleColumn"]) ? "cfe-form-select-one-md" : "cfe-form-select-one" ;
+      }
+
+      if (dataValues[name] != null && typeof dataValues[name].options !== 'undefined') {
+        for (const i in dataValues[name].options) {
+          const op = dataValues[name].options[i];
+          if (op.value !== null) {
+            optionsArray.push({value: op.value, label: op.label});
+          }
+          else {
+            optionsArray.push({value: "", label: CoreUtils.isNotUndefinedNorNull(op.label) ? op.label: "None"});
+          }
+        }
+      }
+      else
+      if (pdjTypes.hasLegalValues(name)) {
+        let legalValueWidth = 0;
+        const legalValues = pdjTypes.getLegalValues(name);
+        for (const j in legalValues) {
+          const o = legalValues[j];
+          if (o.value === null) {
+            o.value = NULL_VALUE;
+          }
+          const option = { value: o.value, label: o.label || o.value};
+          optionsArray.push(option);
+          legalValueWidth = option.label.length;
+        }
+        if (legalValueWidth > 40) field.className = "cfe-form-select-one-wide";
+        // for creating new, we want to set the value to be the first legal value instead of leaving it blank,
+        // as this will be a required field.
+        if (!options["isEdit"] && value === "") {
+          if (typeof legalValues[0].value !== 'undefined') {
+            field.defaultForCreate = legalValues[0].value;
+          }
+        }
+      }
+      else {
+        let warning = "used without options or legal values!" ;
+        optionsArray.push({ label: pdjTypes.getLabel(name), value: value });
+      }
+      return {optionsArray, warning}
+    }
+
+    //public:
     return {
       addFieldIcons: function (params) {
         let container = document.createElement("div");
         container.classList.add("cfe-form-field");
 
         let image = document.createElement("img");
-        image.classList.add("restart-required-icon");
-        if (params.restartRequired && !params.readOnly) {
-          image.setAttribute("src", "../../images/" + params.icons.restart.iconFile + ".png");
-          image.setAttribute("title", params.icons.restart.tooltip);
-          image.style.visibility = "visible";
+        if (params.field.className !== "cfe-multi-select"){
+          image.classList.add("restart-required-icon");
+          if (params.restartRequired && !params.readOnly) {
+            image.setAttribute("src", "../../images/" + params.icons.restart.iconFile + ".png");
+            image.setAttribute("title", params.icons.restart.tooltip);
+            image.style.visibility = "visible";
+          }
+          else {
+            image.style.visibility = "hidden";
+          }
+          container.append(image);
         }
-        else {
-          image.style.visibility = "hidden";
+        const id = params.field.getAttribute("id");
+        if ( !params.readOnly && params.needsWdtIcon) {
+          image.classList.add("cfe-button-icon");
+          image.setAttribute("src", "../../images/" + params.icons.wdtIcon.iconFile + ".png");
+          image.setAttribute("title", params.icons.wdtIcon.tooltip);
+          image.style.visibility = "visible";
+          image.style.verticalAlign = "top";
+          let linkRef = document.createElement("a");
+          linkRef.setAttribute("id", "wdtOptions_" + id);
+          linkRef.setAttribute("replacer", params.replacer);
+          linkRef.setAttribute("data-id", id);
+          linkRef.setAttribute("data-value", params.field.getAttribute("value"));
+          linkRef.setAttribute("data", params.field.getAttribute("data"));  //will be null except for single select
+          linkRef.setAttribute("data-displayClass", params.field.localName);
+          linkRef.setAttribute("readonly", params.readOnly);
+          linkRef.setAttribute("valueset", params.valueSet);
+          linkRef.setAttribute("namelabel", params.nameLabel);
+          linkRef.setAttribute("supportsModelTokens", params.supportsModelTokens);
+          linkRef.setAttribute("supportsUnresolvedReferences", params.supportsUnresolvedReferences);
+          linkRef.setAttribute("valueFrom", params.valueFrom);
+          linkRef.setAttribute("on-click", "[[wdtOptionsIconClickListener]]");
+          linkRef.append(image);
+          container.append(linkRef);
         }
 
-        container.append(image);
-        container.append(params.field);
+        if (params.extraField !== null){
+          let extraFieldDiv = document.createElement('div');
+          extraFieldDiv.setAttribute("id", "extraField_" + id);
+          extraFieldDiv.style.display = (params.showExtraField ? "inline-flex" : "none");
+          extraFieldDiv.append(params.extraField);
+          container.append(extraFieldDiv);
+
+          let baseFieldDiv = document.createElement('div');
+          baseFieldDiv.setAttribute("id", "baseField_" + id);
+          baseFieldDiv.style.display = (params.showExtraField ? "none" : "inline-flex");
+          baseFieldDiv.append(params.field);
+          container.append(baseFieldDiv);
+        }
+        else {
+          container.append(params.field);
+        }
+
+        if (params.field.className === "cfe-multi-select") {
+          container.classList.add("oj-flex");
+          return container;
+        }
 
         const moreIcon = document.createElement("img");
         moreIcon.classList.add(params.icons.more.iconClass);
@@ -48,34 +150,61 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojlogger'],
         if (typeof params.moreMenuParams !== 'undefined') {
           let menuParams = params.moreMenuParams;
 
-          // Add link that will open the more menu,
-          // append moreIcon to it, and then append
-          // link to container.
-          let linkRef = document.createElement("a");
-          linkRef.setAttribute("id", menuParams.buttonId);
-          linkRef.setAttribute("on-click", "[[moreMenuIconClickListener]]");
-          linkRef.append(moreIcon);
-          container.append(linkRef);
+          if (!menuParams.disabled) {
+            // Add link that will open the more menu,
+            // append moreIcon to it, and then append
+            // link to container.
+            const linkRef = document.createElement("a");
+            linkRef.setAttribute("id", menuParams.buttonId);
+            linkRef.setAttribute("on-click", "[[moreMenuIconClickListener]]");
+            linkRef.append(moreIcon);
+            container.append(linkRef);
+          }
 
           // Add the more menu with the supplied menu items
-          let menu = document.createElement("oj-menu");
+          const menu = document.createElement("oj-menu");
           menu.setAttribute("id", menuParams.menuId);
+          menu.setAttribute("data-property-label", menuParams.propertyLabel);
+          menu.setAttribute("data-property-value", menuParams.propertyValue);
+          menu.setAttribute("data-perspective-id", menuParams.perspectiveId);
+          menu.setAttribute("data-options-sources", menuParams.optionsSources);
           menu.setAttribute("on-oj-action", "[[moreMenuClickListener]]");
           menu.setAttribute("open-options.launcher", menuParams.buttonId);
-          let menuItems = menuParams.menuItems;
+
+          const menuItems = menuParams.menuItems;
+
           for (let i = 0; i < menuItems.length; i++) {
-            let menuItem = document.createElement("oj-option");
-            menuItem.setAttribute("id", "item"+i);
-            menuItem.setAttribute("value", i);
-            let span = document.createElement("span");
-            span.innerText = menuItems[i];
-            menuItem.append(span);
-            menu.append(menuItem);
+            if (menuItems[i].visible) {
+              const menuItem = document.createElement("oj-option");
+              menuItem.setAttribute("data-index", menuItems[i].index);
+              menuItem.setAttribute("id", menuItems[i].id);
+              menuItem.setAttribute("value", menuItems[i].id);
+              menuItem.setAttribute("disabled", menuItems[i].disabled);
+              const span = document.createElement("span");
+              span.classList.add("cfe-more-menuitem");
+              span.innerText = menuItems[i].label;
+              menuItem.append(span);
+              menu.append(menuItem);
+            }
           }
+
           container.append(menu);
         }
 
         return container;
+      },
+
+      /** Update the field for the specified property to apply hightlighting and context menu */
+      addFieldContextMenu: function (name, params) {
+        if (params.valueSet) {
+          // Apply the highlight class to the field when the value is set
+          Unset.addHighlightClass(params.field);
+
+          // Add the context menu to the field unless read only
+          if (!params.readOnly) {
+            Unset.addContextMenu(name, params.field);
+          }
+        }
       },
 
       addUploadFileElements: function (params) {
@@ -133,106 +262,89 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojlogger'],
        * @param options
        * @returns {{field: HTMLElement, dataProvider: *}}
        */
-      createSingleSelect: function (pdjTypes, value, dataValues, options) {
-        let optionsArray = [];
-        let field = document.createElement('oj-select-single');
-        const name = options["name"];
+      createSingleSelect: function (pdjTypes, value, dataValues, options, field) {
+        field = document.createElement('oj-select-single');
+        const common = selectCommon(pdjTypes, value, dataValues, options, field);
+        if (common.warning != null){
+          Logger.warn("createSingleSelect() " + common.warning);
+        }
+        return {dataProvider: new ArrayDataProvider(common.optionsArray, { keyAttributes: 'value' }), field: field};
+      },
 
-        if (pdjTypes.isReadOnly(name) || options["isReadOnly"] || false) {
-          //field.setAttribute("readonly", "readonly");
-
-          field.setAttribute("readonly", "true");
-          field.className = (options["isSingleColumn"]) ? "cfe-form-readonly-select-one-md" : "cfe-form-readonly-select-one" ;
-        } else {
-          field.className = (options["isSingleColumn"]) ? "cfe-form-select-one-md" : "cfe-form-select-one" ;
+      /**
+       * Creates an <oj-combobox-one> for either reference-dynamic-enum (defined in rdj) or options (contained in rdj)
+       * @param pdjTypes
+       * @param value
+       * @param dataValues
+       * @param options
+       * @returns {{field: HTMLElement, dataProvider: *}}
+       */
+      createComboOne: function (pdjTypes, value, dataValues, options) {
+        let field = document.createElement('oj-combobox-one');
+        field.setAttribute("value", "{{[fieldSelectData_"+options["name"]+"]()}}");
+        const common = selectCommon(pdjTypes, value, dataValues, options, field);
+        if (common.warning != null){
+          Logger.warn("createComboOne() " + common.warning);
         }
 
-        if (dataValues[name] != null && typeof dataValues[name].options !== 'undefined') {
-          for (var i in dataValues[name].options) {
-            let o = dataValues[name].options[i];
-
-            if (o != null) {
-              if (o.kind === 'collectionChild') {
-                var optionPath = o.path;
-
-                optionsArray.push({
-                  value: o,
-                  label: optionPath[optionPath.length - 1].key
-                });
-              }
-            } else {
-              optionsArray.push({
-                value: "", label: "None"
-              });
-            }
-          }
-        } else if (pdjTypes.hasLegalValues(name)) {
-          let legalValueWidth = 0;
-          let legalValues = pdjTypes.getLegalValues(name);
-          for (var j in legalValues) {
-            let o = legalValues[j];
-
-            if (o !== null) {
-              optionsArray.push({ value: o.value, label: o.label });
-              legalValueWidth = o.label.length;
-            } else {
-              optionsArray.push({ value: "", label: "None" });
-            }
-          }
-          if (legalValueWidth > 40) field.className = "cfe-form-select-one-wide";
-          // for creating new, we want to set the value to be the first legal value instead of leaving it blank,
-          // as this will be a required field.
-          if (!options["isEdit"] && value === "") {
-            if (typeof legalValues[0].value !== 'undefined') {
-              field.defaultForCreate = legalValues[0].value;
-            }
-          }
-        } else {
-          Logger.warn(`createSingleSelect() used without options or legal values!`);
-          optionsArray.push({ label: pdjTypes.getLabel(name), value: value });
-        }
-
-        return {dataProvider: new ArrayDataProvider(optionsArray, { keyAttributes: 'value' }), field: field};
+        return {dataProvider: new ArrayDataProvider(common.optionsArray, { keyAttributes: 'value' }), field: field};
       },
 
       /**
        * Create a cfe-multi-select for type reference-dynamic-enum with array property set to true.
-       * @param dataValues
-       * @param name
+       * @param {object} dataValues
+       * @param {name} name
        * @returns {{chosenItems: Array, field: HTMLElement, origChosenLabels: Array, availableItems: Array}}
        */
-      createMultiSelect: function (dataValues, name) {
-        let optionPath, availableItems = [], chosenItems = [], origChosenLabels = [];
+      createMultiSelect: function (dataValues, name, pdjTypes) {
+        let optionPath, availableItems = [], chosenItems = [], origChosenLabels = [], shortName;
         // Set the chosen and available items to cfe-multi-select
-        if (dataValues[name] != null) {
-          if (typeof dataValues[name].value !== 'undefined') {
-            for (var j in dataValues[name].value) {
-              const va = dataValues[name].value[j];
-              if (va !== null) {
-                if (va.kind === 'collectionChild') {
-                  optionPath = va.path;
-                  const shortName = optionPath[optionPath.length - 1].key;
+        if (dataValues[name] !== null) {
+          if (CoreUtils.isNotUndefinedNorNull(dataValues[name].value)) {
+            let va;
+            if (Array.isArray(dataValues[name].value)) {
+              for (let i = 0; i < dataValues[name].value.length; i++) {
+                va = dataValues[name].value[i];
+                if (CoreUtils.isNotUndefinedNorNull(va.value)){
+                  shortName = va.value.label;
                   chosenItems.push({ value: JSON.stringify(va), label: shortName });
+                  origChosenLabels.push(shortName);
+                }
+                else {
+                  const valueFrom = pdjTypes.getObservableValueFrom(va);
+                  if (valueFrom === "fromModelToken"){
+                    shortName = va.modelToken;
+                    const item = {
+                      "label" : shortName,
+                      "modelToken" : shortName
+                    }
+                    chosenItems.push({ value: JSON.stringify(item), label: shortName});
+                  }
                   origChosenLabels.push(shortName);
                 }
               }
             }
+            else {
+              va = dataValues[name].value;
+              shortName = va.label;
+              chosenItems.push({ value: JSON.stringify(va), label: shortName });
+              origChosenLabels.push(shortName);
+            }
           }
-          if (typeof dataValues[name].options !== 'undefined') {
-            for (var i in dataValues[name].options) {
+
+          if (CoreUtils.isNotUndefinedNorNull(dataValues[name].options)) {
+            for (let i = 0; i < dataValues[name].options.length; i++) {
               const op = dataValues[name].options[i];
-              if (op != null) {
-                if (op.kind === 'collectionChild') {
-                  optionPath = op.path;
-                  const shortName = optionPath[optionPath.length - 1].key;
-                  if (!origChosenLabels.includes(shortName)) {
-                    availableItems.push({ value: JSON.stringify(op), label: shortName });
-                  }
+              if (op !== null) {
+                shortName = (CoreUtils.isNotUndefinedNorNull(op.value) ? op.value.label : op.label);
+                if (!origChosenLabels.includes(shortName)) {
+                  availableItems.push({ value: JSON.stringify(op), label: shortName });
                 }
               }
             }
           }
         }
+
         let field = document.createElement('cfe-multi-select');
         field.classList.add("cfe-multi-select");
         // set the properties
@@ -327,7 +439,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojlogger'],
       },
 
       createInputPassword: function (className) {
-        const field = document.createElement("oj-input-password")
+        const field = document.createElement("oj-input-password");
+        field.setAttribute("mask-icon", "visible");
         field.classList.add(className);
         return field;
       },
@@ -337,6 +450,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojlogger'],
         field.classList.add(options["className"]);
         field.setAttribute("placeholder", options["placeholder"]);
         field.setAttribute("readonly", options["readonly"] || false);
+        return field;
+      },
+
+      createExpandingInputText: (options) => {
+        const field = document.createElement("span");
+        field.classList.add(options["className"]);
+        field.setAttribute("role", "textbox");
+        field.setAttribute("placeholder", options["placeholder"]);
+        field.setAttribute("readonly", options["readonly"] || false);
+        field.setAttribute("contenteditable", true);
         return field;
       },
 
