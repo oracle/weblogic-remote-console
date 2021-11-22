@@ -184,7 +184,6 @@ then
   windows)
     rm -rf "$tmp"/*
     mv dist/*.exe "$tmp"
-    rm -rf dist/*
     java -jar CSS-Client.jar sign -user weblogic_remote_console_grp -global_uid lfeigen -signed_location "dist" -sign_method microsoft -file_to_sign "$tmp"/*.exe
     chmod +x dist/*.exe
   esac
