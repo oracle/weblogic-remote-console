@@ -5,8 +5,6 @@ introductionHTML: >
   from the weblogic.core, weblogic.nodemanager, weblogic.cluster, weblogic.work
   and weblogic.concurrent debug scopes.
 
-# TBD helpTasks:
-
 # TBD helpTopics:
 
 presentation:
@@ -14,32 +12,32 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
-- name: DebugAsyncQueue
-- name: DebugCluster
-- name: DebugClusterAnnouncements
-- name: DebugClusterFragments
-- name: DebugClusterHeartbeats
-- name: DebugConcurrent
-- name: DebugConcurrentContext
-- name: DebugConcurrentMES
-- name: DebugConcurrentMSES
-- name: DebugConcurrentMTF
-- name: DebugConcurrentTransaction
-- name: DebugConsensusLeasing
-- name: DebugDRSCalls
-- name: DebugDRSHeartbeats
-- name: DebugDRSMessages
-- name: DebugDRSQueues
-- name: DebugDRSStateTransitions
-- name: DebugDRSUpdateStatus
-- name: DebugLeaderElection
-- name: DebugNodeManagerRuntime
-- name: DebugRAWork
-- name: DebugRAWorkEvents
-- name: DebugRAXAwork
-- name: DebugReplication
-- name: DebugReplicationDetails
-- name: DebugReplicationSize
-- name: DebugSelfTuning
-- name: ListenThreadDebug
-# excluded - name: MagicThreadDumpEnabled
+- name: ServerDebug.DebugAsyncQueue
+- name: ServerDebug.DebugCluster
+- name: ServerDebug.DebugClusterAnnouncements
+- name: ServerDebug.DebugClusterFragments
+- name: ServerDebug.DebugClusterHeartbeats
+- name: ServerDebug.DebugConcurrent
+- name: ServerDebug.DebugConcurrentContext
+- name: ServerDebug.DebugConcurrentMES
+- name: ServerDebug.DebugConcurrentMSES
+- name: ServerDebug.DebugConcurrentMTF
+- name: ServerDebug.DebugConcurrentTransaction
+- name: ServerDebug.DebugConsensusLeasing
+- name: ServerDebug.DebugDRSCalls
+- name: ServerDebug.DebugDRSHeartbeats
+- name: ServerDebug.DebugDRSMessages
+- name: ServerDebug.DebugDRSQueues
+- name: ServerDebug.DebugDRSStateTransitions
+- name: ServerDebug.DebugDRSUpdateStatus
+- name: ServerDebug.DebugLeaderElection
+- name: ServerDebug.DebugNodeManagerRuntime
+- name: ServerDebug.DebugRAWork
+- name: ServerDebug.DebugRAWorkEvents
+- name: ServerDebug.DebugRAXAwork
+- name: ServerDebug.DebugReplication
+- name: ServerDebug.DebugReplicationDetails
+- name: ServerDebug.DebugReplicationSize
+- name: ServerDebug.DebugSelfTuning
+- name: ServerDebug.ListenThreadDebug
+# excluded - name: ServerDebug.MagicThreadDumpEnabled

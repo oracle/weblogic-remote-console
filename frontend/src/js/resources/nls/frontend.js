@@ -1,24 +1,14 @@
 define({
   "root": {
     "wrc-header": {
-      "text": {"appName": "WebLogic Remote Console"},
-      "keyPairs": {
-        "welcome": {"label": "Welcome, {0}"},
-        "connected": {"label": "Connect to:"},
-        "disconnected": {"label": "Not Connected"}
+      "text": {
+        "appName": "WebLogic Remote Console"
       },
       "icons": {
         "connectivity": {
           "online": {"tooltip": "Online"},
           "offline": {"tooltip": "Offline"},
           "detached": {"tooltip": "Detached"}
-        }, "connectionType": {"nonsecure": {"tooltip": "Nonsecure"}, "secure": {"tooltip": "Secure"}}
-      },
-      "buttons": {"connect": {"label": "Connect"}, "disconnect": {"label": "Disconnect"}},
-      "menus": {
-        "domain": {
-          "url": {"label": "Domain URL:"},
-          "version": {"label": "Domain Version:"}
         }
       }
     },
@@ -28,16 +18,181 @@ define({
         "builtWith": "Built with Oracle JET"
       }
     },
+    "wrc-data-providers": {
+      "icons": {
+        "info": {"tooltip": "Get Info"},
+        "edit": {"tooltip": "Manage"},
+        "delete": {"tooltip": "Remove"}
+      },
+      "labels": {
+        "connections": {
+          "header": {"value": "Unnamed Project"},
+          "name": {"value": "Connection Provider Name"},
+          "url": {"value": "URL"},
+          "username": {"value": "Username"},
+          "password": {"value": "Password"}
+        },
+        "models": {
+          "name": {"value": "WDT Model Provider Name"},
+          "file": {"value": "WDT Model Filename"}
+        },
+        "project": {
+          "name": {"value": "Project Name"},
+          "file": {"value": "Project Filename"}
+        },
+        "provider": {
+          "adminserver": {"value": "Admin Server Connection"},
+          "model": {"value": "WDT Model"}
+        }
+      },
+      "popups": {
+        "info": {
+          "provider": {
+            "id": {"label": "Provider Id:"}
+          },
+          "domain": {
+            "name": {"label": "Domain Name:"},
+            "url": {"label": "Domain URL:"},
+            "version": {"label": "Domain Version:"},
+            "username": {"label": "Username:"},
+            "connectTimeout": {"label": "Connect Timeout:"},
+            "readTimeout": {"label": "Read Timeout:"},
+            "anyAttempt": {"label": "Any Connections Attempted:"},
+            "lastAttempt": {"label": "Last Attempt Successful:"}
+          },
+          "model": {
+            "file": {"label": "File:"}
+          }
+        }
+      },
+      "menus": {
+        "connections": {
+          "add": {"value": "Add Admin Server Connection Provider"},
+          "add1": {"value": "Create Provider for Admin Server Connection"}
+        },
+        "models": {
+          "add": {"value": "Add WDT Model File Provider"},
+          "add1": {"value": "Create Provider for Existing WDT Model File"},
+          "new": {"value": "Create Provider for New WDT Model File"}
+        },
+        "providers": {
+          "sort": {"value": "Sort by Provider Type"}
+        },
+        "context": {
+          "info": {
+            "connection": {
+              "domain": {
+                "url": {"label": "Domain URL:"},
+                "version": {"label": "Domain Version:"},
+                "username": {"label": "Username:"}
+              }
+            },
+            "model": {
+              "file": {"label": "File:"}
+            }
+          }
+        },
+        "project": {
+          "export": {"value": "Export Providers as Project..."},
+          "import": {"value": "Import Project"}
+        }
+      },
+      "instructions": {
+        "connections": {
+          "add": {"value": "Enter new name and connectivity settings for connection provider."},
+          "edit": {"value": "Modify connectivity settings for connection provider."}
+        },
+        "models": {
+          "add": {"value": "Enter settings for existing model file provider. Click upload icon to browse for model file."},
+          "new": {"value": "Enter provider name and filename for new WDT model file, then click icon to pick directory to save file in."},
+          "edit": {"value": "Modify settings for model file provider. Click icon to browse for model file."}
+        },
+        "project": {
+          "export": {"value": "Enter settings for project."},
+          "import": {"value": "Click download icon to browse for project."}
+        },
+        "task": {
+          "startup": {"value": "Which startup task are you interested in performing?"}
+        }
+      },
+      "titles": {
+        "add": {
+          "connections": {"value": "Create Provider for Admin Server Connection"},
+          "models": {"value": "Create Provider for Existing WDT Model File"}
+        },
+        "new": {
+          "models": {"value": "Create Provider for New WDT Model File"}
+        },
+        "edit": {
+          "connections": {"value": "Edit Admin Server Connection Provider"},
+          "models": {"value": "Edit WDT Model File Provider"}
+        },
+        "export": {
+          "project": {"value": "Export Providers to Project"}
+        },
+        "import": {
+          "project": {"value": "Import Project"}
+        },
+        "startup": {
+          "task": {"value": "Startup Task"}
+        }
+      },
+      "messages": {
+        "export": {
+          "failed": {
+            "summary": "Export Unsuccessful",
+            "detail": "Unable to export providers as '{0}' project."
+          }
+        },
+        "import": {
+          "failed": {
+            "summary": "Import Unsuccessful",
+            "detail": "Unable to import '{0}' project file."
+          }
+        },
+        "stage": {
+          "failed": {
+            "summary": "Create Unsuccessful",
+            "detail": "Unable to create '{0}' provider item."
+          }
+        },
+        "use": {
+          "failed": {
+            "summary": "Connection Unsuccessful",
+            "detail": "Unable to use '{0}' provider item."
+          }
+        },
+        "response": {
+          "nameAlreadyExist": {
+            "detail": "Provider named '{0}' is already in this project"
+          }
+        }
+      },
+      "prompts": {
+        "info": {
+          "fileNotSet": {"value": "Not set"}
+        }
+      },
+      "checkboxes": {
+        "useSparseTemplate": {"label": "Use Sparse Template"}
+      }
+    },
     "wrc-navstrip": {
       "icons": {
-        "configuration": {"tooltip": "Configuration"},
-        "view": {"tooltip": "View"},
-        "monitoring": {"tooltip": "Monitoring"}
+        "configuration": {"tooltip": "Edit Tree"},
+        "view": {"tooltip": "Configuration View Tree"},
+        "monitoring": {"tooltip": "Monitoring Tree"},
+        "modeling": {"tooltip": "WDT Model"}
       }
     },
     "wrc-content-area-header": {
-      "buttons": {"readwrite": {"label": "Read/Write"}, "readonly": {"label": "Read-Only"}},
-      "title": {"home": "Home", "configuration": "Configuration", "view": "View", "monitoring": "Monitoring"},
+      "title": {
+        "home": "Home",
+        "configuration": "Edit Tree",
+        "view": "Configuration View Tree",
+        "monitoring": "Monitoring Tree",
+        "modeling": "WDT Model"
+      },
       "toolbar": {
         "buttons": {
           "home": {"label": "Home"},
@@ -50,11 +205,15 @@ define({
       "tabstrip": {
         "tabs": {
           "shoppingcart": {"label": "Shopping Cart"},
-          "ataglance": {"label": "At-A-Glance"}
+          "ataglance": {"label": "At-A-Glance"},
+          "projectmanagement": {"label": "Provider Management"}
         }
-      }, "icons": {"kiosk": {"tooltip": "Kiosk"}, "expand": {"tooltip": "Expand"}, "collapse": {"tooltip": "Collapse"}}
+      },
+      "icons": {
+        "kiosk": {"tooltip": "Kiosk"}
+      }
     },
-    "wrc-configuration": {
+    "wrc-perspective": {
       "icons": {"history": {"tooltip": "History"}},
       "menus": {"history": {"clear": {"value": "Clear History"}}},
       "messages": {"dataNotAvailable": {"summary": "Data Not Available"}}
@@ -69,7 +228,7 @@ define({
       "messages": {
         "lostConnection": {
           "summary": "Lost Connection",
-          "detail": "Unable to connect to the WebLogic Domain {0}, please check that WebLogic is running."
+          "detail": "Connection to remote console backend was lost. Ensure that it is running or restart it and try the link again."
         },
         "cannotConnect": {
           "summary": "Connection Attempt Failed",
@@ -87,16 +246,20 @@ define({
     "wrc-gallery": {
       "cards": {
         "configuration": {
-          "label": "Configuration",
+          "label": "Edit Tree",
           "description": "<p>Maintain configuration of WebLogic domain you are currently working with.</p>"
         },
         "view": {
-          "label": "View",
+          "label": "Configuration View Tree",
           "description": "<p>Examine read-only configuration of WebLogic domain you are currently working with.</p>"
         },
         "monitoring": {
-          "label": "Monitoring",
+          "label": "Monitoring Tree",
           "description": "<p>View runtime MBean information for select resources in WebLogic domain you are currently working with.</p>"
+        },
+        "modeling": {
+          "label": "WDT Model Tree",
+          "description": "<p>Maintain model files associated with the WebLogic Deploy Tooling tool.</p>"
         }
       }
     },
@@ -148,13 +311,6 @@ define({
     },
     "wrc-table": {
       "checkboxes": {"showHiddenColumns": {"label": "Show Hidden Columns"}},
-      "tables": {"label": "Help Table", "columns": {"header": {"name": "Name", "description": "Description"}}},
-      "dialogSync": {
-        "title": "Set Auto-Reload Interval",
-        "instructions": "How many seconds do you want for the auto-reloading interval?",
-        "fields": {"interval": {"label": "Auto-Reload Interval:"}},
-        "buttons": {"ok": {"label": "OK"}, "cancel": {"label": "Cancel"}}
-      },
       "actionsDialog": {"buttons": {"cancel": {"label": "Cancel"}}}
     },
     "wrc-form-toolbar": {
@@ -189,29 +345,19 @@ define({
       "checkboxes": {"showAdvancedFields": {"label": "Show Advanced Fields"}},
       "introduction": {"toggleHelp": {"text": "Click the {0} icon to toggle between summary and detailed help."}},
       "messages": {"save": "Changes added to cart"},
-      "prompts": {
-        "unsavedChanges": {
-          "willBeLost": {"value": "All unsaved changes will be lost. Continue?"},
-          "areYouSure": {"value": "Are you sure you want to exit without saving changes?"}
-        }
-      },
       "icons": {
         "restart": {"tooltip": "Server or App Restart Required"},
-        "choose": {"tooltip": "Choose File"},
-        "clear": {"tooltip": "Clear Chosen File"},
-        "more": {"tooltip": "More Actions"}
-      },
-      "menus": {"more": {"optionsSources": {"view": {"label": "View/Create {0}..."}}}},
-      "tables": {"label": "Help Table", "columns": {"header": {"name": "Name", "description": "Description"}}},
-      "confirmDialog": {
-        "title": "Unsaved Changes Detected",
-        "buttons": {"yes": {"label": "Yes"}, "no": {"label": "No"}}
-      },
-      "dialogSync": {
-        "title": "Set Auto-Reload Interval",
-        "instructions": "How many seconds do you want for the auto-reloading interval?",
-        "fields": {"interval": {"label": "Auto-Reload Interval:"}},
-        "buttons": {"ok": {"label": "OK"}, "cancel": {"label": "Cancel"}}
+        "wdtIcon": {"tooltip": "WDT Settings"}
+      }
+    },
+    "wrc-help-form": {
+      "tables": {
+        "help": {
+          "label": "Help Table",
+          "columns": {
+            "header": {"name": "Name", "description": "Description"}
+          }
+        }
       }
     },
     "wrc-create-form": {
@@ -222,7 +368,72 @@ define({
         }
       }
     },
-    "wrc-form-layouts": {"tooltips": {"collapse": {"value": "Collapse"}, "expand": {"value": "Expand"}}},
+    "wrc-wdt-form": {
+      "messages": {
+        "changesSaved": {"summary": "Changes were successfully saved to '{0}' file!"},
+        "changesNotSaved": {"summary": "Unable to save changes to '{0}' file!"},
+        "changesDownloaded": {"summary": "Changes were successfully downloaded to '{0}' file!"},
+        "changesNotDownloaded": {"summary": "Unable to download changes to '{0}' file!"}
+      },
+      "wdtOptionsDialog" : {
+        "title": "Edit: {0}",
+        "instructions": "Enter token to add to the list of selectable items.",
+        "default": "Restore to default",
+        "enterValue": "Enter value",
+        "selectValue": "Select value",
+        "selectSwitch": "Toggle Value",
+        "enterUnresolvedReference": "Enter value",
+        "enterModelToken": "Enter model token"
+      }
+    },
+    "wrc-common": {
+      "buttons": {
+        "ok": {"label": "OK"},
+        "cancel": {"label": "Cancel"},
+        "yes": {"label": "Yes"},
+        "no": {"label": "No"},
+        "choose": {"label": "Choose"},
+        "connect": {"label": "Connect"},
+        "add": {"label": "Add/Send"},
+        "edit": {"label": "Edit/Send"},
+        "import": {"label": "Import"},
+        "export": {"label": "Export"},
+        "write": {"label": "Download File"},
+        "savenow": {"label": "Save Now"}
+      },
+      "tooltips": {
+        "collapse": {"value": "Collapse"},
+        "expand": {"value": "Expand"},
+        "choose": {"value": "Choose File"},
+        "clear": {"value": "Clear Chosen File"},
+        "more": {"value": "More Actions"},
+        "download": {"value": "Browse"},
+        "reset": {"value": "Reset"},
+        "submit": {"value": "Submit Changes"},
+        "write": {"value": "Download File"},
+        "pick": {"value": "Pick Directory"}
+      }
+    },
+    "wrc-unsaved-changes": {
+      "titles": {
+        "unsavedChanges": {"value": "Unsaved Changes Detected"},
+        "changesNeedDownloading": {"value": "Changes Not Downloaded"}
+      },
+      "prompts": {
+        "unsavedChanges": {
+          "willBeLost": {"value": "All unsaved changes will be lost. Continue?"},
+          "areYouSure": {"value": "Are you sure you want to exit without saving changes?"},
+          "needDownloading": {"value": "Your changes have not been download to the WDT model file, yet.<br/><br/>Download them before continuing?"}
+        }
+      }
+    },
+    "wrc-sync-interval": {
+      "dialogSync": {
+        "title": "Set Auto-Reload Interval",
+        "instructions": "How many seconds do you want for the auto-reloading interval?",
+        "fields": {"interval": {"label": "Auto-Reload Interval:"}}
+      }
+    },
     "wrc-pdj-actions": {
       "messages": {
         "action": {
@@ -235,6 +446,21 @@ define({
       "labels": {"cannotDetermineExactCause": {"value": "Cannot determine exact cause. Check JavaScript Console for hints."}}
     },
     "wrc-pdj-fields": {"cfe-multi-select": {"labels": {"available": "Available", "chosen": "Chosen"}}},
+    "wrc-pdj-options-sources": {
+      "menus": {
+        "more": {
+          "optionsSources": {
+            "view": {"label": "View {0}..."},
+            "create": {"label": "Create New {0}..."},
+            "edit": {"label": "Edit {0}..."}
+          }
+        }
+      }
+    },
+    "wrc-pdj-unset": {
+      "menu": {"label": "Restore to default"},
+      "placeholder": {"value": "default"}
+    },
     "wrc-pdj-crosslinks": {
       "messages": {
         "noNotFoundMessage": {
@@ -264,8 +490,8 @@ define({
       "messages": {
         "backendNotReachable": {"detail": "Backend not currently reachable."},
         "connectionMessage": {"summary": "Connection Message"},
-        "connectFailed": {"detail": "Connect Failed: "},
-        "badRequest": {"detail": "Please supply the WebLogic Domain URL and credentials "},
+        "connectFailed": {"detail": "Attempt Failed: "},
+        "badRequest": {"detail": "Unable to process the submitted file or request"},
         "invalidCredentials": {"detail": "WebLogic Domain credentials are not valid "},
         "invalidUrl": {"detail": "WebLogic Domain URL is not reachable "},
         "notSupported": {"detail": "WebLogic Domain is not supported "},
@@ -301,7 +527,7 @@ define({
   "en-XC": false,
   "es": true,
   "fr": true,
-  "it": false,
+  "it": true,
   "ja": false,
   "ko": false,
   "pt-BR": false,

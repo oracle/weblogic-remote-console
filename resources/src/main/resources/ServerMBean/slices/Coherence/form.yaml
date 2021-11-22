@@ -8,14 +8,9 @@ introductionHTML: >
 
 properties:
   - name: "CoherenceClusterSystemResource"
-  - name: "UnicastListenAddress"
-  - name: "UnicastListenPort"
-  - name: "UnicastPortAutoAdjustAttempts"
-  - name: "RackName"
-  - name: "RoleName"
-  - name: "SiteName"
-helpTasks:
-  - "coherence/ConfigureCoherenceClusterTiers.xml"
-  - "coherence/ConfigureCoherenceSingleServer.xml"
-  - "coherence/ConfigureCoherenceClusters.xml"
-  - "coherence/CreateCoherenceClusters.xml"
+  - name: "CoherenceMemberConfig.UnicastListenAddress"
+  - name: "CoherenceMemberConfig.UnicastListenPort"
+  - name: "CoherenceMemberConfig.UnicastPortAutoAdjustAttempts"
+  - name: "CoherenceMemberConfig.RackName"
+  - name: "CoherenceMemberConfig.RoleName"
+  - name: "CoherenceMemberConfig.SiteName"

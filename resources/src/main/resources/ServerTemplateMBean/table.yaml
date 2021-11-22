@@ -11,12 +11,12 @@ displayedColumns:
 - name: "Cluster"
 - name: "Machine"
 - name: "ListenPort"
-- name: "SSLListenPort"
+- name: "SSL.ListenPort"
 hiddenColumns:
 # deprecated - name: "VirtualMachineName"
 - name: "ListenAddress"
 - name: "ListenPortEnabled"
-- name: "SSLListenPortEnabled"
+- name: "SSL.Enabled"
 - name: "ClusterWeight"
 - name: "AdministrationPort"
 - name: "IIOPEnabled"
@@ -25,13 +25,6 @@ hiddenColumns:
 - name: "ListenThreadStartDelaySecs"
 - name: "AcceptBacklog"
 - name: "WeblogicPluginEnabled"
-helpTasks:
-- "domainconfig/CreateManagedServers"
-- "domainconfig/CloneManagedServers"
-- "domainconfig/DeleteManagedServers"
-- "domainconfig/DeleteTheAdministrationServer"
-- "startstop/StartAndStopServers"
-- "jndi/ViewObjectsInTheJNDITree"
 helpTopics:
 - label: "Monitoring Oracle WebLogic Server with SNMP"
   href: "snmpa/index.html"

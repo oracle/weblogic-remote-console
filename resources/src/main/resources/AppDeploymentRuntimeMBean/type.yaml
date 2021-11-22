@@ -1,0 +1,27 @@
+# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+actions:
+
+- name: "start"
+  label: "Start servicing all requests"
+
+- name: "startInAdminMode"
+  label: "Start servicing only administration requests"
+  actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.startInAdminMode
+  definition:
+    type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+
+- name: "stop"
+  label: "When work completes"
+
+- name: "forceStop"
+  label: "Force stop now"
+  actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.forceStop
+  definition:
+    type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+
+- name: "stopToAdminMode"
+  label: "Stop, but continue servicing administration requests"
+  actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.stopToAdminMode
+  definition:
+    type: "weblogic.management.runtime.DeploymentProgressObjectMBean"

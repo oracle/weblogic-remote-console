@@ -5,3 +5,6 @@ properties:
 - name: IdentityDomain
   helpHTML: >
     <p>The name of the identity domain.</p>
+
+- name: DefaultUserNameMapperAttributeType
+  useUnlocalizedLegalValuesAsLabels: true

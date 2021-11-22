@@ -13,8 +13,8 @@
  * @class
  * @classdesc Class for calculating the actual ``min-height`` of a form or table container, in the Content Area.
  */
-define(['../../../microservices/perspective/perspective-memory-manager', '../../../core/cfe-errors'],
-  function (PerspectiveMemoryManager, CfeErrors) {
+define(['../../../microservices/perspective/perspective-memory-manager'],
+  function (PerspectiveMemoryManager) {
 
   //public:
     /**
@@ -36,8 +36,7 @@ define(['../../../microservices/perspective/perspective-memory-manager', '../../
        * <p>This is a calculation based on the information in the options parameter, as well as height calculations that take into consideration that the container is in a Flexbox layout.</p>
        * @param {string} containerDOMSelector
        * @param {{withHistoryVisible: boolean, withHelpVisible: boolean}} options
-       * @returns {number}
-       * @throws {CfeError} - If ``document.querySelector(containerDOMSelector)`` returns null
+       * @returns {Number}
        */
       getOffsetMaxHeight: function(containerDOMSelector, options) {
         const getOffsetTop = element => {
@@ -48,11 +47,6 @@ define(['../../../microservices/perspective/perspective-memory-manager', '../../
           }
           return offsetTop;
         };
-
-        const container = document.querySelector(containerDOMSelector);
-        if (container === null) {
-          throw new CfeErrors.CfeError(`Null returned when looking up '${containerDOMSelector}' in the DOM.`);
-        }
 
         options.withHistoryVisible = options.withHistoryVisible || false;
         options.withHelpVisible = options.withHelpVisible || false;
@@ -86,7 +80,8 @@ define(['../../../microservices/perspective/perspective-memory-manager', '../../
         this.perspectiveMemory.setHistoryVisibility.call(this.perspectiveMemory, options.withHistoryVisible);
         this.setWasHelpVisible(options.withHelpVisible);
 
-        const offsetTop = getOffsetTop(container);
+        const container = document.querySelector(containerDOMSelector);
+        const offsetTop = (container !== null ? getOffsetTop(container) : 0);
         return offsetTop + offsetValue;
       }
     };

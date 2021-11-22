@@ -18,9 +18,13 @@
     <link href="https://static.oracle.com/cdn/fnd/gallery/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet" />
     <link href="https://static.oracle.com/cdn/fnd/gallery/2004.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
 -->
-    <link href="css/redwood/oj-redwood.css" type="text/css" rel="stylesheet" />
+    <!-- This is the main css file for the default theme -->
+    <!-- injector:theme -->
+    <link rel="stylesheet" href="css/libs/oj/v10.1.0/redwood/oj-redwood-min.css" type="text/css"/>
+    <!-- endinjector -->
+
     <link href="css/fonts/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet" />
-    <link href="css/fonts/2004.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
+    <link href="css/fonts/2110.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
 
     <link href="css/app.css" type="text/css" rel="stylesheet" />
   </head>
@@ -29,7 +33,7 @@
 
     <div id="globalBody">
       <header class="oj-applayout-fixed-top">
-        <oj-module config="[[headerModuleConfig]]" />
+        <oj-module config="[[headerModuleConfig]]"></oj-module>
       </header>
 
       <div id="middle-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
@@ -63,7 +67,7 @@
       </div> <!-- ending div for "middle-container" -->
 
       <footer class="oj-applayout-fixed-bottom">
-        <oj-module config="[[footerModuleConfig]]" />
+        <oj-module config="[[footerModuleConfig]]"></oj-module>
       </footer>
     </div>
 

@@ -11,19 +11,15 @@ introductionHTML: >
 
 properties:
 - name: "Name"
-- name: "DatasourceType"
+- name: "JDBCResource.DatasourceType"
 # deprecated - name: "RowPrefetch"
 # deprecated - name: "RowPrefetchSize"
 # deprecated - name: "StreamChunkSize"
-- name: "ProxySwitchingProperties"
-- name: "ProxySwitchingCallback"
-- name: "JNDINames"
+- name: "JDBCResource.JDBCDataSourceParams.ProxySwitchingProperties"
+- name: "JDBCResource.JDBCDataSourceParams.ProxySwitchingCallback"
+- name: "JDBCResource.JDBCDataSourceParams.JNDINames"
   presentation:
     inlineFieldHelp: "e.g. jdbc/myDS"
-helpTasks:
-- "jdbc/jdbc_datasources/CreateDataSources"
-- "jdbc/jdbc_datasources/CreateGridLinkDataSources"
-- "jdbc/jdbc_datasources/CreateLLRDataSources"
 helpTopics:
 - label: "Overriding a Cache Configuration File "
   href: "clust/coherence.html#CLUST643"

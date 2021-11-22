@@ -8,13 +8,13 @@ properties:
 
 - name: PersistentStore
   optionsSources:
-    - /JDBCStores
-    - /FileStores
+    - Domain/JDBCStores
+    - Domain/FileStores
 
-- name: Target
-  source: Targets
-  reference: true
+- name: Targets
+  label: Target
+  referenceAsReferences: true
   optionsSources:
-    - /Servers
-    - /Clusters
-    - /MigratableTargets
+    - Domain/Servers
+    - Domain/Clusters
+    - Domain/MigratableTargets

@@ -41,13 +41,13 @@ describe.only('Test Suite: machineAndCluster_test for Machine and Cluster functi
     //Test Case:
     // Create and configure new machine - TestMachine-1
     //
-    it('1. Test Category: GAT/Risk1\n \t Test Scenario: create and delete a new machine, TestMachine-1 ', async function () {
-        file = "TestMachine-1.png";
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: create and delete a new machine, TestMachine-123 ', async function () {
+        file = "TestMachine-123.png";
         try {
-            await admin.createNewMBeanObject(driver,"TestMachine-1",2,"configuration","Environment","Machines");
+            await admin.createNewMBeanObject(driver,"TestMachine-123",2,"configuration","Environment","Machines");
             await driver.sleep(1200);
-            await admin.deleteMBeanObject(driver,"TestMachine-1","Machines",2,"configuration",
-                "Environment","Machines");
+            await admin.deleteMBeanObject(driver,"TestMachine-123","Machines",2,"configuration",
+                "Environment","Machines","","","",3);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -56,26 +56,24 @@ describe.only('Test Suite: machineAndCluster_test for Machine and Cluster functi
     })
 
     //Test Case:
-    // Create->modify(general tab)->delete TestCluster-1
+    // Create->modify(general tab)->delete TestCluster-123
     //
-    it('2. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete a new TestCluster-1 ', async function() {
-        file = "TestCluster-1.png";
+    it.skip('2. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete a new TestCluster-123 ', async function() {
+            await admin.deleteMBeanObject(driver,"TestMachine-123","Machines",2,"configuration",
+                "Environment","Machines","","","",3);
+        file = "TestCluster-123.png";
         try {
-            await admin.createNewMBeanObject(driver,"TestCluster-1",2,"configuration","Environment","Clusters");
-            await driver.sleep(1200);
-            //await admin.createNewMBeanObject(driver,"TestServerFailureTrigger-1",4,"configuration",
-            //    "Environment","Clusters","TestCluster-1","Server Failure Trigger");
-            await driver.sleep(1200);
+            await admin.createNewMBeanObject(driver,"TestCluster-123",2,"configuration","Environment","Clusters");
+            await driver.sleep(2400);
 
             //Modify test start Here
-            await cluster.modifyClusterGeneralTab(driver,"TestCluster-1","general","Random",
+            await cluster.modifyClusterGeneralTab(driver,"TestCluster-123","general","Random",
                 "localhost",4,"TxnAffinityEnabled","ConcurrentSingletonActivationEnabled",
                 "WeblogicPluginEnabled","360","2","3");
-
-            await driver.sleep(1200);
-            await admin.deleteMBeanObject(driver,"TestCluster-1","Clusters",2,"configuration",
-                "Environment","Clusters");
-            await driver.sleep(1200);
+            await driver.sleep(2400);
+            await admin.deleteMBeanObject(driver,"TestCluster-123","Clusters",2,"configuration",
+                "Environment","Clusters","","","",3);
+            await driver.sleep(2400);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -86,7 +84,7 @@ describe.only('Test Suite: machineAndCluster_test for Machine and Cluster functi
     //Test Case:
     // Create->modify(NodeManager tab)->delete TestMachine-2
     //
-    it('3. Test Category: GAT/Risk3\n \t Test Scenario: create->modify->delete TestMachine-2 ', async function() {
+    it.skip('3. Test Category: GAT/Risk3\n \t Test Scenario: create->modify->delete TestMachine-2 ', async function() {
         file = "serverTemplate-2.png";
         try {
             await admin.createNewMBeanObject(driver,"TestMachine-2",2,"configuration","Environment","Machines")

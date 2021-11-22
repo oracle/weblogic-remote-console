@@ -27,8 +27,8 @@ define(
       Domain: {
         /** @type {{CONNECTED: {name: string}, DISCONNECTED: {name: string}}} */
         ConnectState: Object.freeze({
-          CONNECTED: {name: "CONNECTED"},
-          DISCONNECTED: {name: "DISCONNECTED"}
+          CONNECTED: {name: "connected"},
+          DISCONNECTED: {name: "disconnected"}
         }),
         connectStateFromName: function (name) {
           return Object.values(this.ConnectState).find(connectState => connectState.name === name);

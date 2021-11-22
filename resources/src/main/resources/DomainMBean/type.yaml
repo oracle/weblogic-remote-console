@@ -39,21 +39,11 @@ properties:
 - name: DiagnosticContextCompatibilityModeEnabled
   label: Diagnostic Context Compatibility Mode
 
-- name: EmbeddedLDAPCredential
-  source: EmbeddedLDAP.Credential
+- name: EmbeddedLDAP.Credential
+  label: Embedded LDAP Credential
 
-- name: SecurityCredential
-  source: SecurityConfiguration.Credential
-
-- name: Callouts
-  ordered: true
-
-- name: DomainSNMPAgent
-  source: SNMPAgent
-  nonCreatableOptionalSingleton: true
-
-- name: JTA
-  nonCreatableOptionalSingleton: true
+- name: SecurityConfiguration.Credential
+  label: Security Credential
 
 - name: AdministrationPort
   usedIf:
@@ -66,3 +56,29 @@ properties:
     property: ConfigBackupEnabled
     values:
       - true
+
+children:
+- name: Callouts
+  ordered: true
+
+- name: SNMPAgent
+  label: Domain SNMP Agent
+
+- name: AppDeployments
+  creatable: true
+  asyncCreate: true
+  asyncDelete: true
+
+- name: Libraries
+  creatable: true
+  asyncCreate: true
+  asyncDelete: true
+
+- name: DBPassiveMode
+  offlineName: DbPassiveMode
+
+- name: DBPassiveModeGracePeriodSeconds
+  offlineName: DbPassiveModeGracePeriodSeconds
+
+- name: EnableEECompliantClassloadingForEmbeddedAdapters
+  offlineName: EnableEeCompliantClassloadingForEmbeddedAdapters

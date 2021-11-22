@@ -6,22 +6,19 @@ introductionHTML: >
   WebLogic Server domain.</p>
 
 properties:
-- name: "EmbeddedLDAPCredential"
+- name: "EmbeddedLDAP.Credential"
   label: "Credential"
-- name: "BackupHour"
-- name: "BackupMinute"
-- name: "BackupCopies"
-- name: "CacheEnabled"
-- name: "CacheSize"
-- name: "CacheTTL"
-- name: "RefreshReplicaAtStartup"
-- name: "MasterFirst"
-- name: "Timeout"
-- name: "AnonymousBindAllowed"
+- name: "EmbeddedLDAP.BackupHour"
+- name: "EmbeddedLDAP.BackupMinute"
+- name: "EmbeddedLDAP.BackupCopies"
+- name: "EmbeddedLDAP.CacheEnabled"
+- name: "EmbeddedLDAP.CacheSize"
+- name: "EmbeddedLDAP.CacheTTL"
+- name: "EmbeddedLDAP.RefreshReplicaAtStartup"
+- name: "EmbeddedLDAP.MasterFirst"
+- name: "EmbeddedLDAP.Timeout"
+- name: "EmbeddedLDAP.AnonymousBindAllowed"
 
-helpTasks:
-- "security/ConfigureEmbeddedLDAPServers"
-- "security/ConfigureAuthenticationProviders"
 helpTopics:
 - label: "Managing the Embedded LDAP Server"
   href: "secmg/ldap.html"

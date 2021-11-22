@@ -4,24 +4,26 @@
   /*
    * START: CFE code will make adjustments to the
    *        following custom CSS variables, at runtime.
+   * --slideup-popup-calc-min-height: 980px;
    */
-  --slideup-popup-calc-min-height: 980px;
   --content-area-container-min-width: 55px;
   --domains-toolbar-right-margin-right: 0;
   --form-container-calc-max-width: 10px;
   --form-container-calc-min-width: 310px;
   --form-container-calc-max-height: 385px;
-  --servers-glance-dom-calc-min-height: 460px;
+  --servers-glance-dom-calc-min-height: 450px;
   --form-input-min-width: 15em;
   --form-input-min-switch-width: 7.25em;
   --dialog1-calc-height: 345px;
+  --provider-activated-color: #3b2de1;
+  --provider-deactivated-color: #777776;
   /*
    * END:   CFE code will make adjustments to the
    *        above custom CSS variables, at runtime.
    */
 
   --form-container-fixed-min-width: 1120px;
-  --content-area-header-height: 70px;
+  --content-area-header-height: 82px;
 
   --form-tabstrip-converyor-calc-max-width: 275px;
   --form-table-container-min-width: 310px;
@@ -29,6 +31,9 @@
   --paging-bottom: 32px;
   --form-input-max-width: 15em;
   --min-width-35em: 35em;
+  --min-width-20em: 20em;
+  --min-width-18em: 18em;
+  --min-width-17em: 17em;
   --min-width-15em: 15em;
 
   --landing-page-cards-min-width: 1095px;
@@ -42,15 +47,19 @@
   --ancillary-content-area-width: 300px;
   --instructions-max-height: 160px;
   --system-status-collapse-min-height: 340px;
-  --system-status-expand-min-height: 460px;
-  --servers-glance-dom-max-height: 460px;
+  --system-status-expand-min-height: 450px;
+  --servers-glance-dom-max-height: 450px;
   --table-dom-max-height: 500px;
+  --project-sidebar-width: 12px;
+  --data-providers-min-height: 70px;
+  --data-providers-min-width: 305px;
+  --projects-section-body-min-height: 270px;
+  --projects-section-body-max-height: 270px;
   --navstrip-max-width: 45px;     /* DON'T CHANGE THIS!! Needs to be 45px, or else left edge of control will be cut off and dnd feature on MyHome will go bonkers */
   --navstrip-min-height: 60px;
   --navstrip-resizer-width: 55px;
   --panel-resizer-width: 10px;
   --resizer-left-panel-min-width: 200px;
-  --resizer-left-panel-max-width: 490px;
   --navtree-calc-min-height: 70px;
   --navtree-calc-max-height: 70px;
   --navtree-min-width: 410px;
@@ -86,15 +95,28 @@
   --breadcrumb-link-color: #0275d8;
   --breadcrumb-hover-color: #01447e;
   --dialog-background-color: #dbd5d0;
+  --dialog2-background-color: #f9f7f6;
 
   --dialog1-width: 360px;
   --dialog1-fixed-min-height: 345px;
   --syncIntervalDialog-width: 330px;
   --syncIntervalDialog-min-height: 236px;
   --confirmDialog-width: 300px;
-  --confirmDialog-min-height: 168px;
+  --confirmDialog-min-height: 140px;
+  --domainConnectionDialog-width: 470px;
+  --domainConnectionDialog-min-height: 410px;
+  --modelDialog-width: 750px;
+  --modelDialog-min-height: 245px;
+  --projectDialog-width: 750px;
+  --projectDialog-min-height: 245px;
+  --projectChooserDialog-width: 400px;
+  --startupTaskChooserDialog-width: 400px;
   --actionDialog-width: 475px;
   --actionDialog-min-height: 390px;
+  --overlayDialog-min-width: 1135px;
+  --cfe-dialog-form-layout-min-height: 90px;
+  --cfe-dialog-form-layout-min-width: 99%;
+  --fileChooser-file-input-width: 92%;
 
   --input-text-wide-width: 18rem;
   --single-select-one-wide-width: 630px;
@@ -106,13 +128,17 @@
   --scrollbar-track-color: #faf8f7;
   --scrollbar-track-color1: #bba9a1;
 
-  --form-input-integer-max-width: 110px;
+  --form-input-integer-max-width: 120px;
 
   --form-layout-row-height: 2.4em;
   --field-highlight-border-color: black;
   --field-highlight-border-style: solid;
 
   --form-section-title-background-color: #dfdcda; /* #ede7e4 #dfdcda; */
+
+  --oj-dialog-title-font-size: 1.0rem;
+  --oj-navigation-list-item-min-height: 100;
+  --oj-navigation-list-item-max-width: 15rem;
 }
 
 html, body {
@@ -194,6 +220,12 @@ div#header-title a:focus
   height: 24px;
   cursor: pointer;
   margin: 5px 10px 0 10px;
+}
+
+#wrc-app-icon {
+  width: 36px;
+  height: 32px;
+  vertical-align: middle;
 }
 
 #oracleLogo {
@@ -281,7 +313,6 @@ div#header-title a:focus
 
 #navtree {
   min-width: var(--navtree-min-width);
-  visibility: hidden;
 }
 
 .navtree-node-label {
@@ -435,6 +466,10 @@ img.clear-chosen-file-icon {
   height: 24px;
   vertical-align: middle;
   margin: 10px 2px 0 3px;
+}
+
+img.clear-chosen-file-icon {
+  display: none;
 }
 
 oj-button[id="connect"],
@@ -735,9 +770,17 @@ a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabbar-item-no-icon {
   position: sticky;
 }
 
-#table-toolbar,
+/*
+//MLW
+#table-toolbar
 #form-toolbar {
   margin-right: 10px;
+}
+*/
+
+#table-toolbar-container
+{
+  margin-bottom: 5px;
 }
 
 #form-toolbar-container,
@@ -746,6 +789,10 @@ a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabbar-item-no-icon {
   height: 36px;
 }
 
+#overlay-toolbar-container
+{
+  height: 48px;
+}
 
 #form-toolbar-save-button,
 #form-toolbar-new-button,
@@ -804,8 +851,13 @@ oj-table.wlstable {
 
 .cfe-sections-form-layout-title {
   width: 99%;
-  padding: 0 3px 3px 0;
+  padding: 2px 3px 3px 0;
   background-color: var(--form-section-title-background-color);
+}
+
+.cfe-sections-form-layout-title > a > span {
+  font-size: 14pt;
+  margin-right: 2px;
 }
 
 .cfe-sections-form-layout-title-arrow,
@@ -845,6 +897,11 @@ oj-table.wlstable {
   min-height: 2.65rem;
 }
 
+img.cfe-button-icon {
+  height: 18px;
+  width: 18px;
+}
+
 .cfe-form-input-integer-sm {
   max-width: var(--form-input-integer-max-width);
 }
@@ -861,6 +918,15 @@ oj-table.wlstable {
 .cfe-form-input-textarea > div.oj-text-field-container > div.oj-text-field-middle > textarea
 {
   white-space: pre;
+}
+
+.cfe-form-input-textarea > div.oj-text-field-container
+{
+  overflow: scroll;
+}
+
+div.cfe-form-select-one div.oj-text-field-container {
+  overflow: hidden;
 }
 
 .cfe-form-readonly-text > div.oj-text-field-container,
@@ -984,7 +1050,7 @@ oj-input-text.cfe-form-readonly-text > div > div > div.oj-text-field-readonly-di
 /* Height for the user-assistance area for a switch in the form to ensure uniform highlight */
 .cfe-form-field > .oj-form-control.oj-component.oj-switch .oj-user-assistance-inline-container.oj-efficient
 {
-  min-height: .5rem;
+  min-height: .1rem;
 }
 
 .cfe-delete-row-button {
@@ -993,24 +1059,21 @@ oj-input-text.cfe-form-readonly-text > div > div > div.oj-text-field-readonly-di
   font-size: 11pt;
 }
 
-div#show-hidden-columns-checkboxset,
-div#show-advanced-fields-checkboxset {
-  margin-right: 10px;
-}
-
-div#show-hidden-columns-checkboxset span,
-div#show-advanced-fields-checkboxset span {
-  margin-right: 5px;
-}
-
-oj-option#show-hidden-columns,
-oj-option#show-advanced-fields {
-  font-size: 11pt;
+oj-option#show-hidden-columns > span,
+oj-option#show-advanced-fields > span
+{
+  margin-right: 15px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .cfe-form-tabstrip {
   margin: 5px 0 0 5px;
   max-width: calc(100vw - var(--form-tabstrip-converyor-calc-max-width));
+}
+
+#form-tabstrip-container {
+  margin-top: 10px;
 }
 
 .title-label-18pt {
@@ -1069,6 +1132,10 @@ img.option-icon
 
 .button-label {
   font-size: 10pt;
+}
+
+.cfe-more-menuitem {
+  font-size: 11pt;
 }
 
 /* Style the breadcrumb list */
@@ -1220,7 +1287,7 @@ oj-dialog[id="dialog1"] div.oj-dialog-header.oj-dialog-header-close {
 
 #url-field-label {
   font-size: 10pt;
-  margin-right: 10px;
+  margin-right: 14px;
 }
 
 oj-input-text#url-field .oj-user-assistance-inline-container.oj-efficient, .oj-form-control:not(.oj-read-only):not(.oj-disabled) .oj-user-assistance-inline-container.oj-efficient {
@@ -1243,38 +1310,32 @@ oj-input-text#url-field .oj-user-assistance-inline-container.oj-efficient, .oj-f
 
 html:not([dir="rtl"]) .oj-dialog-header-close-wrapper {
   margin-right: -1rem;  /* to properly position "X" in header, which closes the */
+  margin-top: 1px;
 }
 
-oj-dialog[id="syncIntervalDialog"] {
-  display: none;
-  width: var(--syncIntervalDialog-width);
-  min-height: var(--syncIntervalDialog-min-height);
-  background-color: var(--dialog-background-color);
-}
-
-oj-dialog#actionsDialog div.oj-dialog-body,
-oj-dialog#syncIntervalDialog div.oj-dialog-body,
-oj-dialog#confirmDialog div.oj-dialog-body
-{
-  position: relative;
-  overflow: auto;
-  box-sizing: border-box;
-  padding: 0.5rem .75rem 1rem .75rem;
-  text-align: start;
-  font-size: 11pt;
-  background-color: white;
+.oj-button-icon-only, .oj-buttonset .oj-button-icon-only {
+  min-width: var(--oj-button-height);
+  height: 24px;
 }
 
 oj-dialog#actionsDialog div.oj-dialog-header,
 oj-dialog#syncIntervalDialog div.oj-dialog-header,
-oj-dialog#confirmDialog div.oj-dialog-header
+oj-dialog#confirmDialog div.oj-dialog-header,
+oj-dialog#overlayFormDialog div.oj-dialog-header,
+oj-dialog#domainConnectionDialog div.oj-dialog-header,
+oj-dialog#modelDialog div.oj-dialog-header,
+oj-dialog#exportProjectDialog div.oj-dialog-header,
+oj-dialog#importProjectDialog div.oj-dialog-header,
+oj-dialog#projectChooserDialog div.oj-dialog-header,
+oj-dialog#startupTaskChooserDialog div.oj-dialog-header,
+oj-dialog#wdtOptionsDialog div.oj-dialog-header
 {
   border-width: 0 0 1px 0;
   border-style: solid;
   position: relative;
   display: flex;
   justify-content: space-between;
-  padding: 0.25rem .5rem 0.25rem .5rem;
+  padding: 0.25rem .75rem 0.25rem .75rem;
   background-color: transparent;
   background-image: none;
   border-bottom-color: transparent;
@@ -1285,21 +1346,62 @@ oj-dialog#confirmDialog div.oj-dialog-header
   min-height: 2.25rem;
 }
 
+oj-dialog#actionsDialog div.oj-dialog-body,
+oj-dialog#syncIntervalDialog div.oj-dialog-body,
+oj-dialog#confirmDialog div.oj-dialog-body,
+oj-dialog#overlayFormDialog div.oj-dialog-body,
+oj-dialog#domainConnectionDialog div.oj-dialog-body,
+oj-dialog#modelDialog div.oj-dialog-body,
+oj-dialog#exportProjectDialog div.oj-dialog-body,
+oj-dialog#importProjectDialog div.oj-dialog-body,
+oj-dialog#projectChooserDialog div.oj-dialog-body,
+oj-dialog#startupTaskChooserDialog div.oj-dialog-body,
+oj-dialog#wdtOptionsDialog div.oj-dialog-body
+{
+  position: relative;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 0 15px;
+  text-align: start;
+  font-size: 11pt;
+}
+
+oj-dialog#syncIntervalDialog div.oj-dialog-body,
+oj-dialog#confirmDialog div.oj-dialog-body,
+oj-dialog#overlayFormDialog div.oj-dialog-body,
+oj-dialog#domainConnectionDialog div.oj-dialog-body,
+oj-dialog#modelDialog div.oj-dialog-body,
+oj-dialog#exportProjectDialog div.oj-dialog-body,
+oj-dialog#importProjectDialog div.oj-dialog-body,
+oj-dialog#projectChooserDialog div.oj-dialog-body,
+oj-dialog#startupTaskChooserDialog div.oj-dialog-body,
+oj-dialog#wdtOptionsDialog div.oj-dialog-body
+{
+  background-color: white;
+}
+
 oj-dialog#actionsDialog div.oj-dialog-body {
-  background-color: #f8f6f5;
+  background-color: #f9f7f6;
+  background-color: var(--dialog2-background-color);
 }
 
 oj-dialog#actionsDialog div.oj-dialog-footer,
 oj-dialog#syncIntervalDialog div.oj-dialog-footer,
-oj-dialog#confirmDialog div.oj-dialog-footer {
+oj-dialog#confirmDialog div.oj-dialog-footer,
+oj-dialog#domainConnectionDialog div.oj-dialog-footer,
+oj-dialog#modelDialog div.oj-dialog-footer,
+oj-dialog#exportProjectDialog div.oj-dialog-footer,
+oj-dialog#importProjectDialog div.oj-dialog-footer,
+oj-dialog#projectChooserDialog div.oj-dialog-footer,
+oj-dialog#startupTaskChooserDialog div.oj-dialog-footer,
+oj-dialog#wdtOptionsDialog div.oj-dialog-footer
+{
+  padding: 0 .75rem .75rem 0;
   background-color: white;
-  padding: .25rem .5rem .5rem .5rem;
 }
 
-oj-dialog#actionsDialog div.oj-dialog-body oj-form-layout,
-oj-dialog#syncIntervalDialog div.oj-dialog-body oj-form-layout
-{
-  margin-top: 10px;
+oj-dialog#actionsDialog div.oj-dialog-footer {
+  background-color: var(--dialog2-background-color);
 }
 
 oj-dialog[id="confirmDialog"] {
@@ -1309,12 +1411,88 @@ oj-dialog[id="confirmDialog"] {
   background-color: var(--dialog-background-color);
 }
 
-
 oj-dialog[id="actionsDialog"] {
   width: var(--actionDialog-width);
   min-height: var(--actionDialog-min-height);
   background-color: var(--dialog-background-color);
   border: 1px none #f8f6f5;
+}
+
+oj-dialog[id="syncIntervalDialog"] {
+  width: var(--syncIntervalDialog-width);
+  min-height: var(--syncIntervalDialog-min-height);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog[id="overlayFormDialog"] {
+  min-width: var(--overlayDialog-min-width);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog[id="domainConnectionDialog"] {
+  width: var(--domainConnectionDialog-width);
+  min-height: var(--domainConnectionDialog-min-height);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog[id="modelDialog"] {
+  width: var(--modelDialog-width);
+  min-height: var(--modelDialog-min-height);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog[id="wdtOptionsDialog"] {
+  width: var(--modelDialog-width);
+  min-height: var(--modelDialog-min-height);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog[id="projectChooserDialog"]
+{
+  width: var(--projectChooserDialog-width);
+  min-height: var(--projectDialog-min-height);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog[id="startupTaskChooserDialog"]
+{
+  width: var(--startupTaskChooserDialog-width);
+  min-height: var(--projectDialog-min-height);
+  background-color: var(--dialog-background-color);
+}
+
+.oj-radio-label, .oj-checkbox-label {
+  color: var(--oj-core-text-color-primary);
+  font-size: inherit;
+  line-height: var(--oj-typography-body-md-line-height);
+  display: inline-block;
+  font-weight: normal;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
+oj-dialog[id="exportProjectDialog"],
+oj-dialog[id="importProjectDialog"]
+{
+  width: var(--projectDialog-width);
+  min-height: var(--projectDialog-min-height);
+  background-color: var(--dialog-background-color);
+}
+
+.cfe-dialog-prompt {
+  margin: 10px 0 20px 0;
+}
+
+.cfe-dialog-field {
+  min-width: var(--min-width-15em);
+}
+
+.cfe-dialog-file-picker {
+  width: var(--min-width-15em);
+}
+
+#linked-property-label {
+  margin: 5px 0 10px 0;
 }
 
 .cfe-draggable {
@@ -1590,15 +1768,17 @@ for "slices". The workaround is to control it here.
   height: var(--form-layout-row-height); /* Controls height of rows */
 }
 
-html:not([dir="rtl"]) .oj-navigationlist-collapsible ul.oj-navigationlist-has-icons > .oj-navigationlist-item-element > ul, html:not([dir="rtl"]) .oj-navigationlist-expanded:not(.oj-navigationlist-icon-only).oj-navigationlist-vertical ul.oj-navigationlist-has-icons > .oj-navigationlist-item-element > ul {
-  padding-left: 18px;   /* indentation used in navtree */
+/* enable navtree to properly indent */
+oj-navigationlist[id="nav"].oj-navigationlist-element, .oj-navigationlist-group {
+  padding-left: 18px;
 }
+
 
 html:not([dir="rtl"]) .oj-navigationlist-group-item {
   padding-right: 0;  /* space between expand/collapse arrow icon and right edge of navtree */
 }
 
-.oj-navigationlist-item-icon {
+oj-navigation-list[id="nav"] .oj-navigationlist-item-icon {
   color: var(--navtree-label-color);  /* color of icon used in navtree list item */
 }
 
@@ -1613,9 +1793,10 @@ html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-end .oj-button-icon.oj-
   margin-left: .3rem;  /* reduce space before down arrow in menu button */
 }
 
-a.oj-navigationlist-item-content .oj-navigationlist-item-label {
+oj-navigation-list[id="nav"] a.oj-navigationlist-item-content .oj-navigationlist-item-label {
   color: var(--navtree-label-color); /* color of navtree list items */
 }
+
 html:not([dir="rtl"]) .oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item {
   padding-left: .55rem;  /* space before icon in navstrip and navtree list items */
 }
@@ -1639,12 +1820,19 @@ span.oj-navigationlist-item-label {
 /*
 For beanpath-history
 */
-input.oj-combobox-input {
+oj-combobox-one#beanpath > div > div > div > input.oj-combobox-input {
   background-color: var(--navtree-background-color);
   color: inherit;
   font-weight: 400;
   font-size: 11pt;
   margin-bottom: 2px;
+}
+
+/*
+For wdt form combo-box
+ */
+.oj-text-field-middle > input.oj-combobox-input {
+  background-color: white;
 }
 
 .oj-text-field-container .oj-component-icon.oj-clickable-icon-nocontext:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-clickable-icon-nocontext.oj-popup-tail.oj-popup-tail-simple:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-clickable-icon-nocontext.oj-radiocheckbox-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-clickable-icon-nocontext.oj-menucheckbox-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-collapsed > .oj-treeview-item-content > .oj-clickable-icon-nocontext.oj-treeview-item-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-expanded > .oj-treeview-item-content > .oj-clickable-icon-nocontext.oj-treeview-item-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon), .oj-text-field-container .oj-treeview-leaf > .oj-treeview-item-content > .oj-clickable-icon-nocontext.oj-treeview-item-icon:not(.oj-select-clear-entry-icon):not(.oj-combobox-clear-entry-icon) {
@@ -1688,6 +1876,10 @@ html:not([dir="rtl"]) .oj-table-column-header-cell,
   z-index: 2;
 }
 
+div.oj-label-group > span {
+  vertical-align: text-top;
+  line-height: .7rem;
+}
 /*
 For controlling the padding used in pagination control beneath tables.
 */
@@ -1701,7 +1893,6 @@ For controlling the padding used in pagination control beneath tables.
 For controlling the styling of oj-button used with most of our clickable icons
 */
 .oj-button, .oj-button-nocomp {
-  height: 1.5rem;        /* Reduce default cell height used in redwood, in order to get more visible rows */
   margin: 5px 0 0 0;
   font-size: 11pt;       /* Set font-size to same as one for header labels */
   display: inline-flex;
@@ -1714,13 +1905,6 @@ div#connection-dialog-body > .oj-dialog-body {
   box-sizing: border-box;
   padding: .2rem .2rem .2rem .2rem;
   text-align: start;
-}
-
-html:not([dir="rtl"]) .oj-dialog-footer {
-  text-align: right;
-  position: relative;
-  box-sizing: border-box;
-  padding: .5rem;
 }
 
 /* For combobox-one used in bean path history */
@@ -1763,10 +1947,34 @@ the text characters limited to the text box width along with scrolling.
   flex: unset;
 }
 
+/*
+10.0.1
+  text-align: var(--oj-form-layout-start-edge-label-text-align);
+*/
+.oj-label-value.oj-formlayout-labels-inline > .oj-flex > .oj-flex-item > .oj-label, .oj-formlayout-inline-label > .oj-label {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-start .oj-button-icon.oj-start, html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icons .oj-button-icon.oj-start, html:not([dir="rtl"]) .oj-button-text-icon-start .oj-button-icon.oj-start, html:not([dir="rtl"]) .oj-button-text-icons .oj-button-icon.oj-start {
+  display: inline-flex;
+  margin-right: 5px;  /* var(--oj-button-icon-to-text-padding); */
+  margin-left: 5px;   /* var(--oj-button-icon-to-edge-padding); */
+}
+
+.oj-formlayout-inline-label .oj-label-required-icon, .oj-formlayout-inline-label .oj-label-help-icon, .oj-formlayout-inline-label label, .oj-formlayout-inline-label .oj-label-help-icon-anchor {
+  float: none;
+}
+
+.oj-dialog-footer > .oj-button, .oj-dialog-footer > .oj-button > .oj-button-button {
+  margin-left: var(--oj-core-spacing-1x);
+}
+
 #slideup-popup {
   height:  var(--slideup-popup-height);
   max-height: var(--slideup-popup-height);
-  min-height: calc(100vh - var(--slideup-popup-calc-min-height));
+  min-height: calc(100vh - var(--slideup-popup-calc-min-height, --slideup-popup-min-height));
   z-index: 3;
 }
 
@@ -1804,4 +2012,149 @@ the text characters limited to the text box width along with scrolling.
 #slideup-toggle img {
   height: 24px;
   width: 24px;
+}
+
+/* ruleset for content-location="kiosk" data attribute */
+[data-content-location="kiosk"]{
+  --data-content-location-background-color: #f0f0f0;
+  --project-body-color: #161514;
+  --project-alias-color: #6c4e4e;
+  --project-alias-background-color: #e3e3e3;
+  --connections-models-header-color: #161514;
+  --iconbar-icon-background-color: #c6c6c6;
+  --iconbar-hover-background-color: #e9e9e9;
+}
+
+#data-providers-container {
+  background-color: var(--data-content-location-background-color);
+}
+
+#data-providers-toggle-strip {
+  background-color: #4c4744;
+  padding: 0 2px;
+  min-width: var(--project-sidebar-width);
+  min-height: calc(100vh - var(--data-providers-min-height));
+}
+
+#projects-section {
+  margin: 5px 0;
+  min-width: var(--data-providers-min-width);
+  max-width: var(--data-providers-min-width);
+}
+
+#projects-section-header {
+  background-color: var(--project-alias-background-color);
+  padding: 2px 10px;
+}
+
+#projects-section-header {
+  color: var(--project-alias-color);
+  margin-left: auto;
+  font-size: 11pt;
+}
+
+#projects-section-body {
+  font-size: 11pt;
+  min-height: calc(100vh - var(--projects-section-body-min-height));
+  max-height: calc(100vh - var(--projects-section-body-max-height));
+  color: var(--project-body-color);
+  overflow-y: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color1);
+}
+
+.cfe-project-provider-icon {
+  height: 24px;
+  width: 24px;
+}
+
+#connection-response-message,
+#model-response-message
+{
+  display: none;
+  padding: 2px 0 10px 0;
+}
+
+#project-management-toolbar,
+#connections-models-header
+{
+  padding: 2px 5px 2px 5px;
+  font-weight: 600;
+  height: 24px;
+  vertical-align: middle;
+  line-height: 1.5rem;
+  color: var(--connections-models-header-color); /* sidebar=#b3b2b1 kiosk=#161514; */
+}
+
+#project-management-toolbar
+{
+  height: 28px;
+  background-color: var(--project-alias-background-color);
+}
+
+#connections-models-header
+{
+  color: var(--project-alias-color);
+}
+
+#connections-models-body {
+  margin-top: 5px;
+}
+
+#connections-models-more-icon {
+  width: 8px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+.cfe-project-provider-listitem > a > span.oj-navigationlist-item-label {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
+  display: inline-block;
+  line-height: 1.5rem;
+}
+
+.cfe-project-provider-iconbar {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  background-color: var(--iconbar-hover-background-color);
+}
+
+.cfe-project-provider-iconbar a {
+  display: inline-block; /* make sure height of <a> element spans the whole list item */
+}
+
+.cfe-project-provider-iconbar a:hover {
+  background-color: var(--iconbar-icon-background-color);
+  text-decoration: none;
+}
+
+.cfe-project-provider-iconbar-icon {
+  padding: 0 2px 0 3px;
+}
+
+.cfe-project-header-title-arrow,
+.cfe-project-header-title-arrow:hover,
+.cfe-project-header-title-arrow:active,
+.cfe-project-header-title-arrow:focus {
+  text-decoration: none;
+}
+
+.cfe-dialog-form-layout {
+  min-width: var(--cfe-dialog-form-layout-min-width);
+  min-height: var(--cfe-dialog-form-layout-min-height);
+}
+
+.cfe-file-chooser-field
+{
+  width: var(--fileChooser-file-input-width);
+}
+
+.cfe-expanding-input-text {
+  min-width: 10rem;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1px 6px;
 }

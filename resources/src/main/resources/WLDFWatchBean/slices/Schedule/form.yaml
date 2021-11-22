@@ -1,18 +1,15 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Use this page to define schedule settings for this policy.</p>
 
 properties:
   - name: "Name"
-  - name: "Timezone"
-  - name: "DayOfMonth"
-  - name: "DayOfWeek"
-  - name: "Second"
-  - name: "Minute"
-  - name: "Hour"
-  - name: "Month"
-  - name: "Year"
-helpTasks:
-  - "diagnostics/ConfigureDiagnosticModules"
-  - "diagnostics/ConfigurePoliciesAndActions"
+  - name: "Schedule.Timezone"
+  - name: "Schedule.DayOfMonth"
+  - name: "Schedule.DayOfWeek"
+  - name: "Schedule.Second"
+  - name: "Schedule.Minute"
+  - name: "Schedule.Hour"
+  - name: "Schedule.Month"
+  - name: "Schedule.Year"

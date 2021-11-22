@@ -16,4 +16,4 @@ properties:
 - name: WeblogicHome
 - name: MiddlewareHome
 - name: PatchList
-- name: JACCEnabled
+- name: ServerSecurityRuntime.JACCEnabled

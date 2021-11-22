@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 # Manually edited from  application/webapp/jsp/security/domain/JaspicWlsAcpConfig.jsp and consolehelp/docsrc/en-us/xml/pagehelp/security/domain/JaspicWlsAcpConfig.xml
 introductionHTML: >
@@ -6,6 +6,6 @@ introductionHTML: >
   WLS authentication configuration provider.</p>
 
 properties:
-  - name: "ClassName"
-  - name: "Properties"
+  - name: "AuthModule.ClassName"
+  - name: "AuthModule.Properties"
 

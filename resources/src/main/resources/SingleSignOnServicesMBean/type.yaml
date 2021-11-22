@@ -24,9 +24,11 @@ properties:
   label: Artifact Cache Timeout
 
 - name: SSOSigningKeyAlias
+  offlineName: SsoSigningKeyAlias
   label: Single Sign-on Signing Key Alias
 
 - name: SSOSigningKeyPassPhrase
+  offlineName: SsoSigningKeyPassPhraseEncrypted
   label: Single Sign-on Signing Key Pass Phrase
 
 - name: IdentityProviderEnabled
@@ -36,6 +38,7 @@ properties:
   label: Only Accept Signed Authentication Requests
 
 - name: LoginURL
+  offlineName: LoginUrl
   label: Login Customized
   helpSummaryHTML: >
     <p>Specifies whether a customized login web application is used. If
@@ -50,6 +53,7 @@ properties:
     the changes to this page.</p>
 
 - name: IdentityProviderPOSTBindingEnabled
+  offlineName: IdentityProviderPostBindingEnabled
   label: POST Binding Enabled
 
 - name: IdentityProviderRedirectBindingEnabled
@@ -97,6 +101,7 @@ properties:
   label: Authentication Request Cache Timeout
 
 - name: ServiceProviderPOSTBindingEnabled
+  offlineName: ServiceProviderPostBindingEnabled
   label: POST Binding Enabled
 
 - name: ServiceProviderArtifactBindingEnabled
@@ -118,5 +123,18 @@ properties:
     list includes: aes128-gcm, aes192-gcm, aes256-gcm, aes128-cbc,
     aes192-cbc, aes256-cbc, rsa-oaep, rsa-oaep-mgf1p </p>
 
-- name: SingleSignOnServicesPOSTOneUseCheckEnabled
-  source: POSTOneUseCheckEnabled
+- name: POSTOneUseCheckEnabled
+  offlineName: PostOneUseCheckEnabled
+  label: Single Sign On Services POST One Use Check Enabled
+
+- name: DefaultURL
+  offlineName: DefaultUrl
+
+- name: EntityID
+  offlineName: EntityId
+
+- name: OrganizationURL
+  offlineName: OrganizationUrl
+
+- name: PublishedSiteURL
+  offlineName: PublishedSiteUrl

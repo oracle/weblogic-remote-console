@@ -12,11 +12,6 @@ properties:
 - name: "PreferredSecondaryGroup"
 - name: "InterfaceAddress"
 - name: "ReplicationPorts"
-helpTasks:
-- "clusters/CreateCluster"
-- "clusters/ConfigureClusters"
-- "clusters/AssignServersToClusters"
-- "clusters/ConfigureClusterMigration"
 helpTopics:
 - label: "Deploying Applications to Oracle WebLogic Server "
   href: "depgd/index.html"

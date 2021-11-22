@@ -1,11 +1,13 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
-- name: DescriptorCustomClusterConfigurationFileName
-  source: CustomClusterConfigurationFileName
+- name: CustomClusterConfigurationFileName
+  label: Descriptor Custom Cluster Configuration File Name
 
-# Hide this name.  It confuses the parser, because we really want:
-# WeblogicCoherenceBean.getCoherenceAddressProviders().getCoherenceAddressProviders(),
-# rather than WeblogicCoherenceBean.getCoherenceAddressProviders().
-- name: CoherenceAddressProvidersBean
-  source: CoherenceAddressProviders
+children:
+- name: CoherenceAddressProviders
+  offlineName: CoherenceAddressProvider
+  collapsedInWDT: true
+
+- name: CoherenceAddressProviders.CoherenceAddressProviders
+  label: Coherence Address Providers Bean

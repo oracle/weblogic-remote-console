@@ -34,6 +34,7 @@ properties:
   label: Use Optimized Serialization
 
 - name: SDPEnabled
+  offlineName: SdpEnabled
   label: Enable SDP Protocol
 
 - name: ChannelIdentityCustomized
@@ -76,3 +77,9 @@ properties:
     property: Enabled
     values:
       - false
+
+- name: MinimumTLSProtocolVersion
+  offlineName: MinimumTlsProtocolVersion
+
+- name: SSLv2HelloEnabled
+  offlineName: SsLv2HelloEnabled

@@ -1,8 +1,8 @@
-# Copyright (c) 2020, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 
 console:
   name: "Oracle WebLogic Server Remote Console"
-  version: "1.0-SNAPSHOT"
+  version: "2.0"
   connectTimeoutMillis: 10000
   readTimeoutMillis: 20000
   disableHostnameVerification: false

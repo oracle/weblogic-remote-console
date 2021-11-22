@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,14 +6,9 @@ introductionHTML: >
   for a SAF Imported Destination, queue or topic.</p>
 
 properties:
-- name: "MessageLoggingEnabled"
-- name: "MessageLoggingFormat"
+- name: "MessageLoggingParams.MessageLoggingEnabled"
+- name: "MessageLoggingParams.MessageLoggingFormat"
 
-helpTasks:
-- "jms_modules/store_and_forward/imported_destinations/topics/ConfigureTopicLogging"
-- "jms_modules/store_and_forward/imported_destinations/queues/ConfigureSAFQueueLogging"
-- "saf_agents/ConfigureSAFAgentLogging"
-- "logging/ConfigureAndViewLogs"
 helpTopics:
 - label: "Configuring Messaging "
   href: "jmsad/basic_config.html"

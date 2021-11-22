@@ -1,4 +1,4 @@
-# Copyright (c) 2020,2021 Oracle and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -8,19 +8,15 @@ introductionHTML: >
   Manager will use to start this server on a remote machine.</p>
 
 properties:
-- name: "JavaHome"
-- name: "JavaVendor"
+- name: "ServerStart.JavaHome"
+- name: "ServerStart.JavaVendor"
 # deprecated - name: "BeaHome"
-- name: "RootDirectory"
-- name: "ClassPath"
-- name: "Arguments"
-- name: "SecurityPolicyFile"
-- name: "Username"
-- name: "Password"
-helpTasks:
-- "startstop/ConfigureStartupArgumentsForManagedServers"
-- "startstop/StartManagedServersFromTheAdministrationConsole"
-- "startstop/ShutDownAServerInstance"
+- name: "ServerStart.RootDirectory"
+- name: "ServerStart.ClassPath"
+- name: "ServerStart.Arguments"
+- name: "ServerStart.SecurityPolicyFile"
+- name: "ServerStart.Username"
+- name: "ServerStart.Password"
 helpTopics:
 - label: "Understanding Server Life Cycle "
   href: "start/server_life.html"

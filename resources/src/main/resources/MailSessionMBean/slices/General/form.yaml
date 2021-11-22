@@ -12,10 +12,6 @@ properties:
 - name: "SessionUsername"
 - name: "SessionPassword"
 - name: "Properties"
-helpTasks:
-- "mail/CreateMailSessions"
-- "mail/TargetMailSessions"
-- "mail/DeleteMailSessions"
 helpTopics:
 - label: "Administering Node Manager for Oracle WebLogic Server "
   href: "nodem/index.html"

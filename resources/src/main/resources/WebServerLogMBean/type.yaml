@@ -5,82 +5,17 @@ properties:
 - name: LoggingEnabled
   label: HTTP access log file enabled
 
-- name: WebServerLogFileName
-  source: FileName
+- name: FileName
   label: Log file name
-
-- name: WebServerLogFileMinSize
-  source: FileMinSize
-  label: Rotation file size
-  usedIf:
-    property: WebServerLogRotationType
-    values:
-    - "bySize"
-
-- name: WebServerLogRotationTime
-  source: RotationTime
-  label: Begin rotation time
-  usedIf:
-    property: WebServerLogRotationType
-    values:
-    - "byTime"
-
-- name: WebServerLogFileTimeSpan
-  source: FileTimeSpan
-  label: Rotation interval
-  usedIf:
-    property: WebServerLogRotationType
-    values:
-    - "byTime"
-
-- name: WebServerLogNumberOfFilesLimited
-  source: NumberOfFilesLimited
-  label: Limit number of retained files
-  usedIf:
-    property: WebServerLogRotationType
-    values:
-    - "bySize"
-    - "byTime"
-    - "none"
-
-- name: WebServerLogFileCount
-  source: FileCount
-  label: Files to retain
-  usedIf:
-    property: WebServerLogNumberOfFilesLimited
-    values:
-    - true
-
-- name: WebServerLogFileRotationDir
-  source: LogFileRotationDir
-  label: Log file rotation directory
-  usedIf:
-    property: WebServerLogRotationType
-    values:
-    - "bySize"
-    - "byTime"
-    - "none"
-
-- name: WebServerLogRotateLogOnStartup
-  source: RotateLogOnStartup
-  label: Rotate log file on startup
-  usedIf:
-    property: WebServerLogRotationType
-    values:
-    - "bySize"
-    - "byTime"
-    - "none"
 
 - name: ELFFields
   label: Extended Logging Format Fields
 
-- name: WebServerLogBufferSizeKB
-  source: BufferSizeKB
+- name: BufferSizeKB
   label: Log File Buffer
 
-- name: WebServerLogDateFormatPattern
-  source: DateFormatPattern
+- name: DateFormatPattern
+  label: Web Server Log Date Format Pattern
 
-- name: WebServerLogRotationType
-  source: RotationType
+- name: RotationType
   label: Log Rotation Type

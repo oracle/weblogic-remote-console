@@ -20,11 +20,6 @@ properties:
 - name: "RestartIntervalSeconds"
 - name: "HealthCheckIntervalSeconds"
 
-helpTasks:
-- "monitoring/MonitorServers"
-- "monitoring/ConfigureSelfhealthMonitoring"
-- "diagnostics/CreateDiagnosticModules"
-- "machines/MonitorNodeManagerStatus"
 helpTopics:
 - label: "Configuring and Using the Diagnostic Framework for Oracle WebLogic Server "
   href: "wldfc/index.html"

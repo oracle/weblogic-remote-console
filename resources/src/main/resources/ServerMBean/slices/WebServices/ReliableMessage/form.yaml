@@ -7,23 +7,13 @@ introductionHTML: >
   Use this page to customize reliable messaging configuration on the Web service endpoint.</p>
 
 properties:
-  - name: "BaseRetransmissionInterval"
-  - name: "RetransmissionExponentialBackoff"
-  - name: "NonBufferedSource"
-  - name: "NonBufferedDestination"
-  - name: "AcknowledgementInterval"
-  - name: "InactivityTimeout"
-  - name: "SequenceExpiration"
-helpTasks:
-  - "webservices/InstallAWebService"
-  - "webservices/StartAndStopAWebService"
-  - "webservices/ConfigureWSPolicyFile"
-  - "webservices/UpdateWebServiceConfiguration"
-  - "webservices/ViewSoapMessageHandlers"
-  - "webservices/ViewWsdl"
-  - "webservices/TestAWebService"
-  - "webservices/MonitorAWebService"
-  - "webservices/MonitorAWebServiceClient"
+  - name: "WebService.WebServiceReliability.BaseRetransmissionInterval"
+  - name: "WebService.WebServiceReliability.RetransmissionExponentialBackoff"
+  - name: "WebService.WebServiceReliability.NonBufferedSource"
+  - name: "WebService.WebServiceReliability.NonBufferedDestination"
+  - name: "WebService.WebServiceReliability.AcknowledgementInterval"
+  - name: "WebService.WebServiceReliability.InactivityTimeout"
+  - name: "WebService.WebServiceReliability.SequenceExpiration"
 helpTopics:
   - label: "Using Web Services Reliable Messaging (JAX-WS)"
     href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSADV275"

@@ -5,11 +5,11 @@ introductionHTML: >
     server.</p>
 
 properties:
-- name: Throughput
-- name: Suspended
-- name: HoggingThreadCount
-- name: StandbyThreadCount
-- name: StuckThreadCount
-- name: MinThreadsConstraintsCompleted
-- name: MinThreadsConstraintsPending
-- name: QueueLength
+- name: ThreadPoolRuntime.Throughput
+- name: ThreadPoolRuntime.Suspended
+- name: ThreadPoolRuntime.HoggingThreadCount
+- name: ThreadPoolRuntime.StandbyThreadCount
+- name: ThreadPoolRuntime.StuckThreadCount
+- name: ThreadPoolRuntime.MinThreadsConstraintsCompleted
+- name: ThreadPoolRuntime.MinThreadsConstraintsPending
+- name: ThreadPoolRuntime.QueueLength

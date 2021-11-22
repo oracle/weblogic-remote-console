@@ -20,9 +20,10 @@ define(
      * @param {string} id
      * @param {Type} type
      * @param {string} iconFiles
+     * @param {string} beanTree
      * @typedef Perspective
      */
-    function Perspective(id, type, iconFiles){
+    function Perspective(id, type, iconFiles, beanTree){
       this.id = id;
       // Include the label and description member
       // variables, even though their values come
@@ -34,6 +35,7 @@ define(
       this.description = "";
       this.type = type || Perspective.prototype.Type.BUILT_IN.name;
       this.iconFiles = iconFiles;
+      this.beanTree = beanTree;
       this.state = Perspective.prototype.State.INACTIVE;
     }
 
@@ -51,6 +53,8 @@ define(
       description: function() { return this.description; },
       type: function() { return this.type; },
       iconFiles: function() { return (typeof this.iconFiles !== 'undefined' ? this.iconfiles : null) },
+      beanTree: function() { return this.beanTree; },
+      isReadOnly: function() { return this.beanTree || false; },
       state: function() { return this.state; }
     };
 

@@ -4,8 +4,6 @@ introductionHTML: >
   Use this page to manage the security-related server debug flags; that is, the flags
   from the weblogic.security debug scope.
 
-# TBD helpTasks:
-
 # TBD helpTopics:
 
 presentation:
@@ -13,36 +11,36 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
-- name: DebugCertRevocCheck
-- name: DebugEmbeddedLDAP
-- name: DebugEmbeddedLDAPWriteOverrideProps
-# excluded - name: DebugSecurity
-- name: DebugSecurityAdjudicator
-- name: DebugSecurityAtn
-- name: DebugSecurityAtz
-- name: DebugSecurityAuditor
-- name: DebugSecurityCertPath
-- name: DebugSecurityCredMap
-- name: DebugSecurityEEngine
-- name: DebugSecurityEncryptionService
-- name: DebugSecurityJACC
-- name: DebugSecurityJACCNonPolicy
-- name: DebugSecurityJACCPolicy
-- name: DebugSecurityKeyStore
-- name: DebugSecurityPasswordPolicy
-- name: DebugSecurityPredicate
-# obsolete - name: DebugSecurityProfiler
-- name: DebugSecurityRealm
-- name: DebugSecurityRoleMap
-- name: DebugSecuritySAML2Atn
-- name: DebugSecuritySAML2CredMap
-- name: DebugSecuritySAML2Lib
-- name: DebugSecuritySAML2Service
-- name: DebugSecuritySAMLAtn
-- name: DebugSecuritySAMLCredMap
-- name: DebugSecuritySAMLLib
-- name: DebugSecuritySAMLService
-- name: DebugSecuritySSL
-- name: DebugSecuritySSLEaten
-- name: DebugSecurityService
-- name: DebugSecurityUserLockout
+- name: ServerDebug.DebugCertRevocCheck
+- name: ServerDebug.DebugEmbeddedLDAP
+- name: ServerDebug.DebugEmbeddedLDAPWriteOverrideProps
+# excluded - name: ServerDebug.DebugSecurity
+- name: ServerDebug.DebugSecurityAdjudicator
+- name: ServerDebug.DebugSecurityAtn
+- name: ServerDebug.DebugSecurityAtz
+- name: ServerDebug.DebugSecurityAuditor
+- name: ServerDebug.DebugSecurityCertPath
+- name: ServerDebug.DebugSecurityCredMap
+- name: ServerDebug.DebugSecurityEEngine
+- name: ServerDebug.DebugSecurityEncryptionService
+- name: ServerDebug.DebugSecurityJACC
+- name: ServerDebug.DebugSecurityJACCNonPolicy
+- name: ServerDebug.DebugSecurityJACCPolicy
+- name: ServerDebug.DebugSecurityKeyStore
+- name: ServerDebug.DebugSecurityPasswordPolicy
+- name: ServerDebug.DebugSecurityPredicate
+# obsolete - name: ServerDebug.DebugSecurityProfiler
+- name: ServerDebug.DebugSecurityRealm
+- name: ServerDebug.DebugSecurityRoleMap
+- name: ServerDebug.DebugSecuritySAML2Atn
+- name: ServerDebug.DebugSecuritySAML2CredMap
+- name: ServerDebug.DebugSecuritySAML2Lib
+- name: ServerDebug.DebugSecuritySAML2Service
+- name: ServerDebug.DebugSecuritySAMLAtn
+- name: ServerDebug.DebugSecuritySAMLCredMap
+- name: ServerDebug.DebugSecuritySAMLLib
+- name: ServerDebug.DebugSecuritySAMLService
+- name: ServerDebug.DebugSecuritySSL
+- name: ServerDebug.DebugSecuritySSLEaten
+- name: ServerDebug.DebugSecurityService
+- name: ServerDebug.DebugSecurityUserLockout

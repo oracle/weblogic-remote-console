@@ -20,11 +20,6 @@ advancedProperties:
   - name: "MulticastBufferSize"
   - name: "IdlePeriodsUntilTimeout"
   - name: "MulticastDataEncryption"
-helpTasks:
-  - "clusters/ConfigureClusters"
-  - "clusters/ConfigureClusterMigration"
-  - "clusters/SpecifyClusterReplicationGroups"
-  - "clusters/ConfigureClusterHTTP"
 helpTopics:
   - label: "Using IP Multicast for Backward Compatibility"
     href: "clust/features.html#CLUST129"

@@ -16,10 +16,13 @@ properties:
   writable: createOnly
   legalValues:
   - value: Machine
+    label: Machine
   - value: UnixMachine
+    label: Unix Machine
 
-- name: "NMType"
-- name: "ListenAddress"
-- name: "ListenPort"
-- name: "NodeManagerHome"
-- name: "ShellCommand"
+- name: NodeManager.NMType
+  label: Type
+- name: NodeManager.ListenAddress
+- name: NodeManager.ListenPort
+- name: NodeManager.NodeManagerHome
+- name: NodeManager.ShellCommand

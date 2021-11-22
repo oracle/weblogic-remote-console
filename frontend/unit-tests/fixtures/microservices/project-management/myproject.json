@@ -1,0 +1,20 @@
+{
+  "name": "MyProject",
+  "isDefault": true,
+  "filename": "myproject.json",
+  "dataProviders": [
+    {
+      "id":"AdminServerConnection0",
+      "name":"domain1",
+      "type":"adminserver",
+      "url":"http://localhost:7001",
+      "username":"weblogic"
+    },
+    {
+      "id":"Model0",
+      "name":"MyModel",
+      "type":"model",
+      "file":"mymodel.yaml"
+    }
+  ]
+}

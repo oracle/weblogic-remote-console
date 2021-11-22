@@ -7,27 +7,22 @@ introductionHTML: >
   it does not store HTTP requests in the server log file or the domain log file.</p>
 
 properties:
-- name: LoggingEnabled
-- name: WebServerLogFileName
-- name: WebServerLogRotationType
-- name: WebServerLogFileMinSize
-- name: WebServerLogRotationTime
-- name: WebServerLogFileTimeSpan
-- name: WebServerLogNumberOfFilesLimited
-- name: WebServerLogFileCount
-- name: WebServerLogFileRotationDir
-- name: WebServerLogRotateLogOnStartup
+- name: WebServer.WebServerLog.LoggingEnabled
+- name: WebServer.WebServerLog.FileName
+- name: WebServer.WebServerLog.RotationType
+- name: WebServer.WebServerLog.FileMinSize
+- name: WebServer.WebServerLog.RotationTime
+- name: WebServer.WebServerLog.FileTimeSpan
+- name: WebServer.WebServerLog.NumberOfFilesLimited
+- name: WebServer.WebServerLog.FileCount
+- name: WebServer.WebServerLog.LogFileRotationDir
+- name: WebServer.WebServerLog.RotateLogOnStartup
 
 advancedProperties:
-- name: LogFileFormat
-- name: ELFFields
-- name: WebServerLogBufferSizeKB
-- name: LogTimeInGMT
-
-helpTasks:
-- "logging/EnableAndConfigureHTTPLogs.xml"
-- "logging/ConfigureAndViewLogs.xml"
-- "virtual_hosts/ConfigureVirtualHostLogging.xml"
+- name: WebServer.WebServerLog.LogFileFormat
+- name: WebServer.WebServerLog.ELFFields
+- name: WebServer.WebServerLog.BufferSizeKB
+- name: WebServer.WebServerLog.LogTimeInGMT
 
 helpTopics:
 - label: "Setting Up HTTP Access Logs"

@@ -105,7 +105,7 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
             // TestCoherenceCluster-1
             await admin.createNewMBeanObject(driver,"TestServer-1",2,"configuration","Environment","Servers")
             await admin.createNewMBeanObject(driver,"TestServerTemplate-1",2,"configuration","Environment","Server Templates");
-            //await admin.createNewMBeanObject(driver,"Machine-1",2,"configuration","Environment","Machines");
+            await admin.createNewMBeanObject(driver,"TestMachine-1",2,"configuration","Environment","Machines");
             await admin.createNewMBeanObject(driver,"TestCluster-1",2,"configuration","Environment","Clusters");
             await admin.createNewMBeanObject(driver,"TestVirtualHost-1",2,"configuration","Environment","Virtual Hosts");
             await admin.createNewMBeanObject(driver,"TestSingleton-1",2,"configuration","Environment","Singleton Services");
@@ -137,20 +137,34 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
 
             //Delete TestServer-1, TestServerTemplate-1, TestCluster-1, TestVituralHost-1, TestSingleton-1,
             // TestCoherenceCluster-1
-            await admin.deleteMBeanObject(driver,"TestServerTemplate-1","ServerTemplates",2,"configuration",
-                "Environment","Server Templates");
-            await admin.deleteMBeanObject(driver,"TestServer-1","Servers",2,"configuration",
-                "Environment","Servers");
-            //await admin.deleteMBeanObject(driver,"Machine-1","Machines",2,"configuration",
-            //    "Environment","Machines");
-            await admin.deleteMBeanObject(driver,"TestCluster-1","Clusters",2,"configuration",
-                "Environment","Clusters");
-            await admin.deleteMBeanObject(driver,"TestVirtualHost-1","VirtualHosts",2,"configuration",
-                "Environment","Virtual Hosts");
-            await admin.deleteMBeanObject(driver,"TestSingleton-1","SingletonServices",2,"configuration",
-                "Environment","Singleton Services");
-            await admin.deleteMBeanObject(driver,"TestCoherenceCluster-1","CoherenceClusterSystemResources",2,
-                "configuration","Environment","Coherence Cluster System Resources");
+
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers",5);
+            await driver.sleep(2400);
+            await admin.deleteMBeanFromLandingPage(driver,"Servers","TestServer-1",5);
+
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Server Templates",5);
+            await driver.sleep(2400);
+            await admin.deleteMBeanFromLandingPage(driver,"Server Templates","TestServerTemplate-1",2);
+
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Machines",5);
+            await driver.sleep(2400);
+            await admin.deleteMBeanFromLandingPage(driver,"Machines","TestMachine-1",3);
+
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Clusters",5);
+            await driver.sleep(2400);
+            await admin.deleteMBeanFromLandingPage(driver,"Clusters","TestCluster-1",3);
+
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Virtual Hosts",5);
+            await driver.sleep(2400);
+            await admin.deleteMBeanFromLandingPage(driver,"Virtual Hosts","TestVirtualHost-1",1);
+
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Singleton Services",5);
+            await driver.sleep(2400);
+            await admin.deleteMBeanFromLandingPage(driver,"Singleton Services","TestSingleton-1",2);
+
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Coherence Cluster System Resources",5);
+            await driver.sleep(2400);
+            await admin.deleteMBeanFromLandingPage(driver,"Coherence Cluster System Resources","TestCoherenceCluster-1",1);
 
             console.log("TEST PASS ");
         } catch (e) {
@@ -169,7 +183,7 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
         file = "navTreeScheduling.png";
         try {
             //Create WorkManager-1,WorkManager-1,FairShareRequestClass-1,MaxThreadsConstraint-1,MinThreadsConstraint-1,
-            //       ContextRequestClass-1,ResponseTimeRequestClass-1,ManagedExecutorServiceTemplate-1,
+            //       ContextRequestClass-1,ResponseTimeRequestClass-1,ManagedExecutorServiceTemplate-1
             await admin.createNewMBeanObject(driver,"TestWorkManager-1",2,"configuration","Scheduling","Work Managers");
             await admin.createNewMBeanObject(driver,"TestCapacity-1",2,"configuration","Scheduling","Capacities");
             await admin.createNewMBeanObject(driver,"TestFairShareRequestClass-1",2,"configuration","Scheduling","Fair Share Request Classes");
@@ -187,7 +201,6 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
                 "Scheduling","Managed Scheduled Executor Service Templates");
             await admin.createNewMBeanObject(driver,"TestManagedThreadFactoryTemplates-1",2,"configuration",
                 "Scheduling","Managed Thread Factory Templates");
-
             //Test to access to the form page
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Scheduling","Work Managers","TestWorkManager-1");
             await admin.goToNavTreeLevelFourLink(driver,"configuration","Scheduling","Work Managers","Capacities","TestCapacity-1");
@@ -210,28 +223,25 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
             //Delete WorkManager-2,FairShareRequestClass-1,MaxThreadsConstraint-1,MinThreadsConstraint-1,
             //       ContextRequestClass-1,ResponseTimeRequestClass-1,ManagedExecutorServiceTemplate-1,
             await admin.deleteMBeanObject(driver,"TestWorkManager-1","WorkManagers",2,"configuration",
-                "Scheduling","Work Managers");
+                "Scheduling","Work Managers","","","",1);
             await admin.deleteMBeanObject(driver,"TestCapacity-1","Capacities",2,"configuration",
-                "Scheduling","Capacities");
+                "Scheduling","Capacities","","","",2);
             await admin.deleteMBeanObject(driver,"TestFairShareRequestClass-1","FairShareRequestClasses",2,"configuration",
-                "Scheduling","Fair Share Request Classes");
-            await admin.deleteMBeanObject(driver,"TestContextCase-1","ContextRequestClasses",4,"configuration",
-                "Scheduling","Context Request Classes","TestContextRequestClass-1","Context Cases","ContextCases");
+                "Scheduling","Fair Share Request Classes","","","",2);
             await admin.deleteMBeanObject(driver,"TestContextRequestClass-1","ContextRequestClasses",2,"configuration",
-                "Scheduling","Context Request Classes");
+                "Scheduling","Context Request Classes","","","",2);
             await admin.deleteMBeanObject(driver,"TestMaxThreadsConstraint-1","MaxThreadsConstraints",2,"configuration",
-                "Scheduling","Max Threads Constraints");
+                "Scheduling","Max Threads Constraints","","","",2);
             await admin.deleteMBeanObject(driver,"TestMinThreadsConstraint-1","MinThreadsConstraints",2,"configuration",
-                "Scheduling","Min Threads Constraints");
+                "Scheduling","Min Threads Constraints","","","",2);
             //await admin.deleteMBeanObject(driver,"ResponseTimeRequestClass-1","ResponseTimeRequestClasses",2,
             //    "configuration","Scheduling","Response Time Request Classes");
             await admin.deleteMBeanObject(driver,"TestManagedExecutorServiceTemplate-1","ManagedExecutorServiceTemplates",2,
-                "configuration","Scheduling","Managed Executor Service Templates");
+                "configuration","Scheduling","Managed Executor Service Templates","","","",1);
             await admin.deleteMBeanObject(driver,"TestManagedScheduledExecutorServiceTemplates-1","ManagedScheduledExecutorServiceTemplates",2,
-                "configuration","Scheduling","Managed Scheduled Executor Service Templates");
+                "configuration","Scheduling","Managed Scheduled Executor Service Templates","","","",1);
             await admin.deleteMBeanObject(driver,"TestManagedThreadFactoryTemplates-1","ManagedThreadFactoryTemplates",2,
-                "configuration","Scheduling","Managed Thread Factory Templates");
-
+                "configuration","Scheduling","Managed Thread Factory Templates","","","",1);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -271,13 +281,13 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
     it('7. Test Category: GAT/Risk1\n \t Test Scenario: NavTree Configuration->Services Sub-Menu Elements Test', async function () {
         file = "navTreeConfigServiceSubMenu.png";
         try {
-            //Create AdminJMSServer,MySAFAgent-1,MyAdminJmsModule-1,PathService-1,MyMessagingBridge-1,FileStore-1,
+            //Create AdminJMSServer,MySAFAgent-1,MyAdminJmsModule-1,PathService-1,MyMessagingBridge-1,FileStore-123,
             await admin.createNewMBeanObject(driver,"TestAdminJMSServer-1",2,"configuration","Services","JMS Servers");
             await admin.createNewMBeanObject(driver,"TestMySAFAgent-1",2,"configuration","Services","SAF Agents");
             await admin.createNewMBeanObject(driver,"TestMyAdminJmsModule-1",2,"configuration","Services","JMS System Resources");
             await admin.createNewMBeanObject(driver,"TestPathService-1",2,"configuration","Services","Path Services");
             await admin.createNewMBeanObject(driver,"TestMyMessagingBridge-1",2,"configuration","Services","Messaging Bridges");
-            await admin.createNewMBeanObject(driver,"TestFileStore-1",2,"configuration","Services","File Stores");
+            await admin.createNewMBeanObject(driver,"TestFileStore-123",2,"configuration","Services","File Stores");
             await admin.createNewMBeanObject(driver,"TestJBossForeignJNDIProvider-1",2,"configuration","Services",
                 "Foreign JNDI Providers");
             await admin.createNewMBeanObject(driver,"TestJMSBridgeDestination-1",2,"configuration","Services",
@@ -285,8 +295,8 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
             //await admin.createNewMBeanObject(driver,"JTestDBCSystemResource-1",2,"configuration","Services",
             //    "JDBC System Resources","","","searchselect","oj-searchselect-filter-DatasourceType|input",
             //    "DatasourceType","Multi Data Source");
-            await admin.createNewMBeanObject(driver,"TestXMLReg-1",2,"configuration","Services","XML Registries");
-            await admin.createNewMBeanObject(driver,"TestXMLEntity-1",2,"configuration","Services","XML Entity Caches");
+            //await admin.createNewMBeanObject(driver,"TestXMLReg-1",2,"configuration","Services","XML Registries");
+            //await admin.createNewMBeanObject(driver,"TestXMLEntity-1",2,"configuration","Services","XML Entity Caches");
             await admin.createNewMBeanObject(driver,"TestMyMailSession-1",2,"configuration","Services",
                 "Mail Sessions","","","input","JNDIName|input","TestMyJndiName-1","");
 
@@ -298,39 +308,37 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","Messaging Bridges","TestMyMessagingBridge-1");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services",
                                                   "JMS Bridge Destinations","TestJMSBridgeDestination-1");
-            await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","File Stores","TestFileStore-1");
+            await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","File Stores","TestFileStore-123");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services",
                                                  "Foreign JNDI Providers","TestJBossForeignJNDIProvider-1");
-            await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","XML Registries","TestXMLReg-1");
-            await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","XML Entity Caches","TestXMLEntity-1");
+            //await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","XML Registries","TestXMLReg-1");
+            //await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","XML Entity Caches","TestXMLEntity-1");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","Mail Sessions","TestMyMailSession-1");
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Services","Osgi Frameworks");
 
-            //Delete AdminJMSServer-2,MySAFAgent-1,MyAdminJmsModule-1,PathService-1,MyMessagingBridge-1,FileStore-1,
+            //Delete AdminJMSServer-2,MySAFAgent-1,MyAdminJmsModule-1,PathService-1,MyMessagingBridge-1,TestFileStore-123,
             await admin.deleteMBeanObject(driver,"TestAdminJMSServer-1","JMSServers",2,"configuration",
-                "Services","JMS Servers");
+                "Services","JMS Servers","","","",4);
             await admin.deleteMBeanObject(driver,"TestMySAFAgent-1","SAFAgents",2,"configuration",
-                "Services","SAF Agents");
+                "Services","SAF Agents","","","",2);
             await admin.deleteMBeanObject(driver,"TestMyAdminJmsModule-1","JMSSystemResources",2,"configuration",
-                "Services","JMS System Resources");
+                "Services","JMS System Resources","","","",3);
             await admin.deleteMBeanObject(driver,"TestPathService-1","PathServices",2,"configuration",
-                "Services","Path Services");
+                "Services","Path Services","","","",2);
             await admin.deleteMBeanObject(driver,"TestMyMessagingBridge-1","MessagingBridges",2,"configuration",
-                "Services","Messaging Bridges");
-            await admin.deleteMBeanObject(driver,"TestFileStore-1","FileStores",2,"configuration",
-                "Services","File Stores");
+                "Services","Messaging Bridges","","","",2);
+            await admin.deleteMBeanObject(driver,"TestFileStore-123","FileStores",2,"configuration",
+                "Services","File Stores","","","",3);
             await admin.deleteMBeanObject(driver,"TestJBossForeignJNDIProvider-1","ForeignJNDIProviders",2,"configuration",
-                "Services","Foreign JNDI Providers");
+                "Services","Foreign JNDI Providers","","","",2);
             await admin.deleteMBeanObject(driver,"TestJMSBridgeDestination-1","JMSBridgeDestinations",2,"configuration",
-                "Services","JMS Bridge Destinations");
-            await admin.deleteMBeanObject(driver,"TestXMLReg-1","XMLRegistries",2,"configuration",
-                "Services","XML Registries");
+                "Services","JMS Bridge Destinations","","","",3);
+            /* await admin.deleteMBeanObject(driver,"TestXMLReg-1","XMLRegistries",2,"configuration",
+                "Services","XML Registries","","","",2);
             await admin.deleteMBeanObject(driver,"TestXMLEntity-1","XMLEntityCaches",2,"configuration",
-                "Services","XML Entity Caches");
+                "Services","XML Entity Caches","","","",2); */
             await admin.deleteMBeanObject(driver,"TestMyMailSession-1","MailSessions",2,"configuration",
-                "Services","Mail Sessions");
-            //await admin.deleteMBeanObject(driver,"TestJDBCSystemResource-1","JDBCSystemResources",2,"configuration",
-              //  "Services","JDBC System Resources");
+                "Services","Mail Sessions","","","",3);
 
             console.log("TEST PASS ");
         } catch (e) {
@@ -417,7 +425,7 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
 
             //Delete WTCServer-1,MyWldfModule
             await admin.deleteMBeanObject(driver,"TestWTCServer","WTCServers",2,"configuration",
-                "Interoperability","WTC Servers");
+                "Interoperability","WTC Servers","","","",2);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 # Manually created from application/webapp/jsp/core/work/FairShareRequestClassConfigForm.jsp and   and consolehelp/docsrc/en-us/xml/pagehelp/core/work/FairShareRequestClassTargetDeploy.xml
 
@@ -8,11 +8,6 @@ introductionHTML: >
   that will host applications that reference the request class.</p>
 properties:
   - name: "Targets"
-helpTasks:
-  - "work/CreateGlobalWorkManager"
-  - "work/CreateGlobalRequestClass"
-  - "work/CreateGlobalConstraint"
-  - "work/DeleteGlobalWorkManager"
 helpTopics:
   - label: "Using Work Managers to Optimize Scheduled Work"
     href: "cnfgd/self_tuned.html"

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -7,18 +7,14 @@ introductionHTML: >
   this domain.</p>
 
 properties:
-- name: "OcspNonceEnabled"
-- name: "OcspResponseCacheEnabled"
+- name: "SecurityConfiguration.CertRevoc.OcspNonceEnabled"
+- name: "SecurityConfiguration.CertRevoc.OcspResponseCacheEnabled"
 advancedProperties:
-- name: "OcspResponseTimeout"
-- name: "OcspTimeTolerance"
-- name: "OcspResponseCacheCapacity"
-- name: "OcspResponseCacheRefreshPeriodPercent"
+- name: "SecurityConfiguration.CertRevoc.OcspResponseTimeout"
+- name: "SecurityConfiguration.CertRevoc.OcspTimeTolerance"
+- name: "SecurityConfiguration.CertRevoc.OcspResponseCacheCapacity"
+- name: "SecurityConfiguration.CertRevoc.OcspResponseCacheRefreshPeriodPercent"
 
-helpTasks:
-- "security/CustomizeDomainWideOCSPSettings"
-- "security/ConfigureX509CertificateRevocationChecking"
-- "security/ConfigureIdentityAndTrust"
 helpTopics:
 - label: "X.509 Certificate Revocation Checking"
   href: "secmg/ssl_cert_revoc_check.html"

@@ -10,7 +10,7 @@ properties:
 - name: DataSource
   label: Data Source
   optionsSources:
-    - /JDBCSystemResources
+    - Domain/JDBCSystemResources
   helpSummaryHTML: >
     <p>The JDBC data source used by this JDBC store to access its backing table.</p>
     <ul>

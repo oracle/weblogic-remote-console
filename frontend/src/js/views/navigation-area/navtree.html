@@ -4,6 +4,7 @@
 -->
 <div id="navtree">
   <oj-navigation-list
+    data-oj-context
     id="nav"
     aria-label="WebLogic Navigation Tree"
     expanded="{{expanded}}"
@@ -14,6 +15,7 @@
     on-oj-before-expand="[[beforeExpand]]"
     on-oj-before-collapse="[[beforeCollapse]]"
     on-oj-before-select="[[beforeSelect]]"
+    on-selection-changed="[[onSelect]]"
     on-oj-expand="[[onExpand]]"
     scroll-policy="loadMoreOnScroll"
   >
@@ -24,6 +26,8 @@
           <oj-bind-text value="[[item.data.label]]"></oj-bind-text>
         </a>
       </li>
+    </template>
+    <template slot="noData">
     </template>
   </oj-navigation-list>
 </div>

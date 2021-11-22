@@ -7,36 +7,19 @@
   <!-- row 1 -->
   <div class="oj-flex-item">
     <span id="content-area-header-title" data-bind="text: [[headerTitle()]]"></span>
-    <oj-bind-if test="[[readonly()]]">
-      <oj-button
-        id="readonly"
-        on-oj-action="[[readonlyButtonClickHandler]]"
-        chroming="borderless"
-        disabled="[[i18n.buttons.readonly.disabled]]"
-      >
-        <img id="readonly-image" slot="startIcon" data-bind="attr: {src: '../../images/' + i18n.buttons.readonly.image + '.png', 'title': i18n.buttons.readonly.label}" />
-      </oj-button>
-    </oj-bind-if>
-
-    <oj-bind-if test="[[!readonly()]]">
-      <oj-button
-        id="readwrite"
-        on-oj-action="[[readonlyButtonClickHandler]]"
-        chroming="borderless"
-        disabled="[[i18n.buttons.readwrite.disabled]]"
-      >
-        <img id="readwrite-image" slot="startIcon" data-bind="attr: {src: '../../images/' + i18n.buttons.readwrite.image + '.png', 'title': i18n.buttons.readwrite.label}" />
-      </oj-button>
-    </oj-bind-if>
   </div>
 
   <!-- row 2 -->
   <div id="content-area-header-toolbars" class="oj-flex-item">
     <div id="content-area-header-toolbar" class="oj-flex oj-sm-flex-items-initial">
       <!-- column 1, left-aligned -->
-      <oj-module config="[[contentAreaHeaderButtonsToolbarModuleConfig]]"></oj-module>
+      <div class="oj-flex-item oj-sm-padding-2x-horizontal">
+        <oj-module config="[[contentAreaHeaderButtonsToolbarModuleConfig]]"></oj-module>
+      </div>
       <!-- column 2, right-aligned -->
-      <oj-module config="[[contentAreaHeaderIconsTabstripModuleConfig]]"></oj-module>
+      <div class="oj-helper-margin-start-auto oj-flex-item oj-sm-padding-2x-horizontal">
+        <oj-module config="[[contentAreaHeaderIconsTabstripModuleConfig]]"></oj-module>
+      </div>
     </div>
   </div>
 </div>

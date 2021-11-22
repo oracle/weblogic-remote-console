@@ -6,8 +6,8 @@
  */
 "use strict";
 
-define(['knockout', '../../core/runtime', '../../microservices/preferences/preferences'],
-  function (ko, Runtimes, Preferences) {
+define(['knockout', '../../core/runtime', '../../microservices/preferences/preferences', '../../core/utils'],
+  function (ko, Runtimes, Preferences, CoreUtils) {
     function NavTreeToggler(viewParams){
       var self = this;
 
@@ -15,14 +15,81 @@ define(['knockout', '../../core/runtime', '../../microservices/preferences/prefe
       this.navtreeVisible = ko.observable(false);
       this.navtreeDisabled = ko.observable(true);
 
+      this.signalBindings = [];
+
       this.connected = function () {
         this.navtreeVisible.subscribe((visible) => {
           signalPerspectiveSelected(visible);
         });
+
+        let binding = viewParams.signaling.perspectiveSelected.add((newPerspective) => {
+          // Show navtree
+          self.navtreeVisible(true);
+          // Enable the toggle navtree visibility icon.
+          self.navtreeDisabled(false);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.ancillaryContentAreaToggled.add((visible) => {
+          // Set visibility of navtree based on a negation of
+          // the visible parameter.
+          setNavTreeVisibility(!visible);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.navtreeLoaded.add((newPerspective) => {
+          // Enable the toggle navtree visibility icon,
+          self.navtreeDisabled(false);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderSectionToggled.add((visible) => {
+          // Only hide navtree if visible === true
+          if (visible) setNavTreeVisibility(false);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.modeChanged.add((newMode) => {
+          if (newMode === "DETACHED") {
+            self.navtreeDisabled(true);
+            if (self.navtreeVisible()) self.navtreeVisible(false);
+          }
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderRemoved.add((dataProvider) => {
+          const beanTree = dataProvider.beanTrees.find(beanTree => beanTree.provider.id === dataProvider.id);
+          if (CoreUtils.isNotUndefinedNorNull(beanTree)) {
+            self.navtreeDisabled(true);
+            if (self.navtreeVisible()) self.navtreeVisible(false);
+          }
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
+          setNavTreeDisabledState(true);
+        });
+
+        self.signalBindings.push(binding);
+
       };
 
       this.disconnected = function () {
         this.navtreeVisible.dispose();
+
+        // Detach all signal "add" bindings
+        self.signalBindings.forEach(binding => { binding.detach(); });
+
+        // Reinitialize module-scoped array for storing
+        // signal "add" bindings, so it can be GC'd by
+        // the JS engine.
+        self.signalBindings = [];
       };
 
       this.navTreeToggleThemeIcon = function(state){
@@ -39,6 +106,13 @@ define(['knockout', '../../core/runtime', '../../microservices/preferences/prefe
         event.preventDefault();
         setNavTreeVisibility(!self.navtreeVisible());
       };
+
+      function setNavTreeDisabledState(state) {
+        self.navtreeDisabled(state);
+        // Set navtreeVisible observable to false, if it's
+        // currently true. Otherwise, do nothing.
+        if (self.navtreeVisible()) self.navtreeVisible(!state);
+      }
 
       function signalPerspectiveSelected(visible) {
         let ele = document.getElementById("navtree-container");
@@ -61,33 +135,14 @@ define(['knockout', '../../core/runtime', '../../microservices/preferences/prefe
 
       function setNavTreeVisibility(visible){
         if (!self.navtreeDisabled()) {
+          // Toggle navtree visibility icon is enabled, so
+          // set navtreeVisible observable to whatever is
+          // assigned to the visible parameter.
           self.navtreeVisible(visible);
+          // Send signal about navtree being toggled
           viewParams.signaling.navtreeToggled.dispatch(visible);
         }
       }
-
-      viewParams.signaling.perspectiveSelected.add((newPerspective, showNavTree) => {
-        if (typeof showNavTree === "undefined") showNavTree = true;
-        if (showNavTree) self.navtreeVisible(true);
-        // Enable the toggle navtree visibility icon
-        self.navtreeDisabled(false);
-      });
-
-      viewParams.signaling.ancillaryContentAreaToggled.add((visible) => {
-        setNavTreeVisibility(!visible);
-      });
-
-      viewParams.signaling.navtreeLoaded.add((newPerspective) => {
-        self.navtreeDisabled(false);
-      });
-
-      viewParams.signaling.modeChanged.add((newMode) => {
-        if (newMode === "DETACHED") {
-          self.navtreeDisabled(true);
-          if (self.navtreeVisible()) self.navtreeVisible(false);
-        }
-      });
-
 
     }
 

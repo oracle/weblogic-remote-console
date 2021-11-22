@@ -1,0 +1,41 @@
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+      <p>Create a new JDBC Store. Best Practices (scroll to see all): </p>
+      <ul>
+        <li><strong>Prefix Name:</strong>Configure a unique table 'Prefix Name' for each JDBC store.
+            Different JDBC Store instances cannot share the same backing table.</li>
+        <li><strong>Target:</strong> Must match the target of the JMS Servers, SAF Agents, or Path Services
+            that will use the store.</li>
+        <li><strong>Policies:</strong>
+          <ul>
+            <li>The Distribution and Migration policies only apply when targeting to a cluster.</li>
+            <li>A 'Distributed' Distribution Policy is required for JDBC Stores that
+                will host JMS Server distributed or SAF Agent imported destinations. This
+                creates an instance of the store for each cluster member.</li>
+            <li>A 'Singleton' Distribution Policy is required for JDBC Stores that will
+                host Singleton JMS Server destinations or the Path Service. This
+                creates a single instance of the store in the cluster.</li>
+            <li>An 'On-Failure' or 'Always' Migration Policy is required when setting a 'Singleton'
+                Distribution policy, or when enabling automatic service migration.</li>
+            <li>An 'On-Failure' or 'Always' migration policy requires configuring leasing on the cluster.</li>
+          </ul>
+        </li>
+      </ul>
+
+
+properties:
+# The attributes are ordered to account for the 2 column 'zig-zag' pattern.
+# (Single column is currently unsupported for create forms.)
+- name: Name
+- name: "Targets"
+- name: "PrefixName"
+- name: "DistributionPolicy"
+- name: "DataSource"
+- name: "MigrationPolicy"
+
+helpTopics:
+  - label: "Administering the WebLogic Persistent Store"
+    href: "store/overview.html"
+    type: "edocs"

@@ -6,8 +6,8 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', '../../apis/data-operations', '../../apis/message-displaying', '../../core/runtime', '../../core/cbe-types', '../../core/types', 'ojs/ojlogger'],
-  function (oj, ko, DataOperations, MessageDisplaying, Runtime, CbeTypes, CoreTypes, Logger) {
+define(['ojs/ojcore', 'knockout', '../../apis/data-operations', '../../apis/message-displaying', '../../microservices/provider-management/data-provider-manager','../../core/runtime', '../../core/cbe-types', '../../core/types', '../../core/utils', 'ojs/ojlogger'],
+  function (oj, ko, DataOperations, MessageDisplaying, DataProviderManager, Runtime, CbeTypes, CoreTypes, CoreUtils, Logger) {
     const i18n = {
       messages: {
         "cannotGetLockState": {summary: oj.Translations.getTranslatedString("wrc-change-manager.messages.cannotGetLockState.summary")},
@@ -21,16 +21,16 @@ define(['ojs/ojcore', 'knockout', '../../apis/data-operations', '../../apis/mess
     var properties = {};
 
     function computeHasChanges(changeManager) {
-      return (typeof changeManager.hasChanges !== "undefined" ? changeManager.hasChanges : false);
+      return (CoreUtils.isNotUndefinedNorNull(changeManager.hasChanges) ? changeManager.hasChanges : false);
     }
 
     function computeSupportsChanges(changeManager) {
-      return (typeof changeManager.supportsChanges !== "undefined" ? changeManager.supportsChanges : false);
+      return (CoreUtils.isNotUndefinedNorNull(changeManager.supportsChanges) ? changeManager.supportsChanges : false);
     }
 
     function computeIsLockOwner(changeManager) {
       let isLockOwner = false;
-      if (typeof changeManager.lockOwner !== "undefined") {
+      if (CoreUtils.isNotUndefinedNorNull(changeManager.lockOwner)) {
         isLockOwner = (Runtime.getWebLogicUsername() === changeManager.lockOwner);
       }
       return isLockOwner;
@@ -66,44 +66,74 @@ define(['ojs/ojcore', 'knockout', '../../apis/data-operations', '../../apis/mess
        */
       getLockState: function () {
         return new Promise((resolve, reject) => {
-          DataOperations.changeManager.getLockState()
-            .then(reply => {
-              reply.body.data.changeManager[this.Property.IS_LOCK_OWNER.name] = computeIsLockOwner(reply.body.data.changeManager);
-              reply.body.data.changeManager[this.Property.HAS_CHANGES.name] = computeHasChanges(reply.body.data.changeManager);
-              reply.body.data.changeManager[this.Property.SUPPORTS_CHANGES.name] = computeSupportsChanges(reply.body.data.changeManager);
-              properties = reply.body.data.changeManager;
-              resolve(reply.body.data);
-            })
-            .catch(response => {
+          const dataProvider = DataProviderManager.getLastActivatedDataProvider();
+          if (CoreUtils.isUndefinedOrNull(dataProvider)) {
+            this.putMostRecent({
+              "isLockOwner": false,
+              "hasChanges": false,
+              "supportsChanges": false
+            });
+            const response = {
+              body: {
+                data: {
+                  changeManager: this.getMostRecent()
+                }
+              }
+            };
+            resolve(response.body.data);
+          }
+          else {
+            const uri = dataProvider.getBeanTreeChangeManagerUri();
+            if (CoreUtils.isNotUndefinedNorNull(uri)) {
+              DataOperations.changeManager.getLockState(uri)
+                .then(reply => {
+                  reply.body.data.changeManager[this.Property.IS_LOCK_OWNER.name] = computeIsLockOwner(reply.body.data.changeManager);
+                  reply.body.data.changeManager[this.Property.HAS_CHANGES.name] = computeHasChanges(reply.body.data.changeManager);
+                  reply.body.data.changeManager[this.Property.SUPPORTS_CHANGES.name] = computeSupportsChanges(reply.body.data.changeManager);
+                  properties = reply.body.data.changeManager;
+                  resolve(reply.body.data);
+                })
+                .catch(response => {
+                  this.putMostRecent({
+                    "isLockOwner": false,
+                    "hasChanges": false,
+                    "supportsChanges": false
+                  });
+                  if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                    // If transport.status of response is 403 (Forbidden)
+                    // it means we're in STANDALONE mode, and the end
+                    // user hasn't made a domain connection, yet. The
+                    // transport layer has already logged the error to
+                    // the JavaScript Console, so we can just return a
+                    // fulfilled Promise containing the response body.
+                    if (response.transport.status === 403) {
+                      response.body.data = {
+                        changeManager: this.getMostRecent()
+                      };
+                      resolve(response.body.data);
+                    }
+                    else {
+                      // Rethrow reject.
+                      reject(response);
+                    }
+                  }
+                  else {
+                    // It's a failure caused by JavaScript,
+                    // so rethrow the reject.
+                    reject(response);
+                  }
+                });
+
+            }
+            else {
               this.putMostRecent({
                 "isLockOwner": false,
                 "hasChanges": false,
                 "supportsChanges": false
               });
-              if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                // If transport.status of response is 403 (Forbidden)
-                // it means we're in STANDALONE mode, and the end
-                // user hasn't made a domain connection, yet. The
-                // transport layer has already logged the error to
-                // the JavaScript Console, so we can just return a
-                // fulfilled Promise containing the response body.
-                if (response.transport.status === 403) {
-                  response.body.data = {
-                    changeManager: this.getMostRecent()
-                  };
-                  resolve(response.body.data);
-                }
-                else {
-                  // Rethrow reject
-                  reject(response);
-                }
-              }
-              else {
-                // It's a failure caused by JavaScript,
-                // so rethrow the reject
-                reject(response);
-              }
-            });
+              resolve({changeManager: this.getMostRecent()});
+            }
+          }
         });
       },
       getMostRecent: function () {
@@ -117,33 +147,36 @@ define(['ojs/ojcore', 'knockout', '../../apis/data-operations', '../../apis/mess
       },
       getData: function () {
         return new Promise((resolve) => {
-          DataOperations.changeManager.getData()
-            .then(reply => {
-              reply.body.data.changeManager[this.Property.IS_LOCK_OWNER.name] = computeIsLockOwner(reply.body.data.changeManager);
-              reply.body.data.changeManager[this.Property.HAS_CHANGES.name] = computeHasChanges(reply.body.data.changeManager);
-              reply.body.data.changeManager[this.Property.SUPPORTS_CHANGES.name] = computeSupportsChanges(reply.body.data.changeManager);
-              this.putMostRecent(reply.body.data.changeManager);
-              resolve(reply.body.data);
-            })
-            .catch(response => {
-              if (!response.succeeded) {
-                this.putMostRecent({
-                  "isLockOwner": false,
-                  "hasChanges": false,
-                  "supportsChanges": false
-                });
-                const data = {
-                  changeManager: this.getMostRecent(),
-                  data: {
-                    additions: [],
-                    modifications: [],
-                    removals: [],
-                    restart: []
-                  }
-                };
-                resolve(data);
-              }
-            });
+          const dataProvider = DataProviderManager.getLastActivatedDataProvider();
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            DataOperations.changeManager.getData(dataProvider.getBeanTreeChangeManagerUri())
+              .then(reply => {
+                reply.body.data.changeManager[this.Property.IS_LOCK_OWNER.name] = computeIsLockOwner(reply.body.data.changeManager);
+                reply.body.data.changeManager[this.Property.HAS_CHANGES.name] = computeHasChanges(reply.body.data.changeManager);
+                reply.body.data.changeManager[this.Property.SUPPORTS_CHANGES.name] = computeSupportsChanges(reply.body.data.changeManager);
+                this.putMostRecent(reply.body.data.changeManager);
+                resolve(reply.body.data);
+              })
+              .catch(response => {
+                if (!response.succeeded) {
+                  this.putMostRecent({
+                    "isLockOwner": false,
+                    "hasChanges": false,
+                    "supportsChanges": false
+                  });
+                  const data = {
+                    changeManager: this.getMostRecent(),
+                    data: {
+                      additions: [],
+                      modifications: [],
+                      removals: [],
+                      restart: []
+                    }
+                  };
+                  resolve(data);
+                }
+              });
+          }
         });
       },
       getSection: function (data, name){
@@ -160,40 +193,46 @@ define(['ojs/ojcore', 'knockout', '../../apis/data-operations', '../../apis/mess
       },
       commitChanges: function () {
         return new Promise((resolve) => {
-          DataOperations.changeManager.commitChanges()
-            .then(reply => {
-              this.putMostRecent({
-                "isLockOwner": properties.isLockOwner,
-                "hasChanges": false,
-                "supportsChanges": properties.supportsChanges
+          const dataProvider = DataProviderManager.getLastActivatedDataProvider();
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            DataOperations.changeManager.commitChanges(dataProvider.getBeanTreeChangeManagerUri())
+              .then(reply => {
+                this.putMostRecent({
+                  "isLockOwner": properties.isLockOwner,
+                  "hasChanges": false,
+                  "supportsChanges": properties.supportsChanges
+                });
+                MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesCommitted.summary, detail: ""});
+                resolve(this.getMostRecent());
+              })
+              .catch(response => {
+                MessageDisplaying.displayResponseMessages(response.body.messages, 5000);
+                Logger.error(response.failureReason);
+                resolve(this.getMostRecent());
               });
-              MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesCommitted.summary, detail: ""});
-              resolve(this.getMostRecent());
-            })
-            .catch(response => {
-              MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesNotCommitted.summary, detail: MessageDisplaying.messages.seeJavascriptConsole.detail}, 2500);
-              Logger.error(response.failureReason);
-              resolve(this.getMostRecent());
-            });
+          }
         });
       },
       discardChanges: function () {
         return new Promise((resolve) => {
-          DataOperations.changeManager.discardChanges()
-            .then(reply => {
-              this.putMostRecent({
-                "isLockOwner": properties.isLockOwner,
-                "hasChanges": false,
-                "supportsChanges": properties.supportsChanges
+          const dataProvider = DataProviderManager.getLastActivatedDataProvider();
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            DataOperations.changeManager.discardChanges(dataProvider.getBeanTreeChangeManagerUri())
+              .then(reply => {
+                this.putMostRecent({
+                  "isLockOwner": properties.isLockOwner,
+                  "hasChanges": false,
+                  "supportsChanges": properties.supportsChanges
+                });
+                MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesDiscarded.summary, detail: ""});
+                resolve(this.getMostRecent());
+              })
+              .catch(response => {
+                MessageDisplaying.displayResponseMessages(response.body.messages, 5000);
+                Logger.error(response.failureReason);
+                resolve(this.getMostRecent());
               });
-              MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesDiscarded.summary, detail: ""});
-              resolve(this.getMostRecent());
-            })
-            .catch(response => {
-              MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesNotDiscarded.summary, detail: MessageDisplaying.messages.seeJavascriptConsole.detail}, 2500);
-              Logger.error(response.failureReason);
-              resolve(this.getMostRecent());
-            });
+          }
 
         });
       }

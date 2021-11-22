@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -9,23 +9,21 @@ introductionHTML: >
   transaction options for this JDBC data source.</p>
 
 properties:
-- name: "UseXaDataSourceInterface"
-- name: "XaSetTransactionTimeout"
-- name: "XaTransactionTimeout"
-- name: "XaRetryDurationSeconds"
-- name: "XaRetryIntervalSeconds"
-- name: "KeepXaConnTillTxComplete"
+- name: "JDBCResource.JDBCDriverParams.UseXaDataSourceInterface"
+- name: "JDBCResource.JDBCXAParams.XaSetTransactionTimeout"
+- name: "JDBCResource.JDBCXAParams.XaTransactionTimeout"
+- name: "JDBCResource.JDBCXAParams.XaRetryDurationSeconds"
+- name: "JDBCResource.JDBCXAParams.XaRetryIntervalSeconds"
+- name: "JDBCResource.JDBCXAParams.KeepXaConnTillTxComplete"
 # deprecated - name: "KeepConnAfterLocalTx"
-- name: "KeepConnAfterGlobalTx"
-- name: "NeedTxCtxOnClose"
+- name: "JDBCResource.JDBCDataSourceParams.KeepConnAfterGlobalTx"
+- name: "JDBCResource.JDBCXAParams.NeedTxCtxOnClose"
 # deprecated - name: "XaEndOnlyOnce"
-- name: "KeepLogicalConnOpenOnRelease"
-- name: "ResourceHealthMonitoring"
-- name: "RecoverOnlyOnce"
+- name: "JDBCResource.JDBCXAParams.KeepLogicalConnOpenOnRelease"
+- name: "JDBCResource.JDBCXAParams.ResourceHealthMonitoring"
+- name: "JDBCResource.JDBCXAParams.RecoverOnlyOnce"
 # deprecated - name: "RollbackLocalTxUponConnClose"
-- name: "JDBCXADebugLevel"
-helpTasks:
-- "jdbc/jdbc_datasources/ConfigureTransactionOptionsForADataSource"
+- name: "JDBCResource.JDBCConnectionPoolParams.JDBCXADebugLevel"
 helpTopics:
 - label: "Configuring WebLogic JDBC Resources "
   href: "jdbca/config.html"

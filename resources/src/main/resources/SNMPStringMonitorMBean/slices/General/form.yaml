@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -15,11 +15,6 @@ properties:
 - name: "PollingInterval"
 - name: "NotifyDiffer"
 - name: "NotifyMatch"
-helpTasks:
-- "snmp/ConfigureStringMonitors"
-- "snmp/DetermineMBeanInstanceNames"
-- "snmp/TargetStringMonitors"
-- "snmp/VerifyTrapGeneration"
 helpTopics:
 - label: "Monitoring Oracle WebLogic Server with SNMP "
   href: "snmpa/index.html"

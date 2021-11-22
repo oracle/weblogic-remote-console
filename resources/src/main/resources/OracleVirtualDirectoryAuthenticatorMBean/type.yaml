@@ -72,13 +72,6 @@ properties:
     multiple wildcards in a given filter expression can have a negative
     performance impact on the LDAP server.</p>
 
-- name: UserSearchScope
-  helpSummaryHTML: >
-    <p>Specifies how deep in the LDAP directory tree the LDAP Authentication
-    provider should search for users.</p>
-  helpDetailsHTML: >
-    <p>Valid values are <code>subtree</code> and <code>onelevel</code>.</p>
-
 - name: UserNameAttribute
   helpSummaryHTML: >
     <p>The attribute of an LDAP user object class that specifies the
@@ -238,3 +231,6 @@ properties:
 - name: IdentityDomain
   helpHTML: >
     <p>The name of the identity domain.</p>
+
+- name: StaticGroupDNsfromMemberDNFilter
+  label: Static Group DNs From Member DN Filter

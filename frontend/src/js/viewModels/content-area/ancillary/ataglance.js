@@ -6,8 +6,8 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', '../../../core/utils/keyset-utils', '../../../apis/message-displaying', '../../../core/runtime', '../../../microservices/ataglance/ataglance-manager', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander', 'ojs/ojgauge'],
-  function(oj, ko, ArrayDataProvider, HtmlUtils, keySet, keySetUtils, MessageDisplaying, Runtime, AtAGlanceManager, Logger){
+define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', '../../../core/utils/keyset-utils', '../../../apis/message-displaying', '../../../core/runtime', '../../../microservices/ataglance/ataglance-manager', '../../utils', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander', 'ojs/ojgauge'],
+  function(oj, ko, ArrayDataProvider, HtmlUtils, keySet, keySetUtils, MessageDisplaying, Runtime, AtAGlanceManager, ViewModelUtils, Logger){
     function AtAGlanceTabTemplate(viewParams) {
       const self = this;
 
@@ -60,29 +60,44 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         }
       ]);
 
+      this.tabNode = "ataglance";
+
       this.connected = function () {
         loadAtAGlanceSections(true);
       }.bind(this);
 
+      this.getCachedState = () => {
+        Logger.log(`[ATAGLANCE] getCachedState() was called.`);
+        return {};
+      };
+
       function loadAtAGlanceSections(expandAfterLoad){
+        ViewModelUtils.setCursorType("progress");
         AtAGlanceManager.getData()
-        .then(reply => {
-          const servers = AtAGlanceManager.getServers(reply.body.data);
-          self.atAGlanceSections()[0].servers = servers;
-          self.runningServers(servers.filter(server => server.state === "RUNNING"));
-          self.shutdownServers(servers.filter(server => server.state === "SHUTDOWN"));
-          const healthState = self.atAGlanceSections()[1].content.healthState;
-          healthState.find(state => state.id === "ok").value = self.runningServers().length;
-          self.serversGlanceExpanded(expandAfterLoad);
-          self.systemGlanceExpanded(expandAfterLoad);
-        })
-        .catch(response => {
-          MessageDisplaying.displayMessage({
-            severity: 'error',
-            summary: response.failureReason,
-            detail: ''
+          .then(reply => {
+            // We only need to do something if reply
+            // is non-empty JS object.
+            if (Object.keys(reply).length > 0) {
+              const servers = AtAGlanceManager.getServers(reply.body.data);
+              self.atAGlanceSections()[0].servers = servers;
+              self.runningServers(servers.filter(server => server.state === "RUNNING"));
+              self.shutdownServers(servers.filter(server => server.state === "SHUTDOWN"));
+              const healthState = self.atAGlanceSections()[1].content.healthState;
+              healthState.find(state => state.id === "ok").value = self.runningServers().length;
+              self.serversGlanceExpanded(expandAfterLoad);
+              self.systemGlanceExpanded(expandAfterLoad);
+            }
+          })
+          .catch(response => {
+            MessageDisplaying.displayMessage({
+              severity: 'error',
+              summary: response.failureReason,
+              detail: ''
+            });
+          })
+          .finally(() => {
+            ViewModelUtils.setCursorType("default");
           });
-        });
       }
 
       this.identityKeyClickHandler = function(event) {

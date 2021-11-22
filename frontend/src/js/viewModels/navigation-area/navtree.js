@@ -9,107 +9,194 @@
 /**
  * frontend viewModel for NavTreeManager
  */
-define(['jquery', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout-keyset', 'ojs/ojarraytreedataprovider', '../../microservices/navtree/navtree-manager', '../../microservices/perspective/perspective-memory-manager', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
-  function ($, ko, Router, keySet, ArrayTreeDataProvider, NavtreeManager, PerspectiveMemoryManager, Logger) {
+define(['jquery', 'knockout', 'ojs/ojcontext', 'ojs/ojrouter', 'ojs/ojknockout-keyset', 'ojs/ojarraytreedataprovider', '../../microservices/navtree/navtree-manager', '../../microservices/perspective/perspective-manager', '../../microservices/perspective/perspective-memory-manager','../utils', '../../core/utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
+  function ($, ko, Context, Router, keySet, ArrayTreeDataProvider, NavtreeManager, PerspectiveManager, PerspectiveMemoryManager, ViewModelUtils, CoreUtils, Logger) {
     function NavtreeViewModel(viewParams) {
-      const self = this;
-      const router = Router.rootInstance;
-
-      const perspective = viewParams.perspective;
-      const perspectiveState = { rootNode: { name: "Domain" } };
+      let self = this;
+      let router = Router.rootInstance;
 
       // Needs to be a ko.observable() in order to allow us
-      // to obtain the id, from the navTreeModuleConfig
-      this.perspective = ko.observable(perspective);
+      // to obtain the id, from the navTreeModuleConfig.
+      this.perspective = ko.observable(viewParams.perspective);
+
+      this.beanTree = viewParams.beanTree;
 
       this.condensedNodes = {};
 
       this.selectedItem = ko.observable();
-      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(perspective.id);
+      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(self.beanTree.type);
       this.expanded = getExpandedSet();
+      
+      this.navtreeManager = new NavtreeManager(self.beanTree);
 
-      this.navtreeManager = new NavtreeManager(perspective);
+      this.setBusyContext = function() {
+     let context = document.querySelector("#nav");
+        if (context && context !== null) {
+          self.busyContext = Context.getContext(context).getBusyContext();
+        } 
+      }
 
-      // if there are already nodes expanded (e.g. from switching back to a perspective),
-      // make sure the expanded nodes get populated
-      this.navtreeManager.populateNodeSet(self.expanded());
+      this.addBusyState = function () {
+        
+        let options = { description: "#nav fetching data" };
+
+        return self.busyContext.addBusyState(options);
+        
+      };
+      
+      // if there are already nodes expanded (e.g. from
+      // switching back to a perspective), make sure the
+      // expanded nodes get populated
 
       this.datasource = ko.observable(this.navtreeManager.getDataProvider());
 
-      this.signalBindings = [];
+      this.beforeSelect = event =>  {};
 
-      this.beforeSelect = event =>  {}
-      
       this.beforeCollapse = event => {
         if (self.selectedItem() === event.detail.key) {
           // when something node is already open and it is selected, don't close it...
           // ... except if they click on the expanded icon (as opposed to clicking on the label)
           let cl = event.detail.originalEvent.path[0].className;
 
-          if (!cl.includes('oj-navigationlist-expand-icon'))   event.preventDefault();
+          if (!cl.includes('oj-navigationlist-expand-icon')) event.preventDefault();
         }
-      }
+      };
+
+      this.signalBindings = [];
 
       this.connected = function () {
-        self.selectedItem(self.perspectiveMemory.contentPage.path);
+        this.setBusyContext();
 
-        let binding = viewParams.signaling.navtreeUpdated.add(function (treeaction) {
-          if (typeof treeaction === 'undefined' || treeaction === null) {
+        self.busyContext.whenReady(10000).then(() => {
+          const resolve = this.addBusyState();
+          this.navtreeManager.refreshTreeModel().then(() => {
+            this.navtreeManager.updateTreeView();
+            resolve();
+          });
+        });
+
+        let binding = viewParams.signaling.navtreeUpdated.add((treeaction) => {
+          if (CoreUtils.isUndefinedOrNull(treeaction)) {
             self.expanded.clear();
             self.perspectiveMemory.navtree.keySet = self.expanded;
             return;
           }
 
           if (treeaction.clearTree) {
-            // refresh the subtree
-            self.navtreeManager = new NavtreeManager(perspective);
-            self.datasource(self.navtreeManager.getDataProvider());
+            self.busyContext.whenReady(10000).then(() => {
+              const resolve = self.addBusyState();
 
-            // clear the expanded set, unset selected item
-            self.expanded.clear();
-            self.selectedItem('');
-            return;
+              // refresh the subtree
+              self.navtreeManager = new NavtreeManager(self.beanTree);
+              self.navtreeManager
+                .refreshTreeModel()
+                .then(() => {
+                  self.navtreeManager.updateTreeView();
+                  self.datasource(self.navtreeManager.getDataProvider());
+
+                  // clear the expanded set, unset selected item
+                  self.expanded.clear();
+                  self.selectedItem("");
+
+                  resolve();
+                })
+                .catch((response) => {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                });
+            });
+          } else {
+            // iterate through every node in the already expanded Set
+            // and ensure they have been populated.
+            self.busyContext.whenReady(10000).then(() => {
+              const resolve = self.addBusyState();
+              self.navtreeManager.populateNodeSet(self.expanded()).finally(()=>{ resolve();});
+             
+            });
           }
-
-          // throw out the navtree manager, then rebuild the expanded nodes
-          self.navtreeManager = new NavtreeManager(perspective);
-          self.datasource(self.navtreeManager.getDataProvider());
-
-          // iterate through every node in the already expanded Set
-          // and ensure they have been populated. 
-          self.navtreeManager.populateNodeSet(self.expanded());
-
         });
 
+        self.signalBindings.push(binding);
+
+
+        binding = viewParams.signaling.navtreeSelectionCleared.add(() => {
+          self.selectedItem("");
+        });
 
         self.signalBindings.push(binding);
 
-        binding =
-          viewParams.signaling.navtreeSelectionCleared.add(() => {
-            self.selectedItem(null);
-          });
+        binding = viewParams.signaling.dataProviderSelected.add(
+          (dataProvider) => {
+            if (dataProvider.id !== self.beanTree.provider.id) {
+              // We're changing to a new data provider, so replace
+              // the existing viewParams.beanTree and self.beanTree
+              // variables.
+              viewParams.beanTree = dataProvider.beanTrees[0];
+              self.beanTree = viewParams.beanTree;
+              // Add a "signal" property to self.beanTree, which
+              // indicates that it's a "replacement".
+              self.beanTree["signal"] = "replacement";
 
-        self.signalBindings.push(binding);
+              // Next, change the existing viewParams.perspective
+              // variable and self.perspective knockout observable
+              viewParams.perspective = PerspectiveManager.getById(
+                self.beanTree.type
+              );
+              self.perspective(viewParams.perspective);
 
-        binding =
-          viewParams.signaling.modeChanged.add((newMode) => {
-            if (newMode === "DETACHED") {
+              // clear the expanded set, unset selected item
               self.expanded.clear();
-              self.perspectiveMemory.navtree.keySet = self.expanded;
-              self.perspectiveMemory.contentPage.path = '';
-              self.selectedItem(self.perspectiveMemory.contentPage.path);
-              self.navtreeManager = null;
+              self.selectedItem("");
+
+              self.busyContext.whenReady(10000).then(() => {
+                const resolve = self.addBusyState();
+
+                // Finally, recreate a NavtreeManager using the new
+                // beanTree module-scoped variable.
+                self.navtreeManager = new NavtreeManager(self.beanTree);
+                self.datasource(self.navtreeManager.getDataProvider());
+
+                self.navtreeManager
+                  .refreshTreeModel()
+                  .then(() => {
+                    self.navtreeManager.updateTreeView();
+                    resolve();
+                  })
+                  .catch((response) => {
+                    ViewModelUtils.failureResponseDefaultHandling(response);
+                  });
+              });
             }
-            else if (newMode === "ONLINE") {
-              self.navtreeManager = new NavtreeManager(perspective);
-              self.datasource(self.navtreeManager.getDataProvider());
-            }
-          });
+          }
+        );
 
         self.signalBindings.push(binding);
 
-        const ele = document.getElementById("navtree");
-        if (ele !== null) ele.style.visibility = "hidden";
+        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
+          router.go("home");
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderRemoved.add(
+          (dataProvider) => {
+            if (self.beanTree.provider.id === dataProvider.id) {
+              // refresh the subtree
+              self.busyContext.whenReady(10000).then(() => {
+                const resolve = self.addBusyState();
+                self.navtreeManager = new NavtreeManager(self.beanTree);
+                self.datasource(self.navtreeManager.getDataProvider());
+
+                // clear the expanded set, unset selected item
+                self.expanded.clear();
+                self.selectedItem("");
+
+                resolve();
+              });
+            }
+          }
+        );
+
+        self.signalBindings.push(binding);
 
         self.selectedItem(self.perspectiveMemory.contentPage.path);
       }.bind(this);
@@ -120,60 +207,49 @@ define(['jquery', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout-keyset', 'ojs/ojar
         self.signalBindings = [];
       }.bind(this);
 
-      this.selectedItem.subscribe(function (id) {
-        if (id != null) {
-          if (self.condensedNodes.hasOwnProperty(id)) id = self.condensedNodes[id];
-          const path = encodeURIComponent(id);
+      this.onSelect = function(event) {
 
-          // if the navtree is selecting the already displayed path,
-          // it is likely because breadcrumb navigation deselected the node and
-          // router.go would cause an empty form/displayed to be displayed,
-          // so do nothing...
-          const params = router.observableModuleConfig().params.ojRouter.parameters;
+        let nodeId = event.detail.value;
 
-          if (typeof params.path !== 'undefined') {
-            if (params.path() === path)
-              return;
-          }
+        if (nodeId !== null && nodeId !== "") {
+          let node = self.navtreeManager.getNodeById(nodeId);
 
-          // If path is for navtree group node (e.g. "Environment"), then
-          // a router.go() will call the CBE to try to get a table/form for
-          // it. This will result in an HTTP error, so make sure path starts
-          // with perspectiveState.rootNode.name before you do a router.go()
-          if (path.startsWith(perspectiveState.rootNode.name)) {
-            router.go("/" + perspective.id + "/" + path);
-          }
+          let resourceData = node.resourceData.resourceData;
+
+          const path = encodeURIComponent(resourceData);
+
+          router.go("/" + self.beanTree.type + "/" + path);
         }
-      });
+      };
 
       this.itemSelectable = function (context) {
-
-        // This callback gets called for every node in the
-        // navigation list (including child nodes), to determine
-        // if the node is selectable, or not. We need to use
-        // this as an opportunity to populate the this.toolbarRendering
-        // instance variable, which is a map for nodes with
-        // kind=creatableOptionalSingleton or kind=nonCreatableOptionalSingleton
-        const kind = context.data.kind;
-
-        
-        if (kind === "condensed") {
-          // Navtree pagination is supported using a "condensed" node
-          // type. This node type has "..." for it's label, and needs
-          // to temporarily use the path of it's parent collection as
-          // it's path. We use this.condensedNodes to map this parent
-          // collection's path to the "condensed" node, and retrieve
-          // it when doing a router.go().
-          const index = context.data.path.lastIndexOf("/");
-          if (index !== -1) self.condensedNodes[context.data.path] = context.data.path.substring(0, index);
-        }
-
-        // Groups are not selectable as there is no corresponding screen
-        return (typeof context.data.group === 'undefined');
+        // selectable is true by default
+        return context?.data?.selectable !== false;
       }.bind(this);
 
       this.beforeExpand = function (event) {
-        return self.navtreeManager.populateNode(event.detail.key);
+        // Switching the data provider causes a switch to
+        // "home" mode. A "signal" property was added to
+        // self.beanTree, during the processing of the
+        // dataProviderSelected signal. Check for that
+        // property here.
+        if (CoreUtils.isNotUndefinedNorNull(self.beanTree["signal"])) {
+          // Found it, so send signal to change the title from
+          // "Home" to whatever self.beanTree.label is.
+          viewParams.signaling.beanTreeChanged.dispatch(self.beanTree);
+          // Don't need the "signal" property anymore, so go
+          // ahead and remove it.
+          delete self.beanTree["signal"];
+        }
+
+        // Expand the node the user clicked on.
+        self.busyContext.whenReady(10000).then(() => {
+          const resolve = self.addBusyState();
+
+          self.navtreeManager.expandNode(event.detail.key).finally(() => {
+            resolve();
+          });
+        });
       };
 
       this.onExpand = function (event) {
@@ -181,7 +257,7 @@ define(['jquery', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout-keyset', 'ojs/ojar
         // get displayed -- deleting and reading seems to get the UI to repaint
         self.expanded.delete([event.detail.key]);
         self.expanded.add([event.detail.key]);
-        
+
         self.perspectiveMemory.navtree.keySet = self.expanded;
         resizeNavTreeContainer();
       };
@@ -198,7 +274,9 @@ define(['jquery', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout-keyset', 'ojs/ojar
       }
 
       function getExpandedSet() {
-        if (self.perspectiveMemory.navtree.keySet === null) self.perspectiveMemory.navtree.keySet = new keySet.ObservableKeySet();
+        if (self.perspectiveMemory.navtree.keySet === null) {
+          self.perspectiveMemory.navtree.keySet = new keySet.ObservableKeySet();
+        }
         return self.perspectiveMemory.navtree.keySet;
       }
     }

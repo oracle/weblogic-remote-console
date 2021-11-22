@@ -10,8 +10,8 @@ define(['ojs/ojcore', '../../core/utils', 'ojs/ojlogger'],
   function(oj, CoreUtils, Logger) {
     const i18n = {
       "tooltips": {
-        "collapse": {"value": "Collapse"},
-        "expand": {"value": "Expand"}
+        "collapse": {"value": oj.Translations.getTranslatedString("wrc-common.tooltips.collapse.value")},
+        "expand": {"value": oj.Translations.getTranslatedString("wrc-common.tooltips.expand.value")}
       }
     };
 
@@ -23,8 +23,8 @@ define(['ojs/ojcore', '../../core/utils', 'ojs/ojlogger'],
       a.setAttribute("on-click", "[[sectionExpanderClickHandler]]");
       a.classList.add("cfe-sections-form-layout-title-arrow");
       const arrow = document.createElement('span');
-      arrow.classList.add("oj-component-icon", "oj-clickable-icon-nocontext", "oj-fwk-icon-arrow03-s");
-      arrow.setAttribute("title", oj.Translations.getTranslatedString("wrc-form-layouts.tooltips.collapse.value"));
+      arrow.classList.add("oj-component-icon", "oj-clickable-icon-nocontext", "oj-collapsible-open-icon");
+      arrow.setAttribute("title", i18n.tooltips.collapse.value);
       arrow.setAttribute("data-section-id", sectionId);
       a.append(arrow);
       const span = document.createElement('span');
@@ -146,6 +146,11 @@ define(['ojs/ojcore', '../../core/utils', 'ojs/ojlogger'],
       return formLayout;
     }
 
+    function debugFlagsSliceCheck(properties) {
+      const filteredProperties = properties.filter(property => property.type === "boolean");
+      return (filteredProperties.length === properties.length);
+    }
+
   //public:
     return {
       /**
@@ -188,6 +193,10 @@ define(['ojs/ojcore', '../../core/utils', 'ojs/ojlogger'],
             const result = presentation[key];
             rtnval = (typeof result === 'boolean')
           }
+        }
+        else if (CoreUtils.isNotUndefinedNorNull(pdjData.createForm) && CoreUtils.isNotUndefinedNorNull(pdjData.createForm.presentation)) {
+          const presentation = pdjData.createForm.presentation;
+          rtnval = presentation[key];
         }
         return rtnval;
       },
@@ -234,12 +243,11 @@ define(['ojs/ojcore', '../../core/utils', 'ojs/ojlogger'],
        */
       createSectionedFormLayout: function (options, pdjTypes, rdjData, pdjData, populateCallback) {
         if (!this.hasFormLayoutSections(pdjData)) {
-          // Consumer didn't call the public
+          // The consumer didn't call the public
           // this.hasFormLayoutSections() function before
           // calling this method, or they ignored the return
-          // value. This function needs the PDJ to have a
-          // .sliceForm.sections property, so just throw a
-          // this.SectionsPropertyNotFoundError.
+          // value. We need the pdjData.sliceForm.sections
+          // property to be defined, so throw an Error.
           throw new this.SectionsPropertyNotFoundError("pdjData object did not contain a 'sections' property.");
         }
 
@@ -251,19 +259,23 @@ define(['ojs/ojcore', '../../core/utils', 'ojs/ojlogger'],
           populateCallback
         );
       },
-      sectionExpanderClickHandler: function(event) {
+      /**
+       *
+       * @param {HTMLElement} event
+       */
+      handleSectionExpanderClicked: function(event) {
         const sectionId = event.target.attributes["data-section-id"].value;
         const parentNode = document.getElementById(sectionId).parentNode;
-        if (event.target.classList.contains("oj-fwk-icon-arrow03-e")) {
-          event.target.classList.remove("oj-fwk-icon-arrow03-e");
-          event.target.classList.add("oj-fwk-icon-arrow03-s");
-          event.target.setAttribute("title", oj.Translations.getTranslatedString("wrc-form-layouts.tooltips.collapse.value"));
+        if (event.target.classList.contains("oj-collapsible-close-icon")) {
+          event.target.classList.remove("oj-collapsible-close-icon");
+          event.target.classList.add("oj-collapsible-open-icon");
+          event.target.setAttribute("title", i18n.tooltips.collapse.value);
           parentNode.style.display = "inline-block";
         }
         else {
-          event.target.classList.remove("oj-fwk-icon-arrow03-s");
-          event.target.classList.add("oj-fwk-icon-arrow03-e");
-          event.target.setAttribute("title", oj.Translations.getTranslatedString("wrc-form-layouts.tooltips.expand.value"));
+          event.target.classList.remove("oj-collapsible-open-icon");
+          event.target.classList.add("oj-collapsible-close-icon");
+          event.target.setAttribute("title", i18n.tooltips.expand.value);
           parentNode.style.display = "none";
         }
       }

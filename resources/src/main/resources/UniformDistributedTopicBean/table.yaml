@@ -7,17 +7,6 @@ displayedColumns:
 - name: "Name"
 - name: "JNDIName"
 
-helpTasks:
-- "jms_modules/quotas/ConfigureQuotas"
-- "jms_modules/templates/ConfigureJMSTemplates"
-- "jms_modules/destination_keys/ConfigureDestinationKeys"
-- "jms_modules/topics/ConfigureTopics"
-- "jms_modules/queues/ConfigureQueues"
-- "jms_modules/connection_factories/ConfigureConnectionFactories"
-- "jms_modules/distributed_topics/ConfigureDistributedTopics"
-- "jms_modules/distributed_queues/ConfigureDistributedQueues"
-- "jms_modules/foreign_servers/ConfigureForeignServers"
-- "jms_modules/store_and_forward/ConfigureJMSSAF"
 helpTopics:
 - label: "Configuring Basic JMS System Resources"
   href: "jmsad/basic_config.html"

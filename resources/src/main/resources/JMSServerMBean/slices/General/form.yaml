@@ -34,10 +34,6 @@ advancedProperties:
 - name: "PagingIoBufferSize"
 - name: "PagingMaxFileSize"
 - name: "PagingBlockSize"
-helpTasks:
-- "jms_modules/modules/ConfigureJMSModules"
-- "stores/ConfigureStores"
-- "jms_modules/templates/ConfigureJMSTemplates"
 helpTopics:
 - label: "Configuring Basic JMS System Resources"
   href: "jmsad/basic_config.html"

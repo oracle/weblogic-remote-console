@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -7,15 +7,10 @@ introductionHTML: >
   credentials.</p>
 
 properties:
-- name: "CredentialMappingEnabled"
-- name: "IdentityBasedConnectionPoolingEnabled"
-- name: "OracleProxySession"
-- name: "UseDatabaseCredentials"
-helpTasks:
-- "jdbc/jdbc_datasources/ConfigureCredentialMappingForADataSource"
-- "jdbc/jdbc_datasources/EnableSetClientId"
-- "jdbc/jdbc_datasources/EnableIdentityBasedConnectionPooling"
-- "security/UseRolesAndPoliciesToSecureResources"
+- name: "JDBCResource.JDBCConnectionPoolParams.CredentialMappingEnabled"
+- name: "JDBCResource.JDBCConnectionPoolParams.IdentityBasedConnectionPoolingEnabled"
+- name: "JDBCResource.JDBCOracleParams.OracleProxySession"
+- name: "JDBCResource.JDBCOracleParams.UseDatabaseCredentials"
 helpTopics:
 - label: "Configuring the Harvester for Metric Collection "
   href: "wldfc/config_harvester.html"

@@ -6,14 +6,16 @@
  */
 "use strict";
 
-define(['./cbe-types'],
-  function(CbeTypes){
+define(['./cbe-types', './utils'],
+  function(CbeTypes, CfeUtils){
     return {
       extractBeanPath: function(url) {
         let beanPath;
-        const urlParts = url.split("/");
-        const index = urlParts.indexOf(CbeTypes.ServiceComponentType.DATA.name);
-        if (index !== -1) beanPath = urlParts.slice(index + 1).join("/");
+        if (CfeUtils.isNotUndefinedNorNull(url)) {
+          const urlParts = url.split("/");
+          const index = urlParts.indexOf(CbeTypes.ServiceComponentType.DATA.name);
+          if (index !== -1) beanPath = urlParts.slice(index + 1).join("/");
+        }
         return beanPath;
       }
     }

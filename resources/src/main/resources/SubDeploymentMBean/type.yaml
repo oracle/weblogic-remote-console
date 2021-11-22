@@ -2,12 +2,13 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
+- name: Targets
+  optionsSources:
+    - Domain/Servers
+    - Domain/Clusters
+    - Domain/JMSServers
+    - Domain/SAFAgents
+children:
 - name: SubDeployments
   label: Subdeployment
 
-- name: Targets
-  optionsSources:
-    - /Servers
-    - /Clusters
-    - /JMSServers
-    - /SAFAgents

@@ -24,7 +24,7 @@ properties:
 - name: SendServerHeaderEnabled
   label: Send Server Header
 
-- name: LogFileFormat
+- name: WebServerLog.LogFileFormat
   label: Format
   helpSummaryHTML: >
     <p>This specifies the format of the HTTP log file. Both formats
@@ -32,7 +32,7 @@ properties:
     directives in the log file to customize the information that the server
     records.</p>
 
-- name: LogTimeInGMT
+- name: WebServerLog.LogTimeInGMT
   helpSummaryHTML: >
     <p>Specifies whether the time stamps for HTTP log messages are in
     Greenwich Mean Time (GMT) regardless of the local time zone that the

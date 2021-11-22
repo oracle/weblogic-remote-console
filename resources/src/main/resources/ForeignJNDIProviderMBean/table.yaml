@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page lists foreign JNDI providers that have been created in
@@ -10,9 +10,6 @@ displayedColumns:
 - name: "ProviderURL"
 - name: "User"
 - name: "Targets"
-helpTasks:
-- "jndi/ManageForeignJNDI"
-- "jndi/ConfigureForeignJNDIProvider"
 helpTopics:
 - label: "Using the Replicated Store "
   href: "wlexa/rs.html"

@@ -1,8 +1,12 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
 - name: JNDINames
+  # WIP - really, this is correct and the other places should be removed,
+  # but let's leave it here and there so that we can test it
+  presentation:
+    inlineFieldHelp: "e.g. jdbc/myDS"
   helpSummaryHTML: >
     <p>The JNDI path to where this data source is bound. By default, the
     JNDI name is the name of the data source.</p>

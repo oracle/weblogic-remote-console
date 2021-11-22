@@ -9,13 +9,29 @@
 define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../core/runtime', './fields', './utils', '../../core/types', '../../core/utils', '../../core/cfe-errors','ojs/ojlogger'],
   function (oj, ko, CbeDataManager, Runtime, PageDefinitionFields, PageDefinitionUtils, CoreTypes,  CoreUtils, CfeErrors, Logger) {
     function PageDefinitionActions(pdjActions, rdjData) {
-      if (typeof pdjActions !== "undefined" && typeof rdjData !== "undefined") {
-        this.pdjData = {actions: convertPDJActions(pdjActions)};
+      if (CoreUtils.isNotUndefinedNorNull(pdjActions) && CoreUtils.isNotUndefinedNorNull(rdjData)) {
+        this.pdjData = {actions: pdjActions};
         this.rdjData = rdjData;
+        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[0]) && this.pdjData.actions[0].name === "startActions") {
+          this.pdjData.actions[0].name = "start";
+        }
+        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[1]) && this.pdjData.actions[1].name === "stopActions") {
+          this.pdjData.actions[1].name = "stop";
+        }
+        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[2]) && this.pdjData.actions[2].name === "suspendActions") {
+          this.pdjData.actions[2].name = "suspend";
+          this.pdjData.actions[2].actions[0].name = "gracefulSuspend";
+        }
+        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[3]) && this.pdjData.actions[3].name === "shutdownActions") {
+          this.pdjData.actions[3].name = "shutdown";
+        }
+
+        const filteredActions = getSupportedActionsByState.call(this, {value: "SHUTDOWN"});
+        Logger.info(`[PDJACTIONS] getSupportedActionsByState({value: "SHUTDOWN"})=${JSON.stringify(filteredActions)}`);
       }
       else {
-        if (typeof pdjActions === "undefined") Logger.warn(`[PDJACTIONS] Constructor parameter is undefined: pdjActions`);
-        if (typeof rdjData === "undefined") Logger.warn(`[PDJACTIONS] Constructor parameter is undefined: rdjData`);
+        if (CoreUtils.isUndefinedOrNull(pdjActions)) Logger.log(`[PDJACTIONS] Constructor parameter is undefined: pdjActions`);
+        if (CoreUtils.isUndefinedOrNull(rdjData)) Logger.log(`[PDJACTIONS] Constructor parameter is undefined: rdjData`);
       }
     }
 
@@ -42,49 +58,49 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
       "stop": {iconFile: "action-stop-icon-blk_24x24", visible: true, disabled: false}
     });
 
-    function convertPDJActions(pdjActions) {
-      let actions = [];
-      pdjActions.forEach((action) => {
-        if (typeof action.actions !== "undefined") {
-          const action1 = {name: action.name, label: action.label, asynchronous: (typeof action.asynchronous !== "undefined" ? action.asynchronous : false), actions: []};
-          action.actions.forEach((action2) => {
-            action1.actions.push({name: action2.name, label: action2.label});
-          });
-          actions.push(action1);
-        }
-        else {
-          action.asynchronous = (typeof action.asynchronous !== "undefined" ? action.asynchronous : false);
-          actions.push(action);
-        }
-      });
-
-      return actions;
-    }
-
+    /**
+     *
+     * @param {string} action
+     * @returns {{data: [{actions: [{name: string, label: string, asynchronous: boolean, usedIf: {property: string, values: [string]}}], identity: {value: {label: string, resourceData: string}}}]}}
+     * @private
+     * @example
+     * convertedData.data = [
+     * {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "ManagedServer1", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/ManagedServer1"}}},
+     * {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "ManagedServer2", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/ManagedServer2"}}},
+     * {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "ManagedServer3", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/ManagedServer3"}}},
+     * {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "server1", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/server1"}}},
+     * {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "server2", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/server2"}}}
+     * ]
+     */
     function getConvertedData(action) {
-      const convertedData = {data: []};
-      let data = [];
-      data = this.rdjData.data.filter(data1 => data1.actions.map(action1 => action1.name).indexOf(action) !== -1);
-      const normal = getFilteredData(data);
-      data = this.rdjData.data.filter(data1 => typeof data1.actions.actions !== "undefined" && data1.actions.actions.map(action1 => action1.name).indexOf(action) !== -1);
-      const variant = getFilteredData(data);
-      convertedData.data = normal.concat(variant);
+      const convertedData = {};
+      const filteredData = getFilteredData.call(this, this.rdjData.data);
+      convertedData["data"] = filteredData.filter(data => data.actions.map(action1 => action1.name).indexOf(action) !== -1);
       return convertedData;
     }
 
+    /**
+     *
+     * @param {[{Name: {value: string}, State: {value: string}, Type: {value: string}, identity: {value: {label: string, resourceData: string}}}]} data
+     * @returns {[{actions: [Array], identity: {value: {label: string, resourceData: string}}}]}
+     */
     function getFilteredData(data) {
-      let filteredData = [];
+      let filteredData = [], filteredActions;
       if (data.length > 0) {
-        let actions;
-        data.forEach((entry) => {
-          if (typeof entry.actions.actions !== "undefined") {
-            actions = entry.actions.actions ;
+        for (let i = 0; i < data.length; i++) {
+          if (CoreUtils.isNotUndefinedNorNull(data[i].State)) {
+            filteredActions = getSupportedActionsByState.call(this, data[i].State);
+            if (filteredActions.length > 0) {
+              filteredData.push({actions: filteredActions, identity: data[i].identity});
+            }
           }
           else {
-            actions = entry.actions;
+            filteredActions = getAllActions.call(this);
+            if (filteredActions.length > 0) {
+              filteredData.push({actions: filteredActions, identity: data[i].identity});
+            }
           }
-          filteredData.push({identity: entry.identity, actions: actions});
-        });
+        }
       }
       return filteredData;
     }
@@ -92,8 +108,8 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
     function getTargetMBean() {
       let targetMBean;
       if (this.hasActions()) {
-        const pageDefinition = this.rdjData.pageDefinition;
-        targetMBean = pageDefinition.substring(0,pageDefinition.indexOf("?"));
+        const pageDescription = this.rdjData.pageDescription;
+        targetMBean = pageDescription.substring(pageDescription.lastIndexOf('/') + 1, pageDescription.indexOf("?"));
       }
       return targetMBean;
     }
@@ -102,44 +118,119 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
       let filteredData = [];
       if (this.hasActions()) {
         const convertedData = getConvertedData.call(this, action);
-        filteredData = convertedData.data.filter(data1 => data1.actions.map(action1 => action1.name).indexOf(action) !== -1);
+        // convertedData.data is an array that should
+        // look something like the following:
+        //
+        // [
+        //  {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "ManagedServer1", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/ManagedServer1"}}},
+        //  {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "ManagedServer2", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/ManagedServer2"}}},
+        //  {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "ManagedServer3", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/ManagedServer3"}}},
+        //  {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "server1", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/server1"}}},
+        //  {actions: [{name: "start", label: "Start", asynchronous: true, usedIf: {property: "State", values: ["SHUTDOWN", "ACTIVATE_LATER", "FAILED_MIGRATABLE", "FAILED_NOT_RESTARTABLE", "UNKNOWN"]}}], identity: {value: {label: "server2", resourceData: "/api/1631352147961/domainRuntime/data/DomainRuntime/ServerLifeCycleRuntimes/server2"}}}
+        // ]
+        //
+        filteredData = convertedData.data.filter(data => data.actions.map(action1 => action1.name).indexOf(action) !== -1);
       }
       return filteredData;
     }
 
+    /**
+     * Returns the number of items in the ``this.rdjData.data`` array, which are currently in a ``State`` that supports performing the specified ``action``.
+     * @param {string} action
+     * @returns {number}
+     * @private
+     */
     function getDataActionsCount(action) {
-      const filteredData = getDataByAction.call(this, action);
-      return filteredData.length;
+      let filteredData = getDataByAction.call(this, action);
+      let count = filteredData.length;
+      if (count === 0) {
+        const filteredActions = this.pdjData.actions.filter(action1 => action1.name === action && CoreUtils.isNotUndefinedNorNull(action1.actions));
+        for (let i = 0; i < filteredActions.length; i++) {
+          for (let j = 0; j < filteredActions[i].actions.length; j++){
+            filteredData = getDataByAction.call(this, filteredActions[i].actions[j].name);
+            count += (filteredData.length > 0 ? 1 : 0);
+          }
+        }
+      }
+      return count;
     }
 
+    /**
+     *
+     * @param {[{Name: {value: string}, State: {value: string}, Type: {value: string}, identity: {value: {label: string, resourceData: string}}}]} data
+     * @return {object}
+     * @private
+     */
     function getDataActionsMap(data) {
-      let actionsMap = {};
-      data.actions.forEach((action1) => {
-        if (typeof action1.actions === "undefined") {
-          actionsMap[action1.name] = action1.resourceData;
-        }
-        else {
-          action1.actions.forEach((action2) => {
-            actionsMap[action2.name] = action2.resourceData;
-          });
-        }
-      });
+      const actionsMap = {};
+      for (let i = 0; i < data.actions.length; i++) {
+        actionsMap[data.actions[i].name] = data.identity;
+      }
       return actionsMap;
     }
 
     function getActionsDialogData(action) {
-      let options = [], urls = [];
-      if (this.hasActions()) {
-        const filteredData = getDataByAction.call(this, action);
-        filteredData.forEach((data) => {
-          const actionsMap = getDataActionsMap(data);
-          if (Object.keys(actionsMap).length > 0) {
-            options.push(data.identity);
-            urls.push({path: PageDefinitionUtils.pathEncodedFromIdentity(data.identity), url: actionsMap[action]});
+        let options = [], urls = [];
+        if (this.hasActions()) {
+          const filteredData = getDataByAction.call(this, action);
+          // Workaround for CBE enhancement to use "gracefulSuspend"
+          // instead of "suspend", for child action of the "suspend"
+          // parent action.
+          const action1 = (action === "gracefulSuspend" ? "suspend" : action);
+          for (let i = 0; i < filteredData.length; i++) {
+            const actionsMap = getDataActionsMap(filteredData[i]);
+            if (Object.keys(actionsMap).length > 0) {
+              options.push(actionsMap[action]);
+              urls.push({path: actionsMap[action].value.resourceData, url: `${actionsMap[action].value.resourceData}?action=${action1}`});
+            }
           }
-        });
+        }
+        return {options: options, urls: urls};
+    }
+
+    /**
+     *
+     *@returns {[any]}
+     *@private
+     */
+    function getAllActions() {
+      function traverseActions(actions, filteredActions) {
+        for (let i = 0; i < actions.length; i++) {
+          if (CoreUtils.isNotUndefinedNorNull(actions[i].actions)) {
+            for (let j = 0; j < actions[i].actions.length; j++) {
+              filteredActions.push(actions[i].actions[j]);
+            }
+            traverseActions(actions[i].actions, filteredActions);
+          }
+        }
+        return filteredActions;
       }
-      return {options: options, urls: urls};
+
+      return traverseActions([...this.pdjData.actions], []);
+    }
+
+    /**
+     *@param {string} state
+     *@returns {[any]}
+     *@private
+     *@example
+     * const state = "RUNNING";
+     * const filteredActions = getSupportedActionsByState(state);
+     */
+    function getSupportedActionsByState(state) {
+      function traverseActions(actions, filteredActions) {
+        for (let i = 0; i < actions.length; i++) {
+          if (CoreUtils.isNotUndefinedNorNull(actions[i].actions)) {
+            traverseActions(actions[i].actions, filteredActions);
+          }
+          if (CoreUtils.isNotUndefinedNorNull(actions[i].usedIf) && actions[i].usedIf.property === "State" && actions[i].usedIf.values.includes(state.value)) {
+            filteredActions.push(actions[i]);
+          }
+        }
+        return filteredActions;
+      }
+
+      return traverseActions([...this.pdjData.actions], []);
     }
 
     function getButtonIconFile(actionName) {
@@ -152,13 +243,13 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
 
     function createButton(action) {
       const button = {html: document.createElement("oj-button")};
-      button["id"] = (typeof action.actions === "undefined" ? action.label : action.name + "MenuLauncher");
+      button["id"] = (CoreUtils.isUndefinedOrNull(action.actions) ? action.label : `${action.name}MenuLauncher`);
       button["name"] = action.name;
       button["disabled"] = false;
-      button["asynchronous"] = action.asynchronous;
-      button.html.setAttribute("id", button.id);
+      button["asynchronous"] = true;  //MLW action.asynchronous;
+      button.html.setAttribute("id", (CoreUtils.isUndefinedOrNull(action.actions) ? button.name : button.id));
       button.html.setAttribute("data-action", button.name);
-      button.html.setAttribute("on-oj-action", (typeof action.actions === "undefined" ? "[[actionButtonClicked]]" : "[[launchActionMenu]]"));
+      button.html.setAttribute("on-oj-action", (CoreUtils.isUndefinedOrNull(action.actions) ? "[[actionButtonClicked]]" : "[[launchActionMenu]]"));
       button.html.setAttribute("chroming", "borderless");
       button.html.setAttribute("disabled", "[[actionButtons.buttons." + button.name + ".disabled]]");
       const img = document.createElement("img");
@@ -183,7 +274,7 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
       menu.setAttribute("open-options.launcher", action.name + "MenuLauncher");
       action.actions.forEach((variant) => {
         option = document.createElement("oj-option");
-        option.setAttribute("id", action.label);
+        option.setAttribute("id", variant.name);
         option.setAttribute("value", variant.name);
         option.setAttribute("data-action", action.name);
         const span = document.createElement("span");
@@ -197,16 +288,16 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
   //public:
     PageDefinitionActions.prototype = {
       hasActions: function () {
-        return (typeof this.pdjData !== "undefined" && typeof this.rdjData !== "undefined");
+        return (CoreUtils.isNotUndefinedNorNull(this.pdjData) && CoreUtils.isNotUndefinedNorNull(this.pdjData.actions));
       },
 
       hasChosenAction: function (action) {
         let actions = [];
         if (this.hasActions()) {
           const filteredData = getDataByAction.call(this, action);
-          filteredData.forEach((data) => {
-            actions.push(data.identity);
-          });
+          for (let i = 0; i < filteredData.length; i++) {
+            actions.push(filteredData[i].identity);
+          }
         }
         return (actions.length > 0);
       },
@@ -215,24 +306,24 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
         const actionButtons = {html: document.createElement("p"), buttons: []};
         if (this.hasActions()) {
           actionButtons.html = document.createElement("div");
-          this.pdjData.actions.forEach((action) => {
-            const button = createButton(action);
+          for (let i = 0; i < this.pdjData.actions.length; i++) {
+            const button = createButton(this.pdjData.actions[i]);
             actionButtons.html.append(button.html);
             actionButtons.buttons[button.name] = {
               id: button.id,
               disabled: ko.observable(button.disabled),
               asynchronous: button.asynchronous
             };
-            if (typeof action.actions !== "undefined") {
-              const menu = createMenu(action);
+            if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[i].actions)) {
+              const menu = createMenu(this.pdjData.actions[i]);
               actionButtons.html.append(menu);
             }
-          });
+          }
         }
         return actionButtons;
       },
 
-      createActionsDialog: function (action) {
+      createActionsDialog: function (id) {
         const formLayout = document.createElement("oj-form-layout");
         formLayout.setAttribute("label-edge", "start");
         let results = {
@@ -243,7 +334,7 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
         };
         if (this.hasActions()) {
           let dataValues = {};
-          const dialogData = getActionsDialogData.call(this, action);
+          const dialogData = getActionsDialogData.call(this, id);
           dataValues[results.domElementId] = {options: dialogData.options};
 
           const multiSelect = PageDefinitionFields.createMultiSelect(dataValues, results.domElementId);
@@ -299,8 +390,19 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
        */
       performActionOnChosenItems: function (chosenItems, actionUrls) {
         function performAction(chosenItem, actionUrls) {
-          const path = PageDefinitionUtils.pathEncodedFromIdentity(chosenItem);
+          const path = chosenItem.value.resourceData;
           const uri = actionUrls.find(url => url.path === path);
+          if (CoreUtils.isUndefinedOrNull(uri.url)) {
+            Logger.error(`Unable to perform action because url for '${PageDefinitionUtils.displayNameFromIdentity(chosenItem)}' was undefined! path=${path}`);
+            return {
+              succeeded: false,
+              data: {
+                severity: "error",
+                summary: i18n.messages.action.unableToPerform.summary,
+                detail: i18n.labels.cannotDetermineExactCause.value
+              }
+            };
+          }
           return CbeDataManager.postActionData(uri.url)
             .then(reply => {
               return {
@@ -314,13 +416,20 @@ define(['ojs/ojcore', 'knockout', '../data-management/cbe-data-manager', '../../
                   succeeded: false
                 };
                 if (response.body.messages.length > 0) {
-                  reply["messages"] = response.body.messages;
+                  const message = response.body.messages[0].message;
+                  if (message.indexOf("Read timed out") !== -1) {
+                    reply["succeeded"] = true;
+                    reply["data"] = {actionUrl: null};
+                  }
+                  else {
+                    reply["messages"] = response.body.messages;
+                  }
                 }
                 else {
                   reply["data"] = {
                     severity: "error",
-                      summary: i18n.messages.action.unableToPerform.summary,
-                      detail: i18n.messages.action.unableToPerform.detail.replace("{1}", PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace("{0}", response.transport.statusText) + " " + oj.Translations.getTranslatedString("wrc-message-displaying.messages.seeJavascriptConsole.detail")
+                    summary: i18n.messages.action.unableToPerform.summary,
+                    detail: i18n.messages.action.unableToPerform.detail.replace("{1}", PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace("{0}", response.transport.statusText) + " " + oj.Translations.getTranslatedString("wrc-message-displaying.messages.seeJavascriptConsole.detail")
                   };
                 }
                 return reply;

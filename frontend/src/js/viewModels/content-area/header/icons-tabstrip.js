@@ -45,9 +45,8 @@ define(['knockout', 'ojs/ojmodule-element-utils', '../../../apis/message-display
       this.tabOverlayModuleConfig = ko.observable({ view: [], viewModel: null });
       // END: Declare instance variables used in the ViewModel's view
 
-      /**
-       * Callback for the JET lifecycle method that is called when the HTML (in the ViewModel's view, or generated programmatically) is added to the DOM
-       */
+      this.signalBindings = [];
+
       this.connected = function() {
         // Subscribe to the change event for the tabOverlayVisible
         // instance variable, which is a knockout observable.
@@ -60,6 +59,38 @@ define(['knockout', 'ojs/ojmodule-element-utils', '../../../apis/message-display
           self.ancillaryContentAreaToggleVisible(visible);
         });
 
+        let binding = viewParams.signaling.tabStripTabSelected.add((source, tabId, visibility) => {
+          showTabStripContent(tabId, visibility);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.navtreeToggled.add((visible) => {
+          if (visible) setAncillaryContentAreaVisibility(!visible);
+        });
+
+        self.signalBindings.push(binding);
+/*
+//MLW
+        binding = viewParams.signaling.modeChanged.add((newMode) => {
+          if (newMode === CoreTypes.Console.RuntimeMode.DETACHED.name) {
+            setAncillaryContentAreaVisibility(false);
+            self.ancillaryContentAreaToggleVisible(false);
+          }
+        });
+
+        self.signalBindings.push(binding);
+*/
+      }.bind(this);
+
+      this.disconnected = function () {
+        // Detach all signal "add" bindings
+        self.signalBindings.forEach(binding => { binding.detach(); });
+
+        // Reinitialize module-scoped array for storing
+        // signal "add" bindings, so it can be GC'd by
+        // the JS engine.
+        self.signalBindings = [];
       }.bind(this);
 
       /**
@@ -93,7 +124,7 @@ define(['knockout', 'ojs/ojmodule-element-utils', '../../../apis/message-display
             parentRouter: viewParams.parentRouter,
             signaling: viewParams.signaling,
             onTabStripContentChanged: changedTabStripContent,
-            onTabStripContentHidden: setAncillaryContentAreaVisibility
+            onTabStripContentVisible: setAncillaryContentAreaVisibility
           }
         })
           .then( function(moduleConfig) {
@@ -179,21 +210,6 @@ define(['knockout', 'ojs/ojmodule-element-utils', '../../../apis/message-display
           });
         }
       }
-
-      viewParams.signaling.tabStripTabSelected.add((source, tabId, visibility) => {
-        showTabStripContent(tabId, visibility);
-      });
-
-      viewParams.signaling.navtreeToggled.add((visible) => {
-        if (visible) setAncillaryContentAreaVisibility(!visible);
-      });
-
-      viewParams.signaling.modeChanged.add((newMode) => {
-        if (newMode === "DETACHED") {
-          setAncillaryContentAreaVisibility(false);
-          self.ancillaryContentAreaToggleVisible(false);
-        }
-      });
 
       function computeAncillaryContentAreaToggleVisible() {
         return new Promise((resolve) => {

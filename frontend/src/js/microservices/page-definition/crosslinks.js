@@ -6,8 +6,8 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'ojs/ojlogger', './utils'],
-  function (oj, Logger, PageDefinitionUtils) {
+define(['ojs/ojcore', './utils', '../../core/utils', 'ojs/ojlogger'],
+  function (oj, PageDefinitionUtils, CoreUtils, Logger) {
 
     const i18n = {
       messages: {
@@ -18,34 +18,31 @@ define(['ojs/ojcore', 'ojs/ojlogger', './utils'],
       }
     };
 
-    function getRDJNavigationData(navigation, breadcrumbsLength) {
-      const data = [];
-      const i = breadcrumbsLength;
-      if (i > 0) {
-        navigation.forEach((item) => {
-          data.push({
-            name: PageDefinitionUtils.displayNameFromIdentity(item.identity).replaceAll(" ", ""),
-            label: PageDefinitionUtils.displayNameFromIdentity(item.identity),
-            descriptionHTML: item.descriptionHTML,
-            message: "",
-            identity: item.identity
-          });
-        });
+    function getBeanTreeType(resourceData, perspectiveId) {
+      let beanTreeType;
+      if (CoreUtils.isNotUndefinedNorNull(resourceData)) {
+        const pathSegments = resourceData.split("/").filter(e => e);
+        const nameSwitch = (value) => ({
+          "edit": (perspectiveId !== "modeling" ? "configuration" : "modeling"),
+          "serverConfig": "view",
+          "domainRuntime": "monitoring"
+        })[value];
+        beanTreeType = nameSwitch(pathSegments[2]);
       }
-      return data;
+      return beanTreeType;
     }
 
-    function getRDJLinksData(links, breadcrumbsLength) {
+    function getRDJLinksData(links, perspectiveId, breadcrumbsLength) {
       const data = [];
-      const i = breadcrumbsLength;
-      if (i > 0) {
+      if (breadcrumbsLength > 0) {
         links.forEach((item) => {
           data.push({
-            name: PageDefinitionUtils.displayNameFromIdentity(item.resourceIdentity).replaceAll(" ", ""),
+            name: item.label,
             label: item.label,
             descriptionHTML: "<p/>",
-            message: (typeof item.notFoundMessage !== "undefined" ? item.notFoundMessage : i18n.messages.noNotFoundMessage.detail.replace("{0}", item.label)),
-            identity: item.resourceIdentity
+            message: (CoreUtils.isNotUndefinedNorNull(item.notFoundMessage) ? item.notFoundMessage : i18n.messages.noNotFoundMessage.detail.replace("{0}", item.label)),
+            identity: item.resourceData,
+            beanTreeType: getBeanTreeType(item.resourceData, perspectiveId)
           });
         });
       }
@@ -54,16 +51,10 @@ define(['ojs/ojcore', 'ojs/ojlogger', './utils'],
 
   //public:
     return {
-      getBreadcrumbsLinksData: function (rdjData, breadcrumbsLength) {
-        return new Promise(function (resolve) {
-          const data1 = (typeof rdjData.navigation === "undefined" ? [] : getRDJNavigationData(rdjData.navigation, breadcrumbsLength));
-          const data2 = (typeof rdjData.links === "undefined" ? [] : getRDJLinksData(rdjData.links, breadcrumbsLength));
-          if (data1.length > 0 && data2.length > 0) {
-            data1.push({
-              name: "---"
-            });
-          }
-          resolve(data1.concat(data2));
+      getBreadcrumbsLinksData: function (rdjData, perspectiveId, breadcrumbsLength) {
+        return new Promise((resolve) => {
+          const data = getRDJLinksData(rdjData.links, perspectiveId, breadcrumbsLength);
+          resolve(data);
         });
       }
     };

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Use this page to create and configure policies and actions for this
@@ -6,12 +6,9 @@ introductionHTML: >
 
 properties:
   - name: "Name"
-  - name: "Severity"
-  - name: "LogWatchSeverity"
-  - name: "Enabled"
-helpTasks:
-  - "diagnostics/ConfigureDiagnosticModules"
-  - "diagnostics/ConfigurePoliciesAndActions"
+  - name: "WLDFResource.WatchNotification.Severity"
+  - name: "WLDFResource.WatchNotification.LogWatchSeverity"
+  - name: "WLDFResource.WatchNotification.Enabled"
 helpTopics:
   - label: "Elastic Actions"
     href: "elast/elastic_actions.html#ELAST514"

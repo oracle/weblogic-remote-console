@@ -4,7 +4,7 @@ properties:
 
 - name: ServerTemplate
   optionsSources:
-    - /ServerTemplates
+    - Domain/ServerTemplates
   helpHTML: >
     <p>The server template used to configure the dynamic servers in this
     cluster. Only templates that specify this cluster are valid choices.</p>

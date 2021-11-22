@@ -29,10 +29,6 @@ advancedProperties:
 - name: "MessagingPerformancePreference"
 - name: "UnitOfWorkHandlingPolicy"
 - name: "IncompleteWorkExpirationTime"
-helpTasks:
-- "jms_modules/queues/ConfigureQueues"
-- "jms_modules/destination_keys/ConfigureDestinationKeys"
-- "jms_modules/distributed_queues/ConfigureDistributedQueues"
 helpTopics:
 - label: "Configuring Messaging "
   href: "jmsad/basic_config.html"

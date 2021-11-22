@@ -1,5 +1,5 @@
 name: WebLogic Remote Console
-version: '1.1.0'
+version: '2.0.0'
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
   version: '1.0'
@@ -36,6 +36,8 @@ console-backend:
       path: /about
     - id: connecting
       path: /connection
+    - id: providers
+      path: /providers
 settings:
   logging:
     defaultLevel: INFO
@@ -48,3 +50,27 @@ settings:
     light:
       - '#dcd6d1'
       - '#b6a29a'
+  projectManagement:
+    startup:
+      config: "config/wrc-projects.yaml"
+      task: choose
+    #      project:
+    #        name: "(Unnamed Project)"
+    #        isDefault: true
+    #        dataProviders:
+    #          - name: Default AdminServer Connection
+    #            type: adminserver
+    #            username: weblogic
+    #            url: "http://localhost:7001"
+    newModel:
+      domain:
+        fileContents: |
+          domainInfo:
+            AdminUserName: '@@PROP:ADMIN_USERNAME@@'
+            AdminPassword: '@@PROP:ADMIN_PASSWORD@@'
+          topology:
+            Server:
+              AdminServer:
+      sparse:
+        fileContents: |
+          domainInfo:

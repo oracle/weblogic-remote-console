@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -8,13 +8,11 @@ introductionHTML: >
 
 properties:
 - name: "Name"
-- name: "LoginURL"
-- name: "Username"
-- name: "Password"
+- name: "SAFLoginContext.LoginURL"
+- name: "SAFLoginContext.Username"
+- name: "SAFLoginContext.Password"
 - name: "CompressionThreshold"
 - name: "ReplyToSAFRemoteContextName"
-helpTasks:
-- "jms_modules/store_and_forward/remote_context/ConfigureRemoteContext"
 helpTopics:
 - label: "Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server "
   href: "wllog/index.html"

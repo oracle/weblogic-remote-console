@@ -6,11 +6,8 @@ introductionHTML: >
   for destinations that are based on this template.</p>
 
 properties:
-- name: "MessageLoggingEnabled"
-- name: "MessageLoggingFormat"
-helpTasks:
-- "jms_servers/ConfigureJMSServerLogging"
-- "logging/ConfigureAndViewLogs"
+- name: "MessageLoggingParams.MessageLoggingEnabled"
+- name: "MessageLoggingParams.MessageLoggingFormat"
 helpTopics:
 - label: "Managing Your Applications "
   href: "jmspg/manage_apps.html"

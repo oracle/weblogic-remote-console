@@ -1,9 +1,9 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
 - label: Min Threads Constraint Configurations
-  resourceData: configuration/data/Domain/MinThreadsConstraints
+  resourceData: Domain/MinThreadsConstraints
 instanceLinks:
 - label: Min Threads Constraint Configuration
-  resourceData: configuration/data/Domain/MinThreadsConstraints/<MinThreadsConstraintRuntime>
+  resourceData: Domain/MinThreadsConstraints/<MinThreadsConstraintRuntime>

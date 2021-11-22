@@ -7,20 +7,15 @@ introductionHTML: >
   </p>
 
 properties:
-  - name: "FileName"
-  - name: "RotationType"
-  - name: "FileMinSize"
-  - name: "RotationTime"
-  - name: "FileTimeSpan"
-  - name: "NumberOfFilesLimited"
-  - name: "FileCount"
-  - name: "LogFileRotationDir"
-  - name: "RotateLogOnStartup"
-helpTasks:
-  - "saf_agents/ConfigureSAFAgentLogging"
-  - "jms_modules/store_and_forward/imported_destinations/queues/ConfigureSAFQueueLogging"
-  - "jms_modules/store_and_forward/imported_destinations/topics/ConfigureTopicLogging"
-  - "logging/ConfigureAndViewLogs"
+  - name: "JMSSAFMessageLogFile.FileName"
+  - name: "JMSSAFMessageLogFile.RotationType"
+  - name: "JMSSAFMessageLogFile.FileMinSize"
+  - name: "JMSSAFMessageLogFile.RotationTime"
+  - name: "JMSSAFMessageLogFile.FileTimeSpan"
+  - name: "JMSSAFMessageLogFile.NumberOfFilesLimited"
+  - name: "JMSSAFMessageLogFile.FileCount"
+  - name: "JMSSAFMessageLogFile.LogFileRotationDir"
+  - name: "JMSSAFMessageLogFile.RotateLogOnStartup"
 helpTopics:
   - label: "Troubleshooting WebLogic SAF"
     href: "safmg/troubleshoot.html"

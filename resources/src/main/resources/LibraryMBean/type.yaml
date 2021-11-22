@@ -4,14 +4,22 @@ properties:
 
 - name: Targets
   optionsSources:
-    - /Clusters
-    - /Servers
+    - Domain/Clusters
+    - Domain/Servers
 
 # SourcePath needs to be specified when creating a deployment
 - name: SourcePath
   required: true
   writable: createOnly
 
-collectionResourceClass: com.oracle.weblogic.console.backend.services.plugins.LibraryMBeanCollectionResource
-instanceResourceClass: com.oracle.weblogic.console.backend.services.plugins.LibraryMBeanCollectionChildResource
-createFormPropertiesMethod: weblogic.console.backend.driver.plugins.LibraryMBeanCustomizer.customizeCreateFormProperties
+- name: StagingMode
+  legalValues:
+  - value: null
+    label: default
+
+- name: PlanStagingMode
+  legalValues:
+  - value: null
+    label: default
+
+createResourceMethod: weblogic.remoteconsole.customizers.LibraryMBeanCustomizer.createResource

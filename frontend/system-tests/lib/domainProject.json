@@ -1,0 +1,1 @@
+{"name":"domainASProject","filename":"domainProject.json","isDefault":true,"dataProviders":[{"name":"slc15akv","type":"adminserver","url":"http://slc15akv:7001","username":"weblogic","password":"PASSWORD"},{"name":"1411LocalDomain","type":"adminserver","url":"http://localhost:7001","username":"weblogic","password":"PASSWORD"}]}

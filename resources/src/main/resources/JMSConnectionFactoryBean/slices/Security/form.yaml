@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,10 +6,7 @@ introductionHTML: >
   this JMS connection factory.</p>
 
 properties:
-- name: "AttachJMSXUserId"
-
-helpTasks:
-- "jms_modules/connection_factories/ConfigureConnectionFactories"
+- name: "SecurityParams.AttachJMSXUserId"
 
 helpTopics:
 - label: "Configuring Basic JMS System Resources"

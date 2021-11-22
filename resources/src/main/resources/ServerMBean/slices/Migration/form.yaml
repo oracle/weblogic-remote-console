@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -15,13 +15,6 @@ introductionHTML: >
 properties:
 - name: "AutoMigrationEnabled"
 - name: "CandidateMachines"
-helpTasks:
-- "startstop/StartAndStopServers"
-- "clusters/AssignServersToClusters"
-- "clusters/ConfigureClusterMigration"
-- "clusters/SpecifyClusterReplicationGroups"
-- "jms_servers/ConfigureJMSMigration"
-- "jta/ConfigureTRSMigration"
 helpTopics:
 - label: "Managing the Server Life Cycle "
   href: "wlstg/manage_servers.html"

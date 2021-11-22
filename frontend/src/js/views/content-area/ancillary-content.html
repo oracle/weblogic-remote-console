@@ -19,10 +19,10 @@
             </div>
             <div id="slideup-toggle">
               <oj-bind-if test="[[!ancillaryContentAreaVisible()]]">
-                <img data-bind="attr: {src: '../../images/' + i18n.icons.expand.iconFile + '.png'}"/>
+                <img data-bind="attr: {src: '../../images/' + i18n.icons.expand.iconFile + '.png', 'title': i18n.icons.expand.tooltip}"/>
               </oj-bind-if>
               <oj-bind-if test="[[ancillaryContentAreaVisible()]]">
-                <img data-bind="attr: {src: '../../images/' + i18n.icons.collapse.iconFile + '.png'}"/>
+                <img data-bind="attr: {src: '../../images/' + i18n.icons.collapse.iconFile + '.png', 'title': i18n.icons.collapse.tooltip}"/>
               </oj-bind-if>
             </div>
           </div>
@@ -35,15 +35,15 @@
           <div class="oj-flex-bar-end site-sideways-tabstrip">
             <oj-bind-for-each data="[[i18n.tabstrip.tabs]]" as="tab">
               <template>
-                <oj-bind-if test="[[tab.data.visible]]">
-                <span>
-                  <a href="#" tabindex="-1"
-                     on-click="[[tabstripButtonClickHandler]]"
-                  >
-                    <img data-bind="attr: {id: tab.data.id + '-tab', src: '../../images/' + tab.data.iconFile + '.png'}"/>
-                    <span :id="[[tab.data.id]]" data-bind="text: tab.data.label"></span>
-                  </a>
-                </span>
+                <oj-bind-if test="[[tab.data.visible()]]">
+                  <span>
+                    <a href="#" tabindex="-1"
+                       on-click="[[tabstripButtonClickHandler]]"
+                    >
+                      <img data-bind="attr: {id: tab.data.id + '-tab', src: '../../images/' + tab.data.iconFile + '.png'}"/>
+                      <span :id="[[tab.data.id]]" data-bind="text: tab.data.label"></span>
+                    </a>
+                  </span>
                 </oj-bind-if>
               </template>
             </oj-bind-for-each>

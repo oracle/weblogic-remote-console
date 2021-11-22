@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -7,25 +7,23 @@ introductionHTML: >
   settings for this server.</p>
 
 properties:
-- name: "DefaultWebAppContextRoot"
-- name: "PostTimeoutSecs"
-- name: "MaxPostSize"
-- name: "KeepAliveEnabled"
-- name: "KeepAliveSecs"
-- name: "HttpsKeepAliveSecs"
-- name: "FrontendHost"
-- name: "FrontendHTTPPort"
-- name: "FrontendHTTPSPort"
-- name: "WAPEnabled"
-- name: "ClientIpHeader"
-- name: "SendServerHeaderEnabled"
-- name: "AcceptContextPathInGetRealPath"
+- name: "WebServer.DefaultWebAppContextRoot"
+- name: "WebServer.PostTimeoutSecs"
+- name: "WebServer.MaxPostSize"
+- name: "WebServer.KeepAliveEnabled"
+- name: "WebServer.KeepAliveSecs"
+- name: "WebServer.HttpsKeepAliveSecs"
+- name: "WebServer.FrontendHost"
+- name: "WebServer.FrontendHTTPPort"
+- name: "WebServer.FrontendHTTPSPort"
+- name: "WebServer.WAPEnabled"
+- name: "WebServer.ClientIpHeader"
+- name: "WebServer.SendServerHeaderEnabled"
+- name: "WebServer.AcceptContextPathInGetRealPath"
 # deprecated - name: "MaxHTTPMessageSize"
 - name: "TunnelingEnabled"
 - name: "TunnelingClientPingSecs"
 - name: "TunnelingClientTimeoutSecs"
-helpTasks:
-- "channels/ConfigureHTTPProtocol"
 helpTopics:
 - label: "Configuring Network Resources "
   href: "cnfgd/network.html"

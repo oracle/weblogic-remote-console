@@ -92,6 +92,10 @@ define(
       };
 
       this.addAllToChosenButtonClick = function (event) {
+        if (self.readonly()) {
+          event.preventDefault();
+          return false;
+        }
         let removedItems = self.availableItems.removeAll();
         self.chosenItems.valueWillMutate();
         ko.utils.arrayPushAll(self.chosenItems(), [...removedItems]);
@@ -102,6 +106,10 @@ define(
       };
 
       this.addAllToAvailableButtonClick = function (event) {
+        if (self.readonly()) {
+          event.preventDefault();
+          return false;
+        }
         let removedItems = self.chosenItems.removeAll();
         self.availableItems.valueWillMutate();
         ko.utils.arrayPushAll(self.availableItems(), [...removedItems]);
@@ -109,6 +117,20 @@ define(
         self.checkedAvailableItems([]);
         self.checkedChosenItems([]);
         dispatchChosenItemsChangedEvent();
+      };
+
+      this.addNewChosenItem = function(newChosenItem) {
+        let existingItem = self.availableItems().find(item => item.label === newChosenItem.label);
+        if (typeof existingItem === "undefined") {
+          existingItem = self.chosenItems().find(item => item.label === newChosenItem.label);
+          if (typeof existingItem === "undefined") {
+            self.chosenItems.valueWillMutate();
+            self.chosenItems().push({value: JSON.stringify(newChosenItem), label: newChosenItem.label});
+            self.chosenItems.valueHasMutated();
+            self.checkedChosenItems([JSON.stringify(newChosenItem)]);
+            dispatchChosenItemsChangedEvent();
+          }
+        }
       };
 
       // Start "private" functions
@@ -221,6 +243,12 @@ define(
       //Once all startup and async activities have finished, relocate if there are any async activities
       this.busyResolve();
     }
+
+    MultiSelectViewModel.prototype = {
+      _addNewChosenItem: function(newChosenItem) {
+        this.addNewChosenItem(newChosenItem);
+      }
+    };
 
     return MultiSelectViewModel;
   });

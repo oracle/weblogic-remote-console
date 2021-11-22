@@ -5,8 +5,6 @@ introductionHTML: >
   from the weblogic.application, weblogic.deploy, weblogic.classloader
   and weblogic.descriptor debug scopes.
 
-# TBD helpTasks:
-
 # TBD helpTopics:
 
 presentation:
@@ -14,27 +12,27 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
-- name: ClassChangeNotifier
-- name: ClassLoader
-- name: ClassLoaderVerbose
-- name: ClassloaderWebApp
-- name: DebugAppAnnotations
-- name: DebugAppContainer
-- name: DebugClassLoadingContextualTrace
-- name: DebugClassLoadingVerbose
-- name: DebugClassRedef
-- name: DebugClassSize
-- name: DebugDeploy
-- name: DebugDeployment
-- name: DebugDeploymentConcise
-- name: DebugDeploymentPlan
-- name: DebugDeploymentService
-- name: DebugDeploymentServiceInternal
-- name: DebugDeploymentServiceStatusUpdates
-- name: DebugDeploymentServiceTransport
-- name: DebugDeploymentServiceTransportHttp
-- name: DebugDescriptor
-- name: DebugLibraries
-- name: DebugReadyApp
-- name: DefaultStore
-- name: RedefiningClassLoader
+- name: ServerDebug.ClassChangeNotifier
+- name: ServerDebug.ClassLoader
+- name: ServerDebug.ClassLoaderVerbose
+- name: ServerDebug.ClassloaderWebApp
+- name: ServerDebug.DebugAppAnnotations
+- name: ServerDebug.DebugAppContainer
+- name: ServerDebug.DebugClassLoadingContextualTrace
+- name: ServerDebug.DebugClassLoadingVerbose
+- name: ServerDebug.DebugClassRedef
+- name: ServerDebug.DebugClassSize
+- name: ServerDebug.DebugDeploy
+- name: ServerDebug.DebugDeployment
+- name: ServerDebug.DebugDeploymentConcise
+- name: ServerDebug.DebugDeploymentPlan
+- name: ServerDebug.DebugDeploymentService
+- name: ServerDebug.DebugDeploymentServiceInternal
+- name: ServerDebug.DebugDeploymentServiceStatusUpdates
+- name: ServerDebug.DebugDeploymentServiceTransport
+- name: ServerDebug.DebugDeploymentServiceTransportHttp
+- name: ServerDebug.DebugDescriptor
+- name: ServerDebug.DebugLibraries
+- name: ServerDebug.DebugReadyApp
+- name: ServerDebug.DefaultStore
+- name: ServerDebug.RedefiningClassLoader

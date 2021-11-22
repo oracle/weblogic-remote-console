@@ -21,11 +21,9 @@ introductionHTML: >
           </ul>
 
 properties:
-  - name: "Target"
+  - name: "Targets"
   - name: "DistributionPolicy"
   - name: "MigrationPolicy"
-helpTasks:
-  - "stores/TargetJDBCStores.xml"
 helpTopics:
   - label: "Administering the WebLogic Persistent Store"
     href: "store/overview.html"

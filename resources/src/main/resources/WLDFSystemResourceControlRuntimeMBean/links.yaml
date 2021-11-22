@@ -1,9 +1,9 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
 - label: WLDF Resource Configurations
-  resourceData: configuration/data/Domain/WLDFSystemResources
+  resourceData: Domain/WLDFSystemResources
 instanceLinks:
 - label: WLDF Resource Configuration
-  resourceData: configuration/data/Domain/WLDFSystemResources/<SystemResourceControlRuntime>
+  resourceData: Domain/WLDFSystemResources/<SystemResourceControlRuntime>

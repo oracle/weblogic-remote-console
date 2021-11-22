@@ -77,21 +77,21 @@ properties:
 
 - name: LogFileFilter
   optionsSources:
-  - /LogFilters
+  - Domain/LogFilters
 
 - name: StdoutSeverity
   label: Stdout Severity Level
 
 - name: StdoutFilter
   optionsSources:
-  - /LogFilters
+  - Domain/LogFilters
 
 - name: DomainLogBroadcastSeverity
   label: Domain Log Broadcast Severity Level
 
 - name: DomainLogBroadcastFilter
   optionsSources:
-  - /LogFilters
+  - Domain/LogFilters
 
 - name: DomainLogBroadcasterBufferSize
   label: Buffer Size

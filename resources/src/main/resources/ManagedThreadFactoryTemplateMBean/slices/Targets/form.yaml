@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 # Manually created from application/webapp/jsp/core/cmotemplate/MTFTemplateTargetdeployForm.jsp  and consolehelp/docsrc/en-us/xml/pagehelp/core/cmotemplate/MTFTemplateTargetDeploy.xml
 introductionHTML: >
@@ -12,9 +12,6 @@ introductionHTML: >
       active servers.</p>
 properties:
   - name: "Targets"
-helpTasks:
-  - "cmo_templates/CreateMTFTemplate"
-  - "cmo_templates/DeleteCMOTemplate"
 helpTopics:
   - label: "Configuring Concurrent Managed Objects"
     href: "cnfgd/concurrent-utils.html"

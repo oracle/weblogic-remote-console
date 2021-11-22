@@ -73,3 +73,11 @@ properties:
 
 - name: IdentityBasedConnectionPoolingEnabled
   label: Enable Identity Based Connection Pooling
+
+- name: StatementCacheType
+  label: Statement Cache Type
+  legalValues:
+    - value: LRU
+      label: LRU
+    - value: FIXED
+      label: Fixed

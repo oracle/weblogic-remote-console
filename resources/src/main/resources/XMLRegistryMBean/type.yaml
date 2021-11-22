@@ -6,3 +6,11 @@ properties:
   helpHTML: >
     <p>The name of this XML Registry.</p>
 
+- name: XMLEventFactory
+  offlineName: XmlEventFactory
+
+- name: XMLInputFactory
+  offlineName: XmlInputFactory
+
+- name: XMLOutputFactory
+  offlineName: XmlOutputFactory

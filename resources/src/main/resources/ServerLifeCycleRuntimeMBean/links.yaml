@@ -1,13 +1,13 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
 - label: Server Configurations
-  resourceData: configuration/data/Domain/Servers
+  resourceData: Domain/Servers
 - label: Server Metrics
-  resourceData: monitoring/data/DomainRuntime/RunningServers
+  resourceData: DomainRuntime/ServerRuntimes
 instanceLinks:
 - label: Server Configuration
-  resourceData: configuration/data/Domain/Servers/<ServerLifeCycleRuntime>
+  resourceData: Domain/Servers/<ServerLifeCycleRuntime>
 - label: Server Metrics
-  resourceData: monitoring/data/DomainRuntime/RunningServers/<ServerLifeCycleRuntime>
+  resourceData: DomainRuntime/ServerLifeCycleRuntimes/<Server>

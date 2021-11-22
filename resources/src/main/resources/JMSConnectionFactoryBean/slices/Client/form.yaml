@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,20 +6,17 @@ introductionHTML: >
   JMS connection factory.</p>
 
 properties:
-- name: "ClientId"
-- name: "ClientIdPolicy"
-- name: "SubscriptionSharingPolicy"
-- name: "AllowCloseInOnMessage"
-- name: "AcknowledgePolicy"
-- name: "MessagesMaximum"
-- name: "SynchronousPrefetchMode"
-- name: "MulticastOverrunPolicy"
+- name: "ClientParams.ClientId"
+- name: "ClientParams.ClientIdPolicy"
+- name: "ClientParams.SubscriptionSharingPolicy"
+- name: "ClientParams.AllowCloseInOnMessage"
+- name: "ClientParams.AcknowledgePolicy"
+- name: "ClientParams.MessagesMaximum"
+- name: "ClientParams.SynchronousPrefetchMode"
+- name: "ClientParams.MulticastOverrunPolicy"
 # deprecated - name: "ReconnectPolicy"
-- name: "ReconnectBlockingMillis"
+- name: "ClientParams.ReconnectBlockingMillis"
 # deprecated - name: "TotalReconnectPeriodMillis"
-
-helpTasks:
-- "jms_modules/connection_factories/ConfigureConnectionFactories"
 
 helpTopics:
 - label: "Configuring Messaging "

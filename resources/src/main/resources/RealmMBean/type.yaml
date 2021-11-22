@@ -71,15 +71,16 @@ properties:
 
 - name: CertPathBuilder
   optionsSources:
-  - CertPathProviders
+  - Domain/SecurityConfiguration/Realms/<Realm>/CertPathProviders
 
+- name: IdentityAssertionHeaderNamePrecedence
+  # TBD - this is a String[] - do we really have unordered string arrays in config.xml?
+  ordered: true
+children:
 - name: Auditors
   ordered: true
 
-- name: AuthenticationProviders
-  ordered: true
-
-- name: Authorizers
+- name: PasswordValidators
   ordered: true
 
 - name: CertPathProviders
@@ -88,12 +89,12 @@ properties:
 - name: CredentialMappers
   ordered: true
 
-- name: PasswordValidators
-  ordered: true
-
 - name: RoleMappers
   ordered: true
 
-- name: IdentityAssertionHeaderNamePrecedence
-  # TBD - this is a String[] - do we really have unordered string arrays in config.xml?
+- name: Authorizers
   ordered: true
+
+- name: AuthenticationProviders
+  ordered: true
+

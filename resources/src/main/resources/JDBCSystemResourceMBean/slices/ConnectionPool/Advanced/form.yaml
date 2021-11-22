@@ -1,0 +1,53 @@
+# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define the additional configuration for this data source's connection
+  pool.</p>
+
+properties:
+  - name: "JDBCResource.JDBCConnectionPoolParams.TestConnectionsOnReserve"
+  - name: "JDBCResource.JDBCConnectionPoolParams.TestFrequencySeconds"
+  - name: "JDBCResource.JDBCConnectionPoolParams.TestTableName"
+  - name: "JDBCResource.JDBCConnectionPoolParams.SecondsToTrustAnIdlePoolConnection"
+  - name: "JDBCResource.JDBCConnectionPoolParams.ShrinkFrequencySeconds"
+  - name: "JDBCResource.JDBCConnectionPoolParams.InitSql"
+  - name: "JDBCResource.JDBCConnectionPoolParams.ConnectionCreationRetryFrequencySeconds"
+  - name: "JDBCResource.JDBCConnectionPoolParams.LoginDelaySeconds"
+  - name: "JDBCResource.JDBCConnectionPoolParams.InactiveConnectionTimeoutSeconds"
+  - name: "JDBCResource.JDBCConnectionPoolParams.HighestNumWaiters"
+  - name: "JDBCResource.JDBCConnectionPoolParams.ConnectionReserveTimeoutSeconds"
+  - name: "JDBCResource.JDBCConnectionPoolParams.StatementTimeout"
+  - name: "JDBCResource.JDBCConnectionPoolParams.IgnoreInUseConnectionsEnabled"
+  - name: "JDBCResource.JDBCConnectionPoolParams.PinnedToThread"
+  - name: "JDBCResource.JDBCConnectionPoolParams.RemoveInfectedConnections"
+  - name: "JDBCResource.JDBCConnectionPoolParams.WrapTypes"
+  - name: "JDBCResource.JDBCConnectionPoolParams.FatalErrorCodes"
+  - name: "JDBCResource.JDBCConnectionPoolParams.ConnectionLabelingCallback"
+  - name: "JDBCResource.JDBCOracleParams.ConnectionInitializationCallback"
+  - name: "JDBCResource.JDBCConnectionPoolParams.ConnectionHarvestMaxCount"
+  - name: "JDBCResource.JDBCConnectionPoolParams.ConnectionHarvestTriggerCount"
+  - name: "JDBCResource.JDBCConnectionPoolParams.CountOfRefreshFailuresTillDisable"
+  - name: "JDBCResource.JDBCConnectionPoolParams.CountOfTestFailuresTillFlush"
+helpTopics:
+  - label: "Configuring WebLogic JDBC Resources "
+    href: "jdbca/config.html"
+    type: "edocs"
+  - label: "Configuring JDBC Data Sources"
+    href: "jdbca/jdbc_datasources.html"
+    type: "edocs"
+  - label: "Using GridLink Data Sources"
+    href: "jdbca/gridlink_datasources.html"
+    type: "edocs"
+  - label: "JDBC Data Source Transaction Options"
+    href: "jdbca/transactions.html"
+    type: "edocs"
+  - label: "Configuring WebLogic JDBC Resources"
+    href: "jdbca/config.html"
+    type: "edocs"
+  - label: "Using Encrypted Connection Properties"
+    href: "jdbca/ds_security.html#JDBCA714"
+    type: "edocs"
+  - label: "Tuning Data Source Connection Pools"
+    href: "jdbca/ds_tuning.html"
+    type: "edocs"

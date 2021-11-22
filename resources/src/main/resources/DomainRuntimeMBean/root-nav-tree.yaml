@@ -1,0 +1,22 @@
+# Copyright (c) 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+contents:
+- child: DomainRuntime.ServerLifeCycleRuntimes
+- child: DomainRuntime.ServerRuntimes
+- label: Domain Information
+  type: group
+  contents:
+  - child: DomainRuntime
+  - child: DomainRuntime.MigrationDataRuntimes
+  - child: DomainRuntime.NodeManagerRuntimes
+  - child: DomainRuntime.SystemComponentLifeCycleRuntimes
+  - child: DomainRuntime.DeploymentManager.AppDeploymentRuntimes
+  - child: DomainRuntime.DeploymentManager.DeploymentProgressObjects
+  - child: DomainRuntime.DeploymentManager.LibDeploymentRuntimes
+  - child: DomainRuntime.ServiceMigrationDataRuntimes
+  - child: DomainRuntime.EditSessionConfigurationManager.EditSessionConfigurations
+  - child: DomainRuntime.ElasticServiceManagerRuntime.ScalingTasks
+  - child: DomainRuntime.RolloutService.AllWorkflows
+  - child: DomainRuntime.RolloutService.InactiveWorkflows
+  - child: DomainRuntime.RolloutService.StoppedWorkflows
+  - child: DomainRuntime.SNMPAgentRuntime

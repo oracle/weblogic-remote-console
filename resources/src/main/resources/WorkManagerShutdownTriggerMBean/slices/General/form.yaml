@@ -8,10 +8,6 @@ properties:
 - name: "MaxStuckThreadTime"
 - name: "StuckThreadCount"
 - name: "ResumeWhenUnstuck"
-helpTasks:
-- "work/CreateGlobalConstraint"
-- "work/CreateGlobalRequestClass"
-- "work/CreateGlobalWorkManager"
 helpTopics:
 - label: "Securing WebLogic Web Services for Oracle WebLogic Server "
   href: "wssov/index.html"

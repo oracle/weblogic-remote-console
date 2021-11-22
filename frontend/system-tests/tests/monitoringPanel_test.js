@@ -18,7 +18,7 @@ const adminUrl = require('../lib/admin').adminUrl;
 const browser = require('../lib/admin').browserName;
 
 // NavTree Test Suite
-describe('Test Suite: monitoringPanel_test for runtime and control ', function () {
+describe.only('Test Suite: monitoringPanel_test for runtime and control ', function () {
     let driver;
     let file = "config.png";
     let element;

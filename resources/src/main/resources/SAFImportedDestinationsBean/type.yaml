@@ -9,7 +9,7 @@ properties:
 - name: SAFRemoteContext
   label: Remote SAF Context
   optionsSources:
-  - ../SAFRemoteContexts
+  - Domain/JMSSystemResources/<JMSSystemResource>/JMSResource/SAFRemoteContexts
 
 - name: UseSAFTimeToLiveDefault
   label: Enable SAF Default Time-to-Live
@@ -25,4 +25,4 @@ properties:
 
 - name: SAFErrorHandling
   optionsSources:
-  - ../SAFErrorHandlings
+  - Domain/JMSSystemResources/<JMSSystemResource>/JMSResource/SAFErrorHandlings

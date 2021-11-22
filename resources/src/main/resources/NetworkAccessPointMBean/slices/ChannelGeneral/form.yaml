@@ -32,13 +32,6 @@ advancedProperties:
 - name: "MaxConnectedClients"
 - name: "UseFastSerialization"
 - name: "SDPEnabled"
-helpTasks:
-- "channels/ConfigureCustomNetworkChannelsForNonclusteredServers"
-- "channels/ConfigureDefaultNetworkConnections"
-- "channels/ConfigureListenPorts"
-- "channels/ConfigureProtocols"
-- "channels/EnableSDP"
-- "security/ConfigureKeystoresAndSSLAttributesForChannel"
 helpTopics:
 - label: "Configuring Diagnostic Archives "
   href: "wldfc/config_diag_archives.html"

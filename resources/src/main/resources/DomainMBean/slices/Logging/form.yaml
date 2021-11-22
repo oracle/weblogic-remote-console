@@ -10,24 +10,18 @@ introductionHTML: >
   the message log for this WebLogic Server domain.</p>
 
 properties:
-- name: "FileName"
-- name: "RotationType"
-- name: "FileMinSize"
-- name: "RotationTime"
-- name: "FileTimeSpan"
-- name: "NumberOfFilesLimited"
-- name: "FileCount"
-- name: "LogFileRotationDir"
-- name: "RotateLogOnStartup"
+- name: "Log.FileName"
+- name: "Log.RotationType"
+- name: "Log.FileMinSize"
+- name: "Log.RotationTime"
+- name: "Log.FileTimeSpan"
+- name: "Log.NumberOfFilesLimited"
+- name: "Log.FileCount"
+- name: "Log.LogFileRotationDir"
+- name: "Log.RotateLogOnStartup"
 advancedProperties:
-- name: "DateFormatPattern"
-- name: "BufferSizeKB"
-
-helpTasks:
-- "logging/ViewDomainLogsFromTheConsole"
-- "logging/ChangeDomainLogFileNamesAndLocations"
-- "domain_log_filters/SpecifyMessagesToForwardToTheDomainLog"
-- "logging/RotateLogFiles"
+- name: "Log.DateFormatPattern"
+- name: "Log.BufferSizeKB"
 
 helpTopics:
 - label: "Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server"

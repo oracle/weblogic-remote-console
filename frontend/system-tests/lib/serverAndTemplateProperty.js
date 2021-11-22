@@ -40,7 +40,7 @@ module.exports = function (driver, file) {
         //
         modifyServerGeneralTab: async function (driver) {
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Servers",
-                "AdminServer","General");
+                "AdminServer");
             await driver.sleep(2400);
             //ui-id-131 for None,  ui-id-132 for Cluster1, ui-id-133 for Cluster2
             await admin.selectDropDownList(driver,idName='Cluster',
@@ -76,6 +76,66 @@ module.exports = function (driver, file) {
             await admin.saveAndCommitChanges(driver);
         },
 
+        ///
+        // Modify Server -> Debug properties
+        //
+        modifyServerDebugTab: async function (driver,serverName,debugGroup,debugProp1,debugProp2,
+                                        debugProp3,debugProp4,debugProp5,debugProp6) {
+            await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment",
+                "Servers",serverName);
+            await driver.sleep(2400);
+            admin.clickConveyorArrow(driver,5);
+            admin.goToTabName(driver,"Debug");
+            await driver.sleep(900);
+            admin.goToTabName(driver,debugGroup);
+            await driver.sleep(900);
+
+            let debugAppPath = "//oj-checkboxset[@id=\'debugFlagsCheckboxset\']";
+            let debugPropIndex = 0;
+            if ( (debugProp1 == 'ClassChangeNotifier') || (debugProp1 == 'DebugConnectorService') ||
+                (debugProp1 == 'DebugAsyncQueue') || (debugProp1 == 'DebugBeanTreeHarvesterControl') ||
+                (debugProp1 == 'DebugJTA2PCStackTrace') )
+            {
+                debugPropIndex = 1;
+                this.selectDebugProperty(driver,debugPropIndex,debugProp1);
+            }
+            if ( (debugProp2 == 'ClassLoader') || (debugProp2 == 'DebugEjbCaching') ||
+                (debugProp2 == 'DebugCluster') || (debugProp2 == 'DebugBeanTreeHarvesterDataCollection') )
+            {
+                debugPropIndex = 2;
+                this.selectDebugProperty(driver,debugPropIndex,debugProp2);
+            }
+            if ( (debugProp3 == 'ClassLoaderVerbose') || (debugProp3 == 'DebugEjbCmpDeployment') ||
+                (debugProp3 == 'DebugClusterAnnouncements') || (debugProp3 == 'DebugBeanTreeHarvesterResolution') )
+            {
+                debugPropIndex = 3;
+                this.selectDebugProperty(driver,debugPropIndex,debugProp3);
+            }
+            // TODO Skip: debugProp4, debugProp6, ...., which should be the same as debugProp1->3
+            if ( (debugProp5 == 'DebugDiagnosticAccessor') )
+            {
+                debugPropIndex = 5;
+                this.selectDebugProperty(driver,debugPropIndex,debugProp5);
+            }
+            await admin.saveAndCommitChanges(driver);
+        },
+
+        ///
+        // Check/uncheck a debug property
+        //
+        selectDebugProperty: async function (driver,debugPropIndex,debugProp) {
+            let debugAppPath = "//oj-checkboxset[@id=\'debugFlagsCheckboxset\']";
+            console.log("Click "+debugProp+ " property");
+            //element = driver.findElement(
+               //By.xpath(debugAppPath+"/div[2]/span["+debugPropIndex+"]/span/input"));
+            element = driver.findElement(
+                By.xpath(debugAppPath+"/div/span["+debugPropIndex+"]/span/input"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+        },
+
+
+        //////////////////////////
         modifyServerTemplateGeneralTab: async function (driver, serverTemplateName, MachineDL, ClusterDL, ListenAddressTF, ListenPortEnabledCB,
                                                         ListenPortTF, SSLListenPortEnabledCB, SSLListenPortTF,
                                                         ClientCertProxyEnabledCB, JavaCompilerTF) {
@@ -84,14 +144,15 @@ module.exports = function (driver, file) {
                 "Environment","Server Templates","","");
             await driver.sleep(600);
             //Select Machine Name
-            await admin.selectDropDownList(driver,idName='Machine',searchList="oj-searchselect-filter-Machine|input","Machine2");
+            await admin.selectDropDownList(driver,idName='Machine',searchList="oj-searchselect-filter-Machine|input",MachineDL);
             //Select Cluster Name
-            //await admin.selectDropDownList(driver,idName='Cluster',searchList="oj-searchselect-filter-Cluster|input",ClusterDL);
+            await admin.selectDropDownList(driver,idName='Cluster',searchList="oj-searchselect-filter-Cluster|input",ClusterDL);
             await admin.setFieldValue(driver, "ListenAddress|input", ListenAddressTF);
             //await admin.enableCheckBox(driver,ListenPortEnabledCB); Already ON
             await admin.setFieldValue(driver, "ListenPort|input", ListenPortTF);
-            await admin.enableCheckBox(driver, SSLListenPortEnabledCB);
-            await admin.setFieldValue(driver, "SSLListenPort|input", SSLListenPortTF);
+            await admin.enableOjSwitchCheckBox(driver,SSLListenPortEnabledCB,3)
+            await driver.sleep(3600);
+            await admin.setFieldValue(driver, "SSL_ListenPort|input", SSLListenPortTF);
             await admin.enableCheckBox(driver, ClientCertProxyEnabledCB);
             await admin.setFieldValue(driver, "JavaCompiler|input", JavaCompilerTF);
             await admin.saveAndCommitChanges(driver);

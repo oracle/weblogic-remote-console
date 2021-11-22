@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A string monitor periodically polls an attribute whose value is a
@@ -17,12 +17,6 @@ displayedColumns:
 - name: "StringToCompare"
 - name: "NotifyDiffer"
 - name: "NotifyMatch"
-helpTasks:
-- "snmp/ConfigureStringMonitors"
-- "snmp/TargetStringMonitors"
-- "snmp/DisableTrapGeneration"
-- "snmp/VerifyTrapGeneration"
-- "snmp/DeleteSNMPMonitors"
 helpTopics:
 - label: "Monitoring Oracle WebLogic Server with SNMP"
   href: "snmpa/index.html"

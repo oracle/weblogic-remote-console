@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -13,9 +13,6 @@ properties:
 - name: "SubDeploymentName"
 advancedProperties:
 - name: "LocalJNDIName"
-helpTasks:
-- "jms_modules/connection_factories/ConfigureConnectionFactories"
-- "jms_modules/connection_factories/TargetConnectionFactories"
 helpTopics:
 - label: "Configuring Messaging"
   href: "jmsad/basic_config.html"

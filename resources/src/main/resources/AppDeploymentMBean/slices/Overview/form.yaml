@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -17,14 +17,6 @@ properties:
   - name: "StagingMode"
   - name: "PlanStagingMode"
   - name: "CacheInAppDirectory"
-
-helpTasks:
-  - "applications/DeployEnterpriseApplications"
-  - "connectors/StartStop"
-  - "web_applications/DeployWebApplications"
-  - "web_applications/ConfigureWebApplications"
-  - "applications/CreateDeploymentPlan"
-  - "web_applications/TestTheDeployment"
 
 helpTopics:
   - label: "Developing Web Applications, Servlets, and JSPs for Oracle WebLogic Server"

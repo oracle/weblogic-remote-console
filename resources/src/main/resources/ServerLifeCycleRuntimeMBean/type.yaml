@@ -1,0 +1,74 @@
+# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+
+- name: "start"
+  label: "Start"
+  usedIf:
+    property: "State"
+    values:
+    - "SHUTDOWN"
+    - "ACTIVATE_LATER"
+    - "FAILED_MIGRATABLE"
+    - "FAILED_NOT_RESTARTABLE"
+    - "UNKNOWN"
+
+- name: "resume"
+  label: "Resume"
+  usedIf:
+    property: "State"
+    values:
+    - "STANDBY"
+    - "ADMIN"
+
+- name: "suspend"
+  label: "Suspend when work completes"
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"
+
+- name: "forceSuspend"
+  label: "Force suspend now"
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"
+
+- name: "gracefulShutdown"
+  label: "Shutdown when work completes"
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"
+    - "STANDBY"
+    - "ADMIN"
+  actionMethod: weblogic.remoteconsole.customizers.ServerLifeCycleRuntimeMBeanCustomizer.gracefulShutdown
+  definition:
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+
+- name: "forceShutdown"
+  label: "Force shutdown now"
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"
+    - "SUSPENDING"
+    - "STARTING"
+    - "SHUTTING_DOWN"
+    - "SHUTDOWN_IN_PROCESS"
+    - "STANDBY"
+    - "ADMIN"
+    - "FAILED"
+    - "SUSPENDING"
+
+- name: "restartSSL"
+  label: "Restart SSL"
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"
+  actionMethod: weblogic.remoteconsole.customizers.ServerLifeCycleRuntimeMBeanCustomizer.restartSSL
+  definition:
+    type: "void"

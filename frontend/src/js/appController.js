@@ -6,8 +6,8 @@
  */
 "use strict";
 
-define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', './apis/message-displaying', './core/runtime', 'ojs/ojcontext', './microservices/perspective/perspective-manager', './microservices/perspective/perspective-memory-manager', './microservices/preferences/preferences', './viewModels/utils', 'ojs/ojlogger', './panel_resizer', 'ojs/ojarraydataprovider', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmessages'],
-  function ($, oj, ko, ModuleElementUtils, Router, signals, ResponsiveUtils, ResponsiveKnockoutUtils, MessageDisplaying, Runtime, Context, PerspectiveManager, PerspectiveMemoryManager, Preferences, ViewModelUtils, Logger) {
+define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', './apis/message-displaying', './core/runtime', 'ojs/ojcontext', './microservices/provider-management/data-provider-manager', './microservices/perspective/perspective-manager', './microservices/perspective/perspective-memory-manager', './microservices/preferences/preferences', './viewModels/utils', './core/utils', './core/types',  'ojs/ojlogger', './panel_resizer', 'ojs/ojarraydataprovider', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmessages'],
+  function ($, oj, ko, ModuleElementUtils, Router, signals, ResponsiveUtils, ResponsiveKnockoutUtils, MessageDisplaying, Runtime, Context, DataProviderManager, PerspectiveManager, PerspectiveMemoryManager, Preferences, ViewModelUtils, CoreUtils, CoreTypes, Logger) {
     function ControllerViewModel() {
       const PANEL_RESIZER_WIDTH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--panel-resizer-width"), 10);
       const NAVSTRIP_WIDTH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--navstrip-max-width"), 10);
@@ -31,9 +31,14 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
         navtreeUpdated: new signals.Signal(),
         navtreeResized: new signals.Signal(),
         popupMessageSent: new signals.Signal(),
+        showStartupTasksTriggered: new signals.Signal(),
         autoSyncCancelled: new signals.Signal(),
-        domainConnectionInitiated: new signals.Signal(),
-        readonlyChanged: new signals.Signal()
+        readonlyChanged: new signals.Signal(),
+        dataProviderSectionToggled: new signals.Signal(),
+        dataProviderSelected: new signals.Signal(),
+        dataProviderRemoved: new signals.Signal(),
+        projectSwitched: new signals.Signal(),
+        beanTreeChanged: new signals.Signal()
       };
 
       MessageDisplaying.setPopupMessageSentSignal(signaling["popupMessageSent"]);
@@ -41,6 +46,12 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
       Runtime.setProperty(Runtime.PropertyName.CFE_NAME, oj.Translations.getTranslatedString("wrc-header.text.appName"));
 
       if (Preferences.general.hasThemePreference()) Runtime.setProperty(Runtime.PropertyName.CFE_CURRENT_THEME, Preferences.general.themePreference());
+
+      if (CoreUtils.isNotUndefinedNorNull(window.electron_api)) {
+        window.electron_api.ipc.receive('on-signal-dispatched', (signal) => {
+          Logger.info(`[APPCONTROLLER] channel='on-signal-dispatched', signal=${signal.name}`);
+        });
+      }
 
       // Media queries for responsive layouts
       const smQuery = ResponsiveUtils.getFrameworkQuery(ResponsiveUtils.FRAMEWORK_QUERY_KEY.SM_ONLY);
@@ -61,7 +72,9 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
         "home": { label: "Home", value: "home", title: Runtime.getName(), isDefault: true },
         "landing/{perspectiveId}": { label: "Landing", value: "landing", title: Runtime.getName() },
         "configuration/{path}": { label: "WebLogic", value: "configuration", title: Runtime.getName() },
-        "monitoring/{path}": { label: "Monitoring", value: "monitoring", title: Runtime.getName() }
+        "monitoring/{path}": { label: "Monitoring", value: "monitoring", title: Runtime.getName() },
+        "view/{path}": { label: "View", value: "view", title: Runtime.getName() },
+        "modeling/{path}": { label: "Modeling", value: "modeling", title: Runtime.getName() }
       });
 
       this.getSignal = function (key) {
@@ -70,15 +83,40 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
 
       this.loadModule = function () {
         self.moduleConfig = ko.pureComputed(function () {
-          var name = self.router.moduleConfig.name();
-          if (typeof name !== "undefined") {
-            var viewPath = 'views/' + name + '.html';
-            var modelPath = 'viewModels/' + name;
-            let viewParams = { parentRouter: self.router, signaling: signaling };
-            let perspective = PerspectiveManager.getById(name);
+          const name = self.router.moduleConfig.name();
+          if (CoreUtils.isNotUndefinedNorNull(name)) {
+            const viewPath = 'views/' + name + '.html';
+            const modelPath = 'viewModels/' + name;
+            const viewParams = { parentRouter: self.router, signaling: signaling };
 
-            if (typeof perspective !== "undefined") {
+            let dataProvider;
+            const perspective = PerspectiveManager.getById(name);
+            if (CoreUtils.isNotUndefinedNorNull(perspective)) {
+              // This means that the viewModel being loaded is
+              // for a perspective (i.e. configuration,
+              // monitoring, modeling, view), so stash the
+              // perspective in the view parameters.
               viewParams["perspective"] = perspective;
+            }
+
+            if (CoreUtils.isNotUndefinedNorNull(perspective)) {
+              // We're trying to load a perspective, so
+              // a data provider is required to continue.
+              dataProvider = DataProviderManager.getLastActivatedDataProvider();
+              if (CoreUtils.isUndefinedOrNull(dataProvider)) {
+                // Didn't get a data provider, which could be
+                // because none have been created yet. Just
+                // return an empty moduleConfig.
+                return { view: [], viewModel: null };
+              }
+              // The DataProvider class knows how to map a
+              // perspective to one of it's beanTrees.
+              const beanTree = dataProvider.getBeanTreeByPerspectiveId(perspective.id);
+              if (CoreUtils.isNotUndefinedNorNull(beanTree)) {
+                // Stash the beanTree metadata in the view
+                // parameters.
+                viewParams["beanTree"] = beanTree;
+              }
             }
 
             return ModuleElementUtils.createConfig({
@@ -106,7 +144,8 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
               smQuery: smQuery,
               mdQuery: mdQuery,
               signaling: signaling,
-              onResized: resizeTriggered
+              onResized: resizeTriggered,
+              onDataProvidersEmpty: selectAncillaryContentAreaTab
             }
           });
         });
@@ -124,7 +163,8 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
             params: {
               parentRouter: self.router,
               signaling: signaling,
-              onResized: resizeTriggered
+              onResized: resizeTriggered,
+              onDataProviderRemoved: setTableFormContainerVisibility
             }
           });
         });
@@ -150,7 +190,7 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
       };
       this.loadFooterTemplate();
 
-      this.loadNavTree = function (perspectiveId) {
+      this.loadNavTree = function (perspectiveId, beanTree) {
         const name = "navtree";
         const perspective = PerspectiveManager.getById(perspectiveId);
 
@@ -161,7 +201,8 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
             parentRouter: self.router,
             signaling: signaling,
             onResized: resizeTriggered,
-            perspective: perspective
+            perspective: perspective,
+            beanTree: beanTree
           }
         })
           .then(function (moduleConfigPromise) {
@@ -198,7 +239,7 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
             params: {
               parentRouter: self.router,
               signaling: signaling,
-              onAncillaryContentAreaToggled: toggledAncillaryContentArea
+              onAncillaryContentAreaToggled: toggleAncillaryContentArea
             }
           });
         });
@@ -209,8 +250,12 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
         signaling.themeChanged.dispatch(theme);
       }
 
-      function toggledAncillaryContentArea(visible) {
+      function toggleAncillaryContentArea(visible) {
         signaling.ancillaryContentAreaToggled.dispatch(visible);
+      }
+
+      function selectAncillaryContentAreaTab(source, tabId) {
+        signaling.tabStripTabSelected.dispatch(source, tabId, true);
       }
 
       function resizeTriggered(source, newOffsetLeft, newOffsetWidth) {
@@ -237,7 +282,7 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
           }
         }
         else {
-          Logger.info(`newOffsetWidth=0`);
+          Logger.info(`[APPCONTROLLER] newOffsetWidth=0`);
         }
 
         resizeContentAreaElements(source, newOffsetLeft, newOffsetWidth);
@@ -245,7 +290,7 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
 
       function resizeContentAreaElements(source, newOffsetLeft, newOffsetWidth) {
         const viewPortValues = getBrowserViewPortValues();
-        Logger.info(`window.width=${viewPortValues.width}, window.height=${viewPortValues.height}`);
+        Logger.info(`[APPCONTROLLER] window.width=${viewPortValues.width}, window.height=${viewPortValues.height}`);
         if (newOffsetWidth !== viewPortValues.width) resizeDomainsToolbarRight(source, newOffsetLeft, newOffsetWidth);
         resizeTableFormContainer(source);
       }
@@ -279,39 +324,42 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
       }
 
       signaling.perspectiveSelected.add((newPerspective) => {
-        if (typeof newPerspective === "undefined") {
-          Logger.info(`newPerspective is undefined`);
+        if (CoreUtils.isUndefinedOrNull(newPerspective)) {
+          Logger.info(`[APPCONTROLLER] newPerspective is undefined`);
           newPerspective = PerspectiveManager.getDefault();
         }
         let active = PerspectiveManager.current();
-        if (typeof active === "undefined") {
+        if (CoreUtils.isUndefinedOrNull(active)) {
           // There is no active perspective, so make newPerspective
           // the active one, but don't load it's navtree
           active = PerspectiveManager.activate(newPerspective.id);
           // Be aware that active will be undefined, when newPerspective is
           // for the landing or home page. In that case, we just want to
           // assign newPerspective to active.
-          if (typeof active === "undefined") active = newPerspective;
+          if (CoreUtils.isUndefinedOrNull(active)) active = newPerspective;
         }
         else {
           active = newPerspective;
         }
 
+        const dataProvider = DataProviderManager.getLastActivatedDataProvider();
         // See if navTreeModuleConfig has a viewModel in it.
         const viewModel = self.navTreeModuleConfig().viewModel;
-        if (typeof viewModel !== "undefined" && viewModel !== null) {
+        if (CoreUtils.isNotUndefinedNorNull(viewModel)) {
           // There is already a viewModel in navTreeModuleConfig, but
           // we only want to reload it if it isn't for the viewModel
           // associated with active
           const perspective = viewModel.perspective();
-          if (typeof perspective !== "undefined" && perspective.id !== active.id) {
-            self.loadNavTree(active.id);
+          const beanTree = dataProvider.getBeanTreeByPerspectiveId(active.id);
+          if (CoreUtils.isNotUndefinedNorNull(perspective) && perspective.id !== active.id) {
+            self.loadNavTree(active.id, beanTree);
           }
         }
         else {
+          const beanTree = dataProvider.getBeanTreeByPerspectiveId(active.id);
           // There is no viewModel in navTreeModuleConfig, so
           // load navtree for active
-          self.loadNavTree(active.id);
+          self.loadNavTree(active.id, beanTree);
         }
       });
 
@@ -322,7 +370,7 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
           // There was no active perspective, so make the
           // one assigned to the perspective parameter, the
           // active one.
-          Logger.log(`previous current: undefined`);
+          Logger.log(`[APPCONTROLLER] previous current: undefined`);
           active = PerspectiveManager.activate(perspective.id);
         }
         else if (active.id !== perspective.id) {
@@ -331,30 +379,44 @@ define(['jquery', 'ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/o
           // In this case, we tell the PerspectiveManager to
           // make the perspective passed as a parameter the
           // active perspective.
-          Logger.info(`previous current: ${active.id}, new current: ${perspective.id}`);
+          Logger.info(`[APPCONTROLLER] previous current: ${active.id}, new current: ${perspective.id}`);
           active = PerspectiveManager.activate(perspective.id);
         }
 
-        Logger.info(`new current: ${active.id}`);
+        Logger.info(`[APPCONTROLLER] new current: ${active.id}`);
       });
 
       signaling.modeChanged.add((newMode) => {
-        const ele = document.getElementById("content-area-body");
-        if (ele !== null) {
+        const div = document.getElementById("table-form-container");
+        if (div !== null) {
+          // Do the appropriate thing to the selected div.
           switch (newMode) {
-            case "ONLINE":
-              ele.style.display = "inline-flex";
+            case CoreTypes.Console.RuntimeMode.ONLINE.name:
+            case CoreTypes.Console.RuntimeMode.OFFLINE.name:
+              div.style.display = "inline-flex";
               break;
-            case "DETACHED":
-              ele.style.display = "none";
+            case CoreTypes.Console.RuntimeMode.DETACHED.name:
+              div.style.display = "none";
               router.go("home");
               break;
           }
         }
       });
 
+      signaling.projectSwitched.add((fromProject) => {
+        setTableFormContainerVisibility(false);
+      });
+
+      function setTableFormContainerVisibility(visible) {
+        const div = document.getElementById("table-form-container");
+        if (div !== null) {
+          div.style.display = (visible ? "inline-flex" : "none");
+        }
+      }
+
       Context.getPageContext().getBusyContext().whenReady()
         .then(function () {
+          document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 UTC; Path=/api;";
           setThemePreference(Preferences.general.themePreference());
           $('#spa-resizer').split({limit: 10});
           // Pass the mode changed signal so that memory can be cleared

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 # manually created based on application/webapp/jsp/core/cluster/ClusterConfigOverload.jsp and consolehelp/docsrc/en-us/xml/pagehelp/core/cluster/ClusterConfigOverload.xml
 
@@ -9,12 +9,6 @@ introductionHTML: >
 properties:
 - name: "MaxStuckThreadTime"
 - name: "StuckThreadCount"
-
-helpTasks:
-- "clusters/ConfigureClusters.xml"
-- "monitoring/ConfigureSelfhealthMonitoring.xml"
-- "clusters/ConfigureClusterMigration.xml"
-- "monitoring/ConfigureSelfhealthMonitoring.xml"
 
 helpTopics:
 - label: "Avoiding and Recovering From Server Failure"

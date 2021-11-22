@@ -13,10 +13,6 @@ displayedColumns:
 - name: "Name"
 - name: "Description"
 - name: "Version"
-helpTasks:
-- "security/ConfigureCertPathProviders"
-- "security/ManageSecurityProviders"
-- "security/ReorderSecurityProviders"
 helpTopics:
 - label: "Auditing Providers "
   href: "devsp/aud.html"

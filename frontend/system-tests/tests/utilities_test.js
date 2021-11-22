@@ -124,14 +124,22 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
                 "Domain/Servers",1);
             await admin.saveAndCommitChanges(driver);
             await driver.sleep(900);
+
             await admin.goToLandingPanelSubTreeCard(driver,"Configuration","EnvironmentChevron","Domain/Clusters");
             await driver.sleep(900);
             console.log("Click Configuration-> Environment-> Clusters-> TestCluster-1 delete row button");
-            await driver.findElement(By.xpath("//oj-button[@id=\'Domain/Clusters/TestCluster-1\']/button/div/span")).click();
+            //New syntax to delete an object
+            element = await driver.findElement(By.xpath("//span[@id=\'Domain/Clusters/TestCluster-1|text\']/span"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            element.click();
+
             await admin.goToLandingPanelSubTreeCard(driver,"Configuration","EnvironmentChevron","Domain/Servers");
             await driver.sleep(900);
             console.log("Click Configuration-> Environment-> Servers-> TestServer-1 delete row button");
-            await driver.findElement(By.xpath("//oj-button[@id=\'Domain/Servers/TestServer-1\']/button/div/span")).click();
+            element =  driver.findElement(By.xpath("//oj-button[@id=\'Domain/Servers/TestServer-1\']/button/div/span"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            element.click();
+
             await driver.sleep(900);
             await admin.viewChanges(driver);
 
