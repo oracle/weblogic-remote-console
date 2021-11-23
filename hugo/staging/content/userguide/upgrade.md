@@ -6,9 +6,11 @@ description: Instructions for upgrading the WebLogic Remote Console
 weight: 4
 ---
 
-While not required, it's recommended that you keep WebLogic Remote Console up to date as it is updated to work with the latest versions of WebLogic Server, including patches.
+We encourage you to stay up to date with the latest version of the WebLogic Remote Console since it is regularly updated to work with the latest versions of WebLogic Server, including patches.
 
 ## Desktop application
+To check for newer versions of the desktop application, go to **Help** > **Check For Updates**. If a newer version is available, a dialog box will open where you can choose to go to the GitHub webpage for the latest WebLogic Remote Console release. If you're already on the latest version, no further action is required.
+
 If you regularly use `config.json` to customize the default connection settings of the WebLogic Remote Console, consider backing up `config.json` in a separate location to easily restore it following the upgrade.
 
 1. Download the latest version from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases).

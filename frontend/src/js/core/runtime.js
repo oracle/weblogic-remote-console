@@ -25,7 +25,7 @@ define(['ojs/ojlogger', './adapters/file-adapter', './cbe-types', './types', './
     properties['console-backend.providerId'] = "";
     properties['console-backend.domain'] = "";
     properties['console-backend.domainConnectState'] = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-    properties['console-backend.weblogic.username'] = "weblogic";
+    properties['console-backend.weblogic.username'] = "";
 
     FileAdapter.readYaml('config/console-frontend-jet.yaml')
       .then((data) => {

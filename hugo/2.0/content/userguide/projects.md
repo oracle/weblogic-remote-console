@@ -2,7 +2,7 @@
 title: Projects
 date: 2021-09-01
 draft: false
-description: How to connect to a WebLogic domain or deploy tooling model.
+description: How to connect to a WebLogic Server domain or deploy tooling model.
 weight: 1
 ---
 
