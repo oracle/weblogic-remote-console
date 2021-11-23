@@ -89,7 +89,7 @@ Limitations The following features are not available in this release of the Remo
       <guid>/weblogic-remote-console/userguide/advanced-settings/</guid>
       <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
  Edit Java system properties in the desktop application Edit Java system properties in the browser-based application Java system properties  Some possible customizations:
- Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
+ Connect to a WebLogic Server domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic Server domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic Server domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
     </item>
     
     <item>
@@ -157,8 +157,8 @@ Back end To view the log file for issues related to the back end of the WebLogic
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>/weblogic-remote-console/setup/admin-console-diff/</guid>
-      <description>The WebLogic Remote Console is distinct from the WebLogic Server Administration Console that is deployed as part of your WebLogic domain. As you explore the WebLogic Remote Console, you&amp;rsquo;ll notice key differences between the two consoles:
- The user interface has been completely redesigned to conform to the Oracle Redwood theme included with Oracle JET. The configuration and monitoring runtime content is separated into separate pages in the Remote Console. In the WebLogic Server Administration Console, the configuration and runtime information is presented on one page.</description>
+      <description>The WebLogic Remote Console is distinct from the WebLogic Server Administration Console that is deployed as part of your WebLogic Server domain. As you explore the WebLogic Remote Console, you&amp;rsquo;ll notice key differences between the two consoles:
+ The user interface has been completely redesigned to conform to the Oracle Redwood theme included with Oracle JET. The configuration and monitoring runtime content is separated into separate pages in the Remote Console.</description>
     </item>
     
   </channel>

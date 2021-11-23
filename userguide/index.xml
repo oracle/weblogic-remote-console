@@ -35,7 +35,7 @@ Configuration locks do not apply to WDT model files. As WDT model files are not 
       <guid>/weblogic-remote-console/userguide/advanced-settings/</guid>
       <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
  Edit Java system properties in the desktop application Edit Java system properties in the browser-based application Java system properties  Some possible customizations:
- Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
+ Connect to a WebLogic Server domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic Server domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic Server domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
     </item>
     
     <item>
