@@ -1046,6 +1046,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  '../../microservic
         // runtime mode (e.g. "connected", "disconnected")
         // the CFE is running in.
         Runtime.setProperty(Runtime.PropertyName.CBE_DOMAIN_CONNECT_STATE, dataProvider.state);
+        Runtime.setProperty(Runtime.PropertyName.CBE_WLS_USERNAME, dataProvider.username);
         // Send signal about domain being changed, if
         // this is an "adminserver" data provider.
         if (dataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name) {

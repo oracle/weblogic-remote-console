@@ -8,6 +8,10 @@ weight: 3
 
 This page provides guidelines to help troubleshoot console issues.
 
+## Check log files for errors
+
+The WebLogic Remote Console provides log files for both front and back end processes. For instructions on how to access these log files, see [Check Log Files]({{< relref "userguide/logging" >}}).
+
 ## Diagnose invalid WebLogic configuration issues {id="invalid"}
 
 ### Administration Server

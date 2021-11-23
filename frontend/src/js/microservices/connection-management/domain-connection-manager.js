@@ -36,7 +36,6 @@ define(['../../core/runtime', '../../apis/data-operations', '../../core/cbe-type
         // properties, when this function is called from the
         // useConnection(dataProvider) function.
         Runtime.setProperty(Runtime.PropertyName.CBE_DOMAIN_URL, data['domainUrl']);
-        Runtime.setProperty(Runtime.PropertyName.CBE_WLS_USERNAME, data['username']);
         // data.state will only be "connected", if this function
         // is called from the useConnection(dataProvider) function.
         if (data.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {

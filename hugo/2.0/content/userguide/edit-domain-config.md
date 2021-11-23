@@ -11,7 +11,7 @@ The domain configuration process in the WebLogic Remote Console is similar to th
 Configuration locks do not apply to WDT model files. As WDT model files are not connected to live domains, they do not require any locks to prevent conflicting changes. Additionally, you do not have to save *and* commit changes; once you save your changes, they are saved to the WDT model file.
 
 #### WDT model tokens {id="model_tokens"}
-When editing the domain configuration for a WDT model File, you can substitute model tokens instead of real field values. Model tokens are variables that you can enter into domain configuration settings. Rather than restricting a setting to a single value, the value will update according the variable.
+When editing the domain configuration for a WDT model file, you can substitute model tokens instead of real field values. Model tokens are variables that you can enter into domain configuration settings. Rather than restricting a setting to a single value, the value will update according the variable.
 
 There are several types of model tokens including variable tokens, file tokens, and so on. Model tokens follow this format: `@@TYPE:KEY@@`, where `TYPE` is the model token type and `KEY` is the variable value. For example, you could declare variable token by entering `@@PROP:ABCDE@@` into a field.
 
@@ -19,7 +19,7 @@ See [WDT Model Tokens](https://oracle.github.io/weblogic-deploy-tooling/concepts
 
 ## Shopping cart {id="shopping_cart"}
 
-The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely. If you installed the console extension, `console-rest-ext-1.0.war`, you can also see the specific changes you've made and the status of the lock in the Change Manager. Unfortunately, there is currently no support for removing individual items from the shopping cart.
+The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely. If you installed the console extension, `console-rest-ext-1.0.war`, you can also see the specific changes you've made and the status of the lock in the Change Manager. Unfortunately, there is currently no support for removing individual items from the shopping cart.
 
 The configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock in the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the WebLogic Remote Console and you will not be locked out of making changes with the other tools.
 

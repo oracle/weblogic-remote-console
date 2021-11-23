@@ -12,12 +12,12 @@ You can customize the default connection settings of the WebLogic Remote Console
 * [Java system properties](#system_prop)
 
 Some possible customizations:
-* [Connect to a WebLogic domain using SSL/TLS ](#ssl)
+* [Connect to a WebLogic Server domain using SSL/TLS ](#ssl)
 * [Specify a listen address for the WebLogic Remote Console host](#listen_address)
 * [Change the network timeout settings for the server ](#network_timeout)
-* [Disable host name verification in the connections to the WebLogic domain ](#hostname)
+* [Disable host name verification in the connections to the WebLogic Server domain ](#hostname)
 * [Set the SameSite cookie attribute if required for web browser support ](#samesite)
-* [Connect to a WebLogic domain running on kubernetes ](#k8s)
+* [Connect to a WebLogic Server domain running on kubernetes ](#k8s)
 
 
 ### Edit Java system properties in the desktop application {id="desktopapp"}
@@ -64,11 +64,11 @@ java -Dserver.host=0.0.0.0 -jar <console_home>/console.jar
 |javax.net.ssl.trustStore |`<java-home>/lib/security/jssecacerts` or `<java-home>/lib/security/cacerts` | javax.net.ssl.trustStore | -Djavax.net.ssl.trustStore |
 |javax.net.ssl.trustStoreType | jks | javax.net.ssl.trustStoreType | -Djavax.net.ssl.trustStoreType |
 
-## Connect to a WebLogic domain using SSL/TLS {id="ssl"}
+## Connect to a WebLogic Server domain using SSL/TLS {id="ssl"}
 
-If you specify HTTPS for the domain URL in the Connect to WebLogic Domain window, then the WebLogic Remote Console uses SSL/TLS to communicate with the WebLogic domain.
+If you specify HTTPS for the domain URL in the Connect to WebLogic Domain window, then the WebLogic Remote Console uses SSL/TLS to communicate with the WebLogic Server domain.
 
-The SSL/TLS connection requires trust in the WebLogic domain, where the trust configuration is handled by the underlying JDK JSSE support. By default, the JDK uses the `cacerts` truststore provided with the JDK. If the WebLogic domain requires additional trust, separate trust, or is using the WebLogic demo trust (`demotrust.jks`), then you can use the JDK system properties when starting the Remote Console.
+The SSL/TLS connection requires trust in the WebLogic Server domain, where the trust configuration is handled by the underlying JDK JSSE support. By default, the JDK uses the `cacerts` truststore provided with the JDK. If the WebLogic Server domain requires additional trust, separate trust, or is using the WebLogic demo trust (`demotrust.jks`), then you can use the JDK system properties when starting the Remote Console.
 
 You can configure SSL/TLS trust with the JDK using one of these options:
 - Import the required trust certificates into the `cacerts` truststore supplied with the JDK using the [`keytool`](https://docs.oracle.com/en/java/javase/11/tools/keytool.html) command.
@@ -130,7 +130,7 @@ To specify a listen address when running `console.zip`:
 
 1. In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain.
 
-      When the Remote Console is not running on the same computer as the browser, the WebLogic domain URL must be accessible to the computer running the Remote Console process.
+      When the Remote Console is not running on the same computer as the browser, the WebLogic Server domain URL must be accessible to the computer running the Remote Console process.
 
 ### Desktop application
 
@@ -162,11 +162,11 @@ When you connect to a Remote Console process running on a different computer, yo
 
 1. In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain.
 
-      When the Remote Console is not running on the same computer as the browser, the WebLogic domain URL must be accessible to the computer running the Remote Console process.
+      When the Remote Console is not running on the same computer as the browser, the WebLogic Server domain URL must be accessible to the computer running the Remote Console process.
 
 ## Change the network timeout settings for the server {id="network_timeout"}
 
-To change the defaults for the connection and read timeout settings used with a WebLogic domain from the Remote Console, change the following Java system properties:
+To change the defaults for the connection and read timeout settings used with a WebLogic Server domain from the Remote Console, change the following Java system properties:
 - Set `console.readTimeoutMillis=<millis>` for the timeout when waiting on a response, _Default:_ `20 seconds`
 - Set `console.connectTimeoutMillis=<millis>` for the timeout when waiting to connect, _Default:_ `10 seconds`
 
@@ -174,7 +174,7 @@ For example:
 ```
 java -Dconsole.readTimeoutMillis=60000 -Dconsole.connectTimeoutMillis=30000 -jar <console_home>/console.jar
 ```
-In this example, <console_home> represents the directory where you unzipped the installer, and will result in the console waiting `60 seconds` before giving up on a response from the WebLogic domain.
+In this example, <console_home> represents the directory where you unzipped the installer, and will result in the console waiting `60 seconds` before giving up on a response from the WebLogic Server domain.
 
 or in `config.json`, add:
 ```
@@ -186,8 +186,8 @@ or in `config.json`, add:
 
 When changing network timeout settings, the primary impact will be the response time for Console threads, while the browser will show no data when a timeout occurs.  Examples of where timeouts may happen include requests where WebLogic experiences longer initialization or execution times such as for runtime monitoring actions of servers.
 
-## Disable host name verification in the connections to the WebLogic domain {id="hostname"}
-When using WebLogic demo trust to connect to the WebLogic domain, you may need to disable host name verification. Disabling host name verification causes the Remote Console to skip the verification check of ensuring that the host name in the URL to which a connection is made matches the host name in the digital certificate that the server sends back as part of the SSL connection.
+## Disable host name verification in the connections to the WebLogic Server domain {id="hostname"}
+When using WebLogic demo trust to connect to the WebLogic Server domain, you may need to disable host name verification. Disabling host name verification causes the Remote Console to skip the verification check of ensuring that the host name in the URL to which a connection is made matches the host name in the digital certificate that the server sends back as part of the SSL connection.
 
 {{% notice note %}}
 We do not recommend using the demo certificates or turning off host name verification in production environments.
@@ -237,5 +237,5 @@ or
 ```
 results in the HTTP session Cookie including the `SameSite` attribute with a value of `Lax`.
 
-## Connect to a WebLogic domain running on kubernetes {id="k8s"}
+## Connect to a WebLogic Server domain running on kubernetes {id="k8s"}
 One of the benefits of the WebLogic Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For details about how to setup access to WebLogic Server domains running on Kubernetes, see [Use the Remote Console](https://oracle.github.io/weblogic-kubernetes-operator/userguide/managing-domains/accessing-the-domain/admin-console/) in the *WebLogic Kubernetes Operator User Guide*.

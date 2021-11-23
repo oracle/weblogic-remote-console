@@ -8,7 +8,7 @@ description: An introduction to the WebLogic Remote Console.
 
 The WebLogic Remote Console is a lightweight, open source console that you can use to manage domain configurations of WebLogic Server Administration Servers or WebLogic Deploy Tooling (WDT) metadata models.
 
-The advantage of the WebLogic Remote Console is that it does not need to be colocated with the WebLogic Server domain. You can install and run the WebLogic Remote Console from one computer and connect to a domain running anywhere: a physical or virtual machine, in a container, Kubernetes, or in the Oracle Cloud. The WebLogic Remote Console connects to your domain using WebLogic REST APIs.
+The advantage of the WebLogic Remote Console is that it does not need to be collocated with the WebLogic Server domain. You can install and run the WebLogic Remote Console from one computer and connect to a domain running anywhere: a physical or virtual machine, in a container, Kubernetes, or in the Oracle Cloud. The WebLogic Remote Console connects to your domain using WebLogic REST APIs.
 
 As for the WDT metadata models, they are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them 'offline' before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models. See the [WebLogic Deploy Tooling](https://oracle.github.io/weblogic-deploy-tooling/) documentation for more information.
 
@@ -49,7 +49,7 @@ Documentation for prior releases of the WebLogic Remote Console: [1.1.0](https:/
 
 #### Need more help? Have a suggestion? Come and say, "Hello!" {id="help"}
 
-We have a **public Slack channel** where you can get in touch with us to ask questions about using the Remote Console or give us feedback or suggestions about what features and improvements you would like to see.  We would love to hear from you. To join our channel, please [visit this site to get an invitation](https://weblogic-slack-inviter.herokuapp.com/). The invitation email will include details of how to access our Slack workspace.  After you are logged in, please come to `#remote-console` and say, "hello!"
+We have a **public Slack channel** where you can get in touch with us to ask questions about using the WebLogic Remote Console or give us feedback or suggestions about what features and improvements you would like to see.  We would love to hear from you. To join our channel, please [visit this site to get an invitation](https://weblogic-slack-inviter.herokuapp.com/). The invitation email will include details of how to access our Slack workspace.  After you are logged in, please come to `#remote-console` and say, "hello!"
 
 #### Related Projects {id="rel_projects"}
 

@@ -321,6 +321,16 @@ function makeMenu() {
                 }
               }
             )
+            .catch(err => {
+              dialog.showMessageBox(window,
+                {
+                  title: 'Connection Issue',
+                  buttons: ['Ok'],
+                  type: 'info',
+                  message: 'Could not reach update site'
+                }
+              );
+            });
           }
         }
     );
