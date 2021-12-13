@@ -83,7 +83,7 @@ public class WebLogicVersions {
   }
 
   // Looks up a version given its domain version.
-  public static WebLogicVersion getWeblogicVersion(String domainVersion) {
+  public static WebLogicVersion getVersion(String domainVersion) {
     WebLogicVersion weblogicVersion = versionStringToVersion.get(domainVersion);
     if (weblogicVersion != null) {
       // This is a known version. Return it.
@@ -110,7 +110,7 @@ public class WebLogicVersions {
 
   // Return whether a weblogic version is supported by the console.
   public static boolean isSupportedVersion(String version) {
-    return getWeblogicVersion(version) != null;
+    return getVersion(version) != null;
   }
 
   // Convert a domainVersion string, e.g. 12.2.1.4.0, into an integer, e.g. 1202010400

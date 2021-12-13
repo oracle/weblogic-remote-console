@@ -1,4 +1,4 @@
-define(['core/runtime', 'core/cbe-types', 'core/types', 'core/utils'],
+define(['wrc-frontend/core/runtime', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/types', 'wrc-frontend/core/utils'],
   function (Runtime, CbeTypes, CoreTypes, CoreUtils) {
 
     describe("Runtime Tests", function () {

@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.webapp;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,6 +41,7 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.providers.AdminServerDataProviderImpl;
 import weblogic.remoteconsole.server.providers.Provider;
 import weblogic.remoteconsole.server.providers.ProviderManager;
+import weblogic.remoteconsole.server.providers.WDTCompositeDataProviderImpl;
 import weblogic.remoteconsole.server.providers.WDTModelDataProviderImpl;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 
@@ -54,6 +56,7 @@ public class ProviderResource extends BaseResource {
   private static final Set<String> reservedNames = new HashSet<>();
   public static final String DOMAIN_URL = "domainUrl";
   public static final String WDT_MODEL = "model";
+  public static final String WDT_MODELS = "modelNames";
   public static final String PROVIDER_TYPE = "providerType";
   public static final String PROVIDER_NAME = "name";
   public static final String TEST_ACTION = "test";
@@ -64,6 +67,7 @@ public class ProviderResource extends BaseResource {
     reservedNames.add("providers");
     reservedNames.add(AdminServerDataProviderImpl.TYPE_NAME);
     reservedNames.add(WDTModelDataProviderImpl.TYPE_NAME);
+    reservedNames.add(WDTCompositeDataProviderImpl.TYPE_NAME);
   }
 
   @GET
@@ -84,7 +88,8 @@ public class ProviderResource extends BaseResource {
     String typeConstraint = null;
     String nameConstraint = null;
     if (first.equals(AdminServerDataProviderImpl.TYPE_NAME)
-      || first.equals(WDTModelDataProviderImpl.TYPE_NAME)) {
+      || first.equals(WDTModelDataProviderImpl.TYPE_NAME)
+      || first.equals(WDTCompositeDataProviderImpl.TYPE_NAME)) {
       typeConstraint = first;
       nameIndex++;
       if (pathSegments.size() <= nameIndex) {
@@ -146,6 +151,22 @@ public class ProviderResource extends BaseResource {
     InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
     for (Provider prov : pm.getAll()) {
       if (prov.getType().equals(WDTModelDataProviderImpl.TYPE_NAME)) {
+        builder.add(prov.toJSON(ic));
+      }
+    }
+    return builder.build();
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/" + WDTCompositeDataProviderImpl.TYPE_NAME)
+  public JsonArray getProviderInfoWDTCompositeDataProviders(
+    @Context ResourceContext resourceContext) {
+    JsonArrayBuilder builder = Json.createArrayBuilder();
+    ProviderManager pm = ProviderManager.getFromContext(resourceContext);
+    InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
+    for (Provider prov : pm.getAll()) {
+      if (prov.getType().equals(WDTCompositeDataProviderImpl.TYPE_NAME)) {
         builder.add(prov.toJSON(ic));
       }
     }
@@ -244,6 +265,33 @@ public class ProviderResource extends BaseResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @Path("/" + WDTCompositeDataProviderImpl.TYPE_NAME)
+  public Response submitProviderInfoWDTCompositeModels(
+    @Context ResourceContext resourceContext,
+    JsonObject data
+  ) {
+    LOGGER.fine("POST provider");
+
+    ProviderManager pm = ProviderManager.getFromContext(resourceContext);
+    // Check that all expected data is passed with the request
+    if (data == null) {
+      LOGGER.fine("POST create bad request: no data");
+      return Response.status(
+        Status.BAD_REQUEST.getStatusCode(), "Missing Request Content").build();
+    }
+    JsonString jname = data.getJsonString(PROVIDER_NAME);
+    if (jname == null) {
+      LOGGER.fine("POST create bad request: no name");
+      return Response.status(
+        Status.BAD_REQUEST.getStatusCode(), "Missing Name").build();
+    }
+    String name = jname.getString();
+    return submitWDTCompositeDataProviderInfo(pm, name, resourceContext, data);
+  }
+
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
   public Response submitProviderInfoAny(
     @Context ResourceContext resourceContext,
     @HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader,
@@ -277,6 +325,9 @@ public class ProviderResource extends BaseResource {
     }
     if (jtype.getString().equals(WDTModelDataProviderImpl.TYPE_NAME)) {
       return submitWDTModelDataProviderInfo(pm, name, resourceContext, data);
+    }
+    if (jtype.getString().equals(WDTCompositeDataProviderImpl.TYPE_NAME)) {
+      return submitWDTCompositeDataProviderInfo(pm, name, resourceContext, data);
     }
     LOGGER.fine("POST create bad request: bad type");
     return Response.status(Status.BAD_REQUEST.getStatusCode(),
@@ -364,6 +415,44 @@ public class ProviderResource extends BaseResource {
     ).build();
   }
 
+  private static Response submitWDTCompositeDataProviderInfo(
+    ProviderManager pm,
+    String name,
+    ResourceContext resourceContext,
+    JsonObject data
+  ) {
+    if (reservedNames.contains(name)) {
+      LOGGER.fine("POST create reserved name: " + name);
+      return Response.status(
+        Status.BAD_REQUEST.getStatusCode(), "Reserved name").build();
+    }
+    JsonArray jmodels = data.getJsonArray(WDT_MODELS);
+    if ((jmodels == null) || jmodels.isEmpty()) {
+      LOGGER.fine("POST create bad request");
+      return Response.status(
+        Status.BAD_REQUEST.getStatusCode(), "Missing model names").build();
+    }
+    List<String> models = new ArrayList<>(jmodels.size());
+    for (int i = 0; i < jmodels.size(); i++) {
+      String model = jmodels.getString(i);
+      if (!pm.hasProvider(model, WDTModelDataProviderImpl.TYPE_NAME)) {
+        LOGGER.fine("POST create bad request - not found: " + model);
+        return Response.status(
+          Status.BAD_REQUEST.getStatusCode(), "Model not found").build();
+      }
+      models.add(model);
+    }
+    pm.createWDTCompositeDataProvider(name, models);
+    InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
+    return
+      WebAppUtils.addCookieFromContext(
+        resourceContext,
+        Response.status(Status.CREATED)
+          .entity(pm.getJSON(name, ic))
+          .type(MediaType.APPLICATION_JSON)
+      ).build();
+  }
+
   @DELETE
   @Path("/{pathSegments: .+}")
   public Response deleteProvider(
@@ -375,7 +464,8 @@ public class ProviderResource extends BaseResource {
     String typeConstraint = null;
     String nameConstraint = null;
     if (first.equals(AdminServerDataProviderImpl.TYPE_NAME)
-      || first.equals(WDTModelDataProviderImpl.TYPE_NAME)) {
+      || first.equals(WDTModelDataProviderImpl.TYPE_NAME)
+      || first.equals(WDTCompositeDataProviderImpl.TYPE_NAME)) {
       typeConstraint = first;
       nameIndex++;
     }

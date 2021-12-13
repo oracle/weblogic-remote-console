@@ -9,7 +9,7 @@
 /**
  * @module
  */
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../apis/data-operations', '../microservices/provider-management/data-provider-manager', '../microservices/perspective/perspective-manager', '../microservices/perspective/perspective-memory-manager', '../microservices/page-definition/utils', './utils', '../core/runtime', '../core/utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojmodule', 'ojs/ojconveyorbelt'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojmodule', 'ojs/ojconveyorbelt'],
   function(oj, ko, HtmlUtils, DataOperations, DataProviderManager, PerspectiveManager, PerspectiveMemoryManager, PageDefinitionUtils, ViewModelUtils, Runtime, CoreUtils, Logger){
     function LandingPageTemplate(viewParams) {
       const self = this;
@@ -327,7 +327,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../apis/data-operations', 
       this.landingPanelClickHandler = function(event) {
         // The Kiosk will more than likely just be in the
         // way from here on out, so go ahead and hide it.
-        viewParams.signaling.ancillaryContentAreaToggled.dispatch(false);
+        viewParams.signaling.ancillaryContentAreaToggled.dispatch("landing", false);
         // The id attribute with the perspectiveId assigned
         // to it, is on the first child element of the
         // click event's current target. The click event's

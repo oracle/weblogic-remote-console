@@ -31,7 +31,8 @@ class PagePropertyExternalHelpDefImpl implements PagePropertyExternalHelpDef {
         .getPageDefImpl()
         .getPageRepoDefImpl()
         .getBeanRepoDefImpl()
-        .getWeblogicVersion()
+        .getMBeansVersion()
+        .getWebLogicVersion()
         .getMBeanAttributeJavadocUrl(type, attribute);
   }
 

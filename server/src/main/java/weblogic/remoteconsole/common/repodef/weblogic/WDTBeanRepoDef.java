@@ -3,8 +3,6 @@
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
-import java.util.Set;
-
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanChildDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
@@ -18,7 +16,7 @@ import weblogic.remoteconsole.common.repodef.yaml.BeanRepoDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.NormalBeanTypeDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.PseudoBeanTypeDefImpl;
 import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**
  * Defines the bean types for WDT
@@ -35,8 +33,8 @@ public class WDTBeanRepoDef extends WebLogicBeanRepoDef {
     return new String[] { "DomainMBean" };
   }
 
-  public WDTBeanRepoDef(WebLogicVersion weblogicVersion, Set<String> roles) {
-    super(weblogicVersion, roles);
+  public WDTBeanRepoDef(WebLogicMBeansVersion mbeansVersion) {
+    super(mbeansVersion);
     createRootTypeDefImpl();
   }
 

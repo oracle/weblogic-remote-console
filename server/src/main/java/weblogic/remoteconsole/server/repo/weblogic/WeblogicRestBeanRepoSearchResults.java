@@ -153,7 +153,7 @@ class WeblogicRestBeanRepoSearchResults implements BeanReaderRepoSearchResults {
     return false; // singleton child or collection child
   }
 
-  private boolean isHaveExpandedValues(BeanTreePath beanTreePath) {
+  public boolean isHaveExpandedValues(BeanTreePath beanTreePath) {
     if (!getBuilder().isIncludeIsSet()) {
       return false;
     } else {

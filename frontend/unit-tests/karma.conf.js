@@ -16,7 +16,9 @@ module.exports = function (config) {
 
   config.set({
 
-    // base path that will be used to resolve all patterns (eg. files, exclude)
+    // base path that will be used to resolve all patterns (eg. files,
+    // exclude). We're in 'frontend/unit-tests', so '../'
+    // means the 'frontend' directory.
     basePath: '../',
 
     // frameworks to use
@@ -32,7 +34,9 @@ module.exports = function (config) {
       'karma-typescript'
     ],
 
-    // list of files / patterns to load in the browser
+    // list of files / patterns to load in the browser.
+    // baseUrl is the 'frontend' directory, so the paths
+    // used in the patterns are relative to that.
     files: [
       'unit-tests/karma-fixture.conf.js',
 
@@ -41,13 +45,14 @@ module.exports = function (config) {
 
       // .yaml files
       {
-        pattern: 'web/config/**',
+        pattern: 'web/jet-composites/1.0.0/config/**',
         included: false,
         served: true
       },
 
       // Test files
       { pattern: 'unit-tests/specs/**', included: false },
+//      { pattern: 'unit-tests/specs/core/**', included: false },
 
       // .json files for fixtures
       { pattern: 'unit-tests/fixtures/**'},
@@ -69,10 +74,10 @@ module.exports = function (config) {
     ],
 
     proxies: {
-      '/config/': '/base/web/config/',
-      '/base/core/': '/base/web/js/core/',
-      '/base/apis/': '/base/web/js/apis/',
-      '/base/microservices/': '/base/web/js/microservices/',
+      '/config/': '/base/web/js/jet-composites/wrc-frontend/1.0.0/config/',
+      '/base/core/': '/base/web/js/jet-composites/wrc-frontend/1.0.0/core/',
+      '/base/apis/': '/base/web/js/jet-composites/wrc-frontend/1.0.0/apis/',
+      '/base/microservices/': '/base/web/js/jet-composites/wrc-frontend/1.0.0/microservices/',
       '/base/core./baseUrl': '/base/web/js/baseUrl'
     },
     // preprocess matching files before serving them to the browser
@@ -86,10 +91,10 @@ module.exports = function (config) {
 
     preprocessors: {
       'unit-tests/fixtures/**/*.json': ['json_fixtures'],
-      'web/js/core/**/*.js': sourcePreprocessors,
-      'web/js/apis/**/*.js': sourcePreprocessors,
-      'web/js/microservices/**/*.js': sourcePreprocessors,
-      'web/js/viewModels/**/*.js': sourcePreprocessors,
+      'web/js/jet-composites/wrc-frontend/1.0.0/core/**/*.js': sourcePreprocessors,
+      'web/js/jet-composites/wrc-frontend/1.0.0/apis/**/*.js': sourcePreprocessors,
+      'web/js/jet-composites/wrc-frontend/1.0.0/microservices/**/*.js': sourcePreprocessors,
+      'web/js/jet-composites/wrc-frontend/1.0.0/integration/viewModels/**/*.js': sourcePreprocessors,
     },
 
     //karmaTypescriptConfig: {

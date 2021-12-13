@@ -1,4 +1,4 @@
-define(['microservices/page-definition/form-variables', 'core/cfe-errors'],
+define(['wrc-frontend/microservices/page-definition/form-variables', 'wrc-frontend/core/cfe-errors'],
   function (FormVariables, CfeErrors) {
 
     describe("FormVariables Tests", function () {

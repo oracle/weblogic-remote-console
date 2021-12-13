@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
@@ -310,7 +311,10 @@ public class WDTValueConverter {
   private static Map<String, Object> getMapFromProperties(Properties items) {
     Map<String, Object> result = new LinkedHashMap<>();
     if ((items != null) && !items.isEmpty()) {
-      items.forEach((key, val) -> result.put(key.toString(), val));
+      // Sort the Properties keys for predictable updated results...
+      Map<String, Object> sorter = new TreeMap<>();
+      items.forEach((key, val) -> sorter.put(key.toString(), val));
+      sorter.forEach((key, val) -> result.put(key, val));
     }
     return result;
   }

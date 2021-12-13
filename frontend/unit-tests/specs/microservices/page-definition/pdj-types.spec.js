@@ -1,5 +1,5 @@
 // https://www.chaijs.com/
-define(['microservices/page-definition/types', 'sinon'],
+define(['wrc-frontend/microservices/page-definition/types', 'sinon'],
   function (PageDataTypes, sinon) {
 
     describe("PDJ Types Tests", function () {

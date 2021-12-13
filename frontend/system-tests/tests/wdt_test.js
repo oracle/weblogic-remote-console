@@ -92,10 +92,12 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
             await driver.sleep(4800);
             await driver.findElement(By.xpath("//div/ul/li[3]/a/span[2]")).click();
             await driver.sleep(4800);
-
+            console.log("Click WDT Model Tree");
+            await driver.findElement(By.xpath("//*[@id=\"modeling\"]/img")).click();
+            await driver.sleep(4800);
             console.log("Click Landing Page Services");
-            await driver.findElement(
-                By.xpath("//section[@id=\'landing-page-cards\']/div/oj-conveyor-belt/div[4]/div/div[6]/a")).click();
+            //*[@id="landing-page-cards"]/div/oj-conveyor-belt/div[4]/div/div[6]/a
+            await driver.findElement(By.id("Services")).click();
             await driver.sleep(4800);
             console.log("Click Landing Page Services -> JMS Servers");
             await driver.findElement(By.xpath("//span[contains(.,\'JMS Servers\')]")).click();

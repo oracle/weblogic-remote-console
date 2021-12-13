@@ -5,7 +5,7 @@ package weblogic.remoteconsole.common.repodef.weblogic;
 
 import weblogic.remoteconsole.common.repodef.yaml.BeanRepoDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.PageRepoDefImpl;
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**
  * Base class for describing the pages for a WebLogic mbean tree.
@@ -13,29 +13,32 @@ import weblogic.remoteconsole.common.utils.WebLogicVersion;
  * The pages are defined in yaml files under resources/src/main/resources.
  */
 public abstract class WebLogicPageRepoDef extends PageRepoDefImpl {
-  private WebLogicVersion weblogicVersion;
+  private WebLogicMBeansVersion mbeansVersion;
 
   protected WebLogicPageRepoDef(
     String name,
-    WebLogicVersion weblogicVersion,
+    WebLogicMBeansVersion mbeansVersion,
     BeanRepoDefImpl beanRepoDefImpl,
     String navTreeRootTypeName
   ) {
     super(
       name,
       beanRepoDefImpl,
-      new WebLogicYamlReader(weblogicVersion),
+      new WebLogicYamlReader(mbeansVersion.getWebLogicVersion()),
       navTreeRootTypeName
     );
-    this.weblogicVersion = weblogicVersion;
+    this.mbeansVersion = mbeansVersion;
   }
 
-  protected WebLogicVersion getWeblogicVersion() {
-    return this.weblogicVersion;
+  protected WebLogicMBeansVersion getMBeansVersion() {
+    return mbeansVersion;
   }
 
   @Override
   public String getResourceBundleName() {
-    return WebLogicLocalizationUtils.getResourceBundleName(getWeblogicVersion().getDomainVersion());
+    return
+      WebLogicLocalizationUtils.getResourceBundleName(
+        getMBeansVersion().getWebLogicVersion().getDomainVersion()
+      );
   }
 }

@@ -4,25 +4,25 @@
 package weblogic.remoteconsole.common.repodef.weblogic;
 
 import weblogic.remoteconsole.common.repodef.PageDefWalker;
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**
  * This utility class walks all of the pages for a WebLogic version.
  */
 public abstract class WebLogicPageDefWalker extends PageDefWalker {
-  WebLogicVersion weblogicVersion;
+  WebLogicMBeansVersion mbeansVersion;
 
-  protected WebLogicVersion getWebLogicVersion() {
-    return this.weblogicVersion;
+  protected WebLogicMBeansVersion getMBeansVersion() {
+    return this.mbeansVersion;
   }
 
-  protected WebLogicPageDefWalker(WebLogicVersion weblogicVersion) {
-    this.weblogicVersion = weblogicVersion;
+  protected WebLogicPageDefWalker(WebLogicMBeansVersion mbeansVersion) {
+    this.mbeansVersion = mbeansVersion;
   }
 
   protected void walk() {
-    walk(weblogicVersion.findOrCreate(WebLogicRestEditPageRepoDef.class));
-    walk(weblogicVersion.findOrCreate(WebLogicRestDomainRuntimePageRepoDef.class));
+    walk(mbeansVersion.findOrCreate(WebLogicRestEditPageRepoDef.class));
+    walk(mbeansVersion.findOrCreate(WebLogicRestDomainRuntimePageRepoDef.class));
     // Don't walk the server config and WDT page repos since they use the same
     // page definitions as the edit edit and domain runtime page repos.
   }

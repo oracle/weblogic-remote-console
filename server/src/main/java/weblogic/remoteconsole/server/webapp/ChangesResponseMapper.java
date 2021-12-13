@@ -20,7 +20,7 @@ import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.ModifiedBeanProperty;
 import weblogic.remoteconsole.server.repo.RemovedBean;
 import weblogic.remoteconsole.server.repo.Response;
-import weblogic.remoteconsole.server.repo.SettableValue;
+import weblogic.remoteconsole.server.repo.Value;
 
 /**
  * Converts a Response<ChangeManagerStatus> to a JAXRS Response.
@@ -71,16 +71,16 @@ public class ChangesResponseMapper extends ResponseMapper<Changes> {
         beanPath = getPagePath(propMod.getBeanTreePath());
         JsonObjectBuilder propBldr = Json.createObjectBuilder();
         propBldr.add("label", propLabel);
-        SettableValue oldValue = propMod.getOldValue();
+        Value oldValue = propMod.getOldValue();
         if (oldValue != null) {
           JsonObjectBuilder valBldr = Json.createObjectBuilder();
-          addValueToJsonObject(valBldr, oldValue.getValue()); // don't include 'set'
+          addValueToJsonObject(valBldr, Value.unsettableValue(oldValue)); // don't include 'set'
           propBldr.add("oldValue", valBldr);
         }
-        SettableValue newValue = propMod.getNewValue();
+        Value newValue = propMod.getNewValue();
         if (newValue != null) {
           JsonObjectBuilder valBldr = Json.createObjectBuilder();
-          addValueToJsonObject(valBldr, newValue.getValue()); // don't include 'set'
+          addValueToJsonObject(valBldr, Value.unsettableValue(newValue)); // don't include 'set'
           propBldr.add("newValue", valBldr);
         }
         propsBldr.add(propBldr);

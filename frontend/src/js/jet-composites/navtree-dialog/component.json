@@ -1,0 +1,42 @@
+{
+  "name": "navtree-dialog",
+  "version": "1.0.0",
+  "jetVersion": "^10.1.0",
+  "displayName": "WebLogic Server Remote Console (WRC) Navtree Dialog",
+  "description": "GUI for navigating MBean data managed with the WebLogic Server Remote Console (WRC).",
+  "properties": {
+    "perspective": {
+      "description": "viewParams.perspective",
+      "type": "object",
+      "value": {
+        "id": "modeling",
+        "beanTree": "model"
+      }
+    },
+    "beanTree": {
+      "description": "viewParams.beanTree",
+      "type": "object",
+      "value": {
+        "name": "edit",
+        "type": "modeling"
+      }
+    }
+  },
+  "methods": {
+  },
+  "events": {
+    "navtreeResized": {
+      "description": "Triggered when the navtree is resized while docked.",
+      "bubbles": true,
+      "detail": {
+        "value": {
+          "displayName": "newDimensions",
+          "description": "The new dimensions of the navtree dialog,",
+          "type": "object"
+        }
+      }
+    }
+  },
+  "slots": {
+  }
+}

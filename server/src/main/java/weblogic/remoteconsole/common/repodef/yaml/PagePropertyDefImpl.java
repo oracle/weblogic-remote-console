@@ -317,7 +317,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
       // So, there is no external mbean javadoc available for it.
       return;
     }
-    if (getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getWeblogicVersion() == null) {
+    if (getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion() == null) {
       // This property's page repo doesn't support WebLogic mbeans.
       return;
     }

@@ -117,15 +117,15 @@ public class WDTModelBuilder {
     return beanTree;
   }
 
-  private Map<String, Object> getOriginalModel() {
-    return getBeanTree().getWDTModel();
+  private List<Map<String, Object>> getOriginalModels() {
+    return getBeanTree().getWDTModels();
   }
 
   private BeanTypeDef getSecurityProviderBeanTypeDef() {
     return getBeanTree().getSecurityProviderTypeDef();
   }
 
-  private Map<String, List<String>> getUnknownProperties() {
+  private Map<String, Set<String>> getUnknownProperties() {
     return getBeanTree().getUnknownProperties();
   }
 
@@ -140,7 +140,7 @@ public class WDTModelBuilder {
 
     // Setup the new model and copy the original model sections
     model = new LinkedHashMap<>();
-    getOriginalModel().forEach((key, value) -> model.put(key, value));
+    copySectionsFromOriginalModels(model);
 
     // Create each updated section of the new model
     SECTIONS.forEach(section -> model.put(section, new LinkedHashMap<String, Object>()));
@@ -286,20 +286,43 @@ public class WDTModelBuilder {
     return (Map<String, Object>)model.get(APP_DEPLOYMENTS);
   }
 
+  // Copy each of the original models to new model by megering Maps for each model section
+  @SuppressWarnings("unchecked")
+  private void copySectionsFromOriginalModels(Map<String, Object> newModel) {
+    getOriginalModels().forEach(originalModel -> {
+      originalModel.entrySet().stream().forEach(entry -> {
+        // Copy sections from the original that the model builder does not know about...
+        if (!SECTIONS.contains(entry.getKey())) {
+          Object newModelValue = newModel.get(entry.getKey());
+          if (newModelValue == null) {
+            newModel.put(entry.getKey(), entry.getValue());
+          } else {
+            Object orignalModelValue = entry.getValue();
+            if ((newModelValue instanceof Map) && (orignalModelValue instanceof Map)) {
+              ((Map<String, Object>)newModelValue).putAll((Map<String, Object>)orignalModelValue);
+            }
+          }
+        }
+      });
+    });
+  }
+
   // Handle copy of unsupported model settings where the Map of the
-  // unknonwn properties contains a list of settings by model section
+  // unknonwn properties contains the settings per model section
   @SuppressWarnings("unchecked")
   private void copyUnsuportedSettings() {
-    getUnknownProperties().forEach((key, list) -> {
-      Object val = getOriginalModel().get(key);
-      if (val instanceof Map) {
-        Map<String, Object> section = (Map<String, Object>) val;
-        list.forEach(item -> {
-          if (section.containsKey(item)) {
-            getSection(item).put(item, section.get(item));
-          }
-        });
-      }
+    getOriginalModels().forEach(originalModel -> {
+      getUnknownProperties().forEach((key, items) -> {
+        Object val = originalModel.get(key);
+        if (val instanceof Map) {
+          Map<String, Object> section = (Map<String, Object>) val;
+          items.forEach(item -> {
+            if (section.containsKey(item)) {
+              getSection(item).put(item, section.get(item));
+            }
+          });
+        }
+      });
     });
   }
 

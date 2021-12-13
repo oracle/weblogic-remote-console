@@ -15,3 +15,4 @@ require('./tests/interop_test');
 require('./tests/deploy_test');
 //require('./tests/scheduling_test');
 require('./tests/wdt_test');
+require('./tests/helpLink_test');

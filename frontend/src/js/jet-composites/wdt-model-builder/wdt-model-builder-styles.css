@@ -1,0 +1,10 @@
+/*! Copyright (c) 2020, 2021, Oracle and/or its affiliates. All rights reserved. */
+
+wdt-model-builder:not(.oj-complete){
+  visibility: hidden;
+}
+
+#wdt-model-builder-container {
+	min-width: 100vw;
+	min-height: 100vh;
+}

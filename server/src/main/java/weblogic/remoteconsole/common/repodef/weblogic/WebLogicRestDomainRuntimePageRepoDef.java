@@ -3,9 +3,7 @@
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
-import java.util.Set;
-
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.server.providers.Root;
 
 /**
@@ -14,11 +12,11 @@ import weblogic.remoteconsole.server.providers.Root;
  * They're used to monitor and manage all of the servers in the domain.
  */
 public class WebLogicRestDomainRuntimePageRepoDef extends WebLogicPageRepoDef {
-  public WebLogicRestDomainRuntimePageRepoDef(WebLogicVersion version, Set<String> roles) {
+  public WebLogicRestDomainRuntimePageRepoDef(WebLogicMBeansVersion mbeansVersion) {
     super(
       Root.DOMAIN_RUNTIME_NAME,
-      version,
-      version.findOrCreate(WebLogicRuntimeTreeBeanRepoDef.class, roles),
+      mbeansVersion,
+      mbeansVersion.findOrCreate(WebLogicRuntimeTreeBeanRepoDef.class),
       Root.MONITORING_ROOT + "MBean"
     );
   }

@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../core/runtime', '../../microservices/preferences/preferences', '../../core/types', '../../core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojradioset'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojradioset'],
   function(oj, ko, ModuleElementUtils, Runtime, Preferences, CoreTypes) {
     function HeaderTemplate(viewParams){
       var self = this;
@@ -101,13 +101,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../core/runt
           switch(theme){
             case "light":
               ele.style.color = "black";
-              ele = document.getElementById("oracleLogo");
-              if (ele !== null) ele.src = "../images/oracle-logo-red_109x16.png";
               break;
             case "dark":
               ele.style.color = "white";
-              ele = document.getElementById("oracleLogo");
-              if (ele !== null) ele.src = "../images/oracle-logo-wht_109x16.png";
               break;
           }
         }

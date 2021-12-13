@@ -1,4 +1,4 @@
-define(['core/utils'],
+define(['wrc-frontend/core/utils'],
   function (CfeUtils) {
 
     describe("CfeUtils Tests", function () {

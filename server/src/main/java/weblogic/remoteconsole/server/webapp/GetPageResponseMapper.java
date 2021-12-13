@@ -5,6 +5,7 @@ package weblogic.remoteconsole.server.webapp;
 
 import java.util.List;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 
@@ -78,7 +79,10 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     }
     List<OptionsSource> optionsSources = propertyValue.getOptionsSources();
     if (optionsSources != null) {
-      builder.add("optionsSources", optionsSourcesToJson(optionsSources));
+      JsonArray jsonOptionsSources = optionsSourcesToJson(optionsSources).build();
+      if (!jsonOptionsSources.isEmpty()) {
+        builder.add("optionsSources", jsonOptionsSources);
+      }
     }
     return builder;
   }
@@ -186,10 +190,14 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     return builder;
   }
 
-  private JsonArrayBuilder optionsSourcesToJson(List<OptionsSource> optionsSource) {
+  private JsonArrayBuilder optionsSourcesToJson(List<OptionsSource> optionsSources) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
-    for (OptionsSource optionSource : optionsSource) {
-      builder.add(valueToJson(optionSource.getOptionsSource()));
+    for (OptionsSource optionsSource : optionsSources) {
+      // TBD - only return the options source if it's creatable
+      BeanTreePath btp = optionsSource.getOptionsSource();
+      if (btp.isCollection() && btp.getLastSegment().getChildDef().isCreatable()) {
+        builder.add(valueToJson(btp));
+      }
     }
     return builder;
   }

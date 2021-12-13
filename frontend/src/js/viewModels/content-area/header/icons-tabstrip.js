@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['knockout', 'ojs/ojmodule-element-utils', '../../../apis/message-displaying', '../../../core/runtime', '../../../microservices/change-management/change-manager', '../../../microservices/ataglance/ataglance-manager', '../../utils', '../../../core/types', 'ojs/ojmodule-element', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
+define(['knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/ataglance/ataglance-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'ojs/ojmodule-element', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
   function(ko, ModuleElementUtils, MessageDisplaying, Runtime, ChangeManager, AtAGlanceManager, ViewModelUtils, CoreTypes) {
     function AncillaryContentAreaIconsTabstrip(viewParams){
       // Declare reference to instance of the ViewModel
@@ -25,17 +25,6 @@ define(['knockout', 'ojs/ojmodule-element-utils', '../../../apis/message-display
         icons: {
           "ataglance": { iconFile: "ataglance-tabstrip-icon_24x24", tooltip: "At-A-Glance Panel"},
           "shoppingcart": { iconFile: "shopping-cart-empty-tabstrip_24x24", tooltip: "Shopping Cart Viewer"}
-        },
-        dialog1: {
-          position: {
-            at: {horizontal: ko.observable("start"), vertical: ko.observable("top")},
-            offset: {y: ko.observable(50)}
-          },
-          icons: {
-            "detach": {id: "undock", iconFile: "overlay-detach-icon-blk_24x24", tooltip: "Detach"},
-            "reattach": {id: "dock", iconFile: "overlay-reattach-icon-blk_24x24", tooltip: "Re-attach"},
-            "close": {id: "close", iconFile: "close-icon-blk_24x24", tooltip: "Close"}
-          }
         }
       };
 
@@ -65,22 +54,12 @@ define(['knockout', 'ojs/ojmodule-element-utils', '../../../apis/message-display
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.navtreeToggled.add((visible) => {
+        binding = viewParams.signaling.navtreeToggled.add((source, visible) => {
           if (visible) setAncillaryContentAreaVisibility(!visible);
         });
 
         self.signalBindings.push(binding);
-/*
-//MLW
-        binding = viewParams.signaling.modeChanged.add((newMode) => {
-          if (newMode === CoreTypes.Console.RuntimeMode.DETACHED.name) {
-            setAncillaryContentAreaVisibility(false);
-            self.ancillaryContentAreaToggleVisible(false);
-          }
-        });
 
-        self.signalBindings.push(binding);
-*/
       }.bind(this);
 
       this.disconnected = function () {

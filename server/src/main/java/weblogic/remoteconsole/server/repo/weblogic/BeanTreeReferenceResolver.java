@@ -99,9 +99,17 @@ public class BeanTreeReferenceResolver {
   }
 
   /**
+   * Get a List of referenced keys from a BeanTreeEntry reference property
+   * where an empty list will be returned if there is no property value
+   */
+  public static List<String> getReferenceKeys(BeanTreeEntry entry) {
+    return determineReferenceKeys(entry);
+  }
+
+  /**
    * Log the resulting reference resolution based on log level...
    */
-  private void debugLogReferences(List<Object> references) {
+  private static void debugLogReferences(List<Object> references) {
     if ((references != null) && LOGGER.isLoggable(Level.FINEST)) {
       if (references.isEmpty()) {
         LOGGER.finest("ReferenceResolver resolved to: []");
@@ -120,7 +128,7 @@ public class BeanTreeReferenceResolver {
   /**
    * Determine if the deleted bean is being referenced and return the index
    */
-  private int isReferenced(BeanTreePath deleted, BeanTreeEntry reference) {
+  private static int isReferenced(BeanTreePath deleted, BeanTreeEntry reference) {
     int result = -1;
     if (reference.containsReference()) {
       List<Object> refs = reference.getPropertyReference();
@@ -139,7 +147,7 @@ public class BeanTreeReferenceResolver {
    * Remove the deleted bean from the reference value, update the
    * property value and return true when the reference is updated.
    */
-  private boolean removeReferenceValue(BeanTreeEntry reference, int index) {
+  private static boolean removeReferenceValue(BeanTreeEntry reference, int index) {
     // Update the reference based on the index value and the property def...
     if (index >= 0) {
       if (!reference.getBeanPropertyDef().isArray()) {
@@ -174,7 +182,7 @@ public class BeanTreeReferenceResolver {
   /**
    * Determine if the reference path (i.e. identity) and deleted bean are the same...
    */
-  private boolean isSameIdentity(BeanTreePath deleted, BeanTreeEntry reference) {
+  private static boolean isSameIdentity(BeanTreePath deleted, BeanTreeEntry reference) {
     // Get the list of path components...
     List<String> deletedPath = deleted.getPath().getComponents();
     List<String> referencePath = reference.getPath().getComponents();
@@ -199,7 +207,7 @@ public class BeanTreeReferenceResolver {
    * Determine the set of reference keys based on the type and model value
    */
   @SuppressWarnings("unchecked")
-  private List<String> determineReferenceKeys(BeanTreeEntry unresolved) {
+  private static List<String> determineReferenceKeys(BeanTreeEntry unresolved) {
     List<String> keys = new LinkedList<>();
     Object propVal = unresolved.getPropertyValue();
     if (propVal != null) {
@@ -256,7 +264,7 @@ public class BeanTreeReferenceResolver {
   /**
    * Look for the key in the list on bean collections based on the type of the reference
    */
-  private  List<BeanTreeEntry> findReference(String key, BeanTreeEntry unresolved) {
+  private List<BeanTreeEntry> findReference(String key, BeanTreeEntry unresolved) {
     List<BeanTreeEntry> candidates = new LinkedList<>();
     BeanTypeDef refTypeDef = unresolved.getBeanPropertyDef().getReferenceTypeDef();
     for (BeanTreeEntry collection : beanCollections) {
@@ -307,7 +315,7 @@ public class BeanTreeReferenceResolver {
    * Determine the value to use for the reference by normalizing the handling
    * when multiple candidates are found...
    */
-  private Object determineReferenceValue(String key, List<BeanTreeEntry> candidates, BeanTreeEntry unresolved) {
+  private static Object determineReferenceValue(String key, List<BeanTreeEntry> candidates, BeanTreeEntry unresolved) {
     if (candidates.size() == 1) {
       // Resolved to a single entry...
       return candidates.get(0);
@@ -331,7 +339,7 @@ public class BeanTreeReferenceResolver {
    * Determine the closet match to the unresolved entry by walking
    * the path of the candidates to find the best match...
    */
-  private BeanTreeEntry determineCandidate(List<BeanTreeEntry> candidates, BeanTreeEntry unresolved) {
+  private static BeanTreeEntry determineCandidate(List<BeanTreeEntry> candidates, BeanTreeEntry unresolved) {
     int bestMatchLen = 0;
     BeanTreeEntry bestCandidate = null;
     List<BeanTreeEntry> bestCandidates = new LinkedList<>();

@@ -1,4 +1,4 @@
-define(['microservices/project-management/console-project-manager', 'microservices/project-management/console-project', 'microservices/provider-management/data-provider', 'core/utils', 'core/cfe-errors'],
+define(['wrc-frontend/microservices/project-management/console-project-manager', 'wrc-frontend/microservices/project-management/console-project', 'wrc-frontend/microservices/provider-management/data-provider', 'wrc-frontend/core/utils', 'wrc-frontend/core/cfe-errors'],
   function (ConsoleProjectManager, ConsoleProject, DataProvider, CoreUtils, CfeErrors) {
 
     let project = new ConsoleProject(

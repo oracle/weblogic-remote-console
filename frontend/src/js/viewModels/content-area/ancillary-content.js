@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../microservices/perspective/perspective-memory-manager', '../../core/runtime', '../../microservices/change-management/change-manager', '../../microservices/ataglance/ataglance-manager', '../utils', '../../core/types', '../../core/utils', 'ojs/ojmodule-element', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/ataglance/ataglance-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojmodule-element', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
   function(oj, ko, ModuleElementUtils, PerspectiveMemoryManager, Runtime, ChangeManager, AtAGlanceManager, ViewModelUtils, CoreTypes, CoreUtils) {
     function ContentAreaAncillaryContent(viewParams){
       const self = this;
@@ -66,7 +66,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../microserv
         // this module. In fact, the code for the add needs to
         // be moved here physically.
 
-        let binding = viewParams.signaling.ancillaryContentAreaToggled.add((visible) => {
+        let binding = viewParams.signaling.ancillaryContentAreaToggled.add((source, visible) => {
           const currentlyVisible = self.ancillaryContentAreaToggleVisible();
           if (currentlyVisible !== visible) setAncillaryContentAreaVisibility(visible);
         });
@@ -79,7 +79,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../microserv
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.navtreeToggled.add((visible) => {
+        binding = viewParams.signaling.navtreeToggled.add((source, visible) => {
           if (visible) setAncillaryContentAreaVisibility(!visible);
         });
 
@@ -212,7 +212,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', '../../microserv
                 break;
               case "expanded":
                 ele.setAttribute("data-state", "collapsed");
-                minHeight = parseInt(ViewModelUtils.getCustomCssProperty("slideup-popup-min-height"), 10);
+                minHeight = $(window).height() - parseInt(ViewModelUtils.getCustomCssProperty("slideup-popup-min-height"), 10);
                 ViewModelUtils.setCustomCssProperty("slideup-popup-calc-min-height", `${minHeight}px`);
                 break;
             }

@@ -1,0 +1,88 @@
+<!--
+ Copyright (c) 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+  <oj-dialog
+    id="overlayFormDialog"
+    cancel-behavior="icon"
+    drag-affordance="title-bar"
+  >
+    <div slot="body">
+      <div class="oj-flex oj-sm-justify-content-flex-end">
+        <span id="linked-property-label"></span>
+      </div>
+
+      <div id="overlay-toolbar-container" class="oj-flex">
+
+        <div id="form-toolbar-buttons" class="oj-flex-bar">
+          <oj-bind-if test="[[!isWizardForm()]]">
+            <div id="form-toolbar-save-button" class="oj-flex-bar-start">
+              <oj-button id="[[i18n.buttons.save.id]]" on-oj-action="[[onSave]]" chroming="borderless"
+                 disabled="[[i18n.buttons.save.disabled()]]">
+                <img class="button-icon" slot="startIcon"
+                   data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.save.iconFile() + '.png'}" />
+                <span class="button-label">
+                  <oj-bind-text value="[[i18n.buttons.save.label()]]"></oj-bind-text>
+                </span>
+              </oj-button>
+            </div>
+          </oj-bind-if>
+
+          <oj-bind-if test="[[isWizardForm()]]">
+            <oj-button id="[[i18n.buttons.finish.id]]" on-oj-action="[[finishAction]]" chroming="borderless"
+               disabled="[[i18n.buttons.finish.disabled]]">
+              <img class="button-icon" slot="startIcon"
+                data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.finish.iconFile + '.png'}" />
+              <span class="button-label">
+                <oj-bind-text value="[[i18n.buttons.finish.label]]"></oj-bind-text>
+              </span>
+            </oj-button>
+          </oj-bind-if>
+
+        </div>
+
+        <div id="form-toolbar-icons" class="oj-flex-item">
+          <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end cfe-flex-items-pad">
+
+            <div id="page-help-toolbar-icon" class="oj-flex-item">
+              <a on-click="[[helpPageClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.help.tooltip}">
+                <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png'}" />
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="intro" class="cfe-table-form-instructions">
+        <oj-bind-dom config="[[introductionHTML]]" />
+      </div>
+
+      <div id="overlay-container" class="cfe-table-form-content">
+        <!--
+          FortifyIssueSuppression Often Misused: File Upload
+        -->
+        <input class="cfe-file-chooser" id="file-chooser" type="file"/>
+
+        <oj-bind-if test="[[!showHelp()]]">
+          <oj-bind-dom label-edge="inside" config="[[ overlayFormDom ]]" />
+        </oj-bind-if>
+        <oj-bind-if test="[[showHelp()]]">
+          <oj-table
+            id='help-table'
+            data='[[helpDataProvider]]'
+            scroll-policy='loadMoreOnScroll'
+            scroll-policy-options='{"fetchSize": 10}'
+            columns-default='{"sortable": "disabled", "resizable":"disabled"}'
+            columns='[[tableHelpColumns]]'
+          >
+            <template slot="domTemplate" data-oj-as="cell">
+              <oj-bind-dom config="[[cell.data]]" />
+            </template>
+          </oj-table>
+          <oj-bind-dom config="[[helpFooterDom]]" />
+        </oj-bind-if>
+      </div>
+
+    </div>
+  </oj-dialog>

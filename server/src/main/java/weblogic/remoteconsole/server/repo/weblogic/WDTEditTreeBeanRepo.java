@@ -4,11 +4,9 @@
 package weblogic.remoteconsole.server.repo.weblogic;
 
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -21,35 +19,33 @@ import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.Localizer;
 import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.server.providers.WDTModelDataProvider;
 import weblogic.remoteconsole.server.repo.BeanEditorRepo;
 import weblogic.remoteconsole.server.repo.BeanPropertyValue;
 import weblogic.remoteconsole.server.repo.BeanPropertyValues;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
-import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
-import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
+import weblogic.remoteconsole.server.repo.DownloadBeanRepo;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.ReferenceAsReferencesValue;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
-import weblogic.remoteconsole.server.repo.StringValue;
-import weblogic.remoteconsole.server.repo.UnknownValue;
-import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
 
 /**
- * WDT model based implementation of a BeanRepo that implements BeanReaderRepo.
+ * WDT model based implementation of a BeanRepo that implements BeanEditorRepo.
  * <p>
  * WDTEditTreeBeanRepo first creates an in memory edit bean tree and then uses
- * the bean tree to walk the BeanTreePath and return Value objects.
+ * the bean tree to walk the BeanTreePath and return Value objects or to update
+ * the bean tree from Value objects.
  * <p>
  * The WDTModelDataProvider parses the YAML into the Map and the BeanTreeBuilder
  * is used to walk the Map using the bean type information to create the bean tree.
  * <p>
+ * The WDTModelBuilder is used create a new model from the bean tree in YAML or JSON.
+ * <p>
  */
-public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo {
+public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, DownloadBeanRepo {
   private static final Logger LOGGER = Logger.getLogger(WDTEditTreeBeanRepo.class.getName());
   private static final String DOMAIN = "Domain";
 
@@ -62,8 +58,8 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo {
   // The cached JSON factory
   private JsonWriterFactory writerFactory = null;
 
-  public WDTEditTreeBeanRepo(WebLogicVersion version, Map<String, Object> model, InvocationContext ic) {
-    super(version);
+  public WDTEditTreeBeanRepo(WebLogicMBeansVersion mbeansVersion, Map<String, Object> model, InvocationContext ic) {
+    super(mbeansVersion);
 
     // Setup the bean tree used to walk a BeanTreePath and return Value objects...
     // The model was parsed into memory from the WDTModelDataProvider
@@ -102,8 +98,11 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo {
     }
   }
 
-  // Write the WDT model by using the WDT model builder
-  public void writeWDTModel(Writer writer, InvocationContext ic) {
+  /**
+   * Handle download for the DownloadBeanRepo by writing the WDT model using the WDT model builder
+   */
+  @Override
+  public void download(Writer writer, InvocationContext ic) {
     if (beanTree != null) {
       // Build the model from the bean tree...
       Map<String, Object> model = null;
@@ -166,244 +165,19 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo {
   }
 
   /**
-   * Return a BeanReaderRepoSearchBuilder where the results are backed by the WDT model
+   * Handle read for the BeanReaderRepo by returning a BeanReaderRepoSearchBuilder backed by the bean tree
    */
   @Override  
   public BeanReaderRepoSearchBuilder createSearchBuilder(InvocationContext invocationContext, boolean includeIsSet) {
     LOGGER.fine("WDT: WDTEditTreeBeanRepo createSearchBuilder() "
                  + invocationContext.getBeanTreePath()
                  + " - includeSet: " + includeIsSet);
-    return new WDTBeanReaderRepoSearchBuilder(beanTree, includeIsSet);
+    return new WDTBeanRepoSearchBuilder(beanTree, includeIsSet);
   }
 
   /**
-   * The implementation of BeanReaderRepoSearchBuilder returns the in memory bean tree...
+   * Handle udpate for the BeanEditorRepo on the bean tree
    */
-  class WDTBeanReaderRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
-    private boolean includeIsSet = true;
-    private BeanTree beanTree = null;
-
-    public WDTBeanReaderRepoSearchBuilder(BeanTree beanTree, boolean includeIsSet) {
-      this.beanTree = beanTree;
-      this.includeIsSet = includeIsSet;
-    }
-
-    @Override
-    public void addProperty(BeanTreePath beanTreePath, BeanPropertyDef propertyDef) {
-    }
-
-    /**
-     * Return a response pointing at the in memory bean tree
-     */
-    @Override
-    public Response<BeanReaderRepoSearchResults> search() {
-      LOGGER.finest("WDT: WDTEditTreeBeanRepo search()");
-      Response<BeanReaderRepoSearchResults> response = new Response<>();
-
-      // IFF the bean tree is not supplied then return a not found response
-      if (beanTree == null) {
-        return response.setNotFound();
-      }
-
-      // Create the search results
-      WDTBeanReaderRepoSearchResults results = new WDTBeanReaderRepoSearchResults(beanTree, includeIsSet);
-
-      // Return the results...
-      return response.setSuccess(results);
-    }
-  }
-
-  class WDTBeanReaderRepoSearchResults implements BeanReaderRepoSearchResults {
-    private boolean includeIsSet = true;
-    private BeanTree beanTree = null;
-
-    // Lazy cache of settings used for the default value computation
-    boolean modeValuesResolved = false;
-    boolean secureModeValue = false;
-    boolean productionModeValue = false;
-    BeanTreeEntry secureMode = null;
-    BeanTreeEntry productionMode = null;
-
-    public WDTBeanReaderRepoSearchResults(
-      BeanTree beanTree,
-      boolean includeIsSet
-    ) {
-      this.beanTree = beanTree;
-      this.includeIsSet = includeIsSet;
-    }
-
-    @Override
-    public BeanSearchResults getBean(BeanTreePath beanTreePath) {
-      LOGGER.fine("WDT: BeanReaderRepoSearchResults getBean(): " + beanTreePath);
-      if (isCollection(beanTreePath)) {
-        throw new AssertionError("WDT: getBean() does not return collections: " + beanTreePath);
-      }
-      BeanTreeEntry entry = beanTree.getBeanTreeEntry(beanTreePath);
-      if (entry == null) {
-        return null;
-      }
-      if (entry.isBeanCollection()) {
-        throw new AssertionError("WDT: Error getBean() found a bean collection: " + entry);
-      }
-      return new WDTBeanSearchResults(this, beanTreePath, entry, includeIsSet);
-    }
-
-    @Override
-    public List<BeanSearchResults> getUnsortedCollection(BeanTreePath beanTreePath) {
-      LOGGER.fine("WDT: BeanReaderRepoSearchResults getUnsortedCollection(): " + beanTreePath);
-      if (!isCollection(beanTreePath)) {
-        throw new AssertionError("WDT: getUnsortedCollection() cannot return a single bean: " + beanTreePath);
-      }
-      BeanTreeEntry entry = beanTree.getBeanTreeEntry(beanTreePath);
-      if (entry == null) {
-        return null;
-      }
-      if (entry.isBean()) {
-        throw new AssertionError("WDT: Error getUnsortedCollection() found a bean: " + entry);
-      }
-      List<BeanSearchResults> result = new ArrayList<>();
-      Set<String> items = entry.getKeySet();
-      for (String item : items) {
-        BeanTreeEntry instance = entry.getBeanTreeEntry(item);
-        result.add(new WDTBeanSearchResults(this, instance.getBeanTreePath(), instance, includeIsSet));
-      }
-      return result;
-    }
-
-    // Determine if the bean tree path is a collection
-    private boolean isCollection(BeanTreePath beanTreePath) {
-      if (beanTreePath.getLastSegment().getChildDef().isCollection()) {
-        if (!beanTreePath.getLastSegment().isKeySet()) {
-          return true;
-        }
-      }
-      return false; // singleton child or collection child
-    }
-
-    // Obtain the defaulted value for a property based on production and secure mode settings
-    Value getDefaultValue(BeanPropertyDef propertyDef) {
-      // Cache the current values for secure and production mode...
-      if (!modeValuesResolved) {
-        // Get each mode and when both are set, populate the boolean values...
-        secureMode = beanTree.getSecureModeSetting();
-        productionMode = beanTree.getProductionModeSetting();
-        if ((productionMode != null) && (secureMode != null)) {
-          secureModeValue = WDTValueConverter.getBooleanFromObject(secureMode.getPropertyValue());
-          productionModeValue = WDTValueConverter.getBooleanFromObject(productionMode.getPropertyValue());
-        }
-        modeValuesResolved = true;
-      }
-
-      // IFF both modes are set then return the default value based on
-      // these settings otherwise use the alternate defaulting logic...
-      if ((productionMode != null) && (secureMode != null)) {
-        return propertyDef.getDefaultValue(secureModeValue, productionModeValue);
-      } else {
-        return propertyDef.getDefaultValue();
-      }
-    }
-  }
-
-  class WDTBeanSearchResults implements BeanSearchResults {
-    private WDTBeanReaderRepoSearchResults results;
-    private BeanTreePath beanTreePath;
-    private BeanTreeEntry beanTreeEntry;
-    private boolean includeIsSet;
-
-    public WDTBeanSearchResults(
-      WDTBeanReaderRepoSearchResults results,
-      BeanTreePath beanTreePath,
-      BeanTreeEntry beanTreeEntry,
-      boolean includeIsSet
-    ) {
-      this.results = results;
-      this.beanTreePath = beanTreePath;
-      this.beanTreeEntry = beanTreeEntry;
-      this.includeIsSet = includeIsSet;
-    }
-
-    @Override public BeanReaderRepoSearchResults getSearchResults() {
-      return results;
-    }
-
-    @Override public BeanTreePath getBeanTreePath() {
-      return beanTreePath;
-    }
-
-    private BeanTreeEntry getBeanTreeEntry() {
-      return beanTreeEntry;
-    }
-
-    private boolean isIncludeIsSet() {
-      return includeIsSet;
-    }
-
-    @Override
-    public Value getUnsortedValue(BeanPropertyDef propertyDef) {
-      LOGGER.fine("WDT: BeanSearchResults getUnsortedValue() on " + getBeanTreePath() + " for: " + propertyDef);
-
-      // Check property to see if the property is the identity
-      // WebLogicRestBeanSearchResults explictly sets the identity property as 'unset' (i.e. false)
-      if (propertyDef.isIdentity()) {
-        return getReturnValue(getBeanTreePath(), false);
-      }
-
-      // Check property to see if the property is the key which is implied from the model
-      if (BeanTree.isKey(getBeanTreePath(), propertyDef)) {
-        return getReturnValue(new StringValue(getBeanTreeEntry().getKey()), true);
-      }
-
-      // The property will have a relative path from the bean instance
-      Path propertyPath = propertyDef.getPropertyPath();
-      BeanTreeEntry value = BeanTree.getProperty(getBeanTreeEntry(), propertyPath);
-      LOGGER.fine("WDT: BeanSearchResults getUnsortedValue() lookup found value: " + value);
-
-      // Convert the model value to the backend value type...
-      // If the value is in the model then the state is 'set'
-      boolean isPropertySet = (value != null);
-      Value propertyValue = getValueOrDefault(value, propertyDef);
-      if (propertyValue != null) {
-        propertyValue = getReturnValue(propertyValue, isPropertySet);
-      } else {
-        propertyValue = getUnknownValue(isPropertySet);
-      }
-      LOGGER.fine("WDT: BeanSearchResults getUnsortedValue() returning property value: " + propertyValue);
-      return propertyValue;
-    }
-
-    // Get the Value to return based on the SearchBuilder 'includeIsSet' flag...
-    private Value getReturnValue(Value value, boolean set) {
-      Value result = value;
-      if ((value != null) && isIncludeIsSet()) {
-        result = new SettableValue(value, set);
-      }
-      return result;
-    }
-
-    // Get the UnknownValue to return based on the SearchBuilder 'includeIsSet' flag...
-    private Value getUnknownValue(boolean set) {
-      Value result = UnknownValue.INSTANCE;
-      if (isIncludeIsSet()) {
-        result = new SettableValue(result, set);
-      }
-      return result;
-    }
-
-    // Get the Value type based on the property def or the default value when NULL...
-    private Value getValueOrDefault(BeanTreeEntry value, BeanPropertyDef propertyDef) {
-      if (value == null) {
-        // Check if the property needs to be converted for ReferenceAsReferences
-        Value defaultValue = results.getDefaultValue(propertyDef);
-        if (propertyDef.isReferenceAsReferences() && (defaultValue != null) && defaultValue.isArray()) {
-          List<Value> values = defaultValue.asArray().getValues();
-          defaultValue = new ReferenceAsReferencesValue(values);
-        }
-        return defaultValue;
-      }
-      return WDTValueConverter.getValueType(value, propertyDef);
-    }
-  }
-
   @Override
   public Response<Void> updateBean(InvocationContext invocationContext, BeanPropertyValues propertyValues) {
     LOGGER.fine("WDT: WDTEditTreeBeanRepo updateBean() "
@@ -482,6 +256,9 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo {
     return response;
   }
 
+  /**
+   * Handle create for the BeanEditorRepo on the bean tree
+   */
   @Override
   public Response<Void> createBean(InvocationContext invocationContext, BeanPropertyValues propertyValues) {
     LOGGER.fine("WDT: WDTEditTreeBeanRepo createBean() "
@@ -597,6 +374,9 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo {
     return parent.getBeanTreeEntry(name);
   }
 
+  /**
+   * Handle delete for the BeanEditorRepo on the bean tree
+   */
   @Override
   public Response<Void> deleteBean(InvocationContext invocationContext, BeanTreePath beanTreePath) {
     LOGGER.fine("WDT: WDTEditTreeBeanRepo deleteBean() "

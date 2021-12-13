@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../microservices/perspective/perspective-manager', '../microservices/provider-management/data-provider-manager', '../core/runtime', '../core/types', '../core/utils', 'ojs/ojknockout', 'ojs/ojbinddom'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojbinddom'],
   function (oj, ko, HtmlUtils, PerspectiveManager, DataProviderManager, Runtime, CoreTypes, CoreUtils) {
     function GalleryTabTemplate(viewParams) {
       const self = this;
@@ -133,7 +133,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../microservices/perspecti
 
           // The Kiosk will more than likely just be in the
           // way going forward, so go ahead and collapse it.
-          viewParams.signaling.ancillaryContentAreaToggled.dispatch(false);
+          viewParams.signaling.ancillaryContentAreaToggled.dispatch("gallery", false);
         }
       };
 

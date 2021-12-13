@@ -19,8 +19,8 @@ import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
+import weblogic.remoteconsole.server.repo.DownloadBeanRepo;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.weblogic.WDTEditTreeBeanRepo;
 
 /**
  * Top level JAXRS resource for a page repo of a provider.
@@ -87,6 +87,8 @@ public class PageRepoResource extends BaseResource {
     } else if (beanTreePath.isCollectionChild()) {
       if (beanTreePath.isDeletable()) {
         return new DeletableCollectionChildBeanResource();
+      } else if (beanTreePath.isEditable()) {
+        return new EditableCollectionChildBeanResource();
       } else {
         return new ReadOnlyCollectionChildBeanResource();
       }
@@ -140,7 +142,7 @@ public class PageRepoResource extends BaseResource {
   @Path("download")
   public Object getDownloadResource() {
     BeanRepo beanRepo = getInvocationContext().getPageRepo().getBeanRepo();
-    if (!(beanRepo instanceof WDTEditTreeBeanRepo)) {
+    if (!(beanRepo instanceof DownloadBeanRepo)) {
       LOGGER.info(
         "BAD REQUEST: BeanRepo does not support download");
       throw new WebApplicationException(Response.status(

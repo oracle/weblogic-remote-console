@@ -17,7 +17,7 @@ import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRuntimeTreeBeanRepoDef;
 import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
@@ -40,9 +40,9 @@ public class WebLogicFileRuntimeTreeBeanRepo extends WebLogicRestBeanRepo {
   // The search results as obtained from the file
   private JsonObject searchResults = null;
 
-  public WebLogicFileRuntimeTreeBeanRepo(WebLogicVersion version, String filename) {
+  public WebLogicFileRuntimeTreeBeanRepo(WebLogicMBeansVersion mbeansVersion, String filename) {
     super(
-      version.findOrCreate(WebLogicRuntimeTreeBeanRepoDef.class),
+      mbeansVersion.findOrCreate(WebLogicRuntimeTreeBeanRepoDef.class),
       rootBeanNameToWebLogicRestTreeNameMap
     );
 

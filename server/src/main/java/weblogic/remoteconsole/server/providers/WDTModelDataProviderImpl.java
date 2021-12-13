@@ -15,6 +15,8 @@ import javax.json.JsonObjectBuilder;
 import org.yaml.snakeyaml.Yaml;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
+import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.weblogic.WDTModelBuilder;
 import weblogic.remoteconsole.server.repo.weblogic.WDTPageRepo;
@@ -118,7 +120,16 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
         // Only provide error message when start fails...
         throw new FailedRequestException(getNoModelMessage(ic));
       }
-      editRoot.setPageRepo(new WDTPageRepo("14.1.1.0.0", model, ic));
+      editRoot.setPageRepo(
+        new WDTPageRepo(
+          WebLogicMBeansVersions.getVersion(
+            WebLogicVersions.getCurrentVersion(),
+            false // supports model tokens
+          ),
+          model,
+          ic
+        )
+      );
       lastMessage = null;
     }
     return true;

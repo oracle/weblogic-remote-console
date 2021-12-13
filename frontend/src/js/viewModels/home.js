@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojcontext', '../core/utils', 'ojs/ojmodule-element', 'ojs/ojknockout',  'ojs/ojnavigationlist'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojcontext', 'wrc-frontend/core/utils', 'ojs/ojmodule-element', 'ojs/ojknockout',  'ojs/ojnavigationlist'],
   function(oj, ko, ModuleElementUtils, Context, CoreUtils) {
     function HomeViewModel(viewParams) {
       const self = this;

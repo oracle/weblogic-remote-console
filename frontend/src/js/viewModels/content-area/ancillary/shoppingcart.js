@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', '../../../core/utils/keyset-utils', '../../../core/runtime', '../../../microservices/change-management/change-manager', '../../../microservices/page-definition/utils', '../../utils', '../../../core/utils', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/core/utils/keyset-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander'],
   function(oj, ko, ArrayDataProvider, HtmlUtils, keySet, keySetUtils, Runtime, ChangeManager, PageDefinitionUtils, ViewModelUtils, CoreUtils, Logger){
     function ShoppingCartTabTemplate(viewParams) {
       var self = this;
@@ -157,16 +157,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
               const ele = document.getElementById(tabButton.id);
               switch (tabButton.id) {
                 case "discard-tab-button":
-                  if (ele !== null) ele.src = "../../images/discard-changes-" + (tabButton.disabled ? "disabled" : "blk") + "_24x24.png";
+                  if (ele !== null) ele.src = "js/jet-composites/wrc-frontend/1.0.0/images/discard-changes-" + (tabButton.disabled ? "disabled" : "blk") + "_24x24.png";
                   break;
                 case "commit-tab-button":
-                  if (ele !== null) ele.src = "../../images/commit-changes-" + (tabButton.disabled ? "disabled" : "blk") + "_24x24.png";
+                  if (ele !== null) ele.src = "js/jet-composites/wrc-frontend/1.0.0/images/commit-changes-" + (tabButton.disabled ? "disabled" : "blk") + "_24x24.png";
                   break;
               }
             });
 
             const ele = document.getElementById("shoppingcart-tab");
-            if (ele !== null) ele.src = "../../images/shopping-cart-" + (changeManager.hasChanges ? "non-empty" : "empty") + "-tabstrip_24x24.png";
+            if (ele !== null) ele.src = "js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-" + (changeManager.hasChanges ? "non-empty" : "empty") + "-tabstrip_24x24.png";
           }
           else {
             viewParams.onTabStripContentChanged(ChangeManager.Entity.SHOPPING_CART.name, false);

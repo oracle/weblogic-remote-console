@@ -1,0 +1,13 @@
+{
+  "name": "apis",
+  "pack": "wrc-frontend",
+  "displayName": "wrc-frontend/apis",
+  "description": "A JET Resource component containing modules formerly located under src/js/apis.",
+  "type": "resource",
+  "version": "1.0.0",
+  "jetVersion": "^10.1.0",
+  "publicModules": [
+    "data-operations",
+    "message-displaying"
+  ]
+}

@@ -1,4 +1,4 @@
-define(['core/cbe-types'],
+define(['wrc-frontend/core/cbe-types'],
   function (CbeTypes) {
 
     describe("CbeTypes Tests", function () {

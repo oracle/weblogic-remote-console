@@ -56,7 +56,8 @@ require.config({
     "normalize": "libs/require-css/normalize",
     "sinon": "../../node_modules/sinon/pkg/sinon",
     "persist": "libs/persist/debug",
-    "promise": "libs/es6-promise/es6-promise"
+    "promise": "libs/es6-promise/es6-promise",
+    "wrc-frontend":"jet-composites/wrc-frontend/1.0.0"
   },
 
   // dynamically load all test files

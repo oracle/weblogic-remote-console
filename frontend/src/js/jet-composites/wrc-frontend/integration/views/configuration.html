@@ -1,0 +1,60 @@
+<!--
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div id="configuration-table-form-container" class="cfe-table-form-container">
+
+  <div id="table-form-header" class="oj-flex oj-sm-flex-direction-column">
+
+    <oj-bind-dom config="[[breadcrumbs.html]]"></oj-bind-dom>
+
+    <div id="beanpath-history-container" class="oj-flex-item">
+
+      <div id="beanpath-history" class="oj-flex oj-md-flex-items-initial oj-md-flex-wrap-nowrap">
+        <div class="oj-flex-item">
+          <img id="beanpath-history-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.history.iconFile + '.png', 'title': i18n.icons.history.tooltip}"/>
+        </div>
+
+        <div id="beanpath-container" class="oj-flex-item">
+          <oj-combobox-one
+            id="beanpath"
+            options="{{beanPathHistoryOptions}}"
+            value='{{selectedBeanPath}}'
+            readonly="false"
+          >
+          </oj-combobox-one>
+        </div>
+        <div id="beanpath-history-count" class="oj-flex-item oj-md-align-self-center">
+          <oj-bind-text value="[[beanPathHistoryCount()]]"></oj-bind-text>
+        </div>
+        <div id="beanpath-history-moremenu-container" class="oj-flex-item oj-md-align-self-center">
+          <a
+            id="moreMenuLauncher"
+            href="#" tabindex="-1"
+            on-click="[[launchMoreMenu]]"
+          >
+            <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/more-vertical-blk-24x24.png'}"/>
+          </a>
+          <oj-menu
+            id="moreMenu"
+            aria-labelledby="moreMenuLauncher"
+            on-oj-action="[[moreMenuClickListener]]"
+            open-options.launcher="moreMenuLauncher"
+          >
+            <oj-option id="clear" value="clear">
+              <img id="[[i18n.menus.history.clear.id]]" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.menus.history.clear.iconFile + '.png'}"/>
+              <span class="button-label"><oj-bind-text value="[[i18n.menus.history.clear.value]]"></oj-bind-text></span>
+            </oj-option>
+          </oj-menu>
+        </div>
+      </div>
+
+    </div>  <!-- closing div for id="beanpath-history" -->
+
+  </div>  <!-- closing div for id="table-form-header" -->
+
+  <!-- show either the table or the form -->
+  <div>
+    <oj-module config="[[wlsModuleConfig]]"></oj-module>
+  </div>
+</div>

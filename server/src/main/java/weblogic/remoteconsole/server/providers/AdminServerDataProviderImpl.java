@@ -6,15 +6,13 @@ package weblogic.remoteconsole.server.providers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import weblogic.remoteconsole.common.repodef.LocalizableString;
-import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
@@ -33,14 +31,13 @@ import weblogic.remoteconsole.server.webapp.UriUtils;
  * on the ConnectionManager class to do most of its work.
 */
 public class AdminServerDataProviderImpl implements AdminServerDataProvider {
-  private static final Logger LOGGER = Logger.getLogger(AdminServerDataProviderImpl.class.getName());
   public static final String TYPE_NAME = "AdminServerConnection";
   private static final ConnectionManager cm = ConsoleBackendRuntime.INSTANCE.getConnectionManager();
   private String connectionId;
   private String name;
   private String url;
   private String authorizationHeader;
-  private Set<String> connectionUserRoles;
+  private WebLogicMBeansVersion mbeansVersion;
   private String connectionWarning;
   private String lastMessage;
   private static final long connectTimeout =
@@ -89,9 +86,6 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       null, // no change manager
       true  // it is read only
     );
-    roots.put(editRoot.getName(), editRoot);
-    roots.put(viewRoot.getName(), viewRoot);
-    roots.put(monitoringRoot.getName(), monitoringRoot);
   }
 
   @Override
@@ -145,7 +139,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   @Override
-  public boolean start(InvocationContext ic) {
+  public synchronized boolean start(InvocationContext ic) {
     ic.setProvider(this);
     Connection connection = null;
     if (connectionId == null) {
@@ -156,12 +150,20 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         isAnyConnectionAttemptSuccessful = true;
         connectionId = result.getConnectionId();
         connection = cm.getConnection(connectionId);
-        connectionUserRoles = cm.getConnectionUserRoles(connection);
-        connectionWarning = checkConnectionUserIsAdministrator(ic);
-        String version = connection.getDomainVersion();
-        editRoot.setPageRepo(new WebLogicRestEditPageRepo(version, connectionUserRoles));
-        viewRoot.setPageRepo(new WebLogicRestServerConfigPageRepo(version, connectionUserRoles));
-        monitoringRoot.setPageRepo(new WebLogicRestDomainRuntimePageRepo(version, connectionUserRoles));
+        mbeansVersion = cm.getWebLogicMBeansVersion(connection);
+        editRoot.setPageRepo(new WebLogicRestEditPageRepo(mbeansVersion));
+        viewRoot.setPageRepo(new WebLogicRestServerConfigPageRepo(mbeansVersion));
+        monitoringRoot.setPageRepo(new WebLogicRestDomainRuntimePageRepo(mbeansVersion));
+        roots.clear();
+        roots.put(viewRoot.getName(), viewRoot);
+        roots.put(monitoringRoot.getName(), monitoringRoot);
+        Set<String> roles = mbeansVersion.getRoles();
+        if (roles.contains(WebLogicRoles.ADMIN) || roles.contains(WebLogicRoles.DEPLOYER)) {
+          // Admins and deployers are allowed to edit the configuration
+          roots.put(editRoot.getName(), editRoot);
+        } else {
+          // Other users are not allowed to edit the configuration
+        }
         lastMessage = null;
       } else {
         isLastConnectionAttemptSuccessful = false;
@@ -216,45 +218,31 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         ret.add("messages", createMessages(lastMessage));
       }
     }
-    JsonArrayBuilder builder = Json.createArrayBuilder();
-    if (connection != null) {
-      // We've successfully connected to the wls domain. Send back the roots.
-      for (Root root : getRoots().values()) {
-        if (supportsRoot(root)) {
+    {
+      JsonArrayBuilder builder = Json.createArrayBuilder();
+      if (connection != null) {
+        // We've successfully connected to the wls domain. Send back the roots.
+        for (Root root : getRoots().values()) {
           builder.add(root.toJSON(ic));
         }
       }
+      ret.add("roots", builder);
     }
-    ret.add("roots", builder);
-    ret.add("mode", "standalone");
+    {
+      JsonArrayBuilder builder = Json.createArrayBuilder();
+      if (mbeansVersion != null) {
+        // We've know the user's roles.  Send them back.
+        for (String role : mbeansVersion.getRoles()) {
+          builder.add(role);
+        }
+      }
+      ret.add("roles", builder);
+    }
     return ret.build();
-  }
-
-  private boolean supportsRoot(Root root) {
-    if (root != editRoot) {
-      // the other roots are always supported
-      return true;
-    }
-    if (connectionUserRoles.contains(WebLogicRoles.ADMIN) || connectionUserRoles.contains(WebLogicRoles.DEPLOYER)) {
-      // Admins and deployers are allowed to edit the configuration
-      return true;
-    }
-    // Other users are not allowed to edit the configuration
-    return false;
   }
 
   @Override
   public boolean isValidPath(String path) {
     return true;
-  }
-
-  private String checkConnectionUserIsAdministrator(InvocationContext ic) {
-    if (connectionUserRoles != null && !connectionUserRoles.contains(WebLogicRoles.ADMIN)) {
-      LocalizableString message = LocalizedConstants.USER_NOT_ADMIN;
-      LOGGER.fine(message.getEnglishText());
-      return ic.getLocalizer().localizeString(message);
-    }
-    // Either the connection user is an Admin or we could't find out the user's roles.
-    return null;
   }
 }

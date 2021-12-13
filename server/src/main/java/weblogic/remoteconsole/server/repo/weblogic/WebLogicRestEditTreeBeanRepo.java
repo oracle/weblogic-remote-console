@@ -5,7 +5,6 @@ package weblogic.remoteconsole.server.repo.weblogic;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -17,7 +16,7 @@ import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.file.StreamDataBodyPart;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicEditTreeBeanRepoDef;
 import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.server.repo.BeanPropertyValue;
 import weblogic.remoteconsole.server.repo.BeanPropertyValues;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
@@ -49,9 +48,9 @@ public class WebLogicRestEditTreeBeanRepo extends WebLogicRestBeanRepo implement
     return ic.getPageRepo().getBeanRepo();
   }
 
-  public WebLogicRestEditTreeBeanRepo(final WebLogicVersion version, Set<String> roles) {
+  public WebLogicRestEditTreeBeanRepo(final WebLogicMBeansVersion mbeansVersion) {
     super(
-      version.findOrCreate(WebLogicEditTreeBeanRepoDef.class, roles),
+      mbeansVersion.findOrCreate(WebLogicEditTreeBeanRepoDef.class),
       rootBeanNameToWebLogicRestTreeNameMap
     );
   }

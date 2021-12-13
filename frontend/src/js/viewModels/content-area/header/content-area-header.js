@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', "knockout", 'ojs/ojarraydataprovider', 'ojs/ojmodule-element-utils', '../../../core/runtime', '../../../core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule'],
+define(['ojs/ojcore', "knockout", 'ojs/ojarraydataprovider', 'ojs/ojmodule-element-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule'],
   function(oj, ko, ArrayDataProvider, ModuleElementUtils, Runtime, CoreUtils) {
     function ContentAreaHeaderTemplate(viewParams){
       const self = this;

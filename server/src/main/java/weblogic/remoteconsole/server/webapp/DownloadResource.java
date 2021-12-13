@@ -15,28 +15,29 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
 import weblogic.remoteconsole.server.repo.BeanRepo;
-import weblogic.remoteconsole.server.repo.weblogic.WDTEditTreeBeanRepo;
+import weblogic.remoteconsole.server.repo.DownloadBeanRepo;
 
 /**
- * Download the current state of the WDT model.
+ * Download the current state of the BeanRepo.
  */
 public class DownloadResource extends BaseResource {
   @GET
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  public Response getWDTModel() {
-    BeanRepo beanRepo = getInvocationContext().getPageRepo().getBeanRepo();
-    if (!(beanRepo instanceof WDTEditTreeBeanRepo)) {
-      // No content when the WDT repo is not found...
+  public Response getDownloadContent() {
+    // Get the BeanRepo and determine if download is supported...
+    BeanRepo repo = getInvocationContext().getPageRepo().getBeanRepo();
+    if (!(repo instanceof DownloadBeanRepo)) {
+      // No content when the repo does not support download!
       return Response.noContent().build();
     }
-    // Get the WDT BeanRepo and provide the handling for the output stream....
-    WDTEditTreeBeanRepo wdtBeanRepo = (WDTEditTreeBeanRepo)beanRepo;
+    // Use the DownloadBeanRepo and provide the handling for the output stream....
+    DownloadBeanRepo beanRepo = (DownloadBeanRepo)repo;
     StreamingOutput stream = new StreamingOutput() {
       @Override
       public void write(OutputStream os) throws IOException, FailedRequestException {
         // Uses the default platform encoding for chars to bytes...
         Writer writer = new BufferedWriter(new OutputStreamWriter(os));
-        wdtBeanRepo.writeWDTModel(writer, getInvocationContext());
+        beanRepo.download(writer, getInvocationContext());
         writer.flush();
       }
     };

@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', '../../../core/runtime', '../../../core/types', 'ojs/ojknockout'],
+define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'ojs/ojknockout'],
   function (oj, ko, Runtime, CoreTypes) {
     function ContentAreaHeaderButtonsToolbar(viewParams) {
       const self = this;

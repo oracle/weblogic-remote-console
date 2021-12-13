@@ -11,6 +11,7 @@ const hostName = process.env.hostname || 'localhost';
 const adminPort = process.env.adminPort || '8012';
 const remoteAdminPort =  process.env.consolePort || '7001';
 const adminUrl = 'http://' + hostName + ':' + adminPort;
+const remoteConsoleUrl = 'http://'+hostName+':'+remoteAdminPort+'/console';
 const domConName = "1411LocalDomain";
 
 if (process.argv.length < 8) {

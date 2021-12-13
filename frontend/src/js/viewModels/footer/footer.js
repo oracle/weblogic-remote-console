@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', '../../core/runtime', '../../microservices/preferences/preferences', 'ojs/ojknockout', 'ojs/ojbinddom'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/preferences/preferences', 'ojs/ojknockout', 'ojs/ojbinddom'],
   function(oj, ko, HtmlUtils, Runtime, Preferences) {
     function FooterTemplate(viewParams){
       // Declare reference to instance of the ViewModel that JET
