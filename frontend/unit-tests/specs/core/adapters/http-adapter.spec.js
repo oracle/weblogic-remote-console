@@ -1,4 +1,4 @@
-define(['core/adapters/http-adapter', 'sinon'],
+define(['wrc-frontend/core/adapters/http-adapter', 'sinon'],
   function (HttpAdapter, sinon) {
 
     describe("HttpAdapter Tests", function () {

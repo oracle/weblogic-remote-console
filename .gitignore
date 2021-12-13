@@ -17,7 +17,7 @@ release.properties
 **/pom.xml.releaseBackup
 *.hold
 .flattened-pom.xml
-CBE.out
+CBE*.out
 console-0.9-*
 # Ignore Mac DS_Store files
 **/.DS_Store

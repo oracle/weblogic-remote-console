@@ -72,3 +72,10 @@ actions:
   actionMethod: weblogic.remoteconsole.customizers.ServerLifeCycleRuntimeMBeanCustomizer.restartSSL
   definition:
     type: "void"
+    # If we don't customize restartSSL's roles, it will inherit ServerLifeCycleRuntimeMBean's
+    # roles which would allow Operator and Admin.
+    # However, restartSSL delegates to ServerRunimeMBean.restartSSLChannel which can only be accessed by Admin.
+    # So, customize the restartSSL's roles to only allow Admin.
+    roles:
+      allowed:
+      - Admin

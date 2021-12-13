@@ -1,4 +1,4 @@
-define(['core/cbe-utils'],
+define(['wrc-frontend/core/cbe-utils'],
   function (CbeUtils) {
 
     describe("CbeUtils Tests", function () {

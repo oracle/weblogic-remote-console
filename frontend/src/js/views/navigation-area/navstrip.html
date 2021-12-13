@@ -7,26 +7,28 @@ Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
   <div id="navstrip-header">
 
     <div id="navstrip-builtins" class="cfe-droppable">
-      <oj-navigation-list aria-label="Click image for built-in perspective type"
-                          data="[[builtInsDataProvider]]"
-                          drill-mode="none"
-                          edge="start"
-                          display="icons"
-                          selection="{{builtInsSelectedItem}}"
-                          on-oj-before-select="[[builtInsBeforeSelectEventHandler]]"
-                          on-selection-changed="[[builtInsSelectedItemChanged]]"
+      <oj-navigation-list 
+        id="navstrip"
+        aria-label="Click image for built-in perspective type"
+        data="[[builtInsDataProvider]]"
+        drill-mode="none"
+        edge="start"
+        display="icons"
+        selection="{{builtInsSelectedItem}}"
+        on-oj-before-select="[[builtInsBeforeSelectEventHandler]]"
+        on-selection-changed="[[builtInsSelectedItemChanged]]"
       >
         <template slot="itemTemplate" data-oj-as="item">
           <div>
             <li data-bind="attr: {id: item.data.type, 'title': getTooltip(item.data.type)}">
-              <img class="navstrip-icon" data-bind="attr: {src: '../../images/' + item.data.iconFile + '.png'}"/>
+              <img class="navstrip-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + item.data.iconFile + '.png'}"/>
             </li>
           </div>
         </template>
         <template slot="noData">
           <div>
             <li id="nodata">
-              <img data-bind="attr: {src: '../../images/' + i18n.icons.nodata.iconFile + '.png'}"/>
+              <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.nodata.iconFile + '.png'}"/>
             </li>
           </div>
         </template>

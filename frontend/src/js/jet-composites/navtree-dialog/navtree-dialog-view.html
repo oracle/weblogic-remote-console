@@ -1,0 +1,108 @@
+<!--
+ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+<div id="navtree-docked" class="cfe-navtree">
+  <div id="navtree-placement-toolbar">
+    <a href="#" tabindex="-1" data-item-state="floating" on-click="[[placementIconClickHandler]]">
+      <img class="cfe-placement-icon" data-bind="attr: {src: 'js/jet-composites/navtree-dialog/1.0.0/images/' + i18n.icons.floating.iconFile + '.png', 'title': i18n.icons.floating.tooltip}"/>
+    </a>
+  </div>
+
+  <div>
+    <oj-navigation-list
+      data-oj-context
+      id="nav"
+      aria-label="WebLogic Navigation Tree"
+      expanded="{{expanded}}"
+      drill-mode="collapsible"
+      data="[[datasource]]"
+      item.selectable="[[itemSelectable]]"
+      selection="{{selectedItem}}"
+      on-oj-before-expand="[[beforeExpand]]"
+      on-oj-before-collapse="[[beforeCollapse]]"
+      on-oj-before-select="[[beforeSelect]]"
+      on-selection-changed="[[onSelect]]"
+      on-oj-expand="[[onExpand]]"
+      scroll-policy="loadMoreOnScroll"
+    >
+      <template slot="itemTemplate" data-oj-as="item">
+        <li :id="[[item.data.id]]">
+          <a href="#">
+            <span :class="[[item.data.class]]"></span>
+            <oj-bind-text value="[[item.data.label]]"></oj-bind-text>
+          </a>
+        </li>
+      </template>
+      <template slot="noData">
+      </template>
+    </oj-navigation-list>
+
+  </div>
+</div>
+
+<div id="navtree-floating" class="cfe-navtree">
+
+  <oj-dialog
+    id="navtreeDialog"
+    dialog-title=""
+    drag-affordance="title-bar"
+    resize-behavior="resizable"
+    on-oj-resize-stop="[[onResizeStop]]"
+    cancel-behavior="[[getRuntimeRole() === 'app' ? 'escape' : 'none']]"
+    modality="modeless"
+  >
+
+    <div slot="body">
+      <div id="navtree-floating-iconbar">
+        <div class="cfe-placement-iconbar-icons">
+          <oj-bind-if test="[[getRuntimeRole() === 'app']]">
+            <a href="#" tabindex="-1" data-item-state="docked" on-click="[[placementIconClickHandler]]">
+              <img class="cfe-placement-icon" data-bind="attr: {src: 'js/jet-composites/navtree-dialog/1.0.0/images/' + i18n.icons.docked.iconFile + '.png', 'title': i18n.icons.docked.tooltip}"/>
+            </a>
+          </oj-bind-if>
+          <oj-bind-if test="[[placement() === 'floating']]">
+            <a href="#" tabindex="-1" data-item-state="minimized" on-click="[[placementIconClickHandler]]">
+              <img class="cfe-placement-icon" data-bind="attr: {src: 'js/jet-composites/navtree-dialog/1.0.0/images/' + i18n.icons.minimized.iconFile + '.png', 'title': i18n.icons.minimized.tooltip}"/>
+            </a>
+          </oj-bind-if>
+          <oj-bind-if test="[[placement() === 'minimized']]">
+            <a href="#" tabindex="-1" data-item-state="floating" on-click="[[placementIconClickHandler]]">
+              <img class="cfe-placement-icon" data-bind="attr: {src: 'js/jet-composites/navtree-dialog/1.0.0/images/' + i18n.icons.floating.iconFile + '.png', 'title': i18n.icons.floating.tooltip}"/>
+            </a>
+          </oj-bind-if>
+        </div>
+      </div>
+
+      <oj-navigation-list
+        data-oj-context
+        id="nav"
+        aria-label="WebLogic Navigation Tree"
+        expanded="{{expanded}}"
+        drill-mode="collapsible"
+        data="[[datasource]]"
+        item.selectable="[[itemSelectable]]"
+        selection="{{selectedItem}}"
+        on-oj-before-expand="[[beforeExpand]]"
+        on-oj-before-collapse="[[beforeCollapse]]"
+        on-oj-before-select="[[beforeSelect]]"
+        on-selection-changed="[[onSelect]]"
+        on-oj-expand="[[onExpand]]"
+        scroll-policy="loadMoreOnScroll"
+      >
+        <template slot="itemTemplate" data-oj-as="item">
+          <li :id="[[item.data.id]]">
+            <a href="#">
+              <span :class="[[item.data.class]]"></span>
+              <oj-bind-text value="[[item.data.label]]"></oj-bind-text>
+            </a>
+          </li>
+        </template>
+        <template slot="noData">
+        </template>
+      </oj-navigation-list>
+
+    </div>  <!-- end slot="body" -->
+
+  </oj-dialog>
+</div>

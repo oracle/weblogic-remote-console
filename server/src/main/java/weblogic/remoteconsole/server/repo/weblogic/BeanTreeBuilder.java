@@ -3,10 +3,13 @@
 
 package weblogic.remoteconsole.server.repo.weblogic;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +22,7 @@ import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
+import weblogic.remoteconsole.server.repo.Value;
 
 /**
  * BeanTreeBuilder creates a BeanTree holding a bean tree created from a WDT model.
@@ -85,7 +89,7 @@ public class BeanTreeBuilder {
     return getBeanTree().getSecurityProviderTypeDef();
   }
 
-  private Map<String, List<String>> getUnknownProperties() {
+  private Map<String, Set<String>> getUnknownProperties() {
     return getBeanTree().getUnknownProperties();
   }
 
@@ -96,15 +100,37 @@ public class BeanTreeBuilder {
     BeanChildDef rootChildDef,
     Localizer localizer
   ) {
-    this.localizer = localizer;
-
-    // Create the BeanTree that will used for the build
+    // Create the BeanTree that will used by the builder
     beanTree =
       new BeanTree(
         wdtModel,      // The parsed WDT model
         beanRepo,      // The WDT BeanRepo
         rootChildDef   // The Domain BeanChildDef
       );
+
+    // Initialize the builder
+    initialize(localizer);
+  }
+
+  // Create the builder using a existing bean tree and adding in another model
+  public BeanTreeBuilder(
+    BeanTree baseBeanTree,
+    Map<String, Object> wdtModel,
+    Localizer localizer
+  ) {
+    // Add the model to the bean tree
+    beanTree = baseBeanTree;
+    beanTree.addWDTModel(wdtModel);
+
+    // Initialize the builder
+    initialize(localizer);
+  }
+
+  // Common initialization for the bean tree builder
+  private void initialize(
+    Localizer localizer
+  ) {
+    this.localizer = localizer;
 
     // Setup root of the model using the Domain information
     parent = beanTree.getDomain();
@@ -189,13 +215,43 @@ public class BeanTreeBuilder {
     }
   }
 
-  // Create a property and place the value into the bean tree
-  private void createProperty(
+  // Update or create a property, update may require a merge where
+  // created properties are added into the bean tree with their value
+  private void createOrUpdateProperty(
     String key,
     Object value,
     BeanPropertyDef beanPropDef
   ) {
-    createProperty(key, value, beanPropDef, getIdentity(), true);
+    // Check for the property and create when non-existent
+    BeanTreeEntry property = getParent().getBeanTreeEntry(key);
+    if (property == null) {
+      createProperty(key, value, beanPropDef, getIdentity(), true);
+      return;
+    }
+
+    // Otherwise, update or merge the property value...
+    mergeOrUpdateProperty(property, value, beanPropDef);
+  }
+
+  // Update or create a property using the supplied parent,
+  // update may require a merge, created properties are added
+  // into the supplied parent with their value
+  private void createOrUpdateProperty(
+    String key,
+    Object value,
+    BeanPropertyDef beanPropDef,
+    BeanTreeEntry parent
+  ) {
+    // Check for the property and create when non-existent
+    BeanTreeEntry property = parent.getBeanTreeEntry(key);
+    if (property == null) {
+      property = createProperty(key, value, beanPropDef, parent.getBeanTreePath(), false);
+      parent.putBeanTreeEntry(key, property);
+      return;
+    }
+
+    // Otherwise, update or merge the property value...
+    mergeOrUpdateProperty(property, value, beanPropDef);
   }
 
   // Create a property but only place into the parent when specified
@@ -218,14 +274,61 @@ public class BeanTreeBuilder {
     return property;
   }
 
-  // Create a bean or bean collection and place the bean into the bean tree
+  // Update or merge a property value based on the property type
+  private void mergeOrUpdateProperty(
+    BeanTreeEntry currentProperty,
+    Object value,
+    BeanPropertyDef beanPropDef
+  ) {
+    // Merge values when property is of type Properties
+    if (beanPropDef.isProperties()) {
+      mergePropertiesProperty(currentProperty, value, beanPropDef);
+      return;
+    }
+
+    // Update non-array property to the new value (i.e. no merge needed)
+    if (!beanPropDef.isArray()) {
+      currentProperty.setPropertyValue(value);
+      return;
+    }
+
+    // Merge the reference keys when there is a reference array type property
+    if (beanPropDef.isReference()) {
+      mergeReferenceArray(currentProperty, value);
+      return;
+    }
+
+    // Otherwise, merge the two arrays based on the type of the array
+    mergeArrayProperty(currentProperty, value, beanPropDef);
+  }
+
+  // Check and get an existing bean when available, otherwise create
+  // the bean or bean collection and place that bean into the bean tree
   // Return the created BeanTreeEntry so the bean properties can be added
-  private BeanTreeEntry createBean(
+  private BeanTreeEntry getOrCreateBean(
     String key,
     boolean collection,
     BeanChildDef beanChildDef
   ) {
-    return createBean(key, collection, beanChildDef, getIdentity(), true);
+    BeanTreeEntry bean = getParent().getBeanTreeEntry(key);
+    return (bean != null) ? bean : createBean(key, collection, beanChildDef, getIdentity(), true);
+  }
+
+  // Check and get an existing bean from the supplied
+  // parent, otherwise create the bean using the parent
+  // identity and then add the created bean to the parent
+  private BeanTreeEntry getOrCreateBean(
+    String key,
+    boolean collection,
+    BeanChildDef beanChildDef,
+    BeanTreeEntry parent
+  ) {
+    BeanTreeEntry bean = parent.getBeanTreeEntry(key);
+    if (bean == null) {
+      bean = createBean(key, collection, beanChildDef, parent.getBeanTreePath(), false);
+      parent.putBeanTreeEntry(key, bean);
+    }
+    return bean;
   }
 
   // Create a bean but only place the bean into the parent when specified
@@ -259,7 +362,7 @@ public class BeanTreeBuilder {
       return;
     }
 
-    BeanTreeEntry bean = createBean(key, beanChildDef.isCollection(), beanChildDef);
+    BeanTreeEntry bean = getOrCreateBean(key, beanChildDef.isCollection(), beanChildDef);
     if (beanChildDef.isCollection()) {
       buildChildCollection(bean, value, beanChildDef);
     } else if (beanChildDef.isCollapsedInWDT()) {
@@ -273,12 +376,9 @@ public class BeanTreeBuilder {
         return;
       }
 
-      // Create the missing child bean so the path can be exapanded per bean tree path
+      // Create or add the missing child bean thus exapanding per the online bean tree path
       BeanTreeEntry missingChildBean =
-        createBean(key, missgingChildDef.isCollection(), missgingChildDef, bean.getBeanTreePath(), false);
-
-      // Add missing child bean into the singleton thus expanding the path
-      bean.putBeanTreeEntry(key, missingChildBean);
+        getOrCreateBean(key, missgingChildDef.isCollection(), missgingChildDef, bean);
 
       // Continue with the child collecton using the created collection bean, the value and proper type
       buildChildCollection(missingChildBean, value, missgingChildDef);
@@ -296,11 +396,10 @@ public class BeanTreeBuilder {
     if ((value != null) && !value.isEmpty()) {
       // For each entry in the collection build the bean and add to the parent
       for (String key : value.keySet()) {
-        BeanTreeEntry bean =
-          createBean(key, false, beanChildDef, parent.getBeanTreePath(), false);
+        // Get or add the instance into the collection
+        BeanTreeEntry bean = getOrCreateBean(key, false, beanChildDef, parent);
 
-        // Add the instance into the collection and build the instance
-        parent.putBeanTreeEntry(key, bean);
+        // Now build the instance from the model value
         buildChildInstance(bean, getMapValueFromKey(key, value), beanChildDef);
       }
     }
@@ -331,7 +430,7 @@ public class BeanTreeBuilder {
     // Place the name property of the security provider into the bean
     BeanPropertyDef namePropDef = getBeanTypeDef().getPropertyDef(new Path("Name"));
     String nameProp = namePropDef.getPropertyName();
-    createProperty(nameProp, providerName, namePropDef);
+    createOrUpdateProperty(nameProp, providerName, namePropDef);
 
     // Attempt to match the model key against the legal values for the provider type
     String type = null;
@@ -354,7 +453,7 @@ public class BeanTreeBuilder {
     // Place the type property of the security provider into the bean
     BeanPropertyDef typePropDef = getBeanTypeDef().getSubTypeDiscriminatorPropertyDef();
     String typeProp = typePropDef.getPropertyName();
-    createProperty(typeProp, type, typePropDef);
+    createOrUpdateProperty(typeProp, type, typePropDef);
 
     // Get the security provider type and show the current state of the
     // proivider for the specified log level to avoiding Map dump overhead...
@@ -396,26 +495,19 @@ public class BeanTreeBuilder {
     }
 
     // Get the Machines collection or create one when not available...
-    BeanTreeEntry machines = getParent().getBeanTreeEntry(MACHINES);
-    if (machines == null) {
-      machines = createBean(MACHINES, beanChildDef.isCollection(), beanChildDef);
-    }
+    BeanTreeEntry machines = getOrCreateBean(MACHINES, beanChildDef.isCollection(), beanChildDef);
 
     // Create each Machine or UnixMachine instance including the type property
     if ((value != null) && !value.isEmpty()) {
       for (String machineName : value.keySet()) {
-        BeanTreeEntry bean =
-          createBean(machineName, false, beanChildDef, machines.getBeanTreePath(), false);
+        BeanTreeEntry bean = getOrCreateBean(machineName, false, beanChildDef, machines);
 
         // Place the type property into the bean so it can be viewed properly...
         BeanPropertyDef typePropDef = beanChildDef.getChildTypeDef().getSubTypeDiscriminatorPropertyDef();
         String typeProp = typePropDef.getPropertyName();
-        BeanTreeEntry property = createProperty(typeProp, type, typePropDef, bean.getBeanTreePath(), false);
-        bean.putBeanTreeEntry(typeProp, property);
+        createOrUpdateProperty(typeProp, type, typePropDef, bean);
 
-        // Add the instance into the Machines collection, obtain the
-        // proper type def and get the Map of attribute values...
-        machines.putBeanTreeEntry(machineName, bean);
+        // Obtain the proper type def and get the Map of attribute values...
         BeanTypeDef typeDef = beanChildDef.getChildTypeDef().getSubTypeDef(type);
         Map<String, Object> machineValue = getMapValueFromKey(machineName, value);
 
@@ -470,7 +562,7 @@ public class BeanTreeBuilder {
     // Check the type of key in order to create a bean entry from the value
     BeanPropertyDef propDef = getBeanTypeDef().getPropertyDefFromOfflineName(key);
     if (propDef != null) {
-      createProperty(propDef.getPropertyName(), value, propDef);
+      createOrUpdateProperty(propDef.getPropertyName(), value, propDef);
     } else {
       BeanChildDef childDef = getBeanTypeDef().getChildDefFromOfflineName(key);
       if (childDef != null) {
@@ -485,7 +577,7 @@ public class BeanTreeBuilder {
         // Fixup - logger warning to indicate model entries not found
         Path beanPath = getIdentity().getPath().childPath(key);
         addUnknownProperty(beanPath.getDotSeparatedPath());
-        LOGGER.info("WARNING: BeanTreeBuilder found unknown property: " + beanPath);
+        LOGGER.warning("WARNING: BeanTreeBuilder found unknown property: " + beanPath);
       }
     }
   }
@@ -493,9 +585,9 @@ public class BeanTreeBuilder {
   // Add to the unknown properties per model section which will be used when model is persisted
   private void addUnknownProperty(String propertyPath) {
     if ((currentModelSection != null) && (propertyPath != null) && propertyPath.startsWith(DOMAIN_PREFIX)) {
-      Map<String, List<String>> unknownProperties = getUnknownProperties();
+      Map<String, Set<String>> unknownProperties = getUnknownProperties();
       if (!unknownProperties.containsKey(currentModelSection)) {
-        unknownProperties.put(currentModelSection, new LinkedList<String>());
+        unknownProperties.put(currentModelSection, new LinkedHashSet<String>());
       }
       String unknownProperty = propertyPath.substring(DOMAIN_PREFIX_LEN);
       unknownProperties.get(currentModelSection).add(unknownProperty);
@@ -551,5 +643,88 @@ public class BeanTreeBuilder {
       throw new IllegalArgumentException(msg);
     }
     return (Map<String, Object>)value;
+  }
+
+  // Merge two reference arrays by normalizing them using the reference
+  // resolver to parse and get the keys from the property values...
+  // NOTE: There is an intermediate step of setting the property to the new
+  // value so the reference keys can be obtained, the new value remains as
+  // the property value if the exisiting and new values cannot be merged!
+  private void mergeReferenceArray(
+    BeanTreeEntry currentProperty,
+    Object value
+  ) {
+    // Get the list of reference keys for both the current and new property values
+    List<String> currentKeys = BeanTreeReferenceResolver.getReferenceKeys(currentProperty);
+    currentProperty.setPropertyValue(value);
+    List<String> newKeys = BeanTreeReferenceResolver.getReferenceKeys(currentProperty);
+
+    // Create a merged list and set the property value to the new list of keys...
+    if (!currentKeys.isEmpty() || !newKeys.isEmpty()) {
+      List<Object> mergedKeys = new ArrayList<>();
+      mergedKeys.addAll(currentKeys);
+      mergedKeys.addAll(newKeys);
+      currentProperty.setPropertyValue(mergedKeys);
+    }
+  }
+
+  // Merge two arrays by normalizing them using the Value types since an
+  // array type will return an empty list if there is no current value...
+  // NOTE: There is an intermediate step of setting the property to the new
+  // value so the Value type can be obtained, the new value remains as
+  // the property value if the exisiting and new values cannot be merged!
+  @SuppressWarnings("unchecked")
+  private void mergeArrayProperty(
+    BeanTreeEntry currentProperty,
+    Object value,
+    BeanPropertyDef beanPropDef
+  ) {
+    // Get the Value type for both the current and new property values
+    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    currentProperty.setPropertyValue(value);
+    Value newValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+
+    // Proceed with merge when both are array values as there could be a model token...
+    if (currentValue.isArray() && newValue.isArray()) {
+      Object curVal = WDTValueConverter.getJavaType(currentValue, beanPropDef, localizer);
+      Object newVal = WDTValueConverter.getJavaType(newValue, beanPropDef, localizer);
+      if ((curVal instanceof List) && (newVal instanceof List)) {
+        List<Object> mergedList = (List<Object>) curVal;
+        mergedList.addAll((List<Object>) newVal);
+        currentProperty.setPropertyValue(mergedList);
+      }
+    }
+  }
+
+  // Merge two Properties by normalizing them using the Value types since an
+  // an empty Properties will be returned if there is no current value...
+  // NOTE: There is an intermediate step of setting the property to the new
+  // value so the Value type can be obtained, the new value remains as
+  // the property value if the exisiting and new values cannot be merged!
+  @SuppressWarnings("unchecked")
+  private void mergePropertiesProperty(
+    BeanTreeEntry currentProperty,
+    Object value,
+    BeanPropertyDef beanPropDef
+  ) {
+    // Get the Value type for both the current and new property values
+    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    currentProperty.setPropertyValue(value);
+    Value newValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+
+    // Proceed with merge when both are Properties as there could be a parse problem...
+    if (currentValue.isProperties() && newValue.isProperties()) {
+      Object curVal = WDTValueConverter.getJavaType(currentValue, beanPropDef, localizer);
+      Object newVal = WDTValueConverter.getJavaType(newValue, beanPropDef, localizer);
+      if ((curVal instanceof Map) && (newVal instanceof Map)) {
+        // Sort the Properties keys for predictable updated results...
+        Map<String, Object> sorter = new TreeMap<>();
+        Map<String, Object> mergedMap = new LinkedHashMap<>();
+        ((Map<String, Object>)curVal).forEach((key, val) -> sorter.put(key, val));
+        ((Map<String, Object>)newVal).forEach((key, val) -> sorter.put(key, val));
+        sorter.forEach((key, val) -> mergedMap.put(key, val));
+        currentProperty.setPropertyValue(mergedMap);
+      }
+    }
   }
 }

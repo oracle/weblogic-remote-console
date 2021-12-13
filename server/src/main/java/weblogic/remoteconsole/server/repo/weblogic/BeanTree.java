@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,8 +44,8 @@ public class BeanTree {
   // The BeanTypeDef used to identify Security Provider MBeans
   private BeanTypeDef securityProviderTypeDef;
 
-  // The parsed version of the original WDT model
-  private Map<String, Object> wdtModel;
+  // The ordered list of models that are used to create the bean tree
+  private List<Map<String, Object>> wdtModels;
 
   // The list of references from the model that are being resolved
   private List<BeanTreeEntry> references;
@@ -56,7 +57,7 @@ public class BeanTree {
   private String domainKeyName;
 
   // The list of unknown properties by model section
-  private Map<String, List<String>> unknownProperties;
+  private Map<String, Set<String>> unknownProperties;
 
   private Map<String, BeanTreeEntry> getTree() {
     return beanTree;
@@ -70,11 +71,23 @@ public class BeanTree {
     return securityProviderTypeDef;
   }
 
+  // Last model used to create the bean tree
   public Map<String, Object> getWDTModel() {
-    return wdtModel;
+    int index = wdtModels.size() - 1;
+    return (index > -1) ? wdtModels.get(index) : null;
   }
 
-  public Map<String, List<String>> getUnknownProperties() {
+  // Ordered list of models used to create the bean tree
+  public List<Map<String, Object>> getWDTModels() {
+    return wdtModels;
+  }
+
+  // Add to the ordered list of models used to create the bean tree
+  void addWDTModel(Map<String, Object> wdtModel) {
+    wdtModels.add(wdtModel);
+  }
+
+  public Map<String, Set<String>> getUnknownProperties() {
     return unknownProperties;
   }
 
@@ -85,8 +98,11 @@ public class BeanTree {
     BeanChildDef domainChildDef
   ) {
     // Keep model related data
-    this.wdtModel = wdtModel;
     this.beanRepo = beanRepo;
+
+    // Create and initialze the list of models used for the bean tree
+    wdtModels = new LinkedList<>();
+    addWDTModel(wdtModel);
 
     // Create lists that will hold references and bean collections
     references = new LinkedList<>();

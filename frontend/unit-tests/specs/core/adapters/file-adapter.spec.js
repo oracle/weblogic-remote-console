@@ -1,4 +1,4 @@
-define(['core/adapters/file-adapter'],
+define(['wrc-frontend/core/adapters/file-adapter'],
   function (FileAdapter) {
 
     describe("FileAdapter Tests", function () {

@@ -7,7 +7,7 @@
 
 "use strict";
 
-define(['ojs/ojcore', 'knockout', '../../microservices/connection-management/domain-connection-manager', './console-backend-connection-verifier', '../../microservices/provider-management/data-provider', '../../apis/message-displaying', '../../core/runtime', '../../core/cbe-types', '../../core/types', '../../core/utils', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojformlayout', 'ojs/ojlabel', 'ojs/ojlabelvalue', 'ojs/ojinputtext', 'ojs/ojradioset', 'ojs/ojdialog', 'ojs/ojbutton'],
+define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/connection-management/domain-connection-manager', './console-backend-connection-verifier', 'wrc-frontend/microservices/provider-management/data-provider', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/runtime', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojformlayout', 'ojs/ojlabel', 'ojs/ojlabelvalue', 'ojs/ojinputtext', 'ojs/ojradioset', 'ojs/ojdialog', 'ojs/ojbutton'],
   function (oj, ko, DomainConnectionManager, ConsoleBackendConnectionVerifier, DataProvider, MessageDisplaying, Runtime, CbeTypes, CoreTypes, CoreUtils, Context, Logger) {
     function ConsoleBackendConnectionTemplate(viewParams) {
       const self = this;

@@ -3,20 +3,18 @@
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
-import java.util.Set;
-
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.server.providers.Root;
 
 /**
  * Defines the pages for WDT
  */
 public class WDTPageRepoDef extends WebLogicPageRepoDef {
-  public WDTPageRepoDef(WebLogicVersion weblogicVersion, Set<String> roles) {
+  public WDTPageRepoDef(WebLogicMBeansVersion mbeansVersion) {
     super(
       Root.EDIT_NAME,
-      weblogicVersion,
-      weblogicVersion.findOrCreate(WDTBeanRepoDef.class, roles),
+      mbeansVersion,
+      mbeansVersion.findOrCreate(WDTBeanRepoDef.class),
       Root.CONFIGURATION_ROOT + "MBean"
     );
   }

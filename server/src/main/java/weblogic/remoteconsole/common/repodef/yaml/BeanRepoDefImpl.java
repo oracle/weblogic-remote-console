@@ -13,21 +13,19 @@ import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PseudoBeanTypeDefSource;
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**
  * Yaml-based implementation of the BeanRepoDef interface.
  */
 public abstract class BeanRepoDefImpl implements BeanRepoDef {
   private BaseBeanTypeDefImpl rootTypeDefImpl;
-  private WebLogicVersion weblogicVersion;
-  Set<String> roles;
+  private WebLogicMBeansVersion mbeansVersion;
 
   private static final Logger LOGGER = Logger.getLogger(BeanRepoDefImpl.class.getName());
 
-  protected BeanRepoDefImpl(WebLogicVersion weblogicVersion, Set<String> roles) {
-    this.weblogicVersion = weblogicVersion;
-    this.roles = roles;
+  protected BeanRepoDefImpl(WebLogicMBeansVersion mbeansVersion) {
+    this.mbeansVersion = mbeansVersion;
   }
 
   protected abstract boolean isRemoveMissingPropertiesAndTypes();
@@ -122,7 +120,7 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
   boolean isAccessAllowed(Set<String> rolesAllowed) {
     // Return true if the user is in any of the roles in rolesAllowed, false otherwise
     for (String roleAllowed : rolesAllowed) {
-      if (roles.contains(roleAllowed)) {
+      if (mbeansVersion.getRoles().contains(roleAllowed)) {
         return true;
       }
     }
@@ -131,8 +129,8 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
 
   protected abstract YamlReader getYamlReader();
 
-  protected WebLogicVersion getWeblogicVersion() {
-    return weblogicVersion;
+  protected WebLogicMBeansVersion getMBeansVersion() {
+    return mbeansVersion;
   }
 
   String getLocalizationKey(String key) {

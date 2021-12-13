@@ -41,15 +41,6 @@ public class LocalizedConstants {
       "Unsupported WebLogic domain version"
     );
 
-  // Indicates that the user used to connect to an online admin server connection
-  // is not a WebLogic adminitrator.
-  public static final LocalizableString USER_NOT_ADMIN =
-    addConstant(
-      "userNotAdmin",
-      "The connected user is not a WebLogic Administrator."
-      + " Pages requiring administrator privileges will experience unexpected behavior."
-    );
-
   // Indicates that a bean couldn't be deleted and it was probably because
   // the user needs to delete references to it first.
   public static final LocalizableString DELETE_REFERENCES_FIRST =

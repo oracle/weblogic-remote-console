@@ -4,76 +4,80 @@
  The Universal Permissive License (UPL), Version 1.0
 -->
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
-    <link href="images/favicon-32.png" type="image/x-icon" rel="icon" />
-<!--
-    !!! DO NOT DELETE THE FOLLOWING HREFS BECAUSE YOU MAY NEED THEM TO RETRIEVE !!!
-    !!! A WOFF FILE THAT GETS REFERENCED IN THE CSS, BUT HASN"T BEEN ADDED TO   !!!
-    !!! THE GITLAB REPO YET. THE MISSING WOFF FILE WON'T BE ONE THAT WE USE IN  !!!
-    !!! OUR JET APP, BUT SHOULD BE RETRIEVED AND ADDED TO THE REPO TO IN ORDER  !!!
-    !!! TO PREVENT GETTING A 404 IN THE JAVASCRIPT CONSOLE LOG.                 !!!
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
+  <link href="images/favicon-32.png" type="image/x-icon" rel="icon"/>
+  <!--
+      !!! DO NOT DELETE THE FOLLOWING HREFS BECAUSE YOU MAY NEED THEM TO RETRIEVE !!!
+      !!! A WOFF FILE THAT GETS REFERENCED IN THE CSS, BUT HASN"T BEEN ADDED TO   !!!
+      !!! THE GITLAB REPO YET. THE MISSING WOFF FILE WON'T BE ONE THAT WE USE IN  !!!
+      !!! OUR JET APP, BUT SHOULD BE RETRIEVED AND ADDED TO THE REPO TO IN ORDER  !!!
+      !!! TO PREVENT GETTING A 404 IN THE JAVASCRIPT CONSOLE LOG.                 !!!
 
-    <link href="https://static.oracle.com/cdn/fnd/gallery/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet" />
-    <link href="https://static.oracle.com/cdn/fnd/gallery/2004.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
--->
-    <!-- This is the main css file for the default theme -->
-    <!-- injector:theme -->
-    <link rel="stylesheet" href="css/libs/oj/v10.1.0/redwood/oj-redwood-min.css" type="text/css"/>
-    <!-- endinjector -->
+      <link href="https://static.oracle.com/cdn/fnd/gallery/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet" />
+      <link href="https://static.oracle.com/cdn/fnd/gallery/2004.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
+  -->
+  <!-- This is the main css file for the default theme -->
+  <!-- injector:theme -->
+  <link rel="stylesheet" href="css/libs/oj/v10.1.0/redwood/oj-redwood-min.css" type="text/css"/>
+  <!-- endinjector -->
 
-    <link href="css/fonts/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet" />
-    <link href="css/fonts/2110.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
+  <link href="js/jet-composites/wrc-frontend/1.0.0/css/fonts/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet"/>
+  <link href="js/jet-composites/wrc-frontend/1.0.0/css/fonts/2110.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
 
-    <link href="css/app.css" type="text/css" rel="stylesheet" />
-  </head>
+  <link href="js/jet-composites/wrc-frontend/1.0.0/css/tool.css" type="text/css" rel="stylesheet" />
+  <link href="css/app.css" type="text/css" rel="stylesheet"/>
+</head>
 
-  <body>
+<body>
 
-    <div id="globalBody">
-      <header class="oj-applayout-fixed-top">
-        <oj-module config="[[headerModuleConfig]]"></oj-module>
-      </header>
+<div id="globalBody" data-runtime-role="app">
+  <header class="oj-applayout-fixed-top">
+    <oj-module config="[[headerModuleConfig]]"></oj-module>
+  </header>
 
-      <div id="middle-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
-        <oj-module config='[[navStripModuleConfig]]'></oj-module>
+  <div id="middle-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
+    <oj-module config='[[navStripModuleConfig]]'></oj-module>
 
-        <div id="spa-resizer" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
-          <div id="navtree-container" class="oj-flex-item">
-            <oj-module class="left_panel" config='[[navTreeModuleConfig]]'></oj-module>
+    <div id="spa-resizer" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
+      <div id="navtree-container" class="oj-flex-item">
+        <div class="left_panel">
+          <oj-bind-dom config="[[navtreeDialog.html]]"></oj-bind-dom>
+        </div>
+      </div>
+
+      <div id="content-area-container" class="right_panel oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+        <!-- row 1 -->
+        <div id="content-area-header" class="oj-flex-item">
+          <oj-module config="[[contentAreaHeaderModuleConfig]]"></oj-module>
+        </div>
+
+        <!-- row 2 (a nested column-oriented flexbox) -->
+        <div id="content-area-body" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
+          <!-- column 1 -->
+          <div id="table-form-container" class="oj-flex-item">
+            <oj-module config="[[moduleConfig]]"></oj-module>
           </div>
-
-          <div id="content-area-container" class="right_panel oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
-            <!-- row 1 -->
-            <div id="content-area-header" class="oj-flex-item">
-              <oj-module config="[[contentAreaHeaderModuleConfig]]"></oj-module>
-            </div>
-
-            <!-- row 2 (a nested column-oriented flexbox) -->
-            <div id="content-area-body" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
-              <!-- column 1 -->
-              <div id="table-form-container" class="oj-flex-item">
-                <oj-module config="[[moduleConfig]]"></oj-module>
-              </div>
-              <!-- column 2, right-aligned -->
-              <div id="ancillary-content-area-container" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end">
-                <oj-module config="[[ancillaryContentAreaModuleConfig]]"></oj-module>
-              </div>
-            </div>
+          <!-- column 2, right-aligned -->
+          <div id="ancillary-content-area-container"
+               class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end">
+            <oj-module config="[[ancillaryContentAreaModuleConfig]]"></oj-module>
           </div>
+        </div>
+      </div>
 
-        </div> <!-- ending div for "spa-resizer" -->
-      </div> <!-- ending div for "middle-container" -->
+    </div> <!-- ending div for "spa-resizer" -->
+  </div> <!-- ending div for "middle-container" -->
 
-      <footer class="oj-applayout-fixed-bottom">
-        <oj-module config="[[footerModuleConfig]]"></oj-module>
-      </footer>
-    </div>
+  <footer class="oj-applayout-fixed-bottom">
+    <oj-module config="[[footerModuleConfig]]"></oj-module>
+  </footer>
+</div>
 
-    <script type="text/javascript" src="js/libs/require/require.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/libs/require/require.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 
-  </body>
+</body>
 
 </html>

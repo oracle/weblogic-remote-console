@@ -168,10 +168,6 @@ public class InvocationContext {
     );
   }
 
-  public WebLogicVersion getWeblogicVersion() {
-    return this.weblogicVersion;
-  }
-
   private String getDomainVersion() {
     return (this.weblogicVersion != null) ? this.weblogicVersion.getDomainVersion() : null;
   }
@@ -185,7 +181,7 @@ public class InvocationContext {
       throw new AssertionError("domain version not available for " + connection.getId());
     }
     // Return the version of weblogic that we have pages for
-    return WebLogicVersions.getWeblogicVersion(domainVersion);
+    return WebLogicVersions.getVersion(domainVersion);
   }
 
   public Connection getConnection() {

@@ -74,7 +74,7 @@
  * The console-project-manager.js module is preloaded to trigger the reading of the "wrc-projects"
  * localStorage object.
  */
-require(['ojs/ojcore', 'ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojrouter', './core/runtime', './microservices/project-management/console-project-manager',
+require(['ojs/ojcore', 'ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojrouter', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/project-management/console-project-manager',
     'ojs/ojknockout', 'ojs/ojnavigationlist'],
   function (oj, Bootstrap, ko, app, Router, Runtime) {
     // this callback gets executed when all required modules are loaded

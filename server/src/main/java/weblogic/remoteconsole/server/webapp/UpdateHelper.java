@@ -38,6 +38,10 @@ public class UpdateHelper {
       return VoidResponseMapper.toResponse(ic, response);
     }
     ic.setPagePath(sliceResponse.getResults());
+    // If this page is read-only, return MethodNotAllowed
+    if (ic.getPageRepo().getPageRepoDef().getPageDef(ic.getPagePath()).asSliceFormDef().isReadOnly()) {
+      return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED).build();
+    }
     // Unmarshal the request body.
     Response<List<FormProperty>> unmarshalResponse = FormRequestBodyMapper.fromRequestBody(ic, requestBody);
     if (!unmarshalResponse.isSuccess()) {

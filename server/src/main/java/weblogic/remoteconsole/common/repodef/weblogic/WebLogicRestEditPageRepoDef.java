@@ -3,9 +3,7 @@
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
-import java.util.Set;
-
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.server.providers.Root;
 
 /**
@@ -14,11 +12,11 @@ import weblogic.remoteconsole.server.providers.Root;
  * They're used to modify the domain's configuration.
  */
 public class WebLogicRestEditPageRepoDef extends WebLogicPageRepoDef {
-  public WebLogicRestEditPageRepoDef(WebLogicVersion version, Set<String> roles) {
+  public WebLogicRestEditPageRepoDef(WebLogicMBeansVersion mbeansVersion) {
     super(
       Root.EDIT_NAME,
-      version,
-      version.findOrCreate(WebLogicEditTreeBeanRepoDef.class, roles),
+      mbeansVersion,
+      mbeansVersion.findOrCreate(WebLogicEditTreeBeanRepoDef.class),
       Root.CONFIGURATION_ROOT + "MBean"
     );
   }

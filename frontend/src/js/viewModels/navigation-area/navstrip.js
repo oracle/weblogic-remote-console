@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', '../../microservices/perspective/perspective-manager', '../../microservices/perspective/perspective', '../../microservices/preferences/preferences', '../../microservices/provider-management/data-provider-manager', '../../core/runtime', '../../core/utils', '../../core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
   function(oj, ko, Router, ArrayDataProvider, PerspectiveManager, Perspective, Preferences, DataProviderManager, Runtime, CoreUtils, CoreTypes, Logger){
     function NavStripTemplate(viewParams){
       var self = this;
@@ -93,7 +93,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', '..
         // this module. In fact, the code for the add needs to
         // be moved here physically.
 
-        let binding = viewParams.signaling.navtreeToggled.add((expanded) => {
+        let binding = viewParams.signaling.navtreeToggled.add((source, expanded) => {
           if (expanded) {
             clearBuiltInsSelection();
           }

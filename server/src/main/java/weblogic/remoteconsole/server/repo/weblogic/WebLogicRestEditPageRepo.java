@@ -3,10 +3,8 @@
 
 package weblogic.remoteconsole.server.repo.weblogic;
 
-import java.util.Set;
-
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRestEditPageRepoDef;
-import weblogic.remoteconsole.common.utils.WebLogicVersions;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.server.repo.ChangeManagerPageRepo;
 
 /**
@@ -14,13 +12,10 @@ import weblogic.remoteconsole.server.repo.ChangeManagerPageRepo;
  * via the WebLogic REST api.
  */
 public class WebLogicRestEditPageRepo extends ChangeManagerPageRepo {
-  public WebLogicRestEditPageRepo(String domainVersion, Set<String> roles) {
+  public WebLogicRestEditPageRepo(WebLogicMBeansVersion mbeansVersion) {
     super(
-      WebLogicVersions.getWeblogicVersion(domainVersion).findOrCreate(
-        WebLogicRestEditPageRepoDef.class,
-        roles
-      ),
-      new WebLogicRestEditTreeBeanRepo(WebLogicVersions.getWeblogicVersion(domainVersion), roles)
+      mbeansVersion.findOrCreate(WebLogicRestEditPageRepoDef.class),
+      new WebLogicRestEditTreeBeanRepo(mbeansVersion)
     );
   }
 }

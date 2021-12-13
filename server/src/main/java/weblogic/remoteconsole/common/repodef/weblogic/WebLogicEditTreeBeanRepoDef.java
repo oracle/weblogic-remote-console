@@ -3,9 +3,7 @@
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
-import java.util.Set;
-
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**
  * Defines the bean types for an admin server connection's edit mbean tree.
@@ -25,8 +23,8 @@ public class WebLogicEditTreeBeanRepoDef extends WebLogicBeanRepoDef {
     return new String[] { "DomainMBean" };
   }
 
-  public WebLogicEditTreeBeanRepoDef(WebLogicVersion weblogicVersion, Set<String> roles) {
-    super(weblogicVersion, roles);
+  public WebLogicEditTreeBeanRepoDef(WebLogicMBeansVersion mbeansVersion) {
+    super(mbeansVersion);
     createRootTypeDefImpl();
   }
 }

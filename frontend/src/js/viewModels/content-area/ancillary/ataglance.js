@@ -6,7 +6,7 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', '../../../core/utils/keyset-utils', '../../../apis/message-displaying', '../../../core/runtime', '../../../microservices/ataglance/ataglance-manager', '../../utils', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander', 'ojs/ojgauge'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/core/utils/keyset-utils', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/ataglance/ataglance-manager', 'wrc-frontend/integration/viewModels/utils', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander', 'ojs/ojgauge'],
   function(oj, ko, ArrayDataProvider, HtmlUtils, keySet, keySetUtils, MessageDisplaying, Runtime, AtAGlanceManager, ViewModelUtils, Logger){
     function AtAGlanceTabTemplate(viewParams) {
       const self = this;

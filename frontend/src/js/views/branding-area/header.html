@@ -11,9 +11,9 @@ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
       memory, and be able to use them with a <canvas> element to set the image
       for the connectivity indicator.
     -->
-    <img id="online-icon" data-bind="attr: {src: '../../images/' + i18n.header.icons.connectivity.online.iconFile + '.png', title: i18n.header.icons.connectivity.online.tooltip}"/>
-    <img id="offline-icon" data-bind="attr: {src: '../../images/' + i18n.header.icons.connectivity.offline.iconFile + '.png', title: i18n.header.icons.connectivity.offline.tooltip}"/>
-    <img id="detached-icon" data-bind="attr: {src: '../../images/' + i18n.header.icons.connectivity.detached.iconFile + '.png', title: i18n.header.icons.connectivity.detached.tooltip}"/>
+    <img id="online-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.online.iconFile + '.png', title: i18n.header.icons.connectivity.online.tooltip}"/>
+    <img id="offline-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.offline.iconFile + '.png', title: i18n.header.icons.connectivity.offline.tooltip}"/>
+    <img id="detached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.detached.iconFile + '.png', title: i18n.header.icons.connectivity.detached.tooltip}"/>
   </div>
 
   <div class="oj-flex-bar">
@@ -25,7 +25,7 @@ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
 
     <div id="header-title" class="oj-sm-align-self-flex-start">
       <a on-click="[[wrcAppIconClick]]" data-bind="attr: {href: '#', tabindex: '-1'}">
-        <img id="wrc-app-icon" data-bind="attr: {src: '../../images/' + i18n.header.icons.wrcApp.iconFile + '.png'}"/>
+        <img id="wrc-app-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.wrcApp.iconFile + '.png'}"/>
       </a>
       <a href="/">
         <span id="app-name" :class="[[appInfoTitleClass]]">

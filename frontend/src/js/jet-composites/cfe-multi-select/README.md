@@ -1,4 +1,4 @@
-# Copyright 2020, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Copyright 2020, 2021, Oracle Corporation and/or its affiliates.  All rights reserved.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 # cfe-multi-select component
@@ -17,7 +17,7 @@ Title for the component and header of the 2 boxes can be specified also.
 <div class="oj-hybrid-padding">
   <h1>Customers Content Area</h1>
 
-  <cfe-multi-select-boxes
+  <cfe-multi-select
       id="mytest"
       available-header="[[availableHeader]]"
       chosen-header="[[chosenHeader]]"
@@ -25,8 +25,10 @@ Title for the component and header of the 2 boxes can be specified also.
       checked-available-items="{{checkedAvailableItems}}"
       chosen-items="{{chosenItems}}"
       checked-chosen-items="{{checkedChosenItems}}"
+      on-chosen-items-changed="[[chosenItemsChanged]]"
+      readonly="false"
   >
-  </wls-multi-select-boxes>
+  </cfe-multi-select>
 </div>
 
 ```
@@ -36,30 +38,24 @@ define(['knockout', 'accUtils',  'ojs/ojknockout', 'wls-multi-select-boxes/loade
     function(ko, accUtils) {
 
     function CustomerViewModel() {
-      var self = this;
-
-      // Declare and initialize the arrays
-      var availableItems = [
-          {value: 'Administrators', label: 'Administrators'},
-          {value: 'AdminChannelUsers', label: 'AdminChannelUsers'},
-          {value: 'AppTesters', label: 'AppTesters'},
-          {value: 'CrossDomainConnectors', label: 'CrossDomainConnectors'},
-          {value: 'Deployers', label: 'Deployers'},
-          {value: 'OracleSystemGroup', label: 'OracleSystemGroup'}
-      ];
-
-      var checkedAvailableItems = ["AppTesters", "Administrators"];
-
-      var chosenItems = [
-            {value: 'Monitors', label: 'Monitors'},
-            {value: 'Operators', label: 'Operators'}
-        ];
+      const self = this;
 
       this.availableHeader=ko.observable("Available:");
       this.chosenHeader=ko.observable("Chosen:");
-      this.availableItems=ko.observableArray(availableItems);
-      this.checkedAvailableItems=ko.observableArray(checkedAvailableItems);
-      this.chosenItems=ko.observableArray(chosenItems);
+
+      this.availableItems=ko.observableArray([
+        {value: 'Administrators', label: 'Administrators'},
+        {value: 'AdminChannelUsers', label: 'AdminChannelUsers'},
+        {value: 'AppTesters', label: 'AppTesters'},
+        {value: 'CrossDomainConnectors', label: 'CrossDomainConnectors'},
+        {value: 'Deployers', label: 'Deployers'},
+        {value: 'OracleSystemGroup', label: 'OracleSystemGroup'}
+      ]);
+      this.checkedAvailableItems=ko.observableArray(["AppTesters", "Administrators"]);
+      this.chosenItems=ko.observableArray([
+        {value: 'Monitors', label: 'Monitors'},
+        {value: 'Operators', label: 'Operators'}
+      ]);
       this.checkedChosenItems=ko.observableArray([]);
 
       // Below is a set of the ViewModel methods invoked by the oj-module component.

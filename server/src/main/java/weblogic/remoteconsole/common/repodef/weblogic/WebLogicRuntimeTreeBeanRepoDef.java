@@ -3,10 +3,7 @@
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
-import java.util.Set;
-import java.util.logging.Logger;
-
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**
  * Defines the bean types for an admin server connection's runtime mbean tree.
@@ -20,8 +17,6 @@ import weblogic.remoteconsole.common.utils.WebLogicVersion;
  */
 public class WebLogicRuntimeTreeBeanRepoDef extends WebLogicBeanRepoDef {
 
-  private static final Logger LOGGER = Logger.getLogger(WebLogicRuntimeTreeBeanRepoDef.class.getName());
-
   @Override
   protected boolean isEditable() {
     return false;
@@ -32,9 +27,8 @@ public class WebLogicRuntimeTreeBeanRepoDef extends WebLogicBeanRepoDef {
     return new String[] { "DomainMBean", "DomainRuntimeMBean" };
   }
 
-  public WebLogicRuntimeTreeBeanRepoDef(WebLogicVersion weblogicVersion, Set<String> roles) {
-    super(weblogicVersion, roles);
+  public WebLogicRuntimeTreeBeanRepoDef(WebLogicMBeansVersion mbeansVersion) {
+    super(mbeansVersion);
     createRootTypeDefImpl();
-    LOGGER.finest("WebLogicRuntimeBeanTree constructor" + weblogicVersion.getDomainVersion());
   }
 }

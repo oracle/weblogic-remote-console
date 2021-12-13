@@ -94,19 +94,10 @@ public class PageDescription {
     addIfNotEmpty(builder, "advancedProperties", sliceFormPropertyDefsToJson(sliceFormDef.getAdvancedPropertyDefs()));
     addIfNotEmpty(builder, "sections", sliceFormSectionDefsToJson(sliceFormDef.getSectionDefs()));
     addIfNotEmpty(builder, "presentation", sliceFormPresentationDefToJson(sliceFormDef.getPresentationDef()));
-    if (isReadOnlySliceForm(sliceFormDef)) {
+    if (sliceFormDef.isReadOnly()) {
       builder.add(READ_ONLY, true);
     }
     return builder.build();
-  }
-
-  private boolean isReadOnlySliceForm(SliceFormDef sliceFormDef) {
-    for (PagePropertyDef propertyDef : sliceFormDef.getAllPropertyDefs()) {
-      if (propertyDef.isUpdateWritable()) {
-        return false;
-      }
-    }
-    return true;
   }
 
   private JsonObject createFormDefToJson(CreateFormDef createFormDef) {

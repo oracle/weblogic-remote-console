@@ -523,6 +523,7 @@ var readline = require('readline');
 
 function writeAutoPrefs() {
   const prefs = {
+    version: `${version}`,
     width: window.getSize()[0],
     height: window.getSize()[1],
     projects: getMaskedProjects(["password"])

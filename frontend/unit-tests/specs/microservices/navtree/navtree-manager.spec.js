@@ -1,4 +1,4 @@
-define(['microservices/navtree/navtree-manager'],
+define(['wrc-frontend/microservices/navtree/navtree-manager'],
   function (NavtreeManager, fakefetch) {
 
     describe("NavtreeManager Tests", function () {

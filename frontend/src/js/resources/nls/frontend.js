@@ -55,6 +55,7 @@ define({
             "url": {"label": "Domain URL:"},
             "version": {"label": "Domain Version:"},
             "username": {"label": "Username:"},
+            "roles": {"label": "Roles:"},
             "connectTimeout": {"label": "Connect Timeout:"},
             "readTimeout": {"label": "Read Timeout:"},
             "anyAttempt": {"label": "Any Connections Attempted:"},
@@ -234,12 +235,6 @@ define({
           "summary": "Connection Attempt Failed",
           "detail": "Unable to connect to the WebLogic Domain {0}, please check that WebLogic is running."
         }
-      },
-      "dialog1": {
-        "title": "Connect to WebLogic Domain",
-        "instructions": "Enter admin user credentials and URL for the WebLogic domain:",
-        "labels": {"url": "URL"},
-        "buttons": {"connect": {"label": "Connect"}}
       }
     },
     "wrc-home": {"tabstrip": {"tabs": {"gallery": {"label": "Gallery"}}}},
@@ -368,6 +363,15 @@ define({
         }
       }
     },
+    "wrc-navtree": {
+      "icons": {
+        "docked": { "tooltip": "Dock in Navigation Area"},
+        "floating": { "tooltip": "Detach from Navigation Area"},
+        "restore": { "tooltip": "Restore"},
+        "minimized": { "tooltip": "Minimize"},
+        "closed": { "tooltip": "Close"}
+      }
+    },
     "wrc-wdt-form": {
       "messages": {
         "changesSaved": {"summary": "Changes were successfully saved to '{0}' file!"},
@@ -494,6 +498,7 @@ define({
         "badRequest": {"detail": "Unable to process the submitted file or request"},
         "invalidCredentials": {"detail": "WebLogic Domain credentials are not valid "},
         "invalidUrl": {"detail": "WebLogic Domain URL is not reachable "},
+        "notInRole": {"detail": "Attempt Failed: The user is not an Admin, Deployer, Operator or Monitor"},
         "notSupported": {"detail": "WebLogic Domain is not supported "},
         "unexpectedStatus": {"detail": "Unexpected result (status: {0}) "},
         "cbeRestApi": {

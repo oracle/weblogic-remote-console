@@ -1,0 +1,156 @@
+/*! Copyright (c) 2020, 2021, Oracle and/or its affiliates. All rights reserved. */
+
+:root {
+	--navtree-background-color: #c3b2ab;
+	--navtree-label-color: #161513;
+	--navtree-calc-min-height: 70px;
+	--navtree-calc-max-height: 70px;
+	--navtree-min-width: 410px;
+	--navtree-node-indent: 18px;
+
+	--placement-toolbar-min-height: 28px;
+
+	--navtreeDialog-z-index: 128;
+	--navtreeDialog-default-height: 242px;
+	--navtreeDialog-min-height: 32px;
+	--navtreeDialog-header-min-height: 24px;
+	--navtreeDialog-floating-top: 147px;
+	--navtreeDialog-floating-left: 686px;
+	--navtreeDialog-floating-height: 650px;
+	--navtreeDialog-floating-min-height: 32px;
+	--navtreeDialog-floating-min-width: 300px;
+	--navtreeDialog-minimized-height: 32px;
+	--navtreeDialog-minimized-min-height: 32px;
+	--navtreeDialog-background-color: #c3b2ab;
+	--navtreeDialog-header-background-color: #eedfd9;  /* #ddd6d1; */
+
+	--oj-dialog-title-font-size: 1.0rem;
+/*	--oj-navigation-list-item-min-height: 100; */
+	--oj-navigation-list-item-max-width: 15rem;
+}
+
+navtree-dialog:not(.oj-complete){
+  visibility: hidden;
+}
+
+#navtree-container {
+	background-color: var(--navtree-background-color);
+	display: none;
+	min-height: calc(100vh - var(--navtree-calc-min-height));
+	max-height: calc(100vh - var(--navtree-calc-max-height));   /* Show vertical scrollbar when height of expanded content goes past 840px */
+	overflow: auto;
+	scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color1);
+}
+
+#navtree-container > oj-bind-dom,
+#navtree-container > div > oj-bind-dom
+{
+	min-width: var(--navtree-min-width);
+}
+
+#navtree-placement-toolbar {
+	 display: inline-flex;
+	 background-color: var(--navtree-background-color);
+	 min-height: var(--placement-toolbar-min-height);
+	 position: sticky;
+	 z-index: 3;
+	 top: 0;
+	 left: calc(100% - 24px);
+ }
+
+.cfe-navtree {
+	min-width: var(--navtree-min-width);
+}
+  
+oj-dialog[id="navtreeDialog"] {
+	background-color: var(--navtreeDialog-background-color);
+}
+
+oj-dialog[id="navtreeDialog"] div.oj-dialog-header {
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	position: relative;
+	display: inline-flex;
+	justify-content: space-between;
+	padding: 2px;
+	background-color: var(--navtreeDialog-header-background-color);
+	background-size: auto 2px;
+	border-bottom-color: var(--navtreeDialog-header-background-color);
+	min-height: var(--navtreeDialog-header-min-height);
+}
+
+oj-dialog[id="navtreeDialog"] div.oj-dialog-body {
+	position: relative;
+	overflow: auto;
+	box-sizing: border-box;
+	padding: 5px 0 0 0;
+}
+
+#navtreeDialog_layer {
+	z-index: var(--navtreeDialog-z-index);
+}
+
+#navtree-floating-iconbar {
+	display: inline-flex;
+}
+
+#navtree-placement-toolbar {
+	display: inline-flex;
+	background-color: #c3b2ab;
+	min-height: 28px;
+}
+    
+.cfe-placement-iconbar-icons {
+	margin-left: auto;
+}
+
+.cfe-placement-icon {
+	height: 24px;
+	width: 24px;
+}
+
+/* enable navtree to properly indent */
+oj-navigationlist[id="nav"].oj-navigationlist-element, .oj-navigationlist-group {
+	padding-left: var(--navtree-node-indent);
+}
+
+oj-navigation-list[id="nav"] span.oj-navigationlist-item-icon 
+{
+	color: var(--navtree-label-color); /* color of icon used in navtree list item */
+}
+
+oj-navigation-list[id="nav"] a.oj-navigationlist-item-content .oj-navigationlist-item-label 
+{
+	color: var(--navtree-label-color); /* color of navtree list items */
+}
+  
+oj-navigation-list[id="nav"].oj-navigationlist-vertical .oj-navigationlist-item::before {
+	min-height: 1.75rem;	/* height of each list items */
+}
+
+oj-navigation-list[id="nav"] .oj-navigationlist-item-element {
+	min-height: 1.75rem; 	/* space between list items */
+}
+
+
+oj-navigation-list[id="nav"] div > div > ul > li > div.oj-navigationlist-group-item {
+	padding-right: 0;	/* space after expand/collapse arrow icon */
+}
+
+html:not([dir="rtl"]) oj-navigation-list[id="nav"].oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item 
+{
+	padding-left: .55rem;  /* space before icon in navstrip and navtree list items */
+}
+
+oj-navigation-list[id="nav"] html:not([dir="rtl"]) .oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item-icon 
+{
+	margin-right: 0.525rem; /* space between icon and label in navtree list item */
+}
+
+.navtree-node-label {
+	padding-right: 10px;
+}
+
+oj-navigation-list[id="nav"] li.oj-navigationlist-focused-element.oj-navigationlist-item-element {
+	padding: 2px 0 1px 2px;
+}

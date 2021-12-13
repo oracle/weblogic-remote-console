@@ -11,17 +11,20 @@ import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
  */
 public class ModifiedBeanProperty extends BaseBeanChange {
   private BeanPropertyDef propertyDef;
-  private SettableValue oldValue;
-  private SettableValue newValue;
+  private boolean unset;
+  private Value oldValue;
+  private Value newValue;
 
   public ModifiedBeanProperty(
     BeanTreePath beanPath,
     BeanPropertyDef propertyDef,
-    SettableValue oldValue,
-    SettableValue newValue
+    boolean unset,
+    Value oldValue,
+    Value newValue
   ) {
     super(beanPath);
     this.propertyDef = propertyDef;
+    this.unset = unset;
     this.oldValue = oldValue;
     this.newValue = newValue;
   }
@@ -31,13 +34,18 @@ public class ModifiedBeanProperty extends BaseBeanChange {
     return propertyDef;
   }
 
+  // Returns whether this modification has unset the property
+  public boolean isUnset() {
+    return unset;
+  }
+
   // Returns the old (previously commited) value of the property
-  public SettableValue getOldValue() {
+  public Value getOldValue() {
     return oldValue;
   }
 
   // Returns the new (pending) value of the property
-  public SettableValue getNewValue() {
+  public Value getNewValue() {
     return newValue;
   }
 }

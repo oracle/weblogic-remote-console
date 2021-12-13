@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response.Status;
 
 import weblogic.remoteconsole.server.providers.Root;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -46,7 +47,20 @@ public class RemoteConsoleResource extends BaseResource {
   public PageRepoResource getWebLogicRestEditTreeConfigurationResource() {
     if (!getInvocationContext().setPageRepoByName(Root.EDIT_NAME)) {
       throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
         "There is no " + Root.EDIT_NAME + " in "
+          + getInvocationContext().getProvider().getName()
+      );
+    }
+    return copyContext(new PageRepoResource());
+  }
+
+  @Path(Root.COMPOSITE_CONFIGURATION_NAME)
+  public PageRepoResource getWDTCompositeConfigurationResource() {
+    if (!getInvocationContext().setPageRepoByName(Root.COMPOSITE_CONFIGURATION_NAME)) {
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "There is no " + Root.COMPOSITE_CONFIGURATION_NAME + " in "
           + getInvocationContext().getProvider().getName()
       );
     }
@@ -57,6 +71,7 @@ public class RemoteConsoleResource extends BaseResource {
   public PageRepoResource getWebLogicRestRuntimeTreeConfigurationResource() {
     if (!getInvocationContext().setPageRepoByName(Root.SERVER_CONFIGURATION_NAME)) {
       throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
         "There is no " + Root.SERVER_CONFIGURATION_NAME + " in "
           + getInvocationContext().getProvider().getName()
       );
@@ -68,6 +83,7 @@ public class RemoteConsoleResource extends BaseResource {
   public PageRepoResource getWebLogicRestRuntimeTreeMonitoringResource() {
     if (!getInvocationContext().setPageRepoByName(Root.DOMAIN_RUNTIME_NAME)) {
       throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
         "There is no " + Root.DOMAIN_RUNTIME_NAME + " in "
           + getInvocationContext().getProvider().getName()
       );

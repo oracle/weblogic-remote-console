@@ -3,10 +3,8 @@
 
 package weblogic.remoteconsole.server.repo.weblogic;
 
-import java.util.Set;
-
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRestServerConfigPageRepoDef;
-import weblogic.remoteconsole.common.utils.WebLogicVersions;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.server.repo.PageReaderRepo;
 
 /**
@@ -14,13 +12,10 @@ import weblogic.remoteconsole.server.repo.PageReaderRepo;
  * via the WebLogic REST api.
  */
 public class WebLogicRestServerConfigPageRepo extends PageReaderRepo {
-  public WebLogicRestServerConfigPageRepo(String domainVersion, Set<String> roles) {
+  public WebLogicRestServerConfigPageRepo(WebLogicMBeansVersion mbeansVersion) {
     super(
-      WebLogicVersions.getWeblogicVersion(domainVersion).findOrCreate(
-        WebLogicRestServerConfigPageRepoDef.class,
-        roles
-      ),
-      new WebLogicRestRuntimeTreeBeanRepo(WebLogicVersions.getWeblogicVersion(domainVersion), roles)
+      mbeansVersion.findOrCreate(WebLogicRestServerConfigPageRepoDef.class),
+      new WebLogicRestRuntimeTreeBeanRepo(mbeansVersion)
     );
   }
 }

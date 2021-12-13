@@ -5,10 +5,9 @@ package weblogic.remoteconsole.server.repo.weblogic;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRuntimeTreeBeanRepoDef;
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**
  * This class uses the WLS REST api to view and invoke operations on
@@ -22,9 +21,9 @@ public class WebLogicRestRuntimeTreeBeanRepo extends WebLogicRestBeanRepo {
     rootBeanNameToWebLogicRestTreeNameMap.put("Domain", "serverConfig");
   }
 
-  public WebLogicRestRuntimeTreeBeanRepo(WebLogicVersion version, Set<String> roles) {
+  public WebLogicRestRuntimeTreeBeanRepo(WebLogicMBeansVersion mbeansVersion) {
     super(
-      version.findOrCreate(WebLogicRuntimeTreeBeanRepoDef.class, roles),
+      mbeansVersion.findOrCreate(WebLogicRuntimeTreeBeanRepoDef.class),
       rootBeanNameToWebLogicRestTreeNameMap
     );
   }

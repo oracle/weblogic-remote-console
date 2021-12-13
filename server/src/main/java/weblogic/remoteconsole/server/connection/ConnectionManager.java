@@ -6,11 +6,11 @@ package weblogic.remoteconsole.server.connection;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +30,8 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.filter.ClientAuthFeature;
@@ -232,6 +234,28 @@ public class ConnectionManager {
   }
 
   /**
+   * Returns the user's view of the weblogic mbeans on this connection.
+   * 
+   * Returns null if there was a problem figuring out the version
+   * (e.g. a WLS REST call to find out if the user is an Admin fails)
+   */
+  public WebLogicMBeansVersion getWebLogicMBeansVersion(Connection connection) {
+    Set<String> roles = getConnectionUserRoles(connection);
+    if (roles != null) {
+      Boolean supportsSecurityWarnings = getSupportsSecurityWarnings(connection);
+      if (supportsSecurityWarnings != null) {
+        return
+          WebLogicMBeansVersions.getVersion(
+            WebLogicVersions.getVersion(connection.getDomainVersion()),
+            supportsSecurityWarnings,
+            roles
+          );
+      }
+    }
+    return null;
+  }
+
+  /**
    * Determines which of the standard roles (Admin, Deployer, Operator, Monitor)
    * the connection user is in.
    * 
@@ -239,8 +263,8 @@ public class ConnectionManager {
    * @return A Set containing the list of roles or <code>null</code> if any of the underlying
    * WLS REST calls failed.
    */
-  public Set<String> getConnectionUserRoles(Connection connection) {
-    Set<String> result = new HashSet<>();
+  private Set<String> getConnectionUserRoles(Connection connection) {
+    Set<String> result = new TreeSet<>(); // Sorted
     // See if the user is an Admin.  If so, that's good enough since
     // an Admin can access anything.  i.e. it doesn't matter if the
     // user is in any other roles.
@@ -326,6 +350,17 @@ public class ConnectionManager {
 
     // Done.
     return result;
+  }
+
+  /**
+   * Determines whether the domain supports security warnings.
+   * 
+   * Returns null if there was a problem determining whether the domain supports security warnings.
+   */
+  private Boolean getSupportsSecurityWarnings(Connection connection) {
+    // TBD try to GET domainRuntime/domainSecurityRuntime
+    // 200 = true, 404 = false
+    return false;
   }
 
   /**

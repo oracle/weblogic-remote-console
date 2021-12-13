@@ -15,6 +15,7 @@ import weblogic.remoteconsole.server.repo.PageRepo;
 public class Root {
   public static final String EDIT_NAME = "edit";
   public static final LocalizableString EDIT_LABEL = LocalizedConstants.EDIT_LABEL;
+  public static final String COMPOSITE_CONFIGURATION_NAME = "compositeConfig";
   public static final String SERVER_CONFIGURATION_NAME = "serverConfig";
   public static final String DOMAIN_RUNTIME_NAME = "domainRuntime";
   public static final String CONFIGURATION_ROOT = "Domain";

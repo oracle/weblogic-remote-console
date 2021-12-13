@@ -10,7 +10,7 @@
  * CFE API module for managing domain connections
  * @module
  */
-define(['../../microservices/connection-management/domain-connection-manager', '../../core/runtime', '../../core/utils', '../../core/types', 'ojs/ojlogger'],
+define(['wrc-frontend/microservices/connection-management/domain-connection-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger'],
   function (DomainConnectionManager, Runtime, CoreUtils, CoreTypes, Logger) {
     let _currentMode = CoreTypes.Console.RuntimeMode.DETACHED.name,
       _timerId, _onConsoleRuntimeModeChanged;

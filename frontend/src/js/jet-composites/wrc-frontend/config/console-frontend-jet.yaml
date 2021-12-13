@@ -1,0 +1,75 @@
+name: WebLogic Remote Console
+version: '2.1.0'
+console-backend:
+  name: Oracle WebLogic Console Backend Microprofile Server
+  version: '1.0'
+  baseUrl: 'http://localhost:8012'
+  pollingMillis: 60000
+  retryAttempts: 5
+  services:
+    - id: configuration
+      path: /configuration
+      enabled: true
+      components:
+        data: null
+        pages: null
+        changeManager:
+          - id: view
+            uri: /changeManager
+          - id: edit
+            uri: /changeManager/changes
+          - id: commit
+            uri: /changeManager/activate
+          - id: discard
+            uri: /changeManager/cancelEdit
+    - id: monitoring
+      path: /monitoring
+      enabled: true
+      components:
+        data: null
+        pages: null
+        lifecycle:
+          - id: view
+            prefix: /data
+            uri: /DomainRuntime/ServerStates
+    - id: information
+      path: /about
+    - id: connecting
+      path: /connection
+    - id: providers
+      path: /providers
+settings:
+  logging:
+    defaultLevel: INFO
+  autoSync:
+    minimumSecs: 30
+  themes:
+    dark:
+      - '#413e3c'
+      - '#624f4f'
+    light:
+      - '#dcd6d1'
+      - '#b6a29a'
+  projectManagement:
+    startup:
+      task: choose
+    #      project:
+    #        name: "(Unnamed Project)"
+    #        isDefault: true
+    #        dataProviders:
+    #          - name: Default AdminServer Connection
+    #            type: adminserver
+    #            username: weblogic
+    #            url: "http://localhost:7001"
+    newModel:
+      domain:
+        fileContents: |
+          domainInfo:
+            AdminUserName: '@@PROP:ADMIN_USERNAME@@'
+            AdminPassword: '@@PROP:ADMIN_PASSWORD@@'
+          topology:
+            Server:
+              AdminServer:
+      sparse:
+        fileContents: |
+          domainInfo:

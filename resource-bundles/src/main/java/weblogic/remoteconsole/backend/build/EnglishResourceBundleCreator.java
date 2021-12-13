@@ -29,6 +29,8 @@ import weblogic.remoteconsole.common.repodef.TableActionDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicLocalizationUtils;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicPageDefWalker;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 
@@ -60,8 +62,8 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
     return this.resourceDefinitions;
   }
 
-  private EnglishResourceBundleCreator(WebLogicVersion weblogicVersion, String bundleDir) {
-    super(weblogicVersion);
+  private EnglishResourceBundleCreator(WebLogicMBeansVersion mbeansVersion, String bundleDir) {
+    super(mbeansVersion);
     this.bundleDir = bundleDir;
   }
 
@@ -70,7 +72,12 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
       LOGGER.info("EnglishResourceBundleCreator.main");
       String bundleDir = args[0];
       for (WebLogicVersion weblogicVersion : WebLogicVersions.getSupportedVersions()) {
-        (new EnglishResourceBundleCreator(weblogicVersion, bundleDir)).create();
+        WebLogicMBeansVersion mbeansVersion =
+          WebLogicMBeansVersions.getVersion(
+            weblogicVersion,
+            true // supports security warnings
+          );
+        (new EnglishResourceBundleCreator(mbeansVersion, bundleDir)).create();
       }
     } catch (Throwable t) {
       t.printStackTrace();
@@ -93,7 +100,7 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
   }
 
   private void writeResourceBundle(String language, String languagePath) throws Exception {
-    String domainVersion = getWebLogicVersion().getDomainVersion();
+    String domainVersion = getMBeansVersion().getWebLogicVersion().getDomainVersion();
     String fileName =
       getBundleDir()
         + "/"

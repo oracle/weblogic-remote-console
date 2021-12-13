@@ -1,4 +1,4 @@
-define(['core/cfe-errors'],
+define(['wrc-frontend/core/cfe-errors'],
   function (CfeErrors) {
 
     describe("CfeErrors Tests", function () {

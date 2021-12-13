@@ -61,7 +61,7 @@ class HelpTopicDefImpl implements HelpTopicDef {
     HelpTopicDefSource.Type type = getSource().getType();
     String relativeHref = getSource().getHref();
     WebLogicVersion version =
-      getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getWeblogicVersion();
+      getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion();
     if (HelpTopicDefSource.Type.edocs.equals(type)) {
       return version.getEdocsHelpTopicUrl(relativeHref);
     }

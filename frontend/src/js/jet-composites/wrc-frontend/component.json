@@ -1,0 +1,17 @@
+{
+  "name": "wrc-frontend",
+  "version": "1.0.0",
+  "jetVersion": "^10.1.3",
+  "type": "pack",
+  "displayName": "A user friendly, translatable name of the pack.",
+  "description": "A translatable high-level description for the pack.",
+  "dependencies": {
+    "wrc-frontend-apis": "1.0.0",
+    "wrc-frontend-config": "1.0.0",
+    "wrc-frontend-core": "1.0.0",
+    "wrc-frontend-css": "1.0.0",
+    "wrc-frontend-images": "1.0.0",
+    "wrc-frontend-integration": "1.0.0",
+    "wrc-frontend-microservices": "1.0.0"
+  }
+}

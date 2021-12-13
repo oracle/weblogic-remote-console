@@ -7,14 +7,12 @@
 
 "use strict";
 
-define(
-  ['knockout', 'ojs/ojarraydataprovider', 'ojL10n!./resources/nls/cfe-multi-select-strings', 'ojs/ojcontext',
-    'ojs/ojknockout', 'ojs/ojbutton', 'ojs/ojcheckboxset', 'ojs/ojlabel'],
-    function (ko, ArrayDataProvider, componentStrings, Context) {
+define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout', 'ojs/ojbutton', 'ojs/ojcheckboxset', 'ojs/ojlabel'],
+  function (ko, ArrayDataProvider, Context) {
 
     function MultiSelectViewModel(context) {
-      
-      var self = this;
+
+      const self = this;
 
       // Declare and initialize the public, instance variable for
       // storing items that appear in availableCheckboxset. Initially
@@ -69,29 +67,49 @@ define(
       this.availableHeader = ko.observable(context.properties.availableHeader);
       this.chosenHeader = ko.observable(context.properties.chosenHeader);
 
+      this.setBusyContext = () => {
+        self.busyContext = Context.getContext(context.element).getBusyContext();
+      };
+
+      this.addBusyState = () => {
+        const options = {"description": "Web Component Startup - Waiting for data"};
+        return self.busyContext.addBusyState(options);
+      };
+
+      this.connected = () => {
+        this.setBusyContext();
+
+        this.busyContext.whenReady()
+          .then(() => {
+            const resolve = this.addBusyState();
+            this.composite = context.element;
+            resolve();
+          });
+      };
+
       // The following line shows how you put checks in
       // oj-option elements, of availableCheckboxSet
       //this.checkedAvailableItems(["AppTesters"]);
 
-      this.checkedAvailableItemsIsEmpty = function () {
+      this.checkedAvailableItemsIsEmpty = () => {
         return (self.checkedAvailableItems().length === 0);
       };
 
-      this.checkedChosenItemsIsEmpty = function () {
+      this.checkedChosenItemsIsEmpty = () => {
         return (self.checkedChosenItems().length === 0);
       };
 
-      this.addToChosenButtonClick = function (event) {
+      this.addToChosenButtonClick = (event) => {
         addToChosenHandler(self.checkedAvailableItems);
         dispatchChosenItemsChangedEvent();
       };
 
-      this.addToAvailableButtonClick = function (event) {
+      this.addToAvailableButtonClick = (event) => {
         addToAvailableHandler(self.checkedChosenItems);
         dispatchChosenItemsChangedEvent();
       };
 
-      this.addAllToChosenButtonClick = function (event) {
+      this.addAllToChosenButtonClick = (event) => {
         if (self.readonly()) {
           event.preventDefault();
           return false;
@@ -105,7 +123,7 @@ define(
         dispatchChosenItemsChangedEvent();
       };
 
-      this.addAllToAvailableButtonClick = function (event) {
+      this.addAllToAvailableButtonClick = (event) => {
         if (self.readonly()) {
           event.preventDefault();
           return false;
@@ -119,7 +137,7 @@ define(
         dispatchChosenItemsChangedEvent();
       };
 
-      this.addNewChosenItem = function(newChosenItem) {
+      this.addNewChosenItem = (newChosenItem) => {
         let existingItem = self.availableItems().find(item => item.label === newChosenItem.label);
         if (typeof existingItem === "undefined") {
           existingItem = self.chosenItems().find(item => item.label === newChosenItem.label);
@@ -133,7 +151,6 @@ define(
         }
       };
 
-      // Start "private" functions
       function dispatchChosenItemsChangedEvent() {
         let chosen = [];
         self.chosenItems().forEach((chosenItem) => {
@@ -227,21 +244,6 @@ define(
         });
       }
 
-      // End "private" functions
-
-      //At the start of your viewModel constructor
-      var busyContext = Context.getContext(context.element).getBusyContext();
-      var options = {"description": "Web Component Startup - Waiting for data"};
-      self.busyResolve = busyContext.addBusyState(options);
-
-      this.composite = context.element;
-
-      //Example observable
-      this.properties = context.properties;
-      this.res = componentStrings['cfe-multi-select'];
-
-      //Once all startup and async activities have finished, relocate if there are any async activities
-      this.busyResolve();
     }
 
     MultiSelectViewModel.prototype = {

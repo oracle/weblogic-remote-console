@@ -25,4 +25,14 @@ public interface SliceFormDef extends FormDef {
   //
   // Returns null if the default presentation should be used.
   public SliceFormPresentationDef getPresentationDef();
+
+  // Returns whether all the fields on this slice are read-only.
+  public default boolean isReadOnly() {
+    for (PagePropertyDef propertyDef : getAllPropertyDefs()) {
+      if (propertyDef.isUpdateWritable()) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

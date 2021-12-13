@@ -6,8 +6,8 @@
  */
 "use strict";
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  '../../microservices/project-management/console-project-manager', '../../microservices/project-management/console-project', '../../microservices/provider-management/data-provider-manager', '../../microservices/provider-management/data-provider', './dataproviders-dialog', '../../apis/message-displaying','../utils', '../../core/runtime', '../../core/utils', '../../core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtreeview','ojs/ojnavigationlist', 'ojs/ojswitch', 'ojs/ojcheckboxset', 'ojs/ojradioset'],
-  function (oj, ko, ArrayDataProvider, ConsoleProjectManager, ConsoleProject, DataProviderManager, DataProvider, DataProvidersDialog, MessageDisplaying, ViewModelUtils, Runtime, CoreUtils, CoreTypes, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/microservices/project-management/console-project-manager', 'wrc-frontend/microservices/project-management/console-project', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/provider-management/data-provider', './dataproviders-dialog','wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtreeview','ojs/ojnavigationlist', 'ojs/ojswitch', 'ojs/ojcheckboxset', 'ojs/ojradioset'],
+  function (oj, ko, ArrayDataProvider, ConsoleProjectManager, ConsoleProject, DataProviderManager, DataProvider, DataProvidersDialog, ViewModelUtils, Runtime, CoreUtils, CoreTypes, Logger) {
     function DataProvidersTemplate(viewParams) {
       const self = this;
 
@@ -97,6 +97,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  '../../microservic
                 "label": oj.Translations.getTranslatedString("wrc-data-providers.popups.info.domain.version.label")},
               "username": {"value": ko.observable(),
                 "label": oj.Translations.getTranslatedString("wrc-data-providers.popups.info.domain.username.label")},
+              "roles": {"value": ko.observable(),
+                "label": oj.Translations.getTranslatedString("wrc-data-providers.popups.info.domain.roles.label")},
               "connectTimeout": {"value": ko.observable(),
                 "label": oj.Translations.getTranslatedString("wrc-data-providers.popups.info.domain.connectTimeout.label")},
               "readTimeout": {"value": ko.observable(),
@@ -560,7 +562,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  '../../microservic
         // Reload the connectionsModels observable
         // array.
         loadConnectionsModels();
-        setTimeout(() => {if (viewParams.onTabStripContentHidden()) viewParams.onTabStripContentVisible(true);
+        setTimeout(() => {
+          if (viewParams.onTabStripContentHidden()) {
+            viewParams.onTabStripContentVisible(true);
+          }
           chooseStartupTask();
           // Add "mouseenter" and "mouseleave" event
           // listener to list items
@@ -594,7 +599,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  '../../microservic
                   }
                 })
                 .catch(failure => {
-                  reject(failure);
+                  resolve(true);
                 });
             }
             else {
@@ -820,6 +825,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  '../../microservic
        * @private
        */
       function updateConnectionsModels(newDataProvider) {
+        if (newDataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name && !newDataProvider.lastConnectionAttemptSuccessful) {
+          return;
+        }
+
         const index = connectionsModels().map(dataProvider => dataProvider.id).indexOf(newDataProvider.id);
         if (index === -1) connectionsModels.push(newDataProvider);
         loadConnectionsModels();
@@ -1149,6 +1158,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  '../../microservic
             self.i18n.popups.info.domain.url.value(dataProvider.url);
             self.i18n.popups.info.domain.version.value(dataProvider.domainVersion);
             self.i18n.popups.info.domain.username.value(dataProvider.username);
+            self.i18n.popups.info.domain.roles.value(dataProvider.userRoles);
             self.i18n.popups.info.domain.connectTimeout.value(dataProvider.connectTimeout);
             self.i18n.popups.info.domain.readTimeout.value(dataProvider.readTimeout);
             break;
@@ -1491,7 +1501,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  '../../microservic
               }
               else {
                 dataProvider = updateDataProvider(dataProvider, self.dialogFields());
-                dataProvider.state = (!removeRequired ? CoreTypes.Domain.ConnectState.CONNECTED.name : CoreTypes.Domain.ConnectState.DISCONNECTED.name);
+//<LW                dataProvider.state = (!removeRequired ? CoreTypes.Domain.ConnectState.CONNECTED.name : CoreTypes.Domain.ConnectState.DISCONNECTED.name);
                 updateConnectionsModels(dataProvider);
                 if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
                   dispatchElectronApiSignal("project-changing");
@@ -1582,22 +1592,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  '../../microservic
         if (CoreUtils.isNotUndefinedNorNull(dataProvider.file)) {
           selectWDTModel(dataProvider);
         }
-      }
-
-      async function downloadWDTModelFile(dataProviders) {
-        let rtnval = {succeeded: true};
-        for (const i in dataProviders) {
-          if (dataProviders[i].state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
-            const result = await DataProviderManager.downloadWDTModel(dataProviders[i])
-            if (ViewModelUtils.isElectronApiAvailable()) {
-              const reply = await window.electron_api.ipc.invoke("file-writing", {filepath: dataProviders[i].file, fileContents: result.body.data});
-              if (!reply.succeeded) {
-                ViewModelUtils.downloadFile({filepath: reply.filepath, fileContents: reply.fileContents, mediaType: "application/x-yaml"});
-              }
-            }
-          }
-        }
-        return Promise.resolve(rtnval);
       }
 
       function removeDataProvider(dataProvider) {

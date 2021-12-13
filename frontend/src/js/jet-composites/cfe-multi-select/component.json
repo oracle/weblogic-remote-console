@@ -1,8 +1,9 @@
 {
   "name": "cfe-multi-select",
+  "type": "composite",
   "version": "1.0.0",
-  "jetVersion": "^9.0.0",
-  "displayName": "multi selection component",
+  "jetVersion": "10.1.3",
+  "displayName": "cfe-multi-select",
   "description": "A component that displays items for two groups of selection boxes and allows swapping.",
   "properties": {
     "availableHeader": {

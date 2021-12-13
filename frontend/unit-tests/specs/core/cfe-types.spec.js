@@ -1,4 +1,4 @@
-define(['core/types'],
+define(['wrc-frontend/core/types'],
   function (CfeTypes) {
 
     describe("CfeTypes Tests", function () {

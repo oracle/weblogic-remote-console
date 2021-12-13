@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
@@ -20,7 +21,6 @@ import weblogic.remoteconsole.server.repo.ChangeManagerStatus;
 import weblogic.remoteconsole.server.repo.Changes;
 import weblogic.remoteconsole.server.repo.ModifiedBeanProperty;
 import weblogic.remoteconsole.server.repo.RemovedBean;
-import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.Value;
 
 /**
@@ -136,8 +136,9 @@ class WeblogicRestEditTreeBeanRepoSearchResults
           new ModifiedBeanProperty(
             beanPath,
             propertyDef,
-            getModificationValue(beanPath, propertyDef, weblogicVal.getJsonObject("oldValue")),
-            getModificationValue(beanPath, propertyDef, weblogicVal.getJsonObject("newValue"))
+            weblogicVal.getBoolean("unset"),
+            getModificationValue(beanPath, propertyDef, weblogicVal.get("oldValue")),
+            getModificationValue(beanPath, propertyDef, weblogicVal.get("newValue"))
           )
         );
       } else {
@@ -145,7 +146,11 @@ class WeblogicRestEditTreeBeanRepoSearchResults
       }
     }
 
-    private SettableValue getModificationValue(BeanTreePath beanPath, BeanPropertyDef propertyDef, JsonObject jsonVal) {
+    private Value getModificationValue(
+      BeanTreePath beanPath,
+      BeanPropertyDef propertyDef,
+      JsonValue jsonVal
+    ) {
       if (jsonVal == null) {
         return null;
       }
@@ -153,9 +158,11 @@ class WeblogicRestEditTreeBeanRepoSearchResults
       // search results (e.g. /Domain or /DomainRuntime)
       BeanChildDef rootChildBean = beanPath.getSegments().get(0).getChildDef();
       WebLogicRestValueBuilder builder = new WebLogicRestValueBuilder(beanPath.getBeanRepo(), rootChildBean);
-      Value value = builder.buildValue(propertyDef, jsonVal.get("value"));
-      boolean set = jsonVal.getBoolean("set");
-      return new SettableValue(value, set);
+      if (isHaveExpandedValues(beanPath)) {
+        // jsonVal should be an expanded value with a value property but without a set property
+        jsonVal = jsonVal.asJsonObject().get("value");
+      }
+      return builder.buildValue(propertyDef, jsonVal);
     }
 
     private void buildAddition(JsonObject weblogicVal) {

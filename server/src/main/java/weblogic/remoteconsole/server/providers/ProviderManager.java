@@ -3,7 +3,9 @@
 
 package weblogic.remoteconsole.server.providers;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.json.JsonObject;
@@ -31,8 +33,20 @@ public class ProviderManager {
     return ret;
   }
 
+  public WDTCompositeDataProvider createWDTCompositeDataProvider(String name, List<String> models) {
+    List<WDTModelDataProvider> wdtProviders = new ArrayList<>(models.size());
+    models.forEach(model -> wdtProviders.add((WDTModelDataProvider)providers.get(model)));
+    WDTCompositeDataProvider ret = new WDTCompositeDataProviderImpl(name, wdtProviders);
+    providers.put(name, ret);
+    return ret;
+  }
+
   public boolean hasProvider(String name) {
     return providers.containsKey(name);
+  }
+
+  public boolean hasProvider(String name, String type) {
+    return (providers.containsKey(name) ? providers.get(name).getType().equals(type) : false);
   }
 
   // Since a ProviderManager doesn't have any state besides the list of
