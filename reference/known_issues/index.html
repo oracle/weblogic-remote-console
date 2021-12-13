@@ -12,20 +12,20 @@
     <title>Known issues :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1637633094" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1639371222" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1639371222" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1639371222" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1639371222" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1639371222" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1639371222" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1639371222" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1639371222" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1639371222" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1639371222" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1639371222"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1637633094"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1637633094"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1639371223"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1639371223"></script>
 <script type="text/javascript">
     
         var baseurl = "\/weblogic-remote-console\/";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1637633094"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1639371223"></script>
 
     
   </div>
@@ -274,6 +274,27 @@
       <li data-nav-id="/weblogic-remote-console/userguide/logging/" title="Check Log Files" class="dd-item ">
         <a href="/weblogic-remote-console/userguide/logging/">
         Check Log Files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/role-access/">
+        Understand access discrepancies
         
         </a>
     </li>
@@ -576,7 +597,6 @@
     <li><a href="#limitations">Limitations</a></li>
     <li><a href="#known-issues">Known issues</a>
       <ul>
-        <li><a href="#limited-support-for-users-in-a-non-administrative-role">Limited support for users in a non-administrative role</a></li>
         <li><a href="#minimum-web-browser-viewport-size">Minimum web browser viewport size</a></li>
       </ul>
     </li>
@@ -608,26 +628,24 @@
 
 <p>This page lists the known issues and workarounds, if available, as well as the limitations of the console in this release.</p>
 <h2 id="limitations">Limitations</h2>
-<p>The following features are not available in this release of the Remote Console:</p>
+<p>The following features are not available in this release of the WebLogic Remote Console:</p>
 <ul>
 <li>Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on.</li>
-<li>Record WLST scripts while you configure WebLogic Server using the Remote Console.</li>
+<li>Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.</li>
 <li>JNDI tree viewer.</li>
 </ul>
 <h2 id="known-issues">Known issues</h2>
 <p>The following list summarizes the known issues at the time of this release.</p>
-<h3 id="limited-support-for-users-in-a-non-administrative-role">Limited support for users in a non-administrative role</h3>
-<p>The Remote Console fully supports only users in the Administrator role. If you are not logged in as an Administrator, unexpected behavior may occur. For example, the Deployer, Monitor and Operator roles are not sufficient for most configuration pages and will result in empty pages and error messages.</p>
 <h3 id="minimum-web-browser-viewport-size">Minimum web browser viewport size</h3>
-<p><strong>Issue</strong> The font sizes in the WebLogic Remote Console are governed by the Oracle JET Redwood style. They are larger than the ones used in the WebLogic Server Administration Console, and the entry fields are a bit larger in height and width. As a result, the overall viewing area inside your web browser&rsquo;s viewport (the portion where all the web content appears), needs to be of a minimum size to have an enjoyable experience using the Remote Console.</p>
+<p><strong>Issue</strong> The font sizes in the WebLogic Remote Console are governed by the Oracle JET Redwood style. They are larger than the ones used in the WebLogic Server Administration Console, and the entry fields are a bit larger in height and width. As a result, the overall viewing area inside your web browser&rsquo;s viewport (the portion where all the web content appears), needs to be of a minimum size to have an enjoyable experience using the WebLogic Remote Console.</p>
 <p>We have determined that the recommended minimum web browser viewport size is 1592 x 900 pixels. If you resize your web browser to be smaller than 1592 x 900 pixels, then scroll bars appear when the mouse hovers over certain areas. However, some form data may still not be visible until the web browser&rsquo;s viewport height is at least 900 pixels.</p>
 <p><strong>Workaround</strong> Ensure that the browser viewport is set to the recommended minimum. If those values are not available, you can also adjust the Zoom setting to 80%.</p>
 <h2 id="limited-mbean-property-support">Limited MBean property support</h2>
-<p>The Remote Console includes the vast majority of the MBean properties that the WebLogic Server Administration Console supports. However, because of limitations in the WebLogic REST API, some are missing, including some that are deprecated. If you notice that there is an MBean property that you require that is not available in the Remote Console, please let us know.</p>
+<p>The WebLogic Remote Console includes the vast majority of the MBean properties that the WebLogic Server Administration Console supports. However, because of limitations in the WebLogic REST API, some are missing, including some that are deprecated. If you notice that there is an MBean property that you require that is not available in the WebLogic Remote Console, please let us know.</p>
 <h2 id="unable-to-reorder-collections-such-as-security-providers">Unable to reorder collections such as security providers</h2>
 <p><strong>Issue</strong> There are separate lists for each type of security provider (such as authentication providers, role mapping providers, authorization providers, and so on).
 When you have more than one security provider in a list, WebLogic Server invokes them in the order that they appear in the list.  Sometimes the order is important (for example, you want the server to try the local fast authentication provider before the slow remote one).</p>
-<p>Currently, the Remote Console doesn&rsquo;t explicitly let you reorder the lists.</p>
+<p>Currently, the WebLogic Remote Console doesn&rsquo;t explicitly let you reorder the lists.</p>
 <p><strong>Workaround</strong> To reorder providers, you can delete and recreate them. For example, if the list of authentication providers has A then B, and you want to switch it to B then A, delete A and recreate it. New providers are always added to the end of the list.</p>
 
 
@@ -724,6 +742,22 @@ When you have more than one security provider in a list, WebLogic Server invokes
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
                         
             
@@ -982,19 +1016,19 @@ When you have more than one security provider in a list, WebLogic Server invokes
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1639371223"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1639371223"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1637633094"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1639371223"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

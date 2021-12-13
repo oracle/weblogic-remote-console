@@ -35,7 +35,7 @@ Configuration locks do not apply to WDT model files. As WDT model files are not 
       <guid>/weblogic-remote-console/userguide/advanced-settings/</guid>
       <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
  Edit Java system properties in the desktop application Edit Java system properties in the browser-based application Java system properties  Some possible customizations:
- Connect to a WebLogic Server domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic Server domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic Server domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
+ Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
     </item>
     
     <item>
@@ -59,6 +59,15 @@ Front end To view the log file for issues related to the front end of the WebLog
 Desktop application Open View &amp;gt; Toggle Developer Tools and select the Console tab.
 Browser application In the browser tab with WebLogic Remote Console, open the Developer Tools and select the Console tab.
 Back end To view the log file for issues related to the back end of the WebLogic Remote Console:</description>
+    </item>
+    
+    <item>
+      <title>Understand access discrepancies</title>
+      <link>/weblogic-remote-console/userguide/role-access/</link>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/weblogic-remote-console/userguide/role-access/</guid>
+      <description>The WebLogic Remote Console restricts what non-administrator users can see or do. Users with the roles Deployer, Monitor, or Operator are only shown the areas and features necessary for their role. These restrictions range from broad (hiding the entire Edit Tree perspective from users in the Monitor role) to narrow (hiding Create buttons on some pages). For full access to all the functionality of the WebLogic Remote Console, log in as an administrator.</description>
     </item>
     
   </channel>

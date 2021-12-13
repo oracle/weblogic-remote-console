@@ -12,20 +12,20 @@
     <title>WebLogic Remote Console :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1637633094" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1639371223" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1639371223"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1637633094"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1637633094"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1639371223"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1639371223"></script>
 <script type="text/javascript">
     
         var baseurl = "\/weblogic-remote-console\/";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1637633094"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1639371223"></script>
 
     
   </div>
@@ -274,6 +274,27 @@
       <li data-nav-id="/weblogic-remote-console/userguide/logging/" title="Check Log Files" class="dd-item ">
         <a href="/weblogic-remote-console/userguide/logging/">
         Check Log Files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/role-access/">
+        Understand access discrepancies
         
         </a>
     </li>
@@ -547,7 +568,7 @@
  
 <h1 id="weblogic-remote-console">WebLogic Remote Console</h1>
 <p>The WebLogic Remote Console is a lightweight, open source console that you can use to manage domain configurations of WebLogic Server Administration Servers or WebLogic Deploy Tooling (WDT) metadata models.</p>
-<p>The advantage of the WebLogic Remote Console is that it does not need to be collocated with the WebLogic Server domain. You can install and run the WebLogic Remote Console from one computer and connect to a domain running anywhere: a physical or virtual machine, in a container, Kubernetes, or in the Oracle Cloud. The WebLogic Remote Console connects to your domain using WebLogic REST APIs.</p>
+<p>The advantage of the WebLogic Remote Console is that it does not need to be colocated with the WebLogic Server domain. You can install and run the WebLogic Remote Console from one computer and connect to a domain running anywhere: a physical or virtual machine, in a container, Kubernetes, or in the Oracle Cloud. The WebLogic Remote Console connects to your domain using WebLogic REST APIs.</p>
 <p>As for the WDT metadata models, they are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them &lsquo;offline&rsquo; before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models. See the <a href="https://oracle.github.io/weblogic-deploy-tooling/">WebLogic Deploy Tooling</a> documentation for more information.</p>
 <p>Simply launch the desktop application and connect to an Administration Server or WDT model. Or, you can start the console in a browser and then connect to the Administration Server.</p>
 <p>The WebLogic Remote Console is fully supported with WebLogic Server 12.2.1.3, 12.2.1.4, and 14.1.1.0.</p>
@@ -567,18 +588,20 @@
 <p>Whether you choose the desktop application or the browser-based tool, it&rsquo;s simple to install the WebLogic Remote Console and get up and running within moments. See <a href="/weblogic-remote-console/setup/">Install WebLogic Remote Console</a> for instructions.</p>
 <hr>
 <h3 id="whats-new">What&rsquo;s new</h3>
-<p>The <a href="https://github.com/oracle/weblogic-remote-console/releases">current release of the WebLogic Remote Console</a> is 2.0.0. This release was published in November 2021.</p>
+<p>The <a href="https://github.com/oracle/weblogic-remote-console/releases">current release of the WebLogic Remote Console</a> is 2.1.0. This release was published in December 2021.</p>
 <p><strong>New features</strong></p>
 <ul>
-<li>WDT model file support - create and update WDT model files</li>
-<li>Multiple provider support - connect to multiple domains and WDT model files</li>
-<li>New Configuration View Tree perspective - view currently active configuration settings</li>
+<li>Support for non-administrator users: the WebLogic Remote Console now limits what Deployers, Monitors, and Operators can see and do based on the needs of the role</li>
 </ul>
 <hr>
 <h4 id="prev_releases">Previous Releases</h4>
-<p>Documentation for prior releases of the WebLogic Remote Console: <a href="https://oracle.github.io/weblogic-remote-console/1.1/">1.1.0</a>.</p>
+<p>Documentation for prior releases of the WebLogic Remote Console:</p>
+<ul>
+<li><a href="https://oracle.github.io/weblogic-remote-console/2.0/">2.0.0</a></li>
+<li><a href="https://oracle.github.io/weblogic-remote-console/1.1/">1.1.0</a></li>
+</ul>
 <h4 id="help">Need more help? Have a suggestion? Come and say, &ldquo;Hello!&rdquo;</h4>
-<p>We have a <strong>public Slack channel</strong> where you can get in touch with us to ask questions about using the WebLogic Remote Console or give us feedback or suggestions about what features and improvements you would like to see.  We would love to hear from you. To join our channel, please <a href="https://weblogic-slack-inviter.herokuapp.com/">visit this site to get an invitation</a>. The invitation email will include details of how to access our Slack workspace.  After you are logged in, please come to <code>#remote-console</code> and say, &ldquo;hello!&rdquo;</p>
+<p>We have a <strong>public Slack channel</strong> where you can get in touch with us to ask questions about using the Remote Console or give us feedback or suggestions about what features and improvements you would like to see.  We would love to hear from you. To join our channel, please <a href="https://weblogic-slack-inviter.herokuapp.com/">visit this site to get an invitation</a>. The invitation email will include details of how to access our Slack workspace.  After you are logged in, please come to <code>#remote-console</code> and say, &ldquo;hello!&rdquo;</p>
 <h4 id="rel_projects">Related Projects</h4>
 <ul>
 <li><a href="https://oracle.github.io/weblogic-deploy-tooling/">WebLogic Deploy Tooling</a></li>
@@ -674,6 +697,22 @@
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
                         
             
@@ -922,19 +961,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1639371223"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1639371223"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1637633094"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1639371223"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

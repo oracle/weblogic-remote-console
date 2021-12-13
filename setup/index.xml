@@ -24,8 +24,8 @@ The WebLogic Remote Console user interface consists of the following sections:
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>/weblogic-remote-console/setup/admin-console-diff/</guid>
-      <description>The WebLogic Remote Console is distinct from the WebLogic Server Administration Console that is deployed as part of your WebLogic Server domain. As you explore the WebLogic Remote Console, you&amp;rsquo;ll notice key differences between the two consoles:
- The user interface has been completely redesigned to conform to the Oracle Redwood theme included with Oracle JET. The configuration and monitoring runtime content is separated into separate pages in the Remote Console.</description>
+      <description>The WebLogic Remote Console is distinct from the WebLogic Server Administration Console that is deployed as part of your WebLogic domain. As you explore the WebLogic Remote Console, you&amp;rsquo;ll notice key differences between the two consoles:
+ The user interface has been completely redesigned to conform to the Oracle Redwood theme included with Oracle JET. The configuration and monitoring runtime content is separated into separate pages in the Remote Console. In the WebLogic Server Administration Console, the configuration and runtime information is presented on one page.</description>
     </item>
     
   </channel>

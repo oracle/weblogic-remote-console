@@ -12,20 +12,20 @@
     <title>Edit domain configurations :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1637633094" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1639371223" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1639371223"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1637633094"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1637633094"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1639371223"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1639371223"></script>
 <script type="text/javascript">
     
         var baseurl = "\/weblogic-remote-console\/";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1637633094"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1639371223"></script>
 
     
   </div>
@@ -274,6 +274,27 @@
       <li data-nav-id="/weblogic-remote-console/userguide/logging/" title="Check Log Files" class="dd-item ">
         <a href="/weblogic-remote-console/userguide/logging/">
         Check Log Files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/role-access/">
+        Understand access discrepancies
         
         </a>
     </li>
@@ -610,11 +631,11 @@
 <p>The domain configuration process in the WebLogic Remote Console is similar to the Administration Console. When you start editing the domain, a configuration lock is placed on the domain that blocks other users from making simultaneous changes. Once you&rsquo;re are satisfied with your changes, you can &lsquo;activate&rsquo; these changes and perpetuate them to the administration and management servers.</p>
 <p>Configuration locks do not apply to WDT model files. As WDT model files are not connected to live domains, they do not require any locks to prevent conflicting changes. Additionally, you do not have to save <em>and</em> commit changes; once you save your changes, they are saved to the WDT model file.</p>
 <h4 id="model_tokens">WDT model tokens</h4>
-<p>When editing the domain configuration for a WDT model file, you can substitute model tokens instead of real field values. Model tokens are variables that you can enter into domain configuration settings. Rather than restricting a setting to a single value, the value will update according the variable.</p>
+<p>When editing the domain configuration for a WDT model File, you can substitute model tokens instead of real field values. Model tokens are variables that you can enter into domain configuration settings. Rather than restricting a setting to a single value, the value will update according the variable.</p>
 <p>There are several types of model tokens including variable tokens, file tokens, and so on. Model tokens follow this format: <code>@@TYPE:KEY@@</code>, where <code>TYPE</code> is the model token type and <code>KEY</code> is the variable value. For example, you could declare variable token by entering <code>@@PROP:ABCDE@@</code> into a field.</p>
 <p>See <a href="https://oracle.github.io/weblogic-deploy-tooling/concepts/model/#model-tokens">WDT Model Tokens</a> for more information.</p>
 <h2 id="shopping_cart">Shopping cart</h2>
-<p>The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely. If you installed the console extension, <code>console-rest-ext-1.0.war</code>, you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager. Unfortunately, there is currently no support for removing individual items from the shopping cart.</p>
+<p>The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely. If you installed the console extension, <code>console-rest-ext-1.0.war</code>, you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager. Unfortunately, there is currently no support for removing individual items from the shopping cart.</p>
 <p>The configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock in the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the WebLogic Remote Console and you will not be locked out of making changes with the other tools.</p>
 
 <div class="notices note" ><p>We recommend against making changes using multiple tools because when one of the sessions activates their changes, it releases the lock and the other session will not be able to save or activate their changes.</p>
@@ -626,6 +647,10 @@
 </div>
 
 <h2 id="changes_adminserver">Edit Administration Servers</h2>
+
+<div class="notices note" ><p>If you are not an WebLogic Server administrator, some areas and actions within the WebLogic Remote Console may not be visible. For example, users with the Operator role cannot see the Edit Tree at all. For more information on what users in each roles can (or cannot) access, see <a href="/weblogic-remote-console/userguide/role-access/">Understand Access Discrepancies</a>.</p>
+</div>
+
 <ol>
 <li>Open a project and select an Admin Server Connection Provider.</li>
 <li>Click the <strong>Edit Tree</strong> perspective and make your changes to the domain configuration. Fields marked with <img src="/weblogic-remote-console/restart-required-blk_24x24.png" alt="Server restart icon"> require a server restart.</li>
@@ -846,6 +871,22 @@
             
         
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
             
         
                     
@@ -1015,19 +1056,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1639371223"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1639371223"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1637633094"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1639371223"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

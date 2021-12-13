@@ -12,20 +12,20 @@
     <title>Troubleshoot issues :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1637633094" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1637633094" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1639371223" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1639371223" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1639371223"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1637633094"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1637633094"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1639371223"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1639371223"></script>
 <script type="text/javascript">
     
         var baseurl = "\/weblogic-remote-console\/";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1637633094"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1639371223"></script>
 
     
   </div>
@@ -274,6 +274,27 @@
       <li data-nav-id="/weblogic-remote-console/userguide/logging/" title="Check Log Files" class="dd-item ">
         <a href="/weblogic-remote-console/userguide/logging/">
         Check Log Files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/role-access/">
+        Understand access discrepancies
         
         </a>
     </li>
@@ -582,6 +603,7 @@
     </li>
     <li><a href="#unresponsive">Unresponsive WebLogic Remote Console browser window</a></li>
     <li><a href="#autoprefs">Error: Failure reading auto prefs</a></li>
+    <li><a href="#the-edit-tree--start-and-stop-buttons--create-buttons---is-missing">The <em>Edit Tree / start and stop buttons / create buttons / &hellip;</em> is missing</a></li>
   </ul>
 </nav>
     </div>
@@ -618,7 +640,7 @@
 
 <p>If the cause of the configuration error is not obvious:</p>
 <ul>
-<li>Check the output from the Remote Console and the domain Administration Server.</li>
+<li>Check the output from the WebLogic Remote Console and the domain Administration Server.</li>
 <li>Check the WebLogic Administration Server log.</li>
 </ul>
 <p>If you are unable to determine the cause of the error, cancel the edits and make the configuration changes again.</p>
@@ -637,6 +659,10 @@
 <li>macOS: <code>/Users/&lt;user&gt;/Library/Application Support/weblogic-remote-console/auto-prefs.json</code></li>
 <li>Windows: <code>C:\Users\&lt;user&gt;\AppData\Roaming\weblogic-remote-console\auto-prefs.json</code></li>
 </ul>
+<h2 id="the-edit-tree--start-and-stop-buttons--create-buttons---is-missing">The <em>Edit Tree / start and stop buttons / create buttons / &hellip;</em> is missing</h2>
+<p>Check the role of the user you used to log into the Administration Server. Only administrators have access to the full functionality of of WebLogic Remote Console. Users with other roles such as Deployers, Operators, or Monitors have limited access to areas outside the scope of their responsibility.</p>
+<!-- raw HTML omitted -->
+<p>For an overview of what users in each role can view or do, see <a href="/weblogic-remote-console/userguide/role-access/">Understand Access Discrepancies</a>.</p>
 
 
 <footer class="footline">
@@ -732,6 +758,22 @@
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
                         
             
@@ -987,19 +1029,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1639371223"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1637633094"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1637633094"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1639371223"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1639371223"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1637633094"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1639371223"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

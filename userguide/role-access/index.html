@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.82.0" />
-    <meta name="description" content="Installing and basic configuration for the WebLogic Remote Console">
+    <meta name="description" content="How user roles affect what you see in the WebLogic Remote Console">
 
 
     <link rel="icon" href="/weblogic-remote-console/images/logo.png" type="image/png">
 
-    <title>Get started :: WebLogic Remote Console</title>
+    <title>Understand access discrepancies :: WebLogic Remote Console</title>
 
     
     <link href="/weblogic-remote-console/css/nucleus.css?1639371223" rel="stylesheet">
@@ -39,7 +39,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/weblogic-remote-console/setup/">
+  <body class="" data-url="/weblogic-remote-console/userguide/role-access/">
     <nav id="sidebar" class="">
 
 
@@ -85,8 +85,8 @@
   
     
     <li data-nav-id="/weblogic-remote-console/setup/" title="Get started" class="dd-item
-        parent
-        active
+        
+        
         
         ">
       <a href="/weblogic-remote-console/setup/">
@@ -161,7 +161,7 @@
   
     
     <li data-nav-id="/weblogic-remote-console/userguide/" title="User Guide" class="dd-item
-        
+        parent
         
         
         ">
@@ -292,7 +292,7 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
+      <li data-nav-id="/weblogic-remote-console/userguide/role-access/" title="Understand access discrepancies" class="dd-item active">
         <a href="/weblogic-remote-console/userguide/role-access/">
         Understand access discrepancies
         
@@ -575,7 +575,13 @@
             
           
           
-            <a href='/weblogic-remote-console/'>WebLogic Remote Console</a> > Get started
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/'>WebLogic Remote Console</a> > <a href='/weblogic-remote-console/userguide/'>User Guide</a> > Understand access discrepancies
+          
+        
           
         
           
@@ -586,18 +592,7 @@
                 
                     <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#install-the-weblogic-remote-console">Install the WebLogic Remote Console</a>
-      <ul>
-        <li><a href="#install_desktop">Desktop application</a></li>
-        <li><a href="#install_browser">Browser-based</a></li>
-      </ul>
-    </li>
-    <li><a href="#connect">Connect to a provider</a></li>
-    <li><a href="#next_steps">Next steps</a></li>
-  </ul>
-</nav>
+<nav id="TableOfContents"></nav>
     </div>
 </div>
 
@@ -613,97 +608,49 @@
           
             <h1>
               
-              Get started
+              Understand access discrepancies
             </h1>
           
 
         
 
 
+<p>The WebLogic Remote Console restricts what non-administrator users can see or do. Users with the roles Deployer, Monitor, or Operator are only shown the areas and features necessary for their role. These restrictions range from broad (hiding the entire Edit Tree perspective from users in the Monitor role) to narrow (hiding Create buttons on some pages). For full access to all the functionality of the WebLogic Remote Console, log in as an administrator.</p>
+<p>The scope of these restrictions is too extensive to list comprehensively but the table below provides some examples.</p>
 
-	<h2 id="install-the-weblogic-remote-console">Install the WebLogic Remote Console</h2>
-<p>You can install and run the WebLogic Remote Console through a desktop application or from within your internet browser.</p>
-
-<div class="notices note" ><p>We recommend using the desktop application over the browser application whenever possible. Certain features, such as editing WDT model files, work more effectively in the desktop application.</p>
+<div class="notices note" ><p>These restrictions are based on the default security policies assigned to each role. If you customize the policies to add or remove access beyond the default, those changed permissions will not be reflected in the WebLogic Remote Console. It will continue to hide or show functionality based on the default security policies.</p>
+<p>See <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-A313D8DB-50DB-43EE-8BA1-EDECDC0DE2FE">Users, Groups, and Security Roles</a> in <em>Securing Resources Using Roles and Policies for Oracle WebLogic Server</em> for more information. You may also find <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/common/mbeansecroles.html">Default Security Policies for MBeans</a> in <em>WebLogic Server MBean Reference</em> helpful.</p>
 </div>
 
-<h3 id="install_desktop">Desktop application</h3>
-<ol>
-<li>Uninstall any previous versions of the WebLogic Remote Console from your computer.</li>
-<li>Download the WebLogic Remote Console. Go to <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a> and download the installer applicable for your operating system.</li>
-<li>Run the installer.</li>
-<li><strong>Optional</strong>: Install the WebLogic Remote Console extension in the WebLogic Server domain. The WebLogic Remote Console extension adds additional functionality when using the WebLogic Remote Console.
-<ol>
-<li>Create a <code>management-services-ext</code> directory under the domain home.</li>
-<li>Download the <code>console-rest-ext-1.0.war</code> from <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a> and save it inside the <code>management-services-ext</code> directory you created in the previous step.</li>
-<li>Reboot the Administration Server if it is already running.</li>
-</ol>
-</li>
-<li>Launch the WebLogic Remote Console application.</li>
-</ol>
-<h3 id="install_browser">Browser-based</h3>
-<p>Your computer must have <a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html">Java SE 11</a> or later installed. To check your Java version, enter <code>java -version</code> at the command line.</p>
-<ol>
-<li>Download the WebLogic Remote Console. Go to <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a> and download <code>console.zip</code>.</li>
-<li>Extract the ZIP archive to a directory of your choice. Once its contents are extracted, it creates a <code>console</code> directory that includes:
-<ul>
-<li>The console executable file <code>console.jar</code></li>
-<li>The libraries required to use the console in the <code>libs</code> subdirectory</li>
-<li>The console extension, <code>console-rest-ext-1.0.war</code>, that you install in the WebLogic Server domain</li>
-</ul>
-</li>
-<li><strong>Optional</strong>: Install the WebLogic Remote Console extension in the WebLogic Server domain. The WebLogic Remote Console extension adds additional functionality when using the WebLogic Remote Console.
-<ol>
-<li>Create a <code>management-services-ext</code> directory under the domain home.</li>
-<li>Download the <code>console-rest-ext-1.0.war</code> from <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a> and save it in the <code>management-services-ext</code> directory you created in the previous step.</li>
-<li>Reboot the Administration Server if it is already running.</li>
-</ol>
-</li>
-<li>Open a command window and on the command line, enter <code>java -jar &lt;console_home&gt;/console.jar</code> where <code>&lt;console_home&gt;</code> is the directory where you unzipped the installer.</li>
-<li>Open a browser window and enter <code>http://localhost:8012</code> in the address bar.</li>
-</ol>
-<h2 id="connect">Connect to a provider</h2>
-<p>The WebLogic Remote Console supports provider connections to WebLogic Server Administration Servers and WebLogic Deploy Tooling (WDT) model files.</p>
-<ol>
-<li>
-<p><em>If connecting to a WebLogic Server Administration Server,</em> start the WebLogic Administration Server.</p>
-</li>
-<li>
-<p>Launch the WebLogic Remote Console in the desktop application or the browser.</p>
-</li>
-<li>
-<p>Choose a startup task to build your first project. Projects are groups of connections to WebLogic Administration Servers, WebLogic Deploy Tooling (WDT) models or both. See <a href="/weblogic-remote-console/userguide/projects/">Projects</a> for more information.</p>
-<ul>
-<li><strong>Add Admin Server Connection Provider</strong>: Connect to the Administration Server of a WebLogic Server domain.</li>
-<li><strong>Add WDT Model File Provider</strong>: Import an existing WDT Model file.</li>
-<li><strong>Create Provider for New WDT Model File</strong>: Create a new WDT model file with only the essential configurations for a fresh start.</li>
-<li><strong>Import Project</strong>: Import project settings from another WebLogic Remote Console instance.</li>
-</ul>
-<p>On subsequent launches, the desktop application will open your last active project.</p>
-<p>If you want to create a new project, select <strong>File &gt; New Project</strong>.</p>
-</li>
-<li>
-<p>Add additional providers to the project. Click ⋮ beside the project name and select a provider type.</p>
-</li>
-<li>
-<p>Select an Administration Server or WDT model file from the Kiosk.</p>
-</li>
-<li>
-<p>Start reviewing or editing the domain configuration.</p>
-</li>
-</ol>
-<h2 id="next_steps">Next steps</h2>
-<ul>
-<li><a href="/weblogic-remote-console/setup/console/">Familiarize yourself with the WebLogic Remote Console.</a></li>
-<li><a href="/weblogic-remote-console/userguide/edit-domain-config/">Edit your Administration Servers or WDT model files.</a></li>
-<li><a href="/weblogic-remote-console/userguide/advanced-settings/">Customize your connection settings.</a></li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Limitations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Administrator</td>
+<td>No limitations. Administrators have full access to all functionality in the WebLogic Remote Console.</td>
+</tr>
+<tr>
+<td>Deployer</td>
+<td>Can view but not edit server or domain configurations; Can modify areas related to application deployment including some JDBC and JMS resources.</td>
+</tr>
+<tr>
+<td>Monitor</td>
+<td>Read-only access to the WebLogic Remote Console.</td>
+</tr>
+<tr>
+<td>Operator</td>
+<td>Can start and stop servers but cannot see the Edit Tree perspective.</td>
+</tr>
+</tbody>
+</table>
 
 
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
@@ -738,57 +685,8 @@
             
                 
                     
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
                         
                         
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -818,6 +716,42 @@
             
             
                 
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -894,6 +828,23 @@
             
         
                     
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
             
         
                     
@@ -901,6 +852,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1050,10 +1004,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/weblogic-remote-console/" title="WebLogic Remote Console"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/weblogic-remote-console/userguide/logging/" title="Check Log Files"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/weblogic-remote-console/setup/console/" title="Explore the WebLogic Remote Console" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/weblogic-remote-console/develop/" title="Development" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1085,3 +1039,4 @@
 
   </body>
 </html>
+
