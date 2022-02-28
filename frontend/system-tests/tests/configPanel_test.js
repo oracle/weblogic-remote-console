@@ -158,8 +158,8 @@ describe.only('Test Suite: configPanel_test for Configuration Landing Menu', fun
     it('6. Test Category: GAT/Risk3\n \t Test Scenario: Interoperability Configuration Elements Menu', async function () {
         file = "EditTreeInteroperabilityMenu.png";
         try {
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","InteroperabilityChevron","WTC Servers",5);
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","InteroperabilityChevron","Jolt Connection Pools",5);
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","InteroperabilityChevron","WTC Servers",0);
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","InteroperabilityChevron","Jolt Connection Pools",0);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * A Concrete Class that represents a storage container for specific data (e.g. RDJ, PDJ) returned by the CBE REST API.
@@ -28,7 +28,7 @@ define(['wrc-frontend/core/data-storage', 'wrc-frontend/core/cfe-errors', 'wrc-f
     function CbeDataStorage(name) {
       DataStorage.apply(this);
       if (CoreUtils.isUndefinedOrNull(name) || CoreUtils.isEmpty(name)) {
-        throw new CfeErrors.InvalidParameterError(`Parameter cannot be undefined, null or an empty string: name`);
+        throw new CfeErrors.InvalidParameterError('Parameter cannot be undefined, null or an empty string: name');
       }
       this.name = name;
     }
@@ -53,7 +53,7 @@ define(['wrc-frontend/core/data-storage', 'wrc-frontend/core/cfe-errors', 'wrc-f
      * Implementation for ``get`` abstract method in ``DataStorage`` abstract class
      */
     CbeDataStorage.prototype.get = function (key) {
-      if (typeof _items[key] === "undefined") {
+      if (typeof _items[key] === 'undefined') {
         throw new CfeErrors.InvalidItemKeyError(`No storage item has "${key}" as the key.`);
       }
       return _items[key];
@@ -70,7 +70,7 @@ define(['wrc-frontend/core/data-storage', 'wrc-frontend/core/cfe-errors', 'wrc-f
      * Implementation for ``remove`` abstract method in ``DataStorage`` abstract class
      */
     CbeDataStorage.prototype.remove = function (key) {
-      if (typeof _items[key] === "undefined") {
+      if (typeof _items[key] === 'undefined') {
         throw new CfeErrors.InvalidItemKeyError(`No storage item has "${key}" as the key.`);
       }
       delete _items[key];

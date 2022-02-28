@@ -1,18 +1,62 @@
-# Copyright 2020, 2021, Oracle Corporation and/or its affiliates.  All rights reserved.
-# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+### Copyright 2020, 2021, Oracle Corporation and/or its affiliates.  All rights reserved.
+### Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
-# cfe-multi-select component
+# cfe-multi-select
 
-A _cfe-multi-select_ composite component consists of 2 boxes.  Each has a list of items.
-The left box displays the items that can be selected, while the right box displays the items that have been selected.
-There are 4 controls between these 2 boxes that allow a user to select/deselect items.
-Title for the component and header of the 2 boxes can be specified also.
+The ``cfe-multi-select`` composite allows you to choose multiple items, from a list of available items. It consists of: 
 
-![](images/sample.png?raw=true "")
+* A list box of the available items. Clicking the available item causes it to be checked or un-checked.
+* A list box of the chosen items. Clicking the chosen item causes it to be checked or un-checked.
+* Four buttons for moving items between the available and chosen list boxes:
+
+    | Name | Action |
+    | ---- | ------ |
+    | MoveAvailableToChosen | Moves checked available items to the chosen list box.|
+    | MoveAllAvailableToChosen | Moves all of the available items to the chosen list box.|
+    | MoveChosenToAvailable | Moves checked chosen items to the available list box.|
+    | MoveAllChosenToAvailable | Moves all of the chosen items to the available list box.|
+    
+
+## Screenshots
+![](images/cfe-multi-select-1.png?raw=true "")
+<br/>**Figure 1:** Selecting items in the available list box.
+
+![](images/cfe-multi-select-2.png?raw=true "")
+<br/>**Figure 2:** Using the ``MoveAvailableToChosen`` button to move checked available items to the chosen list box.
+
+![](images/cfe-multi-select-3.png?raw=true "")
+<br/>**Figure 3:** Chosen list box containing items moved from the available list box, showing that they remained checked.
+
+![](images/cfe-multi-select-4.png?raw=true "")
+<br/>**Figure 4:** Using the `MoveAllAvailableToChosen` button to move all items (checked or unchecked) to the chosen list box.
+
+![](images/cfe-multi-select-5.png?raw=true "")
+<br/>**Figure 5:** Chosen list box containing all the items from the available list box.
+
+## Properties
+| Name | Type | Description | Comments |
+| ---- | ---- | ------------| -------- |
+| availableHeader | string | Value to use for header above the "Available" list box.|Defaults to "Available", if not specified.| 
+| chosenHeader | string | Value to use for header above the "Chosen" list box.|Defaults to "Chosen", if not specified.| 
+| availableItems | array | The items that are available to be moved to the chosen list box.|| 
+| checkedAvailableItems | array | The items that are initially checked in the available list box.|| 
+| chosenItems | array | The items that have already been chosen.|| 
+| checkedChosenItems | array | The items that are initially checked in the chosen list box.|| 
+| readonly | boolean | Makes control operate in readonly mode.|Defaults to false, if not specified.| 
+
+## Methods
+| Name | Parameters | Description | Comments |
+| ---- | ---- | ------------| -------- |
+| addNewChosenItem | {object} newChosenItem | Add a new item to the chosen items list box.|| 
+
+## Events
+| Name | Detail | Comments |
+| ---- | ---- | -------- |
+| chosenItemsChanged| {array} chosenItems|Triggered when an item is added or removed from the chosen list.|
 
 ## Usage and Sample code
 
-## sample.js
+### sample.html
 ```
 <div class="oj-hybrid-padding">
   <h1>Customers Content Area</h1>
@@ -32,7 +76,7 @@ Title for the component and header of the 2 boxes can be specified also.
 </div>
 
 ```
-### sample.html
+### sample.js
 ```
 define(['knockout', 'accUtils',  'ojs/ojknockout', 'wls-multi-select-boxes/loader'],
     function(ko, accUtils) {
@@ -101,4 +145,3 @@ define(['knockout', 'accUtils',  'ojs/ojknockout', 'wls-multi-select-boxes/loade
 );
 
 ```
-

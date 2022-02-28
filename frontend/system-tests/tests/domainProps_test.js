@@ -204,8 +204,6 @@ describe.only('Test Suite: domainProps_test for Domain Configuration properties'
                 'WebAppContainer_ShowArchivedRealPathEnabled','WebAppContainer_GzipCompression_GzipCompressionEnabled','4444',
                 'text/html,text/xml,text/plain,jsp/json,text/yaml','6666','999','75537','26384','147483647');
 
-            //*[@id="WebAppContainer_GzipCompression_GzipCompressionEnabled"]/div[1]/div/div
-
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -223,7 +221,6 @@ describe.only('Test Suite: domainProps_test for Domain Configuration properties'
                 '35','Log_NumberOfFilesLimited','999','./tmp',
                 'Log_RotateLogOnStartup','MMM d, y, h:mm:ss,SSS a zzzz',
                 '444');
-            //*[@id="Log_RotateLogOnStartup"]/div[1]/div/div
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

@@ -52,6 +52,6 @@ To reset the file, delete the `auto-prefs.json` file, then relaunch WebLogic Rem
 
 Check the role of the user you used to log into the Administration Server. Only administrators have access to the full functionality of of WebLogic Remote Console. Users with other roles such as Deployers, Operators, or Monitors have limited access to areas outside the scope of their responsibility.
 
-<!-- You can check the role of a user by expanding the Kiosk, and selecting the Info bubble ![Navpane icon](/weblogic-remote-console/data-providers-info-icon-brn_24x24.png) beside the Administration Server connection with your user. -->
+<!-- You can check the role of a user by expanding the Kiosk, and selecting the Info bubble ![Navpane icon](/weblogic-remote-console/images/icons/data-providers-info-icon-brn_24x24.png) beside the Administration Server connection with your user. -->
 
 For an overview of what users in each role can view or do, see [Understand Access Discrepancies]({{< relref "userguide/role-access" >}}).

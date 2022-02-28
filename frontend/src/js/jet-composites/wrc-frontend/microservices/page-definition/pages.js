@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojlogger'],
   function (Logger) {
@@ -24,7 +24,7 @@ define(['ojs/ojlogger'],
         canNext: true,
         canFinish: false,
         isFinished: false,
-        paging: {direction: "next", current: 0, pages: []}
+        paging: {direction: 'next', current: 0, pages: []}
       };
     }
 
@@ -37,7 +37,7 @@ define(['ojs/ojlogger'],
     }
 
     function goPreviousPage() {
-      this.backingData.canBack = isValidFlow.call(this, "back");
+      this.backingData.canBack = isValidFlow.call(this, 'back');
       if (this.backingData.canBack) {
         this.backingData.paging.current--;
       }
@@ -47,7 +47,7 @@ define(['ojs/ojlogger'],
     }
 
     function goNextPage() {
-      if (isValidFlow.call(this, "next")) {
+      if (isValidFlow.call(this, 'next')) {
         this.backingData.paging.current++;
       }
     }
@@ -55,11 +55,11 @@ define(['ojs/ojlogger'],
     function isValidFlow(direction) {
       let index, rtnval = false;
       switch (direction) {
-        case "next":
+        case 'next':
           index = this.backingData.paging.pages.length;
           rtnval = (index > this.backingData.paging.current);
           break;
-        case "back":
+        case 'back':
           index = this.backingData.paging.current;
           rtnval = (index > 0);
           break;
@@ -91,13 +91,13 @@ define(['ojs/ojlogger'],
       },
 
       setBackingDataPagingDirection: function (value) {
-        if (["next", "back"].includes(value)) {
+        if (['next', 'back'].includes(value)) {
           this.backingData.paging.direction = value;
         }
       },
 
       getBackingDataPagingProperties: function () {
-        if (this.backingData.paging.direction === "next") {
+        if (this.backingData.paging.direction === 'next') {
           const last = this.backingData.paging.pages.length - 1;
           const current = this.backingData.paging.current;
           if (current !== 0 && current > last) {
@@ -108,14 +108,14 @@ define(['ojs/ojlogger'],
       },
 
       markAsFinished: function () {
-        if (this.backingData.mode.name === "PAGING") this.backingData.canBack = false;
+        if (this.backingData.mode.name === 'PAGING') this.backingData.canBack = false;
         this.backingData.canNext = false;
         this.backingData.canFinish = true;
         this.backingData.isFinished = true;
       },
 
       resetBackingDataFlowsAllowed: function () {
-        if (this.backingData.mode.name === "PAGING") this.backingData.canBack = false;
+        if (this.backingData.mode.name === 'PAGING') this.backingData.canBack = false;
         this.backingData.canNext = true;
         this.backingData.canFinish = false;
         this.backingData.isFinished = false;
@@ -153,13 +153,13 @@ define(['ojs/ojlogger'],
       },
 
       selectBackingDataProperties: function (direction) {
-        if (this.backingData.mode.name === "PAGING") {
+        if (this.backingData.mode.name === 'PAGING') {
           this.backingData.paging.direction = direction;
-          if (direction === "back") {
+          if (direction === 'back') {
             goPreviousPage.call(this);
           }
         }
-        if (direction === "next") goNextPage.call(this);
+        if (direction === 'next') goNextPage.call(this);
       },
 
       getMode: function () {

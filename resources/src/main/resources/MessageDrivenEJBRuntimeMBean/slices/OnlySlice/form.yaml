@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: "Name"
@@ -9,14 +9,11 @@ properties:
 - name: "PoolRuntime.PooledBeansCurrentCount"
 - name: "PoolRuntime.TimeoutTotalCount"
 - name: "PoolRuntime.WaiterCurrentCount"
-- name: "Name"
 - name: "Type"
 - name: "TimerRuntime.ActiveTimerCount"
 - name: "TimerRuntime.CancelledTimerCount"
 - name: "TimerRuntime.DisabledTimerCount"
 - name: "TimerRuntime.TimeoutCount"
-- name: "Name"
-- name: "Type"
 - name: "EJBName"
 - name: "ConnectionStatus"
 - name: "Destination"

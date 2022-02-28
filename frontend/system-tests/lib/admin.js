@@ -11,7 +11,7 @@ const hostName = process.env.hostname || 'localhost';
 const adminPort = process.env.adminPort || '8012';
 const remoteAdminPort =  process.env.consolePort || '7001';
 const adminUrl = 'http://' + hostName + ':' + adminPort;
-const remoteConsoleUrl = 'http://'+hostName+':'+remoteAdminPort+'/console';
+const remoteUrl = 'http://'+hostName+':'+remoteAdminPort;
 const domConName = "1411LocalDomain";
 
 if (process.argv.length < 8) {
@@ -71,10 +71,14 @@ module.exports = function (driver, file) {
                         await driver.findElement(By.xpath(taskOptionXPath)).click();
                         break;
                     case 3:
-                        console.log("Select Create Provider for New WDT Model File... task");
+                        console.log("Select Add WDT Composite Model File Provider... task");
                         await driver.findElement(By.xpath(taskOptionXPath)).click();
                         break;
                     case 4:
+                        console.log("Select Create Provider for New WDT Model File... task");
+                        await driver.findElement(By.xpath(taskOptionXPath)).click();
+                        break;
+                    case 5:
                         console.log("Select Import Project task");
                         await driver.findElement(By.xpath(taskOptionXPath)).click();
                         break;
@@ -126,16 +130,18 @@ module.exports = function (driver, file) {
             await driver.findElement(By.xpath("//*[@id=\'password-field\']/div[1]/span/a/span")).click();
             //Make sure OK button is enable
             await driver.sleep(300);
-            element = driver.findElement(By.xpath("//span[@id=\'dlgOkBtn11|text\']/span"));
+            console.log("Click OK button");
+            element = driver.findElement(By.xpath("//span[@id=\'dlgOkBtn11_oj30|text\']/span"));
             await driver.sleep(300);
             if (element.isEnabled()) {
-                await element.click();
                 console.log("Click Domain connection OK button");
-                console.log("Connect to local/remote AdminServer " + remoteAdminUrl + " successful");
+                console.log("User: "+userName+" connect to local/remote AdminServer " + remoteAdminUrl + " successful");
                 console.log("Remote Console run in StandAlone mode. ");
+                await element.click();
                 await driver.sleep(300);
-                await driver.findElement(By.xpath("//img[@title=\'Collapse\']")).click();
             }
+            if (userName == 'weblogic') //For AdminUser only
+                await driver.findElement(By.xpath("//img[@title=\'Collapse\']")).click();
         },
 
         goToHomePageUrl: async function (driver,taskOption,action) {
@@ -193,11 +199,14 @@ module.exports = function (driver, file) {
             console.log("Click Create Provider for New WDT Model File...");
             await driver.findElement(By.xpath("//span[contains(.,\'Create Provider for New WDT Model File...\')]")).click();
             await driver.sleep(4800);
+            console.log("Enter Provider Name = "+wdtProviverName);
             await driver.findElement(By.xpath("//input[@id=\'model-name-field|input\']")).sendKeys(wdtProviverName);
             await driver.sleep(2400);
+            console.log("Enter File Name = "+wdtFileName);
             await driver.findElement(By.xpath("//input[@id=\'model-file-field|input\']")).sendKeys(wdtFileName);
             await driver.sleep(2400);
-            await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12|text\']/span")).click();
+            console.log("Click OK button");
+            await driver.findElement(By.xpath("//oj-button[@id=\'dlgOkBtn12\']/button/div")).click();
         },
 
         addWDTModelExistingFile: async function (driver,modelName,wdtModelFile) {
@@ -229,7 +238,8 @@ module.exports = function (driver, file) {
             console.log("Enter WDT Model File Path = " + wdtModelFile);
             await driver.findElement(By.xpath("//input[@id=\'file-chooser\']")).sendKeys(wdtModelFile);
             await driver.sleep(2400);
-            await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12|text\']")).click();
+            console.log("Click OK button");
+            await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12_oj28|text\']")).click();
             await driver.sleep(2400);
         },
 
@@ -238,13 +248,14 @@ module.exports = function (driver, file) {
             console.log("Launch remote console page. ");
             await driver.get(adminUrl);
             await driver.sleep(4800);
-            await this.startupDialogTask(driver,4,"Choose");
+            await this.startupDialogTask(driver,5,"Choose");
             console.log("Click Import Project...");
             await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
             await driver.sleep(1400);
             console.log("Select to Import Project " + projectFileName);
             await driver.findElement(By.id("file-chooser")).sendKeys(projectFileName);
             await driver.sleep(1400);
+            console.log("Click OK button");
             await driver.findElement(By.xpath("//oj-button[@id=\'dlgOkBtn14\']/button/div")).click();
             await driver.sleep(1400);
         },
@@ -270,6 +281,7 @@ module.exports = function (driver, file) {
             await driver.findElement(By.id("project-name-field|input")).sendKeys("14.1.1.0Domain");
             await driver.findElement(By.id("project-file-field|input")).click();
             await driver.findElement(By.id("project-file-field|input")).sendKeys("p1");
+            console.log("Click OK button");
             await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn13|text\']/span")).click();
         },
 
@@ -530,10 +542,6 @@ module.exports = function (driver, file) {
                     console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
                                 " Delete row button to delete " + objectMBeanName + " object.");
                     element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span/span"));
-                    /*
-                    element = driver.findElement(By.xpath("//oj-button[@id=\'Domain/"+scrumName+"/"+objectMBeanName+
-                              "\']/button/div/span"));
-                     */
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     await driver.sleep(900);
                     await element.click();
@@ -545,8 +553,6 @@ module.exports = function (driver, file) {
                     console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
                         "->"+levelThreeLink+" Delete row button");
                     element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span/span"));
-                    //element = driver.findElement(By.xpath("//oj-button[@id=\'Domain/"+scrumName+"/"
-                      //  +levelThreeLink+"/"+objectMBeanName+"\']/button/div/span"));
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     await driver.sleep(900);
                     await element.click();
@@ -558,8 +564,6 @@ module.exports = function (driver, file) {
                     console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
                         "->"+levelThreeLink+"->"+levelFourLink+" Delete row button");
                     element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span/span"));
-                    //element = driver.findElement(By.xpath("//oj-button[@id=\'Domain/"+scrumName+"/"+levelThreeLink+
-                      //  "/"+scrumName2+"/"+objectMBeanName+"\']/button/div/span"));
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     await driver.sleep(900);
                     await element.click();
@@ -633,8 +637,6 @@ module.exports = function (driver, file) {
             console.log("Click to delete "+objName+ " from "+scrumName+" list");
             //Different syntax to delete an object - utilities test case 2
             await driver.sleep(1400);
-            //element = driver.findElement(
-              //  By.xpath("//oj-button[@id=\'Domain/"+scrumName+"/"+objName+"\']/button/div/span"));
             element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span/span"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
@@ -702,7 +704,6 @@ module.exports = function (driver, file) {
         // This function to select AdminServer, managedServer or Cluster in the targets list
         selectTarget: async function(driver,targetName) {
             console.log("Click Targets tab");
-            //await driver.findElement(By.xpath("//span[contains(.,\'Targets\')]")).click();
             await driver.findElement(By.xpath("//span[contains(.,\'Target\')]")).click();
             await driver.sleep(4800);
             if (targetName == 'AdminServer') {
@@ -741,7 +742,6 @@ module.exports = function (driver, file) {
         //
         goToLandingImage: async function (driver,landingImageName,arrowIndex) {
             await this.goToHomePageUrl(driver);
-            //await this.goToDefaultDomain(driver);
             await driver.manage().setTimeouts( { implicit: 96000 } )
             console.log("Click "+landingImageName+" panel card header image link.");
             element = driver.findElement(By.xpath("//img[@alt=\'"+landingImageName+"\']"));
@@ -793,7 +793,6 @@ module.exports = function (driver, file) {
                 }
             } else {
                 console.log("Click " + panelCard + " link.");
-                //element = driver.findElement(By.id(panelCard));
                 if (panelCard.toString() == "Domain")
                     element = driver.findElement(By.xpath("//div[@id='landing-page-panel-subtree']/div/a/span"));
                 else
@@ -835,6 +834,10 @@ module.exports = function (driver, file) {
             console.log("Click " +landingImageName+"->"+headerContainerName+"->"+panelCard+"->"+tabNameId+" index tab.");
             if (tabNameId == 1)
                 element = driver.findElement(By.xpath("//span[contains(.,\'General\')]"));
+            else if (tabNameId == 7)
+                element = driver.findElement(By.xpath("//span[contains(.,\'Web Application\')]"));
+            else if (tabNameId == 11)
+                element = driver.findElement(By.xpath("//span[contains(.,\'Batch\')]"));
             else
                 element = driver.findElement(By.xpath("//li["+tabNameId+"]/a/span"));
             if (element.isEnabled()) {
@@ -924,16 +927,21 @@ module.exports = function (driver, file) {
         //
         /////////////////////////////////////////////////////////
 
-        //Click oj-conveyor-belt arrow-> (index=5 for right and index=3 for left arrow
+        //Click oj-conveyor-belt arrow-> (index=5 right arrow, index=3 left arrow, index=0 (default: no click)
         clickConveyorArrow: async function(driver,arrowIndex) {
             if (arrowIndex == 5) {
                 console.log("Click right oj-conveyor-belt arrow");
+                element = driver.findElement(By.xpath("//div["+arrowIndex+"]/div/span"));
+                await element.click();
+            }
+            else if (arrowIndex == 3) {
+                console.log("Click left oj-conveyor-belt arrow")
+                element = driver.findElement(By.xpath("//div["+arrowIndex+"]/div/span"));
+                await element.click();
             }
             else {
-                console.log("Click left oj-conveyor-belt arrow")
+                console.log("No oj-conveyor-belt arrow appears");
             }
-            element = driver.findElement(By.xpath("//div["+arrowIndex+"]/div/span"));
-            await element.click();
         },
 
         enableCheckBox: async function (driver,idName) {
@@ -1147,6 +1155,7 @@ module.exports = function (driver, file) {
 
 module.exports.adminUrl = adminUrl;
 module.exports.remoteAdminUrl = remoteAdminUrl;
+module.exports.remoteUrl = remoteUrl;
 module.exports.browserName = browserName;
 module.exports.domConName = domConName;
 // FortifyIssueSuppression Password Management: Password in Comment

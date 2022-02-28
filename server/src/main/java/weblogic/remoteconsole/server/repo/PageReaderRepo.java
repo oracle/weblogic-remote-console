@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
-import weblogic.remoteconsole.common.repodef.SliceFormPagePath;
+import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TableActionDef;
 
 /**
@@ -24,8 +24,8 @@ public abstract class PageReaderRepo extends PageRepo {
   // Get the contents of the page referred to by the invocation context.
   public Response<Page> getPage(InvocationContext ic) {
     LOGGER.finest("PageReaderRepo.getPage " + ic.getPagePath() + " " + ic.getBeanTreePath());
-    if (ic.getPagePath().isSliceFormPagePath()) {
-      return (new SliceFormReader(ic)).getSliceForm();
+    if (ic.getPagePath().isSlicePagePath()) {
+      return (new SliceReader(ic)).getSlice();
     } else if (ic.getPagePath().isCreateFormPagePath()) {
       return (new CreateFormReader(ic)).getCreateForm();
     } else if (ic.getPagePath().isTablePagePath()) {
@@ -35,7 +35,7 @@ public abstract class PageReaderRepo extends PageRepo {
     }
   }
 
-  // Returns the slice form page path for the bean and slice referenced by the invocation context.
+  // Returns the slice page path for the bean and slice referenced by the invocation context.
   //
   // If the bean's type is heterogeneous, the invocation context doesn't include
   // the actual type of the bean.
@@ -51,11 +51,11 @@ public abstract class PageReaderRepo extends PageRepo {
   // out what kind of provider it is first.
   //
   // This method does this and returns the actual page to use.
-  public Response<SliceFormPagePath> getActualSliceFormPagePath(InvocationContext ic) {
-    if (ic.getPagePath().isSliceFormPagePath()) {
-      return (new SliceFormReader(ic)).getActualSliceFormPagePath();
+  public Response<SlicePagePath> getActualSlicePagePath(InvocationContext ic) {
+    if (ic.getPagePath().isSlicePagePath()) {
+      return (new SliceReader(ic)).getActualSlicePagePath();
     } else {
-      throw new AssertionError("Not a slice form : " + ic.getPagePath());
+      throw new AssertionError("Not a slice : " + ic.getPagePath());
     }
   }
 

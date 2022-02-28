@@ -5,21 +5,5 @@
   "description": "A translatable high-level description for the component.",
   "type": "resource",
   "version": "1.0.0",
-  "jetVersion": "^10.1.0",
-  "publicModules": [
-    "adapters/file-adapter",
-    "adapters/http-adapter",
-    "parsers/yaml",
-    "parsers/json",
-    "utils/keyset-utils",
-    "utils/Path",
-    "cbe-types",
-    "cbe-utils",
-    "cfe-errors",
-    "data-storage",
-    "mutex",
-    "runtime",
-    "types",
-    "utils"
-  ]
+  "jetVersion": "^10.1.0"
 }

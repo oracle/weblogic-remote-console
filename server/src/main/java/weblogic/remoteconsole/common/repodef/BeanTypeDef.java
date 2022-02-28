@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -23,20 +23,10 @@ public interface BeanTypeDef {
   // used for PDJ urls and for finding yaml files
   public String getTypeName();
 
-  // Returns the localized name of this type.
-  // e.g. Network Access Point MBean
-  // e.g. used for the help page titles
-  public LocalizableString getTypeNameLabel();
-
   // Returns the name of instances of this type.
   // e.g. NetworkAccessPoint
   // e.g. used for link definitions, name of root bean in RDJ urls
   public String getInstanceName();
-
-  // Returns the localized name of instances of this type.
-  // e.g. Network Access Point
-  // e.g. used for the name of the root bean in the nav tree
-  public LocalizableString getInstanceNameLabel();
   
   public BeanPropertyDef getKeyPropertyDef(); // returns null if this type doesn't have a key property
 

@@ -3,12 +3,22 @@
 
 package weblogic.remoteconsole.customizers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.repodef.BeanTypeDef;
+import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanEditorRepo;
+import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
+import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
+import weblogic.remoteconsole.server.repo.BeanSearchResults;
+import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
+import weblogic.remoteconsole.server.repo.TableCell;
+import weblogic.remoteconsole.server.repo.TableRow;
 import weblogic.remoteconsole.server.repo.Value;
 
 /** 
@@ -20,6 +30,44 @@ public class ClusterMBeanCustomizer {
   private static final String CLUSTER = "Cluster";
 
   private ClusterMBeanCustomizer() {
+  }
+
+  public static Response<List<TableRow>> getServersSliceTableRows(InvocationContext ic) {
+    List<TableRow> rows = new ArrayList<>();
+    Response<List<TableRow>> response = new Response<>();
+
+    // Get each server's identity and cluster reference
+    BeanTreePath serversBeanPath =
+      BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(), new Path("Domain.Servers"));
+    BeanTypeDef serversTypeDef = serversBeanPath.getTypeDef();
+    BeanPropertyDef identityPropertyDef = serversTypeDef.getIdentityPropertyDef();
+    BeanPropertyDef clusterPropertyDef = serversTypeDef.getPropertyDef(new Path("Cluster"));
+    // Don't return whether properties are set.
+    BeanReaderRepoSearchBuilder builder =
+      ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
+    builder.addProperty(serversBeanPath, identityPropertyDef);
+    builder.addProperty(serversBeanPath, clusterPropertyDef);
+    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
+    if (!searchResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(searchResponse);
+    }
+
+    // Add a row for every server in this cluster
+    for (BeanSearchResults serverResults : searchResponse.getResults().getCollection(serversBeanPath)) {
+      BeanTreePath serverIdentity = serverResults.getValue(identityPropertyDef).asBeanTreePath();
+      Value clusterValue = serverResults.getValue(clusterPropertyDef);
+      if (clusterValue.isBeanTreePath()) {
+        BeanTreePath clusterIdentity = clusterValue.asBeanTreePath();
+        if (clusterIdentity.equals(ic.getBeanTreePath())) {
+          TableRow row = new TableRow();
+          row.getCells().add(new TableCell("Server", serverIdentity));
+          rows.add(row);
+        }
+      }
+    }
+
+    response.setSuccess(rows);
+    return response;
   }
 
   // Before a cluster can be deleted, migratable targets or singleton services

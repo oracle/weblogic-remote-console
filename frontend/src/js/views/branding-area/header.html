@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="header-container">
@@ -14,6 +14,7 @@ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
     <img id="online-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.online.iconFile + '.png', title: i18n.header.icons.connectivity.online.tooltip}"/>
     <img id="offline-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.offline.iconFile + '.png', title: i18n.header.icons.connectivity.offline.tooltip}"/>
     <img id="detached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.detached.iconFile + '.png', title: i18n.header.icons.connectivity.detached.tooltip}"/>
+    <img id="unattached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.unattached.iconFile + '.png', title: i18n.header.icons.connectivity.unattached.tooltip}"/>
   </div>
 
   <div class="oj-flex-bar">
@@ -37,8 +38,16 @@ Copyright (c) 2020, 2021, Oracle and/or its affiliates.
       </a>
     </div>
 
+    <div id="header-warning">
+      <a on-click="[[securityWarningLinkClick]]">
+        <spad id="link-label" :class="branding-area-security-warning">
+          <oj-bind-text value="[[linkLabel]]"></oj-bind-text>
+        </spad>
+      </a>
+    </div>
+
     <div id="domain-connect-info" class="oj-flex-bar-end">
-      <canvas id="console-state-bar" width="12" height="24" data-bind="attr: {title: i18n.header.icons.connectivity.online.tooltip}"></canvas>
+      <canvas id="console-state-bar" width="12" height="24" data-bind="attr: {title: i18n.header.icons.connectivity.unattached.tooltip}"></canvas>
 
       <oj-module config="[[domainConnectionModuleConfig]]"></oj-module>
     </div>

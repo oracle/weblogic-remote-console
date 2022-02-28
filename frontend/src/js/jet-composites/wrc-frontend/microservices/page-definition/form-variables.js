@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * Class module for a temporary storage object, which holds the __instance variables__ for an instance of the ``FormViewModel``class.
@@ -20,10 +20,10 @@ define(['wrc-frontend/core/cfe-errors', 'wrc-frontend/core/utils'],
      */
     function FormVariables(name) {
       if (CoreUtils.isUndefinedOrNull(name)) {
-        throw new CfeErrors.InvalidParameterError("Parameter cannot be undefined or null: name");
+        throw new CfeErrors.InvalidParameterError('Parameter cannot be undefined or null: name');
       }
       else if (CoreUtils.isEmpty(name)) {
-        throw new CfeErrors.InvalidParameterError("Parameter cannot be an empty string: name");
+        throw new CfeErrors.InvalidParameterError('Parameter cannot be an empty string: name');
       }
       this.name = name;
     }

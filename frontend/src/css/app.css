@@ -1,11 +1,10 @@
-/*! Copyright (c) 2020, 2021, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2022, Oracle and/or its affiliates. All rights reserved. */
 
 :root {
   /*
    * START: JS code will make adjustments to the
    *        following custom CSS variables, at runtime.
    */
-  --content-area-container-min-width: 55px;
   --servers-glance-dom-calc-min-height: 450px;
   --slideup-popup-calc-min-height: 36px;
   /*
@@ -14,8 +13,11 @@
    */
 
   --content-area-header-height: 82px;
+  --content-area-container-min-width: 55px;
 
-  --landing-page-cards-min-width: 1095px;
+  --gallery-card-min-width: 280px;
+
+  --landing-page-cards-min-width: 1060px;
   --landing-page-panel-subtree-max-height: 295px;
   --landing-page-panel-subtree-max-width: 55px;
   --landing-page-conveyor-calc-max-width: 55px;
@@ -36,10 +38,6 @@
   --navstrip-max-width: 45px;     /* DON'T CHANGE THIS!! Needs to be 45px, or else left edge of control will be cut off and dnd feature on MyHome will go bonkers */
   --navstrip-min-height: 60px;
   --navstrip-resizer-width: 55px;
-  --panel-resizer-width: 10px;
-  --panel-resizer-height: 70px;
-  --resizer-left-panel-min-width: 200px;
-  --navtree-max-width: 490px;
   --tab-container-toolbar-min-width: 306px;
   --header-background-color: #e0dbd7;
 
@@ -57,7 +55,7 @@
   --table-background-color: #f7f7f7;
   --navstrip-background-color: #b6a29a;
 
-  --panel-card-min-width: 195px;
+  --panel-card-min-width: 215px;
   --panel-card-label-color: #161513;
 
   --sideways-tabstrip-min-width: 24px;
@@ -71,8 +69,10 @@
   --domainConnectionDialog-min-height: 410px;
   --modelDialog-width: 750px;
   --modelDialog-min-height: 245px;
+  --modelCompositeDialog-width: 750px;
+  --modelCompositeDialog-min-height: 245px;
   --projectDialog-width: 750px;
-  --projectDialog-min-height: 245px;
+  --projectDialog-min-height: 240px;
   --projectChooserDialog-width: 400px;
   --startupTaskChooserDialog-width: 400px;
   --cfe-dialog-form-layout-min-height: 90px;
@@ -92,8 +92,10 @@
 }
 
 html, body {
-  min-width: 100vw;
-  height: 100vh; /* needed for proper layout */
+  /*
+    min-width: 100vw;
+    height: 100vh;
+  */
   overflow: hidden;
 }
 
@@ -102,7 +104,7 @@ header, footer {
 }
 
 footer {
-  font-size: 11px;
+  font-size: 11pt;
   padding: 5px;
 }
 
@@ -184,42 +186,28 @@ div#header-title a:focus
   font-size: 16pt;
 }
 
+.branding-area-security-warning {
+  font-weight: 400;
+  font-size: 10pt;
+  color: #8b0000;
+  vertical-align: middle;
+  padding: 0 0 0 30px;
+}
+
 #middle-container {
-  width: 100vw;
+  /*
+    width: 100vw;
+  */
   padding-top: var(--header-container-height);
-}
-
-#spa-resizer {
-  min-width: calc(100vw - var(--form-container-calc-min-width));
-}
-
-.resizer_panel .vertical-gripper {
-  min-width: 10px;
-  height: calc(100vh - var(--panel-resizer-height));
-  /* value assigned to url attribute is relative to src/css directory */
-  background: url("../js/jet-composites/wrc-frontend/1.0.0/images/splitter-bkgrd-image-vert-gry_7x28.png");
-  background-repeat: repeat;
-  cursor: col-resize;
-  z-index:20;
-}
-
-.resizer_panel .left_panel,
-.resizer_panel .right_panel {
-  width: 100vw;
-}
-
-.resizer_panel .left_panel
-{
-  min-width: var(--resizer-left-panel-min-width);
-}
-
-.right_panel {
-  min-width: calc(100vw - var(--content-area-container-min-width));
+  height: 100%;
+  display: flex;
+  overflow: auto;
+  width: 100%;
 }
 
 #navstrip-container {
   max-width: var(--navstrip-max-width);
-  min-height: calc(100vh - var(--navstrip-min-height));
+  min-height: 100vh;
 }
 
 #navstrip-header {
@@ -236,15 +224,6 @@ div#header-title a:focus
   height: 24px;
   padding: 2px 0 2px 0;
   cursor: pointer;
-}
-
-#domains-toolbar-container {
-  height: 25px;
-}
-
-#domains-toolbar-right {
-  margin-left: auto !important;
-  margin-right: var(--domains-toolbar-right-margin-right);
 }
 
 #domain-connect-info,
@@ -271,6 +250,7 @@ canvas#console-state-bar {
 
 #content-area-header {
   max-height: var(--content-area-header-height);
+  min-width: 100vw;
 }
 
 #content-area-header-container {
@@ -544,6 +524,7 @@ a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabbar-item-no-icon {
 
 oj-dialog[id="domainConnectionDialog"] div.oj-dialog-header,
 oj-dialog[id="modelDialog"] div.oj-dialog-header,
+oj-dialog[id="modelCompositeDialog"] div.oj-dialog-header,
 oj-dialog[id="exportProjectDialog"] div.oj-dialog-header,
 oj-dialog[id="importProjectDialog"] div.oj-dialog-header,
 oj-dialog[id="projectChooserDialog"] div.oj-dialog-header,
@@ -565,8 +546,31 @@ oj-dialog[id="startupTaskChooserDialog"] div.oj-dialog-header
   min-height: 2.25rem;
 }
 
+oj-dialog[id="domainConnectionDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="modelDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="modelCompositeDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="exportProjectDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="importProjectDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="projectChooserDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="startupTaskChooserDialog"] div.oj-dialog-header h1.oj-dialog-title
+{
+  overflow: hidden;
+  cursor: default;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  align-self: center;
+  font-size: 12pt;
+  line-height: var(--oj-dialog-title-line-height);
+  color: var(--oj-dialog-title-text-color);
+  font-weight: var(--oj-dialog-title-font-weight);
+  margin: 0;
+  padding: 0;
+}
+
 oj-dialog[id="domainConnectionDialog"] div.oj-dialog-body,
 oj-dialog[id="modelDialog"] div.oj-dialog-body,
+oj-dialog[id="modelCompositeDialog"] div.oj-dialog-body,
 oj-dialog[id="exportProjectDialog"] div.oj-dialog-body,
 oj-dialog[id="importProjectDialog"] div.oj-dialog-body,
 oj-dialog[id="projectChooserDialog"] div.oj-dialog-body,
@@ -575,13 +579,14 @@ oj-dialog[id="startupTaskChooserDialog"] div.oj-dialog-body
   position: relative;
   overflow: auto;
   box-sizing: border-box;
-  padding: 0 15px;
+  padding: 0 0.938rem 0.125rem 0.938rem;
   text-align: start;
-  font-size: 11pt;
+  font-size: 0.92em;      /* 11pt; */
 }
 
 oj-dialog[id="domainConnectionDialog"] div.oj-dialog-body,
 oj-dialog[id="modelDialog"] div.oj-dialog-body,
+oj-dialog[id="modelCompositeDialog"] div.oj-dialog-body,
 oj-dialog[id="exportProjectDialog"] div.oj-dialog-body,
 oj-dialog[id="importProjectDialog"] div.oj-dialog-body,
 oj-dialog[id="projectChooserDialog"] div.oj-dialog-body,
@@ -592,6 +597,7 @@ oj-dialog[id="startupTaskChooserDialog"] div.oj-dialog-body
 
 oj-dialog[id="domainConnectionDialog"] div.oj-dialog-footer,
 oj-dialog[id="modelDialog"] div.oj-dialog-footer,
+oj-dialog[id="modelCompositeDialog"] div.oj-dialog-footer,
 oj-dialog[id="exportProjectDialog"] div.oj-dialog-footer,
 oj-dialog[id="importProjectDialog"] div.oj-dialog-footer,
 oj-dialog[id="projectChooserDialog"] div.oj-dialog-footer,
@@ -610,6 +616,12 @@ oj-dialog[id="domainConnectionDialog"] {
 oj-dialog[id="modelDialog"] {
   width: var(--modelDialog-width);
   min-height: var(--modelDialog-min-height);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog[id="modelCompositeDialog"] {
+  width: var(--modelCompositeDialog-width);
+  min-height: var(--modelCompositeDialog-min-height);
   background-color: var(--dialog-background-color);
 }
 
@@ -658,12 +670,14 @@ oj-dialog[id="importProjectDialog"]
   max-height: calc(100vh - var(--content-area-header-height));
 }
 
-div#tab-module.oj-flex-bar-end {
-  margin-left: 0;
+#gallery-container > div > div
+{
+  min-width: var(--gallery-card-min-width);
+  background-color: white;
 }
 
-#gallery-container {
-  background-color: white;
+div#tab-module.oj-flex-bar-end {
+  margin-left: 0;
 }
 
 .site-panel-padding {
@@ -754,12 +768,12 @@ div#tab-module.oj-flex-bar-end {
 }
 
 .landing-page-panel {
-  margin: 5px 0 5px 5px;
+  margin: 5px 3px;
   min-width: var(--panel-card-min-width);
 }
 
 .landing-page-card {
-  padding: 5px;
+  padding: 5px 3px;
   border: 0;
   outline: none;
   display: block;
@@ -930,7 +944,8 @@ div#tab-module.oj-flex-bar-end {
 }
 
 #connection-response-message,
-#model-response-message
+#model-response-message,
+#model-composite-response-message
 {
   display: none;
   padding: 2px 0 10px 0;
@@ -966,6 +981,22 @@ div#tab-module.oj-flex-bar-end {
   width: 8px;
   height: 24px;
   margin-right: 5px;
+}
+
+oj-navigation-list[id="navstrip"].oj-navigationlist-vertical,
+oj-navigation-list[id="connections-models"].oj-navigationlist-vertical {
+  --oj-navigation-list-item-padding: 0.938rem;	/* 15px; */
+  --oj-navigation-list-item-bg-color-hover: var(--oj-core-bg-color-hover);
+  --oj-navigation-list-item-bg-color-selected: var(--oj-core-bg-color-active);
+  --oj-navigation-list-icon-margin: 0;
+  --oj-navigation-list-icon-to-text-padding: 0.375rem;
+  --oj-navigation-list-item-min-height: 1.75rem;
+  --oj-navigation-list-item-margin: 0;
+}
+
+oj-navigation-list[id="navstrip"].oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item
+{
+  padding-left: .55rem;  /* space before icon in navstrip and navtree list items */
 }
 
 .cfe-project-provider-listitem > a > span.oj-navigationlist-item-label {
@@ -1021,12 +1052,13 @@ div#tab-module.oj-flex-bar-end {
   padding: 1px 6px;
 }
 
-html:not([dir="rtl"]) oj-navigation-list[id="navstrip"].oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item
-{
-	padding-left: .55rem;  /* space before icon in navstrip and navtree list items */
+/*
+.resizer_panel .left_panel,
+.resizer_panel .right_panel {
+  width: 100vw;
 }
+*/
 
-html:not([dir="rtl"]) oj-navigation-list[id="navstrip"].oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item-icon
-{
-	margin-right: 0.525rem; /* space between icon and label in navtree list item */
+.right_panel {
+  min-width: calc(100vw - var(--content-area-container-min-width));
 }

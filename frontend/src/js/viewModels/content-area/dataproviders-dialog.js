@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 define(['knockout'],
   function (ko) {
@@ -20,14 +20,14 @@ define(['knockout'],
         }
 
         function onEnterKey() {
-          const ojInputs = domainConnectionDialog.querySelectorAll(".cfe-dialog-field, .cfe-file-chooser-field");
+          const ojInputs = domainConnectionDialog.querySelectorAll('.cfe-dialog-field, .cfe-file-chooser-field');
           const ojInputsArray = Array.from(ojInputs);
           const ojInputsArrayFiltered = ojInputsArray.filter(ojInput => ojInput.value !== null && ojInput.value.length > 0);
           return (ojInputs.length !== ojInputsArrayFiltered.length);
         }
 
         function okClickHandler(event) {
-          if (!isUniqueDataProviderNameCallback("connection-response-message")) {
+          if (!isUniqueDataProviderNameCallback('connection-response-message')) {
             event.preventDefault();
             return false;
           }
@@ -46,7 +46,7 @@ define(['knockout'],
 
         function onKeyUp(event) {
           switch (event.key){
-            case "Enter":
+            case 'Enter':
               // Treat pressing the "Enter" key as clicking the "OK" button
               okClickHandler(event);
               // Suppress default handling of keyup event
@@ -54,20 +54,20 @@ define(['knockout'],
               // Veto the keyup event, so JET will update the knockout
               // observable associated with the <oj-input-text> element
               return false;
-            case "Escape":
+            case 'Escape':
               // Treat pressing the "Escape" key as clicking the "Cancel" button
               cancelClickHandler();
               break;
           }
         }
 
-        const okBtn = document.getElementById("dlgOkBtn11");
+        const okBtn = document.getElementById('dlgOkBtn11');
         okBtn.addEventListener('ojAction', okClickHandler);
 
-        const cancelBtn = document.getElementById("dlgCancelBtn11");
+        const cancelBtn = document.getElementById('dlgCancelBtn11');
         cancelBtn.addEventListener('ojAction', cancelClickHandler);
 
-        domainConnectionDialog.addEventListener("keyup", onKeyUp);
+        domainConnectionDialog.addEventListener('keyup', onKeyUp);
 
         i18n.buttons.ok.disabled(false);
       });
@@ -83,14 +83,14 @@ define(['knockout'],
         }
 
         function onEnterKey() {
-          const ojInputs = modelDialog.querySelectorAll(".cfe-dialog-field, .cfe-file-chooser-field");
+          const ojInputs = modelDialog.querySelectorAll('.cfe-dialog-field, .cfe-file-chooser-field');
           const ojInputsArray = Array.from(ojInputs);
           const ojInputsArrayFiltered = ojInputsArray.filter(ojInput => ojInput.value !== null && ojInput.value.length > 0);
           return (ojInputs.length !== ojInputsArrayFiltered.length);
         }
 
         function okClickHandler(event) {
-          if (!isUniqueDataProviderNameCallback("model-response-message")) {
+          if (!isUniqueDataProviderNameCallback('model-response-message')) {
             event.preventDefault();
             return false;
           }
@@ -109,7 +109,7 @@ define(['knockout'],
 
         function onKeyUp(event) {
           switch (event.key){
-            case "Enter":
+            case 'Enter':
               // Treat pressing the "Enter" key as clicking the "OK" button
               okClickHandler(event);
               // Suppress default handling of keyup event
@@ -117,25 +117,88 @@ define(['knockout'],
               // Veto the keyup event, so JET will update the knockout
               // observable associated with the <oj-input-text> element
               return false;
-            case "Escape":
+            case 'Escape':
               // Treat pressing the "Escape" key as clicking the "Cancel" button
               cancelClickHandler();
               break;
           }
         }
 
-        const okBtn = document.getElementById("dlgOkBtn12");
+        const okBtn = document.getElementById('dlgOkBtn12');
         okBtn.addEventListener('ojAction', okClickHandler);
 
-        const cancelBtn = document.getElementById("dlgCancelBtn12");
+        const cancelBtn = document.getElementById('dlgCancelBtn12');
         cancelBtn.addEventListener('ojAction', cancelClickHandler);
 
-        const fileChooser = document.getElementById("file-chooser");
+        const fileChooser = document.getElementById('file-chooser');
         if (fileChooser !== null) {
-          fileChooser.setAttribute("accepts", dialogParams.accepts);
+          fileChooser.setAttribute('accepts', dialogParams.accepts);
         }
 
-        modelDialog.addEventListener("keyup", onKeyUp);
+        modelDialog.addEventListener('keyup', onKeyUp);
+
+        i18n.buttons.ok.disabled(false);
+      });
+    }
+
+    function showWDTCompositeModelDialog(modelCompositeDialog, dialogParams, i18n, isUniqueDataProviderNameCallback) {
+      return new Promise(function (resolve) {
+        function onClose(reply) {
+          okBtn.removeEventListener('ojAction', okClickHandler);
+          cancelBtn.removeEventListener('ojAction', cancelClickHandler);
+          modelCompositeDialog.removeEventListener('keyup', onKeyUp);
+          resolve(reply);
+        }
+
+        function onEnterKey() {
+          const ojInputs = modelCompositeDialog.querySelectorAll('.cfe-dialog-field, .cfe-file-chooser-field');
+          const ojInputsArray = Array.from(ojInputs);
+          const ojInputsArrayFiltered = ojInputsArray.filter(ojInput => ojInput.value !== null && ojInput.value.length > 0);
+          return (ojInputs.length !== ojInputsArrayFiltered.length);
+        }
+
+        function okClickHandler(event) {
+          if (!isUniqueDataProviderNameCallback('model-composite-response-message')) {
+            event.preventDefault();
+            return false;
+          }
+          if (onEnterKey()) {
+            event.preventDefault();
+            return false;
+          }
+          onClose(true);
+          modelCompositeDialog.close();
+        }
+
+        function cancelClickHandler() {
+          onClose(false);
+          modelCompositeDialog.close();
+        }
+
+        function onKeyUp(event) {
+          switch (event.key){
+            case 'Enter':
+              // Treat pressing the "Enter" key as clicking the "OK" button
+              okClickHandler(event);
+              // Suppress default handling of keyup event
+              event.preventDefault();
+              // Veto the keyup event, so JET will update the knockout
+              // observable associated with the <oj-input-text> element
+              return false;
+            case 'Escape':
+              // Treat pressing the "Escape" key as clicking the "Cancel" button
+              cancelClickHandler();
+              break;
+          }
+        }
+
+        const okBtn = document.getElementById('dlgOkBtn17');
+        okBtn.addEventListener('ojAction', okClickHandler);
+
+        const cancelBtn = document.getElementById('dlgCancelBtn17');
+        cancelBtn.addEventListener('ojAction', cancelClickHandler);
+
+        modelCompositeDialog.addEventListener('keyup', onKeyUp);
 
         i18n.buttons.ok.disabled(false);
       });
@@ -151,7 +214,7 @@ define(['knockout'],
         }
 
         function onEnterKey() {
-          const ojInputs = projectDialog.querySelectorAll(".cfe-dialog-field, .cfe-file-chooser-field");
+          const ojInputs = projectDialog.querySelectorAll('.cfe-dialog-field, .cfe-file-chooser-field');
           const ojInputsArray = Array.from(ojInputs);
           const ojInputsArrayFiltered = ojInputsArray.filter(ojInput => ojInput.value !== null && ojInput.value.length > 0);
           return (ojInputs.length !== ojInputsArrayFiltered.length);
@@ -172,7 +235,7 @@ define(['knockout'],
         }
 
         function onKeyUp(event) {
-          if (event.key === "Enter") {
+          if (event.key === 'Enter') {
             // Treat pressing the "Enter" key as clicking the "OK" button
             okClickHandler(event);
             // Suppress default handling of keyup event
@@ -183,18 +246,18 @@ define(['knockout'],
           }
         }
 
-        const okBtn = document.getElementById("dlgOkBtn14");
+        const okBtn = document.getElementById('dlgOkBtn14');
         okBtn.addEventListener('ojAction', okClickHandler);
 
-        const cancelBtn = document.getElementById("dlgCancelBtn14");
+        const cancelBtn = document.getElementById('dlgCancelBtn14');
         cancelBtn.addEventListener('ojAction', cancelClickHandler);
 
-        const fileChooser = document.getElementById("file-chooser");
+        const fileChooser = document.getElementById('file-chooser');
         if (fileChooser !== null) {
-          fileChooser.setAttribute("accepts", dialogParams.accepts);
+          fileChooser.setAttribute('accepts', dialogParams.accepts);
         }
 
-        projectDialog.addEventListener("keyup", onKeyUp);
+        projectDialog.addEventListener('keyup', onKeyUp);
 
         i18n.buttons.ok.disabled(false);
       });
@@ -210,7 +273,7 @@ define(['knockout'],
         }
 
         function onEnterKey() {
-          const ojInputs = projectDialog.querySelectorAll(".cfe-dialog-field, .cfe-file-chooser-field");
+          const ojInputs = projectDialog.querySelectorAll('.cfe-dialog-field, .cfe-file-chooser-field');
           const ojInputsArray = Array.from(ojInputs);
           const ojInputsArrayFiltered = ojInputsArray.filter(ojInput => ojInput.value !== null && ojInput.value.length > 0);
           return (ojInputs.length !== ojInputsArrayFiltered.length);
@@ -231,7 +294,7 @@ define(['knockout'],
         }
 
         function onKeyUp(event) {
-          if (event.key === "Enter") {
+          if (event.key === 'Enter') {
             // Treat pressing the "Enter" key as clicking the "OK" button
             okClickHandler(event);
             // Suppress default handling of keyup event
@@ -242,18 +305,18 @@ define(['knockout'],
           }
         }
 
-        const okBtn = document.getElementById("dlgOkBtn13");
+        const okBtn = document.getElementById('dlgOkBtn13');
         okBtn.addEventListener('ojAction', okClickHandler);
 
-        const cancelBtn = document.getElementById("dlgCancelBtn13");
+        const cancelBtn = document.getElementById('dlgCancelBtn13');
         cancelBtn.addEventListener('ojAction', cancelClickHandler);
 
-        const fileChooser = document.getElementById("file-chooser");
+        const fileChooser = document.getElementById('file-chooser');
         if (fileChooser !== null) {
-          fileChooser.setAttribute("accepts", dialogParams.accepts);
+          fileChooser.setAttribute('accepts', dialogParams.accepts);
         }
 
-        projectDialog.addEventListener("keyup", onKeyUp);
+        projectDialog.addEventListener('keyup', onKeyUp);
 
         i18n.buttons.ok.disabled(false);
       });
@@ -279,7 +342,7 @@ define(['knockout'],
         }
 
         function onKeyUp(event) {
-          if (event.key === "Enter") {
+          if (event.key === 'Enter') {
             // Treat pressing the "Enter" key as clicking the "OK" button
             okClickHandler(event);
             // Suppress default handling of keyup event
@@ -290,13 +353,13 @@ define(['knockout'],
           }
         }
 
-        const okBtn = document.getElementById("dlgOkBtn15");
+        const okBtn = document.getElementById('dlgOkBtn15');
         okBtn.addEventListener('ojAction', okClickHandler);
 
-        const cancelBtn = document.getElementById("dlgCancelBtn15");
+        const cancelBtn = document.getElementById('dlgCancelBtn15');
         cancelBtn.addEventListener('ojAction', cancelClickHandler);
 
-        projectChooserDialog.addEventListener("keyup", onKeyUp);
+        projectChooserDialog.addEventListener('keyup', onKeyUp);
       });
     }
 
@@ -321,7 +384,7 @@ define(['knockout'],
 
         function onKeyUp(event) {
           switch (event.key){
-            case "Enter":
+            case 'Enter':
               // Treat pressing the "Enter" key as clicking the "OK" button
               okClickHandler(event);
               // Suppress default handling of keyup event
@@ -329,20 +392,20 @@ define(['knockout'],
               // Veto the keyup event, so JET will update the knockout
               // observable associated with the <oj-input-text> element
               return false;
-            case "Escape":
+            case 'Escape':
               // Treat pressing the "Escape" key as clicking the "Cancel" button
               cancelClickHandler();
               break;
           }
         }
 
-        const okBtn = document.getElementById("dlgOkBtn16");
+        const okBtn = document.getElementById('dlgOkBtn16');
         okBtn.addEventListener('ojAction', okClickHandler);
 
-        const cancelBtn = document.getElementById("dlgCancelBtn16");
+        const cancelBtn = document.getElementById('dlgCancelBtn16');
         cancelBtn.addEventListener('ojAction', cancelClickHandler);
 
-        startupTaskChooserDialog.addEventListener("keyup", onKeyUp);
+        startupTaskChooserDialog.addEventListener('keyup', onKeyUp);
       });
     }
 
@@ -359,39 +422,46 @@ define(['knockout'],
       showDataProvidersDialog: (name, dialogParams, i18n, isUniqueDataProviderNameCallback) => {
         let rtnval;
         switch (name) {
-          case "AddAdminServerConnection":
-          case "EditAdminServerConnection": {
+          case 'AddAdminServerConnection':
+          case 'EditAdminServerConnection': {
             const domainConnectionDialog = document.getElementById('domainConnectionDialog');
             rtnval = showDomainConnectionDialog(domainConnectionDialog, dialogParams, i18n, isUniqueDataProviderNameCallback);
             domainConnectionDialog.open();
           }
             break;
-          case "AddWDTModel":
-          case "EditWDTModel": {
+          case 'AddWDTModel':
+          case 'EditWDTModel': {
             const modelDialog = document.getElementById('modelDialog');
             rtnval = showWDTModelDialog(modelDialog, dialogParams, i18n, isUniqueDataProviderNameCallback);
             modelDialog.open();
           }
             break;
-          case "ImportProject": {
+          case 'AddWDTCompositeModel':
+          case 'EditWDTCompositeModel': {
+            const modelCompositeDialog = document.getElementById('modelCompositeDialog');
+            rtnval = showWDTCompositeModelDialog(modelCompositeDialog, dialogParams, i18n, isUniqueDataProviderNameCallback);
+            modelCompositeDialog.open();
+          }
+            break;
+          case 'ImportProject': {
             const projectDialog = document.getElementById('importProjectDialog');
             rtnval = showImportProjectDialog(projectDialog, dialogParams, i18n);
             projectDialog.open();
           }
             break;
-          case "ExportAllToProject": {
+          case 'ExportAllToProject': {
             const projectDialog = document.getElementById('exportProjectDialog');
             rtnval = showExportAllToProjectDialog(projectDialog, dialogParams, i18n);
             projectDialog.open();
           }
             break;
-          case "ProjectChooser": {
+          case 'ProjectChooser': {
             const projectChooserDialog = document.getElementById('projectChooserDialog');
             rtnval = showProjectChooserDialog(projectChooserDialog, dialogParams, i18n);
             projectChooserDialog.open();
           }
             break;
-          case "StartupTaskChooser": {
+          case 'StartupTaskChooser': {
             const startupTaskChooserDialog = document.getElementById('startupTaskChooserDialog');
             rtnval = showStartupTaskChooserDialog(startupTaskChooserDialog, dialogParams, i18n);
             startupTaskChooserDialog.open();

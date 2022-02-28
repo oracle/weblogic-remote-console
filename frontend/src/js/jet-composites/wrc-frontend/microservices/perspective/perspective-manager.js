@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 /**
  * @description This module contains functions for managing instances of the ``Perspective`` class.
@@ -14,9 +14,9 @@
 define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/perspectives.yaml', './perspective', 'wrc-frontend/core/cfe-errors', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function(YamlParser, PerspectivesFileContents, Perspective, CfeErrors, CoreUtils, Logger){
     const i18n = {
-      "errors": {
-        "IsAlreadyActivatedError": {
-          "0000": "{0} "
+      'errors': {
+        'IsAlreadyActivatedError': {
+          '0000': '{0} '
         }
       }
     };
@@ -40,18 +40,18 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/perspectives
 
     /**
      *
-     * @param {["configuration" | "monitoring" | "view" | "modeling"]} beanTreeTypes
+     * @param {["configuration" | "monitoring" | "view" | "modeling" | "composite"]} beanTreeTypes
      * @returns {Perspective[]}
      * @private
      */
     function getByBeanTreeTypes(beanTreeTypes) {
-      let rtnval = ["configuration", "view", "monitoring", "modeling"];
+      let rtnval = ['configuration', 'view', 'monitoring', 'modeling', 'composite'];
       beanTreeTypes.forEach((beanTreeType) => {
         const perspective = this.getById(beanTreeType);
         const index = rtnval.indexOf(perspective.id);
         if (index !== -1) rtnval[index] = perspective;
       });
-      return rtnval.filter(item => typeof item !== "string");
+      return rtnval.filter(item => typeof item !== 'string');
     }
 
     return {
@@ -147,7 +147,7 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/perspectives
       getByDataProvider: function(dataProvider) {
         // Extract bean tree types from beanTrees property of
         // dataProvider parameter.
-        const beanTreeTypes = CoreUtils.getValues(dataProvider.beanTrees, "type");
+        const beanTreeTypes = CoreUtils.getValues(dataProvider.beanTrees, 'type');
         // Use beanTreeTypes to load perspectives.
         return getByBeanTreeTypes.call(this, beanTreeTypes);
       },

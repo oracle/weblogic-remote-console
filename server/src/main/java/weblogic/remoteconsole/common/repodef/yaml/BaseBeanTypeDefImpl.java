@@ -71,7 +71,13 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
 
   @Override
   public boolean hasPropertyDef(Path propertyPath, boolean searchSubTypes) {
-    return findPropertyDefImpl(propertyPath, searchSubTypes) != null;
+    BeanPropertyDefImpl propertyDefImpl = findPropertyDefImpl(propertyPath, searchSubTypes);
+    if (propertyDefImpl != null) {
+      if (getBeanRepoDefImpl().isAccessAllowed(propertyDefImpl.getGetRoles())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override
@@ -154,7 +160,13 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
 
   @Override
   public boolean hasChildDef(Path childPath, boolean searchSubTypes) {
-    return findChildDefImpl(childPath, searchSubTypes) != null;
+    BaseBeanChildDefImpl childDefImpl = findChildDefImpl(childPath, searchSubTypes);
+    if (childDefImpl != null) {
+      if (getBeanRepoDefImpl().isAccessAllowed(childDefImpl.getGetRoles())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override
@@ -237,7 +249,13 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
 
   @Override
   public boolean hasActionDef(Path actionPath, boolean searchSubTypes) {
-    return findActionDefImpl(actionPath, searchSubTypes) != null;
+    BeanActionDefImpl actionDefImpl = findActionDefImpl(actionPath, searchSubTypes);
+    if (actionDefImpl != null) {
+      if (getBeanRepoDefImpl().isAccessAllowed(actionDefImpl.getInvokeRoles())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override

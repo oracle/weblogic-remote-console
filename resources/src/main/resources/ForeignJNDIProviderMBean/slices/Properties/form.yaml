@@ -1,0 +1,15 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure the properties for this Foreign JNDI Provider.</p>
+
+properties:
+  - name: "Properties"
+helpTopics:
+  - label: "Understanding WebLogic JNDI "
+    href: "wjndi/index.html#WJNDI115"
+    type: "edocs"
+  - label: "Understanding WebLogic JNDI"
+    href: "wjndi/index.html#WJNDI115"
+    type: "edocs"

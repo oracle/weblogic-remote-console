@@ -24,7 +24,7 @@ public interface SliceDef {
 
   // Returns the child slices of this slice.
   // Returns an empty list if this is a leaf node.
-  // Leaf nodes have corresponding slice forms.
+  // Leaf nodes have corresponding slice forms/tables.
   // Intermediate nodes don't.
   public List<SliceDef> getContentDefs();
 

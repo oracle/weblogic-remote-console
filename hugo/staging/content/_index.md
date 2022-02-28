@@ -35,7 +35,7 @@ Whether you choose the desktop application or the browser-based tool, it's simpl
 
 ***
 ### What's new
-The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.1.0. This release was published in December 2021.
+The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.2.0. <!--This release was published in January 2022.-->
 
 **New features**
 
@@ -44,6 +44,7 @@ The [current release of the WebLogic Remote Console](https://github.com/oracle/w
 
 #### Previous Releases {id="prev_releases"}
 Documentation for prior releases of the WebLogic Remote Console:
+* [2.1.0](https://oracle.github.io/weblogic-remote-console/2.1/)
 * [2.0.0](https://oracle.github.io/weblogic-remote-console/2.0/)
 * [1.1.0](https://oracle.github.io/weblogic-remote-console/1.1/)
 

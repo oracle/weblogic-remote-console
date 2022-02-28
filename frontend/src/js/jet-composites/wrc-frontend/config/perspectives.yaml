@@ -1,4 +1,4 @@
-# Copyright 2020, 2021, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Copyright 2020, 2022, Oracle Corporation and/or its affiliates.  All rights reserved.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 perspectives:
@@ -30,6 +30,13 @@ perspectives:
       dark: navstrip-icon-wdt-wht_48x48
       greyed: navstrip-icon-wdt-gry_48x48
     beanTree: model
+  - id: composite
+    type: built-in
+    iconFiles:
+      light: navstrip-icon-wdt-composite-blk_48x48
+      dark: navstrip-icon-wdt-composite-wht_48x48
+      greyed: navstrip-icon-wdt-composite-gry_48x48
+    beanTree: compositeConfig
   - id: ancillary
     type: add-in
     iconFiles:

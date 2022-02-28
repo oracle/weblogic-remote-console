@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
-import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.schema.BeanChildDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
@@ -22,31 +21,24 @@ import weblogic.remoteconsole.common.utils.StringUtils;
  */
 abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
 
-  private static final Logger LOGGER = Logger.getLogger(BaseBeanTypeDefImpl.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(YamlBasedBeanTypeDefImpl.class.getName());
 
   private String instanceName;
-  private LocalizableString typeNameLabel;
-  private LocalizableString instanceNameLabel;
   private Map<String,BeanPropertyDefImpl> propertyNameToPropertyDefImplMap = new HashMap<>();
   private Map<String,BeanChildDefImpl> childNameToChildDefImplMap = new HashMap<>();
   private Map<String,BeanActionDefImpl> actionNameToActionDefImplMap = new HashMap<>();
 
   YamlBasedBeanTypeDefImpl(BeanRepoDefImpl beanRepoDefImpl, String typeName) {
     super(beanRepoDefImpl, StringUtils.getLeafClassName(typeName));
-    this.instanceName = StringUtils.getSimpleTypeName(getTypeName());
   }
 
   // Derived class must call this once it knows the label for the type:
-  protected void initializeLabels(String label) {
-    String englishInstanceName = label;
-    if (StringUtils.isEmpty(englishInstanceName)) {
-      englishInstanceName = StringUtils.camelCaseToUpperCaseWords(getInstanceName());
+  protected void initializeInstanceName(String instanceName) {
+    this.instanceName = instanceName;
+    if (StringUtils.isEmpty(getInstanceName())) {
+      // e.g. ServerLifeCycleRuntimeMBean -> ServerLifeCycleRuntime
+      this.instanceName = StringUtils.getSimpleTypeName(getTypeName());
     }
-    // e.g. TypeName = ServerMBean, InstanceName = Server, suffix = MBean
-    String suffix = getTypeName().substring(getInstanceName().length());
-    this.instanceNameLabel = new LocalizableString(getInstanceNameLabelKey(), englishInstanceName);
-    String englishTypeName = englishInstanceName + " " + suffix;
-    this.typeNameLabel = new LocalizableString(getTypeNameLabelKey(), englishTypeName);
   }
 
   // The derived classes must call this after they've finished creating the properties and children:
@@ -75,18 +67,8 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   }
 
   @Override
-  public LocalizableString getTypeNameLabel() {
-    return this.typeNameLabel;
-  }
-
-  @Override
   public String getInstanceName() {
     return this.instanceName;
-  }
-
-  @Override
-  public LocalizableString getInstanceNameLabel() {
-    return this.instanceNameLabel;
   }
 
   protected String pathKey(Path path) {

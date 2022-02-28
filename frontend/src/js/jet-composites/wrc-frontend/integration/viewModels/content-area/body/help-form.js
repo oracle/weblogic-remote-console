@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function (oj, ko, HtmlUtils, PageDataTypes, CoreUtils, Logger) {
@@ -13,11 +13,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
     const i18n = {
       tables: {
         help: {
-          label: oj.Translations.getTranslatedString("wrc-help-form.tables.help.label"),
+          label: oj.Translations.getTranslatedString('wrc-help-form.tables.help.label'),
           columns: {
             header: {
-              name: oj.Translations.getTranslatedString("wrc-help-form.tables.help.columns.header.name"),
-              description: oj.Translations.getTranslatedString("wrc-help-form.tables.help.columns.header.description")
+              name: oj.Translations.getTranslatedString('wrc-help-form.tables.help.columns.header.name'),
+              description: oj.Translations.getTranslatedString('wrc-help-form.tables.help.columns.header.description')
             }
           }
         }
@@ -40,14 +40,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
      * @returns {HTMLElement}
      */
     function createHelp() {
-      const div = document.createElement("div");
+      const div = document.createElement('div');
 
       if (CoreUtils.isNotUndefinedNorNull(this.pdjData.helpTopics)) {
-        div.setAttribute("id", "cfe-help-footer");
-        const title = document.createElement("p");
-        title.innerHTML = "<b>Related Topics:</b>";
+        div.setAttribute('id', 'cfe-help-footer');
+        const title = document.createElement('p');
+        title.innerHTML = '<b>Related Topics:</b>';
         div.append(title);
-        const list = document.createElement("ul");
+        const list = document.createElement('ul');
         div.append(list);
 
         let topic, listElement, ref;
@@ -55,13 +55,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         for (let j = 0; j < this.pdjData.helpTopics.length; j++) {
           topic = this.pdjData.helpTopics[j];
 
-          ref = document.createElement("a");
-          ref.setAttribute("href", topic.href);
-          ref.setAttribute("target", "_blank");
-          ref.setAttribute("rel", "noopener");
+          ref = document.createElement('a');
+          ref.setAttribute('href', topic.href);
+          ref.setAttribute('target', '_blank');
+          ref.setAttribute('rel', 'noopener');
           ref.innerText = topic.label;
 
-          listElement = document.createElement("li");
+          listElement = document.createElement('li');
           listElement.append(ref);
           list.append(listElement);
         }
@@ -74,19 +74,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       i18n: i18n,
       tableHelpColumns: [
         {
-          "headerText": i18n.tables.help.columns.header.name,
-          "headerStyle": "font-weight:bold;text-align:left;min-width: 8em; width: 8em;",
-          "style": "white-space:normal;padding:5px;min-width: 8em; width: 8em;",
-          "name": i18n.tables.help.columns.header.name,
-          "field": i18n.tables.help.columns.header.name
+          'headerText': i18n.tables.help.columns.header.name,
+          'headerStyle': 'font-weight:bold;text-align:left;min-width: 8em; width: 8em;',
+          'style': 'white-space:normal;padding:5px;min-width: 8em; width: 8em;',
+          'name': i18n.tables.help.columns.header.name,
+          'field': i18n.tables.help.columns.header.name
         },
         {
-          "headerText": i18n.tables.help.columns.header.description,
-          "headerStyle": "font-weight:bold;text-align:left;",
-          "style": "white-space:normal;padding:5px;",
-          "name": i18n.tables.help.columns.header.description,
-          "field": i18n.tables.help.columns.header.description,
-          "template": "domTemplate"
+          'headerText': i18n.tables.help.columns.header.description,
+          'headerStyle': 'font-weight:bold;text-align:left;',
+          'style': 'white-space:normal;padding:5px;',
+          'name': i18n.tables.help.columns.header.description,
+          'field': i18n.tables.help.columns.header.description,
+          'template': 'domTemplate'
         }
       ],
       handleHelpIconClicked: (event) => {
@@ -97,18 +97,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           return;
         }
 
-        const popup = document.getElementById(event.target.getAttribute("aria-describedby"))
+        const popup = document.getElementById(event.target.getAttribute('aria-describedby'))
 
         if (popup != null) {
-          const content = popup.getElementsByClassName("oj-label-help-popup-container")[0];
+          const content = popup.getElementsByClassName('oj-label-help-popup-container')[0];
           if (content != null) {
-            if (popup.classList.contains("cfe-detail-popup")) {
+            if (popup.classList.contains('cfe-detail-popup')) {
               content.innerText = instructionHelp;
-              popup.classList.remove("cfe-detail-popup");
+              popup.classList.remove('cfe-detail-popup');
             }
             else {
               content.innerHTML = detailedHelp;
-              popup.classList.add("cfe-detail-popup");
+              popup.classList.add('cfe-detail-popup');
             }
           }
         }

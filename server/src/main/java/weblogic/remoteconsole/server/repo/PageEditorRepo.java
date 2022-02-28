@@ -20,7 +20,7 @@ public abstract class PageEditorRepo extends PageReaderRepo {
   // Update a new bean and its mandatory singleton child beans with the values
   // that the user entered on one of its slice form pages.
   public Response<Void> update(InvocationContext ic, List<FormProperty> properties) {
-    if (ic.getPagePath().isSliceFormPagePath()) {
+    if (ic.getPagePath().isSlicePagePath()) {
       return (new SliceFormUpdater(ic, properties)).update();
     } else {
       throw new AssertionError("Unsupported PagePath type : " + ic.getPagePath());

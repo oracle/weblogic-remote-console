@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -14,6 +14,7 @@ import weblogic.remoteconsole.common.repodef.CollectionParamDef;
 import weblogic.remoteconsole.common.repodef.CustomizerDef;
 import weblogic.remoteconsole.common.repodef.LinkDef;
 import weblogic.remoteconsole.common.repodef.LinksDef;
+import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.NavTreeDef;
 import weblogic.remoteconsole.common.repodef.NavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.ParamDef;
@@ -131,17 +132,24 @@ class PageReader extends PageManager {
   }
 
   private void addBreadCrumbs(Page page) {
-    BeanTreePath beanTreePath = getBeanTreePath();
-    Path path = new Path();
-    List<String> components = beanTreePath.getPath().getComponents();
     List<BeanTreePath> breadCrumbs = new ArrayList<>();
-    // Add a breadcrumb for every part of the path to this bean that has pages (and not for this bean)
-    for (int i = 0; i < components.size() - 1; i++) {
-      path.addComponent(components.get(i));
-      BeanTreePath breadCrumb = BeanTreePath.create(beanTreePath.getBeanRepo(), path);
-      if (getPageRepoDef().getSlicesDef(breadCrumb.getTypeDef()) != null) {
-        // This part of the path has pages.  Add a breadcrumb for it.
-        breadCrumbs.add(breadCrumb);
+    NavTreePath navTreePath = new NavTreePath(getInvocationContext());
+    List<NavTreePathSegment> segments = navTreePath.getSegments();
+    // Add a breadcrumb for every part of the the nav tree path that isn't a group
+    for (int i = 0; i < segments.size(); i++) {
+      NavTreePathSegment segment = segments.get(i);
+      NavTreeNodeDef node = segment.getNavTreeNodeDef();
+      if (node.isChildNodeDef()) {
+        BeanTreePath btp = segment.getBeanTreePath();
+        if (btp.isCollectionChild()) {
+          // add a breadcrumb for the collection too (make sure it's before the child)
+          // note: add it even if this is the last segment
+          breadCrumbs.add(BeanTreePath.create(btp.getBeanRepo(), btp.getPath().getParent()));
+        }
+        // add a breadcrumb for the nav tree segment if it isn't the last segment
+        if (i  < segments.size() - 1) {
+          breadCrumbs.add(btp);
+        }
       }
     }
     page.setBreadCrumbs(breadCrumbs);
@@ -241,9 +249,14 @@ class PageReader extends PageManager {
     Link link = new Link();
     link.setResourceData(getLinkResourceData(pageRepoRelativeResourceData, root));
     link.setLabel(getLinkLabel(linkDef, root));
+    LocalizableString nfm = linkDef.getNotFoundMessage();
+    if (nfm != null) {
+      link.setNotFoundMessage(getInvocationContext().getLocalizer().localizeString(nfm));
+    }
     return link;
   }
 
+  
   private Path getLinkResourceData(Path pageRepoRelativeResourceData, Root root) {
     Path resourceData = new Path(root.getName()); // e.g. edit or serverConfig
     resourceData.addComponent("data");

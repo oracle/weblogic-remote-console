@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * Module containing methods for setting or obtaining "runtime" properties, for the CFE
@@ -21,11 +21,11 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 
     properties['console-frontend.mode'] = CoreTypes.Console.RuntimeMode.DETACHED.name;
     properties['console-frontend.isReadOnly'] = false;
-    properties['console-backend.providerId'] = "";
-    properties['console-backend.domain'] = "";
+    properties['console-backend.providerId'] = '';
+    properties['console-backend.domain'] = '';
     properties['console-backend.domainConnectState'] = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-    properties['console-backend.weblogic.username'] = "";
-    properties['settings.themes'] = "dark";
+    properties['console-backend.weblogic.username'] = '';
+    properties['settings.themes'] = 'dark';
 
     YamlParser.parse(ConfigFileContents)
       .then(data => {
@@ -49,7 +49,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
   });
 
     function getBaseUrl() {
-      return BaseUrl + "/api";
+      return BaseUrl + '/api';
     }
 
     /**
@@ -63,28 +63,28 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
     // public:
     return {
       PropertyName: Object.freeze({
-        CFE_MODE : {name: "console-frontend.mode"},
-        CFE_NAME : {name: "console-frontend.name"},
-        CFE_VERSION : {name: "console-frontend.version"},
-        CFE_ROLE : {name: "console-frontend.role"},
-        CFE_LOGGING_DEFAULT_LEVEL: {name: "console-frontend.logging.defaultLevel"},
-        CFE_AUTO_SYNC_SECS: {name: "settings.autoSync.minimumSecs"},
-        CFE_PROJECT_MANAGEMENT_LOCATION: {name: "settings.projectManagement.location"},
-        CFE_IS_READONLY: {name: "console-frontend.isReadOnly"},
-        CFE_CURRENT_THEME: {name: "settings.themes"},
-        CFE_STARTUP_PROJECT: {name: "settings.projectManagement.startup.project"},
-        CFE_STARTUP_TASK: {name: "settings.projectManagement.startup.task"},
-        CBE_PROVIDER_ID: {name: "console-backend.providerId"},
-        CBE_NAME : {name: "console-backend.name"},
-        CBE_VERSION : {name: "console-backend.version"},
-        CBE_WLS_VERSION_ONLINE: {name: "weblogic.version.online"},
-        CBE_WLS_USERNAME: {name: "console-backend.weblogic.username"},
-        CBE_DOMAIN_URL: {name: "console-backend.domain.url"},
-        CBE_DOMAIN: {name: "console-backend.domain"},
-        CBE_DOMAIN_CONNECT_STATE: {name: "console-backend.domainConnectState"},
-        CBE_POLLING_MILLIS: {name: "console-backend.pollingMillis"},
-        CBE_RETRY_ATTEMPTS: {name: "console-backend.retryAttempts"},
-        CBE_MODE: {name: "console-backend.mode"}
+        CFE_MODE : {name: 'console-frontend.mode'},
+        CFE_NAME : {name: 'console-frontend.name'},
+        CFE_VERSION : {name: 'console-frontend.version'},
+        CFE_ROLE : {name: 'console-frontend.role'},
+        CFE_LOGGING_DEFAULT_LEVEL: {name: 'console-frontend.logging.defaultLevel'},
+        CFE_AUTO_SYNC_SECS: {name: 'settings.autoSync.minimumSecs'},
+        CFE_PROJECT_MANAGEMENT_LOCATION: {name: 'settings.projectManagement.location'},
+        CFE_IS_READONLY: {name: 'console-frontend.isReadOnly'},
+        CFE_CURRENT_THEME: {name: 'settings.themes'},
+        CFE_STARTUP_PROJECT: {name: 'settings.projectManagement.startup.project'},
+        CFE_STARTUP_TASK: {name: 'settings.projectManagement.startup.task'},
+        CBE_PROVIDER_ID: {name: 'console-backend.providerId'},
+        CBE_NAME : {name: 'console-backend.name'},
+        CBE_VERSION : {name: 'console-backend.version'},
+        CBE_WLS_VERSION_ONLINE: {name: 'weblogic.version.online'},
+        CBE_WLS_USERNAME: {name: 'console-backend.weblogic.username'},
+        CBE_DOMAIN_URL: {name: 'console-backend.domain.url'},
+        CBE_DOMAIN: {name: 'console-backend.domain'},
+        CBE_DOMAIN_CONNECT_STATE: {name: 'console-backend.domainConnectState'},
+        CBE_POLLING_MILLIS: {name: 'console-backend.pollingMillis'},
+        CBE_RETRY_ATTEMPTS: {name: 'console-backend.retryAttempts'},
+        CBE_MODE: {name: 'console-backend.mode'}
       }),
 
       getBaseUrl: function() {
@@ -94,19 +94,19 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
       getBackendUrl: getBackendUrl,
 
       getDataProviderId: () => {
-      return properties["console-backend.providerId"];
+      return properties['console-backend.providerId'];
   },
 
     setDataProviderId: (value) => {
-      properties["console-backend.providerId"] = value;
+      properties['console-backend.providerId'] = value;
     },
 
     getStartupProject: () => {
-      return properties["settings.projectManagement.startup.project"];
+      return properties['settings.projectManagement.startup.project'];
     },
 
     getStartupTask: () => {
-      return properties["settings.projectManagement.startup.task"];
+      return properties['settings.projectManagement.startup.task'];
     },
 
     getPollingMillis: function () {
@@ -149,7 +149,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
       if (CoreUtils.isNotUndefinedNorNull(name)) {
         if (CoreUtils.isNotUndefinedNorNull(name.name)) {
           property = properties[name.name];
-        } else if (typeof name === "string" && name.length > 0) {
+        } else if (typeof name === 'string' && name.length > 0) {
           property = properties[name];
         }
       }
@@ -160,7 +160,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
       if (CoreUtils.isNotUndefinedNorNull(name) && CoreUtils.isNotUndefinedNorNull(value)) {
         if (CoreUtils.isNotUndefinedNorNull(name.name)) {
           properties[name.name] = value;
-        } else if (typeof name === "string" && name.length > 0) {
+        } else if (typeof name === 'string' && name.length > 0) {
           properties[name] = value;
         }
       }
@@ -221,11 +221,11 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
      */
     getServiceConfig: function(serviceType) {
       if (CoreUtils.isUndefinedOrNull(serviceType)) {
-        throw new Error("Value assigned to 'serviceType' parameter cannot be undefined.");
+        throw new Error('Value assigned to \'serviceType\' parameter cannot be undefined.');
       }
-      let services = config["console-backend"]["services"];
+      let services = config['console-backend']['services'];
       return services.find((service) => {
-        return service["id"] === serviceType.name;
+        return service['id'] === serviceType.name;
     });
     },
 
@@ -240,10 +240,10 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
      */
     getPathUri: function(serviceType, serviceComponentType) {
       if (CoreUtils.isUndefinedOrNull(serviceType) || CoreUtils.isUndefinedOrNull(serviceComponentType)) {
-        throw new Error("Values assigned to 'serviceType' and 'serviceComponentId' arguments cannot be undefined.");
+        throw new Error('Values assigned to \'serviceType\' and \'serviceComponentId\' arguments cannot be undefined.');
       }
       let service = this.getServiceConfig(serviceType);
-      return (CoreUtils.isNotUndefinedNorNull(service) ? service['path'] + "/" + serviceComponentType.name : undefined);
+      return (CoreUtils.isNotUndefinedNorNull(service) ? service['path'] + '/' + serviceComponentType.name : undefined);
     }
   };
   }

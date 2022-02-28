@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -21,11 +21,11 @@ public class ReadOnlyMandatorySingletonBeanResource extends BeanResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(@QueryParam("slice") @DefaultValue("") String slice) {
-    setSliceFormPagePath(slice);
-    return getSliceForm();
+    setSlicePagePath(slice);
+    return getSlice();
   }
 
-  protected Response getSliceForm() {
+  protected Response getSlice() {
     return
       GetPageResponseMapper.toResponse(
         getInvocationContext(),

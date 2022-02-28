@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -53,8 +53,10 @@ public class WDTCompositeTreeBeanRepo extends WDTCompositeBeanRepo implements Be
         }
         builder.addModelSection("topology").addModelSection("resources").addModelSection("appDeployments");
 
-        // Build the bean tree and any exception during the build results in a failed request!
+        // Build the bean tree and apply the WDT delete operator if used from within the
+        // model fragment, any exception during the build results in a failed request!
         try {
+          builder.setWDTDeleteApplied();
           beanTree = builder.build();
           LOGGER.fine("WDT: WDTCompositeTreeBeanRepo created from model: " + beanTree.getWDTModels().size());
         } catch (Exception exc) {
@@ -85,6 +87,25 @@ public class WDTCompositeTreeBeanRepo extends WDTCompositeBeanRepo implements Be
   }
 
   /**
+   * Create the model on-demand from the current model content.
+   */
+  @Override
+  public Map<String, Object> getContent(InvocationContext ic) {
+    Map<String, Object> result = null;
+    if (beanTree != null) {
+      try {
+        WDTModelBuilder builder = new WDTModelBuilder(beanTree, ic.getLocalizer());
+        result = builder.build();
+      } catch (Exception exc) {
+        String msg = exc.toString();
+        LOGGER.log(Level.SEVERE, "WDT: WDTCompositeTreeBeanRepo getting model from BeanTree: " + msg, exc);
+        throw new FailedRequestException(msg);
+      }
+    }
+    return result;
+  }
+
+  /**
    * Handle download for the DownloadBeanRepo by outputting the current model content in YAML format
    */
   @Override
@@ -92,8 +113,7 @@ public class WDTCompositeTreeBeanRepo extends WDTCompositeBeanRepo implements Be
     if (beanTree != null) {
       try {
         Yaml emitter = WDTModelRepresenter.getYamlEmitter();
-        WDTModelBuilder builder = new WDTModelBuilder(beanTree, ic.getLocalizer());
-        emitter.dump(builder.build(), writer);
+        emitter.dump(getContent(ic), writer);
       } catch (Exception exc) {
         String msg = exc.toString();
         LOGGER.log(Level.SEVERE, "WDT: WDTCompositeTreeBeanRepo downloading BeanTree: " + msg, exc);

@@ -46,13 +46,16 @@ describe.only('Test Suite: scheduling_test for Work Managers, Capacities, Contex
      // Create WorkManager (testWorkManager-1) -> create Work Manager Shutdown Trigger
      // Delete testWorkManager-1
      //
-     it('1. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testWorkManager-1 ',
+     it.skip('1. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testWorkManager-1 ',
         async function () {
         file = "testWorkManager-1.png";
         try {
             await admin.createNewMBeanObject(driver, "testWorkManager-1", 2, "configuration","Scheduling", "Work Managers");
             await admin.createMBeanFromMenuDropDown(driver,"Work Manager Shutdown Trigger");
-            await admin.deleteMBeanObject(driver, "testWorkManager-1", "WorkManagers", 2,"configuration","Scheduling", "Work Managers");
+            await admin.deleteMBeanObject(driver,"testWorkManager-1","WorkManagers",
+                2,"configuration", "Scheduling","Work Managers",
+                "","","",1);
+            console.log("TEST PASS ");
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
                 console.log(e.toString() + " TEST FAIL");
@@ -68,8 +71,9 @@ describe.only('Test Suite: scheduling_test for Work Managers, Capacities, Contex
               file = "testCapacity-1.png";
               try {
                   await admin.createNewMBeanObject(driver, "testCapacity-1", 2, "configuration","Scheduling", "Capacities");
-                  await admin.selectTarget(driver,"AdminServer");
-                  await admin.deleteMBeanObject(driver, "testCapacity-1", "Capacities", 2,"configuration","Scheduling", "Capacities");
+                  await admin.deleteMBeanObject(driver,"testCapacity-1","Capacities", 2,"configuration",
+                      "Scheduling","Capacities","","","",2);
+                  console.log("TEST PASS ");
               } catch (e) {
                   await admin.takeScreenshot(driver, file);
                   console.log(e.toString() + " TEST FAIL");
@@ -80,13 +84,15 @@ describe.only('Test Suite: scheduling_test for Work Managers, Capacities, Contex
       // Create Context Request Classes (testContextRequestClass-1) -> update AdminServer as Target -> save
       // Delete testContextRequestClass-1
       //
-      it('3. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testContextRequestClass-1 ',
+      it.skip('3. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testContextRequestClass-1 ',
           async function () {
               file = "testContextRequestClass-1.png";
               try {
                   await admin.createNewMBeanObject(driver, "testContextRequestClass-1", 2, "configuration","Scheduling", "Context Request Classes");
                   await admin.selectTarget(driver,"AdminServer");
-                  await admin.deleteMBeanObject(driver, "testContextRequestClass-1", "ContextRequestClasses", 2,"configuration","Scheduling", "Context Request Classes");
+                  await admin.deleteMBeanObject(driver,"testContextRequestClass-1","ContextRequestClasses",2,"configuration",
+                      "Scheduling","Context Request Classes","","","",2);
+                  console.log("TEST PASS ");
               } catch (e) {
                   await admin.takeScreenshot(driver, file);
                   console.log(e.toString() + " TEST FAIL");
@@ -97,13 +103,15 @@ describe.only('Test Suite: scheduling_test for Work Managers, Capacities, Contex
       // Create Fair Share Request Classes (testFairShareRequestClass-1) -> update AdminServer as Target -> save
       // Delete testFairShareRequestClass-1
       //
-      it('4. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testFairShareRequestClass-1 ',
+      it.skip('4. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testFairShareRequestClass-1 ',
           async function () {
               file = "testFairShareRequestClass-1.png";
               try {
                   await admin.createNewMBeanObject(driver, "testFairShareRequestClass-1", 2, "configuration","Scheduling", "Fair Share Request Classes");
                   await admin.selectTarget(driver,"AdminServer");
-                  await admin.deleteMBeanObject(driver, "testFairShareRequestClass-1", "FairShareRequestClasses", 2,"configuration","Scheduling", "Fair Share Request Classes");
+                  await admin.deleteMBeanObject(driver,"testFairShareRequestClass-1","FairShareRequestClasses",2,"configuration",
+                      "Scheduling","Fair Share Request Classes","","","",2);
+                  console.log("TEST PASS ");
               } catch (e) {
                   await admin.takeScreenshot(driver, file);
                   console.log(e.toString() + " TEST FAIL");
@@ -114,13 +122,15 @@ describe.only('Test Suite: scheduling_test for Work Managers, Capacities, Contex
       // Create Max Threads Constraints (testMaxThreadsConstraint-1) -> update AdminServer as Target -> save
       // Delete testMaxThreadsConstraint-1
       //
-      it('5. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testMaxThreadsConstraint-1 ',
+      it.skip('5. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testMaxThreadsConstraint-1 ',
           async function () {
               file = "testMaxThreadsConstraint-1.png";
               try {
                   await admin.createNewMBeanObject(driver, "testMaxThreadsConstraint-1", 2, "configuration","Scheduling", "Max Threads Constraints");
                   await admin.selectTarget(driver,"AdminServer");
-                  await admin.deleteMBeanObject(driver, "testMaxThreadsConstraint-1", "MaxThreadsConstraints", 2,"configuration","Scheduling", "Max Threads Constraints");
+                  await admin.deleteMBeanObject(driver,"testMaxThreadsConstraint-1","MaxThreadsConstraints",2,"configuration",
+                      "Scheduling","Max Threads Constraints","","","",2);
+                  console.log("TEST PASS ");
               } catch (e) {
                   await admin.takeScreenshot(driver, file);
                   console.log(e.toString() + " TEST FAIL");
@@ -137,7 +147,9 @@ describe.only('Test Suite: scheduling_test for Work Managers, Capacities, Contex
               try {
                   await admin.createNewMBeanObject(driver, "testMinThreadsConstraint-1", 2, "configuration","Scheduling", "Min Threads Constraints");
                   await admin.selectTarget(driver,"AdminServer");
-                  await admin.deleteMBeanObject(driver, "testMinThreadsConstraint-1", "MinThreadsConstraints", 2,"configuration","Scheduling", "Min Threads Constraints");
+                  await admin.deleteMBeanObject(driver,"testMinThreadsConstraint-1","MinThreadsConstraints",2,"configuration",
+                      "Scheduling","Min Threads Constraints","","","",2);
+                  console.log("TEST PASS ");
               } catch (e) {
                   await admin.takeScreenshot(driver, file);
                   console.log(e.toString() + " TEST FAIL");
@@ -166,13 +178,15 @@ describe.only('Test Suite: scheduling_test for Work Managers, Capacities, Contex
       // Create Managed Executor Service Templates (testManagedExecutorServiceTemplates-1) -> update AdminServer as Target -> save
       // Delete testManagedExecutorServiceTemplates-1
       //
-      it('8. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testManagedExecutorServiceTemplates-1 ',
+      it.skip('8. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testManagedExecutorServiceTemplates-1 ',
           async function () {
               file = "testManagedExecutorServiceTemplates-1.png";
               try {
                   await admin.createNewMBeanObject(driver, "testManagedExecutorServiceTemplates-1", 2, "configuration","Scheduling", "Managed Executor Service Templates");
                   await admin.selectTarget(driver,"AdminServer");
-                  await admin.deleteMBeanObject(driver, "testManagedExecutorServiceTemplates-1", "ManagedExecutorServiceTemplates", 2,"configuration","Scheduling", "Managed Executor Service Templates");
+                  await admin.deleteMBeanObject(driver,"testManagedExecutorServiceTemplate-1","ManagedExecutorServiceTemplates",2,
+                      "configuration","Scheduling","Managed Executor Service Templates","","","",1);
+                  console.log("TEST PASS ");
               } catch (e) {
                   await admin.takeScreenshot(driver, file);
                   console.log(e.toString() + " TEST FAIL");
@@ -183,15 +197,16 @@ describe.only('Test Suite: scheduling_test for Work Managers, Capacities, Contex
       // Create Managed Scheduled Executor Service Templates (testManagedScheduledExecutorServiceTemplates-1) -> update AdminServer as Target -> save
       // Delete testManagedScheduledExecutorServiceTemplates-1
       //
-      it('9. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testManagedExecutorServiceTemplates-1 ',
+      it.skip('9. Test Category: GAT/Risk1\n \t Test Scenario: create/update/delete testManagedExecutorServiceTemplates-1 ',
           async function () {
               file = "testManagedScheduledExecutorServiceTemplates-1.png";
               try {
                   await admin.createNewMBeanObject(driver, "testManagedScheduledExecutorServiceTemplates-1", 2, "configuration",
                       "Scheduling", "Managed Scheduled Executor Service Templates");
                   await admin.selectTarget(driver,"AdminServer");
-                  await admin.deleteMBeanObject(driver, "testManagedScheduledExecutorServiceTemplates-1", "ManagedScheduledExecutorServiceTemplates", 2,
-                      "configuration","Scheduling", "Managed Scheduled Executor Service Templates");
+                  await admin.deleteMBeanObject(driver,"testManagedScheduledExecutorServiceTemplates-1","ManagedScheduledExecutorServiceTemplates",2,
+                      "configuration","Scheduling","Managed Scheduled Executor Service Templates","","","",1);
+                  console.log("TEST PASS ");
               } catch (e) {
                   await admin.takeScreenshot(driver, file);
                   console.log(e.toString() + " TEST FAIL");
@@ -208,7 +223,9 @@ describe.only('Test Suite: scheduling_test for Work Managers, Capacities, Contex
               try {
                   await admin.createNewMBeanObject(driver, "testManagedThreadFactoryTemplate-1", 2, "configuration","Scheduling", "Managed Thread Factory Templates");
                   await admin.selectTarget(driver,"AdminServer");
-                  await admin.deleteMBeanObject(driver, "testManagedThreadFactoryTemplate-1", "ManagedThreadFactoryTemplates", 2,"configuration","Scheduling", "Managed Thread Factory Templates");
+                  await admin.deleteMBeanObject(driver,"testManagedThreadFactoryTemplates-1","ManagedThreadFactoryTemplates",2,
+                      "configuration","Scheduling","Managed Thread Factory Templates","","","",1);
+                  console.log("TEST PASS ");
               } catch (e) {
                   await admin.takeScreenshot(driver, file);
                   console.log(e.toString() + " TEST FAIL");

@@ -1,17 +1,17 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['wrc-frontend/core/utils'],
   function (CoreUtils) {
 
     function parseQueryString(url) {
-      let queryString = url.split("?").pop(), qd = {};
-      queryString.split("&").forEach(function (item) { var s = item.split("="), k = s[0], v = s[1] && decodeURIComponent(s[1]); (qd[k] = qd[k] || []).push(v) });
+      let queryString = url.split('?').pop(), qd = {};
+      queryString.split('&').forEach(function (item) { var s = item.split('='), k = s[0], v = s[1] && decodeURIComponent(s[1]); (qd[k] = qd[k] || []).push(v) });
       return qd;
     }
 
@@ -23,8 +23,8 @@ define(['wrc-frontend/core/utils'],
     function pathSegmentsFromIdentity(id) {
       let pathSegments = [];
 
-      if (typeof id !== "undefined" && typeof id.resourceData !== "undefined" && id.resourceData !== null) {
-        pathSegments = id.resourceData.split("/");
+      if (typeof id !== 'undefined' && typeof id.resourceData !== 'undefined' && id.resourceData !== null) {
+        pathSegments = id.resourceData.split('/');
         pathSegments = pathSegments.filter((e) => {return e});
       }
 
@@ -34,7 +34,7 @@ define(['wrc-frontend/core/utils'],
     function filterPathSegments(path, segment) {
       let pathSegments = [];
       if (CoreUtils.isNotUndefinedNorNull(path) && CoreUtils.isNotUndefinedNorNull(segment)) {
-        pathSegments = path.split("/").filter(e => e);
+        pathSegments = path.split('/').filter(e => e);
         const index = pathSegments.indexOf(segment);
         if (index !== -1) pathSegments = pathSegments.slice(index + 1);
       }
@@ -42,7 +42,7 @@ define(['wrc-frontend/core/utils'],
     }
 
     function pathEncodedFromIdentity(id) {
-      let path = "";
+      let path = '';
       const pathSegments = pathSegmentsFromIdentity(id);
 
       if (pathSegments.length > 0) {
@@ -76,8 +76,8 @@ define(['wrc-frontend/core/utils'],
     }
 
     function displayNameFromIdentity(id) {
-      let displayName = "";
-      if (typeof id !== "undefined" && typeof id.path !== "undefined") {
+      let displayName = '';
+      if (typeof id !== 'undefined' && typeof id.path !== 'undefined') {
         const lastPathSegment = id.path[id.path.length - 1];
 
         if (typeof lastPathSegment.key !== 'undefined') {
@@ -99,12 +99,12 @@ define(['wrc-frontend/core/utils'],
      * @returns {string} - The value assigned to the ``property`` field of the last path segment in ``id``, or an empty string.
      */
     function propertyNameFromIdentity(id) {
-      let propertyName = "";
+      let propertyName = '';
 
-      if (typeof id !== "undefined" && typeof id.path !== "undefined" && id.path !== null) {
+      if (typeof id !== 'undefined' && typeof id.path !== 'undefined' && id.path !== null) {
         const lastPathSegment = id.path[id.path.length - 1];
 
-        if (typeof lastPathSegment !== "undefined" && typeof lastPathSegment.propertyLabel !== 'undefined') {
+        if (typeof lastPathSegment !== 'undefined' && typeof lastPathSegment.propertyLabel !== 'undefined') {
           propertyName = lastPathSegment.property;
         }
       }
@@ -117,9 +117,9 @@ define(['wrc-frontend/core/utils'],
      * @returns {string} - The value assigned to the ``propertyLabel`` field of the last path segment in ``id``, or an empty string.
      */
     function propertyLabelFromIdentity(id) {
-      let propertyLabel = "";
+      let propertyLabel = '';
 
-      if (typeof id !== "undefined" && typeof id.label !== "undefined" && id.label !== null) {
+      if (typeof id !== 'undefined' && typeof id.label !== 'undefined' && id.label !== null) {
         propertyLabel = id.label;
       }
 
@@ -133,15 +133,15 @@ define(['wrc-frontend/core/utils'],
      * @private
      */
     function propertyValueTypeFromIdentity(id) {
-      let propertyValueType = "";
+      let propertyValueType = '';
 
-      if (typeof id !== "undefined" && typeof id.resourceData !== "undefined" && id.resourceData !== null) {
+      if (typeof id !== 'undefined' && typeof id.resourceData !== 'undefined' && id.resourceData !== null) {
         const resourceData = decodeURIComponent(id.resourceData);
         const label = decodeURIComponent(id.label);
-        let pathSegments = resourceData.split("/");
+        let pathSegments = resourceData.split('/');
         pathSegments = pathSegments.filter((e) => {return e});
         propertyValueType = pathSegments[pathSegments.indexOf(label) - 1];
-        if (typeof propertyValueType !== "undefined") {
+        if (typeof propertyValueType !== 'undefined') {
           propertyValueType = propertyValueType.slice(0, -1);
         }
       }
@@ -156,10 +156,10 @@ define(['wrc-frontend/core/utils'],
      * @private
      */
     function typeNameFromIdentity(id) {
-      let typeName = "";
+      let typeName = '';
 
-      if (typeof id !== "undefined" && typeof id.resourceData !== "undefined" && id.resourceData !== null) {
-        let pathSegments = id.resourceData.split("/");
+      if (typeof id !== 'undefined' && typeof id.resourceData !== 'undefined' && id.resourceData !== null) {
+        let pathSegments = id.resourceData.split('/');
         typeName = pathSegments[pathSegments.length - 1];
         typeName = typeName.slice(0, -1);
       }
@@ -174,9 +174,9 @@ define(['wrc-frontend/core/utils'],
      * @private
      */
     function typeLabelFromIdentity(id) {
-      let typeLabel = "";
+      let typeLabel = '';
 
-      if (typeof id !== "undefined" && typeof id.label !== "undefined" && id.label !== null) {
+      if (typeof id !== 'undefined' && typeof id.label !== 'undefined' && id.label !== null) {
         typeLabel = id.label;
         typeLabel = typeLabel.slice(0, -1);
       }
@@ -190,10 +190,10 @@ define(['wrc-frontend/core/utils'],
      * @returns {string} - The value assigned to the ``property`` or ``type`` field of the last path segment in ``id``, depending on which one is present in ``id``. An empty string is returned, if neither is present.
      */
     function parentPropertyFromIdentity(id) {
-      let parentProperty = "";
+      let parentProperty = '';
       const lastPathSegment = id.path[id.path.length-1];
 
-      if (typeof lastPathSegment.property !== "undefined") {
+      if (typeof lastPathSegment.property !== 'undefined') {
         parentProperty = lastPathSegment.property;
       }
       else {
@@ -209,8 +209,8 @@ define(['wrc-frontend/core/utils'],
     }
 
     function removeTrailingSlashes(path) {
-      if (typeof path !== "undefined" && path.length > 0) {
-        while (path.substring(path.length -1) === "/") {
+      if (typeof path !== 'undefined' && path.length > 0) {
+        while (path.substring(path.length -1) === '/') {
           path = path.slice(0, -1);
         }
       }
@@ -235,7 +235,7 @@ define(['wrc-frontend/core/utils'],
 
           if (CoreUtils.isUndefinedOrNull(rdjDataValue[i].value)) {
             if (CoreUtils.isUndefinedOrNull(rdjDataValue[i].label)) {
-              list.push("");
+              list.push('');
             } else {
               list.push(rdjDataValue[i].label);
             }
@@ -256,18 +256,18 @@ define(['wrc-frontend/core/utils'],
 
     function getPropertiesDisplayValue(dataValue, sep) {
       // Empty string or a separated list of key/value pairs
-      let result = "";
+      let result = '';
       let separator = sep;
       if (Object.prototype.toString.call(dataValue) === '[object Array]') {
-        result = "[" + dataValue.join() + "]";
+        result = '[' + dataValue.join() + ']';
       }
       else {
         if (typeof separator === 'undefined') {
-          separator = ", ";
+          separator = ', ';
         }
         for (var key in dataValue) {
           if (result.length > 0) result = result + separator;
-          result = result + key + "=" + dataValue[key];
+          result = result + key + '=' + dataValue[key];
         }
       }
       return result;
@@ -277,13 +277,13 @@ define(['wrc-frontend/core/utils'],
       // Split a comma separated list of key/value pairs
       // No parsed properties results in a null return value...
       let result = null, entry = [];
-      let entries = readValue.split(separator).map(value => value.trim()).filter(value => value != "");
+      let entries = readValue.split(separator).map(value => value.trim()).filter(value => value != '');
       for (let i = 0; i < entries.length; i++) {
-        entry = entries[i].split("=").map(value => value.trim());
+        entry = entries[i].split('=').map(value => value.trim());
         if (entry.length > 1) {
           let key = entry[0];
           let value = entry[1];
-          if ((key !== undefined) && (key !== "") && (value !== undefined) && (value !== "")) {
+          if ((key !== undefined) && (key !== '') && (value !== undefined) && (value !== '')) {
             if (result == null) result = {};
             result[key] = value;
           }
@@ -294,7 +294,7 @@ define(['wrc-frontend/core/utils'],
 
     function getArrayOfStringDisplayValue(dataValue, separator) {
       // Empty string or a separated list of values.
-      let result = "";
+      let result = '';
       for (let i in dataValue) {
         if (result.length > 0) result = result + separator;
         result =
@@ -306,27 +306,27 @@ define(['wrc-frontend/core/utils'],
     function getArrayOfStringConvertedValue(readValue, separator) {
       // Split a comma separated list of values
       let result = null;
-      if (!Array.isArray(readValue) && readValue !== "") {
+      if (!Array.isArray(readValue) && readValue !== '') {
         result = readValue
           .split(separator)
           .map((value) => {
             return { set: true, value: value.trim() };
           })
-          .filter((value) => value !== "");
+          .filter((value) => value !== '');
       }
       return result;
     }
 
     function convertArrayToPrintableList(array, conjunction) {
       let printableList;
-      if (typeof conjunction === "undefined") conjunction = "or";
-      if (typeof array !== "undefined" && array !== null && array.length > 0) {
+      if (typeof conjunction === 'undefined') conjunction = 'or';
+      if (typeof array !== 'undefined' && array !== null && array.length > 0) {
         if (array.length === 1) {
           printableList = array[0];
         }
         else {
           const last = array.pop();
-          printableList = array.join(", ");
+          printableList = array.join(', ');
           printableList += ` ${conjunction} ${last}`;
         }
       }

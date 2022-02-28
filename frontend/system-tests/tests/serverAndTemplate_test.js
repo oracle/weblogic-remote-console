@@ -73,8 +73,6 @@ describe.only('Test Suite: serverAndTemplate_test for Configuration-Servers-And-
         try {
             await admin.createNewMBeanObject(driver,"server-1",2,"configuration","Environment","Servers");
             await driver.sleep(1200);
-            //await admin.deleteMBeanObject(driver,"server-1","Servers",2,"configuration",
-              //  "Environment","Servers");
             await admin.deleteMBeanObject(driver,"server-1","Servers",2,"configuration",
                 "Environment","Servers","","","",5);
             console.log("TEST PASS ");

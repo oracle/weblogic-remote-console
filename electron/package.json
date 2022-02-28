@@ -2,7 +2,7 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -40,7 +40,9 @@
       "category": "Utility"
     },
     "nsis": {
-      "runAfterFinish": "false"
+      "runAfterFinish": "false",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     },
     "extraFiles": {
       "from": "extraFiles/.",
@@ -53,14 +55,14 @@
   },
   "license": "UPL",
   "description": "A remote console for WebLogic",
-  "copyright": "Copyright (c) 2021, Oracle and/or its affiliates.",
+  "copyright": "Copyright (c) 2021, 2022, Oracle and/or its affiliates.",
   "dependencies": {
     "electron-prompt": "^1.6.2",
     "electron-updater": "^4.6.2",
     "keytar": "^7.7.0"
   },
   "devDependencies": {
-    "electron": "^13.1.9",
-    "electron-builder": "^22.13.1"
+    "electron": "^16.0.5",
+    "electron-builder": "^22.14.12"
   }
 }

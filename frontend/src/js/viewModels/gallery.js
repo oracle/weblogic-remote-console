@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojbinddom'],
   function (oj, ko, HtmlUtils, PerspectiveManager, DataProviderManager, Runtime, CoreTypes, CoreUtils) {
@@ -34,9 +34,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         if (dataArray.length > 0) {
           dataArray.forEach((beanTree) => {
             const perspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
-            beanTree["iconFile"] = perspective.iconFiles["light"];
-            beanTree["content"] = { view: HtmlUtils.stringToNodeArray(oj.Translations.getTranslatedString(`wrc-gallery.cards.${beanTree.type}.description`))};
-            beanTree["provider"] = {id: dataProvider.id, name: dataProvider.name};
+            beanTree['iconFile'] = perspective.iconFiles['light'];
+            beanTree['content'] = { view: HtmlUtils.stringToNodeArray(oj.Translations.getTranslatedString(`wrc-gallery.cards.${beanTree.type}.description`))};
+            beanTree['provider'] = {id: dataProvider.id, name: dataProvider.name};
           });
         }
 
@@ -129,23 +129,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
           // Tell root router to navigate to the landing
           // page associated with the selected beanTree.
-          viewParams.parentRouter.go("/landing/" + value);
+          viewParams.parentRouter.go('/landing/' + value);
 
           // The Kiosk will more than likely just be in the
           // way going forward, so go ahead and collapse it.
-          viewParams.signaling.ancillaryContentAreaToggled.dispatch("gallery", false);
+          viewParams.signaling.ancillaryContentAreaToggled.dispatch('gallery', false);
         }
       };
 
       function getSelectedBeanTree(beanTreeType) {
         let beanTree;
-        const index = CoreUtils.getLastIndex(self.galleryItems(), "type", beanTreeType);
+        const index = CoreUtils.getLastIndex(self.galleryItems(), 'type', beanTreeType);
         if (index !== -1) beanTree = self.galleryItems()[index];
         return beanTree;
       }
 
       function signalDataProviderChanged(dataProvider) {
-        viewParams.signaling.beanTreeChanged.dispatch({type: "home", label: oj.Translations.getTranslatedString("wrc-content-area-header.toolbar.buttons.home.label"), provider: {id: dataProvider.id, name: dataProvider.name}});
+        viewParams.signaling.beanTreeChanged.dispatch({type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name}});
       }
 
     }

@@ -44,7 +44,7 @@ describe.only('Test Suite: interop_test for WTC Servers and Jolt Connection Pool
         async function () {
         file = "testWTCServer-1.png";
         try {
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","InteroperabilityChevron","WTC Servers",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","InteroperabilityChevron","WTC Servers",0);
             await driver.sleep(3600);
             await admin.createNewMBeanFromLandingPage(driver,"testWTCServer-1");
             await driver.sleep(3600);
@@ -68,11 +68,12 @@ describe.only('Test Suite: interop_test for WTC Servers and Jolt Connection Pool
             await admin.saveAndCommitChanges(driver);
             await driver.sleep(3600);
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","InteroperabilityChevron","WTC Servers",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","InteroperabilityChevron","WTC Servers",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"WTC Servers","testWTCServer-1",3);
             await driver.sleep(2400);
             await admin.commitChanges(driver);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -87,7 +88,7 @@ describe.only('Test Suite: interop_test for WTC Servers and Jolt Connection Pool
         async function () {
         file = "testJoltConnectionPools-1.png";
         try {
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","InteroperabilityChevron","Jolt Connection Pools",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","InteroperabilityChevron","Jolt Connection Pools",0);
             await driver.sleep(3600);
             await admin.createNewMBeanFromLandingPage(driver,"testJoltConnectionPools-1");
             await driver.sleep(3600);
@@ -117,11 +118,12 @@ describe.only('Test Suite: interop_test for WTC Servers and Jolt Connection Pool
             await admin.saveAndCommitChanges(driver);
             await driver.sleep(3600);
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","InteroperabilityChevron","Jolt Connection Pools",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","InteroperabilityChevron","Jolt Connection Pools",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Jolt Connection Pools","testJoltConnectionPools-1",2);
             await driver.sleep(2400);
             await admin.commitChanges(driver);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");

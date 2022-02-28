@@ -1,0 +1,32 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to specifies the platform logger and the associated level names set
+  through the WebLogic Server configuration.
+  </p>
+
+properties:
+  - name: "Log.PlatformLoggerLevels"
+helpTopics:
+  - label: "Administration Port and Administrative Channel "
+    href: "cnfgd/network.html#CNFGD168"
+    type: "edocs"
+  - label: "Understanding WebLogic Logging Services"
+    href: "wllog/logging_services.html"
+    type: "edocs"
+  - label: "Configuring java.util.logging Logger Levels"
+    href: "wllog/logging_services.html#WLLOG214"
+    type: "edocs"
+  - label: "Writing Messages to the WebLogic Server Log"
+    href: "logsv/writing.html"
+    type: "edocs"
+  - label: "Writing Debug Messages"
+    href: "logsv/writing.html#LOGSV167"
+    type: "edocs"
+  - label: "Specifying Severity Level for Loggers"
+    href: "wllog/config_logs.html#WLLOG156"
+    type: "edocs"
+  - label: "Redirecting JVM Output"
+    href: "wllog/config_logs.html#WLLOG163"
+    type: "edocs"

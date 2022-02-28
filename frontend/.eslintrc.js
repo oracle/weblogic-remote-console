@@ -31,6 +31,10 @@ module.exports = {
     "no-unused-vars": "off",
     "no-console": "off",
     "no-fallthrough": "off",
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "quotes": [
+      "error",
+      "single"
+    ]
   }
 };

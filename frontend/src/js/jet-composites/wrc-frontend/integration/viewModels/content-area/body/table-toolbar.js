@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojcheckboxset'],
   function (oj, ko, HtmlUtils, MessageDisplaying, Runtime, ChangeManager, PerspectiveMemoryManager, PageDefinitionUtils, ViewModelUtils, CoreTypes, CoreUtils, Logger) {
@@ -18,76 +18,76 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
       this.i18n = {
         buttons: {
-          "new": { id: "new", iconFile: "new-icon-blk_24x24", disabled: false,
-            label: oj.Translations.getTranslatedString("wrc-table-toolbar.buttons.new.label")
+          'new': { id: 'new', iconFile: 'new-icon-blk_24x24', disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.new.label')
           },
-          "write": { id: "write", iconFile: "write-wdt-model-blk_24x24", disabled: false, visible: ko.observable(true),
-            label: ko.observable(oj.Translations.getTranslatedString("wrc-common.buttons.write.label"))
+          'write': { id: 'write', iconFile: 'write-wdt-model-blk_24x24', disabled: false, visible: ko.observable(true),
+            label: ko.observable(oj.Translations.getTranslatedString('wrc-common.buttons.write.label'))
           },
-          "clone": { id: "clone", iconFile: "clone-icon-blk_24x24", disabled: true,
-            label: oj.Translations.getTranslatedString("wrc-table-toolbar.buttons.clone.label")
+          'clone': { id: 'clone', iconFile: 'clone-icon-blk_24x24', disabled: true,
+            label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.clone.label')
           },
-          "delete": { id: "delete", iconFile: "delete-icon-blk_24x24", disabled: true,
-            label: oj.Translations.getTranslatedString("wrc-table-toolbar.buttons.delete.label")
+          'delete': { id: 'delete', iconFile: 'delete-icon-blk_24x24', disabled: true,
+            label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.delete.label')
           }
         },
         icons: {
-          "landing": { iconFile: "home-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-table-toolbar.icons.landing.tooltip")
+          'landing': { iconFile: 'home-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.landing.tooltip')
           },
-          "history": { iconFile: "beanpath-history-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-table-toolbar.icons.history.tooltip")
+          'history': { iconFile: 'beanpath-history-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.history.tooltip')
           },
-          "instructions": { iconFile: "toggle-instructions-on-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-table-toolbar.icons.instructions.tooltip")
+          'instructions': { iconFile: 'toggle-instructions-on-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.instructions.tooltip')
           },
-          "help": { iconFile: "toggle-help-on-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-table-toolbar.icons.help.tooltip")
+          'help': { iconFile: 'toggle-help-on-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.help.tooltip')
           },
-          "sync": { iconFile: "sync-off-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-table-toolbar.icons.sync.tooltip"),
-            tooltipOn: oj.Translations.getTranslatedString("wrc-table-toolbar.icons.sync.tooltipOn")
+          'sync': { iconFile: 'sync-off-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.sync.tooltip'),
+            tooltipOn: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.sync.tooltipOn')
           },
-          "syncInterval": { iconFile: "sync-interval-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-table-toolbar.icons.syncInterval.tooltip")
+          'syncInterval': { iconFile: 'sync-interval-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.syncInterval.tooltip')
           },
-          "shoppingcart": { iconFile: "commit-to-cart-icon_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-table-toolbar.icons.shoppingcart.tooltip")
+          'shoppingcart': { iconFile: 'commit-to-cart-icon_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.shoppingcart.tooltip')
           }
         },
         menus: {
           shoppingcart: {
-            "view": { id: "view", iconFile: "", disabled: false, visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString("wrc-table-toolbar.menu.shoppingcart.view.label")
+            'view': { id: 'view', iconFile: '', disabled: false, visible: ko.observable(true),
+              label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.view.label')
             },
-            "discard": { id: "discard", iconFile: "discard-changes-blk_24x24", disabled: false, visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString("wrc-table-toolbar.menu.shoppingcart.discard.label")
+            'discard': { id: 'discard', iconFile: 'discard-changes-blk_24x24', disabled: false, visible: ko.observable(true),
+              label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.discard.label')
             },
-            "commit": { id: "commit", iconFile: "commit-changes-blk_24x24", disabled: false, visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString("wrc-table-toolbar.menu.shoppingcart.commit.label")
+            'commit': { id: 'commit', iconFile: 'commit-changes-blk_24x24', disabled: false, visible: ko.observable(true),
+              label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.commit.label')
             }
           }
         },
         instructions: {
-          "selectItems": {
-            value: oj.Translations.getTranslatedString("wrc-table-toolbar.instructions.selectItems.value", "{0}")
+          'selectItems': {
+            value: oj.Translations.getTranslatedString('wrc-table-toolbar.instructions.selectItems.value', '{0}')
           }
         },
         messages: {
-          "action": {
-            "cannotPerform": {
-              summary: oj.Translations.getTranslatedString("wrc-table-toolbar.messages.action.cannotPerform.summary"),
-              detail: oj.Translations.getTranslatedString("wrc-table-toolbar.messages.action.cannotPerform.detail", "{0}", "{1}")
+          'action': {
+            'cannotPerform': {
+              summary: oj.Translations.getTranslatedString('wrc-table-toolbar.messages.action.cannotPerform.summary'),
+              detail: oj.Translations.getTranslatedString('wrc-table-toolbar.messages.action.cannotPerform.detail', '{0}', '{1}')
             }
           }
         },
         labels: {
-          start: {value: oj.Translations.getTranslatedString("wrc-table-toolbar.labels.start.value")},
-          resume: {value: oj.Translations.getTranslatedString("wrc-table-toolbar.labels.resume.value")},
-          suspend: {value: oj.Translations.getTranslatedString("wrc-table-toolbar.labels.suspend.value")},
-          shutdown: {value: oj.Translations.getTranslatedString("wrc-table-toolbar.labels.shutdown.value")},
-          restartSSL: {value: oj.Translations.getTranslatedString("wrc-table-toolbar.labels.restartSSL.value")},
-          stop: {value: oj.Translations.getTranslatedString("wrc-table-toolbar.labels.stop.value")}
+          start: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.start.value')},
+          resume: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.resume.value')},
+          suspend: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.suspend.value')},
+          shutdown: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.shutdown.value')},
+          restartSSL: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.restartSSL.value')},
+          stop: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.stop.value')}
         }
       };
 
@@ -121,7 +121,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
         const isNonCreatableCollection = rdjData.self.kind === 'nonCreatableCollection';
 
-        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, isNonCreatableCollection || !["configuration","modeling"].includes(self.perspective.id));
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, isNonCreatableCollection || !['configuration','modeling'].includes(self.perspective.id));
         self.readonly(Runtime.isReadOnly());
 
         let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
@@ -131,17 +131,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           updateActionButtonsState(newRO);
         });
 
-        const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? "savenow" : "write"}.label`);
+        const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write'}.label`);
         self.i18n.buttons.write.label(label);
-        self.i18n.buttons.write.visible(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && ViewModelUtils.isElectronApiAvailable());
+        self.i18n.buttons.write.visible(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && ViewModelUtils.isElectronApiAvailable() && self.perspective.id === 'modeling');
 
         self.signalBindings.push(binding);
 
         // Get auto-sync interval from perspectiveMemory
         const syncInterval = self.perspectiveMemory.contentPage.syncInterval;
         if (syncInterval !== null) {
-          const ele = document.getElementById("sync-icon");
-          if (ele !== null) ele.setAttribute("data-interval", syncInterval);
+          const ele = document.getElementById('sync-icon');
+          if (ele !== null) ele.setAttribute('data-interval', syncInterval);
         }
 
         binding = viewParams.signaling.autoSyncCancelled.add(autoSyncCancelledCallback);
@@ -150,7 +150,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
         binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager) => {
           // For refresh event, issue a request to check then set the current state
-          if (eventType === "refresh") {
+          if (eventType === 'refresh') {
             ChangeManager.getLockState()
               .then((data) => {
                 self.changeManager(data.changeManager);
@@ -167,7 +167,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
             ChangeManager.putMostRecent(changeManager);
             self.changeManager(changeManager);
-            if (eventType === "discard") viewParams.onShoppingCartDiscarded();
+            if (eventType === 'discard') viewParams.onShoppingCartDiscarded();
           }
         });
 
@@ -217,38 +217,38 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
       };
 
       this.shoppingCartMenuClickListener = function (event) {
-        if (event.target.value === "view") {
-          viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", ChangeManager.Entity.SHOPPING_CART.name, true);
+        if (event.target.value === 'view') {
+          viewParams.signaling.tabStripTabSelected.dispatch('table-toolbar', ChangeManager.Entity.SHOPPING_CART.name, true);
         }
         else {
           switch (event.target.value){
-            case "commit":
-              ViewModelUtils.setCursorType("progress");
+            case 'commit':
+              ViewModelUtils.setCursorType('progress');
               ChangeManager.commitChanges()
                 .then((changeManager) => {
                   self.changeManager(changeManager);
-                  viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", ChangeManager.Entity.SHOPPING_CART.name, false);
+                  viewParams.signaling.tabStripTabSelected.dispatch('table-toolbar', ChangeManager.Entity.SHOPPING_CART.name, false);
                 })
                 .catch(response => {
                   ViewModelUtils.failureResponseDefaultHandling(response);
                 })
                 .finally(() => {
-                  ViewModelUtils.setCursorType("default");
+                  ViewModelUtils.setCursorType('default');
                 });
               break;
-            case "discard":
-              ViewModelUtils.setCursorType("progress");
+            case 'discard':
+              ViewModelUtils.setCursorType('progress');
               ChangeManager.discardChanges()
                 .then((changeManager) => {
                   self.changeManager(changeManager);
-                  viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", ChangeManager.Entity.SHOPPING_CART.name, false);
+                  viewParams.signaling.tabStripTabSelected.dispatch('table-toolbar', ChangeManager.Entity.SHOPPING_CART.name, false);
                   viewParams.onShoppingCartDiscarded();
                 })
                 .catch(response => {
                   ViewModelUtils.failureResponseDefaultHandling(response);
                 })
                 .finally(() => {
-                  ViewModelUtils.setCursorType("default");
+                  ViewModelUtils.setCursorType('default');
                 });
               break;
           }
@@ -256,14 +256,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
       }.bind(this);
 
-      this.isWdtTable = function() {
-        return viewParams.isWdtTable();
+      this.isShoppingCartVisible = function() {
+        return viewParams.isShoppingCartVisible();
       };
 
       function shoppingCartContentsChanged(changeManager) {
-        let ele = document.getElementById("shoppingCartImage");
+        let ele = document.getElementById('shoppingCartImage');
         if (ele !== null) {
-          ele.src = "js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-" + (changeManager.isLockOwner && changeManager.hasChanges ? "non-empty" : "empty") + "-tabstrip_24x24.png";
+          ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + (changeManager.isLockOwner && changeManager.hasChanges ? 'non-empty' : 'empty') + '-tabstrip_24x24.png';
         }
       }
 
@@ -332,17 +332,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
       this.syncIntervalClick = function (event) {
         // Get <img id="sync-icon"> DOM element
-        const ele = document.getElementById("sync-icon");
+        const ele = document.getElementById('sync-icon');
         // Get numeric representation of "data-interval"
         // attribute of DOM element.
-        const currentValue = parseInt(ele.getAttribute("data-interval"));
+        const currentValue = parseInt(ele.getAttribute('data-interval'));
         // Call function defined in table.js that returns a Promise, passing
         // in the numeric representation of current sync interval.
         viewParams.onSyncIntervalClicked(currentValue)
           .then((result) => {
             self.perspectiveMemory.contentPage.syncInterval = result.interval;
             // Update attributes of <img id="sync-icon"> DOM element
-            ele.setAttribute("data-interval", result.interval);
+            ele.setAttribute('data-interval', result.interval);
             let syncInterval = parseInt(result.interval);
             if (syncInterval > 0) {
               self.autoSyncEnabled(true);
@@ -360,9 +360,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
       function setAutoSyncIcon() {
         // Change tooltip to let end user know the state
-        let syncIconElement = document.getElementById("sync-icon");
-        if ((typeof syncIconElement !== "undefined") && (syncIconElement !== null))
-          syncIconElement.setAttribute("title", (self.autoSyncEnabled() ? self.i18n.icons.sync.tooltipOn : self.i18n.icons.sync.tooltip));
+        let syncIconElement = document.getElementById('sync-icon');
+        if ((typeof syncIconElement !== 'undefined') && (syncIconElement !== null))
+          syncIconElement.setAttribute('title', (self.autoSyncEnabled() ? self.i18n.icons.sync.tooltipOn : self.i18n.icons.sync.tooltip));
       }
 
       this.cancelAutoSync = function () {
@@ -382,11 +382,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
       };
 
       this.writeModelAction = function (event) {
-        viewParams.onWriteModelFile("download");
+        viewParams.onWriteModelFile('download');
       };
 
       this.actionsDialogButtonClicked = function (result) {
-        Logger.info(`[TABLE] okBtn was clicked, or ENTER key was pressed!`);
+        Logger.info('[TABLE] okBtn was clicked, or ENTER key was pressed!');
       };
 
       this.actionButtonClicked = function (event) {
@@ -395,25 +395,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           id: event.currentTarget.id,
           action: event.currentTarget.attributes['data-action'].value,
           title: label,
-          instructions: self.i18n.instructions.selectItems.value.replace("{0}", label),
+          instructions: self.i18n.instructions.selectItems.value.replace('{0}', label),
           label: label,
           isReadOnly: false
         };
 
-        viewParams.signaling.tabStripTabSelected.dispatch("table-toolbar", "shoppingcart", false);
-        const detail = self.i18n.messages.action.cannotPerform.detail.replace("{0}", dialogParams.label);
+        viewParams.signaling.tabStripTabSelected.dispatch('table-toolbar', 'shoppingcart', false);
+        const detail = self.i18n.messages.action.cannotPerform.detail.replace('{0}', dialogParams.label);
         if (self.autoSyncEnabled()) {
           MessageDisplaying.displayMessage({
             severity: 'confirmation',
             summary: self.i18n.messages.action.cannotPerform.summary,
-            detail:  detail.replace("{1}", self.i18n.icons.sync.tooltip)
+            detail:  detail.replace('{1}', self.i18n.icons.sync.tooltip)
           }, 3000);
           return false;
         }
 
         viewParams.onActionButtonClicked(dialogParams)
           .then((result) => {
-            ViewModelUtils.setCursorType("progress");
+            ViewModelUtils.setCursorType('progress');
             const pageDefinitionActions = viewParams.pageDefinitionActions();
             pageDefinitionActions.performActionOnChosenItems(result.chosenItems, result.urls)
               .then(replies => {
@@ -432,13 +432,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
                 }); // end-of forEach
                 const successes = replies.filter(reply => reply.succeeded);
                 if (successes.length > 0 && self.actionButtons.buttons[dialogParams.action].asynchronous) {
-                  self.syncClick({target: {attributes: {"data-interval": {
-                          value: "10"
+                  self.syncClick({target: {attributes: {'data-interval': {
+                          value: '10'
                         }}}});
                 }
                 else {
-                  self.syncClick({target: {attributes: {"data-interval": {
-                          value: "0"
+                  self.syncClick({target: {attributes: {'data-interval': {
+                          value: '0'
                         }}}});
                 }
               })
@@ -446,7 +446,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
                 ViewModelUtils.failureResponseDefaultHandling(response);
               })
               .finally(() => {
-                ViewModelUtils.setCursorType("default");
+                ViewModelUtils.setCursorType('default');
               });
 
           });
@@ -454,7 +454,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
       this.launchActionMenu = function(event) {
         event.preventDefault();
-        const menuId = event.target.id.replace("Launcher", "");
+        const menuId = event.target.id.replace('Launcher', '');
         document.getElementById(menuId).open(event);
       };
 

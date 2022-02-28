@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * Module containing core utility methods for the CFE
@@ -58,8 +58,8 @@ define(
           if (Array.isArray(value)) {
             result = (value.length === 0);
           }
-          else if (typeof value === "string") {
-            result = (value === "");
+          else if (typeof value === 'string') {
+            result = (value === '');
           }
         }
         return result;
@@ -82,7 +82,7 @@ define(
       },
       getValues: function(array, searchKey) {
         let values = [];
-        const results = array.filter(x => typeof x[searchKey] !== "undefined");
+        const results = array.filter(x => typeof x[searchKey] !== 'undefined');
         results.forEach((result) => {
           values.push(result[searchKey]);
         });
@@ -94,7 +94,7 @@ define(
         }
       },
       removeLineBreaks: (value) => {
-        return value.replace( /[\r\n]+/gm, "" );
+        return value.replace( /[\r\n]+/gm, '' );
       }
     };
 

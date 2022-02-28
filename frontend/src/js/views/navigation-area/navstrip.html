@@ -6,6 +6,10 @@ Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
 
   <div id="navstrip-header">
 
+    <div style="display: none;">
+      <img id="nodata-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.nodata.iconFile + '.png'}"/>
+    </div>
+
     <div id="navstrip-builtins" class="cfe-droppable">
       <oj-navigation-list 
         id="navstrip"
@@ -28,7 +32,7 @@ Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
         <template slot="noData">
           <div>
             <li id="nodata">
-              <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.nodata.iconFile + '.png'}"/>
+              <canvas id="nodata-canvas" width="48" height="48" data-bind="attr: {title: i18n.icons.nodata.tooltip}"></canvas>
             </li>
           </div>
         </template>

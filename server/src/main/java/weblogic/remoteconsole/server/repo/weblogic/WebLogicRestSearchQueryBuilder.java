@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -25,7 +25,7 @@ public class WebLogicRestSearchQueryBuilder {
 
   private static final Set<String> FIX_IDENTITIES_FIELDS = Set.of("type", "name", "identity");
 
-  private WeblogicRestBeanRepoSearchBuilder builder;
+  private WebLogicRestBeanRepoSearchBuilder builder;
 
   private WebLogicRestSearchQueryBuilder parent;
 
@@ -61,7 +61,7 @@ public class WebLogicRestSearchQueryBuilder {
   private boolean includeChanges = false;
 
   public WebLogicRestSearchQueryBuilder(
-    WeblogicRestBeanRepoSearchBuilder builder,
+    WebLogicRestBeanRepoSearchBuilder builder,
     BeanTypeDef typeDef,
     boolean fixIdentities
   ) {
@@ -71,7 +71,7 @@ public class WebLogicRestSearchQueryBuilder {
   }
 
   private WebLogicRestSearchQueryBuilder(
-    WeblogicRestBeanRepoSearchBuilder builder,
+    WebLogicRestBeanRepoSearchBuilder builder,
     BeanTypeDef typeDef,
     WebLogicRestSearchQueryBuilder parent
   ) {

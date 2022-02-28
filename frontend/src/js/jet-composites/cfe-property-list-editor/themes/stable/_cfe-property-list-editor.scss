@@ -1,0 +1,19 @@
+
+@import "oj/utilities/_oj.utilities.modules.scss";
+
+// You may import variables from JET like so:
+// @import "oj/core/themes/stable/_oj-core.cssvars.scss";
+// @import "oj/core/themes/stable/_oj-palette.cssvars.scss";
+
+// import the css common to all themes
+@import "../base/_cfe-property-list-editor.scss";
+
+// Even if this file is imported many times 'module-include-once' ensures the content is included just once .
+@include module-include-once("_cfe-property-list-editor.stable") {
+:root {
+  
+  // set your variables inside of :root, an example:
+  //  --cfe-property-list-editor-value-text-color: var(--oj-palette-red-140);
+
+}
+} 

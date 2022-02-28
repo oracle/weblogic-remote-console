@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.backend.build;
@@ -25,6 +25,7 @@ import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyExternalHelpDef;
 import weblogic.remoteconsole.common.repodef.SliceDef;
 import weblogic.remoteconsole.common.repodef.SliceFormDef;
+import weblogic.remoteconsole.common.repodef.SliceTableDef;
 import weblogic.remoteconsole.common.repodef.TableActionDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicLocalizationUtils;
@@ -75,7 +76,7 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
         WebLogicMBeansVersion mbeansVersion =
           WebLogicMBeansVersions.getVersion(
             weblogicVersion,
-            true // supports security warnings
+            weblogicVersion.getCurrentPSU()
           );
         (new EnglishResourceBundleCreator(mbeansVersion, bundleDir)).create();
       }
@@ -131,6 +132,8 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
     processHelpTopicDefs(pageDef.getHelpTopicDefs());
     if (pageDef.isSliceFormDef()) {
       processSliceFormDef(pageDef.asSliceFormDef());
+    } else if (pageDef.isSliceTableDef()) {
+      processSliceTableDef(pageDef.asSliceTableDef());
     } else if (pageDef.isCreateFormDef()) {
       processCreateFormDef(pageDef.asCreateFormDef());
     } else if (pageDef.isTableDef()) {
@@ -149,6 +152,10 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
   private void processSliceFormDef(SliceFormDef sliceFormDef) {
     processPagePropertyDefs(sliceFormDef.getAllPropertyDefs());
     processSectionDefs(sliceFormDef.getAllSectionDefs());
+  }
+
+  private void processSliceTableDef(SliceTableDef sliceTableDef) {
+    processPagePropertyDefs(sliceTableDef.getAllPropertyDefs());
   }
 
   private void processCreateFormDef(CreateFormDef createFormDef) {
@@ -207,8 +214,6 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
 
   @Override
   protected void processTypeDef(BeanTypeDef typeDef) {
-    addResourceDefinition(typeDef.getTypeNameLabel());
-    addResourceDefinition(typeDef.getInstanceNameLabel());
     for (BeanChildDef childDef : typeDef.getChildDefs()) {
       addResourceDefinition(childDef.getLabel());
     }
@@ -234,7 +239,10 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
   @Override
   protected void processLinkDef(LinkDef linkDef) {
     addResourceDefinition(linkDef.getLabel());
-    addResourceDefinition(linkDef.getNotFoundMessage());
+    LocalizableString nfm = linkDef.getNotFoundMessage();
+    if (nfm != null) {
+      addResourceDefinition(linkDef.getNotFoundMessage());
+    }
   }
 
   private void addResourceDefinition(LocalizableString localizableString) {

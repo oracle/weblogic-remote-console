@@ -20,7 +20,7 @@
   -->
   <!-- This is the main css file for the default theme -->
   <!-- injector:theme -->
-  <link rel="stylesheet" href="css/libs/oj/v10.1.0/redwood/oj-redwood-min.css" type="text/css"/>
+  <link rel="stylesheet" href="css/redwood/11.1.2/web/redwood.css/redwood.min.css" type="text/css"/>
   <!-- endinjector -->
 
   <link href="js/jet-composites/wrc-frontend/1.0.0/css/fonts/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet"/>
@@ -32,24 +32,24 @@
 
 <body>
 
-<div id="globalBody" data-runtime-role="app">
+<div id="globalBody">
   <header class="oj-applayout-fixed-top">
     <oj-module config="[[headerModuleConfig]]"></oj-module>
   </header>
 
-  <div id="middle-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
+  <div id="middle-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap" data-runtime-role="app">
     <oj-module config='[[navStripModuleConfig]]'></oj-module>
 
     <div id="spa-resizer" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
-      <div id="navtree-container" class="oj-flex-item">
+      <div id="navtree-container">
         <div class="left_panel">
-          <oj-bind-dom config="[[navtreeDialog.html]]"></oj-bind-dom>
+          <oj-bind-dom config="[[navtree.html]]"></oj-bind-dom>
         </div>
       </div>
 
       <div id="content-area-container" class="right_panel oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
         <!-- row 1 -->
-        <div id="content-area-header" class="oj-flex-item">
+        <div id="content-area-header">
           <oj-module config="[[contentAreaHeaderModuleConfig]]"></oj-module>
         </div>
 

@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-provider', 'wrc-frontend/microservices/connection-management/domain-connection-manager', 'wrc-frontend/apis/data-operations', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function (parser, IdGenerator, DataProvider, DomainConnectionManager, DataOperations, Runtime, CoreTypes, CoreUtils, Logger) {
@@ -63,9 +63,9 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         }
 
         const dataProvider = addDataProvider({id: entry.id, name: entry.name, type: entry.type, beanTrees: entry.beanTrees});
-        if (CoreUtils.isNotUndefinedNorNull(entry.url)) dataProvider["url"] = entry.url;
-        if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider["username"] = entry.username;
-        if (CoreUtils.isNotUndefinedNorNull(entry.password)) dataProvider["password"] = entry.password;
+        if (CoreUtils.isNotUndefinedNorNull(entry.url)) dataProvider['url'] = entry.url;
+        if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider['username'] = entry.username;
+        if (CoreUtils.isNotUndefinedNorNull(entry.password)) dataProvider['password'] = entry.password;
         return dataProvider;
       },
       /**
@@ -81,7 +81,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         else {
           const response = {
             failureType: CoreTypes.FailureType.UNEXPECTED,
-            failureReason: new Error("Required parameter is missing or null: 'id'")
+            failureReason: new Error('Required parameter is missing or null: \'id\'')
           };
           return Promise.reject(response);
         }
@@ -95,7 +95,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         return new Promise((resolve, reject) => {
           const result = {succeeded: false};
           if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
-            if (dataProvider.state === "connected") {
+            if (dataProvider.state === 'connected') {
               DomainConnectionManager.removeConnection(dataProvider)
                 .then(reply => {
                   removeDataProviderById(dataProvider.id);
@@ -104,7 +104,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
                   resolve(result);
                 })
                 .catch(response => {
-                  result["failure"] = response;
+                  result['failure'] = response;
                   reject(result);
                 });
             }
@@ -116,9 +116,9 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
             }
           }
           else {
-            result["failure"] = {
+            result['failure'] = {
               failureType: CoreTypes.FailureType.UNEXPECTED,
-              failureReason: new Error("Required parameter is missing or null: 'id'")
+              failureReason: new Error('Required parameter is missing or null: \'id\'')
             };
             reject(result);
           }
@@ -138,8 +138,8 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         }
 
         const dataProvider = addDataProvider({id: entry.id, name: entry.name, type: DataProvider.prototype.Type.MODEL.name, beanTrees: entry.beanTrees});
-        if (CoreUtils.isNotUndefinedNorNull(entry.file)) dataProvider["file"] = entry.file;
-        if (CoreUtils.isNotUndefinedNorNull(entry.fileContents)) dataProvider["fileContents"] = entry.fileContents;
+        if (CoreUtils.isNotUndefinedNorNull(entry.file)) dataProvider['file'] = entry.file;
+        if (CoreUtils.isNotUndefinedNorNull(entry.fileContents)) dataProvider['fileContents'] = entry.fileContents;
         return dataProvider;
       },
       /**
@@ -166,7 +166,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
        */
       getWDTModelContent: function(data, mediaType) {
         return new Promise((resolve, reject) => {
-          if (!mediaType || mediaType === "") mediaType = "application/x-yaml";
+          if (!mediaType || mediaType === '') mediaType = 'application/x-yaml';
           const reply = {
             body: {
               messages: []
@@ -178,31 +178,42 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
           // support JSON format, so the contents of a .yaml WDT
           // model needs to be converted to JSON before doing a
           // multipart POST.
-          if (mediaType.indexOf("yaml") !== -1) {
+          if (mediaType.indexOf('yaml') !== -1) {
             try {
-              reply.body["data"] = parser.load(data);
+              reply.body['data'] = parser.load(data);
               resolve(reply);
             }
             catch(err) {
-              reply["failureType"] = CoreTypes.FailureType.UNEXPECTED;
-              reply["failureReason"] = err;
+              reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+              reply['failureReason'] = err;
               reject(reply);
             }
           }
-          else if (mediaType.indexOf("json") !== -1) {
+          else if (mediaType.indexOf('json') !== -1) {
             try {
-              reply.body["data"] = JSON.parse(data);
+              reply.body['data'] = JSON.parse(data);
               resolve(reply);
             }
             catch(err) {
-              reply["failureType"] = CoreTypes.FailureType.UNEXPECTED;
-              reply["failureReason"] = err;
+              reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+              reply['failureReason'] = err;
+              reject(reply);
+            }
+          }
+          else if (mediaType.indexOf('plain') !== -1) {
+            try {
+              reply.body['data'] = { contents: data };
+              resolve(reply);
+            }
+            catch(err) {
+              reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+              reply['failureReason'] = err;
               reject(reply);
             }
           }
           else {
-            reply["failureType"] = CoreTypes.FailureType.UNEXPECTED;
-            reply["failureReason"] = new Error(`Unsupported media type: ${mediaType}`);
+            reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+            reply['failureReason'] = new Error(`Unsupported media type: ${mediaType}`);
             reject(reply);
           }
         });
@@ -225,7 +236,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
                   resolve(result);
                 })
                 .catch(response => {
-                  result["failure"] = response;
+                  result['failure'] = response;
                   reject(result);
                 });
             }
@@ -237,9 +248,96 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
             }
           }
           else {
-            result["failure"] = {
+            result['failure'] = {
               failureType: CoreTypes.FailureType.UNEXPECTED,
-              failureReason: new Error("Required parameter is missing or null: 'id'")
+              failureReason: new Error('Required parameter is missing or null: \'id\'')
+            };
+            reject(result);
+          }
+        });
+      },
+      /**
+       * <p><b>DON'T CALL THIS FUNCTION INSIDE A LOOP OR WHILE STATEMENT!!</b></p>
+       * @param {{id?: string, name: string, type: string, models?: [string], beanTrees?: [BeanTree]}} entry
+       * @returns {DataProvider}
+       */
+      createWDTCompositeModel: function(entry) {
+        if (CoreUtils.isUndefinedOrNull(entry.id)) {
+          if (!IdGenerator.exists(DataProvider.prototype.Type.COMPOSITE.name)) {
+            IdGenerator.create(DataProvider.prototype.Type.COMPOSITE.name);
+          }
+          entry.id = `${IdGenerator.getNextId(DataProvider.prototype.Type.COMPOSITE.name)}`;
+        }
+
+        const dataProvider = addDataProvider({id: entry.id, name: entry.name, type: entry.type, beanTrees: entry.beanTrees});
+        if (CoreUtils.isNotUndefinedNorNull(entry.modelProviders)) dataProvider['modelProviders'] = entry.modelProviders;
+        if (CoreUtils.isNotUndefinedNorNull(entry.models)) dataProvider['models'] = entry.models;
+        return dataProvider;
+      },
+      /**
+       * Activate the WDT Composite Model dataprovider
+       * @param {DataProvider} dataProvider
+       * @returns {Promise<{succeeded: boolean, data: any, failure?: any}>}
+       */
+      activateWDTCompositeModel: function(dataProvider) {
+        return new Promise((resolve, reject) => {
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            DataOperations.composite.createComposite(dataProvider)
+              .then(reply => {
+                DataOperations.composite.useComposite(dataProvider)
+                  .then(reply => {
+                     resolve(reply);
+                  })
+                  .catch(response => {
+                    reject(response);
+                  });
+              })
+              .catch(response => {
+                reject(response);
+              });
+          }
+          else {
+            const response = {
+              failureType: CoreTypes.FailureType.UNEXPECTED,
+              failureReason: new Error('Required parameter is missing or null: \'dataProvider\'')
+            };
+            reject(response);
+          }
+        });
+      },
+      /**
+       * Remove the WDT Composite Model dataprovider
+       * @param {DataProvider} dataProvider
+       * @returns {Promise<{succeeded: boolean, data: any, failure?: any}>}
+       */
+      removeWDTCompositeModel: function(dataProvider) {
+        return new Promise((resolve, reject) => {
+          const result = {succeeded: false};
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+              DataOperations.composite.removeComposite(dataProvider.id)
+                .then(reply => {
+                  removeDataProviderById(dataProvider.id);
+                  result.succeeded = true;
+                  result.data = dataProvider;
+                  resolve(result);
+                })
+                .catch(response => {
+                  result['failure'] = response;
+                  reject(result);
+                });
+             }
+             else {
+              removeDataProviderById(dataProvider.id);
+              result.succeeded = true;
+              result.data = dataProvider;
+              resolve(result);
+             }
+          }
+          else {
+            result['failure'] = {
+              failureType: CoreTypes.FailureType.UNEXPECTED,
+              failureReason: new Error('Required parameter is missing or null: \'dataProvider\'')
             };
             reject(result);
           }
@@ -261,10 +359,10 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
                 const index = dataproviders.map(item => item.id).indexOf(listItem.id);
                 if (index !== -1) {
                   listItem.state = listItem.state || CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-                  dataproviders[index].putValue("state", listItem.state);
-                  dataproviders[index].putValue("connectivity", listItem.connectivity || CoreTypes.Console.RuntimeMode.DETACHED.name);
+                  dataproviders[index].putValue('state', listItem.state);
+                  dataproviders[index].putValue('connectivity', listItem.connectivity || CoreTypes.Console.RuntimeMode.DETACHED.name);
                   if (listItem.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
-                    dataproviders[index].putValue("activationDatetime", new Date());
+                    dataproviders[index].putValue('activationDatetime', new Date());
                   }
                   dataProvider = dataproviders[index];
                 } 
@@ -278,11 +376,11 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
                   const nextId = this.getNextDataProviderId(dataProviderType);
 
                   dataProvider = addDataProvider({
-                    id: nextId["id"],
+                    id: nextId['id'],
                     name: listItem.name,
                     type: listItem.providerType
                   });
-                  dataProvider.putValue("index", nextId.index);
+                  dataProvider.putValue('index', nextId.index);
                   dataProvider.populateFromResponse(listItem);
                 }
               });
@@ -309,6 +407,12 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
               IdGenerator.create(DataProvider.prototype.Type.MODEL.name);
             }
             nextId = IdGenerator.getNextId(DataProvider.prototype.Type.MODEL.name);
+            break;
+          case DataProvider.prototype.Type.COMPOSITE:
+            if (!IdGenerator.exists(DataProvider.prototype.Type.COMPOSITE.name)) {
+              IdGenerator.create(DataProvider.prototype.Type.COMPOSITE.name);
+            }
+            nextId = IdGenerator.getNextId(DataProvider.prototype.Type.COMPOSITE.name);
             break;
         }
         return nextId;

@@ -1,0 +1,28 @@
+# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p> Displays the potential security validation warnings for this domain.
+  The list is similar to those displayed during server startup when secure mode validation is performed.</p>
+  <p> The validation warnings are cached for each server in the domain.
+  This cache is refreshed on a scheduled basis every 24 hours.</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.DomainSecurityRuntimeMBeanCustomizer.getSecurityWarningsSliceTableRows
+
+displayedColumns:
+- name: "Id"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The id of the security validation warning."
+- name: "Description"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The description of the security validation warning."
+- name: "Server"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The server to which the security validation warning applies."
+- name: "Cluster"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The cluster of the server to which the security validation warning applies."

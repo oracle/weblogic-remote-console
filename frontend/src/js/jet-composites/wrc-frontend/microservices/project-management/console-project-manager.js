@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 /**
  * Module used to manage console projects.
@@ -22,8 +22,8 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
         switch(item.type) {
           case DataProvider.prototype.Type.ADMINSERVER.name: {
             dataProvider = DataProviderManager.createAdminServerConnection({id: item.id, name: item.name, type: item.type, beanTrees: item.beanTrees || []  });
-            if (CoreUtils.isNotUndefinedNorNull(item.url)) dataProvider.putValue("url", item.url);
-            if (CoreUtils.isNotUndefinedNorNull(item.username)) dataProvider.putValue("username", item.username);
+            if (CoreUtils.isNotUndefinedNorNull(item.url)) dataProvider.putValue('url', item.url);
+            if (CoreUtils.isNotUndefinedNorNull(item.username)) dataProvider.putValue('username', item.username);
                  // FortifyIssueSuppression(5460A0BE8736B50C89F23670FA32C4AE) Password Management: Password in Comment
                  // Just the name of a variable
 //MLW            if (CoreUtils.isNotUndefinedNorNull(item.password)) dataProvider.putValue("password", item.password);
@@ -31,10 +31,10 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
             // this domain connection data provider is from
             // a saved project, which was loaded.
             if (CoreUtils.isNotUndefinedNorNull(item.state)) {
-              dataProvider.putValue("state", item.state);
+              dataProvider.putValue('state', item.state);
             }
             else {
-              dataProvider.putValue("state", CoreTypes.Domain.ConnectState.DISCONNECTED.name);
+              dataProvider.putValue('state', CoreTypes.Domain.ConnectState.DISCONNECTED.name);
             }
             project.dataProviders[index] = dataProvider;
           }
@@ -42,31 +42,55 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
           case DataProvider.prototype.Type.MODEL.name: {
             dataProvider = DataProviderManager.createWDTModel({id: item.id, name: item.name, type: item.type, beanTrees: item.beanTrees || [] });
             if (CoreUtils.isNotUndefinedNorNull(item.fileContents)) {
-              if (typeof item.fileContents === "string") {
-                dataProvider.putValue("fileContents", JSON.parse(item.fileContents));
+              if (typeof item.fileContents === 'string') {
+                dataProvider.putValue('fileContents', JSON.parse(item.fileContents));
               }
               else {
-                dataProvider.putValue("fileContents", item.fileContents);
+                dataProvider.putValue('fileContents', item.fileContents);
               }
             }
-            if (CoreUtils.isNotUndefinedNorNull(item.file)) dataProvider.putValue("file", item.file);
+            if (CoreUtils.isNotUndefinedNorNull(item.file)) dataProvider.putValue('file', item.file);
             // Use connectivity="DETACHED" as an indicator
             // that this WDT data provider is from a saved
             // project, which was loaded.
             if (CoreUtils.isNotUndefinedNorNull(item.connectivity)) {
-              dataProvider.putValue("connectivity", item.connectivity);
+              dataProvider.putValue('connectivity', item.connectivity);
             }
             else {
-              dataProvider.putValue("connectivity", CoreTypes.Console.RuntimeMode.DETACHED.name);
+              dataProvider.putValue('connectivity', CoreTypes.Console.RuntimeMode.DETACHED.name);
             }
             // Use state="disconnected" as an indicator that
             // this domain connection data provider is from
             // a saved project, which was loaded.
             if (CoreUtils.isNotUndefinedNorNull(item.state)) {
-              dataProvider.putValue("state", item.state);
+              dataProvider.putValue('state', item.state);
             }
             else {
-              dataProvider.putValue("state", CoreTypes.Domain.ConnectState.DISCONNECTED.name);
+              dataProvider.putValue('state', CoreTypes.Domain.ConnectState.DISCONNECTED.name);
+            }
+            project.dataProviders[index] = dataProvider;
+          }
+            break;
+          case DataProvider.prototype.Type.COMPOSITE.name: {
+            dataProvider = DataProviderManager.createWDTCompositeModel({id: item.id, name: item.name, type: item.type, beanTrees: item.beanTrees || [] });
+            if (CoreUtils.isNotUndefinedNorNull(item.models)) dataProvider.putValue('models', item.models);
+            // Use connectivity="DETACHED" as an indicator
+            // that this WDT composite provider is from a saved
+            // project, which was loaded.
+            if (CoreUtils.isNotUndefinedNorNull(item.connectivity)) {
+              dataProvider.putValue('connectivity', item.connectivity);
+            }
+            else {
+              dataProvider.putValue('connectivity', CoreTypes.Console.RuntimeMode.DETACHED.name);
+            }
+            // Use state="disconnected" as an indicator that
+            // this domain connection data provider is from
+            // a saved project, which was loaded.
+            if (CoreUtils.isNotUndefinedNorNull(item.state)) {
+              dataProvider.putValue('state', item.state);
+            }
+            else {
+              dataProvider.putValue('state', CoreTypes.Domain.ConnectState.DISCONNECTED.name);
             }
             project.dataProviders[index] = dataProvider;
           }
@@ -118,6 +142,8 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
             return DataProviderManager.removeAdminServerConnection(dataProvider);
           case DataProvider.prototype.Type.MODEL.name:
             return DataProviderManager.removeWDTModel(dataProvider);
+          case DataProvider.prototype.Type.COMPOSITE.name:
+            return DataProviderManager.removeWDTCompositeModel(dataProvider);
         }
       }
 
@@ -182,20 +208,20 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
         else {
           return Promise.resolve({
             succeeded: false,
-            data: CfeErrors.InvalidParameterError("Required parameter is missing or null: 'id'")
+            data: CfeErrors.InvalidParameterError('Required parameter is missing or null: \'id\'')
           });
         }
       },
 
       removeByName: async function(name) {
-        if (name === "(unnamed)") name = "(Unnamed Project)";
+        if (name === '(unnamed)') name = '(Unnamed Project)';
         if (CoreUtils.isNotUndefinedNorNull(name)) {
           return removeProjectByName(name);
         }
         else {
           return Promise.resolve({
             succeeded: false,
-            data: CfeErrors.InvalidParameterError("Required parameter is missing or null: 'id'")
+            data: CfeErrors.InvalidParameterError('Required parameter is missing or null: \'id\'')
           });
         }
       },
@@ -251,7 +277,7 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
        * @returns {ConsoleProject|undefined}
        */
       getByName: function(name) {
-        if (name === "(unnamed)") name = "(Unnamed Project)";
+        if (name === '(unnamed)') name = '(Unnamed Project)';
         return projects.find(project => project.name === name);
       },
 
@@ -266,7 +292,7 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
       getProjectId: function(name) {
         let projectId;
 
-        if (name === "(unnamed)") name = "(Unnamed Project)";
+        if (name === '(unnamed)') name = '(Unnamed Project)';
 
         for (const index in projects) {
           // Ensure uniqueness of id property, for all known
@@ -283,7 +309,7 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
       },
 
       renameProject: function (oldName, newName) {
-        if (oldName === "(unnamed)") oldName = "(Unnamed Project)";
+        if (oldName === '(unnamed)') oldName = '(Unnamed Project)';
         const index = projects.map(item => item.name).indexOf(oldName);
         if (index !== -1) {
           projects[index].name = newName;
@@ -291,10 +317,10 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
       },
 
       createFromEntry: function(entry) {
-        if (entry.name === "(unnamed)") entry.name = "(Unnamed Project)";
-        entry["id"] = this.getProjectId(entry.name);
-        entry["isDefault"] = true;
-        if (CoreUtils.isUndefinedOrNull(entry.dataProviders)) entry["dataProviders"] = [];
+        if (entry.name === '(unnamed)') entry.name = '(Unnamed Project)';
+        entry['id'] = this.getProjectId(entry.name);
+        entry['isDefault'] = true;
+        if (CoreUtils.isUndefinedOrNull(entry.dataProviders)) entry['dataProviders'] = [];
         let dataProviderType;
         // We know all the data providers, so go ahead and
         // generate the ids for them. We do this by calling
@@ -307,7 +333,7 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
             entry.dataProviders[i].id = `${DataProviderManager.getNextDataProviderId(dataProviderType) + i}`;
           }
         }
-        if (CoreUtils.isUndefinedOrNull(entry.filename)) entry["filename"] = null;
+        if (CoreUtils.isUndefinedOrNull(entry.filename)) entry['filename'] = null;
         const project = createProject(entry);
         addProject(project);
         return project;

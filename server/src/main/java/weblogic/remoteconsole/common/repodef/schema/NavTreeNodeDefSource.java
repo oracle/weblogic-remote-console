@@ -33,6 +33,7 @@ public class NavTreeNodeDefSource {
   private StringValue child = new StringValue();
   private StringValue label = new StringValue();
   private ListValue<NavTreeNodeDefSource> contents = new ListValue<>();
+  private Value<RolesDefSource> roles = new Value<>(null);
 
   // The type of the nav tree node.
   public Type getType() {
@@ -85,5 +86,23 @@ public class NavTreeNodeDefSource {
 
   public void addContent(NavTreeNodeDefSource value) {
     contents.add(value);
+  }
+
+  // The roles that are allowed to view this node.
+  // Here are the combinations:
+  // 1) roles specified, group node:
+  //      visible if the user is in one of the roles
+  // 2) roles specified, child node
+  //      visible if the user is in one of the roles AND the user is allowed to view the child
+  // 3) roles not specified, group node:
+  //      visible
+  // 4) roles not specified, child node
+  //      visible if the user is allowed to view the child
+  public RolesDefSource getRoles() {
+    return roles.getValue();
+  }
+
+  public void setRoles(RolesDefSource value) {
+    roles.setValue(value);
   }
 }

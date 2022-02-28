@@ -138,31 +138,31 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
             //Delete TestServer-1, TestServerTemplate-1, TestCluster-1, TestVituralHost-1, TestSingleton-1,
             // TestCoherenceCluster-1
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Servers","TestServer-1",5);
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Server Templates",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Server Templates",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Server Templates","TestServerTemplate-1",2);
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Machines",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Machines",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Machines","TestMachine-1",3);
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Clusters",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Clusters",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Clusters","TestCluster-1",3);
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Virtual Hosts",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Virtual Hosts",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Virtual Hosts","TestVirtualHost-1",1);
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Singleton Services",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Singleton Services",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Singleton Services","TestSingleton-1",2);
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Coherence Cluster System Resources",5);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Coherence Cluster System Resources",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Coherence Cluster System Resources","TestCoherenceCluster-1",1);
 

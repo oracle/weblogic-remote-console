@@ -1,0 +1,147 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+instanceName: ServerRuntime
+
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.management.runtime.RunningServerRuntimeMBean
+  value: RunningServerRuntime
+- type: weblogic.management.runtime.NotRunningServerRuntimeMBean
+  value: NotRunningServerRuntime
+
+properties:
+- name: State
+  legalValues:
+  - value: ACTIVATE_LATER
+    label: Activate later
+  - value: ADMIN
+    label: Admin
+  - value: DISCOVERED
+    label: Discovered
+  - value: FAILED
+    label: Failed
+  - value: FAILED_MIGRATABLE
+    label: Failed, migratable
+  - value: FAILED_NOT_RESTARTABLE
+    label: Failed, not restartable
+  - value: FAILED_RESTARTING
+    label: Failed, restarting
+  - value: FORCE_SHUTTING_DOWN
+    label: Force shutting down
+  - value: FORCE_SUSPENDING
+    label: Force suspending
+  - value: RESTART_REQUIRED
+    label: Restart required
+  - value: RESUMING
+    label: Resuming
+  - value: RUNNING
+    label: Running
+  - value: SHUTDOWN
+    label: Shutdown
+  - value: SHUTDOWN_IN_PROCESS
+    label: Shutdown in progress
+  - value: SHUTDOWN_PENDING
+    label: Shutdown pending
+  - value: SHUTTING_DOWN
+    label: Shutting down
+  - value: STANDBY
+    label: Standby
+  - value: STARTING
+    label: Starting
+  - value: SUSPENDING
+    label: Suspending
+  - value: UNKNOWN
+    label: Unknown
+  - value: NOT_RUNNING
+    label: Not running, click for more info
+
+actions:
+
+- name: "start"
+  label: "Start"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.start
+  definition:
+    type: "void"
+  usedIf:
+    property: "State"
+    values:
+    - "NOT_RUNNING"
+
+- name: "resume"
+  label: "Resume"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.resume
+  definition:
+    type: "void"
+  usedIf:
+    property: "State"
+    values:
+    - "STANDBY"
+    - "ADMIN"
+
+- name: "suspend"
+  label: "Suspend when work completes"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.suspend
+  definition:
+    type: "void"
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"
+
+- name: "forceSuspend"
+  label: "Force suspend now"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceSuspend
+  definition:
+    type: "void"
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"
+
+- name: "gracefulShutdown"
+  label: "Shutdown when work completes"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.gracefulShutdown
+  definition:
+    type: "void"
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"
+    - "STANDBY"
+    - "ADMIN"
+
+- name: "forceShutdown"
+  label: "Force shutdown now"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceShutdown
+  definition:
+    type: "void"
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"
+    - "SUSPENDING"
+    - "STARTING"
+    - "SHUTTING_DOWN"
+    - "SHUTDOWN_IN_PROCESS"
+    - "STANDBY"
+    - "ADMIN"
+    - "FAILED"
+    - "SUSPENDING"
+
+- name: "restartSSL"
+  label: "Restart SSL"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.restartSSL
+  definition:
+    type: "void"
+    # If we don't customize restartSSL's roles, it will inherit CombinedServerRuntimeMBean's
+    # roles which would allow Operator and Admin.
+    # However, restartSSL delegates to ServerRunimeMBean.restartSSLChannels which can only be accessed by Admin.
+    # So, customize restartSSL's roles to only allow Admin.
+    roles:
+      allowed:
+      - Admin
+  usedIf:
+    property: "State"
+    values:
+    - "RUNNING"

@@ -8,13 +8,14 @@ define({
         "connectivity": {
           "online": {"tooltip": "Online"},
           "offline": {"tooltip": "Offline"},
-          "detached": {"tooltip": "Detached"}
+          "detached": {"tooltip": "Detached"},
+          "unattached": {"tooltip": "Unattached"}
         }
       }
     },
     "wrc-footer": {
       "text": {
-        "copyrightLegal": "Copyright © 2020, 2021, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
+        "copyrightLegal": "Copyright © 2020, 2022, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
         "builtWith": "Built with Oracle JET"
       }
     },
@@ -35,6 +36,10 @@ define({
         "models": {
           "name": {"value": "WDT Model Provider Name"},
           "file": {"value": "WDT Model Filename"}
+        },
+        "composite": {
+          "name": {"value": "WDT Composite Model Provider Name"},
+          "providers": {"value": "WDT Models"}
         },
         "project": {
           "name": {"value": "Project Name"},
@@ -63,18 +68,22 @@ define({
           },
           "model": {
             "file": {"label": "File:"}
+          },
+          "composite": {
+            "models": {"label": "Models:"}
           }
         }
       },
       "menus": {
         "connections": {
-          "add": {"value": "Add Admin Server Connection Provider"},
-          "add1": {"value": "Create Provider for Admin Server Connection"}
+          "add": {"value": "Add Admin Server Connection Provider"}
         },
         "models": {
           "add": {"value": "Add WDT Model File Provider"},
-          "add1": {"value": "Create Provider for Existing WDT Model File"},
           "new": {"value": "Create Provider for New WDT Model File"}
+        },
+        "composite": {
+          "add": {"value": "Add WDT Composite Model File Provider"}
         },
         "providers": {
           "sort": {"value": "Sort by Provider Type"}
@@ -108,6 +117,10 @@ define({
           "new": {"value": "Enter provider name and filename for new WDT model file, then click icon to pick directory to save file in."},
           "edit": {"value": "Modify settings for model file provider. Click icon to browse for model file."}
         },
+        "composite": {
+          "add": {"value": "Enter new name and select an ordered list of models for the composite model provider."},
+          "edit": {"value": "Modify settings for the composite model provider. Use an ordered list of models."}
+        },
         "project": {
           "export": {"value": "Enter settings for project."},
           "import": {"value": "Click download icon to browse for project."}
@@ -119,14 +132,16 @@ define({
       "titles": {
         "add": {
           "connections": {"value": "Create Provider for Admin Server Connection"},
-          "models": {"value": "Create Provider for Existing WDT Model File"}
+          "models": {"value": "Create Provider for Existing WDT Model File"},
+          "composite": {"value": "Create Provider for New WDT Composite Model"}
         },
         "new": {
           "models": {"value": "Create Provider for New WDT Model File"}
         },
         "edit": {
           "connections": {"value": "Edit Admin Server Connection Provider"},
-          "models": {"value": "Edit WDT Model File Provider"}
+          "models": {"value": "Edit WDT Model File Provider"},
+          "composite": {"value": "Edit WDT Composite Model Provider"}
         },
         "export": {
           "project": {"value": "Export Providers to Project"}
@@ -163,9 +178,20 @@ define({
             "detail": "Unable to use '{0}' provider item."
           }
         },
+        "upload": {
+          "failed": {
+            "detail": "Unable to load the WDT model file: {0}"
+          }
+        },
         "response": {
           "nameAlreadyExist": {
             "detail": "Provider named '{0}' is already in this project"
+          },
+          "modelsNotFound": {
+            "detail": "Unable to find the configured WDT models '{0}'"
+          },
+          "selectModels": {
+            "detail": "In order to select the WDT Composite, first select all of the WDT Models used by the WDT Composite."
           }
         }
       },
@@ -183,7 +209,8 @@ define({
         "configuration": {"tooltip": "Edit Tree"},
         "view": {"tooltip": "Configuration View Tree"},
         "monitoring": {"tooltip": "Monitoring Tree"},
-        "modeling": {"tooltip": "WDT Model"}
+        "modeling": {"tooltip": "WDT Model"},
+        "composite": {"tooltip": "WDT Composite Model"}
       }
     },
     "wrc-content-area-header": {
@@ -192,7 +219,8 @@ define({
         "configuration": "Edit Tree",
         "view": "Configuration View Tree",
         "monitoring": "Monitoring Tree",
-        "modeling": "WDT Model"
+        "modeling": "WDT Model",
+        "composite": "WDT Composite Model"
       },
       "toolbar": {
         "buttons": {
@@ -255,6 +283,10 @@ define({
         "modeling": {
           "label": "WDT Model Tree",
           "description": "<p>Maintain model files associated with the WebLogic Deploy Tooling tool.</p>"
+        },
+        "composite": {
+          "label": "WDT Composite Model Tree",
+          "description": "<p>View a combined set of WebLogic Deploy Tooling model files that you are currently working with.</p>"
         }
       }
     },
@@ -363,15 +395,6 @@ define({
         }
       }
     },
-    "wrc-navtree": {
-      "icons": {
-        "docked": { "tooltip": "Dock in Navigation Area"},
-        "floating": { "tooltip": "Detach from Navigation Area"},
-        "restore": { "tooltip": "Restore"},
-        "minimized": { "tooltip": "Minimize"},
-        "closed": { "tooltip": "Close"}
-      }
-    },
     "wrc-wdt-form": {
       "messages": {
         "changesSaved": {"summary": "Changes were successfully saved to '{0}' file!"},
@@ -449,7 +472,18 @@ define({
       },
       "labels": {"cannotDetermineExactCause": {"value": "Cannot determine exact cause. Check JavaScript Console for hints."}}
     },
-    "wrc-pdj-fields": {"cfe-multi-select": {"labels": {"available": "Available", "chosen": "Chosen"}}},
+    "wrc-pdj-fields": {
+      "cfe-multi-select": {"labels": {"available": "Available", "chosen": "Chosen"}},
+      "cfe-properties-editor": {"labels": {"name": "Property Name", "value": "Property Value"}},
+      "cfe-property-list-editor": {
+        "labels": {
+          "nameHeader": "Property Name",
+          "valueHeader": "Property Value",
+          "addButtonTooltip": "Add",
+          "deleteButtonTooltip": "Delete"
+        }
+      }
+    },
     "wrc-pdj-options-sources": {
       "menus": {
         "more": {

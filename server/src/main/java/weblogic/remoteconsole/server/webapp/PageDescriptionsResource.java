@@ -88,6 +88,6 @@ public class PageDescriptionsResource extends BaseResource {
       return PagePath.newCreateFormPagePath(pagesPath);
     }
     String slicePath = view;
-    return PagePath.newSliceFormPagePath(pagesPath, new Path(slicePath));
+    return PagePath.newSlicePagePath(pagesPath, new Path(slicePath));
   }
 }

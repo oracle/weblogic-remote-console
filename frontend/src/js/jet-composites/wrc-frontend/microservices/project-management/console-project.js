@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * Class representing the metadata for a connection to a WebLogic REST API endpoint.
@@ -23,8 +23,8 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
      * @param {string} [filename=null] - The file name associated with a saved project. The value null is assigned if not provided.
      */
     function ConsoleProject(id, name=null, isDefault=true, dataProviders=[], filename=null){
-      if (CoreUtils.isUndefinedOrNull(id)) throw new CfeErrors.InvalidParameterError(`Parameter cannot be undefined: id`);
-      if (id === "") throw new CfeErrors.InvalidParameterError(`Parameter cannot be an empty string: id`);
+      if (CoreUtils.isUndefinedOrNull(id)) throw new CfeErrors.InvalidParameterError('Parameter cannot be undefined: id');
+      if (id === '') throw new CfeErrors.InvalidParameterError('Parameter cannot be an empty string: id');
 
       this.id = id;
       this.name = name;
@@ -42,10 +42,10 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
 
     function getAsDownloadFormatted() {
       const downloadFormatted = {};
-      downloadFormatted["name"] = this.name;
-      if (CoreUtils.isNotUndefinedNorNull(this.filename)) downloadFormatted["filename"] = this.filename;
-      downloadFormatted["isDefault"] = this.isDefault;
-      downloadFormatted["dataProviders"] = [];
+      downloadFormatted['name'] = this.name;
+      if (CoreUtils.isNotUndefinedNorNull(this.filename)) downloadFormatted['filename'] = this.filename;
+      downloadFormatted['isDefault'] = this.isDefault;
+      downloadFormatted['dataProviders'] = [];
       this.dataProviders.forEach((item) => {
         const dataProvider = {
           name: item.name,
@@ -53,15 +53,18 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
         };
         switch(item.type) {
           case DataProvider.prototype.Type.ADMINSERVER.name:
-            dataProvider["url"] = item.url;
-            dataProvider["username"] = item.username;
-            dataProvider["password"] = item.password;
+            dataProvider['url'] = item.url;
+            dataProvider['username'] = item.username;
+            dataProvider['password'] = item.password;
             break;
           case DataProvider.prototype.Type.MODEL.name:
-            dataProvider["file"] = item.file;
+            dataProvider['file'] = item.file;
+            break;
+          case DataProvider.prototype.Type.COMPOSITE.name:
+            dataProvider['models'] = item.models;
             break;
         }
-        downloadFormatted["dataProviders"].push(dataProvider);
+        downloadFormatted['dataProviders'].push(dataProvider);
       });
       return downloadFormatted;
     }

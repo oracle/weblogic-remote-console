@@ -3,6 +3,9 @@
 
 package weblogic.remoteconsole.common.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Contains overall information about a Weblogic version, including how to get to its public
  * documentation.
@@ -27,18 +30,35 @@ public class WebLogicVersion {
   // The directory, relative to docsUrl, of the url containing this release's public mbean javadoc
   private String mbeanJavadocDirectory;
 
+  private List<WebLogicPSU> psus = new ArrayList<>();
+
   WebLogicVersion(
     boolean currentVersion,
     String domainVersion,
     String fmwVersion,
     String docsUrl,
-    String mbeanJavadocDirectory
+    String mbeanJavadocDirectory,
+    WebLogicPSU... psus // newest to oldest
   ) {
     this.currentVersion = currentVersion;
     this.domainVersion = domainVersion;
     this.fmwVersion = fmwVersion;
     this.docsUrl = docsUrl;
     this.mbeanJavadocDirectory = mbeanJavadocDirectory;
+    WebLogicPSU lastPSU = null;
+    for (WebLogicPSU psu : psus) {
+      this.psus.add(psu);
+      psu.setWebLogicVersion(this);
+      if (lastPSU == null) {
+        // The first version is the current version
+        psu.setCurrentPSU(true);
+      } else {
+        // Not the first version.
+        // Set the newer's PSU's previousPSU to this PSU
+        lastPSU.setPreviousPSU(psu);
+      }
+      lastPSU = psu;
+    }
   }
 
   public boolean isCurrentVersion() {
@@ -80,5 +100,18 @@ public class WebLogicVersion {
   // Get the url for a generic help topic, replacing @FMW_VERSION with this verion's fmw version
   public String getGenericHelpTopicUrl(String genericTopicUrl) {
     return genericTopicUrl.replaceAll("@FMW_VERSION@&amp;", getFmwVersion() + "&");
+  }
+
+  public List<WebLogicPSU> getPSUs() {
+    return psus;
+  }
+
+  public WebLogicPSU getCurrentPSU() {
+    return psus.isEmpty() ? null : psus.get(0);
+  }
+
+  @Override
+  public String toString() {
+    return getDomainVersion();
   }
 }

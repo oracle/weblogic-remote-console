@@ -1,9 +1,8 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,12 @@ public class ProviderManager {
     return ret;
   }
 
+  public PropertyListDataProvider createPropertyListDataProvider(String name) {
+    PropertyListDataProvider ret = new PropertyListDataProviderImpl(name);
+    providers.put(name, ret);
+    return ret;
+  }
+
   public WDTModelDataProvider createWDTModelDataProvider(String name) {
     WDTModelDataProvider ret = new WDTModelDataProviderImpl(name);
     providers.put(name, ret);
@@ -34,9 +39,7 @@ public class ProviderManager {
   }
 
   public WDTCompositeDataProvider createWDTCompositeDataProvider(String name, List<String> models) {
-    List<WDTModelDataProvider> wdtProviders = new ArrayList<>(models.size());
-    models.forEach(model -> wdtProviders.add((WDTModelDataProvider)providers.get(model)));
-    WDTCompositeDataProvider ret = new WDTCompositeDataProviderImpl(name, wdtProviders);
+    WDTCompositeDataProvider ret = new WDTCompositeDataProviderImpl(name, models, this);
     providers.put(name, ret);
     return ret;
   }
@@ -47,6 +50,11 @@ public class ProviderManager {
 
   public boolean hasProvider(String name, String type) {
     return (providers.containsKey(name) ? providers.get(name).getType().equals(type) : false);
+  }
+
+  public Provider getProvider(String name, String type) {
+    Provider provider = providers.get(name);
+    return (((provider != null) && provider.getType().equals(type)) ? provider : null);
   }
 
   // Since a ProviderManager doesn't have any state besides the list of

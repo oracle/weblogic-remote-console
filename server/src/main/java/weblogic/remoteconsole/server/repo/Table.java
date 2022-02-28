@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class holds all of the data on a table page.
+ * This class holds all of the data on a table or slice table page.
  */
 public class Table extends Page {
   private List<TableRow> rows = new ArrayList<>();

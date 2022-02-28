@@ -1,16 +1,16 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
   function (Logger, PageDefinitionUtils, CoreUtils) {
 
     //This is also defined in fields.js
-    const NULL_VALUE = Object.freeze("___NULL___");
+    const NULL_VALUE = Object.freeze('___NULL___');
 
     /**
      * PageDataTypes Constructor
@@ -71,7 +71,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         let helpDetailed = this.getHelpDetailed(propertyName);
 
         if (helpDetailed == null) {
-          helpDetailed = "<p>No help description found.</p>";
+          helpDetailed = '<p>No help description found.</p>';
         }
 
         let result = helpDetailed;
@@ -81,9 +81,9 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           let link = label;
           let javadocHref = externalHelp.href;
           if (javadocHref !== undefined) {
-            link = "<a target=_blank rel=noopener href=" + javadocHref + ">" + label + "</a>";
+            link = '<a target=_blank rel=noopener href=' + javadocHref + '>' + label + '</a>';
           }
-          result = helpDetailed + "<p> MBean Attribute:<br><code>" + link + "</code></p>"
+          result = helpDetailed + '<p> MBean Attribute:<br><code>' + link + '</code></p>'
         }
         return result;
       },
@@ -137,13 +137,13 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           if (CoreUtils.isNotUndefinedNorNull(value)){
             if (typeof value === 'string'  || typeof value === 'number' || typeof value === 'boolean'
               || value.value !== undefined || value.resourceData != undefined) {
-              return "fromRegValue";
+              return 'fromRegValue';
             }
             else if ( value.unresolvedReference !== undefined){
-              return "fromUnresolvedReference";
+              return 'fromUnresolvedReference';
             }
           }else if (CoreUtils.isNotUndefinedNorNull(rdjObject.modelToken)){
-            return "fromModelToken";
+            return 'fromModelToken';
           }
         }
       },
@@ -152,7 +152,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
       /** Check if the property is required */
       isRequired: function(propertyName) {
         let rtnval = false;
-        if (typeof this.pdjTypes[propertyName].required !== "undefined") {
+        if (typeof this.pdjTypes[propertyName].required !== 'undefined') {
           rtnval = this.pdjTypes[propertyName].required;
         }
         return rtnval;
@@ -191,7 +191,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           if (presentation[key] !== undefined) {
             retval = presentation[key];
             if (typeof retval === 'boolean') {
-              retval = (retval ? "true" : null);
+              retval = (retval ? 'true' : null);
             }
           }
         }
@@ -199,8 +199,8 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
       },
 
       getInLineHelpPresentation: function(propertyName) {
-        let result = "";
-        let inLineHelp = this.getFieldPresentation(propertyName, "inlineFieldHelp");
+        let result = '';
+        let inLineHelp = this.getFieldPresentation(propertyName, 'inlineFieldHelp');
         if (inLineHelp !== null) {
           result = inLineHelp;
         }
@@ -208,11 +208,11 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
       },
 
       isDisplayAsHexPresentation: function(propertyName) {
-        return (this.getFieldPresentation(propertyName, "displayAsHex") !== null);
+        return (this.getFieldPresentation(propertyName, 'displayAsHex') !== null);
       },
 
       decConvertToHexString: function(decValue) {
-        return "0x" + (+decValue).toString(16);
+        return '0x' + (+decValue).toString(16);
       },
 
       /** Check if the property has legal values */
@@ -314,7 +314,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         // Check for array type that is a string
         // Note: reference types are identity values
         if (this.isArray(propertyName) && this.isStringType(propertyName)) {
-          return PageDefinitionUtils.getArrayOfStringConvertedValue(readValue, "\n");
+          return PageDefinitionUtils.getArrayOfStringConvertedValue(readValue, '\n');
         }
 
         // Address the remaining types where needed...
@@ -338,9 +338,9 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             break;
 
           case 'properties':
-            if (readValue !== "") {
+            if (readValue !== '') {
               // Convert to the JSON object of key = value
-              result = PageDefinitionUtils.getPropertiesConvertedValue(readValue, "\n");
+              result = PageDefinitionUtils.getPropertiesConvertedValue(readValue, '\n');
             }
             break;
 
@@ -351,7 +351,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             else
             // Remaining types are correct when not an empty string
             // and the empty string represents no value...
-            if (readValue !== "") result = readValue;
+            if (readValue !== '') result = readValue;
             break;
         }
         return result;
@@ -372,13 +372,13 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         // Check for array type that is a string, eg. JNDI Names
         // Note: reference types are identity values
         if (this.isArray(propertyName) && this.isStringType(propertyName)) {
-          return PageDefinitionUtils.getArrayOfStringConvertedValue(readValue, "\n");
+          return PageDefinitionUtils.getArrayOfStringConvertedValue(readValue, '\n');
         }
 
-        if (from === "fromModelToken"){
+        if (from === 'fromModelToken'){
           return {modelToken: readValue};
         }
-        if (from === "fromUnresolvedReference"){
+        if (from === 'fromUnresolvedReference'){
           return {
             label: readValue,
             unresolvedReference: readValue
@@ -406,9 +406,9 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             break;
 
           case 'properties':
-            if (readValue !== "") {
+            if (readValue !== '') {
               // Convert to the JSON object of key = value
-              result = PageDefinitionUtils.getPropertiesConvertedValue(readValue, "\n");
+              result = PageDefinitionUtils.getPropertiesConvertedValue(readValue, '\n');
             }
             break;
 
@@ -419,7 +419,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             else
             // Remaining types are correct when not an empty string
             // and the empty string represents no value...
-            if (readValue !== "") result = readValue;
+            if (readValue !== '') result = readValue;
             break;
         }
         return result;
@@ -453,7 +453,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
               result = value;
             }
             else {
-              Logger.log("INFO: Observable using display value of property: " + propertyName);
+              Logger.log('INFO: Observable using display value of property: ' + propertyName);
               result = displayValue;
             }
             break;
@@ -464,14 +464,14 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             }
             else {
               // For properties type, get a display value for a text area
-              result = PageDefinitionUtils.getPropertiesDisplayValue(value, "\n");
+              result = PageDefinitionUtils.getPropertiesDisplayValue(value, '\n');
             }
             break;
           case 'string':
             result = value;
             if ((displayValue !== null) && this.isArray(propertyName)) {
               // For a string array, get a display value for a text area
-              result = PageDefinitionUtils.getArrayOfStringDisplayValue(value, "\n");
+              result = PageDefinitionUtils.getArrayOfStringDisplayValue(value, '\n');
             }
             break;
           case 'int':
@@ -500,7 +500,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             return rdjObject.modelToken;
           }
           const valObject = rdjObject.value;
-          if (typeof valObject !== "undefined") {
+          if (typeof valObject !== 'undefined') {
             // valObject can be null, so guard against that
             if (valObject !== null && CoreUtils.isNotUndefinedNorNull(valObject.unresolvedReference)) {
               return valObject.unresolvedReference;
@@ -526,7 +526,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
               result = value;
             }
             else {
-              Logger.log("INFO: Observable using display value of property: " + propertyName);
+              Logger.log('INFO: Observable using display value of property: ' + propertyName);
               result = displayValue;
             }
             break;
@@ -537,14 +537,14 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             }
             else {
               // For properties type, get a display value for a text area
-              result = PageDefinitionUtils.getPropertiesDisplayValue(value, "\n");
+              result = PageDefinitionUtils.getPropertiesDisplayValue(value, '\n');
             }
             break;
           case 'string':
             result = value;
             if ((displayValue !== null) && this.isArray(propertyName)) {
               // For a string array, get a display value for a text area
-              result = PageDefinitionUtils.getArrayOfStringDisplayValue(value, "\n");
+              result = PageDefinitionUtils.getArrayOfStringDisplayValue(value, '\n');
             }
             break;
           case 'int':
@@ -564,17 +564,17 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
       getObservableValueFrom : function(rdjDataObject) {
         if (CoreUtils.isNotUndefinedNorNull(rdjDataObject)) {
           if (CoreUtils.isNotUndefinedNorNull(rdjDataObject.modelToken)){
-            return "fromModelToken";
+            return 'fromModelToken';
           }
           const valObject = rdjDataObject.value;
-          if (typeof valObject !== "undefined") {
+          if (typeof valObject !== 'undefined') {
             // valObject can still be null, so guard against it
             if (valObject !== null && CoreUtils.isNotUndefinedNorNull(valObject.unresolvedReference)) {
-              return "fromUnresolvedReference";
+              return 'fromUnresolvedReference';
             }
           }
         }
-        return "fromRegValue";
+        return 'fromRegValue';
       },
 
       /** Determine if the data value for the property indicates the value is actually set vs. defaulted */
@@ -616,7 +616,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           }
         }
         if (CoreUtils.isUndefinedOrNull(rdjObject)){
-          return "";
+          return '';
         }
         if (CoreUtils.isNotUndefinedNorNull(rdjObject.modelToken)) {
           return rdjObject.modelToken;
@@ -634,7 +634,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
               value = PageDefinitionUtils.getArrayOfNamesFromCollectionChild(value);
             }
             // All other array types display using the string conversion for that type
-            displayValue = PageDefinitionUtils.getArrayOfStringDisplayValue(value, ", ");
+            displayValue = PageDefinitionUtils.getArrayOfStringDisplayValue(value, ', ');
           } else {
             // The value is NOT an array
             if (this.isReferenceType(propertyName)) {
@@ -642,7 +642,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             }
             else
             if (this.isPropertiesType(propertyName)) {
-              displayValue = PageDefinitionUtils.getPropertiesDisplayValue(value, ", ");
+              displayValue = PageDefinitionUtils.getPropertiesDisplayValue(value, ', ');
             } else if (this.isDisplayAsHexPresentation(propertyName)) {
               displayValue = this.decConvertToHexString(value);
             }
@@ -651,7 +651,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             }
             else {
               // All other types display with a string conversion for that type
-              displayValue = "" + value;
+              displayValue = '' + value;
             }
 
             // Covert the value to the legal value display name when available

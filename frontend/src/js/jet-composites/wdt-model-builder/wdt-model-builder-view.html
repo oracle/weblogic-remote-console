@@ -3,31 +3,32 @@
   The Universal Permissive License (UPL), Version 1.0
 -->
 
-<div id="wdt-model-builder-container" class="oj-flex oj-sm-flex-items-initial" data-runtime-role="tool">
+<div id="wdt-model-builder-container" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap" data-runtime-role="tool">
   <!-- column 1 -->
   <div id="navtree-container" class="oj-flex-item">
-    <oj-bind-dom config="[[navtreeDialog.html]]"></oj-bind-dom>
-  </div>
-  <!-- column 2 -->
-  <div class="oj-flex oj-sm-flex-items-initial">
-    <!-- row 1 -->
-    <div id="message-container" class="oj-flex-item">
-      <oj-messages
-        messages="[[messagesDataProvider]]"
-        position="[[messagePosition]]"
-        display="general"
-      >
-        <template slot="messageTemplate" data-oj-as="message">
-          <oj-message message="[[message.data]]">
-            <oj-bind-if test="[[typeof message.data.html !== 'undefined']]">
-              <div slot="detail">
-                <oj-bind-dom config="[[message.data.html]]"></oj-bind-dom>
-              </div>
-            </oj-bind-if>
-          </oj-message>
-        </template>
-      </oj-messages>
+    <div class="left_panel">
+      <oj-bind-dom config="[[navtree.html]]"></oj-bind-dom>
     </div>
+  </div>
+
+  <!-- column 2 -->
+  <div id="wdt-model-builder-content" class="right_panel oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+    <!-- row 1 -->
+    <oj-messages
+      messages="[[messagesDataProvider]]"
+      position="[[messagePosition]]"
+      display="general"
+    >
+      <template slot="messageTemplate" data-oj-as="message">
+        <oj-message message="[[message.data]]">
+          <oj-bind-if test="[[typeof message.data.html !== 'undefined']]">
+            <div slot="detail">
+              <oj-bind-dom config="[[message.data.html]]"></oj-bind-dom>
+            </div>
+          </oj-bind-if>
+        </oj-message>
+      </template>
+    </oj-messages>
     <!-- row 2 -->
     <div id="content-area-container" class="oj-flex-item">
       <div id="content-area-body" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">

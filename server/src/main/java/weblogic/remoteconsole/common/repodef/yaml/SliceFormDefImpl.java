@@ -60,7 +60,7 @@ public class SliceFormDefImpl extends FormDefImpl implements SliceFormDef {
     } else {
       // Since there is more than one slice for this type, the CFE displays the tabs.
       // Therefore, add the slice path to the title.
-      for (String sliceName : getPagePath().asSliceFormPagePath().getSlicePath().getComponents()) {
+      for (String sliceName : getPagePath().asSlicePagePath().getSlicePath().getComponents()) {
         SliceDef sliceDef = getSliceDef(sliceDefs, sliceName);
         sb.append(": ");
         sb.append(sliceDef.getLabel().getEnglishText());
@@ -81,6 +81,6 @@ public class SliceFormDefImpl extends FormDefImpl implements SliceFormDef {
 
   @Override
   protected String getPageKey() {
-    return "slice." + getPagePath().asSliceFormPagePath().getSlicePath().getDotSeparatedPath();
+    return "slice." + getPagePath().asSlicePagePath().getSlicePath().getDotSeparatedPath();
   }
 }

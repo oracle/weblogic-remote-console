@@ -1,6 +1,13 @@
-let keytar;
+/**
+ * @license
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+ * @ignore
+ */
+ let keytar;
 
 const { BrowserWindow, app, Menu, shell, ipcMain, dialog } = require("electron")
+const net = require('net');
 const { autoUpdater } = require('electron-updater');
 autoUpdater.autoDownload = false;
 const prompt = require('electron-prompt');
@@ -11,14 +18,20 @@ const canCheckForUpdates = !instDir.startsWith('/opt/');
 const { homepage, productName, version, copyright } = require(`${instDir}/package.json`);
 
 const fs = require('fs');
+var checkPid = 0;
 var newVersion = version;
+var cbePort = 0;
 var window;
 var projects;
 var current_project;
 var width = 1600;
 var height = 1000;
 var started = false;
+var stdinOption = false;
+var showPort = false;
+var quiet = false;
 var lines = [ ];
+var origConsoleLog;
 
 if (process.platform === 'darwin') {
   quitkey = 'Command+Q';
@@ -148,6 +161,13 @@ function getFilteredProviders(providers) {
     if (providers[i].file) {
       filteredProvider.file = providers[i].file;
     }
+
+    // Filter out properties associated with modelComposite
+    // provider type.
+    if (providers[i].models) {
+      filteredProvider.models = providers[i].models;
+    }
+
     filteredProviders.push(filteredProvider);
   }
   return filteredProviders;
@@ -509,7 +529,7 @@ function makeMenu() {
 }
 
 
-if (canCheckForUpdates) {
+if (canCheckForUpdates && !app.commandLine.hasSwitch("headless")) {
   autoUpdater.checkForUpdates().then(result => {
     newVersion = result.versionInfo.version;
     if (app.isReady())
@@ -524,9 +544,10 @@ var readline = require('readline');
 function writeAutoPrefs() {
   const prefs = {
     version: `${version}`,
-    width: window.getSize()[0],
-    height: window.getSize()[1],
-    projects: getMaskedProjects(["password"])
+    width: width,
+    height: height,
+    projects: getMaskedProjects(["password"]),
+    location: process.env.APPIMAGE ? process.env.APPIMAGE : app.getPath('exe')
   };
   fs.writeFileSync(`${app.getPath('userData')}/auto-prefs.json`, JSON.stringify(prefs, null, 4));
 }
@@ -551,16 +572,45 @@ function readAutoPrefs() {
     projects = [ ];
 }
 
+function doCheckPid() {
+  try {
+    process.kill(checkPid, 0);
+  } catch(err) {
+    process.exit();
+  }
+}
+
 function doit() {
-  var port = 8012;
+  if (!app.commandLine.hasSwitch("headless"))
+    window.loadURL(`http://localhost:${cbePort}/`);
+}
+
+function processOptions() {
   let filename = `${app.getPath('userData')}/config.json`;
   if (fs.existsSync(filename)) {
     props = JSON.parse(fs.readFileSync(filename));
     if (props["server.port"])
-      port = props["server.port"];
+      cbePort = props["server.port"];
   }
-  if (!app.commandLine.hasSwitch("headless"))
-    window.loadURL(`http://localhost:${port}/`);
+  checkPid = app.commandLine.getSwitchValue("check-pid");
+  if (checkPid != 0) {
+    setInterval(doCheckPid, 5000);
+  }
+  portOption = app.commandLine.getSwitchValue("port");
+  if (portOption) {
+    cbePort = portOption;
+  }
+  stdinOption = app.commandLine.hasSwitch("stdin");
+  if (stdinOption) {
+    let readlineStdin = readline.createInterface({
+      input: process.stdin,
+    });
+    readlineStdin.on("close", () => {
+      process.exit();
+    });
+  }
+  showPort = app.commandLine.hasSwitch("showPort");
+  quiet = app.commandLine.hasSwitch("quiet");
 }
 
 function rotateLogfile() {
@@ -575,42 +625,62 @@ function rotateLogfile() {
   return file;
 }
 
-const logFilename = rotateLogfile();
 const os = require("os");
 
+const logFilename = rotateLogfile();
+
+(function () {
+  origConsoleLog = console.log;
+  var _error = console.error;
+  var _warning = console.warning;
+
+  console.error = function (line) {
+    fs.appendFileSync(logFilename, line + os.EOL);
+    _error.apply(console, arguments);
+  };
+
+  console.log = function (line) {
+    fs.appendFileSync(logFilename, line + os.EOL);
+    if (!quiet)
+      origConsoleLog.apply(console, arguments);
+  };
+
+  console.warning = function (warnMessage) {
+    fs.appendFileSync(logFilename, line + os.EOL);
+    if (!quiet)
+      _warning.apply(console, arguments);
+  };
+})();
+
 function start_cbe() {
-  
   const { spawn } = require("child_process");
 
   var instDir = path.dirname(app.getPath("exe"));
   let filename = `${app.getPath("userData")}/config.json`;
   const cbe = spawn(instDir + "/customjre/bin/java", [
+    `-Dserver.port=${cbePort}`,
     "-jar",
     `${instDir}/backend/console.jar`,
+    "--showPort",
     "--stdin",
     "--properties",
     filename,
   ]);
   
-  let rl = readline.createInterface({
+  let readlineStderr = readline.createInterface({
     input: cbe.stderr,
   });
 
-  let rl2 = readline.createInterface({
+  let readlineStdout = readline.createInterface({
     input: cbe.stdout,
   });
 
-  rl.on("line", (line) => {
+  readlineStderr.on("line", (line) => {
     console.log(line);
-    fs.appendFileSync(logFilename, line + os.EOL);
     lines.push(line);
-    if (line.includes("Started in")) {
-      started = true;
-      doit();
-    }
   });
 
-  rl.on("close", () => {
+  readlineStderr.on("close", () => {
     if (!started) {
       let i = lines.length - 40;
       if (i < 0) i = 0;
@@ -626,9 +696,15 @@ function start_cbe() {
     process.exit();
   });
 
-  rl2.on("line", (line) => {
+  readlineStdout.on("line", (line) => {
     console.log(line);
-    fs.appendFileSync(logFilename, line + os.EOL);
+    if (line.startsWith("Port=")) {
+      if (showPort)
+        origConsoleLog(line);
+      cbePort = line.replace("Port=", "");
+      started = true;
+      doit();
+    }
   });
 }
 
@@ -636,7 +712,7 @@ function readWDTModelFile(filepath) {
   return {
     file: filepath,
     fileContents: fs.readFileSync(filepath, 'utf8'),
-    mediaType: (filepath.endsWith(".json") ? "application/json" : "application/yaml")
+    mediaType: (filepath.endsWith(".json") ? "application/json" : (filepath.endsWith(".props") ? "text/plain" : "application/yaml"))
   };
 }
 
@@ -732,14 +808,14 @@ ipcMain.handle('file-creating', async (event, arg) => {
   }
 });
 
-ipcMain.handle('file-reading', async (event, filepath) => {
-  return createFileReadingResponse(filepath)
+ipcMain.handle('file-reading', async (event, arg) => {
+  return createFileReadingResponse(arg.filepath)
     .catch(response => {
-      if (response.failureType === "NOT_FOUND") {
+      if (arg.allowDialog && (response.failureType === "NOT_FOUND")) {
         const dialogParams = {
-          defaultPath: filepath,
+          defaultPath: arg.filepath,
           properties: ['openFile'],
-          filters: { name: 'Supported Formats', extensions: ['yml', 'yaml', 'json']}
+          filters: { name: 'Supported Formats', extensions: ['yml', 'yaml', 'json', 'props']}
         };
         return dialog.showOpenDialog(window, dialogParams)
           .then(dialogReturnValue => {
@@ -755,7 +831,7 @@ ipcMain.handle('file-reading', async (event, filepath) => {
           })
       }
       else {
-        return Promise.reject(response);
+        return Promise.reject(response.failureReason);
       }
     });
 });
@@ -917,8 +993,25 @@ ipcMain.handle('credentials-requesting', async (event, arg) => {
 
 });
 
+ipcMain.handle('window-app-quit', async (event, arg) => {
+  ((line) => {
+    console.log(line);
+  })(`[MAIN] 'window-app-quit' reply=${JSON.stringify(arg)}`);
+  if (!arg.preventQuit) {
+    // Set module-scoped window variable to null, so
+    // the check in the 'close' event handler, won't
+    // do an event.preventDefault().
+    window = null;
+    // Calling app.quit() will generate another 'close'
+    // event, but the app will exit because the module-scoped
+    // window variable has been set to null.
+    app.quit();
+  }
+});
+
 app.whenReady()
   .then(() => {
+    processOptions();
     if (!app.commandLine.hasSwitch("headless")) {
       /**
        * Creates a new instance of the ``BrowserWindow`` class, using the specified parameter values.
@@ -958,12 +1051,28 @@ app.whenReady()
         });
       }
 
+      function setOnWindowCloseListener() {
+        window.on('close', (event) => {
+          if (window) {
+            // Cancel the close, because we want to
+            // allow the JET side to do stuff (like
+            // attempt to save a "dirty" form) before
+            // closing.
+            event.preventDefault();
+            // 1. Send notification to JET side saying
+            //    that the app is closing.
+            window.webContents.send('start-app-quit');
+            // 2. Write out the auto-prefs.json file.
+            writeAutoPrefs();
+          }
+        });
+      }
+
       try {
         readAutoPrefs();
       } catch (error) {
         ((line) => {
           console.log(line);
-          fs.appendFileSync(logFilename, line + os.EOL);
         })(error);
         dialog.showMessageBoxSync(window, {
           title: "Failure reading auto prefs",
@@ -978,17 +1087,19 @@ app.whenReady()
       window = createBrowserWindow("Initializing...", width, height);
       window.webContents.session.clearCache();
       window.on('resize', () => {
+        width = window.getSize()[0];
+        height = window.getSize()[1];
         writeAutoPrefs();
       });
       setAboutPanelFields();
       makeMenu();
+      setOnWindowCloseListener();
     }
     start_cbe();
   })
   .catch(err => {
     ((line) => {
       console.log(line);
-      fs.appendFileSync(logFilename, line + os.EOL);
     })(`[MAIN] err=${err}`);
 
     dialog.showMessageBoxSync(window, {

@@ -1,30 +1,36 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojhtmlutils', 'wrc-frontend/controller', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', './panel_resizer', 'ojs/ojarraydataprovider', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmessages', 'ojs/ojbinddom', 'navtree-dialog/loader'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojhtmlutils', 'wrc-frontend/integration/controller', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'wrc-frontend/integration/panel_resizer', 'ojs/ojarraydataprovider', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmessages', 'ojs/ojbinddom', 'cfe-navtree/loader'],
   function (oj, ko, ModuleElementUtils, Router, ResponsiveUtils, ResponsiveKnockoutUtils, HtmlUtils, Controller, Runtime, Context, DataProviderManager, PerspectiveManager, PerspectiveMemoryManager, Preferences, ViewModelUtils, CoreUtils, CoreTypes, Logger) {
     function ControllerViewModel() {
-      const PANEL_RESIZER_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty("panel-resizer-width"), 10);
-      const NAVSTRIP_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty("navstrip-max-width"), 10);
-      const NAVTREE_MIN_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty("resizer-left-panel-min-width"), 10);
-      const NAVTREE_MAX_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty("navtree-max-width"), 10);
+      const PANEL_RESIZER_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty('panel-resizer-width'), 10);
+      const NAVSTRIP_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty('navstrip-max-width'), 10);
+      const NAVTREE_MIN_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty('resizer-left-panel-min-width'), 10);
+      const NAVTREE_MAX_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty('navtree-max-width'), 10);
 
       const self = this;
 
-      Runtime.setProperty(Runtime.PropertyName.CFE_NAME, oj.Translations.getTranslatedString("wrc-header.text.appName"));
+      Runtime.setProperty(Runtime.PropertyName.CFE_NAME, oj.Translations.getTranslatedString('wrc-header.text.appName'));
       // Set runtime role based on value assigned to data-runtime-role
       // attribute.
-      const ele = document.getElementById("globalBody");
-      Runtime.setProperty(Runtime.PropertyName.CFE_ROLE, ele.getAttribute("data-runtime-role"));
+      const ele = document.getElementById('middle-container');
+      Runtime.setProperty(Runtime.PropertyName.CFE_ROLE, ele.getAttribute('data-runtime-role'));
 
       if (ViewModelUtils.isElectronApiAvailable()) {
-        window.electron_api.ipc.receive('on-signal-dispatched', (signal) => {
-          Logger.info(`[APPCONTROLLER] channel='on-signal-dispatched', signal=${signal.name}`);
+        window.electron_api.ipc.receive('start-app-quit', async () => {
+          Logger.info('[APPCONTROLLER] \'start-app-quit\' Received event.');
+          if (Controller.getSignal('appQuitTriggered').getNumListeners() > 0) {
+            Controller.getSignal('appQuitTriggered').dispatch();
+          }
+          else {
+            window.electron_api.ipc.invoke('window-app-quit',  {preventQuit: false, source: 'appController.js'});
+          }
         });
       }
 
@@ -35,7 +41,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       this.mdScreen = ResponsiveKnockoutUtils.createMediaQueryObservable(mdQuery);
 
       this.beanTree = ko.observable();
-      this.navtreeDialog = {html: ko.observable({})};
+      this.navtree = {html: ko.observable({})};
 
       const router = Controller.getRootRouter();
       this.router = router;
@@ -44,12 +50,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       // configuration to have a 'title' field, or else web
       // browser tabs will begin with "undefined -".
       router.configure({
-        "home": { label: "Home", value: "home", title: Runtime.getName(), isDefault: true },
-        "landing/{perspectiveId}": { label: "Landing", value: "landing", title: Runtime.getName() },
-        "configuration/{path}": { label: "WebLogic", value: "configuration", title: Runtime.getName() },
-        "monitoring/{path}": { label: "Monitoring", value: "monitoring", title: Runtime.getName() },
-        "view/{path}": { label: "View", value: "view", title: Runtime.getName() },
-        "modeling/{path}": { label: "Modeling", value: "modeling", title: Runtime.getName() }
+        'home': { label: 'Home', value: 'home', title: Runtime.getName(), isDefault: true },
+        'landing/{perspectiveId}': { label: 'Landing', value: 'landing', title: Runtime.getName() },
+        'configuration/{path}': { label: 'WebLogic', value: 'configuration', title: Runtime.getName() },
+        'monitoring/{path}': { label: 'Monitoring', value: 'monitoring', title: Runtime.getName() },
+        'view/{path}': { label: 'View', value: 'view', title: Runtime.getName() },
+        'modeling/{path}': { label: 'Modeling', value: 'modeling', title: Runtime.getName() },
+        'composite/{path}': { label: 'Composite', value: 'composite', title: Runtime.getName() }
       });
 
       this.loadModule = function () {
@@ -62,7 +69,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       this.loadHeaderTemplate = function () {
         self.headerModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
-            name: "branding-area/header",
+            name: 'branding-area/header',
             params: {
               parentRouter: self.router,
               smQuery: smQuery,
@@ -79,7 +86,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       this.loadNavStripTemplate = function () {
         self.navStripModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
-            name: "navigation-area/navstrip",
+            name: 'navigation-area/navstrip',
             params: {
               parentRouter: self.router,
               signaling: Controller.getSignaling(),
@@ -94,7 +101,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       this.loadFooterTemplate = function () {
         self.footerModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
-            name: "footer/footer",
+            name: 'footer/footer',
             params: {
               parentRouter: self.router,
               smQuery: smQuery,
@@ -109,7 +116,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       this.loadContentAreaHeaderTemplate = function () {
         self.contentAreaHeaderModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
-            name: "content-area/header/content-area-header",
+            name: 'content-area/header/content-area-header',
             params: {
               parentRouter: self.router,
               signaling: Controller.getSignaling()
@@ -122,7 +129,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       this.loadAncillaryContentAreaTemplate = function () {
         self.ancillaryContentAreaModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
-            name: "content-area/ancillary-content",
+            name: 'content-area/ancillary-content',
             params: {
               parentRouter: self.router,
               signaling: Controller.getSignaling(),
@@ -134,15 +141,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       this.loadAncillaryContentAreaTemplate();
 
       function setThemePreference(theme) {
-        Controller.getSignal("themeChanged").dispatch(theme);
+        Controller.getSignal('themeChanged').dispatch(theme);
       }
 
       function toggleAncillaryContentArea(visible) {
-        Controller.getSignal("ancillaryContentAreaToggled").dispatch("appController", visible);
+        Controller.getSignal('ancillaryContentAreaToggled').dispatch('appController', visible);
       }
 
       function selectAncillaryContentAreaTab(source, tabId) {
-        Controller.getSignal("tabStripTabSelected").dispatch(source, tabId, true);
+        Controller.getSignal('tabStripTabSelected').dispatch(source, tabId, true);
       }
 
       function resizeTriggered(source, newOffsetLeft, newOffsetWidth) {
@@ -151,25 +158,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
           switch (newOffsetWidth) {
             case (NAVSTRIP_WIDTH + PANEL_RESIZER_WIDTH):
               minWidthVariable = newOffsetWidth;
-              document.documentElement.style.setProperty("--content-area-container-min-width", `${minWidthVariable}px`);
+              document.documentElement.style.setProperty('--content-area-container-min-width', `${minWidthVariable}px`);
               break;
             case NAVTREE_MIN_WIDTH:
               minWidthVariable = NAVSTRIP_WIDTH + PANEL_RESIZER_WIDTH;
-              document.documentElement.style.setProperty("--content-area-container-min-width", `${minWidthVariable}px`);
+              document.documentElement.style.setProperty('--content-area-container-min-width', `${minWidthVariable}px`);
               break;
             case NAVTREE_MAX_WIDTH:
             case (NAVSTRIP_WIDTH + NAVTREE_MAX_WIDTH):
               minWidthVariable = newOffsetWidth;
-              document.documentElement.style.setProperty("--content-area-container-min-width", `${minWidthVariable}px`);
+              document.documentElement.style.setProperty('--content-area-container-min-width', `${minWidthVariable}px`);
               break;
             default:
               minWidthVariable = PANEL_RESIZER_WIDTH;
-              document.documentElement.style.setProperty("--content-area-container-min-width", `${minWidthVariable}px`);
+              document.documentElement.style.setProperty('--content-area-container-min-width', `${minWidthVariable}px`);
               break;
           }
         }
         else {
-          Logger.info(`[APPCONTROLLER] newOffsetWidth=0`);
+          Logger.info('[APPCONTROLLER] newOffsetWidth=0');
         }
 
         resizeContentAreaElements(source, newOffsetLeft, newOffsetWidth);
@@ -184,25 +191,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
 
       function resizeDomainsToolbarRight(source, newOffsetLeft, newOffsetWidth) {
         let marginRightVariable;
-        if (source === "closer") {
+        if (source === 'closer') {
           if (newOffsetWidth === NAVTREE_MIN_WIDTH) {
             marginRightVariable = 0;
           } else {
             marginRightVariable = NAVSTRIP_WIDTH;
           }
-        } else if (source === "opener") {
+        } else if (source === 'opener') {
           marginRightVariable = newOffsetWidth;
-        } else if (source === "navtree") {
+        } else if (source === 'navtree') {
           marginRightVariable = 0;
         }
-        ViewModelUtils.setCustomCssProperty("content-area-header-toolbar-right-margin-right", `${marginRightVariable}px`);
+        document.documentElement.style.setProperty('--content-area-header-toolbar-right-margin-right', `${marginRightVariable}px`);
       }
 
       function resizeTableFormContainer(source) {
-        if (source === "opener") {
-          let maxWidthVariable = parseInt(ViewModelUtils.getCustomCssProperty("content-area-header-toolbar-right-margin-right"), 10);
+        if (source === 'opener') {
+          let maxWidthVariable = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--content-area-header-toolbar-right-margin-right'), 10);
           maxWidthVariable += (NAVSTRIP_WIDTH + PANEL_RESIZER_WIDTH);
-          ViewModelUtils.setCustomCssProperty("form-container-calc-max-width", `${maxWidthVariable}px`);
+          document.documentElement.style.setProperty('--form-container-calc-max-width', `${maxWidthVariable}px`);
         }
       }
 
@@ -210,14 +217,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         return {height: $(window).height(), width: $(window).width()};
       }
 
-      Controller.getSignal("navtreeResized").add((source, newOffsetLeft, newOffsetWidth) => {
+      Controller.getSignal('navtreeResized').add((source, newOffsetLeft, newOffsetWidth) => {
         resizeTriggered(source, newOffsetLeft, newOffsetWidth);
       });
 
-      Controller.getSignal("perspectiveSelected").add((newPerspective) => {
+      Controller.getSignal('perspectiveSelected').add((newPerspective) => {
         const dataProvider = DataProviderManager.getLastActivatedDataProvider();
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
 /*
+//MLW
           if (CoreUtils.isUndefinedOrNull(newPerspective)) {
             Logger.info(`[APPCONTROLLER] newPerspective is undefined`);
             newPerspective = PerspectiveManager.getDefault();
@@ -237,37 +245,37 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
             active = newPerspective;
           }
 
-          const composite = document.getElementById("wrcNavtreeDialog");
+          const composite = document.getElementById('wrcNavtree');
           if (composite !== null) {
             const perspective = composite.perspective;
             const beanTree = dataProvider.getBeanTreeByPerspectiveId(active.id);
             if (CoreUtils.isNotUndefinedNorNull(perspective) && perspective.id !== active.id) {
-              createNavtreeDialog(beanTree);
-              Controller.getSignal("navtreeLoaded").dispatch(perspective);
+              createNavtree(beanTree);
+              Controller.getSignal('navtreeLoaded').dispatch(perspective);
             }
           }
           else {
             const beanTree = dataProvider.getBeanTreeByPerspectiveId(active.id);
-            createNavtreeDialog(beanTree);
-            Controller.getSignal("navtreeLoaded").dispatch(active);
+            createNavtree(beanTree);
+            Controller.getSignal('navtreeLoaded').dispatch(active);
           }
         }
       });
 
-      function createNavtreeDialog(beanTree) {
+      function createNavtree(beanTree) {
         self.beanTree(beanTree);
-        const outerHTML = Controller.createNavtreeDialogHTML();
-        self.navtreeDialog.html({ view: HtmlUtils.stringToNodeArray(outerHTML), data: self });
+        const outerHTML = Controller.createNavtreeHTML();
+        self.navtree.html({ view: HtmlUtils.stringToNodeArray(outerHTML), data: self });
       }
 
-      Controller.getSignal("navtreeLoaded").add((perspective) => {
+      Controller.getSignal('navtreeLoaded').add((perspective) => {
         // Get active (e.g. current) current perspective from PerspectiveManager
         let active = PerspectiveManager.current();
         if (typeof active === 'undefined') {
           // There was no active perspective, so make the
           // one assigned to the perspective parameter, the
           // active one.
-          Logger.info(`[APPCONTROLLER] previous current: undefined`);
+          Logger.info('[APPCONTROLLER] previous current: undefined');
           active = PerspectiveManager.activate(perspective.id);
         }
         else if (active.id !== perspective.id) {
@@ -283,43 +291,44 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         Logger.info(`[APPCONTROLLER] new current: ${active.id}`);
       });
 
-      Controller.getSignal("modeChanged").add((newMode) => {
-        const div = document.getElementById("table-form-container");
+      Controller.getSignal('modeChanged').add((newMode) => {
+        const div = document.getElementById('table-form-container');
         if (div !== null) {
           // Do the appropriate thing to the selected div.
           switch (newMode) {
             case CoreTypes.Console.RuntimeMode.ONLINE.name:
             case CoreTypes.Console.RuntimeMode.OFFLINE.name:
-              div.style.display = "inline-flex";
+              div.style.display = 'inline-flex';
               break;
+            case CoreTypes.Console.RuntimeMode.UNATTACHED.name:
             case CoreTypes.Console.RuntimeMode.DETACHED.name:
-              div.style.display = "none";
-              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) router.go("home");
+              div.style.display = 'none';
+              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) router.go('home');
               break;
           }
         }
       });
 
-      Controller.getSignal("projectSwitched").add((fromProject) => {
+      Controller.getSignal('projectSwitched').add((fromProject) => {
         setTableFormContainerVisibility(false);
       });
 
       function setTableFormContainerVisibility(visible) {
-        const div = document.getElementById("table-form-container");
+        const div = document.getElementById('table-form-container');
         if (div !== null) {
-          div.style.display = (visible ? "inline-flex" : "none");
+          div.style.display = (visible ? 'inline-flex' : 'none');
         }
       }
 
       Context.getPageContext().getBusyContext().whenReady()
         .then(function () {
-          document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 UTC; Path=/api;";
+          document.cookie = 'expires=Thu, 01 Jan 1970 00:00:00 UTC; Path=/api;';
           setThemePreference(Preferences.general.themePreference());
-          if (document.getElementById("spa-resizer") !== null) {
+          if (document.getElementById('spa-resizer') !== null) {
             $('#spa-resizer').split({limit: 10});
           }
           // Pass the mode changed signal so that memory can be cleared
-          PerspectiveMemoryManager.setModeChangedSignal(Controller.getSignal("modeChanged"));
+          PerspectiveMemoryManager.setModeChangedSignal(Controller.getSignal('modeChanged'));
         })
         .catch((err) => {
           Logger.error(err);

@@ -26,7 +26,7 @@ public class EditableCollectionChildBeanResource  extends BeanResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(@QueryParam("slice") @DefaultValue("") String slice) {
-    setSliceFormPagePath(slice);
+    setSlicePagePath(slice);
     return getSliceForm();
   }
 
@@ -44,7 +44,7 @@ public class EditableCollectionChildBeanResource  extends BeanResource {
     @QueryParam("action") @DefaultValue(UPDATE) String action,
     JsonObject requestBody
   ) {
-    setSliceFormPagePath(slice);
+    setSlicePagePath(slice);
     if (UPDATE.equals(action)) {
       return updateSliceForm(requestBody);
     } else {

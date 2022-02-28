@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server;
@@ -72,7 +72,7 @@ public final class Main {
 
   private static void usage() {
     System.err.println(
-      "Usage: console.jar [--properties <property-file-path>] [--stdin] [-s server] [-p port] [-u url]");
+      "Usage: console.jar [--properties <property-file-path>] [--stdin] [--showPort] [-s server] [-p port] [-u url]");
     // FortifyIssueSuppression J2EE Bad Practices: JVM Termination
     // This isn't Java EE
     System.exit(1);
@@ -80,6 +80,7 @@ public final class Main {
 
   public static void main(final String[] args) throws Exception {
     boolean stdin = false;
+    boolean showPortOnStdout = false;
     for (int i = 0; i < args.length; i++) {
       if (args[i].equals("-p")) {
         i++;
@@ -91,6 +92,8 @@ public final class Main {
         System.setProperty("server.port", args[1]);
       } else if (args[i].equals("--stdin")) {
         stdin = true;
+      } else if (args[i].equals("--showPort")) {
+        showPortOnStdout = true;
       } else if (args[i].equals("--properties")) {
         i++;
         if (args.length == i) {
@@ -112,11 +115,14 @@ public final class Main {
     String domainUrl = ConsoleBackendRuntime.INSTANCE.attemptConnection();
 
     // Start the server instance
-    startServer();
+    Server server = startServer();
 
     // Log the current WebLogic Console Backend Mode and Connection State
     ConsoleBackendRuntime.Mode mode = ConsoleBackendRuntime.INSTANCE.getMode();
-    logger.info(WLS_CONSOLE_BACKEND + "\n>>>> Started in " + mode + " mode <<<<");
+    if (showPortOnStdout) {
+      System.out.println("Port=" + server.port());
+    }
+    // logger.info(WLS_CONSOLE_BACKEND + "\n>>>> Started in " + mode + " mode <<<<");
     if (mode == ConsoleBackendRuntime.Mode.CREDENTIALS) {
       ConsoleBackendRuntime.State state = ConsoleBackendRuntime.INSTANCE.getState();
       // FortifyIssueSuppression Log Forging

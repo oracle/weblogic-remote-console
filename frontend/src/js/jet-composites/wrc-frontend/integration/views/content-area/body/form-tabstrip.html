@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2021, Oracle and/or its affiliates.
+ Copyright (c) 2021,2022, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="form-tabstrip-container" class="oj-flex">
@@ -8,7 +8,7 @@
     <oj-bind-for-each data="[[tabDataProviders]]">
       <template>
         <div class="oj-flex-item oj-sm-12 tabbar-container oj-sm-padding-2x-horizontal">
-          <oj-conveyor-belt content-parent="#tab1">
+          <oj-conveyor-belt content-parent="#tab1" data-oj-binding-provider="none">
             <oj-tab-bar id="tab1" edge="top" layout="condense" selection="{{$current.data.selection}}" on-selection-changed="[[selectionChanged.bind($current.data)]]" data="[[$current.data.dataProvider]]">
               <template slot="itemTemplate" data-oj-as="item">
                 <li>

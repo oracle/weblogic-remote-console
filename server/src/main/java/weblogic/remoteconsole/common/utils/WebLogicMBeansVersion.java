@@ -20,9 +20,8 @@ public class WebLogicMBeansVersion {
   // Describes the overall WebLogic version
   private WebLogicVersion weblogicVersion;
 
-  // Whether this version supports security warnings
-  // (i.e. is using the PSU that adds their mbeans)
-  private boolean supportsSecurityWarnings;
+  // The PSU (null if using GA)
+  private WebLogicPSU psu;
 
   // The set of role for viewing the mbeans
   // (since what mbeans a user can see depends on the user's roles)
@@ -32,8 +31,8 @@ public class WebLogicMBeansVersion {
     return weblogicVersion;
   }
 
-  public boolean isSupportsSecurityWarnings() {
-    return supportsSecurityWarnings;
+  public WebLogicPSU getPSU() {
+    return psu;
   }
 
   public Set<String> getRoles() {
@@ -42,11 +41,11 @@ public class WebLogicMBeansVersion {
 
   WebLogicMBeansVersion(
     WebLogicVersion weblogicVersion,
-    boolean supportsSecurityWarnings,
+    WebLogicPSU psu,
     Set<String> roles
   ) {
     this.weblogicVersion = weblogicVersion;
-    this.supportsSecurityWarnings = supportsSecurityWarnings;
+    this.psu = psu;
     this.roles = roles;
   }
 

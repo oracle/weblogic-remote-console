@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * Class representing the metadata for a connection to a WebLogic REST API endpoint.
@@ -28,7 +28,7 @@ define(
       // FortifyIssueSuppression(B21CF4C8E20C4238A316EF2F0F5049D9) Password Management: Password in Comment
       // FortifyIssueSuppression Password Management: Empty Password
       // This is not an empty password, it's the name of a private variable
-      var _password = "";
+      var _password = '';
       this.id = id;
       this.name = name;
       this.version = version;

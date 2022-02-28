@@ -84,6 +84,17 @@ public class PageDefSource {
     return (SliceFormDefSource)this;
   }
 
+  // Whether this is a slice table.
+  public boolean isSliceTableDefSource() {
+    return this instanceof SliceTableDefSource;
+  }
+
+  // Converts this page to a slice table.
+  // Throws a ClassCastException if this page isn't a SliceTableDefSource.
+  public SliceTableDefSource asSliceTableDefSource() {
+    return (SliceTableDefSource)this;
+  }
+
   // Whether this is a table.
   public boolean isTableDefSource() {
     return this instanceof TableDefSource;

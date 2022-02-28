@@ -34,7 +34,6 @@ frontend/.DS_Store
 frontend/**/.idea
 frontend/libs
 frontend/src/css/images
-frontend/package-lock.json
 frontend/oraclejetconfig.json
 .vscode/*
 client.log.*
@@ -48,7 +47,6 @@ frontend/seleniumTest.log
 electron/dist/**
 electron/extraFiles/**
 electron/node_modules/**
-electron/package-lock.json
 
 hugo/*/docs/
 hugo/*/.vscode/

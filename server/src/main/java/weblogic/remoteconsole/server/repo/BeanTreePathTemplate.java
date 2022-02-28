@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -32,7 +32,7 @@ public class BeanTreePathTemplate {
   // and the bean identity is 'Domain/Machines/Machine1', then this method will return
   // 'DomainRuntime/NodeManagerRuntimes/Machine1'
   //
-  // If the bean identity doesn't contain a matching values for all the
+  // If the bean identity doesn't contain matching values for all the
   // variables in the path template, then this method will return null to indicate
   // that the path couldn't be expanded.
   public Path expand(BeanTreePath values) {
@@ -59,7 +59,7 @@ public class BeanTreePathTemplate {
         throw new AssertionError("Empty template: " + templateComponent);
       }
       // Try to find a segment in values whose type matches the type instance name.
-      // It should be a collection chhild.  Return its key.
+      // It should be a collection child.  Return its key.
       //
       // For example:
       //

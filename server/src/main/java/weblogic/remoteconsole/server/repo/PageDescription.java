@@ -18,6 +18,7 @@ import weblogic.remoteconsole.common.repodef.HelpTopicDef;
 import weblogic.remoteconsole.common.repodef.LegalValueDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.PageDef;
+import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyExternalHelpDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyPresentationDef;
@@ -25,6 +26,7 @@ import weblogic.remoteconsole.common.repodef.PagesPath;
 import weblogic.remoteconsole.common.repodef.SliceDef;
 import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.repodef.SliceFormPresentationDef;
+import weblogic.remoteconsole.common.repodef.SliceTableDef;
 import weblogic.remoteconsole.common.repodef.SlicesDef;
 import weblogic.remoteconsole.common.repodef.TableActionDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
@@ -58,6 +60,9 @@ public class PageDescription {
     if (pageDef.isSliceFormDef()) {
       addIfNotEmpty(builder, "sliceForm", sliceFormDefToJson(pageDef.asSliceFormDef()));
     }
+    if (pageDef.isSliceTableDef()) {
+      addIfNotEmpty(builder, "sliceTable", sliceTableDefToJson(pageDef.asSliceTableDef()));
+    }
     if (pageDef.isCreateFormDef()) {
       addIfNotEmpty(builder, "createForm", createFormDefToJson(pageDef.asCreateFormDef()));
     }
@@ -89,7 +94,7 @@ public class PageDescription {
 
   private JsonObject sliceFormDefToJson(SliceFormDef sliceFormDef) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
-    addIfNotEmpty(builder, "slices", slicesDefToJson(getSlicesDef(sliceFormDef)));
+    addIfNotEmpty(builder, "slices", slicesDefToJson(getSlicesDef(sliceFormDef.getPagePath())));
     addIfNotEmpty(builder, "properties", sliceFormPropertyDefsToJson(sliceFormDef.getPropertyDefs()));
     addIfNotEmpty(builder, "advancedProperties", sliceFormPropertyDefsToJson(sliceFormDef.getAdvancedPropertyDefs()));
     addIfNotEmpty(builder, "sections", sliceFormSectionDefsToJson(sliceFormDef.getSectionDefs()));
@@ -97,6 +102,14 @@ public class PageDescription {
     if (sliceFormDef.isReadOnly()) {
       builder.add(READ_ONLY, true);
     }
+    return builder.build();
+  }
+
+  private JsonObject sliceTableDefToJson(SliceTableDef sliceTableDef) {
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    addIfNotEmpty(builder, "slices", slicesDefToJson(getSlicesDef(sliceTableDef.getPagePath())));
+    addIfNotEmpty(builder, "displayedColumns", columnPropertyDefsToJson(sliceTableDef.getDisplayedColumnDefs()));
+    addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sliceTableDef.getHiddenColumnDefs()));
     return builder.build();
   }
 
@@ -110,8 +123,8 @@ public class PageDescription {
     return builder.build();
   }
 
-  private SlicesDef getSlicesDef(SliceFormDef sliceFormDef) {
-    PagesPath pagesPath = sliceFormDef.getPagePath().getPagesPath();
+  private SlicesDef getSlicesDef(PagePath pagePath) {
+    PagesPath pagesPath = pagePath.getPagesPath();
     return pagesPath.getPageRepoDef().getSlicesDef(pagesPath.getTypeDef());
   }
 
@@ -421,6 +434,8 @@ public class PageDescription {
       return propertyDef.isCreateWritable();
     } else if (pageDef.isSliceFormDef()) {
       return propertyDef.isUpdateWritable();
+    } else if (pageDef.isSliceTableDef()) {
+      return false; // table cells are always read-only
     } else if (pageDef.isTableDef()) {
       return false; // table cells are always read-only
     } else {

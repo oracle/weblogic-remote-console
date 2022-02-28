@@ -36,7 +36,7 @@ You can restore fields to their default value. Right-click on a field and click 
 ## Edit Administration Servers {id="changes_adminserver"}
 
 1. Open a project and select an Admin Server Connection Provider.
-1. Click the **Edit Tree** perspective and make your changes to the domain configuration. Fields marked with ![Server restart icon](/weblogic-remote-console/restart-required-blk_24x24.png) require a server restart.
+1. Click the **Edit Tree** perspective and make your changes to the domain configuration. Fields marked with ![Server restart icon](/weblogic-remote-console/images/icons/restart-required-blk_24x24.png) require a server restart.
 1. If you have the extension installed, view your changes in the Kiosk.
 1. Commit your changes.
 1. Restart your server if necessary.
@@ -49,7 +49,7 @@ Domain configuration changes in WDT model files offer more flexibility to take a
 It's recommended that you use the desktop application version of the WebLogic Remote Console if you plan to edit a WDT model file.
 
 1. Open a project and select a WDT Model File Provider.
-1. Click **WDT Model Tree** and make your changes to the domain configuration. Make sure to click ![WDT Model Edit](/weblogic-remote-console/wdt-options-icon-blk_24x24.png) if you want to enter a model token. The WebLogic Remote Console auto-saves any changes you make to the WDT model file. You don't need to commit changes to WDT model files.
+1. Click **WDT Model Tree** and make your changes to the domain configuration. Make sure to click ![WDT Model Edit](/weblogic-remote-console/images/icons/wdt-options-icon-blk_24x24.png) if you want to enter a model token. The WebLogic Remote Console auto-saves any changes you make to the WDT model file. You don't need to commit changes to WDT model files.
 1. After you finish making changes, you can click **Save Now** (in the desktop application) or **Download File** (in the browser) to ensure all changes are saved and downloaded to your computer.
 {{% notice info %}}
 The browser application behaves slightly differently. While changes to the WDT model file are still saved automatically as you move around the console, they are *not* saved to your computer. This means that once you're satisfied with your changes, you *must* click **Download File** to download the updated model file to your computer.

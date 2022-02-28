@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * An Abstract Class used to create a Concrete Class that represents temporary storage.
@@ -21,7 +21,7 @@ define(['./cfe-errors'],
      */
     function DataStorage() {
       if (this.constructor === DataStorage) {
-        throw new CfeErrors.CfeError(`DataStorage is an Abstract Class and cannot be instantiated!`);
+        throw new CfeErrors.CfeError('DataStorage is an Abstract Class and cannot be instantiated!');
       }
     }
 
@@ -69,7 +69,7 @@ define(['./cfe-errors'],
      * @throws {Error} - If an attempt is made to call this Abstract Method.
      */
     DataStorage.prototype.clear = function () {
-      throw new Error(`This is an Abstract Method on the DataStorage Abstract Class, which cannot be called.`);
+      throw new Error('This is an Abstract Method on the DataStorage Abstract Class, which cannot be called.');
     };
 
     // Return DataStorage constructor function.

@@ -5,13 +5,17 @@ package weblogic.remoteconsole.server.connection;
 
 import javax.ws.rs.client.Client;
 
+import weblogic.remoteconsole.common.utils.WebLogicPSU;
+import weblogic.remoteconsole.common.utils.WebLogicVersion;
+
 /** The implementation of Connection interface holding connection information */
 public class ConnectionImpl implements Connection {
   // Connection State
   private String id;
   private String domainUrl;
   private String domainName;
-  private String domainVersion;
+  private WebLogicVersion weblogicVersion;
+  private WebLogicPSU psu;
   private String username;
   private Client client;
 
@@ -20,14 +24,16 @@ public class ConnectionImpl implements Connection {
     String id,
     String domainUrl,
     String domainName,
-    String domainVersion,
+    WebLogicVersion weblogicVersion,
+    WebLogicPSU psu,
     String username,
     Client client
   ) {
     this.id = id;
     this.domainUrl = domainUrl;
     this.domainName = domainName;
-    this.domainVersion = domainVersion;
+    this.weblogicVersion = weblogicVersion;
+    this.psu = psu;
     this.username = username;
     this.client = client;
   }
@@ -48,8 +54,13 @@ public class ConnectionImpl implements Connection {
   }
 
   @Override
-  public String getDomainVersion() {
-    return domainVersion;
+  public WebLogicVersion getWebLogicVersion() {
+    return weblogicVersion;
+  }
+
+  @Override
+  public WebLogicPSU getPSU() {
+    return psu;
   }
 
   @Override

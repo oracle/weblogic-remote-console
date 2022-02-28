@@ -1,60 +1,60 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/utils', './create-form', './help-form', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset'],
   function (oj, ko, Router, ArrayDataProvider, HtmlUtils, DataOperations, MessageDisplaying, NavtreeManager, PerspectiveMemoryManager, PageDataTypes, PageDefinitionFields, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUtils, CreateForm, HelpForm, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function OverlayDialogViewModel(viewParams) {
 
-      const FIELD_DISABLED = Object.freeze("fieldDisabled_");
-      const FIELD_UNSET = Object.freeze("fieldUnset_");
-      const FIELD_MESSAGES = Object.freeze("fieldMessages_");
-      const FIELD_SELECTDATA = Object.freeze("fieldSelectData_");
-      const FIELD_VALUES = Object.freeze("fieldValues_");
+      const FIELD_DISABLED = Object.freeze('fieldDisabled_');
+      const FIELD_UNSET = Object.freeze('fieldUnset_');
+      const FIELD_MESSAGES = Object.freeze('fieldMessages_');
+      const FIELD_SELECTDATA = Object.freeze('fieldSelectData_');
+      const FIELD_VALUES = Object.freeze('fieldValues_');
 
       var self = this;
 
       this.i18n = {
         introduction: {
           toggleHelp: {
-            iconFile: "toggle-help-icon-blk_16x16.png",
-            text: oj.Translations.getTranslatedString("wrc-form.introduction.toggleHelp.text", "{0}")
+            iconFile: 'toggle-help-icon-blk_16x16.png',
+            text: oj.Translations.getTranslatedString('wrc-form.introduction.toggleHelp.text', '{0}')
           }
         },
         buttons: {
-          "save": { id: "save", iconFile: ko.observable("save-icon-blk_24x24"), disabled: ko.observable(false),
-            label: ko.observable(oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.save.label"))
+          'save': { id: 'save', iconFile: ko.observable('save-icon-blk_24x24'), disabled: ko.observable(false),
+            label: ko.observable(oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.save.label'))
           },
-          "finish": { id: "finish", iconFile: "add-icon-blk_24x24", disabled: ko.observable(true),
-            label: oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.finish.label")
+          'finish': { id: 'finish', iconFile: 'add-icon-blk_24x24', disabled: ko.observable(true),
+            label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.finish.label')
           }
         },
         icons: {
-          "save": { id: "save", iconFile: "save-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.save.tooltip")
+          'save': { id: 'save', iconFile: 'save-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.save.tooltip')
           },
-          "create": { id: "create", iconFile: "add-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.create.tooltip")
+          'create': { id: 'create', iconFile: 'add-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.create.tooltip')
           },
-          "help": { iconFile: "toggle-help-on-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.help.tooltip")
+          'help': { iconFile: 'toggle-help-on-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.help.tooltip')
           },
-          "restart": {iconFile: "restart-required-org_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form.icons.restart.tooltip")
+          'restart': {iconFile: 'restart-required-org_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form.icons.restart.tooltip')
           },
-          "choose": {iconFile: "choose-file-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-common.tooltips.choose.value")
+          'choose': {iconFile: 'choose-file-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.choose.value')
           },
-          "clear": {iconFile: "erase-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-common.tooltips.clear.value")
+          'clear': {iconFile: 'erase-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.clear.value')
           },
-          "more": {iconFile: "more-vertical-brn-8x24", iconClass: "more-vertical-icon",
-            tooltip: oj.Translations.getTranslatedString("wrc-common.tooltips.more.value")
+          'more': {iconFile: 'more-vertical-brn-8x24', iconClass: 'more-vertical-icon',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.more.value')
           }
         }
       };
@@ -120,14 +120,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         function (event) {
           // clear treenav selection
           viewParams.signaling.navtreeSelectionCleared.dispatch();
-          saveBean("update");
+          saveBean('update');
         }
       );
 
       this.helpPageClick = function (event) {
         function toggleToolbarButtonsVisibility(visible) {
-          const ele = document.getElementById("form-toolbar-buttons");
-          ele.style.display = (visible ? "none" : "inline-flex");
+          const ele = document.getElementById('form-toolbar-buttons');
+          ele.style.display = (visible ? 'none' : 'inline-flex');
         }
 
         function toggleHelpPage(withHelpVisible, withHistoryVisible) {
@@ -158,13 +158,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         }
         if (self.isWizardForm()) {
           let replacer = self.createForm.getBackingDataAttributeReplacer(fieldName);
-          if (typeof replacer === "undefined") replacer = fieldName;
-          if (typeof self[FIELD_VALUES + replacer] === "undefined") {
+          if (typeof replacer === 'undefined') replacer = fieldName;
+          if (typeof self[FIELD_VALUES + replacer] === 'undefined') {
             self[FIELD_VALUES + replacer] = ko.observable();
             self.dirtyFields.add(fieldName);
           }
           const subscription = createFieldValueSubscription(fieldName, replacer);
-          if (subscription._target() === "") {
+          if (subscription._target() === '') {
             self.subscriptions.push(subscription);
           }
           self[FIELD_VALUES + replacer](values);
@@ -189,34 +189,34 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       };
 
       this.chooseFileClickHandler = function(event) {
-        const chooser = $("#file-chooser");
-        chooser.on("change", self.chooseFileChangeHandler);
-        chooser.trigger("click");
-        chooser.attr("data-input", event.currentTarget.attributes["data-input"].value);
+        const chooser = $('#file-chooser');
+        chooser.on('change', self.chooseFileChangeHandler);
+        chooser.trigger('click');
+        chooser.attr('data-input', event.currentTarget.attributes['data-input'].value);
         event.preventDefault();
       };
 
       this.clearChosenFileClickHandler = function(event) {
-        const name = event.currentTarget.attributes["data-input"].value;
+        const name = event.currentTarget.attributes['data-input'].value;
         self[`${FIELD_VALUES}${name}`](null);
         self.createForm.clearUploadedFile(name);
-        $("#" + name + "_clearChosen").css({"display":"none"});
+        $('#' + name + '_clearChosen').css({'display':'none'});
       };
 
       this.chooseFileChangeHandler = function(event) {
         const files = event.currentTarget.files;
         if (files.length > 0) {
-          const name = event.currentTarget.attributes["data-input"].value;
+          const name = event.currentTarget.attributes['data-input'].value;
           const fileName = files[0].name;
-          const fileExt = "." + fileName.split(".").pop();
+          const fileExt = '.' + fileName.split('.').pop();
 
           self[`${FIELD_VALUES}${name}`](fileName);
           self.createForm.addUploadedFile(name, files[0]);
-          $("#" + name + "_clearChosen").css({"display":"inline-flex"});
+          $('#' + name + '_clearChosen').css({'display':'inline-flex'});
 
-          const chooser = $("#file-chooser");
-          chooser.off("change", self.chooseFileChangeHandler);
-          chooser.val("");
+          const chooser = $('#file-chooser');
+          chooser.off('change', self.chooseFileChangeHandler);
+          chooser.val('');
         }
       };
 
@@ -252,7 +252,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         let dataPayload = {};
         var data = self.rdjData.data;
 
-        const formElement = document.getElementById("wlsform");
+        const formElement = document.getElementById('wlsform');
         if (CoreUtils.isUndefinedOrNull(formElement)) {
           return dataPayload;
         }
@@ -263,8 +263,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
       function showModalDialog(title, propertyLabel) {
         const overlayFormDialog = document.getElementById('overlayFormDialog');
-        overlayFormDialog.setAttribute("dialog-title", title);
-        const ele = document.getElementById("linked-property-label");
+        overlayFormDialog.setAttribute('dialog-title', title);
+        const ele = document.getElementById('linked-property-label');
         if (ele !== null) ele.innerText = propertyLabel;
         overlayFormDialog.open();
       }
@@ -282,7 +282,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       function finishWizardForm() {
         if (self.isWizardForm()) {
           const pageState = self.createForm.markAsFinished();
-          if (pageState.succeeded) saveBean("finish");
+          if (pageState.succeeded) saveBean('finish');
         }
       }
 
@@ -298,9 +298,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       };
 
       function renderToolbarButtons() {
-        const ele = document.getElementById("form-toolbar-save-button");
-        if (ele !== null) ele.style.display = "inline-flex";
-        resetSaveButtonDisplayState([{id: "create"}]);
+        const ele = document.getElementById('form-toolbar-save-button');
+        if (ele !== null) ele.style.display = 'inline-flex';
+        resetSaveButtonDisplayState([{id: 'create'}]);
       }
 
       function resetButtonsDisabledState(buttons) {
@@ -311,7 +311,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
       function resetSaveButtonDisabledState(state) {
         resetButtonsDisabledState([
-          {id: "save", disabled: false}
+          {id: 'save', disabled: false}
         ]);
       }
 
@@ -328,7 +328,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
           // First, check for empty payload and return when there is no data
           if (isEdit && (dataPayload != null) && (Object.keys(dataPayload).length === 0)) {
-            Logger.log(`POST data is empty while isEdit=true, exiting save!`);
+            Logger.log('POST data is empty while isEdit=true, exiting save!');
             return;
           }
 
@@ -369,10 +369,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         self.debugFlagsEnabled(PageDefinitionFields.resetDebugFlagsEnabled(self.debugFlagItems()));
 
         resetButtonsDisabledState([
-          {id: "save", disabled: false}
+          {id: 'save', disabled: false}
         ]);
 
-        if (typeof response.failureType !== "undefined" && response.body.messages.length === 0) {
+        if (typeof response.failureType !== 'undefined' && response.body.messages.length === 0) {
           saveFailedNoMessages(dataAction, dataPayload, isEdit);
         }
         else if (response.body.messages.length === 0) {
@@ -384,7 +384,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       function saveFailedNoMessages(dataAction, dataPayload, isEdit) {
         function compensatingTransactionFailure(response) {
           if (response.body.messages.length > 0) {
-            Logger.error(`Compensating transaction failed!`);
+            Logger.error('Compensating transaction failed!');
             MessageDisplaying.displayResponseMessages(response.body.messages);
           }
         }
@@ -394,14 +394,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           let pathLeafName;
           if (typeof dataPayloadName !== 'undefined') pathLeafName = dataPayloadName.value;
 
-          const deleteUrl = viewParams.parentRouter.data.rdjUrl() + "/" + encodeURIComponent(pathLeafName);
+          const deleteUrl = viewParams.parentRouter.data.rdjUrl() + '/' + encodeURIComponent(pathLeafName);
           DataOperations.mbean.delete(deleteUrl)
             .then(reply => {
-              Logger.log(`Delete of partially created object successful.`);
+              Logger.log('Delete of partially created object successful.');
               MessageDisplaying.displayResponseMessages(reply.body.messages);
             })
             .catch(response => {
-              Logger.log(`Delete of partially created object not possible`);
+              Logger.log('Delete of partially created object not possible');
               ViewModelUtils.failureResponseDefaultHandling(response);
             });
         }
@@ -419,12 +419,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         viewParams.signaling.navtreeSelectionCleared.dispatch();
 
         const pathSegments = PageDefinitionUtils.pathSegmentsFromIdentity(identity);
-        Logger.info(`[OVERLAYFORMDIALOG] path=${pathSegments.join("/")}`);
+        Logger.info(`[OVERLAYFORMDIALOG] path=${pathSegments.join('/')}`);
 
         viewParams.onSaveSuceeded(eventType);
         viewParams.onFormRefresh();
         const overlayFormDialog = document.getElementById('overlayFormDialog');
-        if (overlayFormDialog !== "null") overlayFormDialog.close();
+        if (overlayFormDialog !== 'null') overlayFormDialog.close();
       }
 
       function renderPage() {
@@ -449,8 +449,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         self.pdjData = viewParams.parentRouter.data.pdjData();
         self.rdjData = viewParams.parentRouter.data.rdjData();
 
-        const toggleHelpIntroduction = self.i18n.introduction.toggleHelp.text.replace("{0}","<img src='js/jet-composites/wrc-frontend/1.0.0/images/" + self.i18n.introduction.toggleHelp.iconFile + "'>");
-        const bindHtml = (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML) ? pdjData.introductionHTML : "<p>");
+        const toggleHelpIntroduction = self.i18n.introduction.toggleHelp.text.replace('{0}','<img src=\'js/jet-composites/wrc-frontend/1.0.0/images/' + self.i18n.introduction.toggleHelp.iconFile + '\'>');
+        const bindHtml = (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML) ? pdjData.introductionHTML : '<p>');
         self.introductionHTML({ view: HtmlUtils.stringToNodeArray(bindHtml) });
 
         pdjData = viewParams.parentRouter.data.pdjData();
@@ -464,11 +464,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       }
 
       function rerenderWizardForm(pdjData, rdjData, direction, removed) {
-        if (typeof removed !== "undefined") {
+        if (typeof removed !== 'undefined') {
           removed.forEach((item) => {
             // Some subscription._target() values will be an empty
             // string, so we need to look for those first.
-            processRemovedField(item.name,"");
+            processRemovedField(item.name,'');
             // Look for subscription._target() values that match
             // item.name.
             processRemovedField(item.name, item.value);
@@ -478,7 +478,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         const pageState = self.createForm.rerenderPage(direction);
         if (pageState.succeeded) {
           resetButtonsDisabledState([
-            {id: "finish", disabled: !self.createForm.getCanFinish()}
+            {id: 'finish', disabled: !self.createForm.getCanFinish()}
           ]);
 
           renderFormLayout(pdjData, rdjData);
@@ -522,23 +522,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       function renderSpecialHandlingFields() {
         function onMouseUp(event) {
           const parentNode = event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-          const initHeight = parseInt(event.target.attributes["data-init-height"].value, 10);
+          const initHeight = parseInt(event.target.attributes['data-init-height'].value, 10);
           const calcOffsetHeight = (event.target.offsetHeight - initHeight);
           Logger.info(`calcOffsetHeight=${calcOffsetHeight}`);
           parentNode.style.height = `${(initHeight + calcOffsetHeight) - 10}px`;
-          const name = CoreUtils.getSubstring(event.target.id, "|");
+          const name = CoreUtils.getSubstring(event.target.id, '|');
           self.perspectiveMemory.setNthChildMinHeight.call(self.perspectiveMemory, name, parentNode.style.height);
         }
 
         let ele;
         self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).forEach((nthChild) => {
-          ele = document.querySelector("#wlsform > div > div:nth-child(" + nthChild.row + ") > div:nth-child(" + nthChild.col + ")");
-          if (ele !== null && typeof nthChild.minHeight !== "undefined") {
-            ele.style["min-height"] = nthChild.minHeight;
+          ele = document.querySelector('#wlsform > div > div:nth-child(' + nthChild.row + ') > div:nth-child(' + nthChild.col + ')');
+          if (ele !== null && typeof nthChild.minHeight !== 'undefined') {
+            ele.style['min-height'] = nthChild.minHeight;
             ele = document.getElementById(`${nthChild.name}|input`);
             if (ele !== null) {
-              ele.addEventListener("mouseup", onMouseUp);
-              ele.setAttribute("data-init-height", nthChild.minHeight);
+              ele.addEventListener('mouseup', onMouseUp);
+              ele.setAttribute('data-init-height', nthChild.minHeight);
               ele.style.height = `${parseInt(nthChild.minHeight, 10)}px`;
             }
           }
@@ -546,22 +546,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       }
 
       function renderWizardForm(rdjData) {
-        const div = document.createElement("div");
-        div.setAttribute("id", "cfe-form");
+        const div = document.createElement('div');
+        div.setAttribute('id', 'cfe-form');
         div.style.display = 'block';
 
         //wizard form always use single column. If this is changed, the param calling populateFormLayout will need to change.
-        const formLayout = PageDefinitionFormLayouts.createWizardFormLayout({labelWidthPcnt: "32%", maxColumns: "1"});
+        const formLayout = PageDefinitionFormLayouts.createWizardFormLayout({labelWidthPcnt: '32%', maxColumns: '1'});
         div.append(formLayout);
 
-        document.documentElement.style.setProperty("--form-input-min-width", `25em`);
+        document.documentElement.style.setProperty('--form-input-min-width', '25em');
         let properties = self.createForm.getRenderProperties();
         const results = getCreateFormPayload(properties);
 
         self.formToolbarModuleConfig
           .then((moduleConfig) => {
             moduleConfig.viewModel.resetButtonsDisabledState([
-              {id: "finish", disabled: !self.createForm.getCanFinish()}
+              {id: 'finish', disabled: !self.createForm.getCanFinish()}
             ]);
           });
 
@@ -569,8 +569,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         const dataPayload = results.data;
 
         for (const [key, value] of Object.entries(dataPayload)) {
-          if (key !== "wizard" && typeof value !== "undefined" && typeof value.value !== "undefined" ) {
-            if (typeof rdjData.data[key] === "undefined") {
+          if (key !== 'wizard' && typeof value !== 'undefined' && typeof value.value !== 'undefined' ) {
+            if (typeof rdjData.data[key] === 'undefined') {
               rdjData.data[key] = {value: undefined};
             }
             rdjData.data[key].value = value.value;
@@ -579,7 +579,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
         const pdjTypes = new PageDataTypes(properties, viewParams.perspective.id);
 
-        if (typeof rdjData.data !== "undefined") {
+        if (typeof rdjData.data !== 'undefined') {
           //formLayout is built as single column, so just pass in the params as true.
           populateFormLayout(properties, formLayout, pdjTypes, rdjData.data, true, false)
         }
@@ -588,8 +588,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       }
 
       function renderForm(pdjData, rdjData) {
-        const div = document.createElement("div");
-        div.setAttribute("id", "cfe-form");
+        const div = document.createElement('div');
+        div.setAttribute('id', 'cfe-form');
         div.style.display = 'block';
 
         const properties = getSliceProperties(pdjData);
@@ -599,27 +599,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
         let formLayout = null;
 
-        const isUseCheckBoxesForBooleans = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, "useCheckBoxesForBooleans");
-        const isSingleColumn = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, "singleColumn");
+        const isUseCheckBoxesForBooleans = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, 'useCheckBoxesForBooleans');
+        const isSingleColumn = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, 'singleColumn');
         const hasFormLayoutSections = PageDefinitionFormLayouts.hasFormLayoutSections(pdjData);
-        const isReadOnly = (self.readonly() && (["configuration","view"].indexOf(viewParams.perspective.id) !== -1));
+        const isReadOnly = (self.readonly() && (['configuration','view','composite'].indexOf(viewParams.perspective.id) !== -1));
 
         if (hasFormLayoutSections) {
-          formLayout = PageDefinitionFormLayouts.createSectionedFormLayout({labelWidthPcnt: "45%", maxColumns: "1", isReadOnly: isReadOnly, isSingleColumn: isSingleColumn}, pdjTypes, rdjData, pdjData, populateFormLayout);
+          formLayout = PageDefinitionFormLayouts.createSectionedFormLayout({labelWidthPcnt: '45%', maxColumns: '1', isReadOnly: isReadOnly, isSingleColumn: isSingleColumn}, pdjTypes, rdjData, pdjData, populateFormLayout);
           div.append(formLayout);
         }
         else if (isUseCheckBoxesForBooleans) {
-          formLayout = PageDefinitionFormLayouts.createCheckBoxesFormLayout({labelWidthPcnt: "45%", maxColumns: "1"} );
+          formLayout = PageDefinitionFormLayouts.createCheckBoxesFormLayout({labelWidthPcnt: '45%', maxColumns: '1'} );
           div.append(formLayout);
         }
         else {
           if (isSingleColumn) {
-            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({labelWidthPcnt: "32%", maxColumns: "1"} );
+            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({labelWidthPcnt: '32%', maxColumns: '1'} );
             div.append(formLayout);
 //MLW            document.documentElement.style.setProperty("--form-input-min-width", "32em");
           }
           else {
-            formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({labelWidthPcnt: "45%", maxColumns: "2"} );
+            formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({labelWidthPcnt: '45%', maxColumns: '2'} );
             div.append(formLayout);
 //MLW            document.documentElement.style.setProperty("--form-input-min-width", "15em");
           }
@@ -662,7 +662,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       }
 
       function processRemovedField(name, value){
-        if (CoreUtils.isUndefinedOrNull(value)) value = "";
+        if (CoreUtils.isUndefinedOrNull(value)) value = '';
         let index = self.subscriptions.map(subscription => subscription._target()).indexOf(value);
         if (index !== -1) {
           self.subscriptions[index].dispose();
@@ -670,10 +670,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           self.dirtyFields.delete(name);
         }
         let replacer = self.createForm.getBackingDataAttributeReplacer(name);
-        if (typeof replacer === "undefined") replacer = name;
-        if (typeof self[`${FIELD_VALUES}${replacer}`] !== "undefined") delete self[`${FIELD_VALUES}${replacer}`];
-        if (typeof self[`${FIELD_SELECTDATA}${replacer}`] !== "undefined") delete self[`${FIELD_SELECTDATA}${replacer}`];
-        if (typeof self[`${FIELD_MESSAGES}${replacer}`] !== "undefined") {
+        if (typeof replacer === 'undefined') replacer = name;
+        if (typeof self[`${FIELD_VALUES}${replacer}`] !== 'undefined') delete self[`${FIELD_VALUES}${replacer}`];
+        if (typeof self[`${FIELD_SELECTDATA}${replacer}`] !== 'undefined') delete self[`${FIELD_SELECTDATA}${replacer}`];
+        if (typeof self[`${FIELD_MESSAGES}${replacer}`] !== 'undefined') {
           index = self.dynamicMessageFields.indexOf(self[`${FIELD_MESSAGES}${replacer}`]);
           if (index !== -1) self.dynamicMessageFields.splice(index, 1);
           delete self[`${FIELD_MESSAGES}${replacer}`];
@@ -708,7 +708,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             // Prevent a property from becoming enabled/disabled
             // when value has been unset
             if (self[`${FIELD_UNSET}${name}`]() || self[`${FIELD_UNSET}${propertyName}`]()) {
-              Logger.info("Prevent usedIf handling for unset field: " + name);
+              Logger.info('Prevent usedIf handling for unset field: ' + name);
               return;
             }
 
@@ -735,8 +735,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
           if (self.isWizardForm()) {
             const result = self.createForm.getBackingDataAttributeReplacer(replacer);
-            if (typeof result !== "undefined") replacer = result;
-            if (typeof self[FIELD_VALUES + replacer] === "undefined") {
+            if (typeof result !== 'undefined') replacer = result;
+            if (typeof self[FIELD_VALUES + replacer] === 'undefined') {
               // Add name to wizard page in backing data
               self.createForm.addBackingDataPageData(name);
             }
@@ -744,7 +744,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
           // Get the text display value for the data or null
           value = pdjTypes.getDisplayValue(name, dataValues[name]);
-          if (value === null) value = "";
+          if (value === null) value = '';
 
           // special case... if there is only one read-only field that
           // is an array, display it as a table.
@@ -756,39 +756,39 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             self.singlePropertyTableColumns = singlePropertyTable.columns;
             field = singlePropertyTable.field;
           } else if (pdjTypes.isBooleanType(name) && (!pdjTypes.isReadOnly(name)) && (!isReadOnly)) {
-            field = PageDefinitionFields.createSwitch("cfe-form-switch");
+            field = PageDefinitionFields.createSwitch('cfe-form-switch');
           }
           else if (pdjTypes.isDynamicEnumType(name) || pdjTypes.hasLegalValues(name)) {
             if (pdjTypes.isArray(name)) {
               const multiSelect = PageDefinitionFields.createMultiSelect(dataValues, name);
 
               field = multiSelect.field;
-              field.setAttribute("available-items", "[[multiSelectControls." + name + ".availableItems]]");
-              field.setAttribute("chosen-items", "[[multiSelectControls." + name + ".chosenItems]]");
-              field.setAttribute("on-chosen-items-changed", "[[chosenItemsChanged]]");
-              field.setAttribute("readonly", self.readonly());
+              field.setAttribute('available-items', '[[multiSelectControls.' + name + '.availableItems]]');
+              field.setAttribute('chosen-items', '[[multiSelectControls.' + name + '.chosenItems]]');
+              field.setAttribute('on-chosen-items-changed', '[[chosenItemsChanged]]');
+              field.setAttribute('readonly', self.readonly());
 
               self.multiSelectControls[name] = {
                 availableItems: multiSelect.availableItems,
                 chosenItems: multiSelect.chosenItems,
                 origChosenLabels: multiSelect.origChosenLabels
               };
-              self.perspectiveMemory.upsertNthChildrenItem.call(self.perspectiveMemory, {name: name, row: parseInt(i) + 1, col: 2, minHeight: "240px"});
+              self.perspectiveMemory.upsertNthChildrenItem.call(self.perspectiveMemory, {name: name, row: parseInt(i) + 1, col: 2, minHeight: '240px'});
             }
             else {
               const dataProviderName = FIELD_SELECTDATA + replacer;
               const options = {
-                "name": name,
-                "isEdit": (typeof self.pdjData.sliceForm !== 'undefined'),
-                "isSingleColumn": isSingleColumn,
-                "isReadOnly": isReadOnly
+                'name': name,
+                'isEdit': (typeof self.pdjData.sliceForm !== 'undefined'),
+                'isSingleColumn': isSingleColumn,
+                'isReadOnly': isReadOnly
               };
 
               const singleSelect = PageDefinitionFields.createSingleSelect(pdjTypes, value, dataValues, options );
               self[dataProviderName] = singleSelect.dataProvider;
               field = singleSelect.field;
-              field.setAttribute("data", "[[" + dataProviderName + "]]");
-              if (typeof field.defaultForCreate !== "undefined") {
+              field.setAttribute('data', '[[' + dataProviderName + ']]');
+              if (typeof field.defaultForCreate !== 'undefined') {
                 if (field.defaultForCreate !== value) {
                   createValue = field.defaultForCreate;
                   // Convert legal values with int type for observable.
@@ -798,62 +798,62 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             }
           }
           else if (pdjTypes.isSecretType(name)) {
-            field = PageDefinitionFields.createInputPassword("cfe-form-input-password");
+            field = PageDefinitionFields.createInputPassword('cfe-form-input-password');
           }
           else if (pdjTypes.isArray(name) || pdjTypes.isPropertiesType(name)) {
             const options = {
-              "className": "cfe-form-input-textarea",
-              "resize-behavior": "vertical",
-              "placeholder": pdjTypes.getInLineHelpPresentation(name),
-              "readonly": pdjTypes.isReadOnly(name) || isReadOnly
+              'className': 'cfe-form-input-textarea',
+              'resize-behavior': 'vertical',
+              'placeholder': pdjTypes.getInLineHelpPresentation(name),
+              'readonly': pdjTypes.isReadOnly(name) || isReadOnly
             };
             field = PageDefinitionFields.createTextArea(options);
-            field.setAttribute("title", value);
+            field.setAttribute('title', value);
             let nthChild = self.perspectiveMemory.getNthChildrenItem.call(self.perspectiveMemory, name);
-            if (typeof nthChild === "undefined") {
+            if (typeof nthChild === 'undefined') {
               // Setup the nthChild based on the form using one or two fields per row
               let fieldIndex = parseInt(i) + 1;
               let fieldRow = (isSingleColumn ? fieldIndex : Math.round(fieldIndex / 2));
               let fieldColumn = (isSingleColumn || ((fieldIndex % 2) != 0) ? 2 : 4);
-              nthChild = { name: name, row: fieldRow, col: fieldColumn, minHeight: "52px" };
+              nthChild = { name: name, row: fieldRow, col: fieldColumn, minHeight: '52px' };
             }
             self.perspectiveMemory.upsertNthChildrenItem.call(self.perspectiveMemory, nthChild);
           }
           else if (pdjTypes.isReadOnly(name)) {
             const options = {
-              "className": "cfe-form-readonly-text",
-              "readonly": "readonly"
+              'className': 'cfe-form-readonly-text',
+              'readonly': 'readonly'
             };
             field = PageDefinitionFields.createReadOnlyText(options);
-            field.setAttribute("title", value);
+            field.setAttribute('title', value);
           }
           else if (pdjTypes.isUploadedFileType(name)) {
-            field = PageDefinitionFields.createFileChooser("cfe-file-picker");
-            field.setAttribute("title", value);
+            field = PageDefinitionFields.createFileChooser('cfe-file-picker');
+            field.setAttribute('title', value);
           }
           else {
             const options = {
-              "className": pdjTypes.isNumberType(name)? "cfe-form-input-integer-sm" : "cfe-form-input-text",
-              "placeholder": pdjTypes.getInLineHelpPresentation(name),
-              "readonly": isReadOnly
+              'className': pdjTypes.isNumberType(name)? 'cfe-form-input-integer-sm' : 'cfe-form-input-text',
+              'placeholder': pdjTypes.getInLineHelpPresentation(name),
+              'readonly': isReadOnly
             };
             field = PageDefinitionFields.createInputText(options);
-            field.setAttribute("title", value);
+            field.setAttribute('title', value);
           }
 
           if (tableProperty) {
-            formLayout.append(document.createElement("div"));
+            formLayout.append(document.createElement('div'));
           } else {
             labelEle = PageDefinitionFields.createLabel(name, pdjTypes, helpInstruction);
-            if (!isSingleColumn && field.classList.contains("cfe-multi-select")) {
-              formLayout.append(document.createElement("div"));
+            if (!isSingleColumn && field.classList.contains('cfe-multi-select')) {
+              formLayout.append(document.createElement('div'));
             }
             formLayout.append(labelEle);
           }
 
-          if (typeof field !== "undefined" && field.className !== "cfe-multi-select") {
-            field.setAttribute("id", name);
-            field.setAttribute("label-edge", "provided");
+          if (typeof field !== 'undefined' && field.className !== 'cfe-multi-select') {
+            field.setAttribute('id', name);
+            field.setAttribute('label-edge', 'provided');
 
             // Get the actual value for the observable to preserve type
             let observableValue = createValue;
@@ -871,47 +871,47 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
               }
             }
             else {
-              if (self.isWizardForm()) observableValue = "";
+              if (self.isWizardForm()) observableValue = '';
               self[observableName] = ko.observable(observableValue);
             }
 
             const subscription = createFieldValueSubscription(name, replacer);
-            if (subscription._target() === "") {
+            if (subscription._target() === '') {
               self.subscriptions.push(subscription);
             }
 
             if (self.isWizardForm()) {
-              if (self[FIELD_VALUES + replacer]() === "") {
+              if (self[FIELD_VALUES + replacer]() === '') {
                 self[FIELD_VALUES + replacer](dataValues[name].value);
               }
             }
 
-            field.setAttribute("value", "{{" + FIELD_VALUES + replacer + "}}");
-            field.setAttribute("messages-custom", "[[" + FIELD_MESSAGES + replacer + "]]");
-            field.setAttribute("display-options.messages", "none");
+            field.setAttribute('value', '{{' + FIELD_VALUES + replacer + '}}');
+            field.setAttribute('messages-custom', '[[' + FIELD_MESSAGES + replacer + ']]');
+            field.setAttribute('display-options.messages', 'none');
           }
 
-          if (typeof field !== "undefined") {
-            var messageArea = document.createElement("div");
-            messageArea.setAttribute("class", "");
+          if (typeof field !== 'undefined') {
+            var messageArea = document.createElement('div');
+            messageArea.setAttribute('class', '');
             field.append(messageArea);
           }
 
-          if (typeof self[FIELD_MESSAGES + replacer] === "undefined") {
+          if (typeof self[FIELD_MESSAGES + replacer] === 'undefined') {
             self[FIELD_MESSAGES + replacer] = ko.observableArray([]);
             self.dynamicMessageFields.push(self[FIELD_MESSAGES + replacer]);
           }
 
-          if (typeof field !== "undefined") {
-            if (field.className === "cfe-multi-select") {
+          if (typeof field !== 'undefined') {
+            if (field.className === 'cfe-multi-select') {
               container = field;
             }
             else if (pdjTypes.isUploadedFileType(name)){
               const params = {
                 field: field,
                 id: name,
-                choose: { "on-click": "[[chooseFileClickHandler]]", iconFile: self.i18n.icons.choose.iconFile, tooltip: self.i18n.icons.choose.tooltip},
-                clear: { "on-click": "[[clearChosenFileClickHandler]]", iconFile: self.i18n.icons.clear.iconFile, tooltip: self.i18n.icons.clear.tooltip},
+                choose: { 'on-click': '[[chooseFileClickHandler]]', iconFile: self.i18n.icons.choose.iconFile, tooltip: self.i18n.icons.choose.tooltip},
+                clear: { 'on-click': '[[clearChosenFileClickHandler]]', iconFile: self.i18n.icons.clear.iconFile, tooltip: self.i18n.icons.clear.tooltip},
               };
               container = PageDefinitionFields.addUploadFileElements(params);
             }
@@ -966,7 +966,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           self[`${FIELD_UNSET}${action.field}`](action.unset);
           self[`${FIELD_DISABLED}${action.field}`](action.disabled);
           self.dirtyFields.add(action.field);
-          self[`${FIELD_VALUES}${action.field}`]("");
+          self[`${FIELD_VALUES}${action.field}`]('');
         }
       }
 
@@ -1015,7 +1015,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           if (self.createForm.hasMultiFormData()) {
             self.createForm.postMultiFormDataPayload(properties, fieldValues)
               .then((data) => {
-                handleSaveResponse(data, "", {}, "create", (typeof self.pdjData.sliceForm !== "undefined"))
+                handleSaveResponse(data, '', {}, 'create', (typeof self.pdjData.sliceForm !== 'undefined'))
               });
             results.data = undefined;
           }

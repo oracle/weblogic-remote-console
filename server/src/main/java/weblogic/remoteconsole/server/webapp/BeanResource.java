@@ -17,9 +17,9 @@ public class BeanResource extends BaseResource {
   }
 
 
-  protected void setSliceFormPagePath(String slice) {
+  protected void setSlicePagePath(String slice) {
     getInvocationContext().setPagePath(
-      getInvocationContext().getPageRepo().getPageRepoDef().newSliceFormPagePath(
+      getInvocationContext().getPageRepo().getPageRepoDef().newSlicePagePath(
         getInvocationContext().getBeanTreePath().getTypeDef(),
         new Path(slice)
       )
