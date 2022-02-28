@@ -1,0 +1,22 @@
+
+@import "oj/utilities/_oj.utilities.modules.scss";
+
+// This file is where css selectors shared by all themes go.
+// There will be hard code properties and properties controlled by variables, for example
+//
+// cfe-property-list-editor .cfe-property-list-editor-value-text {
+// color: var(--cfe-property-list-editor-value-text-color);
+// display: inline-block;
+// }
+
+// Even if this file is imported many times 'module-include-once' ensures the content is included just once .
+@include module-include-once("cfe-property-list-editor.base") {
+  cfe-property-list-editor:not(.oj-complete){
+    visibility: hidden;
+  }
+  
+  cfe-property-list-editor{
+  	min-height: 50px;
+  	width: 50px;
+  }
+}

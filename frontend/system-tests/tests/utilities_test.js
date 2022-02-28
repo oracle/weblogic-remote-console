@@ -49,21 +49,19 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
         file = "TestShoppingCart-1.png";
         try {
 
-            await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Configuration","EnvironmentChevron",
-                "Domain/Clusters",1);
+            await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Edit Tree","EnvironmentChevron",
+                "Clusters",1);
             await admin.saveToShoppingCart(driver);
             await driver.sleep(2400);
-            await admin.createMBeanObjectFromLandingPage(driver,"TestServer-1","Configuration","EnvironmentChevron",
-                "Domain/Servers",1);
+            await admin.createMBeanObjectFromLandingPage(driver,"TestServer-1","Edit Tree","EnvironmentChevron",
+                "Servers",1);
             await driver.sleep(2400);
             await admin.saveToShoppingCart(driver);
-            await admin.createMBeanObjectFromLandingPage(driver,"TestServerTemplate-1","Configuration","EnvironmentChevron",
-                "Domain/ServerTemplates",1);
+            await admin.createMBeanObjectFromLandingPage(driver,"TestServerTemplate-1","Edit Tree","EnvironmentChevron",
+                "Server Templates",1);
             await driver.sleep(2400);
             await admin.saveToShoppingCart(driver);
             await driver.sleep(900);
-
-
 
             await admin.viewChanges(driver);
             await driver.sleep(2400);
@@ -73,11 +71,11 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             console.log("Click Domain/Server Templates/TestServerTemplate-1 link");
             await driver.findElement(By.linkText("/Domain/Server Templates/TestServerTemplate-1")).click();
             await driver.sleep(2400);
-
+            /* FIXME
             await admin.viewChanges(driver);
             console.log("Click Additions header text pool link");
             await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-additions-header\']/a")).click();
-            await driver.sleep(5400);
+            await driver.sleep(9400);
             console.log("Click Domain/Clusters/TestCluster-1 link");
             await driver.findElement(By.linkText("/Domain/Clusters/TestCluster-1")).click();
             await driver.sleep(2400);
@@ -86,7 +84,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.findElement(By.id("ClusterAddress|input")).click();
             await driver.findElement(By.id("ClusterAddress|input")).sendKeys("localhost");
             await driver.sleep(2400);
-
+            */
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Servers",
                 "AdminServer","General");
             await admin.selectDropDownList(driver,idName='Cluster',
@@ -117,29 +115,19 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
         file = "TestShoppingCart-2.png";
         try {
            let object_count = 2;
-            await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Configuration","EnvironmentChevron",
-                "Domain/Clusters",1);
+            await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Edit Tree","EnvironmentChevron",
+                "Clusters",1);
             await admin.saveAndCommitChanges(driver);
-            await admin.createMBeanObjectFromLandingPage(driver,"TestServer-1","Configuration","EnvironmentChevron",
-                "Domain/Servers",1);
+            await admin.createMBeanObjectFromLandingPage(driver,"TestServer-1","Edit Tree","EnvironmentChevron",
+                "Servers",1);
             await admin.saveAndCommitChanges(driver);
             await driver.sleep(900);
-
-            await admin.goToLandingPanelSubTreeCard(driver,"Configuration","EnvironmentChevron","Domain/Clusters");
-            await driver.sleep(900);
-            console.log("Click Configuration-> Environment-> Clusters-> TestCluster-1 delete row button");
-            //New syntax to delete an object
-            element = await driver.findElement(By.xpath("//span[@id=\'Domain/Clusters/TestCluster-1|text\']/span"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            element.click();
-
-            await admin.goToLandingPanelSubTreeCard(driver,"Configuration","EnvironmentChevron","Domain/Servers");
-            await driver.sleep(900);
-            console.log("Click Configuration-> Environment-> Servers-> TestServer-1 delete row button");
-            element =  driver.findElement(By.xpath("//oj-button[@id=\'Domain/Servers/TestServer-1\']/button/div/span"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            element.click();
-
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Clusters",0);
+            await driver.sleep(1200);
+            await admin.deleteMBeanFromLandingPage(driver,"Clusters","TestCluster-1",3);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers",0);
+            await driver.sleep(2400);
+            await admin.deleteMBeanFromLandingPage(driver,"Servers","TestServer-1",5);
             await driver.sleep(900);
             await admin.viewChanges(driver);
 
@@ -154,7 +142,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.findElement(By.xpath("//div[@id=\'slideup-toggle\']/img")).click();
             await driver.sleep(900);
 
-            console.log("Click commit changes in shopping cart to commit removal of TestCluster-1 and TestServer-1 objects");
+            console.log("Click commit changes in shopping cart to validate removal of TestCluster-1 and TestServer-1 objects");
             element = driver.findElement(By.id("shoppingCartImage"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
@@ -176,24 +164,24 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // Validate Toggle Visibility of History Icon and its functionality for (Server, ServerTemplate and Cluster) Objects
     // Validate History of MBean Tree View Action Bar
     //
-    it('3. Test Category: GAT/Risk1\n \t Test Scenario: Validate Toggle Visibility of History Icon and its functionality for ' +
+    it.skip('3. Test Category: GAT/Risk1\n \t Test Scenario: Validate Toggle Visibility of History Icon and its functionality for ' +
         '(Server, ServerTemplate and Cluster) Objects, And History of MBean Tree View Action Bar', async function() {
         file = "TestUtilities_Icon-1.png";
         try {
             let object_count = 3;
-            await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-2","Configuration","EnvironmentChevron",
-                "Domain/Clusters",1);
+            await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-2","Edit Tree","EnvironmentChevron",
+                "Clusters",1);
             await admin.saveToShoppingCart(driver);
             await driver.sleep(900);
-            await admin.createMBeanObjectFromLandingPage(driver,"TestServer-2","Configuration","EnvironmentChevron",
-                "Domain/Servers",1);
+            await admin.createMBeanObjectFromLandingPage(driver,"TestServer-2","Edit Tree","EnvironmentChevron",
+                "Servers",1);
             await driver.sleep(900);
             await admin.saveToShoppingCart(driver);
-            await admin.createMBeanObjectFromLandingPage(driver,"TestServerTemplate-2","Configuration","EnvironmentChevron",
-                "Domain/ServerTemplates",1);
+            await admin.createMBeanObjectFromLandingPage(driver,"TestServerTemplate-2","Edit Tree","EnvironmentChevron",
+                "Server Templates",1);
             await driver.sleep(900);
             await admin.saveToShoppingCart(driver);
-
+            await driver.sleep(900);
             console.log("Click Toggle History link");
             await driver.findElement(By.id("toggle-history")).click();
             await driver.sleep(900);
@@ -207,7 +195,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             console.log("Click Drop down button menu");
             await driver.findElement(By.css(".oj-combobox-arrow")).click();
             await driver.sleep(900);
-            console.log("Click Domain/ServerTemplates/TestServerTemplate-2 Link");
+            console.log("Click Domain/Server Templates/TestServerTemplate-2 Link");
             await driver.findElement(By.id("oj-listbox-result-label-2")).click();
             console.log("Click Drop down button menu");
             await driver.findElement(By.css(".oj-combobox-arrow")).click();
@@ -242,13 +230,13 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             let object_count = 1;
             let reloadValue = 15;
 
-            await admin.createMBeanObjectFromLandingPage(driver,"TestServer-3","Configuration","EnvironmentChevron",
-                "Domain/Servers",1);
+            await admin.createMBeanObjectFromLandingPage(driver,"TestServer-3","Edit Tree","EnvironmentChevron",
+                "Servers",1);
             await driver.sleep(900);
             await admin.saveToShoppingCart(driver);
             await driver.sleep(900);
             console.log("Click Home Landing Page Icon");
-            await admin.goToLandingPanelSubTreeCard(driver,"Configuration","EnvironmentChevron","Domain/Servers");
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers");
             console.log("Click Set Auto-reload Interval Icon");
             await driver.sleep(900);
             element = driver.findElement(By.id("sync-interval-icon"));

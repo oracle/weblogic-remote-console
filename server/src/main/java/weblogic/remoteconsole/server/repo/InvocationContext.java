@@ -14,8 +14,6 @@ import javax.ws.rs.core.HttpHeaders;
 import weblogic.remoteconsole.common.repodef.Localizer;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicLocalizationUtils;
-import weblogic.remoteconsole.common.utils.StringUtils;
-import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.connection.Connection;
@@ -38,9 +36,6 @@ public class InvocationContext {
   // the connection to a weblogic domain
   // null if not connected to a domain
   private Connection connection;
-
-  // The version of Weblogic to use for processing this request
-  private WebLogicVersion weblogicVersion;
 
   // The client's list of preferred locals (from the request's HTTP headers)
   private List<Locale> locales;
@@ -139,7 +134,6 @@ public class InvocationContext {
 
   public void setConnection(Connection connection) {
     this.connection = connection;
-    this.weblogicVersion = findWeblogicVersion(connection);
   }
 
   public InvocationContext() {
@@ -169,19 +163,7 @@ public class InvocationContext {
   }
 
   private String getDomainVersion() {
-    return (this.weblogicVersion != null) ? this.weblogicVersion.getDomainVersion() : null;
-  }
-
-  private static WebLogicVersion findWeblogicVersion(Connection connection) {
-    if (connection == null) {
-      return null; // since there's no connection, we can't figure out the domain's weblogic version
-    }
-    String domainVersion = connection.getDomainVersion();
-    if (StringUtils.isEmpty(domainVersion)) {
-      throw new AssertionError("domain version not available for " + connection.getId());
-    }
-    // Return the version of weblogic that we have pages for
-    return WebLogicVersions.getVersion(domainVersion);
+    return (this.connection != null) ? this.connection.getWebLogicVersion().getDomainVersion() : null;
   }
 
   public Connection getConnection() {

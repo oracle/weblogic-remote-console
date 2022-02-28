@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * Class representing the metadata for a perspective
@@ -31,8 +31,8 @@ define(
       // us eliminate "typeof XXX 'undefined'"
       // checks, in downstream code that uses a
       // Perspective object.
-      this.label = "";
-      this.description = "";
+      this.label = '';
+      this.description = '';
       this.type = type || Perspective.prototype.Type.BUILT_IN.name;
       this.iconFiles = iconFiles;
       this.beanTree = beanTree;
@@ -41,12 +41,12 @@ define(
 
     Perspective.prototype = {
       Type: Object.freeze({
-        BUILT_IN : {name: "built-in"},
-        ADD_IN : {name: "add-in"}
+        BUILT_IN : {name: 'built-in'},
+        ADD_IN : {name: 'add-in'}
       }),
       State: Object.freeze({
-        INACTIVE : {name: "inactive"},
-        ACTIVE : {name: "active"}
+        INACTIVE : {name: 'inactive'},
+        ACTIVE : {name: 'active'}
       }),
       id: function() { return this.id; },
       label: function() { return this.label; },

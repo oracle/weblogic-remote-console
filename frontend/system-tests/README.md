@@ -1,4 +1,4 @@
-#### Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+#### Copyright (c) 2020, 2021, 2022 Oracle Corporation and/or its affiliates.
 #### [The Universal Permissive License (UPL), Version 1.0](http://oss.oracle.com/licenses/upl.)
 
 # Oracle WebLogic Server Remote Console Remote System Test 
@@ -9,17 +9,18 @@ To write new test case, you can use either Selenium [IDE](https://www.selenium.d
 
 [Mocha](https://mochajs.org/) is installed when you run the ojet restore command. The `frontend/pom.xml` file contains all the information for maven properties. 
 
-To install requirements for remote console, please follow instruction from this [link.](https://gitlab-odx.oracledx.com/weblogic/console-backend/-/blob/master/frontend/README.md)
+To install requisites for remote console, please follow instruction from this [link.](https://gitlab-odx.oracledx.com/weblogic/console-backend/-/blob/master/frontend/README.md)
 
-The system test beside [mocha test framework](https://github.com/mochajs), it's also required Selenium [webdriver browser drivers](https://www.selenium.dev/downloads/). You would need to install both [selenium-webdriver and browser-drivers](https://www.npmjs.com/package/selenium-webdriver) in your machine.
+The system test beside [mocha test framework](https://github.com/mochajs), it's also required Selenium [webdriver browser drivers](https://www.selenium.dev/downloads/). You would need to install both [selenium-webdriver and browser-drivers](https://www.npmjs.com/package/selenium-webdriver) on your machine.
 
 To install selenium-webdriver: `npm install selenium-webdriver --save-dev`.
 
-To install chromedriver: `npm install chromedriver@88.0 --save-dev`, or on MacOS `brew cask install chromedriver@85.0`
+To install chromedriver: `npm install chromedriver@95.0 --save-dev`, or on MacOS `brew cask install chromedriver@85.0`
 
 To install firefoxdriver, `npm install geckodriver --save-dev` for firefox browser.
 
-To avoid the proxy server problem, you can either download the chromedriver to the location which specified in runFETest.sh file, or npm set configuration below:
+To get around proxy configuration, you can download and copy chromedriver to frontend/node_modules/.bin and frontend/node_modules/chromedriver/lib/chromedriver directory.
+Or, run command below to install chromedriver:
 ```
 npm config rm proxy
 npm config rm https-proxy
@@ -29,9 +30,9 @@ npm config set chromedriver_cdnurl http://chromedriver.storage.googleapis.com
 ```
 Details to config npm registry is [here](https://confluence.oraclecorp.com/confluence/display/JET/JET+CLI+Setup)
 
-To build remote console and run selenium short test (basic_test) with build command. From console-backend directory, `./build-run-test.sh --selenium-short`
+To build remote console and run selenium short test (basic_test). From console-backend directory, `./build-run-test.sh --selenium-short`
 
-To build remote console and run selenium full test (long test) with build command. From console-backend directory, `./build-run-test.sh --selenium-long`
+To build remote console and run selenium full test (long test). From console-backend directory, `./build-run-test.sh --selenium-long`
 
 To run a single test suite, (eg, domain property configuration test suite)
 ```
@@ -42,7 +43,6 @@ To run a single test suite, (eg, domain property configuration test suite)
 -From console-backend/frontend directory, 
 ./node_modules/.bin/mocha -g <suiteName_test> weblogic welcome1 http://localhost:7001 system-tests/index.js
 ```
-To run a single test case, use 'To run a single test suite steps above and [mocha test syntax](https://github.com/mochajs)'
 
 The headless option is configured in admin.js file at statement: `browserName='chrome-headless' or browserName='firefox-headless'`
 To view test run on the browser, uncomment statement `browserName=chrome`

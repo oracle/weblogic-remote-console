@@ -24,7 +24,7 @@ public class ReadOnlyCollectionChildBeanResource extends BeanResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(@QueryParam("slice") @DefaultValue("") String slice) {
-    setSliceFormPagePath(slice);
+    setSlicePagePath(slice);
     return getSliceForm();
   }
 
@@ -39,7 +39,7 @@ public class ReadOnlyCollectionChildBeanResource extends BeanResource {
     @QueryParam("action") @DefaultValue("") String action,
     JsonObject requestBody
   ) {
-    setSliceFormPagePath(slice);
+    setSlicePagePath(slice);
     return invokeAction(action, requestBody);
   }
 

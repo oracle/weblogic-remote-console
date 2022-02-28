@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 define(
   function () {
@@ -17,9 +17,9 @@ define(
         i18n.actionsDialog.buttons.ok.label(dialogParams.label);
         i18n.actionsDialog.buttons.ok.disabled(true);
 
-        const okBtn = document.getElementById("dlgOkBtn2");
-        const cancelBtn = document.getElementById("dlgCancelBtn2");
-        const actionsDialog = document.getElementById("actionsDialog");
+        const okBtn = document.getElementById('dlgOkBtn2');
+        const cancelBtn = document.getElementById('dlgCancelBtn2');
+        const actionsDialog = document.getElementById('actionsDialog');
 
         function okClickHandler() {
           resolve({exitAction: i18n.actionsDialog.buttons.ok.label});
@@ -34,7 +34,7 @@ define(
         cancelBtn.addEventListener('click', cancelClickHandler);
 
         function onKeyUp(event) {
-          if (event.key === "Enter") {
+          if (event.key === 'Enter') {
             // Treat pressing the "Enter" key as clicking the "OK" button
             okClickHandler();
             // Suppress default handling of keyup event

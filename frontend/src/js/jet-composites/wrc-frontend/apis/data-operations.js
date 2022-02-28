@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * UI API module for performing data CRUD operations via the `CbeDataManager` module.
@@ -19,29 +19,46 @@
 define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils' , 'wrc-frontend/core/cfe-errors', 'wrc-frontend/core/cbe-types'],
   function (oj, CbeDataManager, Runtime, CoreTypes, CoreUtils, CfeErrors, CbeTypes) {
     function getConnectionErrorMessage(status) {
-      let msg = oj.Translations.getTranslatedString("wrc-data-operations.messages.connectFailed.detail");
+      let msg = oj.Translations.getTranslatedString('wrc-data-operations.messages.connectFailed.detail');
       // Create message to display for connection error
       switch (status) {
         case 400:
-          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.badRequest.detail");
+          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.badRequest.detail');
           break;
         case 401:
-          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.invalidCredentials.detail");
+          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.invalidCredentials.detail');
           break;
         case 403:
-          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.notInRole.detail");
+          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.notInRole.detail');
           break;
         case 404:
-          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.invalidUrl.detail");
+          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.invalidUrl.detail');
           break;
         case 501:
-          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.notSupported.detail");
+          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.notSupported.detail');
           break;
         default:
-          msg = msg + oj.Translations.getTranslatedString("wrc-data-operations.messages.unexpectedStatus.detail", "{0}").replace("{0}", status);
+          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.unexpectedStatus.detail', '{0}').replace('{0}', status);
           break;
       }
       return msg;
+    }
+
+    function processErrorResponse(response, messages) {
+      // Don't assume that this is a CBE_REST_API failure type!! Check and see what failure
+      // type it actually is, before you alter the response :-)
+      if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+        if (response.failureReason.message === 'Failed to fetch') {
+          response['failureReason'] = messages.backendNotReachable.detail;
+        }
+        else {
+          response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
+        }
+      }
+      else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+        response['failureReason'] = getConnectionErrorMessage.call(this, response.transport.status);
+      }
+      return response;
     }
 
     async function createAuthorizationHeader(dataProvider) {
@@ -52,20 +69,20 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
       // to the ".catch(reason => {})" chain link below.
       // Otherwise, we just return the base64 encoded
       // value for the Authorization HTTP header.
-      return "Basic " + btoa(dataProvider.username + ":" + dataProvider.password);
+      return 'Basic ' + btoa(dataProvider.username + ':' + dataProvider.password);
     }
 
     //public:
     return {
       mbean: {
         messages: {
-          "cfeApi": {
-            "serviceNotDefined": {detail: "'{0}' service not defined in console-frontend-jet.yaml file."}
+          'cfeApi': {
+            'serviceNotDefined': {detail: '\'{0}\' service not defined in console-frontend-jet.yaml file.'}
           },
-          "cbeRestApi": {
-            "requestUnsuccessful": {
-              "summary": oj.Translations.getTranslatedString("wrc-cbe-data-manager.messages.cbeRestApi.requestUnsuccessful.summary"),
-              "detail": oj.Translations.getTranslatedString("wrc-cbe-data-manager.messages.cbeRestApi.requestUnsuccessful.detail")
+          'cbeRestApi': {
+            'requestUnsuccessful': {
+              'summary': oj.Translations.getTranslatedString('wrc-cbe-data-manager.messages.cbeRestApi.requestUnsuccessful.summary'),
+              'detail': oj.Translations.getTranslatedString('wrc-cbe-data-manager.messages.cbeRestApi.requestUnsuccessful.detail')
             }
           }
         },
@@ -84,9 +101,9 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
               // transport-related fields from the reply, before you
               // return it to the consumer.
               if (CoreUtils.isNotUndefinedNorNull(reply.transport)) {
-                delete reply.transport["status"];
-                delete reply.transport["statusText"];
-                delete reply.transport["headers"];
+                delete reply.transport['status'];
+                delete reply.transport['statusText'];
+                delete reply.transport['headers'];
               }
               return reply;
             });
@@ -100,14 +117,14 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
           return CbeDataManager.getAggregatedData(uri)
             .catch(response =>{
               if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                response["failureReason"] = response.failureReason.stack;
+                response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
               }
               else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
                 // Try to make FailureType more accurate, if
                 // it was a CBE_REST_API generated failure
                 if (response.transport.status === 404) {
                   // Switch it to FailureType.NOT_FOUND
-                  response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+                  response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
                 }
               }
               // Rethrow updated (or not updated) reject
@@ -123,14 +140,14 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
           return CbeDataManager.reloadData(uri)
             .catch(response =>{
               if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                response["failureReason"] = response.failureReason.stack;
+                response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
               }
               else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
                 // Try to make FailureType more accurate, if
                 // it was a CBE_REST_API generated failure
                 if (response.transport.status === 404) {
                   // Switch it to FailureType.NOT_FOUND
-                  response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+                  response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
                 }
               }
               // Rethrow updated (or not updated) reject
@@ -172,14 +189,14 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
           return CbeDataManager.deleteData(uri)
             .catch(response =>{
               if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                response["failureReason"] = response.failureReason.stack;
+                response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
               }
               else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
                 // Try to make FailureType more accurate, if
                 // it was a CBE_REST_API generated failure
                 if (response.transport.status === 404) {
                   // Switch it to FailureType.NOT_FOUND
-                  response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+                  response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
                 }
               }
               // Rethrow updated (or not updated) reject
@@ -228,9 +245,9 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
 
       changeManager: {
         SessionAction: Object.freeze({
-          VIEW_CHANGES: {name: "changes"},
-          COMMIT_CHANGES: {name: "commitChanges"},
-          DISCARD_CHANGES: {name: "discardChanges"}
+          VIEW_CHANGES: {name: 'changes'},
+          COMMIT_CHANGES: {name: 'commitChanges'},
+          DISCARD_CHANGES: {name: 'discardChanges'}
         }),
         /**
          * Returns a Promise containing the lock state of the edit session the CBE has with WLS domain
@@ -268,14 +285,14 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
 
       connection: {
         messages: {
-          "connectionMessage": {summary: oj.Translations.getTranslatedString("wrc-data-operations.messages.connectionMessage.summary")},
-          "backendNotReachable": {detail: oj.Translations.getTranslatedString("wrc-data-operations.messages.backendNotReachable.detail")},
-          "connectFailed": {detail: oj.Translations.getTranslatedString("wrc-data-operations.messages.connectFailed.detail")},
-          "badRequest":  {detail: oj.Translations.getTranslatedString("wrc-data-operations.messages.badRequest.detail")},
-          "invalidCredentials":  {detail: oj.Translations.getTranslatedString("wrc-data-operations.messages.invalidCredentials.detail")},
-          "invalidUrl":  {detail: oj.Translations.getTranslatedString("wrc-data-operations.messages.invalidUrl.detail")},
-          "notSupported":  {detail: oj.Translations.getTranslatedString("wrc-data-operations.messages.notSupported.detail")},
-          "unexpectedStatus":  {detail: oj.Translations.getTranslatedString("wrc-data-operations.messages.unexpectedStatus.detail", "{0}")}
+          'connectionMessage': {summary: oj.Translations.getTranslatedString('wrc-data-operations.messages.connectionMessage.summary')},
+          'backendNotReachable': {detail: oj.Translations.getTranslatedString('wrc-data-operations.messages.backendNotReachable.detail')},
+          'connectFailed': {detail: oj.Translations.getTranslatedString('wrc-data-operations.messages.connectFailed.detail')},
+          'badRequest':  {detail: oj.Translations.getTranslatedString('wrc-data-operations.messages.badRequest.detail')},
+          'invalidCredentials':  {detail: oj.Translations.getTranslatedString('wrc-data-operations.messages.invalidCredentials.detail')},
+          'invalidUrl':  {detail: oj.Translations.getTranslatedString('wrc-data-operations.messages.invalidUrl.detail')},
+          'notSupported':  {detail: oj.Translations.getTranslatedString('wrc-data-operations.messages.notSupported.detail')},
+          'unexpectedStatus':  {detail: oj.Translations.getTranslatedString('wrc-data-operations.messages.unexpectedStatus.detail', '{0}')}
         },
 
         /**
@@ -296,7 +313,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         stageConnection: function (dataProvider) {
           const dataPayload = {
             name: dataProvider.id,
-            providerType: "AdminServerConnection",
+            providerType: 'AdminServerConnection',
             domainUrl: dataProvider.url
           };
 
@@ -309,7 +326,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
                 // micro-service.
                 CbeDataManager.stageConnectionData(dataPayload, authorization)
                   .then(reply => {
-                    reply.body.data["connectivity"] = CoreTypes.Console.RuntimeMode.DETACHED.name;
+                    reply.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.DETACHED.name;
                     resolve(reply);
                   })
                   .catch(response => {
@@ -318,15 +335,15 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
                     // type it actually is, before you alter the
                     // response :-)
                     if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                      if (response.failureReason.message === "Failed to fetch") {
-                        response["failureReason"] = this.messages.backendNotReachable.detail;
+                      if (response.failureReason.message === 'Failed to fetch') {
+                        response['failureReason'] = this.messages.backendNotReachable.detail;
                       }
                       else {
-                        response["failureReason"] = response.failureReason.stack;
+                        response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
                       }
                     }
                     else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                      response["failureReason"] = getConnectionErrorMessage.call(this, response.transport.status);
+                      response['failureReason'] = getConnectionErrorMessage.call(this, response.transport.status);
                     }
                     reject(response);
                   });
@@ -334,7 +351,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
               .catch(reason => {
                 reject({
                   failureType: CoreTypes.FailureType.UNEXPECTED,
-                  failureReason: new CfeErrors.CfeError("Some of the characters used are outside of the Latin character set")
+                  failureReason: new CfeErrors.CfeError('Some of the characters used are outside of the Latin character set')
                 });
               })
 
@@ -344,12 +361,12 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         useConnection: function (dataProvider) {
           return CbeDataManager.useConnectionData(dataProvider.id)
             .then(response => {
-              response.body.data["connectivity"] = CoreTypes.Console.RuntimeMode.ONLINE.name;
+              response.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.ONLINE.name;
 
               if (CoreUtils.isNotUndefinedNorNull(response.failureType)) {
                 if (response.transport.status === 400) response.transport.status = 401;
-                response["failureReason"] = getConnectionErrorMessage.call(this, response.transport.status);
-                response.body.data["connectivity"] = CoreTypes.Console.RuntimeMode.DETACHED.name;
+                response['failureReason'] = getConnectionErrorMessage.call(this, response.transport.status);
+                response.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.DETACHED.name;
               }
               return response;
             });
@@ -386,8 +403,8 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
 
       model: {
         messages: {
-          "connectionMessage": {summary: oj.Translations.getTranslatedString("wrc-data-operations.messages.connectionMessage.summary")},
-          "backendNotReachable": {detail: oj.Translations.getTranslatedString("wrc-data-operations.messages.backendNotReachable.detail")}
+          'connectionMessage': {summary: oj.Translations.getTranslatedString('wrc-data-operations.messages.connectionMessage.summary')},
+          'backendNotReachable': {detail: oj.Translations.getTranslatedString('wrc-data-operations.messages.backendNotReachable.detail')}
         },
 
         createModel: function(dataProviderId, formData) {
@@ -398,7 +415,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
                 // Check for any messages in the connection reply
                 if (CoreUtils.isNotUndefinedNorNull(reply.body.message)) {
                   messages.push({
-                    severity: "warn",
+                    severity: 'warn',
                     summary: this.messages.connectionMessage.summary,
                     detail: reply.body.message
                   });
@@ -413,15 +430,15 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
                       // anything that will allow us to set the CFE runtime
                       // mode to OFFLINE. For now, we'll just add a
                       // "connectivity": "offline" field to the reply.
-                      reply.body.data["connectivity"] = CoreTypes.Console.RuntimeMode.OFFLINE.name;
+                      reply.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.OFFLINE.name;
                       // The /api/providers API doesn't currently return
                       // a "state" field, but we need that to set the CBE
                       // connect state to "connected". The CBE connect
                       // state drives a lot of the behavior in the CFE.
-                      reply.body.data["state"] = CoreTypes.Domain.ConnectState.CONNECTED.name;
+                      reply.body.data['state'] = CoreTypes.Domain.ConnectState.CONNECTED.name;
                       if (CoreUtils.isNotUndefinedNorNull(reply.body.message)) {
                         messages.push({
-                          severity: "warn",
+                          severity: 'warn',
                           summary: this.messages.connectionMessage.summary,
                           detail: reply.body.message
                         });
@@ -434,15 +451,15 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
                       // but rethrow so the consumer can handle it however
                       // it sees fit.
                       if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                        if (response.failureReason.message === "Failed to fetch") {
-                          response["failureReason"] = this.messages.backendNotReachable.detail;
+                        if (response.failureReason.message === 'Failed to fetch') {
+                          response['failureReason'] = this.messages.backendNotReachable.detail;
                         }
                         else {
-                          response["failureReason"] = response.failureReason.stack;
+                          response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
                         }
                       }
                       else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                        response["failureReason"] = getConnectionErrorMessage.call(this, response.transport.status);
+                        response['failureReason'] = getConnectionErrorMessage.call(this, response.transport.status);
                       }
                       reject(response);
                     });
@@ -453,19 +470,27 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
                 // but rethrow so the consumer can handle it however
                 // it sees fit.
                 if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                  if (response.failureReason.message === "Failed to fetch") {
-                    response["failureReason"] = this.messages.backendNotReachable.detail;
+                  if (response.failureReason.message === 'Failed to fetch') {
+                    response['failureReason'] = this.messages.backendNotReachable.detail;
+                    response.body.messages.push({
+                      severity: 'warn',
+                      summary: oj.Translations.getTranslatedString('wrc-data-operations.messages.cbeRestApi.requestUnsuccessful.summary'),
+                      detail: this.messages.backendNotReachable.detail
+                    });
                   }
                   else {
-                    response["failureReason"] = response.failureReason.stack;
+                    response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
                   }
                 }
                 else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                  if (CoreUtils.isNotUndefinedNorNull(response.body.messages)) {
-                    response["failureReason"] = response.body.messages[0].message;
+                  if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
+                    response['failureReason'] = response.body.messages[0].message;
+                  }
+                  else if (response.transport.status === 0 && response.transport.statusText === 'error') {
+                    response['failureReason'] = this.messages.backendNotReachable.detail;
                   }
                   else {
-                    response["failureReason"] = getConnectionErrorMessage.call(this, response.transport.status);
+                    response['failureReason'] = getConnectionErrorMessage.call(this, response.transport.status);
                   }
                 }
                 reject(response);
@@ -505,6 +530,90 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         }
       },
 
+      composite: {
+        messages: {
+          'connectionMessage': {summary: oj.Translations.getTranslatedString('wrc-data-operations.messages.connectionMessage.summary')},
+          'backendNotReachable': {detail: oj.Translations.getTranslatedString('wrc-data-operations.messages.backendNotReachable.detail')}
+        },
+
+        /**
+         * Ask CBE to create a WDT Composite Model provider specifing the names of the model providers to use for the composite.
+         * @param {{string: id, name: string, type: "modelComposite", modelProviders: [string]} dataProvider
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        createComposite: function (dataProvider) {
+          const dataPayload = {
+            name: dataProvider.id,
+            providerType: 'WDTCompositeModel',
+            modelNames: dataProvider.modelProviders
+          };
+
+          // Use Promise chain to do the work
+          return new Promise((resolve, reject) => {
+            CbeDataManager.stageConnectionData(dataPayload, undefined)
+              .then(reply => {
+                // Add connectivity as "offline" to the reply.
+                reply.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.OFFLINE.name;
+                // Add stated as "connected" which drives a lot of the behavior in the CFE.
+                reply.body.data['state'] = CoreTypes.Domain.ConnectState.CONNECTED.name;
+                resolve(reply);
+              })
+              .catch(response => {
+                response = processErrorResponse.call(this, response, this.messages);
+                reject(response);
+              });
+          })
+        },
+
+        /**
+         * Ask CBE to use the WDT Composite Model provider.
+         * @param {{string: id, name: string, type: "modelComposite", modelProviders: [string]} dataProvider
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        useComposite: function (dataProvider) {
+          return new Promise((resolve, reject) => {
+            CbeDataManager.useCompositeData(dataProvider.id)
+              .then(reply => {
+                // Add connectivity as "offline" to the reply.
+                reply.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.OFFLINE.name;
+                // Add stated as "connected" which drives a lot of the behavior in the CFE.
+                reply.body.data['state'] = CoreTypes.Domain.ConnectState.CONNECTED.name;
+                resolve(reply);
+              })
+              .catch(response => {
+                response = processErrorResponse.call(this, response, this.messages);
+                reject(response);
+              });
+          })
+        },
+
+        /**
+         * Ask the CBE to remnove the WDT Composite Model provider.
+         * @param {string} dataProviderId
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        removeComposite: function(dataProviderId) {
+          return CbeDataManager.deleteCompositeData(dataProviderId)
+            .catch(response =>{
+              // If it was a CBE_REST_API generated failure
+              // with a 403 (Bad Request) status code, we
+              // view this as a recoverable exception, likely
+              // caused by the CBE not getting completely into
+              // the state where the provider stuff works.
+              // The recovery action involves switching the
+              // Promise reject to a Promise resolve.
+              if (response.transport.status === 403) {
+                const reply = { body: { data: {} } };
+                return Promise.resolve(reply);
+              }
+              else {
+                // Rethrow response as a reject Promise.
+                return Promise.reject(response);
+              }
+            });
+        },
+      },
+
       providers: {
         /**
          *
@@ -518,7 +627,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
               // Leave everything else in tact, so caller
               // has everything they need to treat it as
               // an error condition.
-              response["body"] = {data: []};
+              response['body'] = {data: []};
               return Promise.resolve(response);
             });
         }

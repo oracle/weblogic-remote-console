@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/core/utils/keyset-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander'],
   function(oj, ko, ArrayDataProvider, HtmlUtils, keySet, keySetUtils, Runtime, ChangeManager, PageDefinitionUtils, ViewModelUtils, CoreUtils, Logger){
@@ -19,30 +19,30 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
 
       this.changeManagerSections = ko.observableArray([
         {id: ChangeManager.Section.CHANGE_MANAGER.name, content: {}, count: ko.observable(0),
-          label: oj.Translations.getTranslatedString("wrc-shoppingcart.sections.changeManager.label")
+          label: oj.Translations.getTranslatedString('wrc-shoppingcart.sections.changeManager.label')
         },
         {id: ChangeManager.Section.ADDITIONS.name,content: [], count: ko.observable(0),
-          label: oj.Translations.getTranslatedString("wrc-shoppingcart.sections.additions.label")
+          label: oj.Translations.getTranslatedString('wrc-shoppingcart.sections.additions.label')
         },
         {id: ChangeManager.Section.MODIFICATIONS.name, content: [], count: ko.observable(0),
-          label: oj.Translations.getTranslatedString("wrc-shoppingcart.sections.modifications.label")
+          label: oj.Translations.getTranslatedString('wrc-shoppingcart.sections.modifications.label')
         },
         {id: ChangeManager.Section.REMOVALS.name, content: [], count: ko.observable(0),
-          label: oj.Translations.getTranslatedString("wrc-shoppingcart.sections.removals.label")
+          label: oj.Translations.getTranslatedString('wrc-shoppingcart.sections.removals.label')
         },
         {id: ChangeManager.Section.RESTART.name, content: [], count: ko.observable(0),
-          label: oj.Translations.getTranslatedString("wrc-shoppingcart.sections.restart.label")
+          label: oj.Translations.getTranslatedString('wrc-shoppingcart.sections.restart.label')
         }
       ]);
 
       this.i18n = {
         tabstrip: {
           tabs: ko.observableArray([
-            {id: "discard-tab-button", iconFile: "discard-changes-blk_24x24", disabled: false, visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString("wrc-shoppingcart.icons.discard.tooltip")
+            {id: 'discard-tab-button', iconFile: 'discard-changes-blk_24x24', disabled: false, visible: ko.observable(true),
+              label: oj.Translations.getTranslatedString('wrc-shoppingcart.icons.discard.tooltip')
             },
-            {id: "commit-tab-button", iconFile: "commit-changes-blk_24x24", disabled: false, visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString("wrc-shoppingcart.icons.commit.tooltip")
+            {id: 'commit-tab-button', iconFile: 'commit-changes-blk_24x24', disabled: false, visible: ko.observable(true),
+              label: oj.Translations.getTranslatedString('wrc-shoppingcart.icons.commit.tooltip')
             }
           ])
         }
@@ -60,7 +60,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.perspectiveSelected.add((newPerspective) => {
-          setTabStripTabsVisibility(newPerspective.id === "configuration");
+          setTabStripTabsVisibility(newPerspective.id === 'configuration');
         });
 
         self.signalBindings.push(binding);
@@ -84,7 +84,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       }
 
       this.getCachedState = () => {
-        Logger.log(`[SHOPPINGCART] getCachedState() was called.`);
+        Logger.log('[SHOPPINGCART] getCachedState() was called.');
         return {};
       };
 
@@ -107,14 +107,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
               section.count(0);
             }
 
-            ele = document.getElementById("additions-count");
-            if (ele !== null) ele.innerHTML = section.label + " (" + section.count() + ")";
+            ele = document.getElementById('additions-count');
+            if (ele !== null) ele.innerHTML = section.label + ' (' + section.count() + ')';
 
             section = self.changeManagerSections().find(item => item.id === ChangeManager.Section.MODIFICATIONS.name);
             section.content = data.data[ChangeManager.Section.MODIFICATIONS.name];
             section.count(section.content.length);
-            ele = document.getElementById("modifications-count");
-            if (ele !== null) ele.innerHTML = section.label + " (" + section.count() + ")";
+            ele = document.getElementById('modifications-count');
+            if (ele !== null) ele.innerHTML = section.label + ' (' + section.count() + ')';
 
             section = self.changeManagerSections().find(item => item.id === ChangeManager.Section.REMOVALS.name);
             section.content = data.data[ChangeManager.Section.REMOVALS.name];
@@ -124,8 +124,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
             else {
               section.count(0);
             }
-            ele = document.getElementById("removals-count");
-            if (ele !== null) ele.innerHTML = section.label + " (" + section.count() + ")";
+            ele = document.getElementById('removals-count');
+            if (ele !== null) ele.innerHTML = section.label + ' (' + section.count() + ')';
 
             section = self.changeManagerSections().find(item => item.id === ChangeManager.Section.RESTART.name);
             section.content = data.data[ChangeManager.Section.RESTART.name];
@@ -135,8 +135,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
             else {
               section.count(0);
             }
-            ele = document.getElementById("restart-count");
-            if (ele !== null) ele.innerHTML = section.label + " (" + section.count() + ")";
+            ele = document.getElementById('restart-count');
+            if (ele !== null) ele.innerHTML = section.label + ' (' + section.count() + ')';
 
             updateChangeManagerSection(data.changeManager);
           })
@@ -156,17 +156,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
               tabButton.disabled = (!changeManager.hasChanges);
               const ele = document.getElementById(tabButton.id);
               switch (tabButton.id) {
-                case "discard-tab-button":
-                  if (ele !== null) ele.src = "js/jet-composites/wrc-frontend/1.0.0/images/discard-changes-" + (tabButton.disabled ? "disabled" : "blk") + "_24x24.png";
+                case 'discard-tab-button':
+                  if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/discard-changes-' + (tabButton.disabled ? 'disabled' : 'blk') + '_24x24.png';
                   break;
-                case "commit-tab-button":
-                  if (ele !== null) ele.src = "js/jet-composites/wrc-frontend/1.0.0/images/commit-changes-" + (tabButton.disabled ? "disabled" : "blk") + "_24x24.png";
+                case 'commit-tab-button':
+                  if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/commit-changes-' + (tabButton.disabled ? 'disabled' : 'blk') + '_24x24.png';
                   break;
               }
             });
 
-            const ele = document.getElementById("shoppingcart-tab");
-            if (ele !== null) ele.src = "js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-" + (changeManager.hasChanges ? "non-empty" : "empty") + "-tabstrip_24x24.png";
+            const ele = document.getElementById('shoppingcart-tab');
+            if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + (changeManager.hasChanges ? 'non-empty' : 'empty') + '-tabstrip_24x24.png';
           }
           else {
             viewParams.onTabStripContentChanged(ChangeManager.Entity.SHOPPING_CART.name, false);
@@ -176,12 +176,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
 
       this.shoppingCartTabButtonClickHandler = function(event) {
         let id;
-        if (event.target.localName === "img") {
+        if (event.target.localName === 'img') {
           id = event.target.id;
         }
 
         const tabButton = self.i18n.tabstrip.tabs().find(button => button.id === id);
-        if (typeof tabButton === "undefined" || tabButton.disabled) {
+        if (typeof tabButton === 'undefined' || tabButton.disabled) {
           event.preventDefault();
           return false;
         }
@@ -189,26 +189,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         Logger.log(`id=${id}`);
 
         switch(id){
-          case "commit-tab-button":
-            ViewModelUtils.setCursorType("progress");
+          case 'commit-tab-button':
+            ViewModelUtils.setCursorType('progress');
             ChangeManager.commitChanges()
               .then((changeManager) => {
-                viewParams.signaling.shoppingCartModified.dispatch(ChangeManager.Entity.SHOPPING_CART.name, "commit", changeManager);
+                viewParams.signaling.shoppingCartModified.dispatch(ChangeManager.Entity.SHOPPING_CART.name, 'commit', changeManager);
                 viewParams.onTabStripContentChanged(ChangeManager.Entity.SHOPPING_CART.name, false);
               })
               .finally(() => {
-                ViewModelUtils.setCursorType("default");
+                ViewModelUtils.setCursorType('default');
               });
             break;
-          case "discard-tab-button":
-            ViewModelUtils.setCursorType("progress");
+          case 'discard-tab-button':
+            ViewModelUtils.setCursorType('progress');
             ChangeManager.discardChanges()
               .then((changeManager) => {
-                viewParams.signaling.shoppingCartModified.dispatch(ChangeManager.Entity.SHOPPING_CART.name, "discard", changeManager);
+                viewParams.signaling.shoppingCartModified.dispatch(ChangeManager.Entity.SHOPPING_CART.name, 'discard', changeManager);
                 viewParams.onTabStripContentChanged(ChangeManager.Entity.SHOPPING_CART.name, false);
               })
               .finally(() => {
-                ViewModelUtils.setCursorType("default");
+                ViewModelUtils.setCursorType('default');
               });
             break;
         }
@@ -218,22 +218,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         const path = event.target.attributes['data-path'].value;
         if (CoreUtils.isUndefinedOrNull(path)) return;
 
-        viewParams.parentRouter.go("/configuration/" + encodeURIComponent(path));
+        viewParams.parentRouter.go('/configuration/' + encodeURIComponent(path));
         viewParams.onTabStripContentVisible(false);
       }.bind(this);
 
       this.parentIdentityKeyClickHandler = function(event) {
-        const dataKey = event.target.attributes["data-key"].value;
-        const ele = document.querySelector("[name='" + dataKey +"']");
-        if (event.target.classList.contains("oj-fwk-icon-arrow03-e")) {
-          event.target.classList.remove("oj-fwk-icon-arrow03-e");
-          event.target.classList.add("oj-fwk-icon-arrow03-s");
-          ele.style.display = "inline-block";
+        const dataKey = event.target.attributes['data-key'].value;
+        const ele = document.querySelector('[name=\'' + dataKey +'\']');
+        if (event.target.classList.contains('oj-fwk-icon-arrow03-e')) {
+          event.target.classList.remove('oj-fwk-icon-arrow03-e');
+          event.target.classList.add('oj-fwk-icon-arrow03-s');
+          ele.style.display = 'inline-block';
         }
         else {
-          event.target.classList.remove("oj-fwk-icon-arrow03-s");
-          event.target.classList.add("oj-fwk-icon-arrow03-e");
-          ele.style.display = "none";
+          event.target.classList.remove('oj-fwk-icon-arrow03-s');
+          event.target.classList.add('oj-fwk-icon-arrow03-e');
+          ele.style.display = 'none';
         }
       }.bind(this);
 
@@ -286,33 +286,33 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       }
 
       function createChangeManagerDOM(content){
-        let bindHtml = "<table id='change-manager-table'>";
+        let bindHtml = '<table id=\'change-manager-table\'>';
         for (const [key, value] of Object.entries(content)) {
-          bindHtml += "<tr>";
-          bindHtml += "<td class='table-key'>" + key + "</td><td>" + value + "</td>";
-          bindHtml += "</tr>";
+          bindHtml += '<tr>';
+          bindHtml += '<td class=\'table-key\'>' + key + '</td><td>' + value + '</td>';
+          bindHtml += '</tr>';
         }
-        bindHtml += "</table>";
+        bindHtml += '</table>';
         return { view: HtmlUtils.stringToNodeArray(bindHtml) };
       }
 
       function createAdditionsDOM(content){
-        let bindHtml = "<p/>";
+        let bindHtml = '<p/>';
         if (content.length > 0) {
-          bindHtml = "<table id='additions-table'>";
+          bindHtml = '<table id=\'additions-table\'>';
 
           let data = {};
 
           content.forEach((entry) => {
-            bindHtml += "<tr>";
-            bindHtml += "<td class='table-key'>";
-            bindHtml += "<a href='#' on-click='[[identityKeyClickHandler]]' data-path='" + entry.resourceData + "'>";
-            bindHtml += "/" + entry.label;
-            bindHtml += "</a>";
-            bindHtml += "</tr>";
+            bindHtml += '<tr>';
+            bindHtml += '<td class=\'table-key\'>';
+            bindHtml += '<a href=\'#\' on-click=\'[[identityKeyClickHandler]]\' data-path=\'' + entry.resourceData + '\'>';
+            bindHtml += '/' + entry.label;
+            bindHtml += '</a>';
+            bindHtml += '</tr>';
           });
 
-          bindHtml += "</table>";
+          bindHtml += '</table>';
         }
         return { view: HtmlUtils.stringToNodeArray(bindHtml), data: self };
       }
@@ -326,123 +326,124 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
           return JSON.stringify(labelsArray);
         }
 
-        let bindHtml = "<p/>";
+        let bindHtml = '<p/>';
         if (content.length > 0) {
-          bindHtml = "<table id='modifications-table'>";
+          bindHtml = '<table id=\'modifications-table\'>';
 
-          let identityKeyHtml = "", identityProperty = "", pathLinkMap = {}, pathLink = "", pathKey;
+          let identityKeyHtml = '', identityProperty = '', pathLinkMap = {}, pathLink = '', pathKey;
 
           content.forEach((entry) => {
             pathLink = entry.bean.resourceData;
             pathKey = entry.bean.resourceData;
             if (!(pathLink in pathLinkMap)) {
-              identityKeyHtml = "<tr>";
-              identityKeyHtml += "<td class='table-key'>";
-              identityKeyHtml += "<a href='#' on-click='[[parentIdentityKeyClickHandler]]'>";
-              identityKeyHtml += "<span class='oj-component-icon oj-clickable-icon-nocontext oj-fwk-icon-arrow03-e' data-key='" + pathKey + "'></span>";
-              identityKeyHtml += "</a>";
-              identityKeyHtml += "<a href='#' on-click='[[identityKeyClickHandler]]' data-path='" + pathLink + "'>";
-              identityKeyHtml += "/" + entry.bean.label;
-              identityKeyHtml += "</a>";
-              identityKeyHtml += "</td>";
-              identityKeyHtml += "</tr>";
-              identityKeyHtml += "<tr>";
-              identityKeyHtml += "<td>";
-              identityKeyHtml += "<pre class='table-key-content' name='" + pathKey + "'>";
-              identityKeyHtml += "%%INNER_HTML%%</pre>";
-              identityKeyHtml += "</td>";
-              identityKeyHtml += "</tr>";
+              identityKeyHtml = '<tr>';
+              identityKeyHtml += '<td class=\'table-key\'>';
+              identityKeyHtml += '<a href=\'#\' on-click=\'[[parentIdentityKeyClickHandler]]\'>';
+              identityKeyHtml += '<span class=\'oj-component-icon oj-clickable-icon-nocontext oj-fwk-icon-arrow03-e\' data-key=\'' + pathKey + '\'></span>';
+              identityKeyHtml += '</a>';
+              identityKeyHtml += '<a href=\'#\' on-click=\'[[identityKeyClickHandler]]\' data-path=\'' + pathLink + '\'>';
+              identityKeyHtml += '/' + entry.bean.label;
+              identityKeyHtml += '</a>';
+              identityKeyHtml += '</td>';
+              identityKeyHtml += '</tr>';
+              identityKeyHtml += '<tr>';
+              identityKeyHtml += '<td>';
+              identityKeyHtml += '<pre class=\'table-key-content\' name=\'' + pathKey + '\'>';
+              identityKeyHtml += '%%INNER_HTML%%</pre>';
+              identityKeyHtml += '</td>';
+              identityKeyHtml += '</tr>';
 
               pathLinkMap[pathLink] = {outerHtml: identityKeyHtml};
             }
 
-            let innerHtml = "";
+            let innerHtml = '';
 
             entry.properties.forEach((property) => {
-              if (CoreUtils.isNotUndefinedNorNull(property.oldValue.value)) {
-                innerHtml += "&nbsp;&nbsp;&nbsp;&nbsp;";
+              const ovalue = property.oldValue.value;
+              if (CoreUtils.isNotUndefinedNorNull(ovalue)) {
+                innerHtml += '&nbsp;&nbsp;&nbsp;&nbsp;';
                 innerHtml += property.label;
-                innerHtml += ":<br/>";
-                innerHtml += "\toldValue=";
-                if (Array.isArray(property.oldValue.value)) {
-                  innerHtml += getValueLabelsArray(property.oldValue.value) + "\n";
+                innerHtml += ':<br/>';
+                innerHtml += '\toldValue=';
+                if (Array.isArray(ovalue)) {
+                  innerHtml += getValueLabelsArray(ovalue) + '\n';
                 }
-                else {
-                  innerHtml += (property.oldValue.value !== null ? property.oldValue.value : "") + "\n";
+                else if (ovalue != null){
+                  innerHtml += (typeof ovalue === 'object' ? JSON.stringify(ovalue) : ovalue) + '\n';
                 }
               }
 
-              if (CoreUtils.isNotUndefinedNorNull(property.newValue.value)) {
-                innerHtml += "\tnewValue=";
-                if (Array.isArray(property.newValue.value)) {
-                  innerHtml += getValueLabelsArray(property.newValue.value) + "\n";
+              const nvalue = property.newValue.value;
+              if (CoreUtils.isNotUndefinedNorNull(nvalue)) {
+                innerHtml += '\tnewValue=';
+                if (Array.isArray(nvalue)) {
+                  innerHtml += getValueLabelsArray(nvalue) + '\n';
                 }
-                else {
-                  innerHtml += (property.newValue.value !== null ? property.newValue.value : "") + "\n";
-                  innerHtml += "\n";
+                else if (nvalue != null){
+                  innerHtml += (typeof nvalue === 'object' ? JSON.stringify(nvalue) : nvalue) + '\n';
                 }
               }
               else {
-                innerHtml += "\tnewValue=" + property.newValue.value + ",\tset=" + property.newValue + "\n";
-                innerHtml += "\n";
+                innerHtml += '\tnewValue=' + nvalue + ',\tset=' + property.newValue + '\n';
+                innerHtml += '\n';
               }
             });
 
-            if (pathLinkMap[pathLink].outerHtml.indexOf(identityProperty + "</a>:") === -1) {
-              pathLinkMap[pathLink].outerHtml = pathLinkMap[pathLink].outerHtml.replace("%%INNER_HTML%%", innerHtml + "%%INNER_HTML%%");
+            if (pathLinkMap[pathLink].outerHtml.indexOf(identityProperty + '</a>:') === -1) {
+              pathLinkMap[pathLink].outerHtml = pathLinkMap[pathLink].outerHtml.replace('%%INNER_HTML%%', innerHtml + '%%INNER_HTML%%');
             }
           });
 
           // Remove trailing "%%INNER_HTML%%" from each pathLinkMap
           // entry, and then append the entry to bindHtml variable
           Object.values(pathLinkMap).forEach((textblock) => {
-            bindHtml += textblock.outerHtml.replace("%%INNER_HTML%%", "");
+            bindHtml += textblock.outerHtml.replace('%%INNER_HTML%%', '');
           });
 
-          bindHtml += "</table>";
+          bindHtml += '</table>';
         }
         Logger.log(bindHtml);
         return { view: HtmlUtils.stringToNodeArray(bindHtml), data: self };
       }
 
       function createRemovalsDOM(content){
-        let bindHtml = "<p/>";
+        let bindHtml = '<p/>';
         if (content.length > 0) {
-          bindHtml = "<table id='removals-table'>";
+          bindHtml = '<table id=\'removals-table\'>';
 
           let data = {};
 
           content.forEach((entry) => {
-            bindHtml += "<tr>";
-            bindHtml += "<td class='table-key'>";
-            bindHtml += "/" + entry.label;
-            bindHtml += "</td>";
-            bindHtml += "</tr>";
+            bindHtml += '<tr>';
+            bindHtml += '<td class=\'table-key\'>';
+            bindHtml += '/' + entry.label;
+            bindHtml += '</td>';
+            bindHtml += '</tr>';
           });
 
-          bindHtml += "</table>";
+          bindHtml += '</table>';
         }
 
         return { view: HtmlUtils.stringToNodeArray(bindHtml) };
       }
 
       function createRestartDOM(content){
-        let bindHtml = "<p/>";
+        let bindHtml = '<p/>';
         if (content.length > 0) {
-          bindHtml = "<table id='restart-table'>";
+          bindHtml = '<table id=\'restart-table\'>';
 
           let data = {};
 
           content.forEach((entry) => {
-            bindHtml += "<tr>";
-            bindHtml += "<td class='table-key'>";
-            bindHtml += "<a href='#' on-click='[[identityKeyClickHandler]]' data-path='" + entry.resourceData + "'>";
-            bindHtml += "/" + entry.label;
-            bindHtml += "</a>";
-            bindHtml += "</tr>";
+            bindHtml += '<tr>';
+            bindHtml += '<td class=\'table-key\'>';
+            bindHtml += '<a href=\'#\' on-click=\'[[identityKeyClickHandler]]\' data-path=\'' + entry.resourceData + '\'>';
+            bindHtml += '/' + entry.label;
+            bindHtml += '</a>';
+            bindHtml += '</tr>';
           });
 
-          bindHtml += "</table>";
+          bindHtml += '</table>';
         }
         return { view: HtmlUtils.stringToNodeArray(bindHtml), data: self};
       }

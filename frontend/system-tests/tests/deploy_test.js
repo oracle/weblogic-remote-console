@@ -158,6 +158,7 @@ describe.only('Test Suite: deploy_test for Application and Library',
                 await driver.sleep(3600);
                 await admin.deleteMBeanObject(driver,"testLib","Libraries",2,"configuration","Deployments","Libraries","","","",2);
                 await driver.sleep(800);
+                console.log("TEST PASS ");
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
                 console.log(e.toString() + " TEST FAIL");

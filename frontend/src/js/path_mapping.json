@@ -4,11 +4,11 @@
 
   "cdns": {
     "jet": {
-      "prefix": "https://static.oracle.com/cdn/jet/10.1.0/default/js",
-      "css": "https://static.oracle.com/cdn/jet/10.1.0/default/css",
+      "prefix": "https://static.oracle.com/cdn/jet/11.1.2/default/js",
+      "css": "https://static.oracle.com/cdn/jet/11.1.2/default/css",
       "config": "bundles-config.js"
     },
-    "3rdparty": "https://static.oracle.com/cdn/jet/10.1.0/3rdparty"
+    "3rdparty": "https://static.oracle.com/cdn/jet/11.1.2/3rdparty"
   },
 
   "libs": {
@@ -34,12 +34,12 @@
       "debug": {
         "src": "jquery.js",
         "path": "libs/jquery/jquery-#{version}.js",
-        "cdnPath": "jquery/jquery-3.5.1"
+        "cdnPath": "jquery/jquery-3.6.0"
       },
       "release": {
         "src": "jquery.min.js",
         "path": "libs/jquery/jquery-#{version}.min.js",
-        "cdnPath": "jquery/jquery-3.5.1.min"
+        "cdnPath": "jquery/jquery-3.6.0.min"
       }
     },
 
@@ -55,21 +55,6 @@
         "src": ["*.js", "widgets/draggable.js", "widgets/mouse.js", "widgets/sortable.js"],
         "path": "libs/jquery/jqueryui-amd-#{version}.min",
         "cdnPath": "jquery/jqueryui-amd-1.12.1.min"
-      }
-    },
-
-    "promise": {
-      "cdn": "3rdparty",
-      "cwd": "node_modules/es6-promise/dist",
-      "debug": {
-        "src": ["es6-promise.js", "es6-promise.map"],
-        "path": "libs/es6-promise/es6-promise.js",
-        "cdnPath": "es6-promise/es6-promise"
-      },
-      "release": {
-        "src": ["es6-promise.min.js", "es6-promise.min.map"],
-        "path": "libs/es6-promise/es6-promise.min.js",
-        "cdnPath": "es6-promise/es6-promise.min"
       }
     },
 
@@ -109,22 +94,16 @@
       "debug": {
         "src": ["debug*/**"],
         "path": "libs/oj/v#{version}",
-        "pathSuffix": "/debug' + (_ojNeedsES5 ? '_es5' : '')",
+        "pathSuffix": "/debug'",
         "cdnPath": ""
       },
       "release": {
         "src": ["min*/**"],
         "path": "libs/oj/v#{version}",
-		    "pathSuffix": "/min'",
-        "cdnPath": "min"
-      },
-      "release_es5": {
-		    "cwd": "min_es5",
-        "src": ["**"],
-        "path": "libs/oj/v#{version}/min_es5",
-        "cdnPath": "min_es5"
+        "pathSuffix": "/min'",
+        "cdnPath": ""
       }
-    },    
+    },
 
     "ojL10n": {
       "cdn": "jet",
@@ -218,48 +197,63 @@
       }
     },
 
-    "regenerator-runtime": {
+    "preact": {
       "cdn": "3rdparty",
-      "cwd": "node_modules/@oracle/oraclejet/dist/js/libs/regenerator-runtime",
+      "cwd": "node_modules/preact/dist",
       "debug": {
-        "src":  "runtime.js",
-        "path": "libs/regenerator-runtime/runtime.js",
-        "cdnPath": "regenerator-runtime/runtime"
+        "src":  ["preact.umd.js", "preact.umd.js.map"],
+        "path": "libs/preact/dist/preact.umd.js",
+        "cdnPath": "preact/dist/preact.umd"
       },
       "release": {
-        "src": "runtime.js",
-        "path": "libs/regenerator-runtime/runtime.js",
-        "cdnPath": "regenerator-runtime/runtime"
+        "src":  ["preact.umd.js", "preact.umd.js.map"],
+        "path": "libs/preact/dist/preact.umd.js",
+        "cdnPath": "preact/dist/preact.umd"
       }
     },
 
-    "corejs": {
+    "preact/hooks": {
       "cdn": "3rdparty",
-      "cwd": "node_modules/@oracle/oraclejet/dist/js/libs/corejs",
+      "cwd": "node_modules/preact/hooks/dist",
       "debug": {
-        "src":  "shim.js",
-        "path": "libs/corejs/shim.js",
-        "cdnPath": "corejs/shim"
+        "src":  ["hooks.umd.js", "hooks.umd.js.map"],
+        "path": "libs/preact/hooks/dist/hooks.umd.js",
+        "cdnPath": "preact/hooks/dist/hooks.umd"
       },
       "release": {
-        "src": "shim.min.js",
-        "path": "libs/corejs/shim.min.js",
-        "cdnPath": "corejs/shim.min"
+        "src":  ["hooks.umd.js", "hooks.umd.js.map"],
+        "path": "libs/preact/hooks/dist/hooks.umd.js",
+        "cdnPath": "preact/hooks/dist/hooks.umd"
       }
-    },    
-    
-    "customElements": {
+    },
+
+    "preact/debug": {
       "cdn": "3rdparty",
-      "cwd": "node_modules/@webcomponents/custom-elements",
+      "cwd": "node_modules/preact/debug/dist",
       "debug": {
-        "src":  ["custom-elements.min.js", "custom-elements.min.js.map"],
-        "path": "libs/webcomponents/custom-elements.min.js",
-        "cdnPath": "webcomponents/custom-elements.min"
+        "src": ["debug.umd.js", "debug.umd.js.map"],
+        "path": "libs/preact/debug/dist/debug.umd.js",
+        "cdnPath": "preact/debug/dist/debug.umd"
       },
       "release": {
-        "src": ["custom-elements.min.js", "custom-elements.min.js.map"],
-        "path": "libs/webcomponents/custom-elements.min.js",
-        "cdnPath": "webcomponents/custom-elements.min"
+        "src": ["debug.umd.js", "debug.umd.js.map"],
+        "path": "libs/preact/debug/dist/debug.umd.js",
+        "cdnPath": "preact/debug/dist/debug.umd"
+      }
+    },
+
+    "preact/devtools": {
+      "cdn": "3rdparty",
+      "cwd": "node_modules/preact/devtools/dist",
+      "debug": {
+        "src": ["devtools.umd.js", "devtools.umd.js.map"],
+        "path": "libs/preact/devtools/dist/devtools.umd.js",
+        "cdnPath": "preact/devtools/dist/devtools.umd"
+      },
+      "release": {
+        "src": ["devtools.umd.js", "devtools.umd.js.map"],
+        "path": "libs/preact/devtools/dist/devtools.umd.js",
+        "cdnPath": "preact/devtools/dist/devtools.umd"
       }
     },
 
@@ -268,7 +262,7 @@
       "cwd": "proj4/dist",
       "debug": {
         "src":  "proj4-src.js",
-        "path": "libs/proj4js/dist/proj4-src.js", 
+        "path": "libs/proj4js/dist/proj4-src.js",
         "cdnPath": "proj4js/dist/proj4"
       },
       "release": {
@@ -277,7 +271,7 @@
         "cdnPath": "proj4js/dist/proj4"
       }
     },
-    
+
     "css": {
       "cdn": "3rdparty",
       "cwd": "node_modules/require-css",
@@ -299,7 +293,7 @@
       "debug": {
         "src": ["debug/ojcss.js"],
         "path": "libs/oj/v#{version}",
-        "pathSuffix": "/debug' + (_ojNeedsES5 ? '_es5/ojcss.js' : '/ojcss.js')",
+        "pathSuffix": "/debug/ojcss'",
         "cdnPath": "ojcss"
       },
       "release": {
@@ -307,29 +301,40 @@
         "path": "libs/oj/v#{version}",
         "pathSuffix": "/min/ojcss'",
         "cdnPath": "ojcss"
+      }
+    },
+
+    "ojs/ojcss": {
+      "cdn": "jet",
+      "cwd": "node_modules/@oracle/oraclejet/dist/js/libs/oj",
+      "debug": {
+        "src": ["debug/ojcss.js"],
+        "path": "libs/oj/v#{version}",
+        "pathSuffix": "/debug/ojcss'",
+        "cdnPath": "ojcss"
       },
-      "release_es5": {
-        "cwd": "min_es5",
-        "src": ["ojcss.js"],
-        "path": "libs/oj/v#{version}/min_es5/ojcss.js",
+      "release": {
+        "src": ["min/ojcss.js"],
+        "path": "libs/oj/v#{version}",
+        "pathSuffix": "/min/ojcss'",
         "cdnPath": "ojcss"
       }
     },
 
-       "js-yaml": {
-          "cdn": "3rdparty",
-           "cwd": "node_modules/js-yaml/dist",
-             "debug": {
-              "src": ["js-yaml.js", "js-yaml.map"],
-              "path": "libs/js-yaml/js-yaml.js",
-             "cdnPath": "js-yaml/js-yaml"
-             },
-             "release": {
-              "src": ["js-yaml.min.js", "js-yaml.min.map"],
-             "path": "libs/js-yaml/js-yaml.min.js",
-            "cdnPath": "js-yaml/js-yaml.min"
-             }
-           }
-      
+    "js-yaml": {
+      "cdn": "3rdparty",
+      "cwd": "node_modules/js-yaml/dist",
+      "debug": {
+        "src":  ["js-yaml.js"],
+        "path": "libs/js-yaml/js-yaml.js",
+        "cdnPath": "js-yaml/dist"
+      },
+      "release": {
+        "src":  ["js-yaml.js"],
+        "path": "libs/js-yaml/js-yaml.js",
+        "cdnPath": "js-yaml/dist"
+      }
+    }
+
   }
 }

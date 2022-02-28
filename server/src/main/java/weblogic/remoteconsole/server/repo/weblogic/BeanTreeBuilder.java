@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -39,6 +40,10 @@ public class BeanTreeBuilder {
   private static final String UNIX_MACHINE = "UnixMachine";
   private static final String DOMAIN_MBEAN_TYPE = "DomainMBean";
 
+  // WDT delete operator for removing entries (e.g. "!Cluster1")
+  private static final String DELETE_OPER = "!";
+  private static final int DELETE_OPER_LEN = 1;
+
   // The bean repo for the bean tree
   private BeanTree beanTree;
 
@@ -64,6 +69,12 @@ public class BeanTreeBuilder {
 
   // The current section of the model used by the builder
   private String currentModelSection = null;
+
+  // Controls the application of the WDT delete operator from the model
+  private boolean isWDTDeleteApplied = false;
+
+  // Indicate if the security provider type has been applied during build
+  private boolean isSecurityProviderTypeApplied = false;
 
   private BeanTree getBeanTree() {
     return beanTree;
@@ -91,6 +102,31 @@ public class BeanTreeBuilder {
 
   private Map<String, Set<String>> getUnknownProperties() {
     return getBeanTree().getUnknownProperties();
+  }
+
+  // Determine if the WDT delete operator is applied during build
+  public boolean isWDTDeleteApplied() {
+    return isWDTDeleteApplied;
+  }
+
+  // Enable the application of the WDT delete operator during build
+  public void setWDTDeleteApplied() {
+    isWDTDeleteApplied = true;
+  }
+
+  // Set the state of the WDT delete operator for the build
+  private void setWDTDeleteApplied(boolean deleteApplied) {
+    isWDTDeleteApplied = deleteApplied;
+  }
+
+  // Determine if the security provider type has been applied during build
+  public boolean isSecurityProviderTypeApplied() {
+    return isSecurityProviderTypeApplied;
+  }
+
+  // Flag that the security provider type has been applied during build
+  public void setSecurityProviderTypeApplied() {
+    isSecurityProviderTypeApplied = true;
   }
 
   // Create the builder for the Domain root which holds the model sections
@@ -225,7 +261,8 @@ public class BeanTreeBuilder {
     // Check for the property and create when non-existent
     BeanTreeEntry property = getParent().getBeanTreeEntry(key);
     if (property == null) {
-      createProperty(key, value, beanPropDef, getIdentity(), true);
+      property = createProperty(key, value, beanPropDef, getIdentity(), true);
+      checkPropertyValueForDelete(property, beanPropDef);
       return;
     }
 
@@ -247,6 +284,7 @@ public class BeanTreeBuilder {
     if (property == null) {
       property = createProperty(key, value, beanPropDef, parent.getBeanTreePath(), false);
       parent.putBeanTreeEntry(key, property);
+      checkPropertyValueForDelete(property, beanPropDef);
       return;
     }
 
@@ -396,6 +434,12 @@ public class BeanTreeBuilder {
     if ((value != null) && !value.isEmpty()) {
       // For each entry in the collection build the bean and add to the parent
       for (String key : value.keySet()) {
+
+        // Check if the WDT delete operation is used and skip add when applied...
+        if (deleteBeanApplied(key, parent)) {
+          continue;
+        }
+
         // Get or add the instance into the collection
         BeanTreeEntry bean = getOrCreateBean(key, false, beanChildDef, parent);
 
@@ -443,16 +487,25 @@ public class BeanTreeBuilder {
       }
     }
 
-    // IFF the type does not match then skip this security provider
+    // IFF the type does not match the legal values then skip this security provider
     if (type == null) {
-      // Fixup - logger warning to indicate model entries not found
+      // Fixup - logger warning to indicate provider type not found
       LOGGER.warning("WARNING: BeanTreeBuilder buildSecurityProvider NO type: " + key);
       return;
     }
 
     // Place the type property of the security provider into the bean
+    // On merge, IFF the type exists and does not match then skip this security provider
     BeanPropertyDef typePropDef = getBeanTypeDef().getSubTypeDiscriminatorPropertyDef();
     String typeProp = typePropDef.getPropertyName();
+    if (getParent().getKeySet().contains(typeProp)) {
+      Object curType = getParent().getBeanTreeEntry(typeProp).getPropertyValue();
+      if (!type.equals(curType.toString())) {
+        // Fixup - logger warning to indicate type mismatch on merge
+        LOGGER.warning("WARNING: BeanTreeBuilder buildSecurityProvider MISMATCHED type: " + type);
+        return;
+      }
+    }
     createOrUpdateProperty(typeProp, type, typePropDef);
 
     // Get the security provider type and show the current state of the
@@ -476,7 +529,11 @@ public class BeanTreeBuilder {
         localizer                    // The message localizer
       );
 
+    // Flag that the security provider type has been processed
+    builder.setSecurityProviderTypeApplied();
+
     // Build the entry for the security provider...
+    builder.setWDTDeleteApplied(isWDTDeleteApplied);
     builder.buildSubTree();
   }
 
@@ -500,6 +557,10 @@ public class BeanTreeBuilder {
     // Create each Machine or UnixMachine instance including the type property
     if ((value != null) && !value.isEmpty()) {
       for (String machineName : value.keySet()) {
+        // Check if the WDT delete operation is used for the machine
+        if (deleteBeanApplied(machineName, machines)) {
+          continue;
+        }
         BeanTreeEntry bean = getOrCreateBean(machineName, false, beanChildDef, machines);
 
         // Place the type property into the bean so it can be viewed properly...
@@ -523,6 +584,7 @@ public class BeanTreeBuilder {
           );
 
         // Build the entry for the Machine or UnixMachine...
+        builder.setWDTDeleteApplied(isWDTDeleteApplied);
         builder.buildSubTree();
       }
     }
@@ -546,6 +608,7 @@ public class BeanTreeBuilder {
       );
 
     // Build the entry for the bean instance along with any children
+    builder.setWDTDeleteApplied(isWDTDeleteApplied);
     builder.buildSubTree();
   }
 
@@ -603,9 +666,9 @@ public class BeanTreeBuilder {
   private boolean isSecurityProviderBaseType() {
     boolean result = false;
     if (getBeanTypeDef().isTypeDef(getSecurityProviderBeanTypeDef())) {
-      // IFF the security provider does not have a type already set
-      // on the instance then flag that special handling is required!
-      if (!getParent().getKeySet().contains("Type")) {
+      // IFF the security provider has not already had the type
+      // processed then flag that special handling is required!
+      if (!isSecurityProviderTypeApplied()) {
         result = true;
       }
     }
@@ -650,21 +713,39 @@ public class BeanTreeBuilder {
   // NOTE: There is an intermediate step of setting the property to the new
   // value so the reference keys can be obtained, the new value remains as
   // the property value if the exisiting and new values cannot be merged!
-  private void mergeReferenceArray(
-    BeanTreeEntry currentProperty,
-    Object value
-  ) {
+  private void mergeReferenceArray(BeanTreeEntry currentProperty, Object value) {
     // Get the list of reference keys for both the current and new property values
     List<String> currentKeys = BeanTreeReferenceResolver.getReferenceKeys(currentProperty);
     currentProperty.setPropertyValue(value);
     List<String> newKeys = BeanTreeReferenceResolver.getReferenceKeys(currentProperty);
 
+    // Check and handle delete operator for the reference list...
+    boolean removedKeys = false;
+    if (isWDTDeleteApplied() && !newKeys.isEmpty()) {
+      Set<String> removes = new LinkedHashSet<>();
+      newKeys.stream()
+        .filter(key -> (key != null) ? key.startsWith(DELETE_OPER) : false)
+          .forEach(key -> removes.add(key));
+      if (!removes.isEmpty()) {
+        LOGGER.finest("BeanTreeBuilder remove merge reference keys: " + removes);
+        removes.forEach(key -> {
+          newKeys.remove(key);
+          currentKeys.remove(key.substring(DELETE_OPER_LEN));
+        });
+        removedKeys = true;
+      }
+    }
+
     // Create a merged list and set the property value to the new list of keys...
-    if (!currentKeys.isEmpty() || !newKeys.isEmpty()) {
-      List<Object> mergedKeys = new ArrayList<>();
+    if (!currentKeys.isEmpty() || !newKeys.isEmpty() || removedKeys) {
+      List<String> mergedKeys = new ArrayList<>();
       mergedKeys.addAll(currentKeys);
       mergedKeys.addAll(newKeys);
-      currentProperty.setPropertyValue(mergedKeys);
+      if (mergedKeys.isEmpty()) {
+        currentProperty.setPropertyValue(null);
+      } else {
+        currentProperty.setPropertyValue(mergedKeys);
+      }
     }
   }
 
@@ -675,14 +756,19 @@ public class BeanTreeBuilder {
   // the property value if the exisiting and new values cannot be merged!
   @SuppressWarnings("unchecked")
   private void mergeArrayProperty(
-    BeanTreeEntry currentProperty,
-    Object value,
-    BeanPropertyDef beanPropDef
+    BeanTreeEntry currentProperty, Object value, BeanPropertyDef beanPropDef
   ) {
     // Get the Value type for both the current and new property values
     Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
     currentProperty.setPropertyValue(value);
     Value newValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+
+    // Check and handle delete operator for an array of strings...
+    if (isWDTDeleteApplied() && beanPropDef.isString()
+        && newValue.isArray() && !newValue.asArray().getValues().isEmpty()) {
+      mergeDeleteStringArray(currentProperty, beanPropDef, currentValue, newValue);
+      return;
+    }
 
     // Proceed with merge when both are array values as there could be a model token...
     if (currentValue.isArray() && newValue.isArray()) {
@@ -696,26 +782,104 @@ public class BeanTreeBuilder {
     }
   }
 
-  // Merge two Properties by normalizing them using the Value types since an
-  // an empty Properties will be returned if there is no current value...
+  // Handle the merged of a String array that may contain an entry with a delete operator
+  // The current property will be updated with no additional handling required...
+  @SuppressWarnings("unchecked")
+  private void mergeDeleteStringArray(
+    BeanTreeEntry currentProperty, BeanPropertyDef beanPropDef, Value currentValue, Value newValue
+  ) {
+    LOGGER.finest("BeanTreeBuilder merge string array entries with delete");
+
+    // If delete operator is used without previous being an array then use the new value
+    if (!currentValue.isArray()) {
+      removeDeleteFromStringArray(currentProperty, beanPropDef);
+      return;
+    }
+
+    // At this point we have a current and new array of Strings, so merge them checking for delete!
+    Object newVal = WDTValueConverter.getJavaType(newValue, beanPropDef, localizer);
+    if (newVal instanceof List) {
+      List<String> newValues = (List<String>) newVal;
+
+      // Find any delete operator entries...
+      Set<String> removes = new LinkedHashSet<>();
+      newValues.stream()
+        .filter(val -> (val != null) ? val.startsWith(DELETE_OPER) : false)
+          .forEach(val -> removes.add(val));
+
+      // Get the current value and update the entries as needed...
+      Object curVal = WDTValueConverter.getJavaType(currentValue, beanPropDef, localizer);
+      if (curVal instanceof List) {
+        List<String> curValues = (List<String>) curVal;
+
+        // Check and apply the delete operator entries...
+        if (!removes.isEmpty()) {
+          LOGGER.finest("BeanTreeBuilder remove merge array entries: " + removes);
+          removes.forEach(key -> {
+            newValues.remove(key);
+            curValues.remove(key.substring(DELETE_OPER_LEN));
+          });
+        }
+
+        // Create a merged list and set the property value to the new list of strings...
+        List<String> mergedList = new ArrayList<>();
+        mergedList.addAll(curValues);
+        mergedList.addAll(newValues);
+        currentProperty.setPropertyValue(mergedList);
+      }
+    }
+  }
+
+  // Merge two Properties by normalizing them using the Value types...
   // NOTE: There is an intermediate step of setting the property to the new
   // value so the Value type can be obtained, the new value remains as
   // the property value if the exisiting and new values cannot be merged!
   @SuppressWarnings("unchecked")
   private void mergePropertiesProperty(
-    BeanTreeEntry currentProperty,
-    Object value,
-    BeanPropertyDef beanPropDef
+    BeanTreeEntry currentProperty, Object value, BeanPropertyDef beanPropDef
   ) {
+    // Keep the existing properties when there is no new value...
+    if (value == null) {
+      return;
+    }
+
     // Get the Value type for both the current and new property values
     Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
     currentProperty.setPropertyValue(value);
     Value newValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
 
+    // Check and handle delete operator for the Properties keys...
+    if (isWDTDeleteApplied() && (newValue != null) && newValue.isProperties()) {
+      Set<String> removes = new LinkedHashSet<>();
+      newValue.asProperties().getValue().stringPropertyNames().stream()
+        .filter(key -> (key != null) ? key.startsWith(DELETE_OPER) : false)
+          .forEach(key -> removes.add(key));
+
+      // If delete operator is used without previous value then use the new properties
+      if (!removes.isEmpty() && ((currentValue == null) || !currentValue.isProperties())) {
+        removeDeleteFromProperties(currentProperty, beanPropDef);
+        return;
+      }
+
+      // If delete operator is used then update the Properties value
+      if (!removes.isEmpty() && (currentValue != null) && currentValue.isProperties()) {
+        LOGGER.finest("BeanTreeBuilder remove merge property keys: " + removes);
+        Properties curVal = currentValue.asProperties().getValue();
+        Properties newVal = newValue.asProperties().getValue();
+        removes.forEach(key -> {
+          newVal.remove(key);
+          curVal.remove(key.substring(DELETE_OPER_LEN));
+        });
+      }
+    }
+
     // Proceed with merge when both are Properties as there could be a parse problem...
-    if (currentValue.isProperties() && newValue.isProperties()) {
+    if ((currentValue != null) && currentValue.isProperties()
+        && (newValue != null) && newValue.isProperties()) {
       Object curVal = WDTValueConverter.getJavaType(currentValue, beanPropDef, localizer);
+      curVal = (curVal != null) ? curVal : new LinkedHashMap<String, Object>();
       Object newVal = WDTValueConverter.getJavaType(newValue, beanPropDef, localizer);
+      newVal = (newVal != null) ? newVal : new LinkedHashMap<String, Object>();
       if ((curVal instanceof Map) && (newVal instanceof Map)) {
         // Sort the Properties keys for predictable updated results...
         Map<String, Object> sorter = new TreeMap<>();
@@ -723,7 +887,110 @@ public class BeanTreeBuilder {
         ((Map<String, Object>)curVal).forEach((key, val) -> sorter.put(key, val));
         ((Map<String, Object>)newVal).forEach((key, val) -> sorter.put(key, val));
         sorter.forEach((key, val) -> mergedMap.put(key, val));
-        currentProperty.setPropertyValue(mergedMap);
+        if (mergedMap.isEmpty()) {
+          currentProperty.setPropertyValue(null);
+        } else {
+          currentProperty.setPropertyValue(mergedMap);
+        }
+      }
+    }
+  }
+
+  // Determine if the WDT delete operator is being applied
+  // IFF delete, attempt to remove the instance from the parent
+  // Return true when applied and delete operator is specified
+  private boolean deleteBeanApplied(String key, BeanTreeEntry parent) {
+    // WDT delete operator must be enabled on the builder...
+    if (isWDTDeleteApplied() && key.startsWith(DELETE_OPER)) {
+      String deleteKey = key.substring(DELETE_OPER_LEN);
+      LOGGER.finest("BeanTreeBuilder attempting to delete instance: " + deleteKey);
+      parent.getBeanValue().remove(deleteKey);
+      return true;
+    }
+    // Otherwise not applied...
+    return false;
+  }
+
+  // Check a bean property value for use of delete operator and update as needed
+  // A Reference, Proeprties or Array type bean prop can have delete entries removed
+  private void checkPropertyValueForDelete(BeanTreeEntry currentProperty, BeanPropertyDef beanPropDef) {
+    if (isWDTDeleteApplied()) {
+      if (beanPropDef.isProperties()) {
+        removeDeleteFromProperties(currentProperty, beanPropDef);
+      } else if (beanPropDef.isReference() && beanPropDef.isArray()) {
+        removeDeleteFromReferenceArray(currentProperty, beanPropDef);
+      } else if (beanPropDef.isArray() && beanPropDef.isString()) {
+        removeDeleteFromStringArray(currentProperty, beanPropDef);
+      }
+    }
+  }
+
+  // Check and update a Reference key(s) for use of WDT delete operator
+  private void removeDeleteFromReferenceArray(BeanTreeEntry currentProperty, BeanPropertyDef beanPropDef) {
+    List<String> currentKeys = BeanTreeReferenceResolver.getReferenceKeys(currentProperty);
+    if (!currentKeys.isEmpty()) {
+      Set<String> removes = new LinkedHashSet<>();
+      currentKeys.stream()
+        .filter(key -> (key != null) ? key.startsWith(DELETE_OPER) : false)
+          .forEach(key -> removes.add(key));
+      if (!removes.isEmpty()) {
+        LOGGER.finest("BeanTreeBuilder remove reference keys: " + removes);
+        removes.forEach(key -> currentKeys.remove(key));
+        if (currentKeys.isEmpty()) {
+          currentProperty.setPropertyValue(null);
+        } else {
+          List<Object> updatedKeys = new ArrayList<>();
+          updatedKeys.addAll(currentKeys);
+          currentProperty.setPropertyValue(updatedKeys);
+        }
+      }
+    }
+  }
+
+  // Check and update a Properties keys for use of WDT delete operator
+  @SuppressWarnings("unchecked")
+  private void removeDeleteFromProperties(BeanTreeEntry currentProperty, BeanPropertyDef beanPropDef) {
+    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    if ((currentValue != null) && currentValue.isProperties()) {
+      Object curVal = WDTValueConverter.getJavaType(currentValue, beanPropDef, localizer);
+      if (curVal instanceof Map) {
+        // Find the delete entries and if any are present remove them...
+        Set<String> removes = new LinkedHashSet<>();
+        Map<String, Object> properties = ((Map<String, Object>)curVal);
+        properties.entrySet().stream()
+          .filter(entry -> entry.getKey().startsWith(DELETE_OPER))
+            .forEach(entry -> removes.add(entry.getKey()));
+        if (!removes.isEmpty()) {
+          LOGGER.finest("BeanTreeBuilder remove property keys: " + removes);
+          removes.forEach(key -> properties.remove(key));
+          if (properties.isEmpty()) {
+            currentProperty.setPropertyValue(null);
+          } else {
+            currentProperty.setPropertyValue(properties);
+          }
+        }
+      }
+    }
+  }
+
+  // Check and update the String array entries for use of WDT delete operator
+  @SuppressWarnings("unchecked")
+  private void removeDeleteFromStringArray(BeanTreeEntry currentProperty, BeanPropertyDef beanPropDef) {
+    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    if (currentValue.isArray()) {
+      Object curVal = WDTValueConverter.getJavaType(currentValue, beanPropDef, localizer);
+      if ((curVal instanceof List)) {
+        // Find the delete entries and if any are present remove them...
+        Set<String> removes = new LinkedHashSet<>();
+        List<String> updatedList = (List<String>) curVal;
+        updatedList.stream()
+          .filter(val -> (val != null) ? val.startsWith(DELETE_OPER) : false)
+            .forEach(val -> removes.add(val));
+        if (!removes.isEmpty()) {
+          LOGGER.finest("BeanTreeBuilder remove array entries: " + removes);
+          removes.forEach(key -> updatedList.remove(key));
+          currentProperty.setPropertyValue(updatedList);
+        }
       }
     }
   }

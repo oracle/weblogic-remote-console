@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -13,12 +13,6 @@
  // The UserAgent is used to detect IE11. Only IE11 requires ES5.
 (function () {
   
-  function _ojIsIE11() {
-    var nAgt = navigator.userAgent;
-    return nAgt.indexOf('MSIE') !== -1 || !!nAgt.match(/Trident.*rv:11./);
-  }
-  var _ojNeedsES5 = _ojIsIE11();
-
   requirejs.config(
     {
       baseUrl: 'js',
@@ -31,25 +25,28 @@
       // injector:mainReleasePaths
       {
         'knockout': 'libs/knockout/knockout-3.5.1.debug',
-        'jquery': 'libs/jquery/jquery-3.5.1',
+        'knockout-mapping': 'libs/knockout/knockout.mapping-latest.debug',
+        'jquery': 'libs/jquery/jquery-3.6.0',
         'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.12.1',
-        'hammerjs': 'libs/hammer/hammer-2.0.36',
+        'hammerjs': 'libs/hammer/hammer-2.0.8',
         'ojdnd': 'libs/dnd-polyfill/dnd-polyfill-1.0.2',
-        'ojs': 'libs/oj/v9.1.0/debug' + (_ojNeedsES5 ? '_es5' : ''),
-        'ojL10n': 'libs/oj/v9.1.0/ojL10n',
-        'ojtranslations': 'libs/oj/v9.1.0/resources',
+        'ojs': 'libs/oj/v11.1.2/debug',
+        'ojL10n': 'libs/oj/v11.1.2/ojL10n',
+        'ojtranslations': 'libs/oj/v11.1.2/resources',
+        'persist': 'libs/persist/debug',
         'text': 'libs/require/text',
         'signals': 'libs/js-signals/signals',
-        'customElements': 'libs/webcomponents/custom-elements.min',
-        'proj4': 'libs/proj4js/dist/proj4-src',
-        'css': 'libs/require-css/css',
         'touchr': 'libs/touchr/touchr',
-        'corejs' : 'libs/corejs/shim',
-        'chai': 'libs/chai/chai-4.2.0',
-        'regenerator-runtime' : 'libs/regenerator-runtime/runtime',
-        'js-yaml' : 'libs/js-yaml/js-yaml.min'
+        'preact': 'libs/preact/dist/preact.umd',
+        'preact/hooks': 'libs/preact/hooks/dist/hooks.umd',
+        'proj4': 'libs/proj4js/dist/proj4-src',
+        'css': 'libs/require-css/css.min',
+        'css-builder': 'libs/require-css/css-builder',
+        'normalize': 'libs/require-css/normalize',
+        'chai': 'libs/chai/chai-4.3.4',
+        'js-yaml' : 'libs/js-yaml/js-yaml'
       }
-      //endinjector
+      // endinjector
       , config: {
         ojL10n: {
           merge: {
@@ -57,7 +54,8 @@
           }
         }
       }
-    });
+    }
+  );
 }());
 
 /**
@@ -89,13 +87,13 @@ require(['ojs/ojcore', 'ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojro
             ko.applyBindings(app, document.getElementById('globalBody'));
           });
 
-          oj.Logger.option("level", Runtime.getLoggingLevel());
+          oj.Logger.option('level', Runtime.getLoggingLevel());
         }
 
         // If running in a hybrid (e.g. Cordova) environment, we need to wait for the deviceready
         // event before executing any code that might interact with Cordova APIs or plugins.
         if (document.body.classList.contains('oj-hybrid')) {
-          document.addEventListener("deviceready", init);
+          document.addEventListener('deviceready', init);
         } 
         else {
           init();

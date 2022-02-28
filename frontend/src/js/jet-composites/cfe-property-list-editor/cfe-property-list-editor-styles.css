@@ -1,0 +1,64 @@
+/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   cfe-property-list-editor .cfe-property-list-editor-value-text {
+   color: var(--cfe-property-list-editor-value-text-color);
+   display: inline-block;
+	 }
+*/
+
+cfe-property-list-editor:not(.oj-complete){
+	visibility: hidden;
+}
+
+cfe-property-list-editor{
+	min-height: 50px;
+	width: 50px;
+}
+
+.cfe-model-properties-table {
+	height: 100%;
+	min-width: 1px;
+	width: 100%;
+	border-top: 1px solid var(--oj-collection-border-color);
+}
+
+/* over-qualify this to override rtl styles */
+.oj-table .oj-table-column-header-cell.cfe-table-add-header,
+.oj-table .oj-table-data-cell.cfe-table-delete-cell {
+	padding: 2px !important;
+	text-align: center;
+}
+
+.oj-navigationlist-depth-1 .oj-navigationlist-item-content {
+	padding-left: var(--oj-navigation-list-item-padding) !important;
+}
+
+/* this gets hidden in vertical flex layout */
+.oj-tabbar-element li {
+	box-sizing: border-box;
+}
+
+/* over-qualify this to override rtl styles */
+.oj-table .oj-table-column-header-cell.cfe-table-add-header,
+.oj-table .oj-table-data-cell.cfe-table-delete-cell {
+	padding: 2px !important;
+	text-align: center;
+}
+
+/* no default scroll bar on html body */
+.oj-web-applayout-body {
+	overflow-y: auto;
+}
+
+.oj-panel {
+	margin-top: 0.5em;
+}
+
+.oj-collapsible-content > .oj-panel:first-child {
+	margin-top: 0;
+}
+
+.oj-button {
+	margin-left: 0.25em;
+}

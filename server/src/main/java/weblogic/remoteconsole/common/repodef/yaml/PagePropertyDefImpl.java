@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.GetPropertyOptionsCustomizerDef;
 import weblogic.remoteconsole.common.repodef.GetPropertyValueCustomizerDef;
@@ -20,6 +21,7 @@ import weblogic.remoteconsole.common.repodef.PagePropertyPresentationDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyUsedIfDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.LegalValueDefCustomizerSource;
+import weblogic.remoteconsole.common.repodef.schema.MBeanAttributeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.UsedIfDefSource;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -306,22 +308,63 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   private void initializePagePropertyExternalHelpDef() {
-    if (getPageDefImpl().getTypeDefImpl().isDisableMBeanJavadoc()) {
-      // This property's mbean type doesn't have
-      // external mbean javadoc available for it.
+    BeanPropertyDef mbeanAttributePropertyDef = getMBeanAttributePropertyDef();
+    if (mbeanAttributePropertyDef == null) {
+      // No external help for this property
       return;
     }
-    if (isPageLevelProperty()) {
+    externalHelpDefImpl = new PagePropertyExternalHelpDefImpl(this, mbeanAttributePropertyDef);
+  }
+
+  private BeanPropertyDef getMBeanAttributePropertyDef() {
+    if (getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion() == null) {
+      // This property's page repo doesn't support WebLogic mbeans.
+      return null;
+    }
+    MBeanAttributeDefSource source = beanPropertyDefImpl.getCustomizerSource().getMbeanAttribute();
+    String attributeName = source.getAttribute();
+    if (StringUtils.isEmpty(attributeName) && isPageLevelProperty()) {
       // This property is a custom property defined on the page
       // i.e. not one backed by an mbean.
       // So, there is no external mbean javadoc available for it.
-      return;
+      return null;
     }
-    if (getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion() == null) {
-      // This property's page repo doesn't support WebLogic mbeans.
-      return;
+    String typeName = source.getType();
+    BaseBeanTypeDefImpl typeDefImpl =
+      StringUtils.isEmpty(typeName)
+        ? getPageDefImpl().getTypeDefImpl()
+        : getPageDefImpl().getTypeDefImpl().getBeanRepoDefImpl().getTypeDefImpl(typeName);
+
+    BeanPropertyDefImpl propertyDefImpl =
+      StringUtils.isEmpty(attributeName)
+        ? beanPropertyDefImpl
+        : typeDefImpl.getPropertyDefImpl(new Path(attributeName));
+
+    Path parentPath = propertyDefImpl.getParentPath();
+    if (!parentPath.isEmpty()) {
+      // The property lives in a child bean of the bean for the page
+      // e.g. SSLMBean's Enabled property on the Server General page.
+      // Convert ServerMBean's SSL.Enabled property to SSLMBean's Enabled property.
+      boolean searchSubTypes = true;
+      propertyDefImpl =
+        typeDefImpl // e.g. ServerMBean
+          .getChildDefImpl(parentPath, searchSubTypes) // e.g. SSL
+          .getChildTypeDefImpl() // e.g. SSLMBean
+          .getPropertyDefImpl(
+            new Path(propertyDefImpl.getPropertyName()), // e.g. Enabled
+            searchSubTypes
+          );
+    } else {
+      // The property lives directly on the bean for the page
+      // e.g. ServerMBean's ListenPort property on the Server General page.
     }
-    this.externalHelpDefImpl = new PagePropertyExternalHelpDefImpl(this);
+
+    if (propertyDefImpl.getTypeDefImpl().isDisableMBeanJavadoc()) {
+      // This property's mbean type doesn't have external mbean javadoc available for it.
+      return null;
+    }
+
+    return propertyDefImpl;
   }
 
   private void initializeHelpSummaryHTML() {

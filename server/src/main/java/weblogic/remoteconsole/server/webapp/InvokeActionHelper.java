@@ -50,7 +50,7 @@ public class InvokeActionHelper {
 
   private static Response<TableActionDef> findTableActionDef(InvocationContext ic, String action) {
     Response<TableActionDef> response = new Response<>();
-    // The action is invoked on a collection child, so we're passed a slice form page path.
+    // The action is invoked on a collection child, so we're passed a slice page path.
     // Get the corresponding table page path since that's where the action defs live.
     TablePagePath tablePagePath = PagePath.newTablePagePath(ic.getPagePath().getPagesPath());
     TableDef tableDef = ic.getPageRepo().getPageRepoDef().getPageDef(tablePagePath).asTableDef();

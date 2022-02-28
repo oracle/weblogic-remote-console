@@ -1,13 +1,13 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojpagingdataproviderview', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './actions-dialog', './unsaved-changes-dialog', './set-sync-interval-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/actions', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/utils', './help-form', './wdt-form', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojpagingcontrol', 'cfe-multi-select/loader'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojpagingdataproviderview', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './actions-dialog', './unsaved-changes-dialog', './set-sync-interval-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/actions', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/utils', './help-form', './wdt-form', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojpagingcontrol', 'cfe-multi-select/loader'],
   function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, PagingDataProviderView, HtmlUtils, keySet, Controller, DataOperations, MessageDisplaying, ActionsDialog, UnsavedChangesDialog, SetSyncIntervalDialog, ContentAreaContainerResizer, PageDataTypes, PageDefinitionActions, PageDefinitionFields, PageDefinitionUtils, HelpForm, WdtForm, ViewModelUtils, CoreUtils, CoreTypes, Runtime, CbeTypes, CbeUtils, Logger) {
     function TableViewModel(viewParams) {
       // Declare reference to instance of the ViewModel
@@ -19,52 +19,52 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       this.i18n = {
         checkboxes: {
-          "showHiddenColumns": {id: "show-hidden-columns",
-            label: oj.Translations.getTranslatedString("wrc-table.checkboxes.showHiddenColumns.label")
+          'showHiddenColumns': {id: 'show-hidden-columns',
+            label: oj.Translations.getTranslatedString('wrc-table.checkboxes.showHiddenColumns.label')
           }
         },
         buttons: {
           yes: {disabled: false,
-            label: oj.Translations.getTranslatedString("wrc-common.buttons.yes.label")
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.yes.label')
           },
           no: {disabled: false,
-            label: oj.Translations.getTranslatedString("wrc-common.buttons.no.label")
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.no.label')
           },
           ok: {disabled: false,
-            label: oj.Translations.getTranslatedString("wrc-common.buttons.ok.label")
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
           },
           cancel: {disabled: false,
-            label: oj.Translations.getTranslatedString("wrc-common.buttons.cancel.label")
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
           }
         },
         prompts: {
           unsavedChanges: {
-            needDownloading: {value: oj.Translations.getTranslatedString("wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value")}
+            needDownloading: {value: oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value')}
           }
         },
         dialog: {
-          title: ko.observable(""),
-          instructions: ko.observable(""),
-          prompt: ko.observable("")
+          title: ko.observable(''),
+          instructions: ko.observable(''),
+          prompt: ko.observable('')
         },
         dialogSync: {
-          title: oj.Translations.getTranslatedString("wrc-sync-interval.dialogSync.title"),
-          instructions: oj.Translations.getTranslatedString("wrc-sync-interval.dialogSync.instructions"),
+          title: oj.Translations.getTranslatedString('wrc-sync-interval.dialogSync.title'),
+          instructions: oj.Translations.getTranslatedString('wrc-sync-interval.dialogSync.instructions'),
           fields: {
             interval: {value: ko.observable(''),
-              label: oj.Translations.getTranslatedString("wrc-sync-interval.dialogSync.fields.interval.label")
+              label: oj.Translations.getTranslatedString('wrc-sync-interval.dialogSync.fields.interval.label')
             }
           }
         },
         actionsDialog: {
-          title: ko.observable(""),
-          instructions: ko.observable(""),
+          title: ko.observable(''),
+          instructions: ko.observable(''),
           buttons: {
             ok: {disabled: ko.observable(true),
-              label: ko.observable("")
+              label: ko.observable('')
             },
             cancel: {disabled: false,
-              label: oj.Translations.getTranslatedString("wrc-table.actionsDialog.buttons.cancel.label")
+              label: oj.Translations.getTranslatedString('wrc-table.actionsDialog.buttons.cancel.label')
             }
           }
         }
@@ -85,6 +85,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           newAction: newBean,
           onWriteModelFile: writeModelFile,
           isWdtTable: isWdtTable,
+          isShoppingCartVisible: isShoppingCartVisible,
           onConnected: setFormContainerMaxHeight,
           onLandingPageSelected: selectLandingPage,
           onBeanPathHistoryToggled: toggleBeanPathHistory,
@@ -126,7 +127,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.chosenItems = [];
       this.pageDefinitionActions = undefined;
       this.confirmed = ko.observable(function (event) { });
-      this.confirmationMessage = ko.observable("");
+      this.confirmationMessage = ko.observable('');
 
       self.connected = function () {
         self.signalBindings.push(viewParams.signaling.nonwritableChanged.add((newRO) => {
@@ -169,7 +170,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       };
 
       function isWdtTable() {
-        return (viewParams.perspective.id === "modeling");
+        return (viewParams.perspective.id === 'modeling');
+      }
+
+      function isShoppingCartVisible() {
+        // The shopping cart will be visible expect for the WDT perspectives...
+        return (['modeling','composite'].indexOf(viewParams.perspective.id) === -1);
       }
 
       function getPageDefinitionActions() {
@@ -182,7 +188,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function discardShoppingCart() {
         // Only perform UI restore if we're in "configuration" perspective.
-        if (self.perspective.id === "configuration") {
+        if (self.perspective.id === 'configuration') {
           let treeaction = {
             clearTree: true,
             path: decodeURIComponent(viewParams.parentRouter.data.rawPath())
@@ -224,7 +230,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function cancelSyncTimer() {
         let cancelled = false;
-        if (typeof self.timerId !== "undefined") {
+        if (typeof self.timerId !== 'undefined') {
           clearInterval(self.timerId);
           self.timerId = undefined;
           cancelled = true;
@@ -243,19 +249,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function renderActionsDialog(dialogParams) {
         return new Promise(function (resolve, reject) {
           const data = self.pageDefinitionActions.createActionsDialog(dialogParams.id);
-          data.field.setAttribute("on-chosen-items-changed", "[[chosenItemsChanged]]");
-          data.field.setAttribute("readonly", dialogParams.isReadOnly);
+          data.field.setAttribute('on-chosen-items-changed', '[[chosenItemsChanged]]');
+          data.field.setAttribute('readonly', dialogParams.isReadOnly);
           self.availableItems = data.availableItems;
           self.actionsDialog.formLayout.html({ view: HtmlUtils.stringToNodeArray(data.formLayout.outerHTML), data: self });
           self.chosenItems = [];
           return ActionsDialog.showActionsDialog(dialogParams, self.i18n)
             .then((result) => {
-              result["chosenItems"] =  self.chosenItems;
-              result["urls"] = data.urls;
+              result['chosenItems'] =  self.chosenItems;
+              result['urls'] = data.urls;
               resolve(result);
             })
             .catch(cancelled => {
-              Logger.log(`cancelBtn was clicked, or ESC key was pressed!`);
+              Logger.log('cancelBtn was clicked, or ESC key was pressed!');
             });
         });
       }
@@ -275,10 +281,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function setFormContainerMaxHeight(withHistoryVisible){
         const options = {withHistoryVisible: withHistoryVisible, withHelpVisible: self.showHelp()};
-        const offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight("#table-container", options);
+        const offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#table-container', options);
         Logger.log(`max-height=calc(100vh - ${offsetMaxHeight}px)`);
-        const ele = document.querySelector(".cfe-table-form-content");
-        if (ele !== null) ele.style["max-height"] = `calc(100vh - ${offsetMaxHeight}px)`;
+        const ele = document.querySelector('.cfe-table-form-content');
+        if (ele !== null) ele.style['max-height'] = `calc(100vh - ${offsetMaxHeight}px)`;
       }
 
       function toggleBeanPathHistory (withHistoryVisible) {
@@ -289,8 +295,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function toggleInstructions (withInstructionsVisible, withHistoryVisible) {
-        const ele = document.getElementById("intro");
-        ele.style.display = (withInstructionsVisible ? "inline-block" : "none");
+        const ele = document.getElementById('intro');
+        ele.style.display = (withInstructionsVisible ? 'inline-block' : 'none');
         self.showInstructions(withInstructionsVisible);
         setFormContainerMaxHeight(withHistoryVisible);
       }
@@ -310,10 +316,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         DataOperations.mbean.new(createFormUrl)
           .then(reply => {
             Logger.log(`reply=${JSON.stringify(reply)}`);
-            viewParams.parentRouter.data.pdjUrl(reply.body.data.get("pdjUrl"));
-            viewParams.parentRouter.data.pdjData(reply.body.data.get("pdjData"));
-            viewParams.parentRouter.data.rdjData(reply.body.data.get("rdjData"));
-            viewParams.parentRouter.go("form");
+            viewParams.parentRouter.data.pdjUrl(reply.body.data.get('pdjUrl'));
+            viewParams.parentRouter.data.pdjData(reply.body.data.get('pdjData'));
+            viewParams.parentRouter.data.rdjData(reply.body.data.get('rdjData'));
+            viewParams.parentRouter.go('form');
           })
           .catch(response => {
             ViewModelUtils.failureResponseDefaultHandling(response);
@@ -323,7 +329,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.selectedListener = function (event) {
         var id = null;
 
-        if (event.type === "selectedChanged") {
+        if (event.type === 'selectedChanged') {
           if (this.selectedRows() != null && this.selectedRows().values().size > 0) {
             this.selectedRows().values().forEach(function (key) {
               id = key;
@@ -335,7 +341,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
           var path = id;
 
-          if (path !== null) Router.rootInstance.go("/" + self.perspective.id + "/" + encodeURIComponent(path));
+          if (path !== null) Router.rootInstance.go('/' + self.perspective.id + '/' + encodeURIComponent(path));
         }
       }.bind(this);
 
@@ -366,14 +372,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           });
       }
 
-      function writeModelFile(eventType = "autoSave") {
+      function writeModelFile(eventType = 'autoSave') {
         function downloadWdtModelFile() {
           self.wdtForm.getModelFileChanges()
             .then(reply => {
               if (reply.succeeded) {
                 MessageDisplaying.displayMessage({
                   severity: 'confirmation',
-                  summary: self.wdtForm.getSummaryMessage(ViewModelUtils.isElectronApiAvailable() ? "changesSaved": "changesDownloaded")
+                  summary: self.wdtForm.getSummaryMessage(ViewModelUtils.isElectronApiAvailable() ? 'changesSaved': 'changesDownloaded')
                 }, 2500);
               }
               else {
@@ -394,17 +400,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         if (!ViewModelUtils.isElectronApiAvailable()) {
           switch (eventType) {
-            case "autoSave": {
-              self.i18n.dialog.title(oj.Translations.getTranslatedString("wrc-unsaved-changes.titles.changesNeedDownloading.value"));
+            case 'autoSave': {
+              self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.changesNeedDownloading.value'));
               self.i18n.dialog.prompt(self.i18n.prompts.unsavedChanges.needDownloading.value);
-              UnsavedChangesDialog.showConfirmDialog("ChangesNotDownloaded", self.i18n)
+              UnsavedChangesDialog.showConfirmDialog('ChangesNotDownloaded', self.i18n)
                 .then(reply => {
                   if (reply) downloadWdtModelFile(eventType);
                 });
             }
               break;
-            case "navigation":
-            case "download":
+            case 'navigation':
+            case 'download':
               downloadWdtModelFile(eventType);
               break;
           }
@@ -430,15 +436,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
           })
           .then(() => {
-            viewParams.signaling.shoppingCartModified.dispatch("table", "delete", {isLockOwner: true, hasChanges: true, supportsChanges: true,}, event.srcElement.id);
+            viewParams.signaling.shoppingCartModified.dispatch('table', 'delete', {isLockOwner: true, hasChanges: true, supportsChanges: true,}, event.srcElement.id);
             return {
               isEdit: false,
               path: decodeURIComponent(viewParams.parentRouter.data.rawPath()),
             };
           })
           .then((treeaction) => {
-            if (typeof viewParams.parentRouter.data.breadcrumbs !== "undefined") {
-              treeaction["breadcrumbs"] =
+            if (typeof viewParams.parentRouter.data.breadcrumbs !== 'undefined') {
+              treeaction['breadcrumbs'] =
                 viewParams.parentRouter.data.breadcrumbs();
             }
 
@@ -465,8 +471,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             // be refreshed, because the delete rejection may have
             // caused a roll back of the removal.
             viewParams.signaling.shoppingCartModified.dispatch(
-              "table",
-              "refresh",
+              'table',
+              'refresh',
               undefined,
               event.srcElement.id
             );
@@ -479,8 +485,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             // Announce that tabstrip item for "Shopping Cart Viewer"
             // has been unselected
             viewParams.signaling.tabStripTabSelected.dispatch(
-              "table",
-              "shoppingcart",
+              'table',
+              'shoppingcart',
               false
             );
           });
@@ -499,7 +505,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
 
           const cname = column.name;
-          columnMetadata.push({ headerText: cheaderText, name: cname, field: cname, headerStyle: "font-weight:bold;text-align:left;" });
+          columnMetadata.push({ headerText: cheaderText, name: cname, field: cname, headerStyle: 'font-weight:bold;text-align:left;' });
         }
 
         return columnMetadata;
@@ -509,13 +515,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         let columnMetadata = [];
 
         // Add table column containing delete icon as the first column
-        if (["configuration","modeling"].indexOf(perspectiveId) !== -1 && self.nonwritable() !== true) {
-          columnMetadata.push({ name: "_delete", field: "_delete", readonly: self.nonwritable, template: "deleteCellTemplate", sortable: "disabled" });
+        if (['configuration','modeling'].indexOf(perspectiveId) !== -1 && self.nonwritable() !== true) {
+          columnMetadata.push({ name: '_delete', field: '_delete', readonly: self.nonwritable, template: 'deleteCellTemplate', sortable: 'disabled' });
         }
 
         columnMetadata = appendTableColumnMetadata(displayedColumns, columnMetadata);
 
-        self.hasHiddenColumns(typeof hiddenColumns !== "undefined");
+        self.hasHiddenColumns(typeof hiddenColumns !== 'undefined');
 
         if (self.showHiddenColumns().length > 0) {
           // User put a check in the "Show hidden columns" checkbox
@@ -528,7 +534,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function setRDJDataProvider(rdjData, perspectiveId, displayedColumns, hiddenColumns, columnMetadata) {
         function getColumnType(name) {
           let column = displayedColumns.find(column => column.name === name);
-          return (typeof column !== "undefined" ? "displayed" : "hidden");
+          return (typeof column !== 'undefined' ? 'displayed' : 'hidden');
         }
 
         // Setup PDJ type information for display
@@ -546,10 +552,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               if (c.name === r) {
                 // Get the display value based on the type information
                 switch (getColumnType(c.name)) {
-                  case "displayed":
+                  case 'displayed':
                     displayValue = {data: pdjTypes1.getDisplayValue(r, row[r])};
                     break;
-                  case "hidden":
+                  case 'hidden':
                     displayValue = {data: pdjTypes2.getDisplayValue(r, row[r])};
                     break;
                   default:
@@ -596,21 +602,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         setRDJDataProvider(rdjData, self.perspective.id, pdjData.table.displayedColumns, pdjData.table.hiddenColumns, columnMetadata);
 
-        const bindHtml = (typeof pdjData.introductionHTML !== 'undefined' ? pdjData.introductionHTML : "<p>");
+        const bindHtml = (typeof pdjData.introductionHTML !== 'undefined' ? pdjData.introductionHTML : '<p>');
         self.introductionHTML({ view: HtmlUtils.stringToNodeArray(bindHtml), data: self });
 
         let pdjActions;
 
-        if (typeof pdjData.table.actions !== "undefined") pdjActions = pdjData.table.actions;
+        if (typeof pdjData.table.actions !== 'undefined') pdjActions = pdjData.table.actions;
         self.pageDefinitionActions = new PageDefinitionActions(pdjActions, rdjData);
 
-        self.actionsDialog.formLayout.html({ view: HtmlUtils.stringToNodeArray("<p>"), data: self });
+        self.actionsDialog.formLayout.html({ view: HtmlUtils.stringToNodeArray('<p>'), data: self });
 
         createHelp(pdjData, self.perspective.id);
       }
 
       function createHelp(pdjData, perspectiveId) {
-        if (typeof pdjData === "undefined") {
+        if (typeof pdjData === 'undefined') {
           return;
         }
 
@@ -622,7 +628,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         self.tableHelpColumns(helpForm.tableHelpColumns);
 
-        if (typeof pdjData.table.displayedColumns !== "undefined") {
+        if (typeof pdjData.table.displayedColumns !== 'undefined') {
           pdjTypes = new PageDataTypes(pdjData.table.displayedColumns, perspectiveId);
 
           for (const i in pdjData.table.displayedColumns) {
@@ -640,7 +646,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
 
         if (self.showHiddenColumns().length > 0) {
-          if (typeof pdjData.table.hiddenColumns !== "undefined") {
+          if (typeof pdjData.table.hiddenColumns !== 'undefined') {
             pdjTypes = new PageDataTypes(pdjData.table.hiddenColumns, perspectiveId);
 
             for (const i in pdjData.table.hiddenColumns) {
@@ -659,22 +665,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         self.helpDataSource(helpData);
 
-        if (typeof pdjData.helpTopics !== "undefined") {
-          const div = document.createElement("div");
-          div.setAttribute("id", "cfe-help-footer");
-          const title = document.createElement("p");
-          title.innerHTML = "<b>Related Topics:</b>";
+        if (typeof pdjData.helpTopics !== 'undefined') {
+          const div = document.createElement('div');
+          div.setAttribute('id', 'cfe-help-footer');
+          const title = document.createElement('p');
+          title.innerHTML = '<b>Related Topics:</b>';
           div.append(title);
-          const list = document.createElement("ul");
+          const list = document.createElement('ul');
           div.append(list);
 
           for (const j in pdjData.helpTopics) {
             const topic = pdjData.helpTopics[j];
-            const listElement = document.createElement("li");
-            const ref = document.createElement("a");
-            ref.setAttribute("href", topic.href);
-            ref.setAttribute("target", "_blank");
-            ref.setAttribute("rel", "noopener");
+            const listElement = document.createElement('li');
+            const ref = document.createElement('a');
+            ref.setAttribute('href', topic.href);
+            ref.setAttribute('target', '_blank');
+            ref.setAttribute('rel', 'noopener');
             ref.innerText = topic.label;
 
             listElement.append(ref);

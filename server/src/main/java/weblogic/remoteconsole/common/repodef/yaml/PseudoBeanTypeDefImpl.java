@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -33,8 +33,8 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
 
   public PseudoBeanTypeDefImpl(BeanRepoDefImpl beanRepoDefImpl, PseudoBeanTypeDefSource source) {
     super(beanRepoDefImpl, source.getName());
-    // can't customize a pseudo type's labels since pseudo types should have good names to begin with:
-    initializeLabels(null);
+    // can't customize a pseudo type's name since pseudo types should have good names to begin with:
+    initializeInstanceName(null);
     this.source = source;
     this.baseTypeDefImpl =
       getBeanRepoDefImpl()

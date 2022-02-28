@@ -31,38 +31,117 @@ public class WebLogicVersions {
   // Initialize the versions.
   // Must be newest to oldest.
   static {
+
     addVersion(
-      true,
       "14.1.1.0.0",
       "wls14110",
       "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0",
-      "wlmbr/mbeans"
+      "wlmbr/mbeans",
+      new WebLogicPSU(
+        "psu210930",
+        "securityConfiguration.secureMode.warnOnInsecureDataSources"
+      ),
+       new WebLogicPSU(
+        "psu210701",
+        "securityConfiguration.checkCertificatesExpirationDays",
+        "securityConfiguration.checkCertificatesIntervalDays",
+        "securityConfiguration.checkIdentityCertificates",
+        "securityConfiguration.checkTrustCertificates",
+        "securityConfiguration.secureMode.warnOnAnonymousRequests",
+        "securityConfiguration.secureMode.warnOnPatches",
+        "securityConfiguration.secureMode.warnOnPorts",
+        "securityConfiguration.secureMode.warnOnUserLockout",
+        "securityConfiguration.secureMode.warnOnUsernamePasswords"
+      )
     );
+
     addVersion(
-      false,
       "12.2.1.4.0",
       "fmw122140",
       "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4",
-      "wlmbr/mbeans"
+      "wlmbr/mbeans",
+      new WebLogicPSU(
+        "psu210930",
+        "securityConfiguration.secureMode.warnOnInsecureDataSources"
+      ),
+      new WebLogicPSU(
+        "psu210630",
+        "securityConfiguration.checkCertificatesExpirationDays",
+        "securityConfiguration.checkCertificatesIntervalDays",
+        "securityConfiguration.checkIdentityCertificates",
+        "securityConfiguration.checkTrustCertificates",
+        "securityConfiguration.secureMode.warnOnAnonymousRequests",
+        "securityConfiguration.secureMode.warnOnPatches",
+        "securityConfiguration.secureMode.warnOnPorts",
+        "securityConfiguration.secureMode.warnOnUserLockout",
+        "securityConfiguration.secureMode.warnOnUsernamePasswords"
+      ),
+      new WebLogicPSU(
+        "psu210330",
+        "securityConfiguration.remoteAnonymousRMIIIOPEnabled",
+        "securityConfiguration.remoteAnonymousRMIT3Enabled"
+      ),
+      new WebLogicPSU(
+        "psu200624",
+        "restfulManagementServices.CORSAllowedCredentials",
+        "restfulManagementServices.CORSAllowedHeaders",
+        "restfulManagementServices.CORSAllowedMethods",
+        "restfulManagementServices.CORSAllowedOrigins",
+        "restfulManagementServices.CORSEnabled",
+        "restfulManagementServices.CORSExposedHeaders",
+        "restfulManagementServices.CORSMaxAge"
+      )
     );
+
     addVersion(
-      false,
       "12.2.1.3.0",
       "fmw122130",
       "https://docs.oracle.com/middleware/12213/wls",
-      "WLMBR/mbeans"
+      "WLMBR/mbeans",
+      new WebLogicPSU(
+        "psu210923",
+        "securityConfiguration.secureMode.warnOnInsecureDataSources"        
+      ),
+      new WebLogicPSU(
+        "psu210630",
+        "securityConfiguration.checkCertificatesExpirationDays",
+        "securityConfiguration.checkCertificatesIntervalDays",
+        "securityConfiguration.checkIdentityCertificates",
+        "securityConfiguration.checkTrustCertificates",
+        "securityConfiguration.secureMode.warnOnAnonymousRequests",
+        "securityConfiguration.secureMode.warnOnPatches",
+        "securityConfiguration.secureMode.warnOnPorts",
+        "securityConfiguration.secureMode.warnOnUserLockout",
+        "securityConfiguration.secureMode.warnOnUsernamePasswords"
+      ),
+      new WebLogicPSU(
+        "psu210329",
+        "securityConfiguration.remoteAnonymousRMIIIOPEnabled",
+        "securityConfiguration.remoteAnonymousRMIT3Enabled"
+      ),
+      new WebLogicPSU(
+        "psu200227",
+        "restfulManagementServices.CORSAllowedCredentials",
+        "restfulManagementServices.CORSAllowedHeaders",
+        "restfulManagementServices.CORSAllowedMethods",
+        "restfulManagementServices.CORSAllowedOrigins",
+        "restfulManagementServices.CORSEnabled",
+        "restfulManagementServices.CORSExposedHeaders",
+        "restfulManagementServices.CORSMaxAge"        
+      )
     );
   }
 
   private static WebLogicVersion addVersion(
-    boolean isCurrentVersion,
     String domainVersion,
     String fmwVersion,
     String docsUrl,
-    String mbeanJavadocDirectory
+    String mbeanJavadocDirectory,
+    WebLogicPSU... psus // newest to oldest
   ) {
+    boolean isCurrentVersion = versionStringToVersion.isEmpty();
     WebLogicVersion version =
-      new WebLogicVersion(isCurrentVersion, domainVersion, fmwVersion, docsUrl, mbeanJavadocDirectory);
+      new WebLogicVersion(isCurrentVersion, domainVersion, fmwVersion, docsUrl, mbeanJavadocDirectory, psus);
     versionStringToVersion.put(domainVersion, version);
     versionNumberToVersion.put(getVersionNumber(domainVersion), version);
     if (isCurrentVersion) {

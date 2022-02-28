@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.connection;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -17,7 +18,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
@@ -29,10 +32,13 @@ import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
+import weblogic.remoteconsole.common.utils.WebLogicPSU;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
+import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.filter.ClientAuthFeature;
 import weblogic.remoteconsole.server.utils.ResponseHelper;
@@ -139,7 +145,8 @@ public class ConnectionManager {
   Connection newConnection(
     String domainUrl,
     String domainName,
-    String domainVersion,
+    WebLogicVersion weblogicVersion,
+    WebLogicPSU psu,
     String username,
     Client client
   ) {
@@ -149,7 +156,7 @@ public class ConnectionManager {
     String id = getUUID();
 
     // Create the connection instance and add to the list of connections...
-    result = new ConnectionImpl(id, domainUrl, domainName, domainVersion, username, client);
+    result = new ConnectionImpl(id, domainUrl, domainName, weblogicVersion, psu, username, client);
     connections.put(id, result);
 
     // Done.
@@ -242,15 +249,12 @@ public class ConnectionManager {
   public WebLogicMBeansVersion getWebLogicMBeansVersion(Connection connection) {
     Set<String> roles = getConnectionUserRoles(connection);
     if (roles != null) {
-      Boolean supportsSecurityWarnings = getSupportsSecurityWarnings(connection);
-      if (supportsSecurityWarnings != null) {
-        return
-          WebLogicMBeansVersions.getVersion(
-            WebLogicVersions.getVersion(connection.getDomainVersion()),
-            supportsSecurityWarnings,
-            roles
-          );
-      }
+      return
+        WebLogicMBeansVersions.getVersion(
+          connection.getWebLogicVersion(),
+          connection.getPSU(),
+          roles
+        );
     }
     return null;
   }
@@ -353,17 +357,6 @@ public class ConnectionManager {
   }
 
   /**
-   * Determines whether the domain supports security warnings.
-   * 
-   * Returns null if there was a problem determining whether the domain supports security warnings.
-   */
-  private Boolean getSupportsSecurityWarnings(Connection connection) {
-    // TBD try to GET domainRuntime/domainSecurityRuntime
-    // 200 = true, 404 = false
-    return false;
-  }
-
-  /**
    * Try a connection to the WebLogic Domain and return a response status of the connection attempt.
    *
    * @param domainUrl The WebLogic Domain URL
@@ -373,22 +366,22 @@ public class ConnectionManager {
    * @return The connection response; The connection id is available when status is successful
    */
   private ConnectionResponse connect(String domainUrl, String username, Client client, List<Locale> locales) {
-    Map<String, String> domainFieldsMap = new HashMap<>();
 
     // Try to get WebLogic version from RESTful Management endpoint
     // It returns a failure response if there was one
-    ConnectionResponse response = doConnect(domainUrl, client, domainFieldsMap);
-    if (response != null) {
+    ConnectionResponse response = doConnect(domainUrl, client);
+    if (response.getEntity() == null) {
       return response;
     }
 
+    JsonObject entity = response.getEntity();
+  
     // Check response data for the required connection information
-    String domainVersion = domainFieldsMap.get(DOMAINVER);
-    String domainName = domainFieldsMap.get(DOMAINNAME);
+    String domainVersion = entity.getString(DOMAINVER, null);
+    String domainName = entity.getString(NAME, null);
     if ((domainVersion == null) || (domainName == null)) {
       LOGGER.info("Unexpected response from WebLogic Domain: No name or version information found!");
-      client.close();
-      return new ConnectionResponse(Status.INTERNAL_SERVER_ERROR, null, "Missing version");
+      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Missing version");
     }
 
     // Check that the WebLogic domain's version is one the console supports
@@ -398,29 +391,35 @@ public class ConnectionManager {
       // domainVersion is from a trusted source - WebLogic - and is,
       // therefore, not a forging risk
       LOGGER.info(message.getEnglishText());
-      client.close();
       // Fix this localization
-      return new ConnectionResponse(Status.NOT_IMPLEMENTED, null, message.getEnglishText());
+      return newConnectionResponse(Status.NOT_IMPLEMENTED, client, message.getEnglishText());
     }
+
+    WebLogicVersion weblogicVersion = WebLogicVersions.getVersion(domainVersion);
+    WebLogicPSU psu = findPSU(entity, weblogicVersion);
 
     // FortifyIssueSuppression Log Forging
     // domainVersion is from a trusted source - WebLogic - and is,
     // therefore, not a forging risk
 
     // Let the world know what the WebLogic domain that was connected
-    LOGGER.info(
-      ">>>> Connected to the WebLogic Domain '"
-      + domainName
-      + "' with version '"
-      + domainVersion
-      + "' <<<<"
-    );
+    StringBuilder sb = new StringBuilder();
+    sb
+      .append(">>>> Connected to the WebLogic Domain '")
+      .append(domainName)
+      .append("' with version '");
+    if (psu != null) {
+      sb.append(psu);
+    } else {
+      sb.append(weblogicVersion).append(" GA");
+    }
+    sb.append("' <<<<");
+    LOGGER.info(sb.toString());
 
     // Create the connection and return the response
     return
       newConnectionResponse(
-        Status.OK,
-        newConnection(domainUrl, domainName, domainVersion, username, client)
+        newConnection(domainUrl, domainName, weblogicVersion, psu, username, client)
       );
   }
 
@@ -430,20 +429,17 @@ public class ConnectionManager {
    * @return The connection Response and the results populated with the values returned from WebLogic
    *     REST call
    */
-  private ConnectionResponse doConnect(String domainUrl, Client client, Map<String, String> results) {
-    ConnectionResponse ret = null;
+  private ConnectionResponse doConnect(String domainUrl, Client client) {
     // Build request that will check the credentials and the connection...
     WebLogicRestRequest webLogicRestRequest =
       WebLogicRestRequest.builder()
-        .path("/domainConfig")
-        .queryParam("links", "none")
-        .queryParam("fields", "name,domainVersion")
+        .path("/domainConfig/search")
         .serverUrl(domainUrl)
         .client(client)
         .build();
 
     // Attempt to connect to the WebLogic Domain URL...
-    try (Response response = WebLogicRestClient.get(webLogicRestRequest)) {
+    try (Response response = WebLogicRestClient.post(webLogicRestRequest, getDomainFieldsQuery())) {
       // FortifyIssueSuppression Log Forging
       // This response is from a trusted source - WebLogic - and is,
       // therefore, not a forging risk
@@ -453,19 +449,16 @@ public class ConnectionManager {
       // The status returned is from WebLogic, however a ConnectionException
       // is mapped to Status 500 internally, thus use 404 as connection response here!
       if (respStatus == Status.INTERNAL_SERVER_ERROR) {
-        ret = newConnectionResponse(
-          Status.NOT_FOUND, client, "Not able to connect");
+        return newConnectionResponse(Status.NOT_FOUND, client, "Not able to connect");
       } else if (respStatus != Status.OK) {
-        ret = newConnectionResponse(respStatus, client, response.getStatusInfo().getReasonPhrase());
+        return newConnectionResponse(respStatus, client, response.getStatusInfo().getReasonPhrase());
       }
 
       // Populate the results from the JSON response which are found only when the invoke was
       // successful!
+
       JsonObject entity = ResponseHelper.getEntityAsJson(response);
-      if ((entity != null) && entity.containsKey(NAME) && entity.containsKey(DOMAINVER)) {
-        results.put(DOMAINVER, entity.getString(DOMAINVER));
-        results.put(DOMAINNAME, entity.getString(NAME));
-      }
+      return new ConnectionResponse(entity);
     } catch (Exception exc) {
       // Handle any exception to WebLogic as Resoponse.Status.NOT_FOUND as the exception
       // maybe thrown for serveral reasons including unknown host, read timeout, etc.
@@ -476,11 +469,142 @@ public class ConnectionManager {
           + exc.toString()
       );
       LOGGER.log(Level.FINE, "Connection attempt failed with exception: " + exc.toString(), exc);
-      ret = newConnectionResponse(Status.NOT_FOUND, client, "Not able to connect");
+      return newConnectionResponse(Status.NOT_FOUND, client, "Not able to connect");
+    }
+  }
+
+  /**
+   * Determines which PSU to view the domain as (i.e. the domain supports
+   * at least that PSU and not the next PSU that made mbean changes).
+   *
+   * This determines which version of the bean infos the remote console
+   * will use for this connection.
+   *
+   * Returns null if the remote console should use the GA version of the bean infos.
+   */
+  private WebLogicPSU findPSU(JsonObject entity, WebLogicVersion version) {
+    for (WebLogicPSU psu : version.getPSUs()) {
+      if (matchesPSU(entity, psu)) {
+        return psu;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Determines whether the domain has the mbean properties that
+   * indicate that it is using at least the input PSU.
+   */
+  private boolean matchesPSU(JsonObject entity, WebLogicPSU psu) {
+    Boolean matchesPSU = null;
+    for (Path marker : psu.getMarkerMBeanProperties()) {
+      boolean containsMarker = containsMarker(entity, marker);
+      if (matchesPSU == null) {
+        matchesPSU = containsMarker;
+      } else {
+        if (matchesPSU != containsMarker) {
+          LOGGER.warning(
+            "The domain is not using GA or a supported PSU."
+            + " Only found some of the markers for '" + psu + "'."
+          );
+          LOGGER.finest("PSU Markers: " + entity);
+          return false;
+        }
+      }
+    }
+    if (!matchesPSU) {
+      // None of the markers were found.  The domain doesn't use this PSU.
+      return false;
+    }
+    WebLogicPSU previousPSU = psu.getPreviousPSU();
+    if (previousPSU != null) {
+      boolean matchesPreviousPSU = matchesPSU(entity, previousPSU);
+      if (matchesPreviousPSU != matchesPSU) {
+        LOGGER.warning(
+          " The domain is not using GA or a supported PSU."
+          + " '" + psu + "' markers were found but '" + previousPSU + "' markers were not found."
+        );
+        return false;
+      }
+    }
+    // All of the markers were found for this PSU and all previous PSUs.  The domain is using this PSU.
+    return true;
+  }
+
+  /**
+   * Determines whether the domain has a has a domain level property that
+   * was added in a PSU.
+   */
+  private boolean containsMarker(JsonObject entity, Path marker) {
+    List<String> components = marker.getComponents();
+    for (int i = 0; i < components.size() - 1; i++) {
+      String child = components.get(i);
+      if (!entity.containsKey(child)) {
+        return false;
+      }
+      entity = entity.getJsonObject(child);
+    }
+    return entity.containsKey(marker.getLastComponent());
+  }
+
+  /**
+   * Creates the WebLogic REST domainConfig query for returning the domain
+   * info needed to determine the domain's name, version and PSU.
+   */
+  private JsonObject getDomainFieldsQuery() {
+    BeanQueryBuilder builder = new BeanQueryBuilder();
+    builder.addField(NAME);
+    builder.addField(DOMAINVER);
+    for (WebLogicVersion version : WebLogicVersions.getSupportedVersions()) {
+      for (WebLogicPSU psu : version.getPSUs()) {
+        for (Path marker : psu.getMarkerMBeanProperties()) {
+          List<String> components = marker.getComponents();
+          BeanQueryBuilder markerBuilder = builder;
+          for (int i = 0; i < components.size() - 1; i++) {
+            markerBuilder = markerBuilder.getChild(components.get(i));
+          }
+          markerBuilder.addField(marker.getLastComponent());
+        }
+      }
+    }
+    JsonObject query = builder.toJson().build();
+    return query;
+  }
+
+  /**
+   * A helper class used for building the WLS REST query used
+   * to return the domain's name, version and the marker properties
+   * that are used to determine which PSU the domain is using.
+   */
+  private static class BeanQueryBuilder {
+    private Set<String> fields = new HashSet<>();
+    private Map<String,BeanQueryBuilder> children = new HashMap<>();
+
+    private void addField(String field) {
+      fields.add(field);
     }
 
-    // Done.
-    return ret;
+    private BeanQueryBuilder getChild(String name) {
+      return children.computeIfAbsent(name, k -> new BeanQueryBuilder());
+    }
+
+    private JsonObjectBuilder toJson() {
+      JsonObjectBuilder builder = Json.createObjectBuilder();
+      builder.add("links", Json.createArrayBuilder()); // no links ever
+      JsonArrayBuilder fieldsBuilder = Json.createArrayBuilder();
+      for (String field : fields) {
+        fieldsBuilder.add(field);
+      }
+      builder.add("fields", fieldsBuilder);
+      if (!children.isEmpty()) {
+        JsonObjectBuilder childrenBuilder = Json.createObjectBuilder();
+        for (Map.Entry<String,BeanQueryBuilder> childEntry : children.entrySet()) {
+          childrenBuilder.add(childEntry.getKey(), childEntry.getValue().toJson());
+        }
+        builder.add("children", childrenBuilder);
+      }
+      return builder;
+    }
   }
 
   /**
@@ -542,9 +666,9 @@ public class ConnectionManager {
   }
 
   /** Obtain a connection response */
-  private ConnectionResponse newConnectionResponse(Status status, Connection connection) {
+  private ConnectionResponse newConnectionResponse(Connection connection) {
     String id = ((connection != null) ? connection.getId() : null);
-    return new ConnectionResponse(status, id, null);
+    return new ConnectionResponse(id);
   }
 
   /** Obtain a failed connection response with message */
@@ -552,7 +676,7 @@ public class ConnectionManager {
     if (client != null) {
       client.close();
     }
-    return new ConnectionResponse(status, null, message);
+    return new ConnectionResponse(status, message);
   }
 
   /**
@@ -562,14 +686,26 @@ public class ConnectionManager {
    * in the response for use by the WebLogic Console Frontend.
    */
   public class ConnectionResponse {
-    private Status status;
+    private Status status = Status.OK;
     private String connectionId;
     private String message;
+    private JsonObject entity;
 
-    ConnectionResponse(Status status, String connectionId, String message) {
-      this.status = status;
+    // Successful connection to a domain whose version we support:
+    ConnectionResponse(String connectionId) {
       this.connectionId = connectionId;
+    }
+
+    // Unsuccessful connection:
+    ConnectionResponse(Status status, String message) {
+      this.status = status;
       this.message = message;
+    }
+
+    // Intermediate successful connection
+    // (connected to the domain, still need to see if we support the version)
+    ConnectionResponse(JsonObject entity) {
+      this.entity = entity;
     }
 
     public boolean isSuccess() {
@@ -586,6 +722,10 @@ public class ConnectionManager {
 
     public String getMessage() {
       return message;
+    }
+
+    JsonObject getEntity() {
+      return entity;
     }
 
     public String toString() {

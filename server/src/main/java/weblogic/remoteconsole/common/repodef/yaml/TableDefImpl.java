@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -28,8 +28,11 @@ public class TableDefImpl extends PageDefImpl implements TableDef {
 
   public TableDefImpl(PageRepoDefImpl pageRepoDefImpl, PagePath pagePath, TableDefSource source) {
     super(pageRepoDefImpl, pagePath, source);
-    this.displayedColumnDefImpls = createPropertyDefImpls(source.getDisplayedColumns());
-    this.hiddenColumnDefImpls = createPropertyDefImpls(source.getHiddenColumns());
+    // tables can include columns that only some of the derived types support
+    // rows whose type doesn't support the column will omit its cell.
+    boolean searchSubTypes = true;
+    this.displayedColumnDefImpls = createPropertyDefImpls(source.getDisplayedColumns(), searchSubTypes);
+    this.hiddenColumnDefImpls = createPropertyDefImpls(source.getHiddenColumns(), searchSubTypes);
     this.displayedColumnDefs = Collections.unmodifiableList(getDisplayedColumnDefImpls());
     this.hiddenColumnDefs = Collections.unmodifiableList(getHiddenColumnDefImpls());
     // Note: make sure to create the actions after creating the columns so

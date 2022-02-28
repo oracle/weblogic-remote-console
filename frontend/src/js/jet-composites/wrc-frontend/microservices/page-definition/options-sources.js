@@ -1,12 +1,12 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/controller', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/data-management/cbe-data-storage', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/cbe-types', 'ojs/ojlogger'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/integration/controller', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/data-management/cbe-data-storage', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/cbe-types', 'ojs/ojlogger'],
   function (oj, ko, ModuleElementUtils, Controller, Runtime, CbeDataStorage, DataOperations, MessageDisplaying, PageDefinitionUtils, CoreUtils, CbeTypes, Logger) {
 
     const i18n = {
@@ -15,15 +15,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
           optionsSources: {
             view: {
               disabled: ko.observable(false), visible: ko.observable(true),
-              label: ko.observable(oj.Translations.getTranslatedString("wrc-pdj-options-sources.menus.more.optionsSources.view.label", "{0}"))
+              label: ko.observable(oj.Translations.getTranslatedString('wrc-pdj-options-sources.menus.more.optionsSources.view.label', '{0}'))
             },
             create: {
               disabled: ko.observable(false), visible: ko.observable(true),
-              label: ko.observable(oj.Translations.getTranslatedString("wrc-pdj-options-sources.menus.more.optionsSources.create.label", "{0}"))
+              label: ko.observable(oj.Translations.getTranslatedString('wrc-pdj-options-sources.menus.more.optionsSources.create.label', '{0}'))
             },
             edit: {
               disabled: ko.observable(false), visible: ko.observable(true),
-              label: ko.observable(oj.Translations.getTranslatedString("wrc-pdj-options-sources.menus.more.optionsSources.edit.label", "{0}"))
+              label: ko.observable(oj.Translations.getTranslatedString('wrc-pdj-options-sources.menus.more.optionsSources.edit.label', '{0}'))
             }
           }
         }
@@ -38,7 +38,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
 
     function getPropertyName(event) {
       // Get the more menu id based on the property name in the event.
-      return event.currentTarget.id.substring("moreIcon_".length);
+      return event.currentTarget.id.substring('moreIcon_'.length);
     }
 
     /**
@@ -64,11 +64,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
         if (!menuItems[j].visible) j++;
         if (j < menuItems.length) {
           childNodes[i].classList.add(...menuItems[j].classes);
-          childNodes[i].setAttribute("role", menuItems[j].role);
-          childNodes[i].setAttribute("data-index", menuItems[j].index);
-          childNodes[i].setAttribute("id", menuItems[j].id);
-          childNodes[i].setAttribute("value", menuItems[j].id);
-          childNodes[i].setAttribute("disabled", menuItems[j].disabled);
+          childNodes[i].setAttribute('role', menuItems[j].role);
+          childNodes[i].setAttribute('data-index', menuItems[j].index);
+          childNodes[i].setAttribute('id', menuItems[j].id);
+          childNodes[i].setAttribute('value', menuItems[j].id);
+          childNodes[i].setAttribute('disabled', menuItems[j].disabled);
           childNodes[i].innerText = menuItems[j].label;
         }
         else {
@@ -106,27 +106,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
         // Using workaround code here, because we need to wait
         // until after the CBE refactor to get the data that
         // the CFE needs here.
-        const idParts = event.target.value.split("_");
+        const idParts = event.target.value.split('_');
         // idParts will contain 4 array items:
         // [0] = "moreMenuItem"
         // [1] = "view", "create" or "edit"
         // [2] = type name
         switch (idParts[1]) {
-          case "view":
-            optionsSourceConfig["perspectiveId"] = event.currentTarget.attributes['data-perspective-id'].value;
-            optionsSourceConfig["path"] = optionsSource.resourceData;
-            optionsSourceConfig["action"] = "view";
+          case 'view':
+            optionsSourceConfig['perspectiveId'] = event.currentTarget.attributes['data-perspective-id'].value;
+            optionsSourceConfig['path'] = optionsSource.resourceData;
+            optionsSourceConfig['action'] = 'view';
             break;
-          case "create":
-            optionsSourceConfig["perspectiveId"] = event.currentTarget.attributes['data-perspective-id'].value;
-            optionsSourceConfig["path"] = optionsSource.resourceData;
-            optionsSourceConfig["property"] = {name: propertyName, label: PageDefinitionUtils.displayNameFromIdentity(optionsSource)};
-            optionsSourceConfig["action"] = "create";
+          case 'create':
+            optionsSourceConfig['perspectiveId'] = event.currentTarget.attributes['data-perspective-id'].value;
+            optionsSourceConfig['path'] = optionsSource.resourceData;
+            optionsSourceConfig['property'] = {name: propertyName, label: PageDefinitionUtils.displayNameFromIdentity(optionsSource)};
+            optionsSourceConfig['action'] = 'create';
             break;
-          case "edit":
-            optionsSourceConfig["perspectiveId"] = event.currentTarget.attributes['data-perspective-id'].value;
-            optionsSourceConfig["path"] = optionsSource.resourceData;
-            optionsSourceConfig["action"] = "edit";
+          case 'edit':
+            optionsSourceConfig['perspectiveId'] = event.currentTarget.attributes['data-perspective-id'].value;
+            optionsSourceConfig['path'] = optionsSource.resourceData;
+            optionsSourceConfig['action'] = 'edit';
             break;
         }
       }
@@ -142,10 +142,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
      */
     function createMoreMenuParams(propertyName, propertyValue, optionsSources) {
       function addBeforeAfterDividerClasses() {
-        const index = params.menuItems.map(menuItem => menuItem.label).indexOf("---");
+        const index = params.menuItems.map(menuItem => menuItem.label).indexOf('---');
         if (index !== -1) {
-          params.menuItems[index - (params.menuItems[index - 1].visible ? 1 : 2)].classes.push("oj-menu-item-before-divider");
-          params.menuItems[index + 1].classes.push("oj-menu-item-after-divider");
+          params.menuItems[index - (params.menuItems[index - 1].visible ? 1 : 2)].classes.push('oj-menu-item-before-divider');
+          params.menuItems[index + 1].classes.push('oj-menu-item-after-divider');
         }
       }
 
@@ -168,30 +168,30 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
           // one.
           params.menuItems.push({
             index: i,
-            role: "separator",
-            classes: ["oj-complete", "oj-menu-divider"],
+            role: 'separator',
+            classes: ['oj-complete', 'oj-menu-divider'],
             id: `moreMenuItem_separator_${i}`,
-            label: "",
+            label: '',
             disabled: false,
             visible: true
           });
         }
         params.menuItems.push({
           index: i,
-          role: "presentation",
-          classes: ["oj-complete", "oj-menu-item"],
+          role: 'presentation',
+          classes: ['oj-complete', 'oj-menu-item'],
           id: `moreMenuItem_view_${typeName}`,
-          label: i18n.menus.more.optionsSources.view.label().replace("{0}", propertyLabel),
+          label: i18n.menus.more.optionsSources.view.label().replace('{0}', propertyLabel),
           disabled: i18n.menus.more.optionsSources.view.disabled(),
           visible: i18n.menus.more.optionsSources.view.visible()
         });
 
         params.menuItems.push({
           index: i,
-          role: "presentation",
-          classes: ["oj-complete", "oj-menu-item"],
+          role: 'presentation',
+          classes: ['oj-complete', 'oj-menu-item'],
           id: `moreMenuItem_create_${typeName}`,
-          label: i18n.menus.more.optionsSources.create.label().replace("{0}", typeLabel),
+          label: i18n.menus.more.optionsSources.create.label().replace('{0}', typeLabel),
           disabled: i18n.menus.more.optionsSources.create.disabled(),
           visible: i18n.menus.more.optionsSources.create.visible()
         });
@@ -202,10 +202,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
 
         params.menuItems.push({
           index: i,
-          role: "presentation",
-          classes: ["oj-complete", "oj-menu-item"],
+          role: 'presentation',
+          classes: ['oj-complete', 'oj-menu-item'],
           id: `moreMenuItem_edit_${typeName}`,
-          label: i18n.menus.more.optionsSources.edit.label().replace("{0}", identityKey),
+          label: i18n.menus.more.optionsSources.edit.label().replace('{0}', identityKey),
           disabled: i18n.menus.more.optionsSources.edit.disabled(),
           visible: i18n.menus.more.optionsSources.edit.visible()
         });
@@ -225,7 +225,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
       const menuId = `moreMenu_${propertyName}`;
       const moreMenu = document.getElementById(menuId);
       if (CoreUtils.isNotUndefinedNorNull(moreMenu)) {
-        moreMenu.setAttribute("data-property-value", JSON.stringify(newPropertyValue));
+        moreMenu.setAttribute('data-property-value', JSON.stringify(newPropertyValue));
         const optionsSources = JSON.parse(moreMenu.attributes['data-options-sources'].value);
         const params = createMoreMenuParams(propertyName, newPropertyValue, optionsSources);
 
@@ -248,7 +248,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
         moreMenu.open(event);
         const childNodes = moreMenu.childNodes;
         const lastChild = childNodes[childNodes.length - 1];
-        lastChild.classList.remove("oj-menu-divider");
+        lastChild.classList.remove('oj-menu-divider');
       },
 
       /**
@@ -258,7 +258,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
        * @param {{kind: string, perspective: string, path: Array}|""} newPropertyValue - Either an ``identity`` object or an empty string.
        */
       propertyValueChanged: (propertyName, newPropertyValue) => {
-        if (CoreUtils.isNotUndefinedNorNull(newPropertyValue) || newPropertyValue === "") {
+        if (CoreUtils.isNotUndefinedNorNull(newPropertyValue) || newPropertyValue === '') {
           recreateMoreMenuParams(propertyName, newPropertyValue);
         }
       },
@@ -273,13 +273,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
        */
       handleMenuItemSelected: (event, rdjData, viewParams) => {
         const optionsSourceConfig = getOptionsSourceConfig(event, rdjData);
-        PageDefinitionUtils.setPlacementRouterParameter(viewParams.parentRouter, "detached");
+        PageDefinitionUtils.setPlacementRouterParameter(viewParams.parentRouter, 'detached');
 
         switch (optionsSourceConfig.action) {
-          case "view":
+          case 'view':
             viewParams.parentRouter.go(`/${viewParams.perspective.id}/${encodeURIComponent(optionsSourceConfig.path)}`)
               .then(result => {
-                PageDefinitionUtils.setPlacementRouterParameter(viewParams.parentRouter, "embedded");
+                PageDefinitionUtils.setPlacementRouterParameter(viewParams.parentRouter, 'embedded');
                 if (CoreUtils.isNotUndefinedNorNull(result) && CoreUtils.isNotUndefinedNorNull(result.hasChanged) && result.hasChanged) {
                   // router.go() was successful, so dispatch signals
                   // regarding the navtree state.
@@ -288,12 +288,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
                 }
               });
             break;
-          case "edit": {
+          case 'edit': {
             const menuId = `moreMenu_${optionsSourceConfig.name}`;
             const moreMenu = document.getElementById(menuId);
-            const propertyValue = JSON.parse(moreMenu.attributes["data-property-value"].value);
-            if (propertyValue !== "") {
-              optionsSourceConfig["path"] = propertyValue.resourceData;
+            const propertyValue = JSON.parse(moreMenu.attributes['data-property-value'].value);
+            if (propertyValue !== '') {
+              optionsSourceConfig['path'] = propertyValue.resourceData;
             }
             viewParams.parentRouter.go(`/${viewParams.perspective.id}/${encodeURIComponent(optionsSourceConfig.path)}`)
               .then(result => {
@@ -306,8 +306,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
               });
             break;
           }
-          case "create":
-            optionsSourceConfig["breadcrumbs"] = optionsSourceConfig.path;
+          case 'create':
+            optionsSourceConfig['breadcrumbs'] = optionsSourceConfig.path;
             break;
         }
         return optionsSourceConfig;
@@ -324,7 +324,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
        */
       getMoreMenuParams: (propertyName, propertyLabel, propertyData, perspectiveId, disabled) => {
         // Convert null propertyValue to empty string
-        const propertyValue = propertyData.value || "";
+        const propertyValue = propertyData.value || '';
         return {
           disabled: disabled,
           buttonId: `moreIcon_${propertyName}`,
@@ -349,15 +349,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
         const uri = `${optionsSourceConfig.path}?dataAction=new`;
         return DataOperations.mbean.new(uri)
           .then(reply => {
-            let childRouter = viewParams.parentRouter.getChildRouter("form");
+            let childRouter = viewParams.parentRouter.getChildRouter('form');
             if (CoreUtils.isNotUndefinedNorNull(childRouter)) childRouter.dispose();
-            childRouter = viewParams.parentRouter.createChildRouter("form");
+            childRouter = viewParams.parentRouter.createChildRouter('form');
             childRouter.data = {
-              pageTitle: ko.observable(reply.body.data.get("pageTitle")),
-              rdjUrl: ko.observable(reply.body.data.get("rdjUrl")),
-              rdjData: ko.observable(reply.body.data.get("rdjData")),
-              pdjUrl: ko.observable(reply.body.data.get("pdjUrl")),
-              pdjData: ko.observable(reply.body.data.get("pdjData")),
+              pageTitle: ko.observable(reply.body.data.get('pageTitle')),
+              rdjUrl: ko.observable(reply.body.data.get('rdjUrl')),
+              rdjData: ko.observable(reply.body.data.get('rdjData')),
+              pdjUrl: ko.observable(reply.body.data.get('pdjUrl')),
+              pdjData: ko.observable(reply.body.data.get('pdjData')),
               rawPath: ko.observable(optionsSourceConfig.path)
             };
             return ModuleElementUtils.createConfig({
@@ -368,7 +368,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
                 signaling: viewParams.signaling,
                 perspective: viewParams.perspective,
                 beanTree: viewParams.beanTree,
-                title: PageDefinitionUtils.filterPathSegments(optionsSourceConfig.breadcrumbs, "data").join("/"),
+                title: PageDefinitionUtils.filterPathSegments(optionsSourceConfig.breadcrumbs, 'data').join('/'),
                 property: optionsSourceConfig.property,
                 onSaveSuceeded: updateShoppingCartCallback,
                 onFormRefresh: refreshFormCallback

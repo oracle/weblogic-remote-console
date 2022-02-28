@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'ojs/ojknockout'],
   function (oj, ko, Runtime, CoreTypes) {
@@ -15,16 +15,16 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
         toolbar: {
           buttons: {
             home: {
-              id: "home", image: "home-icon-blk_24x24", disabled: ko.observable(false), visible: ko.observable(false),
-              label: oj.Translations.getTranslatedString("wrc-content-area-header.toolbar.buttons.home.label")
+              id: 'home', image: 'home-icon-blk_24x24', disabled: ko.observable(false), visible: ko.observable(false),
+              label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label')
             },
             preferences: {
-              id: "preferences", image: "preferences-icon-blk_24x24", disabled: ko.observable(false), visible: ko.observable(false),
-              label: oj.Translations.getTranslatedString("wrc-content-area-header.toolbar.buttons.preferences.label")
+              id: 'preferences', image: 'preferences-icon-blk_24x24', disabled: ko.observable(false), visible: ko.observable(false),
+              label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.preferences.label')
             },
             search: {
-              id: "search", image: "search-icon-blk_24x24", disabled: ko.observable(false), visible: ko.observable(false),
-              label: oj.Translations.getTranslatedString("wrc-content-area-header.toolbar.buttons.search.label")
+              id: 'search', image: 'search-icon-blk_24x24', disabled: ko.observable(false), visible: ko.observable(false),
+              label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.search.label')
             }
           }
         }
@@ -47,8 +47,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
-          viewParams.signaling.beanTreeChanged.dispatch({type: "home", label: oj.Translations.getTranslatedString("wrc-content-area-header.toolbar.buttons.home.label"), provider: {id: dataProvider.id, name: dataProvider.name}});
-          $("#home").click();
+          viewParams.signaling.beanTreeChanged.dispatch({type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name}});
+          $('#home').click();
         });
 
         self.signalBindings.push(binding);
@@ -73,7 +73,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
         self.i18n.toolbar.buttons.search.disabled(state);
 
         if (state) {
-          viewParams.onToolbarButtonClicked("");
+          viewParams.onToolbarButtonClicked('');
         }
         self.i18n.toolbar.buttons.home.visible(!state);
       }
@@ -85,10 +85,10 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
        */
       this.contentAreaHeaderButtonClickHandler = function(event) {
         switch(event.currentTarget.id) {
-          case "home": {
+          case 'home': {
               if (!self.i18n.toolbar.buttons.home.disabled()) {
                 // Go to "Home" page
-                viewParams.parentRouter.go("home");
+                viewParams.parentRouter.go('home');
               }
             }
             break;

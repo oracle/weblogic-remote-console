@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -29,7 +29,7 @@ define(
   
       if (argumentsArray.length > 0) {
         if (!argumentsArray.isArray(varargs)) {
-          throw new Error("varargs parameter must be a string or array of strings, if present.");
+          throw new Error('varargs parameter must be a string or array of strings, if present.');
         } 
         
         if (varargs.indexOf('.') !== -1 ) {
@@ -104,11 +104,11 @@ define(
       },
 
       getDotSeparatedPath: function(){
-        return this.getPath(".");
+        return this.getPath('.');
       },
   
       getSlashSeparatedPath: function(){
-        return this.getPath("/");
+        return this.getPath('/');
       },
 
       isEmpty: function(){
@@ -132,7 +132,7 @@ define(
         }
         return sb.toString();
 */
-          return "";
+          return '';
       },
 
       toString: function(){

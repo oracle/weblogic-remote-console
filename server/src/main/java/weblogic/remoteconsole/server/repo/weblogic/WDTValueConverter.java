@@ -309,12 +309,14 @@ public class WDTValueConverter {
   }
 
   private static Map<String, Object> getMapFromProperties(Properties items) {
-    Map<String, Object> result = new LinkedHashMap<>();
+    Map<String, Object> result = null;
     if ((items != null) && !items.isEmpty()) {
       // Sort the Properties keys for predictable updated results...
       Map<String, Object> sorter = new TreeMap<>();
+      Map<String, Object> newItems = new LinkedHashMap<>();
       items.forEach((key, val) -> sorter.put(key.toString(), val));
-      sorter.forEach((key, val) -> result.put(key, val));
+      sorter.forEach((key, val) -> newItems.put(key, val));
+      result = newItems;
     }
     return result;
   }
@@ -325,7 +327,7 @@ public class WDTValueConverter {
     if (item instanceof Map) {
       // Use the Map key and the String of each of key value...
       Map<String, Object> properties = (Map<String, Object>)item;
-      properties.forEach((key, val) -> result.setProperty(key, val.toString()));
+      properties.forEach((key, val) -> result.setProperty(key, ((val != null) ? val.toString() : "")));
     }
     return result;
   }

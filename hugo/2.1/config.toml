@@ -10,7 +10,13 @@ theme = "hugo-theme-learn"
 
 publishDir = "docs"
 
-staticDir = ['static', '../../frontend/src/images']
+[module]
+[[module.mounts]]
+  source = 'static'
+  target = 'static'
+[[module.mounts]]
+  source = '../../frontend/src/js/jet-composites/wrc-frontend/images/'
+  target = 'static/images/icons'
 
 # For search functionality
 [outputs]

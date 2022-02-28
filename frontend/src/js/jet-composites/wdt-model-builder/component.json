@@ -5,7 +5,11 @@
   "displayName": "WebLogic Server Deploy Tooling (WDT) Model Builder",
   "description": "GUI for managing model files used with the WebLogic Server Deploy Tooling (WDT) product.",
   "dependencies": {
-    "navtree-dialog": "^1.0.0"
+    "wrc-frontend-apis": "^1.0.0",
+    "wrc-frontend-core": "^1.0.0",
+    "wrc-frontend-integration": "^1.0.0",
+    "wrc-frontend-microservices": "^1.0.0",
+    "cfe-navtree": "^1.0.0"
   },
   "properties": {
     "resourceDataFragment": {
@@ -24,7 +28,7 @@
       "type": "object",
       "readOnly": true,
       "value": {
-        "domain": "domainInfo:\n  AdminUserName: '@@SECRET:__weblogic-credentials__:username@@'\n  AdminPassword: '@@SECRET:__weblogic-credentials__:password@@'\n", 
+        "domain": "domainInfo:\n  AdminUserName: '@@SECRET:__weblogic-credentials__:username@@'\n  AdminPassword: '@@SECRET:__weblogic-credentials__:password@@'\n",
         "sparse": "domainInfo:\n"
       }
     },
@@ -61,6 +65,14 @@
           "type": "object"
         }
       ]
+    },
+    "selectLastVisitedSlice": {
+      "description": "Selects and renders the last visited slice.",
+      "internalName" : "_selectLastVisitedSlice"
+    },
+    "resize": {
+      "description": "Resizes the WDT Model Builder using the 'Resize Observable API' (https://developer.mozilla.org/en-US/docs/Web/API/Resize_Observer_API).",
+      "internalName" : "_resize"
     }
   },
   "events": {

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -12,5 +12,4 @@ properties:
   - name: "HttpAuthenticationUserName"
   # Uncomment when we add support for encrypted properties without isSet
   # - name: "HttpAuthenticationPassword"
-  - name: "CustomNotificationProperties"
 

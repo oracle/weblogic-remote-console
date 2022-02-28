@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="form-toolbar-container" class="oj-flex">
@@ -7,7 +7,7 @@
   <div id="form-toolbar-buttons" class="oj-flex-bar">
     <oj-bind-if test="[[!isWizardForm()]]">
       <div id="form-toolbar-save-button" class="oj-flex-bar-start">
-        <oj-bind-if test="[[sliceReadOnly()===false && i18n.buttons.save.visible]]">
+        <oj-bind-if test="[[sliceReadOnly()===false || i18n.buttons.save.visible]]">
           <oj-button id="[[i18n.buttons.save.id]]" on-oj-action="[[onSave]]" chroming="borderless"
            disabled="[[i18n.buttons.save.disabled]]">
             <img class="button-icon" slot="startIcon"
@@ -133,7 +133,7 @@
         </a>
       </div>
 
-      <oj-bind-if test="[[!isWdtForm()]]">
+      <oj-bind-if test="[[isShoppingCartVisible()]]">
         <div class="toolbar-separator-vertical">
           <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
           <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/separator-vertical_10x24.png'}" />
@@ -141,7 +141,7 @@
       </oj-bind-if>
 
       <div id="shoppingcart-toolbar-icon" class="oj-flex-item">
-        <oj-bind-if test="[[!isWdtForm()]]">
+        <oj-bind-if test="[[isShoppingCartVisible()]]">
           <a id="shoppingCartMenuLauncher" href="#" tabindex="-1"
              on-click="[[launchShoppingCartMenu]]"
           >

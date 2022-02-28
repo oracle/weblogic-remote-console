@@ -49,6 +49,7 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
         try {
             await security.createRealm(driver,"testRealm-1");
             await driver.sleep(3600);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -65,9 +66,9 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
             await security.modifyRealmsGeneralTab(driver,"testRealm-1","general",true,"Advanced",
                 "CombinedRoleMappingEnabled");
             await driver.sleep(6400);
-            //await admin.deleteMBeanObject(driver,"testRealm-1","Realms",2,"configuration","Security", "Realms");
             await admin.deleteMBeanObject(driver,"testRealm-1","Realms",2,"configuration",
                 "Security","Realms","","","",3);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -95,6 +96,7 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
             await admin.deleteMBeanFromLandingPage(driver,"JASPIC/AuthConfigProviders","testAuthConfigProvider-1");
             await driver.sleep(6400);
             await admin.commitChanges(driver);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -111,10 +113,9 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
         try {
             await admin.createNewMBeanObject(driver,"testCertAuthOverrides-1", 2, "configuration", "Security",
                 "Certificate Authority Overrides");
-            //await admin.deleteMBeanObject(driver, "testCertAuthOverrides-1", "CertificateAuthorityOverrides", 2,
-              //  "configuration", "Security", "Certificate Authority Overrides");
             await admin.deleteMBeanObject(driver,"testCertAuthOverrides-1","Certificate Authority Overrides",2,"configuration",
                 "Security","Certificate Authority Overrides","","","",2);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -131,10 +132,9 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
         try {
             await admin.createNewMBeanObject(driver, "testWebserviceSecurities-1", 2, "configuration", "Security",
                 "Webservice Securities");
-            //await admin.deleteMBeanObject(driver, "testWebserviceSecurities-1", "WebserviceSecurities", 2,
-              //  "configuration","Security", "Webservice Securities");
             await admin.deleteMBeanObject(driver,"testWebserviceSecurities-1","Webservice Securities",2,"configuration",
                 "Security","Webservice Securities","","","",1);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");

@@ -1,0 +1,87 @@
+/*! Copyright (c) 2020, 2021, Oracle and/or its affiliates. All rights reserved. */
+
+:root {
+	--navtree-background-color: #c3b2ab;
+	--navtree-label-color: #161513;
+	--navtree-min-width: 200px;
+	--navtree-max-width: 490px;
+
+	--oj-dialog-title-font-size: 1.5rem;
+	--oj-navigation-list-item-max-width: 15rem;
+}
+
+cfe-navtree:not(.oj-complete){
+	visibility: hidden;
+}
+
+/* ruleset for runtime-role="app" data attribute */
+[data-runtime-role="app"] {
+	--navtree-calc-min-height: 4.375rem;		/* 70px; */
+	--navtree-calc-max-height: 4.375rem;		/* 70px; */
+}
+
+/* ruleset for runtime-role="tool" data attribute */
+[data-runtime-role="tool"] {
+	--navtree-calc-min-height: 9.688rem;		/* 155px; */
+	--navtree-calc-max-height: 9.688rem;		/* 155px; */
+}
+
+#navtree-container {
+	padding-top: 0.3125rem;
+	display: none;
+	background-color: var(--navtree-background-color);
+	height: calc(100vh - var(--panel-resizer-height));
+	max-height: calc(100vh - var(--panel-resizer-height));
+/*
+	min-height: calc(100vh - var(--navtree-calc-min-height));
+	max-height: calc(100vh - var(--navtree-calc-max-height));
+	max-width: var(--navtree-max-width);
+*/
+	overflow: auto;
+	scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color1);
+}
+
+oj-navigation-list[id="nav"] span.oj-navigationlist-item-icon
+{
+	color: var(--navtree-label-color); /* color of icon used in navtree list item */
+}
+
+oj-navigation-list[id="nav"] a.oj-navigationlist-item-content .oj-navigationlist-item-label
+{
+	color: var(--navtree-label-color); /* color of navtree list items */
+}
+
+oj-navigation-list[id="nav"] div > div > ul > li > div.oj-navigationlist-group-item {
+	padding-right: 0;	/* space after expand/collapse arrow icon */
+}
+
+oj-navigation-list[id="nav"] html:not([dir="rtl"]) .oj-navigationlist-vertical:not(.oj-navigationlist-icon-only) .oj-navigationlist-item-icon
+{
+	margin-right: 0.525rem; /* space between icon and label in navtree list item */
+}
+
+oj-navigation-list[id="nav"] li.oj-navigationlist-focused-element.oj-navigationlist-item-element {
+	padding: 2px 0 1px 2px;
+}
+
+oj-navigation-list[id="nav"].oj-navigationlist-vertical {
+	--oj-navigation-list-item-padding: 0.875rem;	/* 14px; */
+	--oj-navigation-list-item-bg-color-hover: var(--oj-core-bg-color-hover);
+	--oj-navigation-list-item-bg-color-selected: var(--oj-core-bg-color-active);
+	--oj-navigation-list-icon-margin: 0;
+	--oj-navigation-list-icon-to-text-padding: 0.375rem;
+	--oj-navigation-list-item-min-height: 1.75rem;
+	--oj-navigation-list-item-margin: 0;
+}
+
+oj-navigation-list[id="nav"] .oj-navigationlist-depth-1 .oj-navigationlist-item-content
+{
+	padding-left: var(--oj-navigation-list-item-padding) !important;
+}
+
+oj-navigation-list[id="nav"] li.oj-navigationlist-depth-2,
+oj-navigation-list[id="nav"] li.oj-navigationlist-depth-3,
+oj-navigation-list[id="nav"] li.oj-navigationlist-depth-4
+{
+	padding-left: 1.5rem !important;	/* 24px */
+}

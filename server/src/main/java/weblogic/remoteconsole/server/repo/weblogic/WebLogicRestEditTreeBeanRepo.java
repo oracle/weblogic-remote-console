@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -58,7 +58,7 @@ public class WebLogicRestEditTreeBeanRepo extends WebLogicRestBeanRepo implement
   @Override
   public BeanReaderRepoSearchBuilder createSearchBuilder(InvocationContext invocationContext, boolean includeIsSet) {
     LOGGER.fine("createSearchBuilder " + invocationContext.getBeanTreePath());
-    return new WeblogicRestEditTreeBeanRepoSearchBuilder(this, invocationContext, includeIsSet);
+    return new WebLogicRestEditTreeBeanRepoSearchBuilder(this, invocationContext, includeIsSet);
   }
 
   @Override

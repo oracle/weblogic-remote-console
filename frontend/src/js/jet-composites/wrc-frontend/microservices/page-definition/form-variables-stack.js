@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * A Singleton class that represents a keyed stack for the instance variables in a ``FormViewModel`` instance
@@ -40,7 +40,7 @@ define(['./form-variables', 'wrc-frontend/core/cfe-errors'],
        * @param {FormVariables} variables
        */
       push: function (key, variables) {
-        if (typeof this.getStack()[key] === "undefined") {
+        if (typeof this.getStack()[key] === 'undefined') {
           this.getStack()[key] = variables;
         }
       },
@@ -52,7 +52,7 @@ define(['./form-variables', 'wrc-frontend/core/cfe-errors'],
         let variables = null;
         const keys = Object.keys(this.getStack());
         if (keys.length > 0) {
-          key = (typeof key === "undefined" ? keys[keys.length - 1] : key);
+          key = (typeof key === 'undefined' ? keys[keys.length - 1] : key);
           const { [key]: variables, ...rest } = this.getStack();
           this.setStack(rest);
         }
@@ -65,7 +65,7 @@ define(['./form-variables', 'wrc-frontend/core/cfe-errors'],
        */
       get: function (key) {
         let variables = null;
-        if (typeof this.getStack()[key] !== "undefined") {
+        if (typeof this.getStack()[key] !== 'undefined') {
           variables = this.getStack()[key];
         }
         return variables;

@@ -1,22 +1,22 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * Module for retrieving data from the CBE using the CBE REST API.
  * <p>IMPORTANT: If you see, or are yourself putting any JET-related modules in the <code>define()</code> function, it is a violation of the SoC (separation of concerns) best practice. There should be no JET-related modules (not even the Logger) being imported into this module!!</p>
  * @module
  */
-define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/runtime', './cbe-data-storage', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils' , 'wrc-frontend/core/types', "wrc-frontend/core/utils"],
+define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/runtime', './cbe-data-storage', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils' , 'wrc-frontend/core/types', 'wrc-frontend/core/utils'],
   function ($, HttpAdapter, Runtime, CbeDataStorage, CbeTypes, CbeUtils, CoreTypes, CoreUtils) {
     const i18n = {
       messages: {
-        "cfeApi": {
-          "serviceNotDefined": {detail: "'{0}' service not defined in console-frontend-jet.yaml file."}
+        'cfeApi': {
+          'serviceNotDefined': {detail: '\'{0}\' service not defined in console-frontend-jet.yaml file.'}
         }
       }
     };
@@ -24,14 +24,14 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
     function getServiceConfigComponentURL(serviceType, serviceComponentType, uri){
       const serviceConfig = Runtime.getServiceConfig(serviceType);
 
-      if (CoreUtils.isUndefinedOrNull(serviceConfig)) throw new this.ServiceTypeNotFoundError(i18n.messages.serviceNotDefined.detail.replace("{0}", serviceType.name));
+      if (CoreUtils.isUndefinedOrNull(serviceConfig)) throw new this.ServiceTypeNotFoundError(i18n.messages.serviceNotDefined.detail.replace('{0}', serviceType.name));
 
       return Runtime.getBackendUrl() + uri; // BaseUrl() + uri; //serviceConfig.path + "/" + serviceComponentType.name + "/" + uri;
     }
 
     function getUriById (serviceType, serviceComponentType, id){
       const serviceConfig = Runtime.getServiceConfig(serviceType);
-      if (CoreUtils.isUndefinedOrNull(serviceConfig)) throw new this.ServiceTypeNotFoundError(i18n.messages.serviceNotDefined.detail.replace("{0}", serviceType.name));
+      if (CoreUtils.isUndefinedOrNull(serviceConfig)) throw new this.ServiceTypeNotFoundError(i18n.messages.serviceNotDefined.detail.replace('{0}', serviceType.name));
       const component = serviceConfig.components[serviceComponentType.name].find(item => item.id === id);
       let path = serviceConfig.path ;
       if (CoreUtils.isNotUndefinedNorNull(component.prefix)) {
@@ -55,7 +55,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
 
     function getUrlByServiceType(serviceType) {
       const serviceConfig = Runtime.getServiceConfig(serviceType);
-      if (CoreUtils.isUndefinedOrNull(serviceConfig)) throw new this.ServiceTypeNotFoundError(i18n.messages.cfeApi.serviceNotDefined.detail.replace("{0}", serviceType.name));
+      if (CoreUtils.isUndefinedOrNull(serviceConfig)) throw new this.ServiceTypeNotFoundError(i18n.messages.cfeApi.serviceNotDefined.detail.replace('{0}', serviceType.name));
       return Runtime.getBaseUrl() + serviceConfig.path;
     }
 
@@ -94,7 +94,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         const url = getUrl.call(this, options);
         HttpAdapter.get(url)
           .then(reply => {
-            reply["body"] = {
+            reply['body'] = {
               data: reply.responseJSON,
               messages: getResponseJSONMessages(reply.responseJSON)
             };
@@ -110,15 +110,15 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
             if (CoreUtils.isNotUndefinedNorNull(response.status)) {
               // This means the reject was not from
               // a JavaScript Error being thrown
-              reply["failureType"] = CoreTypes.FailureType.CBE_REST_API;
-              reply["failureReason"] = response.statusText;
-              reply["transport"] = {
+              reply['failureType'] = CoreTypes.FailureType.CBE_REST_API;
+              reply['failureReason'] = response.statusText;
+              reply['transport'] = {
                 status: response.status,
                 statusText: response.statusText
               };
               return response.json()
                 .then(responseJSON => {
-                  reply.body["messages"] = responseJSON.messages;
+                  reply.body['messages'] = responseJSON.messages;
                   reject(reply);
                 })
                 .catch(error => {
@@ -126,7 +126,71 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
                   // just set reply.body["messages"] = [] to
                   // honor the interface contract, when failure
                   // type is CBE_REST_API.
-                  reply.body["messages"] = [];
+                  reply.body['messages'] = [];
+                  // Rethrow for handling by upstream code
+                  reject(reply);
+                });
+            }
+            else {
+              // Reject came from a JavaScript Error
+              // being thrown.
+              const reply = {
+                failureType: CoreTypes.FailureType.UNEXPECTED,
+                // The reply parameter passed to the
+                // .catch link in the chain, will be
+                // the JavaScript Error object
+                failureReason: response
+              };
+              // Rethrow for handling by upstream code
+              reject(reply);
+            }
+          });
+      });
+    }
+
+    /**
+     * Deletes the data or error returned from the CBE REST API
+     * @param {*} options
+     * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+     */
+     function deleteData(options) {
+      return new Promise((resolve, reject) => {
+        const url = getUrl.call(this, options);
+        HttpAdapter.delete(url)
+          .then(reply => {
+            reply['body'] = {
+              data: reply.responseJSON,
+              messages: getResponseJSONMessages(reply.responseJSON)
+            };
+            delete reply.responseJSON;
+            resolve(reply);
+          })
+          .catch(response => {
+            const reply = {
+              body: {
+                data: {}
+              }
+            };
+            if (CoreUtils.isNotUndefinedNorNull(response.status)) {
+              // This means the reject was not from
+              // a JavaScript Error being thrown
+              reply['failureType'] = CoreTypes.FailureType.CBE_REST_API;
+              reply['failureReason'] = response.statusText;
+              reply['transport'] = {
+                status: response.status,
+                statusText: response.statusText
+              };
+              return response.json()
+                .then(responseJSON => {
+                  reply.body['messages'] = responseJSON.messages;
+                  reject(reply);
+                })
+                .catch(error => {
+                  // Response body does not contain JSON, so
+                  // just set reply.body["messages"] = [] to
+                  // honor the interface contract, when failure
+                  // type is CBE_REST_API.
+                  reply.body['messages'] = [];
                   // Rethrow for handling by upstream code
                   reject(reply);
                 });
@@ -159,7 +223,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         const url = getUrl.call(this, options);
         HttpAdapter.post(url, dataPayload)
           .then(reply => {
-            reply["body"] = {
+            reply['body'] = {
               data: reply.responseJSON,
               messages: getResponseJSONMessages(reply.responseJSON)
             };
@@ -175,15 +239,15 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
             if (CoreUtils.isNotUndefinedNorNull(response.status)) {
               // This means the reject was not from
               // a JavaScript Error being thrown
-              reply["failureType"] = CoreTypes.FailureType.CBE_REST_API;
-              reply["failureReason"] = response.statusText;
-              reply["transport"] = {
+              reply['failureType'] = CoreTypes.FailureType.CBE_REST_API;
+              reply['failureReason'] = response.statusText;
+              reply['transport'] = {
                 status: response.status,
                 statusText: response.statusText
               };
               return response.json()
                 .then(responseJSON => {
-                  reply.body["messages"] = responseJSON.messages;
+                  reply.body['messages'] = responseJSON.messages;
                   reject(reply);
                 })
                 .catch(error => {
@@ -191,7 +255,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
                   // just set reply.body["messages"] = [] to
                   // honor the interface contract, when failure
                   // type is CBE_REST_API.
-                  reply.body["messages"] = [];
+                  reply.body['messages'] = [];
                   // Rethrow for handling by upstream code
                   reject(reply);
                 });
@@ -228,7 +292,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         undefined,
         authorization)
         .then(reply => {
-          reply["body"] = {
+          reply['body'] = {
             data: reply.responseJSON,
             messages: getResponseJSONMessages(reply.responseJSON)
           };
@@ -244,15 +308,15 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
           if (CoreUtils.isNotUndefinedNorNull(response.status)) {
             // This means the reject was not from
             // a JavaScript Error being thrown
-            reply["failureType"] = CoreTypes.FailureType.CBE_REST_API;
-            reply["failureReason"] = response.statusText;
-            reply["transport"] = {
+            reply['failureType'] = CoreTypes.FailureType.CBE_REST_API;
+            reply['failureReason'] = response.statusText;
+            reply['transport'] = {
               status: response.status,
               statusText: response.statusText
             };
             return response.json()
               .then(responseJSON => {
-                reply.body["messages"] = responseJSON.messages;
+                reply.body['messages'] = responseJSON.messages;
                 return Promise.reject(reply);
               })
               .catch(error => {
@@ -260,7 +324,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
                 // just set reply.body["messages"] = [] to
                 // honor the interface contract, when failure
                 // type is CBE_REST_API.
-                reply.body["messages"] = [];
+                reply.body['messages'] = [];
                 // Rethrow for handling by upstream code
                 return Promise.reject(reply);
               });
@@ -283,18 +347,18 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
 
     function getResponseJSONMessages(responseJSON) {
       let messages = [];
-      if (typeof responseJSON !== "undefined" && typeof responseJSON.messages !== "undefined") {
+      if (typeof responseJSON !== 'undefined' && typeof responseJSON.messages !== 'undefined') {
         responseJSON.messages.forEach((message) => {
-          if (typeof message.message !== "undefined") {
+          if (typeof message.message !== 'undefined') {
             messages = [message];
           }
           else if (typeof message.property === 'undefined') {
-            if (message.message.indexOf("{") !== -1)
+            if (message.message.indexOf('{') !== -1)
               messages = JSON.parse(message.message);
             else
               messages.push(message);
 
-            if (typeof messages.messages !== "undefined") {
+            if (typeof messages.messages !== 'undefined') {
               messages = messages.messages;
             }
           }
@@ -304,7 +368,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
     }
 
     function hasResponseMessages(data) {
-      return (typeof data !== "undefined" && typeof data.responseJSON !== "undefined" && typeof data.responseJSON.messages !== "undefined");
+      return (typeof data !== 'undefined' && typeof data.responseJSON !== 'undefined' && typeof data.responseJSON.messages !== 'undefined');
     }
 
     //public:
@@ -348,31 +412,31 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
             })
             .then(reply => {
               const aggregatedData = new CbeDataStorage(uri);
-              aggregatedData.add("rawPath", uri);
-              aggregatedData.add("rdjUrl", reply.rdjUrl);
-              aggregatedData.add("rdjData", reply.rdjData);
-              aggregatedData.add("pdjUrl", Runtime.getBackendUrl()+reply.rdjData.pageDescription);
+              aggregatedData.add('rawPath', uri);
+              aggregatedData.add('rdjUrl', reply.rdjUrl);
+              aggregatedData.add('rdjData', reply.rdjData);
+              aggregatedData.add('pdjUrl', Runtime.getBackendUrl()+reply.rdjData.pageDescription);
               return aggregatedData;
             })
             .then(aggregatedData => {
-              return getData.call(this, {url: aggregatedData.get("pdjUrl")})
+              return getData.call(this, {url: aggregatedData.get('pdjUrl')})
                 .then((reply) => {
-                  aggregatedData.add("pdjData", reply.body.data);
-                  reply.body["data"] = aggregatedData;
-                  reply.body["data"].add("pageTitle", `${Runtime.getName()} - ${reply.body.data.get("pdjData").helpPageTitle}`);
+                  aggregatedData.add('pdjData', reply.body.data);
+                  reply.body['data'] = aggregatedData;
+                  reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
                   resolve(reply);
                 });
             })
             .catch(response =>{
               if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                response["failureReason"] = response.failureReason.stack;
+                response['failureReason'] = response.failureReason.stack;
               }
               else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
                 // Try to make FailureType more accurate, if
                 // it was a CBE_REST_API generated failure
                 if (response.transport.status === 404) {
                   // Switch it to FailureType.NOT_FOUND
-                  response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+                  response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
                 }
               }
               // Rethrow updated (or not updated) reject
@@ -395,31 +459,31 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
             })
             .then(reply => {
               const aggregatedData = new CbeDataStorage(uri);
-              aggregatedData.add("rawPath", uri);
-              aggregatedData.add("rdjUrl", reply.rdjUrl);
-              aggregatedData.add("rdjData", reply.rdjData);
-              aggregatedData.add("pdjUrl", Runtime.getBackendUrl()+reply.rdjData.pageDescription.replace("?view=table", "?view=createForm"));
+              aggregatedData.add('rawPath', uri);
+              aggregatedData.add('rdjUrl', reply.rdjUrl);
+              aggregatedData.add('rdjData', reply.rdjData);
+              aggregatedData.add('pdjUrl', Runtime.getBackendUrl()+reply.rdjData.pageDescription.replace('?view=table', '?view=createForm'));
               return aggregatedData;
             })
             .then(aggregatedData => {
-              return getData.call(this, {url: aggregatedData.get("pdjUrl")})
+              return getData.call(this, {url: aggregatedData.get('pdjUrl')})
                 .then((reply) => {
-                  aggregatedData.add("pdjData", reply.body.data);
-                  reply.body["data"] = aggregatedData;
-                  reply.body["data"].add("pageTitle", `${Runtime.getName()} - ${reply.body.data.get("pdjData").helpPageTitle}`);
+                  aggregatedData.add('pdjData', reply.body.data);
+                  reply.body['data'] = aggregatedData;
+                  reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
                   resolve(reply);
                 });
             })
             .catch(response =>{
               if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                response["failureReason"] = response.failureReason.stack;
+                response['failureReason'] = response.failureReason.stack;
               }
               else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
                 // Try to make FailureType more accurate, if
                 // it was a CBE_REST_API generated failure
                 if (response.transport.status === 404) {
                   // Switch it to FailureType.NOT_FOUND
-                  response["failureType"] = CoreTypes.FailureType.NOT_FOUND;
+                  response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
                 }
               }
               // Rethrow updated (or not updated) reject
@@ -448,11 +512,11 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         return new Promise((resolve, reject) => {
           const url = getUrl.call(this, options);
           const jqXHR = $.ajax({
-            type: "POST",
+            type: 'POST',
             url: url,
             data: JSON.stringify({ data: dataPayload }),
-            contentType: "application/json",
-            dataType: "json",
+            contentType: 'application/json',
+            dataType: 'json',
             xhrFields: { withCredentials: true },
           });
           // The data argument is what's in the response body,
@@ -523,7 +587,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
           const url = `${Runtime.getBackendUrl()}${uri}`;
           HttpAdapter.delete(url, {})
             .then(reply => {
-              reply["body"] = {
+              reply['body'] = {
                 data: reply.responseJSON,
                 messages: getResponseJSONMessages(reply.responseJSON)
               };
@@ -539,15 +603,15 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
               if (CoreUtils.isNotUndefinedNorNull(response.status)) {
                 // This means the reject was not from
                 // a JavaScript Error being thrown
-                reply["failureType"] = CoreTypes.FailureType.CBE_REST_API;
-                reply["failureReason"] = response.statusText;
-                reply["transport"] = {
+                reply['failureType'] = CoreTypes.FailureType.CBE_REST_API;
+                reply['failureReason'] = response.statusText;
+                reply['transport'] = {
                   status: response.status,
                   statusText: response.statusText
                 };
                 return response.json()
                   .then(responseJSON => {
-                    reply.body["messages"] = responseJSON.messages;
+                    reply.body['messages'] = responseJSON.messages;
                     reject(reply);
                   })
                   .catch(error => {
@@ -555,7 +619,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
                     // just set reply.body["messages"] = [] to
                     // honor the interface contract, when failure
                     // type is CBE_REST_API.
-                    reply.body["messages"] = [];
+                    reply.body['messages'] = [];
                     // Rethrow for handling by upstream code
                     reject(reply);
                   });
@@ -605,7 +669,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         const actionUrl = `${Runtime.getBackendUrl()}${uri}`;
         return postData.call(this, {url: actionUrl}, {})
           .then(reply => {
-            reply.body["data"] = {actionUrl: actionUrl};
+            reply.body['data'] = {actionUrl: actionUrl};
             return Promise.resolve(reply);
           });
       },
@@ -619,7 +683,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       postMultipartFormData: function (url, formData) {
         return new Promise((resolve, reject) => {
           const jqXHR = $.ajax({
-            type: "POST",
+            type: 'POST',
             enctype: 'multipart/form-data',
             url: url,
             data: formData,
@@ -678,7 +742,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       isNavTreeLeaf: function (url) {
         let response;
         $.ajax({
-          type: "GET",
+          type: 'GET',
           url: url,
           async: false,
           success: function (data, textStatus, jqXHR) {
@@ -788,7 +852,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return new Promise((resolve, reject) => {
           const jqXHR = $.ajax({
-            type: "GET",
+            type: 'GET',
             url: `${url}/${dataProviderId}?action=test`,
             xhrFields: { withCredentials: true },
             async: false
@@ -841,69 +905,55 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
        */
       deleteConnectionData: function (dataProviderId) {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
-        return HttpAdapter.delete(`${url}/AdminServerConnection/${dataProviderId}`)
-          .then(reply => {
-            reply["body"] = {
-              data: reply.responseJSON,
-              messages: getResponseJSONMessages(reply.responseJSON)
-            };
-            delete reply.responseJSON;
-            return Promise.resolve(reply);
-          })
-          .catch(response => {
-            const reply = {
-              body: {
-                data: {}
-              }
-            };
-            if (CoreUtils.isNotUndefinedNorNull(response.status)) {
-              // This means the reject was not from
-              // a JavaScript Error being thrown
-              reply["failureType"] = CoreTypes.FailureType.CBE_REST_API;
-              reply["failureReason"] = response.statusText;
-              reply["transport"] = {
-                status: response.status,
-                statusText: response.statusText
-              };
-              return response.json()
-                .then(responseJSON => {
-                  reply.body["messages"] = responseJSON.messages;
-                  return Promise.reject(reply);
-                })
-                .catch(error => {
-                  // Response body does not contain JSON, so
-                  // just set reply.body["messages"] = [] to
-                  // honor the interface contract, when failure
-                  // type is CBE_REST_API.
-                  reply.body["messages"] = [];
-                  // Rethrow for handling by upstream code
-                  return Promise.reject(reply);
-                });
-            }
-            else {
-              // Reject came from a JavaScript Error
-              // being thrown.
-              const reply = {
-                failureType: CoreTypes.FailureType.UNEXPECTED,
-                // The reply parameter passed to the
-                // .catch link in the chain, will be
-                // the JavaScript Error object
-                failureReason: response
-              };
-              // Rethrow for handling by upstream code
-              return Promise.reject(reply);
-            }
-          });
+        return deleteData.call(this, {url: `${url}/AdminServerConnection/${dataProviderId}`});
       },
 
       getSliceData: function(uri) {
-        return getData.call(this, {url: `${Runtime.getBackendUrl()}${uri}` });
+        return new Promise((resolve, reject) => {
+          const rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
+          getData.call(this, {url: rdjUrl})
+            .then(reply => {
+              return {rdjUrl: rdjUrl, rdjData: reply.body.data};
+            })
+            .then(reply => {
+              const aggregatedData = new CbeDataStorage(uri);
+              aggregatedData.add('rawPath', uri);
+              aggregatedData.add('rdjUrl', reply.rdjUrl);
+              aggregatedData.add('rdjData', reply.rdjData);
+              aggregatedData.add('pdjUrl', `${Runtime.getBackendUrl()}${reply.rdjData.pageDescription}`);
+              return aggregatedData;
+            })
+            .then(aggregatedData => {
+              return getData.call(this, {url: aggregatedData.get('pdjUrl')})
+                .then((reply) => {
+                  aggregatedData.add('pdjData', reply.body.data);
+                  reply.body['data'] = aggregatedData;
+                  reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
+                  resolve(reply);
+                });
+            })
+            .catch(response =>{
+              if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                response['failureReason'] = response.failureReason.stack;
+              }
+              else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                // Try to make FailureType more accurate, if
+                // it was a CBE_REST_API generated failure
+                if (response.transport.status === 404) {
+                  // Switch it to FailureType.NOT_FOUND
+                  response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
+                }
+              }
+              // Rethrow updated (or not updated) reject
+              reject(response);
+            });
+        });
       },
 
       getBundle: function (url) {
         return new Promise((resolve, reject) => {
           const jqXHR = $.ajax({
-            type: "GET",
+            type: 'GET',
             url: url,
             async: false
           });
@@ -954,7 +1004,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       downloadModelData: function(uri) {
         return new Promise((resolve, reject) => {
           const jqXHR = $.ajax({
-            type: "GET",
+            type: 'GET',
             url: `${Runtime.getBackendUrl()}${uri}`,
             xhrFields: { withCredentials: true }
           });
@@ -1016,59 +1066,27 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
        */
       deleteModelData: function(dataProviderId) {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
-        return HttpAdapter.delete(`${url}/WDTModel/${dataProviderId}`)
-          .then(reply => {
-            reply["body"] = {
-              data: reply.responseJSON,
-              messages: getResponseJSONMessages(reply.responseJSON)
-            };
-            delete reply.responseJSON;
-            return Promise.resolve(reply);
-          })
-          .catch(response => {
-            const reply = {
-              body: {
-                data: {}
-              }
-            };
-            if (CoreUtils.isNotUndefinedNorNull(response.status)) {
-              // This means the reject was not from
-              // a JavaScript Error being thrown
-              reply["failureType"] = CoreTypes.FailureType.CBE_REST_API;
-              reply["failureReason"] = response.statusText;
-              reply["transport"] = {
-                status: response.status,
-                statusText: response.statusText
-              };
-              return response.json()
-                .then(responseJSON => {
-                  reply.body["messages"] = responseJSON.messages;
-                  return Promise.reject(reply);
-                })
-                .catch(error => {
-                  // Response body does not contain JSON, so
-                  // just set reply.body["messages"] = [] to
-                  // honor the interface contract, when failure
-                  // type is CBE_REST_API.
-                  reply.body["messages"] = [];
-                  // Rethrow for handling by upstream code
-                  return Promise.reject(reply);
-                });
-            }
-            else {
-              // Reject came from a JavaScript Error
-              // being thrown.
-              const reply = {
-                failureType: CoreTypes.FailureType.UNEXPECTED,
-                // The reply parameter passed to the
-                // .catch link in the chain, will be
-                // the JavaScript Error object
-                failureReason: response
-              };
-              // Rethrow for handling by upstream code
-              return Promise.reject(reply);
-            }
-          });
+        return deleteData.call(this, {url: `${url}/WDTModel/${dataProviderId}`});
+      },
+
+      /**
+       * Test the WDT Composite Model proivider
+       * @param {string} dataProviderId
+       * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+       */
+      useCompositeData: function (dataProviderId) {
+        const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
+        return getData.call(this, {url: `${url}/WDTCompositeModel/${dataProviderId}?action=test`});
+      },
+
+      /**
+       * Delete the WDT Composite Model proivider
+       * @param {string} dataProviderId
+       * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+       */
+      deleteCompositeData: function(dataProviderId) {
+        const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
+        return deleteData.call(this, {url: `${url}/WDTCompositeModel/${dataProviderId}`});
       },
 
       listDataProviders: function() {

@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cbe-data-manager', 'wrc-frontend/core/runtime', './fields', './utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'wrc-frontend/core/cfe-errors','ojs/ojlogger'],
   function (oj, ko, CbeDataManager, Runtime, PageDefinitionFields, PageDefinitionUtils, CoreTypes,  CoreUtils, CfeErrors, Logger) {
@@ -13,53 +13,53 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
         this.pdjData = {actions: pdjActions};
         this.rdjData = rdjData;
 
-        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[0]) && this.pdjData.actions[0].name === "startActions") {
-          this.pdjData.actions[0].name = "start";
+        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[0]) && this.pdjData.actions[0].name === 'startActions') {
+          this.pdjData.actions[0].name = 'start';
         }
 
-        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[1]) && this.pdjData.actions[1].name === "stopActions") {
-          this.pdjData.actions[1].name = "stop";
+        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[1]) && this.pdjData.actions[1].name === 'stopActions') {
+          this.pdjData.actions[1].name = 'stop';
         }
 
-        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[2]) && this.pdjData.actions[2].name === "suspendActions") {
-          this.pdjData.actions[2].name = "suspend";
-          this.pdjData.actions[2].actions[0].name = "gracefulSuspend";
+        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[2]) && this.pdjData.actions[2].name === 'suspendActions') {
+          this.pdjData.actions[2].name = 'suspend';
+          this.pdjData.actions[2].actions[0].name = 'gracefulSuspend';
         }
 
-        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[3]) && this.pdjData.actions[3].name === "shutdownActions") {
-          this.pdjData.actions[3].name = "shutdown";
+        if (CoreUtils.isNotUndefinedNorNull(this.pdjData.actions[3]) && this.pdjData.actions[3].name === 'shutdownActions') {
+          this.pdjData.actions[3].name = 'shutdown';
         }
 
-        const filteredActions = getSupportedActionsByState.call(this, {value: "SHUTDOWN"});
+        const filteredActions = getSupportedActionsByState.call(this, {value: 'SHUTDOWN'});
         Logger.info(`[PDJACTIONS] getSupportedActionsByState({value: "SHUTDOWN"})=${JSON.stringify(filteredActions)}`);
       }
       else {
-        if (CoreUtils.isUndefinedOrNull(pdjActions)) Logger.log(`[PDJACTIONS] Constructor parameter is undefined: pdjActions`);
-        if (CoreUtils.isUndefinedOrNull(rdjData)) Logger.log(`[PDJACTIONS] Constructor parameter is undefined: rdjData`);
+        if (CoreUtils.isUndefinedOrNull(pdjActions)) Logger.log('[PDJACTIONS] Constructor parameter is undefined: pdjActions');
+        if (CoreUtils.isUndefinedOrNull(rdjData)) Logger.log('[PDJACTIONS] Constructor parameter is undefined: rdjData');
       }
     }
 
     const i18n = {
       messages: {
-        "action": {
-          "unableToPerform": {
-            summary: oj.Translations.getTranslatedString("wrc-pdj-actions.messages.action.unableToPerform.summary"),
-            detail: oj.Translations.getTranslatedString("wrc-pdj-actions.messages.action.unableToPerform.detail", "{0}", "{1}")
+        'action': {
+          'unableToPerform': {
+            summary: oj.Translations.getTranslatedString('wrc-pdj-actions.messages.action.unableToPerform.summary'),
+            detail: oj.Translations.getTranslatedString('wrc-pdj-actions.messages.action.unableToPerform.detail', '{0}', '{1}')
           }
         }
       },
       labels: {
-        "cannotDetermineExactCause": {value: oj.Translations.getTranslatedString("wrc-pdj-actions.labels.cannotDetermineExactCause.value")}
+        'cannotDetermineExactCause': {value: oj.Translations.getTranslatedString('wrc-pdj-actions.labels.cannotDetermineExactCause.value')}
       }
     };
 
     const SUPPORTED_ACTIONS = Object.freeze({
-      "start": {iconFile: "action-start-icon-blk_24x24", visible: true, disabled: false},
-      "resume": {iconFile: "action-resume-icon-blk_24x24", visible: true, disabled: false},
-      "suspend": {iconFile: "action-suspend-icon-blk_24x24", visible: true, disabled: false},
-      "shutdown": {iconFile: "action-stop-icon-blk_24x24", visible: true, disabled: false},
-      "restartSSL": {iconFile: "action-restart-icon-blk_24x24", visible: true, disabled: false},
-      "stop": {iconFile: "action-stop-icon-blk_24x24", visible: true, disabled: false}
+      'start': {iconFile: 'action-start-icon-blk_24x24', visible: true, disabled: false},
+      'resume': {iconFile: 'action-resume-icon-blk_24x24', visible: true, disabled: false},
+      'suspend': {iconFile: 'action-suspend-icon-blk_24x24', visible: true, disabled: false},
+      'shutdown': {iconFile: 'action-stop-icon-blk_24x24', visible: true, disabled: false},
+      'restartSSL': {iconFile: 'action-restart-icon-blk_24x24', visible: true, disabled: false},
+      'stop': {iconFile: 'action-stop-icon-blk_24x24', visible: true, disabled: false}
     });
 
     /**
@@ -79,7 +79,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
     function getConvertedData(action) {
       const convertedData = {};
       const filteredData = getFilteredData.call(this, this.rdjData.data);
-      convertedData["data"] = filteredData.filter(data => data.actions.map(action1 => action1.name).indexOf(action) !== -1);
+      convertedData['data'] = filteredData.filter(data => data.actions.map(action1 => action1.name).indexOf(action) !== -1);
       return convertedData;
     }
 
@@ -113,7 +113,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
       let targetMBean;
       if (this.hasActions()) {
         const pageDescription = this.rdjData.pageDescription;
-        targetMBean = pageDescription.substring(pageDescription.lastIndexOf('/') + 1, pageDescription.indexOf("?"));
+        targetMBean = pageDescription.substring(pageDescription.lastIndexOf('/') + 1, pageDescription.indexOf('?'));
       }
       return targetMBean;
     }
@@ -180,7 +180,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
           // Workaround for CBE enhancement to use "gracefulSuspend"
           // instead of "suspend", for child action of the "suspend"
           // parent action.
-          const action1 = (action === "gracefulSuspend" ? "suspend" : action);
+          const action1 = (action === 'gracefulSuspend' ? 'suspend' : action);
           for (let i = 0; i < filteredData.length; i++) {
             const actionsMap = getDataActionsMap(filteredData[i]);
             if (Object.keys(actionsMap).length > 0) {
@@ -227,7 +227,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
           if (CoreUtils.isNotUndefinedNorNull(actions[i].actions)) {
             traverseActions(actions[i].actions, filteredActions);
           }
-          if (CoreUtils.isNotUndefinedNorNull(actions[i].usedIf) && actions[i].usedIf.property === "State" && actions[i].usedIf.values.includes(state.value)) {
+          if (CoreUtils.isNotUndefinedNorNull(actions[i].usedIf) && actions[i].usedIf.property === 'State' && actions[i].usedIf.values.includes(state.value)) {
             filteredActions.push(actions[i]);
           }
         }
@@ -238,32 +238,32 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
     }
 
     function getButtonIconFile(actionName) {
-      let iconFile = "no-toolbar-icon_24x24";
-      if (typeof SUPPORTED_ACTIONS[actionName] !== "undefined") {
+      let iconFile = 'no-toolbar-icon_24x24';
+      if (typeof SUPPORTED_ACTIONS[actionName] !== 'undefined') {
         iconFile = SUPPORTED_ACTIONS[actionName].iconFile;
       }
       return iconFile;
     }
 
     function createButton(action) {
-      const button = {html: document.createElement("oj-button")};
-      button["id"] = (CoreUtils.isUndefinedOrNull(action.actions) ? action.label : `${action.name}MenuLauncher`);
-      button["name"] = action.name;
-      button["disabled"] = false;
-      button["asynchronous"] = true;  //MLW action.asynchronous;
-      button.html.setAttribute("id", (CoreUtils.isUndefinedOrNull(action.actions) ? button.name : button.id));
-      button.html.setAttribute("data-action", button.name);
-      button.html.setAttribute("on-oj-action", (CoreUtils.isUndefinedOrNull(action.actions) ? "[[actionButtonClicked]]" : "[[launchActionMenu]]"));
-      button.html.setAttribute("chroming", "borderless");
-      button.html.setAttribute("disabled", "[[actionButtons.buttons." + button.name + ".disabled]]");
-      const img = document.createElement("img");
-      img.className = "button-icon";
-      img.setAttribute("slot", "startIcon");
-      img.setAttribute("src", "js/jet-composites/wrc-frontend/1.0.0/images/" + getButtonIconFile(action.name) + ".png");
-      img.setAttribute("alt", action.label);
+      const button = {html: document.createElement('oj-button')};
+      button['id'] = (CoreUtils.isUndefinedOrNull(action.actions) ? action.label : `${action.name}MenuLauncher`);
+      button['name'] = action.name;
+      button['disabled'] = false;
+      button['asynchronous'] = true;  //MLW action.asynchronous;
+      button.html.setAttribute('id', (CoreUtils.isUndefinedOrNull(action.actions) ? button.name : button.id));
+      button.html.setAttribute('data-action', button.name);
+      button.html.setAttribute('on-oj-action', (CoreUtils.isUndefinedOrNull(action.actions) ? '[[actionButtonClicked]]' : '[[launchActionMenu]]'));
+      button.html.setAttribute('chroming', 'borderless');
+      button.html.setAttribute('disabled', '[[actionButtons.buttons.' + button.name + '.disabled]]');
+      const img = document.createElement('img');
+      img.className = 'button-icon';
+      img.setAttribute('slot', 'startIcon');
+      img.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + getButtonIconFile(action.name) + '.png');
+      img.setAttribute('alt', action.label);
       button.html.append(img);
-      const span = document.createElement("span");
-      span.className = "button-label";
+      const span = document.createElement('span');
+      span.className = 'button-label';
       span.innerText = action.label;
       button.html.append(span);
       return button;
@@ -271,17 +271,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
 
     function createMenu(action) {
       let option;
-      const menu = document.createElement("oj-menu");
-      menu.setAttribute("id", action.name + "Menu");
-      menu.setAttribute("aria-labelledby", action.name + "MenuLauncher");
-      menu.setAttribute("on-oj-action", "[[actionMenuClickListener]]");
-      menu.setAttribute("open-options.launcher", action.name + "MenuLauncher");
+      const menu = document.createElement('oj-menu');
+      menu.setAttribute('id', action.name + 'Menu');
+      menu.setAttribute('aria-labelledby', action.name + 'MenuLauncher');
+      menu.setAttribute('on-oj-action', '[[actionMenuClickListener]]');
+      menu.setAttribute('open-options.launcher', action.name + 'MenuLauncher');
       action.actions.forEach((variant) => {
-        option = document.createElement("oj-option");
-        option.setAttribute("id", variant.name);
-        option.setAttribute("value", variant.name);
-        option.setAttribute("data-action", action.name);
-        const span = document.createElement("span");
+        option = document.createElement('oj-option');
+        option.setAttribute('id', variant.name);
+        option.setAttribute('value', variant.name);
+        option.setAttribute('data-action', action.name);
+        const span = document.createElement('span');
         span.innerText = variant.label;
         option.append(span);
         menu.append(option);
@@ -307,9 +307,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
       },
 
       createActionsButtons: function () {
-        const actionButtons = {html: document.createElement("p"), buttons: []};
+        const actionButtons = {html: document.createElement('p'), buttons: []};
         if (this.hasActions()) {
-          actionButtons.html = document.createElement("div");
+          actionButtons.html = document.createElement('div');
           for (let i = 0; i < this.pdjData.actions.length; i++) {
             const button = createButton(this.pdjData.actions[i]);
             actionButtons.html.append(button.html);
@@ -328,8 +328,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
       },
 
       createActionsDialog: function (id) {
-        const formLayout = document.createElement("oj-form-layout");
-        formLayout.setAttribute("label-edge", "start");
+        const formLayout = document.createElement('oj-form-layout');
+        formLayout.setAttribute('label-edge', 'start');
         let results = {
           domElementId: getTargetMBean.call(this),
           formLayout: formLayout,
@@ -343,8 +343,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
 
           const multiSelect = PageDefinitionFields.createMultiSelect(dataValues, results.domElementId);
           const field = multiSelect.field;
-          field.setAttribute("available-items", "[[availableItems]]");
-          field.setAttribute("chosen-items", "[[chosenItems]]");
+          field.setAttribute('available-items', '[[availableItems]]');
+          field.setAttribute('chosen-items', '[[chosenItems]]');
 
           formLayout.append(field);
 
@@ -401,7 +401,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
             return {
               succeeded: false,
               data: {
-                severity: "error",
+                severity: 'error',
                 summary: i18n.messages.action.unableToPerform.summary,
                 detail: i18n.labels.cannotDetermineExactCause.value
               }
@@ -421,19 +421,19 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
                 };
                 if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
                   const message = response.body.messages[0].message;
-                  if (message.indexOf("Read timed out") !== -1) {
-                    reply["succeeded"] = true;
-                    reply["data"] = {actionUrl: null};
+                  if (message.indexOf('Read timed out') !== -1) {
+                    reply['succeeded'] = true;
+                    reply['data'] = {actionUrl: null};
                   }
                   else {
-                    reply["messages"] = response.body.messages;
+                    reply['messages'] = response.body.messages;
                   }
                 }
                 else {
-                  reply["data"] = {
-                    severity: "error",
+                  reply['data'] = {
+                    severity: 'error',
                     summary: i18n.messages.action.unableToPerform.summary,
-                    detail: i18n.messages.action.unableToPerform.detail.replace("{1}", PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace("{0}", response.transport.statusText) + " " + oj.Translations.getTranslatedString("wrc-message-displaying.messages.seeJavascriptConsole.detail")
+                    detail: i18n.messages.action.unableToPerform.detail.replace('{1}', PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace('{0}', response.transport.statusText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
                   };
                 }
                 return reply;
@@ -448,9 +448,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
                 return {
                   succeeded: false,
                   data: {
-                    severity: "error",
+                    severity: 'error',
                     summary: i18n.messages.action.unableToPerform.summary,
-                    detail: i18n.messages.action.unableToPerform.detail.replace("{1}", PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace("{0}", reasonText) + " " + oj.Translations.getTranslatedString("wrc-message-displaying.messages.seeJavascriptConsole.detail")
+                    detail: i18n.messages.action.unableToPerform.detail.replace('{1}', PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace('{0}', reasonText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
                   }
                 };
               }

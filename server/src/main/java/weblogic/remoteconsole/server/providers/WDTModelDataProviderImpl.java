@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -17,7 +17,10 @@ import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
+import weblogic.remoteconsole.server.repo.BeanRepo;
+import weblogic.remoteconsole.server.repo.DownloadBeanRepo;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.repo.PageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WDTModelBuilder;
 import weblogic.remoteconsole.server.repo.weblogic.WDTPageRepo;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
@@ -84,8 +87,21 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
   }
 
   @Override
-  public Map<String, Object> getModel() {
-    return model;
+  public Map<String, Object> getModel(InvocationContext ic) {
+    // IFF provider has not been started, return the uploaded model
+    PageRepo pageRepo = editRoot.getPageRepo();
+    if (pageRepo == null) {
+      return model;
+    }
+
+    // IFF provider does NOT support download return uploaded model
+    BeanRepo beanRepo = pageRepo.getBeanRepo();
+    if (!(beanRepo instanceof DownloadBeanRepo)) {
+      return model;
+    }
+
+    // Otherwise get the current model from BeanRepo
+    return ((DownloadBeanRepo)beanRepo).getContent(ic);
   }
 
   @Override
@@ -124,7 +140,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
         new WDTPageRepo(
           WebLogicMBeansVersions.getVersion(
             WebLogicVersions.getCurrentVersion(),
-            false // supports model tokens
+            null // GA
           ),
           model,
           ic

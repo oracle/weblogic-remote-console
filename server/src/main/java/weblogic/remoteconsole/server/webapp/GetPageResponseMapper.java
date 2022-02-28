@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -11,6 +11,7 @@ import javax.json.JsonObjectBuilder;
 
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.Form;
 import weblogic.remoteconsole.server.repo.FormProperty;
@@ -52,7 +53,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     getEntityBuilder()
       .add(
         "pageDescription",
-        getBackendRelativeUri(
+        getBackendRelativePDJUri(
           getResponse().getResults().getPageDef().getPagePath()
         )
       );
@@ -124,7 +125,12 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
       getEntityBuilder().add("navigation", navigation.getRelativeUri());
     }
     BeanTreePath btp = page.getSelf();
-    JsonObjectBuilder builder = Json.createObjectBuilder(beanTreePathToJson(btp).asJsonObject());
+    JsonObjectBuilder builder =
+      Json.createObjectBuilder(
+        beanTreePathToJson(
+          btp,
+          getResponse().getResults().getPageDef().getPagePath().getRDJQueryParams()
+        ).asJsonObject());
     String kind = getBeanTreePathKind(btp);
     if (kind != null) {
       // This is a kind the CFE needs to know about
@@ -154,21 +160,22 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
   }
 
   private void addLinks(Page page) {
-    JsonArrayBuilder builder = Json.createArrayBuilder();
+    JsonArrayBuilder linksBuilder = Json.createArrayBuilder();
     for (Link link : page.getLinks()) {
-      builder.add(
+      JsonObjectBuilder linkBuilder =
         Json.createObjectBuilder()
-          .add(
-            "label",
-            link.getLabel()
-          )
-          .add(
-            "resourceData",
-            UriUtils.getBackendRelativeUri(getInvocationContext(), link.getResourceData())
-          )
-      );
+        .add("label", link.getLabel())
+        .add(
+          "resourceData",
+          UriUtils.getBackendRelativeUri(getInvocationContext(), link.getResourceData())
+        );
+      String nfm = link.getNotFoundMessage();
+      if (StringUtils.notEmpty(nfm)) {
+        linkBuilder.add("notFoundMessage", nfm);
+      }
+      linksBuilder.add(linkBuilder);
     }
-    getEntityBuilder().add("links", builder);
+    getEntityBuilder().add("links", linksBuilder);
   }
 
   private void addChangeManagerStatus(Page page) {
@@ -202,7 +209,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     return builder;
   }
 
-  private String getBackendRelativeUri(PagePath pagePath) {
+  private String getBackendRelativePDJUri(PagePath pagePath) {
     Path connectionRelativePath = new Path();
     String pageRepoName =
       getInvocationContext().getPageRepo().getPageRepoDef().getName();
@@ -211,6 +218,6 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     return
       UriUtils.getBackendRelativeUri(getInvocationContext(), connectionRelativePath)
       + "/"
-      + pagePath.getURI();
+      + pagePath.getPDJURI();
   }
 }

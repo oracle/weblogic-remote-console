@@ -48,8 +48,8 @@ public interface PageRepoDef {
   }
 
   // Create a page path for a slice of a type in this repo.
-  public default SliceFormPagePath newSliceFormPagePath(BeanTypeDef typeDef, Path slice) {
-    return PagePath.newSliceFormPagePath(newPagesPath(typeDef), slice);
+  public default SlicePagePath newSlicePagePath(BeanTypeDef typeDef, Path slice) {
+    return PagePath.newSlicePagePath(newPagesPath(typeDef), slice);
   }
 
   // Create a page path for the create form of a type in this repo.

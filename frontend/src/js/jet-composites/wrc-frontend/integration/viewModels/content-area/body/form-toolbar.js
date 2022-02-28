@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout'],
   function (oj, ko, Runtime, ChangeManager, PerspectiveMemoryManager, PageDefinitionUtils, ViewModelUtils, CoreTypes, CoreUtils) {
@@ -16,75 +16,75 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
       this.i18n = {
         buttons: {
-          "save": { id: "save", iconFile: ko.observable("save-icon-blk_24x24"), disabled: ko.observable(false), visible: ko.observable(false),
-            label: ko.observable(oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.save.label"))
+          'save': { id: 'save', iconFile: ko.observable('save-icon-blk_24x24'), disabled: ko.observable(false), visible: ko.observable(false),
+            label: ko.observable(oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.save.label'))
           },
-          "write": { id: "write", iconFile: "write-wdt-model-blk_24x24", disabled: false, visible: ko.observable(false),
-            label: ko.observable(oj.Translations.getTranslatedString("wrc-common.buttons.write.label"))
+          'write': { id: 'write', iconFile: 'write-wdt-model-blk_24x24', disabled: false, visible: ko.observable(false),
+            label: ko.observable(oj.Translations.getTranslatedString('wrc-common.buttons.write.label'))
           },
-          "new": { id: "new", iconFile: "add-icon-blk_24x24", disabled: false,
-            label: oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.new.label")
+          'new': { id: 'new', iconFile: 'add-icon-blk_24x24', disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.new.label')
           },
-          "delete": { id: "delete", iconFile: "remove-icon-blk_24x24", disabled: false,
-            label: oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.delete.label")
+          'delete': { id: 'delete', iconFile: 'remove-icon-blk_24x24', disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.delete.label')
           },
-          "back": { id: "back", iconFile: "back-icon-blk_24x24", disabled: ko.observable(true),
-            label: oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.back.label")
+          'back': { id: 'back', iconFile: 'back-icon-blk_24x24', disabled: ko.observable(true),
+            label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.back.label')
           },
-          "next": { id: "next", iconFile: "next-icon-blk_24x24", disabled: ko.observable(false),
-            label: oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.next.label")
+          'next': { id: 'next', iconFile: 'next-icon-blk_24x24', disabled: ko.observable(false),
+            label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.next.label')
           },
-          "finish": { id: "finish", iconFile: "add-icon-blk_24x24", disabled: ko.observable(true),
-            label: oj.Translations.getTranslatedString("wrc-form-toolbar.buttons.finish.label")
+          'finish': { id: 'finish', iconFile: 'add-icon-blk_24x24', disabled: ko.observable(true),
+            label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.finish.label')
           }
         },
         icons: {
-          "save": { id: "save", iconFile: "save-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.save.tooltip")
+          'save': { id: 'save', iconFile: 'save-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.save.tooltip')
           },
-          "submit": { id: "submit", iconFile: "submit-changes-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-common.tooltips.submit.value")
+          'submit': { id: 'submit', iconFile: 'submit-changes-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.submit.value')
           },
-          "write": { id: "write", iconFile: "write-wdt-model-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-common.tooltips.write.value")
+          'write': { id: 'write', iconFile: 'write-wdt-model-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.write.value')
           },
-          "create": { id: "create", iconFile: "add-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.create.tooltip")
+          'create': { id: 'create', iconFile: 'add-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.create.tooltip')
           },
-          "separator": { iconFile: "separator-vertical_10x24"},
-          "landing": { iconFile: "home-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.landing.tooltip")
+          'separator': { iconFile: 'separator-vertical_10x24'},
+          'landing': { iconFile: 'home-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.landing.tooltip')
           },
-          "history": { iconFile: "beanpath-history-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.history.tooltip")
+          'history': { iconFile: 'beanpath-history-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.history.tooltip')
           },
-          "instructions": { iconFile: "toggle-instructions-on-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.instructions.tooltip")
+          'instructions': { iconFile: 'toggle-instructions-on-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.instructions.tooltip')
           },
-          "help": { iconFile: "toggle-help-on-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.help.tooltip")
+          'help': { iconFile: 'toggle-help-on-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.help.tooltip')
           },
-          "sync": { iconFile: "sync-off-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.sync.tooltip"),
-            tooltipOn: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.sync.tooltipOn")
+          'sync': { iconFile: 'sync-off-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.sync.tooltip'),
+            tooltipOn: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.sync.tooltipOn')
           },
-          "syncInterval": { iconFile: "sync-interval-icon-blk_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.syncInterval.tooltip")
+          'syncInterval': { iconFile: 'sync-interval-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.syncInterval.tooltip')
           },
-          "shoppingcart": { iconFile: "commit-to-cart-icon_24x24",
-            tooltip: oj.Translations.getTranslatedString("wrc-form-toolbar.icons.shoppingcart.tooltip")
+          'shoppingcart': { iconFile: 'commit-to-cart-icon_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.shoppingcart.tooltip')
           }
         },
         menus: {
           shoppingcart: {
-            "view": { id: "view", iconFile: "", disabled: false,
-              label: oj.Translations.getTranslatedString("wrc-form-toolbar.menu.shoppingcart.view.label")
+            'view': { id: 'view', iconFile: '', disabled: false,
+              label: oj.Translations.getTranslatedString('wrc-form-toolbar.menu.shoppingcart.view.label')
             },
-            "discard": { id: "discard", iconFile: "discard-changes-blk_24x24", visible: ko.observable(true), disabled: false,
-              label: oj.Translations.getTranslatedString("wrc-form-toolbar.menu.shoppingcart.discard.label")
+            'discard': { id: 'discard', iconFile: 'discard-changes-blk_24x24', visible: ko.observable(true), disabled: false,
+              label: oj.Translations.getTranslatedString('wrc-form-toolbar.menu.shoppingcart.discard.label')
             },
-            "commit": { id: "commit", iconFile: "commit-changes-blk_24x24", visible: ko.observable(true), disabled: false,
-              label: oj.Translations.getTranslatedString("wrc-form-toolbar.menu.shoppingcart.commit.label")
+            'commit': { id: 'commit', iconFile: 'commit-changes-blk_24x24', visible: ko.observable(true), disabled: false,
+              label: oj.Translations.getTranslatedString('wrc-form-toolbar.menu.shoppingcart.commit.label')
             }
           }
         }
@@ -92,7 +92,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
       this.showHelp = ko.observable(false);
 
-      this.toolbarButton = "";
+      this.toolbarButton = '';
       this.isWizardForm = ko.observable(viewParams.isWizardForm());
       this.createFormMode = ko.observable(viewParams.createFormMode());
 
@@ -118,10 +118,10 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       this.connected = function () {
         const pdjData = viewParams.parentRouter.data.pdjData();
 
-        const isReadOnly = !pdjData.createForm && pdjData.sliceForm.readOnly === true;
+        const isReadOnly = !pdjData.createForm && (pdjData.sliceForm?.readOnly === true || pdjData.sliceTable !== undefined);
         self.sliceReadOnly(isReadOnly);
 
-        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !["configuration","modeling"].includes(self.perspective.id));
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !['configuration','modeling'].includes(self.perspective.id));
         self.readonly(Runtime.isReadOnly());
 
         let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
@@ -129,12 +129,12 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           self.i18n.buttons.save.visible(!newRO);
           self.i18n.menus.shoppingcart.discard.visible(!newRO);
           self.i18n.menus.shoppingcart.commit.visible(!newRO);
-          if (["modeling","configuration"].indexOf(self.perspective.id) !== -1) {
-            setToolbarButtonsVisibility("save", (!newRO ? "inline-flex" : "none"));
+          if (['modeling','configuration'].indexOf(self.perspective.id) !== -1) {
+            setToolbarButtonsVisibility('save', (!newRO ? 'inline-flex' : 'none'));
           }
         });
 
-        const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? "savenow" : "write"}.label`);
+        const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write'}.label`);
         self.i18n.buttons.write.label(label);
 
         self.signalBindings.push(binding);
@@ -148,8 +148,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         // Get auto-sync interval from perspectiveMemory
         const syncInterval = self.perspectiveMemory.contentPage.syncInterval;
         if (syncInterval !== null) {
-          const ele = document.getElementById("sync-icon");
-          if (ele !== null) ele.setAttribute("data-interval", syncInterval);
+          const ele = document.getElementById('sync-icon');
+          if (ele !== null) ele.setAttribute('data-interval', syncInterval);
         }
 
         binding = viewParams.signaling.autoSyncCancelled.add(autoSyncCancelledCallback);
@@ -161,8 +161,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
             ChangeManager.putMostRecent(changeManager);
             self.changeManager(changeManager);
-            if (eventType === "discard") viewParams.onShoppingCartDiscarded(self.toolbarButton);
-            if (eventType === "commit") viewParams.onShoppingCartCommitted(self.toolbarButton);
+            if (eventType === 'discard') viewParams.onShoppingCartDiscarded(self.toolbarButton);
+            if (eventType === 'commit') viewParams.onShoppingCartCommitted(self.toolbarButton);
           }
         });
 
@@ -181,7 +181,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         ChangeManager.getLockState()
           .then((data) => {
             self.changeManager(data.changeManager);
-            self.renderToolbarButtons("sync");
+            self.renderToolbarButtons('sync');
           })
           .catch(response => {
             ViewModelUtils.failureResponseDefaultHandling(response);
@@ -210,20 +210,20 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       };
 
       this.shoppingCartMenuClickListener = function (event) {
-        if (event.target.value === "view") {
-          viewParams.signaling.tabStripTabSelected.dispatch("form-toolbar", ChangeManager.Entity.SHOPPING_CART.name, true);
+        if (event.target.value === 'view') {
+          viewParams.signaling.tabStripTabSelected.dispatch('form-toolbar', ChangeManager.Entity.SHOPPING_CART.name, true);
         }
         else {
           switch (event.target.value){
-            case "commit":
+            case 'commit':
               viewParams.onUnsavedChangesDecision()
                 .then(function (proceed) {
                   if (proceed) {
-                    ViewModelUtils.setCursorType("progress");
+                    ViewModelUtils.setCursorType('progress');
                     ChangeManager.commitChanges()
                       .then((changeManager) => {
                         self.changeManager(changeManager);
-                        viewParams.signaling.tabStripTabSelected.dispatch("form-toolbar", ChangeManager.Entity.SHOPPING_CART.name, false);
+                        viewParams.signaling.tabStripTabSelected.dispatch('form-toolbar', ChangeManager.Entity.SHOPPING_CART.name, false);
                         // clear treenav selection
                         viewParams.signaling.navtreeSelectionCleared.dispatch();
                         viewParams.onShoppingCartCommitted(self.toolbarButton);
@@ -232,17 +232,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
                         ViewModelUtils.failureResponseDefaultHandling(response);
                       })
                       .finally(() => {
-                        ViewModelUtils.setCursorType("default");
+                        ViewModelUtils.setCursorType('default');
                       });
                   }
                 }.bind(viewParams));
               break;
-            case "discard":
-              ViewModelUtils.setCursorType("progress");
+            case 'discard':
+              ViewModelUtils.setCursorType('progress');
               ChangeManager.discardChanges()
                 .then((changeManager) => {
                   self.changeManager(changeManager);
-                  viewParams.signaling.tabStripTabSelected.dispatch("form-toolbar", ChangeManager.Entity.SHOPPING_CART.name, false);
+                  viewParams.signaling.tabStripTabSelected.dispatch('form-toolbar', ChangeManager.Entity.SHOPPING_CART.name, false);
                   // clear treenav selection
                   viewParams.signaling.navtreeSelectionCleared.dispatch();
                   viewParams.onShoppingCartDiscarded(self.toolbarButton);
@@ -251,7 +251,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
                   ViewModelUtils.failureResponseDefaultHandling(response);
                 })
                 .finally(() => {
-                  ViewModelUtils.setCursorType("default");
+                  ViewModelUtils.setCursorType('default');
                 });
               break;
           }
@@ -259,15 +259,14 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
       }.bind(this);
 
-
-      this.isWdtForm = function() {
-        return viewParams.isWdtForm();
+      this.isShoppingCartVisible = function() {
+        return viewParams.isShoppingCartVisible();
       };
 
       function shoppingCartContentsChanged(changeManager) {
-        let ele = document.getElementById("shoppingCartImage");
+        let ele = document.getElementById('shoppingCartImage');
         if (ele !== null) {
-          ele.src = "js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-" + (changeManager.isLockOwner && changeManager.hasChanges ? "non-empty" : "empty") + "-tabstrip_24x24.png";
+          ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + (changeManager.isLockOwner && changeManager.hasChanges ? 'non-empty' : 'empty') + '-tabstrip_24x24.png';
         }
       }
 
@@ -285,116 +284,116 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       }
 
       this.renderToolbarButtons = async function (eventType, hasNonReadOnlyFields) {
-        if ((["modeling","configuration"].indexOf(self.perspective.id) !== -1) && !self.readonly()) {
+        if ((['modeling','configuration'].indexOf(self.perspective.id) !== -1) && !self.readonly()) {
           const renderingInfo = await viewParams.onToolbarRendering(eventType);
-          let buttonId = ((eventType === "update" || renderingInfo.mode === "save") && self.perspective.id === "modeling" ? "write" : renderingInfo.mode);
+          let buttonId = ((eventType === 'update' || renderingInfo.mode === 'save') && self.perspective.id === 'modeling' ? 'write' : renderingInfo.mode);
 
           resetSaveButtonDisplayState([{id: buttonId}]);
 
-          self.i18n.buttons.save.visible(buttonId !== "write");
-          self.i18n.buttons.write.visible(buttonId !== "create" && self.perspective.id === "modeling" && Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name);
+          self.i18n.buttons.save.visible(buttonId !== 'write');
+          self.i18n.buttons.write.visible(buttonId !== 'create' && self.perspective.id === 'modeling' && Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name);
 
-          if (renderingInfo.kind === "creatableOptionalSingleton") {
-            if (eventType === "create") {
+          if (renderingInfo.kind === 'creatableOptionalSingleton') {
+            if (eventType === 'create') {
               // "Save" button is valid for pendingEventType value, so show or hide it
-              setToolbarButtonsVisibility("save", (renderingInfo.formDataExists ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('save', (renderingInfo.formDataExists ? 'inline-flex' : 'none'));
               // "New" button is invalid for pendingEventType value, so hide it
-              setToolbarButtonsVisibility("new", "none");
+              setToolbarButtonsVisibility('new', 'none');
               // "Delete" button is invalid for pendingEventType value, so hide it
-              setToolbarButtonsVisibility("delete", "none");
+              setToolbarButtonsVisibility('delete', 'none');
             }
-            else if (eventType === "discard") {
+            else if (eventType === 'discard') {
               // Need to show a blank form if discard happened after clicking the "New" button
-              if (self.toolbarButton === "new") showBlankForm();
-              hasNonReadOnlyFields = (typeof hasNonReadOnlyFields !== "undefined" ? hasNonReadOnlyFields : false);
+              if (self.toolbarButton === 'new') showBlankForm();
+              hasNonReadOnlyFields = (typeof hasNonReadOnlyFields !== 'undefined' ? hasNonReadOnlyFields : false);
               // "Save" button is valid for pendingEventType value, so show or hide it
-              setToolbarButtonsVisibility("save", (hasNonReadOnlyFields ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('save', (hasNonReadOnlyFields ? 'inline-flex' : 'none'));
               // "New" button is invalid for pendingEventType value, so hide it
-              setToolbarButtonsVisibility("new", (!hasNonReadOnlyFields ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('new', (!hasNonReadOnlyFields ? 'inline-flex' : 'none'));
               // "Delete" button is valid for pendingEventType value, so show or hide it
-              setToolbarButtonsVisibility("delete", (hasNonReadOnlyFields ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('delete', (hasNonReadOnlyFields ? 'inline-flex' : 'none'));
               // Allow for the tab strip to be displayed again
               if (hasNonReadOnlyFields) allowTabStrip();
             }
-            else if (eventType === "commit") {
-              hasNonReadOnlyFields = (typeof hasNonReadOnlyFields !== "undefined" ? hasNonReadOnlyFields : false);
+            else if (eventType === 'commit') {
+              hasNonReadOnlyFields = (typeof hasNonReadOnlyFields !== 'undefined' ? hasNonReadOnlyFields : false);
               // "Save" button is valid for pendingEventType value, so show or hide it
-              setToolbarButtonsVisibility("save", (hasNonReadOnlyFields ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('save', (hasNonReadOnlyFields ? 'inline-flex' : 'none'));
               // "New" button is invalid for pendingEventType value, so hide it
-              setToolbarButtonsVisibility("new", (!hasNonReadOnlyFields ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('new', (!hasNonReadOnlyFields ? 'inline-flex' : 'none'));
               // "Delete" button is valid for pendingEventType value, so show or hide it
-              setToolbarButtonsVisibility("delete", (hasNonReadOnlyFields ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('delete', (hasNonReadOnlyFields ? 'inline-flex' : 'none'));
               // Allow for the tab strip to be displayed again
               if (hasNonReadOnlyFields) allowTabStrip();
             }
             else {
               // "Save" button is valid for pendingEventType value, so show or hide it
-              setToolbarButtonsVisibility("save", (renderingInfo.formDataExists ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('save', (renderingInfo.formDataExists ? 'inline-flex' : 'none'));
               // "New" button is valid for pendingEventType value, so show or hide it
-              setToolbarButtonsVisibility("new", (!renderingInfo.formDataExists ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('new', (!renderingInfo.formDataExists ? 'inline-flex' : 'none'));
               // "Delete" button is valid for pendingEventType value, so show or hide it
-              setToolbarButtonsVisibility("delete", (renderingInfo.formDataExists ? "inline-flex" : "none"));
+              setToolbarButtonsVisibility('delete', (renderingInfo.formDataExists ? 'inline-flex' : 'none'));
               // Allow for the tab strip to be displayed again
               if (renderingInfo.formDataExists) allowTabStrip();
             }
           }
-          else if (renderingInfo.kind === "nonCreatableOptionalSingleton") {
+          else if (renderingInfo.kind === 'nonCreatableOptionalSingleton') {
             // "Save" button is valid for kind value, so show it only when there is RDJ data
-            let display = "inline-flex";
+            let display = 'inline-flex';
             if (CoreUtils.isUndefinedOrNull(viewParams.parentRouter.data.rdjData().data)) {
-              display = "none";
+              display = 'none';
             }
-            setToolbarButtonsVisibility("save", display);
+            setToolbarButtonsVisibility('save', display);
             // "New" button is invalid for kind value, so hide it
-            setToolbarButtonsVisibility("new", "none");
+            setToolbarButtonsVisibility('new', 'none');
             // "Delete" button is invalid for kind value, so hide it
-            setToolbarButtonsVisibility("delete", "none");
+            setToolbarButtonsVisibility('delete', 'none');
           }
           else {
             // "Save" button is valid for kind value, so show it
-            setToolbarButtonsVisibility("save", "inline-flex");
+            setToolbarButtonsVisibility('save', 'inline-flex');
             // "New" button is invalid for kind value, so hide it
-            setToolbarButtonsVisibility("new", "none");
+            setToolbarButtonsVisibility('new', 'none');
             // "Delete" button is invalid for kind value, so hide it
-            setToolbarButtonsVisibility("delete", "none");
+            setToolbarButtonsVisibility('delete', 'none');
           }
 
-          if (eventType === "delete") showBlankForm();
+          if (eventType === 'delete') showBlankForm();
         }
 
       }.bind(this);
 
       function showBlankForm(){
-        const ele = document.getElementById("cfe-form");
-        if (ele !== null) ele.style.display = "none";
-        const eleTabs = document.getElementById("cfe-form-tabstrip-container");
-        if (eleTabs !== null) eleTabs.style.display = "none";
+        const ele = document.getElementById('cfe-form');
+        if (ele !== null) ele.style.display = 'none';
+        const eleTabs = document.getElementById('cfe-form-tabstrip-container');
+        if (eleTabs !== null) eleTabs.style.display = 'none';
       }
 
       function allowTabStrip(){
-        const eleTabs = document.getElementById("cfe-form-tabstrip-container");
-        if (eleTabs !== null) eleTabs.style = "";
+        const eleTabs = document.getElementById('cfe-form-tabstrip-container');
+        if (eleTabs !== null) eleTabs.style = '';
       }
 
       function setToolbarButtonsVisibility(button, displayValue) {
         let ele = null;
         switch (button) {
-          case "save":
-            ele = document.getElementById("form-toolbar-save-button");
+          case 'save':
+            ele = document.getElementById('form-toolbar-save-button');
             break;
-          case "new":
-            ele = document.getElementById("form-toolbar-new-button");
+          case 'new':
+            ele = document.getElementById('form-toolbar-new-button');
             break;
-          case "delete":
-            ele = document.getElementById("form-toolbar-delete-button");
+          case 'delete':
+            ele = document.getElementById('form-toolbar-delete-button');
             break;
         }
         if (ele !== null) ele.style.display = displayValue;
       }
 
       function toggleToolbarButtonsVisibility(visible) {
-        const ele = document.getElementById("form-toolbar-buttons");
-        ele.style.display = (visible ? "none" : "inline-flex");
+        const ele = document.getElementById('form-toolbar-buttons');
+        ele.style.display = (visible ? 'none' : 'inline-flex');
       }
 
       this.toggleHistoryClick = function (event) {
@@ -439,17 +438,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
       this.syncIntervalClick = function (event) {
         // Get <img id="sync-icon"> DOM element
-        const ele = document.getElementById("sync-icon");
+        const ele = document.getElementById('sync-icon');
         // Get numeric representation of "data-interval"
         // attribute of DOM element
-        const currentValue = parseInt(ele.getAttribute("data-interval"));
+        const currentValue = parseInt(ele.getAttribute('data-interval'));
         // Call function defined in form.js that returns a Promise, passing
         // in the numeric representation of current sync interval.
         viewParams.onSyncIntervalClicked(currentValue)
           .then((result) => {
             self.perspectiveMemory.contentPage.syncInterval = result.interval;
             // Update attributes of <img id="sync-icon"> DOM element
-            ele.setAttribute("data-interval", result.interval);
+            ele.setAttribute('data-interval', result.interval);
             let syncInterval = parseInt(result.interval);
             if (syncInterval > 0) {
               self.autoSyncEnabled(true);
@@ -467,9 +466,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
       function setAutoSyncIcon() {
         // Change tooltip to let end user know the state
-        let syncIconElement = document.getElementById("sync-icon");
-        if ((typeof syncIconElement !== "undefined") && (syncIconElement !== null))
-          syncIconElement.setAttribute("title", (self.autoSyncEnabled() ? self.i18n.icons.sync.tooltipOn : self.i18n.icons.sync.tooltip));
+        let syncIconElement = document.getElementById('sync-icon');
+        if ((typeof syncIconElement !== 'undefined') && (syncIconElement !== null))
+          syncIconElement.setAttribute('title', (self.autoSyncEnabled() ? self.i18n.icons.sync.tooltipOn : self.i18n.icons.sync.tooltip));
       }
 
       this.cancelAutoSync = function () {
@@ -485,30 +484,30 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       }
 
       this.newAction = function (event) {
-        self.toolbarButton = "new";
-        setToolbarButtonsVisibility("new", "none");
+        self.toolbarButton = 'new';
+        setToolbarButtonsVisibility('new', 'none');
         viewParams.newAction(event);
       };
 
       this.backAction = function (event) {
-        self.toolbarButton = "back";
-        viewParams.rerenderAction(viewParams.parentRouter.data.pdjData(), viewParams.parentRouter.data.rdjData(), "back");
+        self.toolbarButton = 'back';
+        viewParams.rerenderAction(viewParams.parentRouter.data.pdjData(), viewParams.parentRouter.data.rdjData(), 'back');
       };
 
       this.nextAction = function (event) {
-        self.toolbarButton = "next";
-        viewParams.rerenderAction(viewParams.parentRouter.data.pdjData(), viewParams.parentRouter.data.rdjData(), "next");
+        self.toolbarButton = 'next';
+        viewParams.rerenderAction(viewParams.parentRouter.data.pdjData(), viewParams.parentRouter.data.rdjData(), 'next');
       };
 
       this.finishAction = function (event) {
-        self.toolbarButton = "finish";
+        self.toolbarButton = 'finish';
         viewParams.signaling.navtreeSelectionCleared.dispatch();
         self.changeManager(ChangeManager.getMostRecent());
         return viewParams.finishedAction();
       };
 
       this.deleteAction = function (event) {
-        self.toolbarButton = "delete";
+        self.toolbarButton = 'delete';
         // clear treenav selection
         viewParams.signaling.navtreeSelectionCleared.dispatch();
         self.changeManager(ChangeManager.getMostRecent());
@@ -523,20 +522,20 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       this.onSave = ko.observable(
         function (event) {
           // event.target.id;
-          self.toolbarButton = "save";
+          self.toolbarButton = 'save';
           // clear treenav selection
           viewParams.signaling.navtreeSelectionCleared.dispatch();
           self.changeManager(ChangeManager.getMostRecent());
-          viewParams.onSave("update");
+          viewParams.onSave('update');
         }
       );
 
       this.onUpdateModelFile = ko.observable(
         function (event) {
           // event.target.id;
-          self.toolbarButton = "write";
+          self.toolbarButton = 'write';
           // clear treenav selection
-          viewParams.onUpdateModelFile("download");
+          viewParams.onUpdateModelFile('download');
         }
       );
     }

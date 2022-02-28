@@ -45,7 +45,7 @@ module.exports = function (config) {
 
       // .yaml files
       {
-        pattern: 'web/jet-composites/1.0.0/config/**',
+        pattern: 'web/js/jet-composites/wrc-frontend/1.0.0/config/**',
         included: false,
         served: true
       },
@@ -78,7 +78,8 @@ module.exports = function (config) {
       '/base/core/': '/base/web/js/jet-composites/wrc-frontend/1.0.0/core/',
       '/base/apis/': '/base/web/js/jet-composites/wrc-frontend/1.0.0/apis/',
       '/base/microservices/': '/base/web/js/jet-composites/wrc-frontend/1.0.0/microservices/',
-      '/base/core./baseUrl': '/base/web/js/baseUrl'
+      '/base/integration/': '/base/web/js/jet-composites/wrc-frontend/1.0.0/integration/',
+      '/base/core/baseUrl': '/base/web/js/baseUrl'
     },
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -94,7 +95,7 @@ module.exports = function (config) {
       'web/js/jet-composites/wrc-frontend/1.0.0/core/**/*.js': sourcePreprocessors,
       'web/js/jet-composites/wrc-frontend/1.0.0/apis/**/*.js': sourcePreprocessors,
       'web/js/jet-composites/wrc-frontend/1.0.0/microservices/**/*.js': sourcePreprocessors,
-      'web/js/jet-composites/wrc-frontend/1.0.0/integration/viewModels/**/*.js': sourcePreprocessors,
+      'web/js/jet-composites/wrc-frontend/1.0.0/integration/**/*.js': sourcePreprocessors
     },
 
     //karmaTypescriptConfig: {

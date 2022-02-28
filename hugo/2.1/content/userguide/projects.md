@@ -22,13 +22,13 @@ A project is a group of connections to either WebLogic Administration Servers or
 1. To add a WDT model file:
     1. Select **Add WDT Model File Provider**.
     1. Enter a name for the model in the **Model Name** field. This is merely a reference name and does not need to match the name of the WDT model.
-    1. Click ![Upload file](/weblogic-remote-console/choose-file-icon-blk_24x24.png) and browse to the WDT model file (a YAML or JSON file).
+    1. Click ![Upload file](/weblogic-remote-console/images/icons/choose-file-icon-blk_24x24.png) and browse to the WDT model file (a YAML or JSON file).
     1. Click **OK** to upload the file.
 1. To create a WDT model file with minimal configurations:
     1. Select **Create Provider for New WDT Model File**.
     1. Enter a name for the model in the **WDT Model Provider Name** field. This is merely a reference name and does not need to match the name of the WDT model.
     1. Enter a name for the WDT model file in the **WDT Model Filename** field. Include .yaml or .json at the end of the file name.
-    1. Click ![Upload file](/weblogic-remote-console/choose-directory-icon-blk_24x24.png) and browse to the directory where you want to save the new WDT model file.
+    1. Click ![Upload file](/weblogic-remote-console/images/icons/choose-directory-icon-blk_24x24.png) and browse to the directory where you want to save the new WDT model file.
     1. **Optional**: Enable **Use Sparse Template** to create a WDT model file which does not contain any references to an Administration Server.
     1. Click **OK** to create the file.
 
@@ -51,7 +51,7 @@ To add connections to a project, expand the Kiosk and click &#x022EE;.
 
 To rename a project, open the **File** menu and select **Rename *current-project***.
 
-To edit the details of a connection, expand the Kiosk and select the ![Settings icon](/weblogic-remote-console/data-providers-manage-icon-brn_24x24.png) icon beside the connection you want to edit.
+To edit the details of a connection, expand the Kiosk and select the ![Settings icon](/weblogic-remote-console/images/icons/data-providers-manage-icon-brn_24x24.png) icon beside the connection you want to edit.
 
 
 ## Export a project {id="export"}
@@ -78,7 +78,7 @@ You can import the project details of a previously created project to rapidly ra
 1. On the computer where you want to import the file, start WebLogic Remote Console.
 1. Open the Kiosk menu and click &#x022EE;.
 1. Select **Import Project**.
-1. Click ![Upload file](/weblogic-remote-console/choose-file-icon-blk_24x24.png) and browse to the exported project file.
+1. Click ![Upload file](/weblogic-remote-console/images/icons/choose-file-icon-blk_24x24.png) and browse to the exported project file.
 1. Click **Import**.
 
 The imported project will automatically become the current project loaded in the WebLogic Remote Console.

@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * @module
@@ -16,7 +16,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
 
       // START: knockout observables referenced in landing.html
       this.perspectiveGroups = ko.observableArray();
-      this.perspectiveGroup = ko.observable({name: "", description: "<p/>"});
+      this.perspectiveGroup = ko.observable({name: '', description: '<p/>'});
       this.subtreeItemChildren = ko.observableArray();
       // END:   knockout observables referenced in landing.html
 
@@ -39,7 +39,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
           // it's landing page. In "home mode", the user is switching between
           // perspectives, so we need to reinitialize the ko.observables
           // that are referenced in landing.html.
-          self.perspectiveGroup({name: "", description: "<p/>"});
+          self.perspectiveGroup({name: '', description: '<p/>'});
           // Hiding the subtree displayed for a perspectiveGroup, is also
           // part of the reinitialization sequence.
           setPagePanelSubtreeVisibility(false);
@@ -57,7 +57,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         // be moved here physically.
 
         let binding = viewParams.signaling.beanTreeChanged.add(newBeanTree => {
-          if (newBeanTree.type !== "home") {
+          if (newBeanTree.type !== 'home') {
             switchPerspective(newBeanTree.type);
           }
         });
@@ -74,7 +74,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
       }.bind(this);
 
       function loadPerspectiveGroups() {
-        ViewModelUtils.setCursorType("progress");
+        ViewModelUtils.setCursorType('progress');
         const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(
           self.perspective.id
         );
@@ -104,8 +104,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
               setPagePanelSubtreeVisibility(false);
             }
           })
+          .catch(response => {
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          })
           .finally(() => {
-            ViewModelUtils.setCursorType("default");
+            ViewModelUtils.setCursorType('default');
           });
       }
 
@@ -119,10 +122,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         let groups = [];
         pathModels.forEach((pathModel) => {
           pathModels.forEach((pathModel) => {
-            if (pathModel.type === "group") {
+            if (pathModel.type === 'group') {
               groups.push({name: pathModel.name, label: pathModel.label});
             }
-            else if (pathModel.type === "collection") {
+            else if (pathModel.type === 'collection') {
               groups.push({name: pathModel.resourceData.label, label: pathModel.resourceData.label, path: pathModel.resourceData.resourceData});
             }
           });
@@ -133,21 +136,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
       }
 
       function setPagePanelSubtreeVisibility(visible) {
-        $("#landing-page-panel-subtree").css({"display": (visible ? "block" : "none")});
+        $('#landing-page-panel-subtree').css({'display': (visible ? 'block' : 'none')});
       }
 
       function toggleSubtreePageVisibility(subtreeName){
-        let ele = document.getElementById("landing-page-panel-subtree");
+        let ele = document.getElementById('landing-page-panel-subtree');
         if (ele !== null) {
-          const visible = (ele.style.display === "block");
-          const ele1 = document.getElementById(subtreeName + "Chevron");
+          const visible = (ele.style.display === 'block');
+          const ele1 = document.getElementById(subtreeName + 'Chevron');
           if (visible) {
-            ele.style.display = "none";
-            if (ele1 !== null) ele1.setAttribute("class", "landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-s");
+            ele.style.display = 'none';
+            if (ele1 !== null) ele1.setAttribute('class', 'landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-s');
           }
           else {
-            ele.style.display = "block";
-            if (ele1 !== null) ele1.setAttribute("class", "landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-n");
+            ele.style.display = 'block';
+            if (ele1 !== null) ele1.setAttribute('class', 'landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-n');
           }
         }
       }
@@ -164,7 +167,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
 
         contents?.forEach((item) => {
           // [{"name":"Environment","label":"Environment","expandable":true,"type":"group"},
-          let identifier = (treeModel ? treeModel + "/" : "") + item.name;
+          let identifier = (treeModel ? treeModel + '/' : '') + item.name;
 
           let node = item;
           node.identifier = identifier;
@@ -203,6 +206,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
               .then( rootTreeModel => {
                 rootTreeModel = processContents(rootTreeModel.contents);
                 resolve({contents: rootTreeModel});
+              })
+              .catch(response => {
+                ViewModelUtils.failureResponseDefaultHandling(response);
               });
           }
           else {
@@ -266,14 +272,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         function getSubtreePageItem(item) {
           return DataOperations.mbean.get(item.resourceData.resourceData)
             .then(reply => {
-              const pdjData = reply.body.data.get("pdjData");
-              const itemHTML = (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML) ? pdjData.introductionHTML : "<p>CBE did not provide a description for this item.</p>");
+              const pdjData = reply.body.data.get('pdjData');
+              const itemHTML = (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML) ? pdjData.introductionHTML : '<p>CBE did not provide a description for this item.</p>');
               return {
                 type: item.type,
                 path: item.resourceData.resourceData,
                 label: item.resourceData.label,
                 descriptionHTML: {view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`)}
               };
+            })
+            .catch(response => {
+              ViewModelUtils.failureResponseDefaultHandling(response);
             });
         }
 
@@ -317,7 +326,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         Logger.log(`[LANDING] data-path=${resourceData}, perspective-group=${self.perspectiveGroup().name}`);
 
         // expand the navtree nodes
-        viewParams.parentRouter.go("/" + self.perspective.id + "/" + encodeURIComponent(resourceData));
+        viewParams.parentRouter.go('/' + self.perspective.id + '/' + encodeURIComponent(resourceData));
       };
 
       /**
@@ -327,7 +336,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
       this.landingPanelClickHandler = function(event) {
         // The Kiosk will more than likely just be in the
         // way from here on out, so go ahead and hide it.
-        viewParams.signaling.ancillaryContentAreaToggled.dispatch("landing", false);
+        viewParams.signaling.ancillaryContentAreaToggled.dispatch('landing', false);
         // The id attribute with the perspectiveId assigned
         // to it, is on the first child element of the
         // click event's current target. The click event's
@@ -338,7 +347,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         if (CoreUtils.isUndefinedOrNull(value)) return;
 
         let pathValue;
-        const path = event.currentTarget.children[0].attributes["data-path"];
+        const path = event.currentTarget.children[0].attributes['data-path'];
         if (CoreUtils.isNotUndefinedNorNull(path)) {
           pathValue = path.value;
         }
@@ -355,15 +364,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
           const previousName = self.perspectiveGroup().name;
           self.perspectiveGroup(self.perspectiveGroups().find(item => item.name === value));
           if (CoreUtils.isUndefinedOrNull(self.perspectiveGroup())) {
-            self.perspectiveGroup({name: "", description: "<p/>"});
+            self.perspectiveGroup({name: '', description: '<p/>'});
           }
           const name = self.perspectiveGroup().name;
 
-          if (previousName !== "") toggleSubtreePageVisibility(previousName);
+          if (previousName !== '') toggleSubtreePageVisibility(previousName);
 
           if (name !== previousName) {
             const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(self.perspective.id);
-            ViewModelUtils.setCursorType("progress");
+            ViewModelUtils.setCursorType('progress');
             getGroupContents(beanTree, self.treeModel, name)
               .then(groupContents => {
                 self.treeModel = groupContents;
@@ -380,14 +389,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
                 toggleSubtreePageVisibility(name);
               })
               .finally(() => {
-                ViewModelUtils.setCursorType("default");
+                ViewModelUtils.setCursorType('default');
               });
           }
           else {
             // Reinitialize perspectiveGroup, so previousName const
             // const will be "" if/when a different perspectiveGroup
             // is selected
-            self.perspectiveGroup({name: "", description: "<p/>"});
+            self.perspectiveGroup({name: '', description: '<p/>'});
           }
         }
 
@@ -397,7 +406,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         self.perspective = PerspectiveManager.getById(perspectiveId);
         viewParams.signaling.perspectiveSelected.dispatch(self.perspective);
         viewParams.signaling.perspectiveChanged.dispatch(self.perspective);
-        document.title = Runtime.getName() + " - " + self.perspective.label;
+        document.title = Runtime.getName() + ' - ' + self.perspective.label;
         self.treeModel = {};
         loadPerspectiveGroups();
       }

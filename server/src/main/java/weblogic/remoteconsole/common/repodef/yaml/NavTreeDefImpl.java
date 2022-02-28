@@ -147,6 +147,10 @@ class NavTreeDefImpl implements NavTreeDef {
     NavTreeNodeDefSource source,
     GroupNavTreeNodeDefImpl groupNodeDefImpl
   ) {
+    if (!getPageRepoDefImpl().getBeanRepoDefImpl().isAccessAllowed(RoleUtils.computeNavTreeNodeRoles(source))) {
+      // The user isn't allowed to view this node
+      return null;
+    }
     NavTreeNodeDefSource.Type type = source.getType();
     if (NavTreeNodeDefSource.Type.child == type) {
       return BeanChildNavTreeNodeDefImpl.newNode(this, source, groupNodeDefImpl);

@@ -1,10 +1,16 @@
 /*! Copyright (c) 2020, 2021, Oracle and/or its affiliates. All rights reserved. */
 
 wdt-model-builder:not(.oj-complete){
-  visibility: hidden;
+	visibility: hidden;
+}
+
+wdt-model-builder {
+	overflow: hidden;
 }
 
 #wdt-model-builder-container {
-	min-width: 100vw;
-	min-height: 100vh;
+	/* width: 100%; */
+	min-width: 2.5rem;		/* 40px; */
+	border-top: 1px solid var(--oj-collection-border-color);
+	box-sizing: border-box;
 }

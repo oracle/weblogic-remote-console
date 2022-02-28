@@ -10,6 +10,7 @@ import java.util.Set;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
+import weblogic.remoteconsole.common.repodef.schema.NavTreeNodeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.RolesDefSource;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 
@@ -39,6 +40,16 @@ class RoleUtils {
         // we can simplify the logic and always only allow those roles.
         roles = WebLogicRoles.ALL;
       }
+    }
+    return roles;
+  }
+
+  static Set<String> computeNavTreeNodeRoles(NavTreeNodeDefSource nodeSource) {
+    // If the roles are specified at the node level, use them.
+    // Otherwise, use ALL.
+    Set<String> roles = computeRoles(nodeSource.getRoles());
+    if (roles == null) {
+      roles = WebLogicRoles.ALL;
     }
     return roles;
   }

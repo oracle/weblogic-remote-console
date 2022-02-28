@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 define(['wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective-memory'],
   function(PerspectiveManager, PerspectiveMemory){
@@ -65,9 +65,9 @@ define(['wrc-frontend/microservices/perspective/perspective-manager', 'wrc-front
        */
       getPerspectiveMemory: function(perspectiveId) {
         const perspective = PerspectiveManager.getById(perspectiveId);
-        if (typeof perspective === "undefined") throw new this.InvalidPerspectiveIdError(`${perspectiveId} is not the id for a currently supported perspective.`);
+        if (typeof perspective === 'undefined') throw new this.InvalidPerspectiveIdError(`${perspectiveId} is not the id for a currently supported perspective.`);
 
-        if (typeof perspectiveMemories[perspectiveId] === "undefined") {
+        if (typeof perspectiveMemories[perspectiveId] === 'undefined') {
           perspectiveMemories[perspectiveId] = new PerspectiveMemory(perspectiveId);
         }
         return perspectiveMemories[perspectiveId];

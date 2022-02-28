@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojradioset'],
   function(oj, ko, ModuleElementUtils, Runtime, Preferences, CoreTypes) {
@@ -17,16 +17,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
             version: { value: Runtime.getProperty(Runtime.PropertyName.CFE_VERSION) }
           },
           icons: {
-            wrcApp: {iconFile: "wrc-app-icon-color_88x78"},
+            wrcApp: {iconFile: 'wrc-app-icon-color_88x78'},
             connectivity: {
-              online: {iconFile: "console-state-bar-grn_13x30",
-                tooltip: oj.Translations.getTranslatedString("wrc-header.icons.connectivity.online.tooltip")
+              online: {iconFile: 'console-state-bar-grn_13x30',
+                tooltip: oj.Translations.getTranslatedString('wrc-header.icons.connectivity.online.tooltip')
               },
-              offline: {iconFile: "console-state-bar-ylw_13x30",
-                tooltip: oj.Translations.getTranslatedString("wrc-header.icons.connectivity.offline.tooltip")
+              offline: {iconFile: 'console-state-bar-ylw_13x30',
+                tooltip: oj.Translations.getTranslatedString('wrc-header.icons.connectivity.offline.tooltip')
               },
-              detached: {iconFile: "console-state-bar-red_13x30",
-                tooltip: oj.Translations.getTranslatedString("wrc-header.icons.connectivity.detached.tooltip")
+              detached: {iconFile: 'console-state-bar-red_13x30',
+                tooltip: oj.Translations.getTranslatedString('wrc-header.icons.connectivity.detached.tooltip')
+              },
+              unattached: {iconFile: 'console-state-bar-clr_13x30',
+                tooltip: oj.Translations.getTranslatedString('wrc-header.icons.connectivity.unattached.tooltip')
               }
             }
           }
@@ -34,12 +37,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
       };
 
       // Initialize instance-scope variables used in header.html
-      this.appInfoTitleClass = (viewParams.smScreen ? "branding-area-title-sm" : "branding-area-title-md");
-      this.appName = oj.Translations.getTranslatedString("wrc-header.text.appName");
+      this.appInfoTitleClass = (viewParams.smScreen ? 'branding-area-title-sm' : 'branding-area-title-md');
+      this.appName = oj.Translations.getTranslatedString('wrc-header.text.appName');
       this.domainsConnectState = ko.observable();
+      this.linkLabel = ko.observable();
+      this.linkResourceData = ko.observable();
 
       this.domainConnectionModuleConfig = ModuleElementUtils.createConfig({
-        name: "branding-area/console-backend-connection",
+        name: 'branding-area/console-backend-connection',
         params: {
           parentRouter: viewParams.parentRouter,
           signaling: viewParams.signaling,
@@ -48,7 +53,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
       });
 
       this.navtreeTogglerModuleConfig = ModuleElementUtils.createConfig({
-        name: "branding-area/navtree-toggler",
+        name: 'branding-area/navtree-toggler',
         params: {
           parentRouter: viewParams.parentRouter,
           signaling: viewParams.signaling,
@@ -64,14 +69,34 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
 
         let binding = viewParams.signaling.modeChanged.add((newMode) => {
           setConsoleStateBar(newMode) ;
-          self.domainsConnectState(Runtime.getDomainConnectState());
+          changedDomainConnectState();
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.backendConnectionLost.add(() => {
+          setConsoleStateBar(CoreTypes.Console.RuntimeMode.DETACHED.name) ;
+          changedDomainConnectState();
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
+          setConsoleStateBar(CoreTypes.Console.RuntimeMode.UNATTACHED.name);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderSelected.add(dataProvider => {
+          this.linkLabel(dataProvider.linkLabel);
+          this.linkResourceData(dataProvider.linkResourceData);
         });
 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderRemoved.add((removedDataProvider) => {
           if (removedDataProvider.id === Runtime.getDataProviderId()) {
-            setConsoleStateBar(CoreTypes.Console.RuntimeMode.DETACHED.name);
+            setConsoleStateBar(CoreTypes.Console.RuntimeMode.UNATTACHED.name);
           }
         });
 
@@ -95,22 +120,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
       }.bind(this);
 
       function setThemePreference(theme) {
-        let ele = document.querySelector("header");
+        let ele = document.querySelector('header');
         if (ele !== null) {
-          ele.style.backgroundColor = Runtime.getConfig()["settings"]["themes"][theme][0];
+          ele.style.backgroundColor = Runtime.getConfig()['settings']['themes'][theme][0];
           switch(theme){
-            case "light":
-              ele.style.color = "black";
+            case 'light':
+              ele.style.color = 'black';
               break;
-            case "dark":
-              ele.style.color = "white";
+            case 'dark':
+              ele.style.color = 'white';
               break;
           }
         }
       }
 
       this.wrcAppIconClick = (event) => {
-        viewParams.signaling.showStartupTasksTriggered.dispatch("triggered");
+        viewParams.signaling.showStartupTasksTriggered.dispatch('triggered');
+      };
+
+      this.securityWarningLinkClick = (event) => {
+        viewParams.parentRouter.go('/monitoring/' + encodeURIComponent(this.linkResourceData()));
       };
 
       function changedDomainConnectState() {
@@ -119,21 +148,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
 
       function setConsoleStateBar(newMode){
         let img;
-        const canvas = document.getElementById("console-state-bar");
+        const canvas = document.getElementById('console-state-bar');
         if (canvas !== null) {
-          canvas.setAttribute("title", newMode);
-          const ctx = canvas.getContext("2d");
+          canvas.setAttribute('title', newMode);
+          const ctx = canvas.getContext('2d');
           switch(newMode){
             case CoreTypes.Console.RuntimeMode.ONLINE.name:
-              img = document.getElementById("online-icon");
+              img = document.getElementById('online-icon');
               ctx.drawImage(img, 0, 0);
               break;
             case CoreTypes.Console.RuntimeMode.OFFLINE.name:
-              img = document.getElementById("offline-icon");
+              img = document.getElementById('offline-icon');
               ctx.drawImage(img, 0, 0);
               break;
             case CoreTypes.Console.RuntimeMode.DETACHED.name:
-              img = document.getElementById("detached-icon");
+              img = document.getElementById('detached-icon');
+              ctx.drawImage(img, 0, 0);
+              break;
+            case CoreTypes.Console.RuntimeMode.UNATTACHED.name:
+              img = document.getElementById('unattached-icon');
               ctx.drawImage(img, 0, 0);
               break;
           }

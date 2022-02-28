@@ -22,9 +22,9 @@ fi
 
 $NPM_PREP_COMMANDS
 
-if ! npm list -g @oracle/ojet-cli@10.1.0 > /dev/null 2>&1
+if ! npm list -g @oracle/ojet-cli@11.1.0 > /dev/null 2>&1
 then
-  npm install -g @oracle/ojet-cli@~10.1.0
+  npm install -g @oracle/ojet-cli@~11.1.0
 fi
 
 case " $* " in

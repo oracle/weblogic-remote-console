@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 /**
  * @typedef NthChild
@@ -31,22 +31,20 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       };
       this.contentPage = {
         path: null,
-        slices: [],
+        resourceDataFragment: null,
+        selectedSlice: {sliceName: null, level: 0},
         syncInterval: null,
         nthChildren: []
       };
       this.navtree = {
         keySet: null,
-        placement: null,
-        selectedItem: null,
-        resourceDataFragment: null,
-        floating: {top: null, left: null, height: null, width: null}
+        width: '300px'
       };
       this.tabstrip = {
         tab: {
-          "shoppingcart": {cachedState: {}},
-          "dataproviders": {cachedState: {}},
-          "ataglance": {cachedState: {}}
+          'shoppingcart': {cachedState: {}},
+          'dataproviders': {cachedState: {}},
+          'ataglance': {cachedState: {}}
         }
       };
     }

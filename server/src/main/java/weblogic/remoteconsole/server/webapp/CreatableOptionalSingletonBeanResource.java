@@ -50,7 +50,7 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
     @QueryParam("slice") @DefaultValue("") String slice
   ) {
     if (VIEW_SLICE.equals(view)) {
-      setSliceFormPagePath(slice);
+      setSlicePagePath(slice);
       return getSliceForm();
     } else if (VIEW_CREATE_FORM.equals(view)) {
       setCreateFormPagePath();
@@ -86,7 +86,7 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
     JsonObject requestBody
   ) {
     if (UPDATE.equals(action)) {
-      setSliceFormPagePath(slice);
+      setSlicePagePath(slice);
       return updateSliceForm(requestBody);
     } else if (CREATE.equals(action)) {
       setCreateFormPagePath();

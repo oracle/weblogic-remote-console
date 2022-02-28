@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -97,7 +97,7 @@ public class WebLogicFileRuntimeTreeBeanRepo extends WebLogicRestBeanRepo {
   /**
    * Return a BeanReaderRepoSearchBuilder where the results are backed by the WLS REST response in a file.
    *
-   * Create a WeblogicRestBeanRepoSearchBuilder so that the WeblogicRestBeanRepoSearchResults can be used
+   * Create a WebLogicRestBeanRepoSearchBuilder so that the WebLogicRestBeanRepoSearchResults can be used
    * as the BeanReaderRepoSearchResults implemenation for the search results found in the file.
    */
   @Override  
@@ -106,7 +106,7 @@ public class WebLogicFileRuntimeTreeBeanRepo extends WebLogicRestBeanRepo {
     return
       new FileBeanReaderRepoSearchBuilder(
         this.searchResults,
-        (WeblogicRestBeanRepoSearchBuilder) super.createSearchBuilder(invocationContext, false)
+        (WebLogicRestBeanRepoSearchBuilder) super.createSearchBuilder(invocationContext, false)
       );
   }
 
@@ -117,11 +117,11 @@ public class WebLogicFileRuntimeTreeBeanRepo extends WebLogicRestBeanRepo {
    */
   class FileBeanReaderRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
     private JsonObject rootBeanSearchResults = null;
-    private WeblogicRestBeanRepoSearchBuilder weblogicRestBeanRepoSearchBuilder;
+    private WebLogicRestBeanRepoSearchBuilder weblogicRestBeanRepoSearchBuilder;
 
     public FileBeanReaderRepoSearchBuilder(
       JsonObject rootBeanSearchResults,
-      WeblogicRestBeanRepoSearchBuilder weblogicRestBeanRepoSearchBuilder
+      WebLogicRestBeanRepoSearchBuilder weblogicRestBeanRepoSearchBuilder
     ) {
       this.rootBeanSearchResults = rootBeanSearchResults;
       this.weblogicRestBeanRepoSearchBuilder = weblogicRestBeanRepoSearchBuilder;
@@ -157,7 +157,7 @@ public class WebLogicFileRuntimeTreeBeanRepo extends WebLogicRestBeanRepo {
       // Return the results from the file...
       return
         response.setSuccess(
-          new WeblogicRestBeanRepoSearchResults(weblogicRestBeanRepoSearchBuilder, searchResults)
+          new WebLogicRestBeanRepoSearchResults(weblogicRestBeanRepoSearchBuilder, searchResults)
         );
     }
   }

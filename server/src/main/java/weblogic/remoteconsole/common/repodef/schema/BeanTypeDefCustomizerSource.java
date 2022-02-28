@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -18,7 +18,7 @@ public class BeanTypeDefCustomizerSource {
   private StringValue deleteMethod = new StringValue();
   private StringValue createResourceMethod = new StringValue();
   private BooleanValue disableMBeanJavadoc = new BooleanValue();
-  private StringValue label = new StringValue();
+  private StringValue instanceName = new StringValue();
 
   // The list of properties on this type that have been customized.
   public List<BeanPropertyDefCustomizerSource> getProperties() {
@@ -137,24 +137,13 @@ public class BeanTypeDefCustomizerSource {
     disableMBeanJavadoc.setValue(value);
   }
 
-  // Specifics the label to use when referring to this type.
-  //
-  // Types typically end with 'Bean' or 'MBean', e.g. ServerMBean and JDBCDriverParamsBean.
-  // These names are localized and displayed to the user as a type name
-  // (e.g. 'JDBC Driver Params Bean') and an instance name (e.g. 'JDBC Driver Params')
-  //
-  // Sometimes the names aren't user-friendly (e.g. CertRevocCaMBean would
-  // become Cert Revoc Ca MBean).  The 'label' property customizes both the
-  // type and instance names.
-  //
-  // For example, if CertRecovCaMBean/type.yaml sets label to 'Cert Revoc CA',
-  // then the english type name is 'Cert Revoc CA MBean' and the english instance
-  // name is 'Cert Revoc CA'
-  public String getLabel() {
-    return label.getValue();
+  // Specifics the name to use when referring to instances of this type, e.g. Server Runtimes.
+  // It is not localized.  It's used in the page help titles for referring to bean types.
+  public String getInstanceName() {
+    return instanceName.getValue();
   }
 
-  public void setLabel(String value) {
-    label.setValue(value);
+  public void setInstanceName(String value) {
+    instanceName.setValue(value);
   }
 }

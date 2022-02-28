@@ -24,7 +24,7 @@ public class EditableMandatorySingletonBeanResource extends ReadOnlyMandatorySin
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response post(@QueryParam("slice") @DefaultValue("") String slice, JsonObject requestBody) {
-    setSliceFormPagePath(slice);
+    setSlicePagePath(slice);
     return updateSliceForm(requestBody);
   }
 

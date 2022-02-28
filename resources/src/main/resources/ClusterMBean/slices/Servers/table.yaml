@@ -1,0 +1,13 @@
+# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: "This page is display the servers that are assigned to this cluster."
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.ClusterMBeanCustomizer.getServersSliceTableRows
+
+displayedColumns:
+- name: "Server"
+  definition:
+    type: "weblogic.management.configuration.ServerMBean"
+    relationship: "reference"
+    descriptionHTML: "A server assigned to this cluster."

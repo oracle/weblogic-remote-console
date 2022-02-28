@@ -1,0 +1,14 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# Manually created from application/webapp/jsp/mail/MailSessionTargetdeployForm.jsp and consolehelp/docsrc/en-us/xml/pagehelp/mail/MailSessionTargetdeploy.xml
+
+introductionHTML: >
+  <p>This page is for specifying the Java Mail Properties for this Mail Session MBean.</p>
+
+properties:
+  - name: "Properties"
+
+helpTopics:
+  - label: "Programming JavaMail with WebLogic Server"
+    href: "wlprg/javamail.html"
+    type: "edocs"

@@ -43,6 +43,17 @@ public interface PageDef {
     return (SliceFormDef)this;
   }
 
+  // Returns whether this form is a slice table
+  public default boolean isSliceTableDef() {
+    return this instanceof SliceTableDef;
+  }
+
+  // Converts this form to a slice table.
+  // Throws a ClassCastException if the form is not a SliceTableDef.
+  public default SliceTableDef asSliceTableDef() {
+    return (SliceTableDef)this;
+  }
+
   // Returns whether this is a create form.
   public default boolean isCreateFormDef() {
     return this instanceof CreateFormDef;

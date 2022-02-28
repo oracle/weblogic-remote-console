@@ -6,11 +6,18 @@ package weblogic.remoteconsole.server.providers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.ws.rs.core.Response;
 
+import weblogic.remoteconsole.common.repodef.BeanTypeDef;
+import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
@@ -18,10 +25,14 @@ import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.connection.Connection;
 import weblogic.remoteconsole.server.connection.ConnectionManager;
+import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestDomainRuntimePageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestEditPageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestServerConfigPageRepo;
+import weblogic.remoteconsole.server.utils.ResponseHelper;
+import weblogic.remoteconsole.server.utils.WebLogicRestClient;
+import weblogic.remoteconsole.server.utils.WebLogicRestRequest;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
 import weblogic.remoteconsole.server.webapp.ProviderResource;
 import weblogic.remoteconsole.server.webapp.UriUtils;
@@ -32,7 +43,17 @@ import weblogic.remoteconsole.server.webapp.UriUtils;
 */
 public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   public static final String TYPE_NAME = "AdminServerConnection";
-  private static final ConnectionManager cm = ConsoleBackendRuntime.INSTANCE.getConnectionManager();
+  private static final ConnectionManager CONNECTION_MANAGER =
+    ConsoleBackendRuntime.INSTANCE.getConnectionManager();
+  private static final long CONNECT_TIMEOUT =
+    ConsoleBackendRuntimeConfig.getConnectionTimeout();
+  private static final long READ_TIMEOUT =
+    ConsoleBackendRuntimeConfig.getReadTimeout();
+  private static final boolean DISABLE_HOSTNAME_VERIFICATION =
+    ConsoleBackendRuntimeConfig.isHostnameVerificationDisabled();
+  private static final Logger LOGGER =
+    Logger.getLogger(AdminServerDataProviderImpl.class.getName());
+
   private String connectionId;
   private String name;
   private String url;
@@ -40,15 +61,9 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private WebLogicMBeansVersion mbeansVersion;
   private String connectionWarning;
   private String lastMessage;
-  private static final long connectTimeout =
-    ConsoleBackendRuntimeConfig.getConnectionTimeout();
-  private static final long readTimeout =
-    ConsoleBackendRuntimeConfig.getReadTimeout();
-  private static final boolean isDisableHostnameVerification =
-    ConsoleBackendRuntimeConfig.isHostnameVerificationDisabled();
   private boolean isLastConnectionAttemptSuccessful;
   private boolean isAnyConnectionAttemptSuccessful;
-  private Map<String, Root> roots = new HashMap<String, Root>();
+  private Map<String, Root> roots = new HashMap<>();
   private Root editRoot;
   private Root viewRoot;
   private Root monitoringRoot;
@@ -105,17 +120,17 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
 
   @Override
   public long getConnectTimeout() {
-    return connectTimeout;
+    return CONNECT_TIMEOUT;
   }
 
   @Override
   public long getReadTimeout() {
-    return readTimeout;
+    return READ_TIMEOUT;
   }
 
   @Override
   public boolean isDisableHostnameVerification() {
-    return isDisableHostnameVerification;
+    return DISABLE_HOSTNAME_VERIFICATION;
   }
 
   @Override
@@ -144,13 +159,13 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     Connection connection = null;
     if (connectionId == null) {
       ConnectionManager.ConnectionResponse result =
-        cm.tryConnection(url, authorizationHeader, ic.getLocales());
+        CONNECTION_MANAGER.tryConnection(url, authorizationHeader, ic.getLocales());
       if (result.isSuccess()) {
         isLastConnectionAttemptSuccessful = true;
         isAnyConnectionAttemptSuccessful = true;
         connectionId = result.getConnectionId();
-        connection = cm.getConnection(connectionId);
-        mbeansVersion = cm.getWebLogicMBeansVersion(connection);
+        connection = CONNECTION_MANAGER.getConnection(connectionId);
+        mbeansVersion = CONNECTION_MANAGER.getWebLogicMBeansVersion(connection);
         editRoot.setPageRepo(new WebLogicRestEditPageRepo(mbeansVersion));
         viewRoot.setPageRepo(new WebLogicRestServerConfigPageRepo(mbeansVersion));
         monitoringRoot.setPageRepo(new WebLogicRestDomainRuntimePageRepo(mbeansVersion));
@@ -173,7 +188,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
           result.getStatus().getStatusCode(), toJSON(ic));
       }
     } else {
-      connection = cm.getConnection(connectionId);
+      connection = CONNECTION_MANAGER.getConnection(connectionId);
     }
     ic.setConnection(connection);
     return true;
@@ -182,7 +197,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   @Override
   public void terminate() {
     if (connectionId != null) {
-      cm.removeConnection(connectionId);
+      CONNECTION_MANAGER.removeConnection(connectionId);
       connectionId = null;
     }
   }
@@ -206,8 +221,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     Connection connection = null;
     if (isLastConnectionAttemptSuccessful()) {
       ret.add("state", "connected");
-      connection = cm.getConnection(connectionId);
-      ret.add("domainVersion", connection.getDomainVersion());
+      connection = CONNECTION_MANAGER.getConnection(connectionId);
+      ret.add("domainVersion", connection.getWebLogicVersion().getDomainVersion());
       ret.add("domainName", connection.getDomainName());
       if (connectionWarning != null) {
         ret.add("connectionWarning", connectionWarning);
@@ -218,27 +233,100 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         ret.add("messages", createMessages(lastMessage));
       }
     }
-    {
-      JsonArrayBuilder builder = Json.createArrayBuilder();
-      if (connection != null) {
-        // We've successfully connected to the wls domain. Send back the roots.
-        for (Root root : getRoots().values()) {
-          builder.add(root.toJSON(ic));
-        }
-      }
-      ret.add("roots", builder);
-    }
-    {
-      JsonArrayBuilder builder = Json.createArrayBuilder();
-      if (mbeansVersion != null) {
-        // We've know the user's roles.  Send them back.
-        for (String role : mbeansVersion.getRoles()) {
-          builder.add(role);
-        }
-      }
-      ret.add("roles", builder);
-    }
+    addRootsToJSON(ret, connection, ic);
+    addRolesToJSON(ret);
+    addLinksToJSON(ret, connection, ic);
     return ret.build();
+  }
+
+  private void addRootsToJSON(JsonObjectBuilder jsonBuilder, Connection connection, InvocationContext ic) {
+    JsonArrayBuilder builder = Json.createArrayBuilder();
+    if (connection != null) {
+      // We've successfully connected to the wls domain. Send back the roots.
+      for (Root root : getRoots().values()) {
+        builder.add(root.toJSON(ic));
+      }
+    }
+    jsonBuilder.add("roots", builder);
+  }
+
+  private void addRolesToJSON(JsonObjectBuilder jsonBuilder) {
+    JsonArrayBuilder builder = Json.createArrayBuilder();
+    if (mbeansVersion != null) {
+      // We've know the user's roles.  Send them back.
+      for (String role : mbeansVersion.getRoles()) {
+        builder.add(role);
+      }
+    }
+    jsonBuilder.add("roles", builder);
+  }
+
+  private void addLinksToJSON(JsonObjectBuilder jsonBuilder, Connection connection, InvocationContext ic) {
+    if (!supportsSecurityValidationWarnings(connection)) {
+      return;
+    }
+    String resourceData =
+      "/" + UriUtils.API_URI
+      + "/" + StringUtils.urlEncode(getName())
+      + "/" + Root.DOMAIN_RUNTIME_NAME
+      + "/data"
+      + "/" + Root.MONITORING_ROOT
+      + "/DomainSecurityRuntime?slice=SecurityWarnings";
+    LocalizableString ls =
+      hasSecurityValidationWarnings(connection)
+        ? LocalizedConstants.SECURITY_VALIDATION_WARNINGS_WARNING_LINK_LABEL
+        : LocalizedConstants.SECURITY_VALIDATION_WARNINGS_INFO_LINK_LABEL;
+    String label = ic.getLocalizer().localizeString(ls);
+    jsonBuilder.add(
+      "links",
+      Json.createArrayBuilder().add(
+        Json.createObjectBuilder()
+          .add("label", label)
+          .add("resourceData", resourceData)
+      )
+    );
+  }
+
+  private boolean supportsSecurityValidationWarnings(Connection connection) {
+    if (connection == null) {
+      return false; // We're not connected yet so can't tell if the domain supports warnings.
+    }
+    BeanRepo beanRepo = viewRoot.getPageRepo().getBeanRepo();
+    BeanTypeDef typeDef = beanRepo.getBeanRepoDef().getTypeDef("DomainSecurityRuntimeMBean");
+    if (typeDef == null) {
+      return false; // The domain doesn't support security validation warnings.
+    }
+    Path actionPath = new Path("hasSecurityValidationWarnings");
+    if (!typeDef.hasActionDef(actionPath)) {
+      return false; // The user isn't allowed to view the warnings.
+    }
+    return true;
+  }
+
+  private boolean hasSecurityValidationWarnings(Connection connection) {
+    if (!supportsSecurityValidationWarnings(connection)) {
+      return false;
+    }
+    WebLogicRestRequest request =
+      WebLogicRestRequest.builder()
+        .connection(connection)
+        .path("/domainRuntime/domainSecurityRuntime/hasSecurityValidationWarnings")
+        .build();
+    JsonObject postData = Json.createObjectBuilder().build();
+    try (Response response = WebLogicRestClient.post(request, postData)) {
+      if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+        return ResponseHelper.getEntityAsJson(response).getBoolean("return");
+      } else {
+        LOGGER.finest(
+          "hasSecurityValidationWarnings failed:"
+          + " " + response.getStatus()
+          + " " + ResponseHelper.getEntityAsString(response)
+        );
+      }
+    } catch (Exception exc) {
+      LOGGER.log(Level.FINEST, "hasSecurityValidationWarnings failed: " + exc.toString(), exc);
+    }
+    return false;
   }
 
   @Override

@@ -67,6 +67,11 @@ public class RemoteConsoleResource extends BaseResource {
     return copyContext(new PageRepoResource());
   }
 
+  @Path(Root.PROPERTY_LIST_CONFIGURATION_NAME)
+  public BaseResource getPropertyListConfigurationResource() {
+    return copyContext(new PropertyListPageRepoResource());
+  }
+
   @Path(Root.SERVER_CONFIGURATION_NAME)
   public PageRepoResource getWebLogicRestRuntimeTreeConfigurationResource() {
     if (!getInvocationContext().setPageRepoByName(Root.SERVER_CONFIGURATION_NAME)) {

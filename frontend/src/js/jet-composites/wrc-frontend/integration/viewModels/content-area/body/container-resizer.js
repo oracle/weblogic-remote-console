@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021 Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 /**
  * Class for calculating the actual ``min-height`` of a form or table container, in the Content Area.
@@ -16,7 +16,7 @@
 define(['wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime'],
   function (PerspectiveMemoryManager, ViewModelUtils, Runtime) {
 
-  //public:
+    //public:
     /**
      * Create a new resizer for the Content Area
      * @constructor
@@ -58,13 +58,14 @@ define(['wrc-frontend/microservices/perspective/perspective-memory-manager', 'wr
         // current state of help visibility.
         const wasHelpVisible = this.getWasHelpVisible();
         // Set initial value of return variable to the
-        // height of the fixed footer (60px), plus it's
+        // height of the fixed footer (70px), plus it's
         // margin-top (5px), plus it's margin-bottom (5px).
-        let offsetValue = parseInt(ViewModelUtils.getCustomCssProperty(`${Runtime.getRole()}-container-resizer-offset-max-height`), 10);
+        let offsetValue = parseInt(ViewModelUtils.getCustomCssProperty('container-resizer-offset-max-height'), 10);
 
         if (wasHistoryVisible && !options.withHistoryVisible) {
           offsetValue -= (wasHelpVisible && options.withHelpVisible ? 40 : 30);
         }
+
         if (wasHelpVisible && options.withHelpVisible) {
           if (!wasHistoryVisible && options.withHistoryVisible) {
             offsetValue += 40;  // 110

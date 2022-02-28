@@ -6,7 +6,7 @@ package weblogic.remoteconsole.server.webapp;
 import java.util.List;
 import javax.json.JsonObject;
 
-import weblogic.remoteconsole.common.repodef.SliceFormPagePath;
+import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
@@ -31,8 +31,8 @@ public class UpdateHelper {
     // Get the actual slice for this bean.
     // i.e. if the type is heterogeneous, we need to get the instance's type
     // to figure out which page to use so that we can unmarshal the request body.
-    Response<SliceFormPagePath> sliceResponse =
-      ic.getPageRepo().asPageReaderRepo().getActualSliceFormPagePath(ic);
+    Response<SlicePagePath> sliceResponse =
+      ic.getPageRepo().asPageReaderRepo().getActualSlicePagePath(ic);
     if (!existsResponse.isSuccess()) {
       response.copyUnsuccessfulResponse(existsResponse);
       return VoidResponseMapper.toResponse(ic, response);

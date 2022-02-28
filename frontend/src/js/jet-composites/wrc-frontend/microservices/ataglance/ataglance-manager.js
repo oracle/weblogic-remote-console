@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function (DataOperations, DataProviderManager, CoreUtils, Logger) {
@@ -12,17 +12,17 @@ define(['wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/provide
   //public:
     return {
       Section:  Object.freeze({
-        SERVERS_GLANCE: {name: "serversGlance"},
-        SYSTEM_STATUS: {name: "systemStatus"}
+        SERVERS_GLANCE: {name: 'serversGlance'},
+        SYSTEM_STATUS: {name: 'systemStatus'}
       }),
       Entity: Object.freeze({
-        AT_A_GLANCE: {name: "ataglance"}
+        AT_A_GLANCE: {name: 'ataglance'}
       }),
       getData: function getData() {
         let data = Promise.resolve({});
         const dataProvider = DataProviderManager.getLastActivatedDataProvider();
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
-          const uri = dataProvider.getBeanTreeNavtreeUri("domainRuntime");
+          const uri = dataProvider.getBeanTreeNavtreeUri('domainRuntime');
           if (CoreUtils.isNotUndefinedNorNull(uri)) {
             DataOperations.ataglance.getServersGlance(uri)
               .then(reply => {
@@ -46,7 +46,7 @@ define(['wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/provide
       },
       getServer: function getServer(data, name){
         let server;
-        if (typeof name !== "undefined" && name.length > 0) {
+        if (typeof name !== 'undefined' && name.length > 0) {
           server = data.data.find(server => server.name === name);
         }
         return server;

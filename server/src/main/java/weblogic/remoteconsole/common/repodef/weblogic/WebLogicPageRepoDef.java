@@ -24,7 +24,7 @@ public abstract class WebLogicPageRepoDef extends PageRepoDefImpl {
     super(
       name,
       beanRepoDefImpl,
-      new WebLogicYamlReader(mbeansVersion.getWebLogicVersion()),
+      new WebLogicYamlReader(mbeansVersion),
       navTreeRootTypeName
     );
     this.mbeansVersion = mbeansVersion;

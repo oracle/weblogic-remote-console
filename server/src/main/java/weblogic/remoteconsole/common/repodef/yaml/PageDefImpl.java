@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -124,9 +124,16 @@ public abstract class PageDefImpl implements PageDef {
   protected List<PagePropertyDefImpl> createPropertyDefImpls(
     List<BeanPropertyDefCustomizerSource> propertyCustomizerSources
   ) {
+    return createPropertyDefImpls(propertyCustomizerSources, false);
+  }
+
+  protected List<PagePropertyDefImpl> createPropertyDefImpls(
+    List<BeanPropertyDefCustomizerSource> propertyCustomizerSources,
+    boolean searchSubTypes
+  ) {
     List<PagePropertyDefImpl> rtn = new ArrayList<>();
     for (BeanPropertyDefCustomizerSource propertyCustomizerSource : propertyCustomizerSources) {
-      PagePropertyDefImpl propDefImpl = getPropertyDefImpl(propertyCustomizerSource);
+      PagePropertyDefImpl propDefImpl = getPropertyDefImpl(propertyCustomizerSource, searchSubTypes);
       if (propDefImpl != null) {
         rtn.add(propDefImpl);
       }
@@ -136,11 +143,14 @@ public abstract class PageDefImpl implements PageDef {
     return rtn;
   }
 
-  private PagePropertyDefImpl getPropertyDefImpl(BeanPropertyDefCustomizerSource propertyCustomizerSource) {
+  private PagePropertyDefImpl getPropertyDefImpl(
+    BeanPropertyDefCustomizerSource propertyCustomizerSource,
+    boolean searchSubTypes
+  ) {
     if (propertyCustomizerSource.getDefinition() == null) {
       // Find the property on the type
       BeanPropertyDefImpl beanPropertyDefImpl =
-        getTypeDefImpl().getPropertyDefImpl(new Path(propertyCustomizerSource.getName()));
+        getTypeDefImpl().getPropertyDefImpl(new Path(propertyCustomizerSource.getName()), searchSubTypes);
       if (beanPropertyDefImpl == null) {
         return null;
       }

@@ -5,6 +5,9 @@ package weblogic.remoteconsole.server.connection;
 
 import javax.ws.rs.client.Client;
 
+import weblogic.remoteconsole.common.utils.WebLogicPSU;
+import weblogic.remoteconsole.common.utils.WebLogicVersion;
+
 /** The Connection interface holding connection information */
 public interface Connection {
 
@@ -17,8 +20,11 @@ public interface Connection {
   /** Obtain the WebLogic Domain Name */
   public String getDomainName();
 
-  /** Obtain the WebLogic Domain Version */
-  public String getDomainVersion();
+  /** Obtain the WebLogic Version */
+  public WebLogicVersion getWebLogicVersion();
+
+  /** Obtain the PSU. Returns null if using GA. */
+  public WebLogicPSU getPSU();
 
   /** Obtain the Connection Username */
   public String getUsername();

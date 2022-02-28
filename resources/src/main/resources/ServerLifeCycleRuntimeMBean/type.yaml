@@ -1,5 +1,50 @@
-# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+properties:
+- name: State
+  legalValues:
+  - value: ACTIVATE_LATER
+    label: Activate later
+  - value: ADMIN
+    label: Admin
+  - value: DISCOVERED
+    label: Discovered
+  - value: FAILED
+    label: Failed
+  - value: FAILED_MIGRATABLE
+    label: Failed, migratable
+  - value: FAILED_NOT_RESTARTABLE
+    label: Failed, not restartable
+  - value: FAILED_RESTARTING
+    label: Failed, restarting
+  - value: FORCE_SHUTTING_DOWN
+    label: Force shutting down
+  - value: FORCE_SUSPENDING
+    label: Force suspending
+  - value: RESTART_REQUIRED
+    label: Restart required
+  - value: RESUMING
+    label: Resuming
+  - value: RUNNING
+    label: Running
+  - value: SHUTDOWN
+    label: Shutdown
+  - value: SHUTDOWN_IN_PROCESS
+    label: Shutdown in progress
+  - value: SHUTDOWN_PENDING
+    label: Shutdown pending
+  - value: SHUTTING_DOWN
+    label: Shutting down
+  - value: STANDBY
+    label: Standby
+  - value: STARTING
+    label: Starting
+  - value: SUSPENDING
+    label: Suspending
+  - value: UNKNOWN
+    label: Unknown
 
 actions:
 

@@ -1,14 +1,14 @@
 <!--
-Copyright (c) 2020, 2021, Oracle and/or its affiliates. The Universal Permissive License (UPL), Version 1.0
+Copyright (c) 2020, 2022, Oracle and/or its affiliates. The Universal Permissive License (UPL), Version 1.0
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="landing-page">
   <section id="landing-page-cards">
     <div class="oj-flex">
-      <oj-conveyor-belt class="oj-lg-11 oj-md-4 oj-sm-12">
+      <oj-conveyor-belt class="oj-sm-12 oj-flex-item" data-oj-binding-provider="none">
         <oj-bind-for-each data="[[perspectiveGroups]]" as="group">
           <template>
-            <div class="oj-flex-item oj-flex oj-sm-flex-items-1 oj-sm-12 oj-md-4 oj-lg-2 landing-page-padding landing-page-panel">
+            <div class="landing-page-padding landing-page-panel">
               <a class="landing-page-card" href="#" tabindex="-1" on-click="[[landingPanelClickHandler]]">
 
                 <oj-bind-if test="[[typeof group.data.path === 'undefined']]">

@@ -1,9 +1,10 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
 
 import java.io.Writer;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -58,6 +59,9 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
   // The cached JSON factory
   private JsonWriterFactory writerFactory = null;
 
+  // The cached model from the current bean tree to support DownloadBeanRepo operations
+  private volatile Map<String, Object> cachedModel = null;
+
   public WDTEditTreeBeanRepo(WebLogicMBeansVersion mbeansVersion, Map<String, Object> model, InvocationContext ic) {
     super(mbeansVersion);
 
@@ -99,6 +103,47 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
   }
 
   /**
+   * Clear the local reference to the model holding the latest bean tree.
+   *
+   * The cache is cleared after BeanEditorRepo operations and will be set
+   * as a result of executing the DownloadBeanRepo operations.
+   */
+  private synchronized void clearCachedModel() {
+    cachedModel = null;
+  }
+
+  /**
+   * Obtain the local reference to the model holding the latest bean tree.
+   *
+   * The cached model is created and set as part of the DownloadBeanRepo operations
+   * and the cached value will be returned until cleared by BeanEditorRepo operations.
+   * @return RuntimeException IFF a problem building the model from the bean tree
+   */
+  private synchronized Map<String, Object> getCachedModel(Localizer localizer) {
+    if ((cachedModel == null) && (beanTree != null)) {
+      WDTModelBuilder builder = new WDTModelBuilder(beanTree, localizer);
+      LOGGER.fine("WDT: WDTEditTreeBeanRepo getCachedModel() building model...");
+      cachedModel = Collections.unmodifiableMap(builder.build());
+    }
+    return cachedModel;
+  }
+
+  /**
+   * Obtain the download content from the cached model of the bean tree content.
+   * @return NULL when there is no bean tree created from the original model
+   */
+  @Override
+  public Map<String, Object> getContent(InvocationContext ic) {
+    try {
+      return getCachedModel(ic.getLocalizer());
+    } catch (Exception exc) {
+      String msg = exc.toString();
+      LOGGER.log(Level.SEVERE, "WDT: WDTEditTreeBeanRepo getting model from BeanTree: " + msg, exc);
+      throw new FailedRequestException(msg);
+    }
+  }
+
+  /**
    * Handle download for the DownloadBeanRepo by writing the WDT model using the WDT model builder
    */
   @Override
@@ -107,7 +152,7 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
       // Build the model from the bean tree...
       Map<String, Object> model = null;
       try {
-        model = new WDTModelBuilder(beanTree, ic.getLocalizer()).build();
+        model = getCachedModel(ic.getLocalizer());
       } catch (Exception exc) {
         String msg = exc.toString();
         LOGGER.log(Level.SEVERE, "WDT: WDTEditTreeBeanRepo ERROR converting BeanTree: " + msg, exc);
@@ -253,7 +298,7 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
         beanTree.resolveReferences(false);
       }
     }
-    return response;
+    return invalidateCachedModel(response);
   }
 
   /**
@@ -328,7 +373,7 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
         beanTree.resolveReferences(false);
       }
     }
-    return response;
+    return invalidateCachedModel(response);
   }
 
   // Create the bean based on the bean tree path looking for the key from the supplied property values...
@@ -403,6 +448,17 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
         LOGGER.warning("WDT: deleteBean() unable to delete bean: " + entry.getPath());
         response.setServiceNotAvailable();
       }
+    }
+    return invalidateCachedModel(response);
+  }
+
+  /**
+   * Invalidate the cached model after successfull response from the
+   * BeanEditorRepo operations, then return the response to the caller.
+   */
+  private Response<Void> invalidateCachedModel(Response<Void> response) {
+    if (response.isSuccess()) {
+      clearCachedModel();
     }
     return response;
   }

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -6,6 +6,7 @@ package weblogic.remoteconsole.customizers;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.FormSectionDefSource;
+import weblogic.remoteconsole.common.repodef.schema.MBeanAttributeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRestEditPageRepoDef;
 
@@ -66,6 +67,9 @@ class LibraryMBeanCreateFormSourceCustomizer extends BasePageDefSourceCustomizer
     );
     sourceProp.getDefinition().setType("java.io.InputStream");
     sourceProp.setOnlineName("sourcePath");
+    MBeanAttributeDefSource sourceMBeanAttr = new MBeanAttributeDefSource();
+    sourceMBeanAttr.setAttribute(PROP_SOURCE_PATH);
+    sourceProp.setMbeanAttribute(sourceMBeanAttr);
   }
 
   private void addDeploySection() {

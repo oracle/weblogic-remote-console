@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle Corp and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle Corp and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
   function(oj, ko, Router, ArrayDataProvider, PerspectiveManager, Perspective, Preferences, DataProviderManager, Runtime, CoreUtils, CoreTypes, Logger){
@@ -42,13 +42,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
           dataArray.forEach((beanTree) => {
             const perspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
             if (connectState === CoreTypes.Domain.ConnectState.CONNECTED.name) {
-              beanTree["iconFile"] = perspective.iconFiles[theme];
+              beanTree['iconFile'] = perspective.iconFiles[theme];
             }
             else {
-              beanTree["iconFile"] = perspective.iconFiles["greyed"];
+              beanTree['iconFile'] = perspective.iconFiles['greyed'];
             }
-            beanTree["label"] = oj.Translations.getTranslatedString(`wrc-navstrip.icons.${beanTree.type}.tooltip`);
-            beanTree["provider"] = {id: dataProvider.id, name: dataProvider.name};
+            beanTree['label'] = oj.Translations.getTranslatedString(`wrc-navstrip.icons.${beanTree.type}.tooltip`);
+            beanTree['provider'] = {id: dataProvider.id, name: dataProvider.name};
           });
         }
 
@@ -66,20 +66,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
       this.i18n = {
         icons: {
-          "configuration": { iconFile: "navstrip-icon-readwrite-configuration-blk_48x48",
-            tooltip: oj.Translations.getTranslatedString("wrc-navstrip.icons.configuration.tooltip")
+          'configuration': { iconFile: 'navstrip-icon-readwrite-configuration-blk_48x48',
+            tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.configuration.tooltip')
           },
-          "view": { iconFile: "navstrip-icon-readonly-configuration-blk_48x48",
-            tooltip: oj.Translations.getTranslatedString("wrc-navstrip.icons.view.tooltip")
+          'view': { iconFile: 'navstrip-icon-readonly-configuration-blk_48x48',
+            tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.view.tooltip')
           },
-          "monitoring": { iconFile: "navstrip-icon-monitoring-blk_48x48",
-            tooltip: oj.Translations.getTranslatedString("wrc-navstrip.icons.monitoring.tooltip")
+          'monitoring': { iconFile: 'navstrip-icon-monitoring-blk_48x48',
+            tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.monitoring.tooltip')
           },
-          "modeling": { iconFile: "navstrip-icon-wdt-blk_48x48",
-            tooltip: oj.Translations.getTranslatedString("wrc-navstrip.icons.modeling.tooltip")
+          'modeling': { iconFile: 'navstrip-icon-wdt-blk_48x48',
+            tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.modeling.tooltip')
           },
-          "nodata": { iconFile: "navstrip-icon-nodata-blk_48x48",
-            tooltip: ""
+          'composite': { iconFile: 'navstrip-icon-readonly-configuration-blk_48x48',
+            tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.composite.tooltip')
+          },
+          'nodata': { iconFile: 'navstrip-icon-nodata-blk_48x48',
+            tooltip: ''
           }
         }
       };
@@ -101,14 +104,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.dataProviderSelected.add((dataProvider, connectState) => {
+        binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
           self.builtInsSelectedItem('');
           self.builtInsDataProvider = loadBuiltInPerspectives(
             Preferences.general.themePreference(),
-            connectState || Runtime.getDomainConnectState(),
+            Runtime.getDomainConnectState(),
             dataProvider
           );
-          viewParams.signaling.beanTreeChanged.dispatch({type: "home", label: oj.Translations.getTranslatedString("wrc-content-area-header.toolbar.buttons.home.label"), provider: {id: dataProvider.id, name: dataProvider.name}});
+          viewParams.signaling.beanTreeChanged.dispatch({type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name}});
         });
 
         self.signalBindings.push(binding);
@@ -125,11 +128,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.modeChanged.add((newMode) => {
-          if (newMode === CoreTypes.Console.RuntimeMode.DETACHED.name) {
-            clearBuiltInsSelection();
-            viewParams.onDataProviderRemoved(false);
-          }
+        binding = viewParams.signaling.backendConnectionLost.add(() => {
+          clearNavStripIcons();
+          setNoDataIcon();
+          clearBuiltInsSelection();
         });
 
         self.signalBindings.push(binding);
@@ -144,8 +146,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
       }.bind(this);
 
       this.disconnected = function() {
-        const navstripContainer = document.getElementById("navstrip-container");
-        if (navstripContainer !== null) navstripContainer.removeEventListener("click", onNavigationListItemClick);
+        const navstripContainer = document.getElementById('navstrip-container');
+        if (navstripContainer !== null) navstripContainer.removeEventListener('click', onNavigationListItemClick);
 
         // Detach all signal "add" bindings
         self.signalBindings.forEach(binding => { binding.detach(); });
@@ -191,7 +193,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
           return false;
         }
 
-        if (self.builtInsSelectedItem() !== "") {
+        if (self.builtInsSelectedItem() !== '') {
           viewParams.signaling.beanTreeChanged.dispatch(beanTree);
         }
 
@@ -206,16 +208,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
           viewParams.signaling.perspectiveChanged.dispatch(newPerspective);
 
           switch (viewParams.parentRouter.stateId()) {
-            case "landing":
+            case 'landing':
               viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId(newPerspective.id);
             // Don't break, just fall through to case for "home" stateId
-            case "home":
-              viewParams.parentRouter.go("landing/" + newPerspective.id);
+            case 'home':
+              viewParams.parentRouter.go('landing/' + newPerspective.id);
               break;
             default:
               if (viewParams.parentRouter.stateId() !== newPerspective.id) {
                 // Go to landing page for newPerspective.id
-                viewParams.parentRouter.go("landing/" + newPerspective.id);
+                viewParams.parentRouter.go('landing/' + newPerspective.id);
               }
               break;
           }
@@ -228,9 +230,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
         builtIns.valueHasMutated();
       }
 
+      function setNoDataIcon() {
+        const canvas = document.getElementById('nodata-canvas');
+        if (canvas !== null) {
+          canvas.setAttribute('title', '');
+          const ctx = canvas.getContext('2d');
+          const img = document.getElementById('nodata-icon');
+          ctx.drawImage(img, 0, 0);
+        }
+      }
+
       function getSelectedBeanTree(beanTreeType) {
         let beanTree;
-        const index = CoreUtils.getLastIndex(builtIns(), "type", beanTreeType);
+        const index = CoreUtils.getLastIndex(builtIns(), 'type', beanTreeType);
         if (index !== -1) beanTree = builtIns()[index];
         return beanTree;
       }
@@ -255,15 +267,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
       }
 
       function setThemePreference(theme) {
-        let ele = document.getElementById("navstrip-header");
+        let ele = document.getElementById('navstrip-header');
         if (ele !== null) {
-          ele.style.backgroundColor = Runtime.getConfig()["settings"]["themes"][theme][1];
+          ele.style.backgroundColor = Runtime.getConfig()['settings']['themes'][theme][1];
           switch(theme){
-            case "light":
-              ele.style.color = "black";
+            case 'light':
+              ele.style.color = 'black';
               break;
-            case "dark":
-              ele.style.color = "white";
+            case 'dark':
+              ele.style.color = 'white';
               break;
           }
         }

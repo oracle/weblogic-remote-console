@@ -37,7 +37,7 @@ The Shopping Cart is only visible in the Kiosk if you **a.** have the console ex
 
 ## NavStrip {id="navstrip"}
 
-The NavStrip is a small strip on the left edge of the WebLogic Remote Console window that contains icons for toggling the visibility of the navigation tree ![Navpane icon](/weblogic-remote-console/navigation-icon-toggle-off-blk_24x24.png), and for choosing which perspective to work within. Clicking a NavStrip icon for a perspective is equivalent to clicking a card on the Home Page.
+The NavStrip is a small strip on the left edge of the WebLogic Remote Console window that contains icons for toggling the visibility of the navigation tree ![Navpane icon](/weblogic-remote-console/images/icons/navigation-icon-toggle-off-blk_24x24.png), and for choosing which perspective to work within. Clicking a NavStrip icon for a perspective is equivalent to clicking a card on the Home Page.
 
 ## Navigation tree {id="navtree"}
 
@@ -78,13 +78,13 @@ For example, if you're on Domain/Servers in the Edit Tree, you can jump to Domai
 
 These icons appear along the top of the content pane:
 
-* Home - Click ![Home icon](/weblogic-remote-console/home-icon-blk_24x24.png) in the content pane to return to the landing page for the functional area, such as Configuration or Monitoring. Click ![Home icon](/weblogic-remote-console/home-icon-blk_24x24.png) in the left side of the header area to return to the console home page.
-* Navigation History - Click ![history icon](/weblogic-remote-console/beanpath-history-icon-blk_24x24.png) to view a menu with a list of clickable links to the pages you have visited. This history is perspective-scoped.
-* Help - Click ![Help icon](/weblogic-remote-console/help-icon-blk_24x24.png) to view reference information about the attributes displayed on the page.
-* Reload - Click ![Reload icon](/weblogic-remote-console/sync-off-icon-blk_24x24.png) to reload the form/table once when no auto reload interval is set. This icon changes to active (![Sync interval icon](/weblogic-remote-console/sync-on-icon-blk_24x24.png)) when the reload interval is set. Click the icon to toggle the auto reload on and off.
-* Auto Reload Interval - Click ![Sync interval icon](/weblogic-remote-console/sync-interval-icon-blk_24x24.png) to set or clear a specified time interval, in seconds, for automatic reload of the form/table. If you select a different tab, or move to another page, automatic page reload stops.
+* Home - Click ![Home icon](/weblogic-remote-console/images/icons/home-icon-blk_24x24.png) in the content pane to return to the landing page for the functional area, such as Configuration or Monitoring. Click ![Home icon](/weblogic-remote-console/images/icons/home-icon-blk_24x24.png) in the left side of the header area to return to the console home page.
+* Navigation History - Click ![history icon](/weblogic-remote-console/images/icons/beanpath-history-icon-blk_24x24.png) to view a menu with a list of clickable links to the pages you have visited. This history is perspective-scoped.
+* Help - Click ![Help icon](/weblogic-remote-console/images/icons/help-icon-blk_24x24.png) to view reference information about the attributes displayed on the page.
+* Reload - Click ![Reload icon](/weblogic-remote-console/images/icons/sync-off-icon-blk_24x24.png) to reload the form/table once when no auto reload interval is set. This icon changes to active (![Sync interval icon](/weblogic-remote-console/images/icons/sync-on-icon-blk_24x24.png)) when the reload interval is set. Click the icon to toggle the auto reload on and off.
+* Auto Reload Interval - Click ![Sync interval icon](/weblogic-remote-console/images/icons/sync-interval-icon-blk_24x24.png) to set or clear a specified time interval, in seconds, for automatic reload of the form/table. If you select a different tab, or move to another page, automatic page reload stops.
 
-* Shopping Cart - When changes are pending, click ![Shopping cart full icon](/weblogic-remote-console/shopping-cart-non-empty-tabstrip_24x24.png) to view, discard, or commit the changes. The ![Shopping cart empty icon](/weblogic-remote-console/shopping-cart-empty-tabstrip_24x24.png) indicates there are no pending changes to the configuration.
+* Shopping Cart - When changes are pending, click ![Shopping cart full icon](/weblogic-remote-console/images/icons/shopping-cart-non-empty-tabstrip_24x24.png) to view, discard, or commit the changes. The ![Shopping cart empty icon](/weblogic-remote-console/images/icons/shopping-cart-empty-tabstrip_24x24.png) indicates there are no pending changes to the configuration.
 
 ## Use the WebLogic Remote Console help {id="help"}
 

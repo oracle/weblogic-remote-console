@@ -1,29 +1,47 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
-define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'ojs/ojlogger', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/utils'],
-  function (ko, ArrayDataProvider, PerspectiveMemoryManager, Logger, PageDefinitionUtils, CoreUtils) {
+define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
+  function (ko, ArrayDataProvider, PerspectiveMemoryManager, PageDefinitionUtils, CoreUtils, Logger) {
 
     function BeanPathManager(beanTree, countObservable){
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(beanTree.type);
-      this.beanPathHistory = ko.observableArray(this.perspectiveMemory.history());
+      this.beanPathHistory = ko.observableArray(getInitialBeanPathItems.call(this, beanTree));
       this.beanPathHistoryOptions = new ArrayDataProvider(this.beanPathHistory, { keyAttributes: 'value' });
       this.beanPathHistoryCount = countObservable;
     }
 
+    function getInitialBeanPathItems(beanTree) {
+      const items = this.perspectiveMemory.history();
+      if (items.length > 0) {
+        let pathParts = [];
+        // The provider id in the value will be different, so
+        // we need to update that using data in beanTree.
+        for (const i in items) {
+          pathParts = items[i].value.split('/').filter(e => e);
+          if (pathParts[1] !== beanTree.provider.id) {
+            pathParts[1] = beanTree.provider.id;
+            items[i].value = `/${pathParts.join('/')}`;
+          }
+        }
+        this.perspectiveMemory.setHistory(items);
+      }
+      return items;
+    }
+
     function isValidBeanPathHistoryPath(path) {
-      return (CoreUtils.isNotUndefinedNorNull(path) && CoreUtils.isNotUndefinedNorNull(path) && !path.startsWith("form")  && !path.startsWith("table"));
+      return (CoreUtils.isNotUndefinedNorNull(path) && CoreUtils.isNotUndefinedNorNull(path) && !path.startsWith('form')  && !path.startsWith('table'));
     }
 
     function trimPathParam(pathParam) {
       pathParam = PageDefinitionUtils.removeTrailingSlashes(pathParam);
 
-      if (pathParam.startsWith("//")) {
+      if (pathParam.startsWith('//')) {
         pathParam = pathParam.substring(2);
       }
       return pathParam;
@@ -36,20 +54,20 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
        * @param {[string]} breadcrumbLabels
        */
       addBeanPath: function (pathParam, breadcrumbLabels) {
-        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith("undefined")) pathParam = "";
+        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith('undefined')) pathParam = '';
 
         const actualPathParam = trimPathParam(pathParam);
-        const breadcrumbsPath = (breadcrumbLabels.length > 0 ? breadcrumbLabels.join("/") : actualPathParam);
+        const breadcrumbsPath = (breadcrumbLabels.length > 0 ? breadcrumbLabels.join('/') : actualPathParam);
+        const breadcrumbsLabel = decodeURIComponent(breadcrumbsPath.replace(/\//g, ' | '));
 
         let result = ko.utils.arrayFirst(this.beanPathHistory(), (beanpath) => {
-          return beanpath['value'] === actualPathParam;
+          return beanpath['label'] === breadcrumbsLabel;
         });
 
-        const breadcrumbsLabel = decodeURIComponent(breadcrumbsPath.replace(/\//g, " | "));
         if (CoreUtils.isNotUndefinedNorNull(result)) {
           result.label = breadcrumbsLabel;
         }
-        else if (isValidBeanPathHistoryPath(actualPathParam) && actualPathParam !== "/") {
+        else if (isValidBeanPathHistoryPath(actualPathParam) && actualPathParam !== '/') {
           // Only add Path if it's not already in beanPathHistory
           this.beanPathHistory.push({
             value: actualPathParam,
@@ -63,7 +81,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
        * @param {string} pathParam
        */
       removeBeanPath: function (pathParam) {
-        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith("undefined")) pathParam = "";
+        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith('undefined')) pathParam = '';
 
         pathParam = trimPathParam(pathParam);
 
@@ -84,10 +102,11 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
         this.beanPathHistory.removeAll();
         this.beanPathHistory.valueHasMutated();
         this.beanPathHistoryCount(this.beanPathHistory().length);
+        this.perspectiveMemory.setHistory(this.beanPathHistory());
       },
 
       getBreadcrumbsPath: function (pathParam) {
-        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith("undefined")) pathParam = "";
+        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith('undefined')) pathParam = '';
 
         pathParam = trimPathParam(pathParam);
 

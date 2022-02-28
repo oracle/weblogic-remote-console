@@ -1,11 +1,10 @@
-/*! Copyright (c) 2020, 2021, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2022, Oracle and/or its affiliates. All rights reserved. */
 
 :root {
   /*
    * START: JS code will make adjustments to the
    *        following custom CSS variables, at runtime.
    */
-  --domains-toolbar-right-margin-right: 0;
   --form-container-calc-max-width: 10px;
   --form-container-calc-min-width: 310px;
   --form-container-calc-max-height: 385px;
@@ -17,14 +16,15 @@
    *        above custom CSS variables, at runtime.
    */
 
-  --form-container-fixed-min-width: 1120px;
+  --table-form-container-width-offset: 330px;
+  --form-container-fixed-min-width: 1060px;
 
-  --app-container-resizer-offset-max-height: 70;
-  --tool-container-resizer-offset-max-height: 10;
+  --container-resizer-offset-max-height: 80;
 
   --detail-popup-background-color: #cae4ef;
   --breadcrumb-link-color: #0275d8;
   --breadcrumb-hover-color: #01447e;
+  --beanpath-background-color: #c3b2ab;
 
   --scrollbar-thumb-color: #837670;
   --scrollbar-track-color: #faf8f7;
@@ -69,6 +69,10 @@
   --overlayDialog-min-width: 1135px;
 
   --spacing-medium: 0.3125rem;
+
+  --panel-resizer-width: 10px;
+  --panel-resizer-height: 70px;
+  --resizer-left-panel-min-width: 200px;
 }
 
 ::-webkit-scrollbar {
@@ -156,7 +160,7 @@ oj-menu[id$="Menu"] .oj-menu-dropdown .oj-menu-item > a {
 
 .toolbar-label {
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.33em;       /* 16pt; */
   font-weight: 400;
   text-align: center;
 }
@@ -180,11 +184,11 @@ img.option-icon
 }
 
 .button-label {
-  font-size: 10pt;
+  font-size: 0.92em;    /* 11pt; */
 }
 
 .cfe-more-menuitem {
-  font-size: 11pt;
+  font-size: 0.92em;    /* 11pt; */
 }
 
 /* Style the breadcrumb list */
@@ -195,7 +199,7 @@ ul.breadcrumb {
 
 /* Display list items side by side */
 ul.breadcrumb li {
-  font-size: 11pt;
+  font-size: 0.92em;      /* 11pt; */
   display: inline;
 }
 
@@ -231,7 +235,7 @@ div#beanpath-history {
 
 div#beanpath-history,
 div#beanpath-history-count {
-  background-color: var(--navtree-background-color);
+  background-color: var(--beanpath-background-color);
 }
 
 div#beanpath-history-count {
@@ -249,14 +253,14 @@ div#beanpath-container {
 }
 
 div#ojChoiceId_beanpath {
-  background-color: var(--navtree-background-color);
+  background-color: var(--beanpath-background-color);
   overflow: hidden;
   height: 1.625rem;
 }
 
 div#oj-combobox-choice-beanpath.oj-combobox-choice {
   border-style: none;
-  background-color: var(--navtree-background-color);
+  background-color: var(--beanpath-background-color);
   color: inherit;
   font-weight: 400;
   padding-left: 0;
@@ -289,6 +293,7 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
 }
 
 #paging {
+  margin-left: 0.3125rem;    /* 5px */
   position: fixed;
   bottom: var(--paging-bottom);
   z-index: 2;
@@ -309,19 +314,26 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
 {
   margin: 1px 1px 0 0.125rem;
   min-height: 2.65rem;
+  font-size: 1.0em;    /* 12pt; */
 }
 
 .cfe-form-input-integer-sm {
   max-width: var(--form-input-integer-max-width);
 }
 
-.cfe-form-input-integer-sm,
+.cfe-form-input-integer-sm
+{
+  font-size: 1.0em;    /* 12pt; */
+}
+
 .cfe-form-input-text,
+.cfe-form-readonly-text
 .cfe-form-input-textarea,
 .cfe-form-input-password,
 .cfe-form-select-one
 {
   line-height: 1rem;
+  font-size: 1em;    /* 12pt; */
 }
 
 .cfe-form-input-textarea > div.oj-text-field-container > div.oj-text-field-middle > textarea
@@ -344,10 +356,6 @@ div.cfe-form-select-one div.oj-text-field-container {
   margin-top: 0.5625rem;
 }
 
-.cfe-form-switch {
-  line-height: 1.2rem;
-}
-
 .cfe-form-input-text,
 .cfe-form-input-textarea,
 .cfe-form-readonly-text,
@@ -366,6 +374,7 @@ div.cfe-form-select-one div.oj-text-field-container {
 
 .cfe-form-switch
 {
+  line-height: 1.2rem;
   min-width: var(--form-input-min-switch-width);
 }
 
@@ -413,9 +422,9 @@ oj-input-text.cfe-form-readonly-text > div > div > div.oj-text-field-readonly-di
   border-left-width: 0;
   border-right-width: 0;
   color: rgb(22, 21, 19);
-  font-size: 1rem;
+  font-size: 1.0em;         /* 12pt; */
   font-weight: normal;
-  line-height: 1.25;
+  line-height: 1.25rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -469,20 +478,21 @@ oj-input-text .oj-user-assistance-inline-container.oj-efficient, .oj-form-contro
 .cfe-delete-row-button {
   height: 1.25rem;
   width: 1.75rem;
-  font-size: 11pt;
+  font-size: 1.0em;    /* 12pt; */
 }
 
 oj-option#show-hidden-columns > span,
 oj-option#show-advanced-fields > span
 {
-  margin-right: 0.9375rem;
-  font-size: 11pt;
+  margin-right: 0.313rem;
+  font-size: 0.92em;        /* 11pt; */
   font-weight: 600;
 }
 
 .cfe-form-tabstrip {
   margin: 0.3125rem 0 0 0.3125rem;
-  max-width: calc(100vw - var(--form-tabstrip-converyor-calc-max-width));
+  max-width: 100%;
+  font-size: 0.92em;        /* 11pt; */
 }
 
 #form-tabstrip-container {
@@ -499,14 +509,14 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 }
 
 #table-form-container {
-  max-width: calc(100vw - var(--form-container-calc-max-width));
   overflow: auto;
+  display: none;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 .cfe-table-form-container {
+  max-width: calc(100vw - var(--table-form-container-width-offset));
   margin: 0.3125rem 0.3125rem 0 0;
-  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 .cfe-table-form-content-header
@@ -544,7 +554,7 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
   max-height: var(--instructions-max-height); /* Show vertical scrollbar, if height > 76px */
   max-width: calc(100vw - var(--instructions-calc-max-width));
   overflow-wrap: break-word;  /* Wraps really long instructions */
-  font-size: 11pt;
+  font-size: 0.92em;    /* 11pt; */
   margin: 0.625rem 0 0.625rem 0.625rem;
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
@@ -589,8 +599,12 @@ oj-table.wlstable {
 }
 
 .cfe-sections-form-layout-title > a > span {
-  font-size: 14pt;
+  font-size: 1.17em;    /* 14pt; */
   margin-right: 0.125rem;
+}
+
+.cfe-sections-form-layout-title-text {
+  font-size: 1.0em;       /* 12pt; */
 }
 
 .cfe-sections-form-layout-title-arrow,
@@ -606,11 +620,7 @@ oj-table.wlstable {
 }
 
 .cfe-sections-form-layout-title-arrow {
-  font-size: 14pt;
-}
-
-.cfe-sections-form-layout-title-text {
-  font-size: 1rem;
+  font-size: 1.17em;    /* 14pt; */
 }
 
 img.cfe-button-icon {
@@ -641,7 +651,7 @@ oj-combobox-one#beanpath > div.oj-text-field-container {
   border-color: rgba(22, 21, 19, .3);
   border-width: 1px 1px 1px 1px;
   border-radius: 0.25rem;
-  background-color: var(--navtree-background-color);  /* set background color of combobox-one field */
+  background-color: var(--beanpath-background-color);  /* set background color of combobox-one field */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -653,10 +663,10 @@ oj-combobox-one#beanpath > div.oj-text-field-container {
 For beanpath-history
 */
 oj-combobox-one#beanpath > div > div > div > input.oj-combobox-input {
-  background-color: var(--navtree-background-color);
+  background-color: var(--beanpath-background-color);
   color: inherit;
   font-weight: 400;
-  font-size: 11pt;
+  font-size: 0.92em;    /* 11pt; */
   margin-bottom: 0.125rem;
 }
 
@@ -687,6 +697,25 @@ oj-dialog[id="wdtOptionsDialog"] {
   background-color: var(--dialog-background-color);
 }
 
+oj-dialog#actionsDialog div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog#syncIntervalDialog div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog#confirmDialog div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog#overlayFormDialog div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog#wdtOptionsDialog div.oj-dialog-header h1.oj-dialog-title
+{
+  overflow: hidden;
+  cursor: default;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  align-self: center;
+  font-size: 1.17em;    /* 14pt; */
+  line-height: var(--oj-dialog-title-line-height);
+  color: var(--oj-dialog-title-text-color);
+  font-weight: var(--oj-dialog-title-font-weight);
+  margin: 0;
+  padding: 0;
+}
 
 oj-dialog#actionsDialog div.oj-dialog-header,
 oj-dialog#syncIntervalDialog div.oj-dialog-header,
@@ -703,8 +732,8 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-header
   background-color: transparent;
   background-image: none;
   border-bottom-color: transparent;
-  font-size: 1rem;
-  line-height: 1.4;
+  font-size: 1em;       /* 12pt; */
+  line-height: 1.33rem;
   color: rgb(22, 21, 19);
   font-weight: 900;
   min-height: 2.25rem;
@@ -721,7 +750,7 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-body
   box-sizing: border-box;
   padding: 0 0.9375rem;
   text-align: start;
-  font-size: 11pt;
+  font-size: 0.92em;    /* 11pt; */
 }
 
 oj-dialog#syncIntervalDialog div.oj-dialog-body,
@@ -804,11 +833,11 @@ For controlling the padding used in pagination control beneath tables.
 /*
 For controlling the styling of oj-button used with most of our clickable icons
 */
-.oj-button,
-.oj-button-nocomp
+div[id="breadcrumbs-container"] .oj-button,
+div[id="breadcrumbs-container"] .oj-button-nocomp
 {
   margin: 0.3125rem 0 0 0;
-  font-size: 11pt;       /* Set font-size to same as one for header labels */
+  font-size: 1.0em;       /* 12pt; */
   display: inline-flex;
   vertical-align: baseline;
 }
@@ -858,7 +887,7 @@ html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-start .oj-button-icon.o
 for "slices". The workaround is to control it here.
 */
 div.cfe-form-tabstrip .oj-tabbar-horizontal .oj-tabbar-item-label {
-  font-size: 10pt;
+  font-size: 0.92em;    /* 11pt; */
   text-align: center;
   min-height: 1.2rem;
 }
@@ -874,15 +903,15 @@ div.cfe-form-tabstrip .oj-tabbar-horizontal .oj-tabbar-item-element {
   overflow: inherit;
   text-align: left;
   text-overflow: inherit;
-  line-height: 1em;
-  font-size: 11pt;
+  line-height: 1.33rem;  /* 16pt; */
+  font-size: 0.92em;    /* 11pt; */
 }
 
 /* Used to control layout for form values */
 .oj-formlayout-labels-inline > .oj-flex > .oj-flex-item:nth-child(even) {
   text-align: left;
-  font-size: 11pt;
-  line-height: 1em;
+  font-size: 0.92em;    /* 11pt; */
+  line-height: 1.33rem;  /* 16pt; */
   height: var(--form-layout-row-height); /* Controls height of rows */
 }
 
@@ -925,15 +954,15 @@ html:not([dir="rtl"]) .oj-formlayout-max-cols-2 .oj-formlayout-form-across > .oj
 /*
 For controlling the styling of oj-table column header
 */
-html:not([dir="rtl"]) .oj-table-column-header-cell,
+html:not([dir="rtl"]) oj-table[id="table"] .oj-table-column-header-cell,
 .oj-table-data-cell {
-  font-size: 11pt;        /* Set font-size used for header labels */
-  padding: 0 0.1875rem 0 0.5rem;   /* Control excessive padding redwood uses in header rows */
+  font-size: 0.92em;      /* 11pt; */
+  padding: 0 0.1875rem 0 0.5rem;
   height: 1rem;
   line-height: 1rem;
 }
 
-.oj-table-column-header {
+oj-table[id="table"] .oj-table-column-header {
   position: relative;
   float: none;
   text-overflow: inherit;
@@ -945,6 +974,7 @@ html:not([dir="rtl"]) .oj-table-column-header-cell,
 
 .oj-formlayout-inline-label .oj-label-required-icon, .oj-formlayout-inline-label .oj-label-help-icon, .oj-formlayout-inline-label label, .oj-formlayout-inline-label .oj-label-help-icon-anchor {
   float: none;
+  font-size: 1.08em;   /* 13pt */
 }
 
 /*
@@ -971,4 +1001,29 @@ The workaround is to create our own cfe-flex-items-pad class
 
 .oj-sm-web-padding-horizontal, .oj-web-padding {
   padding: 0;
+}
+
+#wdt-model-builder-container,
+#spa-resizer {
+  min-width: calc(100vw - var(--form-container-calc-min-width));
+}
+
+.resizer_panel .vertical-gripper {
+  min-width: 10px;
+  height: 100vh;
+  /* path assigned to url attribute is relative to wrc-frontend/css directory */
+  background: url("../images/splitter-bkgrd-image-vert-gry_7x28.png");
+  background-repeat: repeat;
+  cursor: col-resize;
+  z-index:20;
+}
+
+.resizer_panel .left_panel
+{
+  min-width: var(--resizer-left-panel-min-width);
+}
+
+.left_panel
+{
+  width: 100%;    /* Keeps navtree expand/collapse icons right-aligned */
 }

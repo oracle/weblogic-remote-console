@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * CFE API module for managing domain connections
@@ -12,7 +12,7 @@
  */
 define(['wrc-frontend/microservices/connection-management/domain-connection-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger'],
   function (DomainConnectionManager, Runtime, CoreUtils, CoreTypes, Logger) {
-    let _currentMode = CoreTypes.Console.RuntimeMode.DETACHED.name,
+    let _currentMode = CoreTypes.Console.RuntimeMode.UNATTACHED.name,
       _timerId, _onConsoleRuntimeModeChanged;
 
     function checkDomainConnectionState() {
@@ -24,7 +24,7 @@ define(['wrc-frontend/microservices/connection-management/domain-connection-mana
             Logger.info(`Setting _currentMode to ${newMode}`);
             _currentMode = newMode;
             if (CoreUtils.isNotUndefinedNorNull(_onConsoleRuntimeModeChanged)) {
-              _onConsoleRuntimeModeChanged(newMode);
+              _onConsoleRuntimeModeChanged('external', newMode);
             }
           }
         })

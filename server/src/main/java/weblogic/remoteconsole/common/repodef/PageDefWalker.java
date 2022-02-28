@@ -163,9 +163,9 @@ public abstract class PageDefWalker {
     processSliceDef(sliceDef);
     List<SliceDef> contentDefs = sliceDef.getContentDefs();
     if (contentDefs.isEmpty()) {
-      // this is a slice form
+      // this is a slice
       walkPageDef(
-        getPageRepoDef().newSliceFormPagePath(
+        getPageRepoDef().newSlicePagePath(
           sliceDef.getSlicesDef().getTypeDef(),
           sliceDef.getPath()
         )

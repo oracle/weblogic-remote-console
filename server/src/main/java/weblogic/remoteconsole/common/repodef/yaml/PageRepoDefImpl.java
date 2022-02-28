@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -18,13 +18,14 @@ import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
 import weblogic.remoteconsole.common.repodef.PagesPath;
 import weblogic.remoteconsole.common.repodef.SliceDef;
-import weblogic.remoteconsole.common.repodef.SliceFormPagePath;
+import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.SlicesDef;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceFormDefSource;
+import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SlicesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
 import weblogic.remoteconsole.common.utils.Path;
@@ -118,8 +119,8 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
   }
 
   private PageDefImpl createPageDefImpl(PagePath pagePath) {
-    if (pagePath.isSliceFormPagePath()) {
-      return createSliceFormDefImpl(pagePath.asSliceFormPagePath());
+    if (pagePath.isSlicePagePath()) {
+      return createSliceDefImpl(pagePath.asSlicePagePath());
     } else if (pagePath.isCreateFormPagePath()) {
       return createCreateFormDefImpl(pagePath.asCreateFormPagePath());
     } else if (pagePath.isTablePagePath()) {
@@ -139,17 +140,28 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
     return (source != null) ? new TableDefImpl(this, pagePath, source) : null;
   }
 
-  private SliceFormDefImpl createSliceFormDefImpl(SliceFormPagePath pagePath) {
+  private PageDefImpl createSliceDefImpl(SlicePagePath pagePath) {
     SlicesDefImpl slicesDefImpl = getSlicesDefImpl(pagePath.getPagesPath().getTypeDef());
     if (slicesDefImpl == null) {
-      return null; // this type doesn't have any slice forms
+      return null; // this type doesn't have any slices
     }
-    SliceFormPagePath resolvedPagePath = resolveSliceFormPagePath(pagePath, slicesDefImpl);
-    SliceFormDefSource source = getYamlReader().getSliceFormDefSource(resolvedPagePath, slicesDefImpl);
-    return (source != null) ? new SliceFormDefImpl(this, resolvedPagePath, source) : null;
+    SlicePagePath resolvedPagePath = resolveSlicePagePath(pagePath, slicesDefImpl);
+    {
+      SliceFormDefSource source = getYamlReader().getSliceFormDefSource(resolvedPagePath, slicesDefImpl);
+      if (source != null) {
+        return new SliceFormDefImpl(this, resolvedPagePath, source);
+      }
+    }
+    {
+      SliceTableDefSource source = getYamlReader().getSliceTableDefSource(resolvedPagePath, slicesDefImpl);
+      if (source != null) {
+        return new SliceTableDefImpl(this, resolvedPagePath, source);
+      }
+    }
+    return null;
   }
 
-  private SliceFormPagePath resolveSliceFormPagePath(SliceFormPagePath pagePath, SlicesDefImpl slicesDefImpl) {
+  private SlicePagePath resolveSlicePagePath(SlicePagePath pagePath, SlicesDefImpl slicesDefImpl) {
     PagesPath pagesPath = pagePath.getPagesPath();
     Path actualSlicePath =
       computeActualSlicePath(
@@ -158,7 +170,7 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
         pagePath.getSlicePath(), // relative page path
         slicesDefImpl.getContentDefs()
       );
-    return PagePath.newSliceFormPagePath(pagesPath, actualSlicePath);
+    return PagePath.newSlicePagePath(pagesPath, actualSlicePath);
   }
 
   private Path computeActualSlicePath(
@@ -233,7 +245,7 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
     if (typeDef == getBeanRepoDef().getRootTypeDef()) {
       source = getYamlReader().getRootNavTreeDefSource(this.navTreeRootTypeName);
     } else {
-      source = getYamlReader().getNavTreeDefSource(typeDef);
+      source = getYamlReader().getNavTreeDefSource(typeDef.getTypeName());
     }
     if (source == null) {
       return null;

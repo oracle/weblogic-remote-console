@@ -98,8 +98,6 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             await admin.goToFirstCompTab(driver,"Edit Tree","ServicesChevron","File Stores",1,
                 "testFileStore-1","Target");
             await admin.selectDropDownValue(driver,"Targets","AdminServer");
-
-            //await admin.selectTarget(driver,"AdminServer");
             console.log("Select Target for testFileStore-1 as AdminServer");
             await admin.saveToShoppingCart(driver);
             await admin.commitChanges(driver);
@@ -176,10 +174,9 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         file = "testXMLRegistry-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testXMLRegistry-1",2,"configuration","Services","XML Registries");
-            //await admin.deleteMBeanObject(driver,"testXMLRegistry-1","XMLRegistries",2,"configuration",
-              //  "Services","XML Registries");
             await admin.deleteMBeanObject(driver,"testXMLRegistry-1","XML Registries",2,"configuration",
                 "Services","XML Registries","","","",2);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -194,10 +191,9 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         file = "testXMLEntityCahe-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testEntityCache-1",2,"configuration","Services","XML Entity Caches");
-            //await admin.deleteMBeanObject(driver,"testEntityCache-1","XMLEntityCaches",2,"configuration",
-              //  "Services","XML Entity Caches");
             await admin.deleteMBeanObject(driver,"testEntityCache-1","XML Entity Caches",2,"configuration",
                 "Services","XML Entity Caches","","","",2);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -213,10 +209,9 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         try {
             await admin.createNewMBeanObject(driver,"testMailSession-1",2,"configuration","Services","Mail Sessions",
                     "","","input","JNDIName|input","testJNDIName");
-            //await admin.deleteMBeanObject(driver,"testMailSession-1","MailSessions",2,"configuration",
-              //  "Services","Mail Sessions");
             await admin.deleteMBeanObject(driver,"testMailSession-1","Mail Sessions",2,"configuration",
                 "Services","Mail Sessions","","","",3);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -231,10 +226,9 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         file = "testMessagingBridge-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testMessagingBridge-1",2,"configuration","Services","Messaging Bridges");
-            //await admin.deleteMBeanObject(driver,"testMessagingBridge-1","MessagingBridges",2,"configuration",
-              //  "Services","Messaging Bridges");
             await admin.deleteMBeanObject(driver,"testMessagingBridge-1","Messaging Bridges",2,"configuration",
                 "Services","Messaging Bridges","","","",2);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -252,10 +246,9 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         try {
             await admin.createNewMBeanObject(driver,"testForeignJNDIProviders-1",2,"configuration","Services",
                 "Foreign JNDI Providers");
-            //await admin.deleteMBeanObject(driver,"testForeignJNDIProviders-1","ForeignJNDIProviders",2,"configuration",
-              //  "Services","Foreign JNDI Providers");
             await admin.deleteMBeanObject(driver,"testForeignJNDIProviders-1","Foreign JNDI Providers",2,"configuration",
                 "Services","Foreign JNDI Providers","","","",2);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -272,10 +265,9 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             try {
                 await admin.createNewMBeanObject(driver,"testOsgiFrameworks-1",2,"configuration","Services",
                     "Osgi Frameworks");
-                //await admin.deleteMBeanObject(driver,"testOsgiFrameworks-1","OsgiFrameworks",2,"configuration",
-                  //  "Services","Osgi Frameworks");
                 await admin.deleteMBeanObject(driver,"testOsgiFrameworks-1","Osgi Frameworks",2,"configuration",
                     "Services","Osgi Frameworks","","","",1);
+                console.log("TEST PASS ");
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
                 console.log(e.toString() + " TEST FAIL");
@@ -293,10 +285,9 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             try {
                 await admin.createNewMBeanObject(driver,"testJMSBridgeDestinations-1",2,"configuration","Services",
                     "JMS Bridge Destinations");
-                //await admin.deleteMBeanObject(driver,"testJMSBridgeDestinations-1","JMSBridgeDestinations",2,
-                  //  "configuration","Services","JMS Bridge Destinations");
                 await admin.deleteMBeanObject(driver,"testJMSBridgeDestinations-1","JMS Bridge Destinations",2,"configuration",
                     "Services","JMS Bridge Destinations","","","",3);
+                console.log("TEST PASS ");
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
                 console.log(e.toString() + " TEST FAIL");

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -255,6 +255,10 @@ public class ProviderResource extends BaseResource {
     boolean isJson = false;
     if ((modelContent != null) && (modelContent.getFileName() != null)) {
       String fileName = modelContent.getFileName().trim().toLowerCase();
+      if (fileName.endsWith(".props")) {
+        return submitPropertyListDataProviderInfo(
+          pm, name, resourceContext, modelStream);
+      }
       isJson = fileName.endsWith(".json");
     }
 
@@ -415,6 +419,27 @@ public class ProviderResource extends BaseResource {
     ).build();
   }
 
+  private static Response submitPropertyListDataProviderInfo(
+    ProviderManager pm,
+    String name,
+    ResourceContext resourceContext,
+    InputStream modelStream
+  ) {
+    if (reservedNames.contains(name)) {
+      LOGGER.fine("POST create reserved name: " + name);
+      return Response.status(
+        Status.BAD_REQUEST.getStatusCode(), "Reserved name").build();
+    }
+    InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
+    pm.createPropertyListDataProvider(name).parse(modelStream, ic);
+    return WebAppUtils.addCookieFromContext(
+      resourceContext,
+      Response.status(Status.CREATED)
+        .entity(pm.getJSON(name, ic))
+        .type(MediaType.APPLICATION_JSON)
+    ).build();
+  }
+
   private static Response submitWDTCompositeDataProviderInfo(
     ProviderManager pm,
     String name,
@@ -442,8 +467,8 @@ public class ProviderResource extends BaseResource {
       }
       models.add(model);
     }
-    pm.createWDTCompositeDataProvider(name, models);
     InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
+    pm.createWDTCompositeDataProvider(name, models).checkModels(ic);
     return
       WebAppUtils.addCookieFromContext(
         resourceContext,

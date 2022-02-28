@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 /**
  * CFE UI API module for displaying popup messages of all severities and varieties
@@ -21,11 +21,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
   function (oj, ko, HtmlUtils, Logger) {
     const i18n = {
       messages: {
-        "seeJavascriptConsole": {
-          detail: oj.Translations.getTranslatedString("wrc-message-displaying.messages.seeJavascriptConsole.detail")
+        'seeJavascriptConsole': {
+          detail: oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
         },
-        "responseMessages": {
-          summary: oj.Translations.getTranslatedString("wrc-message-displaying.messages.responseMessages.summary")
+        'responseMessages': {
+          summary: oj.Translations.getTranslatedString('wrc-message-displaying.messages.responseMessages.summary')
         }
       }
     };
@@ -42,12 +42,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
       let severity = 'error';
 
       // Check if the message defines a severity and map to the message box severity
-      if ((typeof message.severity !== 'undefined') && (message.severity !== "")) {
+      if ((typeof message.severity !== 'undefined') && (message.severity !== '')) {
         switch (message.severity) {
-          case "INFO":
+          case 'INFO':
             severity = 'info';
             break;
-          case "WARNING":
+          case 'WARNING':
             severity = 'warning';
             break;
         }
@@ -70,7 +70,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
        * Common message objects.
        */
       messages: {
-        "seeJavascriptConsole": i18n.messages.seeJavascriptConsole
+        'seeJavascriptConsole': i18n.messages.seeJavascriptConsole
       },
 
       /**
@@ -80,8 +80,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
        * @param {number} [autoCloseInterval] - Optionally, the number of milliseconds to leave message up, before auto-closing it. 1500 milliseconds (1.5 seconds) will be used, if the parameter is missing.
        */
       displayMessage: function(message, autoCloseInterval) {
-        if (typeof message.severity === "undefined") message["severity"] = "confirmation";
-        if (autoCloseInterval && ["confirmation", "info"].includes(message.severity) ) {
+        if (typeof message.severity === 'undefined') message['severity'] = 'confirmation';
+        if (autoCloseInterval && ['confirmation', 'info'].includes(message.severity) ) {
           getPopupMessageSentSignal().dispatch(message, autoCloseInterval || 1500);
         }
         else {
@@ -95,7 +95,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
        */
       displayMessages: function(messages) {
         messages.forEach((message) => {
-          message["severity"] = getMessageSeverity(message);
+          message['severity'] = getMessageSeverity(message);
           getPopupMessageSentSignal().dispatch(message);
         });
       },
@@ -110,20 +110,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
         let rtnval = [];
 
         if (typeof responseMessages !== 'undefined') {
-          let errorMessagesHTML = "<ul>", errorSummary = i18n.messages.responseMessages.summary;
+          let errorMessagesHTML = '<ul>', errorSummary = i18n.messages.responseMessages.summary;
           responseMessages.forEach((message) => {
-            if (typeof message === "object") {
-              errorMessagesHTML += "<li>" + message.message + "</li>";
+            if (typeof message === 'object') {
+              errorMessagesHTML += '<li>' + message.message + '</li>';
             }
             else {
-              errorMessagesHTML += "<li>" + message + "</li>";
+              errorMessagesHTML += '<li>' + message + '</li>';
             }
           });
-          if (errorMessagesHTML.indexOf("<li>") !== -1) {
-            errorMessagesHTML += "</ul>";
+          if (errorMessagesHTML.indexOf('<li>') !== -1) {
+            errorMessagesHTML += '</ul>';
             const errorMessage = {
               html: { view: HtmlUtils.stringToNodeArray(errorMessagesHTML) },
-              severity: "error",
+              severity: 'error',
               summary: errorSummary
             };
             getPopupMessageSentSignal().dispatch(errorMessage, autoCloseInterval || 5000);
@@ -145,15 +145,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
        * @param {number} [autoCloseInterval] - Optionally, the number of milliseconds to leave message up, before auto-closing it. 1500 milliseconds (1.5 seconds) will be used, if the parameter is missing.
        */
       displayErrorMessagesHTML: function (messages, summary, autoCloseInterval) {
-        let errorMessagesHTML = "<ul>", errorSummary = summary || i18n.messages.incompleteRequiredField.summary;
+        let errorMessagesHTML = '<ul>', errorSummary = summary || i18n.messages.incompleteRequiredField.summary;
         messages.forEach((message) => {
-          errorMessagesHTML += "<li>" + message.detail + "</li>";
+          errorMessagesHTML += '<li>' + message.detail + '</li>';
         });
-        if (errorMessagesHTML.indexOf("<li>") !== -1) {
-          errorMessagesHTML += "</ul>";
+        if (errorMessagesHTML.indexOf('<li>') !== -1) {
+          errorMessagesHTML += '</ul>';
           const errorMessage = {
             html: { view: HtmlUtils.stringToNodeArray(errorMessagesHTML) },
-            severity: "info",
+            severity: 'info',
             summary: errorSummary
           };
           getPopupMessageSentSignal().dispatch(errorMessage, autoCloseInterval);

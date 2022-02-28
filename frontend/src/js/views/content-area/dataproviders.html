@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2021, Oracle and/or its affiliates.
+ Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="data-providers-container" data-content-location="kiosk">
@@ -54,6 +54,9 @@
               </oj-option>
               <oj-option id="[[i18n.menus.models.add.id]]" value="[[i18n.menus.models.add.id]]">
                 <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.menus.models.add.label + '...']]"></oj-bind-text></span>
+              </oj-option>
+              <oj-option id="[[i18n.menus.composite.add.id]]" value="[[i18n.menus.composite.add.id]]">
+                <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.menus.composite.add.label + '...']]"></oj-bind-text></span>
               </oj-option>
               <oj-option id="[[i18n.menus.models.new.id]]" value="[[i18n.menus.models.new.id]]">
                 <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.menus.models.new.label + '...']]"></oj-bind-text></span>
@@ -163,6 +166,11 @@
   <oj-bind-if test="providerInfo.type() === 'model'">
     <span><b><oj-bind-text value="[[i18n.popups.info.model.file.label]]"></oj-bind-text></b>
       <span><oj-bind-text value="[[i18n.popups.info.model.file.value()]]"></oj-bind-text></span>
+    </span>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'modelComposite'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.composite.models.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.composite.models.value()]]"></oj-bind-text></span>
     </span>
   </oj-bind-if>
 </oj-popup>
@@ -363,6 +371,44 @@
       <span class="button-label" data-bind="text: [[i18n.buttons.ok.label()]]"></span>
     </oj-button>
     <oj-button id="dlgCancelBtn16">
+      <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<!-- WDT Composite Model Provider Dialog -->
+<oj-dialog id="modelCompositeDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide">
+  <div slot="body">
+    <div class="cfe-dialog-prompt">
+      <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
+    </div>
+
+    <oj-form-layout id="model-composite-form-layout" class="cfe-dialog-form-layout" label-edge="start" label-width="26%">
+      <oj-label slot="label" for="model-composite-name-field">
+        <oj-bind-text value="[[i18n.labels.composite.name.value + '*']]"></oj-bind-text>
+      </oj-label>
+      <oj-input-text id="model-composite-name-field" class="cfe-dialog-field" value='{{dialogFields().name}}'></oj-input-text>
+
+      <oj-label slot="label" for="model-composite-selection-field">
+        <oj-bind-text value="[[i18n.labels.composite.providers.value + '*']]"></oj-bind-text>
+      </oj-label>
+      <div>
+      <oj-select-many id="model-composite-selection-field" class="cfe-dialog-field"
+          value="{{wdtProvidersSelectedValues}}" options="[[wdtProvidersDataProvider]]">
+      </oj-select-many>
+    </div>
+    </oj-form-layout>
+
+    <div id="model-composite-response-message">
+      <span data-bind="text: [[responseMessage()]]"></span>
+    </div>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgOkBtn17" disabled="[[i18n.buttons.ok.disabled()]]">
+      <span class="button-label" data-bind="text: [[i18n.buttons.ok.label()]]"></span>
+    </oj-button>
+    <oj-button id="dlgCancelBtn17">
       <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
     </oj-button>
   </div>

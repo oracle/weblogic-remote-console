@@ -5,8 +5,5 @@
   "description": "A JET Resource component containing .yaml files formerly located under src/config.",
   "type": "resource",
   "version": "1.0.0",
-  "jetVersion": "^10.1.0",
-  "publicModules": [
-    "console-frontend-jet.yaml"
-  ]
+  "jetVersion": "^10.1.0"
 }

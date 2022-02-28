@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -40,6 +40,7 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
   private StringValue getMethod = new StringValue();
   private StringValue optionsMethod = new StringValue();
   private Value<BeanPropertyPresentationDefSource> presentation = new Value<>(new BeanPropertyPresentationDefSource());
+  private Value<MBeanAttributeDefSource> mbeanAttribute = new Value<>(new MBeanAttributeDefSource());
   private Value<BeanPropertyDefSource> definition = new Value<>(null);
 
   public void merge(BeanPropertyDefCustomizerSource from, Path fromContainedBeanPath) {
@@ -60,6 +61,7 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
     getMethod.merge(from.getMethod, fromContainedBeanPath);
     optionsMethod.merge(from.optionsMethod, fromContainedBeanPath);
     presentation.merge(from.presentation, fromContainedBeanPath);
+    mbeanAttribute.merge(from.mbeanAttribute, fromContainedBeanPath);
     definition.merge(from.definition, fromContainedBeanPath);
     mergeHelp(from, fromContainedBeanPath);
     mergeUsedIf(from, fromContainedBeanPath);
@@ -329,6 +331,17 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
 
   public void setPresentation(BeanPropertyPresentationDefSource value) {
     presentation.setValue(value);
+  }
+
+  // Indicates which mbean attribute this property is related to.
+  // Typically used for page-specific properties since normal
+  // type-specific properties already know which mbean attribute they're related to.
+  public MBeanAttributeDefSource getMbeanAttribute() {
+    return mbeanAttribute.getValue();
+  }
+
+  public void setMbeanAttribute(MBeanAttributeDefSource value) {
+    mbeanAttribute.setValue(value);
   }
 
   // If this property was not configured in type.yaml or extension.yaml,

@@ -14,7 +14,7 @@ contextBridge.exposeInMainWorld(
       receive: (channel, func) => {
         const validChannels = [
           'on-project-switched',
-          'on-signal-dispatched'
+          'start-app-quit'
         ];
         if (validChannels.includes(channel)) {
           // Strip off the event since it includes the sender
@@ -43,7 +43,8 @@ contextBridge.exposeInMainWorld(
           'file-creating',
           'file-choosing',
           'file-reading',
-          'file-writing'
+          'file-writing',
+          'window-app-quit'
         ];
         return new Promise((resolve, reject) => {
           if (validChannels.includes(channel)) {

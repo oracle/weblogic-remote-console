@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojlogger'],
   function (Logger) {
@@ -22,17 +22,17 @@ define(['ojs/ojlogger'],
        */
       getSections: function (createForm) {
         let sections = [];
-        if (typeof createForm.sections !== "undefined") {
+        if (typeof createForm.sections !== 'undefined') {
           // Find "sections" array items under pdjData.createForm.sections
           // that DO NOT have a nested "sections" array.
-          sections = createForm.sections.filter(section => (typeof section.sections === "undefined"));
+          sections = createForm.sections.filter(section => (typeof section.sections === 'undefined'));
 
           if (sections.length === 0) {
             // All the "sections" arrays under pdjData.createForm.sections
             // have a nested "sections" array, so return all of them.
-            sections = createForm.sections.filter(section => (typeof section.sections !== "undefined"));
+            sections = createForm.sections.filter(section => (typeof section.sections !== 'undefined'));
           }
-          else if (typeof sections[0].properties !== "undefined") {
+          else if (typeof sections[0].properties !== 'undefined') {
             const properties = this.filterSectionsUsedIfProperties(sections);
             if (properties.length > 0) {
               sections = [];
@@ -54,21 +54,21 @@ define(['ojs/ojlogger'],
        */
       getUsedIfSections: function (sections, propertyName, value, parentValue) {
         let matchedSections = [];
-        if (typeof sections !== "undefined") {
-          if (typeof value !== "undefined" && value !== null && !Array.isArray(value)) {
-            if (typeof value === "number") value = value.toString();
-            matchedSections = sections.filter(section => typeof section.usedIf !== "undefined" && section.usedIf.property === propertyName && section.usedIf.values.includes(value));
+        if (typeof sections !== 'undefined') {
+          if (typeof value !== 'undefined' && value !== null && !Array.isArray(value)) {
+            if (typeof value === 'number') value = value.toString();
+            matchedSections = sections.filter(section => typeof section.usedIf !== 'undefined' && section.usedIf.property === propertyName && section.usedIf.values.includes(value));
             if (matchedSections.length === 0) {
-              if (typeof parentValue !== "undefined") {
+              if (typeof parentValue !== 'undefined') {
                 // Sometimes the usedIf.values array we're trying to match
                 // has value in it. Other times it has parentValue + "_" value
                 // in it. Try to match again, using the latter.
-                value = value.replace(parentValue + "_", "");
-                matchedSections = sections.filter(section => typeof section.usedIf !== "undefined" && section.usedIf.property === propertyName && section.usedIf.values.includes(value));
+                value = value.replace(parentValue + '_', '');
+                matchedSections = sections.filter(section => typeof section.usedIf !== 'undefined' && section.usedIf.property === propertyName && section.usedIf.values.includes(value));
               }
             }
           } else {
-            matchedSections = sections.filter(section => typeof section.usedIf !== "undefined" && section.usedIf.property === propertyName);
+            matchedSections = sections.filter(section => typeof section.usedIf !== 'undefined' && section.usedIf.property === propertyName);
           }
         }
 
@@ -77,18 +77,18 @@ define(['ojs/ojlogger'],
 
       getAttributesUsedIfSections: function (sections) {
         let matchedSections = [];
-        if (typeof sections !== "undefined") {
-          matchedSections = sections.filter(section => (typeof section.usedIf !== "undefined"));
+        if (typeof sections !== 'undefined') {
+          matchedSections = sections.filter(section => (typeof section.usedIf !== 'undefined'));
         }
         return matchedSections;
       },
 
       getUsedIfSectionsProperties: function (usedIf) {
-        const parentValue = (typeof usedIf.parent !== "undefined" ? usedIf.parent.value : undefined);
+        const parentValue = (typeof usedIf.parent !== 'undefined' ? usedIf.parent.value : undefined);
         const sections = this.getUsedIfSections(usedIf.sections, usedIf.fieldName, usedIf.fieldValue, parentValue);
         let properties = [];
         if (sections.length === 1) {
-          if (typeof sections[0].properties !== "undefined") {
+          if (typeof sections[0].properties !== 'undefined') {
             properties = this.getSectionsProperties(sections);
           }
           else {
@@ -113,9 +113,9 @@ define(['ojs/ojlogger'],
 
       getSectionsProperties: function (sections) {
         let properties = [];
-        if (typeof sections !== "undefined") {
+        if (typeof sections !== 'undefined') {
           sections.forEach((section) => {
-            if (typeof section.properties !== "undefined") {
+            if (typeof section.properties !== 'undefined') {
               section.properties.forEach((property) => {
                 properties.push(property);
               });
@@ -127,7 +127,7 @@ define(['ojs/ojlogger'],
 
       filterSectionsUsedIfProperties: function (sections) {
         let properties = [];
-        const filteredProperties = sections.filter(section => typeof section.usedIf === "undefined");
+        const filteredProperties = sections.filter(section => typeof section.usedIf === 'undefined');
         if (filteredProperties.length === 1) {
           properties = filteredProperties[0].properties;
         }

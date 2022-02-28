@@ -1,20 +1,20 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/provider-management/data-provider-manager','wrc-frontend/core/runtime', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function (oj, ko, DataOperations, MessageDisplaying, DataProviderManager, Runtime, CbeTypes, CoreTypes, CoreUtils, Logger) {
     const i18n = {
       messages: {
-        "cannotGetLockState": {summary: oj.Translations.getTranslatedString("wrc-change-manager.messages.cannotGetLockState.summary")},
-        "changesCommitted": {summary: oj.Translations.getTranslatedString("wrc-change-manager.messages.changesCommitted.summary")},
-        "changesNotCommitted": {summary: oj.Translations.getTranslatedString("wrc-change-manager.messages.changesNotCommitted.summary")},
-        "changesDiscarded":  {summary: oj.Translations.getTranslatedString("wrc-change-manager.messages.changesDiscarded.summary")},
-        "changesNotDiscarded": {summary: oj.Translations.getTranslatedString("wrc-change-manager.messages.changesNotDiscarded.summary")}
+        'cannotGetLockState': {summary: oj.Translations.getTranslatedString('wrc-change-manager.messages.cannotGetLockState.summary')},
+        'changesCommitted': {summary: oj.Translations.getTranslatedString('wrc-change-manager.messages.changesCommitted.summary')},
+        'changesNotCommitted': {summary: oj.Translations.getTranslatedString('wrc-change-manager.messages.changesNotCommitted.summary')},
+        'changesDiscarded':  {summary: oj.Translations.getTranslatedString('wrc-change-manager.messages.changesDiscarded.summary')},
+        'changesNotDiscarded': {summary: oj.Translations.getTranslatedString('wrc-change-manager.messages.changesNotDiscarded.summary')}
       }
     };
 
@@ -40,25 +40,25 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
     return {
       /** @type {{CHANGE_MANAGER: {name: string}, ADDITIONS: {name: string}, MODIFICATIONS: {name: string}, REMOVALS: {name: string}, RESTART: {name: string}}} */
       Section:  Object.freeze({
-        CHANGE_MANAGER: {name: "changeManager"},
-        ADDITIONS: {name: "additions"},
-        MODIFICATIONS: {name: "modifications"},
-        REMOVALS: {name: "removals"},
-        RESTART: {name: "restart"}
+        CHANGE_MANAGER: {name: 'changeManager'},
+        ADDITIONS: {name: 'additions'},
+        MODIFICATIONS: {name: 'modifications'},
+        REMOVALS: {name: 'removals'},
+        RESTART: {name: 'restart'}
       }),
       /** @type {{HAS_CHANGES: {name: string}, IS_LOCK_OWNER: {name: string}, LOCK_OWNER: {name: string}, LOCKED: {name: string}, MERGE_NEEDED: {name: string}, WLS_CONFIG_VERSION: {name: string}, SUPPORTS_CHANGES: {name: string}}} */
       Property: Object.freeze({
-        HAS_CHANGES: {name: "hasChanges"},
-        IS_LOCK_OWNER: {name: "isLockOwner"},
-        LOCK_OWNER: {name: "lockOwner"},
-        LOCKED: {name: "locked"},
-        MERGE_NEEDED: {name: "mergeNeeded"},
-        WLS_CONFIG_VERSION: {name: "weblogicConfigurationVersion"},
-        SUPPORTS_CHANGES: {name: "supportsChanges"}
+        HAS_CHANGES: {name: 'hasChanges'},
+        IS_LOCK_OWNER: {name: 'isLockOwner'},
+        LOCK_OWNER: {name: 'lockOwner'},
+        LOCKED: {name: 'locked'},
+        MERGE_NEEDED: {name: 'mergeNeeded'},
+        WLS_CONFIG_VERSION: {name: 'weblogicConfigurationVersion'},
+        SUPPORTS_CHANGES: {name: 'supportsChanges'}
       }),
       /** @type {{SHOPPING_CART: {name: string}}} */
       Entity: Object.freeze({
-        SHOPPING_CART: {name: "shoppingcart"}
+        SHOPPING_CART: {name: 'shoppingcart'}
       }),
       /**
        *
@@ -69,9 +69,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
           const dataProvider = DataProviderManager.getLastActivatedDataProvider();
           if (CoreUtils.isUndefinedOrNull(dataProvider)) {
             this.putMostRecent({
-              "isLockOwner": false,
-              "hasChanges": false,
-              "supportsChanges": false
+              'isLockOwner': false,
+              'hasChanges': false,
+              'supportsChanges': false
             });
             const response = {
               body: {
@@ -95,9 +95,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
                 })
                 .catch(response => {
                   this.putMostRecent({
-                    "isLockOwner": false,
-                    "hasChanges": false,
-                    "supportsChanges": false
+                    'isLockOwner': false,
+                    'hasChanges': false,
+                    'supportsChanges': false
                   });
                   if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
                     // If transport.status of response is 403 (Forbidden)
@@ -127,9 +127,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
             }
             else {
               this.putMostRecent({
-                "isLockOwner": false,
-                "hasChanges": false,
-                "supportsChanges": false
+                'isLockOwner': false,
+                'hasChanges': false,
+                'supportsChanges': false
               });
               resolve({changeManager: this.getMostRecent()});
             }
@@ -160,9 +160,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
               .catch(response => {
                 if (!response.succeeded) {
                   this.putMostRecent({
-                    "isLockOwner": false,
-                    "hasChanges": false,
-                    "supportsChanges": false
+                    'isLockOwner': false,
+                    'hasChanges': false,
+                    'supportsChanges': false
                   });
                   const data = {
                     changeManager: this.getMostRecent(),
@@ -181,11 +181,11 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       },
       getSection: function (data, name){
         let section;
-        if (typeof name !== "undefined") {
-          if (typeof name.name !== "undefined") {
+        if (typeof name !== 'undefined') {
+          if (typeof name.name !== 'undefined') {
             section = data[name.name];
           }
-          else if (typeof name === "string" && name.length > 0) {
+          else if (typeof name === 'string' && name.length > 0) {
             section = data[name];
           }
         }
@@ -198,11 +198,11 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
             DataOperations.changeManager.commitChanges(dataProvider.getBeanTreeChangeManagerUri())
               .then(reply => {
                 this.putMostRecent({
-                  "isLockOwner": properties.isLockOwner,
-                  "hasChanges": false,
-                  "supportsChanges": properties.supportsChanges
+                  'isLockOwner': properties.isLockOwner,
+                  'hasChanges': false,
+                  'supportsChanges': properties.supportsChanges
                 });
-                MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesCommitted.summary, detail: ""});
+                MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesCommitted.summary, detail: ''});
                 resolve(this.getMostRecent());
               })
               .catch(response => {
@@ -220,11 +220,11 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
             DataOperations.changeManager.discardChanges(dataProvider.getBeanTreeChangeManagerUri())
               .then(reply => {
                 this.putMostRecent({
-                  "isLockOwner": properties.isLockOwner,
-                  "hasChanges": false,
-                  "supportsChanges": properties.supportsChanges
+                  'isLockOwner': properties.isLockOwner,
+                  'hasChanges': false,
+                  'supportsChanges': properties.supportsChanges
                 });
-                MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesDiscarded.summary, detail: ""});
+                MessageDisplaying.displayMessage({severity: 'confirmation', summary: i18n.messages.changesDiscarded.summary, detail: ''});
                 resolve(this.getMostRecent());
               })
               .catch(response => {

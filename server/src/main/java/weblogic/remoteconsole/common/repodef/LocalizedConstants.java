@@ -89,6 +89,12 @@ public class LocalizedConstants {
       "Configuration View Tree"
     );
 
+  public static final LocalizableString PROPERTY_LIST_CONFIGURATION_LABEL =
+    addConstant(
+      "label.propertyList",
+      "Property List"
+    );
+
   public static final LocalizableString MONITORING_LABEL =
     addConstant(
       "label.monitoring",
@@ -141,6 +147,18 @@ public class LocalizedConstants {
     addConstant(
       "modelInvalid",
       "Model not valid!"
+    );
+
+  public static final LocalizableString SECURITY_VALIDATION_WARNINGS_WARNING_LINK_LABEL =
+    addConstant(
+      "securityValidationWarningsWarningLinkLabel",
+      "Security warnings detected. Click here to view the report and recommended remedies."
+    );
+
+  public static final LocalizableString SECURITY_VALIDATION_WARNINGS_INFO_LINK_LABEL =
+    addConstant(
+      "securityValidationWarningsInfoLinkLabel",
+      "View Security Warnings Report"
     );
 
   // Returns all of the constants (used when the resource bundles are

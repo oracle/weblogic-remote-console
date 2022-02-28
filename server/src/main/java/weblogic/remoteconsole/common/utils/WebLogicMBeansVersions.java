@@ -14,38 +14,38 @@ public class WebLogicMBeansVersions {
   private WebLogicMBeansVersions() {
   }
 
-  // Maps from a weblogic version + supportsSecurityWarnings + roles to a WebLogicMBeansVersion
+  // Maps from a weblogic version + psu + roles to a WebLogicMBeansVersion
   private static Map<String, WebLogicMBeansVersion> versionsMap = new ConcurrentHashMap<>();
 
   public static WebLogicMBeansVersion getVersion(
     WebLogicVersion weblogicVersion,
-    boolean supportsSecurityWarnings
+    WebLogicPSU psu
   ) {
-    return getVersion(weblogicVersion, supportsSecurityWarnings, WebLogicRoles.ADMIN_ROLES);
+    return getVersion(weblogicVersion, psu, WebLogicRoles.ADMIN_ROLES);
   }
 
   public static WebLogicMBeansVersion getVersion(
     WebLogicVersion weblogicVersion,
-    boolean supportsSecurityWarnings,
+    WebLogicPSU psu,
     Set<String> roles
   ) {
     return
       versionsMap.computeIfAbsent(
-        computeKey(weblogicVersion, supportsSecurityWarnings, roles),
-        k -> new WebLogicMBeansVersion(weblogicVersion, supportsSecurityWarnings, roles)
+        computeKey(weblogicVersion, psu, roles),
+        k -> new WebLogicMBeansVersion(weblogicVersion, psu, roles)
       );
   }
 
   private static String computeKey(
     WebLogicVersion weblogicVersion,
-    boolean supportsSecurityWarnings,
+    WebLogicPSU psu,
     Set<String> roles
   ) {
     StringBuilder sb = new StringBuilder();
-    sb
-      .append(weblogicVersion.getDomainVersion())
-      .append("_")
-      .append(supportsSecurityWarnings);
+    sb.append(weblogicVersion.getDomainVersion());
+    if (psu != null) {
+      sb.append("_").append(psu.getName());
+    }
     if (roles.contains(WebLogicRoles.ADMIN)) {
       // The user is an Admin and has permission to do anything.
       // The user's other roles don't matter.

@@ -1,28 +1,26 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 /**
  * @module
  */
 define([
-  "knockout",
-  "wrc-frontend/apis/data-operations",
-  "ojs/ojarraytreedataprovider",
-  "ojs/ojkeyset",
-  "wrc-frontend/core/runtime",
-  "wrc-frontend/microservices/page-definition/utils",
-  "wrc-frontend/core/mutex",
+  'knockout',
+  'wrc-frontend/apis/data-operations',
+  'ojs/ojarraytreedataprovider',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/microservices/page-definition/utils',
+  'wrc-frontend/core/mutex',
 ], function (
   ko,
   DataOperations,
   ArrayTreeDataProvider,
-  keySet,
   Runtime,
   PageDefinitionUtils,
   Mutex
@@ -48,47 +46,47 @@ define([
      * @param {*} node
      */
     getIconClass: function (node) {
-      node.class = "oj-navigationlist-item-icon ";
-      if (node.type === "group") {
-        node.class += "oj-ux-ico-bag";
-      } else if (node.type === "root") {
-        node.class += "oj-ux-ico-domain";
-      } else if (node.type === "collection") {
-        node.class += "oj-ux-ico-collections";
-      } else if (node.type === "condensed") {
-        node.class += "oj-ux-ico-browse";
-      } else if (node.type === "collectionChild") {
+      node.class = 'oj-navigationlist-item-icon ';
+      if (node.type === 'group') {
+        node.class += 'oj-ux-ico-bag';
+      } else if (node.type === 'root') {
+        node.class += 'oj-ux-ico-domain';
+      } else if (node.type === 'collection') {
+        node.class += 'oj-ux-ico-collections';
+      } else if (node.type === 'condensed') {
+        node.class += 'oj-ux-ico-browse';
+      } else if (node.type === 'collectionChild') {
         if (
-          node.parentProperty === "Servers" ||
-          node.parentProperty === "RunningServers" ||
-          node.parentProperty === "ServerStates"
+          node.parentProperty === 'Servers' ||
+          node.parentProperty === 'RunningServers' ||
+          node.parentProperty === 'ServerStates'
         ) {
-          node.class += "oj-ux-ico-server";
-        } else if (node.parentProperty === "Clusters") {
-          node.class += "oj-ux-ico-cluster";
+          node.class += 'oj-ux-ico-server';
+        } else if (node.parentProperty === 'Clusters') {
+          node.class += 'oj-ux-ico-cluster';
         } else if (
-          node.parentProperty === "Machines" ||
-          node.parentProperty === "NodeManagerRuntimes"
+          node.parentProperty === 'Machines' ||
+          node.parentProperty === 'NodeManagerRuntimes'
         ) {
-          node.class += "oj-ux-ico-server";
+          node.class += 'oj-ux-ico-server';
         }
       } else {
         // type === 'creatableOptionalSingleton'
         // type === 'nonCreatableOptionalSingleton'
-        node.class += "oj-ux-ico-assets";
+        node.class += 'oj-ux-ico-assets';
       }
       return node.class;
     },
 
     refreshTreeModel: async function () {
-      return DataOperations.navtree.refreshNavtreeData(this.beanTree.navtree, this.treeModel).then((newTreeModel) => {
-        this.treeModel = newTreeModel;
-
-        console.log(this.treeModel);
-      })
-      .catch(error => {
-        return Promise.reject(error);
-      });
+      return DataOperations.navtree.refreshNavtreeData(this.beanTree.navtree, this.treeModel)
+        .then((newTreeModel) => {
+          this.treeModel = newTreeModel;
+          console.log(this.treeModel);
+        })
+        .catch(error => {
+          return Promise.reject(error);
+        });
     },
 
     /**
@@ -101,7 +99,7 @@ define([
 
         contents?.forEach((item) => {
           // [{"name":"Environment","label":"Environment","expandable":true,"type":"group"},
-          let identifier = (parentPath ? parentPath + "/" : "") + item.name;
+          let identifier = (parentPath ? parentPath + '/' : '') + item.name;
 
           let node = item;
           node.identifier = identifier;
@@ -125,6 +123,18 @@ define([
 
           this.nodes[node.identifier] = node;
 
+          if (node.children) {
+            if (node.children().length > 9 && 'group' !== node.type) {
+              node.children.splice(9);
+              node.children.push({
+                identifier: '...',
+                label: '...',
+                name: '...',
+                selectable: false,
+              });
+            }
+          }
+          
           this.getIconClass(node);
           tree.push(node);
         });
@@ -140,16 +150,15 @@ define([
     },
 
     expandNode: function (nodeId) {
-      console.log(nodeId);
+      
       let node = this.nodes[nodeId];
 
-      console.log("node to expand:");
-      console.log(node);
       if (node) {
         node.expanded = true;
-        return this.refreshTreeModel().then(() => {
-          this.updateTreeView();
-        });
+        return this.refreshTreeModel()
+          .then(() => {
+            this.updateTreeView();
+          });
       }
 
       return Promise(1);
@@ -174,7 +183,7 @@ define([
 
       let childNodes = this.buildTreeNode(json);
 
-      let isRoot = pathToExpand === "";
+      let isRoot = pathToExpand === '';
       if (!this.nodeCache[pathToExpand]) {
         if (isRoot) {
           this.nodeCache[pathToExpand] = ko.observableArray(childNodes);
@@ -199,7 +208,7 @@ define([
             if (!dupes || dupes.length === 0) {
               nodeToExpand.children.push(item);
             } else {
-              console.log(item.path + " would be a duplicate child");
+              console.log(item.path + ' would be a duplicate child');
             }
           }
         }
@@ -227,7 +236,7 @@ define([
       let nodeList = [];
 
       if (
-        typeof response.navigation !== "undefined" &&
+        typeof response.navigation !== 'undefined' &&
         response.navigation.length > 0
       ) {
         // in the case of a group (i.e. configuration perspective),
@@ -238,20 +247,20 @@ define([
 
         response.navigation.forEach((item) => {
           // check if this is a group
-          if (typeof item.groupLabel !== "undefined") {
+          if (typeof item.groupLabel !== 'undefined') {
             var groupPath;
             // determine groupPath from the identity is
             // available -- otherwise it's a top-level group
             // so path is the group label
             if (
-              typeof response.data !== "undefined" &&
-              typeof response.data.identity !== "undefined"
+              typeof response.data !== 'undefined' &&
+              typeof response.data.identity !== 'undefined'
             ) {
               groupPath =
                 PageDefinitionUtils.pathEncodedFromIdentity(
                   response.data.identity
                 ) +
-                "/" +
+                '/' +
                 item.groupLabel;
             } else {
               groupPath = item.groupLabel;
@@ -259,12 +268,12 @@ define([
 
             let groupNode = {
               group: groupPath,
-              kind: "group",
+              kind: 'group',
               label: item.groupLabel,
               path: groupPath,
               breadcrumbs: groupPath,
               leaf: false,
-              class: this.getIconClass({ type: "group" }),
+              class: this.getIconClass({ type: 'group' }),
               children: ko.observableArray([]),
             };
 
@@ -274,19 +283,19 @@ define([
             // look for a group containing a group
             item.contents.forEach(
               function (g) {
-                if (typeof g.groupLabel !== "undefined") {
-                  let nestedGroupPath = groupPath + "/" + g.groupLabel;
+                if (typeof g.groupLabel !== 'undefined') {
+                  let nestedGroupPath = groupPath + '/' + g.groupLabel;
 
                   let groupChildNode = {
                     group: nestedGroupPath,
-                    kind: "group",
-                    identity: { kind: "group", path: [] },
+                    kind: 'group',
+                    identity: { kind: 'group', path: [] },
                     label: g.groupLabel,
                     path: nestedGroupPath,
                     breadcrumbs: nestedGroupPath,
                     leaf: false,
                     children: ko.observableArray([]),
-                    class: this.getIconClass({ type: "group" }),
+                    class: this.getIconClass({ type: 'group' }),
                   };
 
                   groupNode.children.push(groupChildNode);
@@ -356,7 +365,7 @@ define([
             );
 
             this.groups[groupPath] = { data: item.contents };
-          } else if (typeof item.contents === "undefined") {
+          } else if (typeof item.contents === 'undefined') {
             let node = {
               label: PageDefinitionUtils.displayNameFromIdentity(item.identity),
               kind: item.identity.kind,
@@ -380,16 +389,16 @@ define([
             nodeList.push(node);
           }
         });
-      } else if ("data" in response) {
+      } else if ('data' in response) {
         let data;
 
         if (Array.isArray(response.data)) data = response.data;
         else data = [response.data];
 
         data.forEach((item) => {
-          if (typeof item.Name !== "undefined") {
+          if (typeof item.Name !== 'undefined') {
             let label =
-              typeof item.Name.value === "undefined"
+              typeof item.Name.value === 'undefined'
                 ? item.Name
                 : item.Name.value;
             let path = PageDefinitionUtils.pathEncodedFromIdentity(
@@ -397,8 +406,8 @@ define([
             );
             let kind = item.identity.kind;
             // in an identity, if a segment is for a singleton, it won't have a key
-            if (kind.endsWith("Singleton")) {
-              path += "/" + label;
+            if (kind.endsWith('Singleton')) {
+              path += '/' + label;
             }
 
             let node = {
@@ -463,10 +472,10 @@ define([
         // if there are any collections as children do not condense because theres no other way to navigate to them
         let collections = node
           .children()
-          .find((child) => child.kind === "collection");
+          .find((child) => child.kind === 'collection');
         let collectionCount = collections ? collections.length : 0;
 
-        if (node.kind !== "group" && collectionCount == 0) {
+        if (node.kind !== 'group' && collectionCount == 0) {
           if (node.children().length >= NavtreeManager.MAX_CHILDREN) {
             let slicedArray = node.children.slice(
               0,
@@ -474,11 +483,11 @@ define([
             );
             node.children(slicedArray);
             node.children.push({
-              label: "...",
-              name: "...",
+              label: '...',
+              name: '...',
               breadcrumbs: node.breadcrumbs,
-              path: node.path + "/...",
-              kind: "condensed",
+              path: node.path + '/...',
+              kind: 'condensed',
             });
           }
         }
@@ -518,7 +527,7 @@ define([
      */
     getDataProvider: function () {
       return new ArrayTreeDataProvider(this.treeData, {
-        keyAttributes: "identifier",
+        keyAttributes: 'identifier',
       });
     },
 
@@ -550,43 +559,17 @@ define([
     },
 
     /**
-     * Return models for the children (single-level) of a given path, as an array.
-     * Use an empty array to indicate there are no children
-     *
-     * @param {*} path
-     */
-    getPathChildrenModels: async function (path) {
-      return this.getPathModel(path);
-      // let isRoot = path === "/" || path === "";
-      // return isRoot ? node() : node.children();
-    },
-
-    /**
-     * get the model for a path.. because tree traversal is
-     * iterative, fetch all the ancestor nodes too.. then pull from
-     * node cache
-     *
-     * @param {*} path
-     */
-    getPathModel: async function (path) {
-      const response = await DataOperations.mbean.get(path);
-      console.log(`[NAVTREE-MANAGER] rdjData=${response.body.data.get("rdjData")}`);
-      console.log(`[NAVTREE-MANAGER] pdjData=${response.body.data.get("pdjData")}`);
-      return Promise.resolve(response.body);
-    },
-
-    /**
      * Determine if a node is a leaf-node or may have children
      *
      * @param {*} item object
      */
     isLeaf: function (item) {
       const kind =
-        typeof item.identity !== "undefined" &&
-        typeof item.identity.kind !== "undefined"
+        typeof item.identity !== 'undefined' &&
+        typeof item.identity.kind !== 'undefined'
           ? item.identity.kind
-          : "";
-      if (kind === "collection") {
+          : '';
+      if (kind === 'collection') {
         return false;
       }
 
@@ -598,21 +581,21 @@ define([
       // with bean path names that require encoding
       let path = PageDefinitionUtils.pathEncodedFromIdentity(item.identity);
 
-      if (path !== "") {
+      if (path !== '') {
         let url =
           Runtime.getBaseUrl() +
-          "/" +
+          '/' +
           this.beanTree.type +
-          "/data/" +
+          '/data/' +
           path +
-          "?properties=";
+          '?properties=';
 
         $.ajax({
-          type: "GET",
+          type: 'GET',
           url: url,
           async: false,
           success: function (result) {
-            if (typeof result.navigation !== "undefined") leaf = false;
+            if (typeof result.navigation !== 'undefined') leaf = false;
           },
         });
       }
@@ -621,81 +604,24 @@ define([
     },
 
     /**
-     * Query the cache or backend for an MBean (or group) and modify the observableArray
-     * backing the oj-navigation-list component by pushing the child nodes into the children
-     * observableArray of the specified path. Called in response to a navigation-list-item being expanded.
-     *
-     * @param {*} pathToExpand Path of node to populate (i.e. expand)
-     */
-    populateNode: async function (pathToExpand) {
-      return true; /*this.expireCache(pathToExpand).then(() => {
-          return this.mutex
-            .runExclusive(
-              function () {
-                return this._populateNode(pathToExpand);
-              }.bind(this)
-            )
-            .then(
-              function () {
-                return this.treeData.valueHasMutated();
-              }.bind(this)
-            );
-        });*/
-    },
-
-    _populateNode: function (pathToExpand) {
-      // check to see if the node has already been populated...
-      if (pathToExpand in this.nodeCache) {
-        if (this.nodeCache[pathToExpand].populated) {
-          return Promise.resolve(1);
-        }
-        this.nodeCache[pathToExpand].populated = true;
-      }
-
-      // if it's a group look for the prefetched json
-      if (pathToExpand in this.groups) {
-        let json = this.groups[pathToExpand];
-
-        this.addNodesToTree(pathToExpand, json);
-        return Promise.resolve(1);
-      }
-
-      let baseUrl = Runtime.getBaseUrl() + "/" + this.beanTree.type + "/data/";
-      let url = baseUrl + pathToExpand + "?properties=";
-
-      if (!(pathToExpand in this.jsonCache)) {
-        return $.getJSON({ url: url }).then(
-          function (childrenJson) {
-            this.jsonCache[pathToExpand] = childrenJson;
-            this.jsonLoadTimes[pathToExpand] = Date.now();
-            this.addNodesToTree(pathToExpand, childrenJson);
-          }.bind(this)
-        );
-      } else {
-        let childrenJson = this.jsonCache[pathToExpand];
-        this.addNodesToTree(pathToExpand, childrenJson);
-      }
-
-      return Promise.resolve(1);
-    },
-
-    /**
-     * populate a given set of paths
-     * @param {Set} paths of nodes to populate
+     * Populates a given set of paths
+     * @param {Set} nodes - paths of nodes to populate
      */
     populateNodeSet: function (nodes) {
-      let promise =  Promise.resolve(1);
-      
+      let promise = Promise.resolve(1);
+      // Iterate through every node in nodes
+      // arguments, which is assumed to be a
+      // Set of labels.
       nodes.values().forEach((n) => {
-        promise = promise.then(
-          (() => {
-            this.expandNode(n);
-          })
-        );
+        promise = promise.then(() => {
+          return this.expandNode(n);
+        });
       });
 
       return promise;
-    },
+    }
+
   };
+
   return NavtreeManager;
 });

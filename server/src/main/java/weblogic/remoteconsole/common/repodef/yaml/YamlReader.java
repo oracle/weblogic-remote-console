@@ -1,14 +1,16 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
+
+import java.util.List;
 
 import weblogic.remoteconsole.common.YamlUtils;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagesPath;
-import weblogic.remoteconsole.common.repodef.SliceFormPagePath;
+import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefExtensionSource;
@@ -18,28 +20,33 @@ import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PseudoBeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceFormDefSource;
+import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SlicesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
+import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * Utilities to help read yaml files for yaml-based page and bean repo defs.
  */
-public class YamlReader {
-  private String typesYamlDirectory;
+public abstract class YamlReader {
 
-  protected YamlReader(String typesYamlDirectory) {
-    this.typesYamlDirectory = typesYamlDirectory;
+  protected abstract List<String> getTypesYamlDirectories();
+
+  public BeanTypeDefSource getBeanTypeDefSource(String type) {
+    for (String dir : getTypesYamlDirectories()) {
+      String path = type + ".yaml";
+      if (StringUtils.notEmpty(dir)) {
+        path = dir + "/" + path;
+      }
+      BeanTypeDefSource source =  YamlUtils.read(path, BeanTypeDefSource.class);
+      if (source != null) {
+        return source;
+      }
+    }
+    return null;
   }
 
-  BeanTypeDefSource getBeanTypeDefSource(String type) {
-    return
-      YamlUtils.read(
-        this.typesYamlDirectory + "/" + type + ".yaml",
-        BeanTypeDefSource.class
-      );
-  }
-
-  PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(String type) {
+  public PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(String type) {
     return
       YamlUtils.read(
         getTypeCustomizationsYamlDirectory(type) + "/pseudo-type.yaml",
@@ -47,23 +54,23 @@ public class YamlReader {
       );
   }
 
-  BeanTypeDefCustomizerSource getBeanTypeDefCustomizerSource(BeanTypeDef type) {
+  public BeanTypeDefCustomizerSource getBeanTypeDefCustomizerSource(BeanTypeDef typeDef) {
     return
       YamlUtils.read(
-        getTypeCustomizationsYamlDirectory(type) + "/type.yaml",
+        getTypeCustomizationsYamlDirectory(typeDef) + "/type.yaml",
         BeanTypeDefCustomizerSource.class
       );
   }
 
-  BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef type) {
+  public BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef typeDef) {
     return
       YamlUtils.read(
-        getTypeCustomizationsYamlDirectory(type) + "/extension.yaml",
+        getTypeCustomizationsYamlDirectory(typeDef) + "/extension.yaml",
         BeanTypeDefExtensionSource.class
       );
   }
 
-  SliceFormDefSource getSliceFormDefSource(SliceFormPagePath pagePath, SlicesDefImpl slicesDefImpl) {
+  public SliceFormDefSource getSliceFormDefSource(SlicePagePath pagePath, SlicesDefImpl slicesDefImpl) {
     String typeYamlDir = getTypeCustomizationsYamlDirectory(pagePath);
     String slicesYamlDir = typeYamlDir + "/slices";
     SliceFormDefSource source = getSliceFormDefSource(slicesYamlDir, pagePath);
@@ -82,12 +89,36 @@ public class YamlReader {
     return null;
   }
 
-  private SliceFormDefSource getSliceFormDefSource(String slicesYamlDir, SliceFormPagePath pagePath) {
+  private SliceFormDefSource getSliceFormDefSource(String slicesYamlDir, SlicePagePath pagePath) {
     String formFile = slicesYamlDir + "/" + pagePath.getSlicePath().getSlashSeparatedPath() + "/form.yaml";
     return YamlUtils.read(formFile, SliceFormDefSource.class);
   }
 
-  CreateFormDefSource getCreateFormDefSource(CreateFormPagePath pagePath) {
+  public SliceTableDefSource getSliceTableDefSource(SlicePagePath pagePath, SlicesDefImpl slicesDefImpl) {
+    String typeYamlDir = getTypeCustomizationsYamlDirectory(pagePath);
+    String slicesYamlDir = typeYamlDir + "/slices";
+    SliceTableDefSource source = getSliceTableDefSource(slicesYamlDir, pagePath);
+    if (source != null) {
+      // Found the form def source in the normal location.  Return it.
+      return source;
+    }
+    // Didn't find it in the normal location.  Look in the alternate locations.
+    for (String alternateSliceSource : slicesDefImpl.getAlternateSliceSources()) {
+      source = getSliceTableDefSource(alternateSliceSource, pagePath);
+      if (source != null) {
+        return source;
+      }
+    }
+    // Didn't find it
+    return null;
+  }
+
+  private SliceTableDefSource getSliceTableDefSource(String slicesYamlDir, SlicePagePath pagePath) {
+    String formFile = slicesYamlDir + "/" + pagePath.getSlicePath().getSlashSeparatedPath() + "/table.yaml";
+    return YamlUtils.read(formFile, SliceTableDefSource.class);
+  }
+
+  public CreateFormDefSource getCreateFormDefSource(CreateFormPagePath pagePath) {
     return
       YamlUtils.read(
         getTypeCustomizationsYamlDirectory(pagePath) + "/create-form.yaml",
@@ -95,7 +126,7 @@ public class YamlReader {
       );
   }
 
-  TableDefSource getTableDefSource(TablePagePath pagePath) {
+  public TableDefSource getTableDefSource(TablePagePath pagePath) {
     return
       YamlUtils.read(
         getTypeCustomizationsYamlDirectory(pagePath) + "/table.yaml",
@@ -103,15 +134,15 @@ public class YamlReader {
       );
   }
 
-  SlicesDefSource getSlicesDefSource(BeanTypeDef type) {
+  public SlicesDefSource getSlicesDefSource(BeanTypeDef typeDef) {
     return
       YamlUtils.read(
-        getTypeCustomizationsYamlDirectory(type) + "/slices.yaml",
+        getTypeCustomizationsYamlDirectory(typeDef) + "/slices.yaml",
         SlicesDefSource.class
       );
   }
 
-  NavTreeDefSource getNavTreeDefSource(BeanTypeDef type) {
+  public NavTreeDefSource getNavTreeDefSource(String type) {
     return
       YamlUtils.read(
         getTypeCustomizationsYamlDirectory(type) + "/nav-tree.yaml",
@@ -119,18 +150,18 @@ public class YamlReader {
       );
   }
 
-  NavTreeDefSource getRootNavTreeDefSource(String rootNavigationType) {
+  public NavTreeDefSource getRootNavTreeDefSource(String type) {
     return
       YamlUtils.read(
-        getTypeCustomizationsYamlDirectory(rootNavigationType) + "/root-nav-tree.yaml",
+        getTypeCustomizationsYamlDirectory(type) + "/root-nav-tree.yaml",
         NavTreeDefSource.class
       );
   }
 
-  LinksDefSource getLinksDefSource(BeanTypeDef type) {
+  public LinksDefSource getLinksDefSource(BeanTypeDef typeDef) {
     return
       YamlUtils.read(
-        getTypeCustomizationsYamlDirectory(type) + "/links.yaml",
+        getTypeCustomizationsYamlDirectory(typeDef) + "/links.yaml",
         LinksDefSource.class
       );
   }

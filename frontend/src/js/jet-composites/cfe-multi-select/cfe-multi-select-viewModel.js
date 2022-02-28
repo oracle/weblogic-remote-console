@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout', 'ojs/ojbutton', 'ojs/ojcheckboxset', 'ojs/ojlabel'],
   function (ko, ArrayDataProvider, Context) {
@@ -28,7 +28,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout'
 
       // readonly mode - whether a multilist devolves to a readonly checkboxset 
       // of chosen items
-      this.readonly = ko.observable(typeof context.properties.readonly !== "undefined" ? context.properties.readonly: false);
+      this.readonly = ko.observable(typeof context.properties.readonly !== 'undefined' ? context.properties.readonly: false);
       
       // Declare and initialize the public, instance variable for
       // storing which oj-option elements in availableCheckboxSet,
@@ -72,7 +72,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout'
       };
 
       this.addBusyState = () => {
-        const options = {"description": "Web Component Startup - Waiting for data"};
+        const options = {'description': 'Web Component Startup - Waiting for data'};
         return self.busyContext.addBusyState(options);
       };
 
@@ -139,9 +139,9 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout'
 
       this.addNewChosenItem = (newChosenItem) => {
         let existingItem = self.availableItems().find(item => item.label === newChosenItem.label);
-        if (typeof existingItem === "undefined") {
+        if (typeof existingItem === 'undefined') {
           existingItem = self.chosenItems().find(item => item.label === newChosenItem.label);
-          if (typeof existingItem === "undefined") {
+          if (typeof existingItem === 'undefined') {
             self.chosenItems.valueWillMutate();
             self.chosenItems().push({value: JSON.stringify(newChosenItem), label: newChosenItem.label});
             self.chosenItems.valueHasMutated();

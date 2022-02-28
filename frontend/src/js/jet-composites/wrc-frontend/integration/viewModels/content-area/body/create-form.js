@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/pages', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function (oj, ko, HtmlUtils, Preferences, Runtime, MessageDisplaying, DataOperations, NavtreeManager, PageDataTypes, PageDefinitionUsedIfs, PageDefinitionPages, PageDefinitionUtils, ViewModelUtils, CbeTypes, CbeUtils, CoreUtils, Logger) {
@@ -28,7 +28,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         // long as kind === "creatableOptionalSingleton".
         const kind = (CoreUtils.isNotUndefinedNorNull(this.rdjData) && CoreUtils.isNotUndefinedNorNull(this.rdjData.self) && CoreUtils.isNotUndefinedNorNull(this.rdjData.self.kind) ? this.rdjData.self.kind : undefined);
         if (CoreUtils.isNotUndefinedNorNull(kind)) {
-          if (kind !== "creatableOptionalSingleton") throw new Error("pdjData argument must be a Javascript object with a createForm property, or a creatableOptionalSingleton.");
+          if (kind !== 'creatableOptionalSingleton') throw new Error('pdjData argument must be a Javascript object with a createForm property, or a creatableOptionalSingleton.');
         }
       }
 
@@ -70,7 +70,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
     function getAttributesUsedIfs() {
       let usedIfs = [];
       for (const [key, tdvrdu] of Object.entries(this.backingData.attributes)) {
-        if (tdvrdu.type === "conditional" && typeof tdvrdu.usedIf.sections !== "undefined" && tdvrdu.usedIf.sections.length > 0) {
+        if (tdvrdu.type === 'conditional' && typeof tdvrdu.usedIf.sections !== 'undefined' && tdvrdu.usedIf.sections.length > 0) {
           usedIfs.push({sections: tdvrdu.usedIf.sections, fieldName: key, fieldValue: tdvrdu.value, parent: tdvrdu.usedIf.parent});
         }
       }
@@ -89,17 +89,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
     function addAttributesUsedIfValues(property, sections, parent) {
       // Only add if this.backingData.attributes[property.name]
       // doesn't exist.
-      if (typeof this.backingData.attributes[property.name] === "undefined") {
+      if (typeof this.backingData.attributes[property.name] === 'undefined') {
         this.backingData.attributes[property.name] = {
-          type: "conditional",
+          type: 'conditional',
           default: this.rdjData.data[property.name].value,
           value: undefined,
-          required: (typeof property.required === "undefined" ? false : property.required),
+          required: (typeof property.required === 'undefined' ? false : property.required),
           visible: true,
           disabled: false,
           usedIf: {parent: parent}
         };
-        if (typeof sections !== "undefined") this.backingData.attributes[property.name].usedIf.sections = sections;
+        if (typeof sections !== 'undefined') this.backingData.attributes[property.name].usedIf.sections = sections;
       }
     }
 
@@ -121,11 +121,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       let sections = [];
       for (const [key, value] of Object.entries(this.backingData.attributes)) {
         // Only interested in attributes with "type": "conditional" field
-        if (this.backingData.attributes[key].type === "conditional") {
+        if (this.backingData.attributes[key].type === 'conditional') {
           // Only interested if "conditional" type attribute has a
           // "usedIf" field, with a nested "parent" field
-          if (typeof this.backingData.attributes[key].usedIf !== "undefined"
-            && typeof this.backingData.attributes[key].usedIf.parent !== "undefined") {
+          if (typeof this.backingData.attributes[key].usedIf !== 'undefined'
+            && typeof this.backingData.attributes[key].usedIf.parent !== 'undefined') {
             // Switch type to "normal" if name field of nested
             // "usedIf.parent" field, matches usedIf.parent.name
             if (this.backingData.attributes[key].usedIf.parent.name === usedIf.name) {
@@ -141,7 +141,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               }
               // Change type from "conditional" to "normal", to reduce
               // the number of re-render calls.
-              this.backingData.attributes[key].type = "normal";
+              this.backingData.attributes[key].type = 'normal';
             }
           }
         }
@@ -173,7 +173,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           // The properties for the new page are nested in a
           // "sections" array item (e.g. sections[0].sections[0]),
           // so we need to grab them from there.
-          if (typeof sections[0].sections !== "undefined") {
+          if (typeof sections[0].sections !== 'undefined') {
             captureSectionsUsedIfs.call(this, sections[0].sections, properties, usedIf);
           }
           else {
@@ -208,7 +208,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       let oldValue = this.backingData.attributes[fieldName].value;
       // Loop through this.backingData.attributes entries
       for (const [key, tdvrdu] of Object.entries(this.backingData.attributes)) {
-        if (typeof tdvrdu.usedIf !== "undefined" && typeof tdvrdu.usedIf.parent !== "undefined" && tdvrdu.usedIf.parent.name === fieldName) {
+        if (typeof tdvrdu.usedIf !== 'undefined' && typeof tdvrdu.usedIf.parent !== 'undefined' && tdvrdu.usedIf.parent.name === fieldName) {
           deleteAttributesUsedIfProperty.call(this, key);
           removed.push({name: key, value: tdvrdu.value});
         }
@@ -242,7 +242,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       let result = {rerender: false, removed: []};
       const attr = this.backingData.attributes[fieldName];
       let oldValue = attr.value;
-      if (typeof oldValue !== "undefined" && oldValue !== fieldValue && !Array.isArray(oldValue)) {
+      if (typeof oldValue !== 'undefined' && oldValue !== fieldValue && !Array.isArray(oldValue)) {
         Logger.info(`[CREATEFORM] fieldName=${fieldName}, oldValue=${oldValue}, newValue=${fieldValue}`);
         result.removed = removeUsedIfDataValues.call(this, fieldName);
         result.rerender = (result.removed.length > 0);
@@ -254,11 +254,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
     }
 
     function setBackingDataAttributeValue(fieldName, fieldValue) {
-      if (typeof this.backingData.attributes[fieldName] !== "undefined" && this.backingData.attributes[fieldName].type === "conditional") {
+      if (typeof this.backingData.attributes[fieldName] !== 'undefined' && this.backingData.attributes[fieldName].type === 'conditional') {
         // We're on an attribute with a "conditional" type, so
         // go ahead and update "usedIf" field of the TDVRVDU
         const result = updateUsedIfDataValue.call(this, fieldName, fieldValue);
-        if (fieldValue === "") this.backingData.attributes[fieldName].value = undefined;
+        if (fieldValue === '') this.backingData.attributes[fieldName].value = undefined;
         if (result.rerender) {
           // The change to a "usedIf" dependent field has resulted
           // in the need to do a re-render. This is typically due
@@ -291,9 +291,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         //    lives, regardless of whether it's a create or
         //    non-create form.
         //
-        this.viewParams.onRerender(this.pdjData, this.rdjData, "next", result.removed);
+        this.viewParams.onRerender(this.pdjData, this.rdjData, 'next', result.removed);
       }
-      else if (typeof this.backingData.attributes[fieldName] === "undefined") {
+      else if (typeof this.backingData.attributes[fieldName] === 'undefined') {
         // Re-rendering happens in form.js, not create-form,js.
         // The latter only sets things up to do the re-rendering.
         // We haven't re-rendered the page yet, so fieldName
@@ -313,7 +313,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         // changing things so they are not needed would be a good
         // thing, overall.
         const replacer = this.getBackingDataAttributeReplacer(fieldName);
-        if (typeof replacer !== "undefined") {
+        if (typeof replacer !== 'undefined') {
           // Loop through keys of this.backingData.attributes
           for (const key of Object.keys(this.backingData.attributes)) {
             // Look for an attribute entry with a key that ends with
@@ -325,7 +325,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               // passing in the pdjData, rdjData, flow direction and
               // array containing data for "the old" instance-level
               // observable to remove, in form.json.
-              this.viewParams.onRerender(this.pdjData, this.rdjData, "next", [{name: fieldName, value: fieldValue}]);
+              this.viewParams.onRerender(this.pdjData, this.rdjData, 'next', [{name: fieldName, value: fieldValue}]);
             }
           }
         }
@@ -339,7 +339,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
     function getBackingDataAttributeValues(fieldName) {
       let attrValues;
-      if (typeof this.backingData.attributes[fieldName] !== "undefined") {
+      if (typeof this.backingData.attributes[fieldName] !== 'undefined') {
         attrValues = this.backingData.attributes[fieldName]
       }
       return attrValues;
@@ -350,7 +350,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       // When called from form.js, properties will only
       // contain the ones for doing a "new". With a wizard
       // there are a lot more, so we need to add them.
-      if (this.pageDefinitionPages.getBackingDataPagingDirection() === "next") {
+      if (this.pageDefinitionPages.getBackingDataPagingDirection() === 'next') {
         pageProperties = processAttributesUsedIfs.call(this);
       }
 
@@ -358,9 +358,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
     }
 
     function hasIncompleteRequiredAttributes() {
-      let properties = [], pageState = {succeeded: true, messages: [], summary: ""};
+      let properties = [], pageState = {succeeded: true, messages: [], summary: ''};
 
-      if (this.pageDefinitionPages.getMode().name === "PAGING")
+      if (this.pageDefinitionPages.getMode().name === 'PAGING')
         properties = this.pageDefinitionPages.getBackingDataPagingProperties();
       else
         properties = this.pageDefinitionPages.getBackingDataProperties();
@@ -370,13 +370,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         const filtered = properties.filter(property => property.name === key);
         if (tdvrdu.required && filtered.length > 0) {
           const value = pdjTypes.getConvertedObservableValue(key, tdvrdu.value);
-          const completed = (typeof value !== "undefined" && value !== null);
+          const completed = (typeof value !== 'undefined' && value !== null);
           if (!completed) {
             const property = properties.find(property => property.name === key);
-            if (typeof property !== "undefined") {
+            if (typeof property !== 'undefined') {
               pageState.messages.push({
-                severity: "error",
-                detail: oj.Translations.getTranslatedString("wrc-create-form.pageState.error.detail", property.label)
+                severity: 'error',
+                detail: oj.Translations.getTranslatedString('wrc-create-form.pageState.error.detail', property.label)
               });
               pageState.succeeded = false;
             }
@@ -384,7 +384,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         }
       }
       if (!pageState.succeeded) {
-        pageState.summary = oj.Translations.getTranslatedString("wrc-create-form.pageState.error.summary");
+        pageState.summary = oj.Translations.getTranslatedString('wrc-create-form.pageState.error.summary');
       }
       return pageState;
     }
@@ -392,17 +392,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
     //public:
     CreateForm.prototype = {
       Mode: Object.freeze({
-        SCROLLING : {name: "SCROLLING"},
-        PAGING : {name: "PAGING"}
+        SCROLLING : {name: 'SCROLLING'},
+        PAGING : {name: 'PAGING'}
       }),
 
       isWizard: function () {
-        return (typeof this.pageDefinitionPages !== "undefined");
+        return (typeof this.pageDefinitionPages !== 'undefined');
       },
 
       getMode: function () {
         let mode = this.Mode.SCROLLING;
-        if (typeof this.pageDefinitionPages !== "undefined") {
+        if (typeof this.pageDefinitionPages !== 'undefined') {
           mode = this.pageDefinitionPages.getMode();
         }
         return mode;
@@ -437,32 +437,32 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
       addUploadedFile: function(fieldName, file) {
         // Only add file, if this.backingData.attributes[fieldName] is there.
-        if (typeof this.backingData.attributes[fieldName] !== "undefined") {
+        if (typeof this.backingData.attributes[fieldName] !== 'undefined') {
           this.backingData.fileUploads[fieldName] = file;
         }
       },
 
       clearUploadedFile: function(fieldName) {
         // Only remove file, if this.backingData.attributes[fieldName] is there.
-        if (typeof this.backingData.attributes[fieldName] !== "undefined") {
+        if (typeof this.backingData.attributes[fieldName] !== 'undefined') {
           delete this.backingData.fileUploads[fieldName];
         }
       },
 
       addBackingDataPageData: function (fieldName) {
         // Only add fieldName, if this.backingData.attributes[fieldName] is not there.
-        if (typeof this.backingData.attributes[fieldName] === "undefined") {
+        if (typeof this.backingData.attributes[fieldName] === 'undefined') {
           const property = getBackingDataProperty.call(this, fieldName);
           const sections = PageDefinitionUsedIfs.getUsedIfSections(this.pdjData.createForm.sections, fieldName, undefined, undefined);
           // Add fieldName to attributes and set it's value to a new
           // TDVRVDU object.
-          const type = (sections.length > 0 ? "conditional": "normal");
+          const type = (sections.length > 0 ? 'conditional': 'normal');
           switch(type){
-            case "normal":
-              this.backingData.attributes[fieldName] = {type: type, default: this.rdjData.data[fieldName].value, value: undefined, required: (typeof property.required === "undefined" ? false : property.required), visible: true, disabled: false};
+            case 'normal':
+              this.backingData.attributes[fieldName] = {type: type, default: this.rdjData.data[fieldName].value, value: undefined, required: (typeof property.required === 'undefined' ? false : property.required), visible: true, disabled: false};
               break;
-            case "conditional":
-              this.backingData.attributes[fieldName] = {type: type, default: this.rdjData.data[fieldName].value, value: undefined, required: (typeof property.required === "undefined" ? false : property.required), visible: true, disabled: false, usedIf: {sections: sections}};
+            case 'conditional':
+              this.backingData.attributes[fieldName] = {type: type, default: this.rdjData.data[fieldName].value, value: undefined, required: (typeof property.required === 'undefined' ? false : property.required), visible: true, disabled: false, usedIf: {sections: sections}};
               break;
           }
         }
@@ -475,17 +475,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       getBackingDataAttributeType: function(fieldName) {
         let rtnval;
         const attrValues = getBackingDataAttributeValues.call(this, fieldName);
-        if (typeof attrValues !== "undefined") rtnval = attrValues.type;
+        if (typeof attrValues !== 'undefined') rtnval = attrValues.type;
         return rtnval;
       },
 
       getBackingDataAttributeDefault: function(fieldName) {
         let rtnval;
         const attrValues = getBackingDataAttributeValues.call(this, fieldName);
-        if (typeof attrValues !== "undefined") {
+        if (typeof attrValues !== 'undefined') {
           rtnval = attrValues.default;
         } else {
-          if (fieldName === "Upload") {
+          if (fieldName === 'Upload') {
             rtnval = this.rdjData.data[fieldName].value;
           }
         }
@@ -495,28 +495,28 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       getBackingDataAttributeValue: function(fieldName) {
         let rtnval;
         const attrValues = getBackingDataAttributeValues.call(this, fieldName);
-        if (typeof attrValues !== "undefined") rtnval = attrValues.value;
+        if (typeof attrValues !== 'undefined') rtnval = attrValues.value;
         return rtnval;
       },
 
       isRequiredBackingDataAttribute: function(fieldName) {
         let rtnval;
         const attrValues = getBackingDataAttributeValues.call(this, fieldName);
-        if (typeof attrValues !== "undefined") rtnval = attrValues.required;
+        if (typeof attrValues !== 'undefined') rtnval = attrValues.required;
         return rtnval;
       },
 
       getBackingDataAttributeVisible: function(fieldName) {
         let rtnval;
         const attrValues = getBackingDataAttributeValues.call(this, fieldName);
-        if (typeof attrValues !== "undefined") rtnval = attrValues.visible;
+        if (typeof attrValues !== 'undefined') rtnval = attrValues.visible;
         return rtnval;
       },
 
       getBackingDataAttributeDisabled: function(fieldName) {
         let rtnval;
         const attrValues = getBackingDataAttributeValues.call(this, fieldName);
-        if (typeof attrValues !== "undefined") rtnval = attrValues.disabled;
+        if (typeof attrValues !== 'undefined') rtnval = attrValues.disabled;
         return rtnval;
       },
 
@@ -525,9 +525,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       },
 
       getBackingDataAttributeReplacer: function(fieldName) {
-        let replacer, delimPos = fieldName.indexOf("_COLON_");
+        let replacer, delimPos = fieldName.indexOf('_COLON_');
         if (delimPos !== -1) {
-          delimPos = fieldName.lastIndexOf("_");
+          delimPos = fieldName.lastIndexOf('_');
           replacer = fieldName.substring(delimPos + 1);
         }
         return replacer;
@@ -585,27 +585,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
           if (this.isWizard()) {
             if (!this.backingData.hasMultiFormData) {
-              this.backingData.hasMultiFormData = (property.type === "fileContents");
+              this.backingData.hasMultiFormData = (property.type === 'fileContents');
             }
 
-            if (typeof this.backingData.removed !== "undefined") {
+            if (typeof this.backingData.removed !== 'undefined') {
               // Get the value from removed
               const replacer = this.getBackingDataAttributeReplacer(name);
-              if (typeof replacer !== "undefined") {
+              if (typeof replacer !== 'undefined') {
                 const entry = this.backingData.removed.find(entry => entry.name.endsWith(replacer));
-                if (typeof entry !== "undefined") {
+                if (typeof entry !== 'undefined') {
                   this.backingData.attributes[name].value = entry.value;
                 }
               }
             }
 
-            if (typeof this.backingData.attributes[name] !== "undefined") {
-              if (typeof this.backingData.attributes[name].value !== "undefined") {
+            if (typeof this.backingData.attributes[name] !== 'undefined') {
+              if (typeof this.backingData.attributes[name].value !== 'undefined') {
                 if (CoreUtils.isUndefinedOrNull(fieldValuesFrom)) {
                   value = pdjTypes.getConvertedObservableValue(name, this.backingData.attributes[name].value);
                 }
                 else {
-                  let from = "fromRegValue";
+                  let from = 'fromRegValue';
                   if (CoreUtils.isNotUndefinedNorNull(fieldValuesFrom[name])){
                     from = fieldValuesFrom[name]();
                   }
@@ -618,7 +618,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
             // Get the value from the observable passed
             // in fieldValues parameter.
             const fieldObv = fieldValues[name];
-            if (typeof fieldObv !== "undefined") {
+            if (typeof fieldObv !== 'undefined') {
               if (CoreUtils.isUndefinedOrNull(fieldValuesFrom))
                 value = pdjTypes.getConvertedObservableValue(name, fieldObv());
               else
@@ -633,13 +633,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               value = defaultValue;
             }
             if (value === null && pdjTypes.isStringType(name) || pdjTypes.isSecretType(name)) {
-              value = "";
+              value = '';
             }
           }
           if (CoreUtils.isUndefinedOrNull(fieldValuesFrom))
             dataPayload[name] = { value: value };
           else {
-            if (CoreUtils.isNotUndefinedNorNull(fieldValuesFrom[name])  && fieldValuesFrom[name]() === "fromModelToken"){
+            if (CoreUtils.isNotUndefinedNorNull(fieldValuesFrom[name])  && fieldValuesFrom[name]() === 'fromModelToken'){
               dataPayload[name] = value;
             } else
               dataPayload[name] = { value: value };
@@ -647,7 +647,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         });
 
         if (this.isWizard()) {
-          if (typeof this.backingData.removed !== "undefined") delete this.backingData.removed;
+          if (typeof this.backingData.removed !== 'undefined') delete this.backingData.removed;
           this.pageDefinitionPages.addBackingDataPagingPageProperties([...properties]);
           if (!this.pageDefinitionPages.getCanFinish()) properties = this.pageDefinitionPages.getBackingDataPagingProperties();
         }
@@ -656,9 +656,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       },
 
       hasDeploymentPathData: function () {
-        let rtnval = (typeof this.backingData.attributes["SourcePath"] !== "undefined");
+        let rtnval = (typeof this.backingData.attributes['SourcePath'] !== 'undefined');
         if (!rtnval && CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm) &&  CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm.properties)) {
-          const index = this.pdjData.createForm.properties.map(property => property.name).indexOf("SourcePath");
+          const index = this.pdjData.createForm.properties.map(property => property.name).indexOf('SourcePath');
           rtnval = (index !== -1);
         }
         return rtnval;
@@ -675,27 +675,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           // CBE everypage examples have no "Upload" field in
           // the dataPayload, so we need to remove it before
           // we create the multipart section for it.
-          delete dataPayload1["Upload"];
+          delete dataPayload1['Upload'];
           // Remove "label" field from "Targets"
-          if (CoreUtils.isNotUndefinedNorNull(dataPayload1["Targets"])) {
-            if (CoreUtils.isUndefinedOrNull(dataPayload1["Targets"].value)) {
+          if (CoreUtils.isNotUndefinedNorNull(dataPayload1['Targets'])) {
+            if (CoreUtils.isUndefinedOrNull(dataPayload1['Targets'].value)) {
               // Remove "Targets" field itself
-              delete dataPayload1["Targets"];
+              delete dataPayload1['Targets'];
             }
             else {
               // Remove "label" field from "Targets" field
-              for (let i = 0; i < dataPayload1["Targets"].value.length; i++) {
-                delete dataPayload1["Targets"].value[i].label;
+              for (let i = 0; i < dataPayload1['Targets'].value.length; i++) {
+                delete dataPayload1['Targets'].value[i].label;
                 //if this is in WDT, it maybe using model token, and value will not exist.
-                if (CoreUtils.isNotUndefinedNorNull(dataPayload1["Targets"].value[i].value)){
-                  delete dataPayload1["Targets"].value[i].value.label;
+                if (CoreUtils.isNotUndefinedNorNull(dataPayload1['Targets'].value[i].value)){
+                  delete dataPayload1['Targets'].value[i].value.label;
                 }
               }
             }
           }
           // Remove "PlanPath" field, if the value is empty
-          if (CoreUtils.isNotUndefinedNorNull(dataPayload1["PlanPath"]) && dataPayload1["PlanPath"].value === "") {
-            delete dataPayload1["PlanPath"];
+          if (CoreUtils.isNotUndefinedNorNull(dataPayload1['PlanPath']) && dataPayload1['PlanPath'].value === '') {
+            delete dataPayload1['PlanPath'];
           }
 
         }
@@ -726,11 +726,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           // from scratch.
           const formData = new FormData();
           // Find properties with "type": "fileContents" field
-          const fields = properties.filter(property => property.type === "fileContents");
+          const fields = properties.filter(property => property.type === 'fileContents');
           // Use property.name to get File onject that was saved
           // in this.backingData.fileUploads map.
           fields.forEach((field) => {
-            if (typeof self.backingData.fileUploads[field.name] !== "undefined") {
+            if (typeof self.backingData.fileUploads[field.name] !== 'undefined') {
               // Add multipart sections using file
               formData.append(
                 field.name,
@@ -755,12 +755,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
             'requestBody',
             new Blob([JSON.stringify({
               data: results.data
-            })], {type: "application/json"})
+            })], {type: 'application/json'})
           );
 
-          Logger.info(`[CREATEFORM] formData.requestBody=${formData.get("requestBody")}`);
-          Logger.info(`[CREATEFORM] formData.Source=${formData.get("Source")}`);
-          Logger.info(`[CREATEFORM] formData.Plan=${formData.get("Plan")}`);
+          Logger.info(`[CREATEFORM] formData.requestBody=${formData.get('requestBody')}`);
+          Logger.info(`[CREATEFORM] formData.Source=${formData.get('Source')}`);
+          Logger.info(`[CREATEFORM] formData.Plan=${formData.get('Plan')}`);
 
           // Create the multipart request and POST it.
           DataOperations.mbean.upload(self.viewParams.parentRouter.data.rdjUrl(), formData)
@@ -776,18 +776,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       newBean: function() {
         const self = this;
         return new Promise(function (resolve) {
-          const newUri = `${self.rdjData.self.resourceData}?view=createForm`;
+        var url = new URL(self.rdjData.self.resourceData,Runtime.getBackendUrl());
+        url.searchParams.set('view', 'createForm');
+        const newUri = url.pathname + url.search;
+
           return DataOperations.mbean.new(newUri)
             .then(reply => {
-              const rdjData = reply.body.data.get("rdjData");
+              const rdjData = reply.body.data.get('rdjData');
               const kind = (CoreUtils.isNotUndefinedNorNull(rdjData) && CoreUtils.isNotUndefinedNorNull(rdjData.self) && CoreUtils.isNotUndefinedNorNull(rdjData.self.kind) ? rdjData.self.kind : undefined);
               const isRdjData = (CoreUtils.isNotUndefinedNorNull(rdjData) && CoreUtils.isNotUndefinedNorNull(rdjData.data) && (Object.keys(rdjData.data).length !== 0) ? true : false);
-              if (!isRdjData && CoreUtils.isNotUndefinedNorNull(kind) && kind === "creatableOptionalSingleton") {
-                const createUrl = `${Runtime.getBackendUrl()}${rdjData.self.resourceData}?action=create`;
-                return DataOperations.mbean.save(createUrl, rdjData.data);
+              if (!isRdjData && CoreUtils.isNotUndefinedNorNull(kind) && kind === 'creatableOptionalSingleton') {
+                var url = new URL(self.rdjData.self.resourceData,Runtime.getBackendUrl());
+                url.searchParams.delete('view');
+                url.searchParams.set('action', 'create');
+                const createUri = url.toString();
+                return DataOperations.mbean.save(createUri, rdjData.data);
               }
               else {
-                return Promise.resolve(reply);
+                return reply;
               }
             })
             .then(reply => {
@@ -795,7 +801,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               // Otherwise fallback to the uri that is found in the create form
               let getUri = reply.body.data.resourceData?.resourceData;
               if (CoreUtils.isUndefinedOrNull(getUri)) {
-                getUri = reply.body.data.get("rdjData").createForm.resourceData;
+                getUri = reply.body.data.get('rdjData').createForm.resourceData;
               }
               DataOperations.mbean.get(getUri)
                 .then(reply => {
@@ -815,7 +821,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               // we need to use the CbeUtils.extractBeanPath() function, so
               // we have what we need when signaling that the shopping cart
               // was modified.
-              self.viewParams.signaling.shoppingCartModified.dispatch("form", "delete", {
+              self.viewParams.signaling.shoppingCartModified.dispatch('form', 'delete', {
                 isLockOwner: true,
                 hasChanges: true,
                 supportsChanges: true

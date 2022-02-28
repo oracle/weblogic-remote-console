@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -7,6 +7,7 @@ import weblogic.remoteconsole.common.repodef.LinkDef;
 import weblogic.remoteconsole.common.repodef.LinksDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.schema.LinkDefSource;
+import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * yaml-based implementation of the LinkDef interface.
@@ -22,10 +23,13 @@ class LinkDefImpl implements LinkDef {
     this.linksDefImpl = linksDefImpl;
     this.source = source;
     this.isCollectionLink = isCollectionLink;
-    this.notFoundMessage =
-      new LocalizableString(getLocalizationKey("notfound"), source.getNotFoundMessage());
+    String englishNotFoundMessage = source.getNotFoundMessage();
+    if (StringUtils.notEmpty(englishNotFoundMessage)) {
+      this.notFoundMessage =
+        new LocalizableString(getLocalizationKey("notfound." + englishNotFoundMessage), englishNotFoundMessage);
+    }
     String englishLabel = source.getLabel();
-    this.label = new LocalizableString(getLocalizationKey(englishLabel + ".label"), englishLabel);
+    this.label = new LocalizableString(getLocalizationKey("label." + englishLabel), englishLabel);
   }
 
   private LinksDefImpl getLinksDefImpl() {

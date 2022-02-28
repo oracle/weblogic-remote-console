@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
-"use strict";
+'use strict';
 
 /**
  * Module used to manage CBE's connection to a WebLogic REST API endpoint.
@@ -15,18 +15,18 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/apis/data-operations', 'wrc-f
   function(Runtime, DataOperations, MessageDisplaying, CbeTypes, CoreTypes, CoreErrors, CoreUtils, Logger){
     const i18n = {
       messages: {
-        "connectionMessage":  {summary: DataOperations.connection.messages.connectionMessage.summary}
+        'connectionMessage':  {summary: DataOperations.connection.messages.connectionMessage.summary}
       }
     };
 
     function processConnectionResponse(data) {
       if (CoreUtils.isNotUndefinedNorNull(data)) {
 
-        if (data["connectionWarning"]) {
+        if (data['connectionWarning']) {
           MessageDisplaying.displayMessages([
             {
-              severity: "WARNING",
-              summary: data["connectionWarning"],
+              severity: 'WARNING',
+              summary: data['connectionWarning'],
             },
           ]);
         }
@@ -93,7 +93,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/apis/data-operations', 'wrc-f
               // Check for any message in the connection reply
               if (CoreUtils.isNotUndefinedNorNull(reply.body.data.lastMessage)) {
                 messages.push({
-                  severity: "error",
+                  severity: 'error',
                   summary: i18n.messages.connectionMessage.summary,
                   detail: reply.body.data.lastMessage
                 });
@@ -108,7 +108,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/apis/data-operations', 'wrc-f
                     // Check for any message in the connection reply
                     if (CoreUtils.isNotUndefinedNorNull(reply.body.data.lastMessage)) {
                       messages.push({
-                        severity: "error",
+                        severity: 'error',
                         summary: i18n.messages.connectionMessage.summary,
                         detail: reply.body.data.lastMessage
                       });
