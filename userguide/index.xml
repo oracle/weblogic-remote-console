@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>User Guide on WebLogic Remote Console</title>
+    <title>User guide on WebLogic Remote Console</title>
     <link>/weblogic-remote-console/userguide/</link>
-    <description>Recent content in User Guide on WebLogic Remote Console</description>
+    <description>Recent content in User guide on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/weblogic-remote-console/userguide/index.xml" rel="self" type="application/rss+xml" />
@@ -13,18 +13,10 @@
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>/weblogic-remote-console/userguide/projects/</guid>
-      <description>A project is a group of connections to either WebLogic Administration Servers or WebLogic Deploy Tooling (WDT) models or both.
-Create a project  Open File &amp;gt; New Project. Enter a name for the project and click OK. The new project will appear in the Kiosk. Expand the Kiosk and beside the project name, click ⋮. Select either Add Admin Server Connection Provider or Add WDT Model File Provider. You can add multiple of either to the project and it doesn&amp;rsquo;t matter which order you add them in.</description>
-    </item>
-    
-    <item>
-      <title>Edit domain configurations</title>
-      <link>/weblogic-remote-console/userguide/edit-domain-config/</link>
-      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/weblogic-remote-console/userguide/edit-domain-config/</guid>
-      <description>The domain configuration process in the WebLogic Remote Console is similar to the Administration Console. When you start editing the domain, a configuration lock is placed on the domain that blocks other users from making simultaneous changes. Once you&amp;rsquo;re are satisfied with your changes, you can &amp;lsquo;activate&amp;rsquo; these changes and perpetuate them to the administration and management servers.
-Configuration locks do not apply to WDT model files. As WDT model files are not connected to live domains, they do not require any locks to prevent conflicting changes.</description>
+      <description>A project is a group of providers connections to WebLogic Administration Servers, WebLogic Deploy Tooling (WDT) models, WDT composite models, or property lists.
+Create a project   Open File &amp;gt; New Project.
+  Enter a name for the project and click OK. The new project will appear in the Kiosk. Next, you&amp;rsquo;ll add a provider to the project.
+  Expand the Kiosk and beside the project name, click ⋮.</description>
     </item>
     
     <item>
@@ -49,7 +41,7 @@ Desktop application To check for newer versions of the desktop application, go t
     </item>
     
     <item>
-      <title>Check Log Files</title>
+      <title>Check log files</title>
       <link>/weblogic-remote-console/userguide/logging/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
