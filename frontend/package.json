@@ -19,7 +19,7 @@
     "chai": "^4.2.0",
     "chromedriver": "^85.0.1",
     "dotenv": "^8.2.0",
-    "electron": "16.0.5",
+    "electron": "16.2.6",
     "eslint": "^7.32.0",
     "fixture": "^0.1.2",
     "geckodriver": "^1.22.3",
