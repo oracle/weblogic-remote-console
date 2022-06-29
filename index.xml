@@ -14,7 +14,7 @@
       
       <guid>/weblogic-remote-console/develop/build-source/</guid>
       <description>Prerequisites Before you can build the WebLogic Remote Console, you need to install the following software in your local build environment:
- Java SE 11 Maven 3.6.1+ nodejs 14.16+ This download includes npm. Oracle JET 11.1.0 client libraries To install the required Oracle JET software, run npm install -g @oracle/ojet-cli@~11.1.0. On Linux and macOS, you will need to use sudo.  You can verify you&amp;rsquo;ve installed the correct versions of the listed software by running the following commands:</description>
+ Java SE 11 Maven 3.6.1+ nodejs 14.16+ This download includes npm. Oracle JET 12.0.0 client libraries To install the required Oracle JET software, run npm install -g @oracle/ojet-cli@~12.0.0. On Linux and macOS, you will need to use sudo.  You can verify you&amp;rsquo;ve installed the correct versions of the listed software by running the following commands:</description>
     </item>
     
     <item>
@@ -23,9 +23,9 @@
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>/weblogic-remote-console/setup/console/</guid>
-      <description>The WebLogic Remote Console provides a redesigned interface for WebLogic Server domain configuration. The new user interface applies the standards of the Oracle Redwood design system included with Oracle JET.
-The WebLogic Remote Console user interface consists of the following sections:
- Kiosk NavStrip Navigation Tree Content Pane  Kiosk The Kiosk (located in the bottom right corner of the WebLogic Remote Console) is where you perform the administrative aspects of the WebLogic Remote Console such as managing providers and projects.</description>
+      <description>The WebLogic Remote Console offers an alternative option for administering WebLogic Server domains. It not only allows you to edit Administration Servers, but also build WebLogic Deploy Tooling (WDT) model files and property lists.
+While the WebLogic Remote Console shares many features with the Administration Console, its functionality is slightly different. See Differences with the Administration Console  for more information.
+Basic layout The WebLogic Remote Console presents a simple user interface that varies slightly across different providers.</description>
     </item>
     
     <item>
@@ -79,9 +79,10 @@ Contributing to the WebLogic Remote Console repository Pull requests can be made
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>/weblogic-remote-console/reference/known_issues/</guid>
-      <description>This page lists the known issues and workarounds, if available, as well as the limitations of the console in this release.
-Limitations The following features are not available in this release of the WebLogic Remote Console:
- Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on. Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.</description>
+      <description>This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.
+Limitations In the current release of WebLogic Remote Console, you are unable to:
+  Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on.
+  Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.</description>
     </item>
     
     <item>
@@ -91,8 +92,8 @@ Limitations The following features are not available in this release of the WebL
       
       <guid>/weblogic-remote-console/userguide/providers/property-list/</guid>
       <description>Property lists are an editable set of key-value pairs.
-We recommend that you use the desktop application over the browser application when working with property list files.
- Create a new property list  Expand the Kiosk and beside the project name, click ⋮. Select Create Provider for New Property List. Enter a name for the property list provider. This is the name that will appear in the Project list of providers so you can identify which provider you&amp;rsquo;re working on.</description>
+You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.
+We recommend that you use the desktop application over the browser application when working with property list files.</description>
     </item>
     
     <item>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.82.0" />
+    <meta name="description" content="Overview of the console&#39;s user interface and behavior">
+
+
+    <link rel="icon" href="/weblogic-remote-console/images/logo.png" type="image/png">
+
+    <title>Console Design and Usage Notes :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/css/nucleus.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1656460289" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1656460289"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/posts/console_uidesign/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/weblogic-remote-console/">
+  <img src="/weblogic-remote-console//images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1656460289"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1656460289"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/weblogic-remote-console\/";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1656460289"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/posts/" title="Using WebLogic Remote Console" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/posts/">
+          Using WebLogic Remote Console
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/install_config/" title="Install and Configure the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/install_config/">
+        Install and Configure the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/console_uidesign/" title="Console Design and Usage Notes" class="dd-item active">
+        <a href="/weblogic-remote-console/posts/console_uidesign/">
+        Console Design and Usage Notes
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/tuning/" title="Tune the Remote Console Environment" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/tuning/">
+        Tune the Remote Console Environment
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/developer_guide/" title="Developer Guide" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/developer_guide/">
+        Developer Guide
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/faqs/" title="Frequently Asked Questions" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/faqs/">
+        Frequently Asked Questions
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/known_issues/" title="Known Issues and Limitations for the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/known_issues/">
+        Known Issues and Limitations for the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/troubleshoot/" title="Troubleshoot WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/troubleshoot/">
+        Troubleshoot WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 1.1.0.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://weblogic-slack-inviter.herokuapp.com/"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/'>Home</a> > <a href='/weblogic-remote-console/posts/'>Using WebLogic Remote Console</a> > Console Design and Usage Notes
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#separation">Separation of Configuration and Runtime Data</a></li>
+    <li><a href="#new_ui">User Interface Description</a></li>
+    <li><a href="#usage">Usage Notes</a>
+      <ul>
+        <li><a href="#create">Create MBeans</a></li>
+        <li><a href="#tool_bar">Use the Tool Bar Icons in the Content Pane</a></li>
+        <li><a href="#cart">Use the Shopping Cart</a></li>
+        <li><a href="#help">Use the Remote Console Help</a></li>
+        <li><a href="#controls">Use the Remote Console Control Operations</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Console Design and Usage Notes
+            </h1>
+          
+
+        
+
+
+<h1 id="heading"></h1>
+<ul>
+<li><a href="#separation">Separation of Configuration and Runtime Data</a></li>
+<li><a href="#new_ui">User Interface Description </a></li>
+<li><a href="#usage">Usage Notes</a></li>
+</ul>
+<h2 id="separation">Separation of Configuration and Runtime Data</h2>
+<p>Unlike the WebLogic Server Administration Console, which has pages that combine the configuration and runtime data, the Remote Console has separate pages for each. For example, in the Remote Console:</p>
+<ul>
+<li>The Servers table under Environment in the Configuration perspective shows all the configured servers (in the &lsquo;edit&rsquo; tree), but does not show whether each server is running.</li>
+<li>The Server States table in the Monitoring perspective lists all the servers, both configured and dynamic, (in the Administration Server&rsquo;s &lsquo;server config&rsquo; tree) and the status of each server. This page also provides control operations to change the state of the servers.</li>
+<li>The Running Servers table in the Monitoring perspective lists the servers (in the Administration Server&rsquo;s &lsquo;server config&rsquo; tree) that are currently running.</li>
+</ul>
+<p>You can navigate easily between the two perspectives using the drop-down list in the breadcrumbs and the icons in the NavStrip on the left.</p>
+
+<div class="notices note" ><p>Because the Configuration perspective shows the &lsquo;edit&rsquo; tree (that is, the changes you&rsquo;re currently making and haven&rsquo;t activated yet), and the Monitoring perspective shows the Administration Server&rsquo;s &lsquo;server config&rsquo; tree (that is, the configuration from the last time the Administration Server was booted plus any activated dynamic changes), unactivated changes that you made in the Configuration perspective won&rsquo;t show up in the Monitoring perspective.  For example, if you add a server and have not activated the change yet, it does not show up in the Monitoring &lsquo;Running Servers&rsquo; and &lsquo;Server States&rsquo; tables.  Also, if you make any nondynamic changes, and activate them, they won&rsquo;t show up in the Monitoring pages until you reboot the appropriate servers.</p>
+</div>
+
+<h2 id="new_ui">User Interface Description</h2>
+<p>The primary areas and design features of the  WebLogic Remote Console user interface are as follows:</p>
+<ul>
+<li>
+<p><strong>Branding Area</strong>   The Branding area is the fixed area at the very top of the page. The application name is located on the left; the connected user and connect/disconnect icon are on the right. In addition to the connect/disconnect icon, you can click the application name to re-establish a domain connection.</p>
+<p>You can click on the domain name in the branding area to see the URL for the domain that you are connected to and the version of the WebLogic Server domain.</p>
+</li>
+<li>
+<p><strong>Home Page</strong> The Home page uses a card-based design to represent functional areas such as Configuration and Monitoring. When you select a card on the Home page, a perspective for the functional area displays. Perspectives separate administration tasks and behaviors.</p>
+</li>
+<li>
+<p><strong>Landing Page</strong> Like the Home page, the landing pages have been reworked to use cards, in addition to clickable links. There are currently two landing pages:</p>
+<ul>
+<li>
+<p>Configuration - For creating, modifying and removing data associated with configuration MBeans in a WebLogic domain. Note that WebLogic has three different versions of the configuration per-domain:</p>
+<ul>
+<li>The &lsquo;edit&rsquo; tree -  the pending configuration that hasn&rsquo;t been activated yet.</li>
+<li>The &lsquo;domain config&rsquo; tree - the most recently activated configuration (that is, the domain&rsquo;s &lsquo;config&rsquo; directory).</li>
+<li>The &lsquo;server config&rsquo; tree - the configuration that a server is currently using that may need to be rebooted to catch up to the domain config tree.</li>
+</ul>
+<p>Currently, the Remote Console only displays the &lsquo;edit&rsquo; tree.</p>
+</li>
+<li>
+<p>Monitoring - For viewing runtime MBeans in a WebLogic domain.</p>
+</li>
+</ul>
+<p>Clicking a card on a landing page displays (or hides) a list of clickable categories for the associated root level node, and a descriptive paragraph for each. On the Configuration landing page, for example, the cards represent the root level nodes in the domain structure (such as Environment, Scheduling, Services, and so on).</p>
+<p>You can return to a landing page by clicking <img src="/weblogic-remote-console/images/icons/home-icon-blk_24x24.png" alt="Home icon"> on the right side of the content pane.</p>
+</li>
+<li>
+<p><strong>Navigation Tree</strong> The Domain Structure panel in the WebLogic Server Administration Console is represented in the WebLogic Remote Console as a dynamic navigation tree pane. Different navigation trees are loaded based on the perspective that you are using. For example, if you are using the Configuration perspective, the navigation tree lists the root-level nodes in the domain structure.</p>
+<p>An ellipse (&hellip;) in the Navigation Tree in a list indicates that there are more than ten entities of a particular type defined in the domain. When you click the ellipse, the table view for the first ten entities displays in the main content area. You can then access all the entities in the table view using the arrows at the bottom of the table. For example, if you have 20 server instances defined in a domain, only the first ten are listed in the navigation tree. Clicking the ellipse displays the Server table in the main content area, where you can view the first ten servers and navigate to the remaining servers.</p>
+</li>
+<li>
+<p><strong>NavStrip</strong> A small strip on the left edge of the page that contains icons for toggling the visibility of the navigation tree <img src="/weblogic-remote-console/images/icons/navigation-icon-toggle-off-blk_24x24.png" alt="Navpane icon">, and for choosing the perspective to work with, such as Configuration and Monitoring. Clicking a NavStrip icon for a perspective is equivalent to clicking a card on the Home Page. The difference is that the NavStrip is always visible, while the Home page cards are not.</p>
+</li>
+<li>
+<p><strong>Navigation Tree/Content Pane Divider</strong>  When the navigation tree is open, you can use this divider to simultaneously adjust the width of the navigation tree and content pane.</p>
+</li>
+<li>
+<p><strong>Content Pane</strong> The content pane is the main pane to the right of the navigation tree that consists of:</p>
+<ul>
+<li>Header - Topmost section of the content pane that contains the name of the active perspective.
+<ul>
+<li>Click <img src="/weblogic-remote-console/images/icons/home-icon-blk_24x24.png" alt="Home icon"> in the Header area to return to the Remote Console Home page.</li>
+<li>Click <img src="/weblogic-remote-console/images/icons/console-mode-readwrite_24x24.png" alt="Read/Write icon"> to change the console into read-only mode or <img src="/weblogic-remote-console/images/icons/console-mode-readonly_24x24.png" alt="Read-only icon"> to change the console into read/write mode.</li>
+</ul>
+</li>
+<li>Breadcrumbs - Represent the path to the current MBean, with clickable links to the parent pages. Use the drop-down list, if available, to navigate to related pages, runtime data or configuration data.</li>
+<li>Main content area - Contains the tables and forms data. The topmost section is a fixed header that contains page descriptions and instructions, tabs (if applicable), perspective-scoped navigation history, toolbar buttons such as <strong>Save</strong> on the left, toolbar icons (on the right) and the <strong>Show advanced fields</strong> check box. The content area beneath the fixed header contains the tables, forms, and help fields. Horizontal and vertical scrollbars appear for tables, forms and help when the page is not large enough to display its entire contents.</li>
+</ul>
+</li>
+</ul>
+<h2 id="usage">Usage Notes</h2>
+<p>Consider the following usage notes when using the WebLogic Remote Console:</p>
+<ul>
+<li><a href="#create">Create MBeans</a></li>
+<li><a href="#tool_bar">Use the Tool Bar Icons in the Content Pane</a></li>
+<li><a href="#cart">Use the Shopping Cart</a></li>
+<li><a href="#help">Use the Remote Console Help</a></li>
+<li><a href="#controls">Use the Remote Console Control Operations</a></li>
+</ul>
+<h3 id="create">Create MBeans</h3>
+<p>The Remote Console includes simplified wizards for deploying applications and creating JDBC system resources.</p>
+<p>In most other cases, when you create a new MBean on a page, you are prompted to fill in a few key properties, such as Name, then click <strong>Create</strong>. Unlike the WebLogic Server Administration Console, the Remote Console does not guide you through configuring other properties that you typically need to complete the configuration. Instead, it displays the new bean&rsquo;s pages where you can click through the tabs to finish configuring the bean.</p>
+
+<div class="notices note" ><p>When you configure a bean property that references another bean, you must first create the other bean. For example, if you want to assign Server1 to Cluster1, you need to create Cluster1 first, unlike in the WebLogic Server Administration Console where you can choose to create Cluster1 during server creation.</p>
+</div>
+
+<h3 id="tool_bar">Use the Tool Bar Icons in the Content Pane</h3>
+<p>Use the icons on the tool bar as follows:</p>
+<ul>
+<li>
+<p>Home - Click <img src="/weblogic-remote-console/images/icons/home-icon-blk_24x24.png" alt="Home icon"> in the content pane to return to the landing page for the functional area, such as Configuration or Monitoring. Click <img src="/weblogic-remote-console/images/icons/home-icon-blk_24x24.png" alt="Home icon"> in the left side of the header area to return to the console home page.</p>
+</li>
+<li>
+<p>Navigation History - Click <img src="/weblogic-remote-console/images/icons/beanpath-history-icon-blk_24x24.png" alt="history icon"> to view a menu with a list of clickable links to the pages you have visited. This history is perspective-scoped.</p>
+</li>
+<li>
+<p>Help - Click <img src="/weblogic-remote-console/images/icons/help-icon-blk_24x24.png" alt="Help icon"> to view reference information about the attributes displayed on the page.</p>
+</li>
+<li>
+<p>Reload - Click <img src="/weblogic-remote-console/images/icons/sync-off-icon-blk_24x24.png" alt="Reload icon"> to reload the form/table once when no auto reload interval is set. This icon changes to active (<img src="/weblogic-remote-console/images/icons/sync-on-icon-blk_24x24.png" alt="Sync interval icon">) when the reload interval is set. Click the icon to toggle the auto reload on and off.</p>
+</li>
+<li>
+<p>Auto Reload Interval - Click <img src="/weblogic-remote-console/images/icons/sync-interval-icon-blk_24x24.png" alt="Sync interval icon"> to set or clear a specified time interval, in seconds, for automatic reload of the form/table. If you select a different tab, or move to another page, automatic page reload stops.</p>
+</li>
+<li>
+<p>Shopping Cart - When changes are pending, click <img src="/weblogic-remote-console/images/icons/shopping-cart-non-empty-tabstrip_24x24.png" alt="Shopping cart full icon"> to view, discard, or commit the changes. The <img src="/weblogic-remote-console/images/icons/shopping-cart-empty-tabstrip_24x24.png" alt="Shopping cart empty icon"> indicates there are no pending changes to the configuration.</p>
+</li>
+</ul>
+<h3 id="cart">Use the Shopping Cart</h3>
+<p>You can use the shopping cart to:</p>
+<ul>
+<li>Commit all the changes currently in the shopping cart. This equates to clicking the &ldquo;Activate Changes&rdquo; button in the WebLogic Server Administration Console.</li>
+<li>Discard all the changes currently in the shopping cart. There is currently no support for removing an individual shopping cart item.</li>
+</ul>
+<p>If you installed the <a href="/weblogic-remote-console/posts/install_config/#extension">Remote Console extension</a> in your domain, you can:</p>
+<ul>
+<li>View the status of the lock in the Change Manager.</li>
+<li>View additions and deletions of configuration objects.</li>
+<li>View the before and after values of fields modified through forms.</li>
+<li>Navigate to the form associated with the addition or change.</li>
+</ul>
+<p>These pending changes and lock status are visible in a Kiosk window, accessible by clicking View Changes from the Shopping Cart menu, or by clicking the Kiosk tab on the bottom right side of the page.</p>
+<p><strong>Difference Between the Change Center and Change Manager</strong>
+In the WebLogic Server Administration Console, the Change Center provides a way to lock a domain configuration so you can make changes to the configuration while preventing other accounts from making changes during your edit session. It can be enabled or disabled in a development domain, and is enabled by default in a production domain. When locking is enabled, you start the edit process by obtaining a lock. When you finish making changes, you save the changes. The changes do not take effect, however, until you activate them, distributing them to all server instances in the domain.</p>
+<p>The WebLogic Remote Console provides similar locking functionality in the shopping cart. In the Remote Console, in both development and production domains, the pages are always read/writeable. When you create an MBean or save a change to page, the Remote Console automatically grabs the lock. To view details about the lock, expand the Change Manager in the Kiosk. The changes are not activated until you click Commit Changes.</p>
+<p>When you activate nondynamic changes, you need to navigate to the &lsquo;Running Servers&rsquo; table in the Monitoring perspective to see which servers need to be rebooted so that they can start using the new configuration.</p>
+<p>In both consoles, the configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock using the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the Remote Console and you will not be locked out of making changes with the other tools.</p>
+
+<div class="notices note" ><p>We recommend against making changes using multiple tools because when one of the sessions activates their changes, it releases the lock and the other session will not be able to save or activate their changes.</p>
+</div>
+
+<h3 id="help">Use the Remote Console Help</h3>
+<p>The Remote Console provides several types of online help on each page.</p>
+<ul>
+<li>Use the ? icon to the left of each field to access summary and detailed help for the field. If you hover over the ?, a summary help description displays. Click the ? icon to display a more detailed help description, if available.</li>
+<li>Click the ? icon in the top right of the content pane to toggle the view of the reference information for all of the fields displayed on the page.</li>
+</ul>
+<h3 id="controls">Use the Remote Console Control Operations</h3>
+<p>The Remote Console provides control operations in the Monitoring perspective.</p>
+<ul>
+<li>The Server States page contains the control operations to change the state of a server. Server state signifies the specific condition of a server in the life cycle management. To change the server state, click the desired control at the top of the table. Then, in the next window, select the servers on which you want to perform the control operation. Consistent with the WebLogic Server Administration Console, the Remote Console includes support for graceful shutdowns.</li>
+<li>The App Deployments Runtimes page, under Domain Information in the Navigation tree, provides controls to start and stop applications. To start or stop an application, select the control, then in the next window, select the applications on which you want to perform the operation.</li>
+</ul>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/posts/install_config/" title="Install and Configure the WebLogic Remote Console"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/posts/tuning/" title="Tune the Remote Console Environment" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1656460289"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1656460289"></script>
+    
+        
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1656460289"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

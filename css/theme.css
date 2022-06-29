@@ -483,16 +483,20 @@ blockquote cite {
 div.notices {
     margin: 2rem 0;
     position: relative;
+    padding-bottom: 10px;
 }
-div.notices p {
-    padding: 15px;
+div.notices > * {
+    padding: 15px 35px;
     display: block;
     font-size: 1rem;
     margin-top: 0rem;
     margin-bottom: 0rem;
     color: #666;
 }
-div.notices p:first-child:before {
+div.notices * + * {
+    padding-top: 0px;
+}
+div.notices > :first-child:before {
     position: absolute;
     top: 2px;
     color: #fff;
@@ -501,49 +505,55 @@ div.notices p:first-child:before {
     content: "\f06a";
     left: 10px;
 }
-div.notices p:first-child:after {
+div.notices > :first-child:after {
     position: absolute;
     top: 2px;
     color: #fff;
     left: 2rem;
 }
-div.notices.info p:first-of-type {
+div.notices.info > :first-child {
     border-top: 30px solid #F0B37E;
 }
 div.notices.info {
     background: #FFF2DB;
 }
-div.notices.info p:first-child:after {
+div.notices.info > :first-child:after {
     content: 'Info';
 }
-div.notices.warning p:first-of-type {
+div.notices.warning > :first-child {
     border-top: 30px solid rgba(217, 83, 79, 0.8);
 }
 div.notices.warning {
     background: #FAE2E2;
 }
-div.notices.warning p:first-child:after {
+div.notices.warning > :first-child:after {
     content: 'Warning';
 }
-div.notices.note p:first-of-type {
+div.notices.note > :first-child {
     border-top: 30px solid #6AB0DE;
 }
 div.notices.note {
     background: #E7F2FA;
 }
-div.notices.note p:first-child:after {
+div.notices.note > :first-child:after {
     content: 'Note';
 }
-div.notices.tip p:first-of-type {
+div.notices.tip > :first-child {
     border-top: 30px solid rgba(92, 184, 92, 0.8);
 }
 div.notices.tip {
     background: #E6F9E6;
 }
-div.notices.tip p:first-child:after {
+div.notices.tip > :first-child:after {
     content: 'Tip';
 }
-
+div.notices pre {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+:is(div.notices) td, th {
+    background-color: #fff;
+}
 /* attachments shortcode */
 
 section.attachments {
@@ -714,6 +724,7 @@ table {
 th {
     background: #f7f7f7;
     padding: 0.5rem;
+    border: 1px solid #eaeaea;
 }
 td {
     padding: 0.5rem;
@@ -1148,4 +1159,7 @@ pre .copy-to-clipboard:hover {
 
 option {
     color: initial;
+}
+img[src*="/icons/"] {
+    vertical-align: middle;
 }

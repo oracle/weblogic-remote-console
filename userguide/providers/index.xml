@@ -25,8 +25,8 @@ Connect to a WebLogic Administration Server  Start the WebLogic Administration S
       
       <guid>/weblogic-remote-console/userguide/providers/property-list/</guid>
       <description>Property lists are an editable set of key-value pairs.
-We recommend that you use the desktop application over the browser application when working with property list files.
- Create a new property list  Expand the Kiosk and beside the project name, click ⋮. Select Create Provider for New Property List. Enter a name for the property list provider. This is the name that will appear in the Project list of providers so you can identify which provider you&amp;rsquo;re working on.</description>
+You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.
+We recommend that you use the desktop application over the browser application when working with property list files.</description>
     </item>
     
     <item>

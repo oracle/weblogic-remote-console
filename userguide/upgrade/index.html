@@ -12,20 +12,20 @@
     <title>Upgrade the WebLogic Remote Console :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1646064198" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1646064198" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1646064198" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1646064198" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1646064198" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1646064198" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1646064198" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1646064198" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1646064198" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1646064198" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1656460289" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1646064198"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1656460289"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1646064198"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1646064198"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1656460289"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1656460289"></script>
 <script type="text/javascript">
     
         var baseurl = "\/weblogic-remote-console\/";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1646064198"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1656460289"></script>
 
     
   </div>
@@ -748,10 +748,13 @@
 <p>If you regularly use <code>config.json</code> to customize the default connection settings of the WebLogic Remote Console, consider backing up <code>config.json</code> in a separate location to easily restore it following the upgrade.</p>
 <ol>
 <li>Download the latest version from <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a>.</li>
-<li>Stop the WebLogic Remote Console.</li>
-<li>Uninstall the WebLogic Remote Console application according to the guidelines for your operating system.</li>
-<li>Follow the installation instructions at <a href="/weblogic-remote-console/setup/">Install WebLogic Remote Console</a>.</li>
+<li>Close the WebLogic Remote Console.</li>
+<li>Run the installer for the new version of WebLogic Remote Console. Follow the instructions at <a href="/weblogic-remote-console/setup/">Install WebLogic Remote Console</a>.</li>
 </ol>
+
+<div class="notices note" ><p>If you&rsquo;re on Windows and upgrading from 2.2.0 or earlier, the upgrade may fail when attempting to uninstall the previous version. To fix it, edit the <code>PATH</code> environment variable to ensure that <code>%SystemRoot%\system32</code> is the first entry that contains the <code>find</code> command, then retry the upgrade.</p>
+</div>
+
 <h2 id="browser-based-application">Browser-based application</h2>
 <ol>
 <li>Download the latest version from <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a>.</li>
@@ -1210,19 +1213,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1646064198"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1646064198"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1646064198"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1646064198"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1646064198"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1646064198"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1656460289"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1646064198"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1646064198"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1646064198"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1656460289"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1646064198"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1656460289"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

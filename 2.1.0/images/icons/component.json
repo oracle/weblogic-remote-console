@@ -1,0 +1,9 @@
+{
+  "name": "images",
+  "pack": "wrc-frontend",
+  "displayName": "wrc-frontend/images",
+  "description": "A JET Resource component containing a subset of the .png files located under src/images.",
+  "type": "resource",
+  "version": "1.0.0",
+  "jetVersion": "^10.1.0"
+}

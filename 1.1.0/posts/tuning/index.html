@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.82.0" />
+    <meta name="description" content="Tips on how to configure your WebLogic Remote Console for your environment">
+
+
+    <link rel="icon" href="/weblogic-remote-console/images/logo.png" type="image/png">
+
+    <title>Tune the Remote Console Environment :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/css/nucleus.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1656460289" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1656460289"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/posts/tuning/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/weblogic-remote-console/">
+  <img src="/weblogic-remote-console//images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1656460289"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1656460289"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/weblogic-remote-console\/";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1656460289"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/posts/" title="Using WebLogic Remote Console" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/posts/">
+          Using WebLogic Remote Console
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/install_config/" title="Install and Configure the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/install_config/">
+        Install and Configure the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/console_uidesign/" title="Console Design and Usage Notes" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/console_uidesign/">
+        Console Design and Usage Notes
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/tuning/" title="Tune the Remote Console Environment" class="dd-item active">
+        <a href="/weblogic-remote-console/posts/tuning/">
+        Tune the Remote Console Environment
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/developer_guide/" title="Developer Guide" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/developer_guide/">
+        Developer Guide
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/faqs/" title="Frequently Asked Questions" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/faqs/">
+        Frequently Asked Questions
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/known_issues/" title="Known Issues and Limitations for the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/known_issues/">
+        Known Issues and Limitations for the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/troubleshoot/" title="Troubleshoot WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/troubleshoot/">
+        Troubleshoot WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 1.1.0.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://weblogic-slack-inviter.herokuapp.com/"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/'>Home</a> > <a href='/weblogic-remote-console/posts/'>Using WebLogic Remote Console</a> > Tune the Remote Console Environment
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#customize">Customize the Default Configuration</a></li>
+    <li><a href="#timeout">Change the Network Timeout Settings for the Server</a></li>
+    <li><a href="#samesite">Set the SameSite Cookie attribute if Required for Web Browser Support</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Tune the Remote Console Environment
+            </h1>
+          
+
+        
+
+
+<p>Although not required, you may want to tune your environment to optimize the performance of the console.</p>
+<ul>
+<li><a href="#customize">Customize the Default Configuration</a></li>
+<li><a href="#timeout">Change the Network Timeout Settings for the Server</a></li>
+<li><a href="#samesite">Set the SameSite Cookie attribute if Required for Web Browser Support</a></li>
+</ul>
+<h2 id="customize">Customize the Default Configuration</h2>
+<p>By default, the WebLogic Remote Console uses the <code>application.yaml</code> file inside the <code>runnable/console-backend-server-{version}.jar</code> file.</p>
+<p>If the default configuration is sufficient, then you don&rsquo;t need to do anything. However, if you need to modify the configuration, you can update the Java system properties by changing the properties in a <code>config.json</code> file or, for the browser version, by passing the modified Java system properties at the command line when starting the Remote Console.</p>
+<p>The <code>config.json</code> file is located in:</p>
+<ul>
+<li>Linux: <code>$HOME/.config/weblogic-remote-console/config.json</code></li>
+<li>macOS: <code>/Users/&lt;user&gt;/Library/Application Support/weblogic-remote-console/config.json</code></li>
+<li>Windows: <code>C:\Users\&lt;user&gt;\AppData\Roaming\weblogic-remote-console\config.json</code>
+<ul>
+<li>Any Windows file paths entered in <code>config.json</code> must be properly escaped. For example, enter <code>C:\Users\Jane\myTrust.jks</code> as <code>C:\\Users\\Jane\\myTrust.jks</code>.</li>
+</ul>
+</li>
+</ul>
+
+<div class="notices note" ><p>You may need to create the <code>config.json</code> file manually.</p>
+</div>
+
+<p>You can modify the following Java system properties:</p>
+<ul>
+<li><code>console.disableHostnameVerification</code> <em>Default:</em> <code>false</code></li>
+<li><code>console.enableSameSiteCookieValue</code> <em>Default:</em>  <code>false</code></li>
+<li><code>console.valueSameSiteCookie</code> <em>Default:</em> <code>Lax</code> (Possible values: Lax, Strict, None) <!-- raw HTML omitted --></li>
+<li><code>console.readTimeoutMillis</code> <em>Default:</em> <code>20000</code></li>
+<li><code>console.connectTimeoutMillis</code>  <em>Default:</em> <code>10000</code></li>
+<li><code>server.host</code> <em>Default:</em> <code>127.0.0.1</code></li>
+<li><code>server.port</code> <em>Default:</em> <code>8012</code></li>
+</ul>
+<p>For example, to set the Remote Console to listen on a host other than <code>localhost</code> (IP address <code>127.0.0.1</code>):</p>
+<p>At the command line:</p>
+<pre><code>java -Dserver.host=0.0.0.0 -jar &lt;console_home&gt;/console.jar
+</code></pre><p>In the <code>config.json</code> file:</p>
+<pre><code>{&quot;server.host&quot;: &quot;0.0.0.0&quot;}
+</code></pre><h2 id="timeout">Change the Network Timeout Settings for the Server</h2>
+<p>To change the defaults for the connection and read timeout settings used with a WebLogic domain from the Remote Console, change the following Java system properties:</p>
+<ul>
+<li>Set <code>console.readTimeoutMillis=&lt;millis&gt;</code> for the timeout when waiting on a response, <em>Default:</em> <code>20 seconds</code></li>
+<li>Set <code>console.connectTimeoutMillis=&lt;millis&gt;</code> for the timeout when waiting to connect, <em>Default:</em> <code>10 seconds</code></li>
+</ul>
+<p>For example:</p>
+<pre><code>java -Dconsole.readTimeoutMillis=60000 -Dconsole.connectTimeoutMillis=30000 -jar &lt;console_home&gt;/console.jar
+</code></pre><p>In this example, &lt;console_home&gt; represents the directory where you unzipped the installer, and will result in the console waiting <code>60 seconds</code> before giving up on a response from the WebLogic domain.</p>
+<p>or in <code>config.json</code>, add:</p>
+<pre><code>{
+    &quot;console.readTimeoutMillis&quot;: &quot;60000&quot;,
+    &quot;console.connectTimeoutMillis&quot;: &quot;30000&quot;
+}
+</code></pre><p>When changing network timeout settings, the primary impact will be the response time for Console threads, while the browser will show no data when a timeout occurs.  Examples of where timeouts may happen include requests where WebLogic experiences longer initialization or execution times such as for runtime monitoring actions of servers.</p>
+<h2 id="samesite">Set the SameSite Cookie attribute if Required for Web Browser Support</h2>
+<p>When the WebLogic Remote Console establishes a connection with the WebLogic Domain, a HTTP Cookie is established with the Web Browser session.</p>
+<p>For security reasons, the <code>SameSite</code> attribute of the HTTP Cookie may need to be set for the Web Browser to accept the HTTP session Cookie. There are two settings that control the Remote Console behavior:</p>
+<ul>
+<li>Set <code>console.enableSameSiteCookieValue=true</code> to include the <code>SameSite</code> attribute in the HTTP Cookie, <em>Default:</em> <code>false</code></li>
+<li>Set <code>console.valueSameSiteCookie=&quot;&lt;value&gt;&quot;</code> to specify the value of the <code>SameSite</code> attribute, <em>Default:</em> <code>Lax</code></li>
+</ul>
+<p>For example:</p>
+<pre><code>java -Dconsole.enableSameSiteCookieValue=true -jar &lt;console_home&gt;/console.jar
+</code></pre><p>or</p>
+<pre><code>{&quot;console.enableSameSiteCookieValue&quot;: &quot;true&quot;}
+</code></pre><p>results in the HTTP session Cookie including the <code>SameSite</code> attribute with a value of <code>Lax</code>.</p>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/posts/console_uidesign/" title="Console Design and Usage Notes"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/posts/developer_guide/" title="Developer Guide" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1656460289"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1656460289"></script>
+    
+        
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1656460289"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

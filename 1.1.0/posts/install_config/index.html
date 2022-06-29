@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.82.0" />
+    <meta name="description" content="Instructions on how to install and use the WebLogic Remote Console">
+
+
+    <link rel="icon" href="/weblogic-remote-console/images/logo.png" type="image/png">
+
+    <title>Install and Configure the WebLogic Remote Console :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/css/nucleus.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1656460289" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1656460289" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1656460289"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/posts/install_config/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/weblogic-remote-console/">
+  <img src="/weblogic-remote-console//images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1656460289"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1656460289"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/weblogic-remote-console\/";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1656460289"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/posts/" title="Using WebLogic Remote Console" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/posts/">
+          Using WebLogic Remote Console
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/install_config/" title="Install and Configure the WebLogic Remote Console" class="dd-item active">
+        <a href="/weblogic-remote-console/posts/install_config/">
+        Install and Configure the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/console_uidesign/" title="Console Design and Usage Notes" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/console_uidesign/">
+        Console Design and Usage Notes
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/tuning/" title="Tune the Remote Console Environment" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/tuning/">
+        Tune the Remote Console Environment
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/developer_guide/" title="Developer Guide" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/developer_guide/">
+        Developer Guide
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/faqs/" title="Frequently Asked Questions" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/faqs/">
+        Frequently Asked Questions
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/known_issues/" title="Known Issues and Limitations for the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/known_issues/">
+        Known Issues and Limitations for the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/posts/troubleshoot/" title="Troubleshoot WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/posts/troubleshoot/">
+        Troubleshoot WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 1.1.0.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://weblogic-slack-inviter.herokuapp.com/"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/'>Home</a> > <a href='/weblogic-remote-console/posts/'>Using WebLogic Remote Console</a> > Install and Configure the WebLogic Remote Console
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#prerequisites">Console Prerequisites</a></li>
+    <li><a href="#download">Download the Remote Console</a></li>
+    <li><a href="#extension">Install the Remote Console Extension in the WebLogic Server Domain</a></li>
+    <li><a href="#start-connect">Start the Remote Console and Connect to a Domain</a>
+      <ul>
+        <li><a href="#remote-console-application">Remote Console Application</a></li>
+        <li><a href="#remote-console-in-the-browser">Remote Console in the Browser</a></li>
+      </ul>
+    </li>
+    <li><a href="#SSL">Connect to a WebLogic Domain using SSL/TLS</a></li>
+    <li><a href="#k8s">Connect to a WebLogic Domain Running on Kubernetes</a></li>
+    <li><a href="#stop">Stop the Remote Console</a></li>
+    <li><a href="#advanced">Advanced Configuration</a>
+      <ul>
+        <li><a href="#remote">Specify a Listen Address for the Remote Console Host</a></li>
+        <li><a href="#hostname">Disable Host Name Verification in the Connections to the WebLogic Domain</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Install and Configure the WebLogic Remote Console
+            </h1>
+          
+
+        
+
+
+<ul>
+<li><a href="#prerequisites">Console Prerequisites</a></li>
+<li><a href="#download">Download the Remote Console</a></li>
+<li><a href="#extension">Install the Remote Console Extension in the WebLogic Server Domain</a></li>
+<li><a href="#start-connect">Start the Remote Console and Connect to a Domain</a></li>
+<li><a href="#SSL">Connect to a WebLogic Domain using SSL/TLS</a></li>
+<li><a href="#k8s">Connect to a WebLogic Domain Running on Kubernetes</a></li>
+<li><a href="#stop">Stop the Remote Console</a></li>
+<li><a href="#advanced">Advanced Configuration</a></li>
+</ul>
+<h2 id="prerequisites">Console Prerequisites</h2>
+<p>If you run the WebLogic Remote Console using the <code>console.zip</code> method, your machine must have <a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html">Java SE 11</a> or later installed.</p>
+<p>To verify your Java version:</p>
+<pre><code>java -version
+</code></pre><p>Java is bundled with the Remote Console desktop application so you do not need to install it separately.</p>
+<h2 id="download">Download the Remote Console</h2>
+<p>The installers for the WebLogic Remote Console desktop applications are available for download at <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a>. Applications are available for the Linux, macOS, and Windows operating systems.</p>
+<p>To run the Remote Console in your browser instead, download <code>console.zip</code> and extract the ZIP archive to a directory of your choice. Once its contents are extracted, it creates a <code>console</code> directory that includes:</p>
+<ul>
+<li>The console executable file <code>console.jar</code></li>
+<li>The libraries required to use the console in the <code>libs</code> subdirectory</li>
+<li>The console extension, <code>console-rest-ext-1.0.war</code>, that you install in the WebLogic Server domain</li>
+</ul>
+<h2 id="extension">Install the Remote Console Extension in the WebLogic Server Domain</h2>
+<p>To get the most functionality when using the WebLogic Remote Console, we recommend that you install the Remote Console extension in your domain.</p>
+
+<div class="notices note" ><p>The extension is supported for WebLogic Server 12.2.1.3, 12.2.1.4, and 14.1.1.0 domains.</p>
+</div>
+
+<ol>
+<li>Create a <code>management-services-ext</code> directory under the domain home.</li>
+<li>Download the <code>console-rest-ext-1.0.war</code> from <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a> and save it in the <code>management-services-ext</code> directory you created in the previous step.</li>
+<li>Reboot the Administration Server if it is already running.</li>
+</ol>
+<h2 id="start-connect">Start the Remote Console and Connect to a Domain</h2>
+<p>Make sure the Administration Server in the domain to which you want to connect is running.</p>
+<h3 id="remote-console-application">Remote Console Application</h3>
+<p>To start the Remote Console on a local machine using the default settings:</p>
+<ol>
+<li>
+<p>Open the Remote Console desktop application.</p>
+</li>
+<li>
+<p>In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain, then click Connect.</p>
+</li>
+</ol>
+<h3 id="remote-console-in-the-browser">Remote Console in the Browser</h3>
+<p>To start the Remote Console on a local machine using the default settings - localhost (127.0.0.1) and port 8012:</p>
+<ol>
+<li>
+<p>Open a command window and on the command line, enter:</p>
+<pre><code>java -jar &lt;console_home&gt;/console.jar
+</code></pre><p>In this command, <code>&lt;console_home&gt;</code> is the directory where you unzipped the installer.</p>
+</li>
+<li>
+<p>Open a browser window and enter:</p>
+<pre><code>http://localhost:8012
+</code></pre></li>
+<li>
+<p>In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain, then click Connect.</p>
+</li>
+</ol>
+<p>To connect to a domain using the HTTPS protocol, see <a href="#SSL">Connect to a WebLogic Domain using SSL/TLS</a>.</p>
+<p>Note the following in this release:</p>
+<ul>
+<li>Only one active WebLogic Domain connection or session is allowed at a time. If another browser tab is opened, the console loads and reuses the existing WebLogic Domain connection from the new tab.</li>
+<li>If the same user establishes a connection with the same domain from a separate browser (or restarts the browser), then the original connection is shared.</li>
+<li>The active session is maintained in memory. After connecting, the session is valid until you disconnect or shut down the console process.</li>
+<li>The original connection/session is terminated if another user and/or another domain is used when the connection is made.</li>
+</ul>
+<h2 id="SSL">Connect to a WebLogic Domain using SSL/TLS</h2>
+<p>If you specify HTTPS for the domain URL in the Connect to WebLogic Domain window, then the WebLogic Remote Console uses SSL/TLS to communicate with the WebLogic domain.</p>
+<p>The SSL/TLS connection requires trust in the WebLogic domain, where the trust configuration is handled by the underlying JDK JSSE support. By default, the JDK uses the <code>cacerts</code> truststore provided with the JDK. If the WebLogic domain requires additional trust, separate trust, or is using the WebLogic demo trust (<code>demotrust.jks</code>), then you can use the JDK system properties when starting the Remote Console.</p>
+<p>You can configure SSL/TLS trust with the JDK using one of these options:</p>
+<ul>
+<li>
+<p>Import the required trust certificates into the <code>cacerts</code> truststore supplied with the JDK using the <a href="https://docs.oracle.com/en/java/javase/11/tools/keytool.html"><code>keytool</code></a> command.</p>
+</li>
+<li>
+<p>Update the JDK Java system properties for JSSE support at the command line (browser only). For example:</p>
+<pre><code>java -Djavax.net.ssl.trustStore=&quot;/home/user/mytrust.jks&quot; -Djavax.net.ssl.trustStoreType=&quot;JKS&quot; -jar &lt;console_home&gt;/console.jar
+</code></pre><p>In this command, <code>&lt;console_home&gt;</code> is the directory where you unzipped the installer.</p>
+</li>
+<li>
+<p>Update the JDK Java system properties for JSSE support in a properties file to configure the location and type of truststore (application only).</p>
+<ol>
+<li>Create a file named <code>config.json</code> and save it in the applicable location for your operating system:
+<ul>
+<li>Linux: <code>$HOME/.config/weblogic-remote-console/</code></li>
+<li>macOS: <code>/Users/&lt;user&gt;/Library/Application Support/weblogic-remote-console/</code></li>
+<li>Windows: <code>C:\Users\&lt;user&gt;\AppData\Roaming\weblogic-remote-console\</code></li>
+</ul>
+</li>
+<li>Add the following properties.
+<pre><code>{
+  &quot;javax.net.ssl.trustStore&quot;: &quot;/home/user/mytrust.jks&quot;,
+  &quot;javax.net.ssl.trustStoreType&quot;: &quot;JKS&quot;
+}
+</code></pre><p>On Windows the path character <code>\</code> must be escaped, for example:</p>
+<pre><code>{
+  &quot;javax.net.ssl.trustStore&quot;: &quot;C:\\Users\\user\\mytrust.jks&quot;,
+  &quot;javax.net.ssl.trustStoreType&quot;: &quot;JKS&quot;
+}
+</code></pre></li>
+<li>Save your changes and open the Remote Console application.</li>
+</ol>
+</li>
+</ul>
+<h2 id="k8s">Connect to a WebLogic Domain Running on Kubernetes</h2>
+<p>One of the benefits of the WebLogic Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For details about how to setup access to WebLogic Server domains running on Kubernetes, see <a href="https://oracle.github.io/weblogic-kubernetes-operator/userguide/managing-domains/accessing-the-domain/admin-console/">Use the Remote Console</a> in the <em>WebLogic Kubernetes Operator User Guide</em>.</p>
+<h2 id="stop">Stop the Remote Console</h2>
+<p>To stop the Remote Console in the desktop application, close the desktop application.
+To stop the Remote Console in the browser, kill the console process (for example, <code>Ctrl+c</code> ).</p>
+
+<div class="notices note" ><p>When you stop the Remote Console process in the browser, close the corresponding browser tab or window.</p>
+</div>
+
+<h2 id="advanced">Advanced Configuration</h2>
+<ul>
+<li><a href="#remote">Specify a Listen Address for the Remote Console Host</a></li>
+<li><a href="#hostname">Disable Host Name Verification in the Connections to the WebLogic Domain</a></li>
+</ul>
+<p>See <a href="/weblogic-remote-console/posts/tuning/">Tune the Remote Console Environment</a> for other possible configuration changes.</p>
+<h3 id="remote">Specify a Listen Address for the Remote Console Host</h3>
+<p>To connect to a WebLogic Remote Console that is not running on the same machine as the browser, you can specify non-default values for the Remote Console host and port using Java system properties. The process differs depending on whether you are using the Remote Console through <code>console.zip</code> or the desktop application.</p>
+<p>To specify a listen address when running <code>console.zip</code>:</p>
+<ol>
+<li>
+<p>On the host where the Remote Console is installed, open a command window.</p>
+</li>
+<li>
+<p>On the command line, set these Java system properties when starting the Remote Console:</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><code>-Dserver.host=&lt;host-address&gt;</code> to have the Remote Console listen on a host other than <code>localhost</code> (IP address <code>127.0.0.1</code>)</p>
+</li>
+<li>
+<p><code>-Dserver.port=&lt;port-number&gt;</code> to have the Remote Console bind to a port other than <code>8012</code>.</p>
+<p>For example:</p>
+<pre><code>java -Dserver.host=0.0.0.0 -Dserver.port=8092 -jar &lt;console_home&gt;/console.jar
+</code></pre><p>In this example, <code>0.0.0.0</code> specifies that the host is listening on all IP addresses on that machine and <code>&lt;console_home&gt;</code> represents the directory where you unzipped the installer.</p>
+</li>
+</ul>
+<ol start="3">
+<li>
+<p>On the local machine, open a browser window and enter:</p>
+<pre><code>http://hostname:8092
+</code></pre><p>In this example, <code>hostname</code> represents the machine where you started the Remote Console, and can be an IP address or a DNS name (such as <code>myhost.example.com</code>).
+
+<div class="notices warning" ><p>When you connect to a Remote Console process running on a different machine, you risk exposing sensitive data over the network.</p>
+</div>
+</p>
+</li>
+<li>
+<p>In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain.</p>
+<p>When the Remote Console is not running on the same machine as the browser, the WebLogic domain URL must be accessible to the machine running the Remote Console process.</p>
+</li>
+</ol>
+<p>To specify a listen address when running the desktop application:</p>
+<ol>
+<li>
+<p>On the host where the Remote Console is installed, create a <code>config.json</code> file in the location applicable to your operating system.</p>
+<ul>
+<li>Linux: <code>$HOME/.config/weblogic-remote-console/</code></li>
+<li>macOS: <code>/Users/&lt;user&gt;/Library/Application Support/weblogic-remote-console/</code></li>
+<li>Windows: <code>C:\Users\&lt;user&gt;\AppData\Roaming\weblogic-remote-console\</code></li>
+</ul>
+</li>
+<li>
+<p>In <code>config.json</code>, add the following properties, updating the values to reflect the hostname and port you want.</p>
+<pre><code>{
+  &quot;server.host&quot;: &quot;0.0.0.0&quot;,
+  &quot;server.port&quot;: &quot;8092&quot;
+}
+</code></pre></li>
+<li>
+<p>On the same machine, open a command window and enter the command applicable to your operating system:</p>
+<ul>
+<li>Linux: <code>weblogic-remote-console --headless</code></li>
+<li>macOS: <code>/Applications/WebLogic Remote Console.app/Contents/MacOS/WebLogic Remote Console --headless</code></li>
+<li>Windows: <code>C:\Users\&lt;user&gt;\AppData\Local\Programs\weblogic-remote-console\WebLogic Remote Console.exe --headless</code></li>
+</ul>
+</li>
+<li>
+<p>On your local machine, open a browser window and enter:</p>
+<pre><code>http://hostname:8092
+</code></pre><p>In this example, <code>hostname</code> represents the machine where you started the Remote Console, and can be an IP address or a DNS name (such as <code>myhost.example.com</code>).
+
+<div class="notices warning" ><p>When you connect to a Remote Console process running on a different machine, you risk exposing sensitive data over the network.</p>
+</div>
+</p>
+</li>
+<li>
+<p>In the Connect to WebLogic Domain window, enter the Administrator user name, password, and the URL of the domain.</p>
+<p>When the Remote Console is not running on the same machine as the browser, the WebLogic domain URL must be accessible to the machine running the Remote Console process.</p>
+</li>
+</ol>
+<h3 id="hostname">Disable Host Name Verification in the Connections to the WebLogic Domain</h3>
+<p>When using WebLogic demo trust to connect to the WebLogic domain, you may need to disable host name verification. Disabling host name verification causes the Remote Console to skip the verification check of ensuring that the host name in the URL to which a connection is made matches the host name in the digital certificate that the server sends back as part of the SSL connection.</p>
+<p>To disable host name verification, set the <code>console.disableHostnameVerification</code> property to <code>true</code> when required. The default is <code>false</code>.</p>
+<p>For example, to connect to the domain using SSL/TLS with host name verification disabled:</p>
+<pre><code>java -Dconsole.disableHostnameVerification=true -Djavax.net.ssl.trustStore=&quot;/&lt;path-to-wl-home&gt;/server/lib/DemoTrust.jks&quot; -Djavax.net.ssl.trustStoreType=&quot;JKS&quot; -jar &lt;console_home&gt;/console.jar
+</code></pre><p>or in the <code>config.json</code> file, add</p>
+<pre><code>  {
+    &quot;console.disableHostnameVerification&quot;: &quot;true&quot;,
+    &quot;javax.net.ssl.trustStore&quot;: &quot;/&lt;path-to-wl-home&gt;/server/lib/DemoTrust.jks&quot;,
+    &quot;javax.net.ssl.trustStoreType&quot;: &quot;JKS&quot;
+  }
+</code></pre><p>On Windows the path character <code>\</code> must be escaped, for example:</p>
+<pre><code>  {
+    &quot;console.disableHostnameVerification&quot;: &quot;true&quot;,
+    &quot;javax.net.ssl.trustStore&quot;: &quot;C:\\&lt;path-to-wl-home&gt;\\server\\lib\\DemoTrust.jks&quot;,
+    &quot;javax.net.ssl.trustStoreType&quot;: &quot;JKS&quot;
+  }
+</code></pre>
+<div class="notices note" ><p>We do not recommend using the demo certificates or turning off host name verification in production environments.</p>
+</div>
+
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/posts/" title="Using WebLogic Remote Console"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/posts/console_uidesign/" title="Console Design and Usage Notes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1656460289"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1656460289"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1656460289"></script>
+    
+        
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1656460289"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

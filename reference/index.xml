@@ -23,9 +23,10 @@ Can I connect the WebLogic Remote Console to domains running in WebLogic on Orac
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>/weblogic-remote-console/reference/known_issues/</guid>
-      <description>This page lists the known issues and workarounds, if available, as well as the limitations of the console in this release.
-Limitations The following features are not available in this release of the WebLogic Remote Console:
- Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on. Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.</description>
+      <description>This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.
+Limitations In the current release of WebLogic Remote Console, you are unable to:
+  Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on.
+  Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.</description>
     </item>
     
     <item>

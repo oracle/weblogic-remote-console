@@ -13,9 +13,9 @@
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>/weblogic-remote-console/setup/console/</guid>
-      <description>The WebLogic Remote Console provides a redesigned interface for WebLogic Server domain configuration. The new user interface applies the standards of the Oracle Redwood design system included with Oracle JET.
-The WebLogic Remote Console user interface consists of the following sections:
- Kiosk NavStrip Navigation Tree Content Pane  Kiosk The Kiosk (located in the bottom right corner of the WebLogic Remote Console) is where you perform the administrative aspects of the WebLogic Remote Console such as managing providers and projects.</description>
+      <description>The WebLogic Remote Console offers an alternative option for administering WebLogic Server domains. It not only allows you to edit Administration Servers, but also build WebLogic Deploy Tooling (WDT) model files and property lists.
+While the WebLogic Remote Console shares many features with the Administration Console, its functionality is slightly different. See Differences with the Administration Console  for more information.
+Basic layout The WebLogic Remote Console presents a simple user interface that varies slightly across different providers.</description>
     </item>
     
     <item>

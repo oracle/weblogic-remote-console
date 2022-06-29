@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Home on WebLogic Remote Console</title>
+    <link>/weblogic-remote-console/</link>
+    <description>Recent content in Home on WebLogic Remote Console</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 27 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/weblogic-remote-console/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install and Configure the WebLogic Remote Console</title>
+      <link>/weblogic-remote-console/posts/install_config/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/weblogic-remote-console/posts/install_config/</guid>
+      <description>Console Prerequisites Download the Remote Console Install the Remote Console Extension in the WebLogic Server Domain Start the Remote Console and Connect to a Domain Connect to a WebLogic Domain using SSL/TLS Connect to a WebLogic Domain Running on Kubernetes Stop the Remote Console Advanced Configuration  Console Prerequisites If you run the WebLogic Remote Console using the console.zip method, your machine must have Java SE 11 or later installed.</description>
+    </item>
+    
+    <item>
+      <title>Console Design and Usage Notes</title>
+      <link>/weblogic-remote-console/posts/console_uidesign/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/weblogic-remote-console/posts/console_uidesign/</guid>
+      <description>Separation of Configuration and Runtime Data User Interface Description  Usage Notes  Separation of Configuration and Runtime Data Unlike the WebLogic Server Administration Console, which has pages that combine the configuration and runtime data, the Remote Console has separate pages for each. For example, in the Remote Console:
+ The Servers table under Environment in the Configuration perspective shows all the configured servers (in the &amp;lsquo;edit&amp;rsquo; tree), but does not show whether each server is running.</description>
+    </item>
+    
+    <item>
+      <title>Tune the Remote Console Environment</title>
+      <link>/weblogic-remote-console/posts/tuning/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/weblogic-remote-console/posts/tuning/</guid>
+      <description>Although not required, you may want to tune your environment to optimize the performance of the console.
+ Customize the Default Configuration Change the Network Timeout Settings for the Server Set the SameSite Cookie attribute if Required for Web Browser Support  Customize the Default Configuration By default, the WebLogic Remote Console uses the application.yaml file inside the runnable/console-backend-server-{version}.jar file.
+If the default configuration is sufficient, then you don&amp;rsquo;t need to do anything.</description>
+    </item>
+    
+    <item>
+      <title>Developer Guide</title>
+      <link>/weblogic-remote-console/posts/developer_guide/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/weblogic-remote-console/posts/developer_guide/</guid>
+      <description>Prerequisites Build the Remote Console From Source Use an Alternate logging.properties file  Prerequisites To build the WebLogic Remote Console, you need the following software installed in your local build environment:
+ Java SE 11 Maven 3.6.1+ nodejs 12.16+ This download includes npm. Oracle JET 10.1.0 client libraries. To install the required Oracle JET software, run: npm install -g @oracle/ojet-cli@~10.1.0 On Linux and macOS, you will need to use sudo.</description>
+    </item>
+    
+    <item>
+      <title>Frequently Asked Questions</title>
+      <link>/weblogic-remote-console/posts/faqs/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/weblogic-remote-console/posts/faqs/</guid>
+      <description>This section provides answers to frequently asked questions about the WebLogic Remote Console.
+Can I connect the WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure? Yes, you can. First, make sure that the domain&amp;rsquo;s administration server is publicly accessible so the WebLogic Remote Console can establish a connection to the administration server. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</description>
+    </item>
+    
+    <item>
+      <title>Known Issues and Limitations for the WebLogic Remote Console</title>
+      <link>/weblogic-remote-console/posts/known_issues/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/weblogic-remote-console/posts/known_issues/</guid>
+      <description>This page lists the known issues and workarounds, if available, as well as the limitations of the console in this release.
+Limitations The following features are not available in this release of the Remote Console:
+ Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on. Record WLST scripts while you configure WebLogic Server using the Remote Console.</description>
+    </item>
+    
+    <item>
+      <title>Troubleshoot WebLogic Remote Console</title>
+      <link>/weblogic-remote-console/posts/troubleshoot/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/weblogic-remote-console/posts/troubleshoot/</guid>
+      <description>This page provides guidelines to help troubleshoot console issues.
+ Diagnose Invalid WebLogic Configuration Issues Unresponsive Remote Console Browser Window  Diagnose Invalid WebLogic Configuration Issues The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.</description>
+    </item>
+    
+  </channel>
+</rss>
