@@ -29,7 +29,7 @@
         <version.helidon>2.5.1</version.helidon>
         <version.jackson>2.13.2.2</version.jackson>
         <version.jackson.jaxrs>2.13.2</version.jackson.jaxrs>
-        <version.jsoup>1.13.1</version.jsoup>
+        <version.jsoup>1.14.2</version.jsoup>
         <version.junit.jupiter>5.5.1</version.junit.jupiter>
         <version.lucene>9.0.0</version.lucene>
         <version.reflections>0.9.11</version.reflections>
