@@ -1,5 +1,5 @@
 /**
-  Copyright (c) 2015, 2020, Oracle and/or its affiliates.
+  Copyright (c) 2015, 2022, Oracle and/or its affiliates.
   Licensed under The Universal Permissive License (UPL), Version 1.0
   as shown at https://oss.oracle.com/licenses/upl/
 
@@ -14,7 +14,7 @@ module.exports = function (configObj) {
     // by default, the baseUrl is going to be empty -- 
     // the REST backend will be at the same host and port as the frontend.
     // in "dev" mode, the REST backend will be the local ojet serve
-    const baseUrlFile = 'web/js/baseUrl'
+    const baseUrlFile = 'web/js/jet-composites/wrc-frontend/1.0.0/core/baseUrl'
     const fs = require('fs')
     var baseUrlData = "http://localhost:8012"
 

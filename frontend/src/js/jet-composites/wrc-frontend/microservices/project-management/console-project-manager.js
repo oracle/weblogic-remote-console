@@ -42,14 +42,10 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
           case DataProvider.prototype.Type.MODEL.name: {
             dataProvider = DataProviderManager.createWDTModel({id: item.id, name: item.name, type: item.type, beanTrees: item.beanTrees || [] });
             if (CoreUtils.isNotUndefinedNorNull(item.fileContents)) {
-              if (typeof item.fileContents === 'string') {
-                dataProvider.putValue('fileContents', JSON.parse(item.fileContents));
-              }
-              else {
-                dataProvider.putValue('fileContents', item.fileContents);
-              }
+              dataProvider.putValue('fileContents', item.fileContents);
             }
             if (CoreUtils.isNotUndefinedNorNull(item.file)) dataProvider.putValue('file', item.file);
+            if (CoreUtils.isNotUndefinedNorNull(item.properties)) dataProvider.putValue('properties', item.properties);
             // Use connectivity="DETACHED" as an indicator
             // that this WDT data provider is from a saved
             // project, which was loaded.
@@ -76,6 +72,33 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
             if (CoreUtils.isNotUndefinedNorNull(item.models)) dataProvider.putValue('models', item.models);
             // Use connectivity="DETACHED" as an indicator
             // that this WDT composite provider is from a saved
+            // project, which was loaded.
+            if (CoreUtils.isNotUndefinedNorNull(item.connectivity)) {
+              dataProvider.putValue('connectivity', item.connectivity);
+            }
+            else {
+              dataProvider.putValue('connectivity', CoreTypes.Console.RuntimeMode.DETACHED.name);
+            }
+            // Use state="disconnected" as an indicator that
+            // this domain connection data provider is from
+            // a saved project, which was loaded.
+            if (CoreUtils.isNotUndefinedNorNull(item.state)) {
+              dataProvider.putValue('state', item.state);
+            }
+            else {
+              dataProvider.putValue('state', CoreTypes.Domain.ConnectState.DISCONNECTED.name);
+            }
+            project.dataProviders[index] = dataProvider;
+          }
+            break;
+          case DataProvider.prototype.Type.PROPERTIES.name: {
+            dataProvider = DataProviderManager.createPropertyList({id: item.id, name: item.name, type: item.type, beanTrees: item.beanTrees || [] });
+            if (CoreUtils.isNotUndefinedNorNull(item.fileContents)) {
+              dataProvider.putValue('fileContents', item.fileContents);
+            }
+            if (CoreUtils.isNotUndefinedNorNull(item.file)) dataProvider.putValue('file', item.file);
+            // Use connectivity="DETACHED" as an indicator
+            // that this properties data provider is from a saved
             // project, which was loaded.
             if (CoreUtils.isNotUndefinedNorNull(item.connectivity)) {
               dataProvider.putValue('connectivity', item.connectivity);
@@ -144,6 +167,8 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
             return DataProviderManager.removeWDTModel(dataProvider);
           case DataProvider.prototype.Type.COMPOSITE.name:
             return DataProviderManager.removeWDTCompositeModel(dataProvider);
+          case DataProvider.prototype.Type.PROPERTIES.name:
+            return DataProviderManager.removePropertyList(dataProvider);
         }
       }
 

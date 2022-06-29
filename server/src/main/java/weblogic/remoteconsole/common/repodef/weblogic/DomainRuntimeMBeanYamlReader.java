@@ -17,11 +17,14 @@ import weblogic.remoteconsole.common.utils.StringUtils;
  * 
  * It starts off with the harvested and hand-coded yaml for DomainRuntimeMBean and:
  * 
- * 1) adds in a CombinedServerRuntimes child that holds a collection of
+ * 1) Adds CustomViews and RecentSearches children that hold collections of
+ *    fabricated beans for custom views and recent simple search results.
+ *
+ * 2) Adds a CombinedServerRuntimes child that holds a collection of
  *    fabricated beans that pull together the ServerLifeCycleRuntime and
  *    ServerRuntime mbeans.
  * 
- * 2) adds in a corresponding aggregated child for every child of
+ * 3) Adds a corresponding aggregated child for every child of
  *    the ServerRuntimeMBean (e.g. AggregatedLibraryRuntimes,
  *    AggregatedApplicationRuntimes).  That is, it adds the
  *    fabricated child beans that aggregate the per-server child
@@ -35,6 +38,7 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     AggregatedRuntimeMBeanNameHandler.INSTANCE;
 
   private static final String SERVER_RUNTIME_MBEAN = "ServerRuntimeMBean";
+  private static final String CUSTOM_VIEWS = "CustomViews";
 
   DomainRuntimeMBeanYamlReader(WebLogicYamlReader yamlReader) {
     super(yamlReader);
@@ -43,6 +47,26 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   @Override
   BeanTypeDefSource getBeanTypeDefSource(String type) {
     BeanTypeDefSource source = super.getBeanTypeDefSource(type);
+    // Add the fabricated collection of beans for recent simple search results
+    {
+      BeanPropertyDefSource property = new BeanPropertyDefSource();
+      property.setName("RecentSearches");
+      property.setType("weblogic.management.SimpleSearchMBean");
+      property.setArray(true);
+      property.setRelationship("containment");
+      property.setDescriptionHTML("<p>Recent search results.</p>");
+      source.getProperties().add(property);
+    }
+    // Add the fabricated collection of beans for custom views
+    {
+      BeanPropertyDefSource property = new BeanPropertyDefSource();
+      property.setName(CUSTOM_VIEWS);
+      property.setType("weblogic.management.CustomViewMBean");
+      property.setArray(true);
+      property.setRelationship("containment");
+      property.setDescriptionHTML("<p>Custom views.</p>");
+      source.getProperties().add(property);
+    }
     // Add the fabricated collection of beans that merge ServerLifeCycleRuntimeMBean and ServerRuntimeMBean
     {
       BeanPropertyDefSource property = new BeanPropertyDefSource();
@@ -69,6 +93,14 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
 
   @Override
   BeanTypeDefCustomizerSource getBeanTypeDefCustomizerSource(BeanTypeDef typeDef) {
+    BeanTypeDefCustomizerSource domainRuntimeCustomizerSource = super.getBeanTypeDefCustomizerSource(typeDef);
+    // Force the CustomViews child to be deletable:
+    {
+      BeanChildDefCustomizerSource childCustomizer = new BeanChildDefCustomizerSource();
+      childCustomizer.setName(CUSTOM_VIEWS);
+      childCustomizer.setDeletable(true);
+      domainRuntimeCustomizerSource.addChild(childCustomizer);
+    }
     // The names of the aggregated properties added to the DomainRuntimeMBean to
     // parallel the ones under the ServerRuntimeMBean start with 'Aggregated' so
     // they won't collide with ones with the same name.  For example,
@@ -79,7 +111,6 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     // the ones under the ServerRuntimeMBean (i.e. SNMP Agent Runtime
     // instead of Aggregated SNMP Agent Runtime).  This is OK since
     // they're displayed under different nodes in the nav tree.
-    BeanTypeDefCustomizerSource domainRuntimeCustomizerSource = super.getBeanTypeDefCustomizerSource(typeDef);
     BeanTypeDefSource serverRuntimeSource = getYamlReader().getBeanTypeDefSource(SERVER_RUNTIME_MBEAN);
     BeanTypeDefCustomizerSource serverRuntimeCustomizerSource =
       getYamlReader().getBeanTypeDefCustomizerSource(

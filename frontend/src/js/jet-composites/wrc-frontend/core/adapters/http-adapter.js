@@ -12,8 +12,8 @@
  * <p>Both synchronous and asynchronous methods are exported. The former provides a <code>callbacks</code> parameter that contains references to callback functions, while the latter uses promises.</p>
  * @module
  */
-define(['ojs/ojcore'],
-  function (oj) {
+define(['ojs/ojcore', 'wrc-frontend/core/runtime'],
+  function (oj, Runtime) {
     const USER_AGENT = Object.freeze('core/adapters/http-adapter');
     const APPLICATION_JSON = Object.freeze('application/json');
 
@@ -56,10 +56,14 @@ define(['ojs/ojcore'],
      */
     function get(url) {
       const reply = {};
+      const headers = new Headers();
+      headers.append('User-Agent', USER_AGENT);
+      if (Runtime.getProperty('X-Session-Token'))
+        headers.append('X-Session-Token', Runtime.getProperty('X-Session-Token'));
       return fetch(url, {
         method: 'get',
         credentials: 'include',
-        headers: {'User-Agent': USER_AGENT}
+        headers: headers
       })
       .then(status)
       .then(response => {
@@ -90,6 +94,8 @@ define(['ojs/ojcore'],
     function post(url, content, contentType, authorization) {
       // Create the HTTP request headers
       const headers = getPostHeaders(contentType, authorization);
+      if (Runtime.getProperty('X-Session-Token'))
+        headers.append('X-Session-Token', Runtime.getProperty('X-Session-Token'));
       const reply = {};
       // Make the request using the specified url
       // and a string representation of content.
@@ -125,12 +131,14 @@ define(['ojs/ojcore'],
 
     function _delete(url) {
       const reply = {};
+      const headers = new Headers();
+      headers.append('User-Agent', USER_AGENT);
+      if (Runtime.getProperty('X-Session-Token'))
+        headers.append('X-Session-Token', Runtime.getProperty('X-Session-Token'));
       return fetch(url, {
         method: 'delete',
         credentials: 'include',
-        headers: {
-          'User-Agent': USER_AGENT
-        }
+        headers: headers
       })
         .then(status)
         .then(response => {

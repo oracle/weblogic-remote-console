@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.repodef.Localizer;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
@@ -29,10 +30,12 @@ public class WDTBeanRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
 
   private boolean includeIsSet = true;
   private BeanTree beanTree = null;
+  private Localizer localizer = null;
 
-  public WDTBeanRepoSearchBuilder(BeanTree beanTree, boolean includeIsSet) {
+  public WDTBeanRepoSearchBuilder(BeanTree beanTree, boolean includeIsSet, Localizer localizer) {
     this.beanTree = beanTree;
     this.includeIsSet = includeIsSet;
+    this.localizer = localizer;
   }
 
   @Override
@@ -53,7 +56,8 @@ public class WDTBeanRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
     }
 
     // Create the search results
-    WDTBeanReaderRepoSearchResults results = new WDTBeanReaderRepoSearchResults(beanTree, includeIsSet);
+    WDTBeanReaderRepoSearchResults results =
+      new WDTBeanReaderRepoSearchResults(beanTree, includeIsSet);
 
     // Return the results...
     return response.setSuccess(results);
@@ -81,15 +85,18 @@ public class WDTBeanRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
     @Override
     public BeanSearchResults getBean(BeanTreePath beanTreePath) {
       LOGGER.fine("WDT: BeanReaderRepoSearchResults getBean(): " + beanTreePath);
-      if (isCollection(beanTreePath)) {
+      if (beanTreePath.isCollection()) {
         throw new AssertionError("WDT: getBean() does not return collections: " + beanTreePath);
       }
-      BeanTreeEntry entry = beanTree.getBeanTreeEntry(beanTreePath);
-      if (entry == null) {
-        return null;
-      }
-      if (entry.isBeanCollection()) {
-        throw new AssertionError("WDT: Error getBean() found a bean collection: " + entry);
+      BeanTreeEntry entry = null;
+      if (!beanTreePath.isRoot()) {
+        entry = beanTree.getBeanTreeEntry(beanTreePath);
+        if (entry == null) {
+          return null;
+        }
+        if (entry.isBeanCollection()) {
+          throw new AssertionError("WDT: Error getBean() found a bean collection: " + entry);
+        }
       }
       return new WDTBeanSearchResults(this, beanTreePath, entry, includeIsSet);
     }
@@ -97,7 +104,7 @@ public class WDTBeanRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
     @Override
     public List<BeanSearchResults> getUnsortedCollection(BeanTreePath beanTreePath) {
       LOGGER.fine("WDT: BeanReaderRepoSearchResults getUnsortedCollection(): " + beanTreePath);
-      if (!isCollection(beanTreePath)) {
+      if (!beanTreePath.isCollection()) {
         throw new AssertionError("WDT: getUnsortedCollection() cannot return a single bean: " + beanTreePath);
       }
       BeanTreeEntry entry = beanTree.getBeanTreeEntry(beanTreePath);
@@ -116,16 +123,6 @@ public class WDTBeanRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
       return result;
     }
 
-    // Determine if the bean tree path is a collection
-    private boolean isCollection(BeanTreePath beanTreePath) {
-      if (beanTreePath.getLastSegment().getChildDef().isCollection()) {
-        if (!beanTreePath.getLastSegment().isKeySet()) {
-          return true;
-        }
-      }
-      return false; // singleton child or collection child
-    }
-
     // Obtain the defaulted value for a property based on production and secure mode settings
     Value getDefaultValue(BeanPropertyDef propertyDef) {
       // Cache the current values for secure and production mode...
@@ -134,8 +131,12 @@ public class WDTBeanRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
         secureMode = beanTree.getSecureModeSetting();
         productionMode = beanTree.getProductionModeSetting();
         if ((productionMode != null) && (secureMode != null)) {
-          secureModeValue = WDTValueConverter.getBooleanFromObject(secureMode.getPropertyValue());
-          productionModeValue = WDTValueConverter.getBooleanFromObject(productionMode.getPropertyValue());
+          secureModeValue =
+            WDTValueConverter.getValueType(secureMode, secureMode.getBeanPropertyDef(), localizer)
+              .asBoolean().getValue();
+          productionModeValue =
+            WDTValueConverter.getValueType(productionMode, productionMode.getBeanPropertyDef(), localizer)
+              .asBoolean().getValue();
         }
         modeValuesResolved = true;
       }
@@ -187,6 +188,11 @@ public class WDTBeanRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
     @Override
     public Value getUnsortedValue(BeanPropertyDef propertyDef) {
       LOGGER.fine("WDT: BeanSearchResults getUnsortedValue() on " + getBeanTreePath() + " for: " + propertyDef);
+
+      if (getBeanTreePath().isRoot()) {
+        // This is the root bean.  It has no properties.
+        return null;
+      }
 
       // Check property to see if the property is the identity
       // WebLogicRestBeanSearchResults explictly sets the identity property as 'unset' (i.e. false)
@@ -246,7 +252,7 @@ public class WDTBeanRepoSearchBuilder implements BeanReaderRepoSearchBuilder {
         }
         return defaultValue;
       }
-      return WDTValueConverter.getValueType(value, propertyDef);
+      return WDTValueConverter.getValueType(value, propertyDef, localizer);
     }
   }
 }

@@ -48,7 +48,6 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
         'Objects', async function() {
         file = "TestShoppingCart-1.png";
         try {
-
             await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Edit Tree","EnvironmentChevron",
                 "Clusters",1);
             await admin.saveToShoppingCart(driver);
@@ -62,7 +61,6 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.sleep(2400);
             await admin.saveToShoppingCart(driver);
             await driver.sleep(900);
-
             await admin.viewChanges(driver);
             await driver.sleep(2400);
             console.log("Click Additions header text pool link");
@@ -71,32 +69,25 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             console.log("Click Domain/Server Templates/TestServerTemplate-1 link");
             await driver.findElement(By.linkText("/Domain/Server Templates/TestServerTemplate-1")).click();
             await driver.sleep(2400);
-            /* FIXME
+
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers");
+            await driver.sleep(3600);
+            console.log("Click TestServer-1");
+            await driver.findElement(By.xpath("//td[contains(.,\'TestServer-1\')]")).click();
+            await driver.sleep(3600);
+            console.log("Click Cluster");
+            await driver.findElement(By.id("Cluster")).click();
+            await driver.sleep(3600);
+            console.log("Click TestCluster-1");
+            await driver.findElement(By.xpath("//span[contains(.,\'TestCluster-1\')]")).click();
+            await driver.sleep(3600);
+            await admin.saveToShoppingCart(driver);
+            await driver.sleep(2400);
             await admin.viewChanges(driver);
             console.log("Click Additions header text pool link");
             await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-additions-header\']/a")).click();
-            await driver.sleep(9400);
-            console.log("Click Domain/Clusters/TestCluster-1 link");
-            await driver.findElement(By.linkText("/Domain/Clusters/TestCluster-1")).click();
-            await driver.sleep(2400);
-            await admin.enableCheckBox(driver,'show-advanced-fields');
-            console.log("Set AdminServer ClusterAddress to localhost");
-            await driver.findElement(By.id("ClusterAddress|input")).click();
-            await driver.findElement(By.id("ClusterAddress|input")).sendKeys("localhost");
-            await driver.sleep(2400);
-            */
-            await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Servers",
-                "AdminServer","General");
-            await admin.selectDropDownList(driver,idName='Cluster',
-                searchList="oj-searchselect-filter-Cluster|input","TestCluster-1");
-            await admin.saveToShoppingCart(driver);
-            await driver.sleep(2400);
-
-            await admin.viewChanges(driver);
-            console.log("Click Modifications header text pool link");
-            await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-modifications-header\']/a")).click();
-            console.log("Click Domain/Servers/AdminServer link");
-            await driver.findElement(By.linkText("/Domain/Servers/AdminServer")).click();
+            console.log("Click Domain/Servers/TestServer-1 link");
+            await driver.findElement(By.linkText("/Domain/Servers/TestServer-1")).click();
             await driver.sleep(2400);
             await admin.discardChanges(driver);
             console.log("TEST PASS ");
@@ -269,4 +260,59 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             console.log(e.toString() + " TEST FAIL");
         }
     })
+
+    //Test Case:
+    // Create->modify(Cluster Customize menu)-> Test Available Columns, Selected Columns
+    // removeRight, removeLeft, addAllRight and addAllLeft arrow, Apply and Reset buttons.
+    //
+    it('5. Test Category: GAT/Risk3\n \t Test Scenario: Customize menu of Cluster ', async function() {
+        file = "customizeCluster-1.png";
+        try {
+            await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Clusters");
+            await driver.sleep(1200);
+            console.log("Click Customizer Toggler");
+            await driver.findElement(By.id("table-customizer-toggler")).click();
+            await driver.sleep(600);
+
+            console.log("Click Multicast Address");
+            await driver.findElement(By.xpath("//oj-selector[@id=\'unselected_checkboxsetMulticastAddress\']/span/input")).click();
+            await driver.sleep(300);
+            console.log("Click Add To Right Arrow");
+            await driver.findElement(By.xpath("//oj-button[@id=\'addToRight\']/button/div/span/span")).click();
+            await driver.sleep(600);
+            console.log("Click Cancel Button");
+            await driver.findElement(By.xpath("//oj-button[3]/button/div/span/span")).click();
+
+            console.log("Verify if user can click to select Multicast Address again after click Cancel button");
+            console.log("Click Multicast Address");
+            await driver.findElement(By.xpath("//oj-selector[@id=\'unselected_checkboxsetMulticastAddress\']/span/input")).click();
+            await driver.sleep(300);
+            console.log("Click Multicast Port");
+            await driver.findElement(By.xpath("//oj-selector[@id=\'unselected_checkboxsetMulticastPort\']/span/input")).click();
+            await driver.sleep(300);
+            console.log("Click Service Age Threshold");
+            await driver.findElement(By.xpath("//oj-selector[@id=\'unselected_checkboxsetServiceAgeThresholdSeconds\']/span/input")).click();
+            await driver.sleep(600);
+            console.log("Click Add To Right Arrow");
+            await driver.findElement(By.xpath("//oj-button[@id=\'addToRight\']/button/div/span/span")).click();
+            await driver.sleep(600);
+            console.log("Click Apply Button");
+            element = driver.findElement(By.xpath("//oj-button[2]/button/div/span/span"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.sleep(600);
+            await element.click();
+            await driver.sleep(600);
+            console.log("Click Reset Button");
+            await driver.findElement(By.xpath("//oj-button[1]/button/div/span/span")).click();
+
+            console.log("Click Middle Container");
+            await driver.findElement(By.xpath("//div[@id=\'middle-container\']")).click();
+            await driver.sleep(600);
+            console.log("TEST PASS ");
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
 })

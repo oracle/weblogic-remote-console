@@ -3,13 +3,18 @@
 
 package weblogic.remoteconsole.server.repo;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import weblogic.remoteconsole.common.repodef.BeanPropertyCustomizerDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CollectionParamDef;
 import weblogic.remoteconsole.common.repodef.CustomizerDef;
 import weblogic.remoteconsole.common.repodef.LinkDef;
@@ -17,16 +22,31 @@ import weblogic.remoteconsole.common.repodef.LinksDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.NavTreeDef;
 import weblogic.remoteconsole.common.repodef.NavTreeNodeDef;
+import weblogic.remoteconsole.common.repodef.PageDef;
+import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.ParamDef;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.providers.Root;
+import weblogic.remoteconsole.server.webapp.UriUtils;
 
 /**
  * This class manages reading a page.
  * It is an internal detail of a PageRepo.
  */
 class PageReader extends PageManager {
+
+  private static final Logger LOGGER = Logger.getLogger(PageReader.class.getName());
+
+  private static final Type GET_COLLECTION_CUSTOMIZER_RETURN_TYPE =
+    (new TypeReference<Response<List<BeanSearchResults>>>() {}).getType();
+
+  private static final Type CUSTOMIZE_PAGE_DEF_RETURN_TYPE =
+    (new TypeReference<Response<PageDef>>() {}).getType();
+
+  private static final Type PROPERTY_DEF_LIST_TYPE =
+    (new TypeReference<List<BeanPropertyDef>>() {}).getType();
 
   protected PageReader(InvocationContext invocationContext) {
     super(invocationContext);
@@ -35,6 +55,63 @@ class PageReader extends PageManager {
   protected void addPageInfo(Page page) {
     addSelf(page);
     addBreadCrumbs(page);
+  }
+
+  protected void setPageDef(Page page, PageDef pageDef) {
+    page.setPageDef(pageDef);
+    page.setBackendRelativePDJURI(getBackendRelativePDJURI(pageDef.getPagePath()));
+  }
+
+  private String getBackendRelativePDJURI(PagePath pagePath) {
+    Path connectionRelativePath = new Path();
+    String pageRepoName =
+      getInvocationContext().getPageRepo().getPageRepoDef().getName();
+    connectionRelativePath.addComponent(pageRepoName);
+    connectionRelativePath.addComponent("pages");
+    return
+      UriUtils.getBackendRelativeUri(getInvocationContext(), connectionRelativePath)
+      + "/"
+      + pagePath.getPDJURI();
+  }
+
+  protected void addCollectionToSearch(
+    BeanReaderRepoSearchBuilder builder,
+    BeanTreePath beanTreePath,
+    List<BeanPropertyDef> propertyDefs
+  ) {
+    for (BeanPropertyDef propertyDef : propertyDefs) {
+      builder.addProperty(beanTreePath, propertyDef);
+      addParamsToSearch(builder, beanTreePath, propertyDef.getGetValueCustomizerDef());
+    }
+    if (beanTreePath.getTypeDef().isHeterogeneous()) {
+      addSubTypeDiscriminatorToSearch(beanTreePath, builder);
+    }
+  }
+
+  protected Response<List<BeanSearchResults>> getCollectionResults(
+    BeanReaderRepoSearchResults searchResults,
+    BeanTreePath beanTreePath,
+    List<BeanPropertyDef> propertyDefs
+  ) {
+    String getCollectionMethod = beanTreePath.getTypeDef().getGetCollectionMethod();
+    if (StringUtils.notEmpty(getCollectionMethod)) {
+      Method method = CustomizerInvocationUtils.getMethod(getCollectionMethod);
+      CustomizerInvocationUtils.checkSignature(
+        method,
+        GET_COLLECTION_CUSTOMIZER_RETURN_TYPE,
+        InvocationContext.class,
+        BeanTreePath.class,
+        BeanReaderRepoSearchResults.class,
+        PROPERTY_DEF_LIST_TYPE
+      );
+      List<Object> args = List.of(getInvocationContext(), beanTreePath, searchResults, propertyDefs);
+      Object rtn = CustomizerInvocationUtils.invokeMethod(method, args);
+      @SuppressWarnings("unchecked")
+      Response<List<BeanSearchResults>> customizerResponse = (Response<List<BeanSearchResults>>)rtn;
+      return customizerResponse;
+    } else {
+      return new Response<List<BeanSearchResults>>().setSuccess(searchResults.getCollection(beanTreePath));
+    }
   }
 
   protected void addSubTypeDiscriminatorToSearch(
@@ -48,6 +125,22 @@ class PageReader extends PageManager {
     builder.addProperty(beanTreePath, discPropertyDef);
     builder.addProperty(beanTreePath, discPropertyDef.getTypeDef().getIdentityPropertyDef());
     addParamsToSearch(builder, beanTreePath, discPropertyDef.getGetValueCustomizerDef());
+  }
+
+  protected Response<BeanTypeDef> getActualTypeDef(
+    BeanTreePath beanTreePath,
+    BeanReaderRepoSearchResults searchResults
+  ) {
+    Response<BeanTypeDef> response = new Response<>();
+    BeanTypeDef typeDef = beanTreePath.getTypeDef();
+    if (typeDef.isHomogeneous()) {
+      return response.setSuccess(typeDef);
+    }
+    Response<String> discResponse = getSubTypeDiscriminatorValue(beanTreePath, searchResults);
+    if (!discResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(discResponse);
+    }
+    return response.setSuccess(typeDef.getSubTypeDef(discResponse.getResults()));
   }
 
   protected Response<String> getSubTypeDiscriminatorValue(
@@ -155,9 +248,51 @@ class PageReader extends PageManager {
     page.setBreadCrumbs(breadCrumbs);
   }
 
+  protected Response<PageDef> getPageDef() {
+    return getPageDef(getInvocationContext().getPagePath());
+  }
+
+  protected Response<PageDef> getPageDef(PagePath pagePath) {
+    Response<PageDef> pageDefResponse = getUncustomizedPageDef(pagePath);
+    if (!pageDefResponse.isSuccess()) {
+      return pageDefResponse;
+    }
+    PageDef uncustomizedPageDef = pageDefResponse.getResults();
+    String methodName = uncustomizedPageDef.getCustomizePageDefMethod();
+    if (StringUtils.isEmpty(methodName)) {
+      // There isn't a customizer for this page def.
+      // Return the standard page def.
+      return new Response<PageDef>().setSuccess(uncustomizedPageDef);
+    }
+    // Call the customizer, passing in the invocation context and page def
+    Method method = CustomizerInvocationUtils.getMethod(methodName);
+    CustomizerInvocationUtils.checkSignature(
+      method,
+      CUSTOMIZE_PAGE_DEF_RETURN_TYPE,
+      InvocationContext.class,
+      PageDef.class
+    );
+    List<Object> args = List.of(getInvocationContext(), uncustomizedPageDef);
+    Object responseAsObject = CustomizerInvocationUtils.invokeMethod(method, args);
+    @SuppressWarnings("unchecked")
+    Response<PageDef> customizerResponse = (Response<PageDef>)responseAsObject;
+    return customizerResponse;
+  }
+
+  protected Response<PageDef> getUncustomizedPageDef(PagePath pagePath) {
+    Response<PageDef> response = new Response<>();
+    PageDef pageDef = getPageRepoDef().getPageDef(pagePath);
+    if (pageDef == null) {
+      LOGGER.warning("Can't find page " + pagePath);
+      return response.setNotFound();
+    }
+    return response.setSuccess(pageDef);
+  }
+
   protected void addLinks(Page page, boolean forInstance) {
     List<Link> links = new ArrayList<>();
-    LinksDef linkDefs = getPageRepoDef().getLinksDef(getBeanTreePath().getTypeDef());
+    LinksDef linkDefs =
+      getPageRepoDef().getLinksDef(page.getPageDef().getPagePath().getPagesPath().getTypeDef());
     if (linkDefs != null) {
       for (LinkDef linkDef : linkDefs.getLinkDefs(forInstance)) {
         links.addAll(createLinks(linkDef));
@@ -186,7 +321,9 @@ class PageReader extends PageManager {
     }
     NavTreeDef nav =
       getInvocationContext().getPageRepo().getPageRepoDef()
-        .getNavTreeDef(page.getSelf().getTypeDef());
+        .getNavTreeDef(
+          page.getPageDef().getPagePath().getPagesPath().getTypeDef()
+        );
     if (nav == null) {
       return;
     }

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -12,6 +12,9 @@ import javax.json.JsonValue;
 import javax.json.JsonValue.ValueType;
 
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 
@@ -26,6 +29,8 @@ public abstract class RequestBodyMapper<T> {
   // use a response so we can return BadRequest for poorly formatted request bodies:
   private Response<T> response = new Response<>();
 
+  protected static final String PROP_RESOURCE_DATA = "resourceData";
+
   protected RequestBodyMapper(
     InvocationContext ic,
     JsonObject requestBody,
@@ -36,7 +41,9 @@ public abstract class RequestBodyMapper<T> {
   }
 
   public Response<T> fromRequestBody() {
-    parseRequestBody();
+    if (isOK()) {
+      parseRequestBody();
+    }
     return getResponse();
   }
 
@@ -88,8 +95,12 @@ public abstract class RequestBodyMapper<T> {
   }
 
   protected String getOptionalString(JsonObject object, String key) {
+    return getOptionalString(object, key, null);
+  }
+
+  protected String getOptionalString(JsonObject object, String key, String defaultValue) {
     JsonValue value = getOptionalJsonValue(object, key);
-    return (value != null) ? asString(key, value) : null;
+    return (value != null) ? asString(key, value) : defaultValue;
   }
 
   protected boolean getRequiredBoolean(JsonObject object, String key) {
@@ -134,6 +145,46 @@ public abstract class RequestBodyMapper<T> {
   protected double getOptionalDouble(JsonObject object, String key) {
     JsonValue value = getOptionalJsonValue(object, key);
     return (value != null) ? asDouble(key, value) : 0;
+  }
+
+  protected BeanTreePath getRequiredBeanTreePath(JsonObject object, String key) {
+    JsonValue value = getRequiredJsonValue(object, key);
+    return (value != null) ? asBeanTreePath(key, value) : null;
+  }
+
+  protected BeanTreePath getOptionalBeanTreePath(JsonObject object, String key) {
+    JsonValue value = getOptionalJsonValue(object, key);
+    return (value != null) ? asBeanTreePath(key, value) : null;
+  }
+
+  protected BeanTreePath asBeanTreePath(String key, JsonValue jsonValue) {
+    JsonObject jsonObject = asJsonObject(key, jsonValue);
+    if (!isOK()) {
+      return null;
+    }
+    String resourceData = getRequiredString(jsonObject, PROP_RESOURCE_DATA);
+    if (StringUtils.isEmpty(resourceData)) {
+      badFormat(key + " resourceData must not be null or empty");
+      return null;
+    }
+    // should be api/<provider>/<repo>/data/...
+    // want to return the ... part
+    Path requiredPrefixPath = new Path();
+    requiredPrefixPath.addComponent("api");
+    requiredPrefixPath.addComponent(getInvocationContext().getProvider().getName());
+    requiredPrefixPath.addComponent(getInvocationContext().getPageRepo().getPageRepoDef().getName());
+    requiredPrefixPath.addComponent("data");
+    String requiredPrefix = "/" + requiredPrefixPath.getRelativeUri();
+    if (!resourceData.startsWith(requiredPrefix)) {
+      badFormat(
+        key
+        + " resourceData must start with " + requiredPrefix
+        + " : " + resourceData
+      );
+      return null;
+    }
+    Path repoRelativePath = Path.fromRelativeUri(resourceData.substring(requiredPrefix.length()));
+    return BeanTreePath.create(getInvocationContext().getPageRepo().getBeanRepo(), repoRelativePath);
   }
 
   protected JsonValue getRequiredJsonValue(JsonObject object, String key) {
@@ -212,7 +263,7 @@ public abstract class RequestBodyMapper<T> {
     return 0;
   }
 
-  private boolean validateType(JsonValue value, String key, ValueType... typesWant) {
+  protected boolean validateType(JsonValue value, String key, ValueType... typesWant) {
     ValueType typeHave = value.getValueType();
     for (ValueType typeWant : typesWant) {
       if (typeWant == typeHave) {

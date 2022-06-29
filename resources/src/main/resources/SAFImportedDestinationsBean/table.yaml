@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Store-and-Forward (SAF) imported destinations are collections of
@@ -7,7 +7,22 @@ introductionHTML: >
 
 displayedColumns:
 - name: "Name"
+- name: "JNDIPrefix"
+- name: "SAFRemoteContext"
+- name: "SAFErrorHandling"
+- name: "DefaultTargetingEnabled"
 - name: "SubDeploymentName"
+
+hiddenColumns:
+# From Configuration slice
+- name: "UseSAFTimeToLiveDefault"
+- name: "TimeToLiveDefault"
+- name: "UnitOfOrderRouting"
+- name: "ExactlyOnceLoadBalancingPolicy"
+# From Logging slice
+- name: "MessageLoggingParams.MessageLoggingEnabled"
+- name: "MessageLoggingParams.MessageLoggingFormat"
+
 helpTopics:
 - label: "Configuring Basic JMS System Resources"
   href: "jmsad/basic_config.html"

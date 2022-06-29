@@ -9,14 +9,15 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 
-import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
+import weblogic.remoteconsole.server.repo.CustomViewDefManager;
 import weblogic.remoteconsole.server.repo.Form;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Link;
+import weblogic.remoteconsole.server.repo.ModelTokens;
 import weblogic.remoteconsole.server.repo.Option;
 import weblogic.remoteconsole.server.repo.OptionsSource;
 import weblogic.remoteconsole.server.repo.Page;
@@ -40,30 +41,28 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
 
   @Override
   protected void addResults() {
-    if (getResponse().getResults().isForm()) {
+    if (getPage().isForm()) {
       addForm();
     }
-    if (getResponse().getResults().isTable()) {
+    if (getPage().isTable()) {
       addTable();
     }
     addPageDescription();
   }
 
   private void addPageDescription() {
-    getEntityBuilder()
-      .add(
-        "pageDescription",
-        getBackendRelativePDJUri(
-          getResponse().getResults().getPageDef().getPagePath()
-        )
-      );
+    getEntityBuilder().add("pageDescription", getPage().getBackendRelativePDJURI());
   }
 
   private void addForm() {
     JsonObjectBuilder builder = Json.createObjectBuilder();
-    Form formData = getResponse().getResults().asForm();
+    Form formData = getPage().asForm();
     addPageInfo(formData);
     if (formData.isExists()) {
+      // Add the model tokens info if available
+      addModelTokens(formData);
+
+      // Add the data using the form property values
       for (FormProperty propertyValue : formData.getProperties()) {
         builder.add(propertyValue.getName(), formPropertyValueToJson(propertyValue));
       }
@@ -90,7 +89,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
 
   private void addTable() {
     JsonArrayBuilder builder = Json.createArrayBuilder();
-    Table tableData = getResponse().getResults().asTable();
+    Table tableData = getPage().asTable();
     addPageInfo(tableData);
     for (TableRow tableRowValues : tableData.getRows()) {
       builder.add(tableRowToJson(tableRowValues));
@@ -117,6 +116,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     addBreadCrumbs(page);
     addLinks(page);
     addChangeManagerStatus(page);
+    addIntroductionHTML(page);
   }
 
   private void addSelf(Page page) {
@@ -129,8 +129,9 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
       Json.createObjectBuilder(
         beanTreePathToJson(
           btp,
-          getResponse().getResults().getPageDef().getPagePath().getRDJQueryParams()
-        ).asJsonObject());
+          getPage().getPageDef().getPagePath().getRDJQueryParams()
+        ).asJsonObject()
+      );
     String kind = getBeanTreePathKind(btp);
     if (kind != null) {
       // This is a kind the CFE needs to know about
@@ -140,13 +141,48 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     if (btp.isCreatable()) {
       getEntityBuilder().add("createForm", beanTreePathToJson(btp, "?view=createForm"));
     }
+    addCustomViewCreateFormLink(btp);
+  }
+
+  // Add a link for getting the create form for creating custom views for beans
+  // like this bean to this bean's RDJ.
+  private void addCustomViewCreateFormLink(BeanTreePath btp) {
+    if (!CustomViewDefManager.isSupportsCustomViews(getInvocationContext(), btp)) {
+      return;
+    }
+    // Create a query parameter that identifies this bean
+    // (e.g. Servers/Server1).  It will be used as the
+    // template for creating a custom view for beans liks
+    // this one.
+    String queryParams = computeCustomViewCreateFormQueryParams(btp);
+    String tree = btp.getSegments().get(0).getChildDef().getChildName();
+    Path customViewsPath = new Path(tree).childPath("CustomViews");
+    BeanTreePath customViewsBtp =
+      BeanTreePath.create(btp.getBeanRepo(), customViewsPath);
+    getEntityBuilder().add("customViewCreateForm", beanTreePathToJson(customViewsBtp, queryParams));
+  }
+
+  private String computeCustomViewCreateFormQueryParams(BeanTreePath btp) {
+    return "?view=createForm&" + CustomViewDefManager.computePathQueryParam(btp);
   }
 
   private String getBeanTreePathKind(BeanTreePath btp) {
     if (btp.isOptionalSingleton()) {
-      return (btp.isCreatable()) ? "creatableOptionalSingleton" : "nonCreatableOptionalSingleton";
+      if (btp.isCreatable()) {
+        return "creatableOptionalSingleton";
+      }
+      if (btp.isDeletable()) {
+        return "deletableOptionalSingleton";
+      }
+      return "nonCreatableOptionalSingleton";
     } else if (btp.isCollection()) {
-      return (btp.isCreatable()) ? "creatableCollection" : "nonCreatableCollection";
+      if (btp.isCreatable()) {
+        return "creatableCollection";
+      }
+      if (btp.isDeletable()) {
+        return "deletableCollection";
+      }
+      return "nonCreatableCollection";
     }
     return null; // This isn't a kind the CFE needs to know about today
   }
@@ -185,6 +221,13 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     );
   }
 
+  private void addIntroductionHTML(Page page) {
+    String localizedIntroductionHTML = page.getLocalizedIntroductionHTML();
+    if (StringUtils.notEmpty(localizedIntroductionHTML)) {
+      getEntityBuilder().add("introductionHTML", localizedIntroductionHTML);
+    }
+  }
+
   private JsonArrayBuilder optionsToJson(List<Option> options) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (Option option : options) {
@@ -201,23 +244,47 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (OptionsSource optionsSource : optionsSources) {
       // TBD - only return the options source if it's creatable
-      BeanTreePath btp = optionsSource.getOptionsSource();
-      if (btp.isCollection() && btp.getLastSegment().getChildDef().isCreatable()) {
+      BeanTreePath btp = optionsSource.getBeanTreePath();
+      if ((btp != null) && btp.isCollection() && btp.getLastSegment().getChildDef().isCreatable()) {
         builder.add(valueToJson(btp));
       }
     }
     return builder;
   }
 
-  private String getBackendRelativePDJUri(PagePath pagePath) {
-    Path connectionRelativePath = new Path();
-    String pageRepoName =
-      getInvocationContext().getPageRepo().getPageRepoDef().getName();
-    connectionRelativePath.addComponent(pageRepoName);
-    connectionRelativePath.addComponent("pages");
-    return
-      UriUtils.getBackendRelativeUri(getInvocationContext(), connectionRelativePath)
-      + "/"
-      + pagePath.getPDJURI();
+  private void addModelTokens(Form form) {
+    // Add model tokens information only when available
+    ModelTokens modelTokens = form.getModelTokens();
+    if (modelTokens == null) {
+      return;
+    }
+    JsonObjectBuilder modelTokensBuilder = Json.createObjectBuilder();
+
+    // Add the model tokens options if these are supplied
+    List<Option> options = modelTokens.getOptions();
+    if ((options != null) && !options.isEmpty()) {
+      modelTokensBuilder.add("options", optionsToJson(options));
+    }
+
+    // Add the sources of the model tokens when available
+    List<OptionsSource> optionsSources = modelTokens.getOptionsSources();
+    if ((optionsSources != null) && !optionsSources.isEmpty()) {
+      JsonArrayBuilder sourcesBuilder = Json.createArrayBuilder();
+      for (OptionsSource source : optionsSources) {
+        sourcesBuilder.add(
+          Json.createObjectBuilder()
+            .add("label", source.getLabel())
+            .add("resourceData", source.getResourceData())
+        );
+      }
+      modelTokensBuilder.add("optionsSources", sourcesBuilder);
+    }
+
+    // Add model tokens to the response JSON
+    getEntityBuilder().add("modelTokens", modelTokensBuilder);
+  }
+
+  private Page getPage() {
+    return getResponse().getResults();
   }
 }

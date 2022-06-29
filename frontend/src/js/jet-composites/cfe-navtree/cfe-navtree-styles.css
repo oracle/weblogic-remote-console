@@ -1,4 +1,4 @@
-/*! Copyright (c) 2020, 2021, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2022, Oracle and/or its affiliates. All rights reserved. */
 
 :root {
 	--navtree-background-color: #c3b2ab;
@@ -79,9 +79,17 @@ oj-navigation-list[id="nav"] .oj-navigationlist-depth-1 .oj-navigationlist-item-
 	padding-left: var(--oj-navigation-list-item-padding) !important;
 }
 
-oj-navigation-list[id="nav"] li.oj-navigationlist-depth-2,
-oj-navigation-list[id="nav"] li.oj-navigationlist-depth-3,
-oj-navigation-list[id="nav"] li.oj-navigationlist-depth-4
+oj-navigation-list[id="nav"] li[class*="oj-navigationlist-depth-"]
 {
-	padding-left: 1.5rem !important;	/* 24px */
+	padding-left: 1.5rem !important;     /* 24px */
+}
+
+oj-navigation-list[id="nav"] li[class*="oj-navigationlist-item"]:not(li[class*="oj-navigationlist-depth-"])
+{
+	padding-left: 0rem !important;  /* no padding for all top level entries */
+}
+
+oj-navigation-list[id="nav"] div[class*="oj-navigationlist-item"]
+{
+	padding-left: 0rem !important;
 }

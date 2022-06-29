@@ -145,19 +145,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
        * @param {number} [autoCloseInterval] - Optionally, the number of milliseconds to leave message up, before auto-closing it. 1500 milliseconds (1.5 seconds) will be used, if the parameter is missing.
        */
       displayErrorMessagesHTML: function (messages, summary, autoCloseInterval) {
-        let errorMessagesHTML = '<ul>', errorSummary = summary || i18n.messages.incompleteRequiredField.summary;
+        const errorMessagesHTML = this.getErrorMessagesAsHTML(messages);
+        if (errorMessagesHTML.indexOf('<li>') !== -1) {
+          const errorSummary = summary || i18n.messages.incompleteRequiredField.summary;
+          const errorMessage = {
+            html: { view: HtmlUtils.stringToNodeArray(errorMessagesHTML) },
+            severity: 'error',
+            summary: errorSummary
+          };
+          getPopupMessageSentSignal().dispatch(errorMessage, autoCloseInterval);
+        }
+      },
+
+      getErrorMessagesAsHTML: (messages) => {
+        let errorMessagesHTML = '<ul>';
         messages.forEach((message) => {
           errorMessagesHTML += '<li>' + message.detail + '</li>';
         });
         if (errorMessagesHTML.indexOf('<li>') !== -1) {
           errorMessagesHTML += '</ul>';
-          const errorMessage = {
-            html: { view: HtmlUtils.stringToNodeArray(errorMessagesHTML) },
-            severity: 'info',
-            summary: errorSummary
-          };
-          getPopupMessageSentSignal().dispatch(errorMessage, autoCloseInterval);
         }
+        return errorMessagesHTML;
       }
     };
 

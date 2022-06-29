@@ -4,42 +4,56 @@
   as shown at https://oss.oracle.com/licenses/upl/
 
 -->
-<oj-table id="properties-table"
-          class="cfe-model-properties-table"
-          aria-label="Editable Properties Table"
-          data="[[propertiesDataProvider]]"
-          edit-mode="[[editMode]]"
-          display="grid"
-          horizontal-grid-visible="enabled"
-          vertical-grid-visible="enabled"
-          layout="fixed"
-          columns='[[columnData]]'>
+<div id="properties-table-container">
+  <oj-table
+    id="properties-table"
+    class="cfe-model-properties-table"
+    aria-label="Editable Properties Table"
+    data="[[propertiesDataProvider]]"
+    edit-mode="[[editMode]]"
+    display="grid"
+    horizontal-grid-visible="enabled"
+    vertical-grid-visible="enabled"
+    layout="fixed"
+    columns='[[columnData]]'
+    on-oj-before-row-edit-end="[[onBeforeRowEditEndListener]]"
+    on-oj-animate-end="[[onAnimateEndListener]]"
+  >
     <template slot="rowTemplate" data-oj-as="row">
-        <tr data-bind="attr: {'data-uid': row.data.uid}">
-            <oj-bind-if test='[[row.mode=="navigation"]]'>
-                <td><oj-bind-text value="[[row.data.Name]]"></oj-bind-text></td>
-                <td><oj-bind-text value="[[row.data.Value]]"></oj-bind-text></td>
-            </oj-bind-if>
-            <oj-bind-if test='[[row.mode=="edit"]]'>
-                <td><oj-input-text value="{{row.data.Name}}" class="editable"></oj-input-text></td>
-                <td><oj-input-text value="{{row.data.Value}}" class="editable"></oj-input-text></td>
-            </oj-bind-if>
-            <oj-bind-if test="[[propertyListEditorRW]]">
-            <td>
-                <oj-button display="icons" chroming="borderless" on-oj-action="[[row.data.remove]]">
-                    <span slot="endIcon" class="oj-ux-ico-trash"></span>
-                    <oj-bind-text value="[[deleteButtonTooltip]]"></oj-bind-text>
-                </oj-button>
-            </td>
-            </oj-bind-if>
-        </tr>
+      <tr data-bind="attr: {'data-uid': row.data.uid}">
+        <oj-bind-if test='[[row.mode=="navigation"]]'>
+          <td>
+            <oj-bind-text value="[[row.data.Name]]"></oj-bind-text>
+          </td>
+          <td>
+            <oj-bind-text value="[[row.data.Value]]"></oj-bind-text>
+          </td>
+        </oj-bind-if>
+        <oj-bind-if test='[[row.mode=="edit"]]'>
+          <td>
+            <oj-input-text value="{{row.data.Name}}" class="editable"></oj-input-text>
+          </td>
+          <td>
+            <oj-input-text value="{{row.data.Value}}" class="editable"></oj-input-text>
+          </td>
+        </oj-bind-if>
+        <oj-bind-if test="[[propertyListEditorRW]]">
+          <td>
+            <oj-button display="icons" chroming="borderless" on-oj-action="[[row.data.remove]]">
+              <span slot="endIcon" class="oj-ux-ico-trash"></span>
+              <oj-bind-text value="[[deleteButtonTooltip]]"></oj-bind-text>
+            </oj-button>
+          </td>
+        </oj-bind-if>
+      </tr>
     </template>
     <oj-bind-if test="[[propertyListEditorRW]]">
-    <template slot="headerTemplate" data-oj-as="header">
+      <template slot="headerTemplate" data-oj-as="header">
         <oj-button display="icons" chroming="borderless" on-oj-action="[[handleAddRow]]">
-            <span slot="endIcon" class="oj-ux-ico-plus"></span>
-            <oj-bind-text value="[[addButtonTooltip]]"></oj-bind-text>
+          <span slot="endIcon" class="oj-ux-ico-plus"></span>
+          <oj-bind-text value="[[addButtonTooltip]]"></oj-bind-text>
         </oj-button>
-    </template>
+      </template>
     </oj-bind-if>
-</oj-table>
+  </oj-table>
+</div>

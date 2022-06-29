@@ -1,0 +1,19 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure the various settings that WebLogic
+  uses when starting and stopping this server.</p>
+
+properties:
+- name: "IgnoreSessionsDuringShutdown"
+- name: "GracefulShutdownTimeout"
+- name: "StartupTimeout"
+- name: "ServerLifeCycleTimeoutVal"
+helpTopics:
+- label: "Understanding Server Life Cycle "
+  href: "start/server_life.html"
+  type: "edocs"
+- label: "Starting and Stopping Servers"
+  href: "start/overview.html"
+  type: "edocs"

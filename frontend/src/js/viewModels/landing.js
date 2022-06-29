@@ -84,7 +84,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
           })
           .then((rootContents) => {
             self.treeModel = rootContents;
-            if (rootContents.contents.length > 0) {
+            // Determine if there is a single non-expandable root and thus
+            // display a single group item which points to the resource data
+            if ((rootContents.contents.length === 1) &&
+                (rootContents.contents[0].expandable === false) &&
+                CoreUtils.isNotUndefinedNorNull(rootContents.contents[0].resourceData)) {
+              self.perspectiveGroups([{
+                  name: rootContents.contents[0].name,
+                  label: rootContents.contents[0].resourceData.label,
+                  path: rootContents.contents[0].resourceData.resourceData
+                }]
+              );
+            }
+            else if (rootContents.contents.length > 0) {
               self.perspectiveGroups(
                 convertRootContentsToGroups(rootContents.contents)
               );
@@ -157,9 +169,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
 
       /**
        * <p>This is like the one in navtree-manager.js, except it doesn't use instance variables. Not using instance variables allows it to be moved to a utility module.</p>
-       * @param {[{label: string, name: string, selectable: boolean, expanded?: boolean, type: "root|group|collection", children?: any}]} contents
+       * @param {[{label: string, name: string, selectable: boolean, expanded?: boolean, expandable?: boolean, type: "root|group|collection", children?: any}]} contents
        * @param {undefined|any} treeModel
-       * @returns {[{identifier: string, label: string, name: string, selectable: boolean, expanded?: boolean, type: "root|group|collection", children?: [any], contents?: any}]}
+       * @returns {[{identifier: string, label: string, name: string, selectable: boolean, expanded?: boolean, expandable?: boolean, type: "root|group|collection", children?: [any], contents?: any}]}
        * @private
        */
       function processContents(contents, treeModel) {
@@ -196,7 +208,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
       /**
        *
        * @param {{actionsEnabled: boolean, content?: {view: Array}, iconFile: string, label: string, name: "edit|serverConfig|domainRuntime", type: "configuration|monitoring|view|modeling", navtree: string, changeManager?: string, readOnly?: boolean, provider?: {id: string, name: string}}} beanTree
-       * @returns {Promise<{contents: [{identifier: string, label: string, name: string, type: "configuration|monitoring|view|modeling", selectable: boolean, expanded?: boolean, type: "root|group|collection", children?: [any], contents?: any}]}>}
+       * @returns {Promise<{contents: [{identifier: string, label: string, name: string, type: "configuration|monitoring|view|modeling", selectable: boolean, expanded?: boolean, expandable?: boolean, type: "root|group|collection", children?: [any], contents?: any}]}>}
        * @private
        */
       function getRootContents(beanTree, treeModel={}) {
@@ -269,21 +281,44 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
        * @private
        */
       function getGroupContentsChildren(contents, groupName) {
+        function getIntroductionHtml(pdjIntro, rdjIntro) {
+          let bindHtml = (CoreUtils.isNotUndefinedNorNull(rdjIntro) ? rdjIntro : pdjIntro);
+          if (CoreUtils.isNotUndefinedNorNull(bindHtml)) {
+            bindHtml = (bindHtml.startsWith('<p>') ? bindHtml : `<p>${bindHtml}</p>`);
+          }
+          else {
+            bindHtml = '<p></p>';
+          }
+          return bindHtml;
+        }
+
         function getSubtreePageItem(item) {
-          return DataOperations.mbean.get(item.resourceData.resourceData)
-            .then(reply => {
-              const pdjData = reply.body.data.get('pdjData');
-              const itemHTML = (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML) ? pdjData.introductionHTML : '<p>CBE did not provide a description for this item.</p>');
-              return {
-                type: item.type,
-                path: item.resourceData.resourceData,
-                label: item.resourceData.label,
-                descriptionHTML: {view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`)}
-              };
-            })
-            .catch(response => {
-              ViewModelUtils.failureResponseDefaultHandling(response);
+          if (CoreUtils.isUndefinedOrNull(item.resourceData)) {
+            const itemHTML = '<p></p>';
+            return Promise.resolve({
+              type: item.type,
+              path: '#',
+              label: `${item.label} (Not selectable)`,
+              descriptionHTML: {view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`)}
             });
+          }
+          else {
+            return DataOperations.mbean.get(item.resourceData.resourceData)
+              .then(reply => {
+                const rdjData = reply.body.data.get('rdjData');
+                const pdjData = reply.body.data.get('pdjData');
+                const itemHTML = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
+                return {
+                  type: item.type,
+                  path: item.resourceData.resourceData,
+                  label: item.resourceData.label,
+                  descriptionHTML: {view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`)}
+                };
+              })
+              .catch(response => {
+                ViewModelUtils.failureResponseDefaultHandling(response);
+              });
+          }
         }
 
         // Initialize index and array used as
@@ -307,7 +342,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
 
             let newPromise = Promise.resolve(getSubtreePageItem(group.contents[i]))
               .then(result => {
-                results.push(result);
+                if (result !== {}) results.push(result);
               });
             i++;
             return newPromise.then(nextPromise);
@@ -384,6 +419,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
                 }
               })
               .then(subtreePageItems => {
+                return getSubGroups(subtreePageItems, beanTree, self.treeModel, name);
+              })
+              .then(subtreePageItems => {
                 self.perspectiveMemory.setExpandableName.call(self.perspectiveMemory, name);
                 self.subtreeItemChildren(subtreePageItems);
                 toggleSubtreePageVisibility(name);
@@ -401,6 +439,63 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         }
 
       };
+
+      // Get subgroups by looking for the non-selectable items from the supplied
+      // subtree page items. When non-selectable items exist, expand those subgroups
+      // using the navtree and then for each subgroup expanded, replace the original
+      // subtree page item for the non-selectable item with the expanded list...
+      async function getSubGroups(subtreePageItems, beanTree, treeModel, subtreeName) {
+        // An item is selectable when the path is not an # character
+        function isSelectableGroup(item) {
+          return (item.path !== '#');
+        }
+
+        // Check to see if any subtree page items contain a non-selectable item and
+        // return the original subtree page items if everything is selectable...
+        if ((subtreePageItems.length === 0) || subtreePageItems.every(isSelectableGroup)) {
+          return subtreePageItems;
+        }
+
+        // Now find all the non-selectable groups (i.e. subgroups) and set them to be exapanded
+        // then issue the navtree request to obtain the expanded contents...
+        const subtree = treeModel.contents.find(group => group.name === subtreeName);
+        subtree.contents.forEach(item => {
+          if ((item.selectable === false) && (item.type === 'group')) {
+            item.expanded = true;
+          }
+        });
+        const response = await DataOperations.navtree.refreshNavtreeData(beanTree.navtree, treeModel)
+          .catch(error => {
+            // Display the problem and return the original subtree page items
+            ViewModelUtils.failureResponseDefaultHandling(error);
+            return subtreePageItems;
+          });
+
+        // Walk the list of subtree page items and replace the non-selectable entries...
+        const results = [];
+        const respSubtree = response.contents.find(group => group.name === subtreeName);
+        for (let index = 0; index < subtreePageItems.length; index++) {
+          const item = subtreePageItems[index];
+          if (isSelectableGroup(item)) {
+            // Keep the current item as this one is selectable
+            results.push(item);
+          } else {
+            // Otherwise get then insert the subgroup item contents for the non-selectable item
+            // Update the subgroup label using parent group's label as the prefix
+            const subGroup = await getGroupContentsChildren(respSubtree.contents, respSubtree.contents[index].name);
+            if (CoreUtils.isNotUndefinedNorNull(subGroup) && (subGroup.length > 0)) {
+              subGroup.forEach(item => {
+                item.label = `${respSubtree.contents[index].label} / ${item.label}`;
+              });
+              results.push(...subGroup);
+            } else {
+              // Keep the original item when there is no subgroup content
+              results.push(item);
+            }
+          }
+        }
+        return results;
+      }
 
       function switchPerspective(perspectiveId){
         self.perspective = PerspectiveManager.getById(perspectiveId);

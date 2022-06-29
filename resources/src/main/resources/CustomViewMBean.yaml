@@ -1,0 +1,108 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.WebLogicMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>TBD custom view description</p>'
+name: weblogic.management.CustomViewMBean
+properties:
+- descriptionHTML: "<p>TBD name description</p>"
+  name: Name
+  type: java.lang.String
+- descriptionHTML: '<p>When the search was last performed.</p>'
+  name: Date
+  type: java.util.Date
+- descriptionHTML: '<p>The number of matching beans in the search results.</p>'
+  name: NumberOfMatches
+  type: long
+- descriptionHTML: "<p>TBD {0} criteria description</p>"
+  name: TemplateBeanKeyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - contains
+  defaultValue:
+    value:
+      value: unfiltered
+- descriptionHTML: "<p>TBD {0} description</p>"
+  name: TemplateBeanKeyValue
+  type: java.lang.String
+- descriptionHTML: "<p>TBD {0} result</p>"
+  name: TemplateBeanKeyResult
+  type: java.lang.String
+- descriptionHTML: "<p>TBD {0} criteria description</p>"
+  name: TemplateLongPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  - lessThan
+  - lessThanOrEquals
+  - greaterThan
+  - greaterThanOrEquals
+  defaultValue:
+    value:
+      value: unfiltered
+- descriptionHTML: "<p>TBD {0} description</p>"
+  name: TemplateLongPropertyValue
+  type: long
+- descriptionHTML: "<p>TBD {0} criteria description</p>"
+  name: TemplateDoublePropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  - lessThan
+  - lessThanOrEquals
+  - greaterThan
+  - greaterThanOrEquals
+  defaultValue:
+    value:
+      value: unfiltered
+- descriptionHTML: "<p>TBD {0} description</p>"
+  name: TemplateDoublePropertyValue
+  type: double
+- descriptionHTML: "<p>TBD {0} criteria description</p>"
+  name: TemplateBooleanPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - "true"
+  - "false"
+  defaultValue:
+    value:
+      value: unfiltered
+- descriptionHTML: "<p>TBD {0} description</p>"
+  name: TemplateBooleanPropertyValue
+  type: boolean
+- descriptionHTML: "<p>TBD {0} criteria description</p>"
+  name: TemplateStringPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  - contains
+  defaultValue:
+    value:
+      value: unfiltered
+- descriptionHTML: "<p>TBD {0} description</p>"
+  name: TemplateStringPropertyValue
+  type: java.lang.String
+- descriptionHTML: "<p>TBD {0} criteria description</p>"
+  name: TemplateGenericPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - contains
+  defaultValue:
+    value:
+      value: unfiltered
+- descriptionHTML: "<p>TBD {0} description</p>"
+  name: TemplateGenericPropertyValue
+  type: java.lang.String

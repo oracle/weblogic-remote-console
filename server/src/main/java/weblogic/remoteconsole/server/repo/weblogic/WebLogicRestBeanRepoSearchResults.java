@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.repo.weblogic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
@@ -40,7 +41,7 @@ class WebLogicRestBeanRepoSearchResults implements BeanReaderRepoSearchResults {
 
   @Override
   public BeanSearchResults getBean(BeanTreePath beanPath) {
-    if (isCollection(beanPath)) {
+    if (beanPath.isCollection()) {
       throw new AssertionError("getBean can't return collections " + beanPath);
     }
     boolean haveExpandedValues = isHaveExpandedValues(beanPath);
@@ -53,7 +54,7 @@ class WebLogicRestBeanRepoSearchResults implements BeanReaderRepoSearchResults {
 
   @Override
   public List<BeanSearchResults> getUnsortedCollection(BeanTreePath collectionPath) {
-    if (!isCollection(collectionPath)) {
+    if (!collectionPath.isCollection()) {
       throw new AssertionError("getBeanCollection can't return single beans " + collectionPath);
     }
     boolean haveExpandedValues = isHaveExpandedValues(collectionPath);
@@ -82,6 +83,11 @@ class WebLogicRestBeanRepoSearchResults implements BeanReaderRepoSearchResults {
   }
 
   JsonObject findDefaultWebLogicSearchResults(BeanTreePath beanTreePath, boolean haveExpandedValues) {
+    if (beanTreePath.isRoot()) {
+      // This is the implied bean that parents the WLS DomainMBean and DomainRuntimeMBean.
+      // It's always implicitly available and has no properties.
+      return Json.createObjectBuilder().build();
+    }
     String rootBeanName = getBuilder().getBeanRepo().getRootBeanName(beanTreePath);
     JsonObject searchResults = getRootBeanNameToSearchResultsMap().get(rootBeanName);
     JsonObject childResults = searchResults;
@@ -148,15 +154,6 @@ class WebLogicRestBeanRepoSearchResults implements BeanReaderRepoSearchResults {
 
   private String getRestKeyPropertyName(BeanTreePathSegment segment) {
     return segment.getChildDef().getChildTypeDef().getKeyPropertyDef().getOnlinePropertyName();
-  }
-
-  private boolean isCollection(BeanTreePath beanTreePath) {
-    if (beanTreePath.getLastSegment().getChildDef().isCollection()) {
-      if (!beanTreePath.getLastSegment().isKeySet()) {
-        return true;
-      }
-    }
-    return false; // singleton child or collection child
   }
 
   public boolean isHaveExpandedValues(BeanTreePath beanTreePath) {

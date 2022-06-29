@@ -1,17 +1,15 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
-import weblogic.remoteconsole.common.repodef.CreateFormDef;
-import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.server.providers.Root;
 
 /**
  * This class manages reading a create form.
@@ -25,37 +23,25 @@ import weblogic.remoteconsole.common.utils.Path;
  */
 class CreateFormReader extends FormReader {
 
-  private static final Logger LOGGER = Logger.getLogger(CreateFormReader.class.getName());
-
   CreateFormReader(InvocationContext invocationContext) {
     super(invocationContext);
   }
 
   Response<Page> getCreateForm() {
-    Response<CreateFormDef> createFormResponse = getCreateFormDef();
-    if (!createFormResponse.isSuccess()) {
-      return (new Response<Page>()).copyUnsuccessfulResponse(createFormResponse);
+    return getCreateForm(getPageDef());
+  }
+
+  Response<Page> getCreateForm(Response<PageDef> pageDefResponse) {
+    if (!pageDefResponse.isSuccess()) {
+      return (new Response<Page>()).copyUnsuccessfulResponse(pageDefResponse);
     }
-    List<PagePropertyDef> propDefs = createFormResponse.getResults().getAllPropertyDefs();
+    List<PagePropertyDef> propDefs = pageDefResponse.getResults().getAllPropertyDefs();
     return
       processCreateFormSearchResults(
-        createFormResponse.getResults(),
+        pageDefResponse.getResults(),
         propDefs,
         performCreateFormSearch(propDefs)
       );
-  }
-
-  private Response<CreateFormDef> getCreateFormDef() {
-    Response<CreateFormDef> response = new Response<>();
-    CreateFormPagePath pagePath = getInvocationContext().getPagePath().asCreateFormPagePath();
-    PageDef pageDef = getPageRepoDef().getPageDef(pagePath);
-    if (pageDef == null) {
-      // The slice doesn't exist
-      LOGGER.warning("Can't find create form " + pagePath);
-      response.setNotFound();
-      return response;
-    }
-    return response.setSuccess(pageDef.asCreateFormDef());
   }
 
   private Response<BeanReaderRepoSearchResults> performCreateFormSearch(
@@ -70,9 +56,11 @@ class CreateFormReader extends FormReader {
         addParamsToSearch(builder, getBeanTreePath(), propDef.getGetOptionsCustomizerDef());
       }
     }
-    // Find out whether the domain is in production or secure mode
-    builder.addProperty(getProductionModeEnabledBeanPath(), getProductionModeEnabledDef());
-    builder.addProperty(getSecureModeEnabledBeanPath(), getSecureModeEnabledDef());
+    if (isDefaultValuesDependOnWebLogicDomainMode()) {
+      // Find out whether the domain is in production or secure mode
+      builder.addProperty(getProductionModeEnabledBeanPath(), getProductionModeEnabledDef());
+      builder.addProperty(getSecureModeEnabledBeanPath(), getSecureModeEnabledDef());
+    }
     if (builder.isChangeManagerBeanRepoSearchBuilder()) {
       builder.asChangeManagerBeanRepoSearchBuilder().addChangeManagerStatus();
     }
@@ -90,10 +78,14 @@ class CreateFormReader extends FormReader {
     }
     BeanReaderRepoSearchResults searchResults = searchResponse.getResults();
     // Find out whether the domain is in production or secure mode
-    Boolean secureMode = getSecureMode(searchResults);
-    Boolean productionMode = getProductionMode(searchResults);
+    Boolean secureMode = null;
+    Boolean productionMode = null;
+    if (isDefaultValuesDependOnWebLogicDomainMode()) {
+      secureMode = getSecureMode(searchResults);
+      productionMode = getProductionMode(searchResults);
+    }
     Form form = new Form();
-    form.setPageDef(pageDef);
+    setPageDef(form, pageDef);
     addPageInfo(form);
     addChangeManagerStatus(form, searchResults);
     for (PagePropertyDef propDef : propDefs) {
@@ -163,7 +155,7 @@ class CreateFormReader extends FormReader {
           .getBean(getSecureModeEnabledBeanPath())
           .getValue(getSecureModeEnabledDef())
       );
-    return enabled.isUnknown() ? null : Boolean.valueOf(enabled.asBoolean().getValue());
+    return enabled.isBoolean() ? Boolean.valueOf(enabled.asBoolean().getValue()) : null;
   }
 
   private Boolean getProductionMode(BeanReaderRepoSearchResults searchResults) {
@@ -173,7 +165,7 @@ class CreateFormReader extends FormReader {
           .getBean(getProductionModeEnabledBeanPath())
           .getValue(getProductionModeEnabledDef())
       );
-    return enabled.isUnknown() ? null : Boolean.valueOf(enabled.asBoolean().getValue());
+    return enabled.isBoolean() ? Boolean.valueOf(enabled.asBoolean().getValue()) : null;
   }
 
   private BeanPropertyDef getSecureModeEnabledDef() {
@@ -190,5 +182,13 @@ class CreateFormReader extends FormReader {
 
   private BeanTreePath getProductionModeEnabledBeanPath() {
     return BeanTreePath.create(getBeanRepo(), new Path("Domain"));
+  }
+
+  private boolean isDefaultValuesDependOnWebLogicDomainMode() {
+    String root = getInvocationContext().getPageRepo().getPageRepoDef().getName();
+    return
+      Root.EDIT_NAME.equals(root)
+        || Root.SERVER_CONFIGURATION_NAME.equals(root)
+        || Root.COMPOSITE_CONFIGURATION_NAME.equals(root);
   }
 }

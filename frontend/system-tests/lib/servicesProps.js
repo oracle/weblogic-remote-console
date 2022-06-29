@@ -41,11 +41,11 @@ module.exports = function (driver, file) {
                                                   databaseType, databaseDriver, databaseName, hostName, port,
                                                   databaseUsername, password) {
             let oracleDriver = "GENERIC_*Oracle\'s Driver (Thin XA) for Application Continuity; Versions";
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree", "ServicesChevron", "JDBC System Resources");
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree", "ServicesChevron", "Data Sources");
             await driver.sleep(6400);
             element = await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img"));
             await driver.sleep(900);
-            console.log("Click JDBC System Resources New button");
+            console.log("Click Data Sources New button");
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -60,7 +60,7 @@ module.exports = function (driver, file) {
 
             await driver.sleep(4800);
             console.log("Select Targets = " + targetName);
-            element = driver.findElement(By.css(".oj-fwk-icon-caret02end-e"));
+            element = driver.findElement(By.xpath("//oj-button[@id=\'addAllToChosen\']/button/div"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
             await driver.sleep(300);
@@ -133,7 +133,7 @@ module.exports = function (driver, file) {
             await driver.sleep(1200);
             console.log("Select Targets = " + targetName);
             if (targetName == "All") {
-                element = driver.findElement(By.css(".oj-fwk-icon-caret02end-e"));
+                element = driver.findElement(By.xpath("//oj-button[@id=\'addAllToChosen\']/button/div"));
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                 await element.click();
             }

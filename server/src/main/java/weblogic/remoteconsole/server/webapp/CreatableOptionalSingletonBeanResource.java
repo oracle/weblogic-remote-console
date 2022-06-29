@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -47,8 +47,10 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(
     @QueryParam("view") @DefaultValue(VIEW_SLICE) String view,
-    @QueryParam("slice") @DefaultValue("") String slice
+    @QueryParam("slice") @DefaultValue("") String slice,
+    @QueryParam("reload") @DefaultValue("false") boolean reload
   ) {
+    getInvocationContext().setReload(reload);
     if (VIEW_SLICE.equals(view)) {
       setSlicePagePath(slice);
       return getSliceForm();

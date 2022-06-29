@@ -16,7 +16,7 @@ signDir() {
     zip="$tmp/${1##*/}.zip"
     rm -f "$zip"
     ditto -c -k --sequesterRsrc --keepParent "$1" "$zip"
-    java -jar "$JAR" sign -hardened_runtime -entitlement_file_path entitlements.mac.plist -signed_location $tmp -sign_method apple -file_to_sign "$zip" -deep -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID
+    java -jar "$JAR" sign -hardened_runtime -server_timeout 40 -entitlement_file_path entitlements.mac.plist -signed_location $tmp -sign_method apple -file_to_sign "$zip" -deep -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID
     ditto -x -k "$zip" "${1%/*}"
 }
 
@@ -45,6 +45,10 @@ mkdir -p "$tmp"
 # be placed in a location where an executable should not be placed.  As you will
 # see below, we do not sign symbolic links, but only files and directories.
 cp -RP "$src/." "$target"
+
+# Create a second copy of the executable for use by WKT UI, so that Mac OS thinks
+# that they are two separate programs and let's you run them.
+cp -p "$target/Contents/MacOS/WebLogic Remote Console" "$target/Contents/MacOS/Embeddable Remote Console"
 
 # This part is seriously weird. The legal directory contains some directories
 # that contain nothing but symbolic links.  The Mac OS signing software does not

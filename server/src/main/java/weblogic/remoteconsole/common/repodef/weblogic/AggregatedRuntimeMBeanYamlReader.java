@@ -81,7 +81,7 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     }
     source.setInstanceName(unaggTypeDef.getInstanceName());
     aggregateProperties(unaggTypeDef, unaggPropertyCustomizers, source);
-    aggregateSubTypes(source);
+    aggregateSubTypes(unaggTypeDef, source);
     return source;
   }
 
@@ -164,13 +164,40 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     return rtn;
   }
 
-  private void aggregateSubTypes(BeanTypeDefCustomizerSource source) {
-    // Switch any subTypes to their corresponding aggregated types
+  private void aggregateSubTypes(BeanTypeDef unaggTypeDef, BeanTypeDefCustomizerSource source) {
+    if (source.getSubTypes().isEmpty()) {
+      return;
+    }
+    // Switch any subTypes to their corresponding aggregated types.
+    // Also keep track of whether the base type is one of the instantiable types.
+    String baseTypeValue = unaggTypeDef.getInstanceName();
+    boolean foundBaseType = false;
     for (SubTypeDefSource subType : source.getSubTypes()) {
+      if (baseTypeValue.equals(subType.getValue())) {
+        foundBaseType = true;
+      }
       String type = subType.getType();
       if (NAME_HANDLER.isFabricatableType(type)) {
         subType.setType(NAME_HANDLER.getFabricatedJavaType(type));
       }
+    }
+    if (!foundBaseType) {
+      // The base type isn't instantiable.  However, when there are currently
+      // no instances of this type on any running server, we need to create an
+      // aggregated bean anyway that will get us to an empty table.
+      // And we need to set that bean's type to a valid sub type.
+      //
+      // We could just randomly pick one of the valid sub types, but
+      // then we'd also add nav tree nodes for that type's children,
+      // which isn't appropriate.
+      //
+      // Instead, add the base type as one of the valid sub types so we can use that.
+      // Then we know that the child nav tree nodes make sense since they're
+      // from the base type, i.e. are always supported.
+      SubTypeDefSource baseSubType = new SubTypeDefSource();
+      baseSubType.setType(NAME_HANDLER.getFabricatedJavaType(unaggTypeDef.getTypeName()));
+      baseSubType.setValue(baseTypeValue);
+      source.getSubTypes().add(baseSubType);
     }
   }
 

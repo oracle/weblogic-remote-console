@@ -186,19 +186,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
           visible: i18n.menus.more.optionsSources.view.visible()
         });
 
-        params.menuItems.push({
-          index: i,
-          role: 'presentation',
-          classes: ['oj-complete', 'oj-menu-item'],
-          id: `moreMenuItem_create_${typeName}`,
-          label: i18n.menus.more.optionsSources.create.label().replace('{0}', typeLabel),
-          disabled: i18n.menus.more.optionsSources.create.disabled(),
-          visible: i18n.menus.more.optionsSources.create.visible()
-        });
+        // At this point, the create option is added except if the type is a JDBC data source.
+        // Once the overlay supports the wizard form, this restriction should be removed.
+        if (typeName !== 'JDBCSystemResource') {
+          params.menuItems.push({
+            index: i,
+            role: 'presentation',
+            classes: ['oj-complete', 'oj-menu-item'],
+            id: `moreMenuItem_create_${typeName}`,
+            label: i18n.menus.more.optionsSources.create.label().replace('{0}', typeLabel),
+            disabled: i18n.menus.more.optionsSources.create.disabled(),
+            visible: i18n.menus.more.optionsSources.create.visible()
+          });
+        }
 
-        const selectedTypeName = PageDefinitionUtils.typeNameFromIdentity(propertyValue);
         const identityKey = PageDefinitionUtils.getNameFromCollectionChild(propertyValue);
-        i18n.menus.more.optionsSources.edit.visible(typeName === selectedTypeName);
+        i18n.menus.more.optionsSources.edit.visible(typeName === propertyValueType);
 
         params.menuItems.push({
           index: i,
@@ -345,7 +348,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
        * @param {function} refreshFormCallback?
        * @returns {Promise<T | {rules} | never>}
        */
-      createOverlayFormDialogModuleConfig: (viewParams, optionsSourceConfig, updateShoppingCartCallback, refreshFormCallback) => {
+      createOverlayFormDialogModuleConfig: (viewParams, optionsSourceConfig, updateShoppingCartCallback, refreshFormCallback, saveContentCallback) => {
         const uri = `${optionsSourceConfig.path}?dataAction=new`;
         return DataOperations.mbean.new(uri)
           .then(reply => {
@@ -371,7 +374,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
                 title: PageDefinitionUtils.filterPathSegments(optionsSourceConfig.breadcrumbs, 'data').join('/'),
                 property: optionsSourceConfig.property,
                 onSaveSuceeded: updateShoppingCartCallback,
-                onFormRefresh: refreshFormCallback
+                onFormRefresh: refreshFormCallback,
+                onSaveContent: saveContentCallback
               }
             });
           });

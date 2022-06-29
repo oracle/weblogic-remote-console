@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -15,7 +15,6 @@ public class BeanResource extends BaseResource {
   protected String getPageRepoRelativeUri() {
     return getInvocationContext().getBeanTreePath().getPath().getRelativeUri();
   }
-
 
   protected void setSlicePagePath(String slice) {
     getInvocationContext().setPagePath(

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -105,11 +105,6 @@ properties:
   helpHTML: >
     <p>The size of the cache (in kilobytes) that is used with the LDAP
     server</p>
-
-- name: CacheTTL
-  helpHTML: >
-    <p>The time-to-live of the cache (in seconds) that is used with the
-    LDAP server</p>
 
 - name: IdentityDomain
   helpHTML: >

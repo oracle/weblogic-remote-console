@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright 2020, 2022, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 cleanup() {
@@ -67,4 +67,4 @@ DOCKER_ID=$(docker run -d \
   --entrypoint=/tmp/script \
   ${CONSOLE_BUILD_IMAGE:-container-registry.oracle.com/middleware/weblogic:14.1.1.0}
 )
-timeout 18000 docker attach --no-stdin $DOCKER_ID
+timeout 28800 docker attach --no-stdin $DOCKER_ID

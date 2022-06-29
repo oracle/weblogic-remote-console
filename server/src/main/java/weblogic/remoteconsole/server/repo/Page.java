@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -22,6 +22,8 @@ public class Page {
   private List<BeanTreePath> breadCrumbs = new ArrayList<>();
   private List<Link> links = new ArrayList<>();
   private ChangeManagerStatus changeManagerStatus = null;
+  private String localizedIntroductionHTML;
+  private String backendRelativePDJURI;
 
   // Get the corresponding page definition
   public PageDef getPageDef() {
@@ -94,6 +96,27 @@ public class Page {
 
   public void setChangeManagerStatus(ChangeManagerStatus val) {
     changeManagerStatus = val;
+  }
+
+  // Normally the page's introduction is fixed for the type and is specified in the PDJ
+  // Some pages need to change the introduction based on which bean the page is displaying.
+  // For these cases, set introductionHTML to the localized text required.
+  // It will be put into the RDJ and the CFE will displayu it instead of the intro in the PDJ.
+
+  public String getLocalizedIntroductionHTML() {
+    return localizedIntroductionHTML;
+  }
+  
+  public void setLocalizedIntroductionHTML(String val) {
+    localizedIntroductionHTML = val;
+  }
+
+  public String getBackendRelativePDJURI() {
+    return backendRelativePDJURI;
+  }
+
+  public void setBackendRelativePDJURI(String val) {
+    backendRelativePDJURI = val;
   }
 
   // Returns whether this page is a form.

@@ -23,16 +23,15 @@ class DelegatedServerLifeCycleRuntimeMBeanWebLogicSearchHelper extends Delegated
   private static class IdentityFixer extends DelegatedIdentityFixer {
     @Override protected JsonArray undelegatedIdentityToDelegatedIdentity(JsonArray undelegatedIdentity) {
       // e.g. convert from
-      //   domainRuntime serverLifeCycleRuntimes Server1 JVMRuntime
+      //   serverLifeCycleRuntimes Server1 JVMRuntime
       // to
-      //   domainRuntime combinedServerRuntimes Server1 serverLifeCycleRuntime JVMRuntime
+      //   combinedServerRuntimes Server1 serverLifeCycleRuntime JVMRuntime
       JsonArrayBuilder bldr = Json.createArrayBuilder();
-      bldr.add(undelegatedIdentity.getString(0)); // domainRuntime
       bldr.add("combinedServerRuntimes");
-      String server = undelegatedIdentity.getString(2);
+      String server = undelegatedIdentity.getString(1);
       bldr.add(server);
       bldr.add("serverLifeCycleRuntime");
-      for (int i = 4; i < undelegatedIdentity.size(); i++) {
+      for (int i = 2; i < undelegatedIdentity.size(); i++) {
         bldr.add(undelegatedIdentity.getString(i));
       }
       return bldr.build();

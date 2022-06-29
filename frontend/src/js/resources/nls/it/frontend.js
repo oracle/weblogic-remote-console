@@ -13,13 +13,16 @@ define({
         },
         "detached": {
           "tooltip": "Scollegata"
+        },
+        "unattached": {
+          "tooltip": "Non collegata"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright \\u00A9 2020-2021, Oracle e/o relative consociate.<br/>Oracle \\u00E8 un marchio registrato di Oracle Corporation e/o delle relative consociate. Altri nomi possono essere marchi dei rispettivi proprietari.<br/>",
+      "copyrightLegal": "Copyright © 2020-2022, Oracle e/o relative consociate.<br/>Oracle è un marchio registrato di Oracle Corporation e/o delle relative consociate. Altri nomi possono essere marchi dei rispettivi proprietari.<br/>",
       "builtWith": "Creato con Oracle JET"
     }
   },
@@ -29,7 +32,7 @@ define({
         "tooltip": "Recupera informazioni"
       },
       "edit": {
-        "tooltip": "Manage"
+        "tooltip": "Gestisci"
       },
       "delete": {
         "tooltip": "Rimuovi"
@@ -38,10 +41,10 @@ define({
     "labels": {
       "connections": {
         "header": {
-          "value": "Unnamed Project"
+          "value": "Progetto senza nome"
         },
         "name": {
-          "value": "Connection Provider Name"
+          "value": "Nome provider di connessione"
         },
         "url": {
           "value": "URL"
@@ -55,29 +58,50 @@ define({
       },
       "models": {
         "name": {
-          "value": "WDT Model Provider Name"
+          "value": "Nome provider modello WDT"
         },
         "file": {
-          "value": "WDT Model Filename"
+          "value": "Nome file modello WDT"
+        },
+        "props": {
+          "value": "Variabili WDT"
+        }
+      },
+      "composite": {
+        "name": {
+          "value": "Nome provider modello composto WDT"
+        },
+        "providers": {
+          "value": "Modelli WDT"
+        }
+      },
+      "proplist": {
+        "name": {
+          "value": "Nome provider lista proprietà"
+        },
+        "file": {
+          "value": "Nome file lista proprietà"
         }
       },
       "project": {
         "name": {
-          "value": "Project Name"
+          "value": "Nome progetto"
         },
         "file": {
-          "value": "Project Filename"
-        },
-        "isDefault": {
-          "value": "Make Default"
+          "value": "Nome file progetto"
         }
       },
       "provider": {
         "adminserver": {
-          "value": "Admin Server Connection"
+          "value": "Connessione al server di amministrazione"
         },
         "model": {
-          "value": "Add WDT Model"
+          "value": "Aggiungi modello WDT"
+        }
+      },
+      "dropdown": {
+        "none": {
+          "value": "Nessuna"
         }
       }
     },
@@ -99,7 +123,10 @@ define({
             "label": "Versione dominio:"
           },
           "username": {
-            "label": "Username:"
+            "label": "Nome utente:"
+          },
+          "roles": {
+            "label": "Ruoli:"
           },
           "connectTimeout": {
             "label": "Timeout di connessione:"
@@ -108,15 +135,28 @@ define({
             "label": "Timeout di lettura:"
           },
           "anyAttempt": {
-            "label": "Any Connections Attempted:"
+            "label": "Tutti i tentativi di connessione:"
           },
           "lastAttempt": {
-            "label": "Last Attempt Successful:"
+            "label": "Ultimo tentativo riuscito:"
           }
         },
         "model": {
           "file": {
             "label": "File:"
+          },
+          "props": {
+            "label": "Variabili:"
+          }
+        },
+        "composite": {
+          "models": {
+            "label": "Modelli:"
+          }
+        },
+        "proplist": {
+          "file": {
+            "label": "Nome file:"
           }
         }
       }
@@ -124,20 +164,33 @@ define({
     "menus": {
       "connections": {
         "add": {
-          "value": "Create Provider for Admin Server Connection..."
+          "value": "Aggiungi provider di connessione al server di amministrazione"
         }
       },
       "models": {
         "add": {
-          "value": "Create Provider for Existing WDT Model File..."
+          "value": "Aggiungi provider di file modello WDT"
         },
         "new": {
-          "value": "Create Provider for New WDT Model File..."
+          "value": "Crea provider per nuovo file modello WDT"
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "Aggiungi provider di file modello composto WDT"
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "Aggiungi provider di lista proprietà"
+        },
+        "new": {
+          "value": "Crea provider per nuova lista proprietà"
         }
       },
       "providers": {
         "sort": {
-          "value": "Sort by Provider Type"
+          "value": "Ordina per tipo di provider"
         }
       },
       "context": {
@@ -151,7 +204,7 @@ define({
                 "label": "Versione dominio:"
               },
               "username": {
-                "label": "Username:"
+                "label": "Nome utente:"
               }
             }
           },
@@ -164,7 +217,7 @@ define({
       },
       "project": {
         "export": {
-          "value": "Export Providers as Project..."
+          "value": "Esporta provider come progetto..."
         },
         "import": {
           "value": "Importa progetto"
@@ -174,62 +227,96 @@ define({
     "instructions": {
       "connections": {
         "add": {
-          "value": "Enter new name and connectivity settings for connection provider."
+          "value": "Immettere il nuovo nome e le impostazioni di connettività per il provider di connessione."
         },
         "edit": {
-          "value": "Modify connectivity settings for connection provider."
+          "value": "Modificare le impostazioni di connettività per il provider di connessione."
         }
       },
       "models": {
         "add": {
-          "value": "Enter settings for existing model file provider. Click upload icon to browse for model file."
+          "value": "Immettere le impostazioni per il provider di file modello esistente. Fare clic sull'icona di caricamento per cercare il file modello."
         },
         "new": {
-          "value": "Enter provider name and filename for new WDT model file, then click icon to pick directory to save file in."
+          "value": "Immettere il nome del provider e il nome file per il nuovo file modello WDT, quindi fare clic sull'icona per selezionare la directory in cui salvare il file."
         },
         "edit": {
-          "value": "Modify settings for model file provider. Click icon to browse for model file."
+          "value": "Modificare le impostazioni per il provider di file modello. Fare clic sull'icona per cercare il file modello."
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "Immettere il nuovo nome e selezionare una lista ordinata di modelli per il provider di modello composito."
+        },
+        "edit": {
+          "value": "Modificare le impostazioni per il provider di modello composito. Utilizzare una lista ordinata di modelli."
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "Immettere le impostazioni per il provider di lista proprietà esistente. Fare clic sull'icona di caricamento per cercare un file di proprietà."
+        },
+        "new": {
+          "value": "Immettere il nome del provider e il nome file per una nuova lista di proprietà, quindi fare clic sull'icona per selezionare la directory in cui salvare il file."
+        },
+        "edit": {
+          "value": "Modificare le impostazioni per il provider di lista proprietà. Fare clic sull'icona per cercare un file di proprietà."
         }
       },
       "project": {
         "export": {
-          "value": "Enter settings for new project."
+          "value": "Immettere le impostazioni per il nuovo progetto."
         },
         "import": {
-          "value": "Click download icon to browse for project."
+          "value": "Fare clic sull'icona di download per cercare il progetto."
         }
       },
       "task": {
         "startup": {
-          "value": "Which startup task are you interested in performing?"
+          "value": "Quale task di avvio si desidera eseguire?"
         }
       }
     },
     "titles": {
       "add": {
         "connections": {
-          "value": "Create Provider for Admin Server Connection"
+          "value": "Crea provider per la connessione al server di amministrazione"
         },
         "models": {
-          "value": "Create Provider for Existing WDT Model File"
+          "value": "Crea provider per file modello WDT esistente"
+        },
+        "composite": {
+          "value": "Crea provider per nuovo modello composto WDT"
+        },
+        "proplist": {
+          "value": "Crea provider per lista proprietà esistente"
         }
       },
       "new": {
         "models": {
-          "value": "Create Provider for New WDT Model File"
+          "value": "Crea provider per nuovo file modello WDT"
+        },
+        "proplist": {
+          "value": "Crea provider per nuova lista proprietà"
         }
       },
       "edit": {
         "connections": {
-          "value": "Edit Admin Server Connection Provider"
+          "value": "Modifica provider di connessione al server di amministrazione"
         },
         "models": {
-          "value": "Edit WDT Model File Provider"
+          "value": "Modifica provider di file modello WDT"
+        },
+        "composite": {
+          "value": "Modifica provider di modello composto WDT"
+        },
+        "proplist": {
+          "value": "Modifica provider di lista proprietà"
         }
       },
       "export": {
         "project": {
-          "value": "Export Providers as Project"
+          "value": "Esporta provider come progetto"
         }
       },
       "import": {
@@ -239,44 +326,83 @@ define({
       },
       "startup": {
         "task": {
-          "value": "Startup Task"
+          "value": "Task di avvio"
         }
       }
     },
     "messages": {
       "export": {
         "failed": {
-          "summary": "Export Unsuccessful",
-          "detail": "Unable to export providers as ''{0}'' project."
+          "summary": "Esportazione non riuscita",
+          "detail": "Impossibile esportare i provider come progetto ''{0}''."
         }
       },
       "import": {
         "failed": {
-          "summary": "Save Unsuccessful",
-          "detail": "Unable to import ''{0}'' project file."
+          "summary": "Salvataggio non riuscito",
+          "detail": "Impossibile importare il file di progetto ''{0}''."
         }
       },
       "stage": {
         "failed": {
-          "summary": "Create Unsuccessful",
-          "detail": "Unable to create ''{0}'' provider item."
+          "summary": "Creazione non riuscita",
+          "detail": "Impossibile creare l''elemento provider ''{0}''."
         }
       },
       "use": {
         "failed": {
-          "summary": "Connection Unsuccessful",
-          "detail": "Unable to use ''{0}'' provider item."
+          "summary": "Connessione non riuscita",
+          "detail": "Impossibile usare l''elemento provider ''{0}''."
+        }
+      },
+      "upload": {
+        "failed": {
+          "detail": "Impossibile caricare il file modello WDT: {0}"
+        },
+        "props": {
+          "failed": {
+            "detail": "Impossibile caricare le variabili WDT: {0}"
+          }
         }
       },
       "response": {
         "nameAlreadyExist": {
-          "detail": "Provider named ''{0}'' is already in this project!"
+          "detail": "Il provider denominato ''{0}'' è già in questo progetto."
+        },
+        "modelsNotFound": {
+          "detail": "Impossibile trovare i modelli WDT configurati ''{0}''"
+        },
+        "propListNotFound": {
+          "detail": "Impossibile trovare le variabili WDT: {0}"
+        },
+        "selectModels": {
+          "detail": "Per selezionare il modello composto WDT, selezionare prima tutti i modelli WDT utilizzati dal modello composto WDT."
+        }
+      },
+      "correctiveAction": {
+        "filePathNotFound": {
+          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+        },
+        "fixModelFile": {
+          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+        },
+        "yamlException": {
+          "detail": "{0} nella riga {1}, colonna {2}"
+        },
+        "wktModelContent": {
+          "summary": "Model Content Problems",
+          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
         }
       }
     },
     "prompts": {
       "info": {
-        "fileNotSet": "Not set"
+        "fileNotSet": "Non impostato"
+      }
+    },
+    "checkboxes": {
+      "useSparseTemplate": {
+        "label": "Usa modello di sparsità"
       }
     }
   },
@@ -286,13 +412,19 @@ define({
         "tooltip": "Modifica struttura"
       },
       "view": {
-        "tooltip": "Configuration View Tree"
+        "tooltip": "Struttura vista configurazione"
       },
       "monitoring": {
-        "tooltip": "Monitoring Tree"
+        "tooltip": "Struttura di monitoraggio"
       },
       "modeling": {
-        "tooltip": "WDT Model"
+        "tooltip": "Modello WDT"
+      },
+      "composite": {
+        "tooltip": "Modello composto WDT"
+      },
+      "properties": {
+        "tooltip": "Editor di liste proprietà"
       }
     }
   },
@@ -300,9 +432,11 @@ define({
     "title": {
       "home": "Home",
       "configuration": "Modifica struttura",
-      "view": "Configuration View Tree",
-      "monitoring": "Monitoring Tree",
-      "modeling": "WDT Model"
+      "view": "Struttura vista configurazione",
+      "monitoring": "Struttura di monitoraggio",
+      "modeling": "Modello WDT",
+      "composite": "Modello composto WDT",
+      "properties": "Lista proprietà"
     },
     "toolbar": {
       "buttons": {
@@ -328,7 +462,7 @@ define({
           "label": "Panoramica"
         },
         "projectmanagement": {
-          "label": "Provider Management"
+          "label": "Gestione provider"
         }
       }
     },
@@ -350,11 +484,6 @@ define({
           "value": "Cancella cronologia"
         }
       }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "Dati non disponibili"
-      }
     }
   },
   "wrc-monitoring": {
@@ -369,11 +498,6 @@ define({
           "value": "Cancella cronologia"
         }
       }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "Dati non disponibili"
-      }
     }
   },
   "wrc-domain-connection": {
@@ -385,23 +509,11 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "Connessione interrotta",
-        "detail": "Connection to remote console backend was lost. Ensure that it is running or restart it and try the link again."
+        "detail": "La connessione al backend della console remota è stata persa. Assicurarsi che sia in esecuzione oppure riavviarlo e riprovare il collegamento."
       },
       "cannotConnect": {
         "summary": "Tentativo di connessione non riuscito",
         "detail": "Impossibile connettersi al dominio WebLogic {0}, verificare che WebLogic sia in esecuzione."
-      }
-    },
-    "dialog1": {
-      "title": "Connessione al dominio WebLogic",
-      "instructions": "Immettere le credenziali dell'utente amministratore e l'URL per il dominio WebLogic:",
-      "labels": {
-        "url": "URL"
-      },
-      "buttons": {
-        "connect": {
-          "label": "Connetti"
-        }
       }
     }
   },
@@ -421,16 +533,24 @@ define({
         "description": "<p>Consente di gestire la configurazione del dominio WebLogic attualmente in uso.</p>"
       },
       "view": {
-        "label": "Configuration View Tree",
+        "label": "Struttura vista configurazione",
         "description": "<p>Consente di esaminare la configurazione di sola lettura del dominio WebLogic attualmente in uso.</p>"
       },
       "monitoring": {
-        "label": "Monitoring Tree",
+        "label": "Struttura di monitoraggio",
         "description": "<p>Consente di visualizzare le informazioni MBean di runtime relative a risorse specifiche nel dominio WebLogic attualmente in uso.</p>"
       },
       "modeling": {
-        "label": "WDT Model Tree",
-        "description": "<p>Maintain model files associated with the WebLogic Deploy Tooling tool.</p>"
+        "label": "Struttura modello WDT",
+        "description": "<p>Gestisce i file modello associati allo strumento WebLogic Deploy Tooling.</p>"
+      },
+      "composite": {
+        "label": "Struttura modello composto WDT",
+        "description": "<p>Visualizza un set combinato di file modello WebLogic Deploy Tooling attualmente in uso.</p>"
+      },
+      "properties": {
+        "label": "Editor di liste proprietà",
+        "description": "<p>Consente di visualizzare o modificare un set di proprietà da un file di lista delle proprietà.</p>"
       }
     }
   },
@@ -471,6 +591,9 @@ define({
       },
       "delete": {
         "label": "Elimina"
+      },
+      "customize": {
+        "label": "Personalizza"
       }
     },
     "icons": {
@@ -478,13 +601,13 @@ define({
         "tooltip": "Pagina di arrivo"
       },
       "history": {
-        "tooltip": "Attiva/disattiva visibilit\\u00E0 della cronologia"
+        "tooltip": "Attiva/disattiva visibilità della cronologia"
       },
       "instructions": {
-        "tooltip": "Attiva/disattiva visibilit\\u00E0 delle istruzioni"
+        "tooltip": "Attiva/disattiva visibilità delle istruzioni"
       },
       "help": {
-        "tooltip": "Attiva/disattiva visibilit\\u00E0 della pagina della Guida"
+        "tooltip": "Attiva/disattiva visibilità della pagina della Guida"
       },
       "sync": {
         "tooltip": "Ricarica",
@@ -519,7 +642,7 @@ define({
       "action": {
         "cannotPerform": {
           "summary": "Messaggio",
-          "detail": "Impossibile eseguire l''azione ''{0}'' mentre \\u00E8 in esecuzione il ricaricamento automatico. Prima fare clic sull''icona ''{1}'' per interromperla."
+          "detail": "Impossibile eseguire l''azione ''{0}'' mentre è in esecuzione il ricaricamento automatico. Prima fare clic sull''icona ''{1}'' per interromperla."
         }
       }
     },
@@ -550,10 +673,26 @@ define({
         "label": "Mostra colonne nascoste"
       }
     },
-    "actionsDialog": {
-      "buttons": {
-        "cancel": {
-          "label": "Annulla"
+    "labels": {
+      "totalRows": {
+        "value": "Totale righe: {0}"
+      }
+    }
+  },
+  "wrc-table-customizer": {
+    "labels": {
+      "available": {
+        "value": "Colonne disponibili"
+      },
+      "selected": {
+        "value": "Colonne selezionate"
+      }
+    },
+    "messages": {
+      "action": {
+        "needAtLeastOneColumn": {
+          "title": "Colonne insufficienti",
+          "detail": "Almeno una colonna selezionata è obbligatoria."
         }
       }
     }
@@ -590,13 +729,13 @@ define({
         "tooltip": "Pagina di arrivo"
       },
       "history": {
-        "tooltip": "Attiva/disattiva visibilit\\u00E0 della cronologia"
+        "tooltip": "Attiva/disattiva visibilità della cronologia"
       },
       "instructions": {
-        "tooltip": "Attiva/disattiva visibilit\\u00E0 delle istruzioni"
+        "tooltip": "Attiva/disattiva visibilità delle istruzioni"
       },
       "help": {
-        "tooltip": "Attiva/disattiva visibilit\\u00E0 della pagina della Guida"
+        "tooltip": "Attiva/disattiva visibilità della pagina della Guida"
       },
       "sync": {
         "tooltip": "Ricarica",
@@ -642,7 +781,7 @@ define({
         "tooltip": "Riavvio del server o dell'applicazione obbligatorio"
       },
       "wdtIcon": {
-        "tooltip": "WDT Settings"
+        "tooltip": "Impostazioni WDT"
       }
     }
   },
@@ -663,12 +802,18 @@ define({
     "pageState": {
       "error": {
         "summary": "Campi obbligatori incompleti",
-        "detail": "Il campo {0} \\u00E8 obbligatorio, ma non \\u00E8 stato fornito alcun valore."
+        "detail": "{0} field is required, but no (or an invalid) value has been provided."
       }
     }
   },
   "wrc-common": {
     "buttons": {
+      "apply": {
+        "label": "Applica"
+      },
+      "reset": {
+        "label": "Reimposta"
+      },
       "ok": {
         "label": "OK"
       },
@@ -676,31 +821,34 @@ define({
         "label": "Annulla"
       },
       "yes": {
-        "label": "S\\u00EC"
+        "label": "Sì"
       },
       "no": {
         "label": "No"
       },
       "choose": {
-        "label": "Choose"
+        "label": "Scegli"
       },
       "connect": {
         "label": "Connetti"
       },
       "add": {
-        "label": "Add/Send"
+        "label": "Aggiungi/Invia"
       },
       "edit": {
-        "label": "Edit/Send"
+        "label": "Modifica/Invia"
       },
       "import": {
-        "label": "Import"
+        "label": "Importa"
       },
       "export": {
-        "label": "Export"
+        "label": "Esporta"
       },
       "write": {
-        "label": "Aggiorna file"
+        "label": "Download del file"
+      },
+      "savenow": {
+        "label": "Salva adesso"
       }
     },
     "tooltips": {
@@ -720,51 +868,89 @@ define({
         "value": "Altre azioni"
       },
       "download": {
-        "value": "Browse"
+        "value": "Sfoglia"
       },
       "reset": {
-        "value": "Reset"
+        "value": "Reimposta"
       },
       "submit": {
         "value": "Sottometti modifiche"
       },
       "write": {
-        "value": "Aggiorna file"
+        "value": "Download del file"
       },
       "pick": {
-        "value": "Pick Directory"
+        "value": "Scegli directory"
+      },
+      "reload": {
+        "value": "Reload File"
+      }
+    },
+    "menu": {
+      "chooseFile": {
+        "value": "Scegli file..."
+      },
+      "chooseDir": {
+        "value": "Scegli directory..."
+      }
+    },
+    "labels": {
+      "info": {
+        "value": "Information"
+      },
+      "warn": {
+        "value": "Avvertenza"
+      },
+      "error": {
+        "value": "Errore"
       }
     }
   },
   "wrc-wdt-form": {
     "messages": {
-      "changesSubmitted": {
-        "summary": "Changes were successfully submitted!"
+      "changesSaved": {
+        "summary": "Salvataggio delle modifiche al file ''{0}'' riuscito."
       },
-      "changesNotSubmitted": {
-        "summary": "Unable to submit changes!"
+      "changesNotSaved": {
+        "summary": "Impossibile salvare le modifiche al file ''{0}''."
       },
-      "changesWritten": {
-        "summary": "Changes were successfully written to ''{0}'' file!"
+      "changesDownloaded": {
+        "summary": "Download delle modifiche nel file ''{0}'' riuscito."
       },
-      "changesNotWritten": {
-        "summary": "Unable to write changes to ''{0}'' file!"
+      "changesNotDownloaded": {
+        "summary": "Impossibile scaricare le modifiche nel file ''{0}''."
+      },
+      "verifyPathEntered": {
+        "detail": ". L''impostazione del campo {0} su false accetterà il valore immesso senza convalidarne l''esistenza come file o directory locale."
       }
     },
     "wdtOptionsDialog": {
-      "title": "Edit: {0}",
-      "default": "Default. (Unset)",
-      "instructions": "Enter token to add to the list of selectable items.",
-      "enterValue": "Enter Value",
-      "selectValue": "Select Value",
+      "title": "Modifica: {0}",
+      "default": "Impostazione predefinita. (Non impostato)",
+      "instructions": "Immettere il token da aggiungere alla lista di elementi selezionabili.",
+      "enterValue": "Immettere un valore",
+      "selectValue": "Selezionare un valore",
       "selectSwitch": "Attiva/Disattiva valore",
-      "enterUnresolvedReference": "Enter Unresolved Reference",
-      "enterModelToken": "Enter Model Token"
+      "enterUnresolvedReference": "Immettere il riferimento non risolto",
+      "enterModelToken": "Immettere il token modello",
+      "selectPropsVariable": "Seleziona variabile token modello",
+      "createPropsVariable": "Crea variabile token modello",
+      "propName": "Nome variabile (obbligatorio)",
+      "propValue": "Valore variabile",
+      "enterVariable": "Immettere la variabile",
+      "variableName": "Nome variabile (obbligatorio)",
+      "variableValue": "Valore variabile",
+      "multiSelectUnset": "\"Impostazione predefinita. (Effettuare una selezione dalla lista di elementi disponibili)\""
     }
   },
   "wrc-unsaved-changes": {
-    "confirmDialog": {
-      "title": "Rilevate modifiche non salvate"
+    "titles": {
+      "unsavedChanges": {
+        "value": "Rilevate modifiche non salvate"
+      },
+      "changesNeedDownloading": {
+        "value": "Modifiche non scaricate"
+      }
     },
     "prompts": {
       "unsavedChanges": {
@@ -772,7 +958,15 @@ define({
           "value": "Tutte le modifiche non salvate andranno perdute. Continuare?"
         },
         "areYouSure": {
-          "value": "Si \\u00E8 certi di voler uscire senza salvare le modifiche?"
+          "value": "Si è certi di voler uscire senza salvare le modifiche?"
+        },
+        "needDownloading": {
+          "value": "Le modifiche non sono ancora state scaricate nel file modello WDT.<br/><br/>Scaricarle prima di continuare?"
+        }
+      },
+      "uncommitedCreate": {
+        "abandonForm": {
+          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
         }
       }
     }
@@ -809,6 +1003,20 @@ define({
         "available": "Disponibili",
         "chosen": "Scelti"
       }
+    },
+    "cfe-properties-editor": {
+      "labels": {
+        "name": "Nome proprietà",
+        "value": "Valore proprietà"
+      }
+    },
+    "cfe-property-list-editor": {
+      "labels": {
+        "nameHeader": "Nome proprietà",
+        "valueHeader": "Valore proprietà",
+        "addButtonTooltip": "Aggiungi",
+        "deleteButtonTooltip": "Elimina"
+      }
     }
   },
   "wrc-pdj-options-sources": {
@@ -839,8 +1047,7 @@ define({
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "summary": "Messaggio",
-        "detail": "RDJ non contiene un campo ''notFoundMessage'' per l''elemento ''{0}''."
+        "detail": "''{0}'' non è disponibile."
       }
     }
   },
@@ -878,7 +1085,7 @@ define({
     },
     "descriptions": {
       "healthState": {
-        "value": "Integrit\\u00E0 dei server in esecuzione a partire da"
+        "value": "Integrità dei server in esecuzione a partire da"
       }
     },
     "headers": {
@@ -901,16 +1108,19 @@ define({
         "summary": "Messaggio di connessione"
       },
       "connectFailed": {
-        "detail": "Attempt Failed: "
+        "detail": "Tentativo non riuscito:"
       },
       "badRequest": {
-        "detail": "Unable to process the submitted file or request "
+        "detail": "Impossibile elaborare la richiesta o il file sottomesso "
       },
       "invalidCredentials": {
         "detail": "Le credenziali del dominio WebLogic non sono valide "
       },
       "invalidUrl": {
         "detail": "URL dominio WebLogic non raggiungibile"
+      },
+      "notInRole": {
+        "detail": "Tentativo non riuscito: l'utente non dispone del ruolo Admin, Deployer, Operator o Monitor"
       },
       "notSupported": {
         "detail": "Dominio WebLogic non supportato "
@@ -921,7 +1131,7 @@ define({
       "cbeRestApi": {
         "requestUnsuccessful": {
           "summary": "Richiesta non riuscita",
-          "detail": "Una risposta non riuscita \\u00E8 stata restituita da una chiamata backend della console."
+          "detail": "Una risposta non riuscita è stata restituita da una chiamata backend della console."
         }
       }
     }
@@ -959,6 +1169,12 @@ define({
     "labels": {
       "unexpectedErrorResponse": {
         "value": "Risposta di errore imprevista"
+      }
+    },
+    "messages": {
+      "connectionRefused": {
+        "summary": "Problema di connessione",
+        "details": "In caso di problemi di invio e ricezione dei dati dal fornitore, assicurarsi che sia accessibile e riprovare."
       }
     }
   }

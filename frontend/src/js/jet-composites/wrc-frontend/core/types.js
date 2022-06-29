@@ -47,11 +47,15 @@ define(
         TRANSPORT: {name: 'TRANSPORT'},
         NOT_FOUND: {name: 'NOT_FOUND'},
         CBE_REST_API: {name: 'CBE_REST_API'},
+        CONNECTION_REFUSED: {name: 'CONNECTION_REFUSED'},
         UNEXPECTED: {name: 'UNEXPECTED'}
       }),
       failureTypeFromName: function (name) {
         return Object.values(this.FailureType).find(failureType => failureType.name === name);
       },
+      TypeErrors: Object.freeze({
+        FETCH_FAILURE: 'Failed to fetch'
+      }),
       Navtree: {
         /** @type {{DOCKED: {name: string}, FLOATING: {name: string}, MINIMIZED: {name: string}}} */
         Placement: Object.freeze({

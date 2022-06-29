@@ -19,6 +19,7 @@ import javax.json.JsonReader;
 
 import io.helidon.microprofile.server.Server;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.server.webapp.WebAppUtils;
 
 public final class Main {
   private static final String LOGGING_FILE = "logging.properties";
@@ -72,7 +73,14 @@ public final class Main {
 
   private static void usage() {
     System.err.println(
-      "Usage: console.jar [--properties <property-file-path>] [--stdin] [--showPort] [-s server] [-p port] [-u url]");
+      "Usage: console.jar"
+      + " [-p port]"
+      + " [--stdin]"
+      + " [--useTokenNotCookie]"
+      + " [--showPort]"
+      + " [--properties <property-file-path>]"
+      + " [--persistenceDirectory <persistence-directory-path>]"
+    );
     // FortifyIssueSuppression J2EE Bad Practices: JVM Termination
     // This isn't Java EE
     System.exit(1);
@@ -81,6 +89,7 @@ public final class Main {
   public static void main(final String[] args) throws Exception {
     boolean stdin = false;
     boolean showPortOnStdout = false;
+    String persistenceDirectory = null;
     for (int i = 0; i < args.length; i++) {
       if (args[i].equals("-p")) {
         i++;
@@ -92,6 +101,8 @@ public final class Main {
         System.setProperty("server.port", args[1]);
       } else if (args[i].equals("--stdin")) {
         stdin = true;
+      } else if (args[i].equals("--useTokenNotCookie")) {
+        WebAppUtils.setUseTokenNotCookie();
       } else if (args[i].equals("--showPort")) {
         showPortOnStdout = true;
       } else if (args[i].equals("--properties")) {
@@ -100,11 +111,19 @@ public final class Main {
           usage();
         }
         readPropertyFile(args[i]);
+      } else if (args[i].equals("--persistenceDirectory")) {
+        i++;
+        if (args.length == i) {
+          usage();
+        }
+        persistenceDirectory = args[i];
       }
     }
     Logger logger = configureLogging();
-    ConsoleBackendRuntime.INSTANCE.init(new String[0]);
 
+    PersistenceManager.initialize(persistenceDirectory);
+
+    ConsoleBackendRuntime.INSTANCE.init(new String[0]);
     // The ConsoleBackendRuntime will attempt to connect
     // to the WebLogic Domain when WebLogic RESTful Management
     // endpoint related properties are specified at startup.

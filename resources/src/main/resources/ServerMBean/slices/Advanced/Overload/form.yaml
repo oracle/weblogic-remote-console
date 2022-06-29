@@ -1,0 +1,26 @@
+# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure how WebLogic Server should react in the
+  case of an overload or failure condition.</p>
+
+properties:
+- name: "OverloadProtection.SharedCapacityForWorkManagers"
+- name: "OverloadProtection.FreeMemoryPercentHighThreshold"
+- name: "OverloadProtection.FreeMemoryPercentLowThreshold"
+- name: "OverloadProtection.FailureAction"
+- name: "OverloadProtection.PanicAction"
+helpTopics:
+- label: "Whole Server Migration with Dynamic and Mixed Clusters "
+  href: "clust/migration.html#CLUST726"
+  type: "edocs"
+- label: "Avoiding and Managing Overload"
+  href: "cnfgd/overload.html"
+  type: "edocs"
+- label: "Avoiding and Recovering From Server Failure"
+  href: "start/failures.html"
+  type: "edocs"
+- label: "Understanding Server Life Cycle"
+  href: "start/server_life.html"
+  type: "edocs"

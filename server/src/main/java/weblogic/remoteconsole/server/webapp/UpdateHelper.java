@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.webapp;
 import java.util.List;
 import javax.json.JsonObject;
 
+import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -16,7 +17,7 @@ import weblogic.remoteconsole.server.repo.Response;
  */
 public class UpdateHelper {
 
-  private UpdateHelper() {
+  protected UpdateHelper() {
   }
 
   public static javax.ws.rs.core.Response update(InvocationContext ic, JsonObject requestBody) {
@@ -33,13 +34,18 @@ public class UpdateHelper {
     // to figure out which page to use so that we can unmarshal the request body.
     Response<SlicePagePath> sliceResponse =
       ic.getPageRepo().asPageReaderRepo().getActualSlicePagePath(ic);
-    if (!existsResponse.isSuccess()) {
-      response.copyUnsuccessfulResponse(existsResponse);
+    if (!sliceResponse.isSuccess()) {
+      response.copyUnsuccessfulResponse(sliceResponse);
       return VoidResponseMapper.toResponse(ic, response);
     }
     ic.setPagePath(sliceResponse.getResults());
     // If this page is read-only, return MethodNotAllowed
-    if (ic.getPageRepo().getPageRepoDef().getPageDef(ic.getPagePath()).asSliceFormDef().isReadOnly()) {
+    Response<Boolean> readOnlyResponse = isReadOnly(ic);
+    if (!readOnlyResponse.isSuccess()) {
+      response.copyUnsuccessfulResponse(readOnlyResponse);
+      return VoidResponseMapper.toResponse(ic, response);
+    }
+    if (readOnlyResponse.getResults()) {
       return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED).build();
     }
     // Unmarshal the request body.
@@ -51,5 +57,22 @@ public class UpdateHelper {
     // Update the underlying beans
     response = ic.getPageRepo().asPageEditorRepo().update(ic, unmarshalResponse.getResults());
     return VoidResponseMapper.toResponse(ic, response);
+  }
+
+  public static Response<Boolean> isReadOnly(InvocationContext ic) {
+    Response<Boolean> response = new Response<>();
+    Response<PageDef> pageDefResponse = ic.getPageRepo().asPageReaderRepo().getPageDef(ic);
+    if (!pageDefResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(pageDefResponse);
+    }
+    PageDef pageDef = pageDefResponse.getResults();
+    boolean readOnly = true;
+    if (pageDef.isSliceFormDef() && !pageDef.asSliceFormDef().isReadOnly()) {
+      readOnly = false;
+    }
+    if (pageDef.isSliceTableDef() && !pageDef.asSliceTableDef().isReadOnly()) {
+      readOnly = false;
+    }
+    return response.setSuccess(readOnly);
   }
 }

@@ -1,9 +1,10 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import weblogic.jdbc.utils.JDBCDriverAttribute;
@@ -11,6 +12,7 @@ import weblogic.jdbc.utils.JDBCDriverInfo;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.FormSectionDefSource;
+import weblogic.remoteconsole.common.repodef.schema.LegalValueDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRestEditPageRepoDef;
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -152,11 +154,14 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
   private void addGridLinkDatabaseDriverSection(FormSectionDefSource parent) {
     FormSectionDefSource section = addSectionToSection(parent);
     // Add a property for selecting the driver
-    createSelectDriverProperty(
-      section,
-      PROPERTY_GRIDLINK_DATABASE_DRIVER,
-      getGridLinkDriverInfos()
-    );
+    BeanPropertyDefCustomizerSource property =
+      createSelectDriverProperty(
+        section,
+        PROPERTY_GRIDLINK_DATABASE_DRIVER,
+        getGridLinkDriverInfos()
+      );
+    // Instead of picking the first driver as the default, use this one (to match the WebLogic console):
+    setDefaultValue(property, "*Oracle's Driver (Thin) for GridLink Connections; Versions:Any");
   }
 
   private void addGridLinkConnectionPropertiesSection(
@@ -302,11 +307,20 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
       section.setIntroductionHTML(
         "You have selected a non-XA JDBC driver. Specify how transactions should be handled."
       );
-      addMBeanPropertyToSection(section, PROPERTY_GLOBAL_TRANSACTIONS_PROTOTOL).setFormName(
+      BeanPropertyDefCustomizerSource property =
+        addMBeanPropertyToSection(section, PROPERTY_GLOBAL_TRANSACTIONS_PROTOTOL);
+      property.setFormName(
         driverNameToFormPropertyName(
           driverScopedName(datasourceType, driverInfo, "GlobalTransactionsProtocol")
-        )
+         )
       );
+      // Remove the TwoPhaseCommit option since we only let the user configure the global
+      // transactions protocol for non-XA drivers and only XA drivers support TwoPhaseCommit.
+      LegalValueDefCustomizerSource twoPhase = new LegalValueDefCustomizerSource();
+      twoPhase.setOmit(true);
+      twoPhase.setValue("TwoPhaseCommit");
+      //twoPhase.setLabel(twoPhase.getValue());
+      property.setLegalValues(List.of(twoPhase));
     }
   }
 

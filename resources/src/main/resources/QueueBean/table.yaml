@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A queue is used for asynchronous peer communications.
@@ -7,7 +7,49 @@ introductionHTML: >
 displayedColumns:
 - name: "Name"
 - name: "JNDIName"
+- name: "Template"
 - name: "SubDeploymentName"
+
+hiddenColumns:
+
+# From General slice:
+- name: "ProductionPausedAtStartup"
+- name: "ConsumptionPausedAtStartup"
+- name: "InsertionPausedAtStartup"
+- name: "DefaultUnitOfOrder"
+- name: "AttachSender"
+- name: "LocalJNDIName"
+- name: "JMSCreateDestinationIdentifier"
+- name: "SAFExportPolicy"
+- name: "MessagingPerformancePreference"
+- name: "UnitOfWorkHandlingPolicy"
+- name: "IncompleteWorkExpirationTime"
+
+# From DeliveryFailure slice:
+- name: "DeliveryParamsOverrides.RedeliveryDelay"
+- name: "DeliveryFailureParams.RedeliveryLimit"
+- name: "DeliveryFailureParams.ExpirationPolicy"
+- name: "DeliveryFailureParams.ExpirationLoggingPolicy"
+- name: "DeliveryFailureParams.ErrorDestination"
+
+# From Logging slice:
+- name: "MessageLoggingParams.MessageLoggingEnabled"
+- name: "MessageLoggingParams.MessageLoggingFormat"
+
+# From Overrides slice:
+- name: "DeliveryParamsOverrides.Priority"
+- name: "DeliveryParamsOverrides.TimeToLive"
+- name: "DeliveryParamsOverrides.TimeToDeliver"
+- name: "DeliveryParamsOverrides.DeliveryMode"
+
+# From Thresholds slice:
+- name: "Thresholds.BytesHigh"
+- name: "Thresholds.BytesLow"
+- name: "Thresholds.MessagesHigh"
+- name: "Thresholds.MessagesLow"
+- name: "Quota"
+- name: "MaximumMessageSize"
+
 helpTopics:
 - label: "JMS System Module Configuration "
   href: "jmsad/basic_config.html#JMSAD156"

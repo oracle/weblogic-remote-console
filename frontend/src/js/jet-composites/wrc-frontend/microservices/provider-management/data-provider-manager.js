@@ -140,6 +140,8 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         const dataProvider = addDataProvider({id: entry.id, name: entry.name, type: DataProvider.prototype.Type.MODEL.name, beanTrees: entry.beanTrees});
         if (CoreUtils.isNotUndefinedNorNull(entry.file)) dataProvider['file'] = entry.file;
         if (CoreUtils.isNotUndefinedNorNull(entry.fileContents)) dataProvider['fileContents'] = entry.fileContents;
+        if (CoreUtils.isNotUndefinedNorNull(entry.propProvider)) dataProvider['propProvider'] = entry.propProvider;
+        if (CoreUtils.isNotUndefinedNorNull(entry.properties)) dataProvider['properties'] = entry.properties;
         return dataProvider;
       },
       /**
@@ -157,6 +159,66 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
        */
       downloadWDTModel: function(dataProvider) {
         return DataOperations.model.downloadModel(dataProvider);
+      },
+      /**
+       * @param {DataProvider} dataProvider
+       * @param {string} searchValue
+       * @returns {Promise<{succeeded: boolean, data?: string, messages?: [string], failure?: any}>}
+       */
+      searchWDTModel: function(dataProvider, searchValue) {
+        return new Promise((resolve, reject) => {
+          const result = {succeeded: false};
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+              // Collect the simple search information and check if the search can be performed
+              const searchUrl = dataProvider.beanTrees[0].simpleSearch;
+              const searchPerspective = dataProvider.beanTrees[0].type;
+              if (CoreUtils.isNotUndefinedNorNull(searchUrl) && CoreUtils.isNotUndefinedNorNull(searchValue) && (searchValue.length > 0)) {
+                // Issue the search request and handle the results
+                DataOperations.mbean.simpleSearch(searchUrl, searchValue)
+                  .then(reply => {
+                    result.succeeded = true;
+
+                    // Check for messages to display about the search
+                    if (CoreUtils.isNotUndefinedNorNull(reply.body.messages) && (reply.body.messages.length > 0)) {
+                      result['messages'] = reply.body.messages;
+                    }
+
+                    // Provide the location of the search for routing
+                    if (CoreUtils.isNotUndefinedNorNull(reply.body.data.resourceData)) {
+                      const encodedResouceData = encodeURIComponent(reply.body.data.resourceData.resourceData);
+                      result['data'] = ('/' + searchPerspective + '/' + encodedResouceData);
+                    }
+                    resolve(result);
+                  })
+                  .catch(response => {
+                    // Check for messages to display about the search failure
+                    if ((response.failureType === CoreTypes.FailureType.CBE_REST_API) &&
+                      CoreUtils.isNotUndefinedNorNull(response.body.messages) && (response.body.messages.length > 0)) {
+                      result['messages'] = response.body.messages;
+                    }
+                    else {
+                      // Otherwise set the failure
+                      result['failure'] = response;
+                    }
+                    // Resolve the promise so the caller can display messages or handle failure
+                    resolve(result);
+                  });
+              }
+            }
+            else {
+              // Resolve the promise wihtout any search
+              resolve(result);
+            }
+          }
+          else {
+            result['failure'] = {
+              failureType: CoreTypes.FailureType.UNEXPECTED,
+              failureReason: new Error('Required parameter is missing or null: \'id\'')
+            };
+            reject(result);
+          }
+        });
       },
       /**
        * Returns fulfilled Promise with JSON
@@ -215,6 +277,43 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
             reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
             reply['failureReason'] = new Error(`Unsupported media type: ${mediaType}`);
             reject(reply);
+          }
+        });
+      },
+      /**
+       *
+       * @param {DataProvider} dataProvider
+       * @param {string} propertyListProviderId
+       * @returns {Promise<{succeeded: boolean, data: any}|*>}
+       */
+       updatePropertyListWDTModel: function(dataProvider, propertyListProviderId) {
+        return new Promise((resolve, reject) => {
+          const result = {succeeded: false};
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+              DataOperations.model.updatePropertyList(dataProvider.id, propertyListProviderId)
+                .then(reply => {
+                  result.succeeded = true;
+                  result.data = dataProvider;
+                  resolve(result);
+                })
+                .catch(response => {
+                  result['failure'] = response;
+                  reject(result);
+                });
+            }
+            else {
+              result.succeeded = true;
+              result.data = dataProvider;
+              resolve(result);
+            }
+          }
+          else {
+            result['failure'] = {
+              failureType: CoreTypes.FailureType.UNEXPECTED,
+              failureReason: new Error('Required dataprovider parameter is missing or null: \'id\'')
+            };
+            reject(result);
           }
         });
       },
@@ -344,6 +443,136 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         });
       },
       /**
+       * <p><b>DON'T CALL THIS FUNCTION INSIDE A LOOP OR WHILE STATEMENT!!</b></p>
+       * @param {{id?: string, name: string, file?: string, fileContents?: string, beanTrees?: [BeanTree]}} entry
+       * @returns {DataProvider}
+       */
+       createPropertyList: function(entry) {
+        if (CoreUtils.isUndefinedOrNull(entry.id)) {
+          if (!IdGenerator.exists(DataProvider.prototype.Type.PROPERTIES.name)) {
+            IdGenerator.create(DataProvider.prototype.Type.PROPERTIES.name);
+          }
+          entry.id = `${IdGenerator.getNextId(DataProvider.prototype.Type.PROPERTIES.name)}`;
+        }
+
+        const dataProvider = addDataProvider({id: entry.id, name: entry.name, type: DataProvider.prototype.Type.PROPERTIES.name, beanTrees: entry.beanTrees});
+        if (CoreUtils.isNotUndefinedNorNull(entry.file)) dataProvider['file'] = entry.file;
+        if (CoreUtils.isNotUndefinedNorNull(entry.fileContents)) dataProvider['fileContents'] = entry.fileContents;
+        return dataProvider;
+      },
+      /**
+       *
+       * @param {DataProvider} dataProvider
+       * @returns {Promise<{succeeded: boolean, data: any}|*>}
+       */
+       removePropertyList: function(dataProvider) {
+        return new Promise((resolve, reject) => {
+          const result = {succeeded: false};
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+              DataOperations.properties.removePropertyList(dataProvider.id)
+                .then(reply => {
+                  removeDataProviderById(dataProvider.id);
+                  result.succeeded = true;
+                  result.data = dataProvider;
+                  resolve(result);
+                })
+                .catch(response => {
+                  result['failure'] = response;
+                  reject(result);
+                });
+            }
+            else {
+              removeDataProviderById(dataProvider.id);
+              result.succeeded = true;
+              result.data = dataProvider;
+              resolve(result);
+            }
+          }
+          else {
+            result['failure'] = {
+              failureType: CoreTypes.FailureType.UNEXPECTED,
+              failureReason: new Error('Required parameter is missing or null: \'id\'')
+            };
+            reject(result);
+          }
+        });
+      },
+      /**
+       *
+       * @param {DataProvider} dataProvider
+       * @param {FormData} formData
+       * @returns {Promise<{body: {data?: *, messages: [*]}} |{failureType: string, failureReason: *}>}
+       */
+       uploadPropertyList: async function(dataProvider, formData) {
+        return DataOperations.properties.createPropertyList(dataProvider.id, formData);
+      },
+      /**
+       *
+       * @param {DataProvider} dataProvider
+       */
+      downloadPropertyList: function(dataProvider) {
+        return DataOperations.properties.downloadPropertyList(dataProvider);
+      },
+      /**
+       * Returns fulfilled Promise with the data contents after checking against the media type
+       * @param {string} data
+       * @param {string} [mediaType="application/x-yaml"]
+       * @returns {Promise<{body: {data?: *, messages: [*]}} |{failureType: string, failureReason: *}>}
+       */
+      checkProviderUploadContent: function(data, mediaType) {
+        return new Promise((resolve, reject) => {
+          if (!mediaType || mediaType === '') mediaType = 'application/x-yaml';
+          const reply = {
+            body: {
+              messages: []
+            }
+          };
+
+          // Use the media type check if the data format complies...
+          if (mediaType.indexOf('yaml') !== -1) {
+            try {
+              parser.load(data);
+            }
+            catch(err) {
+              reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+              reply['failureReason'] = err;
+              reject(reply);
+            }
+          }
+          else if (mediaType.indexOf('json') !== -1) {
+            try {
+              JSON.parse(data);
+            }
+            catch(err) {
+              reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+              reply['failureReason'] = err;
+              reject(reply);
+            }
+          }
+          else if (mediaType.indexOf('plain') !== -1) {
+            try {
+              // plain text
+              reply.body['data'] = data;
+            }
+            catch(err) {
+              reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+              reply['failureReason'] = err;
+              reject(reply);
+            }
+          }
+          else {
+            reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+            reply['failureReason'] = new Error(`Unsupported media type: ${mediaType}`);
+            reject(reply);
+          }
+
+          // Return the data for later upload...
+          reply.body['data'] = data;
+          resolve(reply);
+        });
+      },
+      /**
        * @returns {DataProvider|undefined}
        */
       getLastActivatedDataProvider: function() {
@@ -413,6 +642,12 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
               IdGenerator.create(DataProvider.prototype.Type.COMPOSITE.name);
             }
             nextId = IdGenerator.getNextId(DataProvider.prototype.Type.COMPOSITE.name);
+            break;
+          case DataProvider.prototype.Type.PROPERTIES:
+            if (!IdGenerator.exists(DataProvider.prototype.Type.PROPERTIES.name)) {
+              IdGenerator.create(DataProvider.prototype.Type.PROPERTIES.name);
+            }
+            nextId = IdGenerator.getNextId(DataProvider.prototype.Type.PROPERTIES.name);
             break;
         }
         return nextId;

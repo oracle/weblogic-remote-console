@@ -50,7 +50,8 @@ describe.only('Test Suite: nonAdminUsers Roles and Privileges', function () {
     })
 
     //Test non-Admin users Privileges and Roles
-    it('2. Test Category: GAT/Risk1\n \t Test Scenario: NonAdmin Users Privilege and Roles', async function () {
+    it('2. Test Category: GAT/Risk1\n \t Test Scenario: NonAdmin Users Privilege and Roles with Edit Tree',
+        async function () {
         file = "nonAdminUserPrivilegeRole.png";
         try {
             await nonAdminUser.testUserPrivilegeRole(driver,"monitoruser", "Edit Tree");
@@ -68,6 +69,21 @@ describe.only('Test Suite: nonAdminUsers Roles and Privileges', function () {
         file = "deployerUserPrivilegeRole.png";
         try {
             await nonAdminUser.deployApplication(driver,"deployeruser");
+            console.log("TEST PASS ");
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+    //Test non-Admin users Privileges and Roles
+    it('4. Test Category: GAT/Risk1\n \t Test Scenario: NonAdmin Users Privilege and Roles with Monitoring Tree',
+        async function () {
+        file = "nonAdminUserPrivilegeRole.png";
+        try {
+            await nonAdminUser.testUserPrivilegeRole(driver,"monitoruser", "monitoring");
+            await nonAdminUser.testUserPrivilegeRole(driver,"operatoruser", "monitoring");
+            await nonAdminUser.testUserPrivilegeRole(driver,"deployeruser", "monitoring");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

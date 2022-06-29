@@ -7,8 +7,8 @@
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', './unsaved-changes-dialog', './set-sync-interval-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/options-sources', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/utils', './create-form', './wdt-form',  './help-form', 'wrc-frontend/core/mutex', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'cfe-property-list-editor/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset','ojs/ojradioset'],
-  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, Controller, DataOperations, MessageDisplaying, ChangeManager, NavtreeManager, PerspectiveMemoryManager, UnsavedChangesDialog, SetSyncIntervalDialog, ContentAreaContainerResizer, PageDataTypes, PageDefinitionFields, PageDefinitionOptionsSources, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUtils, CreateForm, WdtForm, HelpForm, Mutex, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/wdt-model/archive', './unsaved-changes-dialog', './set-sync-interval-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/options-sources', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs','wrc-frontend/microservices/page-definition/utils', './create-form', './wdt-form', './help-form', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'cfe-property-list-editor/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset', 'ojs/ojradioset'],
+  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, Controller, DataOperations, MessageDisplaying, ChangeManager, NavtreeManager, PerspectiveMemoryManager, ModelArchive, UnsavedChangesDialog, SetSyncIntervalDialog, ContentAreaContainerResizer, PageDataTypes, PageDefinitionFields, PageDefinitionOptionsSources, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, CreateForm, WdtForm, HelpForm, TableCustomizerManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function FormViewModel(viewParams) {
 
       const FIELD_DISABLED = Object.freeze('fieldDisabled_');
@@ -46,16 +46,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
         },
         icons: {
-          restart: {iconFile: 'restart-required-org_24x24',
+          restart: {
+            iconFile: 'restart-required-org_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form.icons.restart.tooltip')
           },
-          wdtIcon: {iconFile: 'wdt-options-icon-blk_24x24',
+          wdtIcon: {
+            iconFile: 'wdt-options-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form.icons.wdtIcon.tooltip')
           },
-          choose: {iconFile: 'choose-file-icon-blk_24x24',
+          choose: {
+            iconFile: 'choose-file-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.choose.value')
           },
-          clear: {iconFile: 'erase-icon-blk_24x24',
+          clear: {
+            iconFile: 'erase-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.clear.value')
           },
           more: {
@@ -65,16 +69,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
         },
         buttons: {
-          yes: {disabled: false,
+          yes: {
+            disabled: false,
             label: oj.Translations.getTranslatedString('wrc-common.buttons.yes.label')
           },
-          no: {disabled: false,
+          no: {
+            disabled: false,
             label: oj.Translations.getTranslatedString('wrc-common.buttons.no.label')
           },
-          ok: {disabled: false,
+          ok: {
+            disabled: false,
             label: oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
           },
-          cancel: {disabled: false,
+          cancel: {
+            disabled: false,
             label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
           }
         },
@@ -87,7 +95,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           title: oj.Translations.getTranslatedString('wrc-sync-interval.dialogSync.title'),
           instructions: oj.Translations.getTranslatedString('wrc-sync-interval.dialogSync.instructions'),
           fields: {
-            interval: {value: ko.observable(''),
+            interval: {
+              value: ko.observable(''),
               label: oj.Translations.getTranslatedString('wrc-sync-interval.dialogSync.fields.interval.label')
             }
           }
@@ -104,9 +113,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.dynamicMessageFields = [];
       this.multiSelectControls = {};
       this.propertyListName = null;
-      this.saveButtonDisabledVoting = {checkboxSetChanged: true, multiSelectChanged: true, inputFieldChanged: true, nonInputFieldChanged: true};
+      this.saveButtonDisabledVoting = {
+        checkboxSetChanged: true,
+        multiSelectChanged: true,
+        inputFieldChanged: true,
+        nonInputFieldChanged: true
+      };
       this.debugFlagItems = ko.observable();
       this.debugFlagsEnabled = ko.observableArray([]);
+      this.debugFlagEvent = false;
+
+      // An unset field is being set to default value
+      this.resetUnsetFieldFlag = false;
 
       this.hasAdvancedFields = ko.observable(false);
       this.showAdvancedFields = ko.observableArray([]);
@@ -129,11 +147,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.tableHelpColumns = ko.observableArray([]);
 
       this.dialogFields = ko.observable();
-      this.dialogFields({title:''});
-      this.wdtOptionsDialogHTML = ko.observable();
+      this.dialogFields({title: ''});
+      this.wdtOptionsDialogHTML = ko.observable({view: HtmlUtils.stringToNodeArray('<p/>')});
       this.buttonSelected = ko.observable('fromRegValue');
       this.doWdtDialogPopup = false;
 
+      this.modelConsole = {expanded: false, offsetHeight: 0};
+      this.valueSubscriptions = [];
       this.subscriptions = [];
       this.signalBindings = [];
 
@@ -153,7 +173,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           finishedAction: finishWizardForm,
           createFormMode: getCreateFormMode,
           onSave: saveBean,
-          onUpdateModelFile: updateWdtModelFile,
+          onUpdateContentFile: updateContentFile,
           onLandingPageSelected: selectLandingPage,
           onBeanPathHistoryToggled: toggleBeanPathHistory,
           onInstructionsToggled: toggleInstructions,
@@ -164,7 +184,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           onUnsavedChangesDecision: decideUnsavedChangesAction,
           onToolbarRendering: getToolbarRenderingInfo,
           onSyncClicked: setSyncInterval,
-          onSyncIntervalClicked: captureSyncInterval
+          onSyncIntervalClicked: captureSyncInterval,
+          onCustomizeButtonClicked: toggleCustomizer
         }
       });
 
@@ -180,10 +201,90 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
       });
 
-      this.overlayFormDialogModuleConfig = ko.observable({ view: [], viewModel: null });
+      this.overlayFormDialogModuleConfig = ko.observable({view: [], viewModel: null});
+
+      this.columnDataProvider = ko.observable();
+      this.tableCustomizerManager = new TableCustomizerManager();
+
+      self.applyCustomizations = (visibleColumns, hiddenColumns) => {
+        const columnMetadata = self.tableCustomizerManager.applyCustomizations.call(
+          self.tableCustomizerManager,
+          [],
+          visibleColumns,
+          hiddenColumns
+        );
+        self.columnDataProvider(columnMetadata);
+      };
+
+      self.resetCustomizations = function (valueHasMutated = false) {
+        const defaultColumns = getDefaultVisibleAndHiddenColumns();
+        const columnMetadata = self.tableCustomizerManager.applyCustomizations.call(
+          self.tableCustomizerManager,
+          [],
+          defaultColumns.visibleColumns,
+          defaultColumns.hiddenColumns,
+          valueHasMutated
+        );
+        self.columnDataProvider(columnMetadata);
+      };
+
+      this.tableCustomizerModuleConfig = ModuleElementUtils.createConfig({
+        viewPath: `${Controller.getModulePathPrefix()}views/content-area/body/table-customizer.html`,
+        viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/body/table-customizer`,
+        params: {
+          parentRouter: viewParams.parentRouter,
+          signaling: viewParams.signaling,
+          perspective: viewParams.perspective,
+          visibleColumns: self.tableCustomizerManager.getVisibleColumnsObservable.call(self.tableCustomizerManager),
+          hiddenColumns: self.tableCustomizerManager.getHiddenColumnsObservable.call(self.tableCustomizerManager),
+          page: self.tableCustomizerManager.getPageCustomizedObservable.call(self.tableCustomizerManager),
+          applyCustomizationsCallback: self.applyCustomizations,
+          resetCustomizationsCallback: self.resetCustomizations
+        },
+      });
+
+      function toggleCustomizer(event) {
+        self.tableCustomizerManager.toggleCustomizerState(event);
+      }
+
+      function adjustSliceTableCustomizer(showCustomizer) {
+        if (showCustomizer) {
+          // Setup the page and column info on the customizer for a slice table
+          const page = viewParams.parentRouter.data.rdjData().pageDescription.split('/').slice(3).join('/');
+          self.tableCustomizerManager.setPageCustomized.call(self.tableCustomizerManager, page);
+          self.resetCustomizations(true);
+        }
+
+        // Ensure the customizer state is setup once the module is available
+        self.tableCustomizerModuleConfig
+        .then((moduleConfig) => {
+          if (moduleConfig) {
+            // Setup the customizer to display the slice table columns
+            if (showCustomizer) moduleConfig.viewModel.setupCustomization();
+
+            // Adjust the toolbar button based on table customization state
+            self.tableCustomizerManager.adjustCustomizerButtonState(showCustomizer);
+
+            // Ensure the customizer is not available when no slice table
+            if (!showCustomizer) self.tableCustomizerManager.closeCustomizerState();
+          }
+        });
+      }
+
+      function getDefaultVisibleAndHiddenColumns() {
+        const pdjData = viewParams.parentRouter.data.pdjData();
+        const visibleColumns = CoreUtils.shallowCopy(pdjData?.sliceTable.displayedColumns);
+        const hiddenColumns = CoreUtils.shallowCopy(pdjData?.sliceTable?.hiddenColumns);
+        return { visibleColumns: visibleColumns, hiddenColumns: hiddenColumns };
+      }
 
       this.connected = function () {
-        document.title = viewParams.parentRouter.data.pageTitle();
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+          document.title = viewParams.parentRouter.data.pageTitle();
+        }
+
+        // Disable the customizer button until determining if there is a slice table
+        self.tableCustomizerManager.adjustCustomizerButtonState(false);
 
         const pdjData = viewParams.parentRouter.data.pdjData();
         if (CoreUtils.isNotUndefinedNorNull(pdjData.createForm)) {
@@ -194,9 +295,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         if (isWdtForm()) {
           self.wdtForm = new WdtForm(viewParams);
-          self.mutex = new Mutex();
-          if (ViewModelUtils.isElectronApiAvailable() && CoreUtils.isUndefinedOrNull(window.api)) {
-            window.addEventListener('beforeunload', onBeforeUnload);
+          if (!isWizardForm()) {
+            if (ViewModelUtils.isElectronApiAvailable() && CoreUtils.isUndefinedOrNull(window.api)) {
+              window.addEventListener('beforeunload', onBeforeUnload);
+            }
           }
         }
 
@@ -219,6 +321,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.autoDownloadRequested.add(() => {
+          updateContentFile('autoDownload').then(reply => {});
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.modelConsoleSizeChanged.add( (newOffsetHeight) => {
+          self.modelConsole.expanded = (newOffsetHeight > 23);
+          self.modelConsole.offsetHeight = newOffsetHeight;
+          setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+        });
+        self.signalBindings.push(binding);
+
       }.bind(this);
 
       this.disconnected = function () {
@@ -236,9 +351,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         self.subscriptions = [];
 
+        self.valueSubscriptions.forEach((item) => {
+          item.subscription.dispose();
+        });
+
+        self.valueSubscriptions = [];
+
         if (isWdtForm()) {
           const formElement = document.getElementById('wlsform');
-          if (formElement) formElement.removeEventListener('keyup', sendEnterOnKeyUp);
+          if (formElement) {
+            formElement.removeEventListener('blur', onBlurFormLayout);
+          }
+          const nodeList = document.querySelectorAll('#Source, #SourcePath, #Plan, #PlanPath');
+          if (nodeList !== null && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+            const arr = Array.from(nodeList);
+            arr.forEach((node) => {
+              node.removeEventListener('change', onChangeLibAppDeploymentField);
+            });
+          }
+
           window.removeEventListener('beforeunload', onBeforeUnload);
         }
 
@@ -252,8 +383,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function onStartWindowQuit() {
         function sendWindowAppQuit(isNotQuitable, waitMilliseconds) {
           if (ViewModelUtils.isElectronApiAvailable()) {
-              setTimeout(() => {
-                window.electron_api.ipc.invoke('window-app-quit', {preventQuit: isNotQuitable, source: 'form.js'});
+            setTimeout(() => {
+              window.electron_api.ipc.invoke('window-app-quit', {preventQuit: isNotQuitable, source: 'form.js'});
             }, waitMilliseconds);
           }
         }
@@ -262,20 +393,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           stashDirtyFields();
           const eventType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'download' : 'autoDownload');
           return saveBean(eventType)
-            .then(reply => {
-              if (reply) {
-                return self.wdtForm.getModelFileChanges()
-                  .then(reply => {
-                    if (!reply.succeeded) {
-                      writeWdtModelFile({filepath: reply.filepath, fileContents: reply.fileContents});
-                    }
-                    sendWindowAppQuit(false, 2500);
-                  });
-              }
-              else {
-                sendWindowAppQuit(true, 5);
-              }
-            });
+          .then(reply => {
+            if (reply) {
+              return self.wdtForm.getContentFileChanges()
+              .then(reply => {
+                if (!reply.succeeded) {
+                  writeContentFile({filepath: reply.filepath, fileContents: reply.fileContents});
+                }
+                sendWindowAppQuit(false, 2500);
+              });
+            }
+            else {
+              sendWindowAppQuit(true, 5);
+            }
+          });
         }
         else {
           sendWindowAppQuit(false, 5);
@@ -300,11 +431,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
        */
       function DialogFields() {
         return {
-          addField: function(name, value) {
+          addField: function (name, value) {
             if (typeof value === 'number') value = value.toString();
             this.putValue(name, value || '');
           },
-          putValue: function(name, value) {
+          putValue: function (name, value) {
             this[name] = value;
           }
         }
@@ -323,81 +454,259 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         cacheDataPayload(dataPayload);
       }
 
-      function updateFields(){
-        self.doWdtDialogPopup = false;
-        const dialogFields = self.wdtForm.processWDTOptionsDialogFields(self.dialogFields());
-        const buttonS = self.buttonSelected();
-        const name = dialogFields.id;
-        if (dialogFields.displayClass === 'cfe-multi-select'){
-          const newLabel = dialogFields.currentValueText;
-          const newTokenItem = {
-            'label' : newLabel,
-            'modelToken' : newLabel
-          };
-          const newUnrefItem = {
-            'label' : newLabel,
-            'value' : {'label' : newLabel, 'unresolvedReference' : newLabel}
-          };
-          const newChosenItem = (buttonS === 'fromModelToken' ? newTokenItem : newUnrefItem);
-          document.getElementById(name).addNewChosenItem(newChosenItem);
-        }
-        else {
-          if (buttonS === 'restoreToDefault'){
-            unsetProperty(PageDefinitionUnset.getPropertyAction(name));
-            if (dialogFields.displayClass === 'oj-switch'){
-              document.getElementById('extraField_'+name).style.display = 'none';
-              document.getElementById('baseField_'+name).style.display = 'inline-flex';
-            }
-            document.getElementById(name).classList.remove(FIELD_HIGHLIGHT_CLASS);
+      function updateFields_MultiSelect(dialogFields){
+        const variableName = dialogFields.variableName;
+        const itemValue = dialogFields.itemValue;
+        const multiElement = document.getElementById(dialogFields.id);
+        let newProp = null;
+        switch (self.buttonSelected()) {
+          case 'fromRegValue':
+            self[`${FIELD_VALUES}${dialogFields.replacer}`]('');
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromRegValue');
+            multiElement.readonly=false;
+            // if ((dialogFields.wktTool === 'true') && dialogFields.originalValueFrom === 'fromModelToken') {
+            //   self.wdtForm.removeModelProperty(self.wdtForm.stripOutSign(dialogFields.originalValue));
+            // }
+            break;
+          case 'fromSelectWKTVariable': {
+            const modelProp = self.wdtForm.getModelPropertyBasedOnUid(dialogFields.variableUid);
+            dialogFields.variableName = modelProp.Name;
+            dialogFields.itemValue = modelProp.Value;
+            updateValue(dialogFields);
+            multiElement.readonly=true;
+            multiElement.clearAllChosenItems();
+            break;
           }
-          else {
-            self[`${FIELD_VALUE_SET}${dialogFields.replacer}`](true);
-            PageDefinitionUnset.addPropertyHighlight(dialogFields.id);
-            if (buttonS === 'fromModelToken' || buttonS === 'fromUnresolvedReference'){
-              self[`${FIELD_VALUES}${dialogFields.replacer}`](dialogFields.currentValueText);
-              if (dialogFields.displayClass === 'oj-switch'){
-                document.getElementById('extraField_'+name).style.display = 'inline-flex';
-                document.getElementById('baseField_'+name).style.display = 'none';
-              }
-            }
-            else {
-              self[`${FIELD_VALUES}${dialogFields.replacer}`](dialogFields.currentValue);
-              if (dialogFields.displayClass === 'oj-switch'){
-                document.getElementById('extraField_'+name).style.display = 'none';
-                document.getElementById('baseField_'+name).style.display = 'inline-flex';
-              }
-            }
-          }
-          self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`](buttonS);
+          case 'fromWKTVariable':
+            self.wdtForm.setModelPropertyValue(variableName, itemValue);
+            updateValue(dialogFields);
+            multiElement.readonly=true;
+            multiElement.clearAllChosenItems();
+            break;
+          case 'fromModelToken':
+            self[`${FIELD_VALUES}${dialogFields.replacer}`](dialogFields.itemValue);
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromModelToken');
+            multiElement.readonly=true;
+            break;
+          case 'fromPropOptions':
+            self[`${FIELD_VALUES}${dialogFields.replacer}`](dialogFields.variableName);
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromModelToken');
+            multiElement.readonly=true;
+            multiElement.clearAllChosenItems();
+            break;
+          case 'createPropOptions':
+            self[`${FIELD_VALUES}${dialogFields.replacer}`]('@@PROP:' + dialogFields.newPropName + '@@');
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromModelToken');
+            multiElement.readonly=true;
+            multiElement.clearAllChosenItems();
+            newProp = {
+              name: dialogFields.newPropName,
+              value: dialogFields.newPropValue
+            };
         }
-        self.doWdtDialogPopup=true;
+        self.dirtyFields.add(dialogFields.replacer);
+        return newProp;
       }
 
-      function displayAndProcessWdtDialog(result, fromFieldChange){
+      function setReadonly(name , option=true) {
+        let field = document.getElementById(name);
+        if (CoreUtils.isNotUndefinedNorNull(field)) {
+          field.readonly = option;
+        }
+      }
+
+      function updateValue(dialogFields){
+        self[`${FIELD_VALUES}${dialogFields.replacer}`]('@@PROP:'+dialogFields.variableName+'@@');
+        self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromModelToken');
+        const name = dialogFields.id;
+        if (dialogFields.displayClass === 'oj-switch') {
+          document.getElementById('extraField_' + name).style.display = 'inline-flex';
+          document.getElementById('baseField_' + name).style.display = 'none';
+        }
+      }
+
+      function updateFields(dialogFields) {
+        self.doWdtDialogPopup = false;
+        let buttonS = self.buttonSelected();
+        const name = dialogFields.id;
+        let newProp = null;
+        if (dialogFields.displayClass === 'cfe-multi-select') {
+          return updateFields_MultiSelect(dialogFields);
+        }
+        if (dialogFields.wktTool === 'true'){
+          if (!self.dirtyFields.has(dialogFields.id))
+            self.dirtyFields.add(dialogFields.id);
+          // if (dialogFields.originalValueFrom === 'fromModelToken'){
+          //   //If this is TOOLS, used variable before but now no longer using variables, we need to delete this variable.
+          //   if (buttonS !== 'fromWKTVariable') {
+          //     self.wdtForm.removeModelProperty(self.wdtForm.stripOutSign(dialogFields.originalValue));
+          //   }
+          // }
+          //if (buttonS !== 'restoreToDefault') setReadonly(name);
+        }
+        if (buttonS !== 'restoreToDefault') {
+          self[`${FIELD_VALUE_SET}${dialogFields.replacer}`](true);
+          PageDefinitionUnset.addPropertyHighlight(dialogFields.id);
+        }
+        switch (buttonS){
+          case 'restoreToDefault' :
+            unsetProperty(PageDefinitionUnset.getPropertyAction(name));
+            if (dialogFields.displayClass === 'oj-switch') {
+              document.getElementById('extraField_' + name).style.display = 'none';
+              document.getElementById('baseField_' + name).style.display = 'inline-flex';
+            }
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromRegValue');
+            setReadonly(name, false);
+            break;
+          case 'fromSelectWKTVariable': {
+            const modelProp = self.wdtForm.getModelPropertyBasedOnUid(dialogFields.variableUid);
+            dialogFields.variableName = modelProp.Name;
+            dialogFields.itemValue = modelProp.Value;
+            updateValue(dialogFields);
+            setReadonly(name);
+            break;
+          }
+          case 'fromWKTVariable':
+            self.wdtForm.updateModelProperty(dialogFields);
+            updateValue(dialogFields);
+            setReadonly(name);
+            break;
+          case 'fromModelToken':
+            self[`${FIELD_VALUES}${dialogFields.replacer}`](dialogFields.variableName);
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromModelToken');
+            if (dialogFields.displayClass === 'oj-switch') {
+              document.getElementById('extraField_' + name).style.display = 'inline-flex';
+              document.getElementById('baseField_' + name).style.display = 'none';
+            }
+            setReadonly(name);
+            break;
+          case 'fromUnresolvedReference' :
+            self[`${FIELD_VALUES}${dialogFields.replacer}`](dialogFields.unresolvedValue);
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromUnresolvedReference');
+            setReadonly(name);
+            break;
+          case 'fromPropOptions':
+            self[`${FIELD_VALUES}${dialogFields.replacer}`](dialogFields.variableName);
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromModelToken');
+            if (dialogFields.displayClass === 'oj-switch') {
+              document.getElementById('extraField_' + name).style.display = 'inline-flex';
+              document.getElementById('baseField_' + name).style.display = 'none';
+            }
+            setReadonly(name);
+            break;
+          case 'createPropOptions':
+            self[`${FIELD_VALUES}${dialogFields.replacer}`]('@@PROP:' + dialogFields.newPropName + '@@');
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromModelToken');
+            newProp = {
+              name: dialogFields.newPropName,
+              value: dialogFields.newPropValue
+            };
+            if (dialogFields.displayClass === 'oj-switch') {
+              document.getElementById('extraField_' + name).style.display = 'inline-flex';
+              document.getElementById('baseField_' + name).style.display = 'none';
+            }
+            setReadonly(name);
+            break;
+          case 'fromRegValue' :
+            self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromRegValue');
+            if (dialogFields.displayClass === 'oj-switch') {
+              //we want to use the value from the element itself. User may just changed from using Token to
+              //boolean value by radio button selection, and see that it's the value he wants and just
+              //exit the wdt dialog without clicking on the boolean switch.
+              //Then the dialogFields.currentValue will still be the token which is wrong.
+              const realVal = document.getElementById('switch_'+name).value;
+              self[`${FIELD_VALUES}${dialogFields.replacer}`](realVal);
+              document.getElementById('extraField_' + name).style.display = 'none';
+              document.getElementById('baseField_' + name).style.display = 'inline-flex';
+            }else
+            if (dialogFields.displayClass === 'oj-select-single' ||
+              dialogFields.displayClass === 'oj-combobox-one') {
+              self[`${FIELD_VALUES}${dialogFields.replacer}`](dialogFields.selectedValue);
+            } else {
+              self[`${FIELD_VALUES}${dialogFields.replacer}`](dialogFields.itemValue);
+            }
+            setReadonly(name, false);
+            break;
+        }
+        self.doWdtDialogPopup = true;
+        return newProp;
+      }
+
+      function displayAndProcessWdtDialog(result, fromFieldChange) {
         if (CoreUtils.isNotUndefinedNorNull(result.html)) {
-          self.wdtOptionsDialogHTML({ view: HtmlUtils.stringToNodeArray(result.html), data: self });
+          self.wdtOptionsDialogHTML({view: HtmlUtils.stringToNodeArray(result.html), data: self});
           self.dialogFields(result.fields);
           self.i18n.dialog.title(result.title);
           self.buttonSelected(result.fields.showButtonSelected);
           const ignoreReturn = result.fields.displayClass === 'oj-text-area';
           self.wdtForm.showWdtOptionsDialog(fromFieldChange, ignoreReturn)
-            .then(reply => {
+          .then(reply => {
             if (reply) {
               if (self.dialogFields().disabled === true) {
                 //this is a read only field, don't do anything.
                 return;
               }
-              updateFields(self.wdtForm.processWDTOptionsDialogFields(self.dialogFields()));
+              const newProp = updateFields(self.wdtForm.processWDTOptionsDialogFields(self.dialogFields()));
+              if (CoreUtils.isNotUndefinedNorNull(newProp)){
+                const optionsSource = self.rdjData.modelTokens.optionsSources[0];
+                updatePropertyList(optionsSource, newProp.name, newProp.value);
+              }
+              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+                onBlurFormLayout({target: {id: self.dialogFields().id, type: 'blur', cancelable: false, cancelBubble: true}});
+              }
             }
-            else
-              {
-                if (!fromFieldChange || self.dialogFields().disabled === true) return;
-          const dialogFields = self.wdtForm.processWDTOptionsDialogFields(self.dialogFields());
-          self.buttonSelected(dialogFields.originalValueFrom);
-          dialogFields.currentValueText = dialogFields.originalValue;
-          updateFields(dialogFields);
-        }
-        });
+            else {
+              //since WKT has auto-save, we can forget all changes in the wdt dialog as user hits cancel.
+              if (self.dialogFields().wktTool === 'true'){
+                const ov = self.dialogFields().originalValue;
+                if (typeof ov ==='string' && ov.startsWith('@@PROP:') && ov.endsWith('@@')){
+                  let field = document.getElementById(self.dialogFields().id);
+                  if (CoreUtils.isNotUndefinedNorNull(field)) {
+                    field.readonly = true;
+                  }
+                }
+                return;
+              }
+              if (self.dialogFields().disabled === true) {
+                //this is a read only field, don't do anything.
+                return;
+              }
+              //for WRC, auto-save is not enabled. we need to ensure gets back to before the user
+              //brings up the WDT dialog.
+              const dialogFields = self.wdtForm.processWDTOptionsDialogFields(self.dialogFields());
+              self.buttonSelected(dialogFields.originalValueFrom);
+              switch (dialogFields.displayClass) {
+                case 'oj-switch':
+                  dialogFields.itemValue = dialogFields.originalValue;
+                  break;
+                case 'oj-input-text':
+                case 'oj-input-password':
+                case 'oj-text-area':
+                  dialogFields.variableName = dialogFields.originalValue;
+                  break;
+                case 'oj-select-single':
+                case 'oj-combobox-one':
+                  switch (dialogFields.originalValueFrom) {
+                    case 'fromModelToken':
+                      dialogFields.variableName = dialogFields.originalValue;
+                      break;
+                    case 'fromRegValue':
+                      dialogFields.selectedValue = dialogFields.originalValue;
+                      break;
+                    case 'fromUnresolvedReference':
+                      dialogFields.unresolvedValue = dialogFields.originalValue;
+                      break;
+                  }
+                  break;
+                case 'cfe-multi-select':
+                  //we don't need to do anything to the multi select
+                  return;
+                default:
+                  dialogFields.variableName = dialogFields.originalValue;
+              }
+              updateFields(dialogFields);
+            }
+          });
         }
       }
 
@@ -409,18 +718,36 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
         if (typeof replacer === 'undefined') replacer = name;
 
+        let chosenItemsArray;
         if (event.currentTarget.attributes['data-displayClass'].value !== 'cfe-multi-select') {
-          curValue = self[`${FIELD_VALUES}${replacer}`]();
-          valueSet = self[`${FIELD_VALUE_SET}${replacer}`]();
-          valueFrom = self[`${FIELD_VALUE_FROM}${replacer}`]();
-          disabled = (self[`${FIELD_DISABLED}${replacer}`]() === true);
+          curValue = (self[`${FIELD_VALUES}${replacer}`] ? self[`${FIELD_VALUES}${replacer}`]() : undefined);
+          valueSet = (self[`${FIELD_VALUE_SET}${replacer}`] ? self[`${FIELD_VALUE_SET}${replacer}`]() : undefined);
+          valueFrom = (self[`${FIELD_VALUE_FROM}${replacer}`] ? self[`${FIELD_VALUE_FROM}${replacer}`]() : undefined);
+          if (CoreUtils.isNotUndefinedNorNull(self[`${FIELD_DISABLED}${replacer}`])){
+            disabled = (self[`${FIELD_DISABLED}${replacer}`]() === true);
+          }
+          else {
+            disabled = false;
+          }
+        }else {
+          chosenItemsArray = document.getElementById(name).chosenItems;
+          curValue = (self[`${FIELD_VALUES}${replacer}`] ? self[`${FIELD_VALUES}${replacer}`]() : undefined);
+          valueFrom = (self[`${FIELD_VALUE_FROM}${replacer}`] ? self[`${FIELD_VALUE_FROM}${replacer}`]() : undefined);
         }
+
+        const pageProp = hasPagePropVariables();
         const targetInfo = {
           iconLink: event.currentTarget,
           curValue: curValue,
-          valueSet:  valueSet,
-          valueFrom : valueFrom,
-          disabled : disabled
+          valueSet: valueSet,
+          valueFrom: valueFrom,
+          disabled: disabled,
+          supportsPropSelect : pageProp.supportsPropSelect,
+          supportsPropCreate :  pageProp.supportsPropCreate,
+          pagePropVariables : pageProp.pagePropVariables,
+          chosenItemsArray: chosenItemsArray,
+          onValueUpdated: onValueUpdatedTokenName,
+          onValueWKTVariable: onValueWKTVariableUpdated
         };
         const result = self.wdtForm.createWdtOptionsDialog(targetInfo);
         displayAndProcessWdtDialog(result, false);
@@ -448,10 +775,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             self[FIELD_VALUES + replacer] = ko.observable();
             self.dirtyFields.add(fieldName);
           }
-          const subscription = createFieldValueSubscription(fieldName, replacer);
-          if (subscription._target() === '') {
-            self.subscriptions.push(subscription);
-          }
+          createFieldValueSubscription(self.valueSubscriptions, fieldName, replacer);
           self[FIELD_VALUES + replacer](values);
         }
         else if (CoreUtils.isNotUndefinedNorNull(self.createForm) && self.createForm.hasDeploymentPathData()) {
@@ -472,30 +796,89 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             self.multiSelectControls[fieldName].origChosenLabels
           );
           resetSaveButtonDisabledState({disabled: false});
+          if (isEditing() && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name && result.isDirty) {
+            self.dirtyFields.add(fieldName);
+            onBlurFormLayout({target: {id: fieldName, type: 'blur', cancelable: false, cancelBubble: true}});
+          }
         }
       };
 
-      this.debugFlagsValueChanged = function(event) {
-        const dataPayload = PageDefinitionFields.getDebugFlagItems(self.debugFlagItems(), self.debugFlagsEnabled());
-        resetSaveButtonDisabledState({disabled: false});
+      this.debugFlagsValueChanged = function (event) {
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+          const dataPayload = PageDefinitionFields.getDebugFlagItems(self.debugFlagItems(), self.debugFlagsEnabled());
+          resetSaveButtonDisabledState({disabled: false});
+        }
+        else {
+          const hasDebugFlag = (self.debugFlagsEnabled().includes(event.detail.value[0]) || self.debugFlagsEnabled().includes(event.detail.previousValue[0]));
+          if (isEditing() && hasDebugFlag){
+            self.debugFlagEvent = true;
+            updateContentFile('autoDownload')
+            .then(reply => {
+              self.debugFlagEvent = false;
+            });
+          }
+        }
       };
 
-      this.chooseFileClickHandler = function(event) {
-        const chooser = $('#file-chooser');
-        chooser.on('change', self.chooseFileChangeHandler);
-        chooser.trigger('click');
-        chooser.attr('data-input', event.currentTarget.attributes['data-input'].value);
+      this.launchFileChooserMenu = function(event) {
         event.preventDefault();
+        document.getElementById(`${event.currentTarget.attributes['data-input'].value}Menu`).open(event);
       };
 
-      this.clearChosenFileClickHandler = function(event) {
+      this.fileChooserMenuClickListener = function(event) {
+        if (window.api && window.api.ipc) {
+          const menuValue = event.target.value;
+          const name = event.currentTarget.attributes['data-input'].value;
+          const path = self.rdjData.navigation;
+          let entryType;
+          switch (name) {
+            case 'Source':
+            case 'SourcePath':
+              if (path.indexOf('Deployments/AppDeployments') !== -1) {
+                entryType = (menuValue === 'chooseFile' ? 'applicationFile' : 'applicationDir');
+              }
+              else {
+                entryType = (menuValue === 'chooseFile' ? 'sharedLibraryFile' : 'sharedLibraryDir');
+              }
+              break;
+            case 'Plan':
+            case 'PlanPath':
+              entryType = 'applicationDeploymentPlan';
+              break;
+          }
+          const selector = $(`#${name}`);
+          const initialValue = selector.attr('data-initial-value');
+          const label = selector.attr('data-label');
+          const fieldValue = self[`${FIELD_VALUES}${name}`]();
+          const verifyEntry = self[`${FIELD_VALUES}Verify${name}`]();
+          updateModelArchiveEntry(label, name, initialValue, fieldValue, entryType, true, verifyEntry)
+          .then(succeeded => {
+            selector.focus();
+          });
+        }
+      };
+
+      this.chooseFileClickHandler = function (event) {
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+          const chooser = $('#file-chooser');
+          chooser.on('change', self.chooseFileChangeHandler);
+          chooser.trigger('click');
+          chooser.attr('data-input', event.currentTarget.attributes['data-input'].value);
+          event.preventDefault();
+        }
+      };
+
+      this.clearChosenFileClickHandler = function (event) {
+        // Only update state as the eraser icon only appears on a create form
         const name = event.currentTarget.attributes['data-input'].value;
         self[`${FIELD_VALUES}${name}`](null);
-        self.createForm.clearUploadedFile(name);
-        $('#' + name + '_clearChosen').css({'display':'none'});
+        if (CoreUtils.isNotUndefinedNorNull(self.createForm)) {
+          self.createForm.backingDataAttributeValueChanged(name, null);
+          self.createForm.clearUploadedFile(name);
+        }
       };
 
-      this.chooseFileChangeHandler = function(event) {
+      this.chooseFileChangeHandler = function (event) {
         const files = event.currentTarget.files;
         if (files.length > 0) {
           const name = event.currentTarget.attributes['data-input'].value;
@@ -504,7 +887,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
           self[`${FIELD_VALUES}${name}`](fileName);
           self.createForm.addUploadedFile(name, files[0]);
-          $('#' + name + '_clearChosen').css({'display':'inline-flex'});
 
           const chooser = $('#file-chooser');
           chooser.off('change', self.chooseFileChangeHandler);
@@ -543,7 +925,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           const propsElement = document.getElementById(self.propertyListName);
           if (CoreUtils.isNotUndefinedNorNull(propsElement)) {
             const result = propsElement.getUpdatedProperties();
-            if (Object.keys(result).length > 0){
+            if (Object.keys(result).length > 0) {
               dataPayload[self.propertyListName] = {value: result};
               return dataPayload;
             }
@@ -566,13 +948,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // Determine if this form is for a create or edit.
         const isEdit = CoreUtils.isNotUndefinedNorNull(self.pdjData.sliceForm);
         if (!isEdit) {
-          const results = getCreateFormPayload(self.pdjData.createForm.properties);
-          // For a create form without any properties, the
-          // getCreateFormPayload() function will assign
-          // null to results.data.
-          if (isWizardForm()) {
-            results.data = self.createForm.scrubDataPayload(results.data);
+          // Obtain the payload and flag that scrubData is needed for posting to the backend
+          const results = getCreateFormPayload(self.pdjData.createForm.properties, true);
+          if (isWdtForm() && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+            if (results.data.Source) {
+              results.data['SourcePath'] = results.data.Source;
+              delete results.data['Source'];
+              delete results.data['VerifySource'];
+            }
+            if (results.data.Plan) {
+              results.data['PlanPath'] = results.data.Plan;
+              delete results.data['Plan'];
+              delete results.data['VerifyPlan'];
+            }
           }
+
           return results.data;
         }
 
@@ -588,17 +978,63 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           getDebugPayload(),
           getPropertyListEditorPayload()
         );
+
         return dataPayload;
       };
 
       function isShoppingCartVisible() {
-        // The shopping cart will be visible expect for the WDT perspectives...
-        return (['modeling','composite'].indexOf(viewParams.perspective.id) === -1);
+        // The shopping cart will be visible expect for the WDT and properties perspectives...
+        return (['view','modeling', 'composite', 'properties'].indexOf(viewParams.perspective.id) === -1);
       }
 
       function isWdtForm() {
-        return (viewParams.perspective.id === 'modeling');
+        // The same form is used for WDT model and Property List for uniform content file handling
+        return (['modeling', 'properties'].indexOf(viewParams.perspective.id) !== -1);
       }
+
+      function needsWdtIcon(name, pdjTypes) {
+        if (viewParams.perspective.id !== 'modeling' || pdjTypes.isPropertiesType(name))
+          return false;
+        //If the boolean doesn't supports model token, there is no use for popping up the wdt dialog, since it
+        //will only shows the switch.
+        if (pdjTypes.isBooleanType(name) && !pdjTypes.isSupportsModelTokens(name))
+          return false;
+        return true;
+      }
+
+      function hasPagePropVariables(){
+        let result = {
+          supportsPropSelect : false,
+          supportsPropCreate : false,
+          pagePropVariables : null
+        }
+        if (isWdtForm()){
+          const modelTokens = self.rdjData.modelTokens;
+          if (CoreUtils.isNotUndefinedNorNull(modelTokens)){
+            if (CoreUtils.isNotUndefinedNorNull(modelTokens.options)){
+              result.supportsPropSelect = true;
+              result.pagePropVariables = new ArrayDataProvider(self.rdjData.modelTokens.options, { keyAttributes: 'value' });
+            }
+            if (CoreUtils.isNotUndefinedNorNull(modelTokens.optionsSources)) {
+              result.supportsPropCreate = true;
+            }
+          }
+        }
+        return result;
+      }
+
+      function onValueUpdatedTokenName(event) {
+        Logger.log(`[FORM] value=${event.detail.value}, previousValue=${event.detail.previousValue}`);
+        self.wdtForm.updateTokenValueSelection(event);
+      }
+
+      function onValueWKTVariableUpdated(event) {
+        Logger.log(`[FORM] value=${event.detail.value}, previousValue=${event.detail.previousValue}`);
+        const property = self.wdtForm.getModelPropertyBasedOnUid(event.detail.value);
+        self.dialogFields().itemValue = property.Value;
+        self.dialogFields().variableName = property.Name;
+      }
+
 
       function isWizardForm() {
         let rtnval = false;
@@ -613,7 +1049,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function finishWizardForm() {
         if (isWizardForm()) {
           const pageState = self.createForm.markAsFinished();
-          if (pageState.succeeded) saveBean('finish');
+          if (pageState.succeeded) {
+            saveBean('finish');
+          }
         }
       }
 
@@ -673,57 +1111,57 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.canExit = function (eventType) {
         return new Promise(function (resolve) {
           self.formTabStripModuleConfig
-            .then((moduleConfig) => {
+          .then((moduleConfig) => {
             const placement = PageDefinitionUtils.getPlacementRouterParameter(viewParams.parentRouter);
-          if (['autoSave', 'autoDownload', 'navigation'].includes(eventType)) {
-            if (isEditing()) {
-              const cancelSliceChange = moduleConfig.viewModel.getCancelSliceChange();
-              if (!cancelSliceChange) {
-                updateWdtModelFile(eventType)
+            if (['autoSave', 'autoDownload', 'navigation'].includes(eventType)) {
+              if (isEditing()) {
+                const cancelSliceChange = moduleConfig.viewModel.getCancelSliceChange();
+                if (!cancelSliceChange) {
+                  updateContentFile(eventType)
                   .then((result) => {
-                  resolve(result);
-              });
-              }
-              else {
-                resolve(true);
-              }
-            } else {
-              resolve(true);
-            }
-          }
-          else if (CoreUtils.isNotUndefinedNorNull(placement) && placement === 'detached') {
-            resolve(true);
-          }
-          else {
-            const isEdit = (self.pdjData !== null && CoreUtils.isNotUndefinedNorNull(self.pdjData.sliceForm));
-            const cancelSliceChange = moduleConfig.viewModel.getCancelSliceChange();
-            const confirmDialog = document.getElementById('confirmDialog');
-            if (confirmDialog !== 'null' && (confirmDialog.style['display'] !== 'none')) {
-              if (confirmDialog.isOpen()) confirmDialog.close();
-              resolve(true);
-            }
-            else if (!cancelSliceChange && isEdit && self.isDirty()) {
-              return decideUnsavedChangesDetectedAction()
-                .then(reply => {
-                if (reply) {
-                  self.dirtyFields.clear();
-                  resetPageRedoHistory();
-                  self.debugFlagsEnabled(PageDefinitionFields.resetDebugFlagsEnabled(self.debugFlagItems()));
-                  self.multiSelectControls = {};
-                  resolve(reply);
+                    resolve(result);
+                  });
                 }
                 else {
-                  // clear treenav selection in case that caused the exit
-                  viewParams.signaling.navtreeSelectionCleared.dispatch();
-              resolve(reply);
+                  resolve(true);
+                }
+              } else {
+                resolve(true);
+              }
             }
-            });
+            else if (CoreUtils.isNotUndefinedNorNull(placement) && placement === 'detached') {
+              resolve(true);
             }
             else {
-              return resolve(true);
+              const isEdit = (self.pdjData !== null && CoreUtils.isNotUndefinedNorNull(self.pdjData.sliceForm));
+              const cancelSliceChange = moduleConfig.viewModel.getCancelSliceChange();
+              const confirmDialog = document.getElementById('confirmDialog');
+              if (confirmDialog !== 'null' && (confirmDialog.style['display'] !== 'none')) {
+                if (confirmDialog.isOpen()) confirmDialog.close();
+                resolve(true);
+              }
+              else if (!cancelSliceChange && isEdit && self.isDirty()) {
+                return decideUnsavedChangesDetectedAction()
+                .then(reply => {
+                  if (reply) {
+                    self.dirtyFields.clear();
+                    resetPageRedoHistory();
+                    self.debugFlagsEnabled(PageDefinitionFields.resetDebugFlagsEnabled(self.debugFlagItems()));
+                    self.multiSelectControls = {};
+                    resolve(reply);
+                  }
+                  else {
+                    // clear treenav selection in case that caused the exit
+                    viewParams.signaling.navtreeSelectionCleared.dispatch();
+                    resolve(reply);
+                  }
+                });
+              }
+              else {
+                return resolve(true);
+              }
             }
-          }
-        });
+          });
         });
       };
 
@@ -751,7 +1189,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
             // Unset the property by marking the field as not set in the payload
             if (self[`${FIELD_UNSET}${key}`]() === true) {
-              dataPayload[key] = { set: false };
+              dataPayload[key] = {set: false};
               continue;
             }
 
@@ -759,16 +1197,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
             if (typeof fieldObv !== 'undefined') {
               const fieldValue = fieldObv();
-              if (isWdtForm()){
+              if (isWdtForm()) {
                 // Obtain the updated value and the original value
                 // If it's a model token, the value returned will be null;
                 const fromValue = self[`${FIELD_VALUE_FROM}${key}`]();
-                const value = pdjTypes.getConvertedObservableValue_WDT(key, fieldValue, fromValue);
+                let value = {};
+                if(pdjTypes.isMultiSelectType(key)){
+                  value = pdjTypes.getConvertedObservableValue_WDT_Multi(fieldValue, fromValue);
+                } else {
+                  value = pdjTypes.getConvertedObservableValue_WDT(key, fieldValue, fromValue);
+                }
                 let serverValue = pdjTypes.getObservableValue_WDT(key, data[key], null);
                 const serverValueFrom = pdjTypes.getObservableValueFrom(data[key]);
 
                 // Convert and compare values to determine if a change has actually occurred
-                if (serverValueFrom === 'fromModelToken'){
+                if (serverValueFrom === 'fromModelToken') {
                   serverValue = {modelToken: serverValue};
                 }
                 else if (serverValueFrom === 'fromUnresolvedReference') {
@@ -782,8 +1225,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 if (strServerValue !== strValue) {
                   // Set the new value into the payload where the value
                   // from the UI was converted based on the PDJ type...
-                  dataPayload[key] = (fromValue === 'fromModelToken') ?
-                    value : {value: value};
+                  dataPayload[key] = (fromValue === 'fromModelToken') ? value : {value: value};
+
+                  // Convert any WDT string values that are null to an empty string
+                  // WDT validation does not accept bean attribs specified as null
+                  if (pdjTypes.isStringType(key) && !pdjTypes.isArray(key) && (dataPayload[key].value !== undefined)) {
+                    const payloadValue = dataPayload[key].value;
+                    dataPayload[key].value = (payloadValue === null) ? '' : payloadValue;
+                  }
                 }
                 else {
                   // The field was updated then set back to the server value
@@ -861,14 +1310,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             // a knockout change, which is where our change handler
             // does a self.dirtyFields.add() that puts the saved
             // value back in the self.dirtyFields set.
-            if (isWdtForm()){
+            if (isWdtForm()) {
               const obsValue = pdjTypes.getObservableValue_WDT(key, self.rdjData.data[key], displayValue, value);
               self.doWdtDialogPopup = false;
               self[`${FIELD_VALUES}${key}`](obsValue);
               self[`${FIELD_VALUE_FROM}${key}`](self.wdtForm.calValueFrom(key, obsValue));
               self.doWdtDialogPopup = true;
               if (pdjTypes.getPDJType(key).type === 'boolean') {
-                if (self[`${FIELD_VALUE_FROM}${key}`]() === 'fromRegValue'){
+                if (self[`${FIELD_VALUE_FROM}${key}`]() === 'fromRegValue') {
                   document.getElementById('extraField_' + key).style.display = 'none';
                   document.getElementById('baseField_' + key).style.display = 'inline-flex';
                 }
@@ -935,19 +1384,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function resetSaveButtonDisabledState(state) {
         self.formToolbarModuleConfig
-          .then((moduleConfig) => {
+        .then((moduleConfig) => {
           moduleConfig.viewModel.resetButtonsDisabledState([
             {id: 'save', disabled: state.disabled}
           ]);
-      });
+        });
       }
 
       function captureSyncInterval(currentValue) {
         return SetSyncIntervalDialog.showSetSyncIntervalDialog(currentValue, self.i18n)
-          .then(result => {
+        .then(result => {
           setSyncInterval(parseInt(result.interval));
-        return Promise.resolve(result);
-      });
+          return Promise.resolve(result);
+        });
       }
 
       function setSyncInterval(syncInterval) {
@@ -977,29 +1426,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function cancelAutoSync() {
         cancelSyncTimer();
         self.formToolbarModuleConfig
-          .then(moduleConfig => {
+        .then(moduleConfig => {
           moduleConfig.viewModel.cancelAutoSync();
-      });
-      }
-
-      function setAutoDownloadTimer(checkInterval) {
-        if (isWdtForm() && !isWizardForm()) {
-          // Cancel any timer.
-          cancelAutoDownloadTimer();
-
-          // Set a new timer interval in millis when sync interval is specified
-          if (checkInterval > 0) {
-            const intervalMillis = (checkInterval * 1000);
-            self.autoDownloadTimerId = setInterval(onStartWindowQuit, intervalMillis);
-          }
-        }
-      }
-
-      function cancelAutoDownloadTimer() {
-        if (CoreUtils.isNotUndefinedNorNull(self.autoDownloadTimerId)) {
-          clearInterval(self.autoDownloadTimerId);
-          self.autoDownloadTimerId = undefined;
-        }
+        });
       }
 
       function decideUnsavedChangesDetectedAction() {
@@ -1009,22 +1438,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function decideUnsavedChangesAction() {
-        if ( self.isDirty()) {
+        if (self.isDirty()) {
           self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.unsavedChanges.value'));
           self.i18n.dialog.prompt(self.i18n.prompts.unsavedChanges.willBeLost.value);
           return UnsavedChangesDialog.showConfirmDialog('AbandonUnsavedChanges', self.i18n)
-            .then(reply => {
+          .then(reply => {
             if (reply) {
               self.dirtyFields.clear();
               resetPageRedoHistory();
               self.debugFlagsEnabled(PageDefinitionFields.resetDebugFlagsEnabled(self.debugFlagItems()));
             }
             return Promise.resolve(reply);
-        });
+          });
         }
         else {
           return Promise.resolve(true);
         }
+      }
+
+      function decideAbandonCreateFormAction() {
       }
 
       function commitShoppingCart(toolbarButton) {
@@ -1033,15 +1465,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           reloadRdjData();
 
           self.formToolbarModuleConfig
-            .then((moduleConfig) => {
+          .then((moduleConfig) => {
             if (toolbarButton === '' || toolbarButton === 'save') {
-            moduleConfig.viewModel.renderToolbarButtons('sync');
-          }
-        else {
-            const hasNonReadOnlyFields = (toolbarButton === 'new');
-            moduleConfig.viewModel.renderToolbarButtons('commit', hasNonReadOnlyFields);
-          }
-        });
+              moduleConfig.viewModel.renderToolbarButtons('sync');
+            }
+            else {
+              const hasNonReadOnlyFields = (toolbarButton === 'new');
+              moduleConfig.viewModel.renderToolbarButtons('commit', hasNonReadOnlyFields);
+            }
+          });
         }
       }
 
@@ -1051,8 +1483,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function renderPageData(toolbarButton, render) {
         // Only reload data for an edit form as create form would result in table data!
-        const isEdit = typeof self.pdjData.sliceForm !== 'undefined';
-        if (isEdit) {
+        const isEdit = CoreUtils.isNotUndefinedNorNull(self.pdjData.sliceForm);
+        const isSliceTable = CoreUtils.isNotUndefinedNorNull(self.pdjData.sliceTable);
+        if (isEdit || isSliceTable) {
           reloadRdjData();
           // When specified skip the render call as the RDJ reload will trigger observable subscription
           if ((typeof render === 'undefined') || render) {
@@ -1061,31 +1494,35 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
 
         self.formToolbarModuleConfig
-          .then((moduleConfig) => {
+        .then((moduleConfig) => {
           if (toolbarButton === '' || toolbarButton === 'save') {
-          moduleConfig.viewModel.renderToolbarButtons('sync');
-        }
-      else {
-          const hasNonReadOnlyFields = (toolbarButton === 'delete');
-          moduleConfig.viewModel.renderToolbarButtons('discard', hasNonReadOnlyFields);
-        }
-      });
+            moduleConfig.viewModel.renderToolbarButtons('sync');
+          }
+          else {
+            const hasNonReadOnlyFields = (toolbarButton === 'delete');
+            moduleConfig.viewModel.renderToolbarButtons('discard', hasNonReadOnlyFields);
+          }
+        });
       }
 
-      function setFormContainerMaxHeight(withHistoryVisible){
+      function setFormContainerMaxHeight(withHistoryVisible) {
+        let offsetMaxHeight;
         const options = {withHistoryVisible: withHistoryVisible, withHelpVisible: self.showHelp()};
-        const offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#form-container', options);
-        Logger.info(`[FORM] max-height=calc(100vh - ${offsetMaxHeight}px)`);
+        offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#form-container', options);
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+          offsetMaxHeight += (self.modelConsole.expanded ? self.modelConsole.offsetHeight : 23);
+        }
+        Logger.log(`[FORM] max-height=calc(100vh - ${offsetMaxHeight}px)`);
         const ele = document.querySelector('.cfe-table-form-content');
         if (ele !== null) ele.style['max-height'] = `calc(100vh - ${offsetMaxHeight}px)`;
       }
 
-      function toggleBeanPathHistory (withHistoryVisible) {
+      function toggleBeanPathHistory(withHistoryVisible) {
         setFormContainerMaxHeight(withHistoryVisible);
         return viewParams.onBeanPathHistoryToggled();
       }
 
-      function toggleInstructions (withInstructionsVisible, withHistoryVisible) {
+      function toggleInstructions(withInstructionsVisible, withHistoryVisible) {
         const ele = document.getElementById('intro');
         if (ele !== null) ele.style.display = (withInstructionsVisible ? 'inline-block' : 'none');
         self.showInstructions(withInstructionsVisible);
@@ -1098,6 +1535,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             if (result) {
               self.showHelp(withHelpVisible);
               setFormContainerMaxHeight(withHistoryVisible);
+              self.tableCustomizerManager.closeCustomizerState();
 
               stashDirtyFields();
             }
@@ -1105,6 +1543,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         } else {
           self.showHelp(withHelpVisible);
           setFormContainerMaxHeight(withHistoryVisible);
+          self.tableCustomizerManager.closeCustomizerState();
 
           const pdjData = viewParams.parentRouter.data.pdjData();
           const rdjData = viewParams.parentRouter.data.rdjData();
@@ -1120,19 +1559,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function newBean() {
         self.createForm = new CreateForm(viewParams);
         self.createForm.newBean()
-          .then((result) => {
+        .then(result => {
           const rdjUrl = result.body.data.get('rdjUrl');
           const isCreateForm = 'createForm' === (new URL(rdjUrl, Runtime.getBackendUrl())).searchParams.get('view');
-        // We're working with a "createableOptionalSingleton".
-        // save and download the latest WDT model, from the CBE.
-        if (isWdtForm() && !isCreateForm) {
-          submitWdtModelChanges('autoSave');
-        }
-        gotoBean(result, isCreateForm);
-      })
-      .catch(response => {
+          // We're working with a "createableOptionalSingleton".
+          // save and download the latest WDT model, from the CBE.
+          if (isWdtForm() && !isCreateForm) {
+            const eventType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'autoSave' : 'autoDownload');
+            submitContentFileChanges(eventType);
+          }
+          gotoBean(result, isCreateForm);
+        })
+        .catch(response => {
           ViewModelUtils.failureResponseDefaultHandling(response);
-      });
+        });
       }
 
       function gotoBean(result, isCreateForm) {
@@ -1140,67 +1580,82 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         viewParams.parentRouter.data.pdjUrl(result.body.data.get('pdjUrl'));
         viewParams.parentRouter.data.pdjData(result.body.data.get('pdjData'));
         viewParams.parentRouter.data.rdjData(result.body.data.get('rdjData'));
-        viewParams.parentRouter.go('form')
-          .then((hasChanged) => {
+        var editPage = 'form';
+        if (isCreateForm) {
+          // Include the query/search param when going to the create form
+          // such that the router transitions to that form for the singleton
+          // since the singleton and the create form are acutally the same URI
+          const resourceUrl = new URL(result.body.data.get('rdjUrl'), Runtime.getBackendUrl());
+          const path = encodeURIComponent(resourceUrl.pathname + resourceUrl.search);
+          editPage = '/' + viewParams.perspective.id + '/' + path;
+        }
+        viewParams.parentRouter.go(editPage)
+        .then((hasChanged) => {
+          if (isCreateForm) {
+            // When loading the create form signal that nonwritable is false
+            // so that the toolbar shows the button that handles the create form
+            viewParams.signaling.nonwritableChanged.dispatch(false);
+          }
           // Reset the toolbar buttons, so the
           // "Update Changes" button becomes visible.
           resetToolbarButtons();
-        // When not loading the create form update the state
-        // of shopping cart or the toolbar for WDT model
-        if (!isCreateForm) {
-          if (!isWdtForm()) {
-            updateShoppingCart('sync');
-          }
-          else {
-            self.formToolbarModuleConfig
+          // When not loading the create form update the state
+          // of shopping cart or the toolbar for WDT model
+          if (!isCreateForm) {
+            if (!isWdtForm()) {
+              updateShoppingCart('sync');
+            }
+            else {
+              self.formToolbarModuleConfig
               .then((moduleConfig) => {
-              moduleConfig.viewModel.renderToolbarButtons('sync');
-          });
+                moduleConfig.viewModel.renderToolbarButtons('sync');
+              });
+            }
           }
-        }
-      });
+        });
       }
 
       function deleteBean(resourceData) {
         self.createForm = new CreateForm(viewParams);
         self.createForm.deleteBean(resourceData)
-          .then(reply => {
+        .then(reply => {
           self.formToolbarModuleConfig
-            .then((moduleConfig) => {
+          .then((moduleConfig) => {
             const changeManager = moduleConfig.viewModel.changeManager();
-        moduleConfig.viewModel.changeManager({
-          isLockOwner: true,
-          hasChanges: changeManager.hasChanges,
-          supportsChanges: changeManager.supportsChanges
-        });
-        moduleConfig.viewModel.renderToolbarButtons('delete');
-      });
-        return reply;
-      })
-      .then(reply =>{
+            moduleConfig.viewModel.changeManager({
+              isLockOwner: true,
+              hasChanges: changeManager.hasChanges,
+              supportsChanges: changeManager.supportsChanges
+            });
+            moduleConfig.viewModel.renderToolbarButtons('delete');
+          });
+          return reply;
+        })
+        .then(reply => {
           if (reply.body.messages > 0) {
-          MessageDisplaying.displayResponseMessages(reply.body.messages);
-        }
-      else if (isWdtForm()) {
-          submitWdtModelChanges('autoSave');
-        }
-      })
-      .catch(response => {
+            MessageDisplaying.displayResponseMessages(reply.body.messages);
+          }
+          else if (isWdtForm()) {
+            const eventType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'autoSave' : 'autoDownload');
+            submitContentFileChanges(eventType);
+          }
+        })
+        .catch(response => {
           return ViewModelUtils.failureResponseDefaultHandling(response);
-      })
-      .finally(() => {
+        })
+        .finally(() => {
           self.formToolbarModuleConfig
-            .then((moduleConfig) => {
+          .then((moduleConfig) => {
             const changeManager = moduleConfig.viewModel.changeManager();
-        moduleConfig.viewModel.changeManager({
-          isLockOwner: true,
-          hasChanges: changeManager.hasChanges,
-          supportsChanges: changeManager.supportsChanges
+            moduleConfig.viewModel.changeManager({
+              isLockOwner: true,
+              hasChanges: changeManager.hasChanges,
+              supportsChanges: changeManager.supportsChanges
+            });
+            moduleConfig.viewModel.renderToolbarButtons('delete');
+          });
+          viewParams.signaling.tabStripTabSelected.dispatch('form', 'shoppingcart', false);
         });
-        moduleConfig.viewModel.renderToolbarButtons('delete');
-      });
-        viewParams.signaling.tabStripTabSelected.dispatch('form', 'shoppingcart', false);
-      });
       }
 
       function saveBean(eventType) {
@@ -1211,17 +1666,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           // We're in edit mode, so get the slice name from
           // the embedded form-tabstrip.js module config.
           return self.formTabStripModuleConfig
-            .then(moduleConfig => {
+          .then(moduleConfig => {
             // Get name of slice that save applies to.
             const sliceName = moduleConfig.viewModel.getSliceName();
-          if (CoreUtils.isNotUndefinedNorNull(sliceName)) {
-            // There was a slice, so use it to construct
-            // the "slice" query parameter.
-            dataAction = '?slice=' + sliceName;
-          }
-          // Call saveDataPayload closure
-          return saveDataPayload(eventType, isEdit, dataAction);
-        });
+            if (CoreUtils.isNotUndefinedNorNull(sliceName)) {
+              // There was a slice, so use it to construct
+              // the "slice" query parameter.
+              dataAction = '?slice=' + sliceName;
+            }
+            // Call saveDataPayload closure
+            return saveDataPayload(eventType, isEdit, dataAction);
+          });
         }
         else {
           // We're in create mode, so construct static query
@@ -1234,7 +1689,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function saveDataPayload(eventType, isEdit, dataAction) {
         let dataPayload = self.determineChanges(false);
-        Logger.info(`[FORM] dataAction=${dataAction}, dataPayload=${JSON.stringify(dataPayload)}`);
+        Logger.log(`[FORM] dataAction=${dataAction}, dataPayload=${JSON.stringify(dataPayload)}`);
 
         if (isEdit && (dataPayload != null) && (Object.keys(dataPayload).length === 0)) {
           Logger.log('[FORM] POST data is empty while isEdit=true, exiting save!');
@@ -1244,14 +1699,51 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         if (dataPayload === null) dataPayload = {};
 
         if (CoreUtils.isNotUndefinedNorNull(dataPayload)) {
-          const url = `${viewParams.parentRouter.data.rdjUrl()}${dataAction}`;
-          return DataOperations.mbean.save(url, dataPayload)
+          delete dataPayload['VerifySource'];
+          delete dataPayload['VerifySourcePath'];
+          delete dataPayload['VerifyPlan'];
+          delete dataPayload['VerifyPlanPath'];
+          if (CoreUtils.isNotUndefinedNorNull(dataPayload['formData'])) {
+            const formData = dataPayload['formData'];
+            delete dataPayload['formData'];
+            delete dataPayload['Upload'];
+            // Send multipart request.
+            return DataOperations.mbean.upload(viewParams.parentRouter.data.rdjUrl(), formData)
             .then(reply => {
-            return handleSaveResponse(reply, dataAction, dataPayload, eventType, isEdit);
-        })
-        .catch(response => {
-            return handleSaveResponse(response, dataAction, dataPayload, eventType, isEdit);
-        });
+              return handleSaveResponse(reply, dataAction, dataPayload, eventType, isEdit);
+            })
+            .catch(response => {
+              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+                if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                }
+              }
+              return handleSaveResponse(response, dataAction, dataPayload, eventType, isEdit);
+            });
+          }
+          else {
+            let rdjUrl = viewParams.parentRouter.data.rdjUrl();
+            // Remove the query/search param from the RDJ URL when present
+            // as a singleton create form includes this with the router path
+            const resourceUrl = new URL(rdjUrl, Runtime.getBackendUrl());
+            if ('createForm' === resourceUrl.searchParams.get('view')) {
+              resourceUrl.searchParams.delete('view');
+              rdjUrl = resourceUrl.toString();
+            }
+            const url = `${rdjUrl}${dataAction}`;
+            return DataOperations.mbean.save(url, dataPayload)
+            .then(reply => {
+              return handleSaveResponse(reply, dataAction, dataPayload, eventType, isEdit);
+            })
+            .catch(response => {
+              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+                if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                }
+              }
+              return handleSaveResponse(response, dataAction, dataPayload, eventType, isEdit);
+            });
+          }
         }
         return Promise.resolve(true);
       }
@@ -1262,7 +1754,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
        * @param {{body: {data: any, messages?: any}}} response - The response object return from the successful save operation.
        * @param {string} dataAction - Query parameter that was used with the successful save operation.
        * @param {object} dataPayload - JSON payload that was used in the successful save operation.
-       * @param {"create"|"finish"|"update"} eventType - The type of event that was associated with the successful save operation.
+       * @param {"create"|"finish"|"update"|"autoDownload"} eventType - The type of event that was associated with the successful save operation.
        * @param {boolean} isEdit - Flag indicating if the save operation was for a "create" event, or an "update" event. The flag will be false for the former, and true for the latter.
        * @private
        */
@@ -1275,7 +1767,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           MessageDisplaying.displayMessages(bodyMessages);
         }
 
-        self.debugFlagsEnabled(PageDefinitionFields.resetDebugFlagsEnabled(self.debugFlagItems()));
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+          self.debugFlagsEnabled(PageDefinitionFields.resetDebugFlagsEnabled(self.debugFlagItems()));
+        }
 
         resetToolbarButtons();
 
@@ -1283,8 +1777,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           saveFailedNoMessages(dataAction, dataPayload, isEdit);
         }
         else if (response.body.messages.length === 0) {
-          const identity = response.body.data?.resourceData?.resourceData;
-          saveSuceededNoMessages(eventType, dataPayload, isEdit, identity);
+          const identity = (CoreUtils.isNotUndefinedNorNull(response.body.data) && CoreUtils.isNotUndefinedNorNull(response.body.data.resourceData) && CoreUtils.isNotUndefinedNorNull(response.body.data.resourceData.resourceData) ? response.body.data.resourceData.resourceData : undefined);
+          saveSuceeded(eventType, dataPayload, isEdit, identity, response.body.data.messages);
+          if (isWdtForm() && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+            const dataProvider = self.wdtForm.getDataProvider();
+            if (window.api && window.api.ipc && dataProvider.modelArchiveEntries) {
+              window.api.ipc.invoke('get-archive-entry-types')
+              .then(entryTypes => {
+                if (dataProvider.modelArchiveEntries) {
+                  const modelArchive = new ModelArchive(dataProvider.modelArchive, entryTypes);
+                  dataProvider.modelArchiveEntries.forEach((modelArchiveEntry) => {
+                    viewParams.signaling.modelArchiveUpdated.dispatch(dataProvider, {operation: 'add', archivePath: modelArchiveEntry.result.archiveUpdatePath, filePath: modelArchiveEntry.result.filePath});
+                    modelArchive.addToArchive(modelArchiveEntry.result, entryTypes[modelArchiveEntry.result.archiveEntryType]);
+                  });
+                  delete dataProvider['modelArchiveEntries'];
+                }
+              });
+            }
+          }
           retval = true;
         }
 
@@ -1294,14 +1804,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function resetToolbarButtons() {
-        if (['configuration', 'modeling'].indexOf(viewParams.perspective.id) !== -1) {
+        if (['configuration', 'modeling', 'properties'].indexOf(viewParams.perspective.id) !== -1) {
           self.formToolbarModuleConfig
-            .then((moduleConfig) => {
+          .then((moduleConfig) => {
             moduleConfig.viewModel.resetButtonsDisabledState([
               {id: 'save', disabled: false}
             ]);
-          moduleConfig.viewModel.renderToolbarButtons('create');
-        });
+            moduleConfig.viewModel.renderToolbarButtons('create');
+          });
         }
       }
 
@@ -1318,15 +1828,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // partial edit.
 
         /*
-        1) if the update fails:
-          a) display any error messages (global or field scoped)
-          b) repost the stored RDJ's data section to restore the old values
-          c) don't update the values on the screen (so that the user can try to correct them then click 'Save' again)
-        2) if the create fails, try to delete the object (since it may or may not have been created):
-          a) display any error messages (global or field scoped)
-          b) delete the new object (it may or may not have been created)
-          c) don't update the values on the screen (so that the user can try to correct them then click 'Save' again)
-        */
+               1) if the update fails:
+               a) display any error messages (global or field scoped)
+               b) repost the stored RDJ's data section to restore the old values
+               c) don't update the values on the screen (so that the user can try to correct them then click 'Save' again)
+               2) if the create fails, try to delete the object (since it may or may not have been created):
+               a) display any error messages (global or field scoped)
+               b) delete the new object (it may or may not have been created)
+               c) don't update the values on the screen (so that the user can try to correct them then click 'Save' again)
+               */
         if (isEdit) {
           // create a POST request to reverse the change.
           let compensatingPayload = {};
@@ -1336,36 +1846,66 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           });
 
           DataOperations.mbean.save(viewParams.parentRouter.data.rdjUrl() + dataAction, compensatingPayload)
-            .then(reply => {
+          .then(reply => {
             compensatingTransactionFailure(reply);
-        })
-        .catch(response => {
+          })
+          .catch(response => {
             compensatingTransactionFailure(response)
           });
         }
         else if (typeof dataPayload['Name'] !== 'undefined') {
           let dataPayloadName = dataPayload['Name'];
           let pathLeafName;
-          if (typeof dataPayloadName !== 'undefined') pathLeafName = dataPayloadName.value;
-
+          if (typeof dataPayloadName !== 'undefined') {
+            if (CoreUtils.isNotUndefinedNorNull(dataPayloadName.value)){
+              pathLeafName = dataPayloadName.value;
+            }else
+            if (CoreUtils.isNotUndefinedNorNull(dataPayloadName.modelToken)){
+              pathLeafName = dataPayloadName.modelToken;
+            }
+          }
           const deleteUrl = viewParams.parentRouter.data.rdjUrl() + '/' + encodeURIComponent(pathLeafName);
           DataOperations.mbean.delete(deleteUrl)
-            .then(reply => {
+          .then(reply => {
             Logger.log('Delete of partially created object successful.');
-          MessageDisplaying.displayResponseMessages(reply.body.messages);
-        })
-        .catch(response => {
+            MessageDisplaying.displayResponseMessages(reply.body.messages);
+          })
+          .catch(response => {
             Logger.log('Delete of partially created object not possible');
-          ViewModelUtils.failureResponseDefaultHandling(response);
-        });
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          });
         }
       }
 
-      function saveSuceededNoMessages(eventType, dataPayload, isEdit, identity) {
+      function saveSuceeded(eventType, dataPayload, isEdit, identity, messages) {
         updateMultiSelectControls(dataPayload);
         cacheDataPayload(dataPayload);
         self.dirtyFields.clear();
-        self.debugFlagItems(null);
+        clearMultiSelectControl(dataPayload);
+
+        // For tool mode, reset any unset fields to the defaut value, if
+        // the field is not actually in the unset state, no action is taken
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+          if (Object.keys(self.pageRedoHistory).length > 0) {
+            for (const [fieldName, fieldValue] of Object.entries(self.pageRedoHistory)) {
+              resetUnsetFieldToDefault(fieldName);
+            }
+          }
+        }
+
+        if (self.debugFlagEvent && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+          if (Object.keys(self.pageRedoHistory).length > 0) {
+            const flagName = Object.keys(self.pageRedoHistory)[0];
+            const flagVal = self.pageRedoHistory[flagName].value;
+            self.debugFlagItems().data.forEach((oneF) => {
+              if (oneF.value === flagName) {
+                oneF.enabled = flagVal;
+              }
+            });
+          }
+        } else {
+          self.debugFlagItems(null);
+        }
 
         const treeaction = {
           isEdit: isEdit,
@@ -1375,10 +1915,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // fix the navtree
         viewParams.signaling.navtreeUpdated.dispatch(treeaction);
 
+        if (messages && messages.length > 0) {
+          messages.forEach(message => {
+            MessageDisplaying.displayMessage({
+              severity: message.severity,
+              summary: message.message
+            }, 2500);
+          });
+        }
+
         if (isEdit) {
-          if (['configuration', 'modeling'].indexOf(viewParams.perspective.id) !== -1) {
+          if (['configuration', 'modeling', 'properties'].indexOf(viewParams.perspective.id) !== -1) {
             if (CoreUtils.isNotUndefinedNorNull(self.wdtForm)) {
-              submitWdtModelChanges(eventType);
+              submitContentFileChanges(eventType);
             }
             else {
               MessageDisplaying.displayMessage({
@@ -1387,12 +1936,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               }, 2500);
               updateShoppingCart(eventType);
             }
+            // Reload the page data to pickup the saved changes!
+            // Skip reload for property list due to a reordering
+            if (['properties'].indexOf(viewParams.perspective.id) === -1) {
+              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+                reloadRdjData();
+              }
+            }
           }
-          // Reload the page data to pickup the saved changes!
-          reloadRdjData();
         }
         else {
-          if (isWdtForm()) submitWdtModelChanges(eventType);
+          if (isWdtForm()) submitContentFileChanges(eventType);
 
           // clear treenav selection
           viewParams.signaling.navtreeSelectionCleared.dispatch();
@@ -1401,9 +1955,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           if (identity === viewParams.parentRouter.data.rdjUrl()) {
             // Obtain the bean and then goto the page for the bean
             DataOperations.mbean.get(identity)
-              .then((result) => {
+            .then((result) => {
               gotoBean(result, false);
-          });
+            });
             return;
           }
 
@@ -1411,38 +1965,50 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           const editPage = '/' + viewParams.perspective.id + '/' + path;
 
           Router.rootInstance.go(editPage)
-            .then((hasChanged) => {
+          .then((hasChanged) => {
             self.formToolbarModuleConfig
-              .then((moduleConfig) => {
+            .then((moduleConfig) => {
               const changeManager = moduleConfig.viewModel.changeManager();
-          moduleConfig.viewModel.changeManager({
-            isLockOwner: changeManager.isLockOwner,
-            hasChanges: changeManager.hasChanges,
-            supportsChanges: changeManager.supportsChanges,
+              moduleConfig.viewModel.changeManager({
+                isLockOwner: changeManager.isLockOwner,
+                hasChanges: changeManager.hasChanges,
+                supportsChanges: changeManager.supportsChanges,
+              });
+              moduleConfig.viewModel.renderToolbarButtons(eventType);
+            });
           });
-          moduleConfig.viewModel.renderToolbarButtons(eventType);
-        });
-        });
         }
       }
 
-      function submitWdtModelChanges(eventType) {
+      function submitContentFileChanges(eventType) {
         if (!ViewModelUtils.isElectronApiAvailable()) {
           switch (eventType) {
+            case 'finish':
+              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+                downloadContentFile('autoDownload');
+              }
+              break;
             case 'navigation':
             case 'update':
             case 'autoDownload':
             case 'download':
-              downloadWdtModelFile(eventType);
+              downloadContentFile(eventType);
               break;
           }
         }
         else {
-          downloadWdtModelFile(eventType);
+          downloadContentFile(eventType);
         }
       }
 
-      async function updateWdtModelFile(eventType) {
+      function saveContentFileChanges() {
+        if (isWdtForm()) {
+          const eventType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'download' : 'autoDownload');
+          downloadContentFile(eventType);
+        }
+      }
+
+      async function updateContentFile(eventType) {
         if (CoreUtils.isNotUndefinedNorNull(self.wdtForm)) {
           if (self.isDirty()) {
             stashDirtyFields();
@@ -1457,8 +2023,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 else {
                   reply = true;
                 }
-                if (reply) downloadWdtModelFile('download');
+                if (reply) downloadContentFile('download');
                 viewParams.signaling.navtreeSelectionCleared.dispatch();
+              }
+              else if (eventType === 'autoDownload') {
+                downloadContentFile(eventType);
               }
             }
             else {
@@ -1466,51 +2035,103 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               return Promise.resolve(reply);
             }
           }
-          else if (eventType === 'download') {
-            downloadWdtModelFile(eventType);
+          else if (['download', 'autoDownload'].includes(eventType)) {
+            downloadContentFile(eventType);
           }
         }
         return Promise.resolve(true);
       }
 
-      function downloadWdtModelFile(eventType) {
-        self.wdtForm.getModelFileChanges()
-          .then(reply => {
+      function downloadContentFile(eventType, dataProviderId = null) {
+        self.wdtForm.getContentFileChanges(dataProviderId)
+        .then(reply => {
           if (reply.succeeded) {
-          if (eventType === 'download') {
-            MessageDisplaying.displayMessage({
-              severity: 'confirmation',
-              summary: self.wdtForm.getSummaryMessage('changesDownloaded')
-            }, 2500);
-          }
-        }
-      else {
-          // This means wdtForm.getModelFileChanges() was
-          // able to download, but not write out the model
-          // file.
-          if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name && ['update', 'autoDownload'].includes(eventType)) {
-            // Send signal containing the changes
-            // downloaded from the WRC-CBE.
-            const dataProvider = self.wdtForm.getDataProvider();
-            viewParams.signaling.changesAutoDownloaded.dispatch(dataProvider, reply.fileContents);
+            if (eventType === 'download') {
+              MessageDisplaying.displayMessage({
+                severity: 'confirmation',
+                summary: self.wdtForm.getSummaryMessage('changesDownloaded', dataProviderId)
+              }, 2500);
+            }
           }
           else {
-            // Call writeModelFile passing in the
-            // filepath and fileContents in reply.
-            writeWdtModelFile({filepath: reply.filepath, fileContents: reply.fileContents});
+            // This means wdtForm.getContentFileChanges() was
+            // able to download, but not write out the model
+            // file.
+            if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name && ['update', 'autoDownload'].includes(eventType)) {
+              // Send signal containing the changes
+              // downloaded from the WRC-CBE.
+              const dataProvider = self.wdtForm.getDataProvider();
+              viewParams.signaling.changesAutoDownloaded.dispatch(dataProvider, reply.fileContents);
+            }
+            else {
+              // Call writeContentFile passing in the
+              // filepath and fileContents in reply.
+              writeContentFile({filepath: reply.filepath, fileContents: reply.fileContents}, dataProviderId);
+            }
           }
-        }
-      })
-      .catch(response => {
+        })
+        .catch(response => {
           ViewModelUtils.failureResponseDefaultHandling(response);
-      });
+        });
       }
 
-      function writeWdtModelFile(options) {
-        self.wdtForm.writeModelFile(options)
-          .then(reply => {
-          Logger.log(`[FORM] self.wdtForm.writeModelFile(options) returned ${reply.succeeded}`);
-      });
+      function writeContentFile(options, dataProviderId = null) {
+        self.wdtForm.writeContentFile(options, dataProviderId)
+        .then(reply => {
+          Logger.log(`[FORM] self.wdtForm.writeContentFile(options) returned ${reply.succeeded}`);
+        });
+      }
+
+      //When new property is added through the WDT dialog, we will add that to the
+      //in memory rdjData, so that for the next WDT dialog, the new value will show up
+      //for selection without needing the page to refresh.
+      function updateRdjData(key) {
+        let newOption = {
+          label: key,
+          value: '@@PROP:'+ key + '@@'
+        };
+        let modelTokens = self.rdjData.modelTokens;
+        if (CoreUtils.isNotUndefinedNorNull(modelTokens.options)) {
+          modelTokens.options.push(newOption);
+        } else {
+          modelTokens.options = [newOption];
+        }
+      }
+
+
+      // Using the OptionSource information from the RDJ data,
+      // update the property value and save the property list content
+      function updatePropertyList(optionsSource, key, value) {
+        if (CoreUtils.isNotUndefinedNorNull(self.wdtForm)) {
+          savePropertyValue(optionsSource.resourceData, key, value)
+          .then(() => {
+            downloadContentFile('download', optionsSource.label);
+            updateRdjData(key);
+          })
+          .catch(response => {
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          });
+        }
+      }
+
+      // Save a property value to a property list where a new
+      // property is added if the key does not exist and the
+      // full json payload is created for the update action
+      function savePropertyValue(url, key, val) {
+        const rdjUrl = new URL(url, Runtime.getBackendUrl()).toString();
+        const fullPayload = { action: 'update', data: {} };
+        fullPayload.data['Properties'] = { value: {} };
+        fullPayload.data['Properties'].value[key] = val;
+        return DataOperations.mbean.save(rdjUrl, fullPayload, true);
+      }
+
+      function clearMultiSelectControl(dataPayload){
+        for (const key of Object.keys(dataPayload)) {
+          if (typeof self.multiSelectControls[key] !== 'undefined') {
+            self.multiSelectControls[key].chosenItems = [];
+            self.multiSelectControls[key].origChosenLabels = [];
+          }
+        }
       }
 
       function updateMultiSelectControls(dataPayload) {
@@ -1524,7 +2145,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function reloadRdjData() {
         //temp fix for incorrect self.sliceName
         const pageDefinition = (CoreUtils.isNotUndefinedNorNull(viewParams.parentRouter.data.rdjData) ? viewParams.parentRouter.data.rdjData().pageDescription : undefined);
-        let sliceName = (CoreUtils.isNotUndefinedNorNull(pageDefinition) ? pageDefinition.substring( pageDefinition.indexOf('=') +1 ) : '');
+        let sliceName = (CoreUtils.isNotUndefinedNorNull(pageDefinition) ? pageDefinition.substring(pageDefinition.indexOf('=') + 1) : '');
         // Ensure the reload does not attempt to use the create form as the slice
         sliceName = ('createForm' !== sliceName ? sliceName : '');
         Logger.log(`self.sliceName=${self.sliceName}`);
@@ -1532,35 +2153,35 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         const url = viewParams.parentRouter.data.rdjUrl() + '?slice=' + sliceName;
 
         DataOperations.mbean.reload(url)
-          .then(reply => {
+        .then(reply => {
           const rdjData = reply.body.data;
-        Logger.log('[FORM] reload url; reply.body.data = ' + JSON.stringify(rdjData));
-        // Preserve changes that occurred AFTER a save was
-        // done, so they will be available after the data
-        // is refreshed from the reload.
-        const dataPayload = getDirtyFieldsPayload();
-        viewParams.parentRouter.data.rdjData(rdjData);
-        if (CoreUtils.isUndefinedOrNull(rdjData) || CoreUtils.isUndefinedOrNull(rdjData.data)) {
-          // reload rdjData did not get any data
-          signalGotoLandingPage('No RDJ data!');
-        }
-        resetPageRedoHistory();
-        cacheDataPayload(dataPayload);
-        restoreDirtyFieldsValues();
-        self.formToolbarModuleConfig
+          Logger.log('[FORM] reload url; reply.body.data = ' + JSON.stringify(rdjData));
+          // Preserve changes that occurred AFTER a save was
+          // done, so they will be available after the data
+          // is refreshed from the reload.
+          const dataPayload = getDirtyFieldsPayload();
+          viewParams.parentRouter.data.rdjData(rdjData);
+          if (CoreUtils.isUndefinedOrNull(rdjData) || CoreUtils.isUndefinedOrNull(rdjData.data)) {
+            // reload rdjData did not get any data
+            signalGotoLandingPage('No RDJ data!');
+          }
+          resetPageRedoHistory();
+          cacheDataPayload(dataPayload);
+          restoreDirtyFieldsValues();
+          self.formToolbarModuleConfig
           .then((moduleConfig) => {
-          moduleConfig.viewModel.renderToolbarButtons('sync');
-      });
-      })
-      .catch(response => {
+            moduleConfig.viewModel.renderToolbarButtons('sync');
+          });
+        })
+        .catch(response => {
           // failed to reload rdjData
           if (response.failureType === CoreTypes.FailureType.NOT_FOUND) {
-          signalGotoLandingPage('Form reload unable to find page data, goto landing page.');
-        }
-      else {
-          MessageDisplaying.displayResponseMessages(response.body.messages);
-        }
-      });
+            signalGotoLandingPage('Form reload unable to find page data, goto landing page.');
+          }
+          else {
+            MessageDisplaying.displayResponseMessages(response.body.messages);
+          }
+        });
       }
 
       function signalGotoLandingPage(debugMessage) {
@@ -1579,7 +2200,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         //one use case is when we need to reload rdj after creating a resource using overlay-form.  We don't want to lose
         //all the changes.
         //if user is using the 'reload icon' on the toolbar to reload the page, then this flag will not be set.
-        if (CoreUtils.isNotUndefinedNorNull(resetPageHistory) && ! self.loadRdjDoNotClearDirty) {
+        if (CoreUtils.isNotUndefinedNorNull(resetPageHistory) && !self.loadRdjDoNotClearDirty) {
           resetPageRedoHistory();
         }
 
@@ -1598,21 +2219,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         self.pdjData = viewParams.parentRouter.data.pdjData();
         self.rdjData = viewParams.parentRouter.data.rdjData();
 
-        let slices = pdjData.sliceForm?.slices || pdjData.sliceTable?.slices;
-        
+        // Adjust the table customizer based on the PDJ data and when
+        // available, seed the table customizations via columnDataProvider
+        const isSliceTable = pdjData.sliceTable ? true : false;
+        adjustSliceTableCustomizer(isSliceTable);
+
+        // DON'T USE optional chaining, here!! It's not supported
+        // in the JS compiler (esprima) that JET uses, when it does
+        // a release build of a JET web app.
+        let slices = (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm) && CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm.slices) ? pdjData.sliceForm.slices : CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable) && CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable.slices) ? pdjData.sliceTable.slices : undefined);
+
         if (isEdit && CoreUtils.isNotUndefinedNorNull(slices) && slices.length > 0) {
           self.formTabStripModuleConfig
-            .then((moduleConfig) => {
-          const currentSlice = moduleConfig.viewModel.getCurrentSlice();
-          if (currentSlice === '') {
-            moduleConfig.viewModel.updateSlice(currentSlice, 1);
-          }
-        });
+          .then((moduleConfig) => {
+            const currentSlice = moduleConfig.viewModel.getCurrentSlice();
+            if (currentSlice === '') {
+              moduleConfig.viewModel.updateSlice(currentSlice, 1);
+            }
+          });
         }
 
-        const toggleHelpIntroduction = self.i18n.introduction.toggleHelp.text.replace('{0}','<img src=\'../../images/' + self.i18n.introduction.toggleHelp.iconFile + '\'>');
-        const bindHtml = (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML) ? pdjData.introductionHTML : '<p>');
-        self.introductionHTML({ view: HtmlUtils.stringToNodeArray(bindHtml) });
+        const toggleHelpIntroduction = self.i18n.introduction.toggleHelp.text.replace('{0}', '<img src=\'../../images/' + self.i18n.introduction.toggleHelp.iconFile + '\'>');
+        const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
+        self.introductionHTML({view: HtmlUtils.stringToNodeArray(bindHtml)});
 
         pdjData = viewParams.parentRouter.data.pdjData();
         rdjData = viewParams.parentRouter.data.rdjData();
@@ -1625,26 +2254,30 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
       }
 
+      function getIntroductionHtml(pdjIntro, rdjIntro) {
+        const bindHtml = (CoreUtils.isNotUndefinedNorNull(rdjIntro) ? rdjIntro : pdjIntro);
+        return (CoreUtils.isNotUndefinedNorNull(bindHtml) ? bindHtml : '<p>');
+      }
+
       function rerenderWizardForm(pdjData, rdjData, direction, removed) {
         if (typeof removed !== 'undefined') {
           Logger.log(`[FORM] removed.length=${removed.length}`);
           removed.forEach((item) => {
-            // Some subscription._target() values will be an empty
-            // string, so we need to look for those first.
-            processRemovedField(item.name,'');
-          // Look for subscription._target() values that match
-          // item.name.
-          processRemovedField(item.name, item.value);
-        });
+            // Remove the subscription that matches item.name.
+            processRemovedField(item.name);
+          });
         }
 
         const pageState = self.createForm.rerenderPage(direction);
         if (pageState.succeeded) {
           self.formToolbarModuleConfig
-            .then((moduleConfig) => {
-            moduleConfig.viewModel.resetButtonsDisabledState([{id: 'finish', disabled: !self.createForm.getCanFinish()}]);
-          renderFormLayout(pdjData, rdjData);
-        });
+          .then((moduleConfig) => {
+            moduleConfig.viewModel.resetButtonsDisabledState([{
+              id: 'finish',
+              disabled: !self.createForm.getCanFinish()
+            }]);
+            renderFormLayout(pdjData, rdjData);
+          });
         }
       }
 
@@ -1661,19 +2294,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         createHelp(pdjData);
 
-        self.formDom({ view: HtmlUtils.stringToNodeArray(div.outerHTML), data: self });
+        self.formDom({view: HtmlUtils.stringToNodeArray(div.outerHTML), data: self});
 
         setTimeout(() => {
-          Context.getPageContext().getBusyContext().whenReady()
-            .then( () => {
-            restoreUnsetFieldsApplyHighlighting();
-        renderSpecialHandlingFields();
-        setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
-        restoreDirtyFieldsValues();
-        self.loadRdjDoNotClearDirty = false;
-      });
-      }, 5
-      );
+            Context.getPageContext().getBusyContext().whenReady()
+            .then(() => {
+              // Ensure that a create form does not have the customizer button
+              if (CoreUtils.isNotUndefinedNorNull(self.createForm)) {
+                self.tableCustomizerManager.adjustCustomizerButtonState(false);
+              }
+              restoreUnsetFieldsApplyHighlighting();
+              renderSpecialHandlingFields();
+              setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+              restoreDirtyFieldsValues();
+              self.loadRdjDoNotClearDirty = false;
+            });
+          }, 5
+        );
       }
 
       function renderSpecialHandlingFields() {
@@ -1681,7 +2318,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           const parentNode = event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
           const initHeight = parseInt(event.target.attributes['data-init-height'].value, 10);
           const calcOffsetHeight = (event.target.offsetHeight - initHeight);
-          Logger.info(`calcOffsetHeight=${calcOffsetHeight}`);
+          Logger.log(`calcOffsetHeight=${calcOffsetHeight}`);
           parentNode.style.height = `${(initHeight + calcOffsetHeight) - 10}px`;
           const name = CoreUtils.getSubstring(event.target.id, '|');
           self.perspectiveMemory.setNthChildMinHeight.call(self.perspectiveMemory, name, parentNode.style.height);
@@ -1690,29 +2327,188 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         let ele;
         self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).forEach((nthChild) => {
           ele = document.querySelector('#wlsform > div > div:nth-child(' + nthChild.row + ') > div:nth-child(' + nthChild.col + ')');
-        if (ele !== null && typeof nthChild.minHeight !== 'undefined') {
-          ele.style['min-height'] = nthChild.minHeight;
-          ele = document.getElementById(`${nthChild.name}|input`);
-          if (ele !== null) {
-            ele.addEventListener('mouseup', onMouseUp);
-            ele.setAttribute('data-init-height', nthChild.minHeight);
-            ele.style.height = `${parseInt(nthChild.minHeight, 10)}px`;
+          if (ele !== null && typeof nthChild.minHeight !== 'undefined') {
+            ele.style['min-height'] = nthChild.minHeight;
+            ele = document.getElementById(`${nthChild.name}|input`);
+            if (ele !== null) {
+              ele.setAttribute('data-init-height', nthChild.minHeight);
+              ele.style.height = `${parseInt(nthChild.minHeight, 10)}px`;
+            }
           }
-        }
-      });
+        });
 
         if (isWdtForm()) {
+          let nodeList;
           const formElement = document.getElementById('wlsform');
-          if (formElement) formElement.addEventListener('keyup', sendEnterOnKeyUp, true);
+          if (formElement) {
+            nodeList =  formElement.querySelector('oj-input-text.cfe-form-input-text');
+            if (nodeList !== null && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+              nodeList.focus();
+            }
+            formElement.addEventListener('blur', onBlurFormLayout, true);
+          }
+          nodeList = document.querySelectorAll('#Source, #SourcePath, #Plan, #PlanPath');
+          if (nodeList !== null && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+            const arr = Array.from(nodeList);
+            arr.forEach((node) => {
+              node.addEventListener('change', onChangeLibAppDeploymentField);
+            });
+          }
         }
       }
 
-      function sendEnterOnKeyUp(event) {
-        if (event.key !== 'Enter' && event.key !== 'Tab') {
-          const selector = `${document.activeElement.id}`;
-          document.activeElement.blur();
-          document.getElementById(selector).focus();
+      function requiredFieldsComplete(name, newValue) {
+        let rtnval = true;
+        const selector = $(`#${name}`);
+        const isRequired = (selector.attr('data-required') !== 'undefined' ? selector.attr('data-required') : false);
+        const initialValue = (selector.attr('data-initial-value') !== 'null' ? selector.attr('data-initial-value') : '');
+        if (newValue === '' && isRequired) {
+          rtnval = false;
         }
+        else if (newValue === '' && !isRequired) {
+          const curVal = self[`${FIELD_VALUES}${name}`]();
+          if (CoreUtils.isNotUndefinedNorNull(curVal)) {
+            self.wdtForm.deleteModelArchiveEntry([curVal], viewParams.signaling, self.wdtForm);
+          }
+          unsetProperty({field: name, disabled: false, unset: true});
+          onBlurFormLayout({target: {id: name, type: 'blur', cancelable: false, cancelBubble: true}});
+        }
+        return rtnval;
+      }
+
+      function onChangeLibAppDeploymentField(event) {
+        const name = this.id;
+        const newValue = (CoreUtils.isNotUndefinedNorNull(event.target.value) ? event.target.value.trim() : '');
+        const selector = $(`#${name}`);
+        const initialValue = (selector.attr('data-initial-value') !== 'null' ? selector.attr('data-initial-value') : '');
+        const verifyEntry = self[`${FIELD_VALUES}Verify${name}`]();
+        if (!requiredFieldsComplete(name, newValue)) {
+          event.stopImmediatePropagation();
+          selector.val(initialValue);
+          if (!isEditing()) {
+            self.createForm.backingDataAttributeValueChanged(name, initialValue);
+          }
+          self[`${FIELD_VALUES}${name}`](initialValue);
+          if (!self.dirtyFields.has(name)) self.dirtyFields.add(name);
+          viewParams.signaling.popupMessageSent.dispatch({
+            blocking: true,
+            category: oj.Translations.getTranslatedString('wrc-common.labels.info.value'),
+            summary: oj.Translations.getTranslatedString('wrc-create-form.pageState.error.summary'),
+            detail: oj.Translations.getTranslatedString('wrc-create-form.pageState.error.detail', name)
+          });
+        }
+        else if (verifyEntry) {
+          if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+            const label = selector.attr('data-label');
+            const path = self.rdjData.navigation;
+            const entryType = (path.indexOf('Deployments/AppDeployments') !== -1 ? 'applicationFile' : 'sharedLibraryFile');
+            updateModelArchiveEntry(label, name, initialValue, newValue, entryType, false, verifyEntry)
+            .then(succeeded => {
+              if (!succeeded) selector.focus();
+            });
+          }
+        }
+        else {
+          if (isWdtForm() && initialValue.startsWith('wlsdeploy/')) {
+            self.wdtForm.deleteModelArchiveEntry([initialValue], viewParams.signaling, self.wdtForm);
+          }
+          if (!isEditing()) {
+            self.createForm.backingDataAttributeValueChanged(name, newValue);
+          }
+          self[`${FIELD_VALUES}${name}`](newValue);
+          selector.attr('data-initial-value', '');
+          if (!self.dirtyFields.has(name)) self.dirtyFields.add(name);
+          onBlurFormLayout({target: {id: name, type: 'blur', cancelable: false, cancelBubble: true}});
+        }
+      }
+
+      function onBlurFormLayout(event) {
+        let losingFocusId = event.target.id;
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+          if (losingFocusId) {
+            const hasLosingFocusId = (self.dirtyFields.has(losingFocusId) && event.relatedTarget.nodeName === 'A');
+            if (hasLosingFocusId && isEditing()) {
+              exitForm('autoSave')
+              .then(result => {
+                Logger.info(`[FORM] onBlurFormLayout result=${result}`);
+              });
+            }
+          }
+        }
+        else {
+          if (event.target.type === 'checkbox' && ['availableCheckboxset', 'chosenCheckboxset'].indexOf(event.target.name) === -1) {
+            losingFocusId = event.target.value;
+            if (!self.dirtyFields.has(losingFocusId)) self.dirtyFields.add(losingFocusId);
+          }
+          else if (['Source', 'SourcePath'].includes(losingFocusId)) {
+            const selector = $(`#${losingFocusId}`);
+            let newValue = self[`${FIELD_VALUES}${losingFocusId}`]();
+            if (newValue) newValue = newValue.trim();
+            const rtnval = requiredFieldsComplete(losingFocusId, newValue);
+            if (!rtnval) {
+              return cancelEventPropagation(event);
+            }
+          }
+
+          if (losingFocusId) {
+            const hasLosingFocusId = (self.dirtyFields.has(losingFocusId) || losingFocusId === 'Properties');
+            if (!isEditing()) {
+              /*
+//MLW
+              if (hasLosingFocusId && self.createForm.hasBackingDataAttributes()) {
+                 const pageState = self.createForm.markAsFinished();
+                 if (!pageState.succeeded) {
+                  return cancelEventPropagation(event);
+                }
+               }
+*/
+              if (losingFocusId.indexOf('|') === -1) {
+                const isExiting = (CoreUtils.isNotUndefinedNorNull(event.relatedTarget) && ['oj-tabbar-item-content', 'oj-navigationlist-item-content', 'oj-searchselect-filter'].some(item => event.relatedTarget.className.includes(item)));
+                if (isExiting) {
+                  const pageState = self.createForm.markAsFinished();
+                  if (pageState.succeeded) {
+                    self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.unsavedChanges.value'));
+                    self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.uncommitedCreate.abandonForm.value', self.rdjData.createForm.label));
+                    UnsavedChangesDialog.showConfirmDialog('AbandonCreateForm', self.i18n)
+                    .then(reply => {
+                      if (reply) {
+                        updateContentFile('autoDownload').then(reply => {});
+                      }
+                      else {
+                        return cancelEventPropagation(event);
+                      }
+                    });
+                  }
+                  else {
+                    return cancelEventPropagation(event);
+                  }
+                }
+              }
+            }
+            else if (hasLosingFocusId) {
+              if (losingFocusId !== 'Properties' && event.target.type !== 'checkbox') {
+                const value = self[`${FIELD_VALUES}${losingFocusId}`]();
+                if (typeof value === 'string' && !CoreUtils.isEmpty(value) &&
+                  value.startsWith('@@PROP:') && value.endsWith('@@'))
+                {
+                  const varName = self.wdtForm.stripOutSign(value);
+                  const varValue = self.wdtForm.getModelPropertyValue(varName);
+                  if (CoreUtils.isUndefinedOrNull(varValue)){
+                    self.wdtForm.addModelProperty(varName);
+                    self[`${FIELD_VALUE_FROM}${losingFocusId}`]('fromModelToken');
+                  }
+                }
+              }
+              updateContentFile('autoDownload').then(reply => {});
+            }
+          }
+        }
+      }
+
+      function cancelEventPropagation(event) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        return false;
       }
 
       function renderWizardForm(rdjData) {
@@ -1726,18 +2522,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         document.documentElement.style.setProperty('--form-input-min-width', '25em');
         let properties = self.createForm.getRenderProperties();
-        const results = getCreateFormPayload(properties);
+        // Obtain the payload and flag that scrubData is not needed for rendering
+        const results = getCreateFormPayload(properties, false);
 
         self.formToolbarModuleConfig
-          .then((moduleConfig) => {
-          moduleConfig.viewModel.resetButtonsDisabledState([{id: 'finish', disabled: !self.createForm.getCanFinish()}]);
-      });
+        .then((moduleConfig) => {
+          moduleConfig.viewModel.resetButtonsDisabledState([{
+            id: 'finish',
+            disabled: !self.createForm.getCanFinish()
+          }]);
+        });
 
         properties = results.properties;
         const dataPayload = results.data;
 
         for (const [key, value] of Object.entries(dataPayload)) {
-          if (CoreUtils.isNotUndefinedNorNull(value) && typeof value.value !== 'undefined' ) {
+          if (CoreUtils.isNotUndefinedNorNull(value) && typeof value.value !== 'undefined') {
             if (typeof rdjData.data[key] === 'undefined') {
               rdjData.data[key] = {value: undefined};
             }
@@ -1757,6 +2557,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         return div;
       }
 
+      function createVerifyPathProperty(name, label, field) {
+        return {
+          name: name,
+          type: 'boolean',
+          label: label,
+          helpSummaryHTML: `Determines whether the ${field} field value should be added to the archive file, or not. The default (enabled) means that the local file system path will be added to the archive and the ${field} field value will be converted to the relative path into the archive file. When disabled, the ${field} field value will be treated as a path that is available on every machine or container to which the deployment is targeted and not try to add it to the archive file.`,
+          detailedHelpHTML: `<p>Determines whether the ${field} field value should be added to the archive file, or not. The default (enabled) means that the local file system path will be added to the archive and the ${field} field value will be converted to the relative path into the archive file. When disabled, the ${field} field value will be treated as a path that is available on every machine or container to which the deployment is targeted and not try to add it to the archive file.</p>`,
+          readOnly: false,
+          supportsModelTokens: false
+        };
+      }
+
       function renderForm(pdjData, rdjData) {
         const div = document.createElement('div');
         div.setAttribute('id', 'cfe-form');
@@ -1764,6 +2576,38 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         const includeAdvancedFields = (self.showAdvancedFields().length !== 0);
         const properties = getSliceProperties(pdjData, includeAdvancedFields);
+
+        if (isWdtForm() && window?.api?.ipc &&
+          Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name &&
+          rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries]/)) {
+
+          let index = properties.map(property => property.name).indexOf('SourcePath');
+          if (index !== -1) {
+            properties[index].type = 'fileContents';
+            properties[index].supportsModelTokens = true;
+            properties[index].readOnly = false;
+            const index1 = properties.map(property => property.name).indexOf('VerifySourcePath');
+            if (index1 === -1) {
+              const property = createVerifyPathProperty('VerifySourcePath', 'Add Source Path to Archive', 'Source Path');
+              property.required = false;
+              pdjData.sliceForm.properties.splice(index, 0, property);
+              rdjData.data['VerifySourcePath'] = {set: false, value: true};
+            }
+          }
+          index = properties.map(property => property.name).indexOf('PlanPath');
+          if (index !== -1) {
+            properties[index].type = 'fileContents';
+            properties[index].supportsModelTokens = true;
+            properties[index].readOnly = false;
+            const index1 = properties.map(property => property.name).indexOf('VerifyPlanPath');
+            if (index1 === -1) {
+              const property = createVerifyPathProperty('VerifyPlanPath', 'Add Plan Path to Archive', 'Plan Path');
+              property.required = false;
+              pdjData.sliceForm.properties.splice(index, 0, property);
+              rdjData.data['VerifyPlanPath'] = {set: false, value: true};
+            }
+          }
+        }
 
         // Setup PDJ type information for the properties being handled on this form
         const pdjTypes = new PageDataTypes(properties, viewParams.perspective.id);
@@ -1774,7 +2618,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         const isUseCheckBoxesForBooleans = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, 'useCheckBoxesForBooleans');
         const isSingleColumn = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, 'singleColumn');
         const hasFormLayoutSections = PageDefinitionFormLayouts.hasFormLayoutSections(pdjData);
-        const isReadOnly = (self.readonly() && (['configuration','view','composite'].indexOf(viewParams.perspective.id) !== -1));
+        const isReadOnly = (self.readonly() && (['configuration', 'view', 'composite'].indexOf(viewParams.perspective.id) !== -1));
 
         const isSliceTable = pdjData.sliceTable ? true : false;
 
@@ -1792,21 +2636,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
 
         if (hasFormLayoutSections) {
-          formLayout = PageDefinitionFormLayouts.createSectionedFormLayout({labelWidthPcnt: '45%', maxColumns: '1', isReadOnly: isReadOnly, isSingleColumn: isSingleColumn}, pdjTypes, rdjData, pdjData, populateFormLayout);
+          formLayout = PageDefinitionFormLayouts.createSectionedFormLayout({
+            labelWidthPcnt: '45%',
+            maxColumns: '1',
+            isReadOnly: isReadOnly,
+            isSingleColumn: isSingleColumn
+          }, pdjTypes, rdjData, pdjData, populateFormLayout);
           div.append(formLayout);
         }
         else if (isUseCheckBoxesForBooleans) {
-          formLayout = PageDefinitionFormLayouts.createCheckBoxesFormLayout({labelWidthPcnt: '45%', maxColumns: '1'} );
+          formLayout = PageDefinitionFormLayouts.createCheckBoxesFormLayout({labelWidthPcnt: '45%', maxColumns: '1'});
           div.append(formLayout);
         }
         else {
           if (isSingleColumn) {
-            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({labelWidthPcnt: '32%', maxColumns: '1'} );
+            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({
+              labelWidthPcnt: '32%',
+              maxColumns: '1'
+            });
             div.append(formLayout);
             document.documentElement.style.setProperty('--form-input-min-width', '32em');
           }
           else {
-            formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({labelWidthPcnt: '45%', maxColumns: '2'} );
+            formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({labelWidthPcnt: '45%', maxColumns: '2'});
             div.append(formLayout);
             document.documentElement.style.setProperty('--form-input-min-width', '15em');
           }
@@ -1828,66 +2680,118 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         return div;
       }
 
-      function createFieldValueSubscription(name, replacer){
-        return self[`${FIELD_VALUES}${replacer}`].subscribe((newValue) => {
-          self.dirtyFields.add(name);
-        let replacer = name;
-        if (isWizardForm()) {
-          replacer = self.createForm.getBackingDataAttributeReplacer(name);
-          if (typeof replacer === 'undefined') replacer = name;
-        }
-        if (isWdtForm()){
-          let testShow = self.wdtForm.shouldShowDialog(self.doWdtDialogPopup, name, newValue, self.createForm);
-          if (testShow.shouldShow){
-            const result = self.wdtForm.formFieldValueChanged(name, newValue);
-            displayAndProcessWdtDialog(result, true);
-            if (isWizardForm()) {
-              newValue = self[`${FIELD_VALUES}${replacer}`]();
-              self.createForm.backingDataAttributeValueChanged(name, newValue);
-            }
+      function createFieldValueSubscription(valueSubscriptions, name, replacer) {
+        // Check if the subscription already exists and simply return
+        const subscribed = valueSubscriptions.find(sub => sub.name === name);
+        if (CoreUtils.isNotUndefinedNorNull(subscribed)) return;
+
+        // Define the callback function used when the field is updated
+        const updatedFieldValueCallback = (newValue) => {
+          if (self.resetUnsetFieldFlag) {
+            // Skip the field value update processsing when resetting
+            // an unset field to that field's default value. The
+            // reset flag is set and cleared by resetUnsetFieldToDefault
             return;
           }
-          else {
-            //we  want to set the valueFrom, then continue with the rest of the code as normal.
-            if (CoreUtils.isNotUndefinedNorNull(testShow.from)){
+          self.dirtyFields.add(name);
+          let replacer = name;
+          if (isWizardForm()) {
+            replacer = self.createForm.getBackingDataAttributeReplacer(name);
+            if (typeof replacer === 'undefined') replacer = name;
+          }
+          if (isWdtForm()) {
+            let testShow = self.wdtForm.shouldShowDialog(self.doWdtDialogPopup, name, newValue, self.createForm);
+            if (testShow.shouldShow) {
+              //the observed value has changed to the new value, we need to set the From to match that.
               self[`${FIELD_VALUE_FROM}${replacer}`](testShow.from);
+              const pageProp = hasPagePropVariables();
+              const result = self.wdtForm.formFieldValueChanged(name, newValue, pageProp);
+              displayAndProcessWdtDialog(result, true);
+              if (isWizardForm()) {
+                newValue = self[`${FIELD_VALUES}${replacer}`]();
+                self.createForm.backingDataAttributeValueChanged(name, newValue);
+              }
+              return;
             }
+            else {
+              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name){
+                //If the user empties the field through the form, instead of using the dialog to unset the properties,
+                //we want to set treat that as 'unset', otherwise when writing out to the model file,
+                //the field will be included with no value, and validate model will fail.
+                const ntrim = ((newValue && typeof newValue === 'string')  ? newValue.trim(): newValue);
+                if (ntrim === '') {
+                  unsetProperty(PageDefinitionUnset.getPropertyAction(name));
+                  self[`${FIELD_VALUE_FROM}${replacer}`]('fromRegValue');
+                }
+              }
+              //we  want to set the valueFrom, then continue with the rest of the code as normal.
+              if (CoreUtils.isNotUndefinedNorNull(testShow.from)) {
+
+                // We no longer want to remove the variables automatically.  User will need to go to the
+                // Code View variable table to do the removal.
+
+                // if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name){
+                //   //if this is in WKT, we want to remove the previous model token from the datasource model.
+                //   //this use case is when user replace a token to regular text, directly on the form, without
+                //   //going through the dialog.
+                //   if ( (self[`${FIELD_VALUE_FROM}${replacer}`]() === 'fromModelToken') &&
+                //     (testShow.from !== 'fromModelToken')){
+                //     let objVal = self.rdjData.data[`${replacer}`];
+                //     if (CoreUtils.isNotUndefinedNorNull(objVal)){
+                //       const varName = self.wdtForm.stripOutSign(objVal.modelToken);
+                //       self.wdtForm.removeModelProperty(varName);
+                //     }
+                //   }
+                // }
+                self[`${FIELD_VALUE_FROM}${replacer}`](testShow.from);
+              }
+              if (isWizardForm()) {
+                newValue = self[`${FIELD_VALUES}${replacer}`]();
+                self.createForm.backingDataAttributeValueChanged(name, newValue);
+                return;
+              }
+              if (replacer.indexOf('Verify') !== -1 && !newValue) {
+                const index = replacer.indexOf('Verify');
+                const fieldName = replacer.substring(index + 6);
+                $(`#${fieldName}`).attr('data-initial-value', self[`${FIELD_VALUES}${fieldName}`]());
+              }
+            }
+          }
+          else {
             if (isWizardForm()) {
-              newValue = self[`${FIELD_VALUES}${replacer}`]();
               self.createForm.backingDataAttributeValueChanged(name, newValue);
               return;
             }
           }
-        }
-        else {
-          if (isWizardForm()) {
-            self.createForm.backingDataAttributeValueChanged(name, newValue);
-            return;
+          if (CoreUtils.isUndefinedOrNull(self.optionsSources)) {
+            self.optionsSources = new PageDefinitionOptionsSources();
           }
-        }
-        if (CoreUtils.isUndefinedOrNull(self.optionsSources)) {
-          self.optionsSources = new PageDefinitionOptionsSources();
-        }
-        self.optionsSources.propertyValueChanged(name, newValue);
-        resetSaveButtonDisabledState({disabled: false});
+          self.optionsSources.propertyValueChanged(name, newValue);
+          resetSaveButtonDisabledState({disabled: false});
 
-        if ( (CoreUtils.isNotUndefinedNorNull(self[`${FIELD_UNSET}${name}`]) && !self[`${FIELD_UNSET}${name}`]())
-          || (isWdtForm())) {
-          // This means the user is changing the value
-          // of fields on the form, not inside the WDT
-          // settings dialog box.
-          PageDefinitionUnset.addPropertyHighlight(name);
-          self[`${FIELD_VALUE_SET}${name}`](true);
-        }
-      });
+          if ((CoreUtils.isNotUndefinedNorNull(self[`${FIELD_UNSET}${name}`]) && !self[`${FIELD_UNSET}${name}`]())) {
+            // This means the user is changing the value
+            // of fields on the form, not inside the WDT
+            // settings dialog box.
+            PageDefinitionUnset.addPropertyHighlight(name);
+            self[`${FIELD_VALUE_SET}${name}`](true);
+          }
+          if (isEditing() && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name && isWdtForm()){
+            onBlurFormLayout({target: {id: name, type: 'blur', cancelable: false, cancelBubble: true}});
+          }
+        };
+
+        // Subscribe to the field then store the subscription with the field name
+        const subscription = self[`${FIELD_VALUES}${replacer}`].subscribe(updatedFieldValueCallback);
+        valueSubscriptions.push({ name: name, subscription: subscription });
       }
 
-      function processRemovedField(name, value){
-        if (CoreUtils.isUndefinedOrNull(value)) value = '';
-        let index = self.subscriptions.map(subscription => subscription._target()).indexOf(value);
+      function processRemovedField(name) {
+        // Remove the subscription that exists for the removed field
+        let index = self.valueSubscriptions.findIndex(sub => sub.name === name);
         if (index !== -1) {
-          self.subscriptions[index].dispose();
-          self.subscriptions.splice(index, 1);
+          self.valueSubscriptions[index].subscription.dispose();
+          self.valueSubscriptions.splice(index, 1);
           self.dirtyFields.delete(name);
         }
         let replacer = self.createForm.getBackingDataAttributeReplacer(name);
@@ -1903,75 +2807,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
 
         index = self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).map(nthChild1 => nthChild1.name).indexOf(replacer);
-        if (index === -1) self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).splice(index, 1);
+        if (index !== -1) self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).splice(index, 1);
 
         if (CoreUtils.isNotUndefinedNorNull(self.multiSelectControls[replacer])) {
           delete self.multiSelectControls[replacer];
         }
       }
 
-      function setupUsedIfListeners(properties) {
-        const usedIfProperties = properties.filter(property => CoreUtils.isNotUndefinedNorNull(property.usedIf));
+      function populateFormLayout(properties, formLayout, pdjTypes, dataValues, isSingleColumn, isReadOnly) {
 
-        usedIfProperties.forEach((property) => {
-          let propertyName, name = property.name, usedIf = property.usedIf;
-
-        if (self.createForm) {
-          const replacer = self.createForm.getBackingDataAttributeReplacer(usedIf.property);
-          // replacer is only used with the property names used
-          // in the JDBC System Resource wizard. Only assign it
-          // to propertyName, if it's not undefined.
-          propertyName = (CoreUtils.isNotUndefinedNorNull(replacer) ? replacer : usedIf.property);
-        }
-        else {
-          propertyName = usedIf.property;
-        }
-
-        let toggleDisableFunc = (newValue , pType) => {
-          // Prevent a property from becoming enabled/disabled
-          // when value has been unset
-          if (!isWdtForm()){
-            if (self[`${FIELD_UNSET}${name}`]() || self[`${FIELD_UNSET}${propertyName}`]()) {
-              Logger.log(`[FORM] Prevent usedIf handling for unset field: ${name}`);
-              return;
-            }
-          }
-
-          // If the new value is a Model Token, always enable the field.
-          if (CoreUtils.isNotUndefinedNorNull(newValue) && (typeof newValue === 'string') && newValue.startsWith('@@')){
-            self[`${FIELD_DISABLED}${name}`](false);
-          }
-          else {
-            // See if the new value enables the field or not
-            let enabled = usedIf.values.find(
-              (item) => {
-                // if we are comparing to true/false (ie boolean), and the value is undefined
-                // of newValue === "" which is the case when user restore to default
-                // we want to enable the dependant field.
-                // we can only test for true/false here because in this call back, we don't have access
-                // to the pdjTypes of this field
-                if ( isWdtForm() && (item === true || item === false) &&
-              (CoreUtils.isUndefinedOrNull(newValue) || newValue === ''))
-            return true;
-            return item === newValue; }
-          );
-            self[`${FIELD_DISABLED}${name}`](!enabled);
-          }
-        };
-
-        // Call event callback to initialize, then set up
-        // subscription.
-        const oneProp = properties.find(element => element.name === propertyName);
-        let pType = '';
-        if (CoreUtils.isNotUndefinedNorNull(oneProp))
-          pType = oneProp.type;
-        toggleDisableFunc(self[`${FIELD_VALUES}${propertyName}`](), pType);
-        const subscription = self[`${FIELD_VALUES}${propertyName}`].subscribe(toggleDisableFunc);
-        self.subscriptions.push(subscription);
-      });
-      }
-
-      function populateFormLayout(properties, formLayout, pdjTypes, dataValues, isSingleColumn, isReadOnly){
         for (let i = 0; i < properties.length; i++) {
           let name = properties[i].name;
 
@@ -2007,10 +2851,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             field = singlePropertyTable.field;
           }
           else if (pdjTypes.isBooleanType(name) && (!pdjTypes.isReadOnly(name)) && (!isReadOnly)) {
-            field = PageDefinitionFields.createSwitch('cfe-form-switch');
-            if (isWdtForm() && pdjTypes.isSupportsModelTokens(name)){
+            field = PageDefinitionFields.createSwitch({'className': 'cfe-form-switch', 'disabled': false});
+            if (isWdtForm() && pdjTypes.isSupportsModelTokens(name)) {
               const options = {
-                'className':  'cfe-form-input-text',
+                'className': 'cfe-form-input-text',
                 'placeholder': name,
                 'readonly': true,
               };
@@ -2032,12 +2876,28 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 chosenItems: multiSelect.chosenItems,
                 origChosenLabels: multiSelect.origChosenLabels
               };
-              self.perspectiveMemory.upsertNthChildrenItem.call(self.perspectiveMemory, {name: name, row: parseInt(i) + 1, col: 2, minHeight: '240px'});
+              self.perspectiveMemory.upsertNthChildrenItem.call(self.perspectiveMemory, {
+                name: name,
+                row: parseInt(i) + 1,
+                col: 2,
+                minHeight: '240px'
+              });
 
               if (CoreUtils.isUndefinedOrNull(self[observableNameValueFrom])) {
                 self[observableNameValueFrom] = ko.observable();
               }
-              self[observableNameValueFrom]('fromRegValue');
+              const observableNameValue = FIELD_VALUES + name;
+              if (CoreUtils.isUndefinedOrNull(self[observableNameValue])) {
+                self[observableNameValue] = ko.observable();
+                self[observableNameValue]('');
+              }
+              if (isWdtForm() && (CoreUtils.isNotUndefinedNorNull(dataValues[name].modelToken))){
+                self[observableNameValueFrom]('fromModelToken');
+                self[observableNameValue](dataValues[name].modelToken);
+                field.setAttribute('readonly', true);
+              } else {
+                self[observableNameValueFrom]('fromRegValue');
+              }
             }
             else {
               const dataProviderName = FIELD_SELECTDATA + replacer;
@@ -2088,7 +2948,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               let fieldIndex = parseInt(i) + 1;
               let fieldRow = (isSingleColumn ? fieldIndex : Math.round(fieldIndex / 2));
               let fieldColumn = (isSingleColumn || ((fieldIndex % 2) !== 0) ? 2 : 4);
-              nthChild = { name: name, row: fieldRow, col: fieldColumn, minHeight: '52px' };
+              nthChild = {name: name, row: fieldRow, col: fieldColumn, minHeight: '52px'};
             }
             self.perspectiveMemory.upsertNthChildrenItem.call(self.perspectiveMemory, nthChild);
           }
@@ -2113,10 +2973,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           else if (pdjTypes.isUploadedFileType(name)) {
             field = PageDefinitionFields.createFileChooser('cfe-file-picker');
             field.setAttribute('title', value);
+
+            if (isWdtForm() && !isWizardForm() && name === 'PlanPath') {
+              const params = {
+                valueSet: true,
+                field: field,
+                readonly: false,
+                wktTool : Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name
+              };
+              // Apply the highlight and context menu for the property
+              PageDefinitionFields.addFieldContextMenu(name, params);
+            }
           }
           else {
             const options = {
-              'className': pdjTypes.isNumberType(name)? 'cfe-form-input-integer-sm' : 'cfe-form-input-text',
+              'className': pdjTypes.isNumberType(name) ? 'cfe-form-input-integer-sm' : 'cfe-form-input-text',
               'placeholder': pdjTypes.getInLineHelpPresentation(name),
               'readonly': isReadOnly
             };
@@ -2126,7 +2997,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
           if (!tableProperty) {
             if ((!isSingleColumn && pdjTypes.isArray(name) && pdjTypes.isDynamicEnumType(name))
-                 || (!isSingleColumn && pdjTypes.isPropertiesType(name))) {
+              || (!isSingleColumn && pdjTypes.isPropertiesType(name))) {
               // We're on a field associated with a cfe-multi-select or cfe-property-list-editor,
               // so use modulus of i and 2 make odd remainders force
               // a new div.
@@ -2135,10 +3006,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 formLayout.append(div);
               }
             }
-            // Append the help icon to the form layout, as it is
-            // always the first thing on a new row.
-            labelEle = PageDefinitionFields.createLabel(name, pdjTypes, helpInstruction);
-            formLayout.append(labelEle);
+
+            if (viewParams.perspective.id === 'modeling' && name === 'Upload') {
+              Logger.log('[FORM] Suppressing creation of "Upload" label!');
+            }
+            else if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name &&
+              name.indexOf('Verify') !== -1) {
+              Logger.log('[FORM] Suppressing creation of "VerifyXXX" field labels!');
+            }
+            else {
+              // Append the help icon to the form layout, as it is
+              // always the first thing on a new row.
+              labelEle = PageDefinitionFields.createLabel(name, pdjTypes, helpInstruction);
+              formLayout.append(labelEle);
+            }
           }
 
           if (typeof field !== 'undefined' && field.className !== 'cfe-multi-select'
@@ -2151,7 +3032,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             let observableValue = createValue;
             let observableValueFrom = 'fromRegValue';
             if (observableValue === null) {
-              if (isWdtForm()){
+              if (isWdtForm()) {
                 observableValue = pdjTypes.getObservableValue_WDT(name, dataValues[name], value);
                 observableValueFrom = pdjTypes.getObservableValueFrom(dataValues[name]);
               }
@@ -2160,7 +3041,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               }
             }
             let isValueSet = true;
-            if (CoreUtils.isNotUndefinedNorNull(dataValues[name]) && CoreUtils.isNotUndefinedNorNull(dataValues[name].set)){
+            if (CoreUtils.isNotUndefinedNorNull(dataValues[name]) && CoreUtils.isNotUndefinedNorNull(dataValues[name].set)) {
               isValueSet = (dataValues[name].set);
             }
 
@@ -2182,9 +3063,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               self[observableNameValueSet] = ko.observable(isValueSet);
             }
 
-            const subscription = createFieldValueSubscription(name, replacer);
-            if (CoreUtils.isNotUndefinedNorNull(subscription) && subscription._target() === '') {
-              self.subscriptions.push(subscription);
+            if (['Source', 'SourcePath', 'Plan', 'PlanPath'].includes(name) &&
+              Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+              field.setAttribute('data-initial-value', dataValues[name].value);
+              field.setAttribute('data-label', properties[i].label);
+              field.setAttribute('data-required', properties[i].required);
+            }
+            else {
+              createFieldValueSubscription(self.valueSubscriptions, name, replacer);
             }
 
             if (isWizardForm()) {
@@ -2197,7 +3083,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             field.setAttribute('messages-custom', '[[' + FIELD_MESSAGES + replacer + ']]');
             field.setAttribute('display-options.messages', 'none');
 
-            if (field_inputTextForBoolean !== null){
+            if (field_inputTextForBoolean !== null) {
               field_inputTextForBoolean.setAttribute('value', '{{' + FIELD_VALUES + replacer + '}}');
               field_inputTextForBoolean.setAttribute('messages-custom', '[[' + FIELD_MESSAGES + replacer + ']]');
               field_inputTextForBoolean.setAttribute('display-options.messages', 'none');
@@ -2216,13 +3102,33 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
 
           if (typeof field !== 'undefined') {
-            if (pdjTypes.isUploadedFileType(name)){
+            if (pdjTypes.isUploadedFileType(name)) {
               const params = {
                 field: field,
                 id: name,
-                choose: { 'on-click': '[[chooseFileClickHandler]]', iconFile: self.i18n.icons.choose.iconFile, tooltip: self.i18n.icons.choose.tooltip},
-                clear: { 'on-click': '[[clearChosenFileClickHandler]]', iconFile: self.i18n.icons.clear.iconFile, tooltip: self.i18n.icons.clear.tooltip},
+                choose: {
+                  'on-click': '[[chooseFileClickHandler]]',
+                  iconFile: self.i18n.icons.choose.iconFile,
+                  tooltip: self.i18n.icons.choose.tooltip
+                }
               };
+              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name &&
+                ['Source', 'SourcePath','Plan','PlanPath'].includes(name)) {
+                params.choose['menu'] = {
+                  'on-click': '[[launchFileChooserMenu]]',
+                  items: [
+                    {name: 'chooseFile', label: oj.Translations.getTranslatedString('wrc-common.menu.chooseFile.value')},
+                    {name: 'chooseDir', label: oj.Translations.getTranslatedString('wrc-common.menu.chooseDir.value')}
+                  ]
+                };
+              }
+              if (!isEditing()) {
+                params['clear'] = {
+                  'on-click': '[[clearChosenFileClickHandler]]',
+                  iconFile: self.i18n.icons.clear.iconFile,
+                  tooltip: self.i18n.icons.clear.tooltip
+                };
+              }
               container = PageDefinitionFields.addUploadFileElements(params);
             }
             else {
@@ -2233,12 +3139,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 showExtraField: (self[observableNameValueFrom]() === 'fromModelToken'),
                 readOnly: (pdjTypes.isReadOnly(name) || Runtime.isReadOnly()),
                 valueSet: pdjTypes.isValueSet(name, dataValues[name]),
-                restartRequired: pdjTypes.isRestartNeeded(name),
-                needsWdtIcon: isWdtForm(),
+                restartRequired: (viewParams.perspective.id !== 'modeling') && (pdjTypes.isRestartNeeded(name)),
+                needsWdtIcon: needsWdtIcon(name, pdjTypes),
                 nameLabel: pdjTypes.getLabel(name),
                 supportsModelTokens: pdjTypes.isSupportsModelTokens(name),
                 supportsUnresolvedReferences: pdjTypes.isSupportsUnresolvedReferences(name),
-                valueFrom: pdjTypes.valueFrom(name,dataValues[name]),
+                valueFrom: pdjTypes.valueFrom(name, dataValues[name]),
+                wktTool : Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name,
                 showMoreIcon: (
                   pdjTypes.hasOptionsSources(name, dataValues[name])
                   && !pdjTypes.isReadOnly(name)
@@ -2248,13 +3155,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 icons: {
                   restart: {iconFile: self.i18n.icons.restart.iconFile, tooltip: self.i18n.icons.restart.tooltip},
                   wdtIcon: {iconFile: self.i18n.icons.wdtIcon.iconFile, tooltip: self.i18n.icons.wdtIcon.tooltip},
-                  more: {iconFile: (pdjTypes.isReadOnly(name) || Runtime.isReadOnly() ? self.i18n.icons.more.iconFile.grayed: self.i18n.icons.more.iconFile.enabled), iconClass: self.i18n.icons.more.iconClass, tooltip: self.i18n.icons.more.tooltip}
+                  more: {
+                    iconFile: (pdjTypes.isReadOnly(name) || Runtime.isReadOnly() ? self.i18n.icons.more.iconFile.grayed : self.i18n.icons.more.iconFile.enabled),
+                    iconClass: self.i18n.icons.more.iconClass,
+                    tooltip: self.i18n.icons.more.tooltip
+                  }
                 }
               };
 
-              if (field.className !== 'cfe-multi-select'
-                && field.className !== 'cfe-property-list-editor'
-              ) {
+              if (field.className !== 'cfe-multi-select' &&
+                field.className !== 'cfe-property-list-editor') {
                 if (params.showMoreIcon) {
                   self.optionsSources = new PageDefinitionOptionsSources();
                   params['moreMenuParams'] = self.optionsSources.getMoreMenuParams(name, pdjTypes.getLabel(name), dataValues[name], viewParams.perspective.id, pdjTypes.isReadOnly(name) || Runtime.isReadOnly());
@@ -2274,97 +3184,193 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               // Track a field unset action which restores that value to the default setting
               self[`${FIELD_UNSET}${name}`] = ko.observable(false);
             }
+
+            if ( (CoreUtils.isNotUndefinedNorNull(self[`${FIELD_VALUE_FROM}${name}`])) &&
+              (self[`${FIELD_VALUE_FROM}${name}`]() === 'fromModelToken')  &&
+              (field.className !== 'cfe-multi-select') &&
+              (field.className !== 'cfe-property-list-editor'))
+            {
+              field.setAttribute('readonly', 'true');
+            }
           }
-          formLayout.append(container);
+
+          if (viewParams.perspective.id === 'modeling' && name === 'Upload') {
+            Logger.log('[FORM] Suppressing display of "Upload" field!');
+          }
+          else if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name &&
+            name.indexOf('Verify') !== -1) {
+            Logger.log('[FORM] Suppressing display of "VerifyXXX" fields!');
+          }
+          else {
+            formLayout.append(container);
+          }
+
         }  //end of for loops
         if (isWdtForm()) {
           self.doWdtDialogPopup = true;
         }
         if (!isWizardForm()) {
-          setupUsedIfListeners(properties);
+          PageDefinitionUsedIfs.setupUsedIfListeners(properties, isWdtForm(), self);
         }
       }
 
-       function populateSliceTable(
-         properties,
-         table,
-         pdjTypes,
-         dataValues,
-         isSingleColumn,
-         isReadOnly
-       ) {
-         let rows = [];
-         let rowObj = {};
+      function populateSliceTable(properties,
+                                  table,
+                                  pdjTypes,
+                                  dataValues,
+                                  isSingleColumn,
+                                  isReadOnly) {
+        let rows = [];
 
-         for (let i = 0; i < properties.length; i++) {
-           let name = properties[i].name;
+        dataValues.forEach((dataValue) => {
+          let rowObj = {};
 
-           const helpInstruction = PageDefinitionFields.createHelpInstruction(
-             name,
-             pdjTypes
-           );
+          for (let i = 0; i < properties.length; i++) {
+            let name = properties[i].name;
 
-           let value;
-           
+            const helpInstruction = PageDefinitionFields.createHelpInstruction(
+              name,
+              pdjTypes
+            );
 
-           dataValues.forEach((dataValue) => {
-             // Get the text display value for the data or null
-             value = pdjTypes.getDisplayValue(name, dataValue[name]);
-             if (value === null) value = '';
-             rowObj[name] = value;
-           });
-         }
-         rows.push(rowObj);
+            let value;
 
-         const columns = properties.map((dc) => {
-           return { field: dc.name, headerText: dc.label };
-         });
+            // Get the text display value for the data or null
+            value = pdjTypes.getDisplayValue(name, dataValue[name]);
+            if (value === null) value = '';
+            rowObj[name] = value;
+          }
 
-         table.setAttribute('columns', JSON.stringify(columns));
+          // Check and add the resource data for each data value
+          const idValue = (dataValue.identity ? dataValue.identity.value : null);
+          if (CoreUtils.isNotUndefinedNorNull(idValue)) {
+            rowObj['resourceData'] = idValue.resourceData;
+          }
 
-         self['sliceRows'] = new ArrayDataProvider(rows);
-         self['sliceTableChangeListener'] = (event) => {
-           {
-             const row = event.detail.value.row;
+          rows.push(rowObj);
+        });
 
-             if (row.values().size > 0) {
-               // if the selected row contains resourceData, navigate to it
-               row.values().forEach(function (key) {
-                 let row = rows[key];
+        // Set the column data provider for the slice table
+        table.setAttribute('columns', '[[columnDataProvider]]');
 
-                 if (row.resourceData) {
-                   // fix the navtree
-                   viewParams.signaling.navtreeSelectionCleared.dispatch();
-                   Router.rootInstance.go(
-                     '/' +
-                       viewParams.perspective.id +
-                       '/' +
-                       encodeURIComponent(row.resourceData)
-                   );
-                 }
-               });
-             }
-           }
-         };
+        self['sliceRows'] = new ArrayDataProvider(rows);
+        self['sliceTableChangeListener'] = (event) => {
+          {
+            const row = event.detail.value.row;
 
-         table.setAttribute('data', '[[ sliceRows ]]');
-         table.setAttribute('id', 'table');
-         table.setAttribute('class', 'wlstable');
-         table.setAttribute('aria-label', 'Table');
-         table.setAttribute(
-           'selection-mode',
-           JSON.stringify({ row: 'single', column: 'none' })
-         );
-         table.setAttribute(
-           'on-selected-changed',
-           '[[ sliceTableChangeListener ]]'
-         );
-       }
+            if (row.values().size > 0) {
+              // if the selected row contains resourceData, navigate to it
+              row.values().forEach(function (key) {
+                let row = rows[key];
+
+                if (row.resourceData) {
+                  // fix the navtree
+                  viewParams.signaling.navtreeSelectionCleared.dispatch();
+                  Router.rootInstance.go(
+                    '/' +
+                    viewParams.perspective.id +
+                    '/' +
+                    encodeURIComponent(row.resourceData)
+                  );
+                }
+              });
+            }
+          }
+        };
+
+        table.setAttribute('data', '[[ sliceRows ]]');
+        table.setAttribute('id', 'table');
+        table.setAttribute('class', 'wlstable');
+        table.setAttribute('aria-label', 'Table');
+        table.setAttribute(
+          'selection-mode',
+          JSON.stringify({row: 'single', column: 'none'})
+        );
+        table.setAttribute(
+          'on-selected-changed',
+          '[[ sliceTableChangeListener ]]'
+        );
+      }
 
       this.contextMenuClickListener = function (event) {
         event.preventDefault();
         unsetProperty(PageDefinitionUnset.getAction(event));
       };
+
+      function updateModelArchiveEntry(fieldLabel, fieldName, initialValue, fieldValue, entryType, showFileChooser, verifyEntry) {
+        function addArchiveEntry(result, fieldName, fieldValue, initialValue, verifyEntry) {
+          const dataProvider = self.wdtForm.getDataProvider();
+          if (CoreUtils.isUndefinedOrNull(dataProvider['modelArchiveEntries'])) dataProvider.putValue('modelArchiveEntries', []);
+          if (isEditing() && fieldValue !== '' && result.archivePath !== initialValue && initialValue !== 'null' && CoreUtils.isNotUndefinedNorNull(initialValue)) {
+            self.wdtForm.deleteModelArchiveEntry([initialValue], viewParams.signaling, self.wdtForm);
+          }
+          const index = dataProvider.modelArchiveEntries.map(modelArchiveEntry => modelArchiveEntry.archivePath).indexOf(result.archivePath);
+          if (index !== -1) {
+            dataProvider.modelArchiveEntries[index].result = result;
+          }
+          else {
+            dataProvider.modelArchiveEntries.push({archivePath: result.archivePath, result: result});
+          }
+          $(`#${fieldName}`)
+          .attr({
+            'data-initial-value': result.archivePath,
+            'title': result.archivePath
+          });
+        }
+        return new Promise(function (resolve) {
+          if (isWdtForm() && window?.api?.ipc &&
+            Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+            const options = {
+              showChooser: showFileChooser
+            };
+            if (CoreUtils.isNotUndefinedNorNull(fieldValue) && fieldValue !== '') options['providedValue'] = fieldValue;
+            window.api.ipc.invoke('get-archive-entry', entryType, options)
+            .then(result => {
+              // The value of result.filePath will be undefined, if the
+              // end-user clicked the "Cancel" button in the file chooser.
+              if (result.filePath) {
+                let displayedPath;
+                if (verifyEntry) {
+                  displayedPath = result.archivePath;
+                  addArchiveEntry(result, fieldName, displayedPath, initialValue, verifyEntry);
+                  self[`${FIELD_VALUES}${fieldName}`](displayedPath);
+                }
+                else {
+                  displayedPath = result.filePath;
+                  self[`${FIELD_VALUES}${fieldName}`](displayedPath);
+                }
+                if (!isEditing()) {
+                  self.createForm.backingDataAttributeValueChanged(fieldName, displayedPath);
+                }
+                if (!self.dirtyFields.has(fieldName)) self.dirtyFields.add(fieldName);
+                onBlurFormLayout({target: {id: fieldName, type: 'blur', cancelable: false, cancelBubble: true}});
+                resolve(true);
+              }
+              else if (result.errorMessage) {
+                self[`${FIELD_VALUES}${fieldName}`](initialValue);
+                MessageDisplaying.displayMessage({
+                  severity: 'error',
+                  summary: oj.Translations.getTranslatedString('wrc-message-displaying.messages.responseMessages.summary'),
+                  detail: result.errorMessage
+                });
+                resolve(false);
+              }
+            })
+            .catch(err => {
+              const message = {
+                severity: 'error',
+                summary: oj.Translations.getTranslatedString('wrc-view-model-utils.labels.unexpectedErrorResponse.value'),
+                detail: err
+              };
+              ViewModelUtils.displayResponseMessage(message);
+              resolve(false);
+            });
+          }
+          else {
+            resolve(true);
+          }
+        });
+      }
 
       /**
        * Use the action to change the settings for the specified property
@@ -2374,19 +3380,41 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function unsetProperty(action) {
         if (CoreUtils.isNotUndefinedNorNull(action)) {
           self[`${FIELD_UNSET}${action.field}`](action.unset);
-          //This keeps the behavior for unset field to be the same as release 1.
-          if (!isWdtForm()) {
-            self[`${FIELD_DISABLED}${action.field}`](action.disabled);
-          }
           self.dirtyFields.add(action.field);
-          if (isWdtForm()){
+          self[`${FIELD_DISABLED}${action.field}`](action.disabled);
+          if (isWdtForm()) {
             self.doWdtDialogPopup = false;
             self[`${FIELD_VALUES}${action.field}`]('');
             self[`${FIELD_VALUE_SET}${action.field}`](false);
             self.doWdtDialogPopup = true;
           }
-          else
+          else {
             self[`${FIELD_VALUES}${action.field}`]('');
+          }
+        }
+      }
+
+      function resetUnsetFieldToDefault(fieldName) {
+        // Perform the reset of the field only when the field is currently marked unset...
+        if (CoreUtils.isNotUndefinedNorNull(self[`${FIELD_UNSET}${fieldName}`]) && self[`${FIELD_UNSET}${fieldName}`]()) {
+          // Obtain the default value for the field using the page definition...
+          const pageProps = getSliceProperties(self.pdjData, (self.showAdvancedFields().length !== 0));
+          const pdjTypes = new PageDataTypes(pageProps, viewParams.perspective.id);
+          const fieldDefaultValue = pdjTypes.getDefaultObservableValue(fieldName);
+
+          // Clear the placeholder...
+          const field = document.getElementById(fieldName);
+          if (field != null) field.removeAttribute('placeholder');
+
+          // Reset the state of the field...
+          self[`${FIELD_UNSET}${fieldName}`](false);
+          self[`${FIELD_DISABLED}${fieldName}`](false);
+
+          // Update the reset flag and set the default value...
+          self.resetUnsetFieldFlag = true;
+          self[`${FIELD_VALUES}${fieldName}`](fieldDefaultValue);
+          self.resetUnsetFieldFlag = false;
+
         }
       }
 
@@ -2429,26 +3457,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             self.dirtyFields.delete(optionsSourceConfig.name);
             break;
           case 'create':
-            self.optionsSources.createOverlayFormDialogModuleConfig(viewParams, optionsSourceConfig, updateShoppingCart, refreshForm)
-              .then(moduleConfig => {
+            self.optionsSources.createOverlayFormDialogModuleConfig(viewParams, optionsSourceConfig, updateShoppingCart, refreshForm, saveContentFileChanges)
+            .then(moduleConfig => {
               self.overlayFormDialogModuleConfig(moduleConfig);
-        });
-        break;
-      }
+            });
+            break;
+        }
       };
 
       /*
-       * this function is called when user create a new resource using the overlay-form.
-       * we need to reload the rdj data so that the dropdown will refresh with the newly created item.
-       * There is a subscription for the change of rdj data and renderPage() will be called.  We need
-       * to set the flag 'loadRdjDoNotClearDirty' to true so renderPage() will not clean up the dirty field.
-       * This flag will be cleared in the setTimeout method at the end of  renderFormLayout().
-       *
-       * Also need to set the placement to 'embedded'. Otherwise, when user tries to leave the slice, isDirty() will not
-       * be called to determine if the unsaved warning dialog should be displayed.
-       * @private
-       */
-      function refreshForm(){
+             * this function is called when user create a new resource using the overlay-form.
+             * we need to reload the rdj data so that the dropdown will refresh with the newly created item.
+             * There is a subscription for the change of rdj data and renderPage() will be called.  We need
+             * to set the flag 'loadRdjDoNotClearDirty' to true so renderPage() will not clean up the dirty field.
+             * This flag will be cleared in the setTimeout method at the end of  renderFormLayout().
+             *
+             * Also need to set the placement to 'embedded'. Otherwise, when user tries to leave the slice, isDirty() will not
+             * be called to determine if the unsaved warning dialog should be displayed.
+             * @private
+             */
+      function refreshForm() {
         self.loadRdjDoNotClearDirty = true;
         const dataPayload = getDirtyFieldsPayload(true);
         cacheDataPayload(dataPayload);
@@ -2456,33 +3484,37 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         PageDefinitionUtils.setPlacementRouterParameter(viewParams.parentRouter, 'embedded');
       }
 
-      function updateShoppingCart(eventType){
+      function updateShoppingCart(eventType) {
         if (viewParams.perspective.id === 'configuration') {
           self.formToolbarModuleConfig
-            .then((moduleConfig) => {
+          .then((moduleConfig) => {
             const changeManager = moduleConfig.viewModel.changeManager();
-          ChangeManager.getData()
+            ChangeManager.getData()
             .then(data => {
-            let flag = true;
-          let content = data.data[ChangeManager.Section.ADDITIONS.name];
-          if (content.length <= 0) {
-            content = data.data[ChangeManager.Section.MODIFICATIONS.name];
-            if (content.length <= 0) {
-              content = data.data[ChangeManager.Section.REMOVALS.name];
+              let flag = true;
+              let content = data.data[ChangeManager.Section.ADDITIONS.name];
               if (content.length <= 0) {
-                flag = false;
+                content = data.data[ChangeManager.Section.MODIFICATIONS.name];
+                if (content.length <= 0) {
+                  content = data.data[ChangeManager.Section.REMOVALS.name];
+                  if (content.length <= 0) {
+                    flag = false;
+                  }
+                }
               }
-            }
-          }
-          moduleConfig.viewModel.changeManager({ isLockOwner: (flag), hasChanges: (flag), supportsChanges: data.changeManager.supportsChanges });
-        });
+              moduleConfig.viewModel.changeManager({
+                isLockOwner: (flag),
+                hasChanges: (flag),
+                supportsChanges: data.changeManager.supportsChanges
+              });
+            });
 
-          moduleConfig.viewModel.renderToolbarButtons(eventType);
-        });
+            moduleConfig.viewModel.renderToolbarButtons(eventType);
+          });
         }
       }
 
-      function getCreateFormPayload(properties) {
+      function getCreateFormPayload(properties, scrubData) {
         if (isWizardForm()) properties = self.createForm.getRenderProperties();
 
         // Set things up to return a null if there are no properties
@@ -2493,28 +3525,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
           properties.forEach((property) => {
             replacer = property.name;
-          if (isWizardForm()) {
-            const result = self.createForm.getBackingDataAttributeReplacer(replacer);
-            if (CoreUtils.isNotUndefinedNorNull(result)) replacer = result;
-          }
-          fieldValues[property.name] = self[`${FIELD_VALUES}${replacer}`];
-          if(isWdtForm()){
-            fieldValuesFrom[property.name] = self[`${FIELD_VALUE_FROM}${replacer}`];
-          }
-        });
+            if (isWizardForm()) {
+              const result = self.createForm.getBackingDataAttributeReplacer(replacer);
+              if (CoreUtils.isNotUndefinedNorNull(result)) replacer = result;
+            }
+            fieldValues[property.name] = self[`${FIELD_VALUES}${replacer}`];
+            if (isWdtForm()) {
+              fieldValuesFrom[property.name] = self[`${FIELD_VALUE_FROM}${replacer}`];
+            }
+          });
 
           if (self.createForm.hasMultiFormData()) {
-            self.createForm.postMultiFormDataPayload(properties, fieldValues)
-              .then((data) => {
-              handleSaveResponse(data, '', {}, 'create', (typeof self.pdjData.sliceForm !== 'undefined'))
-          });
-            results.data = undefined;
+            // Get FormData associated with multipart request
+            results = self.createForm.createMultipartFormData(properties, fieldValues, scrubData);
           }
           else if (self.createForm.hasDeploymentPathData()) {
-            results = self.createForm.getDeploymentDataPayload(properties, fieldValues);
+            results = self.createForm.getDeploymentDataPayload(properties, fieldValues, scrubData);
           }
           else {
-            results = self.createForm.getDataPayload(properties, fieldValues, (isWdtForm())? fieldValuesFrom : null);
+            results = self.createForm.getDataPayload(properties, fieldValues, ((isWdtForm()) ? fieldValuesFrom : null), scrubData);
           }
         }
 
@@ -2525,21 +3554,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         let properties;
         if (isWizardForm()) {
           properties = self.createForm.getRenderProperties();
+          let index = properties.map(property => property.name).indexOf('Upload');
+          if (index !== -1 &&
+            viewParams.perspective.id === 'modeling' &&
+            Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+            self[`${FIELD_VALUES}${properties[index].name}`](false);
+          }
         }
         else {
           if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm)) {
             properties = pdjData.sliceForm.properties;
-            if (CoreUtils.isUndefinedOrNull(properties)){
+            if (CoreUtils.isUndefinedOrNull(properties)) {
               const sections = pdjData.sliceForm.sections;
               properties = [];
-              if (CoreUtils.isNotUndefinedNorNull(sections)){
+              if (CoreUtils.isNotUndefinedNorNull(sections)) {
                 sections.forEach((section, index) => {
                   // If the section doesn't have a properties
                   // property, just skip over it.
                   if (CoreUtils.isNotUndefinedNorNull(section.properties)) {
-                  properties = properties.concat(section.properties);
-                }
-              });
+                    properties = properties.concat(section.properties);
+                  }
+                });
               }
             }
             if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm.advancedProperties)) {
@@ -2551,7 +3586,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             properties = pdjData.sliceTable.displayedColumns;
           }
 
-          if (CoreUtils.isUndefinedOrNull(properties)) properties = pdjData.createForm.properties;
+          if (CoreUtils.isUndefinedOrNull(properties)) {
+            properties = pdjData.createForm.properties;
+          }
         }
 
         return properties;
@@ -2571,11 +3608,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         );
         self.helpDataSource(helpData);
         const div = helpForm.render();
-        self.helpFooterDom({ view: HtmlUtils.stringToNodeArray(div.outerHTML), data: self });
+        self.helpFooterDom({view: HtmlUtils.stringToNodeArray(div.outerHTML), data: self});
       }
     }
 
     return FormViewModel;
   }
 );
- 

@@ -26,7 +26,8 @@ define(['ojs/ojcore', './utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
           'edit': (perspectiveId !== 'modeling' ? 'configuration' : 'modeling'),
           'serverConfig': 'view',
           'domainRuntime': 'monitoring',
-          'compositeConfig': 'composite'
+          'compositeConfig': 'composite',
+          'propertyList': 'properties'
         })[value];
         beanTreeType = nameSwitch(pathSegments[2]);
       }

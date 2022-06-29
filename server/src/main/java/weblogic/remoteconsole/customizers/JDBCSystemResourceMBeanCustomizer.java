@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -77,17 +77,32 @@ public class JDBCSystemResourceMBeanCustomizer {
   ) {
     List<Option> options = new ArrayList<>();
     for (Map<String,Value> dataSource : dataSources) {
-      if (StringUtils.isEmpty(dataSource.get(DATA_SOURCE_LIST).asString().getValue())) {
-        // This is not a multi data source so don't weed it out yet.
-        boolean isXA = "TwoPhaseCommit".equals(dataSource.get(GLOBAL_TXN_PROTOCOL).asString().getValue());
-        if (isXA == wantXA) {
-          // This data source matches the desired XA setting.
-          // Add it to the list of options.
-          options.add(new Option(ic, dataSource.get(IDENTITY)));
-        }
-      } else {
+      boolean isOption = false;
+      Value dsList = dataSource.get(DATA_SOURCE_LIST);
+      if (dsList.isString() && StringUtils.notEmpty(dsList.asString().getValue())) {
         // This is a multi data source.  Don't add it to the list of options
         // since a multi data source cannot reference another multi data source.
+      } else {
+        // This is not a multi data source so don't weed it out yet.
+        Value protocol = dataSource.get(GLOBAL_TXN_PROTOCOL);
+        if (protocol.isString()) {
+          boolean isXA = "TwoPhaseCommit".equals(protocol.asString().getValue());
+          if (isXA == wantXA) {
+            // This data source matches the desired XA setting.
+            // Add it to the list of options.
+            isOption = true;
+          }
+        } else {
+          // Protocol isn't a string (i.e. probably a model token) so
+          // we can't get its value to see whether it's XA.
+          // Just add it as an option, i.e. it's better to let the
+          // user pick one that isn't appropriate than to not let the
+          // user pick one that is appropriate.
+          isOption = true;
+        }
+      }
+      if (isOption) {
+        options.add(new Option(ic, dataSource.get(IDENTITY)));
       }
     }
     return (new Response<List<Option>>()).setSuccess(options);

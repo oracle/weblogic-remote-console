@@ -1,10 +1,9 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
 
 import java.io.InputStream;
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -13,7 +12,6 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import org.yaml.snakeyaml.Yaml;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
@@ -25,9 +23,10 @@ import weblogic.remoteconsole.server.webapp.UriUtils;
  * is initialized via an InputStream immediately.
 */
 public class PropertyListDataProviderImpl implements PropertyListDataProvider {
-  // public static final String TYPE_NAME = "PropertyList";
-  public static final String TYPE_NAME = "WDTModel";
+  public static final String TYPE_NAME = "PropertyList";
   private String name;
+  private String pageDescription;
+  private String resourceData;
   private String lastMessage = null;
   private Properties properties = new Properties();
   private Map<String, Root> roots = new HashMap<String, Root>();
@@ -35,38 +34,41 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
 
   public PropertyListDataProviderImpl(String name) {
     this.name = name;
-    String encodedName = StringUtils.urlEncode(name);
     editRoot = new Root(
-      // Root.PROPERTY_LIST_CONFIGURATION_NAME,
-      // Root.CONFIGURATION_ROOT,
-      // Root.PROPERTY_LIST_CONFIGURATION_LABEL,
-      /* Frontend can't tolerate other names right now */
-      Root.EDIT_NAME,
+      this,
+      Root.PROPERTY_LIST_CONFIGURATION_NAME,
       Root.CONFIGURATION_ROOT,
-      Root.EDIT_LABEL,
-      "/" + UriUtils.API_URI + "/" + encodedName + "/" + Root.PROPERTY_LIST_CONFIGURATION_NAME + "/navtree",
-      null, // no change manager
-      "/" + UriUtils.API_URI + "/" + encodedName + "/" + Root.PROPERTY_LIST_CONFIGURATION_NAME + "/download",
-      false // it is not read only
+      Root.PROPERTY_LIST_CONFIGURATION_LABEL,
+      false, // editable
+      Root.NAV_TREE_RESOURCE,
+      Root.DOWNLOAD_RESOURCE
     );
-    roots.put("Property List", editRoot);
+    roots.put(Root.PROPERTY_LIST_CONFIGURATION_NAME, editRoot);
+
+    // Compute the properties resource data location
+    resourceData = "/" + UriUtils.API_URI + "/" + StringUtils.urlEncode(name) + "/propertyList/data/Properties";
+    pageDescription = "/" + UriUtils.API_URI + "/" + StringUtils.urlEncode(name) + "/propertyList/pages/Properties";
   }
 
+  @Override
+  public String getPageDescription() {
+    return pageDescription;
+  }
+
+  @Override
+  public String getResourceData() {
+    return resourceData;
+  }
+
+  @Override
   public Properties getProperties() {
     return properties;
   }
 
+  @Override
   public void parse(InputStream is, InvocationContext ic) {
     try {
-      Object parsedJSON = new Yaml().load(is);
-      if (!(parsedJSON instanceof Map)) {
-        throw new FailedRequestException("Not a property list");
-      }
-      Map<String, Object> map = (Map<String, Object>) parsedJSON;
-      if (!map.containsKey("contents")) {
-        throw new FailedRequestException("Not a property list");
-      }
-      properties.load(new StringReader(map.get("contents").toString()));
+      properties.load(is);
     } catch (Exception e) {
       Throwable walk = e;
       for ( ; ; ) {

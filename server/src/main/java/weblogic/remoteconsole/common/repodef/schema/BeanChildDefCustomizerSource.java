@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -16,10 +16,11 @@ public class BeanChildDefCustomizerSource {
   private StringValue offlineName = new StringValue();
   private BooleanValue useUnlocalizedNameAsLabel = new BooleanValue();
   private StringValue label = new StringValue();
+  private StringValue singularLabel = new StringValue();
   private BooleanValue nonCreatableOptionalSingleton = new BooleanValue();
-  private BooleanValue ordered = new BooleanValue();
   private BooleanValue collapsedInWDT = new BooleanValue();
   private BooleanValue creatable = new BooleanValue();
+  private BooleanValue deletable = new BooleanValue();
   private BooleanValue asyncCreate = new BooleanValue();
   private BooleanValue asyncDelete = new BooleanValue();
 
@@ -29,10 +30,11 @@ public class BeanChildDefCustomizerSource {
     offlineName.merge(from.offlineName, fromContainedBeanPath);
     useUnlocalizedNameAsLabel.merge(from.useUnlocalizedNameAsLabel, fromContainedBeanPath);
     label.merge(from.label, fromContainedBeanPath);
+    singularLabel.merge(from.singularLabel, fromContainedBeanPath);
     nonCreatableOptionalSingleton.merge(from.nonCreatableOptionalSingleton, fromContainedBeanPath);
-    ordered.merge(from.ordered, fromContainedBeanPath);
     collapsedInWDT.merge(from.collapsedInWDT, fromContainedBeanPath);
     creatable.merge(from.creatable, fromContainedBeanPath);
+    deletable.merge(from.deletable, fromContainedBeanPath);
     asyncCreate.merge(from.asyncCreate, fromContainedBeanPath);
     asyncDelete.merge(from.asyncDelete, fromContainedBeanPath);
   }
@@ -87,6 +89,15 @@ public class BeanChildDefCustomizerSource {
     label.setValue(value);
   }
 
+  // The english singular label to display for this child.
+  public String getSingularLabel() {
+    return singularLabel.getValue();
+  }
+
+  public void setSingularLabel(String value) {
+    singularLabel.setValue(value);
+  }
+
   // Usually the bean info give us enough information to determine the child's type, i.e.:
   //   - collection of contained beans
   //   - optional contained bean that the user can create and delete
@@ -106,16 +117,6 @@ public class BeanChildDefCustomizerSource {
     nonCreatableOptionalSingleton.setValue(value);
   }
 
-  // Whether this is an ordered collection.
-  // Must not be specified if the child is a singleton.
-  public boolean isOrdered() {
-    return ordered.getValue();
-  }
-
-  public void setOrdered(boolean value) {
-    ordered.setValue(value);
-  }
-
   // Whether this collection should be collapsed in WDT
   // e.g. JDBCDriverParamsBean has Properties singleton bean
   // that has a Properties collection of beans.
@@ -129,7 +130,7 @@ public class BeanChildDefCustomizerSource {
   }
 
   // Indicates that whether this child is creatable is specified in type.yaml
-  // (v.s. looking at its BeanPropertyDefSource
+  // (v.s. looking at its BeanPropertyDefSource)
   //
   // e.g. DomainMBean's Libraries and AppDeployments collections
   // bean infos don't have creators, so appear to be read-only,
@@ -139,7 +140,7 @@ public class BeanChildDefCustomizerSource {
     return creatable.isSpecifiedInYaml();
   }
 
-  // Whether the type is creatable (regardless of whether it was specified
+  // Whether the child is creatable (regardless of whether it was specified
   // in type.yaml or in its BeanPropertyDefSource)
   public boolean isCreatable() {
     return creatable.getValue();
@@ -147,6 +148,25 @@ public class BeanChildDefCustomizerSource {
 
   public void setCreatable(boolean value) {
     creatable.setValue(value);
+  }
+
+  // Indicates that whether this child is deletable is specified in type.yaml
+  // (v.s. looking at its BeanPropertyDefSource)
+  //
+  // e.g. the DomainRuntimeMBean's CustomViews collection is
+  // deletable, but not creatable.
+  public boolean isDeletableSpecifiedInYaml() {
+    return deletable.isSpecifiedInYaml();
+  }
+
+  // Whether this child is deletable (regardless of whether it was specified
+  // in type.yaml or in its BeanPropertyDefSource)
+  public boolean isDeletable() {
+    return deletable.getValue();
+  }
+
+  public void setDeletable(boolean value) {
+    deletable.setValue(value);
   }
 
   // Whether creating this child is asynchronous.

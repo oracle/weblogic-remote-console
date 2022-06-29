@@ -214,8 +214,10 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
 
   @Override
   protected void processTypeDef(BeanTypeDef typeDef) {
+    addResourceDefinition(typeDef.getInstanceNameLabel());
     for (BeanChildDef childDef : typeDef.getChildDefs()) {
       addResourceDefinition(childDef.getLabel());
+      addResourceDefinition(childDef.getSingularLabel());
     }
     // Get all the customizers to force them to be constructed and validated
     // (since we don't have a separate walker during the build that we use to detect yaml/customizer errors).

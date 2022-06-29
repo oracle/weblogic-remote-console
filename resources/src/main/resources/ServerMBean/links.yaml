@@ -1,14 +1,9 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
 - label: Runtime Data
-  resourceData: DomainRuntime/ServerRuntimes
-- label: Status
-  resourceData: DomainRuntime/ServerLifeCycleRuntimes
+  resourceData: DomainRuntime/CombinedServerRuntimes
 instanceLinks:
 - label: Runtime Data
-  resourceData: DomainRuntime/ServerRuntimes/<Server>
-  notFoundMessage: There is no monitoring data available.  Usually, this indicates that the server instance is not reachable (e.g. not running).
-- label: Status
-  resourceData: DomainRuntime/ServerLifeCycleRuntimes/<Server>
+  resourceData: DomainRuntime/CombinedServerRuntimes/<Server>

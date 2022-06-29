@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -58,22 +58,6 @@ public abstract class FormDefImpl extends PageDefImpl implements FormDef {
   @Override
   public List<FormSectionDef> getSectionDefs() {
     return sectionDefs;
-  }
-
-  boolean isSliceFormDefImpl() {
-    return this instanceof SliceFormDefImpl;
-  }
-
-  SliceFormDefImpl asSliceFormDefImpl() {
-    return (SliceFormDefImpl)this;
-  }
-
-  boolean isCreateFormDefImpl() {
-    return this instanceof CreateFormDefImpl;
-  }
-
-  CreateFormDefImpl asCreateFormDefImpl() {
-    return (CreateFormDefImpl)this;
   }
 
   @Override

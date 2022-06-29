@@ -31,3 +31,20 @@ properties:
   name: ServerLifeCycleRuntime
   relationship: containment
   type: weblogic.management.runtime.DelegatedServerLifeCycleRuntimeServerLifeCycleRuntimeMBean
+
+# ServerRuntimeMBean allows Admin.
+# ServerLifeCycleRuntimeMBean allows Operator and Admin.
+#
+# CombinedServerRuntimeMBean delegates reading all the properties to SRC & SLCRT
+# so doesn't need to worry about their roles.
+#
+# On the other hand, CSRT handles all the actions itself (and the impl forwards
+# the action to the SLCRT or SRT as appropriate).
+# This means that we need to get the roles right on these actions.
+#
+# Since all of the CSRT's actions except for restartSSLChannels forward to the SLCRT,
+# set CSRT's roles to the same as SLCRT's so that we don't need to specify the
+# role on each CSRT action that is forwarded to the SLCRT.
+roles:
+  allowed:
+  - Operator

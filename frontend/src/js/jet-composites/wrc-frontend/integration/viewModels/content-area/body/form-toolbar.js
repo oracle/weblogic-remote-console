@@ -36,6 +36,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           },
           'finish': { id: 'finish', iconFile: 'add-icon-blk_24x24', disabled: ko.observable(true),
             label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.finish.label')
+          },
+          'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24',
+            label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.customize.label')
           }
         },
         icons: {
@@ -52,7 +55,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.create.tooltip')
           },
           'separator': { iconFile: 'separator-vertical_10x24'},
-          'landing': { iconFile: 'home-icon-blk_24x24',
+          'landing': { iconFile: 'landing-page-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.landing.tooltip')
           },
           'history': { iconFile: 'beanpath-history-icon-blk_24x24',
@@ -118,18 +121,19 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       this.connected = function () {
         const pdjData = viewParams.parentRouter.data.pdjData();
 
+        const renderToolbarButtonsEventType = (!pdjData.createForm) ? 'sync' : 'create';
+
         const isReadOnly = !pdjData.createForm && (pdjData.sliceForm?.readOnly === true || pdjData.sliceTable !== undefined);
         self.sliceReadOnly(isReadOnly);
 
-        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !['configuration','modeling'].includes(self.perspective.id));
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !['configuration','modeling','properties'].includes(self.perspective.id));
         self.readonly(Runtime.isReadOnly());
 
         let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
           self.readonly(newRO);
-          self.i18n.buttons.save.visible(!newRO);
           self.i18n.menus.shoppingcart.discard.visible(!newRO);
           self.i18n.menus.shoppingcart.commit.visible(!newRO);
-          if (['modeling','configuration'].indexOf(self.perspective.id) !== -1) {
+          if (['modeling','properties','configuration'].indexOf(self.perspective.id) !== -1) {
             setToolbarButtonsVisibility('save', (!newRO ? 'inline-flex' : 'none'));
           }
         });
@@ -181,7 +185,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         ChangeManager.getLockState()
           .then((data) => {
             self.changeManager(data.changeManager);
-            self.renderToolbarButtons('sync');
+            self.renderToolbarButtons(renderToolbarButtonsEventType);
           })
           .catch(response => {
             ViewModelUtils.failureResponseDefaultHandling(response);
@@ -260,7 +264,22 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       }.bind(this);
 
       this.isShoppingCartVisible = function() {
-        return viewParams.isShoppingCartVisible();
+        // Default to false
+        let visible = false;
+        if (ChangeManager.getMostRecent().supportsChanges) {
+          // The console extension is installed, but the
+          // shopping cart icon may be hidden for the
+          // current perspective.
+          visible = viewParams.isShoppingCartVisible();
+        }
+        else if (self.perspective.id === 'configuration') {
+          // The console extension isn't installed, but
+          // there is one perspective where still showing
+          // the shopping cart icon is required. That's
+          // the configuration perspective.
+          visible = viewParams.isShoppingCartVisible();
+        }
+        return visible;
       };
 
       function shoppingCartContentsChanged(changeManager) {
@@ -284,14 +303,14 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       }
 
       this.renderToolbarButtons = async function (eventType, hasNonReadOnlyFields) {
-        if ((['modeling','configuration'].indexOf(self.perspective.id) !== -1) && !self.readonly()) {
+        if ((['modeling','properties','configuration'].indexOf(self.perspective.id) !== -1) && !self.readonly()) {
           const renderingInfo = await viewParams.onToolbarRendering(eventType);
-          let buttonId = ((eventType === 'update' || renderingInfo.mode === 'save') && self.perspective.id === 'modeling' ? 'write' : renderingInfo.mode);
+          let buttonId = ((eventType === 'update' || renderingInfo.mode === 'save') && ['modeling','properties'].includes(self.perspective.id) ? 'write' : renderingInfo.mode);
 
           resetSaveButtonDisplayState([{id: buttonId}]);
 
           self.i18n.buttons.save.visible(buttonId !== 'write');
-          self.i18n.buttons.write.visible(buttonId !== 'create' && self.perspective.id === 'modeling' && Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name);
+          self.i18n.buttons.write.visible(buttonId !== 'create' && ['modeling','properties'].includes(self.perspective.id) && Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name);
 
           if (renderingInfo.kind === 'creatableOptionalSingleton') {
             if (eventType === 'create') {
@@ -530,14 +549,18 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         }
       );
 
-      this.onUpdateModelFile = ko.observable(
+      this.onUpdateContentFile = ko.observable(
         function (event) {
           // event.target.id;
           self.toolbarButton = 'write';
           // clear treenav selection
-          viewParams.onUpdateModelFile('download');
+          viewParams.onUpdateContentFile('download');
         }
       );
+
+      this.customizeAction = (event) => {
+        viewParams.onCustomizeButtonClicked(event);
+      };
     }
 
     return FormToolbar;

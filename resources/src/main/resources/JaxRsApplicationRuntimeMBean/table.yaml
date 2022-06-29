@@ -1,8 +1,5 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
-# For now, this is not active because it is referenced via the navtree
-# from WebAppComponentRuntimeMBean, which will not exist until incremental
-# navtree is supported
 displayedColumns:
 - name: "Name"
 - name: "ApplicationClass"
@@ -13,15 +10,15 @@ displayedColumns:
 - name: "RequestStatistics.AvgTimeLast1m"
 - name: "RequestStatistics.AvgTimeLast1s"
 - name: "RequestStatistics.AvgTimeTotal"
-- name: "ErrorCount"
+#- name: "ErrorCount" # deprecated before the first version of the WLS REST api
 - name: "ExecutionTimeAverage"
 - name: "ExecutionTimeHigh"
 - name: "ExecutionTimeLow"
 - name: "InvocationCount"
-- name: "LastErrorDetails"
-- name: "LastErrorMapper"
-- name: "LastErrorTime"
-- name: "LastHttpMethod"
+#- name: "LastErrorDetails" # deprecated before the first version of the WLS REST api
+#- name: "LastErrorMapper" # deprecated before the first version of the WLS REST api
+#- name: "LastErrorTime" # deprecated before the first version of the WLS REST api
+#- name: "LastHttpMethod" # deprecated before the first version of the WLS REST api
 - name: "LastInvocationTime"
 - name: "ResponseStatistics.LastResponseCode"
 - name: "RequestStatistics.MaxTimeLast15m"
@@ -36,7 +33,7 @@ displayedColumns:
 - name: "RequestStatistics.MinTimeLast1m"
 - name: "RequestStatistics.MinTimeLast1s"
 - name: "RequestStatistics.MinTimeTotal"
-- name: "ResourceConfig.Properties"
+#- name: "ResourceConfig.Properties" # deprecated before the first version of the WLS REST api
 - name: "RequestStatistics.RequestCountLast15m"
 - name: "RequestStatistics.RequestCountLast15s"
 - name: "RequestStatistics.RequestCountLast1h"

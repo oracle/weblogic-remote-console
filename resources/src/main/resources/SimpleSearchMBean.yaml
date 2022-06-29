@@ -1,0 +1,26 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.WebLogicMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Returns the beans whose name in the navigation tree matches
+  the search criteria that the user entered (white space insensitive and case insensitive)</p>'
+name: weblogic.management.SimpleSearchMBean
+properties:
+- descriptionHTML: '<p>The search criteria.</p>
+  <p>Beans whose name in the navigation tree matches the searh criteria
+  (white space insensitive and case insensitive) are returned.
+  For example, if the search criteria is "data source", then
+  beans named "MyDataSource" and "another datasource" would be returned.</p>'
+  name: Name
+  type: java.lang.String
+- descriptionHTML: '<p>When the search was last performed.</p>'
+  name: Date
+  type: java.util.Date
+- descriptionHTML: '<p>The number of matching beans in the search results.</p>'
+  name: NumberOfMatches
+  type: long
+
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -16,7 +16,6 @@ import weblogic.remoteconsole.server.repo.Value;
  */
 public class ServerMBeanCustomizer {
   private static final String IDENTITY = "identity";
-  private static final String NAME = "Name";
 
   private ServerMBeanCustomizer() {
   }
@@ -29,13 +28,13 @@ public class ServerMBeanCustomizer {
     InvocationContext ic,
     @Source(
       collection = "/Domain/MigratableTargets",
-      properties = {IDENTITY, NAME}
+      properties = {IDENTITY}
     ) List<Map<String,Value>> migratableTargets
   ) {
     BeanEditorRepo beanEditorRepo =
       ic.getPageRepo().getBeanRepo().asBeanEditorRepo();
 
-    // Get the name of the cluster that we're about to delete
+    // Get the name of the server that we're about to delete
     String serverName = ic.getBeanTreePath().getLastSegment().getKey();
 
     // Get the name of the corresponding automatically created migratable target.
@@ -44,7 +43,7 @@ public class ServerMBeanCustomizer {
     // Loop over the migratable targets.
     // If it's the automatically created one for this server, delete it.
     for (Map<String,Value> migratableTarget : migratableTargets) {
-      String name = migratableTarget.get(NAME).asString().getValue();
+      String name = migratableTarget.get(IDENTITY).asBeanTreePath().getLastSegment().getKey();
       if (migratableTargetName.equals(name)) {
         Response<Void> response =
           beanEditorRepo.deleteBean(

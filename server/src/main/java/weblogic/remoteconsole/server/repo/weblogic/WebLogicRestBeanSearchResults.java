@@ -63,7 +63,7 @@ public class WebLogicRestBeanSearchResults implements BeanSearchResults {
     for (String parent : propertyDef.getParentPath().getComponents()) {
       BeanChildDef childDef = typeDef.getChildDef(new Path(parent), true);
       String parentRestName = childDef.getOnlineChildName();
-      if (wlBeanResults.isNull(parentRestName)) {
+      if (!wlBeanResults.containsKey(parentRestName) || wlBeanResults.isNull(parentRestName)) {
         return null; // the containing bean isn't present
       }
       wlBeanResults = wlBeanResults.getJsonObject(parentRestName);

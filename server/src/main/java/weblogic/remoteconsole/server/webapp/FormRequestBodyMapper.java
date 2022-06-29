@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -14,9 +14,7 @@ import javax.json.JsonValue;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
-import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.ArrayValue;
-import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.BooleanValue;
 import weblogic.remoteconsole.server.repo.DoubleValue;
 import weblogic.remoteconsole.server.repo.FileContentsValue;
@@ -41,7 +39,6 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
   private static final String PROP_SET = "set";
   private static final String PROP_VALUE = "value";
   private static final String PROP_MODEL_TOKEN = "modelToken";
-  private static final String PROP_RESOURCE_DATA = "resourceData";
   private static final String PROP_UNRESOLVED_REFERENCE = "unresolvedReference";
   private boolean isSliceForm;
   private List<PagePropertyDef> propertyDefs;
@@ -60,10 +57,13 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
     FormDataBodyPart... uploadedFiles
   ) {
     super(ic, requestBody, uploadedFiles);
-    PageDef pageDef =
-      getInvocationContext().getPageRepo().getPageRepoDef().getPageDef(
-        getInvocationContext().getPagePath()
-      );
+    Response<PageDef> pageDefResponse =
+      ic.getPageRepo().asPageReaderRepo().getPageDef(getInvocationContext());
+    if (!pageDefResponse.isSuccess()) {
+      getResponse().copyUnsuccessfulResponse(pageDefResponse);
+      return;
+    }
+    PageDef pageDef = pageDefResponse.getResults();
     if (pageDef.isSliceFormDef()) {
       isSliceForm = true;
       propertyDefs = pageDef.asSliceFormDef().getAllPropertyDefs();
@@ -356,43 +356,22 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
       return null;
     }
     if (haveResolvedRef) {
-      return getValueAsResolvedReference(propertyDef, jsonObject.get(PROP_RESOURCE_DATA));
+      return asBeanTreePath(propertyDef.getPropertyName(), jsonValue);
     } else {
-      return getValueAsUnresolvedReference(propertyDef, jsonObject.get(PROP_UNRESOLVED_REFERENCE));
+      return asUnresolvedReference(propertyDef, jsonValue);
     }
   }
 
-  private Value getValueAsResolvedReference(PagePropertyDef propertyDef, JsonValue resourceDataJson) {
-    // resourceData should be api/<provider>/<repo>/data/...
-    // want to return the ... part
-    String resourceData = asString(propertyDef.getPropertyName(), resourceDataJson);
-    if (!isOK()) {
-      return null;
-    }
-    Path requiredPrefixPath = new Path();
-    requiredPrefixPath.addComponent("api");
-    requiredPrefixPath.addComponent(getInvocationContext().getProvider().getName());
-    requiredPrefixPath.addComponent(getInvocationContext().getPageRepo().getPageRepoDef().getName());
-    requiredPrefixPath.addComponent("data");
-    String requiredPrefix = "/" + requiredPrefixPath.getRelativeUri();
-    if (!resourceData.startsWith(requiredPrefix)) {
-      badFormat(
-        propertyDef
-        + " resourceData must start with " + requiredPrefix
-        + " : " + resourceData
-      );
-      return null;
-    }
-    Path repoRelativePath = Path.fromRelativeUri(resourceData.substring(requiredPrefix.length()));
-    return BeanTreePath.create(getInvocationContext().getPageRepo().getBeanRepo(), repoRelativePath);
-  }
-
-  private Value getValueAsUnresolvedReference(PagePropertyDef propertyDef, JsonValue unresolvedRefJson) {
+  private UnresolvedReference asUnresolvedReference(PagePropertyDef propertyDef, JsonValue jsonValue) {
     if (!propertyDef.isSupportsUnresolvedReferences()) {
       badFormat(propertyDef + " doesn't support unresolved references");
       return null;
     }
-    String key = asString(propertyDef.getPropertyName(), unresolvedRefJson);
+    JsonObject jsonObject = asJsonObject(propertyDef.getPropertyName(), jsonValue);
+    if (!isOK()) {
+      return null;
+    }
+    String key = getRequiredString(jsonObject, PROP_UNRESOLVED_REFERENCE);
     if (!isOK()) {
       return null;
     }

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -30,76 +30,10 @@ public class WDTModelBuilder {
   private static final String PROVIDER_NAME = "Name";
   private static final String PROVIDER_TYPE = "Type";
 
-  // WDT model sections
-  private static final String TOPOLOGY = "topology";
-  private static final String RESOURCES = "resources";
-  private static final String APP_DEPLOYMENTS = "appDeployments";
-  private static final List<String> SECTIONS = List.of(TOPOLOGY, RESOURCES, APP_DEPLOYMENTS);
-  private static final Set<String> TOPOLOGY_SECTION = new HashSet<>();
-  private static final Set<String> RESOURCES_SECTION = new HashSet<>();
-  private static final Set<String> APP_DEPLOYMENTS_SECTION = new HashSet<>();
+  // Valid nav tree top level paths
   private static final Set<String> NAVTREE_VALID_PATHS = new HashSet<>();
 
   static {
-    // topology section
-    TOPOLOGY_SECTION.add("AdminConsole");
-    TOPOLOGY_SECTION.add("CdiContainer");
-    TOPOLOGY_SECTION.add("Cluster");
-    TOPOLOGY_SECTION.add("EmbeddedLDAP");
-    TOPOLOGY_SECTION.add("JMX");
-    TOPOLOGY_SECTION.add("JPA");
-    TOPOLOGY_SECTION.add("JTA");
-    TOPOLOGY_SECTION.add("Log");
-    TOPOLOGY_SECTION.add("LogFilter");
-    TOPOLOGY_SECTION.add("Machine");
-    TOPOLOGY_SECTION.add("MigratableTarget");
-    TOPOLOGY_SECTION.add("NMProperties");
-    TOPOLOGY_SECTION.add("RestfulManagementServices");
-    TOPOLOGY_SECTION.add("Security");
-    TOPOLOGY_SECTION.add("SecurityConfiguration");
-    TOPOLOGY_SECTION.add("Server");
-    TOPOLOGY_SECTION.add("ServerTemplate");
-    TOPOLOGY_SECTION.add("UnixMachine");
-    TOPOLOGY_SECTION.add("VirtualHost");
-    TOPOLOGY_SECTION.add("VirtualTarget");
-    TOPOLOGY_SECTION.add("WSReliableDeliveryPolicy");
-    TOPOLOGY_SECTION.add("XMLEntityCache");
-    TOPOLOGY_SECTION.add("XMLRegistry");
-
-    // resources section
-    RESOURCES_SECTION.add("CoherenceClusterSystemResource");
-    RESOURCES_SECTION.add("FileStore");
-    RESOURCES_SECTION.add("ForeignJNDIProvider");
-    RESOURCES_SECTION.add("JDBCStore");
-    RESOURCES_SECTION.add("JDBCSystemResource");
-    RESOURCES_SECTION.add("JMSBridgeDestination");
-    RESOURCES_SECTION.add("JMSServer");
-    RESOURCES_SECTION.add("JMSSystemResource");
-    RESOURCES_SECTION.add("JoltConnectionPool");
-    RESOURCES_SECTION.add("MailSession");
-    RESOURCES_SECTION.add("MessagingBridge");
-    RESOURCES_SECTION.add("ODLConfiguration");
-    RESOURCES_SECTION.add("OHS");
-    RESOURCES_SECTION.add("Partition");
-    RESOURCES_SECTION.add("PartitionWorkManager");
-    RESOURCES_SECTION.add("PathService");
-    RESOURCES_SECTION.add("ResourceGroup");
-    RESOURCES_SECTION.add("ResourceGroupTemplate");
-    RESOURCES_SECTION.add("ResourceManagement");
-    RESOURCES_SECTION.add("SAFAgent");
-    RESOURCES_SECTION.add("SelfTuning");
-    RESOURCES_SECTION.add("ShutdownClass");
-    RESOURCES_SECTION.add("SingletonService");
-    RESOURCES_SECTION.add("StartupClass");
-    RESOURCES_SECTION.add("SystemComponent");
-    RESOURCES_SECTION.add("WebAppContainer");
-    RESOURCES_SECTION.add("WLDFSystemResource");
-    RESOURCES_SECTION.add("WTCServer");
-
-    // appDeployments section
-    APP_DEPLOYMENTS_SECTION.add("Application");
-    APP_DEPLOYMENTS_SECTION.add("Library");
-
     // Now setup valid navtree top level paths
     makeValidNavtreeKeySet();
   }
@@ -143,18 +77,20 @@ public class WDTModelBuilder {
     copySectionsFromOriginalModels(model);
 
     // Create each updated section of the new model
-    SECTIONS.forEach(section -> model.put(section, new LinkedHashMap<String, Object>()));
+    WDTModelSchema.SUPPORTED_SECTIONS.forEach(section -> model.put(section, new LinkedHashMap<String, Object>()));
   }
 
   // Create the set of valid online paths for the Navtree
   private static void makeValidNavtreeKeySet() {
     // Add each section by converting to the online names...
-    TOPOLOGY_SECTION.forEach(WDTModelBuilder::addValidNavtreeKey);
-    RESOURCES_SECTION.forEach(WDTModelBuilder::addValidNavtreeKey);
-    APP_DEPLOYMENTS_SECTION.forEach(WDTModelBuilder::addValidNavtreeKey);
+    WDTModelSchema.SUPPORTED_SECTION_CONTENTS.forEach((section, contents) -> {
+      contents.forEach(WDTModelBuilder::addValidNavtreeKey);
+    });
 
     // Ensure AppDeployments is valid for Applications
     NAVTREE_VALID_PATHS.add("AppDeployments");
+
+    NAVTREE_VALID_PATHS.add("RecentSearches");
   }
 
   // Add the key to the set of valid navtree paths
@@ -196,7 +132,7 @@ public class WDTModelBuilder {
     domainBeanValue.forEach((key, value) -> {
       if (value.isProperty()) {
         BeanPropertyDef propertyDef = value.getBeanPropertyDef();
-        getTopolgy().put(propertyDef.getOfflinePropertyName(), value.getPropertyValue());
+        getTopology().put(propertyDef.getOfflinePropertyName(), value.getPropertyValue());
       } else if (!value.isTransient()) {
         BeanChildDef childDef = value.getBeanChildDef();
         if (!BeanTree.isMachineType(childDef)) {
@@ -255,35 +191,23 @@ public class WDTModelBuilder {
   }
 
   // Determine and return the model section for the specific bean child name
+  @SuppressWarnings("unchecked")
   private Map<String, Object> getSection(String childName) {
-    if (TOPOLOGY_SECTION.contains(childName)) {
-      return getTopolgy();
-    }
-    if (RESOURCES_SECTION.contains(childName)) {
-      return getResources();
-    }
-    if (APP_DEPLOYMENTS_SECTION.contains(childName)) {
-      return getAppDeployments();
+    for (Map.Entry<String,Set<String>> entry : WDTModelSchema.SUPPORTED_SECTION_CONTENTS.entrySet()) {
+      // entry = section / contents
+      if (entry.getValue().contains(childName)) {
+        return (Map<String, Object>)model.get(entry.getKey());
+      }
     }
     // Fixup - update the log and warning handling
     LOGGER.warning("WARNING: WDTModelBuilder found unmapped section for: " + childName);
-    String unmappedSection = localizer.localizeString(LocalizedConstants.UNMAPPED_SECTION);
-    throw new IllegalArgumentException("WDT Model Builder - " + unmappedSection + childName);
+    String error = localizer.localizeString(LocalizedConstants.UNMAPPED_SECTION, childName);
+    throw new IllegalArgumentException("WDT Model Builder - " + error);
   }
 
   @SuppressWarnings("unchecked")
-  private Map<String, Object> getTopolgy() {
-    return (Map<String, Object>)model.get(TOPOLOGY);
-  }
-
-  @SuppressWarnings("unchecked")
-  private Map<String, Object> getResources() {
-    return (Map<String, Object>)model.get(RESOURCES);
-  }
-
-  @SuppressWarnings("unchecked")
-  private Map<String, Object> getAppDeployments() {
-    return (Map<String, Object>)model.get(APP_DEPLOYMENTS);
+  private Map<String, Object> getTopology() {
+    return (Map<String, Object>)model.get(WDTModelSchema.SECTION_TOPOLOGY);
   }
 
   // Copy each of the original models to new model by megering Maps for each model section
@@ -292,7 +216,7 @@ public class WDTModelBuilder {
     getOriginalModels().forEach(originalModel -> {
       originalModel.entrySet().stream().forEach(entry -> {
         // Copy sections from the original that the model builder does not know about...
-        if (!SECTIONS.contains(entry.getKey())) {
+        if (!WDTModelSchema.SUPPORTED_SECTIONS.contains(entry.getKey())) {
           Object newModelValue = newModel.get(entry.getKey());
           if (newModelValue == null) {
             newModel.put(entry.getKey(), entry.getValue());
@@ -329,7 +253,7 @@ public class WDTModelBuilder {
   // Remove any of the sections which have no settings...
   @SuppressWarnings("unchecked")
   private void cleanupModelSections() {
-    SECTIONS.forEach(section -> {
+    WDTModelSchema.SUPPORTED_SECTIONS.forEach(section -> {
       Object val = model.get(section);
       if (val instanceof Map) {
         Map<String, Object> value = (Map<String, Object>)val;
@@ -393,11 +317,15 @@ public class WDTModelBuilder {
     return providerValue;
   }
 
-  // Obtain the short type name (vs fully qualified) for the WebLogic security providers...
+  // Obtain the appropriate type name (vs fully qualified) for a WebLogic security provider
   private String getSecurityProviderType(BeanTreeEntry typeValue) {
     String result = typeValue.getPropertyValue().toString();
-    if (result.startsWith("weblogic.security.providers.") || result.startsWith("com.bea.security.")) {
-      result = StringUtils.getLeafClassName(result);
+    // WDT requires the full class name for OracleIdentityCloudIntegrator:
+    if (!result.equals("weblogic.security.providers.authentication.OracleIdentityCloudIntegrator")) {
+      // Otherwise WDT uses the leaf class name if it's a security provider that ships with WLS:
+      if (result.startsWith("weblogic.security.providers.") || result.startsWith("com.bea.security.")) {
+        result = StringUtils.getLeafClassName(result);
+      }
     }
     return result;
   }
@@ -441,7 +369,7 @@ public class WDTModelBuilder {
         result.put(machine.getKey(), checkRemoveProperty(beanValue, typeProp));
       });
       // Add the machines based on the offline type name... 
-      getTopolgy().put(offlineType, result);
+      getTopology().put(offlineType, result);
     });
   }
 

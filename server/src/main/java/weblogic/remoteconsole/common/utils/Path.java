@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -12,7 +12,7 @@ import java.util.List;
  * <p>
  * A path is an ordered list of strings that identify something.
  */
-public class Path {
+public class Path  implements Comparable {
 
   private List<String> components = new ArrayList<>();
 
@@ -117,23 +117,27 @@ public class Path {
   }
 
   public String getUnderscoreSeparatedPath() {
-    return getPath(getComponents(), "_");
+    return getSeparatedPath("_");
   }
 
   public String getDotSeparatedPath() {
-    return getPath(getComponents(), ".");
+    return getSeparatedPath(".");
   }
 
   public String getSlashSeparatedPath() {
-    return getPath(getComponents(), "/");
+    return getSeparatedPath("/");
+  }
+
+  public String getSeparatedPath(String separator) {
+    return getPath(getComponents(), separator);
   }
 
   public String getRelativeUri() {
-    List<String> components = new ArrayList<>();
+    List<String> encodedComponents = new ArrayList<>();
     for (String component : getComponents()) {
-      components.add(StringUtils.urlEncode(component));
+      encodedComponents.add(StringUtils.urlEncode(component));
     }
-    return getPath(components, "/");
+    return getPath(encodedComponents, "/");
   }
 
   public boolean isEmpty() {
@@ -158,15 +162,62 @@ public class Path {
   }
 
   @Override
+  public int compareTo(Object obj) {
+    if (obj == null) {
+      throw new NullPointerException();
+    }
+    Path path = Path.class.cast(obj);
+    List<String> lhs = getComponents(); // left hand side = this
+    List<String> rhs = path.getComponents(); // right hand side = obj
+    // compare all the segments up to the size of the shortest of lhs/rhs
+    int size = Math.min(lhs.size(), rhs.size());
+    for (int i = 0; i < size; i++) {
+      int comp = lhs.get(i).compareTo(rhs.get(i));
+      if (comp != 0) {
+        return comp;
+      }
+    }
+    if (lhs.size() == size && rhs.size() == size) {
+      return 0; // same path
+    }
+    if (lhs.size() > size) {
+      // e.g. lhs = A/B/C, rhs = A/B -> A/B then A/B/C
+      return 1; // lhs > rhs
+    } else {
+      // e.g. lhs = A/B, rhs = A/B/C -> A/B then A/B/C
+      return -1; // lhs < rhs
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 1;
+    for (String component : getComponents()) {
+      result = result * component.hashCode();
+    }
+    return result;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (obj == this) {
       return true;
     }
-    if (Path.class.isInstance(obj)) {
-      Path p = Path.class.cast(obj);
-      return getComponents().equals(p.getComponents());
+    if (!Path.class.isInstance(obj)) {
+      return false;
     }
-    return false;
+    Path other = Path.class.cast(obj);
+    List<String> lhs = getComponents();
+    List<String> rhs = other.getComponents();
+    if (lhs.size() != rhs.size()) {
+      return false;
+    }
+    for (int i = 0; i < lhs.size(); i++) {
+      if (!lhs.get(i).equals(rhs.get(i))) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override

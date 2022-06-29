@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -31,6 +31,17 @@ public interface PageDef {
   // and advanced properties.  Or a complex create form
   // will return all of the properties from all of the sections.
   public List<PagePropertyDef> getAllPropertyDefs();
+
+  // Get the name of the method to call customize the
+  // contents of the page after the standard contents
+  // have been computed.
+  public String getCustomizePageMethod();
+
+
+  // Get the name of the method to call customize the
+  // the page def after the standard page def
+  // have been computed.
+  public String getCustomizePageDefMethod();
 
   // Returns whether this form is a slice form
   public default boolean isSliceFormDef() {

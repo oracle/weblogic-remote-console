@@ -2,7 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A server is an instance of WebLogic Server that runs in its own Java Virtual Machine (JVM) and has its own configuration.</p>
-  <p>This page includes the monitoring data for each running server in the current WebLogic Server domain.</p>
+  <p>This page includes the monitoring data for each configured and/or running server in the current WebLogic Server domain.</p>
 
 actions:
 - name: "start"
@@ -25,9 +25,6 @@ displayedColumns:
 - name: "Name"
 - name: "State"
 - name: "ServerRuntime.CurrentMachine"
-- name: "ServerRuntime.OverallHealthState"
-
-hiddenColumns:
 - name: "ServerRuntime.RestartRequired"
   label: "Restart?"
 - name: "ServerRuntime.ThreadPoolRuntime.CompletedRequestCount"
@@ -46,6 +43,7 @@ hiddenColumns:
   label: "Hogging Threads"
 - name: "ServerRuntime.ThreadPoolRuntime.Throughput"
 - name: "ServerRuntime.ActivationTime"
+- name: "ServerRuntime.OverallHealthState"
 - name: "ServerRuntime.AdminServer"
 - name: "ServerRuntime.AdminServerListenPort"
 - name: "ServerRuntime.AdministrationURL"

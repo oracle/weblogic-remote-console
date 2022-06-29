@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -89,16 +89,20 @@ class WebLogicRestValueBuilder {
       return new BooleanValue(jsonValue == JsonValue.TRUE);
     }
     if (valueDef.isInt()) {
-      return new IntValue(((JsonNumber)jsonValue).intValue());
+      int value = (jsonValue == JsonValue.NULL) ? 0 : ((JsonNumber)jsonValue).intValue();
+      return new IntValue(value);
     }
     if (valueDef.isLong()) {
-      return new LongValue(((JsonNumber)jsonValue).longValue());
+      long value = (jsonValue == JsonValue.NULL) ? 0 : ((JsonNumber)jsonValue).longValue();
+      return new LongValue(value);
     }
     if (valueDef.isDouble()) {
-      return new DoubleValue(((JsonNumber)jsonValue).doubleValue());
+      double value = (jsonValue == JsonValue.NULL) ? 0 : ((JsonNumber)jsonValue).doubleValue();
+      return new DoubleValue(value);
     }
     if (valueDef.isDateAsLong()) {
-      return new DateAsLongValue(((JsonNumber)jsonValue).longValue());
+      long value = (jsonValue == JsonValue.NULL) ? 0 : ((JsonNumber)jsonValue).longValue();
+      return new DateAsLongValue(value);
     }
     if (valueDef.isProperties()) {
       return new PropertiesValue(getProperties(jsonValue));

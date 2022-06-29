@@ -243,10 +243,7 @@ public class BeanTreePath extends Value {
     if (isRoot()) {
       return false;
     }
-    if (isCollectionChild() || isOptionalSingleton()) {
-      return getLastSegment().getChildDef().isCreatable();
-    }
-    return false;
+    return getLastSegment().getChildDef().isDeletable();
   }
 
   // Returns whether the delete operation is asynchronous.

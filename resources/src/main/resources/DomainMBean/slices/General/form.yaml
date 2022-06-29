@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -16,6 +16,7 @@ properties:
 - name: "ClusterConstraintsEnabled"
 - name: "InternalAppsDeployOnDemandEnabled"
 advancedProperties:
+- name: "AdminServerName"
 - name: "ConsoleEnabled"
 - name: "ConsoleContextPath"
 - name: "AdminConsole.CookieName"
@@ -24,7 +25,6 @@ advancedProperties:
 - name: "AdminConsole.MinThreads"
 - name: "AdminConsole.SSOLogoutURL"
 - name: "ConsoleExtensionDirectory"
-- name: "WebserviceTestpage.Enabled"
 - name: "AdministrationProtocol"
 - name: "ConfigurationAuditType"
 - name: "ConfigBackupEnabled"
@@ -38,8 +38,6 @@ advancedProperties:
 - name: "DiagnosticContextCompatibilityModeEnabled"
 - name: "EnableEECompliantClassloadingForEmbeddedAdapters"
 - name: "CdiContainer.ImplicitBeanDiscoveryEnabled"
-- name: "LifecycleManagerConfig.DeploymentType"
-- name: "LifecycleManagerConfig.OutOfBandEnabled"
 - name: "SiteName"
 - name: "JMX.InvocationTimeoutSeconds"
 

@@ -151,6 +151,55 @@ define(['knockout'],
       });
     }
 
+    function showAbandonCreateFormDialog(i18n) {
+      const confirmDialog = document.getElementById('confirmDialog');
+      return new Promise(function (resolve) {
+        function onClose(reply) {
+          okBtn.removeEventListener('ojAction', okClickHandler);
+          cancelBtn.removeEventListener('ojAction', cancelClickHandler);
+          confirmDialog.removeEventListener('keyup', onKeyUp);
+          resolve(reply);
+        }
+
+        function okClickHandler(event) {
+          onClose(true);
+          confirmDialog.close();
+        }
+
+        function cancelClickHandler() {
+          onClose(false);
+          confirmDialog.close();
+        }
+
+        function onKeyUp(event) {
+          switch (event.key){
+            case 'Enter':
+              // Treat pressing the "Enter" key as clicking the "OK" button
+              okClickHandler(event);
+              // Suppress default handling of keyup event
+              event.preventDefault();
+              // Veto the keyup event, so JET will update the knockout
+              // observable associated with the <oj-input-text> element
+              return false;
+            case 'Escape':
+              // Treat pressing the "Escape" key as clicking the "Cancel" button
+              cancelClickHandler();
+              break;
+          }
+        }
+
+        const okBtn = document.getElementById('dlgYesBtn');
+        okBtn.addEventListener('ojAction', okClickHandler);
+
+        const cancelBtn = document.getElementById('dlgNoBtn');
+        cancelBtn.addEventListener('ojAction', cancelClickHandler)
+
+        confirmDialog.addEventListener('keyup', onKeyUp);
+
+        confirmDialog.open();
+      });
+    }
+
   //public:
     return {
       showConfirmDialog: (name, i18n) => {
@@ -161,6 +210,8 @@ define(['knockout'],
             return showUnsavedChangesDetectedConfirmDialog(i18n);
           case 'ChangesNotDownloaded':
             return showChangesNotDownloadedConfirmDialog(i18n);
+          case 'AbandonCreateForm':
+            return showAbandonCreateFormDialog(i18n);
         }
       }
 

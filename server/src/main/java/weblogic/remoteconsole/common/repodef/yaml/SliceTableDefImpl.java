@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -11,7 +11,6 @@ import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.SliceDef;
 import weblogic.remoteconsole.common.repodef.SliceTableDef;
 import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * yaml-based implemetation of the TableDef interface
@@ -30,9 +29,6 @@ public class SliceTableDefImpl extends PageDefImpl implements SliceTableDef {
     this.displayedColumnDefs = Collections.unmodifiableList(getDisplayedColumnDefImpls());
     this.hiddenColumnDefs = Collections.unmodifiableList(getHiddenColumnDefImpls());
     this.getTableRowsMethod = source.getGetTableRowsMethod();
-    if (StringUtils.isEmpty(this.getTableRowsMethod)) {
-      throw new AssertionError("getTableRowsMethod not specified: " + pagePath);
-    }
     initializeHelpPageTitle();
     createUsedIfDefImpls();
   }

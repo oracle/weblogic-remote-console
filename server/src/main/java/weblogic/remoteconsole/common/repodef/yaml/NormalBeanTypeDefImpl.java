@@ -41,6 +41,7 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   private boolean settable;
   private LocalizableString descriptionHTML;
   private DeleteBeanCustomizerDefImpl deleteCustomizerDefImpl;
+  private List<BaseBeanTypeDefImpl> inheritedTypeDefImpls = new ArrayList<>();
 
   // maps subtype discriminator legal value to sub type name:
   private Map<String,BaseBeanTypeDefImpl> subTypeDiscriminatorToSubTypeDefImplMap;
@@ -55,7 +56,8 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     this.descriptionHTML =
       new LocalizableString(getLocalizationKey("descriptionHTML"), getSource().getDescriptionHTML());
 
-    LOGGER.finest("BeanTypeImpl constructor " + getTypeName());
+    initializeInheritedTypeDefImpls();
+
     addContainedDefImpls();
   
     // If this type is homogeneous, initialize the sub types to an empty map
@@ -174,20 +176,44 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
+  List<BaseBeanTypeDefImpl> getInheritedTypeDefImpls() {
+    return inheritedTypeDefImpls;
+  }
+
+  void initializeInheritedTypeDefImpls() {
+    for (String inheritedTypeName : getSource().getBaseTypes()) {
+      inheritedTypeDefImpls.add(
+        getBeanRepoDefImpl().getTypeDefImpl(StringUtils.getLeafClassName(inheritedTypeName))
+      );
+    }
+  }
+
+  @Override
   boolean isType(String desiredTypeName) {
     if (getTypeName().equals(desiredTypeName)) {
       return true;
     }
-    for (String inheritedTypeName : getSource().getBaseTypes()) {
-      YamlBasedBeanTypeDefImpl inheritedTypeDefImpl =
-        getBeanRepoDefImpl()
-        .getTypeDefImpl(StringUtils.getLeafClassName(inheritedTypeName))
-        .asYamlBasedBeanTypeDefImpl();
-      if (inheritedTypeDefImpl.isType(desiredTypeName)) {
+    for (BaseBeanTypeDefImpl inheritedTypeDefImpl : getInheritedTypeDefImpls()) {
+      if (inheritedTypeDefImpl.asYamlBasedBeanTypeDefImpl().isType(desiredTypeName)) {
         return true;
       }
     }
     return false;
+  }
+
+  @Override
+  public boolean isReferenceable() {
+    return getCustomizerSource().isReferenceable();
+  }
+
+  @Override
+  public boolean isOrdered() {
+    return getCustomizerSource().isOrdered();
+  }
+
+  @Override
+  public boolean isSupportsCustomViews() {
+    return getCustomizerSource().isSupportsCustomViews();
   }
 
   @Override
@@ -222,6 +248,11 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
+  public String getGetCollectionMethod() {
+    return getCustomizerSource().getGetCollectionMethod();
+  }
+
+  @Override
   boolean isDisableMBeanJavadoc() {
     return getCustomizerSource().isDisableMBeanJavadoc();
   }
@@ -248,29 +279,45 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   private void addPropertyDefImpl(ContainedDefsSourcesMerger.PropertyDefSources propertyDefSources) {
-    Path parentPath = propertyDefSources.getPath().getParent();
     BeanPropertyDefSource src = propertyDefSources.getSource();
-    BeanPropertyDefCustomizerSource customizerSrc = propertyDefSources.getCustomizerSource();
-    customizerSrc.setName(source.getName());
-
+    // Weed out properties that are not included in the WLS REST api:
+    if (!isSupported(src)) {
+      LOGGER.finest("addPropertyDefImpl() skipping unsupported property " + getTypeName() + " " + src.getName());
+      return;
+    }
     // Weed out the Encrypted properties:
     if (src.isEncrypted()
         && src.getName().endsWith("Encrypted")
         && src.getType().equals("byte")
         && src.isArray()
     ) {
-      LOGGER.finest("addPropertyDefImpl() skipping encrypted " + src.getName());
+      LOGGER.finest("addPropertyDefImpl() skipping encrypted " + getTypeName() + " " + src.getName());
       return;
     }
-
-    addPropertyDefImpl(createBeanPropertyDefImpl(parentPath, src, customizerSrc));
+    BeanPropertyDefCustomizerSource customizerSrc = propertyDefSources.getCustomizerSource();
+    customizerSrc.setName(source.getName());
+    Path parentPath = propertyDefSources.getPath().getParent();
+    BeanPropertyDefImpl propertyDefImpl = createBeanPropertyDefImpl(parentPath, src, customizerSrc);
+    if (!propertyDefImpl.isSupportedType()) {
+      LOGGER.finest(
+        "addPropertyDefImpl() skipping unsupported property type " + getTypeName()
+        + " " + src.getName() + " " + src.getType()
+      );
+      return;
+    }
+    addPropertyDefImpl(propertyDefImpl);
   }
 
   private void addChildDefImpl(ContainedDefsSourcesMerger.ChildDefSources childDefSources) {
-    Path parentPath = childDefSources.getPath().getParent();
     BeanPropertyDefSource src = childDefSources.getSource();
+    // Weed out children that are not included in the WLS REST api:
+    if (!isSupported(src)) {
+      LOGGER.finest("addChildDefImpl() skipping unsupported child " + src.getName());
+      return;
+    }
     BeanChildDefCustomizerSource customizerSrc = childDefSources.getCustomizerSource();
     customizerSrc.setName(src.getName());
+    Path parentPath = childDefSources.getPath().getParent();
     addChildDefImpl(createBeanChildDefImpl(parentPath, src, customizerSrc));
   }
 
@@ -390,6 +437,11 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     return customizerSource;
   }
 
+  protected boolean isSupported(BeanPropertyDefSource source) {
+    // By default, only expose properties that the WLS REST api supports:
+    return source.isSupported();
+  }
+
   private class ContainedDefsSourcesMerger {
 
     private ContainedDefsSourcesMerger() {
@@ -484,7 +536,7 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
       // Loop over the child beans defined on this type.
       // They will pull in their children too.
       for (BeanPropertyDefSource propertyDefSource : propertyDefSources) {
-        if (propertyDefSource.isChild()) {
+        if (propertyDefSource.isChild() && isSupported(propertyDefSource)) {
           boolean isCollection = propertyDefSource.isArray();
           boolean isCreatable = !propertyDefSource.getCreators().isEmpty();
           boolean isFoldable = !isCollection && !isCreatable;
@@ -493,7 +545,11 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
             String childTypeName = StringUtils.getLeafClassName(propertyDefSource.getType());
             YamlBasedBeanTypeDefImpl childTypeDefImpl =
               getBeanRepoDefImpl().getTypeDefImpl(childTypeName).asYamlBasedBeanTypeDefImpl();
-            addOrMergeContainedDefSources(childPath, childTypeDefImpl);
+            if (childTypeDefImpl.isHomogeneous()) {
+              addOrMergeContainedDefSources(childPath, childTypeDefImpl);
+            } else {
+              // Don't support folding heterogeneous children.
+            }
           }
         }
       }

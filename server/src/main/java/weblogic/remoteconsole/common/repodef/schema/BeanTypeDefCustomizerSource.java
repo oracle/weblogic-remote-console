@@ -17,8 +17,12 @@ public class BeanTypeDefCustomizerSource {
   private StringValue subTypeDiscriminatorProperty = new StringValue();
   private StringValue deleteMethod = new StringValue();
   private StringValue createResourceMethod = new StringValue();
+  private StringValue getCollectionMethod = new StringValue();
   private BooleanValue disableMBeanJavadoc = new BooleanValue();
   private StringValue instanceName = new StringValue();
+  private BooleanValue referenceable = new BooleanValue();
+  private BooleanValue ordered = new BooleanValue();
+  private BooleanValue supportsCustomViews = new BooleanValue(true);
 
   // The list of properties on this type that have been customized.
   public List<BeanPropertyDefCustomizerSource> getProperties() {
@@ -125,6 +129,24 @@ public class BeanTypeDefCustomizerSource {
     createResourceMethod.setValue(value);
   }
 
+  // Specifics the name of a custom static method to call get a collection of this type.
+  // The format is <package>.<class>.<method>
+  //
+  // Required signature:
+  //   Response<List<CustomBeanSearchResults>> mymethod(
+  //     InvocationContext ic,
+  //     BeanTreePath beanTreePath,
+  //     BeanReaderRepoSearchResults,
+  //     List<BeanPropertyDef> propertyDefs
+  //   )
+  public String getGetCollectionMethod() {
+    return getCollectionMethod.getValue();
+  }
+
+  public void setGetCollectionMethod(String value) {
+    getCollectionMethod.setValue(value);
+  }
+
   // Used to turn off the entire type's mbean javadoc links.
   // Used to work around the case where the public oracle mbean javadoc for 
   // JMSConnectionFactoryBean doesn't work (i.e. it seems to get
@@ -145,5 +167,35 @@ public class BeanTypeDefCustomizerSource {
 
   public void setInstanceName(String value) {
     instanceName.setValue(value);
+  }
+
+  // Whether beans of this type can be referenced by other beans.
+  public boolean isReferenceable() {
+    return referenceable.getValue();
+  }
+
+  public void setReferenceable(boolean value) {
+    referenceable.setValue(value);
+  }
+
+
+  // Whether collections of this type are ordered.
+  public boolean isOrdered() {
+    return ordered.getValue();
+  }
+
+  public void setOrdered(boolean value) {
+    ordered.setValue(value);
+  }
+
+  // Whether this type supports custom views
+  // e.g. we won't want to support creating custom views
+  // for simple searches.
+  public boolean isSupportsCustomViews() {
+    return supportsCustomViews.getValue();
+  }
+
+  public void setSupportsCustomViews(boolean value) {
+    supportsCustomViews.setValue(value);
   }
 }

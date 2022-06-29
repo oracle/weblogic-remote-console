@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -44,7 +44,9 @@ contextBridge.exposeInMainWorld(
           'file-choosing',
           'file-reading',
           'file-writing',
-          'window-app-quit'
+          'window-app-quit',
+          'table-customizing',
+          'table-prefs-reading'
         ];
         return new Promise((resolve, reject) => {
           if (validChannels.includes(channel)) {

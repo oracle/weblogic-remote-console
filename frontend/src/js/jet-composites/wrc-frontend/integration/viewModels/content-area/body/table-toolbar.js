@@ -29,10 +29,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           },
           'delete': { id: 'delete', iconFile: 'delete-icon-blk_24x24', disabled: true,
             label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.delete.label')
+          },
+          'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24',
+            label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.customize.label')
           }
         },
         icons: {
-          'landing': { iconFile: 'home-icon-blk_24x24',
+          'landing': { iconFile: 'landing-page-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.landing.tooltip')
           },
           'history': { iconFile: 'beanpath-history-icon-blk_24x24',
@@ -116,12 +119,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
       this.readonly = ko.observable();
 
       this.connected = function () {
-      
         const rdjData = viewParams.parentRouter.data.rdjData();
 
         const isNonCreatableCollection = rdjData.self.kind === 'nonCreatableCollection';
 
-        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, isNonCreatableCollection || !['configuration','modeling'].includes(self.perspective.id));
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, isNonCreatableCollection || !['configuration','modeling','properties'].includes(self.perspective.id));
         self.readonly(Runtime.isReadOnly());
 
         let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
@@ -133,7 +135,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
         const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write'}.label`);
         self.i18n.buttons.write.label(label);
-        self.i18n.buttons.write.visible(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && ViewModelUtils.isElectronApiAvailable() && self.perspective.id === 'modeling');
+        self.i18n.buttons.write.visible(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && ViewModelUtils.isElectronApiAvailable() && ['modeling','properties'].includes(self.perspective.id));
 
         self.signalBindings.push(binding);
 
@@ -162,7 +164,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           }
 
           // Handle the event based on the supplied changeManager
-          Logger.info(`[TABLE-TOOLBAR] self.changeManager()=${self.changeManager()}`);
+          Logger.log(`[TABLE-TOOLBAR] self.changeManager()=${self.changeManager()}`);
           changeManager.supportsChanges = self.changeManager().supportsChanges;
           if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
             ChangeManager.putMostRecent(changeManager);
@@ -257,7 +259,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
       }.bind(this);
 
       this.isShoppingCartVisible = function() {
-        return viewParams.isShoppingCartVisible();
+        // Default to false
+        let visible = false;
+        if (ChangeManager.getMostRecent().supportsChanges) {
+          // The console extension is installed, but the
+          // shopping cart icon may be hidden for the
+          // current perspective.
+          visible = viewParams.isShoppingCartVisible();
+        }
+        else if (self.perspective.id === 'configuration') {
+          // The console extension isn't installed, but
+          // there is one perspective where still showing
+          // the shopping cart icon is required. That's
+          // the configuration perspective.
+          visible = viewParams.isShoppingCartVisible();
+        }
+        return visible;
       };
 
       function shoppingCartContentsChanged(changeManager) {
@@ -381,12 +398,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         viewParams.newAction(event);
       };
 
-      this.writeModelAction = function (event) {
-        viewParams.onWriteModelFile('download');
+      this.writeContentFileAction = function (event) {
+        viewParams.onWriteContentFile('download');
+      };
+
+      this.customizeAction = (event) => {
+        viewParams.onCustomizeButtonClicked(event);
       };
 
       this.actionsDialogButtonClicked = function (result) {
-        Logger.info('[TABLE] okBtn was clicked, or ENTER key was pressed!');
+        Logger.log('[TABLE] okBtn was clicked, or ENTER key was pressed!');
       };
 
       this.actionButtonClicked = function (event) {
@@ -419,7 +440,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
               .then(replies => {
                 replies.forEach((reply) => {
                   if (reply.succeeded) {
-                    Logger.info(`[TABLETOOLBAR] actionUrl=${reply.data.actionUrl}`);
+                    Logger.log(`[TABLETOOLBAR] actionUrl=${reply.data.actionUrl}`);
                   }
                   else {
                     if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {

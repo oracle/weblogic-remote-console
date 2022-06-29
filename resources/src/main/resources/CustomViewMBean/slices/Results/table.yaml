@@ -1,0 +1,7 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML:  "<p>The search results for ''{0}'' as of {1}.</p>"
+
+customizePageDefMethod: weblogic.remoteconsole.customizers.CustomViewMBeanCustomizer.customizeResultsSliceDef
+customizePageMethod: weblogic.remoteconsole.customizers.CustomViewMBeanCustomizer.customizeResultsSlice

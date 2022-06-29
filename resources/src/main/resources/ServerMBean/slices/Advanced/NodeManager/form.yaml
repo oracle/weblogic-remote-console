@@ -1,0 +1,29 @@
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Node Manager is a WebLogic Server utility that you can use to start,
+  suspend, shut down, and restart servers in normal or unexpected conditions.</p>
+  <p>Use this page to configure the startup settings that Node Manager will use
+  to start this server on a remote machine.</p>
+
+properties:
+- name: "ServerStart.JavaHome"
+- name: "ServerStart.JavaVendor"
+# deprecated - name: "BeaHome"
+- name: "ServerStart.RootDirectory"
+- name: "ServerStart.ClassPath"
+- name: "ServerStart.Arguments"
+- name: "ServerStart.SecurityPolicyFile"
+- name: "ServerStart.Username"
+- name: "ServerStart.Password"
+helpTopics:
+- label: "Understanding Server Life Cycle "
+  href: "start/server_life.html"
+  type: "edocs"
+- label: "Administering Node Manager for Oracle WebLogic Server"
+  href: "nodem/index.html"
+  type: "edocs"
+- label: "Starting and Stopping Servers"
+  href: "start/overview.html"
+  type: "edocs"

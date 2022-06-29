@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="intro" class="cfe-table-form-instructions">
@@ -8,20 +8,8 @@ The Universal Permissive License (UPL), Version 1.0
 
 <oj-module config="[[tableToolbarModuleConfig]]"></oj-module>
 
-<!-- Position "show-hidden-columns" checkboxset on the right side -->
-<div id="show-hidden-columns-container" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end oj-flex-items-pad">
-  <oj-bind-if test="[[hasHiddenColumns()]]">
-    <div id="show-hidden-columns-checkboxset" class="oj-flex-item">
-      <oj-checkboxset value="{{showHiddenColumns}}" on-value-changed="[[showHiddenColumnsValueChanged]]">
-        <oj-option :id="[[i18n.checkboxes.showHiddenColumns.id]]" value="[[i18n.checkboxes.showHiddenColumns.id]]">
-          <span><oj-bind-text value="[[i18n.checkboxes.showHiddenColumns.label]]"></oj-bind-text></span>
-        </oj-option>
-      </oj-checkboxset>
-    </div>
-  </oj-bind-if>
-</div>
-
 <div id="table-container" class="oj-flex-item cfe-table-form-content">
+  <oj-module config="[[tableCustomizerModuleConfig]]"></oj-module>
   <oj-bind-if test="[[!showHelp()]]">
     <oj-table
       id='table'
@@ -29,17 +17,19 @@ The Universal Permissive License (UPL), Version 1.0
       aria-label='Table'
       data='[[rdjDataProvider]]'
       scroll-policy='loadMoreOnScroll'
-      scroll-policy-options='{"fetchSize": 10}'
+      scroll-policy-options='{"fetchSize": 10000}'
       columns='[[columnDataProvider]]'
       display='grid'
       selection-mode='{"row": "single"}'
       selected.row='{{selectedRows}}'
       on-selected-changed='[[selectedListener]]'
+      on-oj-sort='[[onSortListener]]'
+      columns-default='[[tableSortable]]'
       class=".oj-table-data-cell-no-padding"
     >
       <template slot="deleteCellTemplate">
         <oj-button :id="[[$current.data._id]]" :class="cfe-delete-row-button" display="icons" chroming="borderless"
-            on-click="{{ $current.data.listener }}">
+                   on-click="{{ $current.data.listener }}">
           <span class="oj-ux-ico-trash"></span>
         </oj-button>
       </template>
@@ -47,8 +37,9 @@ The Universal Permissive License (UPL), Version 1.0
         <oj-bind-text value="[[cell.data.data]]"></oj-bind-text>
       </template>
     </oj-table>
-    <oj-paging-control id="paging" data="[[rdjDataProvider]]" page-size="[[rowsPerPage()]]" slot="bottom">
-    </oj-paging-control>
+    <div id="paging">
+      <span><oj-bind-text value="[[i18n.labels.totalRows.value]]"></oj-bind-text></span>
+    </div>
   </oj-bind-if>
 
   <oj-bind-if test="[[showHelp()]]">

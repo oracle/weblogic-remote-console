@@ -121,6 +121,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
           linkRef.setAttribute('supportsModelTokens', params.supportsModelTokens);
           linkRef.setAttribute('supportsUnresolvedReferences', params.supportsUnresolvedReferences);
           linkRef.setAttribute('valueFrom', params.valueFrom);
+          linkRef.setAttribute('wktTool', params.wktTool);
           linkRef.setAttribute('on-click', '[[wdtOptionsIconClickListener]]');
           linkRef.append(image);
           container.append(linkRef);
@@ -209,7 +210,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
           Unset.addHighlightClass(params.field);
 
           // Add the context menu to the field unless read only
-          if (!params.readOnly) {
+          // IFF tool mode no context as unset handled differently
+          if (!params.readOnly && (params.wktTool !== true)) {
             Unset.addContextMenu(name, params.field);
           }
         }
@@ -219,45 +221,69 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         let container = document.createElement('div');
         container.classList.add('cfe-form-field');
 
-        let a = document.createElement('a');
-        a.setAttribute('href', '#');
-        a.setAttribute('data-input', params.id);
-        a.setAttribute('on-click', params.choose['on-click']);
-        a.setAttribute('tabindex', '-1');
-
-        a.append(params.field);
-        container.append(a);
-
-        a = document.createElement('a');
-        a.setAttribute('href', '#');
-        a.setAttribute('data-input', params.id);
-        a.setAttribute('data-accepts', params.accepts);
-        a.setAttribute('on-click', params.choose['on-click']);
-        a.setAttribute('tabindex', '-1');
-
         let image = document.createElement('img');
+        image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/wdt-options-icon-clr_24x24.png');
+        container.append(image);
+
+        container.append(params.field);
+
+        const chooseLink = document.createElement('a');
+        chooseLink.setAttribute('href', '#');
+        chooseLink.setAttribute('data-input', params.id);
+        chooseLink.setAttribute('data-accepts', params.accepts);
+        if (params.choose?.menu) {
+          chooseLink.setAttribute('on-click', params.choose.menu['on-click']);
+        }
+        else {
+          chooseLink.setAttribute('on-click', params.choose['on-click']);
+        }
+        chooseLink.setAttribute('tabindex', '-1');
+
+        image = document.createElement('img');
         image.classList.add('choose-file-icon');
         image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + params.choose.iconFile + '.png');
         image.setAttribute('title', params.choose.tooltip);
 
-        a.append(image);
-        container.append(a);
+        chooseLink.append(image);
+        container.append(chooseLink);
 
-        a = document.createElement('a');
-        a.setAttribute('href', '#');
-        a.setAttribute('data-input', params.id);
-        a.setAttribute('on-click', params.clear['on-click']);
-        a.setAttribute('tabindex', '-1');
+        if (params.clear) {
+          const clearLink = document.createElement('a');
+          clearLink.setAttribute('href', '#');
+          clearLink.setAttribute('data-input', params.id);
+          clearLink.setAttribute('on-click', params.clear['on-click']);
+          clearLink.setAttribute('tabindex', '-1');
 
-        image = document.createElement('img');
-        image.setAttribute('id', params.id + '_clearChosen');
-        image.classList.add('clear-chosen-file-icon');
-        image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + params.clear.iconFile + '.png');
-        image.setAttribute('title', params.clear.tooltip);
-        image.style.display = 'none';
+          image = document.createElement('img');
+          image.setAttribute('id', `${params.id}_clearChosen`);
+          image.classList.add('clear-chosen-file-icon');
+          image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + params.clear.iconFile + '.png');
+          image.setAttribute('title', params.clear.tooltip);
+          image.style.display = 'inline-flex';
 
-        a.append(image);
-        container.append(a);
+          clearLink.append(image);
+          container.append(clearLink);
+        }
+
+        if (params.choose?.menu?.items) {
+          chooseLink.setAttribute('id', `${params.id}MenuLauncher`);
+          const menu = document.createElement('oj-menu');
+          menu.setAttribute('id', `${params.id}Menu`);
+          menu.setAttribute('aria-labelledby', `${params.id}MenuLauncher`);
+          menu.setAttribute('on-oj-action', '[[fileChooserMenuClickListener]]');
+          menu.setAttribute('open-options.launcher', `${params.id}MenuLauncher`);
+          menu.setAttribute('data-input', params.id);
+          params.choose.menu.items.forEach((menuItem) => {
+            const option = document.createElement('oj-option');
+            option.setAttribute('id', menuItem.name);
+            option.setAttribute('value', menuItem.name);
+            const span = document.createElement('span');
+            span.innerText = menuItem.label;
+            option.append(span);
+            menu.append(option);
+          });
+          container.append(menu);
+        }
 
         return container;
       },
@@ -318,7 +344,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         return field;
       },
 
-        /**
+      /**
        * Create a cfe-multi-select for type reference-dynamic-enum with array property set to true.
        * @param {object} dataValues
        * @param {name} name
@@ -499,9 +525,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         return field;
       },
 
-      createSwitch: function (className) {
+      createSwitch: function (options) {
         const field = document.createElement('oj-switch')
-        field.classList.add(className);
+        field.classList.add(options['className']);
+        field.setAttribute('disabled', options['disabled'] || false);
         return field;
       },
 
@@ -532,9 +559,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
       },
 
       createFileChooser: function (className) {
-        const field = document.createElement('oj-input-text')
-        field.classList.add(className);
-        field.setAttribute('readonly', true);
+        const field = document.createElement('oj-input-text');
+        field.classList.add(className, 'cfe-form-input-text');
+        field.setAttribute('readonly', false);
         return field;
       },
 

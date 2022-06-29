@@ -57,6 +57,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.dataProviderLoadFailed.add((dataProvider) => {
+          setContentAreaHeaderBranding('');
+        });
+
+        self.signalBindings.push(binding);
+
       }.bind(this);
 
       this.disconnected = function () {

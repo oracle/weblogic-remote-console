@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -30,6 +30,7 @@ public interface PageRepoDef {
   public String getResourceBundleName();
 
   // Looks up the definition of a page in this repo.
+  // Returns null if the page doesn't exist.
   public PageDef getPageDef(PagePath pagePath);
 
   // Looks up the nav tree contents for a type in this repo.
@@ -60,5 +61,12 @@ public interface PageRepoDef {
   // Create a page path for a table of instances of a type in this repo.
   public default TablePagePath newTablePagePath(BeanTypeDef typeDef) {
     return PagePath.newTablePagePath(newPagesPath(typeDef));
+  }
+
+  public default boolean isSupportsCustomViews() {
+    // By default custom views are not supported.
+    // i.e. only the monitoring tree supports custom views,
+    // the config trees don't.
+    return false;
   }
 }

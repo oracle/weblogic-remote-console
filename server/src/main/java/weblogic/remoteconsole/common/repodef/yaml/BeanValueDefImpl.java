@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -55,8 +55,20 @@ class BeanValueDefImpl implements BeanValueDef {
     this.customizerSource = customizerSource;
   }
 
+  boolean isSupportedType() {
+    return getValueKindOrNull() != null;
+  }
+
   @Override
   public ValueKind getValueKind() {
+    ValueKind kind = getValueKindOrNull();
+    if (kind != null) {
+      return kind;
+    }
+    throw configurationError("unsupported value type: " + getJavaType());
+  }
+
+  ValueKind getValueKindOrNull() {
     if (source.isReference()) {
       return ValueKind.REFERENCE;
     }
@@ -68,10 +80,7 @@ class BeanValueDefImpl implements BeanValueDef {
     if (ValueKind.STRING == kind && source.isSecret()) {
       return ValueKind.SECRET;
     }
-    if (kind != null) {
-      return kind;
-    }
-    throw configurationError("unsupported value type: " + javaType);
+    return kind;
   }
 
   @Override

@@ -19,21 +19,25 @@ class LinkDefImpl implements LinkDef {
   private LocalizableString notFoundMessage;
   private LocalizableString label;
 
+  LinkDefImpl(LinksDefImpl linksDefImpl, LinkDefImpl toClone) {
+    this(linksDefImpl, toClone.getSource(), toClone.isCollectionLink);
+  }
+
   LinkDefImpl(LinksDefImpl linksDefImpl, LinkDefSource source, boolean isCollectionLink) {
     this.linksDefImpl = linksDefImpl;
     this.source = source;
     this.isCollectionLink = isCollectionLink;
     String englishNotFoundMessage = source.getNotFoundMessage();
     if (StringUtils.notEmpty(englishNotFoundMessage)) {
-      this.notFoundMessage =
+      notFoundMessage =
         new LocalizableString(getLocalizationKey("notfound." + englishNotFoundMessage), englishNotFoundMessage);
     }
     String englishLabel = source.getLabel();
-    this.label = new LocalizableString(getLocalizationKey("label." + englishLabel), englishLabel);
+    label = new LocalizableString(getLocalizationKey("label." + englishLabel), englishLabel);
   }
 
   private LinksDefImpl getLinksDefImpl() {
-    return this.linksDefImpl;
+    return linksDefImpl;
   }
 
   @Override
@@ -41,12 +45,12 @@ class LinkDefImpl implements LinkDef {
     return getLinksDefImpl();
   }
 
-  private LinkDefSource getSource() {
-    return this.source;
+  LinkDefSource getSource() {
+    return source;
   }
 
   private boolean isCollectionLink() {
-    return this.isCollectionLink;
+    return isCollectionLink;
   }
 
   @Override
@@ -56,12 +60,12 @@ class LinkDefImpl implements LinkDef {
 
   @Override
   public LocalizableString getNotFoundMessage() {
-    return this.notFoundMessage;
+    return notFoundMessage;
   }
 
   @Override
   public LocalizableString getLabel() {
-    return this.label;
+    return label;
   }
 
   private String getLocalizationKey(String key) {

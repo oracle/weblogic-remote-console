@@ -35,12 +35,19 @@ define(['ojs/ojcore', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', '
       dataProviderSectionToggled: new signals.Signal(),
       dataProviderSelected: new signals.Signal(),
       dataProviderRemoved: new signals.Signal(),
+      dataProviderLoadFailed: new signals.Signal(),
       projectSwitched: new signals.Signal(),
       beanTreeChanged: new signals.Signal(),
       changesAutoDownloaded: new signals.Signal(),
+      autoDownloadRequested: new signals.Signal(),
       formSliceSelected: new signals.Signal(),
       backendConnectionLost: new signals.Signal(),
-      appQuitTriggered: new signals.Signal()
+      backendConnectionRefused: new signals.Signal(),
+      backendExceptionOccurred: new signals.Signal(),
+      modelArchiveUpdated: new signals.Signal(),
+      appQuitTriggered: new signals.Signal(),
+      domainSecurityWarning: new signals.Signal(),
+      modelConsoleSizeChanged: new signals.Signal()
     });
 
     const PATH_PREFIX = 'jet-composites/wrc-frontend/1.0.0/integration/';
@@ -87,7 +94,8 @@ define(['ojs/ojcore', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', '
 
       loadModule: (name) => {
         if (CoreUtils.isNotUndefinedNorNull(name)) {
-          const pathPrefix = (['configuration', 'monitoring', 'modeling', 'view', 'composite'].includes(name) ? PATH_PREFIX : '');
+          const perspectiveNames = ['configuration', 'monitoring', 'modeling', 'view', 'composite', 'properties'];
+          const pathPrefix = (perspectiveNames.includes(name) ? PATH_PREFIX : '');
           const viewPath = `${pathPrefix}views/${name}.html`;
           const modelPath = `${pathPrefix}viewModels/${name}`;
           const viewParams = { parentRouter: router, signaling: signaling};

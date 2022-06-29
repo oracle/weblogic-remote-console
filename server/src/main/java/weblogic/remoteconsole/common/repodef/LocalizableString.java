@@ -1,7 +1,9 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
+
+import java.text.MessageFormat;
 
 import weblogic.remoteconsole.common.utils.StringUtils;
 
@@ -46,12 +48,17 @@ public class LocalizableString {
 
   // Returns the string that identifies this string in the resource bundle.
   public String getResourceBundleKey() {
-    return this.resourceBundleKey;
+    return resourceBundleKey;
   }
 
   // Returns this string's unlocalized (i.e. english) text.
-  public String getEnglishText() {
-    return this.englishText;
+  // If arguments are provided, then they are substituted into the english text.
+  // Otherwise, the unsubstituted english text is returned.
+  public String getEnglishText(Object... args) {
+    if (args.length == 0) {
+      return englishText;
+    }
+    return MessageFormat.format(englishText, args);
   }
 
   // Returns whether this string is empty.

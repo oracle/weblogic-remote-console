@@ -87,6 +87,9 @@ class CombinedServerRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSea
   ) {
     JsonObject slcrt =
       super.findWebLogicSearchResults(searchResults, getServerLifeCycleRuntimePath(beanTreePath), false);
+    if (slcrt == null) {
+      return null;
+    }
     JsonArray items = slcrt.getJsonArray("items");
     JsonArrayBuilder itemsBuilder = Json.createArrayBuilder();
     for (int i = 0; i < items.size(); i++) {

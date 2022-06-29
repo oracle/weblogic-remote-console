@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
-import weblogic.remoteconsole.common.repodef.TableDef;
+import weblogic.remoteconsole.common.repodef.PageDef;
 
 /**
  * This class manages reading a bean tree's table pages and invoking the corresponding actions.
@@ -20,18 +20,23 @@ public class TableReader extends PageReader {
   }
 
   Response<Page> getTable() {
-    List<BeanPropertyDef> propDefs = getTablePropertyDefs();
+    Response<List<BeanPropertyDef>> propDefsResponse = getTablePropertyDefs();
+    if (!propDefsResponse.isSuccess()) {
+      return new Response<Page>().copyUnsuccessfulResponse(propDefsResponse);
+    }
+    List<BeanPropertyDef> propDefs = propDefsResponse.getResults();
     return processTableSearchResults(propDefs, performTableSearch(propDefs));
   }
 
-  private List<BeanPropertyDef> getTablePropertyDefs() {
+  private Response<List<BeanPropertyDef>> getTablePropertyDefs() {
+    Response<List<BeanPropertyDef>> response = new Response<>();
+    Response<PageDef> pageDefResponse = getPageDef();
+    if (!pageDefResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(pageDefResponse);
+    }
     List<BeanPropertyDef> propDefs = createPropertyDefList();
-    propDefs.addAll(getTableDef().getAllPropertyDefs());
-    return propDefs;
-  }
-
-  private TableDef getTableDef() {
-    return getPageRepoDef().getPageDef(getPagePath()).asTableDef();
+    propDefs.addAll(pageDefResponse.getResults().getAllPropertyDefs());
+    return response.setSuccess(propDefs);
   }
 
   private Response<BeanReaderRepoSearchResults> performTableSearch(
@@ -41,13 +46,7 @@ public class TableReader extends PageReader {
     boolean includeIsSet = false;
     BeanReaderRepoSearchBuilder builder =
       getBeanRepo().asBeanReaderRepo().createSearchBuilder(getInvocationContext(), includeIsSet);
-    for (BeanPropertyDef propDef : propDefs) {
-      builder.addProperty(getBeanTreePath(), propDef);
-      addParamsToSearch(builder, getBeanTreePath(), propDef.getGetValueCustomizerDef());
-    }
-    if (getBeanTreePath().getTypeDef().isHeterogeneous()) {
-      addSubTypeDiscriminatorToSearch(getBeanTreePath(), builder);
-    }
+    addCollectionToSearch(builder, getBeanTreePath(), propDefs);
     if (builder.isChangeManagerBeanRepoSearchBuilder()) {
       builder.asChangeManagerBeanRepoSearchBuilder().addChangeManagerStatus();
     }
@@ -63,13 +62,25 @@ public class TableReader extends PageReader {
       return response.copyUnsuccessfulResponse(searchResponse);
     }
     BeanReaderRepoSearchResults searchResults = searchResponse.getResults();
+    Response<PageDef> pageDefResponse = getPageDef();
+    if (!pageDefResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(pageDefResponse);
+    }
     Table table = new Table();
-    table.setPageDef(getTableDef());
+    setPageDef(table, pageDefResponse.getResults());
     addPageInfo(table);
     addChangeManagerStatus(table, searchResults);
     addLinks(table, false); // false since it's a collection
-    List<BeanSearchResults> collectionResults =
-      searchResults.getCollection(getBeanTreePath());
+    Response<List<BeanPropertyDef>> propDefsResponse = getTablePropertyDefs();
+    if (!propDefsResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(propDefsResponse);
+    }
+    Response<List<BeanSearchResults>> getCollectionResponse =
+      getCollectionResults(searchResults, getBeanTreePath(), propDefsResponse.getResults());
+    if (!getCollectionResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(getCollectionResponse);
+    }
+    List<BeanSearchResults> collectionResults = getCollectionResponse.getResults();
     if (collectionResults == null) {
       response.setNotFound();
       return response;
@@ -122,16 +133,6 @@ public class TableReader extends PageReader {
     BeanSearchResults beanResults,
     BeanReaderRepoSearchResults searchResults
   ) {
-    Response<BeanTypeDef> response = new Response<>();
-    if (getBeanTreePath().getTypeDef().isHomogeneous()) {
-      return response.setSuccess(getBeanTreePath().getTypeDef());
-    }
-    BeanTreePath rowBeanTreePath = beanResults.getBeanTreePath();
-    Response<String> discResponse = getSubTypeDiscriminatorValue(rowBeanTreePath, searchResults);
-    if (!discResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(discResponse);
-    }
-    String subTypeDiscriminator = discResponse.getResults();
-    return response.setSuccess(getBeanTreePath().getTypeDef().getSubTypeDef(subTypeDiscriminator));
+    return getActualTypeDef(beanResults.getBeanTreePath(), searchResults);
   }
 }

@@ -11,7 +11,8 @@ set -e
 make
 "
 
-rm -rf runnable installer/target
-mkdir -p runnable installer/target
+rm -rf runnable installer/target frontend/web
+mkdir -p runnable installer/target frontend/web
 docker cp $DOCKER_ID:/build/runnable/. runnable
 docker cp $DOCKER_ID:/build/installer/target/. installer/target
+docker cp $DOCKER_ID:/build/frontend/web/. frontend/web

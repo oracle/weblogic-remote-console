@@ -85,7 +85,11 @@ define(['knockout'],
         function onEnterKey() {
           const ojInputs = modelDialog.querySelectorAll('.cfe-dialog-field, .cfe-file-chooser-field');
           const ojInputsArray = Array.from(ojInputs);
-          const ojInputsArrayFiltered = ojInputsArray.filter(ojInput => ojInput.value !== null && ojInput.value.length > 0);
+          // Allow for a field of the dialog to be designated as optional
+          const ojInputsArrayFiltered = ojInputsArray.filter(ojInput => {
+              return ((ojInput.value !== null && ojInput.value.length > 0) ||
+                      ojInput.classList.contains('cfe-dialog-field-optional'));
+            });
           return (ojInputs.length !== ojInputsArrayFiltered.length);
         }
 
@@ -429,6 +433,8 @@ define(['knockout'],
             domainConnectionDialog.open();
           }
             break;
+          case 'AddPropertyList':
+          case 'EditPropertyList':
           case 'AddWDTModel':
           case 'EditWDTModel': {
             const modelDialog = document.getElementById('modelDialog');

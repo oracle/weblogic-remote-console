@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -12,6 +12,8 @@ public class PageDefSource {
   private StringValue introductionHTML = new StringValue();
   private ListValue<HelpTopicDefSource> helpTopics = new ListValue<>();
   private StringValue customizePageDefSourceMethod = new StringValue();
+  private StringValue customizePageDefMethod = new StringValue();
+  private StringValue customizePageMethod = new StringValue();
 
   // The page's english introduction text.
   public String getIntroductionHTML() {
@@ -35,20 +37,55 @@ public class PageDefSource {
     helpTopics.add(value);
   }
 
-  // Specifics a custom static method to call to customize this page's definition.
+  // Specifies a custom static method to call to customize this page's definition's source
   // The format is <package>.<class>.<method>
   //
   // required signature:
   //   public static void <method>(PagePath pagePath, PageDefSource pageDefSource)
   //
   // It's passed in the page's path and the page definition that was
-  // read in from the yaml files.  The method can then modify the page def.
+  // read in from the yaml files.  The method can then modify the page def source.
   public String getCustomizePageDefSourceMethod() {
     return customizePageDefSourceMethod.getValue();
   }
 
   public void setCustomizePageDefSourceMethod(String value) {
     customizePageDefSourceMethod.setValue(value);
+  }
+
+  // Specifies a custom static method to call to customize this page's definition.
+  // The format is <package>.<class>.<method>
+  //
+  // required signature:
+  //   public static Response<PageDef> <method>(InvocationContext ic, PageDef pageDef)
+  //
+  // It's passed in the invocation context and a read-only page def containing
+  // the initial page definition.  The method can then create and return the
+  // customized one.
+  public String getCustomizePageDefMethod() {
+    return customizePageDefMethod.getValue();
+  }
+
+  public void setCustomizePageDefMethod(String value) {
+    customizePageDefMethod.setValue(value);
+  }
+
+  // Specifies a custom static method to call to customize the data for this page.
+  // It's called after the data for the page has been computed.
+  //
+  // The format is <package>.<class>.<method>
+  //
+  // required signature:
+  //   public static Response<Void> <method>(InvocationContext ic, Page page);
+  //
+  // It's passed in the invocation context and the populated page.
+  // The method can then modify the page.
+  public String getCustomizePageMethod() {
+    return customizePageMethod.getValue();
+  }
+
+  public void setCustomizePageMethod(String value) {
+    customizePageMethod.setValue(value);
   }
 
   // Whether this is a form.

@@ -1,38 +1,102 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TableActionDef;
+import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
+import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * This class manages reading a bean tree's pages (invoking actions too)
  */
 public abstract class PageReaderRepo extends PageRepo {
 
+  private SimpleSearchManager simpleSearchManager = new SimpleSearchManager();
+  private CustomViewManager customViewManager = null;
+
   private static final Logger LOGGER = Logger.getLogger(PageReaderRepo.class.getName());
+
+  private static final Type CUSTOMIZE_PAGE_RETURN_TYPE = (new TypeReference<Response<Void>>() {}).getType();
 
   protected PageReaderRepo(PageRepoDef pageRepoDef, BeanRepo beanRepo) {
     super(pageRepoDef, beanRepo);
+    if (pageRepoDef.isSupportsCustomViews()) {
+      customViewManager = new CustomViewManager();
+    }
+  }
+
+  // Get the definition of the page referred to by the invocation context.
+  public Response<PageDef> getPageDef(InvocationContext ic) {
+    LOGGER.finest("PageReaderRepo.getPageDef " + ic.getPagePath());
+    PageReader reader = null;
+    if (ic.getPagePath().isSlicePagePath()) {
+      reader = new SliceReader(ic);
+    } else if (ic.getPagePath().isCreateFormPagePath()) {
+      reader = new CreateFormReader(ic);
+    } else if (ic.getPagePath().isTablePagePath()) {
+      reader = new TableReader(ic);
+    } else {
+      throw new AssertionError("Unknown PagePath type : " + ic.getPagePath());
+    }
+    return reader.getPageDef();
   }
 
   // Get the contents of the page referred to by the invocation context.
   public Response<Page> getPage(InvocationContext ic) {
     LOGGER.finest("PageReaderRepo.getPage " + ic.getPagePath() + " " + ic.getBeanTreePath());
     if (ic.getPagePath().isSlicePagePath()) {
-      return (new SliceReader(ic)).getSlice();
+      return customizePage(ic, (new SliceReader(ic)).getSlice());
     } else if (ic.getPagePath().isCreateFormPagePath()) {
-      return (new CreateFormReader(ic)).getCreateForm();
+      return customizePage(ic, (new CreateFormReader(ic)).getCreateForm());
     } else if (ic.getPagePath().isTablePagePath()) {
-      return (new TableReader(ic)).getTable();
+      return customizePage(ic, (new TableReader(ic)).getTable());
     } else {
       throw new AssertionError("Unknown PagePath type : " + ic.getPagePath());
     }
+  }
+
+  private Response<Page> customizePage(InvocationContext ic, Response<Page> pageResponse) {
+    if (!pageResponse.isSuccess()) {
+      // Something went wrong getting the standard contents of the page.
+      // Return that error.
+      return pageResponse;
+    }
+    Page page = pageResponse.getResults();
+    String methodName = page.getPageDef().getCustomizePageMethod();
+    if (StringUtils.isEmpty(methodName)) {
+      // There isn't a customizer for this page.
+      // Just return the standard response (which is already successful and refers to the standard contents).
+      return pageResponse;
+    }
+    // Call the customizer, passing in the page so that the customizer can modify it.
+    Method method = CustomizerInvocationUtils.getMethod(methodName);
+    CustomizerInvocationUtils.checkSignature(
+      method,
+      CUSTOMIZE_PAGE_RETURN_TYPE,
+      InvocationContext.class,
+      Page.class
+    );
+    List<Object> args = List.of(ic, page);
+    Object responseAsObject = CustomizerInvocationUtils.invokeMethod(method, args);
+    @SuppressWarnings("unchecked")
+    Response<Void> customizerResponse = (Response<Void>)responseAsObject;
+    if (!customizerResponse.isSuccess()) {
+      // The customizer had a problem.  Return it.
+      return pageResponse.copyUnsuccessfulResponse(customizerResponse);
+    }
+    // Since pageResponse is already successful and already refers to the page that
+    // the customizer successfully modified, just return it (v.s. making a new response).
+    return pageResponse;
   }
 
   // Returns the slice page path for the bean and slice referenced by the invocation context.
@@ -83,5 +147,13 @@ public abstract class PageReaderRepo extends PageRepo {
   // that should be displayed to the user.
   public Response<Void> invokeTableRowAction(InvocationContext ic, TableActionDef tableActionDef) {
     return (new TableRowActionInvoker(ic, tableActionDef)).invokeAction();
+  }
+
+  public SimpleSearchManager getSimpleSearchManager() {
+    return simpleSearchManager;
+  }
+
+  public CustomViewManager getCustomViewManager() {
+    return customViewManager;
   }
 }

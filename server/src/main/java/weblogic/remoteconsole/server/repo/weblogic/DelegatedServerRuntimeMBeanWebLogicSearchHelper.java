@@ -23,16 +23,15 @@ class DelegatedServerRuntimeMBeanWebLogicSearchHelper extends DelegatedRuntimeMB
   private static class IdentityFixer extends DelegatedIdentityFixer {
     @Override protected JsonArray undelegatedIdentityToDelegatedIdentity(JsonArray undelegatedIdentity) {
       // e.g. convert from
-      //   domainRuntime serverRuntimes Server1 JVMRuntime
+      //   serverRuntimes Server1 JVMRuntime
       // to
-      //   domainRuntime combinedServerRuntimes Server1 serverRuntime JVMRuntime
+      //   combinedServerRuntimes Server1 serverRuntime JVMRuntime
       JsonArrayBuilder bldr = Json.createArrayBuilder();
-      bldr.add(undelegatedIdentity.getString(0)); // domainRuntime
       bldr.add("combinedServerRuntimes");
-      String server = undelegatedIdentity.getString(2);
+      String server = undelegatedIdentity.getString(1);
       bldr.add(server);
       bldr.add("serverRuntime");
-      for (int i = 4; i < undelegatedIdentity.size(); i++) {
+      for (int i = 2; i < undelegatedIdentity.size(); i++) {
         bldr.add(undelegatedIdentity.getString(i));
       }
       return bldr.build();

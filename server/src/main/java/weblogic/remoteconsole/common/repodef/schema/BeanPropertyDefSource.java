@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -212,7 +212,6 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
     deprecated.setValue(val);
   }
 
-  // Currently unused.
   public String getObsolete() {
     return obsolete.getValue();
   }
@@ -221,7 +220,6 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
     obsolete.setValue(val);
   }
 
-  // Currently unused.
   public boolean isExclude() {
     return exclude.getValue();
   }

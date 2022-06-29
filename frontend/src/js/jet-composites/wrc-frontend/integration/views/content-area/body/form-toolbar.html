@@ -7,7 +7,7 @@
   <div id="form-toolbar-buttons" class="oj-flex-bar">
     <oj-bind-if test="[[!isWizardForm()]]">
       <div id="form-toolbar-save-button" class="oj-flex-bar-start">
-        <oj-bind-if test="[[sliceReadOnly()===false || i18n.buttons.save.visible]]">
+        <oj-bind-if test="[[sliceReadOnly()===false && i18n.buttons.save.visible()]]">
           <oj-button id="[[i18n.buttons.save.id]]" on-oj-action="[[onSave]]" chroming="borderless"
            disabled="[[i18n.buttons.save.disabled]]">
             <img class="button-icon" slot="startIcon"
@@ -18,7 +18,7 @@
           </oj-button>
         </oj-bind-if>
         <oj-bind-if test="[[i18n.buttons.write.visible]]">
-          <oj-button id="[[i18n.buttons.write.id]]" on-oj-action="[[onUpdateModelFile]]" chroming="borderless"
+          <oj-button id="[[i18n.buttons.write.id]]" on-oj-action="[[onUpdateContentFile]]" chroming="borderless"
            disabled="[[i18n.buttons.write.disabled]]">
             <img class="button-icon" slot="startIcon"
              data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.write.iconFile + '.png'}" />
@@ -87,6 +87,13 @@
         </oj-button>
       </div>
     </oj-bind-if>
+
+    <!-- Customize button is made visible on form toolbar when a slice table is rendered -->
+    <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed">
+      <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png'}"/>
+      <span class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
+      <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
+    </a>
   </div>
 
   <div id="form-toolbar-icons" class="oj-flex-item">

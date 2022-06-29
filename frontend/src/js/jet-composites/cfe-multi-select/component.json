@@ -46,6 +46,11 @@
           "type": "object"
         }
       ]
+    },
+
+    "clearAllChosenItems": {
+      "description": "clear the chosen items list.",
+      "internalName" : "_clearAllChosenItems"
     }
   },
   "events": {

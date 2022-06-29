@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -76,30 +76,33 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     this.name = name;
     this.url = url;
     this.authorizationHeader = authorizationHeader;
-    String encodedName = StringUtils.urlEncode(name);
     editRoot = new Root(
+      this,
       Root.EDIT_NAME,
       Root.CONFIGURATION_ROOT,
       Root.EDIT_LABEL,
-      "/" + UriUtils.API_URI + "/" + encodedName + "/" + Root.EDIT_NAME + "/navtree",
-      "/" + UriUtils.API_URI + "/" + encodedName + "/" + Root.EDIT_NAME + "/changeManager",
-      false // it is not read only
+      false, // it is not read only
+      Root.NAV_TREE_RESOURCE,
+      Root.SIMPLE_SEARCH_RESOURCE,
+      Root.CHANGE_MANAGER_RESOURCE
     );
     viewRoot = new Root(
+      this,
       Root.SERVER_CONFIGURATION_NAME,
       Root.CONFIGURATION_ROOT,
       Root.CONFIGURATION_LABEL,
-      "/" + UriUtils.API_URI + "/" + encodedName + "/" + Root.SERVER_CONFIGURATION_NAME + "/navtree",
-      null, // no change manager
-      true  // it is read only
+      true, // it is read only
+      Root.NAV_TREE_RESOURCE,
+      Root.SIMPLE_SEARCH_RESOURCE
     );
     monitoringRoot = new Root(
+      this,
       Root.DOMAIN_RUNTIME_NAME,
       Root.MONITORING_ROOT,
       Root.MONITORING_LABEL,
-      "/" + UriUtils.API_URI + "/" + encodedName + "/" + Root.DOMAIN_RUNTIME_NAME + "/navtree",
-      null, // no change manager
-      true  // it is read only
+      true, // it is read only
+      Root.NAV_TREE_RESOURCE,
+      Root.SIMPLE_SEARCH_RESOURCE
     );
   }
 

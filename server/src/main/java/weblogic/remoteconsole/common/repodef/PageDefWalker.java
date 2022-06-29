@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -80,7 +80,7 @@ public abstract class PageDefWalker {
     walkTypeDef(getPageRepoDef().getBeanRepoDef().getRootTypeDef());
   }
 
-  private void walkTypeDef(BeanTypeDef typeDef) {
+  protected void walkTypeDef(BeanTypeDef typeDef) {
     String typeName = typeDef.getTypeName();
     if (getVisitedTypeNames().contains(typeName)) {
       return; // already visited this type
@@ -97,25 +97,25 @@ public abstract class PageDefWalker {
     walkSubTypes(typeDef);
   }
 
-  private void walkProperties(BeanTypeDef typeDef) {
+  protected void walkProperties(BeanTypeDef typeDef) {
     for (BeanPropertyDef propertyDef : typeDef.getPropertyDefs()) {
       walkChildTypeDef(typeDef, propertyDef.getParentPath());
     }
   }
 
-  private void walkChildren(BeanTypeDef typeDef) {
+  protected void walkChildren(BeanTypeDef typeDef) {
     for (BeanChildDef childDef : typeDef.getChildDefs()) {
       walkChildTypeDef(typeDef, childDef.getParentPath());
     }
   }
 
-  private void walkChildTypeDef(BeanTypeDef parentTypeDef, Path childPath) {
+  protected void walkChildTypeDef(BeanTypeDef parentTypeDef, Path childPath) {
     if (!childPath.isEmpty()) {
       walkTypeDef(parentTypeDef.getChildDef(childPath).getChildTypeDef());
     }
   }
 
-  private void walkNavTreeDef(NavTreeDef navTreeDef) {
+  protected void walkNavTreeDef(NavTreeDef navTreeDef) {
     if (navTreeDef == null) {
       return; // no child nav tree nodes for this type
     }
@@ -125,7 +125,7 @@ public abstract class PageDefWalker {
     }
   }
 
-  private void walkNavTreeNodeDef(NavTreeNodeDef nodeDef) {
+  protected void walkNavTreeNodeDef(NavTreeNodeDef nodeDef) {
     processNavTreeNodeDef(nodeDef);
     if (nodeDef.isGroupNodeDef()) {
       walkGroupNodeDef(nodeDef.asGroupNodeDef());
@@ -134,32 +134,32 @@ public abstract class PageDefWalker {
     }
   }
 
-  private void walkGroupNodeDef(GroupNavTreeNodeDef groupNodeDef) {
+  protected void walkGroupNodeDef(GroupNavTreeNodeDef groupNodeDef) {
     processGroupNavTreeNodeDef(groupNodeDef);
     for (NavTreeNodeDef nodeDef : groupNodeDef.getContentDefs()) {
       walkNavTreeNodeDef(nodeDef);
     }
   }
 
-  private void walkChildNodeDef(BeanChildNavTreeNodeDef childNodeDef) {
+  protected void walkChildNodeDef(BeanChildNavTreeNodeDef childNodeDef) {
     processChildNavTreeNodeDef(childNodeDef);
     walkTypeDef(childNodeDef.getLastChildDef().getChildTypeDef());
   }
 
-  private void walkSlicesDef(SlicesDef slicesDef) {
+  protected void walkSlicesDef(SlicesDef slicesDef) {
     if (slicesDef != null) {
       processSlicesDef(slicesDef);
       walkSliceDefs(slicesDef.getContentDefs());
     }
   }
 
-  private void walkSliceDefs(List<SliceDef> contentDefs) {
+  protected void walkSliceDefs(List<SliceDef> contentDefs) {
     for (SliceDef sliceDef : contentDefs) {
       walkSliceDef(sliceDef);
     }
   }
 
-  private void walkSliceDef(SliceDef sliceDef) {
+  protected void walkSliceDef(SliceDef sliceDef) {
     processSliceDef(sliceDef);
     List<SliceDef> contentDefs = sliceDef.getContentDefs();
     if (contentDefs.isEmpty()) {
@@ -176,7 +176,7 @@ public abstract class PageDefWalker {
     }
   }
 
-  private void walkLinksDef(LinksDef linksDef) {
+  protected void walkLinksDef(LinksDef linksDef) {
     if (linksDef != null) {
       processLinksDef(linksDef);
       walkLinkDefs(linksDef.getInstanceLinkDefs());
@@ -184,13 +184,13 @@ public abstract class PageDefWalker {
     }
   }
 
-  private void walkLinkDefs(List<LinkDef> linkDefs) {
+  protected void walkLinkDefs(List<LinkDef> linkDefs) {
     for (LinkDef linkDef : linkDefs) {
       processLinkDef(linkDef);
     }
   }
 
-  private void walkSubTypes(BeanTypeDef typeDef) {
+  protected void walkSubTypes(BeanTypeDef typeDef) {
     if (typeDef.isHomogeneous()) {
       return;
     }
@@ -199,7 +199,7 @@ public abstract class PageDefWalker {
     }
   }
 
-  private void walkPageDef(PagePath pagePath) {
+  protected void walkPageDef(PagePath pagePath) {
     PageDef pageDef = getPageRepoDef().getPageDef(pagePath);
     if (pageDef != null) {
       processPageDef(pageDef);

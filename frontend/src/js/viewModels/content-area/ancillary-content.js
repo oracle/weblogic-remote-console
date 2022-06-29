@@ -86,13 +86,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
-          const index = self.i18n.tabstrip.tabs.map(item => item.id).indexOf(ChangeManager.Entity.SHOPPING_CART.name);
-          // The shopping cart will _not_ be visible when the data provider is based on a WDT model
-          const shoppingCartVisible = (['model','modelComposite'].indexOf(dataProvider.type) === -1);
-          if (index !== -1) {
-            self.i18n.tabstrip.tabs[index].visible(shoppingCartVisible);
-          }
-          showTabStripContent('shoppingcart', false);
+          // Don't show "Shopping Cart" tab in tabstrip, if WebLogic extension
+          // is not installed.
+          let shoppingCartVisible = ChangeManager.getMostRecent()['supportsChanges'];
+
+          // Set visibility of "Shopping Cart" tab based on the value
+          // of shoppingCartVisible variable.
+          shoppingCartVisible = shoppingCartVisible && showTabStripTab(ChangeManager.Entity.SHOPPING_CART.name, dataProvider.type);
+          const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === ChangeManager.Entity.SHOPPING_CART.name);
+          tabNode.visible(shoppingCartVisible);
+
+          showTabStripContent('shoppingcart', shoppingCartVisible);
         });
 
         self.signalBindings.push(binding);
@@ -143,6 +147,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
           setTabModuleConfig(id, self.perspectiveMemory.tabstrip.tab[id].cachedState);
         }
       };
+
+      function showTabStripTab(tabId, providerType) {
+        let rtnval = false;
+        if (tabId === ChangeManager.Entity.SHOPPING_CART.name) {
+          rtnval = !['model','modelComposite','properties'].includes(providerType);
+        }
+        return rtnval;
+      }
 
       function setTabModuleTabCachedState(tabId) {
         let changingTabModule = true;
@@ -285,7 +297,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
           ChangeManager.getLockState()
             .then((data) => {
               const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === ChangeManager.Entity.SHOPPING_CART.name);
-              tabNode.visible((data.changeManager.isLockOwner && data.changeManager.hasChanges));
+              tabNode.visible((data.changeManager.isLockOwner && data.changeManager.hasChanges && data.changeManager.supportsChanges));
               return hasVisiblityEnabledTabs();
             })
             .then(visible => {

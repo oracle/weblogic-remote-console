@@ -95,6 +95,16 @@ public abstract class PageDefImpl implements PageDef {
     return allPropertyDefs;
   }
 
+  @Override
+  public String getCustomizePageDefMethod() {
+    return source.getCustomizePageDefMethod();
+  }
+
+  @Override
+  public String getCustomizePageMethod() {
+    return source.getCustomizePageMethod();
+  }
+
   // If the page def source specifies the name of a java method
   // that can customize the page def source, call it.  That is,
   // we start off by reading in the PDY, then call some java code
@@ -211,6 +221,22 @@ public abstract class PageDefImpl implements PageDef {
   }
 
   protected abstract String getPageKey();
+
+  SliceFormDefImpl asSliceFormDefImpl() {
+    return (SliceFormDefImpl)this;
+  }
+
+  SliceTableDefImpl asSliceTableDefImpl() {
+    return (SliceTableDefImpl)this;
+  }
+
+  CreateFormDefImpl asCreateFormDefImpl() {
+    return (CreateFormDefImpl)this;
+  }
+
+  TableDefImpl asTableDefImpl() {
+    return (TableDefImpl)this;
+  }
 
   @Override
   public String toString() {

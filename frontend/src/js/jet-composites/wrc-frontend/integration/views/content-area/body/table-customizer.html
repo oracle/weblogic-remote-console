@@ -1,0 +1,162 @@
+<!--
+ Copyright (c) 2022, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+<div
+  id="table-customizer"
+  class="oj-flex oj-sm-flex-direction-column"
+>
+  <!-- nest 4 columns -->
+  <div id="left-right-container" class="oj-flex oj-sm-flex-items-initial">
+    <!-- column 1 -->
+    <div id="left-container" class="oj-flex-item">
+      <span data-bind="text: i18n.labels.available.value"></span>
+      <div>
+        <oj-list-view
+          id="unselectedColumnList"
+          data="[[leftColumnsDataProvider]]"
+          selection-mode="multiple"
+          selected="{{selectedLeftItems}}"
+          class="oj-listview-item-padding-off"
+        >
+          <template slot="itemTemplate" data-oj-as="item">
+            <div class="oj-listview-item-layout">
+              <oj-selector
+                slot="selector"
+                selected-keys="{{selectedLeftItems}}"
+                selection-mode="multiple"
+                row-key="[[item.data.name]]"
+                :id="[['unselected_checkboxset' + item.data.name]]">
+              </oj-selector>
+              <oj-bind-text value="{{item.data.label}}"></oj-bind-text>
+            </div>
+          </template>
+          <template slot="noData"></template>
+        </oj-list-view>
+      </div>
+    </div>
+
+    <!-- column 2 -->
+    <div
+      id="table-customizer-buttonset"
+      class="oj-flex oj-sm-justify-content-center oj-sm-align-self-center"
+    >
+      <div>
+        <oj-button
+          id="addToRight"
+          display="icons"
+          chroming="outlined"
+          disabled="[[columnsLeft().length === 0]]"
+          on-click="[[addRightButtonClick]]"
+        >
+          <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-caret-e"></span>
+        </oj-button>
+      </div>
+      <div>
+        <oj-button
+          id="addAllRight"
+          display="icons"
+          chroming="outlined"
+          on-click="[[addAllButtonClick]]"
+        >
+          <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-caret02end-e"></span>
+        </oj-button>
+      </div>
+      <div>
+        <oj-button
+          id="removeRight"
+          display="icons"
+          chroming="outlined"
+          disabled="[[columnsRight().length === 0]]"
+          on-click="[[removeRightButtonClick]]"
+        >
+          <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-caret-w"></span>
+        </oj-button>
+      </div>
+      <div>
+        <oj-button
+          id="remoteAll"
+          display="icons"
+          chroming="outlined"
+          on-click="[[removeAllButtonClick]]"
+        >
+          <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-caret02end-w"></span>
+        </oj-button>
+      </div>
+    </div>
+
+    <!-- column 3 -->
+    <div id="right-container" class="oj-flex-item">
+      <span data-bind="text: i18n.labels.selected.value"></span>
+      <div>
+        <oj-list-view
+          id="selectedColumnList"
+          data="[[rightColumnsDataProvider]]"
+          selected="{{selectedRightItems}}"
+          selection-mode="multiple"
+          class="oj-listview-item-padding-off"
+        >
+          <template slot="itemTemplate" data-oj-as="item">
+            <div class="oj-listview-item-layout">
+              <oj-selector
+                slot="selector"
+                selected-keys="{{selectedRightItems}}"
+                selection-mode="multiple"
+                row-key="[[item.data.name]]"
+                :id="[['selected_checkboxset' + item.data.name]]">
+              </oj-selector>
+              <oj-bind-text value="{{item.data.label}}"></oj-bind-text>
+            </div>
+          </template>
+          <template slot="noData"></template>
+        </oj-list-view>
+      </div>
+    </div>
+
+    <!-- column 4 -->
+    <div id="applycancel" class="oj-flex oj-sm-flex-direction-column oj-sm-align-self-center">
+      <oj-button id="reset" class="table-customizer-button" chroming="outlined" on-click="[[resetButtonClick]]">
+        <span>
+          <oj-bind-text value="[[i18n.buttons.reset.label]]"></oj-bind-text>
+        </span>
+      </oj-button>
+
+      <oj-button id="apply" class="table-customizer-button" chroming="outlined" on-click="[[applyButtonClick]]" disabled="[[dirty()===false]]">
+        <span>
+          <oj-bind-text value="[[i18n.buttons.apply.label]]"></oj-bind-text>
+        </span>
+      </oj-button>
+
+      <oj-button id="cancel" class="table-customizer-button" chroming="outlined" on-click="[[cancelButtonClick]]" disabled="[[dirty()===false]]">
+        <span>
+          <oj-bind-text value="[[i18n.buttons.cancel.label]]"></oj-bind-text>
+        </span>
+      </oj-button>
+
+    </div>
+
+  </div>
+
+  <oj-dialog
+    id="noColumnsDialog"
+    dialog-title="[[i18n.messages.action.needAtLeastOneColumn.title]]"
+    aria-describedby="desc"
+  >
+    <div slot="body">
+      <p id="desc">
+        <span>
+          <oj-bind-text
+            value="[[i18n.messages.action.needAtLeastOneColumn.detail]]"
+          ></oj-bind-text>
+        </span>
+      </p>
+    </div>
+    <div slot="footer">
+      <oj-button id="okButton" on-oj-action="[[closeErrorButtonClick]]">
+        <span>
+          <oj-bind-text value="[[i18n.buttons.ok.label]]"></oj-bind-text>
+        </span>
+      </oj-button>
+    </div>
+  </oj-dialog>
+</div>

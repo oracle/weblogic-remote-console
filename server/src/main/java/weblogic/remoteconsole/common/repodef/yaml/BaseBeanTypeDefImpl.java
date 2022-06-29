@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -353,6 +353,8 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
   public BeanPropertyDef getIdentityPropertyDef() {
     return getIdentityPropertyDefImpl();
   }
+
+  abstract List<BaseBeanTypeDefImpl> getInheritedTypeDefImpls();
 
   abstract BaseBeanTypeDefImpl getSubTypeDefImpl(String subTypeDiscriminator);
 

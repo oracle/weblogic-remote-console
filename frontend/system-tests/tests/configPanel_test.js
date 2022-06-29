@@ -111,19 +111,21 @@ describe.only('Test Suite: configPanel_test for Configuration Landing Menu', fun
     it('4. Test Category: GAT/Risk1\n \t Test Scenario: Services Configuration Elements Menu', async function () {
         file = "editTreeServicesMenu.png";
         try {
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Data Sources");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JMS Servers");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","SAF Agents");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JMS System Resources");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Path Services");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Messaging Bridges");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JMS Bridge Destinations");
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JDBC System Resources");
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JTA");
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","File Stores");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JDBC Stores");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Foreign JNDI Providers");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","XML Registries");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","XML Entity Caches");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Mail Sessions");
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Osgi Frameworks");
+            //await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Osgi Frameworks");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -140,7 +142,7 @@ describe.only('Test Suite: configPanel_test for Configuration Landing Menu', fun
         file = "EditTreeSecurityMenu.png";
         try {
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","SecurityChevron","Realms");
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","SecurityChevron","JASPIC");
+            //await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","SecurityChevron","JASPIC");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","SecurityChevron","Certificate Authority Overrides");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","SecurityChevron","Webservice Securities");
             console.log("TEST PASS ");

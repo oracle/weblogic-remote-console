@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -148,13 +148,23 @@ function convertPropertiesFileToJSObject(text) {
     if (typeof propNameParts === "undefined") {
       throw new Error("Name portion of property entry did not contain a dot ('.') character!");
     }
+    let unicodeString;
     // Loop through the array, creating a map where
     // the array item (which is a string) is used as
     // the key, and the value is {} or keyValues[1].
     propNameParts.map((k, i, values) => {
+      // Use decodeURIComponent to ensure unicode
+      // characters (e.g. \u00E8) in keyValues[1],
+      // get converted into a displayable character.
+      if (i === values.length - 1) {
+        unicodeString = decodeURIComponent(JSON.parse('"' + value.replace(/\"/g, '\\"') + '"'));
+      }
+      else {
+        unicodeString = {};
+      }
       // Update container, which because it is a reference
       // to jsObject, updates that as well.
-      container = (container[k] = (i === values.length - 1 ? value : {}));
+      container = (container[k] = unicodeString);
     });
 
     return jsObject;

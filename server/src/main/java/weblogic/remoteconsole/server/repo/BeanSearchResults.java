@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -32,6 +32,9 @@ public interface BeanSearchResults {
   // Returns null if the property is not present in the search results.
   public default Value getValue(BeanPropertyDef propertyDef) {
     Value unsorted = getUnsortedValue(propertyDef);
+    if (unsorted == null) {
+      return null;
+    }
     if (!(propertyDef.isArray() && propertyDef.isReference())) {
       // we only sort arrays of references currently
       return unsorted;

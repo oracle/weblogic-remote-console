@@ -72,6 +72,12 @@ define(['knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/pre
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.dataProviderLoadFailed.add((dataProvider) => {
+          setNavTreeDisabledState(true);
+        });
+
+        self.signalBindings.push(binding);
+
         binding = viewParams.signaling.projectSwitched.add((fromProject) => {
           setNavTreeDisabledState(true);
         });
@@ -147,7 +153,7 @@ define(['knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/pre
           if (source === 'signal') {
             self.navtreeVisible(visible);
             // Send signal about navtree being toggled
-            viewParams.signaling.navtreeToggled.dispatch(visible);
+            viewParams.signaling.navtreeToggled.dispatch(source, visible);
           }
         }
       }

@@ -68,7 +68,7 @@ module.exports = function (driver, file) {
             await admin.setFieldValue(driver, idName = 'AdminConsole_MinThreads|input', newValue = minThreadsConsoleTF);
             await admin.setFieldValue(driver, idName = 'AdminConsole_SSOLogoutURL|input', newValue=consoleSSOLogoutUrlTF);
             await admin.setFieldValue(driver, idName = 'ConsoleExtensionDirectory|input', newValue=consoleExtensionDirTF);
-            await admin.enableCheckBox(driver, idName = 'WebserviceTestpage_Enabled');
+            //await admin.enableCheckBox(driver, idName = 'WebserviceTestpage_Enabled');
             await admin.setFieldValue(driver, idName = 'AdministrationProtocol|input', newValue=adminProtocolTF);
             await admin.enableCheckBox(driver, idName = 'CdiContainer_ImplicitBeanDiscoveryEnabled');
             //await admin.disableCheckBox(driver, idName = 'ConfigBackupEnabled');

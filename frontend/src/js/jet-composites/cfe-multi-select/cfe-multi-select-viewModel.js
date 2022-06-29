@@ -87,6 +87,14 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout'
           });
       };
 
+      this.propertyChanged = function (context) {
+        switch (context.property) {
+          case 'readonly':
+            self.readonly(context.value);
+            break;
+        }
+      };
+
       // The following line shows how you put checks in
       // oj-option elements, of availableCheckboxSet
       //this.checkedAvailableItems(["AppTesters"]);
@@ -128,14 +136,18 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout'
           event.preventDefault();
           return false;
         }
+        this.clearAllChosenItems();
+        dispatchChosenItemsChangedEvent();
+      };
+
+      this.clearAllChosenItems = () => {
         let removedItems = self.chosenItems.removeAll();
         self.availableItems.valueWillMutate();
         ko.utils.arrayPushAll(self.availableItems(), [...removedItems]);
         self.availableItems.valueHasMutated();
         self.checkedAvailableItems([]);
         self.checkedChosenItems([]);
-        dispatchChosenItemsChangedEvent();
-      };
+      }
 
       this.addNewChosenItem = (newChosenItem) => {
         let existingItem = self.availableItems().find(item => item.label === newChosenItem.label);
@@ -249,6 +261,10 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout'
     MultiSelectViewModel.prototype = {
       _addNewChosenItem: function(newChosenItem) {
         this.addNewChosenItem(newChosenItem);
+      },
+
+      _clearAllChosenItems: function() {
+        this.clearAllChosenItems();
       }
     };
 

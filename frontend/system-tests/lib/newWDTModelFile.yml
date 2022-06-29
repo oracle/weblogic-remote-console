@@ -1,0 +1,6 @@
+domainInfo:
+  AdminUserName: '@@PROP:ADMIN_USERNAME@@'
+  AdminPassword: '@@PROP:ADMIN_PASSWORD@@'
+topology:
+  Server:
+    AdminServer:

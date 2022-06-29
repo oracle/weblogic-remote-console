@@ -33,6 +33,8 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
         self.currentSlice = this;
         const level = this.level;
 
+        viewParams.signaling.formSliceSelected.dispatch({current: self.currentSlice});
+
         // initialize the slice history stack with the default tab
         if (CoreUtils.isUndefinedOrNull(this.sliceHistory)) {
           this.sliceHistory = [self.tabArrays()[0][0].name];
@@ -77,7 +79,6 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
               // and self.tabArrays instance-scope observableArray
               // variables.
               self.updateSlice(self.currentSlice, level + 1);
-              viewParams.signaling.formSliceSelected.dispatch({sliceName: self.currentSlice, level: level + 1});
             }
             else {
               // form.js says "No", so set cancelSliceChange to
@@ -117,7 +118,7 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
       };
 
       this.updateSlice = function (newSliceName, level) {
-        let nonDefaultTab = newSliceName !== '';
+        const isNonDefaultTab = newSliceName !== '';
 
         if (self.cancelSliceChange) {
           self.cancelSliceChange = false;
@@ -128,25 +129,15 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
 
         let sliceParam = getQualifiedSlice(level);
 
-        // Double check if the top level slice really exists in the PDJ data.
-        // IFF the slice is not found, use the first slice listed in the PDJ.
-        // Perform this sanity check because the form subscribes to RDJ data
-        // observable updates and there are cases where the subscription is
-        // called and the current tab data has not been updated yet!
         if (sliceParam !== '') {
-          let pdjSlices = self?.pdjData?.sliceForm?.slices || self.pdjData?.sliceTable?.slices;
+          const pdjSlices = self?.pdjData?.sliceForm?.slices || self.pdjData?.sliceTable?.slices;
 
           if (pdjSlices) {
-            let found = false;
-            let sliceName = (sliceParam.split('.'))[0];
-            
-            for (let i = 0; i < pdjSlices.length; i++) {
-              if (sliceName === pdjSlices[i].name) {
-                found = true;
-                break;
-              }
-            }
-            if (!found && pdjSlices.length > 0) {
+            const sliceName = (sliceParam.split('.'))[0];
+            const index = pdjSlices.map(pdjSlice => pdjSlice.name).indexOf(sliceName);
+            if (index === -1 && pdjSlices.length > 0) {
+              // pdjSlices does not contain sliceName, so set
+              // sliceParam to default slice (e.g. 'General')
               sliceParam = pdjSlices[0].name;
             }
           }
@@ -178,7 +169,7 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
             });
           }
         }
-        
+
         getData()
           .then((reply) => {
             rdj = reply.rdj;
@@ -200,10 +191,6 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
 
             let tabs = buildTabArrays(pdjData);
 
-            function isSame(a, b) {
-              return JSON.stringify(a) === JSON.stringify(b);
-            }
-
             function findChildTabs(tabs, tabName) {
               if (typeof tabs !== 'undefined')
                 for (var i = 0; i < tabs.length; i++) {
@@ -213,10 +200,7 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
                 }
             }
 
-            if (
-              (tabs.length !== 1 && self.tabArrays().length === 0) ||
-              !isSame(tabs, self.tabArrays()[0])
-            ) {
+            if ((tabs.length !== 1 && self.tabArrays().length === 0) || !CoreUtils.isSame(tabs, self.tabArrays()[0])) {
               self.tabArrays.removeAll();
               self.tabArrays.push(tabs);
             }
@@ -245,7 +229,7 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
                 }
                 subtabs = findChildTabs(subtabs, sliceArray[s]);
 
-                if (typeof subtabs === 'undefined') {
+                if (CoreUtils.isUndefinedOrNull(subtabs)) {
                   break;
                 }
 
@@ -260,7 +244,7 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
                   };
 
                   self.tabDataProviders.push(dataProvider);
-                } else if (!isSame(self.tabArrays()[s + 1], subtabs)) {
+                } else if (!CoreUtils.isSame(self.tabArrays()[s + 1], subtabs)) {
                   self.tabArrays.pop();
                   self.tabArrays.push(subtabs);
 
@@ -279,20 +263,26 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
               }
             }
 
-            // only update pdj/rdj observables for the nonDefaultTab
+            //refresh the header security warning link when goes to another tab.
+            if (CoreUtils.isNotUndefinedNorNull(rdj.providerLinks)){
+              const label = rdj.providerLinks[0].label;
+              const resourceData = rdj.providerLinks[0].resourceData;
+              if (CoreUtils.isNotUndefinedNorNull(label) && CoreUtils.isNotUndefinedNorNull(resourceData)){
+                viewParams.signaling.domainSecurityWarning.dispatch({
+                  linkLabel: label,
+                  linkResourceData: resourceData
+                });
+              }
+            }
+
+            // only update pdj/rdj observables for the isNonDefaultTab
             // to avoid looping on hot rdj's (e.g. JVM Runtimes)
-            if (nonDefaultTab) {
-              if (
-                JSON.stringify(pdjData) !==
-                JSON.stringify(viewParams.parentRouter.data.pdjData())
-              ) {
+            if (isNonDefaultTab) {
+              if (JSON.stringify(pdjData) !== JSON.stringify(viewParams.parentRouter.data.pdjData())) {
                 viewParams.parentRouter.data.pdjData(pdjData);
               }
 
-              if (
-                JSON.stringify(rdj) !==
-                JSON.stringify(viewParams.parentRouter.data.rdjData())
-              ) {
+              if (JSON.stringify(rdj) !== JSON.stringify(viewParams.parentRouter.data.rdjData())) {
                 viewParams.parentRouter.data.rdjData(rdj);
               }
             }
@@ -308,25 +298,30 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
             self.pdjData = pdjData;
             self.rdjData = rdj;
 
-            let nonwritable = pdjData.sliceForm
+            const isNonWritable = pdjData.sliceForm
               ? pdjData.sliceForm.readOnly === true
               : pdjData.sliceTable.readOnly === true;
 
-            if (nonwritable !== self.sliceReadOnly) {
-              self.sliceReadOnly = nonwritable;
-              viewParams.signaling.nonwritableChanged.dispatch(nonwritable);
+            if (isNonWritable !== self.sliceReadOnly) {
+              self.sliceReadOnly = isNonWritable;
+              viewParams.signaling.nonwritableChanged.dispatch(isNonWritable);
             }
 
             if (viewParams.perspective.id === 'configuration') {
               viewParams.signaling.tabStripTabSelected.dispatch(
-                'form',
+                'form-tabstrip',
                 'shoppingcart',
                 false
               );
             }
           })
           .catch((response) => {
-            ViewModelUtils.failureResponseDefaultHandling(response);
+            if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
+              ViewModelUtils.failureResponseDefaultHandling(response);
+            }
+            else {
+              ViewModelUtils.failureResponseDefaultHandling(response);
+            }
           });
       };
 
@@ -353,7 +348,7 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
       // create Tabs recursively from an element in a pdj
       function createTabs(levelTabs, pdjElement) {
         if (CoreUtils.isNotUndefinedNorNull(pdjElement.slices)) {
-          pdjElement.slices.forEach(function (levelSlice) {
+          pdjElement.slices.forEach((levelSlice) => {
             levelTabs.push(tabFromSlice(levelSlice));
 
             if (CoreUtils.isNotUndefinedNorNull(levelSlice.slices)) {

@@ -31,9 +31,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               value: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.value')
             }
           }
-        },
-        messages: {
-          'dataNotAvailable': {summary: oj.Translations.getTranslatedString('wrc-perspective.messages.dataNotAvailable.summary')}
         }
       };
 
@@ -69,7 +66,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       this.isDirty = function () {
         let rtnval = false;
-        if (viewParams.perspective.id === 'modeling') {
+        if (['modeling','properties'].includes(viewParams.perspective.id)) {
           const formViewModel = self.wlsModuleConfig().viewModel;
           if (formViewModel !== null) rtnval = formViewModel.isDirty();
         }
@@ -78,7 +75,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       this.canExit = function () {
         let rtnval = true;
-        if (viewParams.perspective.id === 'modeling') {
+        if (['modeling','properties'].includes(viewParams.perspective.id)) {
           const formViewModel = self.wlsModuleConfig().viewModel;
           if (formViewModel !== null) {
             let exitEntryType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'autoSave' : 'autoDownload');
@@ -133,9 +130,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               params: params
             })
               .then(this.wlsModuleConfig);
-          }
-          else {
-            this.wlsModuleConfig({ view: [], viewModel: null });
           }
         }.bind(this));
 
@@ -249,8 +243,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   MessageDisplaying.displayMessage(
                     {
                       severity: 'info',
-                      summary: self.i18n.messages.dataNotAvailable.summary,
-                      detail: event.target.attributes['data-notFoundMessage'].value
+                      summary: event.target.attributes['data-notFoundMessage'].value
                     },
                     2500
                   );
@@ -369,6 +362,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             });
 
             processRelatedLinks(reply.body.data.get('rdjData'));
+            processHeaderSecurityLink(reply.body.data.get('rdjData'));
             chooseChildRouter(reply.body.data.get('pdjData'));
           })
           .catch(response => {
@@ -382,6 +376,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               if (newRawPath !== '') {
                 renderPage(newRawPath);
               }
+            }
+            else if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
+              ViewModelUtils.failureResponseDefaultHandling(response);
             }
             else {
               ViewModelUtils.failureResponseDefaultHandling(response);
@@ -430,6 +427,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             Logger.log(`breadcrumbs.html=${div.outerHTML}`);
             self.breadcrumbs.html({ view: HtmlUtils.stringToNodeArray(div.outerHTML), data: self });
           });
+      }
+
+      // header security warning link refresh.
+      // rdjData may or may not have this providerLinks.  As of now, only DomainSecurityRuntime in monitoring will
+      // include this link.  So we only add this test in monitoring.js
+      function processHeaderSecurityLink(rdjData) {
+        if (CoreUtils.isNotUndefinedNorNull(rdjData.providerLinks)){
+          const label = rdjData.providerLinks[0].label;
+          const resourceData = rdjData.providerLinks[0].resourceData;
+          if (CoreUtils.isNotUndefinedNorNull(label) && CoreUtils.isNotUndefinedNorNull(resourceData)){
+            viewParams.signaling.domainSecurityWarning.dispatch({
+              linkLabel: label,
+              linkResourceData: resourceData
+            });
+          }
+        }
       }
 
       function chooseChildRouter(pdjData) {

@@ -231,7 +231,7 @@ describe.only('Test Suite: domainProps_test for Domain Configuration properties'
     //Test Case Name for modify:
     // Configuration->Environments->Domain->Batch Page Properties
     //
-    it('13. Test Category: GAT/Risk1\n \t Test Scenario: Modify Environment->Domain->Batch Properties Pages', async function () {
+    it.skip('13. Test Category: GAT/Risk1\n \t Test Scenario: Modify Environment->Domain->Batch Properties Pages', async function () {
         file = "modifyDomainBatchProp.png";
         try {
             await domain.modifyDomainBatchTab(driver,'testJNDIName','testSchema','testServiceTemplate');

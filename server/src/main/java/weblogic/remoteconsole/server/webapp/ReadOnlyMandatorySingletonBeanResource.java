@@ -20,7 +20,11 @@ public class ReadOnlyMandatorySingletonBeanResource extends BeanResource {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response get(@QueryParam("slice") @DefaultValue("") String slice) {
+  public Response get(
+    @QueryParam("slice") @DefaultValue("") String slice,
+    @QueryParam("reload") @DefaultValue("false") boolean reload
+  ) {
+    getInvocationContext().setReload(reload);
     setSlicePagePath(slice);
     return getSlice();
   }

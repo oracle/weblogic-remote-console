@@ -1,10 +1,8 @@
-// Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
 
-import weblogic.remoteconsole.common.repodef.PagePath;
-import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.webapp.BaseResource;
 import weblogic.remoteconsole.server.webapp.CreatableBeanCollectionResource;
@@ -15,14 +13,6 @@ import weblogic.remoteconsole.server.webapp.CreatableBeanCollectionResource;
 public class LibraryMBeanCustomizer {
 
   private LibraryMBeanCustomizer() {
-  }
-
-  // Customize the LibraryMBean create form PDY
-  public static void customizeCreateFormPageDefSource(
-    PagePath pagePath,
-    PageDefSource pageDefSource
-  ) {
-    (new LibraryMBeanCreateFormSourceCustomizer(pagePath, pageDefSource)).customize();
   }
 
   // Customize the LibraryMBean collection's JAXRS resource

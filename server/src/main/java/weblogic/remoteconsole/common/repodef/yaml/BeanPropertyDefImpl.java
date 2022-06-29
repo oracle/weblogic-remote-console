@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -196,8 +196,8 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
 
   @Override
   public boolean isRequired() {
-    if (getCustomizerSource().isRequired()) {
-      return true;
+    if (getCustomizerSource().isRequired() || getCustomizerSource().isRequiredSpecifiedInYaml()) {
+      return getCustomizerSource().isRequired();
     }
     BeanPropertyDef keyPropertyDef = getTypeDef().getKeyPropertyDef();
     if (keyPropertyDef != null) {
@@ -269,7 +269,7 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
     if (dfltSource != null && !dfltSource.isDerivedDefault()) {
       ValueDefSource valSource = dfltSource.getSecureModeValue();
       if (valSource != null) {
-        return ValueUtils.createValue(valSource.getValue());
+        return fixDefaultValue(ValueUtils.createValue(valSource.getValue()));
       }
     }
     return UnknownValue.INSTANCE;
@@ -281,7 +281,7 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
     if (dfltSource != null && !dfltSource.isDerivedDefault()) {
       ValueDefSource valSource = dfltSource.getProductionModeValue();
       if (valSource != null) {
-        return ValueUtils.createValue(valSource.getValue());
+        return fixDefaultValue(ValueUtils.createValue(valSource.getValue()));
       }
     }
     return UnknownValue.INSTANCE;
@@ -295,14 +295,30 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
     }
     ValueDefSource valSource = dfltSource.getValue();
     if (valSource != null) {
-      return ValueUtils.createValue(valSource.getValue());
+      return fixDefaultValue(ValueUtils.createValue(valSource.getValue()));
     }
     return getDefaultValueForType();
   }
 
+  private Value fixDefaultValue(Value defaultValue) {
+    if (isReferenceAsReferences()) {
+      return NullReference.INSTANCE;
+    }
+    if (isDateAsLong()) {
+      return UnknownValue.INSTANCE;
+    }
+    return defaultValue;
+  }
+
   private Value getDefaultValueForType() {
+    if (isReferenceAsReferences()) {
+      return NullReference.INSTANCE;
+    }
     if (isArray()) {
       return new ArrayValue(new ArrayList<Value>());
+    }
+    if (isDateAsLong()) {
+      return UnknownValue.INSTANCE;
     }
     if (isString()) {
       return new StringValue(null);
@@ -337,11 +353,11 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
     return setRoles;
   }
 
-  BeanPropertyDefSource getSource() {
+  protected BeanPropertyDefSource getSource() {
     return source;
   }
 
-  BeanPropertyDefCustomizerSource getCustomizerSource() {
+  protected BeanPropertyDefCustomizerSource getCustomizerSource() {
     return customizerSource;
   }
 

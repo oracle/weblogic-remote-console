@@ -7,8 +7,8 @@
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/pages', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function (oj, ko, HtmlUtils, Preferences, Runtime, MessageDisplaying, DataOperations, NavtreeManager, PageDataTypes, PageDefinitionUsedIfs, PageDefinitionPages, PageDefinitionUtils, ViewModelUtils, CbeTypes, CbeUtils, CoreUtils, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/pages', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger'],
+  function (oj, ko, HtmlUtils, Preferences, Runtime, MessageDisplaying, DataOperations, NavtreeManager, PageDataTypes, PageDefinitionUsedIfs, PageDefinitionPages, PageDefinitionUtils, ViewModelUtils, CbeTypes, CbeUtils, CoreUtils, CoreTypes, Logger) {
     /**
      *
      * @param viewParams
@@ -90,9 +90,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       // Only add if this.backingData.attributes[property.name]
       // doesn't exist.
       if (typeof this.backingData.attributes[property.name] === 'undefined') {
+        if (['VerifySource', 'VerifyPlan'].includes(property.name)) {
+          this.rdjData.data[property.name] = {set: false, value: true};
+        }
         this.backingData.attributes[property.name] = {
           type: 'conditional',
-          default: this.rdjData.data[property.name].value,
+          default: (typeof this.rdjData.data[property.name] !== 'undefined' ? this.rdjData.data[property.name].value : undefined),
           value: undefined,
           required: (typeof property.required === 'undefined' ? false : property.required),
           visible: true,
@@ -170,6 +173,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           this.pageDefinitionPages.markAsFinished();
         }
         else if (sections.length === 1) {
+          if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name &&
+            this.rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries]/)) {
+            let index = properties.map(property => property.name).indexOf('Source');
+            if (index !== -1) {
+              const index1 = properties.map(property => property.name).indexOf('VerifySource');
+              if (index1 === -1) {
+                properties.splice(index, 0, createVerifyPathProperty('VerifySource', 'Add Source to Archive', 'Source'));
+              }
+            }
+            index = properties.map(property => property.name).indexOf('Plan');
+            if (index !== -1) {
+              const index1 = properties.map(property => property.name).indexOf('VerifyPlan');
+              if (index1 === -1) {
+                properties.splice(index, 0, createVerifyPathProperty('VerifyPlan', 'Add Plan to Archive', 'Plan'));
+              }
+            }
+          }
           // The properties for the new page are nested in a
           // "sections" array item (e.g. sections[0].sections[0]),
           // so we need to grab them from there.
@@ -243,7 +263,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       const attr = this.backingData.attributes[fieldName];
       let oldValue = attr.value;
       if (typeof oldValue !== 'undefined' && oldValue !== fieldValue && !Array.isArray(oldValue)) {
-        Logger.info(`[CREATEFORM] fieldName=${fieldName}, oldValue=${oldValue}, newValue=${fieldValue}`);
+        Logger.log(`[CREATEFORM] fieldName=${fieldName}, oldValue=${oldValue}, newValue=${fieldValue}`);
         result.removed = removeUsedIfDataValues.call(this, fieldName);
         result.rerender = (result.removed.length > 0);
       }
@@ -360,6 +380,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
     function hasIncompleteRequiredAttributes() {
       let properties = [], pageState = {succeeded: true, messages: [], summary: ''};
 
+      if (CoreUtils.isUndefinedOrNull(this.pageDefinitionPages)) {
+        return pageState;
+      }
+
       if (this.pageDefinitionPages.getMode().name === 'PAGING')
         properties = this.pageDefinitionPages.getBackingDataPagingProperties();
       else
@@ -387,6 +411,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         pageState.summary = oj.Translations.getTranslatedString('wrc-create-form.pageState.error.summary');
       }
       return pageState;
+    }
+
+    function createVerifyPathProperty(name, label, field) {
+      return {
+        name: name,
+        type: 'boolean',
+        label: label,
+        helpSummaryHTML: `Determines whether the ${field} field value should be added to the archive file, or not. The default (enabled) means that the local file system path will be added to the archive and the ${field} field value will be converted to the relative path into the archive file. When disabled, the ${field} field value will be treated as a path that is available on every machine or container to which the deployment is targeted and not try to add it to the archive file.`,
+        detailedHelpHTML: `<p>Determines whether the ${field} field value should be added to the archive file, or not. The default (enabled) means that the local file system path will be added to the archive and the ${field} field value will be converted to the relative path into the archive file. When disabled, the ${field} field value will be treated as a path that is available on every machine or container to which the deployment is targeted and not try to add it to the archive file.</p>`,
+        readOnly: false,
+        required: false,
+        restartNeeded: false,
+        supportsModelTokens: false
+      };
     }
 
     //public:
@@ -423,7 +461,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       markAsFinished: function () {
         const pageState = hasIncompleteRequiredAttributes.call(this);
         if (pageState.succeeded) {
-          this.pageDefinitionPages.markAsFinished();
+          if (this.pageDefinitionPages) this.pageDefinitionPages.markAsFinished();
         }
         else {
           MessageDisplaying.displayErrorMessagesHTML(
@@ -451,7 +489,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
       addBackingDataPageData: function (fieldName) {
         // Only add fieldName, if this.backingData.attributes[fieldName] is not there.
-        if (typeof this.backingData.attributes[fieldName] === 'undefined') {
+        if (typeof this.backingData.attributes[fieldName] === 'undefined' || ['VerifySource', 'VerifyPlan'].includes(fieldName)) {
           const property = getBackingDataProperty.call(this, fieldName);
           const sections = PageDefinitionUsedIfs.getUsedIfSections(this.pdjData.createForm.sections, fieldName, undefined, undefined);
           // Add fieldName to attributes and set it's value to a new
@@ -497,6 +535,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         const attrValues = getBackingDataAttributeValues.call(this, fieldName);
         if (typeof attrValues !== 'undefined') rtnval = attrValues.value;
         return rtnval;
+      },
+
+      hasBackingDataAttributes: function() {
+        return (Object.keys(this.backingData.attributes).length > 0);
       },
 
       isRequiredBackingDataAttribute: function(fieldName) {
@@ -551,7 +593,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
        * @param {object} fieldValuesFrom An object containing knockout observables, for where each property in properties is from.
        * This will be null if not WDT.
        */
-      getDataPayload: function (properties, fieldValues, fieldValuesFrom){
+      getDataPayload: function (properties, fieldValues, fieldValuesFrom, scrubData) {
         if (this.isWizard()) {
           this.backingData.hasMultiFormData = false;
 
@@ -569,6 +611,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               properties = pageProperties;
             }
           }
+
         }
 
         // Declare local variable used to store data payload
@@ -618,7 +661,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
             // Get the value from the observable passed
             // in fieldValues parameter.
             const fieldObv = fieldValues[name];
-            if (typeof fieldObv !== 'undefined') {
+            if (CoreUtils.isNotUndefinedNorNull(fieldObv)) {
               if (CoreUtils.isUndefinedOrNull(fieldValuesFrom))
                 value = pdjTypes.getConvertedObservableValue(name, fieldObv());
               else
@@ -629,20 +672,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           // Check for no value and update the payload.
           if (value === null) {
             let defaultValue = this.getBackingDataAttributeDefault(name);
-            if (typeof defaultValue !== 'undefined') {
+            if (CoreUtils.isNotUndefinedNorNull(defaultValue)) {
               value = defaultValue;
             }
             if (value === null && pdjTypes.isStringType(name) || pdjTypes.isSecretType(name)) {
               value = '';
             }
           }
-          if (CoreUtils.isUndefinedOrNull(fieldValuesFrom))
+          if (CoreUtils.isUndefinedOrNull(fieldValuesFrom)) {
             dataPayload[name] = { value: value };
+          }
           else {
             if (CoreUtils.isNotUndefinedNorNull(fieldValuesFrom[name])  && fieldValuesFrom[name]() === 'fromModelToken'){
               dataPayload[name] = value;
-            } else
+            } else {
               dataPayload[name] = { value: value };
+            }
           }
         });
 
@@ -651,6 +696,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           this.pageDefinitionPages.addBackingDataPagingPageProperties([...properties]);
           if (!this.pageDefinitionPages.getCanFinish()) properties = this.pageDefinitionPages.getBackingDataPagingProperties();
         }
+
+        // Remove extraneous fields from results.data and return
+        if (scrubData) dataPayload = this.scrubDataPayload(dataPayload);
 
         return {properties: properties, data: dataPayload};
       },
@@ -670,7 +718,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           dataPayload1 = JSON.parse(JSON.stringify(dataPayload));
           // Remove any field that has '' as a value.
           const arr = Object.entries(dataPayload1);
-          const filtered = arr.filter(([key, value]) => value !== null && value.value !== '');
+          const filtered = arr.filter(([key, value]) => value.value !== null && value.value !== '');
           dataPayload1 = Object.fromEntries(filtered);
           // CBE everypage examples have no "Upload" field in
           // the dataPayload, so we need to remove it before
@@ -693,21 +741,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               }
             }
           }
-          // Remove "PlanPath" field, if the value is empty
-          if (CoreUtils.isNotUndefinedNorNull(dataPayload1['PlanPath']) && dataPayload1['PlanPath'].value === '') {
-            delete dataPayload1['PlanPath'];
-          }
 
         }
         // Return scrubbed dataPayload
         return dataPayload1;
       },
 
-      getDeploymentDataPayload: function (properties, fieldValues) {
+      getDeploymentDataPayload: function (properties, fieldValues, scrubData) {
         // Get the dataPayload
-        const results = this.getDataPayload(properties, fieldValues);
-        // Remove extraneous fields from results.data and return it
-        results.data = this.scrubDataPayload(results.data);
+        const results = this.getDataPayload(properties, fieldValues, undefined, scrubData);
         return results;
       },
 
@@ -715,78 +757,69 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         return (Object.keys(this.backingData.fileUploads).length > 0);
       },
 
-      postMultiFormDataPayload: function (properties, fieldValues) {
-        const self = this;
-        return new Promise(function (resolve, reject) {
-          // Get the dataPayload
-          let results = self.getDataPayload(properties, fieldValues);
-          // Remove extraneous fields from results.data
-          results.data = self.scrubDataPayload(results.data);
-          // Create FormData object that we'll be populating
-          // from scratch.
-          const formData = new FormData();
-          // Find properties with "type": "fileContents" field
-          const fields = properties.filter(property => property.type === 'fileContents');
-          // Use property.name to get File onject that was saved
-          // in this.backingData.fileUploads map.
-          fields.forEach((field) => {
-            if (typeof self.backingData.fileUploads[field.name] !== 'undefined') {
-              // Add multipart sections using file
-              formData.append(
-                field.name,
-                self.backingData.fileUploads[field.name],
-                results.data[field.name].value
-              );
-              delete results.data[field.name];
-            }
-            else {
-              // Remove field.name from results.data, if there
-              // is no file upload for it. This prevents sending
-              // a "Plan": {value: ""} (or "Plan": {value: null})
-              // field to the CBE, in results.data object.
-              delete results.data[field.name];
-            }
-          });
-
-          // Add multipart section for 'requestBody' part, using
-          // the current state of the results.data object.
-
-          formData.append(
-            'requestBody',
-            new Blob([JSON.stringify({
-              data: results.data
-            })], {type: 'application/json'})
-          );
-
-          Logger.info(`[CREATEFORM] formData.requestBody=${formData.get('requestBody')}`);
-          Logger.info(`[CREATEFORM] formData.Source=${formData.get('Source')}`);
-          Logger.info(`[CREATEFORM] formData.Plan=${formData.get('Plan')}`);
-
-          // Create the multipart request and POST it.
-          DataOperations.mbean.upload(self.viewParams.parentRouter.data.rdjUrl(), formData)
-            .then(reply => {
-              resolve(reply);
-            })
-            .catch(response => {
-              reject(response);
-            });
+      createMultipartFormData: function (properties, fieldValues, scrubData) {
+        // Get the dataPayload
+        let results = this.getDataPayload(properties, fieldValues, undefined, scrubData);
+        // Create FormData object that we'll be populating
+        // from scratch.
+        const formData = new FormData();
+        // Find properties with "type": "fileContents" field
+        const fields = results.properties.filter(property => property.type === 'fileContents');
+        // Use property.name to get File onject that was saved
+        // in this.backingData.fileUploads map.
+        fields.forEach((field) => {
+          if (typeof this.backingData.fileUploads[field.name] !== 'undefined') {
+            // Add multipart sections using file
+            formData.append(
+              field.name,
+              this.backingData.fileUploads[field.name],
+              results.data[field.name].value
+            );
+            delete results.data[field.name];
+          }
+          else {
+            // Remove field.name from results.data, if there
+            // is no file upload for it. This prevents sending
+            // a "Plan": {value: ""} (or "Plan": {value: null})
+            // field to the CBE, in results.data object.
+            delete results.data[field.name];
+          }
         });
+
+        // Add multipart section for 'requestBody' part, using
+        // the current state of the results.data object.
+
+        formData.append(
+          'requestBody',
+          new Blob([JSON.stringify({
+            data: results.data
+          })], {type: 'application/json'})
+        );
+
+        Logger.log(`[CREATEFORM] formData.requestBody=${formData.get('requestBody')}`);
+        Logger.log(`[CREATEFORM] formData.Source=${formData.get('Source')}`);
+        Logger.log(`[CREATEFORM] formData.Plan=${formData.get('Plan')}`);
+
+        // Update the results to include the form data
+        results.data['formData'] = formData;
+        return {properties: results.properties, data: results.data};
       },
 
       newBean: function() {
         const self = this;
         return new Promise(function (resolve) {
-        var url = new URL(self.rdjData.self.resourceData,Runtime.getBackendUrl());
-        url.searchParams.set('view', 'createForm');
-        const newUri = url.pathname + url.search;
+          let url = new URL(self.rdjData.self.resourceData,Runtime.getBackendUrl());
+          url.searchParams.set('view', 'createForm');
+          const newUri = url.pathname + url.search;
 
           return DataOperations.mbean.new(newUri)
             .then(reply => {
               const rdjData = reply.body.data.get('rdjData');
               const kind = (CoreUtils.isNotUndefinedNorNull(rdjData) && CoreUtils.isNotUndefinedNorNull(rdjData.self) && CoreUtils.isNotUndefinedNorNull(rdjData.self.kind) ? rdjData.self.kind : undefined);
               const isRdjData = (CoreUtils.isNotUndefinedNorNull(rdjData) && CoreUtils.isNotUndefinedNorNull(rdjData.data) && (Object.keys(rdjData.data).length !== 0) ? true : false);
+
               if (!isRdjData && CoreUtils.isNotUndefinedNorNull(kind) && kind === 'creatableOptionalSingleton') {
-                var url = new URL(self.rdjData.self.resourceData,Runtime.getBackendUrl());
+                url = new URL(self.rdjData.self.resourceData,Runtime.getBackendUrl());
                 url.searchParams.delete('view');
                 url.searchParams.set('action', 'create');
                 const createUri = url.toString();

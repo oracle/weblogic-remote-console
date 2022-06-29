@@ -166,6 +166,11 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         return retval;
       },
 
+      /** Return the default value for the property or undefined when not specified */
+      getDefaultValue: function(propertyName) {
+        return this.pdjTypes[propertyName].defaultValue;
+      },
+
       /** Return the legal values for the property or null */
       getLegalValues: function(propertyName) {
         let retval = null;
@@ -303,6 +308,11 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         return (this.getType(propertyName) === 'fileContents');
       },
 
+      /** Check if the property is a multi-field */
+      isMultiSelectType: function(propertyName) {
+        return (this.isArray(propertyName) && this.isDynamicEnumType(propertyName));
+      },
+
       /** Return the converted value for the property that was read from the observable */
       getConvertedObservableValue: function(propertyName, readValue) {
         let result = null;
@@ -355,6 +365,14 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             break;
         }
         return result;
+      },
+
+      getConvertedObservableValue_WDT_Multi: function(readValue, from) {
+        if ( CoreUtils.isEmpty(readValue))
+          return [];
+        if (from === 'fromModelToken'){
+          return {modelToken: readValue};
+        }
       },
 
       getConvertedObservableValue_WDT: function(propertyName, readValue, from) {
@@ -597,6 +615,33 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         if (this.isConfigData && (rdjDataObject != null) && (rdjDataObject.optionsSources != null)) {
           result = (rdjDataObject.optionsSources.length > 0);
         }
+        return result;
+      },
+
+      /** Return the default value for the property to be used with the observable */
+      getDefaultObservableValue: function(propertyName) {
+        // Get the default from the page definition and use
+        // an empty value when no default value is specified
+        let result = this.getDefaultValue(propertyName);
+        if (result === undefined) result = '';
+
+        // Apply updates as needed for the type...
+        switch(this.getType(propertyName)) {
+          case 'properties':
+            if (result === null) result = '';
+            if (result !== '') {
+              result = PageDefinitionUtils.getPropertiesDisplayValue(result, '\n');
+            }
+            break;
+          case 'string':
+            if (result === null) result = '';
+            if (this.isArray(propertyName) && (result !== '')) {
+              result = PageDefinitionUtils.getArrayOfStringDisplayValue(result, '\n');
+            }
+            break;
+        }
+
+        // Done.
         return result;
       },
 

@@ -37,6 +37,13 @@ perspectives:
       dark: navstrip-icon-wdt-composite-wht_48x48
       greyed: navstrip-icon-wdt-composite-gry_48x48
     beanTree: compositeConfig
+  - id: properties
+    type: built-in
+    iconFiles:
+      light: navstrip-icon-property-list-blk_48x48
+      dark: navstrip-icon-property-list-wht_48x48
+      greyed: navstrip-icon-property-list-gry_48x48
+    beanTree: propertyList
   - id: ancillary
     type: add-in
     iconFiles:

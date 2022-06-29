@@ -95,6 +95,10 @@ define(
       },
       removeLineBreaks: (value) => {
         return value.replace( /[\r\n]+/gm, '' );
+      },
+      shallowCopy: (array) => {
+        if (array) return [...array];
+        return [];
       }
     };
 

@@ -18,3 +18,7 @@ descriptionHTML: '<p>Provides methods that transition servers from one state to 
 name: weblogic.management.runtime.NotRunningServerRuntimeMBean
 properties: [
   ]
+
+roles:
+  allowed:
+  - Operator

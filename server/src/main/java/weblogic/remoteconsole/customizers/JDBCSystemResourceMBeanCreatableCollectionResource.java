@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -25,6 +25,7 @@ import weblogic.remoteconsole.server.repo.BeanPropertyValue;
 import weblogic.remoteconsole.server.repo.BeanPropertyValues;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.BeansPropertyValues;
+import weblogic.remoteconsole.server.repo.BooleanValue;
 import weblogic.remoteconsole.server.repo.CreateFormCreator;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -86,27 +87,46 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
     Response<Page> response =
       getInvocationContext().getPageRepo().asPageReaderRepo().getPage(getInvocationContext());
     if (response.isSuccess()) {
-      // The underlying WLS mbeans say that the default value for DatasourceType is null.
-      // We want to change it to GENERIC in the remote console.
-      // There isn't a way at the yaml level to configure this.
-      // So, get the create form RDJ from the page repo, then
-      // change the DatasourceType property's value to GENERIC.
+      // For a few properties, the create form needs different values that the mbean defaults.
+      // Since there isn't a yaml way to configure this, do it here.
       //
       // Note: since the form properties returned from getPage are read-only,
-      // we need to replace the DatasourceType property to chance its value.
-      String nameWant = PROPERTY_DATASOURCE_TYPE;
+      // we need to replace them to change values.
       List<FormProperty> properties = response.getResults().asForm().getProperties();
       for (int i = 0; i < properties.size(); i++) {
         FormProperty prop = properties.get(i);
-        if (nameWant.equals(prop.getPropertyDef().getPropertyPath().getDotSeparatedPath())) {
-          Value value = new SettableValue(new StringValue(DATASOURCE_TYPE_GENERIC), false);
-          FormProperty newProp = new FormProperty(prop.getPropertyDef(), value);
-          properties.set(i, newProp);
-          break;
+        String name = prop.getPropertyDef().getPropertyPath().getDotSeparatedPath();
+        if (PROPERTY_DATASOURCE_TYPE.equals(name)) {
+          properties.set(i, customizeDataSourceType(prop));
+        } else if (PROPERTY_GRIDLINK_FAN_ENABLED.equals(name)) {
+          properties.set(i, customizeGridLinkFanEnabled(prop));
         }
       }
     }
     return GetPageResponseMapper.toResponse(getInvocationContext(), response);
+  }
+
+  private FormProperty customizeDataSourceType(FormProperty property) {
+    // The underlying WLS mbeans say that the default value for DatasourceType is null.
+    // Change it to GENERIC in the remote console.
+    // There isn't a way at the yaml level to configure this.
+    // So, get the create form RDJ from the page repo, then
+    // change the DatasourceType property's value to GENERIC.
+    return
+      new FormProperty(
+        property.getPropertyDef(),
+        new SettableValue(new StringValue(DATASOURCE_TYPE_GENERIC), false)
+      );
+  }
+
+  private FormProperty customizeGridLinkFanEnabled(FormProperty property) {
+    // The underlying WLS mbeans say that the default value is false.
+    // Change it to true for GridLink data sources.
+    return
+      new FormProperty(
+        property.getPropertyDef(),
+        new SettableValue(new BooleanValue(true), false)
+      );
   }
 
   private class JDBCSystemResourceMBeanCreator extends CreateHelper {

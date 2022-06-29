@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
+import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.schema.BeanChildDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
@@ -24,6 +25,7 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   private static final Logger LOGGER = Logger.getLogger(YamlBasedBeanTypeDefImpl.class.getName());
 
   private String instanceName;
+  private LocalizableString instanceNameLabel;
   private Map<String,BeanPropertyDefImpl> propertyNameToPropertyDefImplMap = new HashMap<>();
   private Map<String,BeanChildDefImpl> childNameToChildDefImplMap = new HashMap<>();
   private Map<String,BeanActionDefImpl> actionNameToActionDefImplMap = new HashMap<>();
@@ -39,6 +41,11 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
       // e.g. ServerLifeCycleRuntimeMBean -> ServerLifeCycleRuntime
       this.instanceName = StringUtils.getSimpleTypeName(getTypeName());
     }
+    this.instanceNameLabel =
+      new LocalizableString(
+        getInstanceNameLabelKey(),
+        StringUtils.camelCaseToUpperCaseWords(this.instanceName)
+      );
   }
 
   // The derived classes must call this after they've finished creating the properties and children:
@@ -69,6 +76,11 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   @Override
   public String getInstanceName() {
     return this.instanceName;
+  }
+
+  @Override
+  public LocalizableString getInstanceNameLabel() {
+    return this.instanceNameLabel;
   }
 
   protected String pathKey(Path path) {

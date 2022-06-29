@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -38,7 +38,7 @@ class LinksDefImpl implements LinksDef {
   }
 
   PageRepoDefImpl getPageRepoDefImpl() {
-    return this.pageRepoDefImpl;
+    return pageRepoDefImpl;
   }
 
   @Override
@@ -47,7 +47,7 @@ class LinksDefImpl implements LinksDef {
   }
 
   BaseBeanTypeDefImpl getTypeDefImpl() {
-    return this.typeDefImpl;
+    return typeDefImpl;
   }
 
   @Override
@@ -55,36 +55,52 @@ class LinksDefImpl implements LinksDef {
     return getTypeDefImpl();
   }
 
-  private LinksDefSource getSource() {
-    return this.source;
-  }
-
   List<LinkDefImpl> getInstanceLinkDefImpls() {
-    return this.instanceLinkDefImpls;
+    return instanceLinkDefImpls;
   }
 
   @Override
   public List<LinkDef> getInstanceLinkDefs() {
-    return this.instanceLinkDefs;
+    return instanceLinkDefs;
   }
 
   List<LinkDefImpl> getCollectionLinkDefImpls() {
-    return this.collectionLinkDefImpls;
+    return collectionLinkDefImpls;
   }
 
   @Override
   public List<LinkDef> getCollectionLinkDefs() {
-    return this.collectionLinkDefs;
+    return collectionLinkDefs;
   }
 
   private void createLinkDefImpls() {
-    for (LinkDefSource linkDefSource : getSource().getInstanceLinks()) {
-      getInstanceLinkDefImpls().add(new LinkDefImpl(this, linkDefSource, false));
+    if (source != null) {
+      for (LinkDefSource linkDefSource : source.getInstanceLinks()) {
+        getInstanceLinkDefImpls().add(new LinkDefImpl(this, linkDefSource, false));
+      }
+      for (LinkDefSource linkDefSource : source.getCollectionLinks()) {
+        getCollectionLinkDefImpls().add(new LinkDefImpl(this, linkDefSource, true));
+      }
+    } else {
+      copyInheritedLinks(getTypeDefImpl());
     }
-    for (LinkDefSource linkDefSource : getSource().getCollectionLinks()) {
-      getCollectionLinkDefImpls().add(new LinkDefImpl(this, linkDefSource, true));
+    instanceLinkDefs = Collections.unmodifiableList(getInstanceLinkDefImpls());
+    collectionLinkDefs = Collections.unmodifiableList(getCollectionLinkDefImpls());
+  }
+
+  private void copyInheritedLinks(BaseBeanTypeDefImpl typeDefImpl) {
+    for (BaseBeanTypeDefImpl inheritedTypeDefImpl : typeDefImpl.getInheritedTypeDefImpls()) {
+      LinksDefImpl inheritedLinksDefImpl = pageRepoDefImpl.getLinksDefImpl(inheritedTypeDefImpl);
+      if (inheritedLinksDefImpl != null) {
+        for (LinkDefImpl inheritedLinkDefImpl : inheritedLinksDefImpl.getInstanceLinkDefImpls()) {
+          getInstanceLinkDefImpls().add(new LinkDefImpl(this, inheritedLinkDefImpl));
+        }
+        for (LinkDefImpl inheritedLinkDefImpl : inheritedLinksDefImpl.getCollectionLinkDefImpls()) {
+          getCollectionLinkDefImpls().add(new LinkDefImpl(this, inheritedLinkDefImpl));
+        }
+      } else {
+        copyInheritedLinks(inheritedTypeDefImpl);
+      }
     }
-    this.instanceLinkDefs = Collections.unmodifiableList(getInstanceLinkDefImpls());
-    this.collectionLinkDefs = Collections.unmodifiableList(getCollectionLinkDefImpls());
   }
 }

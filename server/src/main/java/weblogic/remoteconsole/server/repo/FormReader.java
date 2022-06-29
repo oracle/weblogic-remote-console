@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -221,5 +221,12 @@ class FormReader extends PageReader {
     // The segment refers to a collection if its child def is a collection
     // and the segment doesn't specify the key identifying a bean in the collection.
     return segment.getChildDef().isCollection() && !segment.isKeySet();
+  }
+
+  protected void addModelTokens(Form form) {
+    // Check if the form contains properties and that the BeanRepo supports model tokens
+    if (!form.getProperties().isEmpty() && (getBeanRepo() instanceof ModelTokenReader)) {
+      form.setModelTokens(((ModelTokenReader)getBeanRepo()).getModelTokens(getInvocationContext()));
+    }
   }
 }

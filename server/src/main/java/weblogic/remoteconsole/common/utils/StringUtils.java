@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -13,6 +13,8 @@ import javax.ws.rs.core.UriBuilder;
  * Note: copied from org.glassfish.admin.rest.utils.StringUtil
  */
 public class StringUtils {
+
+  private static final String DUMMY_URL_PREFIX = "http://dummyHost:9999/";
 
   /** Determines whether two strings are equal. Handles null strings too. */
   public static boolean equals(String str1, String str2) {
@@ -351,12 +353,15 @@ public class StringUtils {
   }
 
   public static String urlEncode(String str) {
-    return UriBuilder.fromPath("").segment(str).build().toString();
+    String encodedUri = UriBuilder.fromPath(DUMMY_URL_PREFIX).segment(str).build().toString();
+    return encodedUri.substring(DUMMY_URL_PREFIX.length());
   }
 
   public static String urlDecode(String str) {
     try {
-      return new URI(str).getPath();
+      String encodedUri = DUMMY_URL_PREFIX + str;
+      // strip off the beginning "/" from the string that getPath() returns
+      return new URI(encodedUri).getPath().substring(1);
     } catch (URISyntaxException e) {
       throw new AssertionError(e); // The CFE should only have sent in valid urls
     }
@@ -440,5 +445,4 @@ public class StringUtils {
     }
     return string.toString().replaceAll("[^A-Za-z0-9_]", " ");
   }
-
 }
