@@ -2,10 +2,10 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
-- label: Aggregated Runtime Data
+- label: Runtime Data
   resourceData: DomainRuntime/AggregatedMinThreadsConstraintRuntimes
 
 instanceLinks:
-- label: Aggregated Runtime Data
+- label: Runtime Data
   resourceData: DomainRuntime/AggregatedMinThreadsConstraintRuntimes/<MinThreadsConstraint>
   notFoundMessage: This min threads constraint was not found on any of the currently running servers.

@@ -1,17 +1,17 @@
 define({
   "wrc-header": {
     "text": {
-      "appName": "[PX][WebLogic Remote Console \\u00E9\\u00EB\\u017E\\u00E9]"
+      "appName": "[PX][WebLogic Remote Console éëžé]"
     },
     "keyPairs": {
       "welcome": {
-        "label": "[PX][Welcome, {0} \\u00E9]"
+        "label": "[PX][Welcome, {0} é]"
       },
       "connected": {
-        "label": "[PX][Connect to: \\u00E9]"
+        "label": "[PX][Connect to: é]"
       },
       "disconnected": {
-        "label": "[PX][Not Connected \\u00E9]"
+        "label": "[PX][Not Connected é]"
       }
     },
     "icons": {
@@ -28,19 +28,19 @@ define({
       },
       "connectionType": {
         "nonsecure": {
-          "tooltip": "[PX][Nonsecure \\u00E9]"
+          "tooltip": "[PX][Nonsecure é]"
         },
         "secure": {
-          "tooltip": "[PX][Secure \\u00E9]"
+          "tooltip": "[PX][Secure é]"
         }
       }
     },
     "buttons": {
       "connect": {
-        "label": "[PX][Connect \\u00E9]"
+        "label": "[PX][Connect é]"
       },
       "disconnect": {
-        "label": "[PX][Disconnect \\u00E9]"
+        "label": "[PX][Disconnect é]"
       }
     },
     "menus": {
@@ -56,48 +56,48 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "[PX][Copyright \\u00C2\\u00A9 2020, 2021, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/> \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E]",
-      "builtWith": "[PX][Built with Oracle JET \\u00E9]"
+      "copyrightLegal": "[PX][Copyright Â© 2020, 2022, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/> éëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëž]",
+      "builtWith": "[PX][Built with Oracle JET é]"
     }
   },
   "wrc-navstrip": {
     "icons": {
       "configuration": {
-        "tooltip": "[PX][Configuration \\u00E9]"
+        "tooltip": "[PX][Configuration é]"
       },
       "view": {
-        "tooltip": "[PX][View \\u00E9]"
+        "tooltip": "[PX][View é]"
       },
       "monitoring": {
-        "tooltip": "[PX][Monitoring \\u00E9]"
+        "tooltip": "[PX][Monitoring é]"
       }
     }
   },
   "wrc-content-area-header": {
     "buttons": {
       "readwrite": {
-        "label": "[PX][Read/Write \\u00E9]"
+        "label": "[PX][Read/Write é]"
       },
       "readonly": {
-        "label": "[PX][Read-Only \\u00E9]"
+        "label": "[PX][Read-Only é]"
       }
     },
     "title": {
-      "home": "[PX][Home \\u00E9]",
-      "configuration": "[PX][Configuration \\u00E9]",
-      "view": "[PX][View \\u00E9]",
-      "monitoring": "[PX][Monitoring \\u00E9]"
+      "home": "[PX][Home é]",
+      "configuration": "[PX][Configuration é]",
+      "view": "[PX][View é]",
+      "monitoring": "[PX][Monitoring é]"
     },
     "toolbar": {
       "buttons": {
         "home": {
-          "label": "[PX][Home \\u00E9]"
+          "label": "[PX][Home é]"
         },
         "preferences": {
-          "label": "[PX][Preferences \\u00E9]"
+          "label": "[PX][Preferences é]"
         },
         "search": {
-          "label": "[PX][Search \\u00E9]"
+          "label": "[PX][Search é]"
         }
       }
     }
@@ -106,88 +106,88 @@ define({
     "tabstrip": {
       "tabs": {
         "shoppingcart": {
-          "label": "[PX][Shopping Cart \\u00E9]"
+          "label": "[PX][Shopping Cart é]"
         },
         "ataglance": {
-          "label": "[PX][At-A-Glance \\u00E9]"
+          "label": "[PX][At-A-Glance é]"
         }
       }
     },
     "icons": {
       "kiosk": {
-        "tooltip": "[PX][Kiosk \\u00E9]"
+        "tooltip": "[PX][Kiosk é]"
       },
       "expand": {
-        "tooltip": "[PX][Expand \\u00E9]"
+        "tooltip": "[PX][Expand é]"
       },
       "collapse": {
-        "tooltip": "[PX][Collapse \\u00E9]"
+        "tooltip": "[PX][Collapse é]"
       }
     }
   },
   "wrc-configuration": {
     "icons": {
       "history": {
-        "tooltip": "[PX][History \\u00E9]"
+        "tooltip": "[PX][History é]"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "[PX][Clear History \\u00E9]"
+          "value": "[PX][Clear History é]"
         }
       }
     },
     "messages": {
       "dataNotAvailable": {
-        "summary": "[PX][Data Not Available \\u00E9]"
+        "summary": "[PX][Data Not Available é]"
       }
     }
   },
   "wrc-monitoring": {
     "icons": {
       "history": {
-        "tooltip": "[PX][History \\u00E9]"
+        "tooltip": "[PX][History é]"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "[PX][Clear History \\u00E9]"
+          "value": "[PX][Clear History é]"
         }
       }
     },
     "messages": {
       "dataNotAvailable": {
-        "summary": "[PX][Data Not Available \\u00E9]"
+        "summary": "[PX][Data Not Available é]"
       }
     }
   },
   "wrc-domain-connection": {
     "labels": {
       "runningAt": {
-        "value": "[PX][running at {0} \\u00E9]"
+        "value": "[PX][running at {0} é]"
       }
     },
     "messages": {
       "lostConnection": {
-        "summary": "[PX][Lost Connection \\u00E9]",
-        "detail": "[PX][Unable to connect to the WebLogic Domain {0}, please check that WebLogic is running. \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB]"
+        "summary": "[PX][Lost Connection é]",
+        "detail": "[PX][Unable to connect to the WebLogic Domain {0}, please check that WebLogic is running. éëžéëžéëžéëžéëžéëžéë]"
       },
       "cannotConnect": {
-        "summary": "[PX][Connection Attempt Failed \\u00E9]",
-        "detail": "[PX][Unable to connect to the WebLogic Domain {0}, please check that WebLogic is running. \\u00E9]"
+        "summary": "[PX][Connection Attempt Failed é]",
+        "detail": "[PX][Unable to connect to the WebLogic Domain {0}, please check that WebLogic is running. é]"
       }
     },
     "dialog1": {
-      "title": "[PX][Connect to WebLogic Domain \\u00E9\\u00EB]",
-      "instructions": "[PX][Enter admin user credentials and URL for the WebLogic domain: \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB]",
+      "title": "[PX][Connect to WebLogic Domain éë]",
+      "instructions": "[PX][Enter admin user credentials and URL for the WebLogic domain: éëžéëžéëžéë]",
       "labels": {
-        "url": "[PX][URL \\u00E9]"
+        "url": "[PX][URL é]"
       },
       "buttons": {
         "connect": {
-          "label": "[PX][Connect \\u00E9]"
+          "label": "[PX][Connect é]"
         }
       }
     }
@@ -196,7 +196,7 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "[PX][Gallery \\u00E9]"
+          "label": "[PX][Gallery é]"
         }
       }
     }
@@ -204,148 +204,148 @@ define({
   "wrc-gallery": {
     "cards": {
       "configuration": {
-        "label": "[PX][Configuration \\u00E9]",
-        "description": "[PX][<p>Maintain configuration of WebLogic domain you are currently working with.</p> \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9]"
+        "label": "[PX][Configuration é]",
+        "description": "[PX][<p>Maintain configuration of WebLogic domain you are currently working with.</p> éëžéëžéëžéëžéëžéëžé]"
       },
       "view": {
-        "label": "[PX][View \\u00E9]",
-        "description": "[PX][<p>Examine read-only configuration of WebLogic domain you are currently working with.</p> \\u00E9]"
+        "label": "[PX][View é]",
+        "description": "[PX][<p>Examine read-only configuration of WebLogic domain you are currently working with.</p> é]"
       },
       "monitoring": {
-        "label": "[PX][Monitoring \\u00E9]",
-        "description": "[PX][<p>View runtime MBean information for select resources in WebLogic domain you are currently working with.</p> \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E]"
+        "label": "[PX][Monitoring é]",
+        "description": "[PX][<p>View runtime MBean information for select resources in WebLogic domain you are currently working with.</p> éëžéëžéëžéëžéëžéëžéëžéëžéëž]"
       }
     }
   },
   "wrc-shoppingcart": {
     "icons": {
       "discard": {
-        "tooltip": "[PX][Discard Changes \\u00E9]"
+        "tooltip": "[PX][Discard Changes é]"
       },
       "commit": {
-        "tooltip": "[PX][Commit Changes \\u00E9]"
+        "tooltip": "[PX][Commit Changes é]"
       }
     },
     "sections": {
       "changeManager": {
-        "label": "[PX][Change Manager \\u00E9]"
+        "label": "[PX][Change Manager é]"
       },
       "additions": {
-        "label": "[PX][Additions \\u00E9]"
+        "label": "[PX][Additions é]"
       },
       "modifications": {
-        "label": "[PX][Modifications \\u00E9]"
+        "label": "[PX][Modifications é]"
       },
       "removals": {
-        "label": "[PX][Removals \\u00E9]"
+        "label": "[PX][Removals é]"
       },
       "restart": {
-        "label": "[PX][Restart \\u00E9]"
+        "label": "[PX][Restart é]"
       }
     }
   },
   "wrc-table-toolbar": {
     "buttons": {
       "new": {
-        "label": "[PX][New \\u00E9]"
+        "label": "[PX][New é]"
       },
       "clone": {
-        "label": "[PX][Clone \\u00E9]"
+        "label": "[PX][Clone é]"
       },
       "delete": {
-        "label": "[PX][Delete \\u00E9]"
+        "label": "[PX][Delete é]"
       }
     },
     "icons": {
       "landing": {
-        "tooltip": "[PX][Landing Page \\u00E9]"
+        "tooltip": "[PX][Landing Page é]"
       },
       "history": {
-        "tooltip": "[PX][Toggle visibility of history \\u00E9\\u00EB\\u017E]"
+        "tooltip": "[PX][Toggle visibility of history éëž]"
       },
       "instructions": {
-        "tooltip": "[PX][Toggle visibility of instructions \\u00E9\\u00EB\\u017E\\u00E9]"
+        "tooltip": "[PX][Toggle visibility of instructions éëžé]"
       },
       "help": {
-        "tooltip": "[PX][Toggle visibility of Help page \\u00E9\\u00EB\\u017E\\u00E9]"
+        "tooltip": "[PX][Toggle visibility of Help page éëžé]"
       },
       "sync": {
-        "tooltip": "[PX][Reload \\u00E9]",
-        "tooltipOn": "[PX][Stop Auto-Reload \\u00E9]"
+        "tooltip": "[PX][Reload é]",
+        "tooltipOn": "[PX][Stop Auto-Reload é]"
       },
       "syncInterval": {
-        "tooltip": "[PX][Set Auto-Reload Interval \\u00E9\\u00EB]"
+        "tooltip": "[PX][Set Auto-Reload Interval éë]"
       },
       "shoppingcart": {
-        "tooltip": "[PX][Click to view actions for cart \\u00E9\\u00EB\\u017E\\u00E9]"
+        "tooltip": "[PX][Click to view actions for cart éëžé]"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "[PX][View Changes \\u00E9]"
+          "label": "[PX][View Changes é]"
         },
         "discard": {
-          "label": "[PX][Discard Changes \\u00E9]"
+          "label": "[PX][Discard Changes é]"
         },
         "commit": {
-          "label": "[PX][Commit Changes \\u00E9]"
+          "label": "[PX][Commit Changes é]"
         }
       }
     },
     "instructions": {
       "selectItems": {
-        "value": "[PX][Select items you want to perform ''{0}'' operation on. \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9]"
+        "value": "[PX][Select items you want to perform ''{0}'' operation on. éëžéëžéëžé]"
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
-          "summary": "[PX][Message \\u00E9]",
-          "detail": "[PX][Cannot perform ''{0}'' action while auto-reload is running! Please click the ''{1}'' icon to stop it, first. \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB]"
+          "summary": "[PX][Message é]",
+          "detail": "[PX][Cannot perform ''{0}'' action while auto-reload is running! Please click the ''{1}'' icon to stop it, first. éëžéëžéëžéëžéëžéëžéëžéëžéë]"
         }
       }
     },
     "labels": {
       "start": {
-        "value": "[PX][Start \\u00E9]"
+        "value": "[PX][Start é]"
       },
       "resume": {
-        "value": "[PX][Resume \\u00E9]"
+        "value": "[PX][Resume é]"
       },
       "suspend": {
-        "value": "[PX][Suspend \\u00E9]"
+        "value": "[PX][Suspend é]"
       },
       "shutdown": {
-        "value": "[PX][Shutdown \\u00E9]"
+        "value": "[PX][Shutdown é]"
       },
       "restartSSL": {
-        "value": "[PX][Restart SSL \\u00E9]"
+        "value": "[PX][Restart SSL é]"
       },
       "stop": {
-        "value": "[PX][Stop \\u00E9]"
+        "value": "[PX][Stop é]"
       }
     }
   },
   "wrc-table": {
     "checkboxes": {
       "showHiddenColumns": {
-        "label": "[PX][Show Hidden Columns \\u00E9]"
+        "label": "[PX][Show Hidden Columns é]"
       }
     },
     "tables": {
-      "label": "[PX][Help Table \\u00E9]",
+      "label": "[PX][Help Table é]",
       "columns": {
         "header": {
-          "name": "[PX][Name \\u00E9]",
-          "description": "[PX][Description \\u00E9]"
+          "name": "[PX][Name é]",
+          "description": "[PX][Description é]"
         }
       }
     },
     "actionsDialog": {
       "buttons": {
         "cancel": {
-          "label": "[PX][Cancel \\u00E9]"
+          "label": "[PX][Cancel é]"
         }
       }
     }
@@ -353,64 +353,64 @@ define({
   "wrc-form-toolbar": {
     "buttons": {
       "save": {
-        "label": "[PX][Save \\u00E9]"
+        "label": "[PX][Save é]"
       },
       "new": {
-        "label": "[PX][Create \\u00E9]"
+        "label": "[PX][Create é]"
       },
       "delete": {
-        "label": "[PX][Remove \\u00E9]"
+        "label": "[PX][Remove é]"
       },
       "back": {
-        "label": "[PX][Back \\u00E9]"
+        "label": "[PX][Back é]"
       },
       "next": {
-        "label": "[PX][Next \\u00E9]"
+        "label": "[PX][Next é]"
       },
       "finish": {
-        "label": "[PX][Create \\u00E9]"
+        "label": "[PX][Create é]"
       }
     },
     "icons": {
       "save": {
-        "tooltip": "[PX][Save \\u00E9]"
+        "tooltip": "[PX][Save é]"
       },
       "create": {
-        "tooltip": "[PX][Create \\u00E9]"
+        "tooltip": "[PX][Create é]"
       },
       "landing": {
-        "tooltip": "[PX][Landing Page \\u00E9]"
+        "tooltip": "[PX][Landing Page é]"
       },
       "history": {
-        "tooltip": "[PX][Toggle visibility of history \\u00E9\\u00EB\\u017E]"
+        "tooltip": "[PX][Toggle visibility of history éëž]"
       },
       "instructions": {
-        "tooltip": "[PX][Toggle visibility of instructions \\u00E9\\u00EB\\u017E\\u00E9]"
+        "tooltip": "[PX][Toggle visibility of instructions éëžé]"
       },
       "help": {
-        "tooltip": "[PX][Toggle visibility of Help page \\u00E9\\u00EB\\u017E\\u00E9]"
+        "tooltip": "[PX][Toggle visibility of Help page éëžé]"
       },
       "sync": {
-        "tooltip": "[PX][Reload \\u00E9]",
-        "tooltipOn": "[PX][Stop Auto-Reload \\u00E9]"
+        "tooltip": "[PX][Reload é]",
+        "tooltipOn": "[PX][Stop Auto-Reload é]"
       },
       "syncInterval": {
-        "tooltip": "[PX][Set Auto-Reload Interval \\u00E9\\u00EB]"
+        "tooltip": "[PX][Set Auto-Reload Interval éë]"
       },
       "shoppingcart": {
-        "tooltip": "[PX][Click to view actions for cart \\u00E9\\u00EB\\u017E\\u00E9]"
+        "tooltip": "[PX][Click to view actions for cart éëžé]"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "[PX][View Changes \\u00E9]"
+          "label": "[PX][View Changes é]"
         },
         "discard": {
-          "label": "[PX][Discard Changes \\u00E9]"
+          "label": "[PX][Discard Changes é]"
         },
         "commit": {
-          "label": "[PX][Commit Changes \\u00E9]"
+          "label": "[PX][Commit Changes é]"
         }
       }
     }
@@ -418,37 +418,37 @@ define({
   "wrc-form": {
     "checkboxes": {
       "showAdvancedFields": {
-        "label": "[PX][Show Advanced Fields \\u00E9]"
+        "label": "[PX][Show Advanced Fields é]"
       }
     },
     "introduction": {
       "toggleHelp": {
-        "text": "[PX][Click the {0} icon to toggle between summary and detailed help. \\u00E9]"
+        "text": "[PX][Click the {0} icon to toggle between summary and detailed help. é]"
       }
     },
     "messages": {
-      "save": "[PX][Changes added to cart \\u00E9]"
+      "save": "[PX][Changes added to cart é]"
     },
     "icons": {
       "restart": {
-        "tooltip": "[PX][Server or App Restart Required \\u00E9\\u00EB\\u017E\\u00E9]"
+        "tooltip": "[PX][Server or App Restart Required éëžé]"
       },
       "choose": {
-        "tooltip": "[PX][Choose File \\u00E9]"
+        "tooltip": "[PX][Choose File é]"
       },
       "clear": {
-        "tooltip": "[PX][Clear Chosen File \\u00E9]"
+        "tooltip": "[PX][Clear Chosen File é]"
       },
       "more": {
-        "tooltip": "[PX][More Actions \\u00E9]"
+        "tooltip": "[PX][More Actions é]"
       }
     },
     "tables": {
-      "label": "[PX][Help Table \\u00E9]",
+      "label": "[PX][Help Table é]",
       "columns": {
         "header": {
-          "name": "[PX][Name \\u00E9]",
-          "description": "[PX][Description \\u00E9]"
+          "name": "[PX][Name é]",
+          "description": "[PX][Description é]"
         }
       }
     }
@@ -456,59 +456,59 @@ define({
   "wrc-create-form": {
     "pageState": {
       "error": {
-        "summary": "[PX][Incomplete Required Fields \\u00E9\\u00EB]",
-        "detail": "[PX][{0} field is required, but no value has been provided. \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB]"
+        "summary": "[PX][Incomplete Required Fields éë]",
+        "detail": "[PX][{0} field is required, but no value has been provided. éëžéëžéëžéë]"
       }
     }
   },
   "wrc-form-layouts": {
     "tooltips": {
       "collapse": {
-        "value": "[PX][Collapse \\u00E9]"
+        "value": "[PX][Collapse é]"
       },
       "expand": {
-        "value": "[PX][Expand \\u00E9]"
+        "value": "[PX][Expand é]"
       }
     }
   },
   "wrc-unsaved-changes": {
     "confirmDialog": {
-      "title": "[PX][Unsaved Changes Detected \\u00E9\\u00EB]",
+      "title": "[PX][Unsaved Changes Detected éë]",
       "buttons": {
         "yes": {
-          "label": "[PX][Yes \\u00E9]"
+          "label": "[PX][Yes é]"
         },
         "no": {
-          "label": "[PX][No \\u00E9]"
+          "label": "[PX][No é]"
         }
       }
     },
     "prompts": {
       "unsavedChanges": {
         "willBeLost": {
-          "value": "[PX][All unsaved changes will be lost. Continue? \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9]"
+          "value": "[PX][All unsaved changes will be lost. Continue? éëžéëžé]"
         },
         "areYouSure": {
-          "value": "[PX][Are you sure you want to exit without saving changes? \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9]"
+          "value": "[PX][Are you sure you want to exit without saving changes? éëžéëžéëžé]"
         }
       }
     }
   },
   "wrc-sync-interval": {
     "dialogSync": {
-      "title": "[PX][Set Auto-Reload Interval \\u00E9\\u00EB]",
-      "instructions": "[PX][How many seconds do you want for the auto-reloading interval? \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9]",
+      "title": "[PX][Set Auto-Reload Interval éë]",
+      "instructions": "[PX][How many seconds do you want for the auto-reloading interval? éëžéëžéëžéëžé]",
       "fields": {
         "interval": {
-          "label": "[PX][Auto-Reload Interval: \\u00E9]"
+          "label": "[PX][Auto-Reload Interval: é]"
         }
       },
       "buttons": {
         "ok": {
-          "label": "[PX][OK \\u00E9]"
+          "label": "[PX][OK é]"
         },
         "cancel": {
-          "label": "[PX][Cancel \\u00E9]"
+          "label": "[PX][Cancel é]"
         }
       }
     }
@@ -517,22 +517,22 @@ define({
     "messages": {
       "action": {
         "unableToPerform": {
-          "summary": "[PX][Message \\u00E9]",
-          "detail": "[PX][Cannot perform ''{0}'' action while auto-reload is running! Please click the ''{1}'' icon to stop it, first. \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB]"
+          "summary": "[PX][Message é]",
+          "detail": "[PX][Cannot perform ''{0}'' action while auto-reload is running! Please click the ''{1}'' icon to stop it, first. éëžéëžéëžéëžéëžéëžéëžéëžéë]"
         }
       }
     },
     "labels": {
       "cannotDetermineExactCause": {
-        "value": "[PX][Cannot determine exact cause. Check JavaScript Console for hints. \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB]"
+        "value": "[PX][Cannot determine exact cause. Check JavaScript Console for hints. éëžéëžéëžéëžéë]"
       }
     }
   },
   "wrc-pdj-fields": {
     "cfe-multi-select": {
       "labels": {
-        "available": "[PX][Available \\u00E9]",
-        "chosen": "[PX][Chosen \\u00E9]"
+        "available": "[PX][Available é]",
+        "chosen": "[PX][Chosen é]"
       }
     }
   },
@@ -541,13 +541,13 @@ define({
       "more": {
         "optionsSources": {
           "view": {
-            "label": "[PX][View {0}... \\u00E9]"
+            "label": "[PX][View {0}... é]"
           },
           "create": {
-            "label": "[PX][Create New {0}... \\u00E9]"
+            "label": "[PX][Create New {0}... é]"
           },
           "edit": {
-            "label": "[PX][Edit {0}... \\u00E9]"
+            "label": "[PX][Edit {0}... é]"
           }
         }
       }
@@ -555,17 +555,17 @@ define({
   },
   "wrc-pdj-unset": {
     "menu": {
-      "label": "[PX][Restore to default \\u00E9]"
+      "label": "[PX][Restore to default é]"
     },
     "placeholder": {
-      "value": "[PX][default \\u00E9]"
+      "value": "[PX][default é]"
     }
   },
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "summary": "[PX][Message \\u00E9]",
-        "detail": "[PX][RDJ did not contain a ''notFoundMessage'' field for the ''{0}'' item. \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB]"
+        "summary": "[PX][Message é]",
+        "detail": "[PX][RDJ did not contain a ''notFoundMessage'' field for the ''{0}'' item. éëžéëžéëžéëžéë]"
       }
     }
   },
@@ -578,41 +578,41 @@ define({
         "value": "SHUTDOWN"
       },
       "serverStates": {
-        "value": "[PX][Server States \\u00E9]"
+        "value": "[PX][Server States é]"
       },
       "systemStatus": {
-        "value": "[PX][System Status \\u00E9]"
+        "value": "[PX][System Status é]"
       },
       "healthState": {
         "failed": {
-          "value": "[PX][Failed \\u00E9]"
+          "value": "[PX][Failed é]"
         },
         "critical": {
-          "value": "[PX][Critical \\u00E9]"
+          "value": "[PX][Critical é]"
         },
         "overloaded": {
-          "value": "[PX][Overloaded \\u00E9]"
+          "value": "[PX][Overloaded é]"
         },
         "warning": {
-          "value": "[PX][Warning \\u00E9]"
+          "value": "[PX][Warning é]"
         },
         "ok": {
-          "value": "[PX][OK \\u00E9]"
+          "value": "[PX][OK é]"
         }
       }
     },
     "descriptions": {
       "healthState": {
-        "value": "[PX][Health of Running Servers as of \\u00E9\\u00EB\\u017E\\u00E9]"
+        "value": "[PX][Health of Running Servers as of éëžé]"
       }
     },
     "headers": {
       "serverStates": {
         "name": {
-          "value": "[PX][Name \\u00E9]"
+          "value": "[PX][Name é]"
         },
         "state": {
-          "value": "[PX][State \\u00E9]"
+          "value": "[PX][State é]"
         }
       }
     }
@@ -620,33 +620,33 @@ define({
   "wrc-data-operations": {
     "messages": {
       "backendNotReachable": {
-        "detail": "[PX][Backend not currently reachable. \\u00E9\\u00EB\\u017E\\u00E9]"
+        "detail": "[PX][Backend not currently reachable. éëžé]"
       },
       "connectionMessage": {
-        "summary": "[PX][Connection Message  \\u00E9]"
+        "summary": "[PX][Connection Message  é]"
       },
       "connectFailed": {
-        "detail": "[PX][Connect Failed:  \\u00E9]"
+        "detail": "[PX][Connect Failed:  é]"
       },
       "badRequest": {
-        "detail": "[PX][Please supply the WebLogic Domain URL and credentials  \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9\\u00EB]"
+        "detail": "[PX][Please supply the WebLogic Domain URL and credentials  éëžéëžéëžéë]"
       },
       "invalidCredentials": {
-        "detail": "[PX][WebLogic Domain credentials are not valid  \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E\\u00E9]"
+        "detail": "[PX][WebLogic Domain credentials are not valid  éëžéëžé]"
       },
       "invalidUrl": {
-        "detail": "[PX][WebLogic Domain URL is not reachable  \\u00E9\\u00EB\\u017E\\u00E9\\u00EB\\u017E]"
+        "detail": "[PX][WebLogic Domain URL is not reachable  éëžéëž]"
       },
       "notSupported": {
-        "detail": "[PX][WebLogic Domain is not supported  \\u00E9\\u00EB\\u017E\\u00E9]"
+        "detail": "[PX][WebLogic Domain is not supported  éëžé]"
       },
       "unexpectedStatus": {
-        "detail": "[PX][Unexpected result (status: {0})  \\u00E9\\u00EB\\u017E\\u00E9]"
+        "detail": "[PX][Unexpected result (status: {0})  éëžé]"
       },
       "cbeRestApi": {
         "requestUnsuccessful": {
-          "summary": "[PX][Request Unsuccessful  \\u00E9]",
-          "detail": "[PX][A non-successful response was returned from a console backend call.  \\u00E9]"
+          "summary": "[PX][Request Unsuccessful  é]",
+          "detail": "[PX][A non-successful response was returned from a console backend call.  é]"
         }
       }
     }
@@ -654,36 +654,36 @@ define({
   "wrc-message-displaying": {
     "messages": {
       "seeJavascriptConsole": {
-        "detail": "[PX][See remote console terminal or Javascript console for specific reason(s).  \\u00E9]"
+        "detail": "[PX][See remote console terminal or Javascript console for specific reason(s).  é]"
       },
       "responseMessages": {
-        "summary": "[PX][Response Messages  \\u00E9]"
+        "summary": "[PX][Response Messages  é]"
       }
     }
   },
   "wrc-change-manager": {
     "messages": {
       "cannotGetLockState": {
-        "summary": "[PX][Unable to access change manager! \\u00E9\\u00EB\\u017E\\u00E9]"
+        "summary": "[PX][Unable to access change manager! éëžé]"
       },
       "changesCommitted": {
-        "summary": "[PX][Changes were successfully committed! \\u00E9\\u00EB\\u017E\\u00E9\\u00EB]"
+        "summary": "[PX][Changes were successfully committed! éëžéë]"
       },
       "changesNotCommitted": {
-        "summary": "[PX][Unable to commit changes! \\u00E9\\u00EB]"
+        "summary": "[PX][Unable to commit changes! éë]"
       },
       "changesDiscarded": {
-        "summary": "[PX][Changes were successfully discarded! \\u00E9\\u00EB\\u017E\\u00E9\\u00EB]"
+        "summary": "[PX][Changes were successfully discarded! éëžéë]"
       },
       "changesNotDiscarded": {
-        "summary": "[PX][Unable to discard changes! \\u00E9\\u00EB]"
+        "summary": "[PX][Unable to discard changes! éë]"
       }
     }
   },
   "wrc-view-model-utils": {
     "labels": {
       "unexpectedErrorResponse": {
-        "value": "[PX][Unexpected Error Response \\u00E9]"
+        "value": "[PX][Unexpected Error Response é]"
       }
     }
   }

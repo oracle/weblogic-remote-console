@@ -10,7 +10,7 @@
  * Class representing the metadata for a data provider.
  * @module
  * @typedef {{type: string, name: "edit"|"serverConfig"|"domainRuntime", label?: string, navtreeUri?: string, changeManagerUri? : string, readOnly?: boolean}} BeanTree
- * @typedef {"adminserver"|"model"|"modelComposite"} DataProviderType
+ * @typedef {"adminserver"|"model"|"modelComposite"|"properties"} DataProviderType
  */
 define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/cfe-errors', 'wrc-frontend/core/types', 'wrc-frontend/core/cbe-types',  'ojs/ojlogger'],
   function(Runtime, CoreUtils, CfeErrors, CoreTypes, CbeTypes, Logger){
@@ -52,6 +52,9 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
           case DataProvider.prototype.Type.COMPOSITE:
             types = ['composite'];
             break;
+          case DataProvider.prototype.Type.PROPERTIES:
+            types = ['properties'];
+            break;
         }
       }
       return types;
@@ -74,6 +77,9 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
         case DataProvider.prototype.Type.COMPOSITE:
           names = ['compositeConfig'];
           break;
+        case DataProvider.prototype.Type.PROPERTIES:
+          names = ['propertyList'];
+          break;
       }
       return names;
     }
@@ -84,7 +90,8 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
         'monitoring': 'domainRuntime',
         'view': 'serverConfig',
         'modeling': 'edit',
-        'composite': 'compositeConfig'
+        'composite': 'compositeConfig',
+        'properties': 'propertyList'
       })[value];
       return nameSwitch(beanTreeType);
     }
@@ -94,7 +101,8 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
       Type: Object.freeze({
         ADMINSERVER: {name: 'adminserver'},
         MODEL: {name: 'model'},
-        COMPOSITE: {name: 'modelComposite'}
+        COMPOSITE: {name: 'modelComposite'},
+        PROPERTIES: {name: 'properties'}
       }),
       typeFromName: function (name) {
         return Object.values(this.Type).find(type => type.name === name);
@@ -146,6 +154,15 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
           case CbeTypes.ProviderType.WDT_COMPOSITE.name:
             this.putValue('name', this.name);
             this.putValue('type', DataProvider.prototype.Type.COMPOSITE.name);
+            this.putValue('state', responsePayload.state || CoreTypes.Domain.ConnectState.DISCONNECTED.name);
+            this.putValue('connectivity', responsePayload.connectivity || CoreTypes.Console.RuntimeMode.DETACHED.name);
+            this.putValue('mode', responsePayload.mode || CbeTypes.ConnectionMode.STANDALONE.name);
+            if (this['state'] === CoreTypes.Domain.ConnectState.CONNECTED.name) this.putValue('activationDatetime', new Date());
+            this.beanTrees = this.getBeanTreesFromRoots(responsePayload.roots);
+            break;
+          case CbeTypes.ProviderType.PROPERTY_LIST.name:
+            this.putValue('name', this.name);
+            this.putValue('type', DataProvider.prototype.Type.PROPERTIES.name);
             this.putValue('state', responsePayload.state || CoreTypes.Domain.ConnectState.DISCONNECTED.name);
             this.putValue('connectivity', responsePayload.connectivity || CoreTypes.Console.RuntimeMode.DETACHED.name);
             this.putValue('mode', responsePayload.mode || CbeTypes.ConnectionMode.STANDALONE.name);
@@ -217,22 +234,23 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
       },
 
       /**
-       *
+       * Get the download URI from the provider bean tree
        * @returns {undefined|string}
        */
       getBeanTreeDownloadUri: function() {
-        const beanTree = this.beanTrees.find(beanTree => beanTree.type === 'modeling');
+        const beanTree = this.beanTrees.find(beanTree => CoreUtils.isNotUndefinedNorNull(beanTree.download));
         return (CoreUtils.isNotUndefinedNorNull(beanTree) ? beanTree.download : undefined);
       },
 
       getBeanTreesFromRoots: function(roots) {
-        let rtnval = ['configuration', 'view', 'monitoring', 'modeling', 'composite'];
+        let rtnval = ['configuration', 'view', 'monitoring', 'modeling', 'composite', 'properties'];
         roots.forEach((root) => {
           const nameSwitch = (value) => ({
             'edit': 'configuration',
             'serverConfig': 'view',
             'domainRuntime': 'monitoring',
-            'compositeConfig': 'composite'
+            'compositeConfig': 'composite',
+            'propertyList': 'properties'
           })[value];
           const index = rtnval.indexOf(nameSwitch(root.name));
           if (index !== -1) {
@@ -246,6 +264,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
             // Ensure readOnly is defined, when the value is unspecified in the root, the tree is set as not read only
             beanTree['readOnly'] = (CoreUtils.isNotUndefinedNorNull(root.readOnly) ?  root.readOnly : false);
             if (CoreUtils.isNotUndefinedNorNull(root.actionsEnabled)) beanTree['actionsEnabled'] = root.actionsEnabled;
+            if (CoreUtils.isNotUndefinedNorNull(root.simpleSearch)) beanTree['simpleSearch'] = root.simpleSearch;
             rtnval[index] = beanTree;
           }
         });
@@ -255,6 +274,10 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
       addField: function(name, value) {
         if (typeof value === 'number') value = value.toString();
         this.putValue(name, value || '');
+      },
+
+      removeField: function(name) {
+        delete this[name];
       },
 
       putValue: function(name, value) {

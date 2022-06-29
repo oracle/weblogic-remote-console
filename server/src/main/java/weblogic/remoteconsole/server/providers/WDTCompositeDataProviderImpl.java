@@ -15,15 +15,14 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.weblogic.WDTCompositePageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WDTModelBuilder;
+import weblogic.remoteconsole.server.repo.weblogic.WDTModelSchema;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
 import weblogic.remoteconsole.server.webapp.ProviderResource;
-import weblogic.remoteconsole.server.webapp.UriUtils;
 
 /**
  * The implementation of the provider for an order list of WDT Models
@@ -48,16 +47,15 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
     this.pm = pm;
 
     // Setup the roots
-    String encodedName = StringUtils.urlEncode(name);
     viewRoot = new Root(
+      this,
       Root.COMPOSITE_CONFIGURATION_NAME,
       Root.CONFIGURATION_ROOT,
-      Root.CONFIGURATION_LABEL,
-      "/" + UriUtils.API_URI + "/" + encodedName + "/" + Root.COMPOSITE_CONFIGURATION_NAME + "/navtree",
-      null, // no change manager
-      null, // download is _not_ advertised but can be used to see the composite model
-      true  // read only
-    );
+      Root.COMPOSITE_CONFIGURATION_LABEL,
+      true, // read only
+      Root.NAV_TREE_RESOURCE,
+      Root.SIMPLE_SEARCH_RESOURCE
+     );
     roots.put(Root.COMPOSITE_CONFIGURATION_NAME, viewRoot);
   }
 
@@ -170,7 +168,11 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
 
   // Get the response message when no model is set on the provider
   private String getNoModelMessage(InvocationContext ic) {
-    String result = ic.getLocalizer().localizeString(LocalizedConstants.MODEL_INVALID);
+    String result =
+      ic.getLocalizer().localizeString(
+        LocalizedConstants.MODEL_INVALID,
+        WDTModelSchema.KNOWN_SECTIONS
+      );
     result += (lastProviderNoModel != null) ? lastProviderNoModel : "";
     lastMessage = result;
     return result;

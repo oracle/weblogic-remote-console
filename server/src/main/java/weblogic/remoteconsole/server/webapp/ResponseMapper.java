@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -306,6 +306,11 @@ public abstract class ResponseMapper<T> {
     if (beanTreePath == null) {
       return getInvocationContext().getLocalizer().localizeString(LocalizedConstants.NULL_REFERENCE);
     }
+    if (beanTreePath.isRoot()) {
+      // There is no label for the root bean of the repo.
+      // This isn't a problem since the user never sees it anyway.
+      return "";
+    }
     BeanTreePathSegment lastSegment = beanTreePath.getLastSegment();
     BeanChildDef childDef = lastSegment.getChildDef();
     if (childDef.isCollection() && lastSegment.isKeySet()) {
@@ -319,12 +324,16 @@ public abstract class ResponseMapper<T> {
     if (beanTreePath == null) {
       return JsonValue.NULL;
     }
+    return getBackendRelativeUri(beanTreePath.getPath(), queryParams);
+  }
+
+  protected JsonValue getBackendRelativeUri(Path rootRelativePath, String queryParams) {
     Path connectionRelativePath = new Path();
     String pageRepoName =
       getInvocationContext().getPageRepo().getPageRepoDef().getName();
     connectionRelativePath.addComponent(pageRepoName);
     connectionRelativePath.addComponent("data");
-    connectionRelativePath.addPath(beanTreePath.getPath());
+    connectionRelativePath.addPath(rootRelativePath);
     String backendRelativeUri =
       UriUtils.getBackendRelativeUri(getInvocationContext(), connectionRelativePath)
       +

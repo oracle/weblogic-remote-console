@@ -1,0 +1,36 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- name: NumberOfMatches
+  writable: never
+- name: TemplateBeanKeyCriteria
+  label: "{0} criteria"
+- name: TemplateBeanKeyValue
+  label: "{0} value"
+- name: TemplateBeanKeyResult
+  label: "{0}"
+- name: TemplateLongPropertyCriteria
+  label: "{0} criteria"
+- name: TemplateLongPropertyValue
+  label: "{0} value"
+- name: TemplateDoublePropertyCriteria
+  label: "{0} criteria"
+- name: TemplateDoublePropertyValue
+  label: "{0} value"
+- name: TemplateBooleanPropertyCriteria
+  label: "{0} criteria"
+- name: TemplateBooleanPropertyValue
+  label: "{0} value"
+- name: TemplateStringPropertyCriteria
+  label: "{0} criteria"
+- name: TemplateStringPropertyValue
+  label: "{0} value"
+- name: TemplateGenericPropertyCriteria
+  label: "{0} criteria"
+- name: TemplateGenericPropertyValue
+  label: "{0} value"
+
+createResourceMethod: weblogic.remoteconsole.customizers.CustomViewMBeanCustomizer.createResource
+getCollectionMethod: weblogic.remoteconsole.customizers.CustomViewMBeanCustomizer.getCollection
+disableMBeanJavadoc: true
+supportsCustomViews: false

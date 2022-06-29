@@ -11,8 +11,8 @@
  * <p>IMPORTANT: If you see, or are yourself putting any JET-related modules in the <code>define()</code> function, it is a violation of the SoC (separation of concerns) best practice. There should be no JET-related modules (not even the Logger) being imported into this module!!</p>
  * @module
  */
-define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/runtime', './cbe-data-storage', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils' , 'wrc-frontend/core/types', 'wrc-frontend/core/utils'],
-  function ($, HttpAdapter, Runtime, CbeDataStorage, CbeTypes, CbeUtils, CoreTypes, CoreUtils) {
+define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/runtime', './cbe-data-storage', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
+  function ($, HttpAdapter, Runtime, CbeDataStorage, CbeTypes, CoreTypes, CoreUtils, Logger) {
     const i18n = {
       messages: {
         'cfeApi': {
@@ -73,6 +73,12 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         url = getUriById.call(this, options.serviceType, options.serviceComponentType, options.id);
       }
       else if (CoreUtils.isNotUndefinedNorNull(options.url)) {
+        const backendUrl = Runtime.getBackendUrl();
+        const index = options.url.indexOf('/api');
+        if (options.url.substring(0, index) !== backendUrl) {
+          options.url = `${backendUrl}${options.url.substring(index)}`;
+          Logger.info(`[CBE-DATA-MANAGER] options.url=${options.url}`);
+        }
         url = options.url;
       }
       else {
@@ -132,15 +138,15 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
                 });
             }
             else {
-              // Reject came from a JavaScript Error
-              // being thrown.
-              const reply = {
-                failureType: CoreTypes.FailureType.UNEXPECTED,
-                // The reply parameter passed to the
-                // .catch link in the chain, will be
-                // the JavaScript Error object
-                failureReason: response
-              };
+              // Reject came from a JavaScript Error being thrown.
+              // The response will be the JavaScript Error object
+              const reply = {failureReason: response};
+              if (response.message === CoreTypes.TypeErrors.FETCH_FAILURE) {
+                reply['failureType'] = CoreTypes.FailureType.CONNECTION_REFUSED;
+              }
+              else {
+                reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+              }
               // Rethrow for handling by upstream code
               reject(reply);
             }
@@ -371,7 +377,13 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       return (typeof data !== 'undefined' && typeof data.responseJSON !== 'undefined' && typeof data.responseJSON.messages !== 'undefined');
     }
 
-    //public:
+    function getSessionToken(responseSessionToken) {
+      let sessionToken = Runtime.getProperty('X-Session-Token');
+      if (responseSessionToken) sessionToken = responseSessionToken;
+      return sessionToken;
+    }
+  
+  //public:
     return {
       /**
        *
@@ -506,17 +518,25 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
        *
        * @param {{serviceType: ServiceType, serviceComponentType: ServiceComponentType, uri: string}|{url: string}} options
        * @param {object} dataPayload
+       * @param {boolean} isFullPayload - optional, defaults to false, when set the dataPayload is converted directly to JSON
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        */
-      postPayloadData: function (options, dataPayload) {
+      postPayloadData: function (options, dataPayload, isFullPayload = false) {
         return new Promise((resolve, reject) => {
           const url = getUrl.call(this, options);
+          const data = (!isFullPayload) ? JSON.stringify({ data: dataPayload }) : JSON.stringify(dataPayload);
           const jqXHR = $.ajax({
             type: 'POST',
             url: url,
-            data: JSON.stringify({ data: dataPayload }),
+            data: data,
             contentType: 'application/json',
             dataType: 'json',
+            beforeSend: function ( jqXHR, settings) {
+              const sessionToken = getSessionToken(Runtime.getProperty('X-Session-Token'));
+              if (sessionToken) {
+                jqXHR.setRequestHeader('X-Session-Token', sessionToken);
+              }
+            },
             xhrFields: { withCredentials: true },
           });
           // The data argument is what's in the response body,
@@ -551,7 +571,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
                   data: {},
                   messages: getResponseJSONMessages(jqXHR.responseJSON)
                 },
-                failureType: CoreTypes.FailureType.CBE_REST_API,
+                failureType: (jqXHR.status === 0 && jqXHR.statusText === 'error' ? CoreTypes.FailureType.CONNECTION_REFUSED : CoreTypes.FailureType.CBE_REST_API),
                 failureReason: errorThrown
               });
             });
@@ -564,7 +584,10 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        */
       reloadData: function (uri) {
-        return getData.call(this, {url: uri});
+        var url = new URL(uri);
+        url.searchParams.set('reload', 'true');
+        const reloadUri = url.toString();
+        return getData.call(this, {url: reloadUri});
       },
 
       /**
@@ -686,6 +709,12 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
             type: 'POST',
             enctype: 'multipart/form-data',
             url: url,
+            beforeSend: function ( jqXHR, settings) {
+              const sessionToken = getSessionToken(Runtime.getProperty('X-Session-Token'));
+              if (sessionToken) {
+                jqXHR.setRequestHeader('X-Session-Token', sessionToken);
+              }
+            },
             data: formData,
             processData: false,
             contentType: false,
@@ -700,6 +729,8 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
           // and response body.
           jqXHR
             .then((data, textStatus, jqXHR) => {
+              const sessionToken = getSessionToken(jqXHR.getResponseHeader('X-Session-Token'));
+              Runtime.setProperty('X-Session-Token', sessionToken);
               resolve({
                 transport: {
                   status: jqXHR.status,
@@ -854,6 +885,12 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
           const jqXHR = $.ajax({
             type: 'GET',
             url: `${url}/${dataProviderId}?action=test`,
+            beforeSend: function ( jqXHR, settings) {
+              const sessionToken = getSessionToken(Runtime.getProperty('X-Session-Token'));
+              if (sessionToken) {
+                jqXHR.setRequestHeader('X-Session-Token', sessionToken);
+              }
+            },
             xhrFields: { withCredentials: true },
             async: false
           });
@@ -996,16 +1033,21 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         });
       },
 
-      uploadWDTModel: function(formData) {
+      uploadProviderFormData: function(formData, providerType) {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
-        return this.postMultipartFormData(`${url}/WDTModel`, formData);
+        return this.postMultipartFormData(`${url}/${providerType}`, formData);
       },
 
-      downloadModelData: function(uri) {
+      downloadProviderData: function(uri) {
         return new Promise((resolve, reject) => {
           const jqXHR = $.ajax({
             type: 'GET',
             url: `${Runtime.getBackendUrl()}${uri}`,
+            beforeSend: function ( jqXHR, settings) {
+              if (Runtime.getProperty('X-Session-Token')) {
+                jqXHR.setRequestHeader('X-Session-Token', Runtime.getProperty('X-Session-Token'));
+              }
+            },
             xhrFields: { withCredentials: true }
           });
 
@@ -1048,25 +1090,27 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       /**
        *
        * @param {string} dataProviderId
+       * @param {string} providerType
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        * @example:
        * GET /api/providers/WDTModel/<dataProvider.id>
        */
-      useModelData: function (dataProviderId) {
+      useProviderData: function (dataProviderId, providerType) {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
-        return getData.call(this, {url: `${url}/WDTModel/${dataProviderId}`});
+        return getData.call(this, {url: `${url}/${providerType}/${dataProviderId}`});
       },
 
       /**
        *
        * @param {string} dataProviderId
+       * @param {string} providerType
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        * @example:
        * DELETE /api/providers/WDTModel/<dataProvider.id>
        */
-      deleteModelData: function(dataProviderId) {
+       deleteProviderData: function(dataProviderId, providerType) {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
-        return deleteData.call(this, {url: `${url}/WDTModel/${dataProviderId}`});
+        return deleteData.call(this, {url: `${url}/${providerType}/${dataProviderId}`});
       },
 
       /**

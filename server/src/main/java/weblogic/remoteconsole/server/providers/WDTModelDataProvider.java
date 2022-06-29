@@ -4,7 +4,9 @@
 package weblogic.remoteconsole.server.providers;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import weblogic.remoteconsole.server.repo.InvocationContext;
 
@@ -17,4 +19,16 @@ public interface WDTModelDataProvider extends Provider {
   public Map<String, Object> getModel(InvocationContext ic);
 
   public boolean isJson();
+
+  public void setPropertyListProviders(List<String> propertyListNames, ProviderManager pm);
+
+  public List<PropertySource> getPropertySources();
+
+  public interface PropertySource {
+    String getName();
+
+    String getResourceData();
+
+    Properties getProperties();
+  }
 }

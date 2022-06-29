@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Form extends Page {
   private boolean exists = true;
+  private ModelTokens modelTokens = null;
   private List<FormProperty> properties = new ArrayList<>();
 
   // Returns the values of the properties on the form.
@@ -28,6 +29,14 @@ public class Form extends Page {
 
   public void setExists(boolean val) {
     exists = val;
+  }
+
+  public ModelTokens getModelTokens() {
+    return modelTokens;
+  }
+
+  public void setModelTokens(ModelTokens modelTokens) {
+    this.modelTokens = modelTokens;
   }
 
   @Override

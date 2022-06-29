@@ -1,0 +1,161 @@
+{
+  "name": "wdt-model-designer",
+  "version": "1.0.0",
+  "jetVersion": "^10.1.0",
+  "displayName": "WebLogic Server Deploy Tooling (WDT) Model Designer",
+  "description": "GUI for managing model files used with the WebLogic Server Deploy Tooling (WDT) product.",
+  "dependencies": {
+    "wrc-frontend-apis": "^1.0.0",
+    "wrc-frontend-core": "^1.0.0",
+    "wrc-frontend-css": "^1.0.0",
+    "wrc-frontend-integration": "^1.0.0",
+    "wrc-frontend-microservices": "^1.0.0",
+    "cfe-navtree": "^1.0.0"
+  },
+  "properties": {
+    "resourceDataFragment": {
+      "description": "The resourceData fragment to use for newly activated WDT Model File provider.",
+      "type": "string",
+      "readOnly": true,
+      "value": "data/Domain"
+    },
+    "modelTemplate": {
+      "description": "Read-only JS object containing YAML strings associated with WRC-CBE supported templates, for new WDT Model content.",
+      "type": "object",
+      "readOnly": true,
+      "value": {
+        "domain": "domainInfo:\n  AdminUserName: '@@PROP:WebLogicAdminUserName@@'\n  AdminPassword: '@@PROP:WebLogicAdminPassword@@'\n",
+        "sparse": "domainInfo:\n"
+      }
+    },
+    "readonly": {
+      "description": "Determines whether the WDT Model Designer operates in read-only mode or not.",
+      "type": "boolean",
+      "value": false
+    },
+    "visible": {
+      "description": "Determines the visibility of the WDT Model Designer.",
+      "type": "boolean",
+      "value": false
+    }
+  },
+  "methods": {
+    "createProvider": {
+      "description": "Creates WDT Model File provider using provider parameter.",
+      "internalName": "_createProvider",
+      "params": [
+        {
+          "description": "A JS object containing settings used to create the WDT Model File provider.",
+          "name": "options",
+          "type": "object"
+        }
+      ]
+    },
+    "deactivateProvider": {
+      "description": "Deactivates a previously activated WDT Model File provider.",
+      "internalName": "_deactivateProvider",
+      "params": [
+        {
+          "description": "The previously activated WDT Model File provider.",
+          "name": "dataProvider",
+          "type": "object"
+        }
+      ]
+    },
+    "selectLastVisitedSlice": {
+      "description": "Selects and renders the last visited slice.",
+      "internalName": "_selectLastVisitedSlice"
+    },
+    "resize": {
+      "description": "Resizes the WDT Model Designer using the 'Resize Observable API' (https://developer.mozilla.org/en-US/docs/Web/API/Resize_Observer_API).",
+      "internalName": "_resize"
+    },
+    "setBackendUrlPort": {
+      "description": "Sets the port of the WRC backend URL that the WDT Model Designer makes REST calls to.",
+      "internalName": "_setBackendUrlPort"
+    },
+    "getModelChanges": {
+      "description": "Returns the in-memory representation for the WDT file being managed by the WRC backend.",
+      "params": [
+        {
+          "description": "The previously activated WDT Model File provider.",
+          "name": "dataProvider",
+          "type": "object"
+        }
+      ]
+    },
+    "search": {
+      "description": "Perform a search in the WDT Model for the specified value.",
+      "params": [
+        {
+          "description": "The search value.",
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "events": {
+    "providerActivated": {
+      "description": "Triggered when WDT Model File provider has been activated with the WRC-CBE.",
+      "bubbles": true,
+      "detail": {
+        "value": {
+          "displayName": "dataProvider",
+          "description": "The WDT Model File provider populated with data received from the WRC-CBE.",
+          "type": "object"
+        }
+      }
+    },
+    "providerDeactivated": {
+      "description": "Triggered when WDT Model File provider has been deactivated with the WRC-CBE.",
+      "bubbles": true,
+      "detail": {
+        "value": {
+          "displayName": "result",
+          "description": "The WDT Model File provider populated with data received from the WRC-CBE.",
+          "type": "object"
+        }
+      }
+    },
+    "changesAutoDownloaded": {
+      "description": "Triggered when changes have been downloaded from the WRC-CBE, for the active WDT Model File provider.",
+      "bubbles": true,
+      "detail": {
+        "value": {
+          "displayName": "modelContent",
+          "description": "The in-memory representation for the WDT File being managed by the WRC backend.",
+          "type": "object"
+        },
+        "properties": {
+          "displayName": "modelProperties",
+          "description": "The in-memory representation for the WDT File properties being managed by the WRC backend.",
+          "type": "array"
+        }
+      }
+    },
+    "connectionLostRefused": {
+      "description": "Triggered when the WRC-CBE refuses a connection request from the WDT Model Designer or an existing connection is lost.",
+      "bubbles": true,
+      "detail": {
+        "value": {
+          "displayName": "backendUrl",
+          "description": "The URL the WDT Model Designer lost connection to.",
+          "type": "string"
+        }
+      }
+    },
+    "archiveUpdated": {
+      "description": "Triggered when the WDT Model Designer wants to add/delete an entry to/from the model's archive file.",
+      "bubbles": true,
+      "detail": {
+        "options": {
+          "displayName": "options",
+          "description": "",
+          "type": "object"
+        }
+      }
+    }
+  },
+  "slots": {}
+}

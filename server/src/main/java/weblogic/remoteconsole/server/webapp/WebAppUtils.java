@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -16,6 +16,7 @@ import weblogic.remoteconsole.server.repo.InvocationContext;
 public class WebAppUtils {
   public static final String CONSOLE_BACKEND_COOKIE = "WebLogicRemoteConsoleSessionID";
   public static final String CONSOLE_BACKEND_COOKIE_PATH = "/" + UriUtils.API_URI;
+  private static boolean useTokenNotCookie;
 
   public static InvocationContext getInvocationContextFromResourceContext(
     ResourceContext resourceContext
@@ -25,6 +26,10 @@ public class WebAppUtils {
     return (requestContext != null)
       ? getInvocationContextFromRequestContext(requestContext)
       : null;
+  }
+  
+  public static void setUseTokenNotCookie() {
+    useTokenNotCookie = true;
   }
 
   public static InvocationContext getInvocationContextFromRequestContext(
@@ -58,7 +63,11 @@ public class WebAppUtils {
     NewCookie cookie =
       (NewCookie) requestContext.getProperty(NewCookie.class.getName());
     if (cookie != null) {
-      response.cookie(cookie);
+      if (useTokenNotCookie) {
+        response.header("X-Session-Token", cookie.toCookie().getValue());
+      } else {
+        response.cookie(cookie);
+      }
     }
     return response;
   }

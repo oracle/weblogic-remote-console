@@ -1,9 +1,11 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -86,8 +88,10 @@ public class PageDescription {
 
   private JsonObject tableDefToJson(TableDef tableDef) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
+    addIfTrue(builder, "ordered", tableDef.getPagePath().getPagesPath().getTypeDef().isOrdered());
     addIfNotEmpty(builder, "displayedColumns", columnPropertyDefsToJson(tableDef.getDisplayedColumnDefs()));
-    addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(tableDef.getHiddenColumnDefs()));
+    List<PagePropertyDef> sortedHiddenColumns = sortHiddenColumnDefs(tableDef.getHiddenColumnDefs());
+    addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sortedHiddenColumns));
     addIfNotEmpty(builder, "actions", actionDefsToJson(tableDef.getActionDefs()));
     return builder.build();
   }
@@ -109,7 +113,11 @@ public class PageDescription {
     JsonObjectBuilder builder = Json.createObjectBuilder();
     addIfNotEmpty(builder, "slices", slicesDefToJson(getSlicesDef(sliceTableDef.getPagePath())));
     addIfNotEmpty(builder, "displayedColumns", columnPropertyDefsToJson(sliceTableDef.getDisplayedColumnDefs()));
-    addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sliceTableDef.getHiddenColumnDefs()));
+    List<PagePropertyDef> sortedHiddenColumns = sortHiddenColumnDefs(sliceTableDef.getHiddenColumnDefs());
+    addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sortedHiddenColumns));
+    if (sliceTableDef.isReadOnly()) {
+      builder.add(READ_ONLY, true);
+    }
     return builder.build();
   }
 
@@ -193,6 +201,23 @@ public class PageDescription {
     addIfNotEmpty(builder, "usedIf", usedIfDefToJson(sectionDef.getUsedIfDef()));
   }
 
+  // Sort the hidden columns by their localized labels.
+  // This means that:
+  // - the displayed columns are returned in their yaml order
+  //   (since there tend to not be many displayed columns but
+  //   they contain important info)
+  // - the hidden columns are returned in alphahetial order
+  //   (since some tables have many hidden columns and they
+  //   tend to contain less important info than the displayed ones)
+  private List<PagePropertyDef> sortHiddenColumnDefs(List<PagePropertyDef> hiddenColumnDefs) {
+    Map<String,PagePropertyDef> sorter = new TreeMap<>();
+    for (PagePropertyDef hiddenColumnDef : hiddenColumnDefs) {
+      String sortingKey = ic.getLocalizer().localizeString(hiddenColumnDef.getLabel());
+      sorter.put(sortingKey, hiddenColumnDef);
+    }
+    return List.copyOf(sorter.values());
+  }
+
   private JsonArray columnPropertyDefsToJson(List<PagePropertyDef> propertyDefs) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (PagePropertyDef propertyDef : propertyDefs) {
@@ -269,7 +294,7 @@ public class PageDescription {
       addIfNotUnknown(builder, "defaultValue", propertyDef.getDefaultValue());
     }
     addIfTrue(builder, "required", propertyDef.isRequired());
-    addIfTrue(builder, "restartNeeded", propertyDef.isRestartNeeded());
+    addIfTrue(builder, "restartNeeded", writable && propertyDef.isRestartNeeded());
     addIfTrue(builder, "supportsModelTokens", propertyDef.isSupportsModelTokens());
     addIfTrue(builder, "supportsUnresolvedReferences", propertyDef.isSupportsUnresolvedReferences());
     addIfNotEmpty(builder, "presentation", pagePropertyPresentationDefToJson(propertyDef.getPresentationDef()));
@@ -277,6 +302,7 @@ public class PageDescription {
 
   // property info returned for both columns and forms
   private void propertyDefToJson(JsonObjectBuilder builder, PagePropertyDef propertyDef) {
+    addIfTrue(builder, "ordered", propertyDef.isOrdered());
     addIfNotEmpty(builder, "name", propertyDef.getFormPropertyName());
     addIfNotEmpty(builder, "label", propertyDef.getLabel());
     addIfNotEmpty(builder, "type", getPropertyType(propertyDef));

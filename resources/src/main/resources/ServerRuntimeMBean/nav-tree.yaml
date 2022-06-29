@@ -78,6 +78,7 @@ contents:
   type: group
   contents:
   - child: JoltRuntime
+  - child: WTCRuntime
 - label: Diagnostics
   type: group
   contents:

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -21,4 +21,10 @@ public interface SliceTableDef extends PageDef {
 
   // Get the name of the method to call to get the table rows.
   public String getGetTableRowsMethod();
+
+  // Returns whether this slice is read-only.
+  // Currently slice tables are always read-only.
+  public default boolean isReadOnly() {
+    return true;
+  }
 }

@@ -569,7 +569,8 @@ class PagePropertyDefImpl implements PagePropertyDef {
     }
   }
 
-  private boolean isPageLevelProperty() {
+  @Override
+  public boolean isPageLevelProperty() {
     return pageLevelCustomizerSource.getDefinition() != null;
   }
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -21,6 +21,7 @@ public class BeanChildDefImpl extends BaseBeanChildDefImpl {
   private BeanPropertyDefSource source;
   private BeanChildDefCustomizerSource customizerSource;
   private LocalizableString label;
+  private LocalizableString singularLabel;
   private boolean initializedRoles = false;
   private Set<String> getRoles;
   private Set<String> setRoles;
@@ -39,13 +40,37 @@ public class BeanChildDefImpl extends BaseBeanChildDefImpl {
     this.source = source;
     this.parentPath = parentPath.clone();
     this.customizerSource = customizerSource;
-    String englishLabel = computeEnglishLabel();
-    if (getCustomizerSource().isUseUnlocalizedNameAsLabel()) {
-      this.label = new LocalizableString(englishLabel);
-    } else {
-      this.label = new LocalizableString(getLocalizationKey("label"), englishLabel);
-    }
+    initializeLabel();
+    initializeSingularLabel();
     LOGGER.finest("BeanChildDefImpl constructor " + getTypeDef().getTypeName() + " " + getChildPath());
+  }
+
+  private void initializeLabel() {
+    String englishLabel = getCustomizerSource().getLabel();
+    if (StringUtils.isEmpty(englishLabel)) {
+      englishLabel = StringUtils.camelCaseToUpperCaseWords(getChildName());
+    }
+    if (getCustomizerSource().isUseUnlocalizedNameAsLabel()) {
+      label = new LocalizableString(englishLabel);
+    } else {
+      label = new LocalizableString(getLocalizationKey("label"), englishLabel);
+    }
+  }
+
+  private void initializeSingularLabel() {
+    if (!isCollection()) {
+      singularLabel = label;
+    } else {
+      String englishSingularLabel = getCustomizerSource().getSingularLabel();
+      if (StringUtils.isEmpty(englishSingularLabel)) {
+        englishSingularLabel = StringUtils.getSingular(label.getEnglishText());
+      }
+      if (getCustomizerSource().isUseUnlocalizedNameAsLabel()) {
+        singularLabel = new LocalizableString(englishSingularLabel);
+      } else {
+        singularLabel = new LocalizableString(getLocalizationKey("singularLabel"), englishSingularLabel);
+      }
+    }
   }
 
   void mergeCustomizations(BeanChildDefImpl from) {
@@ -152,6 +177,17 @@ public class BeanChildDefImpl extends BaseBeanChildDefImpl {
   }
 
   @Override
+  public boolean isDeletable() {
+    if (!getTypeDefImpl().getBeanRepoDefImpl().isAccessAllowed(getDeleteRoles())) {
+      return false;
+    }
+    if (getCustomizerSource().isDeletableSpecifiedInYaml()) {
+      return getCustomizerSource().isDeletable();
+    }
+    return isCreatable();
+  }
+
+  @Override
   public boolean isAsyncCreate() {
     return getCustomizerSource().isAsyncCreate();
   }
@@ -181,13 +217,13 @@ public class BeanChildDefImpl extends BaseBeanChildDefImpl {
   }
 
   @Override
-  public boolean isOrdered() {
-    return getCustomizerSource().isOrdered();
+  public LocalizableString getLabel() {
+    return this.label;
   }
 
   @Override
-  public LocalizableString getLabel() {
-    return this.label;
+  public LocalizableString getSingularLabel() {
+    return this.singularLabel;
   }
 
   @Override
@@ -230,13 +266,5 @@ public class BeanChildDefImpl extends BaseBeanChildDefImpl {
 
   BeanChildDefCustomizerSource getCustomizerSource() {
     return this.customizerSource;
-  }
-
-  private String computeEnglishLabel() {
-    String englishLabel = getCustomizerSource().getLabel();
-    if (StringUtils.isEmpty(englishLabel)) {
-      englishLabel = StringUtils.camelCaseToUpperCaseWords(getChildName());
-    }
-    return englishLabel;
   }
 }

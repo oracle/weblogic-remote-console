@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -12,6 +12,7 @@ import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.Localizer;
 import weblogic.remoteconsole.common.utils.Path;
@@ -39,7 +40,7 @@ public class WDTValueConverter {
 
   // Get the Value type from the Java type of the specified bean tree property...
   @SuppressWarnings("unchecked")
-  public static Value getValueType(BeanTreeEntry value, BeanPropertyDef propertyDef) {
+  public static Value getValueType(BeanTreeEntry value, BeanPropertyDef propertyDef, Localizer localizer) {
     if (propertyDef.isArray()) {
       // Check for a WDT model token
       Object propVal = value.getPropertyValue();
@@ -84,24 +85,29 @@ public class WDTValueConverter {
         if (propVal instanceof List) {
           List<Object> items = (List<Object>) propVal;
           for (Object item : items) {
-            values.add(getPropertyValue(item, propertyDef, value));
+            values.add(getPropertyValue(item, propertyDef, value, localizer));
           }
         } else if ((propVal instanceof String) && propVal.toString().contains(",")) {
           // Handle the array as comma separated String value
           String[] split = String.class.cast(propVal).split(",");
           for (String item : split) {
-            values.add(getPropertyValue(item.trim(), propertyDef, value));
+            values.add(getPropertyValue(item.trim(), propertyDef, value, localizer));
           }
         } else {
-          values.add(getPropertyValue(propVal, propertyDef, value));
+          values.add(getPropertyValue(propVal, propertyDef, value, localizer));
         }
       }
       return new ArrayValue(values);
     }
-    return getPropertyValue(value.getPropertyValue(), propertyDef, value);
+    return getPropertyValue(value.getPropertyValue(), propertyDef, value, localizer);
   }
 
-  private static Value getPropertyValue(Object item, BeanPropertyDef propertyDef, BeanTreeEntry entry) {
+  private static Value getPropertyValue(
+    Object item,
+    BeanPropertyDef propertyDef,
+    BeanTreeEntry entry,
+    Localizer localizer
+  ) {
     if (item == null) {
       // Return String as a StringValue containing null...
       if (propertyDef.isString()) {
@@ -121,116 +127,152 @@ public class WDTValueConverter {
       return new ModelToken(String.class.cast(item));
     }
     if (propertyDef.isReference()) {
-      if (entry.containsReference()) {
-        Object ref = entry.getPropertyReference().get(0);
-        // Convert into the proper value type...
-        if (ref instanceof BeanTreeEntry) {
-          return ((BeanTreeEntry)ref).getBeanTreePath();
-        } else if (ref != null) {
-          return new UnresolvedReference(ref.toString());
-        } else {
-          return NullReference.INSTANCE;
-        }
-      }
-      return getTypeNotMatched(item, propertyDef);
+      return getReferencePropertyValue(entry, item, localizer);
     }
     if (propertyDef.isString()) {
-      if (String.class.isAssignableFrom(item.getClass())) {
-        String value = String.class.cast(item);
-        return new StringValue(value);
-      }
-      // Convert to a String when model type is not a List or Map
-      if (!(item instanceof List) && !(item instanceof Map)) {
-        return new StringValue(item.toString());
-      }
-      return getTypeNotMatched(item, propertyDef);
+      return getStringPropertyValue(entry, item, localizer);
     }
     if (propertyDef.isSecret()) {
-      if (String.class.isAssignableFrom(item.getClass())) {
-        return new SecretValue(String.class.cast(item));
-      }
-      // Convert to a String when model type is not a List or Map
-      if (!(item instanceof List) && !(item instanceof Map)) {
-        return new SecretValue(item.toString());
-      }
-      return getTypeNotMatched("********", propertyDef);
+      return getSecretPropertyValue(entry, item, localizer);
     }
     if (propertyDef.isBoolean()) {
-      if (Boolean.class.isAssignableFrom(item.getClass())) {
-        boolean value = Boolean.class.cast(item).booleanValue();
-        return new BooleanValue(value);
-      }
-      if (String.class.isAssignableFrom(item.getClass())) {
-        return new BooleanValue(Boolean.parseBoolean(String.class.cast(item)));
-      }
-      return getTypeNotMatched(item, propertyDef);
+      return getBooleanPropertyValue(entry, item, localizer);
     }
     if (propertyDef.isInt()) {
-      if (Integer.class.isAssignableFrom(item.getClass())) {
-        int value = Integer.class.cast(item).intValue();
-        return new IntValue(value);
-      }
-      if (String.class.isAssignableFrom(item.getClass())) {
-        int value = Integer.parseInt(String.class.cast(item));
-        return new IntValue(value);
-      }
-      return getTypeNotMatched(item, propertyDef);
+      return getIntPropertyValue(entry, item, localizer);
     }
     if (propertyDef.isLong()) {
-      // Fixup - BigInteger
-      if (Integer.class.isAssignableFrom(item.getClass())) {
-        long value = Integer.class.cast(item).longValue();
-        return new LongValue(value);
-      }
-      if (Long.class.isAssignableFrom(item.getClass())) {
-        long value = Long.class.cast(item).longValue();
-        return new LongValue(value);
-      }
-      return getTypeNotMatched(item, propertyDef);
+      return getLongPropertyValue(entry, item, localizer);
     }
     if (propertyDef.isDouble()) {
-      if (Double.class.isAssignableFrom(item.getClass())) {
-        Double value = Double.class.cast(item);
-        return new DoubleValue(value);
-      }
-      return getTypeNotMatched(item, propertyDef);
+      return getDoublePropertyValue(entry, item, localizer);
     }
     if (propertyDef.isDateAsLong()) {
-      if (Integer.class.isAssignableFrom(item.getClass())) {
-        long value = Integer.class.cast(item).longValue();
-        return new DateAsLongValue(value);
-      }
-      if (Long.class.isAssignableFrom(item.getClass())) {
-        long value = Long.class.cast(item).longValue();
-        return new DateAsLongValue(value);
-      }
-      return getTypeNotMatched(item, propertyDef);
+      return new DateAsLongValue(getLongPropertyValue(entry, item, localizer).asLong().getValue());
     }
     if (propertyDef.isProperties()) {
-      // Fixup - Java Properties with a model token
-      if (Map.class.isAssignableFrom(item.getClass())) {
-        return new PropertiesValue(getPropertiesFromMap(item));
-      }
-      if (String.class.isAssignableFrom(item.getClass())) {
-        return new PropertiesValue(getPropertiesFromString(String.class.cast(item)));
-      }
-      return getTypeNotMatched(item, propertyDef);
+      return getPropertiesPropertyValue(entry, item, localizer);
     }
-    return getTypeNotMatched(item, propertyDef);
+    throw new AssertionError("Unknown property type: " + propertyDef);
   }
 
-  // Convert to a boolean from a Java type and return true when
-  // and IFF the item is a Boolean true or String of value "true"
-  public static boolean getBooleanFromObject(Object item) {
-    if (item != null) {
-      if (Boolean.class.isAssignableFrom(item.getClass())) {
-        return Boolean.class.cast(item).booleanValue();
-      }
-      if (String.class.isAssignableFrom(item.getClass())) {
-        return Boolean.parseBoolean(String.class.cast(item));
+  private static Value getReferencePropertyValue(BeanTreeEntry entry, Object item, Localizer localizer) {
+    if (entry.containsReference()) {
+      Object ref = entry.getPropertyReference().get(0);
+      // Convert into the proper value type...
+      if (ref instanceof BeanTreeEntry) {
+        return ((BeanTreeEntry)ref).getBeanTreePath();
+      } else if (ref != null) {
+        return new UnresolvedReference(ref.toString());
+      } else {
+        return NullReference.INSTANCE;
       }
     }
-    return false;
+    return new UnresolvedReference(getStringPropertyValue(entry, item, localizer).asString().getValue());
+  }
+
+  private static Value getStringPropertyValue(BeanTreeEntry entry, Object item, Localizer localizer) {
+    if (String.class.isAssignableFrom(item.getClass())) {
+      String value = String.class.cast(item);
+      return new StringValue(value);
+    }
+    // Convert to a String when model type is not a List or Map
+    if (!(item instanceof List) && !(item instanceof Map)) {
+      return new StringValue(item.toString());
+    }
+    throw illegalPropertyValue(entry, item, localizer, LocalizedConstants.WDT_PROPERTY_VALUE_NOT_A_STRING);
+  }
+
+  private static Value getSecretPropertyValue(BeanTreeEntry entry, Object item, Localizer localizer) {
+    if (String.class.isAssignableFrom(item.getClass())) {
+      return new SecretValue(String.class.cast(item));
+    }
+    // Convert to a String when model type is not a List or Map
+    if (!(item instanceof List) && !(item instanceof Map)) {
+      return new SecretValue(item.toString());
+    }
+    throw illegalPropertyValue(entry, "********", localizer, LocalizedConstants.WDT_PROPERTY_VALUE_NOT_A_STRING);
+  }
+
+  private static Value getBooleanPropertyValue(BeanTreeEntry entry, Object item, Localizer localizer) {
+    if (Boolean.class.isAssignableFrom(item.getClass())) {
+      boolean value = Boolean.class.cast(item).booleanValue();
+      return new BooleanValue(value);
+    }
+    if (String.class.isAssignableFrom(item.getClass())) {
+      String str = String.class.cast(item).toLowerCase();
+      if ("true".equals(str)) {
+        return new BooleanValue(true);
+      }
+      if ("false".equals(str)) {
+        return new BooleanValue(false);
+      }
+    }
+    throw illegalPropertyValue(entry, item, localizer, LocalizedConstants.WDT_PROPERTY_VALUE_NOT_A_BOOLEAN);
+  }
+
+  private static Value getIntPropertyValue(BeanTreeEntry entry, Object item, Localizer localizer) {
+    if (Integer.class.isAssignableFrom(item.getClass())) {
+      int value = Integer.class.cast(item).intValue();
+      return new IntValue(value);
+    }
+    if (String.class.isAssignableFrom(item.getClass())) {
+      try {
+        int value = Integer.parseInt(String.class.cast(item));
+        return new IntValue(value);
+      } catch (NumberFormatException e) {
+        // handled below
+      }
+    }
+    throw illegalPropertyValue(entry, item, localizer, LocalizedConstants.WDT_PROPERTY_VALUE_NOT_AN_INT);
+  }
+
+  private static Value getLongPropertyValue(BeanTreeEntry entry, Object item, Localizer localizer) {
+    // Fixup - BigInteger
+    if (Integer.class.isAssignableFrom(item.getClass())) {
+      long value = Integer.class.cast(item).longValue();
+      return new LongValue(value);
+    }
+    if (Long.class.isAssignableFrom(item.getClass())) {
+      long value = Long.class.cast(item).longValue();
+      return new LongValue(value);
+    }
+    if (String.class.isAssignableFrom(item.getClass())) {
+      try {
+        long value = Long.parseLong(String.class.cast(item));
+        return new LongValue(value);
+      } catch (NumberFormatException e) {
+        // handled below
+      }
+    }
+    throw illegalPropertyValue(entry, item, localizer, LocalizedConstants.WDT_PROPERTY_VALUE_NOT_A_LONG);
+  }
+
+  private static Value getDoublePropertyValue(BeanTreeEntry entry, Object item, Localizer localizer) {
+    if (Double.class.isAssignableFrom(item.getClass())) {
+      Double value = Double.class.cast(item);
+      return new DoubleValue(value);
+    }
+    if (String.class.isAssignableFrom(item.getClass())) {
+      try {
+        Double value = Double.parseDouble(String.class.cast(item));
+        return new DoubleValue(value);
+      } catch (NumberFormatException e) {
+        // handled below
+      }
+    }
+    throw illegalPropertyValue(entry, item, localizer, LocalizedConstants.WDT_PROPERTY_VALUE_NOT_A_DOUBLE);
+  }
+
+  private static Value getPropertiesPropertyValue(BeanTreeEntry entry, Object item, Localizer localizer) {
+    // Fixup - Java Properties with a model token
+    if (Map.class.isAssignableFrom(item.getClass())) {
+      return new PropertiesValue(getPropertiesFromMap(item));
+    }
+    if (String.class.isAssignableFrom(item.getClass())) {
+      return new PropertiesValue(getPropertiesFromString(String.class.cast(item)));
+    }
+    throw illegalPropertyValue(entry, item, localizer, LocalizedConstants.WDT_PROPERTY_VALUE_NOT_PROPERTIES);
   }
 
   // Get the Java type from the Value type for the specified property...
@@ -256,20 +298,19 @@ public class WDTValueConverter {
     if (value.isModelToken()) {
       String token = value.asModelToken().getToken();
       if (!isModelToken(token)) {
-        // Fixup - update the log and warning handling
-        LOGGER.warning("WARNING: WDTValueConverter found invalid model token: " + token);
-        String invalidModelToken = localizer.localizeString(LocalizedConstants.INVALID_MODEL_TOKEN);
-        throw new FailedRequestException("WDT Value Converter - " + invalidModelToken + token);
+        throw failedRequestException(localizer, LocalizedConstants.INVALID_MODEL_TOKEN, token);
       }
       return token;
     }
     if (value.isUnresolvedReference()) {
       String key = value.asUnresolvedReference().getKey();
       if ((key == null) || key.isBlank()) {
-        // Fixup - update the log and warning handling
-        LOGGER.warning("WARNING: WDTValueConverter found no Unresolved Reference value!");
-        String noUnresolvedRef = localizer.localizeString(LocalizedConstants.NO_UNRESOLVED_REF);
-        throw new FailedRequestException("WDT Value Converter - " + noUnresolvedRef);
+        throw
+          failedRequestException(
+            localizer,
+            LocalizedConstants.NO_UNRESOLVED_REF,
+            propertyDef.getOfflinePropertyName()
+          );
       }
       return key;
     }
@@ -283,9 +324,12 @@ public class WDTValueConverter {
       // Use reference as single value that will be converted when read
       Value ref = value.asReferenceAsReferences().asReference();
       if (ref == null) {
-        LOGGER.warning("WARNING: WDTValueConverter found no References value!");
-        String noRefsValue = localizer.localizeString(LocalizedConstants.NO_REFS_VALUE);
-        throw new FailedRequestException("WDT Value Converter - " + noRefsValue);
+        throw
+          failedRequestException(
+            localizer,
+            LocalizedConstants.NO_REFS_VALUE,
+            propertyDef.getOfflinePropertyName()
+        );
       }
       return getJavaType(ref, propertyDef, localizer);
     }
@@ -347,18 +391,32 @@ public class WDTValueConverter {
     return result;
   }
 
-  // Output the item to determine if updated handling is needed...
-  private static Value getTypeNotMatched(Object item, BeanPropertyDef propertyDef) {
-    String notMatched = "Prop " + propertyDef.getPropertyName() + " - ";
-    notMatched += "Type " + propertyDef.getValueKind() + ": ";
-    notMatched += item.toString() + " (" + item.getClass().getName() + ")";
-    return new StringValue("WDT Value Converter: " + notMatched);
+  // Fail the request since the property value doesn't match the property type
+  private static FailedRequestException illegalPropertyValue(
+    BeanTreeEntry entry,
+    Object item,
+    Localizer localizer,
+    LocalizableString errorMessage
+  ) {
+    return failedRequestException(localizer, errorMessage, entry.getKey(), item);
   }
 
   private static String getMessageNullPropertyValue(Path propertyPath, BeanPropertyDef propertyDef) {
     String message = "NULL value for Property " + propertyDef.getPropertyName();
     message += " (Type " + propertyDef.getValueKind() + "): " + propertyPath;
     return message;
+  }
+
+  // Check if a property's value is a model token
+  public static boolean isPropertyModelToken(BeanTreeEntry entry) {
+    if (!entry.isProperty()) {
+      return false;
+    }
+    if (entry.getBeanPropertyDef().isArray()) {
+      return isArrayModelToken(entry.getPropertyValue());
+    } else {
+      return isModelToken(entry.getPropertyValue());
+    }
   }
 
   // Check if array property value is a model token
@@ -374,5 +432,14 @@ public class WDTValueConverter {
     boolean isString = (item instanceof String);
     String value = (isString ? item.toString() : "");
     return (isString && value.startsWith("@@") && value.endsWith("@@"));
+  }
+
+  private static FailedRequestException failedRequestException(
+    Localizer localizer,
+    LocalizableString errorMessage,
+    Object... args
+  ) {
+    LOGGER.fine(errorMessage.getEnglishText(args));
+    return new FailedRequestException(localizer.localizeString(errorMessage, args));
   }
 }

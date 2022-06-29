@@ -31,9 +31,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               value: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.value')
             }
           }
-        },
-        messages: {
-          'dataNotAvailable': {summary: oj.Translations.getTranslatedString('wrc-perspective.messages.dataNotAvailable.summary')}
         }
       };
 
@@ -241,8 +238,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   MessageDisplaying.displayMessage(
                     {
                       severity: 'info',
-                      summary: self.i18n.messages.dataNotAvailable.summary,
-                      detail: event.target.attributes['data-notFoundMessage'].value
+                      summary: event.target.attributes['data-notFoundMessage'].value
                     },
                     2500
                   );
@@ -352,6 +348,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             });
 
             processRelatedLinks(reply.body.data.get('rdjData'));
+            processHeaderSecurityLink(reply.body.data.get('rdjData'));
             chooseChildRouter(reply.body.data.get('pdjData'));
           })
           .catch(response => {
@@ -414,6 +411,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             self.breadcrumbs.html({ view: HtmlUtils.stringToNodeArray(div.outerHTML), data: self });
           });
       }
+
+      // header security warning link refresh.
+      // rdjData may or may not have this providerLinks.  As of now, only DomainSecurityRuntime in monitoring will
+      // include this link.  So we only add this test in monitoring.js
+      function processHeaderSecurityLink(rdjData) {
+        if (CoreUtils.isNotUndefinedNorNull(rdjData.providerLinks)){
+          const label = rdjData.providerLinks[0].label;
+          const resourceData = rdjData.providerLinks[0].resourceData;
+          if (CoreUtils.isNotUndefinedNorNull(label) && CoreUtils.isNotUndefinedNorNull(resourceData)){
+            viewParams.signaling.domainSecurityWarning.dispatch({
+              linkLabel: label,
+              linkResourceData: resourceData
+            });
+          }
+        }
+      }
+
 
       function chooseChildRouter(pdjData) {
         if (CoreUtils.isNotUndefinedNorNull(pdjData.table)) {

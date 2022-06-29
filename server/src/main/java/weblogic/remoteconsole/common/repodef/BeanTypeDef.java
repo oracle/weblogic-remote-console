@@ -3,6 +3,7 @@
 
 package weblogic.remoteconsole.common.repodef;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import weblogic.remoteconsole.common.utils.Path;
@@ -28,6 +29,8 @@ public interface BeanTypeDef {
   // e.g. used for link definitions, name of root bean in RDJ urls
   public String getInstanceName();
   
+  public LocalizableString getInstanceNameLabel();
+
   public BeanPropertyDef getKeyPropertyDef(); // returns null if this type doesn't have a key property
 
   public BeanPropertyDef getIdentityPropertyDef(); // returns null if this type doesn't have an identity property
@@ -43,6 +46,18 @@ public interface BeanTypeDef {
   public List<String> getSubTypeDiscriminatorLegalValues();
 
   public BeanTypeDef getSubTypeDef(String subTypeDiscriminator);
+
+  public default List<BeanTypeDef> getSubTypeDefs() {
+    List<BeanTypeDef> rtn = new ArrayList<>();
+    if (isHeterogeneous()) {
+      for (String  subTypeDiscriminator : getSubTypeDiscriminatorLegalValues()) {
+        rtn.add(getSubTypeDef(subTypeDiscriminator));
+      }
+    } else {
+      rtn.add(this);
+    }
+    return rtn;
+  }
 
   // need to support this bean's & contained beans' properties,
   // including folding, since our type.yamls let an outer
@@ -164,6 +179,19 @@ public interface BeanTypeDef {
   public DeleteBeanCustomizerDef getDeleteCustomizerDef();
 
   // The name of the custom static method that creates instances of this type.
-  // If null, then the stnadard mechanisms are used.
+  // If null, then the standard mechanisms are used.
   public String getCreateResourceMethod();
+
+  // The name of the custom static method that gets collections of this type.
+  // If null, then the standard mechanisms are used.
+  public String getGetCollectionMethod();
+
+  // Whether beans of this type can be referenced by other beans
+  public boolean isReferenceable();
+
+  // Whether collections of this type are ordered
+  public boolean isOrdered();
+
+  // Whether custom views can be created that return beans of this type
+  public boolean isSupportsCustomViews();
 }

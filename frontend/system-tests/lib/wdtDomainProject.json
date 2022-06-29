@@ -1,0 +1,36 @@
+{
+  "name":"domainProject",
+  "filename":"wdtDomainProject.json",
+  "isDefault":true,
+  "dataProviders":
+  [
+    {
+      "name":"slc15akv",
+      "type":"adminserver",
+      "url":"http://slc15akv.us.oracle.com:7001",
+      "username":"weblogic"},{"name":"1411LocalDomain",
+      "type":"adminserver","url":"http://localhost:7001",
+      "username":"weblogic"
+    },
+    {
+      "name":"baseDomainModel",
+      "type":"model",
+      "file":"./baseDomainModelFile.yml"
+    },
+    {
+      "name":"wdtTemplateModel",
+      "type":"model",
+      "file":"./wdtTemplateModelFile.yml"
+    },
+    {
+      "name":"wdtCompositeModelOfBaseAndTemplateModels",
+      "type":"modelComposite",
+      "models":["baseDomainModel","wdtTemplateModel"]
+    },
+    {
+      "name":"baseDomainPropList",
+      "type":"properties",
+      "file":"./baseDomainPropList.prop"
+    }
+  ]
+}

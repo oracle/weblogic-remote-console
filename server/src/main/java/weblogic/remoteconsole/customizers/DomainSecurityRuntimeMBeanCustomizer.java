@@ -44,7 +44,10 @@ public class DomainSecurityRuntimeMBeanCustomizer {
     return new DomainSecurityRuntimeMBeanResource();
   }
 
-  public static Response<List<TableRow>> getSecurityWarningsSliceTableRows(InvocationContext ic) {
+  public static Response<List<TableRow>> getSecurityWarningsSliceTableRows(
+    InvocationContext ic,
+    BeanReaderRepoSearchResults searchResults
+  ) {
     Response<List<TableRow>> response = new Response<>();
     Response<Void> refreshResponse = refreshSecurityWarnings(ic);
     if (!refreshResponse.isSuccess()) {

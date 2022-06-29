@@ -38,11 +38,17 @@ Copyright (c) 2020, 2022, Oracle and/or its affiliates.
       </a>
     </div>
 
+    <div id="header-simple-search">
+      <oj-input-search id="cfe-simple-search" class="oj-form-control-max-width-md branding-area-simple-search"
+        value="{{simpleSearchValue}}" on-oj-value-action="[[handleSimpleSearchAction]]">
+      </oj-input-search>
+    </div>
+
     <div id="header-warning">
       <a on-click="[[securityWarningLinkClick]]">
-        <spad id="link-label" :class="branding-area-security-warning">
+        <span id="link-label" :class="branding-area-security-warning">
           <oj-bind-text value="[[linkLabel]]"></oj-bind-text>
-        </spad>
+        </span>
       </a>
     </div>
 

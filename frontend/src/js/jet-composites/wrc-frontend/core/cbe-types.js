@@ -67,7 +67,8 @@ define(
       ProviderType: Object.freeze({
         ADMIN_SERVER_CONNECTION: {name: 'AdminServerConnection'},
         WDT_MODEL: {name: 'WDTModel'},
-        WDT_COMPOSITE: {name: 'WDTCompositeModel'}
+        WDT_COMPOSITE: {name: 'WDTCompositeModel'},
+        PROPERTY_LIST: {name: 'PropertyList'}
       }),
       providerTypeFromName: function (name) {
         return Object.values(this.ProviderType).find(type => type.name === name);

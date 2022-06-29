@@ -1,0 +1,14 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- name: Name
+  label: "Search Criteria" # the search's name is the same as the search criteria the user entered.
+  writable: never
+- name: Date
+  writable: never
+- name: NumberOfMatches
+  writable: never
+ordered: true
+getCollectionMethod: weblogic.remoteconsole.customizers.SimpleSearchMBeanCustomizer.getCollection
+disableMBeanJavadoc: true
+supportsCustomViews: false

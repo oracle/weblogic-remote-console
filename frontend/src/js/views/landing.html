@@ -43,9 +43,14 @@ Copyright (c) 2020, 2022, Oracle and/or its affiliates. The Universal Permissive
     <oj-bind-for-each data="[[subtreeItemChildren]]" as="child">
       <template>
         <div class="landing-page-panel-subtree-card">
-          <a href="#" on-click="[[perspectiveGroupSubtreeItemClickHandler]]">
+          <oj-bind-if test="[[child.data.path !== '#']]">
+            <a href="#" on-click="[[perspectiveGroupSubtreeItemClickHandler]]">
+              <span :id="[[child.data.path]]" data-bind="text: [[child.data.label]]"></span>
+            </a>
+          </oj-bind-if>
+          <oj-bind-if test="[[child.data.path === '#']]">
             <span :id="[[child.data.path]]" data-bind="text: [[child.data.label]]"></span>
-          </a>
+          </oj-bind-if>
           <p><oj-bind-dom config="[[child.data.descriptionHTML]]"></oj-bind-dom></p>
         </div>
       </template>

@@ -32,7 +32,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       this.contentPage = {
         path: null,
         resourceDataFragment: null,
-        selectedSlice: {sliceName: null, level: 0},
+        slices: [],
         syncInterval: null,
         nthChildren: []
       };

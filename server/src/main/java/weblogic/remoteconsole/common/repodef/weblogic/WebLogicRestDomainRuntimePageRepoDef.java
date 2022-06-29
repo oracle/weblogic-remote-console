@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -19,5 +19,11 @@ public class WebLogicRestDomainRuntimePageRepoDef extends WebLogicPageRepoDef {
       mbeansVersion.findOrCreate(WebLogicRuntimeTreeBeanRepoDef.class),
       Root.MONITORING_ROOT + "MBean"
     );
+  }
+
+  @Override
+  public boolean isSupportsCustomViews() {
+    // The monitoring tree supports custom views
+    return true;
   }
 }

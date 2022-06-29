@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -109,16 +109,21 @@ properties:
     a negative performance impact on the LDAP server, so Oracle recommends
     that you limit their use.</p>
 
+- name: DynamicMemberURLAttribute
+  offlineName: DynamicMemberUrlAttribute
+
 - name: UserDynamicGroupDNAttribute
+  offlineName: UserDynamicGroupDnAttribute
   helpSummaryHTML: >
+    <p>The attribute of an LDAP user object that specifies the distinguished
+    names (DNs) of dynamic groups to which this user belongs.</p>
+  helpDetailsHTML: >
     <p>If such an attribute does not exist, WebLogic Server determines if
     a user is a member of a group by evaluating the URLs on the dynamic
-    group. If a group contains other groups, WebLogic Server evaluates
-    the URLs on any of the descendants (indicates parent relationship)
-    of the group.</p>
-  helpDetailsHTML: >
-    <p><b>Note:</b> When this attribute is set, the value for <b>Dynamic
-    Group Name Attribute</b> must be valid and cannot be null.</p>
+    group. If a group contains other groups, WebLogic Server evaluates the
+    URLs on any of the descendants (indicates parent relationship) of the
+    group.</p><p><b>Note:</b> When this attribute is set, the value for
+    <b>Dynamic Group Name Attribute</b> must be valid and cannot be null.</p>
 
 - name: ConnectTimeout
   helpSummaryHTML: >
@@ -187,11 +192,6 @@ properties:
     <p>The size of the cache (in kilobytes) that is used with the LDAP
     server</p>
 
-- name: CacheTTL
-  helpHTML: >
-    <p>The time-to-live of the cache (in seconds) that is used with the
-    LDAP server</p>
-
 - name: EnableCacheStatistics
   helpSummaryHTML: >
     <p>Specifies whether to enable statistics of the cache if
@@ -209,3 +209,9 @@ properties:
 
 - name: MatchGroupBaseDN
   offlineName: MatchGroupBaseDn
+
+- name: GuidAttribute
+  label: GUID Attribute
+
+- name: StaticGroupDNsfromMemberDNFilter
+  label: Static Group DNs From Member DN Filter

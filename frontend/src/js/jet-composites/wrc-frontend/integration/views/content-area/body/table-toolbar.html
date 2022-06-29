@@ -9,7 +9,7 @@
       <div id="table-toolbar-buttons" class="oj-flex-bar">
         <div class="oj-flex-bar-start">
           <oj-bind-if test="[[!readonly()]]">
-            <oj-bind-if test="[[ ['configuration','modeling'].indexOf(perspective.id) !== -1 ]]">
+            <oj-bind-if test="[[ ['configuration','modeling','properties'].indexOf(perspective.id) !== -1 ]]">
               <oj-button id="[[i18n.buttons.new.id]]" on-oj-action="[[newAction]]" chroming="borderless"
                          disabled="[[i18n.buttons.new.disabled]]">
                 <img class="button-icon" slot="startIcon"
@@ -20,7 +20,7 @@
               </oj-button>
             </oj-bind-if>
             <oj-bind-if test="[[i18n.buttons.write.visible()]]">
-              <oj-button id="[[i18n.buttons.write.id]]" on-oj-action="[[writeModelAction]]" chroming="borderless"
+              <oj-button id="[[i18n.buttons.write.id]]" on-oj-action="[[writeContentFileAction]]" chroming="borderless"
                          disabled="[[i18n.buttons.write.disabled]]">
                 <img class="button-icon" slot="startIcon"
                      data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.write.iconFile + '.png'}" />
@@ -33,6 +33,13 @@
           <oj-bind-if test="[[perspective.id === 'monitoring']]">
             <oj-bind-dom config="[[actionButtons.html]]"></oj-bind-dom>
           </oj-bind-if>
+
+          <!-- Customize button is always visible on a table toolbar -->
+          <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed">
+            <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png'}"/>
+            <span class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
+            <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
+          </a>
         </div>
 
       </div>
@@ -59,13 +66,13 @@
           <img id="toggle-history" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showBeanPathHistory() ? 'toggle-beanpath-history-on-blk_24x24' : 'toggle-beanpath-history-off-blk_24x24']] + '.png'}"/>
         </a>
       </div>
-      <!--
-            <div id="toggle-instructions-toolbar-icon" class="oj-flex-item">
-              <a on-click="[[toggleInstructionsClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.instructions.tooltip}">
-                <img id="toggle-instructions" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showInstructions() ? 'toggle-instructions-on-blk_24x24' : 'toggle-instructions-off-blk_24x24']] + '.png'}"/>
-              </a>
-            </div>
-      -->
+<!--
+      <div id="toggle-instructions-toolbar-icon" class="oj-flex-item">
+        <a on-click="[[toggleInstructionsClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.instructions.tooltip}">
+          <img id="toggle-instructions" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showInstructions() ? 'toggle-instructions-on-blk_24x24' : 'toggle-instructions-off-blk_24x24']] + '.png'}"/>
+        </a>
+      </div>
+-->
       <div id="page-help-toolbar-icon" class="oj-flex-item">
         <a on-click="[[helpPageClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.help.tooltip}">
           <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png'}"/>

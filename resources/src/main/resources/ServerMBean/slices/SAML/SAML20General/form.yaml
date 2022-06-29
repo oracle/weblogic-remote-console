@@ -1,0 +1,46 @@
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure the general SAML 2.0 per server properties.</p>
+
+properties:
+- name: "SingleSignOnServices.ReplicatedCacheEnabled"
+- name: "SingleSignOnServices.ContactPersonGivenName"
+- name: "SingleSignOnServices.ContactPersonSurName"
+- name: "SingleSignOnServices.ContactPersonType"
+- name: "SingleSignOnServices.ContactPersonCompany"
+- name: "SingleSignOnServices.ContactPersonTelephoneNumber"
+- name: "SingleSignOnServices.ContactPersonEmailAddress"
+- name: "SingleSignOnServices.OrganizationName"
+- name: "SingleSignOnServices.OrganizationURL"
+- name: "SingleSignOnServices.PublishedSiteURL"
+- name: "SingleSignOnServices.EntityID"
+- name: "SingleSignOnServices.RecipientCheckEnabled"
+- name: "SingleSignOnServices.WantTransportLayerSecurityClientAuthentication"
+- name: "SingleSignOnServices.TransportLayerSecurityKeyAlias"
+- name: "SingleSignOnServices.TransportLayerSecurityKeyPassPhrase"
+- name: "SingleSignOnServices.WantBasicAuthClientAuthentication"
+- name: "SingleSignOnServices.BasicAuthUsername"
+- name: "SingleSignOnServices.BasicAuthPassword"
+- name: "SingleSignOnServices.WantArtifactRequestsSigned"
+- name: "SingleSignOnServices.ArtifactMaxCacheSize"
+- name: "SingleSignOnServices.ArtifactTimeout"
+- name: "SingleSignOnServices.SSOSigningKeyAlias"
+- name: "SingleSignOnServices.SSOSigningKeyPassPhrase"
+helpTopics:
+- label: "Configuring Concurrent Managed Objects "
+  href: "cnfgd/concurrent-utils.html"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: "edocs"
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html"
+  type: "edocs"
+- label: "Using Security Assertion Markup Language (SAML) Tokens For Identity"
+  href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"
+  type: "generic"

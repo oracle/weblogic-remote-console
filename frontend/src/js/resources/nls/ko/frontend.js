@@ -1,83 +1,107 @@
 define({
   "wrc-header": {
     "text": {
-      "appName": "WebLogic \\uC6D0\\uACA9 \\uCF58\\uC194"
+      "appName": "WebLogic 원격 콘솔"
     },
     "icons": {
       "connectivity": {
         "online": {
-          "tooltip": "\\uC628\\uB77C\\uC778"
+          "tooltip": "온라인"
         },
         "offline": {
-          "tooltip": "\\uC624\\uD504\\uB77C\\uC778"
+          "tooltip": "오프라인"
         },
         "detached": {
-          "tooltip": "\\uBD84\\uB9AC\\uB428"
+          "tooltip": "분리됨"
+        },
+        "unattached": {
+          "tooltip": "연결되지 않음"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright \\u00A9 2020, 2021, Oracle and/or its affiliates.<br/>Oracle\\uC740 Oracle Corporation \\uBC0F/\\uB610\\uB294 \\uADF8 \\uC790\\uD68C\\uC0AC\\uC758 \\uB4F1\\uB85D\\uC0C1\\uD45C\\uC785\\uB2C8\\uB2E4. \\uAE30\\uD0C0 \\uBA85\\uCE6D\\uB4E4\\uC740 \\uAC01 \\uC18C\\uC18D \\uD68C\\uC0AC\\uC758 \\uC0C1\\uD45C\\uC77C \\uC218 \\uC788\\uC2B5\\uB2C8\\uB2E4.<br/>",
-      "builtWith": "Oracle JET\\uB85C \\uAD6C\\uCD95\\uB428"
+      "copyrightLegal": "Copyright © 2020, 2022, Oracle and/or its affiliates.<br/>Oracle은 Oracle Corporation 및/또는 그 자회사의 등록상표입니다. 기타 명칭들은 각 소속 회사의 상표일 수 있습니다.<br/>",
+      "builtWith": "Oracle JET로 구축됨"
     }
   },
   "wrc-data-providers": {
     "icons": {
       "info": {
-        "tooltip": "Get Info"
+        "tooltip": "정보 얻기"
       },
       "edit": {
-        "tooltip": "Manage"
+        "tooltip": "관리"
       },
       "delete": {
-        "tooltip": "\\uC81C\\uAC70"
+        "tooltip": "제거"
       }
     },
     "labels": {
       "connections": {
         "header": {
-          "value": "Unnamed Project"
+          "value": "이름 없는 프로젝트"
         },
         "name": {
-          "value": "Connection Provider Name"
+          "value": "접속 제공자 이름"
         },
         "url": {
           "value": "URL"
         },
         "username": {
-          "value": "\\uC0AC\\uC6A9\\uC790 \\uC774\\uB984"
+          "value": "사용자 이름"
         },
         "password": {
-          "value": "\\uBE44\\uBC00\\uBC88\\uD638"
+          "value": "비밀번호"
         }
       },
       "models": {
         "name": {
-          "value": "WDT Model Provider Name"
+          "value": "WDT 모델 제공자 이름"
         },
         "file": {
-          "value": "WDT Model Filename"
+          "value": "WDT 모델 파일 이름"
+        },
+        "props": {
+          "value": "WDT 변수"
+        }
+      },
+      "composite": {
+        "name": {
+          "value": "WDT 조합 모델 제공자 이름"
+        },
+        "providers": {
+          "value": "WDT 모델"
+        }
+      },
+      "proplist": {
+        "name": {
+          "value": "속성 목록 제공자 이름"
+        },
+        "file": {
+          "value": "속성 목록 파일 이름"
         }
       },
       "project": {
         "name": {
-          "value": "Project Name"
+          "value": "프로젝트 이름"
         },
         "file": {
-          "value": "Project Filename"
-        },
-        "isDefault": {
-          "value": "Make Default"
+          "value": "프로젝트 파일 이름"
         }
       },
       "provider": {
         "adminserver": {
-          "value": "Admin Server Connection"
+          "value": "관리 서버 접속"
         },
         "model": {
-          "value": "Add WDT Model"
+          "value": "WDT 모델 추가"
+        }
+      },
+      "dropdown": {
+        "none": {
+          "value": "없음"
         }
       }
     },
@@ -85,38 +109,54 @@ define({
       "info": {
         "provider": {
           "id": {
-            "label": "\\uC81C\\uACF5\\uC790 ID:"
+            "label": "제공자 ID:"
           }
         },
         "domain": {
           "name": {
-            "label": "\\uB3C4\\uBA54\\uC778 \\uC774\\uB984:"
+            "label": "도메인 이름:"
           },
           "url": {
-            "label": "\\uB3C4\\uBA54\\uC778 URL:"
+            "label": "도메인 URL:"
           },
           "version": {
-            "label": "\\uB3C4\\uBA54\\uC778 \\uBC84\\uC804:"
+            "label": "도메인 버전:"
           },
           "username": {
-            "label": "Username:"
+            "label": "사용자 이름:"
+          },
+          "roles": {
+            "label": "롤:"
           },
           "connectTimeout": {
-            "label": "\\uC811\\uC18D \\uC2DC\\uAC04 \\uCD08\\uACFC:"
+            "label": "접속 시간 초과:"
           },
           "readTimeout": {
-            "label": "\\uC77D\\uAE30 \\uC2DC\\uAC04 \\uCD08\\uACFC:"
+            "label": "읽기 시간 초과:"
           },
           "anyAttempt": {
-            "label": "Any Connections Attempted:"
+            "label": "시도된 접속:"
           },
           "lastAttempt": {
-            "label": "Last Attempt Successful:"
+            "label": "마지막 시도 성공:"
           }
         },
         "model": {
           "file": {
-            "label": "File:"
+            "label": "파일:"
+          },
+          "props": {
+            "label": "변수:"
+          }
+        },
+        "composite": {
+          "models": {
+            "label": "모델:"
+          }
+        },
+        "proplist": {
+          "file": {
+            "label": "파일 이름:"
           }
         }
       }
@@ -124,20 +164,33 @@ define({
     "menus": {
       "connections": {
         "add": {
-          "value": "Create Provider for Admin Server Connection..."
+          "value": "관리 서버 접속 제공자 추가"
         }
       },
       "models": {
         "add": {
-          "value": "Create Provider for Existing WDT Model File..."
+          "value": "WDT 모델 파일 제공자 추가"
         },
         "new": {
-          "value": "Create Provider for New WDT Model File..."
+          "value": "새 WDT 모델 파일용 제공자 생성"
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "WDT 조합 모델 파일 제공자 추가"
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "속성 목록 제공자 추가"
+        },
+        "new": {
+          "value": "새 속성 목록에 대한 제공자 생성"
         }
       },
       "providers": {
         "sort": {
-          "value": "Sort by Provider Type"
+          "value": "제공자 유형별 정렬"
         }
       },
       "context": {
@@ -145,175 +198,256 @@ define({
           "connection": {
             "domain": {
               "url": {
-                "label": "\\uB3C4\\uBA54\\uC778 URL:"
+                "label": "도메인 URL:"
               },
               "version": {
-                "label": "\\uB3C4\\uBA54\\uC778 \\uBC84\\uC804:"
+                "label": "도메인 버전:"
               },
               "username": {
-                "label": "Username:"
+                "label": "사용자 이름:"
               }
             }
           },
           "model": {
             "file": {
-              "label": "File:"
+              "label": "파일:"
             }
           }
         }
       },
       "project": {
         "export": {
-          "value": "Export Providers as Project..."
+          "value": "제공자를 프로젝트로 익스포트..."
         },
         "import": {
-          "value": "\\uD504\\uB85C\\uC81D\\uD2B8 \\uC784\\uD3EC\\uD2B8"
+          "value": "프로젝트 임포트"
         }
       }
     },
     "instructions": {
       "connections": {
         "add": {
-          "value": "Enter new name and connectivity settings for connection provider."
+          "value": "접속 제공자에 대한 새 이름과 접속 설정을 입력합니다."
         },
         "edit": {
-          "value": "Modify connectivity settings for connection provider."
+          "value": "접속 제공자에 대한 접속 설정을 수정합니다."
         }
       },
       "models": {
         "add": {
-          "value": "Enter settings for existing model file provider. Click upload icon to browse for model file."
+          "value": "기존 모델 파일 제공자에 대한 설정을 입력합니다. 업로드 아이콘을 눌러 모델 파일을 찾아봅니다."
         },
         "new": {
-          "value": "Enter provider name and filename for new WDT model file, then click icon to pick directory to save file in."
+          "value": "새 WDT 모델 파일에 대한 제공자 이름과 파일 이름을 입력하고, 아이콘을 눌러 파일을 저장할 디렉토리를 선택합니다."
         },
         "edit": {
-          "value": "Modify settings for model file provider. Click icon to browse for model file."
+          "value": "모델 파일 제공자에 대한 설정을 수정합니다. 아이콘을 눌러 모델 파일을 찾아봅니다."
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "새 이름을 입력하고 조합 모델 제공자에 대해 정렬된 모델 목록을 선택합니다."
+        },
+        "edit": {
+          "value": "조합 모델 제공자에 대한 설정을 수정합니다. 정렬된 모델 목록을 사용합니다."
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "기존 속성 목록 제공자에 대한 설정을 입력합니다. 업로드 아이콘을 눌러 속성 파일을 찾아봅니다."
+        },
+        "new": {
+          "value": "새 속성 목록에 대한 제공자 이름과 파일 이름을 입력하고, 아이콘을 눌러 파일을 저장할 디렉토리를 선택합니다."
+        },
+        "edit": {
+          "value": "속성 목록 제공자에 대한 설정을 수정합니다. 아이콘을 눌러 속성 파일을 찾아봅니다."
         }
       },
       "project": {
         "export": {
-          "value": "Enter settings for new project."
+          "value": "새 프로젝트에 대한 설정을 입력합니다."
         },
         "import": {
-          "value": "Click download icon to browse for project."
+          "value": "다운로드 아이콘을 눌러 프로젝트를 찾아봅니다."
         }
       },
       "task": {
         "startup": {
-          "value": "Which startup task are you interested in performing?"
+          "value": "어떤 시작 태스크를 수행하고 싶습니까?"
         }
       }
     },
     "titles": {
       "add": {
         "connections": {
-          "value": "Create Provider for Admin Server Connection"
+          "value": "관리 서버 접속용 제공자 생성"
         },
         "models": {
-          "value": "Create Provider for Existing WDT Model File"
+          "value": "기존 WDT 모델 파일용 제공자 생성"
+        },
+        "composite": {
+          "value": "새 WDT 조합 모델에 대한 제공자 생성"
+        },
+        "proplist": {
+          "value": "기존 속성 목록에 대한 제공자 생성"
         }
       },
       "new": {
         "models": {
-          "value": "Create Provider for New WDT Model File"
+          "value": "새 WDT 모델 파일용 제공자 생성"
+        },
+        "proplist": {
+          "value": "새 속성 목록에 대한 제공자 생성"
         }
       },
       "edit": {
         "connections": {
-          "value": "Edit Admin Server Connection Provider"
+          "value": "관리 서버 접속 제공자 편집"
         },
         "models": {
-          "value": "Edit WDT Model File Provider"
+          "value": "WDT 모델 파일 제공자 편집"
+        },
+        "composite": {
+          "value": "WDT 조합 모델 제공자 편집"
+        },
+        "proplist": {
+          "value": "속성 목록 제공자 편집"
         }
       },
       "export": {
         "project": {
-          "value": "Export Providers as Project"
+          "value": "제공자를 프로젝트로 익스포트"
         }
       },
       "import": {
         "project": {
-          "value": "\\uD504\\uB85C\\uC81D\\uD2B8 \\uC784\\uD3EC\\uD2B8"
+          "value": "프로젝트 임포트"
         }
       },
       "startup": {
         "task": {
-          "value": "Startup Task"
+          "value": "시작 태스크"
         }
       }
     },
     "messages": {
       "export": {
         "failed": {
-          "summary": "Export Unsuccessful",
-          "detail": "Unable to export providers as ''{0}'' project."
+          "summary": "익스포트 실패",
+          "detail": "제공자를 ''{0}'' 프로젝트로 익스포트할 수 없습니다."
         }
       },
       "import": {
         "failed": {
-          "summary": "Save Unsuccessful",
-          "detail": "Unable to import ''{0}'' project file."
+          "summary": "저장 실패",
+          "detail": "''{0}'' 프로젝트 파일을 임포트할 수 없습니다."
         }
       },
       "stage": {
         "failed": {
-          "summary": "Create Unsuccessful",
-          "detail": "Unable to create ''{0}'' provider item."
+          "summary": "생성 실패",
+          "detail": "''{0}'' 제공자 항목을 생성할 수 없습니다."
         }
       },
       "use": {
         "failed": {
-          "summary": "Connection Unsuccessful",
-          "detail": "Unable to use ''{0}'' provider item."
+          "summary": "접속 실패",
+          "detail": "''{0}'' 제공자 항목을 사용할 수 없습니다."
+        }
+      },
+      "upload": {
+        "failed": {
+          "detail": "WDT 모델 파일을 로드할 수 없음: {0}"
+        },
+        "props": {
+          "failed": {
+            "detail": "WDT 변수를 로드할 수 없음: {0}"
+          }
         }
       },
       "response": {
         "nameAlreadyExist": {
-          "detail": "Provider named ''{0}'' is already in this project!"
+          "detail": "''{0}'' 이름의 제공자가 이 프로젝트에 이미 있습니다!"
+        },
+        "modelsNotFound": {
+          "detail": "구성된 WDT 모델 ''{0}''을(를) 찾을 수 없습니다."
+        },
+        "propListNotFound": {
+          "detail": "WDT 변수 ''{0}''을(를) 찾을 수 없습니다."
+        },
+        "selectModels": {
+          "detail": "WDT 조합을 선택하려면 먼저 WDT 조합에 사용된 모든 WDT 모델을 선택하십시오."
+        }
+      },
+      "correctiveAction": {
+        "filePathNotFound": {
+          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+        },
+        "fixModelFile": {
+          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+        },
+        "yamlException": {
+          "detail": "{0} at line {1}, column {2}"
+        },
+        "wktModelContent": {
+          "summary": "Model Content Problems",
+          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
         }
       }
     },
     "prompts": {
       "info": {
-        "fileNotSet": "\\uC124\\uC815\\uB418\\uC9C0 \\uC54A\\uC74C"
+        "fileNotSet": "설정되지 않음"
+      }
+    },
+    "checkboxes": {
+      "useSparseTemplate": {
+        "label": "희소 템플리트 사용"
       }
     }
   },
   "wrc-navstrip": {
     "icons": {
       "configuration": {
-        "tooltip": "\\uD2B8\\uB9AC \\uD3B8\\uC9D1"
+        "tooltip": "트리 편집"
       },
       "view": {
-        "tooltip": "Configuration View Tree"
+        "tooltip": "구성 뷰 트리"
       },
       "monitoring": {
-        "tooltip": "Monitoring Tree"
+        "tooltip": "모니터링 트리"
       },
       "modeling": {
-        "tooltip": "WDT Model"
+        "tooltip": "WDT 모델"
+      },
+      "composite": {
+        "tooltip": "WDT 조합 모델"
+      },
+      "properties": {
+        "tooltip": "속성 목록 편집기"
       }
     }
   },
   "wrc-content-area-header": {
     "title": {
-      "home": "\\uD648",
-      "configuration": "\\uD2B8\\uB9AC \\uD3B8\\uC9D1",
-      "view": "Configuration View Tree",
-      "monitoring": "Monitoring Tree",
-      "modeling": "WDT Model"
+      "home": "홈",
+      "configuration": "트리 편집",
+      "view": "구성 뷰 트리",
+      "monitoring": "모니터링 트리",
+      "modeling": "WDT 모델",
+      "composite": "WDT 조합 모델",
+      "properties": "속성 목록"
     },
     "toolbar": {
       "buttons": {
         "home": {
-          "label": "\\uD648"
+          "label": "홈"
         },
         "preferences": {
-          "label": "\\uD658\\uACBD\\uC124\\uC815"
+          "label": "환경설정"
         },
         "search": {
-          "label": "\\uAC80\\uC0C9"
+          "label": "검색"
         }
       }
     }
@@ -322,86 +456,64 @@ define({
     "tabstrip": {
       "tabs": {
         "shoppingcart": {
-          "label": "\\uC1FC\\uD551 \\uCE74\\uD2B8"
+          "label": "쇼핑 카트"
         },
         "ataglance": {
-          "label": "\\uAC04\\uB7B5\\uD788 \\uBCF4\\uAE30"
+          "label": "간략히 보기"
         },
         "projectmanagement": {
-          "label": "Provider Management"
+          "label": "제공자 관리"
         }
       }
     },
     "icons": {
       "kiosk": {
-        "tooltip": "\\uD0A4\\uC624\\uC2A4\\uD06C"
+        "tooltip": "키오스크"
       }
     }
   },
   "wrc-perspective": {
     "icons": {
       "history": {
-        "tooltip": "\\uB0B4\\uC5ED"
+        "tooltip": "내역"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "\\uB0B4\\uC5ED \\uC9C0\\uC6B0\\uAE30"
+          "value": "내역 지우기"
         }
-      }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "\\uB370\\uC774\\uD130\\uB97C \\uC0AC\\uC6A9\\uD560 \\uC218 \\uC5C6\\uC74C"
       }
     }
   },
   "wrc-monitoring": {
     "icons": {
       "history": {
-        "tooltip": "\\uB0B4\\uC5ED"
+        "tooltip": "내역"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "\\uB0B4\\uC5ED \\uC9C0\\uC6B0\\uAE30"
+          "value": "내역 지우기"
         }
-      }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "\\uB370\\uC774\\uD130\\uB97C \\uC0AC\\uC6A9\\uD560 \\uC218 \\uC5C6\\uC74C"
       }
     }
   },
   "wrc-domain-connection": {
     "labels": {
       "runningAt": {
-        "value": "{0}\\uC5D0\\uC11C \\uC2E4\\uD589 \\uC911"
+        "value": "{0}에서 실행 중"
       }
     },
     "messages": {
       "lostConnection": {
-        "summary": "\\uC811\\uC18D \\uB04A\\uAE40",
-        "detail": "Connection to remote console backend was lost. Ensure that it is running or restart it and try the link again."
+        "summary": "접속 끊김",
+        "detail": "원격 콘솔 백엔드에 대한 접속이 끊겼습니다. 실행 중인지 확인하거나 재시작하고 링크를 다시 시도하십시오."
       },
       "cannotConnect": {
-        "summary": "\\uC811\\uC18D \\uC2DC\\uB3C4 \\uC2E4\\uD328",
-        "detail": "WebLogic \\uB3C4\\uBA54\\uC778 {0}\\uC5D0 \\uC811\\uC18D\\uD560 \\uC218 \\uC5C6\\uC2B5\\uB2C8\\uB2E4. WebLogic\\uC774 \\uC2E4\\uD589 \\uC911\\uC778\\uC9C0 \\uD655\\uC778\\uD558\\uC2ED\\uC2DC\\uC624."
-      }
-    },
-    "dialog1": {
-      "title": "WebLogic \\uB3C4\\uBA54\\uC778\\uC5D0 \\uC811\\uC18D",
-      "instructions": "WebLogic \\uB3C4\\uBA54\\uC778\\uC5D0 \\uB300\\uD55C \\uAD00\\uB9AC \\uC0AC\\uC6A9\\uC790 \\uC778\\uC99D\\uC11C\\uC640 URL \\uC785\\uB825:",
-      "labels": {
-        "url": "URL"
-      },
-      "buttons": {
-        "connect": {
-          "label": "\\uC811\\uC18D"
-        }
+        "summary": "접속 시도 실패",
+        "detail": "WebLogic 도메인 {0}에 접속할 수 없습니다. WebLogic이 실행 중인지 확인하십시오."
       }
     }
   },
@@ -409,7 +521,7 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "\\uAC24\\uB7EC\\uB9AC"
+          "label": "갤러리"
         }
       }
     }
@@ -417,143 +529,170 @@ define({
   "wrc-gallery": {
     "cards": {
       "configuration": {
-        "label": "\\uD2B8\\uB9AC \\uD3B8\\uC9D1",
-        "description": "<p>\\uD604\\uC7AC \\uC0AC\\uC6A9 \\uC911\\uC778 WebLogic \\uB3C4\\uBA54\\uC778\\uC758 \\uAD6C\\uC131\\uC744 \\uC720\\uC9C0\\uD569\\uB2C8\\uB2E4.</p>"
+        "label": "트리 편집",
+        "description": "<p>현재 사용 중인 WebLogic 도메인의 구성을 유지합니다.</p>"
       },
       "view": {
-        "label": "Configuration View Tree",
-        "description": "<p>\\uD604\\uC7AC \\uC0AC\\uC6A9 \\uC911\\uC778 WebLogic \\uB3C4\\uBA54\\uC778\\uC758 \\uC77D\\uAE30 \\uC804\\uC6A9 \\uAD6C\\uC131\\uC744 \\uAC80\\uC0AC\\uD569\\uB2C8\\uB2E4.</p>"
+        "label": "구성 뷰 트리",
+        "description": "<p>현재 사용 중인 WebLogic 도메인의 읽기 전용 구성을 검사합니다.</p>"
       },
       "monitoring": {
-        "label": "Monitoring Tree",
-        "description": "<p>\\uD604\\uC7AC \\uC0AC\\uC6A9 \\uC911\\uC778 WebLogic \\uB3C4\\uBA54\\uC778\\uC758 \\uC120\\uD0DD\\uB41C \\uB9AC\\uC18C\\uC2A4\\uC5D0 \\uB300\\uD55C \\uB7F0\\uD0C0\\uC784 MBean \\uC815\\uBCF4\\uB97C \\uD655\\uC778\\uD569\\uB2C8\\uB2E4.</p>"
+        "label": "모니터링 트리",
+        "description": "<p>현재 사용 중인 WebLogic 도메인의 선택된 리소스에 대한 런타임 MBean 정보를 확인합니다.</p>"
       },
       "modeling": {
-        "label": "WDT Model Tree",
-        "description": "<p>Maintain model files associated with the WebLogic Deploy Tooling tool.</p>"
+        "label": "WDT 모델 트리",
+        "description": "<p>WebLogic Deploy Tooling 툴과 연관된 모델 파일을 유지 관리합니다.</p>"
+      },
+      "composite": {
+        "label": "WDT 조합 모델 트리",
+        "description": "<p>현재 사용 중인 일련의 결합된 WebLogic Deploy Tooling 모델 파일을 확인합니다.</p>"
+      },
+      "properties": {
+        "label": "속성 목록 편집기",
+        "description": "<p>속성 목록 파일에서 속성 집합을 보거나 수정합니다.</p>"
       }
     }
   },
   "wrc-shoppingcart": {
     "icons": {
       "discard": {
-        "tooltip": "\\uBCC0\\uACBD\\uC0AC\\uD56D \\uBB34\\uC2DC"
+        "tooltip": "변경사항 무시"
       },
       "commit": {
-        "tooltip": "\\uBCC0\\uACBD\\uC0AC\\uD56D \\uCEE4\\uBC0B"
+        "tooltip": "변경사항 커밋"
       }
     },
     "sections": {
       "changeManager": {
-        "label": "\\uBCC0\\uACBD \\uAD00\\uB9AC\\uC790"
+        "label": "변경 관리자"
       },
       "additions": {
-        "label": "\\uCD94\\uAC00"
+        "label": "추가"
       },
       "modifications": {
-        "label": "\\uC218\\uC815"
+        "label": "수정"
       },
       "removals": {
-        "label": "\\uC81C\\uAC70"
+        "label": "제거"
       },
       "restart": {
-        "label": "\\uC7AC\\uC2DC\\uC791"
+        "label": "재시작"
       }
     }
   },
   "wrc-table-toolbar": {
     "buttons": {
       "new": {
-        "label": "\\uC0C8\\uB85C \\uB9CC\\uB4E4\\uAE30"
+        "label": "새로 만들기"
       },
       "clone": {
-        "label": "\\uBCF5\\uC81C"
+        "label": "복제"
       },
       "delete": {
-        "label": "\\uC0AD\\uC81C"
+        "label": "삭제"
+      },
+      "customize": {
+        "label": "사용자정의"
       }
     },
     "icons": {
       "landing": {
-        "tooltip": "\\uC2DC\\uC791 \\uD398\\uC774\\uC9C0"
+        "tooltip": "시작 페이지"
       },
       "history": {
-        "tooltip": "\\uB0B4\\uC5ED \\uD45C\\uC2DC \\uD1A0\\uAE00"
+        "tooltip": "내역 표시 토글"
       },
       "instructions": {
-        "tooltip": "\\uC9C0\\uCE68 \\uD45C\\uC2DC \\uD1A0\\uAE00"
+        "tooltip": "지침 표시 토글"
       },
       "help": {
-        "tooltip": "\\uB3C4\\uC6C0\\uB9D0 \\uD398\\uC774\\uC9C0 \\uD45C\\uC2DC \\uD1A0\\uAE00"
+        "tooltip": "도움말 페이지 표시 토글"
       },
       "sync": {
-        "tooltip": "\\uB2E4\\uC2DC \\uB85C\\uB4DC",
-        "tooltipOn": "\\uC790\\uB3D9 \\uB2E4\\uC2DC \\uB85C\\uB4DC \\uC815\\uC9C0"
+        "tooltip": "다시 로드",
+        "tooltipOn": "자동 다시 로드 정지"
       },
       "syncInterval": {
-        "tooltip": "\\uC790\\uB3D9 \\uB2E4\\uC2DC \\uB85C\\uB4DC \\uAC04\\uACA9 \\uC124\\uC815"
+        "tooltip": "자동 다시 로드 간격 설정"
       },
       "shoppingcart": {
-        "tooltip": "\\uB20C\\uB7EC\\uC11C \\uCE74\\uD2B8\\uC5D0 \\uB300\\uD55C \\uC791\\uC5C5 \\uBCF4\\uAE30"
+        "tooltip": "눌러서 카트에 대한 작업 보기"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "\\uBCC0\\uACBD\\uC0AC\\uD56D \\uBCF4\\uAE30"
+          "label": "변경사항 보기"
         },
         "discard": {
-          "label": "\\uBCC0\\uACBD\\uC0AC\\uD56D \\uBB34\\uC2DC"
+          "label": "변경사항 무시"
         },
         "commit": {
-          "label": "\\uBCC0\\uACBD\\uC0AC\\uD56D \\uCEE4\\uBC0B"
+          "label": "변경사항 커밋"
         }
       }
     },
     "instructions": {
       "selectItems": {
-        "value": "''{0}'' \\uC791\\uC5C5\\uC744 \\uC218\\uD589\\uD560 \\uD56D\\uBAA9\\uC744 \\uC120\\uD0DD\\uD558\\uC2ED\\uC2DC\\uC624."
+        "value": "''{0}'' 작업을 수행할 항목을 선택하십시오."
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
-          "summary": "\\uBA54\\uC2DC\\uC9C0",
-          "detail": "\\uC790\\uB3D9 \\uB2E4\\uC2DC \\uB85C\\uB4DC\\uAC00 \\uC2E4\\uD589 \\uC911\\uC778 \\uB3D9\\uC548\\uC5D0\\uB294 ''{0}'' \\uC791\\uC5C5\\uC744 \\uC218\\uD589\\uD560 \\uC218 \\uC5C6\\uC2B5\\uB2C8\\uB2E4! \\uBA3C\\uC800 ''{1}'' \\uC544\\uC774\\uCF58\\uC744 \\uB20C\\uB7EC \\uC815\\uC9C0\\uD558\\uC2ED\\uC2DC\\uC624."
+          "summary": "메시지",
+          "detail": "자동 다시 로드가 실행 중인 동안에는 ''{0}'' 작업을 수행할 수 없습니다! 먼저 ''{1}'' 아이콘을 눌러 정지하십시오."
         }
       }
     },
     "labels": {
       "start": {
-        "value": "\\uC2DC\\uC791"
+        "value": "시작"
       },
       "resume": {
-        "value": "\\uC7AC\\uAC1C"
+        "value": "재개"
       },
       "suspend": {
-        "value": "\\uC77C\\uC2DC \\uC911\\uC9C0"
+        "value": "일시 중지"
       },
       "shutdown": {
-        "value": "\\uC885\\uB8CC"
+        "value": "종료"
       },
       "restartSSL": {
-        "value": "SSL \\uC7AC\\uC2DC\\uC791"
+        "value": "SSL 재시작"
       },
       "stop": {
-        "value": "\\uC815\\uC9C0"
+        "value": "정지"
       }
     }
   },
   "wrc-table": {
     "checkboxes": {
       "showHiddenColumns": {
-        "label": "\\uC228\\uACA8\\uC9C4 \\uC5F4 \\uD45C\\uC2DC"
+        "label": "숨겨진 열 표시"
       }
     },
-    "actionsDialog": {
-      "buttons": {
-        "cancel": {
-          "label": "\\uCDE8\\uC18C"
+    "labels": {
+      "totalRows": {
+        "value": "총 행: {0}"
+      }
+    }
+  },
+  "wrc-table-customizer": {
+    "labels": {
+      "available": {
+        "value": "사용 가능한 열"
+      },
+      "selected": {
+        "value": "선택한 열"
+      }
+    },
+    "messages": {
+      "action": {
+        "needAtLeastOneColumn": {
+          "title": "열 부족",
+          "detail": "적어도 하나의 선택된 열이 필요합니다."
         }
       }
     }
@@ -561,64 +700,64 @@ define({
   "wrc-form-toolbar": {
     "buttons": {
       "save": {
-        "label": "\\uC800\\uC7A5"
+        "label": "저장"
       },
       "new": {
-        "label": "\\uC0DD\\uC131"
+        "label": "생성"
       },
       "delete": {
-        "label": "\\uC81C\\uAC70"
+        "label": "제거"
       },
       "back": {
-        "label": "\\uB4A4\\uB85C"
+        "label": "뒤로"
       },
       "next": {
-        "label": "\\uB2E4\\uC74C"
+        "label": "다음"
       },
       "finish": {
-        "label": "\\uC0DD\\uC131"
+        "label": "생성"
       }
     },
     "icons": {
       "save": {
-        "tooltip": "\\uC800\\uC7A5"
+        "tooltip": "저장"
       },
       "create": {
-        "tooltip": "\\uC0DD\\uC131"
+        "tooltip": "생성"
       },
       "landing": {
-        "tooltip": "\\uC2DC\\uC791 \\uD398\\uC774\\uC9C0"
+        "tooltip": "시작 페이지"
       },
       "history": {
-        "tooltip": "\\uB0B4\\uC5ED \\uD45C\\uC2DC \\uD1A0\\uAE00"
+        "tooltip": "내역 표시 토글"
       },
       "instructions": {
-        "tooltip": "\\uC9C0\\uCE68 \\uD45C\\uC2DC \\uD1A0\\uAE00"
+        "tooltip": "지침 표시 토글"
       },
       "help": {
-        "tooltip": "\\uB3C4\\uC6C0\\uB9D0 \\uD398\\uC774\\uC9C0 \\uD45C\\uC2DC \\uD1A0\\uAE00"
+        "tooltip": "도움말 페이지 표시 토글"
       },
       "sync": {
-        "tooltip": "\\uB2E4\\uC2DC \\uB85C\\uB4DC",
-        "tooltipOn": "\\uC790\\uB3D9 \\uB2E4\\uC2DC \\uB85C\\uB4DC \\uC815\\uC9C0"
+        "tooltip": "다시 로드",
+        "tooltipOn": "자동 다시 로드 정지"
       },
       "syncInterval": {
-        "tooltip": "\\uC790\\uB3D9 \\uB2E4\\uC2DC \\uB85C\\uB4DC \\uAC04\\uACA9 \\uC124\\uC815"
+        "tooltip": "자동 다시 로드 간격 설정"
       },
       "shoppingcart": {
-        "tooltip": "\\uB20C\\uB7EC\\uC11C \\uCE74\\uD2B8\\uC5D0 \\uB300\\uD55C \\uC791\\uC5C5 \\uBCF4\\uAE30"
+        "tooltip": "눌러서 카트에 대한 작업 보기"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "\\uBCC0\\uACBD\\uC0AC\\uD56D \\uBCF4\\uAE30"
+          "label": "변경사항 보기"
         },
         "discard": {
-          "label": "\\uBCC0\\uACBD\\uC0AC\\uD56D \\uBB34\\uC2DC"
+          "label": "변경사항 무시"
         },
         "commit": {
-          "label": "\\uBCC0\\uACBD\\uC0AC\\uD56D \\uCEE4\\uBC0B"
+          "label": "변경사항 커밋"
         }
       }
     }
@@ -626,34 +765,34 @@ define({
   "wrc-form": {
     "checkboxes": {
       "showAdvancedFields": {
-        "label": "\\uACE0\\uAE09 \\uD544\\uB4DC \\uD45C\\uC2DC"
+        "label": "고급 필드 표시"
       }
     },
     "introduction": {
       "toggleHelp": {
-        "text": "\\uC694\\uC57D\\uACFC \\uC790\\uC138\\uD55C \\uB3C4\\uC6C0\\uB9D0 \\uAC04\\uC5D0 \\uD1A0\\uAE00\\uD558\\uB824\\uBA74 {0} \\uC544\\uC774\\uCF58\\uC744 \\uB204\\uB985\\uB2C8\\uB2E4."
+        "text": "요약과 자세한 도움말 간에 토글하려면 {0} 아이콘을 누릅니다."
       }
     },
     "messages": {
-      "save": "\\uBCC0\\uACBD\\uC0AC\\uD56D\\uC774 \\uCE74\\uD2B8\\uC5D0 \\uCD94\\uAC00\\uB418\\uC5C8\\uC2B5\\uB2C8\\uB2E4."
+      "save": "변경사항이 카트에 추가되었습니다."
     },
     "icons": {
       "restart": {
-        "tooltip": "\\uC11C\\uBC84 \\uB610\\uB294 \\uC571 \\uC7AC\\uC2DC\\uC791 \\uD544\\uC694"
+        "tooltip": "서버 또는 앱 재시작 필요"
       },
       "wdtIcon": {
-        "tooltip": "WDT Settings"
+        "tooltip": "WDT 설정"
       }
     }
   },
   "wrc-help-form": {
     "tables": {
       "help": {
-        "label": "\\uB3C4\\uC6C0\\uB9D0 \\uD14C\\uC774\\uBE14",
+        "label": "도움말 테이블",
         "columns": {
           "header": {
-            "name": "\\uC774\\uB984",
-            "description": "\\uC124\\uBA85"
+            "name": "이름",
+            "description": "설명"
           }
         }
       }
@@ -662,128 +801,183 @@ define({
   "wrc-create-form": {
     "pageState": {
       "error": {
-        "summary": "\\uBD88\\uC644\\uC804\\uD55C \\uD544\\uC218 \\uD544\\uB4DC",
-        "detail": "{0}\\uC740(\\uB294) \\uD544\\uC218 \\uD544\\uB4DC\\uC774\\uC9C0\\uB9CC, \\uAC12\\uC774 \\uC81C\\uACF5\\uB418\\uC9C0 \\uC54A\\uC558\\uC2B5\\uB2C8\\uB2E4."
+        "summary": "불완전한 필수 필드",
+        "detail": "{0} field is required, but no (or an invalid) value has been provided."
       }
     }
   },
   "wrc-common": {
     "buttons": {
+      "apply": {
+        "label": "적용"
+      },
+      "reset": {
+        "label": "재설정"
+      },
       "ok": {
-        "label": "\\uD655\\uC778"
+        "label": "확인"
       },
       "cancel": {
-        "label": "\\uCDE8\\uC18C"
+        "label": "취소"
       },
       "yes": {
-        "label": "\\uC608"
+        "label": "예"
       },
       "no": {
-        "label": "\\uC544\\uB2C8\\uC624"
+        "label": "아니오"
       },
       "choose": {
-        "label": "Choose"
+        "label": "선택"
       },
       "connect": {
-        "label": "\\uC811\\uC18D"
+        "label": "접속"
       },
       "add": {
-        "label": "Add/Send"
+        "label": "추가/보내기"
       },
       "edit": {
-        "label": "Edit/Send"
+        "label": "편집/보내기"
       },
       "import": {
-        "label": "Import"
+        "label": "임포트"
       },
       "export": {
-        "label": "Export"
+        "label": "익스포트"
       },
       "write": {
-        "label": "\\uD30C\\uC77C \\uC5C5\\uB370\\uC774\\uD2B8"
+        "label": "파일 다운로드"
+      },
+      "savenow": {
+        "label": "지금 저장"
       }
     },
     "tooltips": {
       "collapse": {
-        "value": "\\uCD95\\uC18C"
+        "value": "축소"
       },
       "expand": {
-        "value": "\\uD655\\uC7A5"
+        "value": "확장"
       },
       "choose": {
-        "value": "\\uD30C\\uC77C \\uC120\\uD0DD"
+        "value": "파일 선택"
       },
       "clear": {
-        "value": "\\uC120\\uD0DD\\uD55C \\uD30C\\uC77C \\uC9C0\\uC6B0\\uAE30"
+        "value": "선택한 파일 지우기"
       },
       "more": {
-        "value": "\\uCD94\\uAC00 \\uC791\\uC5C5"
+        "value": "추가 작업"
       },
       "download": {
-        "value": "Browse"
+        "value": "찾아보기"
       },
       "reset": {
-        "value": "Reset"
+        "value": "재설정"
       },
       "submit": {
-        "value": "\\uBCC0\\uACBD\\uC0AC\\uD56D \\uC81C\\uCD9C"
+        "value": "변경사항 제출"
       },
       "write": {
-        "value": "\\uD30C\\uC77C \\uC5C5\\uB370\\uC774\\uD2B8"
+        "value": "파일 다운로드"
       },
       "pick": {
-        "value": "Pick Directory"
+        "value": "디렉토리 선택"
+      },
+      "reload": {
+        "value": "Reload File"
+      }
+    },
+    "menu": {
+      "chooseFile": {
+        "value": "파일 선택..."
+      },
+      "chooseDir": {
+        "value": "디렉토리 선택..."
+      }
+    },
+    "labels": {
+      "info": {
+        "value": "Information"
+      },
+      "warn": {
+        "value": "경고"
+      },
+      "error": {
+        "value": "오류"
       }
     }
   },
   "wrc-wdt-form": {
     "messages": {
-      "changesSubmitted": {
-        "summary": "Changes were successfully submitted!"
+      "changesSaved": {
+        "summary": "변경사항이 성공적으로 ''{0}'' 파일에 저장되었습니다!"
       },
-      "changesNotSubmitted": {
-        "summary": "Unable to submit changes!"
+      "changesNotSaved": {
+        "summary": "''{0}'' 파일에 변경사항을 저장할 수 없습니다!"
       },
-      "changesWritten": {
-        "summary": "Changes were successfully written to ''{0}'' file!"
+      "changesDownloaded": {
+        "summary": "변경사항이 성공적으로 ''{0}'' 파일에 다운로드되었습니다!"
       },
-      "changesNotWritten": {
-        "summary": "Unable to write changes to ''{0}'' file!"
+      "changesNotDownloaded": {
+        "summary": "''{0}'' 파일에 변경사항을 다운로드할 수 없습니다!"
+      },
+      "verifyPathEntered": {
+        "detail": ". {0} 필드를 false로 설정하면 로컬 파일 또는 디렉토리인지 검증하지 않고 입력된 값을 수락합니다."
       }
     },
     "wdtOptionsDialog": {
-      "title": "Edit: {0}",
-      "default": "Default. (Unset)",
-      "instructions": "Enter token to add to the list of selectable items.",
-      "enterValue": "\\uAC12 \\uC785\\uB825",
-      "selectValue": "\\uAC12 \\uC120\\uD0DD",
-      "selectSwitch": "\\uAC12 \\uD1A0\\uAE00",
-      "enterUnresolvedReference": "Enter Unresolved Reference",
-      "enterModelToken": "Enter Model Token"
+      "title": "편집: {0}",
+      "default": "기본값. (설정 해제)",
+      "instructions": "선택 가능한 항목 목록에 추가할 토큰을 입력합니다.",
+      "enterValue": "값 입력",
+      "selectValue": "값 선택",
+      "selectSwitch": "값 토글",
+      "enterUnresolvedReference": "확인되지 않은 참조 입력",
+      "enterModelToken": "모델 토큰 입력",
+      "selectPropsVariable": "모델 토큰 변수 선택",
+      "createPropsVariable": "모델 토큰 변수 생성",
+      "propName": "변수 이름(필수)",
+      "propValue": "변수 값",
+      "enterVariable": "변수 입력",
+      "variableName": "변수 이름(필수)",
+      "variableValue": "변수 값",
+      "multiSelectUnset": "\"기본값. (사용 가능한 항목 목록에서 선택)\""
     }
   },
   "wrc-unsaved-changes": {
-    "confirmDialog": {
-      "title": "\\uC800\\uC7A5\\uB418\\uC9C0 \\uC54A\\uC740 \\uBCC0\\uACBD\\uC0AC\\uD56D\\uC774 \\uAC10\\uC9C0\\uB428"
+    "titles": {
+      "unsavedChanges": {
+        "value": "저장되지 않은 변경사항이 감지됨"
+      },
+      "changesNeedDownloading": {
+        "value": "변경사항이 다운로드되지 않음"
+      }
     },
     "prompts": {
       "unsavedChanges": {
         "willBeLost": {
-          "value": "\\uC800\\uC7A5\\uB418\\uC9C0 \\uC54A\\uC740 \\uBCC0\\uACBD\\uC0AC\\uD56D\\uC774 \\uBAA8\\uB450 \\uC190\\uC2E4\\uB429\\uB2C8\\uB2E4. \\uACC4\\uC18D\\uD558\\uACA0\\uC2B5\\uB2C8\\uAE4C?"
+          "value": "저장되지 않은 변경사항이 모두 손실됩니다. 계속하겠습니까?"
         },
         "areYouSure": {
-          "value": "\\uBCC0\\uACBD\\uC0AC\\uD56D\\uC744 \\uC800\\uC7A5\\uD558\\uC9C0 \\uC54A\\uACE0 \\uC885\\uB8CC\\uD558\\uACA0\\uC2B5\\uB2C8\\uAE4C?"
+          "value": "변경사항을 저장하지 않고 종료하겠습니까?"
+        },
+        "needDownloading": {
+          "value": "변경사항이 WDT 모델 파일에 아직 다운로드되지 않았습니다.<br/><br/>계속하기 전에 다운로드하겠습니까?"
+        }
+      },
+      "uncommitedCreate": {
+        "abandonForm": {
+          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
         }
       }
     }
   },
   "wrc-sync-interval": {
     "dialogSync": {
-      "title": "\\uC790\\uB3D9 \\uB2E4\\uC2DC \\uB85C\\uB4DC \\uAC04\\uACA9 \\uC124\\uC815",
-      "instructions": "\\uC790\\uB3D9 \\uB2E4\\uC2DC \\uB85C\\uB4DC \\uAC04\\uACA9\\uC5D0 \\uB300\\uD55C \\uC2DC\\uAC04(\\uCD08)\\uC744 \\uC9C0\\uC815\\uD558\\uC2ED\\uC2DC\\uC624.",
+      "title": "자동 다시 로드 간격 설정",
+      "instructions": "자동 다시 로드 간격에 대한 시간(초)을 지정하십시오.",
       "fields": {
         "interval": {
-          "label": "\\uC790\\uB3D9 \\uB2E4\\uC2DC \\uB85C\\uB4DC \\uAC04\\uACA9:"
+          "label": "자동 다시 로드 간격:"
         }
       }
     }
@@ -792,22 +986,36 @@ define({
     "messages": {
       "action": {
         "unableToPerform": {
-          "summary": "\\uBA54\\uC2DC\\uC9C0",
-          "detail": "''{1}''\\uC5D0\\uC11C \\uC9C0\\uC815\\uB41C \\uC791\\uC5C5\\uC744 \\uC218\\uD589\\uD558\\uB824\\uACE0 \\uC2DC\\uB3C4\\uD560 \\uB54C \\uCF58\\uC194 \\uBC31\\uC5D4\\uB4DC \\uD638\\uCD9C\\uC774 ''{0}'' \\uC751\\uB2F5\\uC744 \\uC0DD\\uC131\\uD588\\uC2B5\\uB2C8\\uB2E4."
+          "summary": "메시지",
+          "detail": "''{1}''에서 지정된 작업을 수행하려고 시도할 때 콘솔 백엔드 호출이 ''{0}'' 응답을 생성했습니다."
         }
       }
     },
     "labels": {
       "cannotDetermineExactCause": {
-        "value": "\\uC815\\uD655\\uD55C \\uC6D0\\uC778\\uC744 \\uD655\\uC778\\uD560 \\uC218 \\uC5C6\\uC2B5\\uB2C8\\uB2E4. \\uD78C\\uD2B8\\uB97C \\uC5BB\\uC73C\\uB824\\uBA74 JavaScript \\uCF58\\uC194\\uC744 \\uD655\\uC778\\uD558\\uC2ED\\uC2DC\\uC624."
+        "value": "정확한 원인을 확인할 수 없습니다. 힌트를 얻으려면 JavaScript 콘솔을 확인하십시오."
       }
     }
   },
   "wrc-pdj-fields": {
     "cfe-multi-select": {
       "labels": {
-        "available": "\\uC0AC\\uC6A9 \\uAC00\\uB2A5",
-        "chosen": "\\uC120\\uD0DD\\uB428"
+        "available": "사용 가능",
+        "chosen": "선택됨"
+      }
+    },
+    "cfe-properties-editor": {
+      "labels": {
+        "name": "속성 이름",
+        "value": "속성 값"
+      }
+    },
+    "cfe-property-list-editor": {
+      "labels": {
+        "nameHeader": "속성 이름",
+        "valueHeader": "속성값",
+        "addButtonTooltip": "추가",
+        "deleteButtonTooltip": "삭제"
       }
     }
   },
@@ -816,13 +1024,13 @@ define({
       "more": {
         "optionsSources": {
           "view": {
-            "label": "{0} \\uBCF4\\uAE30..."
+            "label": "{0} 보기..."
           },
           "create": {
-            "label": "\\uC0C8 {0} \\uC0DD\\uC131..."
+            "label": "새 {0} 생성..."
           },
           "edit": {
-            "label": "{0} \\uD3B8\\uC9D1..."
+            "label": "{0} 편집..."
           }
         }
       }
@@ -830,17 +1038,16 @@ define({
   },
   "wrc-pdj-unset": {
     "menu": {
-      "label": "\\uAE30\\uBCF8\\uAC12\\uC73C\\uB85C \\uBCF5\\uC6D0"
+      "label": "기본값으로 복원"
     },
     "placeholder": {
-      "value": "\\uAE30\\uBCF8\\uAC12"
+      "value": "기본값"
     }
   },
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "summary": "\\uBA54\\uC2DC\\uC9C0",
-        "detail": "''{0}'' \\uD56D\\uBAA9\\uC5D0 \\uB300\\uD55C ''notFoundMessage'' \\uD544\\uB4DC\\uAC00 RDJ\\uC5D0 \\uD3EC\\uD568\\uB418\\uC9C0 \\uC54A\\uC558\\uC2B5\\uB2C8\\uB2E4."
+        "detail": "''{0}''을(를) 사용할 수 없습니다."
       }
     }
   },
@@ -853,41 +1060,41 @@ define({
         "value": "SHUTDOWN"
       },
       "serverStates": {
-        "value": "\\uC11C\\uBC84 \\uC0C1\\uD0DC"
+        "value": "서버 상태"
       },
       "systemStatus": {
-        "value": "\\uC2DC\\uC2A4\\uD15C \\uC0C1\\uD0DC"
+        "value": "시스템 상태"
       },
       "healthState": {
         "failed": {
-          "value": "\\uC2E4\\uD328"
+          "value": "실패"
         },
         "critical": {
-          "value": "\\uC2EC\\uAC01"
+          "value": "심각"
         },
         "overloaded": {
-          "value": "\\uC624\\uBC84\\uB85C\\uB4DC\\uB428"
+          "value": "오버로드됨"
         },
         "warning": {
-          "value": "\\uACBD\\uACE0"
+          "value": "경고"
         },
         "ok": {
-          "value": "\\uD655\\uC778"
+          "value": "확인"
         }
       }
     },
     "descriptions": {
       "healthState": {
-        "value": "\\uC2E4\\uD589 \\uC911\\uC778 \\uC11C\\uBC84 \\uAC74\\uC804\\uC131"
+        "value": "실행 중인 서버 건전성"
       }
     },
     "headers": {
       "serverStates": {
         "name": {
-          "value": "\\uC774\\uB984"
+          "value": "이름"
         },
         "state": {
-          "value": "\\uC0C1\\uD0DC"
+          "value": "상태"
         }
       }
     }
@@ -895,33 +1102,36 @@ define({
   "wrc-data-operations": {
     "messages": {
       "backendNotReachable": {
-        "detail": "\\uD604\\uC7AC \\uBC31\\uC5D4\\uB4DC\\uC5D0 \\uC5F0\\uACB0\\uD560 \\uC218 \\uC5C6\\uC2B5\\uB2C8\\uB2E4."
+        "detail": "현재 백엔드에 연결할 수 없습니다."
       },
       "connectionMessage": {
-        "summary": "\\uC811\\uC18D \\uBA54\\uC2DC\\uC9C0"
+        "summary": "접속 메시지"
       },
       "connectFailed": {
-        "detail": "Attempt Failed: "
+        "detail": "시도 실패: "
       },
       "badRequest": {
-        "detail": "Unable to process the submitted file or request "
+        "detail": "제출된 파일 또는 요청을 처리할 수 없습니다. "
       },
       "invalidCredentials": {
-        "detail": "WebLogic \\uB3C4\\uBA54\\uC778 \\uC778\\uC99D\\uC11C\\uAC00 \\uBD80\\uC801\\uD569\\uD569\\uB2C8\\uB2E4. "
+        "detail": "WebLogic 도메인 인증서가 부적합합니다. "
       },
       "invalidUrl": {
-        "detail": "WebLogic \\uB3C4\\uBA54\\uC778 URL\\uC5D0 \\uC5F0\\uACB0\\uD560 \\uC218 \\uC5C6\\uC2B5\\uB2C8\\uB2E4. "
+        "detail": "WebLogic 도메인 URL에 연결할 수 없습니다. "
+      },
+      "notInRole": {
+        "detail": "시도 실패: 사용자가 관리자, 배치자, 운영자 또는 감독자가 아닙니다."
       },
       "notSupported": {
-        "detail": "WebLogic \\uB3C4\\uBA54\\uC778\\uC740 \\uC9C0\\uC6D0\\uB418\\uC9C0 \\uC54A\\uC2B5\\uB2C8\\uB2E4. "
+        "detail": "WebLogic 도메인은 지원되지 않습니다. "
       },
       "unexpectedStatus": {
-        "detail": "\\uC608\\uC0C1\\uCE58 \\uC54A\\uC740 \\uACB0\\uACFC(\\uC0C1\\uD0DC: {0}) "
+        "detail": "예상치 않은 결과(상태: {0}) "
       },
       "cbeRestApi": {
         "requestUnsuccessful": {
-          "summary": "\\uC694\\uCCAD \\uC2E4\\uD328",
-          "detail": "\\uCF58\\uC194 \\uBC31\\uC5D4\\uB4DC \\uD638\\uCD9C\\uC5D0\\uC11C \\uC2E4\\uD328\\uD55C \\uC751\\uB2F5\\uC774 \\uBC18\\uD658\\uB418\\uC5C8\\uC2B5\\uB2C8\\uB2E4."
+          "summary": "요청 실패",
+          "detail": "콘솔 백엔드 호출에서 실패한 응답이 반환되었습니다."
         }
       }
     }
@@ -929,36 +1139,42 @@ define({
   "wrc-message-displaying": {
     "messages": {
       "seeJavascriptConsole": {
-        "detail": "\\uAD6C\\uCCB4\\uC801\\uC778 \\uC6D0\\uC778\\uC740 \\uC6D0\\uACA9 \\uCF58\\uC194 \\uD130\\uBBF8\\uB110 \\uB610\\uB294 JavaScript \\uCF58\\uC194\\uC744 \\uCC38\\uC870\\uD558\\uC2ED\\uC2DC\\uC624."
+        "detail": "구체적인 원인은 원격 콘솔 터미널 또는 JavaScript 콘솔을 참조하십시오."
       },
       "responseMessages": {
-        "summary": "\\uC751\\uB2F5 \\uBA54\\uC2DC\\uC9C0"
+        "summary": "응답 메시지"
       }
     }
   },
   "wrc-change-manager": {
     "messages": {
       "cannotGetLockState": {
-        "summary": "\\uBCC0\\uACBD \\uAD00\\uB9AC\\uC790\\uC5D0 \\uC561\\uC138\\uC2A4\\uD560 \\uC218 \\uC5C6\\uC2B5\\uB2C8\\uB2E4!"
+        "summary": "변경 관리자에 액세스할 수 없습니다!"
       },
       "changesCommitted": {
-        "summary": "\\uBCC0\\uACBD\\uC0AC\\uD56D\\uC774 \\uC131\\uACF5\\uC801\\uC73C\\uB85C \\uCEE4\\uBC0B\\uB418\\uC5C8\\uC2B5\\uB2C8\\uB2E4!"
+        "summary": "변경사항이 성공적으로 커밋되었습니다!"
       },
       "changesNotCommitted": {
-        "summary": "\\uBCC0\\uACBD\\uC0AC\\uD56D\\uC744 \\uCEE4\\uBC0B\\uD560 \\uC218 \\uC5C6\\uC2B5\\uB2C8\\uB2E4!"
+        "summary": "변경사항을 커밋할 수 없습니다!"
       },
       "changesDiscarded": {
-        "summary": "\\uBCC0\\uACBD\\uC0AC\\uD56D\\uC774 \\uC131\\uACF5\\uC801\\uC73C\\uB85C \\uBB34\\uC2DC\\uB418\\uC5C8\\uC2B5\\uB2C8\\uB2E4!"
+        "summary": "변경사항이 성공적으로 무시되었습니다!"
       },
       "changesNotDiscarded": {
-        "summary": "\\uBCC0\\uACBD\\uC0AC\\uD56D\\uC744 \\uBB34\\uC2DC\\uD560 \\uC218 \\uC5C6\\uC2B5\\uB2C8\\uB2E4!"
+        "summary": "변경사항을 무시할 수 없습니다!"
       }
     }
   },
   "wrc-view-model-utils": {
     "labels": {
       "unexpectedErrorResponse": {
-        "value": "\\uC608\\uC0C1\\uCE58 \\uC54A\\uC740 \\uC624\\uB958 \\uC751\\uB2F5"
+        "value": "예상치 않은 오류 응답"
+      }
+    },
+    "messages": {
+      "connectionRefused": {
+        "summary": "접속 문제",
+        "details": "제공자로부터 데이터를 전송 및 수신하는 데 문제가 있습니다! 액세스 가능한지 확인하고 다시 시도하십시오."
       }
     }
   }

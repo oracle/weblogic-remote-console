@@ -1,0 +1,39 @@
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure the SAML 2.0 per server service provider
+  properties.</p>
+
+properties:
+- name: "SingleSignOnServices.ServiceProviderEnabled"
+- name: "SingleSignOnServices.SignAuthnRequests"
+- name: "SingleSignOnServices.ForceAuthn"
+- name: "SingleSignOnServices.Passive"
+- name: "SingleSignOnServices.WantAssertionsSigned"
+- name: "SingleSignOnServices.AuthnRequestMaxCacheSize"
+- name: "SingleSignOnServices.AuthnRequestTimeout"
+- name: "FederationServices.POSTOneUseCheckEnabled"
+- name: "SingleSignOnServices.ServiceProviderPOSTBindingEnabled"
+- name: "SingleSignOnServices.ServiceProviderArtifactBindingEnabled"
+- name: "SingleSignOnServices.ServiceProviderPreferredBinding"
+- name: "SingleSignOnServices.DefaultURL"
+- name: "SingleSignOnServices.AssertionEncryptionDecryptionKeyPassPhrase"
+- name: "SingleSignOnServices.AssertionEncryptionDecryptionKeyAlias"
+- name: "SingleSignOnServices.MetadataEncryptionAlgorithms"
+helpTopics:
+- label: "Using Security Assertion Markup Language (SAML) Tokens For Identity "
+  href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"
+  type: "generic"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: "edocs"
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html"
+  type: "edocs"
+- label: "Using Security Assertion Markup Language (SAML) Tokens For Identity"
+  href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"
+  type: "generic"

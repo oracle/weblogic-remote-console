@@ -1,0 +1,18 @@
+# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define the default deployment staging configuration
+  for this server.</p>
+
+properties:
+- name: "StagingMode"
+- name: "StagingDirectoryName"
+- name: "UploadDirectoryName"
+helpTopics:
+- label: "Configuring an Identity Keystore Specific to a Network Channel "
+  href: "secmg/channel.html"
+  type: "edocs"
+- label: "Deploying Applications to Oracle WebLogic Server"
+  href: "depgd/index.html"
+  type: "edocs"

@@ -94,17 +94,26 @@ class AggregatedRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSearchH
     BeanTreePath aggregatedBeanPath,
     Map<String,JsonObject> unaggregatedBeanResults
   ) {
-    if (unaggregatedBeanResults.isEmpty()) {
+    if (unaggregatedBeanResults.isEmpty() && aggregatedBeanPath.isCollectionChild()) {
+      // The child isn't running on any servers so treat it as not-found.
+      // This will enable us to return custom messages for links from the
+      // config/edit tree to the monitoring tree when the bean in the
+      // edit tree isn't running anywhere.
       return null;
     }
     // This method needs a lot of enhancements
     // - verifying that the per-server instances' values are present and don't conflict
     // - supporting type-specific aggregatable properties, perhaps with custom aggregator methods
     JsonObjectBuilder bldr = Json.createObjectBuilder();
-    JsonObject first = unaggregatedBeanResults.values().iterator().next();
-    bldr.add("name", first.get("name"));
-    bldr.add("type", first.get("type"));
     bldr.add("identity", searchResults.getBuilder().getBeanRepo().toJson(aggregatedBeanPath));
+    if (!unaggregatedBeanResults.isEmpty()) {
+      JsonObject first = unaggregatedBeanResults.values().iterator().next();
+      bldr.add("name", first.get("name"));
+      bldr.add("type", first.get("type"));
+    } else {
+      // There are no instances.  Set the type to the base type.
+      bldr.add("type", aggregatedBeanPath.getLastSegment().getChildDef().getChildTypeDef().getInstanceName());
+    }
     return bldr.build();
   }
   
@@ -131,10 +140,12 @@ class AggregatedRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSearchH
     List<String> rtn = new ArrayList<>();
     BeanTreePath serverRuntimesPath =
       BeanTreePath.create(searchResults.getBuilder().getBeanRepo(), SERVER_RUNTIMES_PATH);
-    JsonArray items =
-      super.findWebLogicSearchResults(searchResults, serverRuntimesPath, false).getJsonArray("items");
-    for (int i = 0; i < items.size(); i++) {
-      rtn.add(items.getJsonObject(i).getString("name"));
+    JsonObject serverRuntimes = super.findWebLogicSearchResults(searchResults, serverRuntimesPath, false);
+    if (serverRuntimes != null) {
+      JsonArray items = serverRuntimes.getJsonArray("items");
+      for (int i = 0; i < items.size(); i++) {
+        rtn.add(items.getJsonObject(i).getString("name"));
+      }
     }
     return rtn;
   }

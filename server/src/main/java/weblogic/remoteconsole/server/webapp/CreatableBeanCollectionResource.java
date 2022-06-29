@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -35,7 +35,11 @@ public class CreatableBeanCollectionResource extends BeanResource {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response get(@QueryParam("view") @DefaultValue(VIEW_TABLE) String view) {
+  public Response get(
+    @QueryParam("view") @DefaultValue(VIEW_TABLE) String view,
+    @QueryParam("reload") @DefaultValue("false") boolean reload
+  ) {
+    getInvocationContext().setReload(reload);
     if (VIEW_TABLE.equals(view)) {
       setTablePagePath();
       return getTable();

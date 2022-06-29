@@ -6,30 +6,33 @@ define({
     "icons": {
       "connectivity": {
         "online": {
-          "tooltip": "En l\\u00EDnea"
+          "tooltip": "En línea"
         },
         "offline": {
-          "tooltip": "Fuera de l\\u00EDnea"
+          "tooltip": "Fuera de línea"
         },
         "detached": {
           "tooltip": "Desasociado"
+        },
+        "unattached": {
+          "tooltip": "No conectado"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright \\u00C2\\u00A9 2020, 2021, Oracle y/o sus filiales.<br/>Oracle es una marca comercial registrada de Oracle Corporation y/o sus filiales. Todos los dem\\u00E1s nombres pueden ser marcas comerciales de sus respectivos propietarios.<br/>",
+      "copyrightLegal": "Copyright Â© 2020, 2022, Oracle y/o sus filiales.<br/>Oracle es una marca comercial registrada de Oracle Corporation y/o sus filiales. Todos los demás nombres pueden ser marcas comerciales de sus respectivos propietarios.<br/>",
       "builtWith": "Creado con Oracle JET"
     }
   },
   "wrc-data-providers": {
     "icons": {
       "info": {
-        "tooltip": "Obtener Informaci\\u00F3n"
+        "tooltip": "Obtener Información"
       },
       "edit": {
-        "tooltip": "Manage"
+        "tooltip": "Gestionar"
       },
       "delete": {
         "tooltip": "Eliminar"
@@ -38,10 +41,10 @@ define({
     "labels": {
       "connections": {
         "header": {
-          "value": "Unnamed Project"
+          "value": "Proyecto sin nombre"
         },
         "name": {
-          "value": "Connection Provider Name"
+          "value": "Nombre de proveedor de conexión"
         },
         "url": {
           "value": "URL"
@@ -50,34 +53,55 @@ define({
           "value": "Nombre de usuario"
         },
         "password": {
-          "value": "Contrase\\u00F1a"
+          "value": "Contraseña"
         }
       },
       "models": {
         "name": {
-          "value": "WDT Model Provider Name"
+          "value": "Nombre de proveedor de modelo WDT"
         },
         "file": {
-          "value": "WDT Model Filename"
+          "value": "Nombre de archivo de modelo WDT"
+        },
+        "props": {
+          "value": "Variables de WDT"
+        }
+      },
+      "composite": {
+        "name": {
+          "value": "Nombre de proveedor de modelo de compuesto WDT"
+        },
+        "providers": {
+          "value": "Modelos WDT"
+        }
+      },
+      "proplist": {
+        "name": {
+          "value": "Nombre de proveedor de lista de propiedades"
+        },
+        "file": {
+          "value": "Nombre de archivo de lista de propiedades"
         }
       },
       "project": {
         "name": {
-          "value": "Project Name"
+          "value": "Nombre de proyecto"
         },
         "file": {
-          "value": "Project Filename"
-        },
-        "isDefault": {
-          "value": "Make Default"
+          "value": "Nombre de archivo de proyecto"
         }
       },
       "provider": {
         "adminserver": {
-          "value": "Admin Server Connection"
+          "value": "Conexión de servidor de administración"
         },
         "model": {
-          "value": "Add WDT Model"
+          "value": "Agregar modelo WDT"
+        }
+      },
+      "dropdown": {
+        "none": {
+          "value": "Ninguno"
         }
       }
     },
@@ -96,27 +120,43 @@ define({
             "label": "URL de dominio:"
           },
           "version": {
-            "label": "Versi\\u00F3n de dominio:"
+            "label": "Versión de dominio:"
           },
           "username": {
-            "label": "Username:"
+            "label": "Nombre de usuario:"
+          },
+          "roles": {
+            "label": "Roles:"
           },
           "connectTimeout": {
-            "label": "Timeout de Conexi\\u00F3n:"
+            "label": "Timeout de Conexión:"
           },
           "readTimeout": {
             "label": "Timeout de Lectura:"
           },
           "anyAttempt": {
-            "label": "Any Connections Attempted:"
+            "label": "Intentos de conexión:"
           },
           "lastAttempt": {
-            "label": "Last Attempt Successful:"
+            "label": "Último intento correcto:"
           }
         },
         "model": {
           "file": {
-            "label": "File:"
+            "label": "Archivo:"
+          },
+          "props": {
+            "label": "Variables:"
+          }
+        },
+        "composite": {
+          "models": {
+            "label": "Modelos:"
+          }
+        },
+        "proplist": {
+          "file": {
+            "label": "Nombre de archivo:"
           }
         }
       }
@@ -124,20 +164,33 @@ define({
     "menus": {
       "connections": {
         "add": {
-          "value": "Create Provider for Admin Server Connection..."
+          "value": "Agregar proveedor de conexión de servidor de administración"
         }
       },
       "models": {
         "add": {
-          "value": "Create Provider for Existing WDT Model File..."
+          "value": "Agregar proveedor de archivo de modelo WDT"
         },
         "new": {
-          "value": "Create Provider for New WDT Model File..."
+          "value": "Crear proveedor para el nuevo archivo de modelo WDT"
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "Agregar proveedor de archivo de modelo de compuesto WDT"
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "Agregar proveedor de lista de propiedades"
+        },
+        "new": {
+          "value": "Crear proveedor para nueva lista de propiedades"
         }
       },
       "providers": {
         "sort": {
-          "value": "Sort by Provider Type"
+          "value": "Ordenar por tipo de proveedor"
         }
       },
       "context": {
@@ -148,23 +201,23 @@ define({
                 "label": "URL de dominio:"
               },
               "version": {
-                "label": "Versi\\u00F3n de dominio:"
+                "label": "Versión de dominio:"
               },
               "username": {
-                "label": "Username:"
+                "label": "Nombre de usuario:"
               }
             }
           },
           "model": {
             "file": {
-              "label": "File:"
+              "label": "Archivo:"
             }
           }
         }
       },
       "project": {
         "export": {
-          "value": "Export Providers as Project..."
+          "value": "Exportar proveedores como proyecto..."
         },
         "import": {
           "value": "Importar Proyecto"
@@ -174,62 +227,96 @@ define({
     "instructions": {
       "connections": {
         "add": {
-          "value": "Enter new name and connectivity settings for connection provider."
+          "value": "Introduzca un nuevo nombre y la configuración de conectividad para el proveedor de conexión."
         },
         "edit": {
-          "value": "Modify connectivity settings for connection provider."
+          "value": "Modifique la configuración de conectividad para el proveedor de conexión."
         }
       },
       "models": {
         "add": {
-          "value": "Enter settings for existing model file provider. Click upload icon to browse for model file."
+          "value": "Introduzca la configuración para el proveedor de archivo de modelo existente. Haga clic en el icono de carga para examinar el archivo de modelo."
         },
         "new": {
-          "value": "Enter provider name and filename for new WDT model file, then click icon to pick directory to save file in."
+          "value": "Introduzca el nombre del proveedor y el nombre de archivo para el nuevo archivo de modelo WDT. A continuación, haga clic en el icono para elegir en qué directorio guardar el archivo."
         },
         "edit": {
-          "value": "Modify settings for model file provider. Click icon to browse for model file."
+          "value": "Modifique la configuración para el proveedor de archivo de modelo. Haga clic en el icono para examinar el archivo de modelo."
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "Introduzca un nuevo nombre y seleccione una lista de modelos ordenada para el proveedor de modelo de compuesto."
+        },
+        "edit": {
+          "value": "Modifique la configuración para el proveedor de modelo de compuesto. Utilice una lista de modelos ordenada."
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "Introduzca la configuración para el proveedor de lista de propiedades existente. Haga clic en el icono de carga para examinar un archivo de propiedades."
+        },
+        "new": {
+          "value": "Introduzca el nombre del proveedor y el nombre de archivo para una nueva lista de propiedades. A continuación, haga clic en el icono para elegir en qué directorio guardar el archivo."
+        },
+        "edit": {
+          "value": "Modifique la configuración para el proveedor de listas de propiedades. Haga clic en el icono para examinar un archivo de propiedades."
         }
       },
       "project": {
         "export": {
-          "value": "Enter settings for new project."
+          "value": "Introduzca la configuración para un nuevo proyecto."
         },
         "import": {
-          "value": "Click download icon to browse for project."
+          "value": "Haga clic en el icono de descarga para examinar un proyecto."
         }
       },
       "task": {
         "startup": {
-          "value": "Which startup task are you interested in performing?"
+          "value": "¿Qué tarea de inicio desea realizar?"
         }
       }
     },
     "titles": {
       "add": {
         "connections": {
-          "value": "Create Provider for Admin Server Connection"
+          "value": "Crear proveedor para la conexión de servidor de administración"
         },
         "models": {
-          "value": "Create Provider for Existing WDT Model File"
+          "value": "Crear proveedor para el archivo de modelo WDT existente"
+        },
+        "composite": {
+          "value": "Crear proveedor para nuevo modelo de compuesto WDT"
+        },
+        "proplist": {
+          "value": "Crear proveedor para la lista de propiedades existente"
         }
       },
       "new": {
         "models": {
-          "value": "Create Provider for New WDT Model File"
+          "value": "Crear proveedor para el nuevo archivo de modelo WDT"
+        },
+        "proplist": {
+          "value": "Crear proveedor para nueva lista de propiedades"
         }
       },
       "edit": {
         "connections": {
-          "value": "Edit Admin Server Connection Provider"
+          "value": "Editar proveedor de conexión de servidor de administración"
         },
         "models": {
-          "value": "Edit WDT Model File Provider"
+          "value": "Editar proveedor de archivo de modelo WDT"
+        },
+        "composite": {
+          "value": "Editar proveedor de archivo de modelo de compuesto WDT"
+        },
+        "proplist": {
+          "value": "Editar proveedor de lista de propiedades"
         }
       },
       "export": {
         "project": {
-          "value": "Export Providers as Project"
+          "value": "Exportar proveedores como proyecto"
         }
       },
       "import": {
@@ -239,38 +326,72 @@ define({
       },
       "startup": {
         "task": {
-          "value": "Startup Task"
+          "value": "Tarea de inicio"
         }
       }
     },
     "messages": {
       "export": {
         "failed": {
-          "summary": "Export Unsuccessful",
-          "detail": "Unable to export providers as ''{0}'' project."
+          "summary": "Exportación incorrecta",
+          "detail": "No se han podido exportar los proveedores como proyecto ''{0}''."
         }
       },
       "import": {
         "failed": {
-          "summary": "Save Unsuccessful",
-          "detail": "Unable to import ''{0}'' project file."
+          "summary": "No se ha guardado correctamente",
+          "detail": "No se ha podido importar el archivo de proyecto ''{0}''"
         }
       },
       "stage": {
         "failed": {
-          "summary": "Create Unsuccessful",
-          "detail": "Unable to create ''{0}'' provider item."
+          "summary": "No se ha creado correctamente",
+          "detail": "No se ha podido crear el elemento de proveedor ''{0}''."
         }
       },
       "use": {
         "failed": {
-          "summary": "Connection Unsuccessful",
-          "detail": "Unable to use ''{0}'' provider item."
+          "summary": "Conexión incorrecta",
+          "detail": "No se ha podido utilizar el elemento de proveedor ''{0}''."
+        }
+      },
+      "upload": {
+        "failed": {
+          "detail": "No se puede cargar el archivo de modelo WDT: {0}"
+        },
+        "props": {
+          "failed": {
+            "detail": "No se pueden cargar las variables de WDT: {0}"
+          }
         }
       },
       "response": {
         "nameAlreadyExist": {
-          "detail": "Provider named ''{0}'' is already in this project!"
+          "detail": "El proveedor con nombre ''{0}'' ya está en este proyecto."
+        },
+        "modelsNotFound": {
+          "detail": "No se han encontrado los modelos WDT configurados ''{0}''"
+        },
+        "propListNotFound": {
+          "detail": "No se encuentran las variables de ''{0}''"
+        },
+        "selectModels": {
+          "detail": "Para seleccionar el compuesto WDT, seleccione primero todos los modelos WDT que utiliza el compuesto WDT."
+        }
+      },
+      "correctiveAction": {
+        "filePathNotFound": {
+          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+        },
+        "fixModelFile": {
+          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+        },
+        "yamlException": {
+          "detail": "{0} en la línea {1}, columna {2}"
+        },
+        "wktModelContent": {
+          "summary": "Model Content Problems",
+          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
         }
       }
     },
@@ -278,31 +399,44 @@ define({
       "info": {
         "fileNotSet": "No definido"
       }
+    },
+    "checkboxes": {
+      "useSparseTemplate": {
+        "label": "Usar plantilla ligera"
+      }
     }
   },
   "wrc-navstrip": {
     "icons": {
       "configuration": {
-        "tooltip": "Editar \\u00C1rbol"
+        "tooltip": "Editar Árbol"
       },
       "view": {
-        "tooltip": "Configuration View Tree"
+        "tooltip": "Configurar árbol de vista"
       },
       "monitoring": {
-        "tooltip": "Monitoring Tree"
+        "tooltip": "Supervisar árbol"
       },
       "modeling": {
-        "tooltip": "WDT Model"
+        "tooltip": "Modelo WDT"
+      },
+      "composite": {
+        "tooltip": "Modelo de compuesto WDT"
+      },
+      "properties": {
+        "tooltip": "Editor de lista de propiedad"
       }
     }
   },
   "wrc-content-area-header": {
     "title": {
       "home": "Inicio",
-      "configuration": "Editar \\u00C1rbol",
-      "view": "Configuration View Tree",
-      "monitoring": "Monitoring Tree",
-      "modeling": "WDT Model"
+      "configuration": "Editar Árbol",
+      "view": "Configurar árbol de vista",
+      "monitoring": "Supervisar árbol",
+      "modeling": "Modelo WDT",
+      "composite": "Modelo de compuesto WDT",
+      "properties": "Lista de propiedades"
     },
     "toolbar": {
       "buttons": {
@@ -325,10 +459,10 @@ define({
           "label": "Carro de compra"
         },
         "ataglance": {
-          "label": "Visi\\u00F3n r\\u00E1pida"
+          "label": "Visión rápida"
         },
         "projectmanagement": {
-          "label": "Provider Management"
+          "label": "Gestión de proveedores"
         }
       }
     },
@@ -350,11 +484,6 @@ define({
           "value": "Borrar historial"
         }
       }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "Datos no disponibles"
-      }
     }
   },
   "wrc-monitoring": {
@@ -369,39 +498,22 @@ define({
           "value": "Borrar historial"
         }
       }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "Datos no disponibles"
-      }
     }
   },
   "wrc-domain-connection": {
     "labels": {
       "runningAt": {
-        "value": "ejecut\\u00E1ndose a las {0}"
+        "value": "ejecutándose a las {0}"
       }
     },
     "messages": {
       "lostConnection": {
-        "summary": "Conexi\\u00F3n perdida",
-        "detail": "Connection to remote console backend was lost. Ensure that it is running or restart it and try the link again."
+        "summary": "Conexión perdida",
+        "detail": "Se ha perdido la conexión al backend de la consola remota. Compruebe que funciona o reinícielo y vuelva a probar el enlace."
       },
       "cannotConnect": {
-        "summary": "Fallo al intentar la conexi\\u00F3n",
-        "detail": "No se puede conectar al dominio de WebLogic {0}, compruebe que WebLogic se est\\u00E1 ejecutando."
-      }
-    },
-    "dialog1": {
-      "title": "Conectar al dominio de WebLogic",
-      "instructions": "Introduzca las credenciales del usuario administrador y la URL para el dominio de WebLogic:",
-      "labels": {
-        "url": "URL"
-      },
-      "buttons": {
-        "connect": {
-          "label": "Conectar"
-        }
+        "summary": "Fallo al intentar la conexión",
+        "detail": "No se puede conectar al dominio de WebLogic {0}, compruebe que WebLogic se está ejecutando."
       }
     }
   },
@@ -409,7 +521,7 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "Galer\\u00EDa"
+          "label": "Galería"
         }
       }
     }
@@ -417,20 +529,28 @@ define({
   "wrc-gallery": {
     "cards": {
       "configuration": {
-        "label": "Editar \\u00C1rbol",
-        "description": "<p>Mantener la configuraci\\u00F3n del dominio de WebLogic con el que est\\u00E1 trabajando actualmente.</p>"
+        "label": "Editar Árbol",
+        "description": "<p>Mantener la configuración del dominio de WebLogic con el que está trabajando actualmente.</p>"
       },
       "view": {
-        "label": "Configuration View Tree",
-        "description": "<p>Examinar la configuraci\\u00F3n de solo lectura del dominio de WebLogic con el que est\\u00E1 trabajando actualmente.</p>"
+        "label": "Configurar árbol de vista",
+        "description": "<p>Examinar la configuración de solo lectura del dominio de WebLogic con el que está trabajando actualmente.</p>"
       },
       "monitoring": {
-        "label": "Monitoring Tree",
-        "description": "<p>Ver la informaci\\u00F3n del MBean de tiempo de ejecuci\\u00F3n para los recursos seleccionados del dominio de WebLogic con el que est\\u00E1 trabajando actualmente.</p>"
+        "label": "Supervisar árbol",
+        "description": "<p>Ver la información del MBean de tiempo de ejecución para los recursos seleccionados del dominio de WebLogic con el que está trabajando actualmente.</p>"
       },
       "modeling": {
-        "label": "WDT Model Tree",
-        "description": "<p>Maintain model files associated with the WebLogic Deploy Tooling tool.</p>"
+        "label": "Árbol de modelo WDT",
+        "description": "<p>Mantener archivos de modelo asociados a la herramienta WebLogic Deploy Tooling.</p>"
+      },
+      "composite": {
+        "label": "Árbol de modelo de compuesto WDT",
+        "description": "<p>Ver un juego combinado de los archivos de modelo WebLogic Deploy Tooling con los que está trabajando actualmente.</p>"
+      },
+      "properties": {
+        "label": "Editor de lista de propiedad",
+        "description": "<p>Ver o modificar un conjunto de propiedades de un archivo de lista de propiedad.</p>"
       }
     }
   },
@@ -471,11 +591,14 @@ define({
       },
       "delete": {
         "label": "Suprimir"
+      },
+      "customize": {
+        "label": "Personalizar"
       }
     },
     "icons": {
       "landing": {
-        "tooltip": "P\\u00E1gina de llegada"
+        "tooltip": "Página de llegada"
       },
       "history": {
         "tooltip": "Conmutar visibilidad del historial"
@@ -484,14 +607,14 @@ define({
         "tooltip": "Conmutar visibilidad de las instrucciones"
       },
       "help": {
-        "tooltip": "Conmutar visibilidad de la p\\u00E1gina de ayuda"
+        "tooltip": "Conmutar visibilidad de la página de ayuda"
       },
       "sync": {
         "tooltip": "Recargar",
-        "tooltipOn": "Parar recarga autom\\u00E1tica"
+        "tooltipOn": "Parar recarga automática"
       },
       "syncInterval": {
-        "tooltip": "Definir intervalo de recarga autom\\u00E1tica"
+        "tooltip": "Definir intervalo de recarga automática"
       },
       "shoppingcart": {
         "tooltip": "Haga clic para ver acciones para el carro"
@@ -512,14 +635,14 @@ define({
     },
     "instructions": {
       "selectItems": {
-        "value": "Seleccione los elementos en los que desea realizar la operaci\\u00F3n ''{0}''."
+        "value": "Seleccione los elementos en los que desea realizar la operación ''{0}''."
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
           "summary": "Mensaje",
-          "detail": "No se puede realizar la acci\\u00F3n ''{0}'' mientras se est\\u00E1 ejecutando la recarga autom\\u00E1tica. Primero, haga clic en el icono ''{1}'' para pararla."
+          "detail": "No se puede realizar la acción ''{0}'' mientras se está ejecutando la recarga automática. Primero, haga clic en el icono ''{1}'' para pararla."
         }
       }
     },
@@ -550,10 +673,26 @@ define({
         "label": "Mostrar columnas ocultas"
       }
     },
-    "actionsDialog": {
-      "buttons": {
-        "cancel": {
-          "label": "Cancelar"
+    "labels": {
+      "totalRows": {
+        "value": "Total de Filas: {0}"
+      }
+    }
+  },
+  "wrc-table-customizer": {
+    "labels": {
+      "available": {
+        "value": "Columnas disponibles"
+      },
+      "selected": {
+        "value": "Columnas seleccionadas"
+      }
+    },
+    "messages": {
+      "action": {
+        "needAtLeastOneColumn": {
+          "title": "Columnas insuficientes",
+          "detail": "Se necesita al menos una columna seleccionada."
         }
       }
     }
@@ -570,7 +709,7 @@ define({
         "label": "Eliminar"
       },
       "back": {
-        "label": "Atr\\u00E1s"
+        "label": "Atrás"
       },
       "next": {
         "label": "Siguiente"
@@ -587,7 +726,7 @@ define({
         "tooltip": "Crear"
       },
       "landing": {
-        "tooltip": "P\\u00E1gina de llegada"
+        "tooltip": "Página de llegada"
       },
       "history": {
         "tooltip": "Conmutar visibilidad del historial"
@@ -596,14 +735,14 @@ define({
         "tooltip": "Conmutar visibilidad de las instrucciones"
       },
       "help": {
-        "tooltip": "Conmutar visibilidad de la p\\u00E1gina de ayuda"
+        "tooltip": "Conmutar visibilidad de la página de ayuda"
       },
       "sync": {
         "tooltip": "Recargar",
-        "tooltipOn": "Parar recarga autom\\u00E1tica"
+        "tooltipOn": "Parar recarga automática"
       },
       "syncInterval": {
-        "tooltip": "Definir intervalo de recarga autom\\u00E1tica"
+        "tooltip": "Definir intervalo de recarga automática"
       },
       "shoppingcart": {
         "tooltip": "Haga clic para ver acciones para el carro"
@@ -639,10 +778,10 @@ define({
     },
     "icons": {
       "restart": {
-        "tooltip": "Es necesario reiniciar el servidor o la aplicaci\\u00F3n"
+        "tooltip": "Es necesario reiniciar el servidor o la aplicación"
       },
       "wdtIcon": {
-        "tooltip": "WDT Settings"
+        "tooltip": "Configuración de WDT"
       }
     }
   },
@@ -653,7 +792,7 @@ define({
         "columns": {
           "header": {
             "name": "Nombre",
-            "description": "Descripci\\u00F3n"
+            "description": "Descripción"
           }
         }
       }
@@ -663,44 +802,53 @@ define({
     "pageState": {
       "error": {
         "summary": "Campos necesarios incompletos",
-        "detail": "El campo {0} es necesario, pero no se ha proporcionado ning\\u00FAn valor."
+        "detail": "{0} field is required, but no (or an invalid) value has been provided."
       }
     }
   },
   "wrc-common": {
     "buttons": {
+      "apply": {
+        "label": "Aplicar"
+      },
+      "reset": {
+        "label": "Restablecer"
+      },
       "ok": {
-        "label": "OK"
+        "label": "Aceptar"
       },
       "cancel": {
         "label": "Cancelar"
       },
       "yes": {
-        "label": "S\\u00ED"
+        "label": "Sí"
       },
       "no": {
         "label": "No"
       },
       "choose": {
-        "label": "Choose"
+        "label": "Seleccionar"
       },
       "connect": {
         "label": "Conectar"
       },
       "add": {
-        "label": "Add/Send"
+        "label": "Agregar/enviar"
       },
       "edit": {
-        "label": "Edit/Send"
+        "label": "Editar/enviar"
       },
       "import": {
-        "label": "Import"
+        "label": "Importar"
       },
       "export": {
-        "label": "Export"
+        "label": "Exportar"
       },
       "write": {
-        "label": "Actualizar Archivo"
+        "label": "Descargar archivo"
+      },
+      "savenow": {
+        "label": "Guardar Ahora"
       }
     },
     "tooltips": {
@@ -717,73 +865,119 @@ define({
         "value": "Borrar archivo seleccionado"
       },
       "more": {
-        "value": "M\\u00E1s acciones"
+        "value": "Más acciones"
       },
       "download": {
-        "value": "Browse"
+        "value": "Examinar"
       },
       "reset": {
-        "value": "Reset"
+        "value": "Restablecer"
       },
       "submit": {
         "value": "Enviar Cambios"
       },
       "write": {
-        "value": "Actualizar Archivo"
+        "value": "Descargar archivo"
       },
       "pick": {
-        "value": "Pick Directory"
+        "value": "Seleccionar directorio"
+      },
+      "reload": {
+        "value": "Reload File"
+      }
+    },
+    "menu": {
+      "chooseFile": {
+        "value": "Seleccionar Archivo..."
+      },
+      "chooseDir": {
+        "value": "Seleccionar Directorio..."
+      }
+    },
+    "labels": {
+      "info": {
+        "value": "Information"
+      },
+      "warn": {
+        "value": "Advertencia"
+      },
+      "error": {
+        "value": "Error"
       }
     }
   },
   "wrc-wdt-form": {
     "messages": {
-      "changesSubmitted": {
-        "summary": "Changes were successfully submitted!"
+      "changesSaved": {
+        "summary": "Los cambios se han guardado correctamente en el archivo ''{0}''."
       },
-      "changesNotSubmitted": {
-        "summary": "Unable to submit changes!"
+      "changesNotSaved": {
+        "summary": "No se han podido guardar los cambios en el archivo ''{0}''."
       },
-      "changesWritten": {
-        "summary": "Changes were successfully written to ''{0}'' file!"
+      "changesDownloaded": {
+        "summary": "Los cambios se han descargado correctamente en el archivo ''{0}''."
       },
-      "changesNotWritten": {
-        "summary": "Unable to write changes to ''{0}'' file!"
+      "changesNotDownloaded": {
+        "summary": "No se han podido descargar los cambios en el archivo ''{0}''."
+      },
+      "verifyPathEntered": {
+        "detail": ". Si establece el campo {0} en falso se aceptará el valor competo, sin validar su existencia como un directorio o archivo local."
       }
     },
     "wdtOptionsDialog": {
-      "title": "Edit: {0}",
-      "default": "Default. (Unset)",
-      "instructions": "Enter token to add to the list of selectable items.",
+      "title": "Editar: {0}",
+      "default": "Por defecto. (Anular definición)",
+      "instructions": "Introducir token para agregar a lista de elementos seleccionables.",
       "enterValue": "Introducir Valor",
-      "selectValue": "Select Value",
+      "selectValue": "Seleccionar valor",
       "selectSwitch": "Conmutar Valor",
-      "enterUnresolvedReference": "Enter Unresolved Reference",
-      "enterModelToken": "Enter Model Token"
+      "enterUnresolvedReference": "Introducir referencia sin resolver",
+      "enterModelToken": "Introducir token de modelo",
+      "selectPropsVariable": "Seleccionar variable de token de modelo",
+      "createPropsVariable": "Crear variable de token de modelo",
+      "propName": "Nombre de variable (necesario)",
+      "propValue": "Valor de Variable",
+      "enterVariable": "Introducir variable",
+      "variableName": "Nombre de variable (necesario)",
+      "variableValue": "Valor de Variable",
+      "multiSelectUnset": "\"Predeterminado. (Seleccionar de la lista de elementos disponibles)\""
     }
   },
   "wrc-unsaved-changes": {
-    "confirmDialog": {
-      "title": "Se han detectado cambios sin guardar"
+    "titles": {
+      "unsavedChanges": {
+        "value": "Se han detectado cambios sin guardar"
+      },
+      "changesNeedDownloading": {
+        "value": "Los cambios no se han descargado"
+      }
     },
     "prompts": {
       "unsavedChanges": {
         "willBeLost": {
-          "value": "Todos los cambios sin guardar se perder\\u00E1n. \\u00BFDesea continuar?"
+          "value": "Todos los cambios sin guardar se perderán. ¿Desea continuar?"
         },
         "areYouSure": {
-          "value": "\\u00BFSeguro que desea salir sin guardar los cambios?"
+          "value": "¿Seguro que desea salir sin guardar los cambios?"
+        },
+        "needDownloading": {
+          "value": "Sus cambios todavía no se han descargado en el archivo de modelo WDT.<br/><br/>¿Desea descargarlos antes de continuar?"
+        }
+      },
+      "uncommitedCreate": {
+        "abandonForm": {
+          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
         }
       }
     }
   },
   "wrc-sync-interval": {
     "dialogSync": {
-      "title": "Definir intervalo de recarga autom\\u00E1tica",
-      "instructions": "\\u00BFCu\\u00E1ntos segundos desea definir para el intervalo de recarga autom\\u00E1tica?",
+      "title": "Definir intervalo de recarga automática",
+      "instructions": "¿Cuántos segundos desea definir para el intervalo de recarga automática?",
       "fields": {
         "interval": {
-          "label": "Intervalo de recarga autom\\u00E1tica:"
+          "label": "Intervalo de recarga automática:"
         }
       }
     }
@@ -793,7 +987,7 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "Mensaje",
-          "detail": "La llamada de backend de la consola ha generado una respuesta ''{0}'' al intentar realizar la acci\\u00F3n especificada en ''{1}''."
+          "detail": "La llamada de backend de la consola ha generado una respuesta ''{0}'' al intentar realizar la acción especificada en ''{1}''."
         }
       }
     },
@@ -808,6 +1002,20 @@ define({
       "labels": {
         "available": "Disponibles",
         "chosen": "Seleccionados"
+      }
+    },
+    "cfe-properties-editor": {
+      "labels": {
+        "name": "Nombre de propiedad",
+        "value": "Valor de propiedad"
+      }
+    },
+    "cfe-property-list-editor": {
+      "labels": {
+        "nameHeader": "Nombre de Propiedades",
+        "valueHeader": "Valor de Propiedades",
+        "addButtonTooltip": "Agregar",
+        "deleteButtonTooltip": "Suprimir"
       }
     }
   },
@@ -839,8 +1047,7 @@ define({
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "summary": "Mensaje",
-        "detail": "RDJ no contiene un campo ''notFoundMessage'' para el elemento ''{0}''."
+        "detail": "''{0}'' no está disponible."
       }
     }
   },
@@ -863,7 +1070,7 @@ define({
           "value": "Con fallos"
         },
         "critical": {
-          "value": "Cr\\u00EDtico"
+          "value": "Crítico"
         },
         "overloaded": {
           "value": "Sobrecargado"
@@ -878,7 +1085,7 @@ define({
     },
     "descriptions": {
       "healthState": {
-        "value": "Estado de Servidores en Ejecuci\\u00F3n a"
+        "value": "Estado de Servidores en Ejecución a"
       }
     },
     "headers": {
@@ -898,22 +1105,25 @@ define({
         "detail": "No se puede acceder al backend actualmente."
       },
       "connectionMessage": {
-        "summary": "Mensaje de conexi\\u00F3n"
+        "summary": "Mensaje de conexión"
       },
       "connectFailed": {
-        "detail": "Attempt Failed: "
+        "detail": "Intento con fallos: "
       },
       "badRequest": {
-        "detail": "Unable to process the submitted file or request "
+        "detail": "No se ha podido procesar el archivo o la solicitud enviados "
       },
       "invalidCredentials": {
-        "detail": "Las credenciales del dominio de WebLogic no son v\\u00E1lidas "
+        "detail": "Las credenciales del dominio de WebLogic no son válidas "
       },
       "invalidUrl": {
         "detail": "No se puede acceder a la URL del dominio de WebLogic "
       },
+      "notInRole": {
+        "detail": "Intento con fallos: el usuario no es administrador, desplegador, operador o supervisor"
+      },
       "notSupported": {
-        "detail": "El dominio de WebLogic no est\\u00E1 soportado "
+        "detail": "El dominio de WebLogic no está soportado "
       },
       "unexpectedStatus": {
         "detail": "Resultado inesperado (estado: {0}) "
@@ -929,7 +1139,7 @@ define({
   "wrc-message-displaying": {
     "messages": {
       "seeJavascriptConsole": {
-        "detail": "Consulte el terminal de la consola remota o la consola de Javascript para obtener informaci\\u00F3n sobre los motivos espec\\u00EDficos."
+        "detail": "Consulte el terminal de la consola remota o la consola de Javascript para obtener información sobre los motivos específicos."
       },
       "responseMessages": {
         "summary": "Mensajes de respuesta"
@@ -959,6 +1169,12 @@ define({
     "labels": {
       "unexpectedErrorResponse": {
         "value": "Respuesta de error inesperado"
+      }
+    },
+    "messages": {
+      "connectionRefused": {
+        "summary": "Incidencia de conexión",
+        "details": "Hay un problema al enviar y recibir datos del proveedor. Asegúrese de que son accesibles y vuelva a intentarlo."
       }
     }
   }

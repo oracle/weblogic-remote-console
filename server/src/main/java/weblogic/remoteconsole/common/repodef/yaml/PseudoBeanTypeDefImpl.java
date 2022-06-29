@@ -3,6 +3,7 @@
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,19 +31,21 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   private PseudoBeanTypeDefSource source;
   private YamlBasedBeanTypeDefImpl baseTypeDefImpl;
+  private List<BaseBeanTypeDefImpl> inheritedTypeDefImpls = new ArrayList<>();
 
   public PseudoBeanTypeDefImpl(BeanRepoDefImpl beanRepoDefImpl, PseudoBeanTypeDefSource source) {
     super(beanRepoDefImpl, source.getName());
     // can't customize a pseudo type's name since pseudo types should have good names to begin with:
     initializeInstanceName(null);
     this.source = source;
-    this.baseTypeDefImpl =
+    baseTypeDefImpl =
       getBeanRepoDefImpl()
       .getTypeDefImpl(StringUtils.getLeafClassName(getSource().getBaseType()))
       .asYamlBasedBeanTypeDefImpl();
     if (getBaseTypeDefImpl() == null) {
       throw new AssertionError("Can't find base type " + getSource().getBaseType() + " for " + getTypeName());
     }
+    inheritedTypeDefImpls.add(baseTypeDefImpl);
     copyPropertyDefImpls();
     copyChildDefImpls();
     initializeContainedDefsAndImpls();
@@ -105,11 +108,16 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   private PseudoBeanTypeDefSource getSource() {
-    return this.source;
+    return source;
   }
 
   private YamlBasedBeanTypeDefImpl getBaseTypeDefImpl() {
-    return this.baseTypeDefImpl;
+    return baseTypeDefImpl;
+  }
+
+  @Override
+  List<BaseBeanTypeDefImpl> getInheritedTypeDefImpls() {
+    return inheritedTypeDefImpls;
   }
 
   // Delegate everything else to the base type:
@@ -120,6 +128,21 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
       return true;
     }
     return getBaseTypeDefImpl().isType(desiredTypeName);
+  }
+
+  @Override
+  public boolean isReferenceable() {
+    return getBaseTypeDefImpl().isReferenceable();
+  }
+
+  @Override
+  public boolean isOrdered() {
+    return getBaseTypeDefImpl().isOrdered();
+  }
+
+  @Override
+  public boolean isSupportsCustomViews() {
+    return getBaseTypeDefImpl().isSupportsCustomViews();
   }
 
   @Override
@@ -175,6 +198,11 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   @Override
   public String getCreateResourceMethod() {
     return getBaseTypeDefImpl().getCreateResourceMethod();
+  }
+
+  @Override
+  public String getGetCollectionMethod() {
+    return getBaseTypeDefImpl().getGetCollectionMethod();
   }
 
   @Override

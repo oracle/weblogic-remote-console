@@ -46,31 +46,19 @@ describe.only('Test Suite: helpLink_test: From Server ' +
             console.log("Click ServerMBean.Name link");
             await driver.findElement(By.linkText("ServerMBean.Name")).click();
             await driver.sleep(4800);
-            console.log("Click Monitoring Oracle WebLogic Server with SNMP link");
-            await driver.findElement(By.linkText("Monitoring Oracle WebLogic Server with SNMP")).click();
-            await driver.sleep(4800);
 
             console.log("Get All Window Tab Names");
             return await driver.getAllWindowHandles().then(async function (handles) {
-                console.log("Check if there is 3 window tabs on the browser");
-                var isHandleCount2 = (handles.length == 3);
-
+                console.log("Check if there are "+handles.length+" window tabs on the browser");
+                var isHandleCount2 = (handles.length == 2);
                 let expectedTitle = "ServerMBean";
                 console.log("Switch to window 2")
                 driver.switchTo().window(handles[handles.length - 1]);
                 var title = await driver.getTitle();
                 console.log("Verify if this window title is "+title);
                 assert.equal(title,expectedTitle);
-
-                expectedTitle = "Oracle Fusion Middleware Monitoring Oracle WebLogic Server with SNMP, 14c (14.1.1.0.0)";
-                console.log("Switch to window 3")
-                driver.switchTo().window(handles[handles.length - 2]);
-                var title = await driver.getTitle();
-                console.log("Verify if this window title is "+title);
-                assert.equal(title,expectedTitle);
                 console.log("TEST PASS ");
             });
-
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -82,36 +70,27 @@ describe.only('Test Suite: helpLink_test: From Server ' +
         ' Click to validate  ', async function () {
         file = "JDBCSysResPageHelpLinkTest.png";
         try {
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree", "ServicesChevron", "JDBC System Resources");
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree", "ServicesChevron", "Data Sources");
             await driver.sleep(4800);
             console.log("Click Help Page Link Icon");
             element = driver.findElement(By.xpath("//div[@id=\'page-help-toolbar-icon\']/a/img"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             element.click();
-            console.log("Go to Weblogic JNDI Page");
-            await driver.findElement(By.xpath("//a[contains(.,\'Understanding WebLogic JNDI\')]")).click();
             await driver.sleep(4800);
             console.log("Click JDBC Datasource Help Link");
             await driver.findElement(By.linkText("Configuring JDBC Data Sources")).click();
             await driver.sleep(4800);
-            await driver.findElement(By.xpath("//input[@id=\'show-hidden-columns|cb\']")).click();
-            await driver.sleep(4800);
-            console.log("Click JDBCDataSourceParamsBean Help Link");
-            await driver.findElement(By.linkText("JDBCDataSourceParamsBean.AlgorithmType")).click();
-            await driver.sleep(4800);
-
             console.log("Get All Window Tab Names");
             return await driver.getAllWindowHandles().then(async function (handles) {
                 console.log("Check if there is 3 window tabs on the browser");
                 var isHandleCount2 = (handles.length == 3);
-                let expectedTitle = "Oracle Fusion Middleware Developing JNDI Applications for Oracle WebLogic Server";
+                let expectedTitle = "Configuring JDBC Data Sources";
                 console.log("Switch to window 2")
                 driver.switchTo().window(handles[handles.length - 1]);
                 var title = await driver.getTitle();
                 console.log("Verify if this window title is "+title);
                 assert.equal(title,expectedTitle);
-
-                expectedTitle = "Configuring JDBC Data Sources";
+                expectedTitle = "WebLogic Remote Console - JDBCSystemResources";
                 console.log("Switch to window 3")
                 driver.switchTo().window(handles[handles.length - 2]);
                 var title = await driver.getTitle();
@@ -119,11 +98,9 @@ describe.only('Test Suite: helpLink_test: From Server ' +
                 assert.equal(title,expectedTitle);
                 console.log("TEST PASS ");
             });
-
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
         }
     })
-
 })

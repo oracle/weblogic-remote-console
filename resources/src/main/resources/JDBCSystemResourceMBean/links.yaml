@@ -2,10 +2,10 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
-- label: Aggregated Runtime Data
+- label: Runtime Data
   resourceData: DomainRuntime/AggregatedJDBCServiceRuntime/JDBCDataSourceRuntimeMBeans
 
 instanceLinks:
-- label: Aggregated Runtime Data
+- label: Runtime Data
   resourceData: DomainRuntime/AggregatedJDBCServiceRuntime/JDBCDataSourceRuntimeMBeans/<JDBCSystemResource>
   notFoundMessage: This JDBC system resource was not found on any of the currently running servers.

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -8,6 +8,7 @@ import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import weblogic.remoteconsole.server.providers.Root;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -32,6 +33,7 @@ public class RemoteConsoleResource extends BaseResource {
 
   @Context ResourceContext resourceContext;
   @Context HttpHeaders headers;
+  @Context UriInfo uriInfo;
 
   @Path(ABOUT_PATH)
   public AboutResource getAboutResourceNew() {
@@ -111,7 +113,7 @@ public class RemoteConsoleResource extends BaseResource {
     }
     ret = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
     if (ret == null) {
-      ret = new InvocationContext(resourceContext, headers);
+      ret = new InvocationContext(resourceContext, headers, uriInfo);
     }
     synchronized (this) {
       setInvocationContext(ret);

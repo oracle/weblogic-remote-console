@@ -58,6 +58,9 @@ actions:
     - "FAILED_MIGRATABLE"
     - "FAILED_NOT_RESTARTABLE"
     - "UNKNOWN"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.start
+  definition:
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
 
 - name: "resume"
   label: "Resume"
@@ -66,6 +69,9 @@ actions:
     values:
     - "STANDBY"
     - "ADMIN"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.resume
+  definition:
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
 
 - name: "suspend"
   label: "Suspend when work completes"
@@ -73,6 +79,9 @@ actions:
     property: "State"
     values:
     - "RUNNING"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.suspend
+  definition:
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
 
 - name: "forceSuspend"
   label: "Force suspend now"
@@ -80,6 +89,9 @@ actions:
     property: "State"
     values:
     - "RUNNING"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceSuspend
+  definition:
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
 
 - name: "gracefulShutdown"
   label: "Shutdown when work completes"
@@ -89,7 +101,7 @@ actions:
     - "RUNNING"
     - "STANDBY"
     - "ADMIN"
-  actionMethod: weblogic.remoteconsole.customizers.ServerLifeCycleRuntimeMBeanCustomizer.gracefulShutdown
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.gracefulShutdown
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
 
@@ -107,6 +119,9 @@ actions:
     - "ADMIN"
     - "FAILED"
     - "SUSPENDING"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceShutdown
+  definition:
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
 
 - name: "restartSSL"
   label: "Restart SSL"
@@ -114,7 +129,7 @@ actions:
     property: "State"
     values:
     - "RUNNING"
-  actionMethod: weblogic.remoteconsole.customizers.ServerLifeCycleRuntimeMBeanCustomizer.restartSSL
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.restartSSL
   definition:
     type: "void"
     # If we don't customize restartSSL's roles, it will inherit ServerLifeCycleRuntimeMBean's

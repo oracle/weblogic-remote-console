@@ -58,8 +58,14 @@
               <oj-option id="[[i18n.menus.composite.add.id]]" value="[[i18n.menus.composite.add.id]]">
                 <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.menus.composite.add.label + '...']]"></oj-bind-text></span>
               </oj-option>
+              <oj-option id="[[i18n.menus.proplist.add.id]]" value="[[i18n.menus.proplist.add.id]]">
+                <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.menus.proplist.add.label + '...']]"></oj-bind-text></span>
+              </oj-option>
               <oj-option id="[[i18n.menus.models.new.id]]" value="[[i18n.menus.models.new.id]]">
                 <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.menus.models.new.label + '...']]"></oj-bind-text></span>
+              </oj-option>
+              <oj-option id="[[i18n.menus.proplist.new.id]]" value="[[i18n.menus.proplist.new.id]]">
+                <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.menus.proplist.new.label + '...']]"></oj-bind-text></span>
               </oj-option>
               <oj-option>---</oj-option>
               <oj-bind-if test="[[connectionsModelsDataProvider.data().length > 0]]">
@@ -167,10 +173,21 @@
     <span><b><oj-bind-text value="[[i18n.popups.info.model.file.label]]"></oj-bind-text></b>
       <span><oj-bind-text value="[[i18n.popups.info.model.file.value()]]"></oj-bind-text></span>
     </span>
+    <oj-bind-if test="typeof i18n.popups.info.model.props.value() !== 'undefined'">
+      <br/>
+      <span><b><oj-bind-text value="[[i18n.popups.info.model.props.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.model.props.value()]]"></oj-bind-text></span>
+      </span>
+    </oj-bind-if>
   </oj-bind-if>
   <oj-bind-if test="providerInfo.type() === 'modelComposite'">
     <span><b><oj-bind-text value="[[i18n.popups.info.composite.models.label]]"></oj-bind-text></b>
       <span><oj-bind-text value="[[i18n.popups.info.composite.models.value()]]"></oj-bind-text></span>
+    </span>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'properties'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.proplist.file.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.proplist.file.value()]]"></oj-bind-text></span>
     </span>
   </oj-bind-if>
 </oj-popup>
@@ -217,13 +234,13 @@
     </div>
 
     <oj-form-layout id="model-form-layout" class="cfe-dialog-form-layout" label-edge="start" label-width="26%">
-      <oj-label slot="label" for="model-name-field"><oj-bind-text value="[[i18n.labels.models.name.value + '*']]"></oj-bind-text></oj-label>
+      <oj-label slot="label" for="model-name-field"><oj-bind-text value="[[i18n.dialog.nameLabel() + '*']]"></oj-bind-text></oj-label>
       <oj-input-text id="model-name-field" class="cfe-dialog-field" value='{{dialogFields().name}}'></oj-input-text>
 
-      <oj-label slot="label" for="model-file-field"><oj-bind-text value="[[i18n.labels.models.file.value + '*']]"></oj-bind-text></oj-label>
+      <oj-label slot="label" for="model-file-field"><oj-bind-text value="[[i18n.dialog.fileLabel() + '*']]"></oj-bind-text></oj-label>
       <div>
         <oj-bind-if test="[[dialogFields().action === 'new']]">
-          <oj-input-text id="model-file-field" class="cfe-file-chooser-field" value="{{modelFile}}" placeholder="e.g. mynewmodel.yml" readonly="[[dialogFields().readonly]]"></oj-input-text>
+          <oj-input-text id="model-file-field" class="cfe-file-chooser-field" value="{{contentFile}}" placeholder="e.g. mynewfile.ext" readonly="[[dialogFields().readonly]]"></oj-input-text>
           <a href="#" tabindex="-1"
              :data-input="[[dialogFields().id]]"
              :data-input-type="[[dialogFields().type]]"
@@ -231,14 +248,16 @@
           >
             <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip}"/>
           </a>
-          <oj-checkboxset value="{{useSparseTemplate}}">
-            <oj-option id="use-sparse-template" value="[[i18n.checkboxes.useSparseTemplate.id]]">
-              <span><oj-bind-text value="[[i18n.checkboxes.useSparseTemplate.label]]"></oj-bind-text></span>
-            </oj-option>
-          </oj-checkboxset>
+          <oj-bind-if test="[[dialogFields().checkbox]]">
+            <oj-checkboxset value="{{useSparseTemplate}}">
+              <oj-option id="use-sparse-template" value="[[i18n.checkboxes.useSparseTemplate.id]]">
+                <span><oj-bind-text value="[[i18n.checkboxes.useSparseTemplate.label]]"></oj-bind-text></span>
+              </oj-option>
+            </oj-checkboxset>
+          </oj-bind-if>
         </oj-bind-if>
         <oj-bind-if test="[[dialogFields().action === 'existing']]">
-          <oj-input-text id="model-file-field" class="cfe-file-chooser-field" value="{{modelFile}}" readonly="[[dialogFields().readonly]]"></oj-input-text>
+          <oj-input-text id="model-file-field" :class="[[isElectronApiAvailable() ? 'cfe-file-reloader-field' : 'cfe-file-chooser-field']]" value="{{contentFile}}" readonly="[[dialogFields().readonly]]"></oj-input-text>
           <a href="#" tabindex="-1"
              :data-input="[[dialogFields().id]]"
              :data-input-type="[[dialogFields().type]]"
@@ -246,12 +265,31 @@
           >
             <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip}"/>
           </a>
+          <oj-bind-if test="[[isElectronApiAvailable()]]">
+            <a href="#" index="-1"
+               :data-input="[[dialogFields().id]]"
+               on-click="[[reloadFileClickListener]]"
+            >
+              <img class="reload-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.reload.iconFile + '.png', 'title': i18n.icons.reload.tooltip}" />
+            </a>
+          </oj-bind-if>
         </oj-bind-if>
       </div>
+
+      <oj-bind-if test="[[dialogFields().selectProps]]">
+        <oj-label slot="label" for="model-proplist-selection-field">
+          <oj-bind-text value="[[i18n.labels.models.props.value]]"></oj-bind-text>
+        </oj-label>
+        <div>
+          <oj-select-single id="model-proplist-selection-field" class="cfe-dialog-field cfe-dialog-field-optional"
+                            value="{{propProviderSelectedValue}}" data="[[propProvidersDataProvider]]">
+          </oj-select-single>
+        </div>
+      </oj-bind-if>
     </oj-form-layout>
 
     <div id="model-response-message">
-      <span data-bind="text: [[responseMessage()]]"></span>
+      <span data-bind="html: [[responseMessage()]]"></span>
     </div>
   </div>
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.utils;
@@ -42,6 +42,7 @@ abstract class WebLogicRestClientHelper {
     headers.add("Content-type", MediaType.APPLICATION_JSON);
     headers.add("X-Requested-By", "ConsoleBackendRestClient");
     headers.add("X-Skip-Resource-Links", "true");
+    headers.add("weblogic.edit.session", "default"); // Only use the default edit session
     for (String header : request.headers().keySet()) {
       headers.add(header, request.headers().get(header));
     }

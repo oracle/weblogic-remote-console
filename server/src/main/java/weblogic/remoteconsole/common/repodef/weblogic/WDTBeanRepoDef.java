@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -16,6 +16,7 @@ import weblogic.remoteconsole.common.repodef.yaml.BeanRepoDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.NormalBeanTypeDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.PseudoBeanTypeDefImpl;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**
@@ -72,6 +73,31 @@ public class WDTBeanRepoDef extends WebLogicBeanRepoDef {
       BeanChildDefCustomizerSource customizerSource
     ) {
       return new WDTBeanChildDefImpl(this, parentPath, source, customizerSource);
+    }
+
+    @Override
+    protected boolean isSupported(BeanPropertyDefSource source) {
+      // The WLS REST api omits properties for a variety of reasons:
+      //
+      // - because the property is excluded or obsolete
+      //
+      // - because the property was deprecated before the first version of the WLS REST api
+      //
+      // - because the property is explictly excluded from the REST api
+      //   (usually because the property's type isn't supported by REST, e.g. List, Map, CompositeData)
+      //
+      // WDT doesn't have all these restrictions.  For example, it supports
+      // properties that were deprecated before the first version of the WLS REST api.
+      //
+      // Today, our pages only include properties that are supported by the WLS REST api.
+      // However, when we read in a WDT model, it can include some properties that the
+      // WLS REST api doesn't support, and needs to be able to write them back out,
+      // even though the user can never see them on the pages.  To do this, it needs
+      // the typing info for these properties.
+      //
+      // So, for WDT, expose all of the properties except for obsolete and
+      // excluded ones (since WDT doesn't support them).
+      return !source.isExclude() && StringUtils.isEmpty(source.getObsolete());
     }
   }
 
@@ -139,9 +165,22 @@ public class WDTBeanRepoDef extends WebLogicBeanRepoDef {
         // Force the DomainMBean Name property to be update writable in WDT.
         return true;
       }
+      if (
+        isProperty("AppDeploymentMBean", "SourcePath")
+          || isProperty("AppDeploymentMBean", "PlanPath")
+          || isProperty("LibraryMBean", "SourcePath")
+      ) {
+        // Force the deployment paths to be update writable in WDT.
+        return true;
+      }
       return super.isUpdateWritable();
     }
 
+    @Override
+    public boolean isRestartNeeded() {
+      return false;
+    }
+  
     @Override public boolean isSupportsUnresolvedReferences() {
       if (!isReference()) {
         return false;
@@ -157,6 +196,14 @@ public class WDTBeanRepoDef extends WebLogicBeanRepoDef {
       }
       if (isSubTypeDiscriminatorPropertyDef()) {
         // Since this property identifies the sub type, it can't be a model token.
+        return false;
+      }
+      if (getCustomizerSource().isDontAllowModelTokens()) {
+        // This property is explictly configured to not be a model token.
+        // This is typically because the property is used in a computation
+        // that we need to know the answer for.  For example, the DomainMBean's
+        // ProductionModeEnabled is used to compute default values in PDJs
+        // and create forms.
         return false;
       }
       return true;
@@ -183,9 +230,13 @@ public class WDTBeanRepoDef extends WebLogicBeanRepoDef {
       }
       return getPropertyPath().equals(discPropDef.getPropertyPath());
     }
-  
+
     private boolean isDomainMBeanName() {
-      return "DomainMBean".equals(getTypeDef().getTypeName()) && "Name".equals(getPropertyName());
+      return isProperty("DomainMBean", "Name");
+    }
+
+    private boolean isProperty(String typeName, String propertyName) {
+      return typeName.equals(getTypeDef().getTypeName()) && propertyName.equals(getPropertyName());
     }
   }
 

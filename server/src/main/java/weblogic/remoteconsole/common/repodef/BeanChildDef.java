@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -51,12 +51,17 @@ public interface BeanChildDef {
   public boolean isCollection();
 
   // If this is a collection, specifies whether you can create children in the collection.
-  // If this is an optional singletoon, specifies whether you can create the singleton
+  // If this is an optional singleton, specifies whether you can create the singleton
   // if it doesn't currently exist.
   // It implies that the beans are deletable.
   // It also implies that the beans are editable.
   // And, if it's an ordered collection, it implies you can reorder the collection's children.
   public boolean isCreatable();
+
+  // If this is a collection, specifies whether you can delete children in the collection.
+  // If this is an optional singletoon, specifies whether you can delete the singleton
+  // if it currently exists.
+  public boolean isDeletable();
 
   // Whether create is asynchronous (e.g. creating a library is asynchronous)
   public boolean isAsyncCreate();
@@ -89,10 +94,17 @@ public interface BeanChildDef {
 
   // Whether this is an ordered collection.
   // Returns false is isCollection returns false.
-  public boolean isOrdered();
+  public default boolean isOrdered() {
+    return isCollection() ? getChildTypeDef().isOrdered() : false;
+  }
 
   // The child's label (e.g. the localizable name of the collection or optional singleton)
   public LocalizableString getLabel();
+
+  // The child's singular label
+  // It's the singular of the label for collections (e.g Server / Servers)
+  // It's the same as getLabel for singletons (e.g. Adjudicator / Adjudicator)
+  public LocalizableString getSingularLabel();
 
   // Whether the WLS server needs to be restarted to see changes to this child
   // (e.g. creating/deleting a collection child or optional singleton).

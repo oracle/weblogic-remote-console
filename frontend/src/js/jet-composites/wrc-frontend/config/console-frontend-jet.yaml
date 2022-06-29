@@ -1,5 +1,5 @@
 name: WebLogic Remote Console
-version: '2.2.0'
+version: '2.3.0'
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
   version: '1.0'
@@ -43,6 +43,8 @@ settings:
     defaultLevel: INFO
   autoSync:
     minimumSecs: 30
+  autoDownloadTimer:
+    minimumSecs: 1
   themes:
     dark:
       - '#413e3c'

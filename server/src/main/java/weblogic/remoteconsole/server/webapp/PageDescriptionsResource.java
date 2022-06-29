@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -19,7 +19,9 @@ import weblogic.remoteconsole.common.repodef.PageRepoDef;
 import weblogic.remoteconsole.common.repodef.PagesPath;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.PageDescription;
+import weblogic.remoteconsole.server.repo.PageRepo;
 import weblogic.remoteconsole.server.repo.Response;
 
 /**
@@ -52,30 +54,26 @@ public class PageDescriptionsResource extends BaseResource {
   }
 
   private Response<JsonObject> getResponse(String typeName, String view) {
+    InvocationContext ic = getInvocationContext();
     Response<JsonObject> response = new Response<>();
-    JsonObject pageDesc = getPageDesc(typeName, view);
-    if (pageDesc != null) {
-      response.setSuccess(pageDesc);
-    } else {
-      response.setNotFound();
-    }
-    return response;
-  }
-
-  private JsonObject getPageDesc(String typeName, String view) {
-    PageRepoDef pageRepoDef = getInvocationContext().getPageRepo().getPageRepoDef();
-    PagePath pagePath = computePagePath(pageRepoDef, typeName, view);
+    PageRepo pageRepo = ic.getPageRepo();
+    PagePath pagePath = computePagePath(typeName, view);
     if (pagePath == null) {
-      return null; // not found
+      return response.setNotFound();
     }
-    PageDef pageDef = pageRepoDef.getPageDef(pagePath);
-    if (pageDef == null) {
-      return null; // not found
+    ic.setPagePath(pagePath);
+    Response<PageDef> pageDefResponse =
+      pageRepo.asPageReaderRepo().getPageDef(ic);
+    if (!pageDefResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(pageDefResponse);
     }
-    return PageDescription.getPageDescription(pageDef, getInvocationContext());
+    PageDef pageDef = pageDefResponse.getResults();
+    JsonObject pageDesc = PageDescription.getPageDescription(pageDef, ic);
+    return response.setSuccess(pageDesc);
   }
 
-  private PagePath computePagePath(PageRepoDef pageRepoDef, String typeName, String view) {
+  private PagePath computePagePath(String typeName, String view) {
+    PageRepoDef pageRepoDef = getInvocationContext().getPageRepo().getPageRepoDef();
     BeanTypeDef typeDef = pageRepoDef.getBeanRepoDef().getTypeDef(typeName);
     if (typeDef == null) {
       return null; // not found

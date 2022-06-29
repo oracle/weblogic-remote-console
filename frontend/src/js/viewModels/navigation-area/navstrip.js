@@ -78,8 +78,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
           'modeling': { iconFile: 'navstrip-icon-wdt-blk_48x48',
             tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.modeling.tooltip')
           },
-          'composite': { iconFile: 'navstrip-icon-readonly-configuration-blk_48x48',
+          'composite': { iconFile: 'navstrip-icon-wdt-composite-blk_48x48',
             tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.composite.tooltip')
+          },
+          'properties': { iconFile: 'navstrip-icon-property-list-blk_48x48',
+            tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.properties.tooltip')
           },
           'nodata': { iconFile: 'navstrip-icon-nodata-blk_48x48',
             tooltip: ''
@@ -124,6 +127,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
             clearBuiltInsSelection();
             viewParams.onDataProviderRemoved(false);
           }
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderLoadFailed.add((dataProvider) => {
+          clearNavStripIcons();
+          clearBuiltInsSelection();
         });
 
         self.signalBindings.push(binding);

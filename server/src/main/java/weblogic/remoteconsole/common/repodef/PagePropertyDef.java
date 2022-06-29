@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -63,4 +63,8 @@ public interface PagePropertyDef extends BeanPropertyDef {
   // (e.g. links to mbean javadoc about this property).
   // Returns null if there is no external documentation available.
   public PagePropertyExternalHelpDef getExternalHelpDef();
+
+  // Whether this property is just for the page (true)
+  // or whether it's stored in the bean repo too (false)
+  public boolean isPageLevelProperty();
 }

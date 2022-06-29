@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -94,15 +94,16 @@ class NavTreeReader extends PageReader {
       nodeToComplete.setLabel(getLocalizer().localizeString(groupNodeDef.getLabel()));
       nodeToComplete.setSelectable(false);
       List<NavTreeNodeDef> contentsNodeDefs = groupNodeDef.getContentDefs();
-      if (contentsNodeDefs.isEmpty()) {
-        throw new AssertionError("Group with no contents: " + groupNodeDef);
-      }
-      nodeToComplete.setExpandable(true);
       nodeToComplete.setType(NavTreeNode.Type.GROUP);
-      if (nodeToExpand != null) {
-        nodeToComplete.setContents(
-          expandNodes(navTreePath.getPath(), contentsNodeDefs, nodeToExpand.getContents())
-        );
+      if (contentsNodeDefs.isEmpty()) {
+        nodeToComplete.setExpandable(false);
+      } else {
+        nodeToComplete.setExpandable(true);
+        if (nodeToExpand != null) {
+          nodeToComplete.setContents(
+            expandNodes(navTreePath.getPath(), contentsNodeDefs, nodeToExpand.getContents())
+          );
+        }
       }
       return nodeToComplete;
     }
@@ -132,8 +133,19 @@ class NavTreeReader extends PageReader {
       BeanChildNavTreeNodeDef childNodeDef,
       NavTreeNode nodeToExpand
     ) {
-      List<BeanSearchResults> collectionResults =
-        searchResults.getCollection(nodeToComplete.getResourceData());
+      Response<List<BeanSearchResults>> getCollectionResponse =
+        getCollectionResults(
+          searchResults,
+          nodeToComplete.getResourceData(),
+          List.of(nodeToComplete.getResourceData().getTypeDef().getIdentityPropertyDef())
+        );
+      List<BeanSearchResults> collectionResults = null;
+      if (getCollectionResponse.isSuccess()) {
+        collectionResults = getCollectionResponse.getResults();
+      } else {
+        // TBD - log the problem and omit the nav tree node from the results
+        collectionResults = null;
+      }
       if (collectionResults == null) {
         // It seems like this can't be null, due to the mandatory nature
         // of the last part of the path, however, with the use of dotted paths
@@ -271,15 +283,11 @@ class NavTreeReader extends PageReader {
     }
   
     private BeanTypeDef getChildTypeDef(NavTreeNode nodeToComplete) {
-      BeanTypeDef typeDef = nodeToComplete.getResourceData().getTypeDef();
-      if (typeDef.isHomogeneous()) {
-        return typeDef;
+      Response<BeanTypeDef> response = getActualTypeDef(nodeToComplete.getResourceData(), searchResults);
+      if (!response.isSuccess()) {
+        throw new UnsuccessfulResponseException(response);
       }
-      Response<String> discResponse = getSubTypeDiscriminatorValue(nodeToComplete.getResourceData(), searchResults);
-      if (!discResponse.isSuccess()) {
-        throw new UnsuccessfulResponseException(discResponse);
-      }
-      return typeDef.getSubTypeDef(discResponse.getResults());
+      return response.getResults();
     }
   }
 
@@ -322,11 +330,8 @@ class NavTreeReader extends PageReader {
         new NavTreePath(getPageRepo(), parentNavTreePath.childPath(nodeName));
       if (nodeDef.isChildNodeDef()) {
         BeanTreePath beanTreePath = navTreePath.getLastSegment().getBeanTreePath();
-        BeanTypeDef typeDef = beanTreePath.getTypeDef(); 
-        getBuilder().addProperty(beanTreePath, typeDef.getIdentityPropertyDef());
-        if (typeDef.isHeterogeneous()) {
-          addSubTypeDiscriminatorToSearch(beanTreePath, getBuilder());
-        }
+        BeanTypeDef typeDef = beanTreePath.getTypeDef();
+        addCollectionToSearch(getBuilder(), beanTreePath, List.of(typeDef.getIdentityPropertyDef()));
         if (beanTreePath.isCollection()) {
           addCollectionNodeChildrenToExpand(navTreePath, nodeDef.asChildNodeDef(), nodeToExpand);
         } else {

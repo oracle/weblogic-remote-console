@@ -1,0 +1,29 @@
+# Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure how and where the current server archives
+  its monitoring and diagnostics data.</p>
+
+properties:
+  - name: "ServerDiagnosticConfig.DiagnosticDataArchiveType"
+  - name: "ServerDiagnosticConfig.DataRetirementEnabled"
+  - name: "ServerDiagnosticConfig.DiagnosticStoreDir"
+  - name: "ServerDiagnosticConfig.DiagnosticJDBCResource"
+  - name: "ServerDiagnosticConfig.DiagnosticStoreFileLockingEnabled"
+  - name: "ServerDiagnosticConfig.DiagnosticJDBCSchemaName"
+  - name: "ServerDiagnosticConfig.PreferredStoreSizeLimit"
+  - name: "ServerDiagnosticConfig.StoreSizeCheckPeriod"
+advancedProperties:
+  - name: "ServerDiagnosticConfig.DiagnosticStoreMinWindowBufferSize"
+  - name: "ServerDiagnosticConfig.DiagnosticStoreMaxWindowBufferSize"
+  - name: "ServerDiagnosticConfig.DiagnosticStoreIoBufferSize"
+  - name: "ServerDiagnosticConfig.DiagnosticStoreMaxFileSize"
+  - name: "ServerDiagnosticConfig.DiagnosticStoreBlockSize"
+helpTopics:
+  - label: "Monitoring Oracle WebLogic Server with SNMP "
+    href: "snmpa/index.html"
+    type: "edocs"
+  - label: "Configuring Diagnostic Archives"
+    href: "wldfc/config_diag_archives.html"
+    type: "edocs"

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -12,6 +12,7 @@ properties:
   label: Max Concurrent Long Requests
 
 - name: Name
+  required: false # otherwise it defaults to true since DomainMBean's Name has an @key annotation
   helpSummaryHTML: >
     <p>The name of this WebLogic Server domain.</p>
 
@@ -20,6 +21,7 @@ properties:
 
 - name: ProductionModeEnabled
   label: Production Mode
+  dontAllowModelTokens: true # since needed to compute default values
 
 - name: ExalogicOptimizationsEnabled
   label: Enable Exalogic Optimizations
@@ -57,22 +59,9 @@ properties:
     values:
       - true
 
-children:
-- name: Callouts
-  ordered: true
-
-- name: SNMPAgent
-  label: Domain SNMP Agent
-
-- name: AppDeployments
-  creatable: true
-  asyncCreate: true
-  asyncDelete: true
-
-- name: Libraries
-  creatable: true
-  asyncCreate: true
-  asyncDelete: true
+- name: AdminServerName
+  helpHTML: >
+    <p>Specifies which of the servers in this domain is the Administration Server.</p>
 
 - name: DBPassiveMode
   offlineName: DbPassiveMode
@@ -82,3 +71,21 @@ children:
 
 - name: EnableEECompliantClassloadingForEmbeddedAdapters
   offlineName: EnableEeCompliantClassloadingForEmbeddedAdapters
+
+children:
+
+- name: SNMPAgent
+  label: Domain SNMP Agent
+
+- name: AppDeployments
+  creatable: true
+  asyncCreate: true
+  asyncDelete: true
+
+- name: JDBCSystemResources
+  label: Data Sources
+
+- name: Libraries
+  creatable: true
+  asyncCreate: true
+  asyncDelete: true

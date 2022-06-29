@@ -4,11 +4,11 @@
 
   "cdns": {
     "jet": {
-      "prefix": "https://static.oracle.com/cdn/jet/11.1.2/default/js",
-      "css": "https://static.oracle.com/cdn/jet/11.1.2/default/css",
+      "prefix": "https://static.oracle.com/cdn/jet/12.0.1/default/js",
+      "css": "https://static.oracle.com/cdn/jet/12.0.1/default/css",
       "config": "bundles-config.js"
     },
-    "3rdparty": "https://static.oracle.com/cdn/jet/11.1.2/3rdparty"
+    "3rdparty": "https://static.oracle.com/cdn/jet/12.0.1/3rdparty"
   },
 
   "libs": {
@@ -49,12 +49,12 @@
       "debug": {
         "src": ["*.js", "widgets/draggable.js", "widgets/mouse.js", "widgets/sortable.js"],
         "path": "libs/jquery/jqueryui-amd-#{version}",
-        "cdnPath": "jquery/jqueryui-amd-1.12.1"
+        "cdnPath": "jquery/jqueryui-amd-1.13.0"
       },
       "release": {
         "src": ["*.js", "widgets/draggable.js", "widgets/mouse.js", "widgets/sortable.js"],
         "path": "libs/jquery/jqueryui-amd-#{version}.min",
-        "cdnPath": "jquery/jqueryui-amd-1.12.1.min"
+        "cdnPath": "jquery/jqueryui-amd-1.13.0.min"
       }
     },
 
@@ -224,6 +224,21 @@
         "src":  ["hooks.umd.js", "hooks.umd.js.map"],
         "path": "libs/preact/hooks/dist/hooks.umd.js",
         "cdnPath": "preact/hooks/dist/hooks.umd"
+      }
+    },
+
+    "preact/compat": {
+      "cdn": "3rdparty",
+      "cwd": "node_modules/preact/compat/dist",
+      "debug": {
+        "src":  ["compat.umd.js", "compat.umd.js.map"],
+        "path": "libs/preact/compat/dist/compat.umd.js",
+        "cdnPath": "preact/compat/dist/compat.umd"
+      },
+      "release": {
+        "src":  ["compat.umd.js", "compat.umd.js.map"],
+        "path": "libs/preact/compat/dist/compat.umd.js",
+        "cdnPath": "preact/compat/dist/compat.umd"
       }
     },
 

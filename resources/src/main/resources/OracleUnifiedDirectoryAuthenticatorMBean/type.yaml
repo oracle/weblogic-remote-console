@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -133,6 +133,9 @@ properties:
     -- that change must be duplicated in the <b>All Groups Filter</b>
     and <b>Group From Name Filter </b>attributes.</p>
 
+- name: DynamicMemberURLAttribute
+  offlineName: DynamicMemberUrlAttribute
+
 - name: DynamicGroupNameAttribute
   helpHTML: >
     <p>The attribute of a dynamic LDAP group object that specifies the name
@@ -140,17 +143,6 @@ properties:
     is changed -- for example, from <code>cn</code> to <code>uid</code>
     -- that change must be duplicated in both the <b>All Groups Filter</b>
     and <b>Group From Name Filter</b> attributes.</p>
-
-- name: UserDynamicGroupDNAttribute
-  helpSummaryHTML: >
-    <p>If such an attribute does not exist, WebLogic Server determines if
-    a user is a member of a group by evaluating the URLs on the dynamic
-    group. If a group contains other groups, WebLogic Server evaluates
-    the URLs on any of the descendants (indicates parent relationship)
-    of the group.</p>
-  helpDetailsHTML: >
-    <p><b>Note:</b> When this attribute is set, the value for <b>Dynamic
-    Group Name Attribute</b> must be valid and cannot be null.</p>
 
 - name: ConnectTimeout
   helpSummaryHTML: >
@@ -218,11 +210,6 @@ properties:
   helpHTML: >
     <p>The size of the cache (in kilobytes) that is used with the LDAP
     server</p>
-
-- name: CacheTTL
-  helpHTML: >
-    <p>The time-to-live of the cache (in seconds) that is used with the
-    LDAP server</p>
 
 - name: EnableCacheStatistics
   helpSummaryHTML: >

@@ -25,25 +25,27 @@
   --landing-page-subtree-color: #83837f;
   --landing-page-subtree-card-color: #70706c;
 
-  --ancillary-content-area-width: 300px;
+  --ancillary-content-area-width: 330px;
   --system-status-collapse-min-height: 340px;
   --system-status-expand-min-height: 450px;
   --servers-glance-dom-max-height: 450px;
   --table-dom-max-height: 500px;
   --project-sidebar-width: 12px;
   --data-providers-min-height: 70px;
-  --data-providers-min-width: 305px;
+  --data-providers-min-width: 335px;
   --projects-section-body-min-height: 270px;
   --projects-section-body-max-height: 270px;
   --navstrip-max-width: 45px;     /* DON'T CHANGE THIS!! Needs to be 45px, or else left edge of control will be cut off and dnd feature on MyHome will go bonkers */
   --navstrip-min-height: 60px;
   --navstrip-resizer-width: 55px;
-  --tab-container-toolbar-min-width: 306px;
+  --tab-container-toolbar-min-width: 336px;
   --header-background-color: #e0dbd7;
+  --simple-search-backgroud-color: #c8c3c0;
+  --security-warning-color: #8b0000;
 
-  --slideup-popup-width: 400px;
+  --slideup-popup-width: 430px;
   --slideup-popup-min-height: 36px;
-  --slideup-popup-content-width: 330px;
+  --slideup-popup-content-width: 360px;
   --slideup-popup-height: 36px;
   --slideup-popup-offset-top: 200px;
   --slideup-popup-z-index: 129;
@@ -78,11 +80,14 @@
   --cfe-dialog-form-layout-min-height: 90px;
   --cfe-dialog-form-layout-min-width: 99%;
   --fileChooser-file-input-width: 92%;
+  --fileReloader-file-input-width: 87%;
 
   --header-container-height: 34px;
 
   --provider-activated-color: #3b2de1;
   --provider-deactivated-color: #777776;
+
+  --response-message-color: #ff0000;
 
   --form-section-title-background-color: #dfdcda; /* #ede7e4 #dfdcda; */
 
@@ -141,6 +146,15 @@ div#header-title a:focus
   text-decoration: none;
 }
 
+div#header-simple-search {
+  margin: 0.188rem 1.25rem 0 4rem;   /* 3px 30px 0 100px; */
+}
+
+div#header-warning {
+  display: flex;
+  align-items: center;
+}
+
 #app-name {
   color: var(--app-info-label-color);
 }
@@ -189,9 +203,28 @@ div#header-title a:focus
 .branding-area-security-warning {
   font-weight: 400;
   font-size: 10pt;
-  color: #8b0000;
-  vertical-align: middle;
-  padding: 0 0 0 30px;
+  color: var(--security-warning-color);
+}
+
+.cfe-blinking-text {
+  animation:cfe-blinking-text 1.2s infinite;
+}
+
+@keyframes cfe-blinking-text {
+  0%{     color: var(--security-warning-color);    }
+  49%{    color: var(--security-warning-color); }
+  60%{    color: transparent; }
+  99%{    color:transparent;  }
+  100%{   color: var(--security-warning-color);    }
+}
+
+.branding-area-simple-search {
+  background-color: var(--simple-search-backgroud-color);
+}
+
+.branding-area-simple-search > div.oj-text-field-container
+{
+  height: 1.75rem;
 }
 
 #middle-container {
@@ -836,15 +869,22 @@ div#tab-module.oj-flex-bar-end {
   color: var(--panel-card-label-color);
 }
 
+.landing-page-panel-subtree-card span,
 .landing-page-panel-subtree-card a span,
 .landing-page-panel-subtree-card a p {
   color: var(--landing-page-subtree-card-color);
   font-size: 11pt;
 }
 
-.landing-page-panel-subtree-card a span {
+.landing-page-panel-subtree-card span,
+.landing-page-panel-subtree-card a span
+{
   color: var(--panel-card-label-color);
   font-weight: 600;
+}
+
+.landing-page-panel-subtree-card > p > span > p {
+  font-weight: 400;
 }
 
 #slideup-popup {
@@ -948,7 +988,32 @@ div#tab-module.oj-flex-bar-end {
 #model-composite-response-message
 {
   display: none;
-  padding: 2px 0 10px 0;
+  overflow: scroll;
+  height: 7.375rem; /* 118px */
+  min-width: 100%;
+}
+
+#connection-response-message > span,
+#model-response-message > span,
+#model-composite-response-message > span
+{
+  font-size: 1.08em;
+  font-weight: 700;
+  color: var(--response-message-color);
+}
+
+#connection-response-message > span > ul,
+#model-response-message > span > ul,
+#model-composite-response-message > span > ul
+{
+  padding-inline-start: 1.25rem;  /* 20px; */
+}
+
+#connection-response-message > span > p,
+#model-response-message > span > p,
+#model-composite-response-message > span > p
+{
+  margin-bottom: 0;
 }
 
 #project-management-toolbar,
@@ -1042,6 +1107,11 @@ oj-navigation-list[id="navstrip"].oj-navigationlist-vertical:not(.oj-navigationl
 .cfe-file-chooser-field
 {
   width: var(--fileChooser-file-input-width);
+}
+
+.cfe-file-reloader-field
+{
+  width: var(--fileReloader-file-input-width);
 }
 
 .cfe-expanding-input-text {

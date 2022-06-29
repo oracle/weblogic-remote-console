@@ -1,0 +1,26 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p> Displays the objects that directly reference this object.</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.ReferenceableBeanCustomizer.getReferencedBySliceTableRows
+
+displayedColumns:
+- name: "Name"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The name of referring object."
+- name: "Type"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The type of the referring object."
+- name: "Properties"
+  definition:
+    type: "java.lang.String"
+    array: true
+    descriptionHTML: "The names of the properties on the referring object that reference this object."
+- name: "Path"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The path in the navigation tree to the referring object."

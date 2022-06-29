@@ -1,8 +1,7 @@
 //
 // Monitoring Navtree Test Suite for:
-//    Server States
-//    Running Servers
-//    Domain Information
+//    Environment
+//
 //
 //
 const {Builder, By, Key, until} = require('selenium-webdriver')
@@ -38,15 +37,18 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
     })
 
     //
-    // Monitoring(NavTree) -> Server Status Summary Elements from NavTree:
-    //    Server States, AdminServer, Tasks
+    // Monitoring(NavTree) -> Environment
     //
-    it('1. Test Category: GAT/Risk1\n \t Test Scenario: Monitoring NavTree for Server Status States -> AdminServer -> ' +
-        'Tasks Menu', async function () {
-        file = "monitoringNavTreeServerStatusAdminTaskMenu.png";
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: Monitoring -> Environment -> Servers -> AdminServer', async function () {
+        file = "monitoringNavTreeServerAdminTaskMenu.png";
         try {
-            await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Server States",
-                serverName, "Tasks");
+            await admin.goToNavTreeLevelThreeLink(driver,"monitoring","Environment",
+                "Servers","AdminServer");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Environment", "Clustering", "Scaling Tasks");
+            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
+                "Environment", "System Component Life Cycle Runtimes",
+                "SystemComponent-1", "Tasks");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -54,16 +56,44 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
         }
     })
 
-    // Monitoring(NavTree)->Running Servers->AdminServer->Environment
+
+    // Monitoring(NavTree)->Scheduling
     //
-    it('2. Test Category: GAT/Risk1\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> AdminServer -> ' +
-        'Environment', async function () {
-        file = "monitoringNavTreeServerMetricsAdminEnvironmentMenu.png";
+    it('2. Test Category: GAT/Risk1\n \t Test Scenario: Monitoring(NavTree) -> Scheduling', async function () {
+        file = "monitoringNavTreeSchedulingMenu.png";
         try {
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Environment", "Clustering");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Environment", "System Resource Controls");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Execute Queue Runtimes", "weblogic.socket.Muxer");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Min Threads Constraint Runtimes", "MinThreadsConstraint-1");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Max Threads Constraint Runtimes", "MaxThreadsConstraint-1");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Request Class Runtimes", "FairShareRequestClass-1");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Request Class Runtimes", "ResponseTimeRequestClass-1");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Work Manager Runtimes", "BEJmsDispatcher");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Work Manager Runtimes", "CdsAsyncRegistration");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Work Manager Runtimes", "DataRetirementWorkManager");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Work Manager Runtimes", "FEJmsDispatcher");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Work Manager Runtimes", "ImageWorkManager");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Work Manager Runtimes", "JTACoordinatorWM");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Work Manager Runtimes", "JmsAsyncQueue");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Work Manager Runtimes", "OneWayJTACoordinatorWM");
+            await admin.goToNavTreeLevelTwoLink(driver, "monitoring",
+                "Scheduling", "Managed Executor Service Runtime");
+            await admin.goToNavTreeLevelTwoLink(driver, "monitoring",
+                "Scheduling", "Managed Scheduled Executor Service Runtimes");
+            await admin.goToNavTreeLevelTwoLink(driver, "monitoring",
+                "Scheduling", "Managed Thread Factory Runtimes");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -71,70 +101,34 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
         }
     })
 
-    // Monitoring(NavTree)->Running Servers->AdminServer->Scheduling
+    // Monitoring(NavTree)->Deployments
     //
-    it('3. Test Category: GAT/Risk1\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> ' +
-        'AdminServer -> Scheduling', async function () {
-        file = "monitoringNavTreeServerMetricsAdminSchedulingMenu.png";
-        try {
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Execute Queue Runtimes", "weblogic.socket.Muxer");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Min Threads Constraint Runtimes");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Max Threads Constraint Runtimes");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Request Class Runtimes");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Work Manager Runtimes", "BEJmsDispatcher");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Work Manager Runtimes", "CdsAsyncRegistration");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Work Manager Runtimes", "DataRetirementWorkManager");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Work Manager Runtimes", "FEJmsDispatcher");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Work Manager Runtimes", "ImageWorkManager");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Work Manager Runtimes", "JTACoordinatorWM");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Work Manager Runtimes", "JmsAsyncQueue");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Work Manager Runtimes", "OneWayJTACoordinatorWM");
-            //await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-              //  "Running Servers", serverName, "Scheduling", "Work Manager Runtimes", "direct");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Managed Executor Service Runtimes");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Managed Scheduled Executor Service Runtimes");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Scheduling", "Managed Thread Factory Runtimes");
-            console.log("TEST PASS ");
-        } catch (e) {
-            await admin.takeScreenshot(driver, file);
-            console.log(e.toString() + " TEST FAIL");
-        }
-    })
-
-    // Monitoring(NavTree)->Running Servers->AdminServer->Deployments
-    //
-    it('4. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> ' +
+    it('3. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> ' +
                 'AdminServer -> Deployments ', async function () {
         file = "monitoringNavTreeServerMetricsAdminDeploymentMenu.png";
         try {
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Deployments","Web Services");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName, "Deployments", "Resource Adapters");
-
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers",serverName,"Deployments","Web Services","Wsee Cluster Front End Runtime");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers",serverName,"Deployments","Web Services","Entity Cache Cumulative Runtime");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers",serverName,"Deployments","Resource Adapters","Inactive RAs");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers",serverName,"Deployments","Resource Adapters","RAs");
+            await admin.goToNavTreeLevelFiveLink(driver,"monitoring","Deployments",
+                "Application Runtimes","MyAdminJmsModule","Component Runtimes","MyAdminJmsModule");
+            await admin.goToNavTreeLevelFiveLink(driver,"monitoring", "Deployments",
+                "Application Runtimes","MyAdminJmsModule","Managed Executor Service Runtimes","DefaultManagedExecutorService");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Deployments",
+                "App Deployment Runtimes", "jms-local-adp");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Deployments",
+                "Library Runtimes", "pwdgen");
+            await driver.sleep(600);
+            console.log("Click pwdgen pop down menu");
+            await driver.findElement(By.css(".oj-end")).click();
+            await driver.sleep(600);
+            console.log("Select Library Configuration - Edit Tree");
+            await driver.findElement(By.xpath("//oj-option[@id=\'Library Configuration - Edit Tree\']/a")).click();
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Deployments", "Web Services", "Wsee Wsrm Runtime");
+            await admin.goToNavTreeLevelSevenLink(driver, "monitoring", "Deployments",
+                "Resource Adapters","Active RAs", "jms-internal-notran-adp",
+                "Connection Pools","eis/jms/internal/WLSConnectionFactoryJNDINoTX","Connections");
+            await admin.goToNavTreeLevelSevenLink(driver, "monitoring", "Deployments",
+                "Resource Adapters","RAs", "jms-internal-notran-adp",
+                "Connection Pools", "eis/jms/internal/WLSConnectionFactoryJNDINoTX","Connections");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -142,30 +136,29 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
         }
     })
 
-    // Monitoring(NavTree)->Running Servers->AdminServer->Services
+    // Monitoring(NavTree)->Services
     //
-    it('5. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> ' +
+    it('4. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> ' +
            'AdminServer->Services', async function () {
         file = "monitoringNavTreeServerMetricsAdminServicesMenu.png";
         try {
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-               "Running Servers", serverName,"Services","Messaging","JMS Runtime");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Services","Messaging","SAF Runtime");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Services","Messaging","Path Service Runtimes");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Services","Messaging","Messaging Bridge Runtimes");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Services","Datasource","JDBC Data Source Runtime MBeans");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Services","Datasource","JDBC Multi Data Source Runtime MBeans");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Services","Transactions","JTA Runtime");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Services","Persistence","Persistent Store Runtimes");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Services","Persistence"," Data Access Runtimes");
+            await admin.goToNavTreeLevelSevenLink(driver, "monitoring", "Services",
+                "Messaging","JMS Runtime", "JMS Servers",
+                "AdminJMSServer","Destinations","MyAdminJmsModule!AdminJMSServer@MyAdminUniformDistributedQueue");
+            await admin.goToNavTreeLevelNineLink(driver, "monitoring", "Services",
+                "Messaging","JMS Runtime", "Connections",
+                "connection15","Sessions","session41",
+                "Consumers","consumer43");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Services",
+                "Data Sources","JDBC Data Source Runtime MBeans");
+            await driver.sleep(600);
+            console.log("Click JDBC Data Source Runtime MBeans pop down menu");
+            await driver.findElement(By.css(".oj-end")).click();
+            await driver.sleep(600);
+            console.log("Select JDBC Data Sources - Configuration View Tree");
+            await driver.findElement(By.xpath("//oj-option[@id=\'JDBC Datasources - Configuration View Tree\']/a")).click();
+            await admin.goToNavTreeLevelFourLink(driver, "monitoring", "Services",
+                "Persistence","Data Access Runtimes","JMSMessageLog/AdminJMSServer");
             console.log("TEST PASS ");
          } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -173,14 +166,19 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
          } 
      })
 
-    // Monitoring(NavTree)->Running Servers->AdminServer->Security
+    // Monitoring(NavTree)->Security
     //
-    it('6. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> ' +
-        'AdminServer->Security', async function () {
+    it('5. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring AdminServer->Security', async function () {
         file = "monitoringNavTreeServerMetricsAdminSecurityMenu.png";
         try {
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName, "Security","Realm Runtimes","myrealm");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Security","Realm Runtimes","myrealm");
+            await driver.sleep(600);
+            console.log("Click myrealm pop down menu");
+            await driver.findElement(By.css(".oj-end")).click();
+            await driver.sleep(600);
+            console.log("Select Authenticator Runtimes - myrealm menu");
+            await driver.findElement(By.xpath("//oj-option[@id=\'Authenticator Runtimes - myrealm\']/a")).click();
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -190,7 +188,7 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
 
     // Monitoring(NavTree)->Running Servers->AdminServer->Interoperability
     //
-    it('7. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> ' +
+    it.skip('6. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> ' +
         'AdminServer->Interoperability', async function () {
         file = "monitoringNavTreeServerMetricsAdminInteroperabilityMenu.png";
         try {
@@ -203,50 +201,13 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
         }
     })
 
-    // Monitoring(NavTree)->Running Servers->AdminServer->Diagnostics
+    // Monitoring(NavTree)->Diagnostics
     //
-    it('8. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring(NavTree) for Running Servers -> ' +
-        'AdminServer->Diagnostics', async function () {
+    it('7. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring -> Diagnostics', async function () {
         file = "monitoringNavTreeServerMetricsAdminDiagnosticsMenu.png";
         try {
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName,"Diagnostics","SNMP Agent Runtime");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Diagnostics","WLDF Archive Runtimes","DataSourceLog");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName,"Diagnostics","WLDF Instrumentation Runtimes");
-            await admin.goToNavTreeLevelFiveLink(driver, "monitoring",
-                "Running Servers", serverName,"Diagnostics","WLDF Data Access Runtimes","DataSourceLog");
-            await admin.goToNavTreeLevelFourLink(driver, "monitoring",
-                "Running Servers", serverName,"Diagnostics","Debug Patch Tasks");
-            console.log("TEST PASS ");
-        } catch (e) {
-            await admin.takeScreenshot(driver, file);
-            console.log(e.toString() + " TEST FAIL");
-        }
-    })
-
-
-    // Monitoring(NavTree) -> Domain Information
-    //
-    it('9. Test Category: GAT/Risk3\n \t Test Scenario: Monitoring(NavTree) for Domain Information menu ',
-        async function () {
-        file = "monitoringNavTreeDomainInformationMenu.png";
-        try {
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","Domain Runtime");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","Migration Data Runtimes");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","Node Manager Runtimes");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","System Component Life Cycle Runtimes");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","App Deployment Runtimes");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","Deployment Progress Objects");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","Lib Deployment Runtimes");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","Service Migration Data Runtimes");
-            await admin.goToNavTreeLevelThreeLink(driver,"monitoring","Domain Information","Edit Session Configurations","default");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","Scaling Tasks");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","All Workflows");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","Inactive Workflows");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","Stopped Workflows");
-            await admin.goToNavTreeLevelTwoLink(driver,"monitoring","Domain Information","SNMP Agent Runtime");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Diagnostics",
+                "WLDF Archive Runtimes","JMSMessageLog/AdminJMSServer");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

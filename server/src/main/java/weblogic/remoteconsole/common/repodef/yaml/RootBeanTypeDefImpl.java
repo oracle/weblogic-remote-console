@@ -26,6 +26,8 @@ class RootBeanTypeDefImpl extends BaseBeanTypeDefImpl {
 
   private Map<String,BaseBeanChildDefImpl> childPathToChildDefImplMap = new HashMap<>();
 
+  private List<BaseBeanTypeDefImpl> inheritedTypeDefImpls = List.of();
+
   RootBeanTypeDefImpl(BeanRepoDefImpl beanRepoDefImpl, String... rootChildBeanTypeNames) {
     super(beanRepoDefImpl, "root");
     for (String rootChildBeanTypeName : rootChildBeanTypeNames) {
@@ -42,6 +44,11 @@ class RootBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   @Override
   public String getInstanceName() {
     return null;
+  }
+
+  @Override
+  public LocalizableString getInstanceNameLabel() {
+    return LocalizableString.NULL;
   }
 
   @Override
@@ -62,6 +69,11 @@ class RootBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   @Override
   public boolean isHomogeneous() {
     return true;
+  }
+
+  @Override
+  List<BaseBeanTypeDefImpl> getInheritedTypeDefImpls() {
+    return inheritedTypeDefImpls;
   }
 
   @Override
@@ -95,6 +107,21 @@ class RootBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   }
 
   @Override
+  public boolean isReferenceable() {
+    return false;
+  }
+
+  @Override
+  public boolean isOrdered() {
+    return false;
+  }
+
+  @Override
+  public boolean isSupportsCustomViews() {
+    return false;
+  }
+
+  @Override
   public boolean isSettable() {
     return false;
   }
@@ -111,6 +138,11 @@ class RootBeanTypeDefImpl extends BaseBeanTypeDefImpl {
 
   @Override
   public String getCreateResourceMethod() {
+    return null;
+  }
+
+  @Override
+  public String getGetCollectionMethod() {
     return null;
   }
 

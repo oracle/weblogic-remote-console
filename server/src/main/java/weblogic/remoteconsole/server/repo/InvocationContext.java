@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -10,6 +10,7 @@ import java.util.Locale;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.UriInfo;
 
 import weblogic.remoteconsole.common.repodef.Localizer;
 import weblogic.remoteconsole.common.repodef.PagePath;
@@ -46,13 +47,67 @@ public class InvocationContext {
 
   private Provider provider;
 
+  // localizes strings based on the page repo def's resource bundle
+  // and the client's preferred language.
+  // null if not connected to a domain.
+  private Localizer localizer;
+
+  // identifies a bean or a collection of beans
+  // used by per-perspective pages that manage beans (e.g. api/configuration/Domain/...)
+  // null if not connected to a domain or not a resource that manages beans
+  private BeanTreePath beanTreePath;
+
+  // Lists the form/table properties that a GET operation should return.
+  // If null, all of the form/table properties are returned.
+  // If not, only properties that are on the form/table AND in
+  // this list are returned.
+  private HashSet<String> properties;
+
+  // Whether a GET needs to refetch the info from the page repo (true)
+  // or whether it can use cached results (false)
+  private boolean reload;
+
+  // The info about the URI that the caller invoked this request on
+  private UriInfo uriInfo;
+
+  private PagePath pagePath;
+
+  public InvocationContext() {
+    // Use the default language until we find out what the client wants.
+    setLocales(new ArrayList<Locale>());
+  }
+
+  public InvocationContext(
+    ResourceContext resourceContext,
+    HttpHeaders httpHeaders,
+    UriInfo uriInfo
+  ) {
+    setLocales(getLocales(httpHeaders));
+    setConnection(getConnection(resourceContext));
+    setUriInfo(uriInfo);
+    this.uriInfo = uriInfo;
+  }
+
+  public InvocationContext(InvocationContext toClone) {
+    this.connection = toClone.connection;
+    this.locales = toClone.locales;
+    this.pageRepo = toClone.pageRepo;
+    this.provider = toClone.provider;
+    this.localizer = toClone.localizer;
+    this.beanTreePath = toClone.beanTreePath;
+    this.properties = toClone.properties;
+    this.reload = toClone.reload;
+    this.uriInfo = toClone.uriInfo;
+    this.pagePath = toClone.pagePath;
+  }
+
   public PageRepo getPageRepo() {
-    return this.pageRepo;
+    return pageRepo;
   }
 
   public void setPageRepo(PageRepo pageRepo) {
     this.pageRepo = pageRepo;
-    this.localizer = new Localizer(pageRepo.getPageRepoDef().getResourceBundleName(), this.locales);
+    localizer = new Localizer(pageRepo.getPageRepoDef().getResourceBundleName(), locales);
   }
 
   public boolean setPageRepoByName(String rootName) {
@@ -72,43 +127,25 @@ public class InvocationContext {
     this.provider = provider;
   }
 
-  // localizes strings based on the page repo def's resource bundle
-  // and the client's preferred language.
-  // null if not connected to a domain.
-  private Localizer localizer;
-
   public Localizer getLocalizer() {
-    return this.localizer;
+    return localizer;
   }
 
-  // identifies a bean or a collection of beans
-  // used by per-perspective pages that manage beans (e.g. api/configuration/Domain/...)
-  // null if not connected to a domain or not a resource that manages beans
-  private BeanTreePath beanTreePath;
-
   public BeanTreePath getBeanTreePath() {
-    return this.beanTreePath;
+    return beanTreePath;
   }
 
   public void setIdentity(BeanTreePath beanTreePath) {
     this.beanTreePath = beanTreePath;
   }
 
-  private PagePath pagePath;
-
   public PagePath getPagePath() {
-    return this.pagePath;
+    return pagePath;
   }
 
   public void setPagePath(PagePath pagePath) {
     this.pagePath = pagePath;
   }
-
-  // Lists the form/table properties that a GET operation should return.
-  // If null, all of the form/table properties are returned.
-  // If not, only properties that are on the form/table AND in
-  // this list are returned.
-  private HashSet<String> properties;
 
   public boolean filtersProperties() {
     return this.properties != null;
@@ -132,21 +169,16 @@ public class InvocationContext {
     }
   }
 
+  public boolean isReload() {
+    return reload;
+  }
+
+  public void setReload(boolean reload) {
+    this.reload = reload;
+  }
+
   public void setConnection(Connection connection) {
     this.connection = connection;
-  }
-
-  public InvocationContext() {
-    // Use the default language until we find out what the client wants.
-    setLocales(new ArrayList<Locale>());
-  }
-
-  public InvocationContext(
-    ResourceContext resourceContext,
-    HttpHeaders httpHeaders
-  ) {
-    setLocales(getLocales(httpHeaders));
-    setConnection(getConnection(resourceContext));
   }
 
   public void setLocales(List<Locale> locales) {
@@ -160,6 +192,14 @@ public class InvocationContext {
         ),
         this.locales
     );
+  }
+
+  public void setUriInfo(UriInfo uriInfo) {
+    this.uriInfo = uriInfo;
+  }
+
+  public UriInfo getUriInfo() {
+    return uriInfo;
   }
 
   private String getDomainVersion() {

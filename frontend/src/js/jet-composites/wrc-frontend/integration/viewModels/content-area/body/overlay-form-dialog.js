@@ -85,10 +85,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       this.helpFooterDom = ko.observable({});
       this.tableHelpColumns = ko.observableArray([]);
 
+      this.valueSubscriptions = [];
       this.subscriptions = [];
 
       this.connected = function () {
-        document.title = viewParams.parentRouter.data.pageTitle();
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+          document.title = viewParams.parentRouter.data.pageTitle();
+        }
 
         renderToolbarButtons();
 
@@ -109,6 +112,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           subscription.dispose();
         });
         self.subscriptions = [];
+
+        self.valueSubscriptions.forEach(function (item) {
+          item.subscription.dispose();
+        });
+        self.valueSubscriptions = [];
       };
 
       this.finishAction = function (event) {
@@ -163,10 +171,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             self[FIELD_VALUES + replacer] = ko.observable();
             self.dirtyFields.add(fieldName);
           }
-          const subscription = createFieldValueSubscription(fieldName, replacer);
-          if (subscription._target() === '') {
-            self.subscriptions.push(subscription);
-          }
+          createFieldValueSubscription(self.valueSubscriptions, fieldName, replacer);
           self[FIELD_VALUES + replacer](values);
         }
         const availableItems = self.multiSelectControls[fieldName].availableItems.concat(self.multiSelectControls[fieldName].chosenItems);
@@ -257,7 +262,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           return dataPayload;
         }
 
-        const results = getCreateFormPayload(self.pdjData.createForm.properties);
+        // Obtain the payload and flag that scrubData is needed for posting to the backend
+        const results = getCreateFormPayload(self.pdjData.createForm.properties, true);
         return results.data;
       };
 
@@ -423,6 +429,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
         viewParams.onSaveSuceeded(eventType);
         viewParams.onFormRefresh();
+        viewParams.onSaveContent();
         const overlayFormDialog = document.getElementById('overlayFormDialog');
         if (overlayFormDialog !== 'null') overlayFormDialog.close();
       }
@@ -450,7 +457,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         self.rdjData = viewParams.parentRouter.data.rdjData();
 
         const toggleHelpIntroduction = self.i18n.introduction.toggleHelp.text.replace('{0}','<img src=\'js/jet-composites/wrc-frontend/1.0.0/images/' + self.i18n.introduction.toggleHelp.iconFile + '\'>');
-        const bindHtml = (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML) ? pdjData.introductionHTML : '<p>');
+        const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
         self.introductionHTML({ view: HtmlUtils.stringToNodeArray(bindHtml) });
 
         pdjData = viewParams.parentRouter.data.pdjData();
@@ -463,15 +470,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         }
       }
 
+      function getIntroductionHtml(pdjIntro, rdjIntro) {
+        const bindHtml = (CoreUtils.isNotUndefinedNorNull(rdjIntro) ? rdjIntro : pdjIntro);
+        return (CoreUtils.isNotUndefinedNorNull(bindHtml) ? bindHtml : '<p>');
+      }
+
       function rerenderWizardForm(pdjData, rdjData, direction, removed) {
         if (typeof removed !== 'undefined') {
           removed.forEach((item) => {
-            // Some subscription._target() values will be an empty
-            // string, so we need to look for those first.
-            processRemovedField(item.name,'');
-            // Look for subscription._target() values that match
-            // item.name.
-            processRemovedField(item.name, item.value);
+            // Remove the subscription that matches item.name.
+            processRemovedField(item.name);
           });
         }
 
@@ -556,20 +564,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
         document.documentElement.style.setProperty('--form-input-min-width', '25em');
         let properties = self.createForm.getRenderProperties();
-        const results = getCreateFormPayload(properties);
-
-        self.formToolbarModuleConfig
-          .then((moduleConfig) => {
-            moduleConfig.viewModel.resetButtonsDisabledState([
-              {id: 'finish', disabled: !self.createForm.getCanFinish()}
-            ]);
-          });
+        // Obtain the payload and flag that scrubData is not needed for rendering
+        const results = getCreateFormPayload(properties, false);
 
         properties = results.properties;
         const dataPayload = results.data;
 
         for (const [key, value] of Object.entries(dataPayload)) {
-          if (key !== 'wizard' && typeof value !== 'undefined' && typeof value.value !== 'undefined' ) {
+          if (CoreUtils.isNotUndefinedNorNull(value) && typeof value.value !== 'undefined') {
             if (typeof rdjData.data[key] === 'undefined') {
               rdjData.data[key] = {value: undefined};
             }
@@ -640,33 +642,36 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         return div;
       }
 
-      function createFieldValueSubscription(name, replacer){
-        return self[`${FIELD_VALUES}${replacer}`].subscribe((newValue) => {
+      function createFieldValueSubscription(valueSubscriptions, name, replacer){
+        // Check if the subscription already exists and simply return
+        const subscribed = valueSubscriptions.find(sub => sub.name === name);
+        if (CoreUtils.isNotUndefinedNorNull(subscribed)) return;
+
+        // Define the callback function used when the field is updated
+        const updatedFieldValueCallback = (newValue) => {
           self.dirtyFields.add(name);
           if (self.isWizardForm()) {
             self.createForm.backingDataAttributeValueChanged(name, newValue);
           }
           else {
-/*
-            if (CoreUtils.isUndefinedOrNull(self.optionsSources)) {
-              self.optionsSources = new PageDefinitionOptionsSources();
-            }
-            self.optionsSources.propertyValueChanged(name, newValue);/
-*/
             resetSaveButtonDisabledState({disabled: !self.isDirty()});
             if (!self[`${FIELD_UNSET}${name}`]()) {
               PageDefinitionUnset.addPropertyHighlight(name);
             }
           }
-        });
+        };
+
+        // Subscribe to the field then store the subscription with the field name
+        const subscription = self[`${FIELD_VALUES}${replacer}`].subscribe(updatedFieldValueCallback);
+        valueSubscriptions.push({ name: name, subscription: subscription });
       }
 
-      function processRemovedField(name, value){
-        if (CoreUtils.isUndefinedOrNull(value)) value = '';
-        let index = self.subscriptions.map(subscription => subscription._target()).indexOf(value);
+      function processRemovedField(name){
+        // Remove the subscription that exists for the removed field
+        let index = self.valueSubscriptions.findIndex(sub => sub.name === name);
         if (index !== -1) {
-          self.subscriptions[index].dispose();
-          self.subscriptions.splice(index, 1);
+          self.valueSubscriptions[index].subscription.dispose();
+          self.valueSubscriptions.splice(index, 1);
           self.dirtyFields.delete(name);
         }
         let replacer = self.createForm.getBackingDataAttributeReplacer(name);
@@ -680,7 +685,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         }
 
         index = self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).map(nthChild1 => nthChild1.name).indexOf(replacer);
-        if (index === -1) self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).splice(index, 1);
+        if (index !== -1) self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).splice(index, 1);
 
         if (CoreUtils.isNotUndefinedNorNull(self.multiSelectControls[replacer])) {
           delete self.multiSelectControls[replacer];
@@ -756,7 +761,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             self.singlePropertyTableColumns = singlePropertyTable.columns;
             field = singlePropertyTable.field;
           } else if (pdjTypes.isBooleanType(name) && (!pdjTypes.isReadOnly(name)) && (!isReadOnly)) {
-            field = PageDefinitionFields.createSwitch('cfe-form-switch');
+            field = PageDefinitionFields.createSwitch({'className': 'cfe-form-switch', 'disabled': false});
           }
           else if (pdjTypes.isDynamicEnumType(name) || pdjTypes.hasLegalValues(name)) {
             if (pdjTypes.isArray(name)) {
@@ -875,10 +880,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
               self[observableName] = ko.observable(observableValue);
             }
 
-            const subscription = createFieldValueSubscription(name, replacer);
-            if (subscription._target() === '') {
-              self.subscriptions.push(subscription);
-            }
+            createFieldValueSubscription(self.valueSubscriptions, name, replacer);
 
             if (self.isWizardForm()) {
               if (self[FIELD_VALUES + replacer]() === '') {
@@ -994,7 +996,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         }
       }
 
-      function getCreateFormPayload(properties) {
+      function getCreateFormPayload(properties, scrubData) {
         if (self.isWizardForm()) properties = self.createForm.getRenderProperties();
 
         // Set things up to return a null if there are no properties
@@ -1020,10 +1022,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             results.data = undefined;
           }
           else if (self.createForm.hasDeploymentPathData()) {
-            results = self.createForm.getDeploymentDataPayload(properties, fieldValues);
+            results = self.createForm.getDeploymentDataPayload(properties, fieldValues, scrubData);
           }
           else {
-            results = self.createForm.getDataPayload(properties, fieldValues);
+            results = self.createForm.getDataPayload(properties, fieldValues, undefined, scrubData);
           }
         }
 

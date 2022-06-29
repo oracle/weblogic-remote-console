@@ -1,0 +1,32 @@
+/*! Copyright (c) 2020, 2022, Oracle and/or its affiliates. All rights reserved. */
+
+wdt-model-designer:not(.oj-complete){
+	visibility: hidden;
+}
+
+wdt-model-designer {
+	overflow: hidden;
+}
+
+#wdt-model-designer-container {
+	/* width: 100%; */
+	min-width: 2.5rem;		/* 40px; */
+	border-top: 1px solid var(--oj-collection-border-color);
+	box-sizing: border-box;
+	display: none;
+}
+
+.wdt-model-designer-popup {
+	width: 38rem;
+	height: 9rem;
+	display: none;
+}
+
+.oj-message-detail-ul {
+	margin: .35rem 0 0 0;
+	padding: 0 1.75rem;
+}
+
+oj-popup[id="wdt-model-designer-popup"] .oj-message-body {
+	margin-left: 22px;
+}

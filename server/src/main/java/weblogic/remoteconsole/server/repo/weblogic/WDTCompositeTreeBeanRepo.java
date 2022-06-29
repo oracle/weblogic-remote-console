@@ -51,7 +51,7 @@ public class WDTCompositeTreeBeanRepo extends WDTCompositeBeanRepo implements Be
         } else {
           builder = new BeanTreeBuilder(beanTree, model, ic.getLocalizer());
         }
-        builder.addModelSection("topology").addModelSection("resources").addModelSection("appDeployments");
+        builder.addModelSections();
 
         // Build the bean tree and apply the WDT delete operator if used from within the
         // model fragment, any exception during the build results in a failed request!
@@ -126,10 +126,10 @@ public class WDTCompositeTreeBeanRepo extends WDTCompositeBeanRepo implements Be
    * Handle read for the BeanReaderRepo by returning a BeanReaderRepoSearchBuilder backed by the composite bean tree
    */
   @Override  
-  public BeanReaderRepoSearchBuilder createSearchBuilder(InvocationContext invocationContext, boolean includeIsSet) {
+  public BeanReaderRepoSearchBuilder createSearchBuilder(InvocationContext ic, boolean includeIsSet) {
     LOGGER.fine("WDT: WDTCompositeTreeBeanRepo createSearchBuilder() "
-                 + invocationContext.getBeanTreePath()
+                 + ic.getBeanTreePath()
                  + " - includeSet: " + includeIsSet);
-    return new WDTBeanRepoSearchBuilder(beanTree, includeIsSet);
+    return new WDTBeanRepoSearchBuilder(beanTree, includeIsSet, ic.getLocalizer());
   }
 }

@@ -22,7 +22,6 @@ import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.SlicesDef;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
-import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
@@ -269,12 +268,8 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
   }
 
   private LinksDefImpl createLinksDefImpl(BeanTypeDef typeDef) {
-    LinksDefSource source = getYamlReader().getLinksDefSource(typeDef);
-    if (source == null) {
-      return null;
-    } else {
-      return new LinksDefImpl(this, source, getTypeDefImpl(typeDef));
-    }
+    LinksDefImpl rtn = new LinksDefImpl(this, getYamlReader().getLinksDefSource(typeDef), getTypeDefImpl(typeDef));
+    return (rtn.getInstanceLinkDefs().isEmpty() && rtn.getCollectionLinkDefs().isEmpty()) ? null : rtn;
   }
 
   SlicesDefImpl getSlicesDefImpl(BeanTypeDef typeDef) {

@@ -1,0 +1,16 @@
+# Copyright (c) 2021, 2022 Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure this server instance as a Coherence cluster member by
+  selecting the Coherence cluster that it belongs to.
+  You can also configure Coherence cluster member properties as required.</p>
+
+properties:
+  - name: "CoherenceClusterSystemResource"
+  - name: "CoherenceMemberConfig.UnicastListenAddress"
+  - name: "CoherenceMemberConfig.UnicastListenPort"
+  - name: "CoherenceMemberConfig.UnicastPortAutoAdjustAttempts"
+  - name: "CoherenceMemberConfig.RackName"
+  - name: "CoherenceMemberConfig.RoleName"
+  - name: "CoherenceMemberConfig.SiteName"

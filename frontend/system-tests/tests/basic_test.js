@@ -44,7 +44,6 @@ describe.only('Test Suite: basic_test: Add WLS Domain Connection/WDT Model file 
             await admin.goToHomePageUrl(driver,"","Cancel");
             await driver.sleep(4800);
             console.log("Click Configuration View Tree Image");
-            //await driver.findElement(By.xpath("//img[@alt=\'Configuration View Tree\']")).click();
             await driver.findElement(By.xpath("//*[@id=\'view\']/img")).click();
             console.log("Click Navtree Environment");
             await driver.sleep(2400);

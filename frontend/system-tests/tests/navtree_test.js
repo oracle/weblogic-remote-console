@@ -16,7 +16,7 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
     let file = "snapStripTree.png";
     let element;
     var sec = 1000;
-    this.timeout(6000 * sec);
+    this.timeout(7000 * sec);
 
     beforeEach(async function () {
         // Get Browser driver
@@ -314,7 +314,7 @@ describe.only('Test Suite: navtree_test for Navtree Test-Suite', function () {
             //await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","XML Registries","TestXMLReg-1");
             //await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","XML Entity Caches","TestXMLEntity-1");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","Mail Sessions","TestMyMailSession-1");
-            await admin.goToNavTreeLevelTwoLink(driver,"configuration","Services","Osgi Frameworks");
+            //await admin.goToNavTreeLevelTwoLink(driver,"configuration","Services","Osgi Frameworks");
 
             //Delete AdminJMSServer-2,MySAFAgent-1,MyAdminJmsModule-1,PathService-1,MyMessagingBridge-1,TestFileStore-123,
             await admin.deleteMBeanObject(driver,"TestAdminJMSServer-1","JMSServers",2,"configuration",

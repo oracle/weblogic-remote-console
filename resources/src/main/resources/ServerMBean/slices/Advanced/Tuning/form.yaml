@@ -1,0 +1,43 @@
+# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to tune the performance and functionality of this
+  server.</p>
+
+properties:
+- name: "NativeIOEnabled"
+- name: "ThreadPoolPercentSocketReaders"
+- name: "GatheredWritesEnabled"
+- name: "ScatteredReadsEnabled"
+- name: "MaxOpenSockCount"
+# deprecated - name: "StuckThreadMaxTime"
+- name: "StuckThreadTimerInterval"
+- name: "AcceptBacklog"
+- name: "LoginTimeoutMillis"
+- name: "ReverseDNSAllowed"
+advancedProperties:
+# excluded - name: "SelfTuningThreadPoolSizeMin"
+# excluded - name: "SelfTuningThreadPoolSizeMax"
+- name: "ManagedServerIndependenceEnabled"
+- name: "PeriodLength"
+- name: "IdlePeriodsUntilTimeout"
+- name: "DGCIdlePeriodsUntilTimeout"
+- name: "MuxerClass"
+- name: "UseConcurrentQueueForRequestManager"
+helpTopics:
+- label: "Starting and Stopping Servers "
+  href: "start/overview.html"
+  type: "edocs"
+- label: "Starting and Stopping Servers"
+  href: "start/overview.html"
+  type: "edocs"
+- label: "Understanding Server Life Cycle"
+  href: "start/server_life.html"
+  type: "edocs"
+- label: "Administering Clusters for Oracle WebLogic Server"
+  href: "clust/index.html"
+  type: "edocs"
+- label: "Understanding Domain Configuration for Oracle WebLogic Server"
+  href: "domcf/index.html"
+  type: "edocs"

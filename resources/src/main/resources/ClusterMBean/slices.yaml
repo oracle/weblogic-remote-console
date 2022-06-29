@@ -1,5 +1,7 @@
-# Copyright (c) 2021, Oracle and/or its affiliates.
+# Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+alternateSliceSources:
+- ReferenceableBean/slices
 slices:
 - name: General
 - name: Health
@@ -13,3 +15,4 @@ slices:
 - name: Servers
 - name: Messaging
 - name: Coherence
+- name: ReferencedBy

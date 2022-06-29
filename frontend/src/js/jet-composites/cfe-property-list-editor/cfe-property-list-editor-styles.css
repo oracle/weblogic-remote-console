@@ -62,3 +62,9 @@ cfe-property-list-editor{
 .oj-button {
 	margin-left: 0.25em;
 }
+
+#properties-table-container {
+	overflow: auto;
+	resize: both;
+	width: 40.625rem;
+}

@@ -17,3 +17,7 @@ properties:
   name: ServerRuntime
   relationship: containment
   type: weblogic.management.runtime.DelegatedServerRuntimeServerRuntimeMBean
+
+roles:
+  allowed:
+  - Operator

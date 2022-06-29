@@ -1,83 +1,107 @@
 define({
   "wrc-header": {
     "text": {
-      "appName": "WebLogic \\u9060\\u7AEF\\u4E3B\\u63A7\\u53F0"
+      "appName": "WebLogic 遠端主控台"
     },
     "icons": {
       "connectivity": {
         "online": {
-          "tooltip": "\\u7DDA\\u4E0A"
+          "tooltip": "線上"
         },
         "offline": {
-          "tooltip": "\\u96E2\\u7DDA"
+          "tooltip": "離線"
         },
         "detached": {
-          "tooltip": "\\u5DF2\\u53D6\\u6D88\\u9023\\u9644"
+          "tooltip": "已取消連附"
+        },
+        "unattached": {
+          "tooltip": "已取消附加"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "\\u8457\\u4F5C\\u6B0A\\u6240\\u6709 \\u00C2\\u00A9 2020\\uFF0C2021\\uFF0COracle \\u548C (\\u6216) \\u5176\\u95DC\\u4FC2\\u4F01\\u696D\\u3002<br/>Oracle \\u662F Oracle Corporation \\u548C (\\u6216) \\u5176\\u95DC\\u4FC2\\u4F01\\u696D\\u7684\\u8A3B\\u518A\\u5546\\u6A19\\u3002\\u5176\\u4ED6\\u540D\\u7A31\\u70BA\\u5404\\u5546\\u6A19\\u6301\\u6709\\u4EBA\\u6240\\u64C1\\u6709\\u4E4B\\u5546\\u6A19\\u3002<br>",
-      "builtWith": "\\u4F7F\\u7528 Oracle JET \\u5EFA\\u7F6E"
+      "copyrightLegal": "著作權所有 Â© 2020，2022，Oracle 和 (或) 其關係企業。<br/>Oracle 是 Oracle Corporation 和 (或) 其關係企業的註冊商標。其他名稱為各商標持有人所擁有之商標。<br/>",
+      "builtWith": "使用 Oracle JET 建置"
     }
   },
   "wrc-data-providers": {
     "icons": {
       "info": {
-        "tooltip": "Get Info"
+        "tooltip": "取得資訊"
       },
       "edit": {
-        "tooltip": "Manage"
+        "tooltip": "管理"
       },
       "delete": {
-        "tooltip": "\\u79FB\\u9664"
+        "tooltip": "移除"
       }
     },
     "labels": {
       "connections": {
         "header": {
-          "value": "Unnamed Project"
+          "value": "未命名的專案"
         },
         "name": {
-          "value": "Connection Provider Name"
+          "value": "連線提供者名稱"
         },
         "url": {
           "value": "URL"
         },
         "username": {
-          "value": "\\u4F7F\\u7528\\u8005\\u540D\\u7A31"
+          "value": "使用者名稱"
         },
         "password": {
-          "value": "\\u5BC6\\u78BC"
+          "value": "密碼"
         }
       },
       "models": {
         "name": {
-          "value": "WDT Model Provider Name"
+          "value": "WDT 模型提供者名稱"
         },
         "file": {
-          "value": "WDT Model Filename"
+          "value": "WDT 模型檔案名稱"
+        },
+        "props": {
+          "value": "WDT 變數"
+        }
+      },
+      "composite": {
+        "name": {
+          "value": "WDT 複合模型提供者名稱"
+        },
+        "providers": {
+          "value": "WDT 模型"
+        }
+      },
+      "proplist": {
+        "name": {
+          "value": "特性清單提供者名稱"
+        },
+        "file": {
+          "value": "特性清單檔案名稱"
         }
       },
       "project": {
         "name": {
-          "value": "\\u5C08\\u6848\\u540D\\u7A31"
+          "value": "專案名稱"
         },
         "file": {
-          "value": "Project Filename"
-        },
-        "isDefault": {
-          "value": "\\u8A2D\\u70BA\\u9810\\u8A2D\\u503C"
+          "value": "專案檔案名稱"
         }
       },
       "provider": {
         "adminserver": {
-          "value": "Admin Server Connection"
+          "value": "管理伺服器連線"
         },
         "model": {
-          "value": "Add WDT Model"
+          "value": "新增 WDT 模型"
+        }
+      },
+      "dropdown": {
+        "none": {
+          "value": "無"
         }
       }
     },
@@ -85,38 +109,54 @@ define({
       "info": {
         "provider": {
           "id": {
-            "label": "Provider Id:"
+            "label": "提供者 ID："
           }
         },
         "domain": {
           "name": {
-            "label": "\\u7DB2\\u57DF\\u540D\\u7A31:"
+            "label": "網域名稱:"
           },
           "url": {
-            "label": "\\u7DB2\\u57DF URL\\uFF1A"
+            "label": "網域 URL："
           },
           "version": {
-            "label": "\\u7DB2\\u57DF\\u7248\\u672C\\uFF1A"
+            "label": "網域版本："
           },
           "username": {
-            "label": "Username:"
+            "label": "使用者名稱："
+          },
+          "roles": {
+            "label": "角色："
           },
           "connectTimeout": {
-            "label": "\\u9023\\u7DDA\\u903E\\u6642\\uFF1A"
+            "label": "連線逾時："
           },
           "readTimeout": {
-            "label": "\\u8B80\\u53D6\\u903E\\u6642\\uFF1A"
+            "label": "讀取逾時："
           },
           "anyAttempt": {
-            "label": "Any Connections Attempted:"
+            "label": "嘗試的任何連線："
           },
           "lastAttempt": {
-            "label": "Last Attempt Successful:"
+            "label": "上次成功的嘗試："
           }
         },
         "model": {
           "file": {
-            "label": "File:"
+            "label": "檔案："
+          },
+          "props": {
+            "label": "變數："
+          }
+        },
+        "composite": {
+          "models": {
+            "label": "模型："
+          }
+        },
+        "proplist": {
+          "file": {
+            "label": "檔案名稱："
           }
         }
       }
@@ -124,20 +164,33 @@ define({
     "menus": {
       "connections": {
         "add": {
-          "value": "Create Provider for Admin Server Connection..."
+          "value": "新增管理伺服器連線提供者"
         }
       },
       "models": {
         "add": {
-          "value": "Create Provider for Existing WDT Model File..."
+          "value": "新增 WDT 模型檔案提供者"
         },
         "new": {
-          "value": "Create Provider for New WDT Model File..."
+          "value": "建立新 WDT 模型檔案的提供者"
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "新增 WDT 複合模型檔案提供者"
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "新增特性清單提供者"
+        },
+        "new": {
+          "value": "建立新特性清單的提供者"
         }
       },
       "providers": {
         "sort": {
-          "value": "Sort by Provider Type"
+          "value": "依提供者類型排序"
         }
       },
       "context": {
@@ -145,175 +198,256 @@ define({
           "connection": {
             "domain": {
               "url": {
-                "label": "\\u7DB2\\u57DF URL\\uFF1A"
+                "label": "網域 URL："
               },
               "version": {
-                "label": "\\u7DB2\\u57DF\\u7248\\u672C\\uFF1A"
+                "label": "網域版本："
               },
               "username": {
-                "label": "Username:"
+                "label": "使用者名稱："
               }
             }
           },
           "model": {
             "file": {
-              "label": "File:"
+              "label": "檔案："
             }
           }
         }
       },
       "project": {
         "export": {
-          "value": "Export Providers as Project..."
+          "value": "將提供者匯出成為專案..."
         },
         "import": {
-          "value": "\\u532F\\u5165\\u5C08\\u6848"
+          "value": "匯入專案"
         }
       }
     },
     "instructions": {
       "connections": {
         "add": {
-          "value": "Enter new name and connectivity settings for connection provider."
+          "value": "輸入連線提供者的新名稱和連線設定值。"
         },
         "edit": {
-          "value": "Modify connectivity settings for connection provider."
+          "value": "修改連線提供者的連線設定值。"
         }
       },
       "models": {
         "add": {
-          "value": "Enter settings for existing model file provider. Click upload icon to browse for model file."
+          "value": "輸入現有模型檔案提供者的設定值。按一下上傳圖示即可瀏覽模型檔案。"
         },
         "new": {
-          "value": "Enter provider name and filename for new WDT model file, then click icon to pick directory to save file in."
+          "value": "輸入新 WDT 模型檔案的提供者名稱和檔案名稱，然後按一下圖示以選擇用於儲存檔案的目錄。"
         },
         "edit": {
-          "value": "Modify settings for model file provider. Click icon to browse for model file."
+          "value": "修改模型檔案提供者的設定值。按一下圖示即可瀏覽模型檔案。"
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "輸入複合模型提供者的新名稱並選取已排序的模型清單。"
+        },
+        "edit": {
+          "value": "修改複合模型提供者的設定值。使用已排序的模型清單。"
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "輸入現有特性清單提供者的設定值。按一下上傳圖示即可瀏覽特性檔案。"
+        },
+        "new": {
+          "value": "輸入新特性清單的提供者名稱和檔案名稱，然後按一下圖示以選擇用於儲存檔案的目錄。"
+        },
+        "edit": {
+          "value": "修改特性清單提供者的設定值。按一下圖示即可瀏覽特性檔案。"
         }
       },
       "project": {
         "export": {
-          "value": "Enter settings for new project."
+          "value": "輸入新專案的設定值。"
         },
         "import": {
-          "value": "Click download icon to browse for project."
+          "value": "按一下下載圖示以瀏覽專案。"
         }
       },
       "task": {
         "startup": {
-          "value": "Which startup task are you interested in performing?"
+          "value": "您想要執行哪個啟動作業？"
         }
       }
     },
     "titles": {
       "add": {
         "connections": {
-          "value": "Create Provider for Admin Server Connection"
+          "value": "建立管理伺服器連線的提供者"
         },
         "models": {
-          "value": "Create Provider for Existing WDT Model File"
+          "value": "建立現有 WDT 模型檔案的提供者"
+        },
+        "composite": {
+          "value": "建立新 WDT 複合模型的提供者"
+        },
+        "proplist": {
+          "value": "建立現有特性清單的提供者"
         }
       },
       "new": {
         "models": {
-          "value": "Create Provider for New WDT Model File"
+          "value": "建立新 WDT 模型檔案的提供者"
+        },
+        "proplist": {
+          "value": "建立新特性清單的提供者"
         }
       },
       "edit": {
         "connections": {
-          "value": "Edit Admin Server Connection Provider"
+          "value": "編輯管理伺服器連線提供者"
         },
         "models": {
-          "value": "Edit WDT Model File Provider"
+          "value": "編輯 WDT 模型檔案提供者"
+        },
+        "composite": {
+          "value": "編輯 WDT 複合模型提供者"
+        },
+        "proplist": {
+          "value": "編輯特性清單提供者"
         }
       },
       "export": {
         "project": {
-          "value": "Export Providers as Project"
+          "value": "將提供者匯出成為專案"
         }
       },
       "import": {
         "project": {
-          "value": "\\u532F\\u5165\\u5C08\\u6848"
+          "value": "匯入專案"
         }
       },
       "startup": {
         "task": {
-          "value": "Startup Task"
+          "value": "啟動作業"
         }
       }
     },
     "messages": {
       "export": {
         "failed": {
-          "summary": "Export Unsuccessful",
-          "detail": "Unable to export providers as ''{0}'' project."
+          "summary": "匯出失敗",
+          "detail": "無法將提供者匯出成為 ''{0}'' 專案。"
         }
       },
       "import": {
         "failed": {
-          "summary": "Save Unsuccessful",
-          "detail": "Unable to import ''{0}'' project file."
+          "summary": "儲存失敗",
+          "detail": "無法匯入 ''{0}'' 專案檔案。"
         }
       },
       "stage": {
         "failed": {
-          "summary": "Create Unsuccessful",
-          "detail": "Unable to create ''{0}'' provider item."
+          "summary": "建立失敗",
+          "detail": "無法建立 ''{0}'' 提供者項目。"
         }
       },
       "use": {
         "failed": {
-          "summary": "Connection Unsuccessful",
-          "detail": "Unable to use ''{0}'' provider item."
+          "summary": "連線失敗",
+          "detail": "無法使用 ''{0}'' 提供者項目。"
+        }
+      },
+      "upload": {
+        "failed": {
+          "detail": "無法載入 WDT 模型檔案：{0}"
+        },
+        "props": {
+          "failed": {
+            "detail": "無法載入 WDT 變數：{0}"
+          }
         }
       },
       "response": {
         "nameAlreadyExist": {
-          "detail": "Provider named ''{0}'' is already in this project!"
+          "detail": "此專案中已經有名為 ''{0}'' 的專案！"
+        },
+        "modelsNotFound": {
+          "detail": "找不到已設定的 WDT 模型 ''{0}''"
+        },
+        "propListNotFound": {
+          "detail": "找不到 WDT 變數 ''{0}''"
+        },
+        "selectModels": {
+          "detail": "若要選取 WDT 複合項目，請先選取 WDT 複合項目使用的所有 WDT 模型。"
+        }
+      },
+      "correctiveAction": {
+        "filePathNotFound": {
+          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+        },
+        "fixModelFile": {
+          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+        },
+        "yamlException": {
+          "detail": "{0} at line {1}, column {2}"
+        },
+        "wktModelContent": {
+          "summary": "Model Content Problems",
+          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
         }
       }
     },
     "prompts": {
       "info": {
-        "fileNotSet": "\\u672A\\u8A2D\\u5B9A"
+        "fileNotSet": "未設定"
+      }
+    },
+    "checkboxes": {
+      "useSparseTemplate": {
+        "label": "使用稀疏樣板"
       }
     }
   },
   "wrc-navstrip": {
     "icons": {
       "configuration": {
-        "tooltip": "Edit Tree"
+        "tooltip": "編輯樹狀結構"
       },
       "view": {
-        "tooltip": "Configuration View Tree"
+        "tooltip": "組態檢視樹狀結構"
       },
       "monitoring": {
-        "tooltip": "Monitoring Tree"
+        "tooltip": "監督樹狀結構"
       },
       "modeling": {
-        "tooltip": "WDT Model"
+        "tooltip": "WDT 模型"
+      },
+      "composite": {
+        "tooltip": "WDT 複合模型"
+      },
+      "properties": {
+        "tooltip": "特性清單編輯器"
       }
     }
   },
   "wrc-content-area-header": {
     "title": {
-      "home": "\\u9996\\u9801",
-      "configuration": "Edit Tree",
-      "view": "Configuration View Tree",
-      "monitoring": "Monitoring Tree",
-      "modeling": "WDT Model"
+      "home": "首頁",
+      "configuration": "編輯樹狀結構",
+      "view": "組態檢視樹狀結構",
+      "monitoring": "監督樹狀結構",
+      "modeling": "WDT 模型",
+      "composite": "WDT 複合模型",
+      "properties": "特性清單"
     },
     "toolbar": {
       "buttons": {
         "home": {
-          "label": "\\u9996\\u9801"
+          "label": "首頁"
         },
         "preferences": {
-          "label": "\\u504F\\u597D\\u8A2D\\u5B9A"
+          "label": "偏好設定"
         },
         "search": {
-          "label": "\\u641C\\u5C0B"
+          "label": "搜尋"
         }
       }
     }
@@ -322,86 +456,64 @@ define({
     "tabstrip": {
       "tabs": {
         "shoppingcart": {
-          "label": "\\u8CFC\\u7269\\u8ECA"
+          "label": "購物車"
         },
         "ataglance": {
-          "label": "\\u5FEB\\u901F\\u700F\\u89BD"
+          "label": "快速瀏覽"
         },
         "projectmanagement": {
-          "label": "Provider Management"
+          "label": "提供者管理"
         }
       }
     },
     "icons": {
       "kiosk": {
-        "tooltip": "\\u8CC7\\u8A0A\\u5C0F\\u7AD9"
+        "tooltip": "資訊小站"
       }
     }
   },
   "wrc-perspective": {
     "icons": {
       "history": {
-        "tooltip": "\\u6B77\\u53F2\\u8A18\\u9304"
+        "tooltip": "歷史記錄"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "\\u6E05\\u9664\\u6B77\\u53F2\\u8A18\\u9304"
+          "value": "清除歷史記錄"
         }
-      }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "\\u6C92\\u6709\\u8CC7\\u6599"
       }
     }
   },
   "wrc-monitoring": {
     "icons": {
       "history": {
-        "tooltip": "\\u6B77\\u53F2\\u8A18\\u9304"
+        "tooltip": "歷史記錄"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "\\u6E05\\u9664\\u6B77\\u53F2\\u8A18\\u9304"
+          "value": "清除歷史記錄"
         }
-      }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "\\u6C92\\u6709\\u8CC7\\u6599"
       }
     }
   },
   "wrc-domain-connection": {
     "labels": {
       "runningAt": {
-        "value": "\\u57F7\\u884C\\u65BC {0}"
+        "value": "(執行於 {0})"
       }
     },
     "messages": {
       "lostConnection": {
-        "summary": "\\u9023\\u7DDA\\u4E2D\\u65B7",
-        "detail": "Connection to remote console backend was lost. Ensure that it is running or restart it and try the link again."
+        "summary": "連線中斷",
+        "detail": "與遠端主控台後端的連線中斷。請確定該後端正在執行中，或將其重新啟動並嘗試再次連線。"
       },
       "cannotConnect": {
-        "summary": "\\u9023\\u7DDA\\u5617\\u8A66\\u5931\\u6557",
-        "detail": "\\u7121\\u6CD5\\u9023\\u7DDA\\u81F3 WebLogic \\u7DB2\\u57DF {0}\\uFF0C\\u8ACB\\u78BA\\u8A8D WebLogic \\u5728\\u57F7\\u884C\\u4E2D\\u3002"
-      }
-    },
-    "dialog1": {
-      "title": "\\u9023\\u7DDA\\u81F3 WebLogic \\u7DB2\\u57DF",
-      "instructions": "\\u8F38\\u5165 WebLogic \\u7DB2\\u57DF\\u7684\\u7BA1\\u7406\\u54E1\\u4F7F\\u7528\\u8005\\u8B49\\u660E\\u8CC7\\u6599\\u548C URL\\uFF1A",
-      "labels": {
-        "url": "URL"
-      },
-      "buttons": {
-        "connect": {
-          "label": "\\u9023\\u7DDA"
-        }
+        "summary": "連線嘗試失敗",
+        "detail": "無法連線至 WebLogic 網域 {0}，請確認 WebLogic 在執行中。"
       }
     }
   },
@@ -409,7 +521,7 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "\\u914D\\u7F6E\\u5EAB"
+          "label": "配置庫"
         }
       }
     }
@@ -417,143 +529,170 @@ define({
   "wrc-gallery": {
     "cards": {
       "configuration": {
-        "label": "Edit Tree",
-        "description": "<p>\\u7DAD\\u8B77\\u76EE\\u524D\\u6240\\u4F7F\\u7528 WebLogic \\u7DB2\\u57DF\\u7684\\u7D44\\u614B\\u3002</p>"
+        "label": "編輯樹狀結構",
+        "description": "<p>維護目前所使用 WebLogic 網域的組態。</p>"
       },
       "view": {
-        "label": "Configuration View Tree",
-        "description": "<p>\\u6AA2\\u67E5\\u76EE\\u524D\\u6240\\u4F7F\\u7528 WebLogic \\u7DB2\\u57DF\\u7684\\u552F\\u8B80\\u7D44\\u614B\\u3002</p>"
+        "label": "組態檢視樹狀結構",
+        "description": "<p>檢查目前所使用 WebLogic 網域的唯讀組態。</p>"
       },
       "monitoring": {
-        "label": "Monitoring Tree",
-        "description": "<p>\\u6AA2\\u8996\\u76EE\\u524D\\u6240\\u4F7F\\u7528 WebLogic \\u7DB2\\u57DF\\u4E2D\\u6240\\u9078\\u8CC7\\u6E90\\u7684\\u57F7\\u884C\\u6642\\u671F MBean \\u8CC7\\u8A0A\\u3002</p>"
+        "label": "監督樹狀結構",
+        "description": "<p>檢視目前所使用 WebLogic 網域中所選資源的執行時期 MBean 資訊。</p>"
       },
       "modeling": {
-        "label": "WDT Model Tree",
-        "description": "<p>Maintain model files associated with the WebLogic Deploy Tooling tool.</p>"
+        "label": "WDT 模型樹狀結構",
+        "description": "<p>維護與「WebLogic 部署工具」關聯的模型檔案。</p>"
+      },
+      "composite": {
+        "label": "WDT 複合模型樹狀結構",
+        "description": "<p>檢視您目前正在使用的 WebLogic 部署工具模型檔案組合。</p>"
+      },
+      "properties": {
+        "label": "特性清單編輯器",
+        "description": "<p>可檢視或修改特性清單檔中的一組特性。</p>"
       }
     }
   },
   "wrc-shoppingcart": {
     "icons": {
       "discard": {
-        "tooltip": "\\u6368\\u68C4\\u8B8A\\u66F4"
+        "tooltip": "捨棄變更"
       },
       "commit": {
-        "tooltip": "\\u78BA\\u8A8D\\u8B8A\\u66F4"
+        "tooltip": "確認變更"
       }
     },
     "sections": {
       "changeManager": {
-        "label": "\\u8B8A\\u66F4\\u7BA1\\u7406\\u7A0B\\u5F0F"
+        "label": "變更管理程式"
       },
       "additions": {
-        "label": "\\u65B0\\u589E\\u9805\\u76EE"
+        "label": "新增項目"
       },
       "modifications": {
-        "label": "\\u4FEE\\u6539\\u9805\\u76EE"
+        "label": "修改項目"
       },
       "removals": {
-        "label": "\\u79FB\\u9664\\u9805\\u76EE"
+        "label": "移除項目"
       },
       "restart": {
-        "label": "\\u91CD\\u65B0\\u555F\\u52D5"
+        "label": "重新啟動"
       }
     }
   },
   "wrc-table-toolbar": {
     "buttons": {
       "new": {
-        "label": "\\u65B0\\u5EFA"
+        "label": "新建"
       },
       "clone": {
-        "label": "\\u8907\\u88FD"
+        "label": "複製"
       },
       "delete": {
-        "label": "\\u522A\\u9664"
+        "label": "刪除"
+      },
+      "customize": {
+        "label": "自訂"
       }
     },
     "icons": {
       "landing": {
-        "tooltip": "\\u767B\\u9678\\u9801\\u9762"
+        "tooltip": "登陸頁面"
       },
       "history": {
-        "tooltip": "\\u5207\\u63DB\\u6B77\\u53F2\\u8A18\\u9304\\u53EF\\u898B\\u6027"
+        "tooltip": "切換歷史記錄可見性"
       },
       "instructions": {
-        "tooltip": "\\u5207\\u63DB\\u6307\\u793A\\u53EF\\u898B\\u6027"
+        "tooltip": "切換指示可見性"
       },
       "help": {
-        "tooltip": "\\u5207\\u63DB\\u300C\\u8AAA\\u660E\\u300D\\u9801\\u9762\\u53EF\\u898B\\u6027"
+        "tooltip": "切換「說明」頁面可見性"
       },
       "sync": {
-        "tooltip": "\\u91CD\\u65B0\\u8F09\\u5165",
-        "tooltipOn": "\\u505C\\u6B62\\u81EA\\u52D5\\u91CD\\u65B0\\u8F09\\u5165"
+        "tooltip": "重新載入",
+        "tooltipOn": "停止自動重新載入"
       },
       "syncInterval": {
-        "tooltip": "\\u8A2D\\u5B9A\\u81EA\\u52D5\\u91CD\\u65B0\\u8F09\\u5165\\u9593\\u9694"
+        "tooltip": "設定自動重新載入間隔"
       },
       "shoppingcart": {
-        "tooltip": "\\u6309\\u4E00\\u4E0B\\u5373\\u53EF\\u6AA2\\u8996\\u8CFC\\u7269\\u8ECA\\u52D5\\u4F5C"
+        "tooltip": "按一下即可檢視購物車動作"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "\\u6AA2\\u8996\\u8B8A\\u66F4"
+          "label": "檢視變更"
         },
         "discard": {
-          "label": "\\u6368\\u68C4\\u8B8A\\u66F4"
+          "label": "捨棄變更"
         },
         "commit": {
-          "label": "\\u78BA\\u8A8D\\u8B8A\\u66F4"
+          "label": "確認變更"
         }
       }
     },
     "instructions": {
       "selectItems": {
-        "value": "\\u9078\\u53D6\\u8981\\u5C0D\\u5176\\u57F7\\u884C ''{0}'' \\u64CD\\u4F5C\\u7684\\u9805\\u76EE\\u3002"
+        "value": "選取要對其執行 ''{0}'' 操作的項目。"
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
-          "summary": "\\u8A0A\\u606F",
-          "detail": "\\u81EA\\u52D5\\u91CD\\u65B0\\u8F09\\u5165\\u57F7\\u884C\\u6642\\u7121\\u6CD5\\u57F7\\u884C ''{0}'' \\u52D5\\u4F5C\\uFF01\\u8ACB\\u5148\\u6309\\u4E00\\u4E0B ''{1}'' \\u5716\\u793A\\u5C07\\u5176\\u505C\\u6B62\\u3002"
+          "summary": "訊息",
+          "detail": "自動重新載入執行時無法執行 ''{0}'' 動作！請先按一下 ''{1}'' 圖示將其停止。"
         }
       }
     },
     "labels": {
       "start": {
-        "value": "\\u555F\\u52D5"
+        "value": "啟動"
       },
       "resume": {
-        "value": "\\u7E7C\\u7E8C"
+        "value": "繼續"
       },
       "suspend": {
-        "value": "\\u66AB\\u505C"
+        "value": "暫停"
       },
       "shutdown": {
-        "value": "\\u95DC\\u9589"
+        "value": "關閉"
       },
       "restartSSL": {
-        "value": "\\u91CD\\u65B0\\u555F\\u52D5 SSL"
+        "value": "重新啟動 SSL"
       },
       "stop": {
-        "value": "\\u505C\\u6B62"
+        "value": "停止"
       }
     }
   },
   "wrc-table": {
     "checkboxes": {
       "showHiddenColumns": {
-        "label": "\\u986F\\u793A\\u96B1\\u85CF\\u7684\\u8CC7\\u6599\\u6B04"
+        "label": "顯示隱藏的資料欄"
       }
     },
-    "actionsDialog": {
-      "buttons": {
-        "cancel": {
-          "label": "\\u53D6\\u6D88"
+    "labels": {
+      "totalRows": {
+        "value": "資料列總數: {0}"
+      }
+    }
+  },
+  "wrc-table-customizer": {
+    "labels": {
+      "available": {
+        "value": "可用的資料欄"
+      },
+      "selected": {
+        "value": "選取的資料欄"
+      }
+    },
+    "messages": {
+      "action": {
+        "needAtLeastOneColumn": {
+          "title": "資料欄不足",
+          "detail": "至少需要一個選取的資料欄."
         }
       }
     }
@@ -561,64 +700,64 @@ define({
   "wrc-form-toolbar": {
     "buttons": {
       "save": {
-        "label": "\\u5132\\u5B58"
+        "label": "儲存"
       },
       "new": {
-        "label": "\\u5EFA\\u7ACB"
+        "label": "建立"
       },
       "delete": {
-        "label": "\\u79FB\\u9664"
+        "label": "移除"
       },
       "back": {
-        "label": "\\u4E0A\\u4E00\\u9801"
+        "label": "上一頁"
       },
       "next": {
-        "label": "\\u4E0B\\u4E00\\u9801"
+        "label": "下一頁"
       },
       "finish": {
-        "label": "\\u5EFA\\u7ACB"
+        "label": "建立"
       }
     },
     "icons": {
       "save": {
-        "tooltip": "\\u5132\\u5B58"
+        "tooltip": "儲存"
       },
       "create": {
-        "tooltip": "\\u5EFA\\u7ACB"
+        "tooltip": "建立"
       },
       "landing": {
-        "tooltip": "\\u767B\\u9678\\u9801\\u9762"
+        "tooltip": "登陸頁面"
       },
       "history": {
-        "tooltip": "\\u5207\\u63DB\\u6B77\\u53F2\\u8A18\\u9304\\u53EF\\u898B\\u6027"
+        "tooltip": "切換歷史記錄可見性"
       },
       "instructions": {
-        "tooltip": "\\u5207\\u63DB\\u6307\\u793A\\u53EF\\u898B\\u6027"
+        "tooltip": "切換指示可見性"
       },
       "help": {
-        "tooltip": "\\u5207\\u63DB\\u300C\\u8AAA\\u660E\\u300D\\u9801\\u9762\\u53EF\\u898B\\u6027"
+        "tooltip": "切換「說明」頁面可見性"
       },
       "sync": {
-        "tooltip": "\\u91CD\\u65B0\\u8F09\\u5165",
-        "tooltipOn": "\\u505C\\u6B62\\u81EA\\u52D5\\u91CD\\u65B0\\u8F09\\u5165"
+        "tooltip": "重新載入",
+        "tooltipOn": "停止自動重新載入"
       },
       "syncInterval": {
-        "tooltip": "\\u8A2D\\u5B9A\\u81EA\\u52D5\\u91CD\\u65B0\\u8F09\\u5165\\u9593\\u9694"
+        "tooltip": "設定自動重新載入間隔"
       },
       "shoppingcart": {
-        "tooltip": "\\u6309\\u4E00\\u4E0B\\u5373\\u53EF\\u6AA2\\u8996\\u8CFC\\u7269\\u8ECA\\u52D5\\u4F5C"
+        "tooltip": "按一下即可檢視購物車動作"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "\\u6AA2\\u8996\\u8B8A\\u66F4"
+          "label": "檢視變更"
         },
         "discard": {
-          "label": "\\u6368\\u68C4\\u8B8A\\u66F4"
+          "label": "捨棄變更"
         },
         "commit": {
-          "label": "\\u78BA\\u8A8D\\u8B8A\\u66F4"
+          "label": "確認變更"
         }
       }
     }
@@ -626,34 +765,34 @@ define({
   "wrc-form": {
     "checkboxes": {
       "showAdvancedFields": {
-        "label": "\\u986F\\u793A\\u9032\\u968E\\u6B04\\u4F4D"
+        "label": "顯示進階欄位"
       }
     },
     "introduction": {
       "toggleHelp": {
-        "text": "\\u6309\\u4E00\\u4E0B {0} \\u5716\\u793A\\u5373\\u53EF\\u5728\\u6458\\u8981\\u8207\\u8A73\\u7D30\\u8AAA\\u660E\\u4E4B\\u9593\\u505A\\u5207\\u63DB\\u3002"
+        "text": "按一下 {0} 圖示即可在摘要與詳細說明之間做切換。"
       }
     },
     "messages": {
-      "save": "\\u5DF2\\u65B0\\u589E\\u8CFC\\u7269\\u8ECA\\u8B8A\\u66F4"
+      "save": "已新增購物車變更"
     },
     "icons": {
       "restart": {
-        "tooltip": "\\u9700\\u8981\\u91CD\\u65B0\\u555F\\u52D5\\u4F3A\\u670D\\u5668\\u6216\\u61C9\\u7528\\u7A0B\\u5F0F"
+        "tooltip": "需要重新啟動伺服器或應用程式"
       },
       "wdtIcon": {
-        "tooltip": "WDT Settings"
+        "tooltip": "WDT 設定值"
       }
     }
   },
   "wrc-help-form": {
     "tables": {
       "help": {
-        "label": "\\u8AAA\\u660E\\u8868\\u683C",
+        "label": "說明表格",
         "columns": {
           "header": {
-            "name": "\\u540D\\u7A31",
-            "description": "\\u63CF\\u8FF0"
+            "name": "名稱",
+            "description": "描述"
           }
         }
       }
@@ -662,128 +801,183 @@ define({
   "wrc-create-form": {
     "pageState": {
       "error": {
-        "summary": "\\u5FC5\\u8981\\u6B04\\u4F4D\\u672A\\u5B8C\\u6210",
-        "detail": "\\u5C1A\\u672A\\u63D0\\u4F9B\\u5FC5\\u8981\\u6B04\\u4F4D {0} \\u7684\\u503C\\u3002"
+        "summary": "必要欄位未完成",
+        "detail": "{0} field is required, but no (or an invalid) value has been provided."
       }
     }
   },
   "wrc-common": {
     "buttons": {
+      "apply": {
+        "label": "套用"
+      },
+      "reset": {
+        "label": "重設"
+      },
       "ok": {
-        "label": "OK"
+        "label": "確定"
       },
       "cancel": {
-        "label": "\\u53D6\\u6D88"
+        "label": "取消"
       },
       "yes": {
-        "label": "\\u662F"
+        "label": "是"
       },
       "no": {
-        "label": "\\u5426"
+        "label": "否"
       },
       "choose": {
-        "label": "Choose"
+        "label": "選擇"
       },
       "connect": {
-        "label": "\\u9023\\u7DDA"
+        "label": "連線"
       },
       "add": {
-        "label": "Add/Send"
+        "label": "新增/傳送"
       },
       "edit": {
-        "label": "Edit/Send"
+        "label": "編輯/傳送"
       },
       "import": {
-        "label": "Import"
+        "label": "匯入"
       },
       "export": {
-        "label": "Export"
+        "label": "匯出"
       },
       "write": {
-        "label": "\\u66F4\\u65B0\\u6A94\\u6848"
+        "label": "下載檔案"
+      },
+      "savenow": {
+        "label": "立即儲存"
       }
     },
     "tooltips": {
       "collapse": {
-        "value": "\\u96B1\\u85CF"
+        "value": "隱藏"
       },
       "expand": {
-        "value": "\\u5C55\\u958B"
+        "value": "展開"
       },
       "choose": {
-        "value": "\\u9078\\u64C7\\u6A94\\u6848"
+        "value": "選擇檔案"
       },
       "clear": {
-        "value": "\\u6E05\\u9664\\u9078\\u64C7\\u7684\\u6A94\\u6848"
+        "value": "清除選擇的檔案"
       },
       "more": {
-        "value": "\\u5176\\u4ED6\\u52D5\\u4F5C"
+        "value": "其他動作"
       },
       "download": {
-        "value": "Browse"
+        "value": "瀏覽"
       },
       "reset": {
-        "value": "Reset"
+        "value": "重設"
       },
       "submit": {
-        "value": "Submit Changes"
+        "value": "送出變更"
       },
       "write": {
-        "value": "\\u66F4\\u65B0\\u6A94\\u6848"
+        "value": "下載檔案"
       },
       "pick": {
-        "value": "Pick Directory"
+        "value": "選擇目錄"
+      },
+      "reload": {
+        "value": "Reload File"
+      }
+    },
+    "menu": {
+      "chooseFile": {
+        "value": "選擇檔案..."
+      },
+      "chooseDir": {
+        "value": "選擇目錄..."
+      }
+    },
+    "labels": {
+      "info": {
+        "value": "Information"
+      },
+      "warn": {
+        "value": "出現警告"
+      },
+      "error": {
+        "value": "錯誤"
       }
     }
   },
   "wrc-wdt-form": {
     "messages": {
-      "changesSubmitted": {
-        "summary": "Changes were successfully submitted!"
+      "changesSaved": {
+        "summary": "已順利將變更儲存至 ''{0}'' 檔案！"
       },
-      "changesNotSubmitted": {
-        "summary": "Unable to submit changes!"
+      "changesNotSaved": {
+        "summary": "無法將變更儲存至 ''{0}'' 檔案！"
       },
-      "changesWritten": {
-        "summary": "Changes were successfully written to ''{0}'' file!"
+      "changesDownloaded": {
+        "summary": "已順利將變更下載至 ''{0}'' 檔案！"
       },
-      "changesNotWritten": {
-        "summary": "Unable to write changes to ''{0}'' file!"
+      "changesNotDownloaded": {
+        "summary": "無法將變更下載至 ''{0}'' 檔案！"
+      },
+      "verifyPathEntered": {
+        "detail": "若將 {0} 欄位設為 false，將會接受輸入的值，不會驗證其是否為本機檔案還是目錄。"
       }
     },
     "wdtOptionsDialog": {
-      "title": "Edit: {0}",
-      "default": "Default. (Unset)",
-      "instructions": "Enter token to add to the list of selectable items.",
-      "enterValue": "Enter Value",
-      "selectValue": "Select Value",
-      "selectSwitch": "\\u5207\\u63DB\\u503C",
-      "enterUnresolvedReference": "Enter Unresolved Reference",
-      "enterModelToken": "Enter Model Token"
+      "title": "編輯：{0}",
+      "default": "預設值。(未設定)",
+      "instructions": "輸入要新增至可選項目清單中的權杖。",
+      "enterValue": "輸入值",
+      "selectValue": "選取值",
+      "selectSwitch": "切換值",
+      "enterUnresolvedReference": "輸入未解析的參照",
+      "enterModelToken": "輸入模型權杖",
+      "selectPropsVariable": "選取模型權杖變數",
+      "createPropsVariable": "建立模型權杖變數",
+      "propName": "變數名稱 (必要)",
+      "propValue": "變數值",
+      "enterVariable": "輸入變數",
+      "variableName": "變數名稱 (必要)",
+      "variableValue": "變數值",
+      "multiSelectUnset": "\"預設值。(從可用的項目清單中選取)\""
     }
   },
   "wrc-unsaved-changes": {
-    "confirmDialog": {
-      "title": "\\u5075\\u6E2C\\u5230\\u672A\\u5132\\u5B58\\u7684\\u8B8A\\u66F4"
+    "titles": {
+      "unsavedChanges": {
+        "value": "偵測到未儲存的變更"
+      },
+      "changesNeedDownloading": {
+        "value": "未下載變更"
+      }
     },
     "prompts": {
       "unsavedChanges": {
         "willBeLost": {
-          "value": "\\u6240\\u6709\\u672A\\u5132\\u5B58\\u7684\\u8B8A\\u66F4\\u90FD\\u5C07\\u6703\\u907A\\u5931\\u3002\\u8981\\u7E7C\\u7E8C\\u9032\\u884C\\u55CE\\uFF1F"
+          "value": "所有未儲存的變更都將會遺失。要繼續進行嗎？"
         },
         "areYouSure": {
-          "value": "\\u78BA\\u5B9A\\u8981\\u7D50\\u675F\\u4F46\\u4E0D\\u5132\\u5B58\\u8B8A\\u66F4\\u55CE\\uFF1F"
+          "value": "確定要結束但不儲存變更嗎？"
+        },
+        "needDownloading": {
+          "value": "尚未將您的變更下載至 WDT 模型檔案。<br/><br/>要先下載再繼續嗎？"
+        }
+      },
+      "uncommitedCreate": {
+        "abandonForm": {
+          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
         }
       }
     }
   },
   "wrc-sync-interval": {
     "dialogSync": {
-      "title": "\\u8A2D\\u5B9A\\u81EA\\u52D5\\u91CD\\u65B0\\u8F09\\u5165\\u9593\\u9694",
-      "instructions": "\\u81EA\\u52D5\\u91CD\\u65B0\\u8F09\\u5165\\u9593\\u9694\\u8981\\u6709\\u5E7E\\u79D2\\uFF1F",
+      "title": "設定自動重新載入間隔",
+      "instructions": "自動重新載入間隔要有幾秒？",
       "fields": {
         "interval": {
-          "label": "\\u81EA\\u52D5\\u91CD\\u65B0\\u8F09\\u5165\\u9593\\u9694\\uFF1A"
+          "label": "自動重新載入間隔："
         }
       }
     }
@@ -792,22 +986,36 @@ define({
     "messages": {
       "action": {
         "unableToPerform": {
-          "summary": "\\u8A0A\\u606F",
-          "detail": "\\u5617\\u8A66\\u5C0D ''{1}'' \\u57F7\\u884C\\u6307\\u5B9A\\u52D5\\u4F5C\\u6642\\uFF0C\\u4E3B\\u63A7\\u53F0\\u5F8C\\u7AEF\\u547C\\u53EB\\u7522\\u751F ''{0}'' \\u56DE\\u61C9\\u3002"
+          "summary": "訊息",
+          "detail": "嘗試對 ''{1}'' 執行指定動作時，主控台後端呼叫產生 ''{0}'' 回應。"
         }
       }
     },
     "labels": {
       "cannotDetermineExactCause": {
-        "value": "\\u7121\\u6CD5\\u5224\\u65B7\\u78BA\\u5207\\u539F\\u56E0\\u3002\\u8ACB\\u67E5\\u770B\\u300CJavaScript \\u4E3B\\u63A7\\u53F0\\u300D\\u4EE5\\u7372\\u53D6\\u63D0\\u793A\\u3002"
+        "value": "無法判斷確切原因。請查看「JavaScript 主控台」以獲取提示。"
       }
     }
   },
   "wrc-pdj-fields": {
     "cfe-multi-select": {
       "labels": {
-        "available": "\\u53EF\\u7528",
-        "chosen": "\\u5DF2\\u9078\\u64C7"
+        "available": "可用",
+        "chosen": "已選擇"
+      }
+    },
+    "cfe-properties-editor": {
+      "labels": {
+        "name": "特性名稱",
+        "value": "特性值"
+      }
+    },
+    "cfe-property-list-editor": {
+      "labels": {
+        "nameHeader": "特性名稱",
+        "valueHeader": "特性值",
+        "addButtonTooltip": "新增",
+        "deleteButtonTooltip": "刪除"
       }
     }
   },
@@ -816,13 +1024,13 @@ define({
       "more": {
         "optionsSources": {
           "view": {
-            "label": "\\u6AA2\\u8996 {0}..."
+            "label": "檢視 {0}..."
           },
           "create": {
-            "label": "\\u5EFA\\u7ACB\\u65B0\\u7684 {0}..."
+            "label": "建立新的 {0}..."
           },
           "edit": {
-            "label": "\\u7DE8\\u8F2F {0}..."
+            "label": "編輯 {0}..."
           }
         }
       }
@@ -830,17 +1038,16 @@ define({
   },
   "wrc-pdj-unset": {
     "menu": {
-      "label": "\\u56DE\\u5FA9\\u70BA\\u9810\\u8A2D\\u503C"
+      "label": "回復為預設值"
     },
     "placeholder": {
-      "value": "\\u9810\\u8A2D\\u503C"
+      "value": "預設值"
     }
   },
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "summary": "\\u8A0A\\u606F",
-        "detail": "RDJ \\u672A\\u5305\\u542B ''{0}'' \\u9805\\u76EE\\u7684 ''notFoundMessage'' \\u6B04\\u4F4D\\u3002"
+        "detail": "''{0}'' 無法使用。"
       }
     }
   },
@@ -853,41 +1060,41 @@ define({
         "value": "SHUTDOWN"
       },
       "serverStates": {
-        "value": "\\u4F3A\\u670D\\u5668\\u72C0\\u614B"
+        "value": "伺服器狀態"
       },
       "systemStatus": {
-        "value": "\\u7CFB\\u7D71\\u72C0\\u614B"
+        "value": "系統狀態"
       },
       "healthState": {
         "failed": {
-          "value": "\\u5931\\u6557"
+          "value": "失敗"
         },
         "critical": {
-          "value": "\\u56B4\\u91CD"
+          "value": "嚴重"
         },
         "overloaded": {
-          "value": "\\u8D85\\u8F09"
+          "value": "超載"
         },
         "warning": {
-          "value": "\\u51FA\\u73FE\\u8B66\\u544A"
+          "value": "出現警告"
         },
         "ok": {
-          "value": "\\u826F\\u597D"
+          "value": "良好"
         }
       }
     },
     "descriptions": {
       "healthState": {
-        "value": "\\u622A\\u81F3\\u4E0B\\u5217\\u6642\\u9593\\u70BA\\u6B62\\u7684\\u57F7\\u884C\\u4E2D\\u4F3A\\u670D\\u5668\\u72C0\\u6CC1:"
+        "value": "截至下列時間為止的執行中伺服器狀況:"
       }
     },
     "headers": {
       "serverStates": {
         "name": {
-          "value": "\\u540D\\u7A31"
+          "value": "名稱"
         },
         "state": {
-          "value": "\\u72C0\\u614B"
+          "value": "狀態"
         }
       }
     }
@@ -895,33 +1102,36 @@ define({
   "wrc-data-operations": {
     "messages": {
       "backendNotReachable": {
-        "detail": "\\u76EE\\u524D\\u7121\\u6CD5\\u9023\\u7DDA\\u5F8C\\u7AEF\\u3002"
+        "detail": "目前無法連線後端。"
       },
       "connectionMessage": {
-        "summary": "\\u9023\\u7DDA\\u8A0A\\u606F"
+        "summary": "連線訊息"
       },
       "connectFailed": {
-        "detail": "Attempt Failed: "
+        "detail": "嘗試失敗："
       },
       "badRequest": {
-        "detail": "Unable to process the submitted file or request "
+        "detail": "無法處理送出的檔案或要求 "
       },
       "invalidCredentials": {
-        "detail": "WebLogic \\u7DB2\\u57DF\\u8B49\\u660E\\u8CC7\\u6599\\u7121\\u6548 "
+        "detail": "WebLogic 網域證明資料無效 "
       },
       "invalidUrl": {
-        "detail": "\\u7121\\u6CD5\\u9023\\u7DDA WebLogic \\u7DB2\\u57DF URL"
+        "detail": "無法連線 WebLogic 網域 URL"
+      },
+      "notInRole": {
+        "detail": "嘗試失敗：使用者不具備管理員、部署者、操作員或監督者身分"
       },
       "notSupported": {
-        "detail": "\\u4E0D\\u652F\\u63F4 WebLogic \\u7DB2\\u57DF"
+        "detail": "不支援 WebLogic 網域"
       },
       "unexpectedStatus": {
-        "detail": "\\u672A\\u9810\\u671F\\u7684\\u7D50\\u679C (\\u72C0\\u614B\\uFF1A{0}) "
+        "detail": "未預期的結果 (狀態：{0}) "
       },
       "cbeRestApi": {
         "requestUnsuccessful": {
-          "summary": "\\u8981\\u6C42\\u5931\\u6557",
-          "detail": "\\u4E3B\\u63A7\\u53F0\\u5F8C\\u7AEF\\u547C\\u53EB\\u50B3\\u56DE\\u4E0D\\u6210\\u529F\\u7684\\u56DE\\u61C9\\u3002"
+          "summary": "要求失敗",
+          "detail": "主控台後端呼叫傳回不成功的回應。"
         }
       }
     }
@@ -929,36 +1139,42 @@ define({
   "wrc-message-displaying": {
     "messages": {
       "seeJavascriptConsole": {
-        "detail": "\\u8ACB\\u67E5\\u770B\\u9060\\u7AEF\\u4E3B\\u63A7\\u53F0\\u7D42\\u7AEF\\u6A5F\\u6216 Javascript \\u4E3B\\u63A7\\u53F0\\u4EE5\\u77AD\\u89E3\\u5177\\u9AD4\\u539F\\u56E0\\u3002"
+        "detail": "請查看遠端主控台終端機或 Javascript 主控台以瞭解具體原因。"
       },
       "responseMessages": {
-        "summary": "\\u56DE\\u61C9\\u8A0A\\u606F"
+        "summary": "回應訊息"
       }
     }
   },
   "wrc-change-manager": {
     "messages": {
       "cannotGetLockState": {
-        "summary": "\\u7121\\u6CD5\\u5B58\\u53D6\\u8B8A\\u66F4\\u7BA1\\u7406\\u7A0B\\u5F0F\\uFF01"
+        "summary": "無法存取變更管理程式！"
       },
       "changesCommitted": {
-        "summary": "\\u8B8A\\u66F4\\u5DF2\\u9806\\u5229\\u78BA\\u8A8D\\uFF01"
+        "summary": "變更已順利確認！"
       },
       "changesNotCommitted": {
-        "summary": "\\u7121\\u6CD5\\u78BA\\u8A8D\\u8B8A\\u66F4\\uFF01"
+        "summary": "無法確認變更！"
       },
       "changesDiscarded": {
-        "summary": "\\u8B8A\\u66F4\\u5DF2\\u9806\\u5229\\u6368\\u68C4\\uFF01"
+        "summary": "變更已順利捨棄！"
       },
       "changesNotDiscarded": {
-        "summary": "\\u7121\\u6CD5\\u6368\\u68C4\\u8B8A\\u66F4\\uFF01"
+        "summary": "無法捨棄變更！"
       }
     }
   },
   "wrc-view-model-utils": {
     "labels": {
       "unexpectedErrorResponse": {
-        "value": "\\u672A\\u9810\\u671F\\u7684\\u932F\\u8AA4\\u56DE\\u61C9"
+        "value": "未預期的錯誤回應"
+      }
+    },
+    "messages": {
+      "connectionRefused": {
+        "summary": "連線問題",
+        "details": "無法傳送資料至提供者及從提供者接收資料！請確定提供者可供存取，然後再試一次。"
       }
     }
   }

@@ -2,8 +2,8 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
-- label: Server Configuration
+- label: Server Configurations
   resourceData: Domain/Servers
 instanceLinks:
 - label: Server Configuration
-  resourceData: Domain/Servers/<CombinedServerRuntime>
+  resourceData: Domain/Servers/<ServerRuntime>

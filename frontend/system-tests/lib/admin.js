@@ -75,10 +75,18 @@ module.exports = function (driver, file) {
                         await driver.findElement(By.xpath(taskOptionXPath)).click();
                         break;
                     case 4:
-                        console.log("Select Create Provider for New WDT Model File... task");
+                        console.log("Select Add Property List Provider... task");
                         await driver.findElement(By.xpath(taskOptionXPath)).click();
                         break;
                     case 5:
+                        console.log("Select Create Provider for New WDT Model File... task");
+                        await driver.findElement(By.xpath(taskOptionXPath)).click();
+                        break;
+                    case 6:
+                        console.log("Create Provider for New Property List");
+                        await driver.findElement(By.xpath(taskOptionXPath)).click();
+                        break;
+                    case 7:
                         console.log("Select Import Project task");
                         await driver.findElement(By.xpath(taskOptionXPath)).click();
                         break;
@@ -131,7 +139,7 @@ module.exports = function (driver, file) {
             //Make sure OK button is enable
             await driver.sleep(300);
             console.log("Click OK button");
-            element = driver.findElement(By.xpath("//span[@id=\'dlgOkBtn11_oj30|text\']/span"));
+            element = driver.findElement(By.xpath("//span[@id=\'dlgOkBtn11_oj32|text\']/span"));
             await driver.sleep(300);
             if (element.isEnabled()) {
                 console.log("Click Domain connection OK button");
@@ -239,8 +247,20 @@ module.exports = function (driver, file) {
             await driver.findElement(By.xpath("//input[@id=\'file-chooser\']")).sendKeys(wdtModelFile);
             await driver.sleep(2400);
             console.log("Click OK button");
-            await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12_oj28|text\']")).click();
+            await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12_oj30|text\']")).click();
             await driver.sleep(2400);
+        },
+
+        createNewPropertyList: async function(driver,propertyListName,propertyFileName) {
+            console.log("Enter Provider Name = "+propertyListName);
+            await driver.findElement(By.xpath("//input[@id=\'model-name-field|input\']")).sendKeys(propertyListName);
+            await driver.sleep(1200);
+            console.log("Enter File Name = "+propertyFileName);
+            await driver.findElement(By.xpath("//input[@id=\'model-file-field|input\']")).sendKeys(propertyFileName);
+            await driver.sleep(1200);
+            console.log("Click OK button");
+            await driver.findElement(By.xpath("//*[@id=\'dlgOkBtn12_oj30|text\']/span")).click();
+            await driver.sleep(1200);
         },
 
         importProject: async function(driver,projectFileName) {
@@ -248,7 +268,7 @@ module.exports = function (driver, file) {
             console.log("Launch remote console page. ");
             await driver.get(adminUrl);
             await driver.sleep(4800);
-            await this.startupDialogTask(driver,5,"Choose");
+            await this.startupDialogTask(driver,7,"Choose");
             console.log("Click Import Project...");
             await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
             await driver.sleep(1400);
@@ -267,22 +287,45 @@ module.exports = function (driver, file) {
             await driver.sleep(2400);
         },
 
-        selectTree: async function (driver, treeType) {
-            console.log("Click " +treeType);
+        selectTree: async function (driver, treeType, filePath) {
+            console.log("Click Provider Name: " +treeType);
             await driver.findElement(By.xpath("//span[contains(.,\'"+treeType+"\')]")).click();
             await driver.sleep(4800);
+
+            if (filePath != null) {
+                console.log("Click Choose File...");
+                await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
+                await driver.sleep(1400);
+                console.log("Select to enter file path " + filePath);
+                await driver.findElement(By.id("file-chooser")).sendKeys(filePath);
+                await driver.sleep(1400);
+                console.log("Click OK button");
+                if (treeType == "wdtTemplateModel")
+                    await driver.findElement(By.xpath("//oj-button[@id=\'dlgOkBtn12\']/button/div")).click();
+                else
+                    await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12_oj72|text\']")).click();
+                await driver.sleep(1400);
+            }
         },
 
-        exportDomainConnection: async function (driver,projectName,fileName) {
+        exportProviderAsProject: async function (driver,projectName,fileName) {
             await driver.manage().setTimeouts( { implicit: 9800 } )
-            console.log("Click unnamed projects menu... ");
+            console.log("Click More Action menu... ");
             await driver.findElement(By.id("project-more-icon")).click();
             await driver.sleep(600);
-            await driver.findElement(By.id("project-name-field|input")).sendKeys("14.1.1.0Domain");
+            console.log("Click Export Providers as Project");
+            await driver.findElement(By.xpath("//oj-option[@id=\'[[i18n.menus.project.export.id]]\']/a")).click();
+            await driver.sleep(600);
+            console.log("Enter export project = "+projectName);
+            await driver.findElement(By.id("project-name-field|input")).sendKeys(projectName);
+            await driver.sleep(600);
+            console.log("Click project-file-field|input field");
             await driver.findElement(By.id("project-file-field|input")).click();
-            await driver.findElement(By.id("project-file-field|input")).sendKeys("p1");
+            await driver.sleep(600);
+            console.log("Enter export project file path = "+fileName);
+            await driver.findElement(By.id("project-file-field|input")).sendKeys(fileName);
             console.log("Click OK button");
-            await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn13|text\']/span")).click();
+            await driver.findElement(By.xpath("//oj-button[@id=\'dlgOkBtn13\']/button/div")).click();
         },
 
         /////////////
@@ -300,7 +343,6 @@ module.exports = function (driver, file) {
 
         goToNavStripImageMenuLink: async function(driver,navImageMenuLink) {
             await driver.manage().setTimeouts( { implicit: 6400 } )
-            //await this.goToDefaultDomain(driver);
             await this.goToHomePageUrl(driver);
             await driver.sleep(6400);
             console.log("Click NavStrip "+navImageMenuLink+" link.");
@@ -313,7 +355,7 @@ module.exports = function (driver, file) {
         goToNavTreeLevelOneLink: async function(driver,navImageMenuLink,levelOneLink) {
             await driver.manage().setTimeouts( { implicit: 900000 } )
             await this.goToNavStripImageMenuLink(driver,navImageMenuLink);
-            await driver.sleep(3600);
+            await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelOneLink+"\')]"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
@@ -324,7 +366,7 @@ module.exports = function (driver, file) {
 
         goToNavTreeLevelTwoLink: async function(driver,navImageMenuLink,levelOneLink,levelTwoLink) {
             await this.goToNavTreeLevelOneLink(driver,navImageMenuLink,levelOneLink);
-            await driver.sleep(9600);
+            await driver.sleep(8400);
             console.log("Click " + navImageMenuLink + "->" + levelOneLink + "->" + levelTwoLink + " NavTree link.");
             if (levelTwoLink.toString() == "Domain") {
                 await driver.findElement(By.xpath("//li/a/span[2]")).click();
@@ -339,7 +381,7 @@ module.exports = function (driver, file) {
 
         goToNavTreeLevelThreeLink: async function(driver,navImageMenuLink,levelOneLink,levelTwoLink,levelThreeLink) {
             await this.goToNavTreeLevelTwoLink(driver,navImageMenuLink,levelOneLink,levelTwoLink);
-            await driver.sleep(2400);
+            await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelThreeLink+"\')]"));
             if (element.isEnabled()) {
@@ -351,7 +393,7 @@ module.exports = function (driver, file) {
                                                  levelTwoLink,levelThreeLink,levelFourLink)
         {
             await this.goToNavTreeLevelThreeLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,levelThreeLink);
-            await driver.sleep(2400);
+            await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"
                                     +levelThreeLink+"->"+levelFourLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelFourLink+"\')]"));
@@ -364,7 +406,7 @@ module.exports = function (driver, file) {
                                                  levelTwoLink,levelThreeLink,levelFourLink,levelFiveLink)
         {
             await this.goToNavTreeLevelFourLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,levelThreeLink,levelFourLink);
-            await driver.sleep(2400);
+            await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"
                                 +levelThreeLink+"->"+levelFourLink+"->"+levelFiveLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelFiveLink+"\')]"));
@@ -378,7 +420,7 @@ module.exports = function (driver, file) {
         {
             await this.goToNavTreeLevelFiveLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,
             levelThreeLink,levelFourLink,levelFiveLink);
-            await driver.sleep(2400);
+            await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"
                 +levelThreeLink+"->"+levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelSixLink+"\')]"));
@@ -394,7 +436,7 @@ module.exports = function (driver, file) {
                 levelThreeLink,levelFourLink,levelFiveLink,levelSixLink);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+"->"
                 +levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+"->"+levelSevenLink+" NavTree link.");
-            await driver.sleep(2400);
+            await driver.sleep(8400);
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelSevenLink+"\')]"));
             if (element.isEnabled()) {
                 await element.click();
@@ -407,7 +449,7 @@ module.exports = function (driver, file) {
         {
             await this.goToNavTreeLevelSevenLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,
             levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink);
-            await driver.sleep(2400);
+            await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+"->"
                 +levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+"->"+levelSevenLink+"->"+levelEightLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelEightLink+"\')]"));
@@ -421,7 +463,7 @@ module.exports = function (driver, file) {
         {
             await this.goToNavTreeLevelEightLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,
             levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink,levelEightLink);
-            await driver.sleep(2400);
+            await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+"->"
                 +levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+"->"+levelSevenLink+"->"
                 +levelEightLink+"->"+levelNineLink+" NavTree link.");
@@ -541,7 +583,7 @@ module.exports = function (driver, file) {
                     await driver.sleep(1400);
                     console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
                                 " Delete row button to delete " + objectMBeanName + " object.");
-                    element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span/span"));
+                    element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span"));
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     await driver.sleep(900);
                     await element.click();
@@ -552,7 +594,7 @@ module.exports = function (driver, file) {
                     await driver.sleep(1400);
                     console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
                         "->"+levelThreeLink+" Delete row button");
-                    element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span/span"));
+                    element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span"));
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     await driver.sleep(900);
                     await element.click();
@@ -563,7 +605,7 @@ module.exports = function (driver, file) {
                     await driver.sleep(1400);
                     console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
                         "->"+levelThreeLink+"->"+levelFourLink+" Delete row button");
-                    element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span/span"));
+                    element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span"));
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     await driver.sleep(900);
                     await element.click();
@@ -637,7 +679,7 @@ module.exports = function (driver, file) {
             console.log("Click to delete "+objName+ " from "+scrumName+" list");
             //Different syntax to delete an object - utilities test case 2
             await driver.sleep(1400);
-            element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span/span"));
+            element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
             await driver.sleep(900);

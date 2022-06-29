@@ -124,7 +124,16 @@ public abstract class FabricatedRuntimeMBeanNameHandler {
   }
 
   public static boolean isFabricatableType(String type) {
-    return type.endsWith(RUNTIME_MBEAN);
+    String leafType = StringUtils.getLeafClassName(type);
+    return 
+      leafType.endsWith("RuntimeMBean")
+        // There are a few runtime mbeans that don't follow the FooRuntimeMBean
+        // naming convention.  Look for them explicitly.  We need to make sure
+        // that as new runtime mbean types that don't follow that convention
+        // are added to weblogic, we add them to this list:
+        || "AggregateProgressMBean".equals(leafType)
+        || "ProgressMBean".equals(leafType)
+        || "SAFStatisticsCommonMBean".equals(leafType);
   }
 
   public boolean isFabricatedName(String name) {

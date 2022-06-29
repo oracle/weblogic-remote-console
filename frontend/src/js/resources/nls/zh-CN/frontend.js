@@ -1,83 +1,107 @@
 define({
   "wrc-header": {
     "text": {
-      "appName": "WebLogic \\u8FDC\\u7A0B\\u63A7\\u5236\\u53F0"
+      "appName": "WebLogic 远程控制台"
     },
     "icons": {
       "connectivity": {
         "online": {
-          "tooltip": "\\u8054\\u673A"
+          "tooltip": "联机"
         },
         "offline": {
-          "tooltip": "\\u8131\\u673A"
+          "tooltip": "脱机"
         },
         "detached": {
-          "tooltip": "\\u5DF2\\u5206\\u79BB"
+          "tooltip": "已分离"
+        },
+        "unattached": {
+          "tooltip": "未附加"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "\\u7248\\u6743\\u6240\\u6709 \\u00A9 2020\\uFF0C2021\\uFF0COracle \\u548C/\\u6216\\u5176\\u5173\\u8054\\u516C\\u53F8\\u3002<br/>Oracle \\u662F Oracle Corporation \\u548C/\\u6216\\u5176\\u5173\\u8054\\u516C\\u53F8\\u7684\\u6CE8\\u518C\\u5546\\u6807\\u3002\\u5176\\u4ED6\\u540D\\u79F0\\u53EF\\u80FD\\u662F\\u5404\\u81EA\\u6240\\u6709\\u8005\\u7684\\u5546\\u6807\\u3002<br/>",
-      "builtWith": "\\u4F7F\\u7528 Oracle JET \\u6784\\u5EFA"
+      "copyrightLegal": "版权所有 © 2020，2022，Oracle 和/或其关联公司。<br/>Oracle 是 Oracle Corporation 和/或其关联公司的注册商标。其他名称可能是各自所有者的商标。<br/>",
+      "builtWith": "使用 Oracle JET 构建"
     }
   },
   "wrc-data-providers": {
     "icons": {
       "info": {
-        "tooltip": "\\u83B7\\u53D6\\u4FE1\\u606F"
+        "tooltip": "获取信息"
       },
       "edit": {
-        "tooltip": "Manage"
+        "tooltip": "管理"
       },
       "delete": {
-        "tooltip": "\\u5220\\u9664"
+        "tooltip": "删除"
       }
     },
     "labels": {
       "connections": {
         "header": {
-          "value": "Unnamed Project"
+          "value": "未命名项目"
         },
         "name": {
-          "value": "Connection Provider Name"
+          "value": "连接提供程序名称"
         },
         "url": {
           "value": "URL"
         },
         "username": {
-          "value": "\\u7528\\u6237\\u540D"
+          "value": "用户名"
         },
         "password": {
-          "value": "\\u5BC6\\u7801"
+          "value": "密码"
         }
       },
       "models": {
         "name": {
-          "value": "WDT Model Provider Name"
+          "value": "WDT 模型提供程序名称"
         },
         "file": {
-          "value": "WDT Model Filename"
+          "value": "WDT 模型文件名"
+        },
+        "props": {
+          "value": "WDT 变量"
+        }
+      },
+      "composite": {
+        "name": {
+          "value": "WDT 组合模型提供程序名称"
+        },
+        "providers": {
+          "value": "WDT 模型"
+        }
+      },
+      "proplist": {
+        "name": {
+          "value": "属性列表提供程序名称"
+        },
+        "file": {
+          "value": "属性列表文件名"
         }
       },
       "project": {
         "name": {
-          "value": "Project Name"
+          "value": "项目名称"
         },
         "file": {
-          "value": "Project Filename"
-        },
-        "isDefault": {
-          "value": "Make Default"
+          "value": "项目文件名"
         }
       },
       "provider": {
         "adminserver": {
-          "value": "Admin Server Connection"
+          "value": "管理服务器连接"
         },
         "model": {
-          "value": "Add WDT Model"
+          "value": "添加 WDT 模型"
+        }
+      },
+      "dropdown": {
+        "none": {
+          "value": "无"
         }
       }
     },
@@ -85,38 +109,54 @@ define({
       "info": {
         "provider": {
           "id": {
-            "label": "Provider Id:"
+            "label": "提供程序 ID："
           }
         },
         "domain": {
           "name": {
-            "label": "\\u57DF\\u540D:"
+            "label": "域名:"
           },
           "url": {
-            "label": "\\u57DF URL\\uFF1A"
+            "label": "域 URL："
           },
           "version": {
-            "label": "\\u57DF\\u7248\\u672C\\uFF1A"
+            "label": "域版本："
           },
           "username": {
-            "label": "Username:"
+            "label": "用户名："
+          },
+          "roles": {
+            "label": "角色："
           },
           "connectTimeout": {
-            "label": "\\u8FDE\\u63A5\\u8D85\\u65F6\\uFF1A"
+            "label": "连接超时："
           },
           "readTimeout": {
-            "label": "\\u8BFB\\u53D6\\u8D85\\u65F6:"
+            "label": "读取超时:"
           },
           "anyAttempt": {
-            "label": "Any Connections Attempted:"
+            "label": "尝试的任何连接："
           },
           "lastAttempt": {
-            "label": "Last Attempt Successful:"
+            "label": "上次成功尝试："
           }
         },
         "model": {
           "file": {
-            "label": "File:"
+            "label": "文件："
+          },
+          "props": {
+            "label": "变量："
+          }
+        },
+        "composite": {
+          "models": {
+            "label": "模型："
+          }
+        },
+        "proplist": {
+          "file": {
+            "label": "文件名："
           }
         }
       }
@@ -124,20 +164,33 @@ define({
     "menus": {
       "connections": {
         "add": {
-          "value": "Create Provider for Admin Server Connection..."
+          "value": "添加管理服务器连接提供程序"
         }
       },
       "models": {
         "add": {
-          "value": "Create Provider for Existing WDT Model File..."
+          "value": "添加 WDT 模型文件提供程序"
         },
         "new": {
-          "value": "Create Provider for New WDT Model File..."
+          "value": "为新 WDT 模型文件创建提供程序"
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "添加 WDT 组合模型文件提供程序"
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "添加属性列表提供程序"
+        },
+        "new": {
+          "value": "为新属性列表创建提供程序"
         }
       },
       "providers": {
         "sort": {
-          "value": "Sort by Provider Type"
+          "value": "按提供程序类型排序"
         }
       },
       "context": {
@@ -145,175 +198,256 @@ define({
           "connection": {
             "domain": {
               "url": {
-                "label": "\\u57DF URL\\uFF1A"
+                "label": "域 URL："
               },
               "version": {
-                "label": "\\u57DF\\u7248\\u672C\\uFF1A"
+                "label": "域版本："
               },
               "username": {
-                "label": "Username:"
+                "label": "用户名："
               }
             }
           },
           "model": {
             "file": {
-              "label": "File:"
+              "label": "文件："
             }
           }
         }
       },
       "project": {
         "export": {
-          "value": "Export Providers as Project..."
+          "value": "将提供程序作为项目导出..."
         },
         "import": {
-          "value": "\\u5BFC\\u5165\\u9879\\u76EE"
+          "value": "导入项目"
         }
       }
     },
     "instructions": {
       "connections": {
         "add": {
-          "value": "Enter new name and connectivity settings for connection provider."
+          "value": "输入连接提供程序的新名称和连接设置。"
         },
         "edit": {
-          "value": "Modify connectivity settings for connection provider."
+          "value": "修改连接提供程序的连接设置。"
         }
       },
       "models": {
         "add": {
-          "value": "Enter settings for existing model file provider. Click upload icon to browse for model file."
+          "value": "输入现有模型文件提供程序的设置。单击上载图标以浏览模型文件。"
         },
         "new": {
-          "value": "Enter provider name and filename for new WDT model file, then click icon to pick directory to save file in."
+          "value": "输入新 WDT 模型文件的提供程序名称和文件名，然后单击用于选取文件保存目录的图标。"
         },
         "edit": {
-          "value": "Modify settings for model file provider. Click icon to browse for model file."
+          "value": "修改模型文件提供程序的设置。单击用于浏览模型文件的图标。"
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "输入新名称，并为组合模型提供程序选择经过排序的模型列表。"
+        },
+        "edit": {
+          "value": "修改组合模型提供程序的设置。使用经过排序的模型列表。"
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "输入现有模型列表提供程序的设置。单击上载图标以浏览属性文件。"
+        },
+        "new": {
+          "value": "输入新属性列表的提供程序名称和文件名，然后单击用于选取文件保存目录的图标。"
+        },
+        "edit": {
+          "value": "修改属性列表提供程序的设置。单击用于浏览属性文件的图标。"
         }
       },
       "project": {
         "export": {
-          "value": "Enter settings for new project."
+          "value": "输入新项目的设置。"
         },
         "import": {
-          "value": "Click download icon to browse for project."
+          "value": "单击下载图标以浏览项目。"
         }
       },
       "task": {
         "startup": {
-          "value": "Which startup task are you interested in performing?"
+          "value": "您希望执行哪个启动任务？"
         }
       }
     },
     "titles": {
       "add": {
         "connections": {
-          "value": "Create Provider for Admin Server Connection"
+          "value": "为管理服务器连接创建提供程序"
         },
         "models": {
-          "value": "Create Provider for Existing WDT Model File"
+          "value": "为现有 WDT 模型文件创建提供程序"
+        },
+        "composite": {
+          "value": "为新 WDT 组合模型创建提供程序"
+        },
+        "proplist": {
+          "value": "为现有属性列表创建提供程序"
         }
       },
       "new": {
         "models": {
-          "value": "Create Provider for New WDT Model File"
+          "value": "为新 WDT 模型文件创建提供程序"
+        },
+        "proplist": {
+          "value": "为新属性列表创建提供程序"
         }
       },
       "edit": {
         "connections": {
-          "value": "Edit Admin Server Connection Provider"
+          "value": "编辑管理服务器连接提供程序"
         },
         "models": {
-          "value": "Edit WDT Model File Provider"
+          "value": "编辑 WDT 模型文件提供程序"
+        },
+        "composite": {
+          "value": "编辑 WDT 组合模型提供程序"
+        },
+        "proplist": {
+          "value": "编辑属性列表提供程序"
         }
       },
       "export": {
         "project": {
-          "value": "Export Providers as Project"
+          "value": "将提供程序作为项目导出"
         }
       },
       "import": {
         "project": {
-          "value": "\\u5BFC\\u5165\\u9879\\u76EE"
+          "value": "导入项目"
         }
       },
       "startup": {
         "task": {
-          "value": "Startup Task"
+          "value": "启动任务"
         }
       }
     },
     "messages": {
       "export": {
         "failed": {
-          "summary": "Export Unsuccessful",
-          "detail": "Unable to export providers as ''{0}'' project."
+          "summary": "导出未成功",
+          "detail": "无法将提供程序作为 ''{0}'' 项目导出。"
         }
       },
       "import": {
         "failed": {
-          "summary": "Save Unsuccessful",
-          "detail": "Unable to import ''{0}'' project file."
+          "summary": "保存未成功",
+          "detail": "无法导入 ''{0}'' 项目文件。"
         }
       },
       "stage": {
         "failed": {
-          "summary": "Create Unsuccessful",
-          "detail": "Unable to create ''{0}'' provider item."
+          "summary": "创建未成功",
+          "detail": "无法创建 ''{0}'' 提供程序项。"
         }
       },
       "use": {
         "failed": {
-          "summary": "Connection Unsuccessful",
-          "detail": "Unable to use ''{0}'' provider item."
+          "summary": "连接未成功",
+          "detail": "无法使用 ''{0}'' 提供程序项。"
+        }
+      },
+      "upload": {
+        "failed": {
+          "detail": "无法加载 WDT 模型文件 {0}"
+        },
+        "props": {
+          "failed": {
+            "detail": "无法加载 WDT 变量：{0}"
+          }
         }
       },
       "response": {
         "nameAlreadyExist": {
-          "detail": "Provider named ''{0}'' is already in this project!"
+          "detail": "此项目中已存在名为 ''{0}'' 的提供程序！"
+        },
+        "modelsNotFound": {
+          "detail": "找不到所配置的 WDT 模型 ''{0}''"
+        },
+        "propListNotFound": {
+          "detail": "找不到 WDT 变量 ''{0}''"
+        },
+        "selectModels": {
+          "detail": "要选择 WDT 组合，请首先选择 WDT 组合使用的所有 WDT 模型。"
+        }
+      },
+      "correctiveAction": {
+        "filePathNotFound": {
+          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+        },
+        "fixModelFile": {
+          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+        },
+        "yamlException": {
+          "detail": "{0} at line {1}, column {2}"
+        },
+        "wktModelContent": {
+          "summary": "Model Content Problems",
+          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
         }
       }
     },
     "prompts": {
       "info": {
-        "fileNotSet": "\\u672A\\u8BBE\\u7F6E"
+        "fileNotSet": "未设置"
+      }
+    },
+    "checkboxes": {
+      "useSparseTemplate": {
+        "label": "使用稀疏模板"
       }
     }
   },
   "wrc-navstrip": {
     "icons": {
       "configuration": {
-        "tooltip": "\\u7F16\\u8F91\\u6811"
+        "tooltip": "编辑树"
       },
       "view": {
-        "tooltip": "Configuration View Tree"
+        "tooltip": "配置视图树"
       },
       "monitoring": {
-        "tooltip": "Monitoring Tree"
+        "tooltip": "监视树"
       },
       "modeling": {
-        "tooltip": "WDT Model"
+        "tooltip": "WDT 模型"
+      },
+      "composite": {
+        "tooltip": "WDT 组合模型"
+      },
+      "properties": {
+        "tooltip": "属性列表编辑器"
       }
     }
   },
   "wrc-content-area-header": {
     "title": {
-      "home": "\\u4E3B\\u9875",
-      "configuration": "\\u7F16\\u8F91\\u6811",
-      "view": "Configuration View Tree",
-      "monitoring": "Monitoring Tree",
-      "modeling": "WDT Model"
+      "home": "主页",
+      "configuration": "编辑树",
+      "view": "配置视图树",
+      "monitoring": "监视树",
+      "modeling": "WDT 模型",
+      "composite": "WDT 组合模型",
+      "properties": "属性列表"
     },
     "toolbar": {
       "buttons": {
         "home": {
-          "label": "\\u4E3B\\u9875"
+          "label": "主页"
         },
         "preferences": {
-          "label": "\\u9996\\u9009\\u9879"
+          "label": "首选项"
         },
         "search": {
-          "label": "\\u641C\\u7D22"
+          "label": "搜索"
         }
       }
     }
@@ -322,86 +456,64 @@ define({
     "tabstrip": {
       "tabs": {
         "shoppingcart": {
-          "label": "\\u8D2D\\u7269\\u8F66"
+          "label": "购物车"
         },
         "ataglance": {
-          "label": "\\u6982\\u89C8"
+          "label": "概览"
         },
         "projectmanagement": {
-          "label": "Provider Management"
+          "label": "提供程序管理"
         }
       }
     },
     "icons": {
       "kiosk": {
-        "tooltip": "\\u4FE1\\u606F\\u7EC8\\u7AEF"
+        "tooltip": "信息终端"
       }
     }
   },
   "wrc-perspective": {
     "icons": {
       "history": {
-        "tooltip": "\\u5386\\u53F2\\u8BB0\\u5F55"
+        "tooltip": "历史记录"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "\\u6E05\\u9664\\u5386\\u53F2\\u8BB0\\u5F55"
+          "value": "清除历史记录"
         }
-      }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "\\u6570\\u636E\\u4E0D\\u53EF\\u7528"
       }
     }
   },
   "wrc-monitoring": {
     "icons": {
       "history": {
-        "tooltip": "\\u5386\\u53F2\\u8BB0\\u5F55"
+        "tooltip": "历史记录"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "\\u6E05\\u9664\\u5386\\u53F2\\u8BB0\\u5F55"
+          "value": "清除历史记录"
         }
-      }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "\\u6570\\u636E\\u4E0D\\u53EF\\u7528"
       }
     }
   },
   "wrc-domain-connection": {
     "labels": {
       "runningAt": {
-        "value": "\\u5728 {0} \\u8FD0\\u884C"
+        "value": "在 {0} 运行"
       }
     },
     "messages": {
       "lostConnection": {
-        "summary": "\\u8FDE\\u63A5\\u4E22\\u5931",
-        "detail": "Connection to remote console backend was lost. Ensure that it is running or restart it and try the link again."
+        "summary": "连接丢失",
+        "detail": "与远程控制台后端的连接丢失。确保它正在运行或重新启动它并重试链接。"
       },
       "cannotConnect": {
-        "summary": "\\u5C1D\\u8BD5\\u8FDE\\u63A5\\u5931\\u8D25",
-        "detail": "\\u65E0\\u6CD5\\u8FDE\\u63A5\\u5230 WebLogic \\u57DF {0}\\uFF0C\\u8BF7\\u68C0\\u67E5 WebLogic \\u662F\\u5426\\u5728\\u8FD0\\u884C\\u3002"
-      }
-    },
-    "dialog1": {
-      "title": "\\u8FDE\\u63A5\\u5230 WebLogic \\u57DF",
-      "instructions": "\\u8F93\\u5165 WebLogic \\u57DF\\u7684\\u7BA1\\u7406\\u5458\\u7528\\u6237\\u8EAB\\u4EFD\\u8BC1\\u660E\\u548C URL\\uFF1A",
-      "labels": {
-        "url": "URL"
-      },
-      "buttons": {
-        "connect": {
-          "label": "\\u8FDE\\u63A5"
-        }
+        "summary": "尝试连接失败",
+        "detail": "无法连接到 WebLogic 域 {0}，请检查 WebLogic 是否在运行。"
       }
     }
   },
@@ -409,7 +521,7 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "\\u5E93"
+          "label": "库"
         }
       }
     }
@@ -417,143 +529,170 @@ define({
   "wrc-gallery": {
     "cards": {
       "configuration": {
-        "label": "\\u7F16\\u8F91\\u6811",
-        "description": "<p>\\u7EF4\\u62A4\\u60A8\\u5F53\\u524D\\u4F7F\\u7528\\u7684 WebLogic \\u57DF\\u7684\\u914D\\u7F6E\\u3002</p>"
+        "label": "编辑树",
+        "description": "<p>维护您当前使用的 WebLogic 域的配置。</p>"
       },
       "view": {
-        "label": "Configuration View Tree",
-        "description": "<p>\\u68C0\\u67E5\\u60A8\\u5F53\\u524D\\u4F7F\\u7528\\u7684 WebLogic \\u57DF\\u7684\\u53EA\\u8BFB\\u914D\\u7F6E\\u3002</p>"
+        "label": "配置视图树",
+        "description": "<p>检查您当前使用的 WebLogic 域的只读配置。</p>"
       },
       "monitoring": {
-        "label": "Monitoring Tree",
-        "description": "<p>\\u67E5\\u770B\\u60A8\\u5F53\\u524D\\u4F7F\\u7528\\u7684 WebLogic \\u57DF\\u4E2D\\u9009\\u5B9A\\u8D44\\u6E90\\u7684\\u8FD0\\u884C\\u65F6 MBean \\u4FE1\\u606F\\u3002</p>"
+        "label": "监视树",
+        "description": "<p>查看您当前使用的 WebLogic 域中选定资源的运行时 MBean 信息。</p>"
       },
       "modeling": {
-        "label": "WDT Model Tree",
-        "description": "<p>Maintain model files associated with the WebLogic Deploy Tooling tool.</p>"
+        "label": "WDT 模型树",
+        "description": "<p>维护与 WebLogic Deploy Tooling 工具关联的模型文件。</p>"
+      },
+      "composite": {
+        "label": "WDT 组合模型树",
+        "description": "<p>查看当前正在使用的 WebLogic 部署工具模型文件的组合集。</p>"
+      },
+      "properties": {
+        "label": "属性列表编辑器",
+        "description": "<p>查看或修改属性列表文件中的一组属性。</p>"
       }
     }
   },
   "wrc-shoppingcart": {
     "icons": {
       "discard": {
-        "tooltip": "\\u653E\\u5F03\\u66F4\\u6539"
+        "tooltip": "放弃更改"
       },
       "commit": {
-        "tooltip": "\\u63D0\\u4EA4\\u66F4\\u6539"
+        "tooltip": "提交更改"
       }
     },
     "sections": {
       "changeManager": {
-        "label": "\\u66F4\\u6539\\u7BA1\\u7406\\u5668"
+        "label": "更改管理器"
       },
       "additions": {
-        "label": "\\u6DFB\\u52A0"
+        "label": "添加"
       },
       "modifications": {
-        "label": "\\u4FEE\\u6539"
+        "label": "修改"
       },
       "removals": {
-        "label": "\\u5220\\u9664"
+        "label": "删除"
       },
       "restart": {
-        "label": "\\u91CD\\u65B0\\u542F\\u52A8"
+        "label": "重新启动"
       }
     }
   },
   "wrc-table-toolbar": {
     "buttons": {
       "new": {
-        "label": "\\u65B0\\u5EFA"
+        "label": "新建"
       },
       "clone": {
-        "label": "\\u514B\\u9686"
+        "label": "克隆"
       },
       "delete": {
-        "label": "\\u5220\\u9664"
+        "label": "删除"
+      },
+      "customize": {
+        "label": "定制"
       }
     },
     "icons": {
       "landing": {
-        "tooltip": "\\u767B\\u5F55\\u9875"
+        "tooltip": "登录页"
       },
       "history": {
-        "tooltip": "\\u663E\\u793A/\\u9690\\u85CF\\u5386\\u53F2\\u8BB0\\u5F55"
+        "tooltip": "显示/隐藏历史记录"
       },
       "instructions": {
-        "tooltip": "\\u663E\\u793A/\\u9690\\u85CF\\u8BF4\\u660E"
+        "tooltip": "显示/隐藏说明"
       },
       "help": {
-        "tooltip": "\\u663E\\u793A/\\u9690\\u85CF\\u5E2E\\u52A9\\u9875"
+        "tooltip": "显示/隐藏帮助页"
       },
       "sync": {
-        "tooltip": "\\u91CD\\u65B0\\u52A0\\u8F7D",
-        "tooltipOn": "\\u505C\\u6B62\\u81EA\\u52A8\\u91CD\\u65B0\\u52A0\\u8F7D"
+        "tooltip": "重新加载",
+        "tooltipOn": "停止自动重新加载"
       },
       "syncInterval": {
-        "tooltip": "\\u8BBE\\u7F6E\\u81EA\\u52A8\\u91CD\\u65B0\\u52A0\\u8F7D\\u95F4\\u9694"
+        "tooltip": "设置自动重新加载间隔"
       },
       "shoppingcart": {
-        "tooltip": "\\u5355\\u51FB\\u4EE5\\u67E5\\u770B\\u8D2D\\u7269\\u8F66\\u7684\\u64CD\\u4F5C"
+        "tooltip": "单击以查看购物车的操作"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "\\u67E5\\u770B\\u66F4\\u6539"
+          "label": "查看更改"
         },
         "discard": {
-          "label": "\\u653E\\u5F03\\u66F4\\u6539"
+          "label": "放弃更改"
         },
         "commit": {
-          "label": "\\u63D0\\u4EA4\\u66F4\\u6539"
+          "label": "提交更改"
         }
       }
     },
     "instructions": {
       "selectItems": {
-        "value": "\\u9009\\u62E9\\u8981\\u6267\\u884C ''{0}'' \\u64CD\\u4F5C\\u7684\\u9879\\u76EE\\u3002"
+        "value": "选择要执行 ''{0}'' 操作的项目。"
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
-          "summary": "\\u6D88\\u606F",
-          "detail": "\\u65E0\\u6CD5\\u5728\\u8FD0\\u884C\\u81EA\\u52A8\\u91CD\\u65B0\\u52A0\\u8F7D\\u65F6\\u6267\\u884C ''{0}'' \\u64CD\\u4F5C\\uFF01\\u8BF7\\u9996\\u5148\\u5355\\u51FB ''{1}'' \\u56FE\\u6807\\u505C\\u6B62\\u91CD\\u65B0\\u52A0\\u8F7D\\u3002"
+          "summary": "消息",
+          "detail": "无法在运行自动重新加载时执行 ''{0}'' 操作！请首先单击 ''{1}'' 图标停止重新加载。"
         }
       }
     },
     "labels": {
       "start": {
-        "value": "\\u542F\\u52A8"
+        "value": "启动"
       },
       "resume": {
-        "value": "\\u6062\\u590D"
+        "value": "恢复"
       },
       "suspend": {
-        "value": "\\u6302\\u8D77"
+        "value": "挂起"
       },
       "shutdown": {
-        "value": "\\u5173\\u95ED"
+        "value": "关闭"
       },
       "restartSSL": {
-        "value": "\\u91CD\\u65B0\\u542F\\u52A8 SSL"
+        "value": "重新启动 SSL"
       },
       "stop": {
-        "value": "\\u505C\\u6B62"
+        "value": "停止"
       }
     }
   },
   "wrc-table": {
     "checkboxes": {
       "showHiddenColumns": {
-        "label": "\\u663E\\u793A\\u9690\\u85CF\\u7684\\u5217"
+        "label": "显示隐藏的列"
       }
     },
-    "actionsDialog": {
-      "buttons": {
-        "cancel": {
-          "label": "\\u53D6\\u6D88"
+    "labels": {
+      "totalRows": {
+        "value": "总行数: {0}"
+      }
+    }
+  },
+  "wrc-table-customizer": {
+    "labels": {
+      "available": {
+        "value": "可用列"
+      },
+      "selected": {
+        "value": "选定列"
+      }
+    },
+    "messages": {
+      "action": {
+        "needAtLeastOneColumn": {
+          "title": "列数不足",
+          "detail": "必须至少选择一列。"
         }
       }
     }
@@ -561,64 +700,64 @@ define({
   "wrc-form-toolbar": {
     "buttons": {
       "save": {
-        "label": "\\u4FDD\\u5B58"
+        "label": "保存"
       },
       "new": {
-        "label": "\\u521B\\u5EFA"
+        "label": "创建"
       },
       "delete": {
-        "label": "\\u5220\\u9664"
+        "label": "删除"
       },
       "back": {
-        "label": "\\u4E0A\\u4E00\\u6B65"
+        "label": "上一步"
       },
       "next": {
-        "label": "\\u4E0B\\u4E00\\u6B65"
+        "label": "下一步"
       },
       "finish": {
-        "label": "\\u521B\\u5EFA"
+        "label": "创建"
       }
     },
     "icons": {
       "save": {
-        "tooltip": "\\u4FDD\\u5B58"
+        "tooltip": "保存"
       },
       "create": {
-        "tooltip": "\\u521B\\u5EFA"
+        "tooltip": "创建"
       },
       "landing": {
-        "tooltip": "\\u767B\\u5F55\\u9875"
+        "tooltip": "登录页"
       },
       "history": {
-        "tooltip": "\\u663E\\u793A/\\u9690\\u85CF\\u5386\\u53F2\\u8BB0\\u5F55"
+        "tooltip": "显示/隐藏历史记录"
       },
       "instructions": {
-        "tooltip": "\\u663E\\u793A/\\u9690\\u85CF\\u8BF4\\u660E"
+        "tooltip": "显示/隐藏说明"
       },
       "help": {
-        "tooltip": "\\u663E\\u793A/\\u9690\\u85CF\\u5E2E\\u52A9\\u9875"
+        "tooltip": "显示/隐藏帮助页"
       },
       "sync": {
-        "tooltip": "\\u91CD\\u65B0\\u52A0\\u8F7D",
-        "tooltipOn": "\\u505C\\u6B62\\u81EA\\u52A8\\u91CD\\u65B0\\u52A0\\u8F7D"
+        "tooltip": "重新加载",
+        "tooltipOn": "停止自动重新加载"
       },
       "syncInterval": {
-        "tooltip": "\\u8BBE\\u7F6E\\u81EA\\u52A8\\u91CD\\u65B0\\u52A0\\u8F7D\\u95F4\\u9694"
+        "tooltip": "设置自动重新加载间隔"
       },
       "shoppingcart": {
-        "tooltip": "\\u5355\\u51FB\\u4EE5\\u67E5\\u770B\\u8D2D\\u7269\\u8F66\\u7684\\u64CD\\u4F5C"
+        "tooltip": "单击以查看购物车的操作"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "\\u67E5\\u770B\\u66F4\\u6539"
+          "label": "查看更改"
         },
         "discard": {
-          "label": "\\u653E\\u5F03\\u66F4\\u6539"
+          "label": "放弃更改"
         },
         "commit": {
-          "label": "\\u63D0\\u4EA4\\u66F4\\u6539"
+          "label": "提交更改"
         }
       }
     }
@@ -626,34 +765,34 @@ define({
   "wrc-form": {
     "checkboxes": {
       "showAdvancedFields": {
-        "label": "\\u663E\\u793A\\u9AD8\\u7EA7\\u5B57\\u6BB5"
+        "label": "显示高级字段"
       }
     },
     "introduction": {
       "toggleHelp": {
-        "text": "\\u5355\\u51FB {0} \\u56FE\\u6807\\u4EE5\\u5728\\u6982\\u8981\\u548C\\u8BE6\\u7EC6\\u5E2E\\u52A9\\u4FE1\\u606F\\u4E4B\\u95F4\\u5207\\u6362\\u3002"
+        "text": "单击 {0} 图标以在概要和详细帮助信息之间切换。"
       }
     },
     "messages": {
-      "save": "\\u6DFB\\u52A0\\u5230\\u8D2D\\u7269\\u8F66\\u7684\\u66F4\\u6539"
+      "save": "添加到购物车的更改"
     },
     "icons": {
       "restart": {
-        "tooltip": "\\u9700\\u8981\\u91CD\\u65B0\\u542F\\u52A8\\u670D\\u52A1\\u5668\\u6216\\u5E94\\u7528\\u7A0B\\u5E8F"
+        "tooltip": "需要重新启动服务器或应用程序"
       },
       "wdtIcon": {
-        "tooltip": "WDT Settings"
+        "tooltip": "WDT 设置"
       }
     }
   },
   "wrc-help-form": {
     "tables": {
       "help": {
-        "label": "\\u5E2E\\u52A9\\u8868",
+        "label": "帮助表",
         "columns": {
           "header": {
-            "name": "\\u540D\\u79F0",
-            "description": "\\u8BF4\\u660E"
+            "name": "名称",
+            "description": "说明"
           }
         }
       }
@@ -662,128 +801,183 @@ define({
   "wrc-create-form": {
     "pageState": {
       "error": {
-        "summary": "\\u5FC5\\u586B\\u5B57\\u6BB5\\u4E0D\\u5B8C\\u6574",
-        "detail": "{0} \\u5B57\\u6BB5\\u662F\\u5FC5\\u586B\\u5B57\\u6BB5\\uFF0C\\u4F46\\u662F\\u5C1A\\u672A\\u63D0\\u4F9B\\u4EFB\\u4F55\\u503C\\u3002"
+        "summary": "必填字段不完整",
+        "detail": "{0} field is required, but no (or an invalid) value has been provided."
       }
     }
   },
   "wrc-common": {
     "buttons": {
+      "apply": {
+        "label": "应用"
+      },
+      "reset": {
+        "label": "重置"
+      },
       "ok": {
-        "label": "OK"
+        "label": "确定"
       },
       "cancel": {
-        "label": "\\u53D6\\u6D88"
+        "label": "取消"
       },
       "yes": {
-        "label": "\\u662F"
+        "label": "是"
       },
       "no": {
-        "label": "\\u5426"
+        "label": "否"
       },
       "choose": {
-        "label": "Choose"
+        "label": "选择"
       },
       "connect": {
-        "label": "\\u8FDE\\u63A5"
+        "label": "连接"
       },
       "add": {
-        "label": "Add/Send"
+        "label": "添加/发送"
       },
       "edit": {
-        "label": "Edit/Send"
+        "label": "编辑/发送"
       },
       "import": {
-        "label": "Import"
+        "label": "导入"
       },
       "export": {
-        "label": "Export"
+        "label": "导出"
       },
       "write": {
-        "label": "\\u66F4\\u65B0\\u6587\\u4EF6"
+        "label": "下载文件"
+      },
+      "savenow": {
+        "label": "立即保存"
       }
     },
     "tooltips": {
       "collapse": {
-        "value": "\\u6298\\u53E0"
+        "value": "折叠"
       },
       "expand": {
-        "value": "\\u5C55\\u5F00"
+        "value": "展开"
       },
       "choose": {
-        "value": "\\u9009\\u62E9\\u6587\\u4EF6"
+        "value": "选择文件"
       },
       "clear": {
-        "value": "\\u6E05\\u9664\\u6240\\u9009\\u6587\\u4EF6"
+        "value": "清除所选文件"
       },
       "more": {
-        "value": "\\u66F4\\u591A\\u64CD\\u4F5C"
+        "value": "更多操作"
       },
       "download": {
-        "value": "Browse"
+        "value": "浏览"
       },
       "reset": {
-        "value": "Reset"
+        "value": "重置"
       },
       "submit": {
-        "value": "\\u63D0\\u4EA4\\u66F4\\u6539"
+        "value": "提交更改"
       },
       "write": {
-        "value": "\\u66F4\\u65B0\\u6587\\u4EF6"
+        "value": "下载文件"
       },
       "pick": {
-        "value": "Pick Directory"
+        "value": "选取目录"
+      },
+      "reload": {
+        "value": "Reload File"
+      }
+    },
+    "menu": {
+      "chooseFile": {
+        "value": "选择文件..."
+      },
+      "chooseDir": {
+        "value": "选择目录..."
+      }
+    },
+    "labels": {
+      "info": {
+        "value": "Information"
+      },
+      "warn": {
+        "value": "警告"
+      },
+      "error": {
+        "value": "错误"
       }
     }
   },
   "wrc-wdt-form": {
     "messages": {
-      "changesSubmitted": {
-        "summary": "Changes were successfully submitted!"
+      "changesSaved": {
+        "summary": "更改已成功保存到 ''{0}'' 文件！"
       },
-      "changesNotSubmitted": {
-        "summary": "Unable to submit changes!"
+      "changesNotSaved": {
+        "summary": "无法将更改保存到 ''{0}'' 文件！"
       },
-      "changesWritten": {
-        "summary": "Changes were successfully written to ''{0}'' file!"
+      "changesDownloaded": {
+        "summary": "更改已成功下载到 ''{0}'' 文件！"
       },
-      "changesNotWritten": {
-        "summary": "Unable to write changes to ''{0}'' file!"
+      "changesNotDownloaded": {
+        "summary": "无法将更改下载到 ''{0}'' 文件！"
+      },
+      "verifyPathEntered": {
+        "detail": ". 将 {0} 字段设置为 false 将接受输入的值，而不验证该值是否作为本地文件或目录存在。"
       }
     },
     "wdtOptionsDialog": {
-      "title": "Edit: {0}",
-      "default": "Default. (Unset)",
-      "instructions": "Enter token to add to the list of selectable items.",
-      "enterValue": "\\u8F93\\u5165\\u503C",
-      "selectValue": "Select Value",
-      "selectSwitch": "\\u5207\\u6362\\u503C",
-      "enterUnresolvedReference": "Enter Unresolved Reference",
-      "enterModelToken": "Enter Model Token"
+      "title": "编辑：{0}",
+      "default": "默认值。（取消设置）",
+      "instructions": "输入要添加到可选项目列表的令牌。",
+      "enterValue": "输入值",
+      "selectValue": "选择值",
+      "selectSwitch": "切换值",
+      "enterUnresolvedReference": "输入未解析的引用",
+      "enterModelToken": "输入模型令牌",
+      "selectPropsVariable": "选择模型令牌变量",
+      "createPropsVariable": "创建模型令牌变量",
+      "propName": "变量名（必需）",
+      "propValue": "变量值",
+      "enterVariable": "输入变量",
+      "variableName": "变量名（必需）",
+      "variableValue": "变量值",
+      "multiSelectUnset": "\"默认值。（从可用项列表中选择）\""
     }
   },
   "wrc-unsaved-changes": {
-    "confirmDialog": {
-      "title": "\\u68C0\\u6D4B\\u5230\\u672A\\u4FDD\\u5B58\\u7684\\u66F4\\u6539"
+    "titles": {
+      "unsavedChanges": {
+        "value": "检测到未保存的更改"
+      },
+      "changesNeedDownloading": {
+        "value": "未下载更改"
+      }
     },
     "prompts": {
       "unsavedChanges": {
         "willBeLost": {
-          "value": "\\u6240\\u6709\\u672A\\u4FDD\\u5B58\\u7684\\u66F4\\u6539\\u90FD\\u5C06\\u4E22\\u5931\\u3002\\u662F\\u5426\\u7EE7\\u7EED\\uFF1F"
+          "value": "所有未保存的更改都将丢失。是否继续？"
         },
         "areYouSure": {
-          "value": "\\u662F\\u5426\\u786E\\u5B9E\\u8981\\u9000\\u51FA\\u800C\\u4E0D\\u4FDD\\u5B58\\u66F4\\u6539\\uFF1F"
+          "value": "是否确实要退出而不保存更改？"
+        },
+        "needDownloading": {
+          "value": "您的更改尚未下载到 WDT 模型文件。<br/><br/>先进行下载再继续？"
+        }
+      },
+      "uncommitedCreate": {
+        "abandonForm": {
+          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
         }
       }
     }
   },
   "wrc-sync-interval": {
     "dialogSync": {
-      "title": "\\u8BBE\\u7F6E\\u81EA\\u52A8\\u91CD\\u65B0\\u52A0\\u8F7D\\u95F4\\u9694",
-      "instructions": "\\u60A8\\u5E0C\\u671B\\u81EA\\u52A8\\u91CD\\u65B0\\u52A0\\u8F7D\\u95F4\\u9694\\u662F\\u591A\\u5C11\\u79D2\\uFF1F",
+      "title": "设置自动重新加载间隔",
+      "instructions": "您希望自动重新加载间隔是多少秒？",
       "fields": {
         "interval": {
-          "label": "\\u81EA\\u52A8\\u91CD\\u65B0\\u52A0\\u8F7D\\u95F4\\u9694\\uFF1A"
+          "label": "自动重新加载间隔："
         }
       }
     }
@@ -792,22 +986,36 @@ define({
     "messages": {
       "action": {
         "unableToPerform": {
-          "summary": "\\u6D88\\u606F",
-          "detail": "\\u5F53\\u5C1D\\u8BD5\\u5BF9 ''{1}'' \\u6267\\u884C\\u6307\\u5B9A\\u64CD\\u4F5C\\u65F6\\uFF0C\\u63A7\\u5236\\u53F0\\u540E\\u7AEF\\u8C03\\u7528\\u751F\\u6210\\u4E86 ''{0}'' \\u54CD\\u5E94\\u3002"
+          "summary": "消息",
+          "detail": "当尝试对 ''{1}'' 执行指定操作时，控制台后端调用生成了 ''{0}'' 响应。"
         }
       }
     },
     "labels": {
       "cannotDetermineExactCause": {
-        "value": "\\u65E0\\u6CD5\\u786E\\u5B9A\\u786E\\u5207\\u539F\\u56E0\\u3002\\u8BF7\\u67E5\\u770B JavaScript \\u63A7\\u5236\\u53F0\\u4E2D\\u7684\\u63D0\\u793A\\u3002"
+        "value": "无法确定确切原因。请查看 JavaScript 控制台中的提示。"
       }
     }
   },
   "wrc-pdj-fields": {
     "cfe-multi-select": {
       "labels": {
-        "available": "\\u53EF\\u7528",
-        "chosen": "\\u6240\\u9009"
+        "available": "可用",
+        "chosen": "所选"
+      }
+    },
+    "cfe-properties-editor": {
+      "labels": {
+        "name": "属性名称",
+        "value": "属性值"
+      }
+    },
+    "cfe-property-list-editor": {
+      "labels": {
+        "nameHeader": "属性名称",
+        "valueHeader": "属性值",
+        "addButtonTooltip": "添加",
+        "deleteButtonTooltip": "删除"
       }
     }
   },
@@ -816,13 +1024,13 @@ define({
       "more": {
         "optionsSources": {
           "view": {
-            "label": "\\u67E5\\u770B {0}..."
+            "label": "查看 {0}..."
           },
           "create": {
-            "label": "\\u521B\\u5EFA\\u65B0{0}..."
+            "label": "创建新{0}..."
           },
           "edit": {
-            "label": "\\u7F16\\u8F91 {0}..."
+            "label": "编辑 {0}..."
           }
         }
       }
@@ -830,17 +1038,16 @@ define({
   },
   "wrc-pdj-unset": {
     "menu": {
-      "label": "\\u8FD8\\u539F\\u4E3A\\u9ED8\\u8BA4\\u503C"
+      "label": "还原为默认值"
     },
     "placeholder": {
-      "value": "\\u9ED8\\u8BA4\\u503C"
+      "value": "默认值"
     }
   },
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "summary": "\\u6D88\\u606F",
-        "detail": "RDJ \\u4E0D\\u5305\\u542B ''{0}'' \\u9879\\u76EE\\u7684 ''notFoundMessage'' \\u5B57\\u6BB5\\u3002"
+        "detail": "''{0}'' 不可用。"
       }
     }
   },
@@ -853,41 +1060,41 @@ define({
         "value": "SHUTDOWN"
       },
       "serverStates": {
-        "value": "\\u670D\\u52A1\\u5668\\u72B6\\u6001"
+        "value": "服务器状态"
       },
       "systemStatus": {
-        "value": "\\u7CFB\\u7EDF\\u72B6\\u6001"
+        "value": "系统状态"
       },
       "healthState": {
         "failed": {
-          "value": "\\u5931\\u8D25"
+          "value": "失败"
         },
         "critical": {
-          "value": "\\u4E25\\u91CD"
+          "value": "严重"
         },
         "overloaded": {
-          "value": "\\u8D85\\u8F7D"
+          "value": "超载"
         },
         "warning": {
-          "value": "\\u8B66\\u544A"
+          "value": "警告"
         },
         "ok": {
-          "value": "\\u6B63\\u5E38"
+          "value": "正常"
         }
       }
     },
     "descriptions": {
       "healthState": {
-        "value": "\\u622A\\u81F3\\u4EE5\\u4E0B\\u65F6\\u95F4\\u6B63\\u5728\\u8FD0\\u884C\\u7684\\u670D\\u52A1\\u5668\\u7684\\u5065\\u5EB7\\u72B6\\u51B5:"
+        "value": "截至以下时间正在运行的服务器的健康状况:"
       }
     },
     "headers": {
       "serverStates": {
         "name": {
-          "value": "\\u540D\\u79F0"
+          "value": "名称"
         },
         "state": {
-          "value": "\\u72B6\\u6001"
+          "value": "状态"
         }
       }
     }
@@ -895,33 +1102,36 @@ define({
   "wrc-data-operations": {
     "messages": {
       "backendNotReachable": {
-        "detail": "\\u5F53\\u524D\\u65E0\\u6CD5\\u8BBF\\u95EE\\u540E\\u7AEF\\u3002"
+        "detail": "当前无法访问后端。"
       },
       "connectionMessage": {
-        "summary": "\\u8FDE\\u63A5\\u6D88\\u606F"
+        "summary": "连接消息"
       },
       "connectFailed": {
-        "detail": "Attempt Failed: "
+        "detail": "尝试失败："
       },
       "badRequest": {
-        "detail": "Unable to process the submitted file or request "
+        "detail": "无法处理提交的文件或请求"
       },
       "invalidCredentials": {
-        "detail": "WebLogic \\u57DF\\u8EAB\\u4EFD\\u8BC1\\u660E\\u65E0\\u6548 "
+        "detail": "WebLogic 域身份证明无效 "
       },
       "invalidUrl": {
-        "detail": "\\u65E0\\u6CD5\\u8BBF\\u95EE WebLogic \\u57DF URL "
+        "detail": "无法访问 WebLogic 域 URL "
+      },
+      "notInRole": {
+        "detail": "尝试失败：用户不是管理员、部署人员、操作员或监视人员"
       },
       "notSupported": {
-        "detail": "\\u4E0D\\u652F\\u6301 WebLogic \\u57DF "
+        "detail": "不支持 WebLogic 域 "
       },
       "unexpectedStatus": {
-        "detail": "\\u610F\\u5916\\u7684\\u7ED3\\u679C\\uFF08\\u72B6\\u6001\\uFF1A{0}\\uFF09"
+        "detail": "意外的结果（状态：{0}）"
       },
       "cbeRestApi": {
         "requestUnsuccessful": {
-          "summary": "\\u8BF7\\u6C42\\u672A\\u6210\\u529F",
-          "detail": "\\u4ECE\\u63A7\\u5236\\u53F0\\u540E\\u7AEF\\u8C03\\u7528\\u8FD4\\u56DE\\u4E86\\u4E0D\\u6210\\u529F\\u7684\\u54CD\\u5E94\\u3002"
+          "summary": "请求未成功",
+          "detail": "从控制台后端调用返回了不成功的响应。"
         }
       }
     }
@@ -929,36 +1139,42 @@ define({
   "wrc-message-displaying": {
     "messages": {
       "seeJavascriptConsole": {
-        "detail": "\\u8BF7\\u67E5\\u770B\\u8FDC\\u7A0B\\u63A7\\u5236\\u53F0\\u7EC8\\u7AEF\\u6216 Javascript \\u63A7\\u5236\\u53F0\\u4EE5\\u4E86\\u89E3\\u5177\\u4F53\\u539F\\u56E0\\u3002"
+        "detail": "请查看远程控制台终端或 Javascript 控制台以了解具体原因。"
       },
       "responseMessages": {
-        "summary": "\\u54CD\\u5E94\\u6D88\\u606F"
+        "summary": "响应消息"
       }
     }
   },
   "wrc-change-manager": {
     "messages": {
       "cannotGetLockState": {
-        "summary": "\\u65E0\\u6CD5\\u8BBF\\u95EE\\u66F4\\u6539\\u7BA1\\u7406\\u5668\\uFF01"
+        "summary": "无法访问更改管理器！"
       },
       "changesCommitted": {
-        "summary": "\\u5DF2\\u6210\\u529F\\u63D0\\u4EA4\\u66F4\\u6539\\uFF01"
+        "summary": "已成功提交更改！"
       },
       "changesNotCommitted": {
-        "summary": "\\u65E0\\u6CD5\\u63D0\\u4EA4\\u66F4\\u6539\\uFF01"
+        "summary": "无法提交更改！"
       },
       "changesDiscarded": {
-        "summary": "\\u5DF2\\u6210\\u529F\\u653E\\u5F03\\u66F4\\u6539\\uFF01"
+        "summary": "已成功放弃更改！"
       },
       "changesNotDiscarded": {
-        "summary": "\\u65E0\\u6CD5\\u653E\\u5F03\\u66F4\\u6539\\uFF01"
+        "summary": "无法放弃更改！"
       }
     }
   },
   "wrc-view-model-utils": {
     "labels": {
       "unexpectedErrorResponse": {
-        "value": "\\u610F\\u5916\\u7684\\u9519\\u8BEF\\u54CD\\u5E94"
+        "value": "意外的错误响应"
+      }
+    },
+    "messages": {
+      "connectionRefused": {
+        "summary": "连接问题",
+        "details": "从提供程序发送和接收数据出现问题！请确保提供程序可访问，然后重试。"
       }
     }
   }

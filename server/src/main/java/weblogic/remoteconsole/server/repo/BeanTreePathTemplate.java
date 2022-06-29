@@ -92,11 +92,15 @@ public class BeanTreePathTemplate {
                 );
             }
           } else {
-            throw
-              new AssertionError(
-                templateComponent + " is not a collection:"
-                + " " + childDef.getChildName() + " " + values
-              );
+            // Some types, like MinThreadsConstraintRuntime, are sometimes
+            // collection children and sometimes singleton children.
+            // When the link has <TypeName> in it, it's specifying a link
+            // from a collection child of this type to a collection child
+            // in a corresponding collection.
+            // When the current bean is a singleton, we can't make the
+            // link since we don't know the current bean's name.
+            // So, just omit the link.
+            return null;
           }
         }
       }

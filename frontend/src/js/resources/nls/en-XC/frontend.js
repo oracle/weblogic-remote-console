@@ -56,7 +56,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-footer.text.copyrightLegal:::Copyright \\u00C2\\u00A9 2020, 2021, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>]]",
+      "copyrightLegal": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-footer.text.copyrightLegal:::Copyright Â© 2020, 2022, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>]]",
       "builtWith": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-footer.text.builtWith:::Built with Oracle JET]]"
     }
   },

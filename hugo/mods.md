@@ -3,7 +3,13 @@ A list of modifications made to the learn theme that weren't made in the config.
 ## Left menu
 By default, there are entries for 'Home' and 'Release Notes' in the left menu. These have been removed by commenting them out of the layout template in `hugo/themes/hugo-theme-learn/layouts/partials/menu.html`
 
-## Block/inline images
+## CSS changes
+
+Main CSS file: `/hugo/../themes/hugo-theme-learn/static/css/theme.css`
+
+There are other CSS files but this seems to be the main one.
+
+### Block/inline images
 
 By default, all images are rendered as block images. I removed the CSS styling so images are now inline by default, if they're within a paragraph.
 
@@ -14,8 +20,6 @@ Some text.
 ![Image](/image.png)
 
 More text.
-
-This change was made in `/hugo/themes/hugo-theme-learn/static/css/theme.css` at line 329.
 
 ```
 #body img, #body .video-container {
@@ -37,24 +41,37 @@ became
 
 i.e. `#body img,` was removed.
 
-## Notices styling
+### Notices styling
 
-The default styling for notices meant that anything more exotic than a (single) p tag and the styling would break down. This change allows for other elements like lists to render well inside notices.
+The default styling for notices wasn't flexible and if you added anything more exotic than a single p tag, the styling would break. Various changes were made to the `div.notices ...` rulesets (starting at ~ line 483) to allow for other elements like lists and codeblocks to render well inside notices. 
 
-Original (for div.notices.info, div.notices.warning, div.notices.note, and div.notices.tip ):
+Typically, that meant replacing rulesets targeting `div.notices p` with ones that target any direct descendant: `div.notices > *`.
+
+
+### Icon styling
+Added styling to vertically align icons that are inline with text.
+
 ```
-div.notices.info p {
-    border-top: 30px solid #F0B37E;
-    background: #FFF2DB;
+img[src*="/icons/"] {
+    vertical-align: middle;
 }
 ```
 
-New (for div.notices.info, div.notices.warning, div.notices.note, and div.notices.tip ):
+### Table head
+Added border styling to `th`
+
+From
 ```
-div.notices.info p:first-of-type {
-    border-top: 30px solid #F0B37E;
+th {
+    background: #f7f7f7;
+    padding: 0.5rem;
 }
-div.notices.info {
-    background: #FFF2DB;
+```
+to 
+```
+th {
+    background: #f7f7f7;
+    padding: 0.5rem;
+    border: 1px solid #eaeaea;
 }
 ```

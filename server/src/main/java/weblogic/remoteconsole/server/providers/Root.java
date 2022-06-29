@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -9,8 +9,10 @@ import javax.json.JsonObjectBuilder;
 
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.PageRepo;
+import weblogic.remoteconsole.server.webapp.UriUtils;
 
 public class Root {
   public static final String EDIT_NAME = "edit";
@@ -20,47 +22,39 @@ public class Root {
   public static final String SERVER_CONFIGURATION_NAME = "serverConfig";
   public static final String DOMAIN_RUNTIME_NAME = "domainRuntime";
   public static final String CONFIGURATION_ROOT = "Domain";
+  public static final String NAV_TREE_RESOURCE = "navtree";
+  public static final String SIMPLE_SEARCH_RESOURCE = "simpleSearch";
+  public static final String CHANGE_MANAGER_RESOURCE = "changeManager";
+  public static final String DOWNLOAD_RESOURCE = "download";
   public static final LocalizableString CONFIGURATION_LABEL = LocalizedConstants.CONFIGURATION_LABEL;
+  public static final LocalizableString COMPOSITE_CONFIGURATION_LABEL =
+    LocalizedConstants.COMPOSITE_CONFIGURATION_LABEL;
   public static final LocalizableString PROPERTY_LIST_CONFIGURATION_LABEL =
     LocalizedConstants.PROPERTY_LIST_CONFIGURATION_LABEL;
   public static final String MONITORING_ROOT = "DomainRuntime";
   public static final LocalizableString MONITORING_LABEL = LocalizedConstants.MONITORING_LABEL;
+  private Provider provider;
   private String name;
   private String rootName;
   private LocalizableString label;
-  private String navtree;
-  private String changeManager;
-  private String download;
   private boolean readOnly;
+  private String[] topLevelResources;
   private PageRepo pageRepo;
 
   public Root(
+    Provider provider,
     String name,
     String rootName,
     LocalizableString label,
-    String navtree,
-    String changeManager,
-    boolean readOnly
+    boolean readOnly,
+    String... topLevelResources
   ) {
-    this(name, rootName, label, navtree, changeManager, null, readOnly);
-  }
-
-  public Root(
-    String name,
-    String rootName,
-    LocalizableString label,
-    String navtree,
-    String changeManager,
-    String download,
-    boolean readOnly
-  ) {
+    this.provider = provider;
     this.name = name;
     this.rootName = rootName;
     this.label = label;
-    this.navtree = navtree;
-    this.changeManager = changeManager;
-    this.download = download;
     this.readOnly = readOnly;
+    this.topLevelResources = topLevelResources;
   }
 
   public String getName() {
@@ -88,12 +82,12 @@ public class Root {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", name);
     ret.add("label", ic.getLocalizer().localizeString(label));
-    ret.add("navtree", navtree);
-    if (changeManager != null) {
-      ret.add("changeManager", changeManager);
-    }
-    if (download != null) {
-      ret.add("download", download);
+    String encodedProviderName = StringUtils.urlEncode(provider.getName());
+    for (String topLevelResource : topLevelResources) {
+      ret.add(
+        topLevelResource,
+        "/" + UriUtils.API_URI + "/" + encodedProviderName + "/" + name + "/" + topLevelResource
+      );
     }
     if (readOnly) {
       ret.add("readOnly", true);

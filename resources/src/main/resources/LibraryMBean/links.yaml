@@ -4,12 +4,12 @@
 collectionLinks:
 - label: Status
   resourceData: DomainRuntime/DeploymentManager/LibDeploymentRuntimes
-- label: Aggregated Runtime Data
+- label: Runtime Data
   resourceData: DomainRuntime/AggregatedLibraryRuntimes
 
 instanceLinks:
 - label: Status
   resourceData: DomainRuntime/DeploymentManager/LibDeploymentRuntimes/<Library>
-- label: Aggregated Runtime Data
+- label: Runtime Data
   resourceData: DomainRuntime/AggregatedLibraryRuntimes/<Library>
   notFoundMessage: This library was not found on any of the currently running servers.

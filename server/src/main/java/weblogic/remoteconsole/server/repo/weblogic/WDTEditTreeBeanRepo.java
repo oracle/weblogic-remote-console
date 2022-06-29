@@ -22,6 +22,7 @@ import weblogic.remoteconsole.common.repodef.Localizer;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.server.providers.WDTModelDataProvider;
+import weblogic.remoteconsole.server.providers.WDTModelDataProvider.PropertySource;
 import weblogic.remoteconsole.server.repo.BeanEditorRepo;
 import weblogic.remoteconsole.server.repo.BeanPropertyValue;
 import weblogic.remoteconsole.server.repo.BeanPropertyValues;
@@ -29,8 +30,13 @@ import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.DownloadBeanRepo;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.repo.ModelTokenReader;
+import weblogic.remoteconsole.server.repo.ModelTokens;
+import weblogic.remoteconsole.server.repo.Option;
+import weblogic.remoteconsole.server.repo.OptionsSource;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
+import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
 
 /**
@@ -46,7 +52,7 @@ import weblogic.remoteconsole.server.webapp.FailedRequestException;
  * The WDTModelBuilder is used create a new model from the bean tree in YAML or JSON.
  * <p>
  */
-public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, DownloadBeanRepo {
+public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, DownloadBeanRepo, ModelTokenReader {
   private static final Logger LOGGER = Logger.getLogger(WDTEditTreeBeanRepo.class.getName());
   private static final String DOMAIN = "Domain";
 
@@ -71,11 +77,13 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
       LOGGER.fine("WDT: WDTEditTreeBeanRepo created");
       BeanChildDef rootChildDef = getBeanRepoDef().getRootTypeDef().getChildDef(new Path(DOMAIN));
       BeanTreeBuilder builder = new BeanTreeBuilder(model, this, rootChildDef, ic.getLocalizer());
-      builder.addModelSection("topology").addModelSection("resources").addModelSection("appDeployments");
+      builder.addModelSections();
 
       // Build the bean tree and any exception during the build results in a failed request!
       try {
         beanTree = builder.build();
+      } catch (FailedRequestException fre) {
+        throw fre;
       } catch (Exception exc) {
         throw new FailedRequestException(exc.getMessage());
       }
@@ -210,23 +218,53 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
   }
 
   /**
+   * Provide information on WDT model tokens when the WDT model references a property list.
+   */
+  @Override
+  public ModelTokens getModelTokens(InvocationContext ic) {
+    ModelTokens modelTokens = null;
+    if (ic.getProvider() instanceof WDTModelDataProvider) {
+      List<PropertySource> sources = ((WDTModelDataProvider)ic.getProvider()).getPropertySources();
+
+      // Create the model tokens information using the property list source and the list of Properties
+      if ((sources != null) && !sources.isEmpty()) {
+        modelTokens = new ModelTokens();
+        for (PropertySource source : sources) {
+          // Add the source location of the Property List provider
+          modelTokens.getOptionsSources().add(new OptionsSource(source.getName(), source.getResourceData()));
+
+          // Add an option for each of the Properties using the label as the property name (i.e. key)
+          // and setting the option value to the WDT model token for the property name...
+          List<Option> options = modelTokens.getOptions();
+          source.getProperties().forEach((key, val) -> {
+            String label = key.toString();
+            StringValue value = new StringValue("@@PROP:" + label + "@@");
+            options.add(new Option(label, value));
+          });
+        }
+      }
+    }
+    return modelTokens;
+  }
+
+  /**
    * Handle read for the BeanReaderRepo by returning a BeanReaderRepoSearchBuilder backed by the bean tree
    */
   @Override  
-  public BeanReaderRepoSearchBuilder createSearchBuilder(InvocationContext invocationContext, boolean includeIsSet) {
+  public BeanReaderRepoSearchBuilder createSearchBuilder(InvocationContext ic, boolean includeIsSet) {
     LOGGER.fine("WDT: WDTEditTreeBeanRepo createSearchBuilder() "
-                 + invocationContext.getBeanTreePath()
+                 + ic.getBeanTreePath()
                  + " - includeSet: " + includeIsSet);
-    return new WDTBeanRepoSearchBuilder(beanTree, includeIsSet);
+    return new WDTBeanRepoSearchBuilder(beanTree, includeIsSet, ic.getLocalizer());
   }
 
   /**
    * Handle udpate for the BeanEditorRepo on the bean tree
    */
   @Override
-  public Response<Void> updateBean(InvocationContext invocationContext, BeanPropertyValues propertyValues) {
+  public Response<Void> updateBean(InvocationContext ic, BeanPropertyValues propertyValues) {
     LOGGER.fine("WDT: WDTEditTreeBeanRepo updateBean() "
-                 + invocationContext.getBeanTreePath()
+                 + ic.getBeanTreePath()
                  + " - propertyValues: " + propertyValues);
 
     // Look up the bean in the tree...
@@ -240,7 +278,7 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
     } else {
       // Update each property on the bean based on the state of the bean tree...
       LOGGER.finest("WDT: updateBean(): " + entry.getPath());
-      Localizer localizer = invocationContext.getLocalizer();
+      Localizer localizer = ic.getLocalizer();
       boolean performReferenceResolution = false;
       for (BeanPropertyValue value : propertyValues.getPropertyValues()) {
         BeanPropertyDef propertyDef = value.getPropertyDef();
@@ -305,9 +343,9 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
    * Handle create for the BeanEditorRepo on the bean tree
    */
   @Override
-  public Response<Void> createBean(InvocationContext invocationContext, BeanPropertyValues propertyValues) {
+  public Response<Void> createBean(InvocationContext ic, BeanPropertyValues propertyValues) {
     LOGGER.fine("WDT: WDTEditTreeBeanRepo createBean() "
-                 + invocationContext.getBeanTreePath()
+                 + ic.getBeanTreePath()
                  + " - propertyValues: " + propertyValues);
 
     BeanTreeEntry createdBean = null;
@@ -332,7 +370,7 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
       LOGGER.finest("WDT: createBean() created: " + createdBean.getPath());
 
       // Add all the specified properties to the created bean...
-      Localizer localizer = invocationContext.getLocalizer();
+      Localizer localizer = ic.getLocalizer();
       boolean performReferenceResolution = false;
       for (BeanPropertyValue value : listPropertyValues) {
         BeanPropertyDef propertyDef = value.getPropertyDef();
@@ -423,9 +461,9 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
    * Handle delete for the BeanEditorRepo on the bean tree
    */
   @Override
-  public Response<Void> deleteBean(InvocationContext invocationContext, BeanTreePath beanTreePath) {
+  public Response<Void> deleteBean(InvocationContext ic, BeanTreePath beanTreePath) {
     LOGGER.fine("WDT: WDTEditTreeBeanRepo deleteBean() "
-                 + invocationContext.getBeanTreePath()
+                 + ic.getBeanTreePath()
                  + " - beanTreePath: " + beanTreePath);
 
     // Look up the bean in the tree...

@@ -1,0 +1,20 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML:  "<p>The search results for ''{0}'' as of {1}.</p>"
+
+customizePageMethod: weblogic.remoteconsole.customizers.SimpleSearchMBeanCustomizer.customizePage
+
+displayedColumns:
+- name: "Name"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The bean's name."
+- name: "Type"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The bean's type."
+- name: "Path"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The path to the bean in the navigation tree."

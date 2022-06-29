@@ -6,8 +6,14 @@
  */
 'use strict';
 
-define(['ojs/ojlogger'],
-  function (Logger) {
+define(['wrc-frontend/core/utils', 'ojs/ojlogger'],
+  function (CoreUtils, Logger) {
+
+    const FIELD_DISABLED = Object.freeze('fieldDisabled_');
+    const FIELD_UNSET = Object.freeze('fieldUnset_');
+    const FIELD_MESSAGES = Object.freeze('fieldMessages_');
+    const FIELD_SELECTDATA = Object.freeze('fieldSelectData_');
+    const FIELD_VALUES = Object.freeze('fieldValues_');
 
     //public:
     return {
@@ -63,7 +69,7 @@ define(['ojs/ojlogger'],
                 // Sometimes the usedIf.values array we're trying to match
                 // has value in it. Other times it has parentValue + "_" value
                 // in it. Try to match again, using the latter.
-                value = value.replace(parentValue + '_', '');
+                if (typeof value === 'string' && value.indexOf(`${parentValue}'_'`) !== -1) value = value.replace(parentValue + '_', '');
                 matchedSections = sections.filter(section => typeof section.usedIf !== 'undefined' && section.usedIf.property === propertyName && section.usedIf.values.includes(value));
               }
             }
@@ -132,7 +138,75 @@ define(['ojs/ojlogger'],
           properties = filteredProperties[0].properties;
         }
         return properties;
-      }
-    };
+      },
+
+      setupUsedIfListeners: function (properties, isWdtForm, form) {
+        const usedIfProperties = properties.filter(property => CoreUtils.isNotUndefinedNorNull(property.usedIf));
+
+        usedIfProperties.forEach((property) => {
+          let propertyName, name = property.name, usedIf = property.usedIf;
+
+          if (form.createForm) {
+            const replacer = form.createForm.getBackingDataAttributeReplacer(usedIf.property);
+            // replacer is only used with the property names used
+            // in the JDBC System Resource wizard. Only assign it
+            // to propertyName, if it's not undefined.
+            propertyName = (CoreUtils.isNotUndefinedNorNull(replacer) ? replacer : usedIf.property);
+          }
+          else {
+            propertyName = usedIf.property;
+          }
+
+          let toggleDisableFunc = (newValue, pType) => {
+            // Prevent a property from becoming enabled/disabled
+            // when value has been unset
+            if (!isWdtForm) {
+              if (form[`${FIELD_UNSET}${name}`]() || form[`${FIELD_UNSET}${propertyName}`]()) {
+                Logger.log(`[FORM] Prevent usedIf handling for unset field: ${name}`);
+                return;
+              }
+            }
+
+            // If the new value is a Model Token, always enable the field.
+            if (CoreUtils.isNotUndefinedNorNull(newValue) &&
+                (typeof newValue === 'string') &&
+                newValue.startsWith('@@PROP:') &&
+                newValue.endsWith('@@')) {
+              form[`${FIELD_DISABLED}${name}`](false);
+            }
+            else {
+              // See if the new value enables the field or not
+              let enabled = usedIf.values.find((item) => {
+                // if we are comparing to true/false (ie boolean), and the value is undefined
+                // of newValue === "" which is the case when user restore to default
+                // we want to enable the dependant field.
+                // we can only test for true/false here because in this call back, we don't have access
+                // to the pdjTypes of this field
+                if (isWdtForm &&
+                    (item === true || item === false) &&
+                    (CoreUtils.isUndefinedOrNull(newValue) || newValue === '')) {
+                  return true;
+                }
+                return item === newValue;
+              }
+            );
+            form[`${FIELD_DISABLED}${name}`](!enabled);
+          }
+        };
+
+        // Call event callback to initialize, then set up
+        // subscription.
+        const oneProp = properties.find(element => element.name === propertyName);
+        let pType = '';
+        if (CoreUtils.isNotUndefinedNorNull(oneProp)) {
+          pType = oneProp.type;
+        }
+        toggleDisableFunc(form[`${FIELD_VALUES}${propertyName}`](), pType);
+        const subscription = form[`${FIELD_VALUES}${propertyName}`].subscribe(toggleDisableFunc);
+        form.subscriptions.push(subscription);
+      });
+    }
+
+  };
   }
 );

@@ -76,7 +76,7 @@ module.exports = function (driver, file) {
             await driver.sleep(1200);
             console.log("Click Configuration-> Environment-> Clusters-> "+clusterName+" delete row button");
             // 3 in the row = <clusterName>
-            await driver.findElement(By.xpath("//tr[3]/td/oj-button/button/div/span/span/span")).click();
+            await driver.findElement(By.xpath("//tr[3]/td/oj-button/button/div/span/span")).click();
             await driver.sleep(1200);
             await admin.commitChanges(driver);
             await driver.sleep(1200);

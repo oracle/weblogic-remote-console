@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response.Status;
 
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.server.providers.Root;
 import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.DownloadBeanRepo;
@@ -118,13 +119,23 @@ public class PageRepoResource extends BaseResource {
   }
 
   // Get the JAXRS resource that returns the nav tree contents for the beans in the page repo.
-  @Path("navtree")
+  @Path(Root.NAV_TREE_RESOURCE)
   public Object getNavTreeResource() {
     return copyContext(new NavTreeResource());
   }
 
+  @Path("search")
+  public Object getSearchResource() {
+    return copyContext(new SearchResource());
+  }
+
+  @Path(Root.SIMPLE_SEARCH_RESOURCE)
+  public Object getSimpleSearchResource() {
+    return copyContext(new SimpleSearchResource());
+  }
+
   // Get the JAXRS resource for the page repo's change manager.
-  @Path("changeManager")
+  @Path(Root.CHANGE_MANAGER_RESOURCE)
   public Object getChangeManagerResource() {
     if (!getInvocationContext().getPageRepo().supportsChangeManager()) {
       LOGGER.info(
@@ -139,7 +150,7 @@ public class PageRepoResource extends BaseResource {
   }
 
   // Get the JAXRS resource for downloading the contents of the page repo.
-  @Path("download")
+  @Path(Root.DOWNLOAD_RESOURCE)
   public Object getDownloadResource() {
     BeanRepo beanRepo = getInvocationContext().getPageRepo().getBeanRepo();
     if (!(beanRepo instanceof DownloadBeanRepo)) {

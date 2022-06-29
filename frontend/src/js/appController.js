@@ -56,7 +56,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         'monitoring/{path}': { label: 'Monitoring', value: 'monitoring', title: Runtime.getName() },
         'view/{path}': { label: 'View', value: 'view', title: Runtime.getName() },
         'modeling/{path}': { label: 'Modeling', value: 'modeling', title: Runtime.getName() },
-        'composite/{path}': { label: 'Composite', value: 'composite', title: Runtime.getName() }
+        'composite/{path}': { label: 'Composite', value: 'composite', title: Runtime.getName() },
+        'properties/{path}': { label: 'Properties', value: 'properties', title: Runtime.getName() }
       });
 
       this.loadModule = function () {
@@ -310,6 +311,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       });
 
       Controller.getSignal('projectSwitched').add((fromProject) => {
+        setTableFormContainerVisibility(false);
+      });
+
+      Controller.getSignal('dataProviderLoadFailed').add((dataProvider) => {
         setTableFormContainerVisibility(false);
       });
 

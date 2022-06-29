@@ -6,7 +6,7 @@
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/microservices/project-management/console-project-manager', 'wrc-frontend/microservices/project-management/console-project', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/provider-management/data-provider', './dataproviders-dialog','wrc-frontend/integration/viewModels/utils', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtreeview','ojs/ojnavigationlist', 'ojs/ojswitch', 'ojs/ojcheckboxset', 'ojs/ojradioset', 'ojs/ojselectcombobox'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/microservices/project-management/console-project-manager', 'wrc-frontend/microservices/project-management/console-project', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/provider-management/data-provider', './dataproviders-dialog','wrc-frontend/integration/viewModels/utils', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtreeview','ojs/ojnavigationlist', 'ojs/ojswitch', 'ojs/ojcheckboxset', 'ojs/ojradioset', 'ojs/ojselectcombobox', 'ojs/ojselectsingle'],
   function (oj, ko, ArrayDataProvider, ConsoleProjectManager, ConsoleProject, DataProviderManager, DataProvider, DataProvidersDialog, ViewModelUtils, MessageDisplaying, Runtime, CoreUtils, CoreTypes, Logger) {
     function DataProvidersTemplate(viewParams) {
       const self = this;
@@ -69,6 +69,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             iconFile: 'more-vertical-brn-8x24',
             tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.more.value')
           },
+          'reload': {
+            iconFile: 'reload-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.reload.value')
+          },
           'info': {
             iconFile: 'data-providers-info-icon-brn_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-data-providers.icons.info.tooltip')
@@ -110,11 +114,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             },
             'model': {
               'file': {'value': ko.observable(),
-                'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.model.file.label')}
+                'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.model.file.label')},
+              'props': {'value': ko.observable(),
+                'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.model.props.label')}
             },
             'composite': {
               'models': {'value': ko.observableArray([]),
                 'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.composite.models.label')}
+            },
+            'proplist': {
+              'file': {'value': ko.observable(),
+                'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.proplist.file.label')}
             }
           }
         },
@@ -128,11 +138,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           },
           'models': {
             'name': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.models.name.value')},
-            'file': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.models.file.value')}
+            'file': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.models.file.value')},
+            'props': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.models.props.value')}
           },
           'composite': {
             'name': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.composite.name.value')},
             'providers': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.composite.providers.value')}
+          },
+          'proplist': {
+            'name': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.proplist.name.value')},
+            'file': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.proplist.file.value')}
           },
           'project': {
             'name': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.project.name.value')},
@@ -141,6 +156,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           'provider': {
             'adminserver': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.provider.adminserver.value')},
             'model': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.provider.model.value')}
+          },
+          'dropdown': {
+            'none': {'value': oj.Translations.getTranslatedString('wrc-data-providers.labels.dropdown.none.value')}
           }
         },
         'menus': {
@@ -162,6 +180,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               label: oj.Translations.getTranslatedString('wrc-data-providers.menus.composite.add.value')
             }
           },
+          'proplist': {
+            'new': {id: 'add-new-property-list', disabled: false,
+              label: oj.Translations.getTranslatedString('wrc-data-providers.menus.proplist.new.value')
+            },
+            'add': {id: 'add-exiting-property-list', disabled: false,
+              label: oj.Translations.getTranslatedString('wrc-data-providers.menus.proplist.add.value')
+            }
+          },
           'providers': {
             'sort': {
               id: 'sort-by-provider-type', disabled: false,
@@ -181,15 +207,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           'add': {
             'connections': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.add.connections.value')},
             'models': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.add.models.value')},
-            'composite': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.add.composite.value')}
+            'composite': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.add.composite.value')},
+            'proplist': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.add.proplist.value')},
           },
           'new': {
-            'models': {'value': oj.Translations.getTranslatedString('wrc-data-providers.titles.new.models.value')}
+            'models': {'value': oj.Translations.getTranslatedString('wrc-data-providers.titles.new.models.value')},
+            'proplist': {'value': oj.Translations.getTranslatedString('wrc-data-providers.titles.new.proplist.value')}
           },
           'edit': {
             'connections': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.connections.value')},
             'models': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.models.value')},
-            'composite': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.composite.value')}
+            'composite': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.composite.value')},
+            'proplist': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.proplist.value')},
           },
           'export': {
             'project': {value: oj.Translations.getTranslatedString('wrc-data-providers.titles.export.project.value')}
@@ -246,6 +275,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             'modelsNotFound': {
               'detail': oj.Translations.getTranslatedString('wrc-data-providers.messages.response.modelsNotFound.detail', '{0}')
             },
+            'propListNotFound': {
+              'detail': oj.Translations.getTranslatedString('wrc-data-providers.messages.response.propListNotFound.detail', '{0}')
+            },
             'selectModels': {
               'detail': oj.Translations.getTranslatedString('wrc-data-providers.messages.response.selectModels.detail')
             }
@@ -260,10 +292,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         'dialog': {
           'title': ko.observable(''),
           'instructions': ko.observable(''),
+          'nameLabel': ko.observable(''),
+          'fileLabel': ko.observable(''),
           'iconFile': ko.observable(''),
           'tooltip': ko.observable('')
         }
       };
+
+      // Content for a new property list dataprovider
+      const newPropertyListContentFileData = '# Property List\n';
 
       // START: knockout observables referenced in dataproviders.html
       this.connectionsModelsSelectedItem = ko.observable('');
@@ -275,8 +312,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       this.dialogFields = ko.observable(initializeDialogFields());
       this.responseMessage = ko.observable('');
       this.providerInfo = {type: ko.observable('adminserver'), state: ko.observable('disconnected')};
-      this.modelFile = ko.observable();
-      this.modelFiles = {};
+      this.contentFile = ko.observable();
+      this.contentFiles = {};
       // END:   knockout observables referenced in dataproviders.html
       this.useSparseTemplate = ko.observableArray([]);
 
@@ -288,6 +325,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       // WDT Composite Model Provider Dialog
       this.wdtProvidersSelectedValues = ko.observableArray([]);
       this.wdtProvidersDataProvider = new ArrayDataProvider([], { keyAttributes: 'value' });
+
+      // Property List selections for WDT Model
+      this.propProviderSelectedValue = ko.observable('');
+      this.propProvidersDataProvider = new ArrayDataProvider([], { keyAttributes: 'value' });
 
       /**
        * Returns the dataProviders property of the default project
@@ -698,6 +739,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                     });
                 }
                 break;
+              case DataProvider.prototype.Type.PROPERTIES.name: {
+                  DataProviderManager.removePropertyList(dataProvider)
+                    .then( result => {
+                      if (result.succeeded) {
+                        viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
+                      }
+                      else {
+                        ViewModelUtils.failureResponseDefaultHandling(result.failure);
+                      }
+                    })
+                    .catch(response => {
+                      ViewModelUtils.failureResponseDefaultHandling(response.failure);
+                    });
+                }
+                break;
             }
           });
         };
@@ -721,6 +777,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             case DataProvider.prototype.Type.COMPOSITE.name:
               dataProvider.putValue('class', 'oj-navigationlist-item-icon oj-ux-ico-composite-form cfe-provider-icon');
               break;
+            case DataProvider.prototype.Type.PROPERTIES.name:
+              dataProvider.putValue('class', 'oj-navigationlist-item-icon oj-ux-ico-custom-properties cfe-provider-icon');
+              break;
           }
         });
       }
@@ -737,6 +796,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         dialogFields.addField('name');
         dialogFields.putValue('type', dataProviderType.name);
         dialogFields.putValue('readonly', CoreUtils.isUndefinedOrNull(window.electron_api));
+        dialogFields.putValue('selectProps', false);
 
         switch(dataProviderType) {
           case DataProvider.prototype.Type.ADMINSERVER:
@@ -745,6 +805,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dialogFields.addField('password');
             break;
           case DataProvider.prototype.Type.MODEL:
+            dialogFields.putValue('selectProps', true);
+            dialogFields.putValue('propProvider', '');
+          case DataProvider.prototype.Type.PROPERTIES:
             dialogFields.addField('file');
             break;
           case DataProvider.prototype.Type.COMPOSITE:
@@ -771,6 +834,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // Set it based on whether we're running as
         // an Electron app (false), not not (true).
         dialogFields.putValue('readonly', CoreUtils.isUndefinedOrNull(window.electron_api));
+        dialogFields.putValue('selectProps', false);
 
         switch(dataProvider.type) {
           case DataProvider.prototype.Type.ADMINSERVER.name:
@@ -779,6 +843,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dialogFields.putValue('password', dataProvider.password);
             break;
           case DataProvider.prototype.Type.MODEL.name:
+            dialogFields.putValue('selectProps', true);
+            dialogFields.putValue('propProvider', getPropertyListProvider(dataProvider.properties));
+          case DataProvider.prototype.Type.PROPERTIES.name:
             dialogFields.putValue('file', (ViewModelUtils.isElectronApiAvailable() ? dataProvider.file : ''));
             break;
           case DataProvider.prototype.Type.COMPOSITE.name:
@@ -807,11 +874,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           case DataProvider.prototype.Type.MODEL:
             dataProvider = DataProviderManager.createWDTModel({id: dialogFields.id, name: dialogFields.name, type: dialogFields.type, beanTrees: []});
             dataProvider.putValue('file', dialogFields.file);
+            dataProvider.putValue('propProvider', dialogFields.propProvider);
+            var propListNames = getPropertyListNames(dialogFields.propProvider);
+            if (CoreUtils.isNotUndefinedNorNull(propListNames)) dataProvider.putValue('properties', propListNames);
             break;
           case DataProvider.prototype.Type.COMPOSITE:
             dataProvider = DataProviderManager.createWDTCompositeModel({ id: dialogFields.id, name: dialogFields.name, type: dialogFields.type, beanTrees: [] });
             dataProvider.putValue('modelProviders', dialogFields.modelProviders);
             dataProvider.putValue('models', getWDTModelNames(dialogFields.modelProviders));
+            break;
+          case DataProvider.prototype.Type.PROPERTIES:
+            dataProvider = DataProviderManager.createPropertyList({id: dialogFields.id, name: dialogFields.name, type: dialogFields.type, beanTrees: []});
+            dataProvider.putValue('file', dialogFields.file);
             break;
         }
         setDataProvidersClassField([dataProvider]);
@@ -834,7 +908,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               self.dialogFields().password = dataProvider.password;
               break;
             case DataProvider.prototype.Type.MODEL.name:
-              delete self.modelFiles[dataProvider.id];
+              self.dialogFields().propProvider = dataProvider.propProvider;
+            case DataProvider.prototype.Type.PROPERTIES.name:
+              delete self.contentFiles[dataProvider.id];
               self.dialogFields().file = (ViewModelUtils.isElectronApiAvailable() ? dataProvider.file : '');
               break;
             case DataProvider.prototype.Type.COMPOSITE.name:
@@ -867,6 +943,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dataProvider.putValue('password', dialogFields.password);
             break;
           case DataProvider.prototype.Type.MODEL.name:
+            dataProvider.putValue('file', dialogFields.file);
+            dataProvider.putValue('propProvider', dialogFields.propProvider);
+            var propListNames = getPropertyListNames(dialogFields.propProvider);
+            if (CoreUtils.isNotUndefinedNorNull(propListNames)) {
+              dataProvider.putValue('properties', propListNames);
+            }
+            else {
+              dataProvider.removeField('properties');
+            }
+          case DataProvider.prototype.Type.PROPERTIES.name:
             if (CoreUtils.isNotUndefinedNorNull(dialogFields.file)) {
               dataProvider.putValue('file', dialogFields.file);
             }
@@ -1003,18 +1089,28 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       }
 
       function selectWDTModel(dataProvider, navtreeReset = false) {
+        // Check the property list reference on the model
+        // and then select the model provider...
+        checkPropertyListSelectWDTModel(dataProvider, navtreeReset);
+      }
+
+      /**
+       * Common logic to select the data providers using file content
+       * deal with the creating the form data and doing the upload.
+       */
+      function selectContentFileProvider(dataProvider, navtreeReset = false) {
         if (dataProvider.state === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
           if (CoreUtils.isNotUndefinedNorNull(dataProvider.fileContents)) {
             // We're not connected, but we have the file contents.
-            const blob = self.modelFiles[dataProvider.id];
+            const blob = self.contentFiles[dataProvider.id];
             if (CoreUtils.isUndefinedOrNull(blob)) {
-              const formData = getWDTModelFormData(dataProvider);
-              sendWDTModelFormData(dataProvider, formData, navtreeReset);
-              delete self.modelFiles[dataProvider.id];
+              const formData = getContentFileFormData(dataProvider);
+              sendContentFileFormData(dataProvider, formData, navtreeReset);
+              delete self.contentFiles[dataProvider.id];
             }
           }
           else {
-            createWDTFileBlob(dataProvider, navtreeReset);
+            createContentFileBlob(dataProvider, navtreeReset);
           }
         }
         else if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
@@ -1024,12 +1120,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             if (CoreUtils.isNotUndefinedNorNull(dataProvider.file)) {
               // It's not, so set file name to an empty string,
               // which will cause the user to be prompted to
-              // choose the physical WDT model file.
+              // choose the physical file.
               dataProvider.file = '';
             }
-            // Put up dialog, so user can choose the WDT model
+            // Put up dialog, so user can choose the
             // file to associated with the data provider.
-            editWDTModel(dataProvider);
+            editDataProvider(dataProvider);
           }
           else {
             // We're good to go, so "activate" or make this the
@@ -1063,7 +1159,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
         // IFF all the model dataproviders are not ready then upload the model files...
         const modelProviders = getWDTModelProviders(dataProvider.models, true);
-        if (!modelProviders.every(isWDTModelProviderReady)) {
+        if (!modelProviders.every(isProviderContentReady)) {
           if (!ViewModelUtils.isElectronApiAvailable()) {
             // Unable to updload model files when using the browser only, so
             // display a message to first select all the WDT model providers
@@ -1103,56 +1199,94 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         }
       }
 
-      function createWDTFileBlob(dataProvider, navtreeReset) {
-        const blob = self.modelFiles[dataProvider.id];
+      function selectPropertyList(dataProvider, navtreeReset = false) {
+        // Perform the file content handling and select the provider
+        selectContentFileProvider(dataProvider, navtreeReset);
+      }
+
+      function createContentFileBlob(dataProvider, navtreeReset) {
+        const blob = self.contentFiles[dataProvider.id];
         if (CoreUtils.isNotUndefinedNorNull(blob)) {
-          uploadWDTModelFile(dataProvider)
+          createUploadContentFileFormData(dataProvider)
             .then(formData => {
-              sendWDTModelFormData(dataProvider, formData, navtreeReset);
-              delete self.modelFiles[dataProvider.id];
+              sendContentFileFormData(dataProvider, formData, navtreeReset);
+              delete self.contentFiles[dataProvider.id];
             })
             .catch(failure => {
-              ViewModelUtils.failureResponseDefaultHandling(failure);
+              viewParams.signaling.dataProviderLoadFailed.dispatch(dataProvider);
+              if (failure?.failureReason?.name === 'YAMLException') {
+                delete self.contentFiles[dataProvider.id];
+                const failureMessage = ViewModelUtils.getYAMLExceptionFailureMessage(failure);
+                const displayedMessage = `${oj.Translations.getTranslatedString('wrc-data-providers.messages.correctiveAction.fixModelFile.detail')}<ul><li>${failureMessage}.</li></ul>`;
+                self.responseMessage(displayedMessage);
+                setResponseMessageVisibility('model-response-message', true);
+                editDataProvider(dataProvider);
+              }
+              else {
+                ViewModelUtils.failureResponseDefaultHandling(failure);
+              }
             });
         }
         else {
           if (CoreUtils.isNotUndefinedNorNull(window.electron_api)) {
             // Get the file contents, so we can create
             // the multipart/form POST we need to get
-            // a session for a model provider type.
-            window.electron_api.ipc.invoke('file-reading', {filepath: dataProvider.file, allowDialog: true})
+            // a session for the provider type.
+            window.electron_api.ipc.invoke('file-reading', {filepath: dataProvider.file, allowDialog: false})
               .then(response => {
                 if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.file)) {
-                  // This means the user picked the model file
-                  // and it was read.
-                  Logger.info(`[DATAPROVIDERS] ipcMain.handle()->ipcRenderer.invoke()->createWDTFileBlob(dataProvider) 'file-reading' file=${response.file}`);
-                  self.modelFiles[dataProvider.id] = new Blob([response.fileContents], {type: response.mediaType});
-                  self.modelFile(response.file);
+                  // This means the user picked the file and it was read.
+                  Logger.info(`[DATAPROVIDERS] ipcMain.handle()->ipcRenderer.invoke()->createContentFileBlob(dataProvider) 'file-reading' file=${response.file}`);
+                  // Ensure the media type for a properties dataprovider is always plain text
+                  const mediaType = ((dataProvider.type === DataProvider.prototype.Type.PROPERTIES.name) ? 'text/plain' : response.mediaType);
+                  self.contentFiles[dataProvider.id] = new Blob([response.fileContents], {type: mediaType});
+                  self.contentFile(response.file);
                   dataProvider.file = response.file;
-                  uploadWDTModelFile(dataProvider)
+                  createUploadContentFileFormData(dataProvider)
                     .then(formData => {
-                      sendWDTModelFormData(dataProvider, formData, navtreeReset);
-                      delete self.modelFiles[dataProvider.id];
+                      sendContentFileFormData(dataProvider, formData, navtreeReset);
+                      delete self.contentFiles[dataProvider.id];
                     })
                     .catch(failure => {
-                      ViewModelUtils.failureResponseDefaultHandling(failure);
+                      viewParams.signaling.dataProviderLoadFailed.dispatch(dataProvider);
+                      if (failure?.failureReason?.name === 'YAMLException') {
+                        delete self.contentFiles[dataProvider.id];
+                        const failureMessage = ViewModelUtils.getYAMLExceptionFailureMessage(failure);
+                        const displayedMessage = `${oj.Translations.getTranslatedString('wrc-data-providers.messages.correctiveAction.fixModelFile.detail')}<ul><li>${failureMessage}.</li></ul>`;
+                        self.responseMessage(displayedMessage);
+                        setResponseMessageVisibility('model-response-message', true);
+                        editDataProvider(dataProvider);
+                      }
+                      else {
+                        ViewModelUtils.failureResponseDefaultHandling(failure);
+                      }
                     });
                 }
               })
               .catch(failure => {
-                ViewModelUtils.failureResponseDefaultHandling(failure);
+                viewParams.signaling.dataProviderLoadFailed.dispatch(dataProvider);
+                const failureMessage = failure.message.match(/(File does not exist.+)/);
+                if (failureMessage !== null) {
+                  const displayedMessage = `${oj.Translations.getTranslatedString('wrc-data-providers.messages.correctiveAction.filePathNotFound.detail')}<ul><li>${failureMessage[0]}.</li></ul>`;
+                  self.responseMessage(displayedMessage);
+                  setResponseMessageVisibility('model-response-message', true);
+                  editDataProvider(dataProvider);
+                }
+                else {
+                  ViewModelUtils.failureResponseDefaultHandling(failure);
+                }
               });
           }
           else {
-            // Put up dialog, so user can choose the WDT model
+            // Put up dialog, so user can choose the
             // file to associated with the data provider.
-            editWDTModel(dataProvider);
+            editDataProvider(dataProvider);
           }
         }
       }
 
-      function sendWDTModelFormData(dataProvider, formData, navtreeReset) {
-        DataProviderManager.uploadWDTModel(dataProvider, formData)
+      function sendContentFileFormData(dataProvider, formData, navtreeReset) {
+        uploadDataProviderFormData(dataProvider, formData)
           .then(reply => {
             dataProvider.populateFromResponse(reply.body.data);
             if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
@@ -1168,19 +1302,28 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               setListItemColor([dataProvider]);
               self.responseMessage(reply.failureReason);
               setResponseMessageVisibility('model-response-message', true);
-              editWDTModel(dataProvider);
+              editDataProvider(dataProvider);
             }
           })
           .catch(response => {
-            dataProvider.file = '';
+//MLW            dataProvider.file = '';
             dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
+            viewParams.signaling.dataProviderLoadFailed.dispatch(dataProvider);
             delete dataProvider['fileContents'];
+            let responseErrorMessages = {html: '<p/>'};
             if (CoreUtils.isError(response)) {
-              response['failureReason'] = response;
+              response.body.messages.push({message: response});
             }
-            self.responseMessage(response.failureReason);
+            else if (response.transport.status === 0) {
+              response.body.messages.push({message: response.failureReason});
+            }
+            responseErrorMessages = ViewModelUtils.getResponseErrorMessages(
+              response,
+              oj.Translations.getTranslatedString('wrc-data-providers.messages.correctiveAction.fixModelFile.detail')
+            );
+            self.responseMessage(responseErrorMessages.html);
             setResponseMessageVisibility('model-response-message', true);
-            editWDTModel(dataProvider);
+            editDataProvider(dataProvider);
           });
       }
 
@@ -1252,29 +1395,34 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
       }
 
-      function getWDTModelFormData(dataProvider) {
+      function getContentFileFormData(dataProvider) {
         const formData = new FormData();
-        // Add multipart section for model file, using
-        // "model" as the part name.
+        // Add multipart section for the file contents
         formData.append(
-          'model',
-          new Blob([JSON.stringify(dataProvider['fileContents'])]),
+          dataProvider.type,
+          new Blob([dataProvider.fileContents]),
           dataProvider.file
         );
-        // Add multipart section for data, using "data" as
-        // the part name.
+
+        // Create the data section specifying the name as the provider id
+        const data = {
+          name: dataProvider.id
+        };
+
+        // Add the property list reference when specified on the dataprovider
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.propProvider) && (dataProvider.propProvider !== '')) {
+          data['propertyLists'] = [dataProvider.propProvider];
+        }
+
+        // Add the multipart form data section
         formData.append(
-          'data',
-          JSON.stringify({
-            name: dataProvider.id,
-            providerType: 'WDTModel'
-          })
+          'data', JSON.stringify(data)
         );
 
         return formData;
       }
 
-      function readWDTModelFile(dataProvider, blob) {
+      function readContentFile(dataProvider, blob) {
         return new Promise((resolve, reject) => {
           // Declare reader for reading model file.
           const reader = new FileReader();
@@ -1285,7 +1433,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           // File/Blob object for the model file.
           reader.onload = (function (theBlob) {
             return function (event) {
-              DataProviderManager.getWDTModelContent(event.target.result, blob.type)
+              const mediaType = ((dataProvider.type === DataProvider.prototype.Type.PROPERTIES.name) ? 'text/plain' : blob.type);
+              DataProviderManager.checkProviderUploadContent(event.target.result,  mediaType)
                 .then(reply => {
                   resolve(reply);
                 })
@@ -1300,70 +1449,147 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         });
       }
 
-      async function uploadWDTModelFile(dataProvider, blob = null) {
-        const modelFileBlob = (CoreUtils.isUndefinedOrNull(blob) ? self.modelFiles[dataProvider.id] : blob);
-        const reply = await readWDTModelFile(dataProvider, modelFileBlob)
+      async function createUploadContentFileFormData(dataProvider, blob = null) {
+        const contentFileBlob = (CoreUtils.isUndefinedOrNull(blob) ? self.contentFiles[dataProvider.id] : blob);
+        const reply = await readContentFile(dataProvider, contentFileBlob)
         dataProvider['fileContents'] = reply.body.data;
-        return getWDTModelFormData(dataProvider);
+        return getContentFileFormData(dataProvider);
       }
 
-      function isWDTModelProviderReady(dataProvider) {
-        // Check if the dataprovider is already connected and has the model file
+      // Checks if provider content is ready for a WDT Model or Property List provider
+      function isProviderContentReady(dataProvider) {
+        // Check if the dataprovider is already connected and has the content file
         return ((dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name)
                 && CoreUtils.isNotUndefinedNorNull(dataProvider['fileContents']));
       }
 
       function uploadCompositeModelFiles(compositeProvider, modelProviders, navtreeReset) {
-        CoreUtils.asyncForEach(modelProviders, uploadModelFileForComposite)
+        CoreUtils.asyncForEach(modelProviders, uploadModelProviderContentFile)
           .then(() => {
             Logger.info(`[DATAPROVIDERS] uploadCompositeModelFiles() completed for ${compositeProvider.name}`);
             selectWDTCompositeModel(compositeProvider, navtreeReset);
           })
           .catch(error => {
-            var failure = error;
-            if (CoreUtils.isError(error) && CoreUtils.isNotUndefinedNorNull(error.message)) {
-              // When we have an Error, extract the message and create the failure...
-              const reason = error.message.substring(error.message.indexOf(':') + 1);
-              failure = {
-                failureType: CoreTypes.FailureType.UNEXPECTED,
-                failureReason: self.i18n.messages.upload.failed.detail.replace('{0}', reason)
-              };
-            }
-            ViewModelUtils.failureResponseDefaultHandling(failure, 'error');
+            ViewModelUtils.failureResponseDefaultHandling(getUploadContentFileFailure(error), 'error');
           });
       }
 
-      async function uploadModelFileForComposite(modelProvider) {
-        // Skip upload when the model dataprovider is ready...
-        if (isWDTModelProviderReady(modelProvider)) {
+      function getUploadContentFileFailure(error) {
+        var failure = error;
+        if (CoreUtils.isError(error) && CoreUtils.isNotUndefinedNorNull(error.message)) {
+          // When we have an Error, extract the message and create the failure...
+          const reason = error.message.substring(error.message.indexOf(':') + 1);
+          failure = {
+            failureType: CoreTypes.FailureType.UNEXPECTED,
+            failureReason: self.i18n.messages.upload.failed.detail.replace('{0}', reason)
+          };
+        }
+        return failure;
+      }
+
+      async function uploadModelProviderContentFile(modelProvider) {
+        // Check and attempt to upload the property list first when a reference exists
+        // If there is a failure to upload properties, display the message and continue...
+        if (isPropertyListSpecified(modelProvider.properties)) {
+          const propProvider = getPropertyListProvider(modelProvider.properties, true);
+          if (CoreUtils.isNotUndefinedNorNull(propProvider)) {
+            self.i18n.messages.upload.failed.detail = oj.Translations.getTranslatedString('wrc-data-providers.messages.upload.props.failed.detail', '{0}');
+            modelProvider['propProvider'] = propProvider.id;
+            await uploadProviderContentFile(propProvider)
+              .catch(error => {
+                ViewModelUtils.failureResponseDefaultHandling(getUploadContentFileFailure(error), 'info');
+              });
+          }
+        }
+
+        // Now upload the model file...
+        self.i18n.messages.upload.failed.detail = oj.Translations.getTranslatedString('wrc-data-providers.messages.upload.failed.detail', '{0}');
+        await uploadProviderContentFile(modelProvider);
+      }
+
+      async function uploadProviderContentFile(dataprovider) {
+        // Skip upload when the dataprovider is ready...
+        if (isProviderContentReady(dataprovider)) {
           return Promise.resolve(true);
         }
 
-        // Otherwise read the model file for the dataprovider and upload the content...
-        const response = await window.electron_api.ipc.invoke('file-reading', {filepath: modelProvider.file, allowDialog: false});
-        Logger.info(`[DATAPROVIDERS] uploadModelFileForComposite() 'file-reading' file=${response.file}`);
+        // Otherwise read the content file for the dataprovider and upload...
+        const response = await window.electron_api.ipc.invoke('file-reading', {filepath: dataprovider.file, allowDialog: false});
+        Logger.info(`[DATAPROVIDERS] uploadProviderContentFile() 'file-reading' file=${response.file}`);
         const blob = new Blob([response.fileContents], { type: response.mediaType });
-        const formData = await uploadWDTModelFile(modelProvider, blob);
-        return DataProviderManager.uploadWDTModel(modelProvider, formData)
+        const formData = await createUploadContentFileFormData(dataprovider, blob);
+        return uploadDataProviderFormData(dataprovider, formData)
           .then(reply => {
-            modelProvider.populateFromResponse(reply.body.data);
-            setListItemColor([modelProvider]);
-            if (modelProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+            dataprovider.populateFromResponse(reply.body.data);
+            setListItemColor([dataprovider]);
+            if (dataprovider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
               return Promise.resolve(true);
             }
             else {
               const failure = {
                 failureType: CoreTypes.FailureType.UNEXPECTED,
-                failureReason: self.i18n.messages.upload.failed.detail.replace('{0}', modelProvider.file)
+                failureReason: self.i18n.messages.upload.failed.detail.replace('{0}', dataprovider.file)
               };
               return Promise.reject(failure);
             }
           })
           .catch(failure => {
-            modelProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-            delete modelProvider['fileContents'];
+            dataprovider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
+            delete dataprovider['fileContents'];
             return Promise.reject(failure);
           });
+      }
+
+      // Check the referenced property list from the model for upload then select the model
+      async function checkPropertyListSelectWDTModel(modelProvider, navtreeReset = false) {
+        // Check and map the properties reference to the property list dataprovider...
+        const propProvider = getPropertyListProvider(modelProvider.properties, true);
+        const propProviderId = (CoreUtils.isUndefinedOrNull(propProvider) ? '' : propProvider.id)
+        if (CoreUtils.isUndefinedOrNull(modelProvider['propProvider'])) {
+          modelProvider['propProvider'] = propProviderId;
+        }
+        else if ((propProviderId !== '') && (propProviderId !== modelProvider['propProvider'])) {
+          // If the poperty list provider was updated or replaced then update the model reference
+          await DataProviderManager.updatePropertyListWDTModel(modelProvider, propProviderId)
+            .catch(response => {
+              ViewModelUtils.failureResponseDefaultHandling(response.failure);
+            });
+          modelProvider['propProvider'] = propProviderId;
+        }
+
+        // IFF the property list was specified but the provider was not found then display this information
+        if (CoreUtils.isUndefinedOrNull(propProvider) && isPropertyListSpecified(modelProvider.properties)) {
+          MessageDisplaying.displayMessage({
+            severity: 'info',
+            summary: self.i18n.messages.response.propListNotFound.detail.replace('{0}', modelProvider.properties[0])
+          }, 5000);
+        }
+
+        // Where there is a property list reference, attempt to upload the properties
+        // but if there are any problems, just display the failure and continue since the
+        // property list is not required for the WDT model...
+        if ((modelProvider.propProvider !== '') &&
+             CoreUtils.isNotUndefinedNorNull(propProvider) &&
+             !isProviderContentReady(propProvider)) {
+          if (!ViewModelUtils.isElectronApiAvailable()) {
+            // Unable to upload files when using the browser only, the model
+            // provider will still get a reference to the properties and when
+            // property list provider is selected the property values can be used.
+            Logger.info(`[DATAPROVIDERS] skipping upload of property list provider: ${modelProvider.propProvider}`);
+          }
+          else {
+            // Perform the upload for the property list provider and if there is any problem
+            // diaplay the message but the error does not prevent selecting the model provider...
+            self.i18n.messages.upload.failed.detail = oj.Translations.getTranslatedString('wrc-data-providers.messages.upload.props.failed.detail', '{0}');
+            await uploadProviderContentFile(propProvider)
+              .catch(error => {
+                ViewModelUtils.failureResponseDefaultHandling(getUploadContentFileFailure(error), 'info');
+              });
+          }
+        }
+
+        // Now go an perform the file content handling and select the model provider!
+        selectContentFileProvider(modelProvider, navtreeReset);
       }
 
       function showDataProviderInfo(dataProvider, popup) {
@@ -1380,9 +1606,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             break;
           case DataProvider.prototype.Type.MODEL.name:
             self.i18n.popups.info.model.file.value(CoreUtils.isNotUndefinedNorNull(dataProvider.file) ? dataProvider.file : oj.Translations.getTranslatedString('wrc-data-providers.prompts.info.fileNotSet.value'));
+            var propsSet = (CoreUtils.isNotUndefinedNorNull(dataProvider.properties) && CoreUtils.isNotUndefinedNorNull(dataProvider.properties[0])) ? true : false;
+            self.i18n.popups.info.model.props.value(propsSet ? dataProvider.properties[0] : undefined);
             break;
           case DataProvider.prototype.Type.COMPOSITE.name:
             self.i18n.popups.info.composite.models.value(CoreUtils.isNotUndefinedNorNull(dataProvider.models) ? dataProvider.models : []);
+            break;
+          case DataProvider.prototype.Type.PROPERTIES.name:
+            self.i18n.popups.info.proplist.file.value(CoreUtils.isNotUndefinedNorNull(dataProvider.file) ? dataProvider.file : oj.Translations.getTranslatedString('wrc-data-providers.prompts.info.fileNotSet.value'));
             break;
         }
         popup.open('#' + dataProvider.id);
@@ -1426,6 +1657,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       function addWDTModel(dialogParams) {
         const entryValues = getDialogFields(DataProvider.prototype.Type.MODEL);
         entryValues['action'] = dialogParams.action;
+        entryValues['checkbox'] = (dialogParams.action === 'new');
         entryValues.file = (dialogParams.action === 'existing' ? '' : 'new-wdt-model.yaml');
         entryValues.readonly = (dialogParams.action === 'existing');
 
@@ -1438,6 +1670,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         const actionPart = actionSwitch(dialogParams.action);
 
         self.i18n.dialog.title(self.i18n.titles[actionPart].models.value);
+        self.i18n.dialog.nameLabel(self.i18n.labels.models.name.value);
+        self.i18n.dialog.fileLabel(self.i18n.labels.models.file.value);
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString(`wrc-data-providers.instructions.models.${actionPart}.value`));
         self.i18n.dialog.iconFile(dialogParams.action === 'existing' ? self.i18n.icons.choose.iconFile : self.i18n.icons.pick.iconFile);
         self.i18n.dialog.tooltip(dialogParams.action === 'existing' ? self.i18n.icons.choose.tooltip : self.i18n.icons.pick.tooltip);
@@ -1453,21 +1687,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // user clicks the directory tree icon
         // (dialogParams.action = "new"), or the download
         // icon (dialogParams.action = "existing").
-        self.modelFile('');
+        self.contentFile('');
+
+        // Setup the Property List selection values
+        self.propProviderSelectedValue(self.dialogFields().propProvider);
+        self.propProvidersDataProvider.data = getAvailablePropertyLists();
 
         DataProvidersDialog.showDataProvidersDialog('AddWDTModel', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
-              self.dialogFields().file = self.modelFile();
+              self.dialogFields().file = self.contentFile();
+              self.dialogFields().propProvider = self.propProviderSelectedValue();
               const dataProvider = addDialogFields(DataProvider.prototype.Type.MODEL, self.dialogFields());
               dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
               if (dialogParams.action === 'new') {
-                delete self.modelFiles[dataProvider.id];
-                const data = createNewWDTModelFile(self.modelFile(), 'file-writing');
+                delete self.contentFiles[dataProvider.id];
+                const data = createNewWDTModelFile(self.contentFile(), 'file-writing', dataProvider);
                 const mediaType = 'application/x-yaml';
                 // The getWDTModelContent() function uses js-yaml to
                 // convert the data/YAML into a JS object.
-                DataProviderManager.getWDTModelContent(data, mediaType)
+                DataProviderManager.checkProviderUploadContent(data, mediaType)
                   .then(reply => {
                     // Assign JS object to dataProvider's "fileContents"
                     // property.
@@ -1483,8 +1722,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               }
             }
             else {
-              self.modelFile('');
-              self.dialogFields().file = self.modelFile();
+              self.contentFile('');
+              self.dialogFields().file = self.contentFile();
+              self.propProviderSelectedValue('');
+              self.dialogFields().propProvider = self.propProviderSelectedValue();
               self.responseMessage('');
               setResponseMessageVisibility('model-response-message', false);
             }
@@ -1522,6 +1763,75 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               self.wdtProvidersSelectedValues([])
               self.responseMessage('');
               setResponseMessageVisibility('model-composite-response-message', false);
+            }
+          });
+      }
+
+      /**
+       * Displays the dialog box used to add a Property List provider.
+       * Uses the WDT model dialog box without checkbox for new property list.
+       * @private
+       */
+       function addPropertyList(dialogParams) {
+        const entryValues = getDialogFields(DataProvider.prototype.Type.PROPERTIES);
+        entryValues['action'] = dialogParams.action;
+        entryValues['checkbox'] = false;
+        entryValues.file = (dialogParams.action === 'existing' ? '' : 'new-property-list.props');
+        entryValues.readonly = (dialogParams.action === 'existing');
+
+        self.dialogFields(entryValues);
+
+        const actionSwitch = (value) => ({
+          'new': 'new',
+          'existing': 'add'
+        })[value];
+        const actionPart = actionSwitch(dialogParams.action);
+
+        self.i18n.dialog.title(self.i18n.titles[actionPart].proplist.value);
+        self.i18n.dialog.nameLabel(self.i18n.labels.proplist.name.value);
+        self.i18n.dialog.fileLabel(self.i18n.labels.proplist.file.value);
+        self.i18n.dialog.instructions(oj.Translations.getTranslatedString(`wrc-data-providers.instructions.proplist.${actionPart}.value`));
+        self.i18n.dialog.iconFile(dialogParams.action === 'existing' ? self.i18n.icons.choose.iconFile : self.i18n.icons.pick.iconFile);
+        self.i18n.dialog.tooltip(dialogParams.action === 'existing' ? self.i18n.icons.choose.tooltip : self.i18n.icons.pick.tooltip);
+
+        self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
+
+        self.responseMessage('');
+        setResponseMessageVisibility('model-response-message',false);
+
+        // Set the file observable to "", which will make
+        // clicking the "OK" button a no-op, until the end
+        // user clicks the directory tree icon
+        self.contentFile('');
+
+        DataProvidersDialog.showDataProvidersDialog('AddPropertyList', dialogParams, self.i18n, isUniqueDataProviderName)
+          .then(reply => {
+            if (reply) {
+              self.dialogFields().file = self.contentFile();
+              const dataProvider = addDialogFields(DataProvider.prototype.Type.PROPERTIES, self.dialogFields());
+              dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
+              if (dialogParams.action === 'new') {
+                delete self.contentFiles[dataProvider.id];
+                // Create the file content for a new properties file
+                const data = createNewContentFile(newPropertyListContentFileData, self.contentFile(), 'file-writing', dataProvider);
+                const mediaType = 'text/plain';
+                DataProviderManager.checkProviderUploadContent(data, mediaType)
+                  .then(reply => {
+                    // Assign dataProvider file content and then select the provider
+                    dataProvider['fileContents'] = reply.body.data;
+                    selectPropertyList(dataProvider);
+                  });
+              }
+              else {
+                // Select the provider to check, upload and create the PropertyList
+                selectPropertyList(dataProvider);
+              }
+            }
+            else {
+              self.contentFile('');
+              self.dialogFields().file = self.contentFile();
+              self.responseMessage('');
+              setResponseMessageVisibility('model-response-message', false);
             }
           });
       }
@@ -1570,6 +1880,68 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           });
         }
         return modelProviders;
+      }
+
+      /**
+       * Return the array of Property Lists currently available from the list of dataproviders.
+       * @private
+       */
+       function getAvailablePropertyLists() {
+        var propertyLists = [];
+        connectionsModels().forEach(dataprovider => {
+          if (dataprovider.type === DataProvider.prototype.Type.PROPERTIES.name) {
+            propertyLists.push({
+              value: dataprovider.id,
+              label: dataprovider.name
+            });
+          }
+        });
+        // Add an empty element to allow for picking no provider
+        // as once an item is selected, there is no option to unselect
+        // and the property list providers are optional...
+        propertyLists.push({ value: '', label: self.i18n.labels.dropdown.none.value});
+        return propertyLists;
+      }
+
+      /**
+       * Return an array of Property List names based on the single dataprovider id
+       * as the backend model provider allows multiple references to be specified.
+       *
+       * An null is returned when there is no dataprovider selected as the
+       * property list reference for the model is optional...
+       * @private
+       */
+       function getPropertyListNames(providerId) {
+        var propertyNames = null;
+        if (providerId !== '') {
+          propertyNames = [connectionsModels().find(dataProvider => dataProvider.id === providerId).name];
+        }
+        return propertyNames;
+      }
+
+      /**
+       * Check if there is a property list name entry in the array of property list names.
+       * @private
+       */
+       function isPropertyListSpecified(propListNames) {
+        return (CoreUtils.isNotUndefinedNorNull(propListNames) && CoreUtils.isNotUndefinedNorNull(propListNames[0]));
+      }
+
+      /**
+       * Return the dataprovider id or the dataprovider based on first Property List name.
+       *
+       * An empty id or null provider is returned when there is no property list name as the
+       * property list reference for the model is optional...
+       * @private
+       */
+       function getPropertyListProvider(propListNames, isDataProvider = false) {
+        if (isPropertyListSpecified(propListNames)) {
+          const entry = connectionsModels().find(dataProvider => dataProvider.name === propListNames[0]);
+          if (CoreUtils.isNotUndefinedNorNull(entry) && (entry.type === DataProvider.prototype.Type.PROPERTIES.name)) {
+            return (isDataProvider ? entry : entry.id);
+          }
+        }
+        return (isDataProvider ? null : '');
       }
 
       function addProject(dialogParams) {
@@ -1694,7 +2066,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           {id: 'adminserver', value: self.i18n.menus.connections.add.id, label: oj.Translations.getTranslatedString('wrc-data-providers.menus.connections.add.value')},
           {id: 'addModel', value: self.i18n.menus.models.add.id, label: oj.Translations.getTranslatedString('wrc-data-providers.menus.models.add.value')},
           {id: 'addModelComposite', value: self.i18n.menus.composite.add.id, label: oj.Translations.getTranslatedString('wrc-data-providers.menus.composite.add.value')},
+          {id: 'addPropertyList', value: self.i18n.menus.proplist.add.id, label: oj.Translations.getTranslatedString('wrc-data-providers.menus.proplist.add.value')},
           {id: 'newModel', value: self.i18n.menus.models.new.id, label: oj.Translations.getTranslatedString('wrc-data-providers.menus.models.new.value')},
+          {id: 'newPropertyList', value: self.i18n.menus.proplist.new.id, label: oj.Translations.getTranslatedString('wrc-data-providers.menus.proplist.new.value')},
           {id: 'importProject', value: self.i18n.menus.project.import.id, label: oj.Translations.getTranslatedString('wrc-data-providers.menus.project.import.value')}
         ];
 
@@ -1804,7 +2178,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               }
               else {
                 dataProvider = editUpdateDataProvider(dataProvider, self.dialogFields());
-//MLW                dataProvider.state = (!removeRequired ? CoreTypes.Domain.ConnectState.CONNECTED.name : CoreTypes.Domain.ConnectState.DISCONNECTED.name);
                 // Dispatch the dataProviderSelected singal using navtreeReset as true
                 selectAdminServerConnection(dataProvider, true);
               }
@@ -1830,6 +2203,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
         self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.models.value'));
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.models.edit.value'));
+        self.i18n.dialog.nameLabel(self.i18n.labels.models.name.value);
+        self.i18n.dialog.fileLabel(self.i18n.labels.models.file.value);
         self.i18n.dialog.iconFile(self.i18n.icons.choose.iconFile);
         self.i18n.dialog.tooltip(self.i18n.icons.choose.tooltip);
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
@@ -1843,15 +2218,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         self.connectionsModelsSelectedItem('');
 
         // Set the dialog box based on createDialogFields()
-        self.modelFile(self.dialogFields().file);
+        self.contentFile(self.dialogFields().file);
+
+        // Setup the Property List selection values
+        self.propProviderSelectedValue(self.dialogFields().propProvider);
+        self.propProvidersDataProvider.data = getAvailablePropertyLists();
 
         // Finally, we need to show the "Edit WDT Model" dialog,
         // mainly for the purpose of getting the model file.
         DataProvidersDialog.showDataProvidersDialog('EditWDTModel', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
-              self.dialogFields().file = self.modelFile();
-              const removeRequired = (dataProvider.file !== self.modelFile() || CoreUtils.isNotUndefinedNorNull(self.modelFiles[dataProvider.id]));
+              self.dialogFields().file = self.contentFile();
+              self.dialogFields().propProvider = self.propProviderSelectedValue();
+              let removeRequired = (dataProvider.file !== self.contentFile() || CoreUtils.isNotUndefinedNorNull(self.contentFiles[dataProvider.id]));
+              if (!removeRequired && CoreUtils.isNotUndefinedNorNull(dataProvider.propProvider)) {
+                // Determine if property list reference has been removed which also requires a dataprovider remove
+                removeRequired = ((dataProvider.propProvider !== '') && (self.dialogFields().propProvider === ''));
+              }
               if ((removeRequired) && (dataProvider.state !== CoreTypes.Domain.ConnectState.DISCONNECTED.name)) {
                 // Remove fileContents property before proceeding.
                 delete dataProvider['fileContents'];
@@ -1873,21 +2257,42 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                     ViewModelUtils.failureResponseDefaultHandling(response.failure);
                   });
               }
+              else if (CoreUtils.isNotUndefinedNorNull(dataProvider.propProvider) &&
+                       (dataProvider.propProvider !== self.dialogFields().propProvider)) {
+                // IFF property provider has changed, update the property list reference
+                DataProviderManager.updatePropertyListWDTModel(dataProvider, self.dialogFields().propProvider)
+                  .then(reply =>{
+                    if (reply.succeeded) {
+                      editUpdateWDTModel(dataProvider);
+                    }
+                    else {
+                      ViewModelUtils.failureResponseDefaultHandling(reply.failure);
+                    }
+                  })
+                  .catch(response => {
+                    ViewModelUtils.failureResponseDefaultHandling(response.failure);
+                  });
+              }
               else {
-                dataProvider = editUpdateDataProvider(dataProvider, self.dialogFields());
-                if (CoreUtils.isNotUndefinedNorNull(dataProvider.file)) {
-                  // Dispatch the dataProviderSelected singal using navtreeReset as true
-                  selectWDTModel(dataProvider, true);
-                }
+                editUpdateWDTModel(dataProvider);
               }
             }
             else {
               revertDialogFields(dataProvider);
-              self.modelFile(self.dialogFields().file)
+              self.contentFile(self.dialogFields().file);
+              self.propProviderSelectedValue(self.dialogFields().propProvider);
               self.responseMessage('');
               setResponseMessageVisibility('model-response-message', false);
             }
           });
+      }
+
+      function editUpdateWDTModel(dataProvider) {
+        dataProvider = editUpdateDataProvider(dataProvider, self.dialogFields());
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.file)) {
+          // Dispatch the dataProviderSelected singal using navtreeReset as true
+          selectWDTModel(dataProvider, true);
+        }
       }
 
       /**
@@ -1978,6 +2383,81 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         return ((other.length === prov.length) && other.every((val, idx) => val === prov[idx]));
       }
 
+      /**
+       * Displays the dialog box used to edit a Property List provider.
+       * Uses the WDT model dialog box.
+       * @param {DataProvider} dataProvider
+       * @private
+       */
+       function editPropertyList(dataProvider) {
+        const entryValues = createDialogFields(dataProvider);
+        entryValues['action'] = 'existing';
+        self.dialogFields(entryValues);
+
+        self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.proplist.value'));
+        self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.proplist.edit.value'));
+        self.i18n.dialog.nameLabel(self.i18n.labels.proplist.name.value);
+        self.i18n.dialog.fileLabel(self.i18n.labels.proplist.file.value);
+        self.i18n.dialog.iconFile(self.i18n.icons.choose.iconFile);
+        self.i18n.dialog.tooltip(self.i18n.icons.choose.tooltip);
+        self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
+
+        const dialogParams = {
+          type: dataProvider.type,
+          id: dataProvider.id,
+          accepts: 'text/plain'
+        };
+
+        self.connectionsModelsSelectedItem('');
+
+        // Set the dialog box based on createDialogFields()
+        self.contentFile(self.dialogFields().file);
+
+        // Finally, we need to show the "Edit Property List" dialog,
+        // mainly for the purpose of getting the properties file.
+        DataProvidersDialog.showDataProvidersDialog('EditPropertyList', dialogParams, self.i18n, isUniqueDataProviderName)
+          .then(reply => {
+            if (reply) {
+              self.dialogFields().file = self.contentFile();
+              const removeRequired = (dataProvider.file !== self.contentFile() || CoreUtils.isNotUndefinedNorNull(self.contentFiles[dataProvider.id]));
+              if ((removeRequired) && (dataProvider.state !== CoreTypes.Domain.ConnectState.DISCONNECTED.name)) {
+                // Remove fileContents property before proceeding.
+                delete dataProvider['fileContents'];
+                removeDataProvider(dataProvider)
+                  .then(reply =>{
+                    if (reply.succeeded) {
+                      dataProvider = updateDataProvider(dataProvider, self.dialogFields());
+                      dataProvider = DataProviderManager.createPropertyList(dataProvider);
+                      dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
+                      replaceConnectionsModels(dataProvider);
+                      // Dispatch the dataProviderSelected singal using navtreeReset as true
+                      selectPropertyList(dataProvider, true);
+                    }
+                    else {
+                      ViewModelUtils.failureResponseDefaultHandling(reply.failure);
+                    }
+                  })
+                  .catch(response => {
+                    ViewModelUtils.failureResponseDefaultHandling(response.failure);
+                  });
+              }
+              else {
+                dataProvider = editUpdateDataProvider(dataProvider, self.dialogFields());
+                if (CoreUtils.isNotUndefinedNorNull(dataProvider.file)) {
+                  // Dispatch the dataProviderSelected singal using navtreeReset as true
+                  selectPropertyList(dataProvider, true);
+                }
+              }
+            }
+            else {
+              revertDialogFields(dataProvider);
+              self.contentFile(self.dialogFields().file)
+              self.responseMessage('');
+              setResponseMessageVisibility('model-response-message', false);
+            }
+          });
+      }
+
       function editUpdateDataProvider(dataProvider, dialogFields) {
         dataProvider = updateDataProvider(dataProvider, dialogFields);
         updateConnectionsModels(dataProvider);
@@ -1988,6 +2468,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         return dataProvider;
       }
 
+      function editDataProvider(dataProvider) {
+        switch (dataProvider.type) {
+          case DataProvider.prototype.Type.ADMINSERVER.name:
+            editAdminServerConnection(dataProvider);
+            break;
+          case DataProvider.prototype.Type.MODEL.name:
+            editWDTModel(dataProvider);
+            break;
+          case DataProvider.prototype.Type.COMPOSITE.name:
+            editWDTCompositeModel(dataProvider);
+            break;
+          case DataProvider.prototype.Type.PROPERTIES.name:
+            editPropertyList(dataProvider);
+            break;
+        }
+      }
+
       function removeDataProvider(dataProvider) {
         switch (dataProvider.type) {
           case DataProvider.prototype.Type.ADMINSERVER.name:
@@ -1996,6 +2493,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             return DataProviderManager.removeWDTModel(dataProvider);
           case DataProvider.prototype.Type.COMPOSITE.name:
             return DataProviderManager.removeWDTCompositeModel(dataProvider);
+          case DataProvider.prototype.Type.PROPERTIES.name:
+            return DataProviderManager.removePropertyList(dataProvider);
+        }
+      }
+
+      function uploadDataProviderFormData(dataProvider, formData) {
+        switch (dataProvider.type) {
+          case DataProvider.prototype.Type.MODEL.name:
+            return DataProviderManager.uploadWDTModel(dataProvider, formData);
+          case DataProvider.prototype.Type.PROPERTIES.name:
+            return DataProviderManager.uploadPropertyList(dataProvider, formData);
         }
       }
 
@@ -2073,7 +2581,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       this.projectMoreMenuClickListener = function (event) {
         const dialogParams = {
           id: event.target.value,
-          accepts: 'application/yaml,application/x-yaml,application/json'
+          accepts: 'application/yaml,application/x-yaml,application/json,text/plain'
         };
 
         switch(dialogParams.id) {
@@ -2090,6 +2598,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             break;
           case self.i18n.menus.composite.add.id:
             addWDTCompositeModel(dialogParams);
+            break;
+          case self.i18n.menus.proplist.add.id:
+            dialogParams['action'] = 'existing';
+            addPropertyList(dialogParams);
+            break;
+          case self.i18n.menus.proplist.new.id:
+            dialogParams['action'] = 'new';
+            addPropertyList(dialogParams);
             break;
           case self.i18n.menus.providers.sort.id:
             sortConnectionModels();
@@ -2149,17 +2665,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           switch(dialogParams.type) {
             case DataProvider.prototype.Type.ADMINSERVER.name:
               setResponseMessageVisibility('connection-response-message', false);
-              editAdminServerConnection(dataProvider);
               break;
             case DataProvider.prototype.Type.MODEL.name:
+            case DataProvider.prototype.Type.PROPERTIES.name:
               setResponseMessageVisibility('model-response-message', false);
-              editWDTModel(dataProvider);
               break;
             case DataProvider.prototype.Type.COMPOSITE.name:
               setResponseMessageVisibility('model-composite-response-message', false);
-              editWDTCompositeModel(dataProvider);
               break;
-          }
+            }
+            editDataProvider(dataProvider);
         }
         else {
           const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
@@ -2176,6 +2691,47 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       };
 
+      function changeConnectionsModelsSelectedItem(dataProvider) {
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+          // Choose what to do next, based on the type
+          // of data provider this is.
+          switch(dataProvider.type) {
+            case DataProvider.prototype.Type.ADMINSERVER.name: {
+              const options = {project: {name: self.project.name}, provider: {name: dataProvider.name, username: dataProvider.username, password: dataProvider.password}};
+              getAdminServerConnectionCredentials(options)
+                .then(reply => {
+                  if (reply.succeeded) {
+                    // Attempt to get the credentials succeeded,
+                    // so go ahead and update the data provider's
+                    // FortifyIssueSuppression(C9827329D56593134375D08BC3A21847) Password Management: Password in Comment
+                    // Not a password, just a comment
+                    // password property.
+                    dataProvider['password'] = reply.secret;
+                    selectAdminServerConnection(dataProvider);
+                  }
+                  else {
+                    Logger.warn(`[DATAPROVIDERS] ${JSON.stringify(reply)}`);
+                    editAdminServerConnection(dataProvider);
+                  }
+                })
+                .catch(failure => {
+                  ViewModelUtils.failureResponseDefaultHandling(failure);
+                });
+            }
+              break;
+            case DataProvider.prototype.Type.MODEL.name:
+              selectWDTModel(dataProvider);
+              break;
+            case DataProvider.prototype.Type.COMPOSITE.name:
+              selectWDTCompositeModel(dataProvider);
+              break;
+            case DataProvider.prototype.Type.PROPERTIES.name:
+              selectPropertyList(dataProvider);
+              break;
+          }
+        }
+      }
+
       this.connectionsModelsSelectedItemChanged = function(event) {
         // Only do something if user actually clicked a
         // list item. self.connectionsModelsSelectedItem
@@ -2187,49 +2743,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           // event.target.currentItem contains the id of
           // the data provider the user clicked in the list.
           const dataProvider = connectionsModels().find(item => item.id === event.target.currentItem);
-          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
-            // Choose what to do next, based on the type
-            // of data provider this is.
-            switch(dataProvider.type) {
-              case DataProvider.prototype.Type.ADMINSERVER.name: {
-                const options = {project: {name: self.project.name}, provider: {name: dataProvider.name, username: dataProvider.username, password: dataProvider.password}};
-                getAdminServerConnectionCredentials(options)
-                  .then(reply => {
-                    if (reply.succeeded) {
-                      // Attempt to get the credentials succeeded,
-                      // so go ahead and update the data provider's
-                      // FortifyIssueSuppression(C9827329D56593134375D08BC3A21847) Password Management: Password in Comment
-                      // Not a password, just a comment
-                      // password property.
-                      dataProvider['password'] = reply.secret;
-                      selectAdminServerConnection(dataProvider);
-                    }
-                    else {
-                      Logger.warn(`[DATAPROVIDERS] ${JSON.stringify(reply)}`);
-                      editAdminServerConnection(dataProvider);
-                    }
-                  })
-                  .catch(failure => {
-                    ViewModelUtils.failureResponseDefaultHandling(failure);
-                  });
-              }
-                break;
-              case DataProvider.prototype.Type.MODEL.name:
-                selectWDTModel(dataProvider);
-                break;
-              case DataProvider.prototype.Type.COMPOSITE.name:
-                selectWDTCompositeModel(dataProvider);
-                break;
-            }
-          }
+          changeConnectionsModelsSelectedItem(dataProvider);
         }
       };
 
       this.newFileClickHandler = (event) => {
-        const filepath = self.modelFile();
-        const data = createNewWDTModelFile(filepath);
+        const fileType = event.currentTarget.attributes['data-input-type'].value;
+        const filepath = self.contentFile();
+        var data = '';
+        var mediaType = 'application/x-yaml';
+        switch (fileType) {
+          case 'model':
+            data = createNewWDTModelFile(filepath);
+            break;
+          case 'properties':
+            data = createNewContentFile(newPropertyListContentFileData, filepath);
+            mediaType = 'text/plain';
+            break;
+        }
         if (!ViewModelUtils.isElectronApiAvailable() && filepath !== '') {
-          const mediaType = 'application/x-yaml';
           ViewModelUtils.downloadFile({filepath: filepath, fileContents: data, mediaType: mediaType});
         }
       };
@@ -2241,13 +2773,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
        * @returns {object}
        * @private
        */
-      function createNewWDTModelFile(filepath, channel = 'file-creating') {
+      function createNewWDTModelFile(filepath, channel = 'file-creating', dataprovider = null) {
         const data = getNewWDTModelDataByTemplate(self.useSparseTemplate().length > 0 ? 'sparse' : 'domain');
+        return createNewContentFile(data, filepath, channel, dataprovider);
+      }
+
+      function createNewContentFile(data, filepath, channel = 'file-creating', dataprovider = null) {
         if (ViewModelUtils.isElectronApiAvailable()) {
           if (filepath !== '') {
             window.electron_api.ipc.invoke(channel, {filepath: filepath, fileContents: data})
               .then(reply => {
-                self.modelFile(reply.filePath);
+                self.contentFile(reply.filePath);
+                if ((channel === 'file-writing') && CoreUtils.isNotUndefinedNorNull(dataprovider)) {
+                  checkDataproviderFilePath(dataprovider, self.contentFile());
+                }
               })
               .catch(error => {
                 // Creating a fake error object because the error object here
@@ -2260,21 +2799,34 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         return data;
       }
 
+      // Check the dataprovider file path against the path of the file created
+      function checkDataproviderFilePath(dataprovider, filePath) {
+        if (CoreUtils.isNotUndefinedNorNull(dataprovider.file)) {
+          // IFF file path values are not the same then update the data provider
+          // so the provider editing and the loading of the provider at startup
+          // reflect the location of the file on disk
+          if (dataprovider.file !== filePath) {
+            dataprovider.putValue('file', filePath);
+          }
+        }
+      }
+
       this.chooseFileClickHandler = (event) => {
         const fileType = event.currentTarget.attributes['data-input-type'].value;
         if (ViewModelUtils.isElectronApiAvailable()) {
           const dialogParams = {
             defaultPath: self.dialogFields().file,
             properties: ['openFile'],
-            filters: { name: 'Supported Formats', extensions: ['yml', 'yaml', 'json']}
+            filters: { name: 'Supported Formats', extensions: ['yml', 'yaml', 'json', 'props', 'properties']}
           };
           window.electron_api.ipc.invoke('file-choosing', dialogParams)
             .then(response => {
               Logger.info(`[DATAPROVIDERS] ipcMain.handle()->ipcRenderer.invoke()->this.chooseFileClickHandler(event) 'file-choosing' file=${response.file}`);
               if (CoreUtils.isNotUndefinedNorNull(response.file)) {
                 switch(fileType) {
+                  case 'properties':
                   case 'model': {
-                    self.modelFile(response.file);
+                    self.contentFile(response.file);
                   }
                     break;
                   case 'project': {
@@ -2303,11 +2855,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         const files = event.currentTarget.files;
         if (files.length > 0) {
           const fileType = event.currentTarget.attributes['data-input-type'].value;
-          switch(fileType){
+          switch(fileType) {
+            case 'properties':
             case 'model': {
               const dataProviderId = event.currentTarget.attributes['data-input'].value;
-              self.modelFiles[dataProviderId] = files[0];
-              self.modelFile(files[0].name);
+              self.contentFiles[dataProviderId] = files[0];
+              self.contentFile(files[0].name);
             }
               break;
             case 'project': {
@@ -2321,6 +2874,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           chooser.off('change', self.chooseFileChangeHandler);
           chooser.val('');
         }
+      };
+
+      this.reloadFileClickListener = function(event) {
+        const dataProvider = connectionsModels().find(item => item.id === self.dialogFields().id);
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+          dataProvider.file = null;
+          delete self.contentFiles[dataProvider.id];
+          const dlgOkBtn12 = $('#dlgOkBtn12');
+          dlgOkBtn12.trigger('click');
+        }
+      };
+
+      this.isElectronApiAvailable = () => {
+        return ViewModelUtils.isElectronApiAvailable();
       };
 
       /**

@@ -19,9 +19,11 @@ The WebLogic Remote Console provides an alternative WebLogic Server administrati
 ## Get Started
 You can install the WebLogic Remote Console as a desktop or browser application, depending on your usecases although the desktop application is recommended. Both versions are available to download from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases).
 
+Review the system requirements at [Get Started](https://oracle.github.io/weblogic-remote-console/setup/)
+
 You should also download and install the WebLogic Remote Console extension for your WebLogic Server domain. The extension provides additional functionality that is not available with the console alone. Although installing the extension is optional, we recommend that you install it to get the optimum functionality from the WebLogic Remote Console.
 
-Documentation for the WebLogic Remote Console is available at [https://oracle.github.io/weblogic-remote-console/](https://oracle.github.io/weblogic-remote-console/setup/). It provides instructions for installing and configuring the WebLogic Remote Console.
+Documentation for the WebLogic Remote Console is [available here](https://oracle.github.io/weblogic-remote-console/setup/). 
 
 To build the WebLogic Remote Console from source, see the [Developer Guide](https://oracle.github.io/weblogic-remote-console/develop/build-source/).
 

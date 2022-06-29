@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div class="cfe-table-form-container">
@@ -12,10 +12,14 @@
     <oj-module config="[[formToolbarModuleConfig]]">
     </oj-module>
 
+    <oj-module config="[[tableCustomizerModuleConfig]]">
+    </oj-module>
+
     <oj-module config="[[formTabStripModuleConfig]]">
     </oj-module>
 
     <div id="intro" class="cfe-table-form-instructions">
+      <hr>
       <oj-bind-dom config="[[introductionHTML]]" />
     </div>
 
@@ -101,7 +105,7 @@
   </div>
 </oj-dialog>
 
-<oj-dialog id="wdtOptionsDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide">
+<oj-dialog id="wdtOptionsDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide" drag-affordance="title-bar">
   <div slot="body">
     <div class="cfe-dialog-prompt">
       <oj-bind-dom config="[[wdtOptionsDialogHTML]]" />

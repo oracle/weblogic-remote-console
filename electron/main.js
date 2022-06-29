@@ -12,10 +12,13 @@ const { autoUpdater } = require('electron-updater');
 autoUpdater.autoDownload = false;
 const prompt = require('electron-prompt');
 var path = require('path');
+var another_me = null;
 const instDir = path.dirname(app.getPath('exe'));
 const canCheckForUpdates = !instDir.startsWith('/opt/');
 
 const { homepage, productName, version, copyright } = require(`${instDir}/package.json`);
+
+const fileExtensions = ['yml', 'yaml', 'json', 'props', 'properties'];
 
 const fs = require('fs');
 var checkPid = 0;
@@ -24,11 +27,13 @@ var cbePort = 0;
 var window;
 var projects;
 var current_project;
+var tablePrefs = {};
 var width = 1600;
 var height = 1000;
 var started = false;
 var stdinOption = false;
 var showPort = false;
+var useTokenNotCookie = false;
 var quiet = false;
 var lines = [ ];
 var origConsoleLog;
@@ -166,6 +171,12 @@ function getFilteredProviders(providers) {
     // provider type.
     if (providers[i].models) {
       filteredProvider.models = providers[i].models;
+    }
+
+    // Filter out the references to a property list
+    // associated with model provider type.
+    if (providers[i].type === 'model' && providers[i].properties) {
+      filteredProvider.properties = providers[i].properties;
     }
 
     filteredProviders.push(filteredProvider);
@@ -528,6 +539,49 @@ function makeMenu() {
   Menu.setApplicationMenu((Menu.buildFromTemplate(template)));
 }
 
+// On Mac OS, the "Finder" prevents starting the Remote Console when it
+// has already been started, even if it was only started for use by WKT UI.
+// This is different than Windows and Linux where the passive Remote Console
+// instance started for WKT UI is not seen as an instance of the Remote
+// Console.  Given the limitations of the Mac OS user interface, it will be
+// impossible to do as well as Windows and Linux, where the user can launch as
+// many copies of the Remote Console as they choose.  Instead, we will allow the
+// user to have, at most, two Remote Consoles, the passive one used by WKT UI
+// and an active one that is actually a Remote Console that they can use.
+// 
+// We will be able to make this work on the Mac by recognizing that the user
+// has clicked on the Remote Console and interpreting that as the desire to
+// have a real one, not the passive one.
+//
+// Electron on Mac OS does give an "activate" notification when the user clicks.
+// Therefore, if there is no Remote Console running when we get the
+// notification, we start one.  There are three ways to know that there is
+// already a Remote Console running:
+// 1.  We are a Remote Console ourselves.  This is indicated by the "window"
+//     variable, which is where the remote console is displayed and is set by the
+//     "ready" notification, which comes before any "activate" notification.
+// 2.  We've already started one ourselves and it is still running.
+// 3.  If a Remote Console was started *prior* to launching WKT UI and the user
+//     clicked on our process, neither of the above conditions is true, but
+//     we also don't want to launch another because that is not consistent with
+//     the user's click.
+//     We can tell that this has occurred by using the "single instance lock".
+//     On Mac OS, we grab the lock whenever we create the window (the lock is
+//     automatically released on process exit).  Therefore, if nobody is holding
+//     the lock, then we are free to start a new process to start a window and
+//     grab the lock.  Since we are testing the lock before creating the new
+//     process, there is a timing window where if a user clicks really quickly,
+//     we will try to create more than necessary and they will die right away.
+//     This will actually be the behavior the user would expect since, on the
+//     Mac, only a single active instance is allowed.
+// Technically, we could live without #2 since #3 will cover it, but it feels
+// like checking a variable is nice and light weight.
+app.on('activate', () => {
+  if (!window && !another_me && app.requestSingleInstanceLock()) {
+    app.releaseSingleInstanceLock();
+    start_another_me();
+  }
+});
 
 if (canCheckForUpdates && !app.commandLine.hasSwitch("headless")) {
   autoUpdater.checkForUpdates().then(result => {
@@ -547,7 +601,8 @@ function writeAutoPrefs() {
     width: width,
     height: height,
     projects: getMaskedProjects(["password"]),
-    location: process.env.APPIMAGE ? process.env.APPIMAGE : app.getPath('exe')
+    location: process.env.APPIMAGE ? process.env.APPIMAGE : app.getPath('exe'),
+    tablePrefs: tablePrefs
   };
   fs.writeFileSync(`${app.getPath('userData')}/auto-prefs.json`, JSON.stringify(prefs, null, 4));
 }
@@ -564,6 +619,9 @@ function readAutoPrefs() {
       projects = props["projects"]
     else
       projects = [ ];
+
+    if (props["tablePrefs"]) tablePrefs = props["tablePrefs"];
+
     for (let i = 0; i < projects.length; i++)
       if (projects[i].current)
         current_project = projects[i];
@@ -592,7 +650,10 @@ function processOptions() {
     if (props["server.port"])
       cbePort = props["server.port"];
   }
-  checkPid = app.commandLine.getSwitchValue("check-pid");
+  if (app.commandLine.hasSwitch("check-ppid"))
+    checkPid = process.ppid;
+  else
+    checkPid = app.commandLine.getSwitchValue("check-pid");
   if (checkPid != 0) {
     setInterval(doCheckPid, 5000);
   }
@@ -609,7 +670,11 @@ function processOptions() {
       process.exit();
     });
   }
-  showPort = app.commandLine.hasSwitch("showPort");
+  // Windows folds case in arguments it seems
+  showPort = app.commandLine.hasSwitch("showPort") ||
+             app.commandLine.hasSwitch("showport");
+  useTokenNotCookie = app.commandLine.hasSwitch("useTokenNotCookie") ||
+                      app.commandLine.hasSwitch("usetokennotcookie");
   quiet = app.commandLine.hasSwitch("quiet");
 }
 
@@ -657,7 +722,7 @@ function start_cbe() {
 
   var instDir = path.dirname(app.getPath("exe"));
   let filename = `${app.getPath("userData")}/config.json`;
-  const cbe = spawn(instDir + "/customjre/bin/java", [
+  let spawnArgs = [
     `-Dserver.port=${cbePort}`,
     "-jar",
     `${instDir}/backend/console.jar`,
@@ -665,8 +730,12 @@ function start_cbe() {
     "--stdin",
     "--properties",
     filename,
-  ]);
-  
+  ];
+  if (useTokenNotCookie) {
+    spawnArgs.push('--useTokenNotCookie');
+  }
+  const cbe = spawn(instDir + "/customjre/bin/java", spawnArgs);
+
   let readlineStderr = readline.createInterface({
     input: cbe.stderr,
   });
@@ -708,12 +777,22 @@ function start_cbe() {
   });
 }
 
-function readWDTModelFile(filepath) {
+function readContentFile(filepath) {
   return {
     file: filepath,
     fileContents: fs.readFileSync(filepath, 'utf8'),
-    mediaType: (filepath.endsWith(".json") ? "application/json" : (filepath.endsWith(".props") ? "text/plain" : "application/yaml"))
+    mediaType: (filepath.endsWith(".json") ? "application/json" :  "application/x-yaml")
   };
+}
+
+function start_another_me() {
+  const { execFile } = require("child_process");
+
+  another_me = execFile(`${instDir}/WebLogic Remote Console`, () =>
+    {
+	another_me = null;
+    }
+  );
 }
 
 function writeFileAsync(filepath, fileContents) {
@@ -744,7 +823,7 @@ function createFileReadingResponse(filepath) {
   const response = {};
   if (fs.existsSync(filepath)) {
     try {
-      const results = readWDTModelFile(filepath);
+      const results = readContentFile(filepath);
       response["file"] = results.file;
       response["fileContents"] = results.fileContents;
       response["mediaType"] = results.mediaType;
@@ -779,7 +858,7 @@ ipcMain.handle('file-creating', async (event, arg) => {
     const dialogParams = {
       defaultPath: arg.filepath,
       properties: ['createDirectory'],
-      filters: { name: 'Supported Formats', extensions: ['yml', 'yaml', 'json']}
+      filters: { name: 'Supported Formats', extensions: fileExtensions }
     };
     return dialog.showSaveDialog(window, dialogParams)
       .then(result => {
@@ -815,7 +894,7 @@ ipcMain.handle('file-reading', async (event, arg) => {
         const dialogParams = {
           defaultPath: arg.filepath,
           properties: ['openFile'],
-          filters: { name: 'Supported Formats', extensions: ['yml', 'yaml', 'json', 'props']}
+          filters: { name: 'Supported Formats', extensions: fileExtensions }
         };
         return dialog.showOpenDialog(window, dialogParams)
           .then(dialogReturnValue => {
@@ -836,8 +915,25 @@ ipcMain.handle('file-reading', async (event, arg) => {
     });
 });
 
+ipcMain.handle("table-customizing", async (event, arg) => {
+  const currentEntry = tablePrefs[arg.page];
+
+  if (currentEntry !== arg.fileContents) {
+    tablePrefs[arg.page] = arg.fileContents;
+    writeAutoPrefs();
+    return Promise.resolve();
+  }
+});
+
+ipcMain.handle("table-prefs-reading", async () => {
+  return Promise.resolve(tablePrefs);
+});
+
 ipcMain.handle('file-writing', async (event, arg) => {
   if (arg.filepath && arg.fileContents) {
+    if (path.dirname(arg.filepath) === '.') {
+      arg.filepath = path.join(__dirname, arg.filepath)
+    }
     return writeFileAsync(arg.filepath, arg.fileContents);
   }
   else {
@@ -1013,12 +1109,21 @@ app.whenReady()
   .then(() => {
     processOptions();
     if (!app.commandLine.hasSwitch("headless")) {
+      // As described earlier, the Mac will only support one running
+      // Remote Console (with a head)
+      if (process.platform === 'darwin') {
+        if (!app.requestSingleInstanceLock()) {
+          process.exit();
+          process.kill(process.pid, 9);
+        }
+      }
       /**
        * Creates a new instance of the ``BrowserWindow`` class, using the specified parameter values.
        * @param {string} title
        * @param {number} width
        * @param {number} height
        * @returns {BrowserWindow}
+          show: app.commandLine.hasSwitch("headless") ? false : true,
        * @private
        */
       function createBrowserWindow(title, width, height) {
@@ -1084,7 +1189,9 @@ app.whenReady()
         process.exit();
         process.kill(process.pid, 9);
       }
+
       window = createBrowserWindow("Initializing...", width, height);
+
       window.webContents.session.clearCache();
       window.on('resize', () => {
         width = window.getSize()[0];

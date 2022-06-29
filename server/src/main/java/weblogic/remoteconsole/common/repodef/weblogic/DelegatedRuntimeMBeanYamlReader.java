@@ -6,6 +6,7 @@ package weblogic.remoteconsole.common.repodef.weblogic;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
@@ -29,6 +30,7 @@ import weblogic.remoteconsole.common.repodef.schema.SubTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
 import weblogic.remoteconsole.common.repodef.yaml.SlicesDefImpl;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * Base implementation for dynamically creating the yaml that describes
@@ -167,16 +169,25 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
     // Find the leaf property def
     Path parentPath = undelPropertyDef.getParentPath();
     if (!parentPath.isEmpty()) {
-      // The property lives in a child bean.  Find the corresponding property on the child bean.
+      // The property lives in a child bean.
+      // Find the corresponding property on the child bean.
       boolean searchSubTypes = true;
-      undelPropertyDef =
-        undelPropertyDef.getTypeDef() // e.g. ServerMBean
-          .getChildDef(parentPath, searchSubTypes) // e.g. SSL
-          .getChildTypeDef() // e.g. SSLMBean
-          .getPropertyDef(
-            new Path(undelPropertyDef.getPropertyName()), // e.g. Enabled
+      BeanChildDef childDef =
+        undelPropertyDef
+          .getTypeDef() // e.g. ServerMBean
+          .getChildDef(parentPath, searchSubTypes); // e.g. SSL.Enabled
+      if (childDef != null) {
+        undelPropertyDef =
+          childDef
+            .getChildTypeDef() // e.g. SSLMBean
+            .getPropertyDef(
+              new Path(undelPropertyDef.getPropertyName()), // e.g. Enabled
             searchSubTypes
           );
+      } else {
+        // The child isn't visible (e.g. excluded).  Skip the property.
+        return;
+      }
     } else {
       // The property lives directly on the bean.
     }
@@ -215,6 +226,17 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
       String type = subType.getType();
       if (nameHandler.isFabricatableType(type)) {
         subType.setType(nameHandler.getFabricatedJavaType(type));
+        // Normally, a runtime mbean's Type property is the same as the type name
+        // so we just set the subtype Type and leave Value empty.
+        // But, for delegated types, the Type property is still the undelegated
+        // type (e.g. FooMBean) but the corresponding type name is the
+        // delegated type (e.g. BlahFooMBean).
+        // So, we need to set Type to BlahFooMBean and Value to FooMBean.
+        String value = subType.getValue();
+        if (StringUtils.isEmpty(value)) {
+          value = type;
+        }
+        subType.setValue(value);
       }
     }
   }

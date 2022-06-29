@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
+import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.Localizer;
 import weblogic.remoteconsole.common.utils.Path;
@@ -24,6 +25,7 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.Value;
+import weblogic.remoteconsole.server.webapp.FailedRequestException;
 
 /**
  * BeanTreeBuilder creates a BeanTree holding a bean tree created from a WDT model.
@@ -196,8 +198,21 @@ public class BeanTreeBuilder {
     this.localizer = localizer;
   }
 
+  // Add a WDT model sections that will be placed into the bean tree
+  public void addModelSections() {
+    getModel().keySet().forEach(section -> {
+      if (!WDTModelSchema.KNOWN_SECTIONS.contains(section)) {
+        throw failedRequestException(LocalizedConstants.WDT_INVALID_SECTION, section, WDTModelSchema.KNOWN_SECTIONS);
+      }
+    });
+    WDTModelSchema.SUPPORTED_SECTIONS.forEach(section -> {
+      addModelSection(section);
+    });
+  }
+
+
   // Add a WDT model section that will be placed into the bean tree
-  public BeanTreeBuilder addModelSection(String section) {
+  private void addModelSection(String section) {
     if ((section != null) && !section.isEmpty()) {
       if (getModel().containsKey(section)) {
         // Get and place the model section into the list of model sections
@@ -218,7 +233,6 @@ public class BeanTreeBuilder {
         }
       }
     }
-    return this;
   }
 
   // Build the bean tree using the model sections specified
@@ -233,6 +247,7 @@ public class BeanTreeBuilder {
 
     // Clear the current model section and return the bean tree...
     currentModelSection = null;
+
     return getBeanTree();
   }
 
@@ -308,6 +323,8 @@ public class BeanTreeBuilder {
       getParent().putBeanTreeEntry(key, property);
     }
 
+    validatePropertyValue(property);
+
     // Return created property
     return property;
   }
@@ -318,6 +335,8 @@ public class BeanTreeBuilder {
     Object value,
     BeanPropertyDef beanPropDef
   ) {
+    validatePropertyValue(currentProperty);
+
     // Merge values when property is of type Properties
     if (beanPropDef.isProperties()) {
       mergePropertiesProperty(currentProperty, value, beanPropDef);
@@ -332,12 +351,27 @@ public class BeanTreeBuilder {
 
     // Merge the reference keys when there is a reference array type property
     if (beanPropDef.isReference()) {
-      mergeReferenceArray(currentProperty, value);
+      mergeReferenceArray(currentProperty, value, beanPropDef.isReferenceAsReferences());
       return;
     }
 
     // Otherwise, merge the two arrays based on the type of the array
     mergeArrayProperty(currentProperty, value, beanPropDef);
+  }
+
+  private void validatePropertyValue(BeanTreeEntry property) {
+    if (!property.getBeanPropertyDef().isSupportsModelTokens()) {
+      if (WDTValueConverter.isPropertyModelToken(property)) {
+        throw
+          failedRequestException(
+            LocalizedConstants.WDT_MODEL_TOKEN_NOT_SUPPORTED,
+            property.getKey(),
+            property.getPropertyValue()
+          );
+      }
+    }
+    // Throws FailedRequestException if the property's value doesn't match its type:
+    WDTValueConverter.getValueType(property, property.getBeanPropertyDef(), localizer);
   }
 
   // Check and get an existing bean when available, otherwise create
@@ -408,18 +442,17 @@ public class BeanTreeBuilder {
 
       // Get the childDef child type which is needed to expand the path properly
       // Fixup - Check for same keys and that missing child is a collection
-      BeanChildDef missgingChildDef = beanChildDef.getChildTypeDef().getChildDef(new Path(key));
-      if ((missgingChildDef == null) || !missgingChildDef.isCollection()) {
-        LOGGER.warning("WARNING: BeanTreeBuilder expanding child found NO EXPANDED Key: " + key);
-        return;
+      BeanChildDef missingChildDef = beanChildDef.getChildTypeDef().getChildDef(new Path(key));
+      if ((missingChildDef == null) || !missingChildDef.isCollection()) {
+        throw failedRequestException(LocalizedConstants.WDT_INVALID_CHILD, key);
       }
 
       // Create or add the missing child bean thus exapanding per the online bean tree path
       BeanTreeEntry missingChildBean =
-        getOrCreateBean(key, missgingChildDef.isCollection(), missgingChildDef, bean);
+        getOrCreateBean(key, missingChildDef.isCollection(), missingChildDef, bean);
 
       // Continue with the child collecton using the created collection bean, the value and proper type
-      buildChildCollection(missingChildBean, value, missgingChildDef);
+      buildChildCollection(missingChildBean, value, missingChildDef);
     } else {
       buildChildInstance(bean, value, beanChildDef);
     }
@@ -460,9 +493,7 @@ public class BeanTreeBuilder {
 
       // Also ensure the type is present as well as the name...
       if (value.keySet().size() != 1) {
-        // Fixup - logger warning to indicate model entries not found or Assert
-        LOGGER.warning("WARNING: BeanTreeBuilder buildSecurityProvider Unknown type: " + key);
-        return;
+        throw failedRequestException(LocalizedConstants.WDT_INVALID_SECURITY_PROVIDER_TYPE, key);
       }
 
       // Now shift to the type and the value specified in the model
@@ -489,9 +520,7 @@ public class BeanTreeBuilder {
 
     // IFF the type does not match the legal values then skip this security provider
     if (type == null) {
-      // Fixup - logger warning to indicate provider type not found
-      LOGGER.warning("WARNING: BeanTreeBuilder buildSecurityProvider NO type: " + key);
-      return;
+      throw failedRequestException(LocalizedConstants.WDT_INVALID_SECURITY_PROVIDER_TYPE, key);
     }
 
     // Place the type property of the security provider into the bean
@@ -501,9 +530,7 @@ public class BeanTreeBuilder {
     if (getParent().getKeySet().contains(typeProp)) {
       Object curType = getParent().getBeanTreeEntry(typeProp).getPropertyValue();
       if (!type.equals(curType.toString())) {
-        // Fixup - logger warning to indicate type mismatch on merge
-        LOGGER.warning("WARNING: BeanTreeBuilder buildSecurityProvider MISMATCHED type: " + type);
-        return;
+        throw failedRequestException(LocalizedConstants.WDT_INVALID_SECURITY_PROVIDER_TYPE, key);
       }
     }
     createOrUpdateProperty(typeProp, type, typePropDef);
@@ -545,10 +572,7 @@ public class BeanTreeBuilder {
     // Get the Machines child def to use for the collection
     BeanChildDef beanChildDef = getBeanTypeDef().getChildDef(new Path(MACHINES));
     if (beanChildDef == null) {
-      String noMachinesDef = localizer.localizeString(LocalizedConstants.NO_MACHINES_DEF);
-      String msg = "BeanTreeBuilder " + noMachinesDef + type;
-      LOGGER.severe(msg);
-      throw new IllegalArgumentException(msg);
+      throw failedRequestException(LocalizedConstants.NO_MACHINES_DEF, type);
     }
 
     // Get the Machines collection or create one when not available...
@@ -614,7 +638,8 @@ public class BeanTreeBuilder {
 
   // Introspect the value and add to the tree as property or bean
   private void addTree(String key, Object value) {
-    LOGGER.finest("BeanTreeBuilder addTree: " + key + "=" + ((value instanceof Map) ? "MAP" : value));
+    boolean isMap = value instanceof Map;
+    LOGGER.finest("BeanTreeBuilder addTree: " + key + "=" + (isMap ? "MAP" : value));
 
     // Check for security provider type collection as these require special handling...
     if (isSecurityProviderBaseType()) {
@@ -637,16 +662,41 @@ public class BeanTreeBuilder {
           buildMachines(UNIX_MACHINE, getMapFromValue(value, key));
           return;
         }
-        // Fixup - logger warning to indicate model entries not found
         Path beanPath = getIdentity().getPath().childPath(key);
-        addUnknownProperty(beanPath.getDotSeparatedPath());
-        LOGGER.warning("WARNING: BeanTreeBuilder found unknown property: " + beanPath);
+        if (isMap) {
+          // It's a child
+          if (isKnownButNotSupported(key)) {
+            // It's a known but unsupported child, e.g. topology -> NMProperties.
+            // Do a silent pass through.
+            addUnknownProperty(beanPath.getDotSeparatedPath());
+          } else {
+            // It's an unknown child, e.g. topology -> foo
+            throw failedRequestException(LocalizedConstants.WDT_INVALID_CHILD, key);
+          }
+        } else {
+          // It's a property value.
+          // WDTBeanRepoDef already exposes mbean properties that aren't
+          // supported by the WLS REST api so that WDT can pass them through.
+          // Therefore, either this is a property that was added in a PSU
+          // that the remote console hasn't caught up to yet, or it's
+          // a bogus property name.  Assume the latter.
+          throw failedRequestException(LocalizedConstants.WDT_INVALID_PROPERTY, key);
+        }
       }
     }
   }
 
+  // Determine if the value is known but not supported
+  private boolean isKnownButNotSupported(String key) {
+    if (currentModelSection != null) {
+      return WDTModelSchema.SUPPORTED_SECTION_CONTENTS.get(currentModelSection).contains(key);
+    }
+    return false;
+  }
+
   // Add to the unknown properties per model section which will be used when model is persisted
   private void addUnknownProperty(String propertyPath) {
+    LOGGER.finest("BeanTreeBuilder addUnknownProperty: " + propertyPath);
     if ((currentModelSection != null) && (propertyPath != null) && propertyPath.startsWith(DOMAIN_PREFIX)) {
       Map<String, Set<String>> unknownProperties = getUnknownProperties();
       if (!unknownProperties.containsKey(currentModelSection)) {
@@ -687,10 +737,7 @@ public class BeanTreeBuilder {
   private Map<String, Object> getMapValueFromKey(String key, Map<String, Object> value) {
     Object result = value.get(key);
     if ((result != null) && !(result instanceof Map)) {
-      String keyValueNotMap = localizer.localizeString(LocalizedConstants.KEY_VALUE_NOT_MAP);
-      String msg = "BeanTreeBuilder " + keyValueNotMap + key;
-      LOGGER.severe(msg);
-      throw new IllegalArgumentException(msg);
+      throw failedRequestException(LocalizedConstants.KEY_VALUE_NOT_MAP, key);
     }
     return (Map<String, Object>)result;
   }
@@ -700,10 +747,7 @@ public class BeanTreeBuilder {
   @SuppressWarnings("unchecked")
   private Map<String, Object> getMapFromValue(Object value, String key) {
     if ((value != null) && !(value instanceof Map)) {
-      String valueNotMap = localizer.localizeString(LocalizedConstants.VALUE_NOT_MAP);
-      String msg = "BeanTreeBuilder " + valueNotMap + key;
-      LOGGER.severe(msg);
-      throw new IllegalArgumentException(msg);
+      throw failedRequestException(LocalizedConstants.VALUE_NOT_MAP, key);
     }
     return (Map<String, Object>)value;
   }
@@ -713,7 +757,7 @@ public class BeanTreeBuilder {
   // NOTE: There is an intermediate step of setting the property to the new
   // value so the reference keys can be obtained, the new value remains as
   // the property value if the exisiting and new values cannot be merged!
-  private void mergeReferenceArray(BeanTreeEntry currentProperty, Object value) {
+  private void mergeReferenceArray(BeanTreeEntry currentProperty, Object value, boolean isRefAsRefs) {
     // Get the list of reference keys for both the current and new property values
     List<String> currentKeys = BeanTreeReferenceResolver.getReferenceKeys(currentProperty);
     currentProperty.setPropertyValue(value);
@@ -745,6 +789,12 @@ public class BeanTreeBuilder {
         currentProperty.setPropertyValue(null);
       } else {
         currentProperty.setPropertyValue(mergedKeys);
+        // Last reference remains for isReferenceAsReferences
+        if (isRefAsRefs && (mergedKeys.size() > 1)) {
+          String last = mergedKeys.get(mergedKeys.size() - 1);
+          mergedKeys.clear();
+          mergedKeys.add(last);
+        }
       }
     }
   }
@@ -759,9 +809,9 @@ public class BeanTreeBuilder {
     BeanTreeEntry currentProperty, Object value, BeanPropertyDef beanPropDef
   ) {
     // Get the Value type for both the current and new property values
-    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef, localizer);
     currentProperty.setPropertyValue(value);
-    Value newValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    Value newValue = WDTValueConverter.getValueType(currentProperty, beanPropDef, localizer);
 
     // Check and handle delete operator for an array of strings...
     if (isWDTDeleteApplied() && beanPropDef.isString()
@@ -844,9 +894,9 @@ public class BeanTreeBuilder {
     }
 
     // Get the Value type for both the current and new property values
-    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef, localizer);
     currentProperty.setPropertyValue(value);
-    Value newValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    Value newValue = WDTValueConverter.getValueType(currentProperty, beanPropDef, localizer);
 
     // Check and handle delete operator for the Properties keys...
     if (isWDTDeleteApplied() && (newValue != null) && newValue.isProperties()) {
@@ -950,7 +1000,7 @@ public class BeanTreeBuilder {
   // Check and update a Properties keys for use of WDT delete operator
   @SuppressWarnings("unchecked")
   private void removeDeleteFromProperties(BeanTreeEntry currentProperty, BeanPropertyDef beanPropDef) {
-    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef, localizer);
     if ((currentValue != null) && currentValue.isProperties()) {
       Object curVal = WDTValueConverter.getJavaType(currentValue, beanPropDef, localizer);
       if (curVal instanceof Map) {
@@ -976,7 +1026,7 @@ public class BeanTreeBuilder {
   // Check and update the String array entries for use of WDT delete operator
   @SuppressWarnings("unchecked")
   private void removeDeleteFromStringArray(BeanTreeEntry currentProperty, BeanPropertyDef beanPropDef) {
-    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef);
+    Value currentValue = WDTValueConverter.getValueType(currentProperty, beanPropDef, localizer);
     if (currentValue.isArray()) {
       Object curVal = WDTValueConverter.getJavaType(currentValue, beanPropDef, localizer);
       if ((curVal instanceof List)) {
@@ -993,5 +1043,10 @@ public class BeanTreeBuilder {
         }
       }
     }
+  }
+
+  private FailedRequestException failedRequestException(LocalizableString errorMessage, Object... args) {
+    LOGGER.fine(errorMessage.getEnglishText(args));
+    return new FailedRequestException(localizer.localizeString(errorMessage, args));
   }
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.webapp;
 import java.util.List;
 import javax.json.JsonObject;
 
+import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.TableActionDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
@@ -53,7 +54,13 @@ public class InvokeActionHelper {
     // The action is invoked on a collection child, so we're passed a slice page path.
     // Get the corresponding table page path since that's where the action defs live.
     TablePagePath tablePagePath = PagePath.newTablePagePath(ic.getPagePath().getPagesPath());
-    TableDef tableDef = ic.getPageRepo().getPageRepoDef().getPageDef(tablePagePath).asTableDef();
+    InvocationContext tableIc = new InvocationContext(ic);
+    tableIc.setPagePath(tablePagePath);
+    Response<PageDef> pageDefResponse = tableIc.getPageRepo().asPageReaderRepo().getPageDef(tableIc);
+    if (!pageDefResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(pageDefResponse);
+    }
+    TableDef tableDef = pageDefResponse.getResults().asTableDef();
     List<TableActionDef> actionDefs = tableDef.getActionDefs();
     TableActionDef tableActionDef = findTableActionDef(actionDefs, new Path(action));
     if (tableActionDef != null) {

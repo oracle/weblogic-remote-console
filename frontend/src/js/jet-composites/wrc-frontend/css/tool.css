@@ -7,7 +7,6 @@
    */
   --form-container-calc-max-width: 10px;
   --form-container-calc-min-width: 310px;
-  --form-container-calc-max-height: 385px;
   --form-input-min-width: 15em;
   --form-input-min-switch-width: 7.25em;
 
@@ -16,10 +15,11 @@
    *        above custom CSS variables, at runtime.
    */
 
-  --table-form-container-width-offset: 330px;
+  --table-form-container-width-offset: 340px;
   --form-container-fixed-min-width: 1060px;
 
-  --container-resizer-offset-max-height: 80;
+  --container-resizer-offset-max-height: 72; /* 80; */
+  --model-console-header-height: 23px;
 
   --detail-popup-background-color: #cae4ef;
   --breadcrumb-link-color: #0275d8;
@@ -34,7 +34,6 @@
   --form-table-container-min-width: 310px;
   --instructions-calc-max-width: 335px;
   --instructions-max-height: 160px;
-  --paging-bottom: 2rem;
 
   --form-input-max-width: 15em;
   --form-input-integer-max-width: 120px;
@@ -73,6 +72,8 @@
   --panel-resizer-width: 10px;
   --panel-resizer-height: 70px;
   --resizer-left-panel-min-width: 200px;
+
+  --oj-button-outlined-chrome-text-color-disabled: #bdc3c6;
 }
 
 ::-webkit-scrollbar {
@@ -89,11 +90,19 @@
 /* ruleset for runtime-role="app" data attribute */
 [data-runtime-role="app"] {
   --runtime-role-display: inline-flex;
+  --paging-position: fixed;
+  --paging-bottom: 2rem;
+  --form-container-calc-max-height: 405px;
+  --oj-form-layout-column-gutter: 1.5rem;
 }
 
 /* ruleset for runtime-role="tool" data attribute */
 [data-runtime-role="tool"] {
   --runtime-role-display: none;
+  --paging-position: unset;
+  --paging-bottom: unset;
+  --form-container-calc-max-height: 430px;
+  --oj-form-layout-column-gutter: .5rem;
 }
 
 #form-toolbar-buttons > div[id='form-toolbar-save-button'],
@@ -119,6 +128,7 @@
   margin: 0.625rem 0 1.25rem 0;
 }
 
+img.reload-file-icon,
 img.choose-file-icon,
 img.clear-chosen-file-icon {
   width: 1.5rem;
@@ -165,10 +175,13 @@ oj-menu[id$="Menu"] .oj-menu-dropdown .oj-menu-item > a {
   text-align: center;
 }
 
+.button-label {
+  font-size: 1em;    /* 12pt; */
+}
+
 .button-icon {
-  width: 1.125rem;
-  height: 1.125rem;
-  padding-right: 0.3125rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 img.oj-button-icon.oj-start {
@@ -181,10 +194,6 @@ img.option-icon
   height: 1.25rem;
   width: 1.25rem;
   margin: 0 0.625rem 0 0;
-}
-
-.button-label {
-  font-size: 0.92em;    /* 11pt; */
 }
 
 .cfe-more-menuitem {
@@ -293,10 +302,10 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
 }
 
 #paging {
-  margin-left: 0.3125rem;    /* 5px */
-  position: fixed;
+  height: 1.75rem;
+  margin: 0.438rem 0 0 0.3125rem;
+  position: var(--paging-position);
   bottom: var(--paging-bottom);
-  z-index: 2;
 }
 
 /* Style for highlighting of form fields */
@@ -410,7 +419,6 @@ div.cfe-form-select-one div.oj-text-field-container {
 }
 
 /* Set height of readonly fields to achieve proper layout on page */
-oj-input-text.cfe-file-picker > div > div > div.oj-text-field-readonly-div,
 oj-input-text.cfe-form-readonly-text > div > div > div.oj-text-field-readonly-div
 {
   -webkit-appearance: none;
@@ -563,7 +571,6 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 .cfe-table-form-content {
   min-width: var(--form-container-fixed-min-width);
   max-width: calc(100vw - var(--form-container-calc-max-width));    /* Any form, table or article wider than var(--content-area-max-width) will have a horizontal scroll bar */
-  max-height: calc(100vh - var(--form-container-calc-max-height));
   margin: 0.3125rem 0 0 0;
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
@@ -571,6 +578,7 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 
 oj-table.wlstable {
   overflow: auto;
+  height: calc(100vh - var(--form-container-calc-max-height));
   z-index: 1;
 }
 
@@ -691,12 +699,6 @@ oj-combobox-one#beanpath > div > div > div > input.oj-combobox-input {
   margin: 0.3125rem 0 0.625rem 0;
 }
 
-oj-dialog[id="wdtOptionsDialog"] {
-  width: var(--wdtOptionsDialog-width);
-  min-height: var(--wdtOptionsDialog-min-height);
-  background-color: var(--dialog-background-color);
-}
-
 oj-dialog#actionsDialog div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog#syncIntervalDialog div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog#confirmDialog div.oj-dialog-header h1.oj-dialog-title,
@@ -801,6 +803,12 @@ oj-dialog[id="syncIntervalDialog"] {
 
 oj-dialog[id="overlayFormDialog"] {
   min-width: var(--overlayDialog-min-width);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog[id="wdtOptionsDialog"] {
+  width: var(--wdtOptionsDialog-width);
+  min-height: var(--wdtOptionsDialog-min-height);
   background-color: var(--dialog-background-color);
 }
 
@@ -1003,7 +1011,7 @@ The workaround is to create our own cfe-flex-items-pad class
   padding: 0;
 }
 
-#wdt-model-builder-container,
+#wdt-model-designer-container,
 #spa-resizer {
   min-width: calc(100vw - var(--form-container-calc-min-width));
 }
@@ -1026,4 +1034,80 @@ The workaround is to create our own cfe-flex-items-pad class
 .left_panel
 {
   width: 100%;    /* Keeps navtree expand/collapse icons right-aligned */
+}
+
+#table-customizer {
+  display: none;
+}
+
+.table-customizer-expander {
+  display: flex;
+  align-items: center;
+  margin-left: 0.313rem;
+}
+
+.table-customizer-expander,
+.table-customizer-expander:hover,
+.table-customizer-expander:active,
+.table-customizer-expander:focus {
+  text-decoration: none;
+}
+
+.table-customizer-expander > span.button-label {
+  font-size: 11pt;
+  font-weight: 600;
+  color: #161513;
+  margin-left: 0.313rem; /* 5px; */
+}
+
+#left-right-container {
+  background-color: #f9f7f6;
+  width: 100%;
+  margin-bottom: 0.938rem;  /* 15px; */
+}
+
+#left-container,
+#right-container
+{
+  width: 23.75rem;  /* 380px; */
+  margin: 0.313rem 0.625rem 0 0.313rem; /* 5px 10px 0 5px; */
+}
+
+#left-container > div,
+#right-container > div
+{
+  background-color: white;
+  max-height: 16.25rem; /* 260px; */
+  overflow: auto;
+}
+
+#left-container > span,
+#right-container > span
+{
+  margin: 0.313rem 0.188rem 0.188rem 0.313rem; /* 5px 3px 3px 5px; */
+  font-size: 11pt;
+  font-weight: 600;
+}
+
+#table-customizer-buttonset {
+  width: 1px;
+  min-width: 2.938rem;  /* 47px; */
+  display: inline-block;
+}
+
+#table-customizer-buttonset > div {
+  min-width: 0.75rem; /* 12px; */
+  min-height: 0.75rem;  /* 12px; */
+  padding-bottom: 0.313rem; /* 5px; */
+}
+
+.table-customizer-button
+{
+  margin-bottom: 0.313rem;  /* 5px; */
+}
+
+oj-list-view[id="unselectedColumnList"] .oj-listview-item-layout,
+oj-list-view[id="selectedColumnList"]  .oj-listview-item-layout
+{
+  min-height: .5rem;
 }

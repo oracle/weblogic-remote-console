@@ -1,8 +1,9 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
 - name: IssuerURI
+  offlineName: IssuerUri
   helpHTML: >
     <p>The Issuer URI, or name, of this SAML 2.0 Credential Mapping
     provider. The value that you specify for Issuer URI should match the
@@ -45,3 +46,6 @@ properties:
     information. Note that the Service Provider partner needs to have a
     SAML Authentication provider configured to be able to extract and use
     the attribute information contained in the assertion.</p>
+
+- name: CredCacheMinViableTTL
+  offlineName: CredCacheMinViableTtl

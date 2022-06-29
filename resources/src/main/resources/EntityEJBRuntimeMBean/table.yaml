@@ -6,7 +6,7 @@ displayedColumns:
 - name: "Type"
 - name: "CacheRuntime.ActivationCount"
 - name: "QueryCacheRuntime.CacheAccessCount"
-- name: "QueryCacheRuntime.CacheHitCount"
+#- name: "QueryCacheRuntime.CacheHitCount" # deprecated before the first version of the WLS REST api
 - name: "CacheRuntime.CacheMissCount"
 - name: "CacheRuntime.CachedBeansCurrentCount"
 - name: "CacheRuntime.PassivationCount"

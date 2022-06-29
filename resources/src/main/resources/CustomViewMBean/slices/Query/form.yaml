@@ -1,0 +1,12 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>TBD custom view query intro</p>
+
+
+customizePageDefMethod: weblogic.remoteconsole.customizers.CustomViewMBeanCustomizer.customizeQuerySliceDef
+customizePageMethod: weblogic.remoteconsole.customizers.CustomViewMBeanCustomizer.customizeQuerySlice
+
+properties:
+- name: "Name"

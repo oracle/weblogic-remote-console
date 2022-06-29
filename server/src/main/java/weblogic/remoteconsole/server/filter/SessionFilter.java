@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
@@ -88,6 +88,12 @@ public class SessionFilter implements ContainerRequestFilter {
 
     // Look for the session id and setup the request context property
     Cookie sessionId = requestContext.getCookies().get(WebAppUtils.CONSOLE_BACKEND_COOKIE);
+    if (sessionId == null) {
+      String header = requestContext.getHeaderString("X-Session-Token");
+      if (header != null) {
+        sessionId = new Cookie("whocares", header);
+      }
+    }
     Frontend frontend;
     if (sessionId == null) {
       // Create frontend instance
@@ -113,6 +119,7 @@ public class SessionFilter implements ContainerRequestFilter {
     InvocationContext ic = new InvocationContext();
     WebAppUtils.storeInvocationContextInRequestContext(requestContext, ic);
     ic.setLocales(requestContext.getAcceptableLanguages());
+    ic.setUriInfo(requestContext.getUriInfo());
     if (isProviderBasedPath(requestContext)) {
       setupConnectionAndRewriteURL(requestContext, frontend, ic);
     }

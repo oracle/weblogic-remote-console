@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.utils;
@@ -121,9 +121,8 @@ public interface WebLogicRestRequest {
      * @return modified builder
      */
     public Builder asynchronous(boolean asynchronous) {
-      // Synchronously wait for 2 seconds if case the operation returns quickly.
       if (asynchronous) {
-        return header("Prefer", "wait=2");
+        return header("Prefer", "respond-async");
       } else {
         this.headers.remove("Prefer");
         return this;

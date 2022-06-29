@@ -12,8 +12,14 @@
 define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function (oj, Preferences, MessageDisplaying, CoreTypes, CoreUtils, Logger) {
     const i18n = {
-      labels: {
+      'labels': {
         'unexpectedErrorResponse': {value: oj.Translations.getTranslatedString('wrc-view-model-utils.labels.unexpectedErrorResponse.value')}
+      },
+      'messages': {
+        'connectionRefused': {
+          'summary': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.summary'),
+          'details': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.details')
+        }
       }
     };
 
@@ -31,6 +37,15 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         );
       },
 
+      displayResponseMessage: function (message) {
+        MessageDisplaying.displayMessage({
+            severity: message.severity || 'error',
+            summary: message.summary,
+            detail: message.detail
+          }, Preferences.notifications.autoCloseInterval()
+        );
+      },
+
       getResponseBodyMessages: function (response, properties) {
         let bodyMessages = [], errorMessage;
         if (CoreUtils.isError(response)) {
@@ -44,23 +59,46 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         else if (CoreUtils.isNotUndefinedNorNull(response.body) && CoreUtils.isNotUndefinedNorNull(response.body.messages)) {
           response.body.messages.forEach((message) => {
             if (CoreUtils.isUndefinedOrNull(message.property)) {
-            errorMessage = {
-              severity: message.severity.toLowerCase(),
-              summary: response.failureReason,
-              detail: message.message
-            };
-            bodyMessages.push(errorMessage);
-          }
-        else {
-            errorMessage = { severity: message.severity };
-            const property = properties.find(property => property.name === message.property);
-            if (typeof property !== 'undefined') errorMessage['summary'] = property.label;
-            errorMessage['detail'] = message.message;
-            bodyMessages.push(errorMessage);
-          }
-        });
+              errorMessage = {
+                severity: message.severity.toLowerCase(),
+                summary: response.failureReason,
+                detail: message.message
+              };
+              bodyMessages.push(errorMessage);
+            }
+            else {
+              errorMessage = { severity: message.severity };
+              const property = properties.find(property => property.name === message.property);
+              if (typeof property !== 'undefined') errorMessage['summary'] = property.label;
+              errorMessage['detail'] = message.message;
+              bodyMessages.push(errorMessage);
+            }
+          });
         }
         return bodyMessages;
+      },
+
+      getResponseErrorMessages: (response, correctiveActions = '') => {
+        const responseErrorMessages = {
+          status: response.transport.status,
+          html: '<p/>'
+        };
+        if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
+          const details = [];
+          response.body.messages.forEach((message) => {
+            details.push({detail: message.message});
+          });
+          responseErrorMessages.html = `${correctiveActions}${MessageDisplaying.getErrorMessagesAsHTML(details)}`;
+        }
+        return responseErrorMessages;
+      },
+
+      getYAMLExceptionFailureMessage: (failure) => {
+        return oj.Translations.getTranslatedString('wrc-data-providers.messages.correctiveAction.yamlException.detail',
+          `${failure.failureReason.reason.charAt(0).toUpperCase()}${failure.failureReason.reason.slice(1)}`,
+          failure.failureReason.mark.line + 1,
+          failure.failureReason.mark.column
+        );
       },
 
       /**
@@ -90,28 +128,33 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         }
 
         if (Preferences.notifications.showPopupForFailureResponsesPreference()) {
+          let messageSummary, messageDetails;
           // The end user's "showPopupForFailureResponses"
           // preference setting has a value of true, so
           // display the message. Use response.failureReason
           // to craft the summary property.
-          const messageSummary = (CoreUtils.isError(response.failureReason) ? response.failureReason.name : i18n.labels.unexpectedErrorResponse.value);
+          if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
+            messageSummary = i18n.messages.connectionRefused.summary;
+            messageDetails = i18n.messages.connectionRefused.details;
+          }
+          else {
+            messageSummary = (CoreUtils.isError(response.failureReason) ? response.failureReason.name : i18n.labels.unexpectedErrorResponse.value);
+            messageDetails = response.failureReason;
+          }
 
-          // Assign default value to severity, if
-          // parameter wasn't provided
-          severity = (severity || 'info');
+          // Assign 'error' to severity, if parameter wasn't provided
+          severity = (severity || 'error');
 
-          // Set value of severity to "info", if
-          // an invalid value was assigned to the
-          // severity parameter.
+          // Set value of severity to "info", if an invalid value was
+          // assigned to the severity parameter.
           if (!['error', 'warn', 'info'].includes(severity)) severity = 'info';
 
-          // Display message used for default failure
-          // response handling, using parameter and
-          // preference values.
+          // Display message used for default failure response handling,
+          // using parameter and preference values.
           MessageDisplaying.displayMessage({
               severity: severity,
               summary: messageSummary,
-              detail: response.failureReason
+              detail: messageDetails
             }, Preferences.notifications.autoCloseInterval()
           );
         }
@@ -146,71 +189,71 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
        * @param {"progress"|"wait"|"default"} type
        */
       setCursorType: (type) => {
-      if (['progress', 'wait', 'default'].includes(type)) {
-      document.body.style.cursor = type;
+        if (['progress', 'wait', 'default'].includes(type)) {
+          document.body.style.cursor = type;
+        }
+      },
+
+      /**
+       * Returns whether CFE is running inside an Electron app, or not.
+       * @returns {boolean}
+       */
+      isElectronApiAvailable: () => {
+        return (CoreUtils.isNotUndefinedNorNull(window.electron_api));
+      },
+
+      /**
+       *
+       * @param {string} name
+       * @returns {string}
+       * @example
+       * const minHeight = ViewModelUtils.getCssCustomProperty("slideup-popup-offset-top");
+       */
+      getCustomCssProperty: (name) => {
+        if (name[0] !== '-') name = `--${name}`;
+        return getComputedStyle(document.documentElement).getPropertyValue(name);
+      },
+
+      setCustomCssProperty: (name, value) => {
+        if (name[0] !== '-') name = `--${name}`;
+        document.documentElement.style.setProperty(name, value);
+      },
+
+      /**
+       * Returns how many ``root element`` responsive units (rem) are in the specified number of ``pixels``.
+       * @param {number} pixels - Number of pixels, without the ``px`` suffix.
+       * @returns {string} - Root element units suffixed with ``rem``.
+       */
+      pxToRem: (pixels) => {
+        const baseFontSize = parseInt(getComputedStyle(document.documentElement).fontSize, 10);
+        return `${pixels / baseFontSize}rem`;
+      },
+
+      /**
+       * Use ``download`` attribute on an ``<a>`` HTML tag, to download a file to the local filesystem.
+       * @param {{filepath: string, fileContents: string, mediaType: string}} options - JS object with properties containing data for the file to be downloaded.
+       */
+      downloadFile: (options) => {
+        const blob = new Blob([options.fileContents], {type: options.mediaType});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = options.filepath;
+        Object.assign(link.style, {
+          visibility: 'hidden',
+          width: 0,
+          height: 0,
+          overflow: 'hidden',
+          position: 'absolute'
+        });
+        link.onclick = function(event) {
+          const that = this;
+          setTimeout(function() {
+            window.URL.revokeObjectURL(that.href);
+          }, 1500);
+        };
+        link.click();
+        link.remove();
+      }
     }
-  },
-
-    /**
-     * Returns whether CFE is running inside an Electron app, or not.
-     * @returns {boolean}
-     */
-    isElectronApiAvailable: () => {
-      return (CoreUtils.isNotUndefinedNorNull(window.electron_api));
-    },
-
-    /**
-     *
-     * @param {string} name
-     * @returns {string}
-     * @example
-     * const minHeight = ViewModelUtils.getCssCustomProperty("slideup-popup-offset-top");
-     */
-    getCustomCssProperty: (name) => {
-      if (name[0] !== '-') name = `--${name}`;
-      return getComputedStyle(document.documentElement).getPropertyValue(name);
-    },
-
-    setCustomCssProperty: (name, value) => {
-      if (name[0] !== '-') name = `--${name}`;
-      document.documentElement.style.setProperty(name, value);
-    },
-
-    /**
-     * Returns how many ``root element`` responsive units (rem) are in the specified number of ``pixels``.
-     * @param {number} pixels - Number of pixels, without the ``px`` suffix.
-     * @returns {string} - Root element units suffixed with ``rem``.
-     */
-    pxToRem: (pixels) => {
-      const baseFontSize = parseInt(getComputedStyle(document.documentElement).fontSize, 10);
-      return `${pixels / baseFontSize}rem`;
-    },
-
-    /**
-     * Use ``download`` attribute on an ``<a>`` HTML tag, to download a file to the local filesystem.
-     * @param {{filepath: string, fileContents: string, mediaType: string}} options - JS object with properties containing data for the file to be downloaded.
-     */
-    downloadFile: (options) => {
-      const blob = new Blob([options.fileContents], {type: options.mediaType});
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = options.filepath;
-      Object.assign(link.style, {
-        visibility: 'hidden',
-        width: 0,
-        height: 0,
-        overflow: 'hidden',
-        position: 'absolute'
-      });
-      link.onclick = function(event) {
-        const that = this;
-        setTimeout(function() {
-          window.URL.revokeObjectURL(that.href);
-        }, 1500);
-      };
-      link.click();
-      link.remove();
-    }
-  }
   }
 );

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Quotas are used to control the allotment of system resources available
@@ -6,6 +6,10 @@ introductionHTML: >
 
 displayedColumns:
 - name: "Name"
+- name: "BytesMaximum"
+- name: "MessagesMaximum"
+- name: "Policy"
+- name: "Shared"
 
 helpTopics:
 - label: "Configuring Messaging "

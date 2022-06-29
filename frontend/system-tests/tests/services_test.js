@@ -124,7 +124,7 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             await services.createJDBCSystemResource(driver,"testJDBCSysRes-1","testJdbcJNDIName-1","All","Generic Data Source",
                 "Oracle","GENERIC_Oracle_DatabaseDriver","orcl","provencelx.us.oracle.com","1521","system","oracle");
             await admin.saveToShoppingCart(driver,"finish");
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","JDBC System Resources");
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","Data Sources");
             await driver.sleep(1200);
             await admin.discardChanges(driver);
             console.log("TEST PASS ");
@@ -157,9 +157,9 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
 
             await admin.deleteMBeanObject(driver,"testJDBCStore-2","JDBC Stores",2,"configuration",
                 "Services","JDBC Stores","","","",4);
-            await admin.deleteMBeanObject(driver,"testJDBCSysRes-2","JDBC System Resources",2,"configuration",
-                "Services","JDBC System Resources","","","",7);
-
+            await admin.deleteMBeanObject(driver,"testJDBCSysRes-2","Data Sources",2,"configuration",
+                "Services","Data Sources","","","",7);
+            console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");
@@ -256,10 +256,11 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     })
 
     //Test Case:
+    // Osgi Frameworks is deprecated.
     // Create Osgi Frameworks (testOsgiFrameworks-1)
     // Delete testOsgiFrameworks-1
     //
-    it('11. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testOsgiFrameworks-1 ',
+    it.skip('11. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testOsgiFrameworks-1 ',
         async function() {
             file = "testOsgiFrameworks-1.png";
             try {
@@ -273,7 +274,6 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
                 console.log(e.toString() + " TEST FAIL");
             }
     })
-
 
     //Test Case:
     // Create JTA (testJMSBridgeDestinations-1)

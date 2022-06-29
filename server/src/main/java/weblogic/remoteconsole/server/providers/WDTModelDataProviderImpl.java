@@ -4,9 +4,12 @@
 package weblogic.remoteconsole.server.providers;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Properties;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -14,7 +17,6 @@ import javax.json.JsonObjectBuilder;
 
 import org.yaml.snakeyaml.Yaml;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.repo.BeanRepo;
@@ -22,10 +24,10 @@ import weblogic.remoteconsole.server.repo.DownloadBeanRepo;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.PageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WDTModelBuilder;
+import weblogic.remoteconsole.server.repo.weblogic.WDTModelSchema;
 import weblogic.remoteconsole.server.repo.weblogic.WDTPageRepo;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
 import weblogic.remoteconsole.server.webapp.ProviderResource;
-import weblogic.remoteconsole.server.webapp.UriUtils;
 
 /**
  * The implementation of the provider for WDT Models.  The model is
@@ -33,8 +35,7 @@ import weblogic.remoteconsole.server.webapp.UriUtils;
  * representation of the data.
 */
 public class WDTModelDataProviderImpl implements WDTModelDataProvider {
-  public static final Set<String> WDT_MODEL_SECTIONS =
-    Set.of("domainInfo","topology","resources","appDeployments","kubernetes");
+  private static final Logger LOGGER = Logger.getLogger(WDTModelDataProviderImpl.class.getName());
 
   public static final String TYPE_NAME = "WDTModel";
   private String name;
@@ -43,18 +44,20 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
   private Map<String, Root> roots = new HashMap<String, Root>();
   private Root editRoot;
   private boolean isJson = false;
+  private List<String> propertyListNames = null;
+  private ProviderManager pm = null;
 
   public WDTModelDataProviderImpl(String name) {
     this.name = name;
-    String encodedName = StringUtils.urlEncode(name);
     editRoot = new Root(
+      this,
       Root.EDIT_NAME,
       Root.CONFIGURATION_ROOT,
       Root.EDIT_LABEL,
-      "/" + UriUtils.API_URI + "/" + encodedName + "/" + Root.EDIT_NAME + "/navtree",
-      null, // no change manager
-      "/" + UriUtils.API_URI + "/" + encodedName + "/" + Root.EDIT_NAME + "/download",
-      false // it is not read only
+      false, // it is not read only
+      Root.NAV_TREE_RESOURCE,
+      Root.SIMPLE_SEARCH_RESOURCE,
+      Root.DOWNLOAD_RESOURCE
     );
     roots.put(Root.EDIT_NAME, editRoot);
   }
@@ -66,6 +69,9 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
       this.isJson = isJson;
       Object parsedModel = new Yaml().load(is);
       model = getAcceptableModel(parsedModel, ic);
+      test(ic); // Builds the bean tree so we can look for more problems with the model
+    } catch (FailedRequestException fre) {
+      throw fre;
     } catch (Exception e) {
       Throwable walk = e;
       for ( ; ; ) {
@@ -102,6 +108,77 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
 
     // Otherwise get the current model from BeanRepo
     return ((DownloadBeanRepo)beanRepo).getContent(ic);
+  }
+
+  @Override
+  public void setPropertyListProviders(List<String> propertyListNames, ProviderManager pm) {
+    this.pm = pm;
+    this.propertyListNames = propertyListNames;
+  }
+
+  @Override
+  public List<PropertySource> getPropertySources() {
+    // No information when no property list references exist
+    if (propertyListNames == null) {
+      return null;
+    }
+
+    // Obtain the property list data providers from the names
+    List<PropertyListDataProvider> dataProviders = new ArrayList<>(propertyListNames.size());
+    propertyListNames.forEach(name -> {
+      PropertyListDataProvider dataProvider = (PropertyListDataProvider)
+        pm.getProvider(name, PropertyListDataProviderImpl.TYPE_NAME);
+      boolean added = ((dataProvider != null) ? dataProviders.add(dataProvider) : false);
+      if (!added) {
+        LOGGER.finest("WDTModelDataProviderImpl unable to find Property List provider: " + name);
+      }
+    });
+
+    // No information if the property list references are not available
+    if (dataProviders.isEmpty()) {
+      return null;
+    }
+
+    // Obtain the list of Properties from the property list data providers
+    List<PropertySource> propertySources = new ArrayList<>(dataProviders.size());
+    dataProviders.forEach(provider -> {
+      propertySources.add(new PropertySourceImpl(
+          provider.getName(),
+          provider.getResourceData(),
+          provider.getProperties()));
+    });
+
+    // Done.
+    LOGGER.finest("WDTModelDataProviderImpl obtained Property Sources from: " + propertyListNames);
+    return propertySources;
+  }
+
+  // Information on the property list provider and the supplied properties
+  private class PropertySourceImpl implements PropertySource {
+    private String name;
+    private String resoruceData;
+    private Properties properties;
+
+    private PropertySourceImpl(String name, String resoruceData, Properties properties) {
+      this.name = name;
+      this.resoruceData = resoruceData;
+      this.properties = properties;
+    }
+
+    @Override
+    public String getName() {
+      return name;
+    }
+
+    @Override
+    public String getResourceData() {
+      return resoruceData;
+    }
+
+    @Override
+    public Properties getProperties() {
+      return properties;
+    }
   }
 
   @Override
@@ -159,7 +236,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
     if (parsedModel instanceof Map) {
       Map<String, Object> parsed = (Map<String, Object>) parsedModel;
       boolean validModel = parsed.entrySet().stream()
-        .anyMatch(entry -> WDT_MODEL_SECTIONS.contains(entry.getKey()));
+        .anyMatch(entry -> WDTModelSchema.KNOWN_SECTIONS.contains(entry.getKey()));
       result = validModel ? parsed : null;
     }
     if (result == null) {
@@ -170,7 +247,10 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
 
   // Get the response message when no model is set on the provider
   private String getNoModelMessage(InvocationContext ic) {
-    return (lastMessage != null) ? lastMessage : ic.getLocalizer().localizeString(LocalizedConstants.MODEL_INVALID);
+    return
+      (lastMessage != null)
+        ? lastMessage
+        : ic.getLocalizer().localizeString(LocalizedConstants.MODEL_INVALID, WDTModelSchema.KNOWN_SECTIONS);
   }
 
   @Override
@@ -189,6 +269,11 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
     }
     ret.add("roots", builder);
     ret.add("mode", "standalone");
+    if (propertyListNames != null) {
+      JsonArrayBuilder props = Json.createArrayBuilder();
+      propertyListNames.forEach(props::add);
+      ret.add("propertyLists", props);
+    }
     if (lastMessage != null) {
       ret.add("messages", createMessages(lastMessage));
     }

@@ -62,7 +62,7 @@ actions:
   label: "Start"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.start
   definition:
-    type: "void"
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
   usedIf:
     property: "State"
     values:
@@ -72,7 +72,7 @@ actions:
   label: "Resume"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.resume
   definition:
-    type: "void"
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
   usedIf:
     property: "State"
     values:
@@ -83,7 +83,7 @@ actions:
   label: "Suspend when work completes"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.suspend
   definition:
-    type: "void"
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
   usedIf:
     property: "State"
     values:
@@ -93,7 +93,7 @@ actions:
   label: "Force suspend now"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceSuspend
   definition:
-    type: "void"
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
   usedIf:
     property: "State"
     values:
@@ -103,7 +103,7 @@ actions:
   label: "Shutdown when work completes"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.gracefulShutdown
   definition:
-    type: "void"
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
   usedIf:
     property: "State"
     values:
@@ -115,7 +115,7 @@ actions:
   label: "Force shutdown now"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceShutdown
   definition:
-    type: "void"
+    type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
   usedIf:
     property: "State"
     values:

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -33,7 +33,7 @@ public interface BeanPropertyDef extends BeanValueDef {
   public String getPropertyName();
 
   // The name that is used to identify this property in forms in the HTTP api.
-  // Typically it's the same as getPropertyPath.getUnderscoreSeparatedPath()
+  // Typically it's the same as getPropertyPath().getUnderscoreSeparatedPath()
   // However, sometimes the form name of the property needs to
   // be different (especially for wizards).
   public String getFormPropertyName();
@@ -168,8 +168,8 @@ public interface BeanPropertyDef extends BeanValueDef {
   }
 
   // The roles that are allowed to get (read) this property
-  Set<String> getGetRoles();
+  public Set<String> getGetRoles();
 
   // The roles that are allowed to set this property
-  Set<String> getSetRoles();
+  public Set<String> getSetRoles();
 }

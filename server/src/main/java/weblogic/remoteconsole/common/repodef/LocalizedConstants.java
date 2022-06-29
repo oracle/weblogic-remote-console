@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -89,6 +89,12 @@ public class LocalizedConstants {
       "Configuration View Tree"
     );
 
+  public static final LocalizableString COMPOSITE_CONFIGURATION_LABEL =
+    addConstant(
+      "label.compositeConfig",
+      "Composite View Tree"
+    );
+
   public static final LocalizableString PROPERTY_LIST_CONFIGURATION_LABEL =
     addConstant(
       "label.propertyList",
@@ -104,49 +110,49 @@ public class LocalizedConstants {
   public static final LocalizableString INVALID_MODEL_TOKEN =
     addConstant(
       "invalidModelToken",
-      "Invalid model token: "
+      "Invalid model token: {0}"
     );
 
   public static final LocalizableString NO_UNRESOLVED_REF =
     addConstant(
       "noUnresolvedRef",
-      "Unresolved Reference value was not specified!"
+      "Unresolved Reference value was not specified: {0}"
     );
 
   public static final LocalizableString NO_REFS_VALUE =
     addConstant(
       "noRefsValue",
-      "References value was not specified!"
+      "References value was not specified: {0}"
     );
 
   public static final LocalizableString UNMAPPED_SECTION =
     addConstant(
       "unmappedSection",
-      "Unmapped section for: "
+      "Unmapped section for: {0}"
     );
 
   public static final LocalizableString NO_MACHINES_DEF =
     addConstant(
       "noMachinesDef",
-      "no Machines child definition: "
+      "No Machines child definition: {0}"
     );
 
   public static final LocalizableString KEY_VALUE_NOT_MAP =
     addConstant(
       "keyValueNotMap",
-      "key value is not a Map: "
+      "{0} is not a folder."
     );
 
   public static final LocalizableString VALUE_NOT_MAP =
     addConstant(
       "valueNotMap",
-      "value is not a Map: "
+      "{0} is not a folder."
     );
 
   public static final LocalizableString MODEL_INVALID =
     addConstant(
       "modelInvalid",
-      "Model not valid!"
+      "Invalid WDT model.  It must contain at least one of the following top-level folders: {0}"
     );
 
   public static final LocalizableString SECURITY_VALIDATION_WARNINGS_WARNING_LINK_LABEL =
@@ -159,6 +165,99 @@ public class LocalizedConstants {
     addConstant(
       "securityValidationWarningsInfoLinkLabel",
       "View Security Warnings Report"
+    );
+
+  public static final LocalizableString PROPERTY_LIST_PROPERTIES =
+    addConstant(
+      "label.propertyList.properties",
+      "Properties"
+    );
+
+  public static final LocalizableString PROPERTY_LIST_HELP_TEXT =
+    addConstant(
+      "label.propertyList.helpText",
+      "The set of properties contained in the property list file."
+    );
+
+  // Indicates that a simple search string is invalid because it's empty
+  public static final LocalizableString EMPTY_SIMPLE_SEARCH_STRING =
+    addConstant(
+      "emptySimpleSearchString",
+      "The search string must not be empty."
+    );
+
+
+  // Indicates that a bean can't be created because one with that name already exists
+  public static final LocalizableString ALREADY_EXISTS =
+    addConstant(
+      "alreadyExists",
+      "{0} already exists."
+    );
+
+  public static final LocalizableString WDT_MODEL_TOKEN_NOT_SUPPORTED =
+    addConstant(
+      "wdtModelTokenNotSupported",
+      "{0} does not support variables: {1}"
+    );
+
+  public static final LocalizableString WDT_PROPERTY_VALUE_NOT_A_STRING =
+    addConstant(
+      "wdtPropertyValueNotAString",
+      "The value of {0} is not a string: {1}"
+    );
+
+  public static final LocalizableString WDT_PROPERTY_VALUE_NOT_A_BOOLEAN =
+    addConstant(
+      "wdtPropertyValueNotABoolean",
+      "The value of {0} is not true or false: {1}"
+    );
+
+  public static final LocalizableString WDT_PROPERTY_VALUE_NOT_AN_INT =
+    addConstant(
+      "wdtPropertyValueNotAnInt",
+      "The value of {0} is not an int: {1}"
+    );
+
+  public static final LocalizableString WDT_PROPERTY_VALUE_NOT_A_LONG =
+    addConstant(
+      "wdtPropertyValueNotALong",
+      "The value of {0} is not a long: {1}"
+    );
+
+  public static final LocalizableString WDT_PROPERTY_VALUE_NOT_A_DOUBLE =
+    addConstant(
+      "wdtPropertyValueNotADouble",
+      "The value of {0} is not a double: {1}"
+    );
+
+  public static final LocalizableString WDT_PROPERTY_VALUE_NOT_PROPERTIES =
+    addConstant(
+      "wdtPropertyValueNotProperties",
+      "The value of {0} is not a set of properties: {1}"
+    );
+
+  public static final LocalizableString WDT_INVALID_SECURITY_PROVIDER_TYPE =
+    addConstant(
+      "wdtInvalidSecurityProviderType",
+      "{0} is not a valid security provider type."
+    );
+
+  public static final LocalizableString WDT_INVALID_SECTION =
+    addConstant(
+      "wdtInvalidSection",
+      "{0} is not a valid top-level folder. It must be one of: {1}"
+    );
+
+  public static final LocalizableString WDT_INVALID_CHILD =
+    addConstant(
+      "wdtInvalidChild",
+      "{0} is not a valid folder."
+    );
+
+  public static final LocalizableString WDT_INVALID_PROPERTY =
+    addConstant(
+      "wdtInvalidProperty",
+      "{0} is not a valid attribute."
     );
 
   // Returns all of the constants (used when the resource bundles are

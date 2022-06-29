@@ -1,5 +1,49 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
-
 introductionHTML: Create a new App Deployment
-customizePageDefSourceMethod: weblogic.remoteconsole.customizers.AppDeploymentMBeanCustomizer.customizeCreateFormPageDefSource
+sections:
+- properties:
+  - name: Name
+  - name: Targets
+  - name: Upload
+    required: true
+    definition:
+      name: Upload
+      type: boolean
+      writable: true
+      defaultValue:
+        value:
+          value: true
+      descriptionHTML: "Do you want to upload the application to the Administration Server then deploy it or
+        do you want to deploy an application that is already on the Administration Server's file system?"
+- usedIf:
+    property: Upload
+    values:
+    - true
+  properties:
+  - name: Source
+    required: true
+    onlineName: sourcePath
+    mbeanAttribute:
+      attribute: SourcePath
+    definition:
+      name: Source
+      type: java.io.InputStream
+      writable: true
+      descriptionHTML: "Select the deployable unit to upload to the Administration Server and deploy."
+  - name: Plan
+    onlineName: planPath
+    mbeanAttribute:
+      attribute: PlanPath
+    definition:
+      name: Plan
+      type: java.io.InputStream
+      writable: true
+      descriptionHTML: "Select the deployment plan document to upload to the Administration Server and deploy."
+- usedIf:
+    property: Upload
+    values:
+    - false
+  properties:
+  - name: SourcePath
+  - name: PlanPath

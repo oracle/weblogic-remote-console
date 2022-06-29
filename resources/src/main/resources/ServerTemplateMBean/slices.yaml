@@ -2,7 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 alternateSliceSources:
 - ServerMBean/slices
-
+- ReferenceableBean/slices
 slices:
 - name: General
 - name: Protocols
@@ -11,16 +11,12 @@ slices:
   - name: Http
   - name: IIOP
 - name: Cluster
+- name: Migration
 - name: WebServices
   slices:
   - name: Buffering
   - name: ReliableMessage
-- name: FederationServices
-  slices:
-  - name: FederationServicesSAML20General
-  - name: FederationServicesSAML20IdentityProvider
-  - name: FederationServicesSAML20ServiceProvider
-- name: Deployment
+
 - name: Health
 - name: Logging
   slices:
@@ -29,13 +25,6 @@ slices:
   - name: DataSource
   - name: SeverityProperties
   - name: PlatformLoggerLevels
-- name: DiagnosticArchive
-- name: Migration
-- name: Tuning
-- name: Overload
-- name: Concurrency
-- name: Coherence
-- name: Start
 - name: Debug
   slices:
   - name: Application
@@ -49,3 +38,20 @@ slices:
   - name: Security
   - name: Transactions
   - name: All
+- name: SAML
+  slices:
+  - name: SAML20General
+  - name: SAML20IdentityProvider
+  - name: SAML20ServiceProvider
+- name: Advanced
+  slices:
+  - name: Deployment
+  - name: DiagnosticArchive
+  - name: Tuning
+  - name: Overload
+  - name: Concurrency
+  - name: Coherence
+  - name: NodeManager
+  - name: StartStop
+    label: 'Start / Stop'
+- name: ReferencedBy

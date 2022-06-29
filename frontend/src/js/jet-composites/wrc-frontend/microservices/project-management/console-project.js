@@ -58,6 +58,8 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
             dataProvider['password'] = item.password;
             break;
           case DataProvider.prototype.Type.MODEL.name:
+            dataProvider['properties'] = item.properties;
+          case DataProvider.prototype.Type.PROPERTIES.name:
             dataProvider['file'] = item.file;
             break;
           case DataProvider.prototype.Type.COMPOSITE.name:

@@ -42,6 +42,7 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
   private Value<BeanPropertyPresentationDefSource> presentation = new Value<>(new BeanPropertyPresentationDefSource());
   private Value<MBeanAttributeDefSource> mbeanAttribute = new Value<>(new MBeanAttributeDefSource());
   private Value<BeanPropertyDefSource> definition = new Value<>(null);
+  private BooleanValue dontAllowModelTokens = new BooleanValue();
 
   public void merge(BeanPropertyDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
@@ -63,6 +64,7 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
     presentation.merge(from.presentation, fromContainedBeanPath);
     mbeanAttribute.merge(from.mbeanAttribute, fromContainedBeanPath);
     definition.merge(from.definition, fromContainedBeanPath);
+    dontAllowModelTokens.merge(from.dontAllowModelTokens, fromContainedBeanPath);
     mergeHelp(from, fromContainedBeanPath);
     mergeUsedIf(from, fromContainedBeanPath);
   }
@@ -217,6 +219,11 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
     usedIf.setValue(value);
   }
 
+  // Indicates that whether this property is required is specified in type.yaml
+  public boolean isRequiredSpecifiedInYaml() {
+    return required.isSpecifiedInYaml();
+  }
+
   // Whether this property's value must be specified.
   public boolean isRequired() {
     return required.getValue();
@@ -353,6 +360,15 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
 
   public void setDefinition(BeanPropertyDefSource value) {
     definition.setValue(value);
+  }
+
+  // Whether this property cannot be set to a model token
+  public boolean isDontAllowModelTokens() {
+    return dontAllowModelTokens.getValue();
+  }
+
+  public void setDontAllowModelTokens(boolean val) {
+    dontAllowModelTokens.setValue(val);
   }
 
   public String toString() {

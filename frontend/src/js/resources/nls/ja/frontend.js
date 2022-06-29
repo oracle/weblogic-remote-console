@@ -1,83 +1,107 @@
 define({
   "wrc-header": {
     "text": {
-      "appName": "WebLogic\\u30EA\\u30E2\\u30FC\\u30C8\\u30FB\\u30B3\\u30F3\\u30BD\\u30FC\\u30EB"
+      "appName": "WebLogicリモート・コンソール"
     },
     "icons": {
       "connectivity": {
         "online": {
-          "tooltip": "\\u30AA\\u30F3\\u30E9\\u30A4\\u30F3"
+          "tooltip": "オンライン"
         },
         "offline": {
-          "tooltip": "\\u30AA\\u30D5\\u30E9\\u30A4\\u30F3"
+          "tooltip": "オフライン"
         },
         "detached": {
-          "tooltip": "\\u30C7\\u30BF\\u30C3\\u30C1\\u6E08"
+          "tooltip": "デタッチ済"
+        },
+        "unattached": {
+          "tooltip": "アタッチ解除済"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright \\u00C2\\u00A9 2020, 2021, Oracle and/or its affiliates.<br/>Oracle\\u306F\\u30AA\\u30E9\\u30AF\\u30EB\\u304A\\u3088\\u3073\\u305D\\u306E\\u95A2\\u9023\\u4F1A\\u793E\\u306E\\u767B\\u9332\\u5546\\u6A19\\u3067\\u3059\\u3002\\u305D\\u306E\\u4ED6\\u306E\\u793E\\u540D\\u3001\\u5546\\u54C1\\u540D\\u7B49\\u306F\\u5404\\u793E\\u306E\\u5546\\u6A19\\u307E\\u305F\\u306F\\u767B\\u9332\\u5546\\u6A19\\u3067\\u3042\\u308B\\u5834\\u5408\\u304C\\u3042\\u308A\\u307E\\u3059\\u3002<br/>",
-      "builtWith": "Oracle JET\\u3067\\u69CB\\u7BC9"
+      "copyrightLegal": "Copyright Â© 2020, 2022, Oracle and/or its affiliates.<br/>Oracleはオラクルおよびその関連会社の登録商標です。その他の社名、商品名等は各社の商標または登録商標である場合があります。<br/>",
+      "builtWith": "Oracle JETで構築"
     }
   },
   "wrc-data-providers": {
     "icons": {
       "info": {
-        "tooltip": "\\u60C5\\u5831"
+        "tooltip": "情報"
       },
       "edit": {
-        "tooltip": "Manage"
+        "tooltip": "管理"
       },
       "delete": {
-        "tooltip": "\\u524A\\u9664"
+        "tooltip": "削除"
       }
     },
     "labels": {
       "connections": {
         "header": {
-          "value": "Unnamed Project"
+          "value": "名前のないプロジェクト"
         },
         "name": {
-          "value": "Connection Provider Name"
+          "value": "接続プロバイダ名"
         },
         "url": {
           "value": "URL"
         },
         "username": {
-          "value": "\\u30E6\\u30FC\\u30B6\\u30FC\\u540D"
+          "value": "ユーザー名"
         },
         "password": {
-          "value": "\\u30D1\\u30B9\\u30EF\\u30FC\\u30C9"
+          "value": "パスワード"
         }
       },
       "models": {
         "name": {
-          "value": "WDT Model Provider Name"
+          "value": "WDTモデル・プロバイダ名"
         },
         "file": {
-          "value": "WDT Model Filename"
+          "value": "WDTモデル・ファイル名"
+        },
+        "props": {
+          "value": "WDT変数"
+        }
+      },
+      "composite": {
+        "name": {
+          "value": "WDTコンポジット・モデル・プロバイダ名"
+        },
+        "providers": {
+          "value": "WDTモデル"
+        }
+      },
+      "proplist": {
+        "name": {
+          "value": "プロパティ・リスト・プロバイダ名"
+        },
+        "file": {
+          "value": "プロパティ・リスト・ファイル名"
         }
       },
       "project": {
         "name": {
-          "value": "\\u30D7\\u30ED\\u30B8\\u30A7\\u30AF\\u30C8\\u540D"
+          "value": "プロジェクト名"
         },
         "file": {
-          "value": "Project Filename"
-        },
-        "isDefault": {
-          "value": "Make Default"
+          "value": "プロジェクト・ファイル名"
         }
       },
       "provider": {
         "adminserver": {
-          "value": "Admin Server Connection"
+          "value": "管理サーバー接続"
         },
         "model": {
-          "value": "Add WDT Model"
+          "value": "WDTモデルの追加"
+        }
+      },
+      "dropdown": {
+        "none": {
+          "value": "なし"
         }
       }
     },
@@ -85,38 +109,54 @@ define({
       "info": {
         "provider": {
           "id": {
-            "label": "\\u30D7\\u30ED\\u30D0\\u30A4\\u30C0ID:"
+            "label": "プロバイダID:"
           }
         },
         "domain": {
           "name": {
-            "label": "\\u30C9\\u30E1\\u30A4\\u30F3\\u540D:"
+            "label": "ドメイン名:"
           },
           "url": {
-            "label": "\\u30C9\\u30E1\\u30A4\\u30F3URL:"
+            "label": "ドメインURL:"
           },
           "version": {
-            "label": "\\u30C9\\u30E1\\u30A4\\u30F3\\u30FB\\u30D0\\u30FC\\u30B8\\u30E7\\u30F3:"
+            "label": "ドメイン・バージョン:"
           },
           "username": {
-            "label": "Username:"
+            "label": "ユーザー名:"
+          },
+          "roles": {
+            "label": "ロール:"
           },
           "connectTimeout": {
-            "label": "\\u63A5\\u7D9A\\u30BF\\u30A4\\u30E0\\u30A2\\u30A6\\u30C8:"
+            "label": "接続タイムアウト:"
           },
           "readTimeout": {
-            "label": "\\u8AAD\\u53D6\\u308A\\u30BF\\u30A4\\u30E0\\u30A2\\u30A6\\u30C8:"
+            "label": "読取りタイムアウト:"
           },
           "anyAttempt": {
-            "label": "Any Connections Attempted:"
+            "label": "試行された接続:"
           },
           "lastAttempt": {
-            "label": "Last Attempt Successful:"
+            "label": "最後に成功した試行:"
           }
         },
         "model": {
           "file": {
-            "label": "File:"
+            "label": "ファイル:"
+          },
+          "props": {
+            "label": "変数:"
+          }
+        },
+        "composite": {
+          "models": {
+            "label": "モデル:"
+          }
+        },
+        "proplist": {
+          "file": {
+            "label": "ファイル名:"
           }
         }
       }
@@ -124,20 +164,33 @@ define({
     "menus": {
       "connections": {
         "add": {
-          "value": "Create Provider for Admin Server Connection..."
+          "value": "管理サーバー接続プロバイダの追加"
         }
       },
       "models": {
         "add": {
-          "value": "Create Provider for Existing WDT Model File..."
+          "value": "WDTモデル・ファイル・プロバイダの追加"
         },
         "new": {
-          "value": "Create Provider for New WDT Model File..."
+          "value": "新規WDTモデル・ファイルのプロバイダの作成"
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "WDTコンポジット・モデル・ファイル・プロバイダの追加"
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "プロパティ・リスト・プロバイダの追加"
+        },
+        "new": {
+          "value": "新規プロパティ・リストのプロバイダの作成"
         }
       },
       "providers": {
         "sort": {
-          "value": "Sort by Provider Type"
+          "value": "プロバイダ・タイプでソート"
         }
       },
       "context": {
@@ -145,175 +198,256 @@ define({
           "connection": {
             "domain": {
               "url": {
-                "label": "\\u30C9\\u30E1\\u30A4\\u30F3URL:"
+                "label": "ドメインURL:"
               },
               "version": {
-                "label": "\\u30C9\\u30E1\\u30A4\\u30F3\\u30FB\\u30D0\\u30FC\\u30B8\\u30E7\\u30F3:"
+                "label": "ドメイン・バージョン:"
               },
               "username": {
-                "label": "Username:"
+                "label": "ユーザー名:"
               }
             }
           },
           "model": {
             "file": {
-              "label": "File:"
+              "label": "ファイル:"
             }
           }
         }
       },
       "project": {
         "export": {
-          "value": "Export Providers as Project..."
+          "value": "プロバイダをプロジェクトとしてエクスポート..."
         },
         "import": {
-          "value": "\\u30D7\\u30ED\\u30B8\\u30A7\\u30AF\\u30C8\\u306E\\u30A4\\u30F3\\u30DD\\u30FC\\u30C8"
+          "value": "プロジェクトのインポート"
         }
       }
     },
     "instructions": {
       "connections": {
         "add": {
-          "value": "Enter new name and connectivity settings for connection provider."
+          "value": "接続プロバイダの新しい名前および接続設定を入力します。"
         },
         "edit": {
-          "value": "Modify connectivity settings for connection provider."
+          "value": "接続プロバイダの接続設定を変更します。"
         }
       },
       "models": {
         "add": {
-          "value": "Enter settings for existing model file provider. Click upload icon to browse for model file."
+          "value": "既存のモデル・ファイル・プロバイダの設定を入力します。アップロード・アイコンをクリックして、モデル・ファイルを参照します。"
         },
         "new": {
-          "value": "Enter provider name and filename for new WDT model file, then click icon to pick directory to save file in."
+          "value": "新規WDTモデル・ファイルのプロバイダ名およびファイル名を入力し、アイコンをクリックして、ファイルを保存するディレクトリを選択します。"
         },
         "edit": {
-          "value": "Modify settings for model file provider. Click icon to browse for model file."
+          "value": "モデル・ファイル・プロバイダの設定を変更します。アイコンをクリックして、モデル・ファイルを参照します。"
+        }
+      },
+      "composite": {
+        "add": {
+          "value": "コンポジット・モデル・プロバイダの新しい名前を入力し、モデルの順序付きリストを選択します。"
+        },
+        "edit": {
+          "value": "コンポジット・モデル・プロバイダの設定を変更します。モデルの順序付きリストを使用します。"
+        }
+      },
+      "proplist": {
+        "add": {
+          "value": "既存のプロパティ・リスト・プロバイダの設定を入力します。アップロード・アイコンをクリックして、プロパティ・ファイルを参照します。"
+        },
+        "new": {
+          "value": "新規プロパティ・リストのプロバイダ名およびファイル名を入力し、アイコンをクリックして、ファイルを保存するディレクトリを選択します。"
+        },
+        "edit": {
+          "value": "プロパティ・リスト・プロバイダの設定を変更します。アイコンをクリックして、プロパティ・ファイルを参照します。"
         }
       },
       "project": {
         "export": {
-          "value": "Enter settings for new project."
+          "value": "新規プロジェクトの設定を入力します。"
         },
         "import": {
-          "value": "Click download icon to browse for project."
+          "value": "ダウンロード・アイコンをクリックして、プロジェクトを参照します。"
         }
       },
       "task": {
         "startup": {
-          "value": "Which startup task are you interested in performing?"
+          "value": "どの起動タスクを実行することに関心がありますか。"
         }
       }
     },
     "titles": {
       "add": {
         "connections": {
-          "value": "Create Provider for Admin Server Connection"
+          "value": "管理サーバー接続のプロバイダの作成"
         },
         "models": {
-          "value": "Create Provider for Existing WDT Model File"
+          "value": "既存のWDTモデル・ファイルのプロバイダの作成"
+        },
+        "composite": {
+          "value": "新規WDTコンポジット・モデルのプロバイダの作成"
+        },
+        "proplist": {
+          "value": "既存のプロパティ・リストのプロバイダの作成"
         }
       },
       "new": {
         "models": {
-          "value": "Create Provider for New WDT Model File"
+          "value": "新規WDTモデル・ファイルのプロバイダの作成"
+        },
+        "proplist": {
+          "value": "新規プロパティ・リストのプロバイダの作成"
         }
       },
       "edit": {
         "connections": {
-          "value": "Edit Admin Server Connection Provider"
+          "value": "管理サーバー接続プロバイダの編集"
         },
         "models": {
-          "value": "Edit WDT Model File Provider"
+          "value": "WDTモデル・ファイル・プロバイダの編集"
+        },
+        "composite": {
+          "value": "WDTコンポジット・モデル・プロバイダの編集"
+        },
+        "proplist": {
+          "value": "プロパティ・リスト・プロバイダの編集"
         }
       },
       "export": {
         "project": {
-          "value": "Export Providers as Project"
+          "value": "プロバイダをプロジェクトとしてエクスポート"
         }
       },
       "import": {
         "project": {
-          "value": "\\u30D7\\u30ED\\u30B8\\u30A7\\u30AF\\u30C8\\u306E\\u30A4\\u30F3\\u30DD\\u30FC\\u30C8"
+          "value": "プロジェクトのインポート"
         }
       },
       "startup": {
         "task": {
-          "value": "Startup Task"
+          "value": "起動タスク"
         }
       }
     },
     "messages": {
       "export": {
         "failed": {
-          "summary": "Export Unsuccessful",
-          "detail": "Unable to export providers as ''{0}'' project."
+          "summary": "エクスポート失敗",
+          "detail": "プロバイダを''{0}''プロジェクトとしてエクスポートできません。"
         }
       },
       "import": {
         "failed": {
-          "summary": "Save Unsuccessful",
-          "detail": "Unable to import ''{0}'' project file."
+          "summary": "保存失敗",
+          "detail": "''{0}''プロジェクト・ファイルをインポートできません。"
         }
       },
       "stage": {
         "failed": {
-          "summary": "Create Unsuccessful",
-          "detail": "Unable to create ''{0}'' provider item."
+          "summary": "作成失敗",
+          "detail": "''{0}''プロバイダ・アイテムを作成できません。"
         }
       },
       "use": {
         "failed": {
-          "summary": "Connection Unsuccessful",
-          "detail": "Unable to use ''{0}'' provider item."
+          "summary": "接続失敗",
+          "detail": "''{0}''プロバイダ・アイテムを使用できません。"
+        }
+      },
+      "upload": {
+        "failed": {
+          "detail": "WDTモデル・ファイルをロードできません: {0}"
+        },
+        "props": {
+          "failed": {
+            "detail": "WDT変数をロードできません: {0}"
+          }
         }
       },
       "response": {
         "nameAlreadyExist": {
-          "detail": "Provider named ''{0}'' is already in this project!"
+          "detail": "''{0}''という名前のプロバイダはすでにこのプロジェクトに含まれています。"
+        },
+        "modelsNotFound": {
+          "detail": "構成済のWDTモデル''{0}''が見つかりません"
+        },
+        "propListNotFound": {
+          "detail": "WDT変数''{0}''が見つかりません"
+        },
+        "selectModels": {
+          "detail": "WDTコンポジットを選択するには、まず、WDTコンポジットで使用されたすべてのWDTモデルを選択します。"
+        }
+      },
+      "correctiveAction": {
+        "filePathNotFound": {
+          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+        },
+        "fixModelFile": {
+          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+        },
+        "yamlException": {
+          "detail": "{0} at line {1}, column {2}"
+        },
+        "wktModelContent": {
+          "summary": "Model Content Problems",
+          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
         }
       }
     },
     "prompts": {
       "info": {
-        "fileNotSet": "\\u672A\\u8A2D\\u5B9A"
+        "fileNotSet": "未設定"
+      }
+    },
+    "checkboxes": {
+      "useSparseTemplate": {
+        "label": "疎テンプレートの使用"
       }
     }
   },
   "wrc-navstrip": {
     "icons": {
       "configuration": {
-        "tooltip": "\\u30C4\\u30EA\\u30FC\\u306E\\u7DE8\\u96C6"
+        "tooltip": "ツリーの編集"
       },
       "view": {
-        "tooltip": "Configuration View Tree"
+        "tooltip": "構成ビュー・ツリー"
       },
       "monitoring": {
-        "tooltip": "Monitoring Tree"
+        "tooltip": "モニタリング・ツリー"
       },
       "modeling": {
-        "tooltip": "WDT Model"
+        "tooltip": "WDTモデル"
+      },
+      "composite": {
+        "tooltip": "WDTコンポジット・モデル"
+      },
+      "properties": {
+        "tooltip": "プロパティ・リスト・エディタ"
       }
     }
   },
   "wrc-content-area-header": {
     "title": {
-      "home": "\\u30DB\\u30FC\\u30E0",
-      "configuration": "\\u30C4\\u30EA\\u30FC\\u306E\\u7DE8\\u96C6",
-      "view": "Configuration View Tree",
-      "monitoring": "Monitoring Tree",
-      "modeling": "WDT Model"
+      "home": "ホーム",
+      "configuration": "ツリーの編集",
+      "view": "構成ビュー・ツリー",
+      "monitoring": "モニタリング・ツリー",
+      "modeling": "WDTモデル",
+      "composite": "WDTコンポジット・モデル",
+      "properties": "プロパティ・リスト"
     },
     "toolbar": {
       "buttons": {
         "home": {
-          "label": "\\u30DB\\u30FC\\u30E0"
+          "label": "ホーム"
         },
         "preferences": {
-          "label": "\\u30D7\\u30EA\\u30D5\\u30A1\\u30EC\\u30F3\\u30B9"
+          "label": "プリファレンス"
         },
         "search": {
-          "label": "\\u691C\\u7D22"
+          "label": "検索"
         }
       }
     }
@@ -322,86 +456,64 @@ define({
     "tabstrip": {
       "tabs": {
         "shoppingcart": {
-          "label": "\\u30B7\\u30E7\\u30C3\\u30D4\\u30F3\\u30B0\\u30FB\\u30AB\\u30FC\\u30C8"
+          "label": "ショッピング・カート"
         },
         "ataglance": {
-          "label": "\\u5373\\u6642"
+          "label": "即時"
         },
         "projectmanagement": {
-          "label": "Provider Management"
+          "label": "プロバイダ管理"
         }
       }
     },
     "icons": {
       "kiosk": {
-        "tooltip": "\\u30AD\\u30AA\\u30B9\\u30AF"
+        "tooltip": "キオスク"
       }
     }
   },
   "wrc-perspective": {
     "icons": {
       "history": {
-        "tooltip": "\\u5C65\\u6B74"
+        "tooltip": "履歴"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "\\u5C65\\u6B74\\u306E\\u30AF\\u30EA\\u30A2"
+          "value": "履歴のクリア"
         }
-      }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "\\u30C7\\u30FC\\u30BF\\u3092\\u4F7F\\u7528\\u3067\\u304D\\u307E\\u305B\\u3093"
       }
     }
   },
   "wrc-monitoring": {
     "icons": {
       "history": {
-        "tooltip": "\\u5C65\\u6B74"
+        "tooltip": "履歴"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "\\u5C65\\u6B74\\u306E\\u30AF\\u30EA\\u30A2"
+          "value": "履歴のクリア"
         }
-      }
-    },
-    "messages": {
-      "dataNotAvailable": {
-        "summary": "\\u30C7\\u30FC\\u30BF\\u3092\\u4F7F\\u7528\\u3067\\u304D\\u307E\\u305B\\u3093"
       }
     }
   },
   "wrc-domain-connection": {
     "labels": {
       "runningAt": {
-        "value": "{0}\\u6642\\u306B\\u5B9F\\u884C"
+        "value": "{0}時に実行"
       }
     },
     "messages": {
       "lostConnection": {
-        "summary": "\\u63A5\\u7D9A\\u304C\\u5931\\u308F\\u308C\\u307E\\u3057\\u305F",
-        "detail": "Connection to remote console backend was lost. Ensure that it is running or restart it and try the link again."
+        "summary": "接続が失われました",
+        "detail": "リモート・コンソール・バックエンドへの接続が失われました。稼働していることを確認するか、再起動してリンクを再試行してください。"
       },
       "cannotConnect": {
-        "summary": "\\u63A5\\u7D9A\\u306E\\u8A66\\u884C\\u306B\\u5931\\u6557\\u3057\\u307E\\u3057\\u305F",
-        "detail": "WebLogic\\u30C9\\u30E1\\u30A4\\u30F3{0}\\u306B\\u63A5\\u7D9A\\u3067\\u304D\\u307E\\u305B\\u3093\\u3002WebLogic\\u304C\\u7A3C\\u50CD\\u3057\\u3066\\u3044\\u308B\\u3053\\u3068\\u3092\\u78BA\\u8A8D\\u3057\\u3066\\u304F\\u3060\\u3055\\u3044\\u3002"
-      }
-    },
-    "dialog1": {
-      "title": "WebLogic\\u30C9\\u30E1\\u30A4\\u30F3\\u3078\\u306E\\u63A5\\u7D9A",
-      "instructions": "WebLogic\\u30C9\\u30E1\\u30A4\\u30F3\\u306E\\u7BA1\\u7406\\u30E6\\u30FC\\u30B6\\u30FC\\u306E\\u8CC7\\u683C\\u8A3C\\u660E\\u3068URL\\u3092\\u5165\\u529B\\u3057\\u307E\\u3059:",
-      "labels": {
-        "url": "URL"
-      },
-      "buttons": {
-        "connect": {
-          "label": "\\u63A5\\u7D9A"
-        }
+        "summary": "接続の試行に失敗しました",
+        "detail": "WebLogicドメイン{0}に接続できません。WebLogicが稼働していることを確認してください。"
       }
     }
   },
@@ -409,7 +521,7 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "\\u30AE\\u30E3\\u30E9\\u30EA"
+          "label": "ギャラリ"
         }
       }
     }
@@ -417,143 +529,170 @@ define({
   "wrc-gallery": {
     "cards": {
       "configuration": {
-        "label": "\\u30C4\\u30EA\\u30FC\\u306E\\u7DE8\\u96C6",
-        "description": "<p>\\u73FE\\u5728\\u4F5C\\u696D\\u4E2D\\u306EWebLogic\\u30C9\\u30E1\\u30A4\\u30F3\\u306E\\u69CB\\u6210\\u3092\\u7DAD\\u6301\\u3057\\u307E\\u3059\\u3002</p>"
+        "label": "ツリーの編集",
+        "description": "<p>現在作業中のWebLogicドメインの構成を維持します。</p>"
       },
       "view": {
-        "label": "Configuration View Tree",
-        "description": "<p>\\u73FE\\u5728\\u4F5C\\u696D\\u4E2D\\u306EWebLogic\\u30C9\\u30E1\\u30A4\\u30F3\\u306E\\u8AAD\\u53D6\\u308A\\u5C02\\u7528\\u69CB\\u6210\\u3092\\u8ABF\\u3079\\u307E\\u3059\\u3002</p>"
+        "label": "構成ビュー・ツリー",
+        "description": "<p>現在作業中のWebLogicドメインの読取り専用構成を調べます。</p>"
       },
       "monitoring": {
-        "label": "Monitoring Tree",
-        "description": "<p>\\u73FE\\u5728\\u4F5C\\u696D\\u4E2D\\u306EWebLogic\\u30C9\\u30E1\\u30A4\\u30F3\\u306E\\u9078\\u629E\\u3055\\u308C\\u305F\\u30EA\\u30BD\\u30FC\\u30B9\\u306E\\u30E9\\u30F3\\u30BF\\u30A4\\u30E0MBean\\u60C5\\u5831\\u3092\\u53D6\\u5F97\\u3057\\u307E\\u3059\\u3002</p>"
+        "label": "モニタリング・ツリー",
+        "description": "<p>現在作業中のWebLogicドメインの選択されたリソースのランタイムMBean情報を取得します。</p>"
       },
       "modeling": {
-        "label": "WDT Model Tree",
-        "description": "<p>Maintain model files associated with the WebLogic Deploy Tooling tool.</p>"
+        "label": "WDTモデル・ツリー",
+        "description": "<p>WebLogic Deploy Toolingツールに関連付けられたモデル・ファイルを維持します。</p>"
+      },
+      "composite": {
+        "label": "WDTコンポジット・モデル・ツリー",
+        "description": "<p>現在作業中のWebLogic Deploy Toolingモデル・ファイルの結合セットを表示します。</p>"
+      },
+      "properties": {
+        "label": "プロパティ・リスト・エディタ",
+        "description": "<p>プロパティ・リスト・ファイルからプロパティのセットを表示または変更します。</p>"
       }
     }
   },
   "wrc-shoppingcart": {
     "icons": {
       "discard": {
-        "tooltip": "\\u5909\\u66F4\\u306E\\u7834\\u68C4"
+        "tooltip": "変更の破棄"
       },
       "commit": {
-        "tooltip": "\\u5909\\u66F4\\u306E\\u30B3\\u30DF\\u30C3\\u30C8"
+        "tooltip": "変更のコミット"
       }
     },
     "sections": {
       "changeManager": {
-        "label": "\\u5909\\u66F4\\u30DE\\u30CD\\u30FC\\u30B8\\u30E3"
+        "label": "変更マネージャ"
       },
       "additions": {
-        "label": "\\u8FFD\\u52A0"
+        "label": "追加"
       },
       "modifications": {
-        "label": "\\u5909\\u66F4"
+        "label": "変更"
       },
       "removals": {
-        "label": "\\u524A\\u9664"
+        "label": "削除"
       },
       "restart": {
-        "label": "\\u518D\\u8D77\\u52D5"
+        "label": "再起動"
       }
     }
   },
   "wrc-table-toolbar": {
     "buttons": {
       "new": {
-        "label": "\\u65B0\\u898F"
+        "label": "新規"
       },
       "clone": {
-        "label": "\\u30AF\\u30ED\\u30FC\\u30F3"
+        "label": "クローン"
       },
       "delete": {
-        "label": "\\u524A\\u9664"
+        "label": "削除"
+      },
+      "customize": {
+        "label": "カスタマイズ"
       }
     },
     "icons": {
       "landing": {
-        "tooltip": "\\u30E9\\u30F3\\u30C7\\u30A3\\u30F3\\u30B0\\u30FB\\u30DA\\u30FC\\u30B8"
+        "tooltip": "ランディング・ページ"
       },
       "history": {
-        "tooltip": "\\u5C65\\u6B74\\u306E\\u8868\\u793A\\u306E\\u5207\\u66FF\\u3048"
+        "tooltip": "履歴の表示の切替え"
       },
       "instructions": {
-        "tooltip": "\\u30A4\\u30F3\\u30B9\\u30C8\\u30E9\\u30AF\\u30B7\\u30E7\\u30F3\\u306E\\u8868\\u793A\\u306E\\u5207\\u66FF\\u3048"
+        "tooltip": "インストラクションの表示の切替え"
       },
       "help": {
-        "tooltip": "\\u30D8\\u30EB\\u30D7\\u30FB\\u30DA\\u30FC\\u30B8\\u306E\\u8868\\u793A\\u306E\\u5207\\u66FF\\u3048"
+        "tooltip": "ヘルプ・ページの表示の切替え"
       },
       "sync": {
-        "tooltip": "\\u518D\\u30ED\\u30FC\\u30C9",
-        "tooltipOn": "\\u81EA\\u52D5\\u518D\\u30ED\\u30FC\\u30C9\\u306E\\u505C\\u6B62"
+        "tooltip": "再ロード",
+        "tooltipOn": "自動再ロードの停止"
       },
       "syncInterval": {
-        "tooltip": "\\u81EA\\u52D5\\u518D\\u30ED\\u30FC\\u30C9\\u306E\\u9593\\u9694\\u306E\\u8A2D\\u5B9A"
+        "tooltip": "自動再ロードの間隔の設定"
       },
       "shoppingcart": {
-        "tooltip": "\\u30AF\\u30EA\\u30C3\\u30AF\\u3057\\u3066\\u30AB\\u30FC\\u30C8\\u306B\\u5BFE\\u3059\\u308B\\u30A2\\u30AF\\u30B7\\u30E7\\u30F3\\u3092\\u8868\\u793A"
+        "tooltip": "クリックしてカートに対するアクションを表示"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "\\u5909\\u66F4\\u306E\\u8868\\u793A"
+          "label": "変更の表示"
         },
         "discard": {
-          "label": "\\u5909\\u66F4\\u306E\\u7834\\u68C4"
+          "label": "変更の破棄"
         },
         "commit": {
-          "label": "\\u5909\\u66F4\\u306E\\u30B3\\u30DF\\u30C3\\u30C8"
+          "label": "変更のコミット"
         }
       }
     },
     "instructions": {
       "selectItems": {
-        "value": "''{0}''\\u64CD\\u4F5C\\u3092\\u5B9F\\u884C\\u3059\\u308B\\u30A2\\u30A4\\u30C6\\u30E0\\u3092\\u9078\\u629E\\u3057\\u307E\\u3059\\u3002"
+        "value": "''{0}''操作を実行するアイテムを選択します。"
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
-          "summary": "\\u30E1\\u30C3\\u30BB\\u30FC\\u30B8",
-          "detail": "\\u81EA\\u52D5\\u518D\\u30ED\\u30FC\\u30C9\\u306E\\u5B9F\\u884C\\u4E2D\\u306F''{0}''\\u30A2\\u30AF\\u30B7\\u30E7\\u30F3\\u3092\\u5B9F\\u884C\\u3067\\u304D\\u307E\\u305B\\u3093\\u3002\\u307E\\u305A\\u3001''{1}''\\u30A2\\u30A4\\u30B3\\u30F3\\u3092\\u30AF\\u30EA\\u30C3\\u30AF\\u3057\\u3066\\u505C\\u6B62\\u3057\\u3066\\u304F\\u3060\\u3055\\u3044\\u3002"
+          "summary": "メッセージ",
+          "detail": "自動再ロードの実行中は''{0}''アクションを実行できません。まず、''{1}''アイコンをクリックして停止してください。"
         }
       }
     },
     "labels": {
       "start": {
-        "value": "\\u8D77\\u52D5"
+        "value": "起動"
       },
       "resume": {
-        "value": "\\u518D\\u958B"
+        "value": "再開"
       },
       "suspend": {
-        "value": "\\u4E00\\u6642\\u505C\\u6B62"
+        "value": "一時停止"
       },
       "shutdown": {
-        "value": "\\u30B7\\u30E3\\u30C3\\u30C8\\u30C0\\u30A6\\u30F3"
+        "value": "シャットダウン"
       },
       "restartSSL": {
-        "value": "SSL\\u306E\\u518D\\u8D77\\u52D5"
+        "value": "SSLの再起動"
       },
       "stop": {
-        "value": "\\u505C\\u6B62"
+        "value": "停止"
       }
     }
   },
   "wrc-table": {
     "checkboxes": {
       "showHiddenColumns": {
-        "label": "\\u975E\\u8868\\u793A\\u306E\\u5217\\u3092\\u8868\\u793A"
+        "label": "非表示の列を表示"
       }
     },
-    "actionsDialog": {
-      "buttons": {
-        "cancel": {
-          "label": "\\u53D6\\u6D88"
+    "labels": {
+      "totalRows": {
+        "value": "合計行: {0}"
+      }
+    }
+  },
+  "wrc-table-customizer": {
+    "labels": {
+      "available": {
+        "value": "使用可能な列"
+      },
+      "selected": {
+        "value": "選択済の列"
+      }
+    },
+    "messages": {
+      "action": {
+        "needAtLeastOneColumn": {
+          "title": "不十分な列",
+          "detail": "少なくとも選択済の列が1つ必要です。"
         }
       }
     }
@@ -561,64 +700,64 @@ define({
   "wrc-form-toolbar": {
     "buttons": {
       "save": {
-        "label": "\\u4FDD\\u5B58"
+        "label": "保存"
       },
       "new": {
-        "label": "\\u4F5C\\u6210"
+        "label": "作成"
       },
       "delete": {
-        "label": "\\u524A\\u9664"
+        "label": "削除"
       },
       "back": {
-        "label": "\\u623B\\u308B"
+        "label": "戻る"
       },
       "next": {
-        "label": "\\u6B21"
+        "label": "次"
       },
       "finish": {
-        "label": "\\u4F5C\\u6210"
+        "label": "作成"
       }
     },
     "icons": {
       "save": {
-        "tooltip": "\\u4FDD\\u5B58"
+        "tooltip": "保存"
       },
       "create": {
-        "tooltip": "\\u4F5C\\u6210"
+        "tooltip": "作成"
       },
       "landing": {
-        "tooltip": "\\u30E9\\u30F3\\u30C7\\u30A3\\u30F3\\u30B0\\u30FB\\u30DA\\u30FC\\u30B8"
+        "tooltip": "ランディング・ページ"
       },
       "history": {
-        "tooltip": "\\u5C65\\u6B74\\u306E\\u8868\\u793A\\u306E\\u5207\\u66FF\\u3048"
+        "tooltip": "履歴の表示の切替え"
       },
       "instructions": {
-        "tooltip": "\\u30A4\\u30F3\\u30B9\\u30C8\\u30E9\\u30AF\\u30B7\\u30E7\\u30F3\\u306E\\u8868\\u793A\\u306E\\u5207\\u66FF\\u3048"
+        "tooltip": "インストラクションの表示の切替え"
       },
       "help": {
-        "tooltip": "\\u30D8\\u30EB\\u30D7\\u30FB\\u30DA\\u30FC\\u30B8\\u306E\\u8868\\u793A\\u306E\\u5207\\u66FF\\u3048"
+        "tooltip": "ヘルプ・ページの表示の切替え"
       },
       "sync": {
-        "tooltip": "\\u518D\\u30ED\\u30FC\\u30C9",
-        "tooltipOn": "\\u81EA\\u52D5\\u518D\\u30ED\\u30FC\\u30C9\\u306E\\u505C\\u6B62"
+        "tooltip": "再ロード",
+        "tooltipOn": "自動再ロードの停止"
       },
       "syncInterval": {
-        "tooltip": "\\u81EA\\u52D5\\u518D\\u30ED\\u30FC\\u30C9\\u306E\\u9593\\u9694\\u306E\\u8A2D\\u5B9A"
+        "tooltip": "自動再ロードの間隔の設定"
       },
       "shoppingcart": {
-        "tooltip": "\\u30AF\\u30EA\\u30C3\\u30AF\\u3057\\u3066\\u30AB\\u30FC\\u30C8\\u306B\\u5BFE\\u3059\\u308B\\u30A2\\u30AF\\u30B7\\u30E7\\u30F3\\u3092\\u8868\\u793A"
+        "tooltip": "クリックしてカートに対するアクションを表示"
       }
     },
     "menu": {
       "shoppingcart": {
         "view": {
-          "label": "\\u5909\\u66F4\\u306E\\u8868\\u793A"
+          "label": "変更の表示"
         },
         "discard": {
-          "label": "\\u5909\\u66F4\\u306E\\u7834\\u68C4"
+          "label": "変更の破棄"
         },
         "commit": {
-          "label": "\\u5909\\u66F4\\u306E\\u30B3\\u30DF\\u30C3\\u30C8"
+          "label": "変更のコミット"
         }
       }
     }
@@ -626,34 +765,34 @@ define({
   "wrc-form": {
     "checkboxes": {
       "showAdvancedFields": {
-        "label": "\\u62E1\\u5F35\\u30D5\\u30A3\\u30FC\\u30EB\\u30C9\\u306E\\u8868\\u793A"
+        "label": "拡張フィールドの表示"
       }
     },
     "introduction": {
       "toggleHelp": {
-        "text": "{0}\\u30A2\\u30A4\\u30B3\\u30F3\\u3092\\u30AF\\u30EA\\u30C3\\u30AF\\u3059\\u308B\\u3068\\u3001\\u30B5\\u30DE\\u30EA\\u30FC\\u30FB\\u30D8\\u30EB\\u30D7\\u3068\\u8A73\\u7D30\\u30D8\\u30EB\\u30D7\\u306E\\u9593\\u3067\\u5207\\u308A\\u66FF\\u3048\\u308B\\u3053\\u3068\\u304C\\u3067\\u304D\\u307E\\u3059\\u3002"
+        "text": "{0}アイコンをクリックすると、サマリー・ヘルプと詳細ヘルプの間で切り替えることができます。"
       }
     },
     "messages": {
-      "save": "\\u30AB\\u30FC\\u30C8\\u306B\\u5909\\u66F4\\u304C\\u8FFD\\u52A0\\u3055\\u308C\\u307E\\u3057\\u305F"
+      "save": "カートに変更が追加されました"
     },
     "icons": {
       "restart": {
-        "tooltip": "\\u30B5\\u30FC\\u30D0\\u30FC\\u307E\\u305F\\u306F\\u30A2\\u30D7\\u30EA\\u30B1\\u30FC\\u30B7\\u30E7\\u30F3\\u306E\\u518D\\u8D77\\u52D5\\u304C\\u5FC5\\u8981\\u3067\\u3059"
+        "tooltip": "サーバーまたはアプリケーションの再起動が必要です"
       },
       "wdtIcon": {
-        "tooltip": "WDT Settings"
+        "tooltip": "WDT設定"
       }
     }
   },
   "wrc-help-form": {
     "tables": {
       "help": {
-        "label": "\\u30D8\\u30EB\\u30D7\\u8868",
+        "label": "ヘルプ表",
         "columns": {
           "header": {
-            "name": "\\u540D\\u524D",
-            "description": "\\u8AAC\\u660E"
+            "name": "名前",
+            "description": "説明"
           }
         }
       }
@@ -662,128 +801,183 @@ define({
   "wrc-create-form": {
     "pageState": {
       "error": {
-        "summary": "\\u5FC5\\u9808\\u30D5\\u30A3\\u30FC\\u30EB\\u30C9\\u304C\\u4E0D\\u5B8C\\u5168\\u3067\\u3059",
-        "detail": "{0}\\u30D5\\u30A3\\u30FC\\u30EB\\u30C9\\u306F\\u5FC5\\u9808\\u3067\\u3059\\u304C\\u3001\\u5024\\u304C\\u6307\\u5B9A\\u3055\\u308C\\u3066\\u3044\\u307E\\u305B\\u3093\\u3002"
+        "summary": "必須フィールドが不完全です",
+        "detail": "{0} field is required, but no (or an invalid) value has been provided."
       }
     }
   },
   "wrc-common": {
     "buttons": {
+      "apply": {
+        "label": "適用"
+      },
+      "reset": {
+        "label": "リセット"
+      },
       "ok": {
         "label": "OK"
       },
       "cancel": {
-        "label": "\\u53D6\\u6D88"
+        "label": "取消"
       },
       "yes": {
-        "label": "\\u306F\\u3044"
+        "label": "はい"
       },
       "no": {
-        "label": "\\u3044\\u3044\\u3048"
+        "label": "いいえ"
       },
       "choose": {
-        "label": "Choose"
+        "label": "選択"
       },
       "connect": {
-        "label": "\\u63A5\\u7D9A"
+        "label": "接続"
       },
       "add": {
-        "label": "Add/Send"
+        "label": "追加/送信"
       },
       "edit": {
-        "label": "Edit/Send"
+        "label": "編集/送信"
       },
       "import": {
-        "label": "Import"
+        "label": "インポート"
       },
       "export": {
-        "label": "Export"
+        "label": "エクスポート"
       },
       "write": {
-        "label": "\\u30D5\\u30A1\\u30A4\\u30EB\\u306E\\u66F4\\u65B0"
+        "label": "ファイルのダウンロード"
+      },
+      "savenow": {
+        "label": "今すぐ保存"
       }
     },
     "tooltips": {
       "collapse": {
-        "value": "\\u7E2E\\u5C0F"
+        "value": "縮小"
       },
       "expand": {
-        "value": "\\u5C55\\u958B"
+        "value": "展開"
       },
       "choose": {
-        "value": "\\u30D5\\u30A1\\u30A4\\u30EB\\u306E\\u9078\\u629E"
+        "value": "ファイルの選択"
       },
       "clear": {
-        "value": "\\u9078\\u629E\\u3057\\u305F\\u30D5\\u30A1\\u30A4\\u30EB\\u306E\\u30AF\\u30EA\\u30A2"
+        "value": "選択したファイルのクリア"
       },
       "more": {
-        "value": "\\u305D\\u306E\\u4ED6\\u306E\\u30A2\\u30AF\\u30B7\\u30E7\\u30F3"
+        "value": "その他のアクション"
       },
       "download": {
-        "value": "Browse"
+        "value": "参照"
       },
       "reset": {
-        "value": "Reset"
+        "value": "リセット"
       },
       "submit": {
-        "value": "Submit Changes"
+        "value": "変更の送信"
       },
       "write": {
-        "value": "\\u30D5\\u30A1\\u30A4\\u30EB\\u306E\\u66F4\\u65B0"
+        "value": "ファイルのダウンロード"
       },
       "pick": {
-        "value": "Pick Directory"
+        "value": "ディレクトリの選択"
+      },
+      "reload": {
+        "value": "Reload File"
+      }
+    },
+    "menu": {
+      "chooseFile": {
+        "value": "ファイルの選択..."
+      },
+      "chooseDir": {
+        "value": "ディレクトリの選択..."
+      }
+    },
+    "labels": {
+      "info": {
+        "value": "Information"
+      },
+      "warn": {
+        "value": "警告"
+      },
+      "error": {
+        "value": "エラー"
       }
     }
   },
   "wrc-wdt-form": {
     "messages": {
-      "changesSubmitted": {
-        "summary": "Changes were successfully submitted!"
+      "changesSaved": {
+        "summary": "変更は''{0}''ファイルに正常に保存されました。"
       },
-      "changesNotSubmitted": {
-        "summary": "Unable to submit changes!"
+      "changesNotSaved": {
+        "summary": "変更を''{0}''ファイルに保存できません。"
       },
-      "changesWritten": {
-        "summary": "Changes were successfully written to ''{0}'' file!"
+      "changesDownloaded": {
+        "summary": "変更は''{0}''ファイルに正常にダウンロードされました。"
       },
-      "changesNotWritten": {
-        "summary": "Unable to write changes to ''{0}'' file!"
+      "changesNotDownloaded": {
+        "summary": "変更を''{0}''ファイルにダウンロードできません。"
+      },
+      "verifyPathEntered": {
+        "detail": "{0}フィールドをfalseに設定すると、ローカル・ファイルまたはディレクトリとして存在することを検証せずに、入力された値を受け入れます。"
       }
     },
     "wdtOptionsDialog": {
-      "title": "Edit: {0}",
-      "default": "Default. (Unset)",
-      "instructions": "Enter token to add to the list of selectable items.",
-      "enterValue": "Enter Value",
-      "selectValue": "\\u5024\\u306E\\u9078\\u629E",
-      "selectSwitch": "\\u5024\\u306E\\u5207\\u66FF\\u3048",
-      "enterUnresolvedReference": "Enter Unresolved Reference",
-      "enterModelToken": "Enter Model Token"
+      "title": "編集: {0}",
+      "default": "デフォルト。(設定解除)",
+      "instructions": "トークンを入力して、選択可能なアイテムのリストに追加します。",
+      "enterValue": "値の入力",
+      "selectValue": "値の選択",
+      "selectSwitch": "値の切替え",
+      "enterUnresolvedReference": "未解決の参照の入力",
+      "enterModelToken": "モデル・トークンの入力",
+      "selectPropsVariable": "モデル・トークン変数の選択",
+      "createPropsVariable": "モデル・トークン変数の作成",
+      "propName": "変数名(必須)",
+      "propValue": "変数値",
+      "enterVariable": "変数の入力",
+      "variableName": "変数名(必須)",
+      "variableValue": "変数値",
+      "multiSelectUnset": "\"デフォルト。(使用可能なアイテム・リストから選択)\""
     }
   },
   "wrc-unsaved-changes": {
-    "confirmDialog": {
-      "title": "\\u4FDD\\u5B58\\u3055\\u308C\\u3066\\u3044\\u306A\\u3044\\u5909\\u66F4\\u304C\\u691C\\u51FA\\u3055\\u308C\\u307E\\u3057\\u305F"
+    "titles": {
+      "unsavedChanges": {
+        "value": "保存されていない変更が検出されました"
+      },
+      "changesNeedDownloading": {
+        "value": "変更がダウンロードされません"
+      }
     },
     "prompts": {
       "unsavedChanges": {
         "willBeLost": {
-          "value": "\\u672A\\u4FDD\\u5B58\\u306E\\u5909\\u66F4\\u5185\\u5BB9\\u306F\\u3059\\u3079\\u3066\\u5931\\u308F\\u308C\\u307E\\u3059\\u3002\\u7D9A\\u884C\\u3057\\u307E\\u3059\\u304B\\u3002"
+          "value": "未保存の変更内容はすべて失われます。続行しますか。"
         },
         "areYouSure": {
-          "value": "\\u5909\\u66F4\\u3092\\u4FDD\\u5B58\\u305B\\u305A\\u306B\\u7D42\\u4E86\\u3057\\u3066\\u3082\\u3088\\u308D\\u3057\\u3044\\u3067\\u3059\\u304B\\u3002"
+          "value": "変更を保存せずに終了してもよろしいですか。"
+        },
+        "needDownloading": {
+          "value": "変更はまだWDTモデル・ファイルにダウンロードされていません。<br/><br/>続行する前にダウンロードしますか。"
+        }
+      },
+      "uncommitedCreate": {
+        "abandonForm": {
+          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
         }
       }
     }
   },
   "wrc-sync-interval": {
     "dialogSync": {
-      "title": "\\u81EA\\u52D5\\u518D\\u30ED\\u30FC\\u30C9\\u306E\\u9593\\u9694\\u306E\\u8A2D\\u5B9A",
-      "instructions": "\\u81EA\\u52D5\\u518D\\u30ED\\u30FC\\u30C9\\u306E\\u9593\\u9694\\u306F\\u4F55\\u79D2\\u306B\\u3057\\u307E\\u3059\\u304B\\u3002",
+      "title": "自動再ロードの間隔の設定",
+      "instructions": "自動再ロードの間隔は何秒にしますか。",
       "fields": {
         "interval": {
-          "label": "\\u81EA\\u52D5\\u518D\\u30ED\\u30FC\\u30C9\\u306E\\u9593\\u9694:"
+          "label": "自動再ロードの間隔:"
         }
       }
     }
@@ -792,22 +986,36 @@ define({
     "messages": {
       "action": {
         "unableToPerform": {
-          "summary": "\\u30E1\\u30C3\\u30BB\\u30FC\\u30B8",
-          "detail": "''{1}''\\u3067\\u6307\\u5B9A\\u3055\\u308C\\u305F\\u30A2\\u30AF\\u30B7\\u30E7\\u30F3\\u3092\\u5B9F\\u884C\\u3057\\u3088\\u3046\\u3068\\u3057\\u305F\\u3068\\u304D\\u306B\\u3001\\u30B3\\u30F3\\u30BD\\u30FC\\u30EB\\u30FB\\u30D0\\u30C3\\u30AF\\u30A8\\u30F3\\u30C9\\u547C\\u51FA\\u3057\\u304C''{0}''\\u30EC\\u30B9\\u30DD\\u30F3\\u30B9\\u3092\\u751F\\u6210\\u3057\\u307E\\u3057\\u305F\\u3002"
+          "summary": "メッセージ",
+          "detail": "''{1}''で指定されたアクションを実行しようとしたときに、コンソール・バックエンド呼出しが''{0}''レスポンスを生成しました。"
         }
       }
     },
     "labels": {
       "cannotDetermineExactCause": {
-        "value": "\\u6B63\\u78BA\\u306A\\u539F\\u56E0\\u3092\\u7279\\u5B9A\\u3067\\u304D\\u307E\\u305B\\u3093\\u3002JavaScript\\u30B3\\u30F3\\u30BD\\u30FC\\u30EB\\u3067\\u30D2\\u30F3\\u30C8\\u3092\\u78BA\\u8A8D\\u3057\\u3066\\u304F\\u3060\\u3055\\u3044\\u3002"
+        "value": "正確な原因を特定できません。JavaScriptコンソールでヒントを確認してください。"
       }
     }
   },
   "wrc-pdj-fields": {
     "cfe-multi-select": {
       "labels": {
-        "available": "\\u4F7F\\u7528\\u53EF\\u80FD",
-        "chosen": "\\u9078\\u629E\\u6E08"
+        "available": "使用可能",
+        "chosen": "選択済"
+      }
+    },
+    "cfe-properties-editor": {
+      "labels": {
+        "name": "プロパティ名",
+        "value": "プロパティ値"
+      }
+    },
+    "cfe-property-list-editor": {
+      "labels": {
+        "nameHeader": "プロパティ名",
+        "valueHeader": "プロパティ値",
+        "addButtonTooltip": "追加",
+        "deleteButtonTooltip": "削除"
       }
     }
   },
@@ -816,13 +1024,13 @@ define({
       "more": {
         "optionsSources": {
           "view": {
-            "label": "{0}\\u306E\\u8868\\u793A..."
+            "label": "{0}の表示..."
           },
           "create": {
-            "label": "{0}\\u306E\\u65B0\\u898F\\u4F5C\\u6210..."
+            "label": "{0}の新規作成..."
           },
           "edit": {
-            "label": "{0}\\u306E\\u7DE8\\u96C6..."
+            "label": "{0}の編集..."
           }
         }
       }
@@ -830,17 +1038,16 @@ define({
   },
   "wrc-pdj-unset": {
     "menu": {
-      "label": "\\u30C7\\u30D5\\u30A9\\u30EB\\u30C8\\u306B\\u623B\\u3059"
+      "label": "デフォルトに戻す"
     },
     "placeholder": {
-      "value": "\\u30C7\\u30D5\\u30A9\\u30EB\\u30C8"
+      "value": "デフォルト"
     }
   },
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "summary": "\\u30E1\\u30C3\\u30BB\\u30FC\\u30B8",
-        "detail": "RDJ\\u306B\\u306F\\u3001''{0}''\\u30A2\\u30A4\\u30C6\\u30E0\\u306E''notFoundMessage''\\u30D5\\u30A3\\u30FC\\u30EB\\u30C9\\u304C\\u542B\\u307E\\u308C\\u3066\\u3044\\u307E\\u305B\\u3093\\u3067\\u3057\\u305F\\u3002"
+        "detail": "''{0}''は使用できません。"
       }
     }
   },
@@ -853,23 +1060,23 @@ define({
         "value": "SHUTDOWN"
       },
       "serverStates": {
-        "value": "\\u30B5\\u30FC\\u30D0\\u30FC\\u306E\\u72B6\\u614B"
+        "value": "サーバーの状態"
       },
       "systemStatus": {
-        "value": "\\u30B7\\u30B9\\u30C6\\u30E0\\u30FB\\u30B9\\u30C6\\u30FC\\u30BF\\u30B9"
+        "value": "システム・ステータス"
       },
       "healthState": {
         "failed": {
-          "value": "\\u5931\\u6557"
+          "value": "失敗"
         },
         "critical": {
-          "value": "\\u30AF\\u30EA\\u30C6\\u30A3\\u30AB\\u30EB"
+          "value": "クリティカル"
         },
         "overloaded": {
-          "value": "\\u904E\\u8CA0\\u8377"
+          "value": "過負荷"
         },
         "warning": {
-          "value": "\\u8B66\\u544A"
+          "value": "警告"
         },
         "ok": {
           "value": "OK"
@@ -878,16 +1085,16 @@ define({
     },
     "descriptions": {
       "healthState": {
-        "value": "\\u5B9F\\u884C\\u4E2D\\u306E\\u30B5\\u30FC\\u30D0\\u30FC\\u306E\\u73FE\\u6642\\u70B9\\u306E\\u30D8\\u30EB\\u30B9"
+        "value": "実行中のサーバーの現時点のヘルス"
       }
     },
     "headers": {
       "serverStates": {
         "name": {
-          "value": "\\u540D\\u524D"
+          "value": "名前"
         },
         "state": {
-          "value": "\\u72B6\\u614B"
+          "value": "状態"
         }
       }
     }
@@ -895,33 +1102,36 @@ define({
   "wrc-data-operations": {
     "messages": {
       "backendNotReachable": {
-        "detail": "\\u73FE\\u5728\\u3001\\u30D0\\u30C3\\u30AF\\u30A8\\u30F3\\u30C9\\u306B\\u30A2\\u30AF\\u30BB\\u30B9\\u3067\\u304D\\u307E\\u305B\\u3093\\u3002"
+        "detail": "現在、バックエンドにアクセスできません。"
       },
       "connectionMessage": {
-        "summary": "\\u63A5\\u7D9A\\u30E1\\u30C3\\u30BB\\u30FC\\u30B8"
+        "summary": "接続メッセージ"
       },
       "connectFailed": {
-        "detail": "Attempt Failed: "
+        "detail": "試行に失敗しました: "
       },
       "badRequest": {
-        "detail": "Unable to process the submitted file or request "
+        "detail": "送信されたファイルまたはリクエストを処理できません。"
       },
       "invalidCredentials": {
-        "detail": "Weblogic\\u30C9\\u30E1\\u30A4\\u30F3\\u8CC7\\u683C\\u8A3C\\u660E\\u304C\\u6709\\u52B9\\u3067\\u306F\\u3042\\u308A\\u307E\\u305B\\u3093"
+        "detail": "Weblogicドメイン資格証明が有効ではありません"
       },
       "invalidUrl": {
-        "detail": "WebLogic\\u30C9\\u30E1\\u30A4\\u30F3\\u306EURL\\u306B\\u30A2\\u30AF\\u30BB\\u30B9\\u3067\\u304D\\u307E\\u305B\\u3093"
+        "detail": "WebLogicドメインのURLにアクセスできません"
+      },
+      "notInRole": {
+        "detail": "試行できませんでした: ユーザーは管理者、デプロイヤ、オペレータまたはモニターではありません"
       },
       "notSupported": {
-        "detail": "WebLogic\\u30C9\\u30E1\\u30A4\\u30F3\\u306F\\u30B5\\u30DD\\u30FC\\u30C8\\u3055\\u308C\\u3066\\u3044\\u307E\\u305B\\u3093"
+        "detail": "WebLogicドメインはサポートされていません"
       },
       "unexpectedStatus": {
-        "detail": "\\u4E88\\u671F\\u3057\\u306A\\u3044\\u7D50\\u679C(\\u30B9\\u30C6\\u30FC\\u30BF\\u30B9: {0})"
+        "detail": "予期しない結果(ステータス: {0})"
       },
       "cbeRestApi": {
         "requestUnsuccessful": {
-          "summary": "\\u30EA\\u30AF\\u30A8\\u30B9\\u30C8\\u5931\\u6557",
-          "detail": "\\u5931\\u6557\\u3092\\u793A\\u3059\\u30EC\\u30B9\\u30DD\\u30F3\\u30B9\\u304C\\u30B3\\u30F3\\u30BD\\u30FC\\u30EB\\u30FB\\u30D0\\u30C3\\u30AF\\u30A8\\u30F3\\u30C9\\u547C\\u51FA\\u3057\\u304B\\u3089\\u8FD4\\u3055\\u308C\\u307E\\u3057\\u305F\\u3002"
+          "summary": "リクエスト失敗",
+          "detail": "失敗を示すレスポンスがコンソール・バックエンド呼出しから返されました。"
         }
       }
     }
@@ -929,36 +1139,42 @@ define({
   "wrc-message-displaying": {
     "messages": {
       "seeJavascriptConsole": {
-        "detail": "\\u7279\\u5B9A\\u306E\\u7406\\u7531\\u306B\\u3064\\u3044\\u3066\\u306F\\u3001\\u30EA\\u30E2\\u30FC\\u30C8\\u30FB\\u30B3\\u30F3\\u30BD\\u30FC\\u30EB\\u7AEF\\u672B\\u307E\\u305F\\u306FJavascript\\u30B3\\u30F3\\u30BD\\u30FC\\u30EB\\u3092\\u53C2\\u7167\\u3057\\u3066\\u304F\\u3060\\u3055\\u3044\\u3002"
+        "detail": "特定の理由については、リモート・コンソール端末またはJavascriptコンソールを参照してください。"
       },
       "responseMessages": {
-        "summary": "\\u30EC\\u30B9\\u30DD\\u30F3\\u30B9\\u30FB\\u30E1\\u30C3\\u30BB\\u30FC\\u30B8"
+        "summary": "レスポンス・メッセージ"
       }
     }
   },
   "wrc-change-manager": {
     "messages": {
       "cannotGetLockState": {
-        "summary": "\\u5909\\u66F4\\u30DE\\u30CD\\u30FC\\u30B8\\u30E3\\u306B\\u30A2\\u30AF\\u30BB\\u30B9\\u3067\\u304D\\u307E\\u305B\\u3093\\u3002"
+        "summary": "変更マネージャにアクセスできません。"
       },
       "changesCommitted": {
-        "summary": "\\u5909\\u66F4\\u306F\\u6B63\\u5E38\\u306B\\u30B3\\u30DF\\u30C3\\u30C8\\u3055\\u308C\\u307E\\u3057\\u305F\\u3002"
+        "summary": "変更は正常にコミットされました。"
       },
       "changesNotCommitted": {
-        "summary": "\\u5909\\u66F4\\u3092\\u30B3\\u30DF\\u30C3\\u30C8\\u3067\\u304D\\u307E\\u305B\\u3093\\u3002"
+        "summary": "変更をコミットできません。"
       },
       "changesDiscarded": {
-        "summary": "\\u5909\\u66F4\\u306F\\u6B63\\u5E38\\u306B\\u7834\\u68C4\\u3055\\u308C\\u307E\\u3057\\u305F\\u3002"
+        "summary": "変更は正常に破棄されました。"
       },
       "changesNotDiscarded": {
-        "summary": "\\u5909\\u66F4\\u3092\\u7834\\u68C4\\u3067\\u304D\\u307E\\u305B\\u3093\\u3002"
+        "summary": "変更を破棄できません。"
       }
     }
   },
   "wrc-view-model-utils": {
     "labels": {
       "unexpectedErrorResponse": {
-        "value": "\\u4E88\\u671F\\u3057\\u306A\\u3044\\u30A8\\u30E9\\u30FC\\u30FB\\u30EC\\u30B9\\u30DD\\u30F3\\u30B9"
+        "value": "予期しないエラー・レスポンス"
+      }
+    },
+    "messages": {
+      "connectionRefused": {
+        "summary": "接続の問題",
+        "details": "プロバイダからのデータの送受信に問題があります。アクセス可能であることを確認し、再試行してください。"
       }
     }
   }

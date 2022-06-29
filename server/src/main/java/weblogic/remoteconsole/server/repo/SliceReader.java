@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -18,6 +18,7 @@ import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.SliceTableDef;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
+import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * This class manages reading a slice form or slice table
@@ -34,7 +35,7 @@ class SliceReader extends FormReader {
   }
 
   Response<Page> getSlice() {
-    Response<PageDef> pageDefResponse = getPageDef();
+    Response<PageDef> pageDefResponse = getActualPageDef();
     if (!pageDefResponse.isSuccess()) {
       return (new Response<Page>()).copyUnsuccessfulResponse(pageDefResponse);
     }
@@ -47,7 +48,7 @@ class SliceReader extends FormReader {
     throw new AssertionError("Slice is not a form or table: " + pageDef);
   }
 
-  private Response<PageDef> getPageDef() {
+  private Response<PageDef> getActualPageDef() {
     Response<PageDef> response = new Response<>();
     Response<SlicePagePath> pagePathResponse = getActualSlicePagePath();
     if (!pagePathResponse.isSuccess()) {
@@ -55,14 +56,7 @@ class SliceReader extends FormReader {
       return response.copyUnsuccessfulResponse(pagePathResponse);
     }
     SlicePagePath pagePath = pagePathResponse.getResults();
-    PageDef pageDef = getPageRepoDef().getPageDef(pagePathResponse.getResults());
-    if (pageDef == null) {
-      // The slice doesn't exist
-      LOGGER.warning("Can't find slice " + pagePath);
-      response.setNotFound();
-      return response;
-    }
-    return response.setSuccess(pageDef);
+    return getPageDef(pagePath);
   }
 
   private Response<Page> getSliceTable(SliceTableDef sliceTableDef) {
@@ -91,16 +85,12 @@ class SliceReader extends FormReader {
       return response.copyUnsuccessfulResponse(searchResponse);
     }
     BeanReaderRepoSearchResults searchResults = searchResponse.getResults();
-    BeanSearchResults beanResults = searchResults.getBean(getBeanTreePath());
-    if (beanResults == null) {
-      return response.setNotFound();
-    }
-    Response<List<TableRow>> getRowsResponse = getTableRows(sliceTableDef);
+    Response<List<TableRow>> getRowsResponse = getTableRows(searchResults, sliceTableDef);
     if (!getRowsResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(getRowsResponse);
     }
     Table table = new Table();
-    table.setPageDef(sliceTableDef);
+    setPageDef(table, sliceTableDef);
     addChangeManagerStatus(table, searchResults);
     addPageInfo(table);
     addLinks(table, true); // false since it's a bean
@@ -108,11 +98,26 @@ class SliceReader extends FormReader {
     return response.setSuccess(table);
   }
 
-  private Response<List<TableRow>> getTableRows(SliceTableDef sliceTableDef) {
-    Method method = CustomizerInvocationUtils.getMethod(sliceTableDef.getGetTableRowsMethod());
-    CustomizerInvocationUtils.checkSignature(method, GET_TABLE_ROWS_CUSTOMIZER_RETURN_TYPE, InvocationContext.class);
-    List<Object> args = new ArrayList<>();
-    args.add(getInvocationContext());
+  private Response<List<TableRow>> getTableRows(
+    BeanReaderRepoSearchResults searchResults,
+    SliceTableDef sliceTableDef
+  ) {
+    String methodName = sliceTableDef.getGetTableRowsMethod();
+    if (StringUtils.isEmpty(methodName)) {
+      // There isn't a method to get the get the slice's rows.
+      // Return an empty list.
+      // Most likely there will be a method to customize the page
+      // and that method will fill in the rows.
+      return new Response<List<TableRow>>().setSuccess(new ArrayList<>());
+    }
+    Method method = CustomizerInvocationUtils.getMethod(methodName);
+    CustomizerInvocationUtils.checkSignature(
+      method,
+      GET_TABLE_ROWS_CUSTOMIZER_RETURN_TYPE,
+      InvocationContext.class,
+      BeanReaderRepoSearchResults.class
+    );
+    List<Object> args = List.of(getInvocationContext(), searchResults);
     Object responseAsObject = CustomizerInvocationUtils.invokeMethod(method, args);
     @SuppressWarnings("unchecked")
     Response<List<TableRow>> customizerResponse = (Response<List<TableRow>>)responseAsObject;
@@ -160,7 +165,12 @@ class SliceReader extends FormReader {
     BeanSearchResults beanResults = searchResults.getBean(getBeanTreePath());
     if (beanResults == null) {
       if (!getBeanTreePath().isOptionalSingleton()) {
-        return response.setNotFound();
+        if (StringUtils.isEmpty(pageDef.getCustomizePageMethod())) {
+          return response.setNotFound();
+        } else {
+          // still need to call the customize page method.
+          // it will be responsible for handling not found.
+        }
       } else {
         // still need to return the PDJ, minus "data"
       }
@@ -171,10 +181,11 @@ class SliceReader extends FormReader {
     if (!propsResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(propsResponse);
     }
-    form.setPageDef(pageDef);
+    setPageDef(form, pageDef);
     addPageInfo(form);
     addChangeManagerStatus(form, searchResults);
     addLinks(form, true); // true since it's an instance
+    addModelTokens(form); // when repo supports model tokens
     return response.setSuccess(form);
   }
 
