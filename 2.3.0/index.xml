@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>WebLogic Remote Console</title>
-    <link>/</link>
+    <link>https://oracle.github.io/weblogic-remote-console/2.3.0/</link>
     <description>Recent content on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://oracle.github.io/weblogic-remote-console/2.3.0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Build from source</title>
-      <link>/develop/build-source/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/develop/build-source/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/develop/build-source/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/develop/build-source/</guid>
       <description>Prerequisites Before you can build the WebLogic Remote Console, you need to install the following software in your local build environment:
  Java SE 11 Maven 3.6.1+ nodejs 14.16+ This download includes npm. Oracle JET 12.0.0 client libraries To install the required Oracle JET software, run npm install -g @oracle/ojet-cli@~12.0.0. On Linux and macOS, you will need to use sudo.  You can verify you&amp;rsquo;ve installed the correct versions of the listed software by running the following commands:</description>
     </item>
     
     <item>
       <title>Explore the WebLogic Remote Console</title>
-      <link>/setup/console/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/setup/console/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/setup/console/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/setup/console/</guid>
       <description>The WebLogic Remote Console offers an alternative option for administering WebLogic Server domains. It not only allows you to edit Administration Servers, but also build WebLogic Deploy Tooling (WDT) model files and property lists.
 While the WebLogic Remote Console shares many features with the Administration Console, its functionality is slightly different. See Differences with the Administration Console  for more information.
 Basic layout The WebLogic Remote Console presents a simple user interface that varies slightly across different providers.</description>
@@ -30,20 +30,20 @@ Basic layout The WebLogic Remote Console presents a simple user interface that v
     
     <item>
       <title>Frequently asked questions</title>
-      <link>/reference/faqs/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/reference/faqs/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/reference/faqs/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/reference/faqs/</guid>
       <description>This section provides answers to frequently asked questions about the WebLogic Remote Console.
 Can I connect the WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure? Yes, you can. First, make sure that the domain&amp;rsquo;s administration server is publicly accessible so the WebLogic Remote Console can establish a connection to the administration server. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</description>
     </item>
     
     <item>
       <title>Projects</title>
-      <link>/userguide/projects/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/projects/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/projects/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/projects/</guid>
       <description>A project is a group of providers connections to WebLogic Administration Servers, WebLogic Deploy Tooling (WDT) models, WDT composite models, or property lists.
 Create a project   Open File &amp;gt; New Project.
   Enter a name for the project and click OK. The new project will appear in the Kiosk. Next, you&amp;rsquo;ll add a provider to the project.
@@ -52,10 +52,10 @@ Create a project   Open File &amp;gt; New Project.
     
     <item>
       <title>Administration Servers</title>
-      <link>/userguide/providers/administration-server/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/providers/administration-server/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/providers/administration-server/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/providers/administration-server/</guid>
       <description>The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
 You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.
 Connect to a WebLogic Administration Server  Start the WebLogic Administration Server. Expand the Kiosk and beside the project name, click ⋮.</description>
@@ -63,10 +63,10 @@ Connect to a WebLogic Administration Server  Start the WebLogic Administration S
     
     <item>
       <title>Contribute to WebLogic Remote Console</title>
-      <link>/develop/contribute/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/develop/contribute/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/develop/contribute/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/develop/contribute/</guid>
       <description>We welcome contributions to this repository from anyone.
 If you want to submit a pull request to fix a bug or enhance an existing feature, please first open an issue and link to that issue when you submit your pull request.
 If you have any questions about a possible submission, feel free to open an issue too.
@@ -75,10 +75,10 @@ Contributing to the WebLogic Remote Console repository Pull requests can be made
     
     <item>
       <title>Known issues</title>
-      <link>/reference/known_issues/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/reference/known_issues/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/reference/known_issues/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/reference/known_issues/</guid>
       <description>This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.
 Limitations In the current release of WebLogic Remote Console, you are unable to:
   Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on.
@@ -87,10 +87,10 @@ Limitations In the current release of WebLogic Remote Console, you are unable to
     
     <item>
       <title>Property lists</title>
-      <link>/userguide/providers/property-list/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/providers/property-list/</link>
       <pubDate>Tue, 22 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/providers/property-list/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/providers/property-list/</guid>
       <description>Property lists are an editable set of key-value pairs.
 You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.
 We recommend that you use the desktop application over the browser application when working with property list files.</description>
@@ -98,10 +98,10 @@ We recommend that you use the desktop application over the browser application w
     
     <item>
       <title>Customize connection settings</title>
-      <link>/userguide/advanced-settings/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/advanced-settings/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/advanced-settings/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/advanced-settings/</guid>
       <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
  Edit Java system properties in the desktop application Edit Java system properties in the browser-based application Java system properties  Some possible customizations:
  Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
@@ -109,10 +109,10 @@ We recommend that you use the desktop application over the browser application w
     
     <item>
       <title>Troubleshoot issues</title>
-      <link>/reference/troubleshoot/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/reference/troubleshoot/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/reference/troubleshoot/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/reference/troubleshoot/</guid>
       <description>This page provides guidelines to help troubleshoot console issues.
 Check log files for errors The WebLogic Remote Console provides log files for both front and back end processes. For instructions on how to access these log files, see Check Log Files.
 Diagnose invalid WebLogic configuration issues Administration Server The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.</description>
@@ -120,10 +120,10 @@ Diagnose invalid WebLogic configuration issues Administration Server The WebLogi
     
     <item>
       <title>Use an alternative logging configuration file</title>
-      <link>/develop/alternative-logging/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/develop/alternative-logging/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/develop/alternative-logging/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/develop/alternative-logging/</guid>
       <description>By default, the WebLogic Remote Console uses the logging.properties file inside the runnable/console-backend-server-{version}.jar file.
 If the default configuration is sufficient, then you don&amp;rsquo;t need to do anything. However, if you want to tweak the logger configuration without regenerating the runnable/console-backend-server-{version}.jar file, you can pass the -Djava.util.logging.config.file=&amp;lt;path-to-logging.properties&amp;gt; Java system property when starting the console.
 For example:
@@ -132,10 +132,10 @@ For example:
     
     <item>
       <title>Contribute to the documentation</title>
-      <link>/develop/docs-contribute/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/develop/docs-contribute/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/develop/docs-contribute/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/develop/docs-contribute/</guid>
       <description>The WebLogic Remote Console documentation is produced using the Hugo static site generator. The webpages are created in markdown and hosted within the same repository as the WebLogic Remote Console. This makes it easy to suggest edits and improvements directly to the documentation.
 To make an update to the documentation:
   Clone the repository.
@@ -145,10 +145,10 @@ $ git checkout -b &amp;lt;your-branch&amp;gt;   Make your changes to the documen
     
     <item>
       <title>Review security issues</title>
-      <link>/reference/security-warnings/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/reference/security-warnings/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/reference/security-warnings/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/reference/security-warnings/</guid>
       <description>WebLogic Server regularly checks domains to ensure they comply with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in the WebLogic Remote Console.
 You must have the July 2021 Patch Set Update (PSU) for WebLogic Server applied to your domain to receive security warnings.
  When there are active security warnings in your domain, a banner with red text appears at the top of the WebLogic Remote Console window.</description>
@@ -156,20 +156,20 @@ You must have the July 2021 Patch Set Update (PSU) for WebLogic Server applied t
     
     <item>
       <title>Upgrade the WebLogic Remote Console</title>
-      <link>/userguide/upgrade/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/upgrade/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/upgrade/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/upgrade/</guid>
       <description>We encourage you to stay up to date with the latest version of the WebLogic Remote Console since it is regularly updated to work with the latest versions of WebLogic Server, including patches.
 Desktop application To check for newer versions of the desktop application, go to Help &amp;gt; Check For Updates. If a newer version is available, a dialog box will open where you can choose to go to the GitHub webpage for the latest WebLogic Remote Console release.</description>
     </item>
     
     <item>
       <title>WDT model files</title>
-      <link>/userguide/providers/wdt-model/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/providers/wdt-model/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/providers/wdt-model/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/providers/wdt-model/</guid>
       <description>WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them &amp;lsquo;offline&amp;rsquo; before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.
 See the WebLogic Deploy Tooling documentation for more information.
 We recommend that you use the desktop application over the browser application when working with WDT model files.</description>
@@ -177,10 +177,10 @@ We recommend that you use the desktop application over the browser application w
     
     <item>
       <title>Check log files</title>
-      <link>/userguide/logging/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/logging/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/logging/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/logging/</guid>
       <description>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.
 Front end To view the log file for issues related to the front end of the WebLogic Remote Console:
 Desktop application Open View &amp;gt; Toggle Developer Tools and select the Console tab.
@@ -190,20 +190,20 @@ Back end To view the log file for issues related to the back end of the WebLogic
     
     <item>
       <title>Differences with the Administration Console</title>
-      <link>/setup/admin-console-diff/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/setup/admin-console-diff/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/setup/admin-console-diff/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/setup/admin-console-diff/</guid>
       <description>The WebLogic Remote Console is distinct from the WebLogic Server Administration Console that is deployed as part of your WebLogic domain. As you explore the WebLogic Remote Console, you&amp;rsquo;ll notice key differences between the two consoles:
  The user interface has been completely redesigned to conform to the Oracle Redwood theme included with Oracle JET. The configuration and monitoring runtime content is separated into separate pages in the Remote Console. In the WebLogic Server Administration Console, the configuration and runtime information is presented on one page.</description>
     </item>
     
     <item>
       <title>WDT composite models</title>
-      <link>/userguide/providers/wdt-composite/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/providers/wdt-composite/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/providers/wdt-composite/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/providers/wdt-composite/</guid>
       <description>WDT composite models are read-only representations of multiple, merged WDT model files.
 Create a WDT composite model   Create or upload two or more WDT model files to the WebLogic Remote Console.
   Expand the Kiosk and beside the project name, click ⋮. Select Add WDT Composite Model File Provider.
@@ -212,10 +212,10 @@ Create a WDT composite model   Create or upload two or more WDT model files to t
     
     <item>
       <title>Understand access discrepancies</title>
-      <link>/userguide/role-access/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/role-access/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/role-access/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/role-access/</guid>
       <description>The WebLogic Remote Console restricts what non-administrator users can see or do. Users with the roles Deployer, Monitor, or Operator are only shown the areas and features necessary for their role. These restrictions range from broad (hiding the entire Edit Tree perspective from users in the Monitor role) to narrow (hiding Create buttons on some pages). For full access to all the functionality of the WebLogic Remote Console, log in as an administrator.</description>
     </item>
     

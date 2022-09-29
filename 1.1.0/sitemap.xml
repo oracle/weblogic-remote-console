@@ -2,35 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/posts/install_config/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/posts/install_config/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/console_uidesign/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/posts/console_uidesign/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/tuning/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/posts/tuning/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/developer_guide/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/posts/developer_guide/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/faqs/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/posts/faqs/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/known_issues/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/posts/known_issues/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/troubleshoot/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/posts/troubleshoot/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/posts/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/categories/</loc>
   </url><url>
-    <loc>/tags/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/1.1.0/tags/</loc>
   </url>
 </urlset>

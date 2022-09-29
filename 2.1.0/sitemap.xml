@@ -2,68 +2,68 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/develop/build-source/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/develop/build-source/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/setup/console/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/setup/console/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/reference/faqs/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/reference/faqs/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/setup/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/setup/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/userguide/projects/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/userguide/projects/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/userguide/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/userguide/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/develop/contribute/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/develop/contribute/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/develop/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/develop/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/userguide/edit-domain-config/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/userguide/edit-domain-config/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/reference/known_issues/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/reference/known_issues/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/userguide/advanced-settings/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/userguide/advanced-settings/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/reference/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/reference/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/reference/troubleshoot/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/reference/troubleshoot/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/develop/alternative-logging/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/develop/alternative-logging/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/develop/docs-contribute/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/develop/docs-contribute/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/userguide/upgrade/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/userguide/upgrade/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/userguide/logging/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/userguide/logging/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/setup/admin-console-diff/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/setup/admin-console-diff/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/userguide/role-access/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/userguide/role-access/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/categories/</loc>
   </url><url>
-    <loc>/tags/</loc>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.1.0/tags/</loc>
   </url>
 </urlset>

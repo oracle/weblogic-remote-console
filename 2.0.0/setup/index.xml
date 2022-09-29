@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Get started on WebLogic Remote Console</title>
-    <link>/setup/</link>
+    <link>https://oracle.github.io/weblogic-remote-console/2.0.0/setup/</link>
     <description>Recent content in Get started on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/setup/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://oracle.github.io/weblogic-remote-console/2.0.0/setup/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Explore the WebLogic Remote Console</title>
-      <link>/setup/console/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.0.0/setup/console/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/setup/console/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.0.0/setup/console/</guid>
       <description>The WebLogic Remote Console provides a redesigned interface for WebLogic Server domain configuration. The new user interface applies the standards of the Oracle Redwood design system included with Oracle JET.
 The WebLogic Remote Console user interface consists of the following sections:
  Kiosk NavStrip Navigation Tree Content Pane  Kiosk The Kiosk (located in the bottom right corner of the WebLogic Remote Console) is where you perform the administrative aspects of the WebLogic Remote Console.</description>
@@ -20,10 +20,10 @@ The WebLogic Remote Console user interface consists of the following sections:
     
     <item>
       <title>Differences With the Administration Console</title>
-      <link>/setup/admin-console-diff/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.0.0/setup/admin-console-diff/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/setup/admin-console-diff/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.0.0/setup/admin-console-diff/</guid>
       <description>The WebLogic Remote Console is distinct from the WebLogic Server Administration Console that is deployed as part of your WebLogic Server domain. As you explore the WebLogic Remote Console, you&amp;rsquo;ll notice key differences between the two consoles:
  The user interface has been completely redesigned to conform to the Oracle Redwood theme included with Oracle JET. The configuration and monitoring runtime content is separated into separate pages in the Remote Console.</description>
     </item>

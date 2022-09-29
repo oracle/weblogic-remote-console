@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>User guide on WebLogic Remote Console</title>
-    <link>/userguide/</link>
+    <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/</link>
     <description>Recent content in User guide on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/userguide/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Projects</title>
-      <link>/userguide/projects/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/projects/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/projects/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/projects/</guid>
       <description>A project is a group of providers connections to WebLogic Administration Servers, WebLogic Deploy Tooling (WDT) models, WDT composite models, or property lists.
 Create a project   Open File &amp;gt; New Project.
   Enter a name for the project and click OK. The new project will appear in the Kiosk. Next, you&amp;rsquo;ll add a provider to the project.
@@ -21,10 +21,10 @@ Create a project   Open File &amp;gt; New Project.
     
     <item>
       <title>Customize connection settings</title>
-      <link>/userguide/advanced-settings/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/advanced-settings/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/advanced-settings/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/advanced-settings/</guid>
       <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
  Edit Java system properties in the desktop application Edit Java system properties in the browser-based application Java system properties  Some possible customizations:
  Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
@@ -32,20 +32,20 @@ Create a project   Open File &amp;gt; New Project.
     
     <item>
       <title>Upgrade the WebLogic Remote Console</title>
-      <link>/userguide/upgrade/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/upgrade/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/upgrade/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/upgrade/</guid>
       <description>We encourage you to stay up to date with the latest version of the WebLogic Remote Console since it is regularly updated to work with the latest versions of WebLogic Server, including patches.
 Desktop application To check for newer versions of the desktop application, go to Help &amp;gt; Check For Updates. If a newer version is available, a dialog box will open where you can choose to go to the GitHub webpage for the latest WebLogic Remote Console release.</description>
     </item>
     
     <item>
       <title>Check log files</title>
-      <link>/userguide/logging/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/logging/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/logging/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/logging/</guid>
       <description>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.
 Front end To view the log file for issues related to the front end of the WebLogic Remote Console:
 Desktop application Open View &amp;gt; Toggle Developer Tools and select the Console tab.
@@ -55,10 +55,10 @@ Back end To view the log file for issues related to the back end of the WebLogic
     
     <item>
       <title>Understand access discrepancies</title>
-      <link>/userguide/role-access/</link>
+      <link>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/role-access/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/userguide/role-access/</guid>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.3.0/userguide/role-access/</guid>
       <description>The WebLogic Remote Console restricts what non-administrator users can see or do. Users with the roles Deployer, Monitor, or Operator are only shown the areas and features necessary for their role. These restrictions range from broad (hiding the entire Edit Tree perspective from users in the Monitor role) to narrow (hiding Create buttons on some pages). For full access to all the functionality of the WebLogic Remote Console, log in as an administrator.</description>
     </item>
     
