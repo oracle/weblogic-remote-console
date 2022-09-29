@@ -2,35 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/weblogic-remote-console/posts/install_config/</loc>
+    <loc>/posts/install_config/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/posts/console_uidesign/</loc>
+    <loc>/posts/console_uidesign/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/posts/tuning/</loc>
+    <loc>/posts/tuning/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/posts/developer_guide/</loc>
+    <loc>/posts/developer_guide/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/posts/faqs/</loc>
+    <loc>/posts/faqs/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/posts/known_issues/</loc>
+    <loc>/posts/known_issues/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/posts/troubleshoot/</loc>
+    <loc>/posts/troubleshoot/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/</loc>
+    <loc>/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/categories/</loc>
+    <loc>/categories/</loc>
   </url><url>
-    <loc>/weblogic-remote-console/tags/</loc>
+    <loc>/tags/</loc>
   </url>
 </urlset>

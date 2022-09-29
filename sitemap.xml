@@ -2,83 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/weblogic-remote-console/develop/build-source/</loc>
+    <loc>/develop/build-source/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/setup/console/</loc>
+    <loc>/setup/console/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/reference/faqs/</loc>
+    <loc>/reference/faqs/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/setup/</loc>
+    <loc>/setup/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/projects/</loc>
+    <loc>/userguide/projects/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/providers/</loc>
+    <loc>/userguide/providers/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/</loc>
+    <loc>/userguide/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/providers/administration-server/</loc>
+    <loc>/userguide/providers/administration-server/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/develop/contribute/</loc>
+    <loc>/develop/contribute/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/develop/</loc>
+    <loc>/develop/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/reference/known_issues/</loc>
+    <loc>/reference/known_issues/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/providers/property-list/</loc>
+    <loc>/userguide/dashboards/</loc>
+    <lastmod>2022-07-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/userguide/providers/property-list/</loc>
     <lastmod>2022-02-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/advanced-settings/</loc>
+    <loc>/userguide/advanced-settings/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/reference/</loc>
+    <loc>/reference/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/reference/troubleshoot/</loc>
+    <loc>/reference/troubleshoot/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/develop/alternative-logging/</loc>
+    <loc>/develop/alternative-logging/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/develop/docs-contribute/</loc>
+    <loc>/develop/docs-contribute/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/reference/security-warnings/</loc>
+    <loc>/reference/security-warnings/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/upgrade/</loc>
+    <loc>/userguide/upgrade/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/providers/wdt-model/</loc>
+    <loc>/userguide/providers/wdt-model/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/logging/</loc>
+    <loc>/userguide/logging/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/setup/admin-console-diff/</loc>
+    <loc>/setup/admin-console-diff/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/providers/wdt-composite/</loc>
+    <loc>/userguide/providers/wdt-composite/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/userguide/role-access/</loc>
+    <loc>/userguide/role-access/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/</loc>
+    <loc>/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/weblogic-remote-console/categories/</loc>
+    <loc>/categories/</loc>
   </url><url>
-    <loc>/weblogic-remote-console/tags/</loc>
+    <loc>/tags/</loc>
   </url>
 </urlset>

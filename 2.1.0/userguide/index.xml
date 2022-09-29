@@ -2,37 +2,37 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>User Guide on WebLogic Remote Console</title>
-    <link>/weblogic-remote-console/userguide/</link>
+    <link>/userguide/</link>
     <description>Recent content in User Guide on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/weblogic-remote-console/userguide/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/userguide/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Projects</title>
-      <link>/weblogic-remote-console/userguide/projects/</link>
+      <link>/userguide/projects/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/weblogic-remote-console/userguide/projects/</guid>
+      <guid>/userguide/projects/</guid>
       <description>A project is a group of connections to either WebLogic Administration Servers or WebLogic Deploy Tooling (WDT) models or both.
 Create a project  Open File &amp;gt; New Project. Enter a name for the project and click OK. The new project will appear in the Kiosk. Expand the Kiosk and beside the project name, click ⋮. Select either Add Admin Server Connection Provider or Add WDT Model File Provider. You can add multiple of either to the project and it doesn&amp;rsquo;t matter which order you add them in.</description>
     </item>
     
     <item>
       <title>Edit domain configurations</title>
-      <link>/weblogic-remote-console/userguide/edit-domain-config/</link>
+      <link>/userguide/edit-domain-config/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/weblogic-remote-console/userguide/edit-domain-config/</guid>
+      <guid>/userguide/edit-domain-config/</guid>
       <description>The domain configuration process in the WebLogic Remote Console is similar to the Administration Console. When you start editing the domain, a configuration lock is placed on the domain that blocks other users from making simultaneous changes. Once you&amp;rsquo;re are satisfied with your changes, you can &amp;lsquo;activate&amp;rsquo; these changes and perpetuate them to the administration and management servers.
 Configuration locks do not apply to WDT model files. As WDT model files are not connected to live domains, they do not require any locks to prevent conflicting changes.</description>
     </item>
     
     <item>
       <title>Customize connection settings</title>
-      <link>/weblogic-remote-console/userguide/advanced-settings/</link>
+      <link>/userguide/advanced-settings/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/weblogic-remote-console/userguide/advanced-settings/</guid>
+      <guid>/userguide/advanced-settings/</guid>
       <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
  Edit Java system properties in the desktop application Edit Java system properties in the browser-based application Java system properties  Some possible customizations:
  Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
@@ -40,20 +40,20 @@ Configuration locks do not apply to WDT model files. As WDT model files are not 
     
     <item>
       <title>Upgrade the WebLogic Remote Console</title>
-      <link>/weblogic-remote-console/userguide/upgrade/</link>
+      <link>/userguide/upgrade/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/weblogic-remote-console/userguide/upgrade/</guid>
+      <guid>/userguide/upgrade/</guid>
       <description>We encourage you to stay up to date with the latest version of the WebLogic Remote Console since it is regularly updated to work with the latest versions of WebLogic Server, including patches.
 Desktop application To check for newer versions of the desktop application, go to Help &amp;gt; Check For Updates. If a newer version is available, a dialog box will open where you can choose to go to the GitHub webpage for the latest WebLogic Remote Console release.</description>
     </item>
     
     <item>
       <title>Check Log Files</title>
-      <link>/weblogic-remote-console/userguide/logging/</link>
+      <link>/userguide/logging/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/weblogic-remote-console/userguide/logging/</guid>
+      <guid>/userguide/logging/</guid>
       <description>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.
 Front end To view the log file for issues related to the front end of the WebLogic Remote Console:
 Desktop application Open View &amp;gt; Toggle Developer Tools and select the Console tab.
@@ -63,10 +63,10 @@ Back end To view the log file for issues related to the back end of the WebLogic
     
     <item>
       <title>Understand access discrepancies</title>
-      <link>/weblogic-remote-console/userguide/role-access/</link>
+      <link>/userguide/role-access/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/weblogic-remote-console/userguide/role-access/</guid>
+      <guid>/userguide/role-access/</guid>
       <description>The WebLogic Remote Console restricts what non-administrator users can see or do. Users with the roles Deployer, Monitor, or Operator are only shown the areas and features necessary for their role. These restrictions range from broad (hiding the entire Edit Tree perspective from users in the Monitor role) to narrow (hiding Create buttons on some pages). For full access to all the functionality of the WebLogic Remote Console, log in as an administrator.</description>
     </item>
     
