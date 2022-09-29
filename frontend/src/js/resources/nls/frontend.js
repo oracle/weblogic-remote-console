@@ -35,6 +35,9 @@ define({
         "edit": {
           "tooltip": "Manage"
         },
+        "deactivate": {
+          "tooltip": "Deactivate"
+        },
         "delete": {
           "tooltip": "Remove"
         }
@@ -418,6 +421,9 @@ define({
         "monitoring": {
           "tooltip": "Monitoring Tree"
         },
+        "security": {
+          "tooltip": "Security Data Tree"
+        },
         "modeling": {
           "tooltip": "WDT Model"
         },
@@ -435,6 +441,7 @@ define({
         "configuration": "Edit Tree",
         "view": "Configuration View Tree",
         "monitoring": "Monitoring Tree",
+        "security": "Security Data Tree",
         "modeling": "WDT Model",
         "composite": "WDT Composite Model",
         "properties": "Property List"
@@ -446,9 +453,6 @@ define({
           },
           "preferences": {
             "label": "Preferences"
-          },
-          "search": {
-            "label": "Search"
           }
         }
       }
@@ -531,15 +535,19 @@ define({
       "cards": {
         "configuration": {
           "label": "Edit Tree",
-          "description": "<p>Maintain configuration of WebLogic domain you are currently working with.</p>"
+          "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
         },
         "view": {
           "label": "Configuration View Tree",
-          "description": "<p>Examine read-only configuration of WebLogic domain you are currently working with.</p>"
+          "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
         },
         "monitoring": {
           "label": "Monitoring Tree",
-          "description": "<p>View runtime MBean information for select resources in WebLogic domain you are currently working with.</p>"
+          "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+        },
+        "security": {
+          "label": "Security Data Tree",
+          "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
         },
         "modeling": {
           "label": "WDT Model Tree",
@@ -594,7 +602,7 @@ define({
           "label": "Delete"
         },
         "customize": {
-          "label": "Customize"
+          "label": "Customize Table"
         }
       },
       "icons": {
@@ -677,6 +685,9 @@ define({
       "labels": {
         "totalRows": {
           "value": "Total Rows: {0}"
+        },
+        "reloadHidden": {
+          "value": "Reload the table to view the current {0} values"
         }
       }
     },
@@ -778,7 +789,16 @@ define({
         }
       },
       "messages": {
-        "save": "Changes added to cart"
+        "savedTo": {
+          "shoppingcart": "Changes were added to cart!",
+          "customView": "Changes were saved!"
+        },
+        "action": {
+          "notAllowed": {
+            "summary": "Action Not Allowed",
+            "detail": "Cannot perform requested action during a create operation. Click Cancel button to cancel create operation."
+          }
+        }
       },
       "icons": {
         "restart": {
@@ -908,6 +928,21 @@ define({
         "error": {
           "value": "Error"
         }
+      },
+      "placeholders": {
+        "search": {
+          "value": "Search"
+        }
+      },
+      "title": {
+        "incorrectFileContent": {
+          "value": "Incorrect File Content"
+        }
+      },
+      "messages": {
+        "incorrectFileContent": {
+          "detail": "'{0}' contains JSON, but it is not a JSON representation of a {1}!"
+        }
       }
     },
     "wrc-wdt-form": {
@@ -962,15 +997,18 @@ define({
             "value": "All unsaved changes will be lost. Continue?"
           },
           "areYouSure": {
-            "value": "Are you sure you want to exit without saving changes?"
+            "value": "Are you sure you want to {0} without saving your changes?"
+          },
+          "saveBeforeExiting": {
+            "value": "Do you want to save changes before exiting?"
           },
           "needDownloading": {
-            "value": "Your changes have not been download to the WDT model file, yet.<br/><br/>Download them before continuing?"
+            "value": "Your changes to '{0}' have not been download to the file.<br/><br/>Download them before continuing?"
           }
         },
         "uncommitedCreate": {
           "abandonForm": {
-            "value": "Your new '{0}' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
+            "value": "Your new '{0}' instance has not been added to the WDT model.<br/><br/>Add it before continuing?"
           }
         }
       }

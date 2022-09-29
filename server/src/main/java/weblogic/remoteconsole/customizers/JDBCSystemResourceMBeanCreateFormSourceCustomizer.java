@@ -184,6 +184,9 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
       );
     setDefaultValue(property, null);
     property.getDefinition().setArray(true);
+    // Even though the listeners get converted to an mbean property,
+    // we can't support model tokens for them because the underlying
+    // JDBC utilities we use require a certain format.
     setInlineFieldHelp(property, "host:portNumber\nhost2:portNumber2");
     createDriverConnectionProperties(section, datasourceType, driverInfo);
   }
@@ -446,6 +449,9 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
     }
     // The driver attribute determines whether this is a required property.
     property.setRequired(driverAttribute.isRequired());
+    // Normally non-mbean properties can't be set to model tokens.
+    // Allow it here since this value gets transformed into an mbean property eventually.
+    property.setSupportsModelTokens(true);
   }
 
   private String getDriverConnectionPropertyLabel(String attributeName) {

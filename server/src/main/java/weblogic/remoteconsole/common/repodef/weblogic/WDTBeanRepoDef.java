@@ -198,13 +198,10 @@ public class WDTBeanRepoDef extends WebLogicBeanRepoDef {
         // Since this property identifies the sub type, it can't be a model token.
         return false;
       }
-      if (getCustomizerSource().isDontAllowModelTokens()) {
-        // This property is explictly configured to not be a model token.
-        // This is typically because the property is used in a computation
-        // that we need to know the answer for.  For example, the DomainMBean's
-        // ProductionModeEnabled is used to compute default values in PDJs
-        // and create forms.
-        return false;
+      if (getCustomizerSource().isSupportsModelTokensSpecifiedInYaml()) {
+        // This property is explictly configured to either support or not support
+        // model tokens.  Honor it.
+        return getCustomizerSource().isSupportsModelTokens();
       }
       return true;
     }

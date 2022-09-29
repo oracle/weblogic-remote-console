@@ -3,8 +3,11 @@
 
 package weblogic.remoteconsole.server.webapp;
 
+import javax.json.JsonObject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -30,6 +33,24 @@ public class ReadOnlyOptionalSingletonBeanResource extends BeanResource {
     getInvocationContext().setReload(reload);
     setSlicePagePath(slice);
     return getSliceForm();
+  }
+
+  /**
+   * Customizes the slice table.
+   */
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response post(
+    @QueryParam("slice") @DefaultValue("") String slice,
+    @QueryParam("action") String action,
+    JsonObject requestBody
+  ) {
+    setSlicePagePath(slice);
+    if (CUSTOMIZE_TABLE.equals(action)) {
+      return customizeTable(requestBody);
+    }
+    return defaultPost(requestBody);
   }
 
   protected Response getSliceForm() {

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.connection;
@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -54,6 +55,10 @@ public class ConnectionManager {
   private static final String DOMAINNAME = "domainName";
   private static final String DOMAINVER = "domainVersion";
   private static final String RETURN = "return";
+  private static final String CONSOLE_BACKEND = "consoleBackend";
+  private static final String CONSOLE_EXTENSION_VERSION = "version";
+  private static final String CONSOLE_EXTENSION_CAPABILITIES = "capabilities";
+  private static final String CONSOLE_EXTENSION_V1 = "1";
 
   // Placeholder when username is not known from authorization
   public static final String DEFAULT_USERNAME_UNKNOWN = "<unknown>";
@@ -147,6 +152,8 @@ public class ConnectionManager {
     String domainName,
     WebLogicVersion weblogicVersion,
     WebLogicPSU psu,
+    String consoleExtensionVersion,
+    Set<String> consoleExtensionCapabilities,
     String username,
     Client client
   ) {
@@ -156,7 +163,18 @@ public class ConnectionManager {
     String id = getUUID();
 
     // Create the connection instance and add to the list of connections...
-    result = new ConnectionImpl(id, domainUrl, domainName, weblogicVersion, psu, username, client);
+    result =
+      new ConnectionImpl(
+        id,
+        domainUrl,
+        domainName,
+        weblogicVersion,
+        psu,
+        consoleExtensionVersion,
+        consoleExtensionCapabilities,
+        username,
+        client
+      );
     connections.put(id, result);
 
     // Done.
@@ -253,7 +271,8 @@ public class ConnectionManager {
         WebLogicMBeansVersions.getVersion(
           connection.getWebLogicVersion(),
           connection.getPSU(),
-          roles
+          roles,
+          connection.getConsoleExtensionCapabilities()
         );
     }
     return null;
@@ -375,7 +394,7 @@ public class ConnectionManager {
     }
 
     JsonObject entity = response.getEntity();
-  
+
     // Check response data for the required connection information
     String domainVersion = entity.getString(DOMAINVER, null);
     String domainName = entity.getString(NAME, null);
@@ -398,6 +417,16 @@ public class ConnectionManager {
     WebLogicVersion weblogicVersion = WebLogicVersions.getVersion(domainVersion);
     WebLogicPSU psu = findPSU(entity, weblogicVersion);
 
+    String consoleExtensionVersion = getConsoleExtensionVersion(entity);
+    Set<String> consoleExtensionCapabilities = getConsoleExtensionCapabilities(entity);
+    if (consoleExtensionVersion != null) {
+      LOGGER.info(
+        "The domain has version '" + consoleExtensionVersion + "' of the WebLogic Remote Console Extension installed."
+      );
+    } else {
+      LOGGER.info("The domain does not have the WebLogic Remote Console Extension installed.");
+    }
+
     // FortifyIssueSuppression Log Forging
     // domainVersion is from a trusted source - WebLogic - and is,
     // therefore, not a forging risk
@@ -419,8 +448,63 @@ public class ConnectionManager {
     // Create the connection and return the response
     return
       newConnectionResponse(
-        newConnection(domainUrl, domainName, weblogicVersion, psu, username, client)
+        newConnection(
+          domainUrl,
+          domainName,
+          weblogicVersion,
+          psu,
+          consoleExtensionVersion,
+          consoleExtensionCapabilities,
+          username,
+          client
+        )
       );
+  }
+
+  private JsonObject getConsoleBackend(JsonObject entity) {
+    return entity.getJsonObject(CONSOLE_BACKEND);
+  }
+
+  private String getConsoleExtensionVersion(JsonObject entity) {
+    JsonObject consoleBackend = getConsoleBackend(entity);
+    String version = (consoleBackend != null) ? consoleBackend.getString(CONSOLE_EXTENSION_VERSION, null) : null;
+    if ("CBE_WLS_REST_EXTENSION_V1".equals(version)) {
+      // The newer versions are numeric, i.e. 2, 3, 4, ...
+      // Make the oldest version follow the same pattern.
+      version = CONSOLE_EXTENSION_V1;
+    }
+    return version;
+  }
+
+  private Set<String> getConsoleExtensionCapabilities(JsonObject entity) {
+    String version = getConsoleExtensionVersion(entity);
+    if (version == null) {
+      // The extension isn't installed.  We can't use any extended capabilities.
+      return Set.of();
+    }
+    JsonArray capabilities = getConsoleBackend(entity).getJsonArray(CONSOLE_EXTENSION_CAPABILITIES);
+    if (capabilities != null) {
+      // The console REST extension returned its capabilities.  Use them.
+      Set<String> rtn = new HashSet<>();
+      for (int i = 0; i < capabilities.size(); i++) {
+        rtn.add(capabilities.getString(i)); // Don't bother checking that the array only contains strings
+      }
+      return rtn;
+    }
+    if (CONSOLE_EXTENSION_V1.equals(version)) {
+      // The first version of the console REST extension didn't declare its capabilities.
+      // Hard-code them here:
+      return Set.of("ConfigurationChanges", "SecurityProviderType");
+    }
+    // We should never get here.
+    // The domain has an extension newer than the first version.
+    // It should have returned a list of its capabilities.
+    LOGGER.warning(
+      "Version '" + version + "' of the WebLogic Remote Console Extension is installed the domain"
+      + " but did not return a list of its capabilities."
+      + " The WebLogic Remote Console will not support any extended capabilities."
+    );
+    return Set.of();
   }
 
   /**
@@ -555,6 +639,9 @@ public class ConnectionManager {
     BeanQueryBuilder builder = new BeanQueryBuilder();
     builder.addField(NAME);
     builder.addField(DOMAINVER);
+    BeanQueryBuilder consoleBackendBuilder = builder.getChild(CONSOLE_BACKEND);
+    consoleBackendBuilder.addField(CONSOLE_EXTENSION_VERSION);
+    consoleBackendBuilder.addField(CONSOLE_EXTENSION_CAPABILITIES);
     for (WebLogicVersion version : WebLogicVersions.getSupportedVersions()) {
       for (WebLogicPSU psu : version.getPSUs()) {
         for (Path marker : psu.getMarkerMBeanProperties()) {

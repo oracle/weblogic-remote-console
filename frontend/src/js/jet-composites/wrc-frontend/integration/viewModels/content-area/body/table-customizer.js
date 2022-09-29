@@ -12,11 +12,12 @@ define([
   'knockout',
   'ojs/ojarraydataprovider',
   'ojs/ojknockout-keyset',
+  'wrc-frontend/apis/data-operations',
   'wrc-frontend/integration/viewModels/utils',
   'ojs/ojlistitemlayout',
   'ojs/ojlistview',
   'ojs/ojselector'
-], function (oj, ko, ArrayDataProvider, KeySet, ViewModelUtils) {
+], function (oj, ko, ArrayDataProvider, KeySet, DataOperations, ViewModelUtils) {
   function TableCustomizer(viewParams) {
     const self = this;
 
@@ -163,7 +164,8 @@ define([
       } else {
         self.applyCustomizationsCallback(
           self.columnsRight(),
-          self.columnsLeft()
+          self.columnsLeft(),
+          true
         );
         self.dirty(false);
 
@@ -194,13 +196,14 @@ define([
       self.resetCustomizationsCallback();
       takeColumnsSnapshot();
 
-      self.persistCustomization();
+      self.persistCustomization(true);
     };
 
     this.selectedLeftItems = new KeySet.ObservableKeySet();
     this.selectedRightItems = new KeySet.ObservableKeySet();
 
-    self.page = viewParams.page;
+    self.tablePrefs = {};
+    self.customizerUrl = viewParams.customizerUrl;
 
     self.columnsLeft = viewParams.hiddenColumns;
     self.columnsRight = viewParams.visibleColumns;
@@ -217,7 +220,7 @@ define([
     });
 
     this.applyDefaultCustomizations = function () {
-      let tablePref = (self.tablePrefs ? self.tablePrefs[self.page()] : undefined);
+      const tablePref = self.tablePrefs[self.customizerUrl()];
 
       if (tablePref && Array.isArray(tablePref.selected)) {
         let allColumns = [...self.columnsRight(), ...self.columnsLeft()];
@@ -248,44 +251,36 @@ define([
       }
     };
 
-    this.initializeCustomization = () => {
-      if (ViewModelUtils.isElectronApiAvailable()) {
-        return window.electron_api.ipc.invoke('table-prefs-reading')
-          .then((reply) => {
-            self.tablePrefs = reply;
-          });
-      }
+    this.persistCustomization = (reset = false) => {
+      // Save the currently selected columns in memory
+      // A reset will still save the defaulted columns
+      // as those columns now take precedence
+      const nameMapper = (column) => column.name;
+      self.tablePrefs[self.customizerUrl()] = {
+        selected: self.columnsRight().map(nameMapper)
+      };
 
-      return Promise.resolve();
-    };
-
-    this.persistCustomization = () => {
-      if (ViewModelUtils.isElectronApiAvailable()) {
-        // We're running as an Electron app, so use the
-        // window.electron_api to write the customizer
-        // preference locally
-        const nameMapper = (column) => column.name;
-        self.tablePrefs[self.page()] = {
-          selected: self.columnsRight().map(nameMapper),
-        };
-
-        return window.electron_api.ipc.invoke('table-customizing', {
-          page: self.page(),
-          fileContents: self.tablePrefs[self.page()],
-        });
-      }
+      // Save the selected colums to the backend using table customizer url
+      DataOperations.mbean.customizeTable(
+        self.customizerUrl(),
+        self.tablePrefs[self.customizerUrl()].selected,
+        reset)
+      .catch(response => {
+        ViewModelUtils.failureResponseDefaultHandling(response);
+      })
     };
 
     // Perfrom setup for tables and slice tables when rendered
-    this.setupCustomization = () => {
+    this.setupCustomization = (selectedColumns) => {
+      // Establish the selected columns unless they have already been defined previously
+      if (selectedColumns && Array.isArray(selectedColumns) && (selectedColumns.length > 0)) {
+        const tablePref = self.tablePrefs[self.customizerUrl()];
+        if (!tablePref) self.tablePrefs[self.customizerUrl()] = { selected: selectedColumns };
+      }
+      // Apply any customizations
       self.applyDefaultCustomizations();
       takeColumnsSnapshot();
     };
-
-    this.initializeCustomization()
-      .then(() => {
-        self.setupCustomization();
-      });
   }
 
   return TableCustomizer;

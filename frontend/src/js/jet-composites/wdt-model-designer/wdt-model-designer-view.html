@@ -39,6 +39,11 @@
     </div>
   </div>
 </div>
+
+<div id="preloader-image">
+  <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.images.preloader.iconFile + '.png'}" />
+</div>
+
 <oj-popup
   id="wdt-model-designer-popup"
   class="wdt-model-designer-popup"
@@ -80,3 +85,29 @@
     </div>
   </div>
 </oj-popup>
+
+<!--
+The confirmDialog oj-dialog needs to be here, because it has to be
+available outside of a form or table.
+-->
+<oj-dialog id="confirmDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide">
+  <div slot="body">
+    <div class="cfe-dialog-prompt">
+      <span id="confirmDialogPrompt" data-bind="html: [[i18n.dialog.prompt()]]"></span>
+    </div>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgYesBtn">
+      <span class="button-label" data-bind="text: [[i18n.buttons.yes.label]]"></span>
+    </oj-button>
+    <oj-button id="dlgNoBtn">
+      <span class="button-label" data-bind="text: [[i18n.buttons.no.label]]"></span>
+    </oj-button>
+    <oj-bind-if test="[[i18n.buttons.cancel.visible()]]">
+      <oj-button id="dlgCancelBtn">
+        <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
+      </oj-button>
+    </oj-bind-if>
+  </div>
+</oj-dialog>

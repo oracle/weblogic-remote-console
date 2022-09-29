@@ -22,7 +22,8 @@ public class BeanTypeDefCustomizerSource {
   private StringValue instanceName = new StringValue();
   private BooleanValue referenceable = new BooleanValue();
   private BooleanValue ordered = new BooleanValue();
-  private BooleanValue supportsCustomViews = new BooleanValue(true);
+  private BooleanValue editable = new BooleanValue();
+  private BooleanValue supportsCustomFilteringDashboards = new BooleanValue(true);
 
   // The list of properties on this type that have been customized.
   public List<BeanPropertyDefCustomizerSource> getProperties() {
@@ -188,14 +189,36 @@ public class BeanTypeDefCustomizerSource {
     ordered.setValue(value);
   }
 
-  // Whether this type supports custom views
-  // e.g. we won't want to support creating custom views
-  // for simple searches.
-  public boolean isSupportsCustomViews() {
-    return supportsCustomViews.getValue();
+
+  // Indicates that whether this type is editable is specified in type.yaml
+  // (v.s. v.s. using the defaults for the bean repo)
+  //
+  // e.g. a DefaultAuthenticator's Group child is editable, even
+  // when accessed from the server config perspective, which is read-only.
+  public boolean isEditableSpecifiedInYaml() {
+    return editable.isSpecifiedInYaml();
   }
 
-  public void setSupportsCustomViews(boolean value) {
-    supportsCustomViews.setValue(value);
+  // Whether the type is editable.
+  public boolean isEditable() {
+    if (!isEditableSpecifiedInYaml()) {
+      throw new AssertionError("isEditable called when isEditableSpecifiedInYaml is false");
+    }
+    return editable.getValue();
+  }
+
+  public void setEditable(boolean value) {
+    editable.setValue(value);
+  }
+
+  // Whether this type supports custom filtering dashboards.
+  // e.g. we won't want to support creating custom filtering dashboards
+  // for simple searches.
+  public boolean isSupportsCustomFilteringDashboards() {
+    return supportsCustomFilteringDashboards.getValue();
+  }
+
+  public void setSupportsCustomFilteringDashboards(boolean value) {
+    supportsCustomFilteringDashboards.setValue(value);
   }
 }

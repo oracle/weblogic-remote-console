@@ -150,10 +150,10 @@ public abstract class YamlReader {
       );
   }
 
-  public NavTreeDefSource getRootNavTreeDefSource(String type) {
+  public NavTreeDefSource getRootNavTreeDefSource(String navTreeName) {
     return
       YamlUtils.read(
-        getTypeCustomizationsYamlDirectory(type) + "/root-nav-tree.yaml",
+        "roots/" + navTreeName + "/nav-tree.yaml",
         NavTreeDefSource.class
       );
   }

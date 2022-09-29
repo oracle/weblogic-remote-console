@@ -115,8 +115,8 @@ class NavTreeReader extends PageReader {
       NavTreeNode nodeToExpand
     ) {
       BeanChildDef childDef = childNodeDef.getLastChildDef();
-      BeanTreePath beanTreePath = navTreePath.getLastSegment().getBeanTreePath();
-      nodeToComplete.setResourceData(beanTreePath);
+      BeanTreePath beanPath = navTreePath.getLastSegment().getBeanTreePath();
+      nodeToComplete.setResourceData(beanPath);
       nodeToComplete.setLabel(getLocalizer().localizeString(childNodeDef.getLabel()));
       if (childDef.isCollection()) {
         return completeCollectionNode(nodeToComplete, navTreePath, childNodeDef, nodeToExpand);
@@ -230,8 +230,8 @@ class NavTreeReader extends PageReader {
       NavTreeNode nodeToExpand
     ) {
       nodeToComplete.setSelectable(true);
-      BeanTreePath beanTreePath = navTreePath.getLastSegment().getBeanTreePath();
-      if (beanTreePath.getLastSegment().getChildDef().isRoot()) {
+      BeanTreePath beanPath = navTreePath.getLastSegment().getBeanTreePath();
+      if (beanPath.getLastSegment().getChildDef().isRoot()) {
         nodeToComplete.setType(NavTreeNode.Type.ROOT);
       } else {
         nodeToComplete.setType(NavTreeNode.Type.SINGLETON);
@@ -243,12 +243,12 @@ class NavTreeReader extends PageReader {
         // we want a node for it, and its child nodes
         expandChildChildrenNodes(nodeToComplete, nodeToExpand);
       } else {
-        if (beanTreePath.isCreatable()) {
+        if (beanPath.isCreatable()) {
           // creatable optional singleton that doesn't currently exist.
           // we need a node for it, but no child nodes
           nodeToComplete.setExpandable(false);
         } else {
-          if (beanTreePath.getLastSegment().getChildDef().isOptional()) {
+          if (beanPath.getLastSegment().getChildDef().isOptional()) {
             // non-creatable optional singleton that doesn't currently exist.
             // we want a node for it (but no child nodes) so that we can display
             // a message that says what conditions create the singleton.
@@ -329,10 +329,10 @@ class NavTreeReader extends PageReader {
       NavTreePath navTreePath =
         new NavTreePath(getPageRepo(), parentNavTreePath.childPath(nodeName));
       if (nodeDef.isChildNodeDef()) {
-        BeanTreePath beanTreePath = navTreePath.getLastSegment().getBeanTreePath();
-        BeanTypeDef typeDef = beanTreePath.getTypeDef();
-        addCollectionToSearch(getBuilder(), beanTreePath, List.of(typeDef.getIdentityPropertyDef()));
-        if (beanTreePath.isCollection()) {
+        BeanTreePath beanPath = navTreePath.getLastSegment().getBeanTreePath();
+        BeanTypeDef typeDef = beanPath.getTypeDef();
+        addCollectionToSearch(getBuilder(), beanPath, List.of(typeDef.getIdentityPropertyDef()));
+        if (beanPath.isCollection()) {
           addCollectionNodeChildrenToExpand(navTreePath, nodeDef.asChildNodeDef(), nodeToExpand);
         } else {
           addChildNodeChildrenToExpand(navTreePath, nodeDef.asChildNodeDef(), nodeToExpand);
@@ -405,7 +405,7 @@ class NavTreeReader extends PageReader {
   }
 
   private List<NavTreeNodeDef> getRootNodeDefs() {
-    return getNodeDefs(getBeanRepoDef().getRootTypeDef());
+    return getNodeDefs(getPageRepoDef().getRootNavTreeDef());
   }
 
   private List<NavTreeNodeDef> getNodeDefs(BeanTypeDef typeDef, boolean includeSubTypes) {
@@ -428,7 +428,10 @@ class NavTreeReader extends PageReader {
   }
 
   private List<NavTreeNodeDef> getNodeDefs(BeanTypeDef typeDef) {
-    NavTreeDef navTreeDef = getPageRepoDef().getNavTreeDef(typeDef);
+    return getNodeDefs(getPageRepoDef().getNavTreeDef(typeDef));
+  }
+
+  private List<NavTreeNodeDef> getNodeDefs(NavTreeDef navTreeDef) {
     return (navTreeDef != null) ? navTreeDef.getContentDefs() : null;
   }
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -19,32 +19,35 @@ public class WebLogicMBeansVersions {
 
   public static WebLogicMBeansVersion getVersion(
     WebLogicVersion weblogicVersion,
-    WebLogicPSU psu
+    WebLogicPSU psu,
+    Set<String> capabilities
   ) {
-    return getVersion(weblogicVersion, psu, WebLogicRoles.ADMIN_ROLES);
+    return getVersion(weblogicVersion, psu, WebLogicRoles.ADMIN_ROLES, capabilities);
   }
 
   public static WebLogicMBeansVersion getVersion(
     WebLogicVersion weblogicVersion,
     WebLogicPSU psu,
-    Set<String> roles
+    Set<String> roles,
+    Set<String> capabilities
   ) {
     return
       versionsMap.computeIfAbsent(
-        computeKey(weblogicVersion, psu, roles),
-        k -> new WebLogicMBeansVersion(weblogicVersion, psu, roles)
+        computeKey(weblogicVersion, psu, roles, capabilities),
+        k -> new WebLogicMBeansVersion(weblogicVersion, psu, roles, capabilities)
       );
   }
 
   private static String computeKey(
     WebLogicVersion weblogicVersion,
     WebLogicPSU psu,
-    Set<String> roles
+    Set<String> roles,
+    Set<String> capabilities
   ) {
     StringBuilder sb = new StringBuilder();
     sb.append(weblogicVersion.getDomainVersion());
     if (psu != null) {
-      sb.append("_").append(psu.getName());
+      sb.append("_psu_").append(psu.getName());
     }
     if (roles.contains(WebLogicRoles.ADMIN)) {
       // The user is an Admin and has permission to do anything.
@@ -55,7 +58,10 @@ public class WebLogicMBeansVersions {
       roles = WebLogicRoles.ADMIN_ROLES;
     }
     for (String role : new TreeSet<String>(roles)) { // sort the roles
-      sb.append("_").append(role);
+      sb.append("_role_").append(role);
+    }
+    for (String capability : new TreeSet<String>(capabilities)) { // sort the capabilities
+      sb.append("_capability_").append(capability);
     }
     return sb.toString();
   }

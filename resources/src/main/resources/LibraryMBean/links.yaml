@@ -3,13 +3,17 @@
 
 collectionLinks:
 - label: Status
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/DeploymentManager/LibDeploymentRuntimes
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedLibraryRuntimes
 
 instanceLinks:
 - label: Status
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/DeploymentManager/LibDeploymentRuntimes/<Library>
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedLibraryRuntimes/<Library>
   notFoundMessage: This library was not found on any of the currently running servers.

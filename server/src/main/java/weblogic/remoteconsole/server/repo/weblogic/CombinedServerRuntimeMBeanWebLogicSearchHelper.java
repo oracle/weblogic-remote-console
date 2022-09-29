@@ -31,12 +31,12 @@ class CombinedServerRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSea
     BeanTreePath slcrtPath = getServerLifeCycleRuntimePath(beanTreePath);
     BeanTreePath srtPath = getServerRuntimePath(beanTreePath);
     if ("identity".equals(firstComponent) || "Type".equals(firstComponent) || "State".equals(firstComponent)) {
-      // Fetch the SLC & SLCRT identities so we can figure out whether the server is known and is running
+      // Fetch the SRT & SLCRT identities so we can figure out whether the server is known and is running
       Path identityPath = new Path("identity");
       addProperty(searchBuilder, slcrtPath, identityPath);
       addProperty(searchBuilder, srtPath, identityPath);
-      // Fetch the SLC state if it's available
-      // That is, set the state to the SLC's state if it's available, otherwise set it to 'NOT_RUNNING'
+      // Fetch the SRT state if it's available
+      // That is, set the state to the SRT's state if it's available, otherwise set it to 'NOT_RUNNING'
       // (since it's too expensive to get it from SLCRT's state)
       addProperty(searchBuilder, srtPath, new Path("State"));
     } else if ("Name".equals(firstComponent)) {

@@ -121,7 +121,7 @@ class PageReader extends PageManager {
     // Find out which property on the bean indicates its type
     BeanPropertyDef discPropertyDef = beanTreePath.getTypeDef().getSubTypeDiscriminatorPropertyDef();
 
-    // Add it, and anything needed to compute it to the search
+    // Add it, and anything needed to compute it, to the search
     builder.addProperty(beanTreePath, discPropertyDef);
     builder.addProperty(beanTreePath, discPropertyDef.getTypeDef().getIdentityPropertyDef());
     addParamsToSearch(builder, beanTreePath, discPropertyDef.getGetValueCustomizerDef());
@@ -143,24 +143,43 @@ class PageReader extends PageManager {
     return response.setSuccess(typeDef.getSubTypeDef(discResponse.getResults()));
   }
 
+  protected Response<BeanTypeDef> getActualTypeDef(
+    BeanTreePath beanTreePath,
+    BeanSearchResults beanResults,
+    BeanReaderRepoSearchResults searchResults
+  ) {
+    Response<BeanTypeDef> response = new Response<>();
+    BeanTypeDef typeDef = beanTreePath.getTypeDef();
+    if (typeDef.isHomogeneous()) {
+      return response.setSuccess(typeDef);
+    }
+    Response<String> discResponse = getSubTypeDiscriminatorValue(beanTreePath, beanResults, searchResults);
+    if (!discResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(discResponse);
+    }
+    return response.setSuccess(typeDef.getSubTypeDef(discResponse.getResults()));
+  }
+
   protected Response<String> getSubTypeDiscriminatorValue(
     BeanTreePath beanTreePath,
     BeanReaderRepoSearchResults searchResults
   ) {
-    Response<String> response = new Response<>();
+    return getSubTypeDiscriminatorValue(beanTreePath, searchResults.getBean(beanTreePath), searchResults);
+  }
 
-    BeanSearchResults beanResults = searchResults.getBean(beanTreePath);
-    if (beanResults == null) {
-      return response.setNotFound();
-    }
+  protected Response<String> getSubTypeDiscriminatorValue(
+    BeanTreePath beanTreePath,
+    BeanSearchResults beanResults,
+    BeanReaderRepoSearchResults searchResults
+  ) {
+    Response<String> response = new Response<>();
 
     // Find out which property on the bean indicates its type
     BeanPropertyDef discPropertyDef = beanTreePath.getTypeDef().getSubTypeDiscriminatorPropertyDef();
-
     // Get the value of the property from the search results and return it
     boolean includeIsSet = false;
     Response<Value> valueResponse =
-      getPropertyValue(discPropertyDef, beanResults, searchResults, includeIsSet);
+      getPropertyValue(discPropertyDef, beanTreePath, beanResults, searchResults, includeIsSet);
     if (!valueResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(valueResponse);
     }
@@ -291,10 +310,10 @@ class PageReader extends PageManager {
 
   protected void addLinks(Page page, boolean forInstance) {
     List<Link> links = new ArrayList<>();
-    LinksDef linkDefs =
+    LinksDef linksDef =
       getPageRepoDef().getLinksDef(page.getPageDef().getPagePath().getPagesPath().getTypeDef());
-    if (linkDefs != null) {
-      for (LinkDef linkDef : linkDefs.getLinkDefs(forInstance)) {
+    if (linksDef != null) {
+      for (LinkDef linkDef : linksDef.getLinkDefs(forInstance)) {
         links.addAll(createLinks(linkDef));
       }
     }
@@ -356,7 +375,7 @@ class PageReader extends PageManager {
       // in ic's bean.  That's OK.  Skip this link.
       return links;
     }
-    for (Root root : getRootsThatSupportLink(pageRepoRelativeResourceData)) {
+    for (Root root : getRootsThatSupportLink(linkDef)) {
       links.add(createLink(linkDef, pageRepoRelativeResourceData, root));
     }
     return links;
@@ -367,8 +386,8 @@ class PageReader extends PageManager {
   }
 
   // e.g. find all the roots that support Domain/Servers (i.e. edit & serverConfig)
-  private List<Root> getRootsThatSupportLink(Path pageRepoRelativeResourceData) {
-    String rootName = pageRepoRelativeResourceData.getFirstComponent(); // e.g. Domain or DomainRuntime
+  private List<Root> getRootsThatSupportLink(LinkDef linkDef) {
+    String rootName = linkDef.getRoot();
     List<Root> roots = new ArrayList<>();
     for (Root root : getInvocationContext().getProvider().getRoots().values()) {
       if (root.getRootName().equals(rootName)) {
@@ -393,7 +412,6 @@ class PageReader extends PageManager {
     return link;
   }
 
-  
   private Path getLinkResourceData(Path pageRepoRelativeResourceData, Root root) {
     Path resourceData = new Path(root.getName()); // e.g. edit or serverConfig
     resourceData.addComponent("data");
@@ -426,16 +444,30 @@ class PageReader extends PageManager {
     BeanReaderRepoSearchResults searchResults,
     boolean includeIsSet
   ) {
+    return getPropertyValue(propertyDef, getBeanTreePath(), beanResults, searchResults, includeIsSet);
+  }
+
+  protected Response<Value> getPropertyValue(
+    BeanPropertyDef propertyDef,
+    BeanTreePath beanTreePath,
+    BeanSearchResults beanResults,
+    BeanReaderRepoSearchResults searchResults,
+    boolean includeIsSet
+  ) {
     Response<Value> response = new Response<>();
     if (propertyDef.getGetValueCustomizerDef() == null) {
+      if (beanResults == null) {
+        return response.setNotFound();
+      }
       return response.setSuccess(beanResults.getValue(propertyDef));
     } else {
-      return getCustomPropertyValue(propertyDef, beanResults, searchResults, includeIsSet);
+      return getCustomPropertyValue(propertyDef, beanTreePath, beanResults, searchResults, includeIsSet);
     }
   }
 
   private Response<Value> getCustomPropertyValue(
     BeanPropertyDef propertyDef,
+    BeanTreePath beanTreePath,
     BeanSearchResults beanResults,
     BeanReaderRepoSearchResults searchResults,
     boolean includeIsSet
@@ -443,8 +475,12 @@ class PageReader extends PageManager {
     Response<Value> response = new Response<>();
     BeanPropertyCustomizerDef customizerDef = propertyDef.getGetValueCustomizerDef();
     boolean argsIncludeIsSet = true;
-    List<Object> args = getArguments(customizerDef, beanResults, searchResults, argsIncludeIsSet);
-    Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), args);
+    Response<List<Object>> argsResponse =
+      getArguments(customizerDef, beanTreePath, beanResults, searchResults, argsIncludeIsSet);
+    if (!argsResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(argsResponse);
+    }
+    Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), argsResponse.getResults());
     @SuppressWarnings("unchecked")
     Response<SettableValue> customizerResponse = (Response<SettableValue>)rtn;
     if (!customizerResponse.isSuccess()) {
@@ -454,36 +490,60 @@ class PageReader extends PageManager {
     return response.setSuccess(getValue(settableValue, includeIsSet));
   }
 
-  protected List<Object> getArguments(
+  protected Response<List<Object>> getArguments(
     CustomizerDef customizerDef,
     BeanSearchResults beanResults,
     BeanReaderRepoSearchResults searchResults,
     boolean includeIsSet
   ) {
-    List<Object> args = new ArrayList<>();
-    for (ParamDef paramDef : customizerDef.getParamDefs()) {
-      args.add(getArgument(paramDef, beanResults, searchResults, includeIsSet));
-    }
-    return args;
+    return getArguments(customizerDef, getBeanTreePath(), beanResults, searchResults, includeIsSet);
   }
 
-  private Object getArgument(
-    ParamDef paramDef,
+  protected Response<List<Object>> getArguments(
+    CustomizerDef customizerDef,
+    BeanTreePath beanTreePath,
     BeanSearchResults beanResults,
     BeanReaderRepoSearchResults searchResults,
     boolean includeIsSet
   ) {
+    Response<List<Object>> response = new Response<>();
+    BeanTreePath btp = (beanResults != null) ? beanResults.getBeanTreePath() : beanTreePath;
+    List<Object> args = new ArrayList<>();
+    for (ParamDef paramDef : customizerDef.getParamDefs()) {
+      Response<Object> argResponse = getArgument(paramDef, btp, beanResults, searchResults, includeIsSet);
+      if (!argResponse.isSuccess()) {
+        return response.copyUnsuccessfulResponse(argResponse);
+      }
+      args.add(argResponse.getResults());
+    }
+    return response.setSuccess(args);
+  }
+
+  private Response<Object> getArgument(
+    ParamDef paramDef,
+    BeanTreePath beanTreePath,
+    BeanSearchResults beanResults,
+    BeanReaderRepoSearchResults searchResults,
+    boolean includeIsSet
+  ) {
+    Response<Object> response = new Response<>();
     if (paramDef.isInvocationContext()) {
-      return getInvocationContext();
+      InvocationContext beanIc = new InvocationContext(getInvocationContext());
+      beanIc.setIdentity(beanTreePath);
+      return response.setSuccess(beanIc);
     } else if (paramDef.isProperty()) {
       if (beanResults == null) {
-        // This is probably because an options customizer on a property on a create form
-        // has used a bean relative @Source annotation.  This is not supported.
-        throw new AssertionError("Null beanResults");
+        return response.setNotFound();
       }
-      return argumentValue(beanResults.getValue(paramDef.asProperty().getPropertyDef()), includeIsSet);
+      return
+        response.setSuccess(
+          argumentValue(beanResults.getValue(paramDef.asProperty().getPropertyDef()), includeIsSet)
+        );
     } else if (paramDef.isCollection()) {
-      return getCollectionArgument(paramDef.asCollection(), beanResults, searchResults, includeIsSet);
+      return
+        response.setSuccess(
+          getCollectionArgument(paramDef.asCollection(), beanResults, searchResults, includeIsSet)
+        );
     } else {
       throw new AssertionError("Unsupported parameter " + paramDef);
     }

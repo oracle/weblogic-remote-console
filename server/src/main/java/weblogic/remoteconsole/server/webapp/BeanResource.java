@@ -3,10 +3,16 @@
 
 package weblogic.remoteconsole.server.webapp;
 
+import javax.json.JsonObject;
+import javax.ws.rs.core.Response;
+
 import weblogic.remoteconsole.common.utils.Path;
  
 /** Base resource for resources that manage a bean or a collection of beans. */
 public class BeanResource extends BaseResource {
+
+  protected static final String CUSTOMIZE_TABLE = "customizeTable";
+  protected static final String UPDATE = "update";
 
   /**
    * Get the relate url of this bean or collection of beans.
@@ -39,5 +45,13 @@ public class BeanResource extends BaseResource {
         getInvocationContext().getBeanTreePath().getTypeDef()
       )
     );
+  }
+
+  protected Response customizeTable(JsonObject requestBody) {
+    return CustomizeTableHelper.customizeTable(getInvocationContext(), requestBody);
+  }
+
+  protected Response defaultPost(JsonObject requestBody) {
+    return Response.status(Response.Status.METHOD_NOT_ALLOWED).build();
   }
 }

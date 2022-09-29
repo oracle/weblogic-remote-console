@@ -139,7 +139,7 @@ module.exports = function (driver, file) {
             //Make sure OK button is enable
             await driver.sleep(300);
             console.log("Click OK button");
-            element = driver.findElement(By.xpath("//span[@id=\'dlgOkBtn11_oj32|text\']/span"));
+            element = driver.findElement(By.xpath("//span[@id=\'dlgOkBtn11_oj36|text\']/span"));
             await driver.sleep(300);
             if (element.isEnabled()) {
                 console.log("Click Domain connection OK button");
@@ -247,7 +247,7 @@ module.exports = function (driver, file) {
             await driver.findElement(By.xpath("//input[@id=\'file-chooser\']")).sendKeys(wdtModelFile);
             await driver.sleep(2400);
             console.log("Click OK button");
-            await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12_oj30|text\']")).click();
+            await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12_oj34|text\']")).click();
             await driver.sleep(2400);
         },
 
@@ -259,7 +259,7 @@ module.exports = function (driver, file) {
             await driver.findElement(By.xpath("//input[@id=\'model-file-field|input\']")).sendKeys(propertyFileName);
             await driver.sleep(1200);
             console.log("Click OK button");
-            await driver.findElement(By.xpath("//*[@id=\'dlgOkBtn12_oj30|text\']/span")).click();
+            await driver.findElement(By.xpath("//*[@id=\'dlgOkBtn12_oj34|text\']/span")).click();
             await driver.sleep(1200);
         },
 
@@ -300,10 +300,11 @@ module.exports = function (driver, file) {
                 await driver.findElement(By.id("file-chooser")).sendKeys(filePath);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                if (treeType == "wdtTemplateModel")
-                    await driver.findElement(By.xpath("//oj-button[@id=\'dlgOkBtn12\']/button/div")).click();
+                if (treeType == "wdtTemplateModel" || treeType == "baseDomainModel"
+                    || treeType == "testPropertyListProvider" || treeType == "baseDomainPropList")
+                    await driver.findElement(By.xpath("//oj-button[@id='dlgOkBtn12']")).click();
                 else
-                    await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12_oj72|text\']")).click();
+                    await driver.findElement(By.xpath("//span[@id=\'dlgOkBtn12_oj34|text\']")).click();
                 await driver.sleep(1400);
             }
         },

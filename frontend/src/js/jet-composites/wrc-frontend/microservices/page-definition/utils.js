@@ -297,8 +297,15 @@ define(['wrc-frontend/core/utils'],
       let result = '';
       for (let i in dataValue) {
         if (result.length > 0) result = result + separator;
-        result =
-          result + (dataValue[i].value ? dataValue[i].value : dataValue[i]);
+        if (CoreUtils.isNotUndefinedNorNull(dataValue[i].value)) {
+          result = result + dataValue[i].value;
+        }
+        else if (CoreUtils.isNotUndefinedNorNull(dataValue[i].modelToken)) {
+          result = result + dataValue[i].modelToken;
+        }
+        else {
+          result = result + dataValue[i];
+        }
       }
       return result;
     }

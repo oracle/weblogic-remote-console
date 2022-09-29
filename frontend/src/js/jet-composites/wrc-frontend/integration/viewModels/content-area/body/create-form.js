@@ -808,9 +808,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       newBean: function() {
         const self = this;
         return new Promise(function (resolve) {
-          let url = new URL(self.rdjData.self.resourceData,Runtime.getBackendUrl());
+          let url = new URL(self.rdjData.self.resourceData, Runtime.getBackendUrl());
           url.searchParams.set('view', 'createForm');
-          const newUri = url.pathname + url.search;
+          const newUri = `${url.pathname}${url.search}`;
 
           return DataOperations.mbean.new(newUri)
             .then(reply => {
@@ -819,7 +819,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               const isRdjData = (CoreUtils.isNotUndefinedNorNull(rdjData) && CoreUtils.isNotUndefinedNorNull(rdjData.data) && (Object.keys(rdjData.data).length !== 0) ? true : false);
 
               if (!isRdjData && CoreUtils.isNotUndefinedNorNull(kind) && kind === 'creatableOptionalSingleton') {
-                url = new URL(self.rdjData.self.resourceData,Runtime.getBackendUrl());
+                url = new URL(self.rdjData.self.resourceData, Runtime.getBackendUrl());
                 url.searchParams.delete('view');
                 url.searchParams.set('action', 'create');
                 const createUri = url.toString();

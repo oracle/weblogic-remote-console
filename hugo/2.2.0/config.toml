@@ -1,7 +1,7 @@
 # analytics
 googleAnalytics = "UA-129126578-2"
 
-baseURL = "/weblogic-remote-console/"
+baseURL = "/"
 languageCode = "en-us"
 title = "WebLogic Remote Console"
 

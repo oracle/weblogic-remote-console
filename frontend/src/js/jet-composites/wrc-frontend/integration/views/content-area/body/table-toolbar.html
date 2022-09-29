@@ -9,7 +9,7 @@
       <div id="table-toolbar-buttons" class="oj-flex-bar">
         <div class="oj-flex-bar-start">
           <oj-bind-if test="[[!readonly()]]">
-            <oj-bind-if test="[[ ['configuration','modeling','properties'].indexOf(perspective.id) !== -1 ]]">
+            <oj-bind-if test="[[i18n.buttons.new.visible()]]">
               <oj-button id="[[i18n.buttons.new.id]]" on-oj-action="[[newAction]]" chroming="borderless"
                          disabled="[[i18n.buttons.new.disabled]]">
                 <img class="button-icon" slot="startIcon"
@@ -30,7 +30,7 @@
               </oj-button>
             </oj-bind-if>
           </oj-bind-if>
-          <oj-bind-if test="[[perspective.id === 'monitoring']]">
+          <oj-bind-if test="[[actionButtons.visible()]]">
             <oj-bind-dom config="[[actionButtons.html]]"></oj-bind-dom>
           </oj-bind-if>
 
@@ -40,6 +40,16 @@
             <span class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
             <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
           </a>
+          <oj-bind-if test="[[i18n.buttons.customView.visible()]]">
+            <oj-button id="[[i18n.buttons.customView.id]]" on-oj-action="[[customViewAction]]" chroming="borderless"
+                       disabled="[[i18n.buttons.customView.disabled]]">
+              <img class="button-icon" slot="startIcon"
+                   data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customView.iconFile + '.png'}" />
+              <span class="button-label">
+                  <oj-bind-text value="[[i18n.buttons.customView.label]]"></oj-bind-text>
+                </span>
+            </oj-button>
+          </oj-bind-if>
         </div>
 
       </div>
@@ -79,22 +89,24 @@
         </a>
       </div>
 
-      <div class="toolbar-separator-vertical">
-        <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
-        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/separator-vertical_10x24.png'}"/>
-      </div>
+      <oj-bind-if test="[[showAutoSyncIcons]]">
+        <div class="toolbar-separator-vertical">
+          <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
+          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/separator-vertical_10x24.png'}"/>
+        </div>
 
-      <div id="sync-toolbar-icon" class="oj-flex-item">
-        <a on-click="[[syncClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.sync.tooltip}">
-          <img id="sync-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[autoSyncEnabled() ? 'sync-on-icon-blk_24x24' : 'sync-off-icon-blk_24x24' ]] + '.png'}" data-interval="0"/>
-        </a>
-      </div>
+        <div id="sync-toolbar-icon" class="oj-flex-item">
+          <a on-click="[[syncClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.sync.tooltip}">
+            <img id="sync-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[autoSyncEnabled() ? 'sync-on-icon-blk_24x24' : 'sync-off-icon-blk_24x24' ]] + '.png'}" data-interval="0"/>
+          </a>
+        </div>
 
-      <div id="sync-interval-toolbar-icon" class="oj-flex-item">
-        <a on-click="[[syncIntervalClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.syncInterval.tooltip}">
-          <img id="sync-interval-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.syncInterval.iconFile + '.png'}"/>
-        </a>
-      </div>
+        <div id="sync-interval-toolbar-icon" class="oj-flex-item">
+          <a on-click="[[syncIntervalClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.syncInterval.tooltip}">
+            <img id="sync-interval-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.syncInterval.iconFile + '.png'}"/>
+          </a>
+        </div>
+      </oj-bind-if>
 
       <oj-bind-if test="[[isShoppingCartVisible()]]">
         <div class="toolbar-separator-vertical">

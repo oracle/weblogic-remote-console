@@ -54,6 +54,11 @@ class LinkDefImpl implements LinkDef {
   }
 
   @Override
+  public String getRoot() {
+    return getSource().getRoot();
+  }
+
+  @Override
   public String getResourceData() {
     return getSource().getResourceData();
   }

@@ -89,7 +89,7 @@ public final class Main {
   public static void main(final String[] args) throws Exception {
     boolean stdin = false;
     boolean showPortOnStdout = false;
-    String persistenceDirectory = null;
+    String persistenceDirectory = System.getenv("CBE_PERSISTENCE_DIRECTORY");
     for (int i = 0; i < args.length; i++) {
       if (args[i].equals("-p")) {
         i++;

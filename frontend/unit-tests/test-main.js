@@ -2,8 +2,10 @@
  * This is an initialization file which will be loaded into the browser by Karma
  * to configure RequireJS for the test.
  */
-var allTestFiles = []
-var TEST_REGEXP = /\w\.spec\.js$/i
+var allTestFiles = [];
+var TEST_REGEXP = /\w\.spec\.js$/i;
+// Variable for JET version used in paths
+var JET_VERSION = 'v12.0.2';
 
 // Get a list of all the test files to include
 Object.keys(window.__karma__.files).forEach(function (file) {
@@ -33,9 +35,9 @@ require.config({
     'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.12.1',
     'hammerjs': 'libs/hammer/hammer-2.0.8',
     'ojdnd': 'libs/dnd-polyfill/dnd-polyfill-1.0.2',
-    'ojs': 'libs/oj/v11.1.2/debug',
-    'ojL10n': 'libs/oj/v11.1.2/ojL10n',
-    'ojtranslations': 'libs/oj/v11.1.2/resources',
+    'ojs': `libs/oj/${JET_VERSION}/debug`,
+    'ojL10n': `libs/oj/${JET_VERSION}/ojL10n`,
+    'ojtranslations': `libs/oj/${JET_VERSION}/resources`,
     'persist': 'libs/persist/debug',
     'text': 'libs/require/text',
     'signals': 'libs/js-signals/signals',

@@ -23,7 +23,7 @@ public class LocalizedConstants {
   public static final LocalizableString INVALID_PORT =
     addConstant(
       "invalidPort",
-      "Invalid port (must be an integer): "
+      "Invalid port (must be an integer): {0}"
     );
 
   // Indicates that a string that should identify a grid link listener
@@ -31,7 +31,7 @@ public class LocalizedConstants {
   public static final LocalizableString INVALID_GRID_LINK_LISTENER =
     addConstant(
       "invalidGridLinkListener",
-      "Invalid listener (must be host:port): "
+      "Invalid listener (must be host:port): {0}"
     );
 
   // Indicates that a WLS domain version isn't one that the remote console supports.
@@ -60,7 +60,7 @@ public class LocalizedConstants {
   public static final LocalizableString BEAN_ALREADY_EXISTS =
     addConstant(
       "beanAlreadyExists",
-      "Already exists: "
+      "Already exists: {0}"
     );
 
   // The label to use to refer to a null reference (e.g. setting a Server's Machine to null)
@@ -74,7 +74,7 @@ public class LocalizedConstants {
   public static final LocalizableString REQUIRED_PROPERTY_NOT_SPECIFIED =
     addConstant(
       "requiredPropertyNotSpecified",
-      "Required property not specified: "
+      "Required property not specified: {0}"
     );
 
   public static final LocalizableString EDIT_LABEL =
@@ -107,6 +107,30 @@ public class LocalizedConstants {
       "Monitoring Tree"
     );
 
+  public static final LocalizableString SECURITY_DATA_LABEL =
+    addConstant(
+      "label.securityData",
+      "Security Data Tree"
+    );
+
+  public static final LocalizableString CUSTOM_FILTERING_DASHBOARD_TYPE_LABEL =
+    addConstant(
+      "label.customFilteringDashboardType",
+      "Custom Filtering Dashboard"
+    );
+
+  public static final LocalizableString NEW_CUSTOM_FILTERING_DASHBOARD_LABEL =
+    addConstant(
+      "label.newCustomFilteringDashboard",
+      "New Dashboard"
+    );
+
+  public static final LocalizableString UNSPECIFIED_CUSTOM_FILTERING_DASHBOARD_FILTERED_VALUE =
+    addConstant(
+      "label.unspecifiedCustomFilteringDashboardFilteredValue",
+      "A value must be specified for {0}"
+    );
+  
   public static final LocalizableString INVALID_MODEL_TOKEN =
     addConstant(
       "invalidModelToken",
@@ -258,6 +282,13 @@ public class LocalizedConstants {
     addConstant(
       "wdtInvalidProperty",
       "{0} is not a valid attribute."
+    );
+
+  // An unlabeled property (can't be empty, otherwise the property's name is used)
+  public static final LocalizableString UNLABELED_PROPERTY =
+    addConstant(
+      "unlabeledProperty",
+      " "
     );
 
   // Returns all of the constants (used when the resource bundles are

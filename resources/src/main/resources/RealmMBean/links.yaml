@@ -2,10 +2,22 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
-- label: Runtime Data
+- label: Realms Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedServerSecurityRuntime/RealmRuntimes
+- label: Realms Security Data
+  root: SecurityData
+  resourceData: Domain/RealmsSecurityData
+  requiredCapabilities:
+  - RealmsSecurityData
 
 instanceLinks:
-- label: Runtime Data
+- label: Realm Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedServerSecurityRuntime/RealmRuntimes/<Realm>
   notFoundMessage: This realm was not found on any of the currently running servers.
+- label: Realm Security Data
+  root: SecurityData
+  resourceData: Domain/RealmsSecurityData/<Realm>
+  requiredCapabilities:
+  - RealmsSecurityData

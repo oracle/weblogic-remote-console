@@ -6,8 +6,8 @@
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
-  function(oj, ko, Router, ArrayDataProvider, PerspectiveManager, Perspective, Preferences, DataProviderManager, Runtime, CoreUtils, CoreTypes, Logger){
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/microservices/provider-management/data-provider-manager','wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
+  function(oj, ko, Router, ArrayDataProvider, PerspectiveManager, Perspective, Preferences, DataProviderManager, ViewModelUtils, Runtime, CoreUtils, CoreTypes, Logger){
     function NavStripTemplate(viewParams){
       var self = this;
 
@@ -48,7 +48,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
               beanTree['iconFile'] = perspective.iconFiles['greyed'];
             }
             beanTree['label'] = oj.Translations.getTranslatedString(`wrc-navstrip.icons.${beanTree.type}.tooltip`);
-            beanTree['provider'] = {id: dataProvider.id, name: dataProvider.name};
           });
         }
 
@@ -74,6 +73,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
           },
           'monitoring': { iconFile: 'navstrip-icon-monitoring-blk_48x48',
             tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.monitoring.tooltip')
+          },
+          'security': { iconFile: 'navstrip-icon-security-blk_48x48',
+            tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.security.tooltip')
           },
           'modeling': { iconFile: 'navstrip-icon-wdt-blk_48x48',
             tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.modeling.tooltip')
@@ -107,7 +109,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
+          clearNavStripIcons();
+          clearBuiltInsSelection();
+        });
+
+        self.signalBindings.push(binding);
+
         binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
+          self.canExitCallback = undefined;
           self.builtInsSelectedItem('');
           self.builtInsDataProvider = loadBuiltInPerspectives(
             Preferences.general.themePreference(),
@@ -148,6 +158,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
         binding = viewParams.signaling.themeChanged.add((newTheme) => {
           setThemePreference(newTheme);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
+          self.canExitCallback = exitFormCallback;
         });
 
         self.signalBindings.push(binding);
@@ -203,35 +219,43 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
           return false;
         }
 
-        if (self.builtInsSelectedItem() !== '') {
-          viewParams.signaling.beanTreeChanged.dispatch(beanTree);
-        }
-
-        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, CoreUtils.isUndefinedOrNull(beanTree.readOnly) ? false : beanTree.readOnly);
-        viewParams.signaling.readonlyChanged.dispatch(Runtime.isReadOnly());
-
-        const newPerspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
-        if (CoreUtils.isNotUndefinedNorNull(newPerspective)) {
-          // Signal that a new perspective was selected
-          // from the builtIns navstrip
-          viewParams.signaling.perspectiveSelected.dispatch(newPerspective);
-          viewParams.signaling.perspectiveChanged.dispatch(newPerspective);
-
-          switch (viewParams.parentRouter.stateId()) {
-            case 'landing':
-              viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId(newPerspective.id);
-            // Don't break, just fall through to case for "home" stateId
-            case 'home':
-              viewParams.parentRouter.go('landing/' + newPerspective.id);
-              break;
-            default:
-              if (viewParams.parentRouter.stateId() !== newPerspective.id) {
-                // Go to landing page for newPerspective.id
-                viewParams.parentRouter.go('landing/' + newPerspective.id);
+        ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)
+          .then(reply => {
+            if (reply) {
+              if (self.builtInsSelectedItem() !== '') {
+                viewParams.signaling.beanTreeChanged.dispatch(beanTree);
               }
-              break;
-          }
-        }
+
+              Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, CoreUtils.isUndefinedOrNull(beanTree.readOnly) ? false : beanTree.readOnly);
+              viewParams.signaling.readonlyChanged.dispatch(Runtime.isReadOnly());
+
+              const newPerspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
+              if (CoreUtils.isNotUndefinedNorNull(newPerspective)) {
+                // Signal that a new perspective was selected
+                // from the builtIns navstrip
+                viewParams.signaling.perspectiveSelected.dispatch(newPerspective);
+                viewParams.signaling.perspectiveChanged.dispatch(newPerspective);
+
+                switch (viewParams.parentRouter.stateId()) {
+                  case 'landing':
+                    viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId(newPerspective.id);
+                  // Don't break, just fall through to case for "home" stateId
+                  case 'home':
+                    viewParams.parentRouter.go('landing/' + newPerspective.id);
+                    break;
+                  default:
+                    if (viewParams.parentRouter.stateId() !== newPerspective.id) {
+                      // Go to landing page for newPerspective.id
+                      viewParams.parentRouter.go('landing/' + newPerspective.id);
+                    }
+                    break;
+                }
+              }
+            }
+          })
+          .catch(failure => {
+            ViewModelUtils.failureResponseDefaultHandling(failure);
+          });
       };
 
       function clearNavStripIcons() {

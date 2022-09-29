@@ -67,4 +67,13 @@ public interface PagePropertyDef extends BeanPropertyDef {
   // Whether this property is just for the page (true)
   // or whether it's stored in the bean repo too (false)
   public boolean isPageLevelProperty();
+
+  // Whether to return this property if it's in a hidden column on the page.
+  // Normally, all of the columns are fetched (since it isn't expensive)
+  // so that the CFE doesn't need to do another round trip when the user
+  // changes which columns are displayed.
+  // However, some properties, like the ServerLifeCycleRuntimeMBean's State
+  // property, are very expensive to compute, and slow the table down.
+  // So, it's better to not fetch them until the user wants to see them.
+  public boolean isDontReturnIfHiddenColumn();
 }

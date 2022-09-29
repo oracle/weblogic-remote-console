@@ -5,6 +5,11 @@
   "displayName": "A user friendly, translatable name of the component.",
   "description": "A translatable high-level description for the component.",
   "properties": {
+    "propertyListName": {
+      "description": "Name of property list, which should be set to property name specified in PDJ.",
+      "type": "string",
+      "value": "Properties"
+    },
     "nameHeaderLabel": {
       "description": "Header of the Name column",
       "type": "string"
@@ -15,7 +20,8 @@
     },
     "propertiesString": {
       "description": "JSON string that represents the object with name and value pair. ",
-      "type": "string"
+      "type": "string",
+      "value": ""
     },
     "readonly": {
       "description": "Indicates if this property list editor is read only, defaults to false.",
@@ -31,11 +37,13 @@
     }
   },
   "methods": {
-    "getUpdatedProperties": {
-      "description": "Get the current Properties Map",
-      "internalName" : "_getUpdatedProperties"
+    "getPropertyListChangeResults": {
+      "description": "Returns JS object for latest property list entries."
+    },
+    "updatePropertyListSnapshot": {
+      "description": "Update snapshot of property list entries."
     }
-  }, 
+  },
   "events": {
 
   }, 

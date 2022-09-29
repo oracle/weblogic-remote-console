@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="shoppingcart-tab-container">
@@ -39,54 +39,56 @@
       </div>
     </oj-collapsible>
 
-    <oj-collapsible
-      id="additions"
-      on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
-    >
-      <span slot="header">
-        <span id="additions-count" data-bind="text: changeManagerSections()[1].label"></span>
-      </span>
-      <div id="additions-dom">
-        <oj-bind-dom config="[[additionsDom]]" />
-      </div>
-    </oj-collapsible>
-
-    <oj-collapsible
-      id="modifications"
-      on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
-    >
-      <span slot="header">
-        <span id="modifications-count" data-bind="text: changeManagerSections()[2].label"></span>
-      </span>
-      <div id="modifications-dom">
-        <oj-bind-dom config="[[modificationsDom]]" />
-      </div>
-    </oj-collapsible>
-
-    <oj-collapsible
-      id="removals"
-      on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
-    >
-      <span slot="header">
-        <span id="removals-count" data-bind="text: changeManagerSections()[3].label"></span>
-      </span>
-      <div id="removals-dom">
-        <oj-bind-dom config="[[removalsDom]]" />
-      </div>
-    </oj-collapsible>
-
-    <oj-bind-if test="[[changeManagerSections()[4].count() > 0]]">
+    <oj-bind-if test="[[displayOtherSections]]">
       <oj-collapsible
-        id="restart"
+        id="additions"
         on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
       >
         <span slot="header">
-          <span id="restart-count" data-bind="text: changeManagerSections()[4].label"></span>
+          <span id="additions-count" data-bind="text: changeManagerSections()[1].label"></span>
         </span>
-        <div id="restart-dom">
-          <oj-bind-dom config="[[restartDom]]" />
+        <div id="additions-dom">
+          <oj-bind-dom config="[[additionsDom]]" />
         </div>
       </oj-collapsible>
+
+      <oj-collapsible
+        id="modifications"
+        on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
+      >
+        <span slot="header">
+          <span id="modifications-count" data-bind="text: changeManagerSections()[2].label"></span>
+        </span>
+        <div id="modifications-dom">
+          <oj-bind-dom config="[[modificationsDom]]" />
+        </div>
+      </oj-collapsible>
+
+      <oj-collapsible
+        id="removals"
+        on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
+      >
+        <span slot="header">
+          <span id="removals-count" data-bind="text: changeManagerSections()[3].label"></span>
+        </span>
+        <div id="removals-dom">
+          <oj-bind-dom config="[[removalsDom]]" />
+        </div>
+      </oj-collapsible>
+
+      <oj-bind-if test="[[changeManagerSections()[4].count() > 0]]">
+        <oj-collapsible
+          id="restart"
+          on-oj-before-expand="[[changeManagerSectionBeforeExpand]]"
+        >
+          <span slot="header">
+            <span id="restart-count" data-bind="text: changeManagerSections()[4].label"></span>
+          </span>
+          <div id="restart-dom">
+            <oj-bind-dom config="[[restartDom]]" />
+          </div>
+        </oj-collapsible>
+      </oj-bind-if>
     </oj-bind-if>
 
   </oj-accordion>

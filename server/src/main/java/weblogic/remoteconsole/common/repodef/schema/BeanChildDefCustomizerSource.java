@@ -3,6 +3,8 @@
 
 package weblogic.remoteconsole.common.repodef.schema;
 
+import java.util.List;
+
 import weblogic.remoteconsole.common.utils.Path;
 
 /**
@@ -23,6 +25,7 @@ public class BeanChildDefCustomizerSource {
   private BooleanValue deletable = new BooleanValue();
   private BooleanValue asyncCreate = new BooleanValue();
   private BooleanValue asyncDelete = new BooleanValue();
+  private ListValue<String> requiredCapabilities = new ListValue<>();
 
   public void merge(BeanChildDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
@@ -37,6 +40,7 @@ public class BeanChildDefCustomizerSource {
     deletable.merge(from.deletable, fromContainedBeanPath);
     asyncCreate.merge(from.asyncCreate, fromContainedBeanPath);
     asyncDelete.merge(from.asyncDelete, fromContainedBeanPath);
+    requiredCapabilities.merge(from.requiredCapabilities, fromContainedBeanPath);
   }
 
   // The path from the page-relative bean type to this child,
@@ -140,9 +144,11 @@ public class BeanChildDefCustomizerSource {
     return creatable.isSpecifiedInYaml();
   }
 
-  // Whether the child is creatable (regardless of whether it was specified
-  // in type.yaml or in its BeanPropertyDefSource)
+  // Whether the child is creatable.
   public boolean isCreatable() {
+    if (!isCreatableSpecifiedInYaml()) {
+      throw new AssertionError("isCreatable called when isCreatableSpecifiedInYaml is false");
+    }
     return creatable.getValue();
   }
 
@@ -153,15 +159,17 @@ public class BeanChildDefCustomizerSource {
   // Indicates that whether this child is deletable is specified in type.yaml
   // (v.s. looking at its BeanPropertyDefSource)
   //
-  // e.g. the DomainRuntimeMBean's CustomViews collection is
+  // e.g. the DomainRuntimeMBean's Dashboard collection is
   // deletable, but not creatable.
   public boolean isDeletableSpecifiedInYaml() {
     return deletable.isSpecifiedInYaml();
   }
 
-  // Whether this child is deletable (regardless of whether it was specified
-  // in type.yaml or in its BeanPropertyDefSource)
+  // Whether this child is deletable.
   public boolean isDeletable() {
+    if (!isDeletableSpecifiedInYaml()) {
+      throw new AssertionError("isDeletable called when isDeletableSpecifiedInYaml is false");
+    }
     return deletable.getValue();
   }
 
@@ -185,5 +193,14 @@ public class BeanChildDefCustomizerSource {
 
   public void setAsyncDelete(boolean value) {
     asyncDelete.setValue(value);
+  }
+
+  // The bean repo capabilities that are required for child type to be present
+  public List<String> getRequiredCapabilities() {
+    return requiredCapabilities.getValue();
+  }
+
+  public void setRequiredCapabilities(List<String> val) {
+    requiredCapabilities.setValue(val);
   }
 }

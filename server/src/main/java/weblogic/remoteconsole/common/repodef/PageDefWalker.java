@@ -77,6 +77,7 @@ public abstract class PageDefWalker {
   protected void walk(PageRepoDef pageRepoDef) {
     this.pageRepoDef = pageRepoDef;
     getVisitedTypeNames().clear();
+    walkNavTreeDef(getPageRepoDef().getRootNavTreeDef());
     walkTypeDef(getPageRepoDef().getBeanRepoDef().getRootTypeDef());
   }
 

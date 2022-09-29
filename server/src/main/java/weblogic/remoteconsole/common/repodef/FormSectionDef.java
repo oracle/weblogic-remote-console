@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -48,4 +48,21 @@ public interface FormSectionDef {
   // Returns an empty list if this section has any properties
   // (i.e. a section can't parent both properties and sections).
   public List<FormSectionDef> getSectionDefs();
+
+  // Returns all the child sections of this section and its child sections.
+  public default List<FormSectionDef> getAllSectionDefs() {
+    if (getSectionDefs().isEmpty()) {
+      return List.of();
+    }
+    List<FormSectionDef> allDefs = new ArrayList<>();
+    addSectionDefs(allDefs, getSectionDefs());
+    return allDefs;
+  }
+
+  private static void addSectionDefs(List<FormSectionDef> allDefs, List<FormSectionDef> sectionDefs) {
+    allDefs.addAll(sectionDefs);
+    for (FormSectionDef sectionDef : sectionDefs) {
+      addSectionDefs(allDefs, sectionDef.getSectionDefs());
+    }
+  }
 }

@@ -23,6 +23,13 @@ perspectives:
       dark: navstrip-icon-readonly-configuration-wht_48x48
       greyed: navstrip-icon-readonly-configuration-gry_48x48
     beanTree: serverConfig
+  - id: security
+    type: built-in
+    iconFiles:
+      light: navstrip-icon-security-blk_48x48
+      dark: navstrip-icon-security-wht_48x48
+      greyed: navstrip-icon-security-gry_48x48
+    beanTree: securityData
   - id: modeling
     type: built-in
     iconFiles:

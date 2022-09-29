@@ -117,7 +117,7 @@ class RootBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   }
 
   @Override
-  public boolean isSupportsCustomViews() {
+  public boolean isSupportsCustomFilteringDashboards() {
     return false;
   }
 
@@ -148,6 +148,11 @@ class RootBeanTypeDefImpl extends BaseBeanTypeDefImpl {
 
   @Override
   boolean isDisableMBeanJavadoc() {
+    return false;
+  }
+
+  @Override
+  boolean isEditable() {
     return false;
   }
 

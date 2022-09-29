@@ -76,10 +76,14 @@ class LinksDefImpl implements LinksDef {
   private void createLinkDefImpls() {
     if (source != null) {
       for (LinkDefSource linkDefSource : source.getInstanceLinks()) {
-        getInstanceLinkDefImpls().add(new LinkDefImpl(this, linkDefSource, false));
+        if (pageRepoDefImpl.getBeanRepoDefImpl().supportsCapabilities(linkDefSource.getRequiredCapabilities())) {
+          getInstanceLinkDefImpls().add(new LinkDefImpl(this, linkDefSource, false));
+        }
       }
       for (LinkDefSource linkDefSource : source.getCollectionLinks()) {
-        getCollectionLinkDefImpls().add(new LinkDefImpl(this, linkDefSource, true));
+        if (pageRepoDefImpl.getBeanRepoDefImpl().supportsCapabilities(linkDefSource.getRequiredCapabilities())) {
+          getCollectionLinkDefImpls().add(new LinkDefImpl(this, linkDefSource, true));
+        }
       }
     } else {
       copyInheritedLinks(getTypeDefImpl());

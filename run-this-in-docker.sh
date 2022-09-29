@@ -22,6 +22,8 @@ set -e
 set -x
 umask 000
 $PREP_COMMANDS
+export NPM_PREP_COMMANDS="$NPM_PREP_COMMANDS"
+export JAVA_OPTS="$JAVA_OPTS"
 export MW_HOME=/u01/oracle
 export WL_HOME=\$MW_HOME/wlserver
 . \$WL_HOME/server/bin/setWLSEnv.sh

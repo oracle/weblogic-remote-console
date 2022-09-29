@@ -505,9 +505,9 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
         } else {
           badUserRequest(
             getInvocationContext().getLocalizer().localizeString(
-              LocalizedConstants.INVALID_GRID_LINK_LISTENER
+              LocalizedConstants.INVALID_GRID_LINK_LISTENER,
+              hostPort
             )
-            + hostPort
           );
           return;
         }
@@ -706,21 +706,33 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
     }
 
     private void addDbmsPort(String dataSourceType, JDBCDriverInfo driverInfo) {
-      if (supportsWellKnownConnectionProperty(driverInfo, PROPERTY_DBMS_PORT)) {
-        String value = getWellKnownConnectionProperty(dataSourceType, driverInfo, PROPERTY_DBMS_PORT);
-        if (isOK() && !StringUtils.isEmpty(value)) { // empty indicates an unset optional property
-          if (StringUtils.isInteger(value)) {
-            driverInfo.setDbmsPort(value);
-          } else {
-            badUserRequest(
-              getInvocationContext().getLocalizer().localizeString(
-                LocalizedConstants.INVALID_PORT
-              )
-              + value
-            );
-          }
-        }
+      if (!supportsWellKnownConnectionProperty(driverInfo, PROPERTY_DBMS_PORT)) {
+        return;
       }
+      String value = getWellKnownConnectionProperty(dataSourceType, driverInfo, PROPERTY_DBMS_PORT);
+      if (!isOK() || StringUtils.isEmpty(value)) { // empty indicates an unset optional property
+        return;
+      }
+      FormProperty formProperty =
+        findFormProperty(
+          driverNameToFormPropertyName(
+            driverScopedName(dataSourceType, driverInfo, PROPERTY_DBMS_PORT)
+          )
+        );
+      if (
+        formProperty != null
+          && !getFormPropertyValue(formProperty).getValue().isModelToken()
+          && !StringUtils.isInteger(value)
+      ) {
+        badUserRequest(
+          getInvocationContext().getLocalizer().localizeString(
+            LocalizedConstants.INVALID_PORT,
+            value
+          )
+        );
+        return;
+      }
+      driverInfo.setDbmsPort(value);
     }
 
     private void addDbmsUserName(String dataSourceType, JDBCDriverInfo driverInfo) {
@@ -916,7 +928,9 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
     private String getStringValue(FormProperty formProperty) {
       Value value = getFormPropertyValue(formProperty).getValue();
       String stringValue = null;
-      if (value.isSecret()) {
+      if (value.isModelToken()) {
+        stringValue = value.asModelToken().getToken();
+      } else if (value.isSecret()) {
         stringValue = value.asSecret().getValue();
       } else {
         stringValue = value.asString().getValue();

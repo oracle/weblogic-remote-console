@@ -121,14 +121,15 @@ public abstract class ResponseMapper<T> {
   }
 
   private String getSeverity(Message message) {
+    // Map the CBE message severities to the JET ones to make it easier for the CFE
     if (message.isSuccess()) {
-      return "success";
+      return "info";
     }
     if (message.isWarning()) {
       return "warning";
     }
     if (message.isFailure()) {
-      return "failure";
+      return "error";
     }
     throw new AssertionError("Unsupported message type");
   }

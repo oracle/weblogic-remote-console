@@ -19,7 +19,7 @@ The WebLogic Remote Console presents a simple user interface that varies slightl
 
 * **Kiosk** - manage the details of your current [project]({{< relref "userguide/projects" >}}), its [providers]({{< relref "userguide/providers" >}}) and their connection details. You can also import and export project files here. On Administration Server providers, the Kiosk also includes the Shopping Cart which contains the Change Manager, as well as any changes you’ve made to the domain configuration. You can commit (or discard) changes directly from the Shopping Cart. 
     
-    If you have the console extension, `console-rest-ext-1.0.war`, installed, you can see the specific pending changes for your domain.
+    If you have the console extension, `console-rest-ext-2.0.war`, installed, you can see the specific pending changes for your domain.
 
 * **NavStrip** - toggle the visibility of the navigation tree (![Navpane icon](/weblogic-remote-console/images/icons/navigation-icon-toggle-off-blk_24x24.png)) and, in an Administration Server provider, move between perspectives. 
 
@@ -58,6 +58,7 @@ Each provider type has at least one perspective - a representation of the data s
                     </ul>
                 </li>
                 <li>Monitoring Tree: an overview of the runtime statistics for the running domain. You can view statistics by server or aggregated across servers. For example, applications running on Server1  vs. applications running on one or more servers. The Monitoring Tree also provides some control operations such as starting or stopping servers or applications.</li>
+                <li>Security Data Tree: an editable overview of the users and groups in the default authentication provider of the security realm. You add, edit, and delete users and groups.</li>
             </ul>
         </td>
     </tr>
@@ -107,7 +108,7 @@ These icons appear along the top of the content pane:
 
 You can choose which columns to show or hide in tables so you can focus on the important details and ignore the irrelevant ones.
 
-Click the **Customize** option that appears above all tables in the WebLogic Remote Console to view a list of all the possible columns you can add to the table and see information for. Move the columns back and forth between **Available Columns** and **Selected Columns** until you've assembled a set of columns that works for your needs and then, click **Apply**. 
+Click the **Customize Table** option that appears above all tables in the WebLogic Remote Console to view a list of all the possible columns you can add to the table and see information for. Move the columns back and forth between **Available Columns** and **Selected Columns** until you've assembled a set of columns that works for your needs and then, click **Apply**. 
 
 To return the table to its default set of columns, click **Reset**.
 
@@ -118,3 +119,26 @@ The list of options under Available Columns changes depending on the table; not 
 The WebLogic Remote Console provides several types of online help on each page.
 * Use the ? icon to the left of each field to access summary and detailed help for the field. If you hover over the ?, a summary help description displays. Click the ? icon to display a more detailed help description, if available.
 * Click the ? icon in the top right of the content pane to toggle the view of the reference information for all of the fields displayed on the page.
+
+## Supplemental customization {id="files"}
+
+While you should perform all configuration of the WebLogic Remote Console from within its graphical user interface, occasionally there are circumstances where that's not possible. In those cases, you can view some of the data files upon which the WebLogic Remote Console builds its customizations. 
+
+These files are located in the following directories:
+* Linux: `$HOME/.config/weblogic-remote-console/`
+* macOS: `/Users/<user>/Library/Application Support/weblogic-remote-console/`
+* Windows: `C:\Users\<user>\AppData\Roaming\weblogic-remote-console\`
+
+
+| File name | Purpose |
+|---|---|
+|`auto-prefs.json`| Describes the user interface of the WebLogic Remote Console, including its dimensions, projects and providers. |
+|`config.json`| Describes the connection settings for the WebLogic Remote Console. You will need to create this file manually. See [Customize connection settings]({{< relref "userguide/advanced-settings" >}}) for more information. |
+|`dashboards.json`| Records the details of existing dashboards. See [Generate dashboards]({{< relref "userguide/dashboards" >}}) for more information. |
+|`out.log`| Collects log entries for the current session of the WebLogic Remote Console. There is also an `out-1.log` file which holds a copy of the previous session's log entries. See [Check log files]({{< relref "userguide/logging" >}}) for more information. |
+|`recent-searches.json`| Lists the search terms for any searches that you've executed. See [Search]({{< relref "setup/console#nav_dom" >}}) for more information. |
+|`table-customizations.json`| Describes any table customizations you've saved. See [Customizable tables]({{< relref "setup/console#cust_table" >}}) for more information. |
+
+{{% notice note %}}
+If you introduce an error into one of these files, it may affect the behavior of the WebLogic Remote Console and you may need to wipe or delete the file to recover. The WebLogic Remote Console will lose all saved data for that file, resetting it to its defaults. For example, if you have to erase `dashboards.json`, all your dashboards will be deleted.
+{{% /notice %}}

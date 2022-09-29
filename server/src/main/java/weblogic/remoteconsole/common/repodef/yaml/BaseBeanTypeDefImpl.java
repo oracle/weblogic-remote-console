@@ -391,6 +391,8 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
 
   abstract boolean isDisableMBeanJavadoc();
 
+  abstract boolean isEditable();
+
   @Override
   public String toString() {
     return "type=" + getTypeName();

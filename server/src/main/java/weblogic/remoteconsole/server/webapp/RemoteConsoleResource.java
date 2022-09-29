@@ -86,6 +86,18 @@ public class RemoteConsoleResource extends BaseResource {
     return copyContext(new PageRepoResource());
   }
 
+  @Path(Root.SECURITY_DATA_NAME)
+  public PageRepoResource getWebLogicRestSecurityDataResource() {
+    if (!getInvocationContext().setPageRepoByName(Root.SECURITY_DATA_NAME)) {
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "There is no " + Root.SECURITY_DATA_NAME + " in "
+          + getInvocationContext().getProvider().getName()
+      );
+    }
+    return copyContext(new PageRepoResource());
+  }
+
   @Path(Root.DOMAIN_RUNTIME_NAME)
   public PageRepoResource getWebLogicRestRuntimeTreeMonitoringResource() {
     if (!getInvocationContext().setPageRepoByName(Root.DOMAIN_RUNTIME_NAME)) {

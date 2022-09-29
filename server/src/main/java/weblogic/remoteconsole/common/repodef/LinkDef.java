@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -12,6 +12,10 @@ package weblogic.remoteconsole.common.repodef;
 public interface LinkDef {
 
   public LinksDef getLinkDefs();
+
+  // The name of the root that for this link.
+  // Matches the *_ROOT constants in weblogic.remoteconsole.server.providers.Root
+  public String getRoot();
 
   // Returns the template for creating resourceData links
   // given this link def and a bean tree path.

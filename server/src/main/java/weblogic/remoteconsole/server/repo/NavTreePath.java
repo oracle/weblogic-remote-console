@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -61,7 +61,7 @@ public class NavTreePath {
   }
 
   private void initialize() {
-    BeanTypeDef typeDef = getPageRepo().getBeanRepo().getBeanRepoDef().getRootTypeDef();
+    BeanTypeDef typeDef = null; // selects the root nav tree def
     Path beanTreePath = new Path();
     Path typeRelativeNavTreePath = new Path();
     List<String> components = getPath().getComponents();
@@ -149,7 +149,7 @@ public class NavTreePath {
   private Path computeNavTreePathFromBeanTreePath(BeanTreePath beanTreePath) {
     Path navTreePath = new Path();
     Path restOfBeanTreePath = beanTreePath.getPath();
-    BeanTypeDef typeDef = beanTreePath.getTypeDef().getBeanRepoDef().getRootTypeDef();
+    BeanTypeDef typeDef = null; // selects the root nav tree def
     while (!restOfBeanTreePath.isEmpty()) {
       BeanChildNavTreeNodeDef nodeDef =
         findMostSpecificMatchingNodeInTypeOrSubTypes(beanTreePath, typeDef, restOfBeanTreePath);
@@ -190,7 +190,7 @@ public class NavTreePath {
     if (nodeDef != null) {
       return nodeDef;
     }
-    if (typeDef.isHeterogeneous()) {
+    if (typeDef != null && typeDef.isHeterogeneous()) {
       // Look in this type's sub types.
       for (String discriminator : typeDef.getSubTypeDiscriminatorLegalValues()) {
         BeanTypeDef subTypeDef = typeDef.getSubTypeDef(discriminator);
@@ -205,7 +205,7 @@ public class NavTreePath {
     }
     throw
       new AssertionError(
-        "Couldn't find navigation node: "
+        "Couldn't find navigation node:"
         + " " + typeDef
         + " " + restOfBeanTreePath
         + " " + beanTreePath
@@ -216,7 +216,7 @@ public class NavTreePath {
     BeanTypeDef typeDef,
     Path restOfBeanTreePath
   ) {
-    NavTreeDef navTreeDef = getPageRepo().getPageRepoDef().getNavTreeDef(typeDef);
+    NavTreeDef navTreeDef = getNavTreeDef(typeDef);
     if (navTreeDef == null) {
       return null;
     }
@@ -256,7 +256,7 @@ public class NavTreePath {
     }
     throw
       new AssertionError(
-        "Couldn't find navigation node: "
+        "Couldn't find navigation node:"
         + " " + typeDef
         + " " + typeRelativeNavTreePath
       );
@@ -266,11 +266,18 @@ public class NavTreePath {
     BeanTypeDef typeDef,
     Path typeRelativeNavTreePath
   ) {
-    NavTreeDef navTreeDef = getPageRepo().getPageRepoDef().getNavTreeDef(typeDef);
+    NavTreeDef navTreeDef = getNavTreeDef(typeDef);
     if (navTreeDef == null) {
       return null;
     }
     return navTreeDef.findNodeByNavTreePath(typeRelativeNavTreePath);
+  }
+
+  NavTreeDef getNavTreeDef(BeanTypeDef typeDef) {
+    return
+      (typeDef != null)
+      ? getPageRepo().getPageRepoDef().getNavTreeDef(typeDef)
+      : getPageRepo().getPageRepoDef().getRootNavTreeDef();
   }
 
   @Override

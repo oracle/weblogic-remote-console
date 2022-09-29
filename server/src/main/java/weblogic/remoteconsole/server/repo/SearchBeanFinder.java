@@ -163,15 +163,22 @@ public class SearchBeanFinder extends PageReader {
     }
 
     private void addChildrenToSearch() {
-      for (BeanTypeDef typeDef : getTypeDefs(beanTreePath)) {
-        addNavTreeNodesToSearch(typeDef);
+      if (beanTreePath.getPath().isEmpty()) {
+        addNavTreeNodesToSearch(
+          getInvocationContext().getPageRepo().getPageRepoDef().getRootNavTreeDef()
+        );
+      } else {
+        for (BeanTypeDef typeDef : getTypeDefs(beanTreePath)) {
+          addNavTreeNodesToSearch(
+            getInvocationContext().getPageRepo().getPageRepoDef().getNavTreeDef(typeDef)
+          );
+        }
       }
     }
 
-    private void addNavTreeNodesToSearch(BeanTypeDef typeDef) {
-      NavTreeDef navTreeDef = getInvocationContext().getPageRepo().getPageRepoDef().getNavTreeDef(typeDef);
+    private void addNavTreeNodesToSearch(NavTreeDef navTreeDef) {
       if (navTreeDef != null) {
-        addNavTreeNodesToSearch(navTreeDef.getContentDefs());
+        addNavTreeNodesToSearch(navTreeDef.getContentDefs());      
       }
     }
   
@@ -296,13 +303,20 @@ public class SearchBeanFinder extends PageReader {
     }
 
     private void findChildrenResults() {
-      for (BeanTypeDef typeDef : getTypeDefs(beanTreePath)) {
-        findNavTreeNodesResults(typeDef);
+      if (beanTreePath.getPath().isEmpty()) {
+        findNavTreeNodesResults(
+          getInvocationContext().getPageRepo().getPageRepoDef().getRootNavTreeDef()
+        );
+      } else {
+        for (BeanTypeDef typeDef : getTypeDefs(beanTreePath)) {
+          findNavTreeNodesResults(
+            getInvocationContext().getPageRepo().getPageRepoDef().getNavTreeDef(typeDef)
+          );
+        }
       }
     }
 
-    private void findNavTreeNodesResults(BeanTypeDef typeDef) {
-      NavTreeDef navTreeDef = getInvocationContext().getPageRepo().getPageRepoDef().getNavTreeDef(typeDef);
+    private void findNavTreeNodesResults(NavTreeDef navTreeDef) {
       if (navTreeDef != null) {
         findNavTreeNodesResults(navTreeDef.getContentDefs());
       }

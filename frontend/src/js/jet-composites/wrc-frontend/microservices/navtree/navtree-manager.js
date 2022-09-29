@@ -90,7 +90,8 @@ define([
     },
 
     /**
-     * convert treeModel into the datastructure that oj-navigation-list needs
+     * Convert treeModel into data structure that oj-navigation-list needs
+     * @param {string} selectedItem - Path of node (e.g. Environment/Servers/AdminServer) that was selected
      */
     updateTreeView: function (selectedItem = '') {
       // recursive function to process contents attribute of a node
@@ -277,7 +278,8 @@ define([
 
     /**
      * Populates a given set of paths
-     * @param {Set} nodes - paths of nodes to populate
+     * @param {Set} nodes - The set (i.e. paths) nodes that need to be populated
+     * @param {string} selectedItem - Path of node (e.g. Environment/Servers/AdminServer) that was selected
      */
     populateNodeSet: function (nodes, selectedItem) {
       let promise = Promise.resolve(1);

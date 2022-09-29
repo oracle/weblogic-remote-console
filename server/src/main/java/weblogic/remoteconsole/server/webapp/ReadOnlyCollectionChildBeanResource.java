@@ -33,7 +33,8 @@ public class ReadOnlyCollectionChildBeanResource extends BeanResource {
   }
 
   /**
-   * Invokes an action on the child (e.g. start a server).
+   * Customize the slice table or
+   * invoke an action on the child (e.g. start a server).
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -44,6 +45,9 @@ public class ReadOnlyCollectionChildBeanResource extends BeanResource {
     JsonObject requestBody
   ) {
     setSlicePagePath(slice);
+    if (CUSTOMIZE_TABLE.equals(action)) {
+      return customizeTable(requestBody);
+    }
     return invokeAction(action, requestBody);
   }
 

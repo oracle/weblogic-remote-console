@@ -161,7 +161,7 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
   }
 
   public boolean isCreateWritable() {
-    if (!getTypeDefImpl().getBeanRepoDefImpl().isEditable()) {
+    if (!getTypeDefImpl().isEditable()) {
       return false;
     }
     if (!getTypeDefImpl().getBeanRepoDefImpl().isAccessAllowed(getSetRoles())) {
@@ -178,7 +178,7 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
   }
 
   public boolean isUpdateWritable() {
-    if (!getTypeDefImpl().getBeanRepoDefImpl().isEditable()) {
+    if (!getTypeDefImpl().isEditable()) {
       return false;
     }
     if (!getTypeDefImpl().getBeanRepoDefImpl().isAccessAllowed(getSetRoles())) {

@@ -34,6 +34,9 @@ define({
       "edit": {
         "tooltip": "관리"
       },
+      "deactivate": {
+        "tooltip": "Deactivate"
+      },
       "delete": {
         "tooltip": "제거"
       }
@@ -381,17 +384,17 @@ define({
       },
       "correctiveAction": {
         "filePathNotFound": {
-          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+          "detail": "<p>파일 이름 필드에서 경로를 편집하고 [확인] 단추를 누릅니다. 또는 업로드 아이콘을 누르고 다른 파일을 선택하십시오.</p>"
         },
         "fixModelFile": {
-          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+          "detail": "<p>아래 언급된 문제를 수정하고 [확인] 단추를 누릅니다. 또는 다른 파일을 선택하십시오.</p>"
         },
         "yamlException": {
-          "detail": "{0} at line {1}, column {2}"
+          "detail": "{1}행, {2}열의 {0}"
         },
         "wktModelContent": {
-          "summary": "Model Content Problems",
-          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
+          "summary": "모델 콘텐츠 문제",
+          "detail": "<i>코드 뷰</i> 탭의 모델 편집기를 사용하여 문제를 해결하십시오."
         }
       }
     },
@@ -417,6 +420,9 @@ define({
       "monitoring": {
         "tooltip": "모니터링 트리"
       },
+      "security": {
+        "tooltip": "Security Data Tree"
+      },
       "modeling": {
         "tooltip": "WDT 모델"
       },
@@ -434,6 +440,7 @@ define({
       "configuration": "트리 편집",
       "view": "구성 뷰 트리",
       "monitoring": "모니터링 트리",
+      "security": "Security Data Tree",
       "modeling": "WDT 모델",
       "composite": "WDT 조합 모델",
       "properties": "속성 목록"
@@ -445,9 +452,6 @@ define({
         },
         "preferences": {
           "label": "환경설정"
-        },
-        "search": {
-          "label": "검색"
         }
       }
     }
@@ -530,15 +534,19 @@ define({
     "cards": {
       "configuration": {
         "label": "트리 편집",
-        "description": "<p>현재 사용 중인 WebLogic 도메인의 구성을 유지합니다.</p>"
+        "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
       },
       "view": {
         "label": "구성 뷰 트리",
-        "description": "<p>현재 사용 중인 WebLogic 도메인의 읽기 전용 구성을 검사합니다.</p>"
+        "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
       },
       "monitoring": {
         "label": "모니터링 트리",
-        "description": "<p>현재 사용 중인 WebLogic 도메인의 선택된 리소스에 대한 런타임 MBean 정보를 확인합니다.</p>"
+        "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+      },
+      "security": {
+        "label": "Security Data Tree",
+        "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
       },
       "modeling": {
         "label": "WDT 모델 트리",
@@ -593,7 +601,7 @@ define({
         "label": "삭제"
       },
       "customize": {
-        "label": "사용자정의"
+        "label": "테이블 사용자정의"
       }
     },
     "icons": {
@@ -676,6 +684,9 @@ define({
     "labels": {
       "totalRows": {
         "value": "총 행: {0}"
+      },
+      "reloadHidden": {
+        "value": "Reload the table to view the current {0} values"
       }
     }
   },
@@ -716,6 +727,9 @@ define({
       },
       "finish": {
         "label": "생성"
+      },
+      "customize": {
+        "label": "테이블 사용자정의"
       }
     },
     "icons": {
@@ -774,7 +788,10 @@ define({
       }
     },
     "messages": {
-      "save": "변경사항이 카트에 추가되었습니다."
+      "savedTo": {
+        "shoppingcart": "Changes were added to cart!",
+        "customView": "Changes were saved!"
+      }
     },
     "icons": {
       "restart": {
@@ -802,7 +819,7 @@ define({
     "pageState": {
       "error": {
         "summary": "불완전한 필수 필드",
-        "detail": "{0} field is required, but no (or an invalid) value has been provided."
+        "detail": "{0}은(는) 필수 필드이지만, 값이 제공되지 않았거나 부적합한 값이 제공되었습니다."
       }
     }
   },
@@ -883,7 +900,7 @@ define({
         "value": "디렉토리 선택"
       },
       "reload": {
-        "value": "Reload File"
+        "value": "파일 다시 로드"
       }
     },
     "menu": {
@@ -896,13 +913,18 @@ define({
     },
     "labels": {
       "info": {
-        "value": "Information"
+        "value": "정보"
       },
       "warn": {
         "value": "경고"
       },
       "error": {
         "value": "오류"
+      }
+    },
+    "placeholders": {
+      "search": {
+        "value": "검색"
       }
     }
   },
@@ -960,13 +982,16 @@ define({
         "areYouSure": {
           "value": "변경사항을 저장하지 않고 종료하겠습니까?"
         },
+        "saveBeforeExiting": {
+          "value": "Do you want to save changes before exiting?"
+        },
         "needDownloading": {
-          "value": "변경사항이 WDT 모델 파일에 아직 다운로드되지 않았습니다.<br/><br/>계속하기 전에 다운로드하겠습니까?"
+          "value": "Your changes have not been download to the file, yet.<br/><br/>Download them before continuing?"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
+          "value": "새 ''{0}'' 인스턴스가 WDT 모델에 아직 추가되지 않았습니다.<br/><br/>계속하기 전에 추가하겠습니까?"
         }
       }
     }

@@ -3,7 +3,9 @@
 
 collectionLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/CombinedServerRuntimes
 instanceLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/CombinedServerRuntimes/<Server>

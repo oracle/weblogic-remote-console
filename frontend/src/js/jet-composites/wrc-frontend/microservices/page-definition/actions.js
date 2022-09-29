@@ -250,7 +250,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
       button['id'] = (CoreUtils.isUndefinedOrNull(action.actions) ? action.label : `${action.name}MenuLauncher`);
       button['name'] = action.name;
       button['disabled'] = false;
-      button['asynchronous'] = true;  //MLW action.asynchronous;
+      button['asynchronous'] = true;
       button.html.setAttribute('id', (CoreUtils.isUndefinedOrNull(action.actions) ? button.name : button.id));
       button.html.setAttribute('data-action', button.name);
       button.html.setAttribute('on-oj-action', (CoreUtils.isUndefinedOrNull(action.actions) ? '[[actionButtonClicked]]' : '[[launchActionMenu]]'));

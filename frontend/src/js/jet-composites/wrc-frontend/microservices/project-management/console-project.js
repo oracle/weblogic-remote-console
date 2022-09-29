@@ -72,6 +72,7 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
     }
 
     ConsoleProject.prototype = {
+      UNNAMED_PROJECT: '(Unnamed Project)',
       /**
        * Returns all of the data providers associated with the project
        * @returns {[*|DataProvider]}

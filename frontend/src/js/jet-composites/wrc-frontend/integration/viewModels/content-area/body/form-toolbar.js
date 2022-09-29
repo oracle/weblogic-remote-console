@@ -37,8 +37,14 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           'finish': { id: 'finish', iconFile: 'add-icon-blk_24x24', disabled: ko.observable(true),
             label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.finish.label')
           },
-          'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24',
+          'cancel': { id: 'cancel', iconFile: 'cancel-icon-blk_24x24', disabled: false, visible: ko.observable(false),
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
+          },
+          'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24', disabled: false, visible: ko.observable(false),
             label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.customize.label')
+          },
+          'customView': { id: 'customView', iconFile: 'custom-view-icon-blk_24x24', disabled: false, visible: ko.observable(false),
+            label: ko.observable()
           }
         },
         icons: {
@@ -103,6 +109,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       // sync-<state>-icon-blk_24x24.png is assigned to the
       // <img id="sync-icon">
       this.autoSyncEnabled = ko.observable(false);
+      this.showAutoSyncIcons = ko.observable(true);
 
       // Need initial values because form-toolbar.html has binding
       // expressions that reference changeManager.
@@ -126,20 +133,31 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         const isReadOnly = !pdjData.createForm && (pdjData.sliceForm?.readOnly === true || pdjData.sliceTable !== undefined);
         self.sliceReadOnly(isReadOnly);
 
-        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !['configuration','modeling','properties'].includes(self.perspective.id));
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !['configuration','modeling','properties','security'].includes(self.perspective.id));
         self.readonly(Runtime.isReadOnly());
+
+        const label = (ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write');
+        self.i18n.buttons.write.label(oj.Translations.getTranslatedString(`wrc-common.buttons.${label}.label`));
 
         let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
           self.readonly(newRO);
           self.i18n.menus.shoppingcart.discard.visible(!newRO);
           self.i18n.menus.shoppingcart.commit.visible(!newRO);
-          if (['modeling','properties','configuration'].indexOf(self.perspective.id) !== -1) {
+          if (['modeling','properties','configuration','security'].includes(self.perspective.id)) {
             setToolbarButtonsVisibility('save', (!newRO ? 'inline-flex' : 'none'));
           }
         });
 
-        const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write'}.label`);
-        self.i18n.buttons.write.label(label);
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.formSliceSelected.add((selectedSlice) => {
+          if (self.perspective.id === 'monitoring') {
+            const visible = (selectedSlice.current.selection() === 'Edit');
+            self.sliceReadOnly(!visible);
+            self.i18n.buttons.save.visible(visible);
+            this.resetIconsVisibleState(!visible);
+          }
+        });
 
         self.signalBindings.push(binding);
 
@@ -223,7 +241,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
               viewParams.onUnsavedChangesDecision()
                 .then(function (proceed) {
                   if (proceed) {
-                    ViewModelUtils.setCursorType('progress');
+                    ViewModelUtils.setPreloaderVisibility(true);
                     ChangeManager.commitChanges()
                       .then((changeManager) => {
                         self.changeManager(changeManager);
@@ -236,13 +254,13 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
                         ViewModelUtils.failureResponseDefaultHandling(response);
                       })
                       .finally(() => {
-                        ViewModelUtils.setCursorType('default');
+                        ViewModelUtils.setPreloaderVisibility(false);
                       });
                   }
                 }.bind(viewParams));
               break;
             case 'discard':
-              ViewModelUtils.setCursorType('progress');
+              ViewModelUtils.setPreloaderVisibility(true);
               ChangeManager.discardChanges()
                 .then((changeManager) => {
                   self.changeManager(changeManager);
@@ -255,7 +273,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
                   ViewModelUtils.failureResponseDefaultHandling(response);
                 })
                 .finally(() => {
-                  ViewModelUtils.setCursorType('default');
+                  ViewModelUtils.setPreloaderVisibility(false);
                 });
               break;
           }
@@ -263,16 +281,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
       }.bind(this);
 
+      this.resetIconsVisibleState = function(state) {
+        self.showAutoSyncIcons(state);
+      };
+
       this.isShoppingCartVisible = function() {
         // Default to false
         let visible = false;
-        if (ChangeManager.getMostRecent().supportsChanges) {
-          // The console extension is installed, but the
-          // shopping cart icon may be hidden for the
-          // current perspective.
-          visible = viewParams.isShoppingCartVisible();
-        }
-        else if (self.perspective.id === 'configuration') {
+        // The console extension is installed, but the
+        // shopping cart icon may be hidden for the
+        // current perspective.
+        if (self.perspective.id === 'configuration') {
           // The console extension isn't installed, but
           // there is one perspective where still showing
           // the shopping cart icon is required. That's
@@ -303,14 +322,18 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       }
 
       this.renderToolbarButtons = async function (eventType, hasNonReadOnlyFields) {
-        if ((['modeling','properties','configuration'].indexOf(self.perspective.id) !== -1) && !self.readonly()) {
+        let buttonId;
+        if ((['modeling','properties','configuration','security'].includes(self.perspective.id)) && !self.readonly()) {
           const renderingInfo = await viewParams.onToolbarRendering(eventType);
-          let buttonId = ((eventType === 'update' || renderingInfo.mode === 'save') && ['modeling','properties'].includes(self.perspective.id) ? 'write' : renderingInfo.mode);
+          buttonId = ((eventType === 'update' || renderingInfo.mode === 'save') && ['modeling','properties'].includes(self.perspective.id) ? 'write' : renderingInfo.mode);
 
           resetSaveButtonDisplayState([{id: buttonId}]);
 
           self.i18n.buttons.save.visible(buttonId !== 'write');
+          self.i18n.buttons.cancel.visible(buttonId === 'create');
           self.i18n.buttons.write.visible(buttonId !== 'create' && ['modeling','properties'].includes(self.perspective.id) && Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name);
+
+          toggleToolbarIconsVisibility(buttonId !== 'create');
 
           if (renderingInfo.kind === 'creatableOptionalSingleton') {
             if (eventType === 'create') {
@@ -379,6 +402,31 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
           if (eventType === 'delete') showBlankForm();
         }
+        else if (self.perspective.id === 'monitoring') {
+          const rdjData = viewParams.parentRouter?.data?.rdjData();
+          const pdjData = viewParams.parentRouter?.data?.pdjData();
+          if (CoreUtils.isNotUndefinedNorNull(rdjData?.dashboardCreateForm)) {
+            if (CoreUtils.isNotUndefinedNorNull(pdjData?.sliceTable?.readOnly)) {
+              self.i18n.buttons.customView.label(rdjData?.dashboardCreateForm?.label);
+              self.i18n.buttons.customView.visible(pdjData.sliceTable.readOnly);
+            }
+            else if (CoreUtils.isNotUndefinedNorNull(pdjData?.sliceForm?.readOnly)) {
+              self.i18n.buttons.customView.label(rdjData?.dashboardCreateForm?.label);
+              self.i18n.buttons.customView.visible(pdjData.sliceForm.readOnly);
+            }
+            else {
+              buttonId = 'save';
+            }
+          }
+          else if (rdjData?.navigation === 'Dashboards' && eventType === 'create') {
+            buttonId = 'create';
+          }
+          if (CoreUtils.isNotUndefinedNorNull(buttonId)) {
+            showCustomViewToolbarButtons(buttonId);
+          }
+        }
+
+        this.resetIconsVisibleState(self.perspective.id === 'monitoring');
 
       }.bind(this);
 
@@ -412,13 +460,21 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
       function toggleToolbarButtonsVisibility(visible) {
         const ele = document.getElementById('form-toolbar-buttons');
-        ele.style.display = (visible ? 'none' : 'inline-flex');
+        if (ele !== null) ele.style.display = (visible ? 'none' : 'inline-flex');
+      }
+
+      function toggleToolbarIconsVisibility(visible) {
+        let ele = document.getElementById('form-toolbar-icons');
+        if (ele !== null) ele.style.visibility = (visible ? 'visible' : 'hidden');
+        ele = document.getElementById('page-help-toolbar-icon');
+        if (ele !== null) ele.style.visibility = 'visible';
       }
 
       this.toggleHistoryClick = function (event) {
+        const withHistoryVisible = viewParams.onBeanPathHistoryToggled(!self.showBeanPathHistory());
         // Call function in form.js assigned to the
         // onBeanPathHistoryToggled field in viewParams
-        self.showBeanPathHistory(viewParams.onBeanPathHistoryToggled(!self.showBeanPathHistory()));
+        self.showBeanPathHistory(withHistoryVisible);
       };
 
       this.landingPageClick = function (event) {
@@ -502,10 +558,33 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         self.autoSyncEnabled(false);
       }
 
+      function showCustomViewToolbarButtons(buttonId) {
+        resetSaveButtonDisplayState([{id: buttonId}]);
+        self.i18n.buttons.save.visible(buttonId === 'create');
+        self.i18n.buttons.cancel.visible(buttonId === 'create');
+        toggleToolbarIconsVisibility(buttonId !== 'create');
+      }
+
+      function supportsCustomViewCreation() {
+        const rdjData = viewParams.parentRouter.data.rdjData();
+        return (rdjData.navigation === 'Dashboards');
+      }
+
       this.newAction = function (event) {
         self.toolbarButton = 'new';
         setToolbarButtonsVisibility('new', 'none');
         viewParams.newAction(event);
+      };
+
+      this.cancelAction = function (event) {
+        viewParams.cancelAction('cancel');
+        if (supportsCustomViewCreation()) {
+          self.i18n.buttons.save.visible(false);
+          self.i18n.buttons.cancel.visible(false);
+          toggleToolbarIconsVisibility(true);
+          self.i18n.buttons.customView.visible(true);
+          self.sliceReadOnly(false);
+        }
       };
 
       this.backAction = function (event) {
@@ -536,6 +615,19 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         // as the delete uri.
         const uri = viewParams.parentRouter.data.rdjData().self.resourceData;
         viewParams.deleteAction(uri);
+      };
+
+      this.customViewAction = (event) => {
+        if (self.showBeanPathHistory()) {
+          const withHistoryVisible = viewParams.onBeanPathHistoryToggled(false);
+          self.showBeanPathHistory(withHistoryVisible);
+        }
+        const eleTabs = document.getElementById('cfe-form-tabstrip-container');
+        if (eleTabs !== null) eleTabs.style.display = 'none';
+        showCustomViewToolbarButtons('create');
+        self.i18n.buttons.customView.visible(false);
+        self.sliceReadOnly(false);
+        viewParams.onCustomViewButtonClicked(event);
       };
 
       this.onSave = ko.observable(

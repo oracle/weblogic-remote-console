@@ -54,6 +54,7 @@ public class SimpleSearchResponseMapper extends ResponseMapper<String> {
     if (Root.EDIT_NAME.equals(root)
          || Root.SERVER_CONFIGURATION_NAME.equals(root)
          || Root.COMPOSITE_CONFIGURATION_NAME.equals(root)
+         || Root.SECURITY_DATA_NAME.equals(root)
     ) {
       return "Domain";
     }

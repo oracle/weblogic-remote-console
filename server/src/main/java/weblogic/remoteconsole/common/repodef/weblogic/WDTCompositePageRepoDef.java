@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -15,7 +15,7 @@ public class WDTCompositePageRepoDef extends WebLogicPageRepoDef {
       Root.COMPOSITE_CONFIGURATION_NAME,
       mbeansVersion,
       mbeansVersion.findOrCreate(WDTCompositeBeanRepoDef.class),
-      Root.CONFIGURATION_ROOT + "MBean"
+      Root.CONFIGURATION_ROOT
     );
   }
 }
