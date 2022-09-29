@@ -5,6 +5,8 @@ package weblogic.remoteconsole.server;
 
 import java.util.logging.Logger;
 
+import weblogic.remoteconsole.server.repo.InvocationContext;
+
 /**
  * This abstract class helps manage the shared persistent data of a feature
  * across the providers that support the feature.
@@ -15,23 +17,23 @@ public abstract class PersistableFeature<T> {
 
   private PersistenceManager<T>.State state = null;
 
-  protected void refresh() {
+  protected void refresh(InvocationContext ic) {
     LOGGER.finest("refresh");
     PersistenceManager<T>.State newState = getPersistenceManager().get();
-    if (state == null || state.getTimeStamp() != newState.getTimeStamp()) {
+    if (newState != state) {
       LOGGER.finest("reloading");
       state = newState;
       try {
-        fromPersistedData(state.getData());
+        fromPersistedData(ic, state.getData());
       } catch (BadFormatException e) {
         getPersistenceManager().reportBadFormat(e.getMessage());
       }
     }
   }
 
-  protected void update() {
+  protected void update(InvocationContext ic) {
     LOGGER.finest("update");
-    getPersistenceManager().set(toPersistedData());
+    getPersistenceManager().set(toPersistedData(ic));
   }
 
   // Return the persistence manager for this feature for the entire CBE.
@@ -39,11 +41,11 @@ public abstract class PersistableFeature<T> {
 
   // Update whatever this feature stores in memory to match what
   // has been persisted for the entire CBE for this feature.
-  protected abstract void fromPersistedData(T data);
+  protected abstract void fromPersistedData(InvocationContext ic, T data);
 
   // Convert whatever this feature stores in memory to the POJO
   // that should be persisted for the entire CBE for this feature.
-  protected abstract T toPersistedData();
+  protected abstract T toPersistedData(InvocationContext ic);
 
   public static class BadFormatException extends RuntimeException {
     public BadFormatException(String message) {

@@ -151,15 +151,6 @@ class WebLogicYamlReader extends YamlReader {
   }
 
   @Override
-  public NavTreeDefSource getRootNavTreeDefSource(String type) {
-    return getTypeYamlReader(type).getRootNavTreeDefSource(type);
-  }
-
-  NavTreeDefSource getDefaultRootNavTreeDefSource(String type) {
-    return super.getRootNavTreeDefSource(type);
-  }
-
-  @Override
   public LinksDefSource getLinksDefSource(BeanTypeDef typeDef) {
     return getTypeYamlReader(typeDef).getLinksDefSource(typeDef);
   }

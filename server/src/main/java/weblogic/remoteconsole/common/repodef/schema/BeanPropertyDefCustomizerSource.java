@@ -42,7 +42,8 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
   private Value<BeanPropertyPresentationDefSource> presentation = new Value<>(new BeanPropertyPresentationDefSource());
   private Value<MBeanAttributeDefSource> mbeanAttribute = new Value<>(new MBeanAttributeDefSource());
   private Value<BeanPropertyDefSource> definition = new Value<>(null);
-  private BooleanValue dontAllowModelTokens = new BooleanValue();
+  private BooleanValue supportsModelTokens = new BooleanValue(true);
+  private BooleanValue dontReturnIfHiddenColumn = new BooleanValue();
 
   public void merge(BeanPropertyDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
@@ -64,7 +65,8 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
     presentation.merge(from.presentation, fromContainedBeanPath);
     mbeanAttribute.merge(from.mbeanAttribute, fromContainedBeanPath);
     definition.merge(from.definition, fromContainedBeanPath);
-    dontAllowModelTokens.merge(from.dontAllowModelTokens, fromContainedBeanPath);
+    supportsModelTokens.merge(from.supportsModelTokens, fromContainedBeanPath);
+    dontReturnIfHiddenColumn.merge(from.dontReturnIfHiddenColumn, fromContainedBeanPath);
     mergeHelp(from, fromContainedBeanPath);
     mergeUsedIf(from, fromContainedBeanPath);
   }
@@ -362,13 +364,27 @@ public class BeanPropertyDefCustomizerSource extends BeanValueDefCustomizerSourc
     definition.setValue(value);
   }
 
-  // Whether this property cannot be set to a model token
-  public boolean isDontAllowModelTokens() {
-    return dontAllowModelTokens.getValue();
+  // Whether this property can be set to a model token
+  public boolean isSupportsModelTokens() {
+    return supportsModelTokens.getValue();
   }
 
-  public void setDontAllowModelTokens(boolean val) {
-    dontAllowModelTokens.setValue(val);
+  public void setSupportsModelTokens(boolean val) {
+    supportsModelTokens.setValue(val);
+  }
+
+  public boolean isSupportsModelTokensSpecifiedInYaml() {
+    return supportsModelTokens.isSpecifiedInYaml();
+  }
+
+  // Whether this property shouldn't be returned if it's being displayed
+  // in a hidden column on the page currently.
+  public boolean isDontReturnIfHiddenColumn() {
+    return dontReturnIfHiddenColumn.getValue();
+  }
+
+  public void setDontReturnIfHiddenColumn(boolean val) {
+    dontReturnIfHiddenColumn.setValue(val);
   }
 
   public String toString() {

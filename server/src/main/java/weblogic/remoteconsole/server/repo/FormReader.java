@@ -153,8 +153,13 @@ class FormReader extends PageReader {
   ) {
     BeanPropertyCustomizerDef customizerDef = propertyDef.getGetOptionsCustomizerDef();
     boolean argsIncludeIsSet = false;
-    List<Object> args = getArguments(customizerDef, beanResults, searchResults, argsIncludeIsSet); 
-    Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), args);
+    Response<List<Object>> argsResponse = 
+      getArguments(customizerDef, beanResults, searchResults, argsIncludeIsSet);
+    if (!argsResponse.isSuccess()) {
+      Response<List<Option>> errorResponse = new Response<>();
+      return errorResponse.copyUnsuccessfulResponse(argsResponse);
+    }
+    Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), argsResponse.getResults());
     @SuppressWarnings("unchecked")
     Response<List<Option>> customizerResponse = (Response<List<Option>>)rtn;
     return customizerResponse;

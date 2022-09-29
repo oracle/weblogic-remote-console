@@ -272,22 +272,28 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
        * @param {HTMLElement} event - The event associated with the chosen kebab menu item
        * @param {*} rdjData - RDJ data returned from the CBE
        * @param {*} viewParams - Parameters used when creating the FormViewModel instance.
+       * @param {function} canExitCallback
        * @returns {{name: string,path: string|null, action: string|null, breadcrumbs?: string, property?: {name: string, label: string}}}
        */
-      handleMenuItemSelected: (event, rdjData, viewParams) => {
+      handleMenuItemSelected: (event, rdjData, viewParams, canExitCallback) => {
         const optionsSourceConfig = getOptionsSourceConfig(event, rdjData);
         PageDefinitionUtils.setPlacementRouterParameter(viewParams.parentRouter, 'detached');
 
         switch (optionsSourceConfig.action) {
           case 'view':
-            viewParams.parentRouter.go(`/${viewParams.perspective.id}/${encodeURIComponent(optionsSourceConfig.path)}`)
-              .then(result => {
-                PageDefinitionUtils.setPlacementRouterParameter(viewParams.parentRouter, 'embedded');
-                if (CoreUtils.isNotUndefinedNorNull(result) && CoreUtils.isNotUndefinedNorNull(result.hasChanged) && result.hasChanged) {
-                  // router.go() was successful, so dispatch signals
-                  // regarding the navtree state.
-                  viewParams.signaling.navtreeSelectionCleared.dispatch();
-                  viewParams.signaling.navtreeUpdated.dispatch({path: optionsSourceConfig.path});
+            canExitCallback('exit')
+              .then(reply => {
+                if (reply) {
+                  viewParams.parentRouter.go(`/${viewParams.perspective.id}/${encodeURIComponent(optionsSourceConfig.path)}`)
+                    .then(result => {
+                      PageDefinitionUtils.setPlacementRouterParameter(viewParams.parentRouter, 'embedded');
+                      if (CoreUtils.isNotUndefinedNorNull(result) && CoreUtils.isNotUndefinedNorNull(result.hasChanged) && result.hasChanged) {
+                        // router.go() was successful, so dispatch signals
+                        // regarding the navtree state.
+                        viewParams.signaling.navtreeSelectionCleared.dispatch();
+                        viewParams.signaling.navtreeUpdated.dispatch({path: optionsSourceConfig.path});
+                      }
+                    });
                 }
               });
             break;
@@ -298,13 +304,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
             if (propertyValue !== '') {
               optionsSourceConfig['path'] = propertyValue.resourceData;
             }
-            viewParams.parentRouter.go(`/${viewParams.perspective.id}/${encodeURIComponent(optionsSourceConfig.path)}`)
-              .then(result => {
-                if (CoreUtils.isNotUndefinedNorNull(result) && CoreUtils.isNotUndefinedNorNull(result.hasChanged) && result.hasChanged) {
-                  // router.go() was successful, so dispatch signals
-                  // regarding the navtree state.
-                  viewParams.signaling.navtreeSelectionCleared.dispatch();
-                  viewParams.signaling.navtreeUpdated.dispatch({path: optionsSourceConfig.path});
+            canExitCallback('exit')
+              .then(reply => {
+                if (reply) {
+                  viewParams.parentRouter.go(`/${viewParams.perspective.id}/${encodeURIComponent(optionsSourceConfig.path)}`)
+                    .then(result => {
+                      if (CoreUtils.isNotUndefinedNorNull(result) && CoreUtils.isNotUndefinedNorNull(result.hasChanged) && result.hasChanged) {
+                        // router.go() was successful, so dispatch signals
+                        // regarding the navtree state.
+                        viewParams.signaling.navtreeSelectionCleared.dispatch();
+                        viewParams.signaling.navtreeUpdated.dispatch({path: optionsSourceConfig.path});
+                      }
+                    });
                 }
               });
             break;

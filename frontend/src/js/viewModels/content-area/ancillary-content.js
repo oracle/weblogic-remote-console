@@ -53,6 +53,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
       this.tabModuleConfig = ko.observable({ view: [], viewModel: null });
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory('ancillary');
 
+      this.beanTreeName = 'none';
       // Declare module-scoped variable for storing
       // bindings to "add" signal handlers.
       this.signalBindings = [];
@@ -85,24 +86,45 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
-          // Don't show "Shopping Cart" tab in tabstrip, if WebLogic extension
-          // is not installed.
-          let shoppingCartVisible = ChangeManager.getMostRecent()['supportsChanges'];
-
-          // Set visibility of "Shopping Cart" tab based on the value
-          // of shoppingCartVisible variable.
-          shoppingCartVisible = shoppingCartVisible && showTabStripTab(ChangeManager.Entity.SHOPPING_CART.name, dataProvider.type);
-          const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === ChangeManager.Entity.SHOPPING_CART.name);
-          tabNode.visible(shoppingCartVisible);
-
-          showTabStripContent('shoppingcart', shoppingCartVisible);
+        binding = viewParams.signaling.navtreeSelectionChanged.add((source, node) => {
+          const currentlyVisible = self.ancillaryContentAreaToggleVisible();
+          if (currentlyVisible) setAncillaryContentAreaVisibility(false, false);
         });
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
-          showTabStripContent('shoppingcart', false);
+        binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
+          self.canExitCallback = undefined;
+          const shoppingCartVisible = (self.beanTreeName === 'edit' && (dataProvider.type === 'adminserver'));
+          const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === 'shoppingcart');
+          tabNode.visible(shoppingCartVisible);
+
+          setTabModuleConfig('dataproviders', self.perspectiveMemory.tabstrip.tab['dataproviders'].cachedState);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderRemoved.add((dataProvider) => {
+          showTabStripContent('shoppingcart', false, false);
+          showTabStripContent('dataproviders', true, true);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.beanTreeChanged.add(newBeanTree => {
+          if (newBeanTree.type !== 'home') {
+            self.beanTreeName = newBeanTree.name;
+            const shoppingCartVisible = (newBeanTree.name === 'edit' && (newBeanTree.type !== 'modeling'));
+            const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === 'shoppingcart');
+            tabNode.visible(shoppingCartVisible);
+            showTabStripContent('shoppingcart', shoppingCartVisible, false);
+          }
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
+          self.canExitCallback = exitFormCallback;
         });
 
         self.signalBindings.push(binding);
@@ -148,14 +170,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
         }
       };
 
-      function showTabStripTab(tabId, providerType) {
-        let rtnval = false;
-        if (tabId === ChangeManager.Entity.SHOPPING_CART.name) {
-          rtnval = !['model','modelComposite','properties'].includes(providerType);
-        }
-        return rtnval;
-      }
-
       function setTabModuleTabCachedState(tabId) {
         let changingTabModule = true;
         const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === tabId);
@@ -177,6 +191,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
             parentRouter: viewParams.parentRouter,
             signaling: viewParams.signaling,
             cachedState: cachedState,
+            canExitCallback: self.canExitCallback,
             onCachedStateChanged: changedTabModuleTabCachedState,
             onTabStripContentChanged: changedTabStripContent,
             onTabStripContentVisible: setAncillaryContentAreaVisibility,
@@ -217,22 +232,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
 
       function showAncillaryAreaSlideUp() {
         if (self.ancillaryContentAreaToggleVisible()) {
-          const ele = document.getElementById('slideup-header');
-          if (ele !== null) {
-            let minHeight;
-            let toggleState = ele.getAttribute('data-state');
+          const slideupHeader = document.getElementById('slideup-header');
+          if (slideupHeader !== null) {
+            let toggleState = slideupHeader.getAttribute('data-state');
             if (!self.ancillaryContentAreaVisible()) toggleState = 'expanded';
+            const slideupPopup = document.getElementById('slideup-popup');
             switch (toggleState) {
-              case 'collapsed':
-                ele.setAttribute('data-state', 'expanded');
-                minHeight = parseInt(ViewModelUtils.getCustomCssProperty('slideup-popup-offset-top'), 10);
-                ViewModelUtils.setCustomCssProperty('slideup-popup-calc-min-height', `${minHeight}px`);
-                break;
-              case 'expanded':
-                ele.setAttribute('data-state', 'collapsed');
-                minHeight = $(window).height() - parseInt(ViewModelUtils.getCustomCssProperty('slideup-popup-min-height'), 10);
-                ViewModelUtils.setCustomCssProperty('slideup-popup-calc-min-height', `${minHeight}px`);
-                break;
+              case 'collapsed': {
+                  slideupHeader.setAttribute('data-state', 'expanded');
+                  const offsetTop = parseInt(ViewModelUtils.getCustomCssProperty('slideup-popup-offset-top'), 10);
+                  slideupPopup.style.minHeight = `calc(100vh - ${offsetTop}px`;
+                  break;
+                }
+              case 'expanded': {
+                  slideupHeader.setAttribute('data-state', 'collapsed');
+                  slideupPopup.style.minHeight = 'unset';
+                  break;
+                }
             }
           }
         }
@@ -242,8 +258,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
         setAncillaryContentAreaVisibility(!self.ancillaryContentAreaVisible());
       };
 
-      function setAncillaryContentAreaVisibility(stateFlag){
-        self.ancillaryContentAreaVisible(stateFlag);
+      function setAncillaryContentAreaVisibility(stateFlag, autoPopup=true){
+        self.ancillaryContentAreaVisible(stateFlag && autoPopup);
         showAncillaryAreaSlideUp();
       }
 
@@ -267,12 +283,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
        * @param {boolean} visibility
        * @private
        */
-      function showTabStripContent(tabId, visibility){
+      function showTabStripContent(tabId, visibility, autoPopup=true){
         computeAncillaryContentAreaToggleVisible()
           .then((visible) => {
             self.ancillaryContentAreaToggleVisible(visible);
             const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === tabId);
-            if (!tabNode.disabled && visibility) {
+            if (!tabNode.disabled && visibility && autoPopup) {
               setTabModuleTabCachedState(tabNode.id);
               setTabModuleConfig(tabNode.id, self.perspectiveMemory.tabstrip.tab[tabNode.id].cachedState);
             }
@@ -280,7 +296,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
               setTabModuleTabCachedState('dataproviders');
               setTabModuleConfig('dataproviders', self.perspectiveMemory.tabstrip.tab['dataproviders'].cachedState);
             }
-            setAncillaryContentAreaVisibility(visibility);
+            setAncillaryContentAreaVisibility(visibility, autoPopup);
           })
           .catch(response => {
             ViewModelUtils.failureResponseDefaultHandling(response);
@@ -294,10 +310,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
             return (tabNodes.length > 0);
           }
 
-          ChangeManager.getLockState()
+          ChangeManager.getLockState(self.beanTreeName)
             .then((data) => {
               const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === ChangeManager.Entity.SHOPPING_CART.name);
-              tabNode.visible((data.changeManager.isLockOwner && data.changeManager.hasChanges && data.changeManager.supportsChanges));
+              tabNode.visible((data.changeManager.isLockOwner && data.changeManager.hasChanges));
               return hasVisiblityEnabledTabs();
             })
             .then(visible => {

@@ -34,7 +34,6 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
   // These constants match the values the caller can use.
   //
   // I'd prefer to use an enum, but that's tricky with @QueryParam and @DefaultValue annotations
-  private static final String UPDATE = "update";
   private static final String CREATE = "create";
 
   /**
@@ -60,15 +59,8 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
     } else {
       throw
         new AssertionError(
-          "Invalid view:"
-            + view
-            + ", singleton="
-            + getPageRepoRelativeUri()
-            + ", valid views are "
-            + VIEW_SLICE
-            + " and "
-            + VIEW_CREATE_FORM
-            + "."
+          "Invalid view:" + view + ", singleton=" + getPageRepoRelativeUri() + "."
+          + " Valid views are " + VIEW_SLICE + " and " + VIEW_CREATE_FORM + "."
         );
     }
   }
@@ -76,6 +68,7 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
   /**
    * Handles the JAXRS POST method for this singleton.
    * <p>
+   * If the action is customizeTable, it updates the slice table's customizations.
    * If action is update, it modifies a slice of the singleton.
    * If action is create, it creates the singleton.
    */
@@ -87,6 +80,10 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
     @QueryParam("slice") @DefaultValue("") String slice,
     JsonObject requestBody
   ) {
+    if (CUSTOMIZE_TABLE.equals(action)) {
+      setSlicePagePath(slice);
+      return customizeTable(requestBody);      
+    }
     if (UPDATE.equals(action)) {
       setSlicePagePath(slice);
       return updateSliceForm(requestBody);
@@ -96,15 +93,8 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
     } else {
       throw
         new AssertionError(
-          "Invalid action:"
-          + action
-          + ", singleton="
-          + getPageRepoRelativeUri()
-          + ", valid dataActions are "
-          + UPDATE
-          + " and "
-          + CREATE
-          + "."
+          "Invalid action:" + action + ", singleton=" + getPageRepoRelativeUri() + "."
+          + " Valid actions are " + CUSTOMIZE_TABLE + ", " + UPDATE + " and " + CREATE + "."
         );
     }
   }

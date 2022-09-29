@@ -58,7 +58,8 @@ define(
       BeanTreeType: Object.freeze({
         EDIT: {name: 'edit'},
         SERVER_CONFIG: {name: 'serverConfig'},
-        DOMAIN_RUNTIME: {name: 'domainRuntime'}
+        DOMAIN_RUNTIME: {name: 'domainRuntime'},
+        SECURITY_DATA: {name: 'securityData'}
       }),
       beanTreeTypeFromName: function (name) {
         return Object.values(this.BeanTreeType).find(type => type.name === name);

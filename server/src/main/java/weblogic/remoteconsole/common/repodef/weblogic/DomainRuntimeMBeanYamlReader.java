@@ -17,8 +17,8 @@ import weblogic.remoteconsole.common.utils.StringUtils;
  * 
  * It starts off with the harvested and hand-coded yaml for DomainRuntimeMBean and:
  * 
- * 1) Adds CustomViews and RecentSearches children that hold collections of
- *    fabricated beans for custom views and recent simple search results.
+ * 1) Adds 'Dashboards' and 'RecentSearches' children that hold collections of
+ *    fabricated beans for dashboards and recent simple search results.
  *
  * 2) Adds a CombinedServerRuntimes child that holds a collection of
  *    fabricated beans that pull together the ServerLifeCycleRuntime and
@@ -38,7 +38,7 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     AggregatedRuntimeMBeanNameHandler.INSTANCE;
 
   private static final String SERVER_RUNTIME_MBEAN = "ServerRuntimeMBean";
-  private static final String CUSTOM_VIEWS = "CustomViews";
+  private static final String DASHBOARDS = "Dashboards";
 
   DomainRuntimeMBeanYamlReader(WebLogicYamlReader yamlReader) {
     super(yamlReader);
@@ -57,14 +57,14 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       property.setDescriptionHTML("<p>Recent search results.</p>");
       source.getProperties().add(property);
     }
-    // Add the fabricated collection of beans for custom views
+    // Add the fabricated collection of beans for dashboards
     {
       BeanPropertyDefSource property = new BeanPropertyDefSource();
-      property.setName(CUSTOM_VIEWS);
-      property.setType("weblogic.management.CustomViewMBean");
+      property.setName(DASHBOARDS);
+      property.setType("weblogic.management.DashboardMBean");
       property.setArray(true);
       property.setRelationship("containment");
-      property.setDescriptionHTML("<p>Custom views.</p>");
+      property.setDescriptionHTML("<p>Dashboards.</p>");
       source.getProperties().add(property);
     }
     // Add the fabricated collection of beans that merge ServerLifeCycleRuntimeMBean and ServerRuntimeMBean
@@ -94,11 +94,12 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   @Override
   BeanTypeDefCustomizerSource getBeanTypeDefCustomizerSource(BeanTypeDef typeDef) {
     BeanTypeDefCustomizerSource domainRuntimeCustomizerSource = super.getBeanTypeDefCustomizerSource(typeDef);
-    // Force the CustomViews child to be deletable:
+    // Force the Dashboards child to be deletable:
     {
       BeanChildDefCustomizerSource childCustomizer = new BeanChildDefCustomizerSource();
-      childCustomizer.setName(CUSTOM_VIEWS);
+      childCustomizer.setName(DASHBOARDS);
       childCustomizer.setDeletable(true);
+      childCustomizer.setLabel("Dashboards");
       domainRuntimeCustomizerSource.addChild(childCustomizer);
     }
     // The names of the aggregated properties added to the DomainRuntimeMBean to

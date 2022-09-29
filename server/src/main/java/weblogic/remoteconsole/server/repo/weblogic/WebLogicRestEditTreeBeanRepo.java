@@ -3,7 +3,6 @@
 
 package weblogic.remoteconsole.server.repo.weblogic;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -35,14 +34,9 @@ import weblogic.remoteconsole.server.repo.Value;
  */
 public class WebLogicRestEditTreeBeanRepo extends WebLogicRestBeanRepo implements ChangeManagerBeanRepo { 
   private static final Logger LOGGER = Logger.getLogger(WebLogicRestEditTreeBeanRepo.class.getName());
-  private static Map<String,String> rootBeanNameToWebLogicRestTreeNameMap = new HashMap<>();
   private static final String EDIT = "edit";
   private static final Path EDIT_PATH = new Path(EDIT);
   private static final Path CHANGE_MANAGER_PATH = EDIT_PATH.childPath("changeManager");
-
-  static {
-    rootBeanNameToWebLogicRestTreeNameMap.put("Domain", EDIT);
-  }
 
   public static BeanRepo getInstance(final InvocationContext ic) {
     return ic.getPageRepo().getBeanRepo();
@@ -51,7 +45,9 @@ public class WebLogicRestEditTreeBeanRepo extends WebLogicRestBeanRepo implement
   public WebLogicRestEditTreeBeanRepo(final WebLogicMBeansVersion mbeansVersion) {
     super(
       mbeansVersion.findOrCreate(WebLogicEditTreeBeanRepoDef.class),
-      rootBeanNameToWebLogicRestTreeNameMap
+      Map.of(
+        "Domain", EDIT
+      )
     );
   }
 
@@ -146,7 +142,7 @@ public class WebLogicRestEditTreeBeanRepo extends WebLogicRestBeanRepo implement
       WebLogicRestInvoker.delete(
         ic,
         EDIT_PATH.childPath(getTreeRelativeRestPath(beanTreePath)),
-        false, // savehanges,
+        false, // saveChanges,
         beanTreePath.isAsyncDelete()
       );
     if (!deleteResponse.isSuccess()) {

@@ -33,12 +33,28 @@ class CustomFormDef {
     propertyDefs = val;
   }
   
+  List<PagePropertyDef> getAllPropertyDefs() {
+    List<PagePropertyDef> allDefs = new ArrayList<>(propertyDefs);
+    for (FormSectionDef sectionDef : sectionDefs) {
+      allDefs.addAll(sectionDef.getAllPropertyDefs());
+    }
+    return allDefs;
+  }
+
   List<FormSectionDef> getSectionDefs() {
     return sectionDefs;
   }
 
   void setSectionDefs(List<FormSectionDef> val) {
     sectionDefs = val;
+  }
+
+  List<FormSectionDef> getAllSectionDefs() {
+    List<FormSectionDef> allDefs = new ArrayList<>(sectionDefs);
+    for (FormSectionDef sectionDef : sectionDefs) {
+      allDefs.addAll(sectionDef.getAllSectionDefs());
+    }
+    return allDefs;
   }
 
   PagePath getPagePath() {

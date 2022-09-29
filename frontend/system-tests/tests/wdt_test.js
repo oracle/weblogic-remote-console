@@ -52,64 +52,72 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
             await driver.sleep(4800);
 
             console.log("Click WDT Model Tree");
-            await driver.findElement(By.xpath("//*[@id=\"modeling\"]/img")).click();
+            await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
             await driver.sleep(2400);
             console.log("Click Navtree Environment");
-            await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
             await driver.sleep(2400);
             console.log("Click Navtree Server");
-            await driver.findElement(By.xpath("//span[contains(.,\'Servers\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Servers')]")).click();
             await driver.sleep(4800)
             console.log("Click Navtree AdminServer");
-            await driver.findElement(By.xpath("//span[contains(.,\'AdminServer\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'AdminServer')]")).click();
             await driver.sleep(4800);
 
             console.log("Click Navtree Cluster");
-            await driver.findElement(By.xpath("//span[contains(.,\'Clusters\')]")).click()
+            await driver.findElement(By.xpath("//span[contains(.,'Clusters')]")).click()
             await driver.sleep(2400);
             console.log("Click Cluster New button");
             await driver.findElement(
-                By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img")).click();
+                By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
             await driver.sleep(2400);
             console.log("Enter testCLuster-1 name");
-            await driver.findElement(By.xpath("//input[@id=\'Name|input\']")).sendKeys("testCluster-1");
+            await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys("testCluster-1");
             await driver.sleep(4800);
 
             console.log("Click Navtree Machines");
-            await driver.findElement(By.xpath("//span[contains(.,\'Machines\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Machines')]")).click();
             await driver.sleep(2400);
             console.log("Click Machine New button");
-            element = driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img"));
+            element = driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             element.click();
             console.log("Enter testMachine-1 name");
             await driver.sleep(2400);
-            await driver.findElement(By.xpath("//oj-input-text[@id=\'Name\']/div/div/input")).sendKeys("testMachine-1");
+            await driver.findElement(By.xpath("//oj-input-text[@id='Name']/div/div/input")).sendKeys("testMachine-1");
             await driver.sleep(2400);
-            await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.save.id]]\']/button/div/span/img")).click();
+            await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span/img")).click();
             await driver.sleep(4800);
 
             console.log("Click expand Kiosk menu...");
-            await driver.findElement(By.xpath("//*[@id=\'slideup-toggle\']/img")).click()
+            await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click()
             await driver.sleep(4800);
             await driver.findElement(By.xpath("//div/ul/li[3]/a/span[2]")).click();
             await driver.sleep(4800);
             console.log("Click WDT Model Tree");
-            await driver.findElement(By.xpath("//*[@id=\"modeling\"]/img")).click();
+            await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
             await driver.sleep(4800);
-            console.log("Click Landing Page Services");
-            await driver.findElement(By.id("Services")).click();
+            console.log("Click Landing Page Image");
+            await driver.findElement(By.xpath("//*[@id=\"landing-page-icon\"]")).click();
+            await driver.sleep(4800);
+            console.log("Click Services Landing Page");
+            element = await driver.findElement(By.id("Services"));
+            //element = driver.findElement(By.xpath("//span[@class='oj-navigationlist-item-label' and text()='Services']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            element.click();
             await driver.sleep(4800);
             console.log("Click Landing Page Services -> JMS Servers");
-            await driver.findElement(By.xpath("//span[contains(.,\'JMS Servers\')]")).click();
+            element = await driver.findElement(By.xpath("//span[contains(.,'JMS Servers')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            element.click();
             await driver.sleep(2400);
             console.log("Click JMSServer New button");
             await driver.findElement(
                 By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img")).click();
             await driver.sleep(2400);
             console.log("Enter testJMSServer-1 name");
-            await driver.findElement(By.xpath("//input[@id=\'Name|input\']")).click();
-            await driver.findElement(By.xpath("//input[@id=\'Name|input\']")).sendKeys("testJMSServer-1");
+            await driver.findElement(By.xpath("//input[@id='Name|input']")).click();
+            await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys("testJMSServer-1");
             await driver.sleep(4800);
 
             console.log("TEST PASS ");
@@ -139,7 +147,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await admin.selectTree(driver,"baseDomainModel", baseDomModelFile);
                 await driver.sleep(4800);
                 console.log("Click To expand Kiosk");
-                await driver.findElement(By.xpath("//img[@title=\'Expand\']")).click();
+                await driver.findElement(By.xpath("//img[@title='Expand']")).click();
                 await driver.sleep(4800);
                 await admin.selectTree(driver,"wdtTemplateModel", wdtTempModelFile);
                 await driver.sleep(4800);
@@ -222,6 +230,18 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Click Add \(+\) symbol to add new property");
                 await driver.findElement(By.css(".oj-ux-ico-plus")).click();
                 await driver.sleep(600);
+                try {
+                    element = driver.findElement(By.xpath("//oj-button[@id='dlgNoBtn']"));
+                    await driver.sleep(600);
+                    if (element.isDisplayed() && element.isEnabled()) {
+                        console.log("Click No button");
+                        await element.click();
+                        await driver.sleep(600);
+                    }
+                }
+                catch (e) {
+                    console.log("Changed Not Download dialog doesn't come up");
+                }
                 console.log("Click default new-property-1");
                 await driver.findElement(By.xpath("//td[contains(.,\'new-property-1\')]")).click();
                 {
@@ -239,10 +259,21 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Enter "+user+" name");
                 await driver.findElement(By.xpath("//td[2]/oj-input-text/div/div/input")).sendKeys(user);
                 await driver.sleep(600);
-
                 console.log("Click Add \(+\) symbol to add another property");
                 await driver.findElement(By.css(".oj-ux-ico-plus")).click();
                 await driver.sleep(600);
+                try {
+                    element = driver.findElement(By.xpath("//oj-button[@id='dlgNoBtn']"));
+                    await driver.sleep(600);
+                    if (element.isDisplayed() && element.isEnabled()) {
+                        console.log("Click No button");
+                        await element.click();
+                        await driver.sleep(600);
+                    }
+                }
+                catch (e) {
+                    console.log("Changed Not Download dialog doesn't come up");
+                }
                 console.log("Click default new-property-1");
                 await driver.findElement(By.xpath("//td[contains(.,\'new-property-1\')]")).click();
                 {
@@ -260,10 +291,21 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Enter "+password+" password");
                 await driver.findElement(By.xpath("//td[2]/oj-input-text/div/div/input")).sendKeys(password);
                 await driver.sleep(600);
-
                 console.log("Click Add \(+\) symbol to add another property");
                 await driver.findElement(By.css(".oj-ux-ico-plus")).click();
                 await driver.sleep(600);
+                try {
+                    element = driver.findElement(By.xpath("//oj-button[@id='dlgNoBtn']"));
+                    await driver.sleep(600);
+                    if (element.isDisplayed() && element.isEnabled()) {
+                        console.log("Click No button");
+                        await element.click();
+                        await driver.sleep(600);
+                    }
+                }
+                catch (e) {
+                    console.log("Changed Not Download dialog doesn't come up");
+                }
                 console.log("Click default new-property-1");
                 await driver.findElement(By.xpath("//td[contains(.,\'new-property-1\')]")).click();
                 {
@@ -699,18 +741,18 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
 
                 console.log("Click Security EmbeddedLDAP Tab");
                 await driver.findElement(By.xpath("//div[2]/oj-conveyor-belt/div[4]/div/oj-tab-bar/div/div/ul/li[5]/a/span")).click();
-                await driver.sleep(2800);
-                console.log("Click Yes button");
-                await driver.findElement(By.xpath("//oj-button[@id=\'dlgYesBtn\']/button/div")).click();
+                //await driver.sleep(2800);
+                //console.log("Click Yes button");
+                //await driver.findElement(By.xpath("//oj-button[@id=\'dlgYesBtn\']/button/div")).click();
                 await driver.sleep(2400);
                 console.log("Enter EmbeddedLDAP = Welcome1");
                 await driver.findElement(By.id("EmbeddedLDAP_Credential|input")).sendKeys("Welcome1");
                 await driver.sleep(2800);
                 console.log("Click Security SSL Certificate Revocation Checking Tab");
                 await driver.findElement(By.xpath("//div[2]/oj-conveyor-belt/div[4]/div/oj-tab-bar/div/div/ul/li[7]/a/span")).click();
-                await driver.sleep(2800);
-                console.log("Click Yes button");
-                await driver.findElement(By.xpath("//oj-button[@id=\'dlgYesBtn\']/button/div")).click();
+                //await driver.sleep(2800);
+                //console.log("Click Yes button");
+                //await driver.findElement(By.xpath("//oj-button[@id=\'dlgYesBtn\']/button/div")).click();
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"SecurityConfiguration_CertRevoc_CheckingEnabled",3);
                 await driver.sleep(2400);
@@ -782,17 +824,23 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(2800);
                 console.log("Enter MaxConcurrentNewThreads = 100");
                 await driver.findElement(By.id("MaxConcurrentNewThreads|input")).clear();
+                await driver.sleep(3600);
+                await driver.findElement(By.id("MaxConcurrentNewThreads|input")).sendKeys(Key.BACK_SPACE);
+                await driver.sleep(3600);
                 await driver.findElement(By.id("MaxConcurrentNewThreads|input")).sendKeys("100");
                 await driver.sleep(2800);
                 console.log("Enter MaxConcurrentLongRunningRequests = 120");
                 await driver.findElement(By.id("MaxConcurrentLongRunningRequests|input")).clear();
-                await driver.findElement(By.id("MaxConcurrentLongRunningRequests|input")).sendKeys("100");
+                await driver.sleep(2800);
+                await driver.findElement(By.id("MaxConcurrentLongRunningRequests|input")).sendKeys(Key.BACK_SPACE);
+                await driver.sleep(2800);
+                await driver.findElement(By.id("MaxConcurrentLongRunningRequests|input")).sendKeys("120");
                 await driver.sleep(2800);
                 console.log("Click Domain Web Application Tab");
                 await driver.findElement(By.xpath("//div/ul/li[7]/a/span")).click();
-                await driver.sleep(2400);
-                console.log("Click Yes button");
-                await driver.findElement(By.xpath("//span[contains(.,\'Yes\')]")).click();
+                //await driver.sleep(2400);
+                //console.log("Click Yes button");
+                //await driver.findElement(By.xpath("//span[contains(.,\'Yes\')]")).click();
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"WebAppContainer_ReloginEnabled",3);
                 await driver.sleep(2400);
@@ -801,11 +849,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await admin.enableCheckBox(driver,"WebAppContainer_FilterDispatchedRequestsEnabled",3);
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"WebAppContainer_OverloadProtectionEnabled",3);
-                await driver.sleep(2400);
-                console.log("Enter WebAppContainer_MimeMappingFile = ./config/mime.prop");
-                await driver.findElement(By.id("WebAppContainer_MimeMappingFile|input")).clear();
-                await driver.findElement(By.id("WebAppContainer_MimeMappingFile|input")).sendKeys("./config/mime.prop");
-                await driver.sleep(2800);
+                await driver.sleep(4800);
                 await admin.enableCheckBox(driver,"WebAppContainer_RtexprvalueJspParamName",3);
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"WebAppContainer_ClientCertProxyEnabled",3);
@@ -821,17 +865,12 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await admin.enableCheckBox(driver,"WebAppContainer_WAPEnabled",3);
                 await driver.sleep(2400);
                 console.log("Enter WebAppContainer_PostTimeoutSecs = 30");
-                await driver.findElement(By.id("WebAppContainer_PostTimeoutSecs|input")).clear();
-                await driver.findElement(By.id("WebAppContainer_PostTimeoutSecs|input")).sendKeys("30");
-                await driver.sleep(2800);
-                console.log("Enter WebAppContainer_MaxPostTimeSecs = 6000");
-                await driver.findElement(By.id("WebAppContainer_MaxPostTimeSecs|input")).clear();
-                await driver.findElement(By.id("WebAppContainer_MaxPostTimeSecs|input")).sendKeys("6000");
-                await driver.sleep(2800);
-                console.log("Enter WebAppContainer_MaxPostSize = 80");
-                await driver.findElement(By.id("WebAppContainer_MaxPostSize|input")).clear();
-                await driver.findElement(By.id("WebAppContainer_MaxPostSize|input")).sendKeys("80");
-                await driver.sleep(2800);
+                element = await driver.findElement(By.id("WebAppContainer_PostTimeoutSecs|input"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await element.clear();
+                await element.sendKeys(Key.BACK_SPACE);
+                await element.sendKeys("30");
+                await driver.sleep(4800);
                 await admin.enableCheckBox(driver,"WebAppContainer_WorkContextPropagationEnabled",3);
                 await driver.sleep(2400);
                 console.log("Enter WebAppContainer_P3PHeaderValue = POST /dir/file.html?P1=V1&P2=V2 HTTP/1.1");
@@ -842,23 +881,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"WebAppContainer_ShowArchivedRealPathEnabled",3);
                 await driver.sleep(2400);
-                console.log("Enter WebAppContainer_Http2Config_HeaderTableSize = Cookie: P3=V3; P4=V4");
-                await driver.findElement(By.id("WebAppContainer_Http2Config_HeaderTableSize|input")).clear();
-                await driver.findElement(By.id("WebAppContainer_Http2Config_HeaderTableSize|input")).sendKeys("Cookie: P3=V3; P4=V4");
-                await driver.sleep(2800);
-                console.log("Enter WebAppContainer_Http2Config_HeaderTableSize = 10");
-                await driver.findElement(By.id("WebAppContainer_Http2Config_HeaderTableSize|input")).clear();
-                await driver.findElement(By.id("WebAppContainer_Http2Config_HeaderTableSize|input")).sendKeys("10");
-                await driver.sleep(2800);
-                console.log("Enter WebAppContainer_Http2Config_MaxHeaderListSize = 22");
-                await driver.findElement(By.id("WebAppContainer_Http2Config_MaxHeaderListSize|input")).clear();
-                await driver.findElement(By.id("WebAppContainer_Http2Config_MaxHeaderListSize|input")).sendKeys("22");
-                await driver.sleep(2800);
-                await admin.enableCheckBox(driver,"WebAppContainer_GzipCompression_GzipCompressionEnabled",3);
                 await driver.sleep(2400);
                 console.log("Enter WebAppContainer_GzipCompression_GzipCompressionMinContentLength = text/html,text/xml,text/plain,text/txt");
                 await driver.sleep(300);
                 await driver.findElement(By.id("WebAppContainer_GzipCompression_GzipCompressionContentType|input")).clear();
+                await driver.findElement(By.id("WebAppContainer_GzipCompression_GzipCompressionContentType|input")).sendKeys(Key.BACK_SPACE);
                 await driver.findElement(By.id("WebAppContainer_GzipCompression_GzipCompressionContentType|input"))
                     .sendKeys("text/html text/xml text/plain text/txt");
                 await driver.sleep(2800);
@@ -872,6 +899,4 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log(e.toString() + " TEST FAIL");
             }
         })
-
-
 })

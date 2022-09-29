@@ -14,14 +14,43 @@ import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
 import weblogic.remoteconsole.common.repodef.SliceDef;
+import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.repodef.SlicesDef;
 import weblogic.remoteconsole.common.utils.Path;
 
 /**
- * TBD
+ * General purpose utilities for performing searches.
  */
 public class SearchUtils {
 
+  // Find all of the basic properties of a type - i.e. the
+  // ones for the default displayed columns for searches on the type.
+  public static List<PagePropertyDef> getBasicPagePropertyDefs(
+    PageRepoDef pageRepoDef,
+    BeanTypeDef typeDef
+  ) {
+    PageDef pageDef = pageRepoDef.getPageDef(pageRepoDef.newTablePagePath(typeDef));
+    if (pageDef != null) {
+      return pageDef.asTableDef().getDisplayedColumnDefs();
+    }
+    SliceFormDef formDef = getDefaultSliceFormDef(pageRepoDef, typeDef);
+    if (formDef != null) {
+      return formDef.getPropertyDefs();
+    }
+    throw new AssertionError(typeDef + " is not a table and does not have a slice form");
+  }
+
+  private static SliceFormDef getDefaultSliceFormDef(PageRepoDef pageRepoDef, BeanTypeDef typeDef) {
+    PageDef pageDef = pageRepoDef.getPageDef(pageRepoDef.newSlicePagePath(typeDef, new Path()));
+    if (pageDef != null && pageDef.isSliceFormDef()) {
+      return pageDef.asSliceFormDef();
+    }
+    // Need to look walk through all of the type's slices and return the 'first'
+    // one that is a slice form.
+    return null;
+  }
+
+  // Find all of the properties on all of the pages of a type.
   public static Map<String,PagePropertyDef> getPagePropertyDefs(
     PageRepoDef pageRepoDef,
     BeanTypeDef baseTypeDef
@@ -34,11 +63,14 @@ public class SearchUtils {
     return propertyDefs;
   }
 
+  // Finds all of the types that can have pages for a type
+  // and its derived types.
   public static List<BeanTypeDef> getTypeDefs(BeanTypeDef baseTypeDef) {
     if (baseTypeDef.isHomogeneous()) {
       return List.of(baseTypeDef);
     }
     List<BeanTypeDef> typeDefs = new ArrayList<>();
+    typeDefs.add(baseTypeDef);
     for (String disc : baseTypeDef.getSubTypeDiscriminatorLegalValues()) {
       typeDefs.add(baseTypeDef.getSubTypeDef(disc));
     }

@@ -22,8 +22,7 @@ The WebLogic Remote Console supports the following platforms:
         * Oracle Linux 8 and later
     * Debian 8 and later
 * macOS
-    * macOS 10.11 (El Capitan) or later
-    * Apple silicon (arm64)
+    * macOS 10.11 (El Capitan) or later (64-bit Intel)
 * Windows (64 bit only)
     * Windows 7 and later
 
@@ -34,7 +33,7 @@ Additionally, the WebLogic Remote Console *browser application* requires the use
 * Microsoft Edge
 * Mozilla Firefox
 
-The WebLogic Remote Console *desktop application* is based on the [Electron](https://www.electronjs.org/) framework and follows a subset of the [Electron system requirements](https://www.electronjs.org/docs/latest/tutorial/support#supported-platforms).
+The WebLogic Remote Console *desktop application* is based on the [Electron](https://www.electronjs.org/) framework.
 
 ## Install the WebLogic Remote Console
 

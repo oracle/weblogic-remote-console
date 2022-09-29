@@ -8,6 +8,14 @@ weight: 4
 
 We encourage you to stay up to date with the latest version of the WebLogic Remote Console since it is regularly updated to work with the latest versions of WebLogic Server, including patches.
 
+{{% notice note %}}
+The WebLogic Remote Console extension is periodically updated to incorporate new functionality. When upgrading the WebLogic Remote Console, check to see if there's a newer version of the extension available so you can enjoy all of the newest features. 
+
+Delete and replace any previous versions of the extension. Keeping multiple versions of the extension installed can lead to unexpected behavior.
+
+The current version is `console-rest-ext-2.0.war`. 
+{{% /notice %}}
+
 ## Desktop application
 To check for newer versions of the desktop application, go to **Help** > **Check For Updates**. If a newer version is available, a dialog box will open where you can choose to go to the GitHub webpage for the latest WebLogic Remote Console release. If you're already on the latest version, no further action is required.
 

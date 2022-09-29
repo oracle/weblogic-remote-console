@@ -28,7 +28,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           ok: {disabled: false,
             label: oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
           },
-          cancel: {disabled: false,
+          cancel: {
+            disabled: false,
+            visible: ko.observable(false),
             label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
           }
         },
@@ -96,28 +98,38 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           onSyncClicked: setSyncInterval,
           onSyncIntervalClicked: captureSyncInterval,
           onActionButtonClicked: renderActionsDialog,
-          onCustomizeButtonClicked: toggleCustomizer
+          onCustomizeButtonClicked: toggleCustomizer,
+          onCustomViewButtonClicked: createCustomView
         }
       });
 
       this.columnDataProvider = ko.observable();
-      this.tableCustomizerManager = new TableCustomizerManager(viewParams.parentRouter.data.rdjData().pageDescription.split('/').slice(3).join('/'));
+      this.tableCustomizerManager = new TableCustomizerManager(viewParams.parentRouter.data.rdjData().tableCustomizer);
 
-      self.applyCustomizations = (visibleColumns, hiddenColumns) => {
+      self.applyCustomizations = (visibleColumns, hiddenColumns, applyButton = false) => {
         const columnMetadata = self.tableCustomizerManager.applyCustomizations.call(
           self.tableCustomizerManager,
-          getColumnMetadata(self.perspective.id),
+          getColumnMetadata(viewParams.perspective.id),
           visibleColumns,
           hiddenColumns
         );
         self.columnDataProvider(columnMetadata);
+        if (applyButton) {
+          const defaultColumns = getDefaultVisibleAndHiddenColumns();
+          self.tableCustomizerManager.checkTableHiddenValue(
+            visibleColumns,
+            defaultColumns.visibleColumns,
+            defaultColumns.hiddenColumns,
+            viewParams.parentRouter.data.rdjData().displayedColumns
+          );
+        }
       };
 
       self.resetCustomizations = function (valueHasMutated = false) {
         const defaultColumns = getDefaultVisibleAndHiddenColumns();
         const columnMetadata = self.tableCustomizerManager.applyCustomizations.call(
           self.tableCustomizerManager,
-          getColumnMetadata(self.perspective.id),
+          getColumnMetadata(viewParams.perspective.id),
           defaultColumns.visibleColumns,
           defaultColumns.hiddenColumns,
           valueHasMutated
@@ -134,7 +146,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           perspective: viewParams.perspective,
           visibleColumns: self.tableCustomizerManager.getVisibleColumnsObservable.call(self.tableCustomizerManager),
           hiddenColumns: self.tableCustomizerManager.getHiddenColumnsObservable.call(self.tableCustomizerManager),
-          page: self.tableCustomizerManager.getPageCustomizedObservable.call(self.tableCustomizerManager),
+          customizerUrl: self.tableCustomizerManager.getCustomizerUrlObservable.call(self.tableCustomizerManager),
           applyCustomizationsCallback: self.applyCustomizations,
           resetCustomizationsCallback: self.resetCustomizations
         },
@@ -201,7 +213,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       };
 
       this.canExit = function () {
-        return true;
+        return Promise.resolve(true);
       };
 
       function isWdtTable() {
@@ -300,6 +312,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               Logger.log('cancelBtn was clicked, or ESC key was pressed!');
             });
         });
+      }
+
+      function createCustomView(event) {
+        const createFormUrl = viewParams.parentRouter.data.rdjData().dashboardCreateForm.resourceData;
+        DataOperations.mbean.new(createFormUrl)
+          .then(reply => {
+            viewParams.parentRouter.data.pdjUrl(reply.body.data.get('pdjUrl'));
+            viewParams.parentRouter.data.pdjData(reply.body.data.get('pdjData'));
+            viewParams.parentRouter.data.rdjUrl(reply.body.data.get('rdjUrl'));
+            viewParams.parentRouter.data.rdjData(reply.body.data.get('rdjData'));
+            viewParams.parentRouter.go('form');
+          })
+          .catch(response => {
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          });
       }
 
       this.chosenItemsChanged = function (event) {
@@ -421,10 +448,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           self.wdtForm.getContentFileChanges()
             .then(reply => {
               if (reply.succeeded) {
-                MessageDisplaying.displayMessage({
-                  severity: 'confirmation',
-                  summary: self.wdtForm.getSummaryMessage(ViewModelUtils.isElectronApiAvailable() ? 'changesSaved': 'changesDownloaded')
-                }, 2500);
+                if (eventType === 'download') {
+                  MessageDisplaying.displayMessage({
+                    severity: 'confirmation',
+                    summary: self.wdtForm.getSummaryMessage(ViewModelUtils.isElectronApiAvailable() ? 'changesSaved': 'changesDownloaded')
+                  }, 2500);
+                }
               }
               else {
                 if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
@@ -453,11 +482,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           switch (eventType) {
             case 'autoSave': {
               if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+                const dataProvider = self.wdtForm.getDataProvider();
+                const options = {
+                  dialogMessage: {name: CoreUtils.isNotUndefinedNorNull(dataProvider) ? dataProvider.name : ''}
+                };
                 self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.changesNeedDownloading.value'));
-                self.i18n.dialog.prompt(self.i18n.prompts.unsavedChanges.needDownloading.value);
+                self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value', '{0}').replace('{0}', options.dialogMessage.name));
+                self.i18n.buttons.cancel.visible(false);
                 UnsavedChangesDialog.showConfirmDialog('ChangesNotDownloaded', self.i18n)
                   .then(reply => {
-                    if (reply) downloadContentFile();
+                    if (reply.exitButton === 'yes') {
+                      downloadContentFile();
+                    }
                   });
               }
               else {
@@ -507,7 +543,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               MessageDisplaying.displayResponseMessages(reply.body.messages);
             }
             else if (CoreUtils.isNotUndefinedNorNull(self.wdtForm)) {
-              writeContentFile();
+              const eventType = (ViewModelUtils.isElectronApiAvailable() ? 'autoDownload' : 'autoSave');
+              writeContentFile(eventType);
             }
           })
           .then(() => {
@@ -585,7 +622,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         let columnMetadata = [];
 
         // Add table column containing delete icon as the first column
-        if (['configuration','modeling','properties'].indexOf(perspectiveId) !== -1 && self.nonwritable() !== true) {
+        const rdjData = viewParams.parentRouter?.data?.rdjData();
+        if (rdjData?.navigation === 'Dashboards') {
+          columnMetadata.push({ name: '_delete', field: '_delete', readonly: self.nonwritable, template: 'deleteCellTemplate', sortable: 'disabled'});
+        }
+        else if (['configuration','modeling','security','properties'].indexOf(perspectiveId) !== -1 && self.nonwritable() !== true) {
           columnMetadata.push({ name: '_delete', field: '_delete', readonly: self.nonwritable, template: 'deleteCellTemplate', sortable: 'disabled'});
         }
 
@@ -593,14 +634,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function setRDJDataProvider(rdjData, perspectiveId, displayedColumns, hiddenColumns) {
-        function getColumnType(name) {
-          let column = displayedColumns.find(column => column.name === name);
-          return (typeof column !== 'undefined' ? 'displayed' : 'hidden');
-        }
-
         // Setup PDJ type information for display
-        const pdjTypes1 = new PageDataTypes(displayedColumns, perspectiveId);
-        const pdjTypes2 = new PageDataTypes(hiddenColumns, perspectiveId);
+        let columns = displayedColumns;
+        if (CoreUtils.isNotUndefinedNorNull(hiddenColumns)) {
+          columns = columns.concat(hiddenColumns);
+        }
+        const pdjTypes = new PageDataTypes(columns, perspectiveId);
 
         let rows = [];
 
@@ -608,25 +647,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           const row = rdjData.data[j];
           let rowObj = {}, displayValue;
 
-          const columns = CoreUtils.shallowCopy(displayedColumns).concat(CoreUtils.shallowCopy(hiddenColumns));
-          for (var r in row) {
-            columns.forEach(c => {
-              if (c.name === r) {
-                // Get the display value based on the type information
-                switch (getColumnType(c.name)) {
-                  case 'displayed':
-                    displayValue = {data: pdjTypes1.getDisplayValue(r, row[r])};
-                    break;
-                  case 'hidden':
-                    displayValue = {data: pdjTypes2.getDisplayValue(r, row[r])};
-                    break;
-                  default:
-                    displayValue = null;
-                    break;
-                }
-                if (displayValue !== null) rowObj[c.name] = displayValue;
-              }
-            });
+          for (let i = 0; i < columns.length; i++) {
+            const cname = columns[i].name;
+
+            // Get the display value based on the type information
+            displayValue = {data: pdjTypes.getDisplayValue(cname, row[cname])};
+            rowObj[cname] = displayValue;
           }
 
           if (CoreUtils.isNotUndefinedNorNull(row.identity)) {
@@ -667,7 +693,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         self.resetCustomizations(true);
         self.tableCustomizerModuleConfig
         .then((moduleConfig) => {
-          if (moduleConfig) moduleConfig.viewModel.setupCustomization();
+          if (moduleConfig) {
+            const selectedColumns = viewParams.parentRouter.data.rdjData().displayedColumns;
+            moduleConfig.viewModel.setupCustomization(selectedColumns);
+          }
         });
       }
 

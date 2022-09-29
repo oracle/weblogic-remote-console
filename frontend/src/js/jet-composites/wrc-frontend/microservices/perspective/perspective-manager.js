@@ -40,12 +40,12 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/perspectives
 
     /**
      *
-     * @param {["configuration" | "monitoring" | "view" | "modeling" | "composite" | "properties"]} beanTreeTypes
+     * @param {["configuration" | "monitoring" | "view" | "security" | "modeling" | "composite" | "properties"]} beanTreeTypes
      * @returns {Perspective[]}
      * @private
      */
     function getByBeanTreeTypes(beanTreeTypes) {
-      let rtnval = ['configuration', 'view', 'monitoring', 'modeling', 'composite', 'properties'];
+      let rtnval = ['configuration', 'view', 'monitoring', 'security', 'modeling', 'composite', 'properties'];
       beanTreeTypes.forEach((beanTreeType) => {
         const perspective = this.getById(beanTreeType);
         const index = rtnval.indexOf(perspective.id);

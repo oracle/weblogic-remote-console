@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
@@ -24,8 +23,6 @@ import weblogic.remoteconsole.common.utils.StringUtils;
  * This class manages reading a slice form or slice table
  */
 class SliceReader extends FormReader {
-
-  private static final Logger LOGGER = Logger.getLogger(SliceReader.class.getName());
 
   private static final Type GET_TABLE_ROWS_CUSTOMIZER_RETURN_TYPE =
     (new TypeReference<Response<List<TableRow>>>() {}).getType();
@@ -90,12 +87,25 @@ class SliceReader extends FormReader {
       return response.copyUnsuccessfulResponse(getRowsResponse);
     }
     Table table = new Table();
+    setTableCustomizations(table, sliceTableDef);
     setPageDef(table, sliceTableDef);
     addChangeManagerStatus(table, searchResults);
     addPageInfo(table);
     addLinks(table, true); // false since it's a bean
     table.getRows().addAll(getRowsResponse.getResults());
     return response.setSuccess(table);
+  }
+
+  private void setTableCustomizations(Table table, SliceTableDef sliceTableDef) {
+    TableCustomizations customizations =
+      getInvocationContext()
+        .getPageRepo()
+        .asPageReaderRepo()
+        .getTableCustomizationsManager()
+        .getTableCustomizations(getInvocationContext(), sliceTableDef);
+    if (customizations != null) {
+      table.getDisplayedColumns().addAll(customizations.getDisplayedColumns());
+    }
   }
 
   private Response<List<TableRow>> getTableRows(

@@ -194,6 +194,23 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         }
       },
 
+      setPreloaderVisibility: (visible) => {
+        const div = document.getElementById('preloader-image');
+        if (div !== null) {
+          div.style.display = (visible ? 'inline-flex' : 'none');
+        }
+      },
+
+      /**
+       * Changes the active element on the page back to the default (the <body> element)
+       * <[>Call this function to trigger JET change events, without having to press the tab or enter key.</p>
+       * @returns {HTMLElement}
+       */
+      blurActiveElement: () => {
+        document.activeElement.blur();
+        return document.activeElement;
+      },
+
       /**
        * Returns whether CFE is running inside an Electron app, or not.
        * @returns {boolean}
@@ -253,7 +270,47 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         };
         link.click();
         link.remove();
+      },
+
+      /**
+       * Uses a given ``router`` to go to a given ``path``, calling a can exit callback, if specified
+       * @param {object} router
+       * @param {string} path
+       * @param {function} canExitCallback
+       */
+      goToRouterPath: (router, path, canExitCallback) => {
+        if (CoreUtils.isNotUndefinedNorNull(canExitCallback)) {
+          canExitCallback('exit')
+            .then(reply => {
+              if (reply) {
+                router.go(path);
+              }
+            })
+            .catch(failure => {
+              this.failureResponseDefaultHandling(failure);
+            });
+        }
+        else {
+          router.go(path);
+        }
+      },
+
+      /**
+       *
+       * @param {'exit'} eventType
+       * @param {function} canExitCallback
+       * @param {{dialogMessage: {name: string}}} [options]
+       * @returns {Promise<*>}
+       */
+      abandonUnsavedChanges: async (eventType, canExitCallback, options) => {
+        if (CoreUtils.isNotUndefinedNorNull(canExitCallback)) {
+          return canExitCallback(eventType, options);
+        }
+        else {
+          return Promise.resolve(true);
+        }
       }
+
     }
   }
 );

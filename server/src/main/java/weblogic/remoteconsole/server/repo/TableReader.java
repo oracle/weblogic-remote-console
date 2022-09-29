@@ -8,6 +8,8 @@ import java.util.List;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
+import weblogic.remoteconsole.common.repodef.PagePropertyDef;
+import weblogic.remoteconsole.common.repodef.TableDef;
 
 /**
  * This class manages reading a bean tree's table pages and invoking the corresponding actions.
@@ -20,28 +22,39 @@ public class TableReader extends PageReader {
   }
 
   Response<Page> getTable() {
-    Response<List<BeanPropertyDef>> propDefsResponse = getTablePropertyDefs();
-    if (!propDefsResponse.isSuccess()) {
-      return new Response<Page>().copyUnsuccessfulResponse(propDefsResponse);
+    Response<TableDef> tableDefResponse = getTableDef();
+    if (!tableDefResponse.isSuccess()) {
+      return new Response<Page>().copyUnsuccessfulResponse(tableDefResponse);
     }
-    List<BeanPropertyDef> propDefs = propDefsResponse.getResults();
-    return processTableSearchResults(propDefs, performTableSearch(propDefs));
+    TableDef tableDef = tableDefResponse.getResults();
+    List<BeanPropertyDef> propDefs = createPropertyDefList();
+    addPropertyDefsToReturn(propDefs, tableDef);
+    return processTableSearchResults(tableDef, propDefs, performTableSearch(propDefs));
   }
 
-  private Response<List<BeanPropertyDef>> getTablePropertyDefs() {
-    Response<List<BeanPropertyDef>> response = new Response<>();
+  private Response<TableDef> getTableDef() {
+    Response<TableDef> response = new Response<>();
     Response<PageDef> pageDefResponse = getPageDef();
     if (!pageDefResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(pageDefResponse);
     }
-    List<BeanPropertyDef> propDefs = createPropertyDefList();
-    propDefs.addAll(pageDefResponse.getResults().getAllPropertyDefs());
-    return response.setSuccess(propDefs);
+    return response.setSuccess(pageDefResponse.getResults().asTableDef());
   }
 
-  private Response<BeanReaderRepoSearchResults> performTableSearch(
-    List<BeanPropertyDef> propDefs
-  ) {
+  private void addPropertyDefsToReturn(List<BeanPropertyDef> propDefs, TableDef tableDef) {
+    TableCustomizations customizations = getTableCustomizations(tableDef);
+    List<String> displayedColumns =
+      customizations != null
+        ? customizations.getDisplayedColumns()
+        : getTableCustomizationsManager().getDefaultDisplayedColumns(tableDef);
+    for (PagePropertyDef propDef : tableDef.getAllPropertyDefs()) {
+      if (displayedColumns.contains(propDef.getFormPropertyName()) || !propDef.isDontReturnIfHiddenColumn()) {
+        propDefs.add(propDef);
+      }
+    }
+  }
+
+  private Response<BeanReaderRepoSearchResults> performTableSearch(List<BeanPropertyDef> propDefs) {
     // Since tables never display whether a property is set, we don't need to fetch it
     boolean includeIsSet = false;
     BeanReaderRepoSearchBuilder builder =
@@ -54,6 +67,7 @@ public class TableReader extends PageReader {
   }
 
   private Response<Page> processTableSearchResults(
+    TableDef tableDef,
     List<BeanPropertyDef> propDefs,
     Response<BeanReaderRepoSearchResults> searchResponse
   ) {
@@ -67,16 +81,13 @@ public class TableReader extends PageReader {
       return response.copyUnsuccessfulResponse(pageDefResponse);
     }
     Table table = new Table();
+    setTableCustomizations(table, tableDef);
     setPageDef(table, pageDefResponse.getResults());
     addPageInfo(table);
     addChangeManagerStatus(table, searchResults);
     addLinks(table, false); // false since it's a collection
-    Response<List<BeanPropertyDef>> propDefsResponse = getTablePropertyDefs();
-    if (!propDefsResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(propDefsResponse);
-    }
     Response<List<BeanSearchResults>> getCollectionResponse =
-      getCollectionResults(searchResults, getBeanTreePath(), propDefsResponse.getResults());
+      getCollectionResults(searchResults, getBeanTreePath(), propDefs);
     if (!getCollectionResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(getCollectionResponse);
     }
@@ -93,6 +104,21 @@ public class TableReader extends PageReader {
       table.getRows().add(rowResponse.getResults());
     }
     return response.setSuccess(table);
+  }
+
+  private void setTableCustomizations(Table table, TableDef tableDef) {
+    TableCustomizations customizations = getTableCustomizations(tableDef);
+    if (customizations != null) {
+      table.getDisplayedColumns().addAll(customizations.getDisplayedColumns());
+    }
+  }
+
+  private TableCustomizations getTableCustomizations(TableDef tableDef) {
+    return getTableCustomizationsManager().getTableCustomizations(getInvocationContext(), tableDef);
+  }
+
+  private TableCustomizationsManager getTableCustomizationsManager() {
+    return getInvocationContext().getPageRepo().asPageReaderRepo().getTableCustomizationsManager();
   }
 
   private Response<TableRow> createTableRow(
@@ -133,6 +159,6 @@ public class TableReader extends PageReader {
     BeanSearchResults beanResults,
     BeanReaderRepoSearchResults searchResults
   ) {
-    return getActualTypeDef(beanResults.getBeanTreePath(), searchResults);
+    return getActualTypeDef(beanResults.getBeanTreePath(), beanResults, searchResults);
   }
 }

@@ -46,10 +46,6 @@ mkdir -p "$tmp"
 # see below, we do not sign symbolic links, but only files and directories.
 cp -RP "$src/." "$target"
 
-# Create a second copy of the executable for use by WKT UI, so that Mac OS thinks
-# that they are two separate programs and let's you run them.
-cp -p "$target/Contents/MacOS/WebLogic Remote Console" "$target/Contents/MacOS/Embeddable Remote Console"
-
 # This part is seriously weird. The legal directory contains some directories
 # that contain nothing but symbolic links.  The Mac OS signing software does not
 # like signing a directory with nothing but symbolic links in it.  However, if

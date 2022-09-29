@@ -43,12 +43,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
 
       // Check if the message defines a severity and map to the message box severity
       if ((typeof message.severity !== 'undefined') && (message.severity !== '')) {
-        switch (message.severity) {
+        switch (message.severity.toUpperCase()) {
           case 'INFO':
+          case 'SUCCESS':
             severity = 'info';
             break;
           case 'WARNING':
             severity = 'warning';
+            break;
+          case 'ERROR':
+          case 'FAILURE':
+          case 'CRITICAL':
+            severity = 'error';
             break;
         }
       }

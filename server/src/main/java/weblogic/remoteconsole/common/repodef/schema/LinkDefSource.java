@@ -1,7 +1,9 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
+
+import java.util.List;
 
 /**
  * This POJO mirrors the yaml source file format for configuring information
@@ -9,8 +11,20 @@ package weblogic.remoteconsole.common.repodef.schema;
  */
 public class LinkDefSource {
   private StringValue label = new StringValue();
+  private StringValue root = new StringValue();
   private StringValue resourceData = new StringValue();
   private StringValue notFoundMessage = new StringValue();
+  private ListValue<String> requiredCapabilities = new ListValue<>();
+
+  // The name of the root that for this link.
+  // Matches the *_ROOT constants in weblogic.remoteconsole.server.providers.Root
+  public String getRoot() {
+    return root.getValue();
+  }
+
+  public void setRoot(String value) {
+    root.setValue(value);
+  }
 
   // The template for creating resourceData links
   // given this link def and a bean tree path.
@@ -48,12 +62,21 @@ public class LinkDefSource {
     notFoundMessage.setValue(value);
   }
 
+  // The english label to display for this link on the page
   public String getLabel() {
     return label.getValue();
   }
 
-  // Get the english label to display for this link on the page
   public void setLabel(String value) {
     label.setValue(value);
+  }
+
+  // The bean repo capabilities that are required for this link to be present
+  public List<String> getRequiredCapabilities() {
+    return requiredCapabilities.getValue();
+  }
+  
+  public void setRequiredCapabilities(List<String> val) {
+    requiredCapabilities.setValue(val);
   }
 }

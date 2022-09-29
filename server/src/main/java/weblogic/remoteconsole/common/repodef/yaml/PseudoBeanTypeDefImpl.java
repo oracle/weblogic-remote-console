@@ -141,8 +141,8 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
-  public boolean isSupportsCustomViews() {
-    return getBaseTypeDefImpl().isSupportsCustomViews();
+  public boolean isSupportsCustomFilteringDashboards() {
+    return getBaseTypeDefImpl().isSupportsCustomFilteringDashboards();
   }
 
   @Override
@@ -213,5 +213,10 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   @Override
   BeanTypeDefSource getTypeDefSource() {
     return baseTypeDefImpl.getTypeDefSource();
+  }
+
+  @Override
+  boolean isEditable() {
+    return baseTypeDefImpl.isEditable();
   }
 }

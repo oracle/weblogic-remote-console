@@ -17,6 +17,7 @@
           data="[[leftColumnsDataProvider]]"
           selection-mode="multiple"
           selected="{{selectedLeftItems}}"
+          scroll-policy="loadAll"
           class="oj-listview-item-padding-off"
         >
           <template slot="itemTemplate" data-oj-as="item">
@@ -94,6 +95,7 @@
           data="[[rightColumnsDataProvider]]"
           selected="{{selectedRightItems}}"
           selection-mode="multiple"
+          scroll-policy="loadAll"
           class="oj-listview-item-padding-off"
         >
           <template slot="itemTemplate" data-oj-as="item">

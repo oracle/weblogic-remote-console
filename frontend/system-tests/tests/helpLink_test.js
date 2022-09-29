@@ -84,7 +84,7 @@ describe.only('Test Suite: helpLink_test: From Server ' +
             return await driver.getAllWindowHandles().then(async function (handles) {
                 console.log("Check if there is 3 window tabs on the browser");
                 var isHandleCount2 = (handles.length == 3);
-                let expectedTitle = "Configuring JDBC Data Sources";
+                let expectedTitle = "Configure Database Connectivity";
                 console.log("Switch to window 2")
                 driver.switchTo().window(handles[handles.length - 1]);
                 var title = await driver.getTitle();

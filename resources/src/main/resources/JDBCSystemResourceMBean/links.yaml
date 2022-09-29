@@ -3,9 +3,11 @@
 
 collectionLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedJDBCServiceRuntime/JDBCDataSourceRuntimeMBeans
 
 instanceLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedJDBCServiceRuntime/JDBCDataSourceRuntimeMBeans/<JDBCSystemResource>
   notFoundMessage: This JDBC system resource was not found on any of the currently running servers.

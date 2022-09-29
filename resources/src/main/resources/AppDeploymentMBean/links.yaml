@@ -3,13 +3,17 @@
 
 collectionLinks:
 - label: Status
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedApplicationRuntimes
 
 instanceLinks:
 - label: Status
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<AppDeployment>
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedApplicationRuntimes/<AppDeployment>
   notFoundMessage: This application was not found on any of the currently running servers.

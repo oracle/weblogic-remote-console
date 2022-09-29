@@ -29,6 +29,7 @@ import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestDomainRuntimePageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestEditPageRepo;
+import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestSecurityDataPageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestServerConfigPageRepo;
 import weblogic.remoteconsole.server.utils.ResponseHelper;
 import weblogic.remoteconsole.server.utils.WebLogicRestClient;
@@ -67,6 +68,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private Root editRoot;
   private Root viewRoot;
   private Root monitoringRoot;
+  private Root securityDataRoot;
 
   public AdminServerDataProviderImpl(
     String name,
@@ -101,6 +103,15 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       Root.MONITORING_ROOT,
       Root.MONITORING_LABEL,
       true, // it is read only
+      Root.NAV_TREE_RESOURCE,
+      Root.SIMPLE_SEARCH_RESOURCE
+    );
+    securityDataRoot = new Root(
+      this,
+      Root.SECURITY_DATA_NAME,
+      Root.SECURITY_DATA_ROOT,
+      Root.SECURITY_DATA_LABEL,
+      false, // it is not read only
       Root.NAV_TREE_RESOURCE,
       Root.SIMPLE_SEARCH_RESOURCE
     );
@@ -181,6 +192,14 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
           roots.put(editRoot.getName(), editRoot);
         } else {
           // Other users are not allowed to edit the configuration
+        }
+        // See if the domain has a version of the remote console rest extension installed that supports security data.
+        if (connection.getConsoleExtensionCapabilities().contains("RealmsSecurityData")) {
+          // Only admins are allowed to manage the security data.
+          if (roles.contains(WebLogicRoles.ADMIN)) {
+            securityDataRoot.setPageRepo(new WebLogicRestSecurityDataPageRepo(mbeansVersion));
+            roots.put(securityDataRoot.getName(), securityDataRoot);
+          }
         }
         lastMessage = null;
       } else {

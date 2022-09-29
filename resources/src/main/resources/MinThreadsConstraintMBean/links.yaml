@@ -3,9 +3,11 @@
 
 collectionLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedMinThreadsConstraintRuntimes
 
 instanceLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedMinThreadsConstraintRuntimes/<MinThreadsConstraint>
   notFoundMessage: This min threads constraint was not found on any of the currently running servers.

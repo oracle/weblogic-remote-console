@@ -3,7 +3,9 @@
 
 collectionLinks:
 - label: Application Configurations
+  root: DomainConfiguration
   resourceData: Domain/AppDeployments
 instanceLinks:
 - label: Application Configuration
+  root: DomainConfiguration
   resourceData: Domain/AppDeployments/<AppDeploymentRuntime>

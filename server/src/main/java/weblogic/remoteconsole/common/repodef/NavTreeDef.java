@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -27,7 +27,7 @@ public interface NavTreeDef {
   // Find a nav tree node def by its relative nav tree path from this type.
   // Works for any kind of node (group or child).
   // e.g. DomainMBean & 'Services' returns the top level Services group node
-  // e.g. DOmainMBean & 'Services/Servers' returns the Services group node's Servers child node.
+  // e.g. DomainMBean & 'Services/Servers' returns the Services group node's Servers child node.
   // Returns null if not found.
   public NavTreeNodeDef findNodeByNavTreePath(Path relativeNavTreePath);
 

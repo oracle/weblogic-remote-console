@@ -33,6 +33,9 @@ public interface PageRepoDef {
   // Returns null if the page doesn't exist.
   public PageDef getPageDef(PagePath pagePath);
 
+  // Looks up the nav tree contents for the root of this repo.
+  public NavTreeDef getRootNavTreeDef();
+
   // Looks up the nav tree contents for a type in this repo.
   public NavTreeDef getNavTreeDef(BeanTypeDef typeDef);
 
@@ -63,9 +66,15 @@ public interface PageRepoDef {
     return PagePath.newTablePagePath(newPagesPath(typeDef));
   }
 
-  public default boolean isSupportsCustomViews() {
-    // By default custom views are not supported.
-    // i.e. only the monitoring tree supports custom views,
+  public default boolean isSupportsDashboards() {
+    // By default, dashboards are supported only if custom filtering dashboards are supported.
+    // This may change when support for other kinds of dashboards is added.
+    return isSupportsCustomFilteringDashboards();
+  }
+
+  public default boolean isSupportsCustomFilteringDashboards() {
+    // By default custom filtering dashboards are not supported.
+    // i.e. only the monitoring tree supports custom filtering dashboards,
     // the config trees don't.
     return false;
   }

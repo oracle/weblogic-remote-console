@@ -4,7 +4,7 @@ properties:
 
 - name: ActiveGridlink
   label: Active GridLink Datasource
-  dontAllowModelTokens: true # since sometimes needed to compute the data source's type
+  supportsModelTokens: false # since sometimes needed to compute the data source's type
 
 - name: OnsNodeList
   label: ONS Nodes

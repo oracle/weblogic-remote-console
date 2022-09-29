@@ -48,12 +48,12 @@
     </oj-bind-if>
     <oj-bind-if test="[[showHelp()]]">
       <oj-table
-              id='help-table'
-              data='[[helpDataProvider]]'
-              scroll-policy='loadMoreOnScroll'
-              scroll-policy-options='{"fetchSize": 10}'
-              columns-default='{"sortable": "disabled", "resizable":"disabled"}'
-              columns='[[tableHelpColumns]]'
+        id='help-table'
+        data='[[helpDataProvider]]'
+        scroll-policy='loadMoreOnScroll'
+        scroll-policy-options='{"fetchSize": 10}'
+        columns-default='{"sortable": "disabled", "resizable":"disabled"}'
+        columns='[[tableHelpColumns]]'
       >
         <template slot="domTemplate" data-oj-as="cell">
           <oj-bind-dom config="[[cell.data]]" />
@@ -64,23 +64,6 @@
   </div>
 
 </div>
-
-<oj-dialog id="confirmDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide">
-  <div slot="body">
-    <div class="cfe-dialog-prompt">
-      <span id="confirmDialogPrompt" data-bind="html: [[i18n.dialog.prompt()]]"></span>
-    </div>
-  </div>
-
-  <div slot="footer">
-    <oj-button id="dlgYesBtn">
-      <span class="button-label" data-bind="text: [[i18n.buttons.yes.label]]"></span>
-    </oj-button>
-    <oj-button id="dlgNoBtn">
-      <span class="button-label" data-bind="text: [[i18n.buttons.no.label]]"></span>
-    </oj-button>
-  </div>
-</oj-dialog>
 
 <oj-dialog id="syncIntervalDialog" dialog-title="[[i18n.dialogSync.title]]" initial-visibility="hide" cancel-behavior="icon">
   <div slot="body">

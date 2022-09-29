@@ -1,8 +1,9 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -125,6 +126,18 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
       }
     }
     return false;
+  }
+
+  boolean supportsCapabilities(List<String> capabilities) {
+    if (mbeansVersion.getCapabilities().contains("All")) {
+      return true;
+    }
+    for (String capability : capabilities) {
+      if (!mbeansVersion.getCapabilities().contains(capability)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   protected abstract YamlReader getYamlReader();

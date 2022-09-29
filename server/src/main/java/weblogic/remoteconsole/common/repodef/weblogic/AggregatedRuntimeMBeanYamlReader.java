@@ -303,11 +303,6 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   }
 
   @Override
-  NavTreeDefSource getRootNavTreeDefSource(String type) {
-    throw new AssertionError("Aggregated types do not support root nav trees: " + type);
-  }
-
-  @Override
   LinksDefSource getLinksDefSource(BeanTypeDef typeDef) {
     return getYamlReader().getLinksDefSource(NAME_HANDLER.getUnfabricatedTypeDef(typeDef));
   }

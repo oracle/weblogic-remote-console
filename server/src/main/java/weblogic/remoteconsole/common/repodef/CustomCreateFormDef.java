@@ -52,7 +52,7 @@ public class CustomCreateFormDef implements CreateFormDef {
 
   @Override
   public List<PagePropertyDef> getAllPropertyDefs() {
-    return getPropertyDefs();
+    return formDef.getAllPropertyDefs();
   }
 
   @Override
@@ -71,7 +71,7 @@ public class CustomCreateFormDef implements CreateFormDef {
 
   @Override
   public List<FormSectionDef> getAllSectionDefs() {
-    return getSectionDefs();
+    return formDef.getAllSectionDefs();
   }
 
   @Override

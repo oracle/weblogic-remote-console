@@ -3,7 +3,9 @@
 
 collectionLinks:
 - label: Work Manager Configurations
+  root: DomainConfiguration
   resourceData: Domain/SelfTuning/WorkManagers
 instanceLinks:
 - label: Work Manager Configuration
+  root: DomainConfiguration
   resourceData: Domain/SelfTuning/WorkManagers/<WorkManagerRuntime>

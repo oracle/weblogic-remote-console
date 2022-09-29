@@ -86,21 +86,8 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
               self.cancelSliceChange = true;
 
               // Set slice back to the previous selection.
-              let oldTab = self.tabDataProviders()[level].lastSelection;
+              const oldTab = self.tabDataProviders()[level].lastSelection;
               this.selection(oldTab);
-            }
-
-            if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
-              // Send signal that will either set the navtree dialog
-              // JET composite's placement state to "floating"
-              // (visible = true), or "minimized" (visible = false).
-              viewParams.signaling.navtreeToggled.dispatch('form-tabstrip', false);
-            }
-            else {
-              // Send signal that will either set the navtree dialog
-              // JET composite's placement state to "docked"
-              // (visible = true), or "minimized" (visible = false)
-              viewParams.signaling.navtreeToggled.dispatch('toggle', false);
             }
           });
       };
@@ -156,17 +143,19 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
               pdj: viewParams.parentRouter.data.pdjData(),
             };
           } else {
-            // Remove backendUrl from viewParams.parentRouter.data.rdjUrl() and add slice query string
+            // Remove backendUrl from viewParams.parentRouter.data.rdjUrl()
+            // and add slice query string
             const uri = `${viewParams.parentRouter.data
               .rdjUrl()
               .replace(Runtime.getBackendUrl(), '')}?slice=${sliceParam}`;
 
-            return DataOperations.tabstrip.getSlice(uri).then((reply) => {
-              return {
-                rdj: reply.body.data.get('rdjData'),
-                pdj: reply.body.data.get('pdjData'),
-              };
-            });
+            return DataOperations.tabstrip.getSlice(uri)
+              .then((reply) => {
+                return {
+                  rdj: reply.body.data.get('rdjData'),
+                  pdj: reply.body.data.get('pdjData'),
+                };
+              });
           }
         }
 

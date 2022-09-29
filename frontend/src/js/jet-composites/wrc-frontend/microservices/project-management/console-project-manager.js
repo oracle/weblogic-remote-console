@@ -11,8 +11,8 @@
  * Module used to manage console projects.
  * @module
  */
-define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects.yaml', './console-project', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/provider-management/data-provider', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/cfe-errors', 'ojs/ojlogger' ],
-  function(YamlParser, WrcProjectsFileContents, ConsoleProject, DataProviderManager, DataProvider, Runtime, CoreUtils, CoreTypes, CfeErrors, Logger){
+define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'text!wrc-frontend/config/wrc-projects.yaml', './console-project', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/provider-management/data-provider', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/cfe-errors', 'ojs/ojlogger' ],
+  function(YamlParser, JsonParser, WrcProjectsFileContents, ConsoleProject, DataProviderManager, DataProvider, Runtime, CoreUtils, CoreTypes, CfeErrors, Logger){
     var projects = [];
 
     function createProject(entry) {
@@ -24,9 +24,6 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
             dataProvider = DataProviderManager.createAdminServerConnection({id: item.id, name: item.name, type: item.type, beanTrees: item.beanTrees || []  });
             if (CoreUtils.isNotUndefinedNorNull(item.url)) dataProvider.putValue('url', item.url);
             if (CoreUtils.isNotUndefinedNorNull(item.username)) dataProvider.putValue('username', item.username);
-                 // FortifyIssueSuppression(5460A0BE8736B50C89F23670FA32C4AE) Password Management: Password in Comment
-                 // Just the name of a variable
-//MLW            if (CoreUtils.isNotUndefinedNorNull(item.password)) dataProvider.putValue("password", item.password);
             // Use state="disconnected" as an indicator that
             // this domain connection data provider is from
             // a saved project, which was loaded.
@@ -362,6 +359,28 @@ define(['wrc-frontend/core/parsers/yaml', 'text!wrc-frontend/config/wrc-projects
         const project = createProject(entry);
         addProject(project);
         return project;
+      },
+
+      /**
+       * Attempt to create a ``ConsoleProject`` instance from a given JSON string
+       * @param {string} jsonString
+       * @returns {Promise<ConsoleProject|*>}
+       */
+      createFromJSONString: function(jsonString) {
+        return JsonParser.parse(jsonString)
+          .then(entry => {
+            if (CoreUtils.isNotUndefinedNorNull(entry.name)) {
+              entry.isDefault = false;
+              const project = this.createFromEntry(entry);
+              return Promise.resolve(project);
+            }
+            else {
+              const failure = {
+                failureType: CoreTypes.FailureType.INCORRECT_CONTENT
+              };
+              return Promise.reject(failure);
+            }
+          });
       },
 
       loadConfigProjects: function() {

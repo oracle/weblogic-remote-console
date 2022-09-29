@@ -59,8 +59,7 @@
   --wdtOptionsDialog-min-height: 245px;
 
   --syncIntervalDialog-width: 330px;
-  --syncIntervalDialog-min-height: 236px;
-  --confirmDialog-width: 300px;
+  --confirmDialog-width: 375px;
   --confirmDialog-min-height: 140px;
   --actionsDialog-background-color: #f9f7f6;
   --actionDialog-width: 475px;
@@ -120,12 +119,29 @@
   display: var(--runtime-role-display);
 }
 
+#preloader-image {
+  /* Make sure you set foreground color to #848483 in free preloaders from https://icons8.com/ */
+  display: none;
+  width: 4rem;  /* 64px; */
+  height: 4rem; /* 64px; */
+  margin:0 auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+}
+
 .cfe-file-chooser {
   display: none;
 }
 
 .cfe-dialog-prompt {
   margin: 0.625rem 0 1.25rem 0;
+}
+
+.cfe-dialog-cancel {
+  display: none;
+  margin: 0 0 0 0.25rem;  /* 0 0 0 4px */
 }
 
 img.reload-file-icon,
@@ -752,7 +768,7 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-body
   box-sizing: border-box;
   padding: 0 0.9375rem;
   text-align: start;
-  font-size: 0.92em;    /* 11pt; */
+  font-size: 1em;       /* 12pt; */
 }
 
 oj-dialog#syncIntervalDialog div.oj-dialog-body,
@@ -766,6 +782,11 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-body
 oj-dialog#actionsDialog div.oj-dialog-body {
   background-color: #f9f7f6;
   background-color: var(--actionsDialog-background-color);
+}
+
+oj-dialog#syncIntervalDialog div.oj-dialog-content
+{
+  background-color: white;
 }
 
 oj-dialog#actionsDialog div.oj-dialog-footer,
@@ -797,7 +818,6 @@ oj-dialog[id="actionsDialog"] {
 
 oj-dialog[id="syncIntervalDialog"] {
   width: var(--syncIntervalDialog-width);
-  min-height: var(--syncIntervalDialog-min-height);
   background-color: var(--dialog-background-color);
 }
 
