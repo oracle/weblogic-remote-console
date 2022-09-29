@@ -15,7 +15,6 @@ public class CustomSliceFormDef implements SliceFormDef {
   private CustomFormDef formDef = new CustomFormDef();
   private List<PagePropertyDef> advancedPropertyDefs = new ArrayList<>();
   private SliceFormPresentationDef presentationDef;
-  private List<PagePropertyDef> allPropertyDefs = new ArrayList<>();
 
   public CustomSliceFormDef() {
   }
@@ -23,7 +22,6 @@ public class CustomSliceFormDef implements SliceFormDef {
   public CustomSliceFormDef(SliceFormDef toClone) {
     formDef = new CustomFormDef(toClone);
     getAdvancedPropertyDefs().addAll(toClone.getAdvancedPropertyDefs());
-    computeAllPropertyDefs();
     setPresentationDef(toClone.getPresentationDef());
   }
 
@@ -34,7 +32,6 @@ public class CustomSliceFormDef implements SliceFormDef {
 
   public void setAdvancedPropertyDefs(List<PagePropertyDef> val) {
     advancedPropertyDefs = val;
-    computeAllPropertyDefs();
   }
 
   public CustomSliceFormDef advancedPropertyDefs(List<PagePropertyDef> val) {
@@ -63,7 +60,6 @@ public class CustomSliceFormDef implements SliceFormDef {
 
   public void setPropertyDefs(List<PagePropertyDef> val) {
     formDef.setPropertyDefs(val);
-    computeAllPropertyDefs();
   }
 
   public CustomSliceFormDef propertyDefs(List<PagePropertyDef> val) {
@@ -73,13 +69,9 @@ public class CustomSliceFormDef implements SliceFormDef {
 
   @Override
   public List<PagePropertyDef> getAllPropertyDefs() {
-    return allPropertyDefs;
-  }
-
-  private void computeAllPropertyDefs() {
-    allPropertyDefs.clear();
-    allPropertyDefs.addAll(getPropertyDefs());
-    allPropertyDefs.addAll(getAdvancedPropertyDefs());
+    List<PagePropertyDef> allDefs = formDef.getAllPropertyDefs();
+    allDefs.addAll(advancedPropertyDefs);
+    return allDefs;
   }
 
   @Override
@@ -98,7 +90,7 @@ public class CustomSliceFormDef implements SliceFormDef {
 
   @Override
   public List<FormSectionDef> getAllSectionDefs() {
-    return getSectionDefs();
+    return formDef.getAllSectionDefs();
   }
 
   @Override

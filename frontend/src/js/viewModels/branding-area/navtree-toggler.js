@@ -6,8 +6,8 @@
  */
 'use strict';
 
-define(['knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/utils'],
-  function (ko, Runtimes, Preferences, CoreUtils) {
+define(['knockout', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils'],
+  function (ko, Preferences, Runtime, CoreUtils) {
     function NavTreeToggler(viewParams){
       var self = this;
 
@@ -62,9 +62,8 @@ define(['knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/pre
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.dataProviderRemoved.add((dataProvider) => {
-          const beanTree = dataProvider.beanTrees.find(beanTree => beanTree.provider?.id === dataProvider.id);
-          if (CoreUtils.isNotUndefinedNorNull(beanTree)) {
+        binding = viewParams.signaling.dataProviderRemoved.add((removedDataProvider) => {
+          if (removedDataProvider.id === Runtime.getDataProviderId()) {
             self.navtreeDisabled(true);
             if (self.navtreeVisible()) self.navtreeVisible(false);
           }

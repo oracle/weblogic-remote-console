@@ -126,7 +126,7 @@ public class SimpleSearchMBeanCustomizer {
   }
 
   private static List<SimpleSearch> getRecentSearches(InvocationContext ic) {
-    return getSimpleSearchManager(ic).getRecentSearches();
+    return getSimpleSearchManager(ic).getRecentSearches(ic);
   }
 
   private static SimpleSearchManager getSimpleSearchManager(InvocationContext ic) {

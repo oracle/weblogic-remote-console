@@ -17,6 +17,7 @@ import javax.json.JsonObjectBuilder;
 
 import org.yaml.snakeyaml.Yaml;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.repo.BeanRepo;
@@ -217,7 +218,8 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
         new WDTPageRepo(
           WebLogicMBeansVersions.getVersion(
             WebLogicVersions.getCurrentVersion(),
-            null // GA
+            null, // GA
+            WebLogicMBeansVersion.NO_CAPABILITIES
           ),
           model,
           ic

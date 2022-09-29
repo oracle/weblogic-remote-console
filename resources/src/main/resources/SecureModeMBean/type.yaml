@@ -7,7 +7,7 @@ properties:
   helpSummaryHTML: >
     <p>Specifies whether the domain will run in secured production mode. The
     domain must be in production mode to enable secured production mode.</p>
-  dontAllowModelTokens: true # since needed to compute default values
+  supportsModelTokens: false # since needed to compute default values
 
 - name: RestrictiveJMXPolicies
   offlineName: RestrictiveJmxPolicies

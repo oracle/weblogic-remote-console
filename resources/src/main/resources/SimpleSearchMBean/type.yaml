@@ -11,4 +11,4 @@ properties:
 ordered: true
 getCollectionMethod: weblogic.remoteconsole.customizers.SimpleSearchMBeanCustomizer.getCollection
 disableMBeanJavadoc: true
-supportsCustomViews: false
+supportsCustomFilteringDashboards: false

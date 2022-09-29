@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -62,8 +62,12 @@ class BeanDeleter extends PageManager {
     }
     BeanReaderRepoSearchResults searchResults = searchResponse.getResults();
     BeanSearchResults beanResults = searchResults.getBean(beanPath);
-    List<Object> args = reader.getArguments(customizerDef, beanResults, searchResults, includeIsSet); 
-    Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), args);
+    Response<List<Object>> argsResponse = reader.getArguments(customizerDef, beanResults, searchResults, includeIsSet);
+    if (!argsResponse.isSuccess()) {
+      Response<Void> errorResponse = new Response<>();
+      return errorResponse.copyUnsuccessfulResponse(argsResponse);
+    }
+    Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), argsResponse.getResults());
     @SuppressWarnings("unchecked")
     Response<Void> customizerResponse = (Response<Void>)rtn;
     return customizerResponse;

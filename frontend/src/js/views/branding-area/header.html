@@ -4,7 +4,7 @@ Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 -->
 <div id="header-container">
 
-  <div style="display: none;">
+  <div id="header-container-images">
     <!--
       When the CBE goes down there is no Helidon server to serve up images, so
       we need to stash images here. Doing that allows us to have the images in
@@ -25,9 +25,7 @@ Copyright (c) 2020, 2022, Oracle and/or its affiliates.
     </div>
 
     <div id="header-title" class="oj-sm-align-self-flex-start">
-      <a on-click="[[wrcAppIconClick]]" data-bind="attr: {href: '#', tabindex: '-1'}">
-        <img id="wrc-app-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.wrcApp.iconFile + '.png'}"/>
-      </a>
+      <img id="wrc-app-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.wrcApp.iconFile + '.png'}"/>
       <a href="/">
         <span id="app-name" :class="[[appInfoTitleClass]]">
           <oj-bind-text value="[[appName]]"></oj-bind-text>
@@ -39,14 +37,13 @@ Copyright (c) 2020, 2022, Oracle and/or its affiliates.
     </div>
 
     <div id="header-simple-search">
-      <oj-input-search id="cfe-simple-search" class="oj-form-control-max-width-md branding-area-simple-search"
-        value="{{simpleSearchValue}}" on-oj-value-action="[[handleSimpleSearchAction]]">
-      </oj-input-search>
+      <oj-module config="[[simpleSearchModuleConfig]]">
+      </oj-module>
     </div>
 
     <div id="header-warning">
       <a on-click="[[securityWarningLinkClick]]">
-        <span id="link-label" :class="branding-area-security-warning">
+        <span id="link-label" class="branding-area-security-warning">
           <oj-bind-text value="[[linkLabel]]"></oj-bind-text>
         </span>
       </a>

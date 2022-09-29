@@ -15,6 +15,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -129,7 +130,8 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
       new WDTCompositePageRepo(
         WebLogicMBeansVersions.getVersion(
           WebLogicVersions.getCurrentVersion(),
-          null // GA
+          null, // GA
+          WebLogicMBeansVersion.NO_CAPABILITIES
         ),
         models,
         ic

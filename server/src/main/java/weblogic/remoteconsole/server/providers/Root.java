@@ -21,7 +21,10 @@ public class Root {
   public static final String COMPOSITE_CONFIGURATION_NAME = "compositeConfig";
   public static final String SERVER_CONFIGURATION_NAME = "serverConfig";
   public static final String DOMAIN_RUNTIME_NAME = "domainRuntime";
-  public static final String CONFIGURATION_ROOT = "Domain";
+  public static final String SECURITY_DATA_NAME = "securityData";
+  public static final String CONFIGURATION_ROOT = "DomainConfiguration";
+  public static final String MONITORING_ROOT = "DomainRuntimeMonitoring";
+  public static final String SECURITY_DATA_ROOT = "SecurityData";
   public static final String NAV_TREE_RESOURCE = "navtree";
   public static final String SIMPLE_SEARCH_RESOURCE = "simpleSearch";
   public static final String CHANGE_MANAGER_RESOURCE = "changeManager";
@@ -31,8 +34,8 @@ public class Root {
     LocalizedConstants.COMPOSITE_CONFIGURATION_LABEL;
   public static final LocalizableString PROPERTY_LIST_CONFIGURATION_LABEL =
     LocalizedConstants.PROPERTY_LIST_CONFIGURATION_LABEL;
-  public static final String MONITORING_ROOT = "DomainRuntime";
   public static final LocalizableString MONITORING_LABEL = LocalizedConstants.MONITORING_LABEL;
+  public static final LocalizableString SECURITY_DATA_LABEL = LocalizedConstants.SECURITY_DATA_LABEL;
   private Provider provider;
   private String name;
   private String rootName;

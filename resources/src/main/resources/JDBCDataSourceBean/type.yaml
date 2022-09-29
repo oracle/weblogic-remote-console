@@ -5,7 +5,7 @@ properties:
 - name: DatasourceType
   required: true
   writable: createOnly
-  dontAllowModelTokens: true # since it's used to determine which pages are displayed
+  supportsModelTokens: false # since it's used to determine which pages are displayed
   getMethod: weblogic.remoteconsole.customizers.JDBCDataSourceBeanCustomizer.getDatasourceType
   legalValues:
   - value: GENERIC

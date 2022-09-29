@@ -70,6 +70,10 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
     BeanPropertyDefSource source,
     BeanChildDefCustomizerSource customizerSource
   ) {
+    if (!getBeanRepoDefImpl().supportsCapabilities(customizerSource.getRequiredCapabilities())) {
+      // This domain doesn't support this child.
+      return null;
+    }
     return new BeanChildDefImpl(this, parentPath, source, customizerSource);
   }
 
@@ -126,6 +130,9 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   }
 
   protected void addChildDefImpl(BeanChildDefImpl childDef) {
+    if (childDef == null) {
+      return;
+    }
     Path childPath = childDef.getChildPath();
     if (!hasChildDef(childPath)) {
       getChildNameToChildDefImplMap().put(pathKey(childPath), childDef);
@@ -137,7 +144,6 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   protected Map<String,BeanChildDefImpl> getChildNameToChildDefImplMap() {
     return this.childNameToChildDefImplMap;
   }
-
 
   @Override
   BeanActionDefImpl findActionDefImpl(Path actionPath) {

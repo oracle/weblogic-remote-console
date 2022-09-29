@@ -49,10 +49,10 @@ The [current release of the WebLogic Remote Console](https://github.com/oracle/w
 
 #### Previous Releases {id="prev_releases"}
 Documentation for prior releases of the WebLogic Remote Console:
-* [2.2.0](https://oracle.github.io/weblogic-remote-console/2.2.0/)
-* [2.1.0](https://oracle.github.io/weblogic-remote-console/2.1.0/)
-* [2.0.0](https://oracle.github.io/weblogic-remote-console/2.0.0/)
-* [1.1.0](https://oracle.github.io/weblogic-remote-console/1.1.0/)
+* [2.2.0](../2.2.0/)
+* [2.1.0](../2.1.0/)
+* [2.0.0](../2.0.0/)
+* [1.1.0](../1.1.0/)
 
 #### Need more help? Have a suggestion? Come and say, "Hello!" {id="help"}
 

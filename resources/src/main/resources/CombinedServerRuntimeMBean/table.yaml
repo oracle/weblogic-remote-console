@@ -66,3 +66,6 @@ displayedColumns:
 # - name: "Timers"
 - name: "ServerRuntime.WeblogicHome"
 - name: "ServerRuntime.WeblogicVersion"
+
+hiddenColumns:
+- name: "ServerLifeCycleRuntime.State"

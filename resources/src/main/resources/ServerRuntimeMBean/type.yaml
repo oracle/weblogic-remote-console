@@ -6,6 +6,7 @@ properties:
 - name: ActivationTime
   dateAsLong: true
 - name: State
+  label: "Server State"
   legalValues:
   - value: ACTIVATE_LATER
     label: Activate later

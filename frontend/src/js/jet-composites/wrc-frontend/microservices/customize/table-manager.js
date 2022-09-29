@@ -6,8 +6,8 @@
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function (oj, ko, CoreUtils, Logger) {
+define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
+  function (oj, ko, MessageDisplaying, CoreUtils, Logger) {
 
     // Table Customizer document ids and state values
     const customizer = {
@@ -33,12 +33,12 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
     /**
      * Table Customizer Manager handles the table customizer used for a table or slice table
      *
-     * @parm page - customized page
+     * @parm tableCustomizerUrl - customizer url from the backend
      * @parm visibleColumns - displayed columns
      * @parm hiddenColumns - non-displayed columns
      */
-    function TableCustomizerManager(page, visibleColumns, hiddenColumns) {
-      this.pageCustomized =  ko.observable(page ? page : '');      
+    function TableCustomizerManager(tableCustomizerUrl, visibleColumns, hiddenColumns) {
+      this.customizerUrl =  ko.observable(tableCustomizerUrl ? tableCustomizerUrl : '');
       this.visibleColumns = ko.observableArray(visibleColumns ? visibleColumns : []);
       this.hiddenColumns = ko.observableArray(hiddenColumns ? hiddenColumns : []);
     }
@@ -129,21 +129,66 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
       return updatedColumnMetadata;
     }
 
+    /**
+     * Check if a visible column matches one of the
+     * hidden columns that contains no data value.
+     *
+     * Upon match, a message will be displayed that a
+     * reload of the table is needed to view the data.
+     */
+    function checkTableHiddenValue(nowVisibleColumns, displayedColumns, hiddenColumns, rdjDisplayedColumns) {
+      // Obtain a list of all the columns as any column may be expensive (i.e. not returned if hidden)
+      let allColumns = displayedColumns;
+      if (CoreUtils.isNotUndefinedNorNull(hiddenColumns)) {
+        allColumns = displayedColumns.concat(hiddenColumns);
+      }
+
+      // Now look to see if one of these hidden data columns is available on the table
+      const hiddenNoValues = allColumns.filter(c => c.valueNotReturnedIfHidden === true);
+      if (hiddenNoValues.length > 0) {
+        // Check if the now visible columns contains one of these hidden columns
+        const notReturnedIfHiddenColumns = [];
+        nowVisibleColumns.forEach(nv => {
+          let hiddenNoValueColumn = hiddenNoValues.find(h => h.name === nv.name);
+          if (hiddenNoValueColumn) notReturnedIfHiddenColumns.push(hiddenNoValueColumn);
+        });
+        notReturnedIfHiddenColumns.forEach(notReturnedIfHidden => {
+          // Check if the column has any data present by
+          // first checking the RDJ displayed columns
+          if (rdjDisplayedColumns && Array.isArray(rdjDisplayedColumns)) {
+            const rdjColumn = rdjDisplayedColumns.find(c => c === notReturnedIfHidden.name);
+            if (rdjColumn) return;
+          }
+          else {
+            // Otherwise by checking the PDJ displayed columuns
+            const pdjColumn = displayedColumns.find(c => c.name === notReturnedIfHidden.name);
+            if (pdjColumn) return;
+          }
+
+          // Display the reload message if the column data is not part of the currently displayed data
+          MessageDisplaying.displayMessage({
+            severity: 'info',
+            summary: oj.Translations.getTranslatedString('wrc-table.labels.reloadHidden.value', notReturnedIfHidden.label)
+          }, 5000);
+        });
+      }
+    }
+
     TableCustomizerManager.prototype = {
       /**
-       * Get the observable holding the page being customized
+       * Get the observable holding the backend table customizer url
        */
-      getPageCustomizedObservable: function() {
-        return this.pageCustomized;
+      getCustomizerUrlObservable: function() {
+        return this.customizerUrl;
       },
 
       /**
-       * Set the current page being customized.
+       * Set the current table customizer url.
        *
-       * @parm page - customized page
+       * @parm tableCustomizerUrl - customizer url from the backend
        */
-      setPageCustomized: function(page) {
-        this.pageCustomized(page);
+      setCustomizerUrl: function(tableCustomizerUrl) {
+        this.customizerUrl(tableCustomizerUrl ? tableCustomizerUrl : '');
       },
 
       /**
@@ -206,6 +251,13 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
        */
       adjustCustomizerButtonState: function(showButton) {
         adjustCustomizerButton(showButton);
+      },
+
+      /**
+       * Check if a currently visible column is a hidden column with no data value.
+       */
+      checkTableHiddenValue: function(nowVisibleColumns, displayedColumns, hiddenColumns, rdjDisplayedColumns) {
+        checkTableHiddenValue(nowVisibleColumns, displayedColumns, hiddenColumns, rdjDisplayedColumns);
       }
     };
 

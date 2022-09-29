@@ -11,7 +11,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
     function ContentAreaHeaderTemplate(viewParams){
       const self = this;
 
-      this.headerTitle = ko.observable();
+      this.headerTitle = {
+        label: ko.observable(''),
+        info: ko.observable('')
+      };
 
       // System messages
       this.messages = ko.observableArray([]);
@@ -27,8 +30,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
 
       this.connected = function() {
         let binding = viewParams.signaling.beanTreeChanged.add(beanTree => {
-          const label = oj.Translations.getTranslatedString(`wrc-content-area-header.title.${beanTree.type}`) + (CoreUtils.isNotUndefinedNorNull(beanTree.provider) ? ` (${beanTree.provider.name})` : '');
-          setContentAreaHeaderBranding(label);
+          const title = {
+            label: oj.Translations.getTranslatedString(`wrc-content-area-header.title.${beanTree.type}`),
+            info: (CoreUtils.isNotUndefinedNorNull(beanTree.provider) ? ` (${beanTree.provider.name})` : '')
+          };
+          setContentAreaHeaderBranding(title);
         });
 
         self.signalBindings.push(binding);
@@ -52,13 +58,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.backendConnectionLost.add(() => {
-          setContentAreaHeaderBranding('');
+          setContentAreaHeaderBranding({label: '', info: ''});
         });
 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderLoadFailed.add((dataProvider) => {
-          setContentAreaHeaderBranding('');
+          setContentAreaHeaderBranding({label: '', info: ''});
         });
 
         self.signalBindings.push(binding);
@@ -80,15 +86,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
         }
       });
 
-      this.securityWarningsIconClick = (event) => {
-        if (CoreUtils.isNotUndefinedNorNull(self.securityWarnings.resourceData)) {
-          viewParams.parentRouter.go('/monitoring/' + encodeURIComponent(self.securityWarnings.resourceData));
+      function setContentAreaHeaderBranding(title) {
+        self.headerTitle.label(title.label);
+        if (CoreUtils.isNotUndefinedNorNull(title.info)) {
+          self.headerTitle.info(title.info);
         }
-      };
-
-      function setContentAreaHeaderBranding(label) {
-        self.headerTitle(label);
-        document.title = `${Runtime.getName()}  ${(label.length > 0 ? '-' : '')}${label}`;
+        document.title = `${Runtime.getName()}  ${(title.label.length > 0 ? '-' : '')}${title.label}`;
       }
 
     }

@@ -34,6 +34,9 @@ define({
       "edit": {
         "tooltip": "管理"
       },
+      "deactivate": {
+        "tooltip": "Deactivate"
+      },
       "delete": {
         "tooltip": "削除"
       }
@@ -381,17 +384,17 @@ define({
       },
       "correctiveAction": {
         "filePathNotFound": {
-          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+          "detail": "<p>ファイル名フィールドのパスを編集し、「OK」ボタンをクリックします。または、アップロード・アイコンをクリックして別のファイルを選択します。</p>"
         },
         "fixModelFile": {
-          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+          "detail": "<p>次に示す問題を修正したら、「OK」ボタンをクリックします。または、別のファイルを選択します。</p>"
         },
         "yamlException": {
-          "detail": "{0} at line {1}, column {2}"
+          "detail": "行 {1}、列{2}で{0}が発生しました"
         },
         "wktModelContent": {
-          "summary": "Model Content Problems",
-          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
+          "summary": "モデル・コンテンツの問題",
+          "detail": "<i>「コード・ビュー」</i>タブでモデル・エディタを使用して、問題を解決します。"
         }
       }
     },
@@ -417,6 +420,9 @@ define({
       "monitoring": {
         "tooltip": "モニタリング・ツリー"
       },
+      "security": {
+        "tooltip": "Security Data Tree"
+      },
       "modeling": {
         "tooltip": "WDTモデル"
       },
@@ -434,6 +440,7 @@ define({
       "configuration": "ツリーの編集",
       "view": "構成ビュー・ツリー",
       "monitoring": "モニタリング・ツリー",
+      "security": "Security Data Tree",
       "modeling": "WDTモデル",
       "composite": "WDTコンポジット・モデル",
       "properties": "プロパティ・リスト"
@@ -445,9 +452,6 @@ define({
         },
         "preferences": {
           "label": "プリファレンス"
-        },
-        "search": {
-          "label": "検索"
         }
       }
     }
@@ -530,15 +534,19 @@ define({
     "cards": {
       "configuration": {
         "label": "ツリーの編集",
-        "description": "<p>現在作業中のWebLogicドメインの構成を維持します。</p>"
+        "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
       },
       "view": {
         "label": "構成ビュー・ツリー",
-        "description": "<p>現在作業中のWebLogicドメインの読取り専用構成を調べます。</p>"
+        "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
       },
       "monitoring": {
         "label": "モニタリング・ツリー",
-        "description": "<p>現在作業中のWebLogicドメインの選択されたリソースのランタイムMBean情報を取得します。</p>"
+        "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+      },
+      "security": {
+        "label": "Security Data Tree",
+        "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
       },
       "modeling": {
         "label": "WDTモデル・ツリー",
@@ -593,7 +601,7 @@ define({
         "label": "削除"
       },
       "customize": {
-        "label": "カスタマイズ"
+        "label": "表のカスタマイズ"
       }
     },
     "icons": {
@@ -676,6 +684,9 @@ define({
     "labels": {
       "totalRows": {
         "value": "合計行: {0}"
+      },
+      "reloadHidden": {
+        "value": "Reload the table to view the current {0} values"
       }
     }
   },
@@ -716,6 +727,9 @@ define({
       },
       "finish": {
         "label": "作成"
+      },
+      "customize": {
+        "label": "表のカスタマイズ"
       }
     },
     "icons": {
@@ -774,7 +788,10 @@ define({
       }
     },
     "messages": {
-      "save": "カートに変更が追加されました"
+      "savedTo": {
+        "shoppingcart": "Changes were added to cart!",
+        "customView": "Changes were saved!"
+      }
     },
     "icons": {
       "restart": {
@@ -802,7 +819,7 @@ define({
     "pageState": {
       "error": {
         "summary": "必須フィールドが不完全です",
-        "detail": "{0} field is required, but no (or an invalid) value has been provided."
+        "detail": "{0}フィールドは必須ですが、値が指定されていないか、指定されている値が無効です。"
       }
     }
   },
@@ -883,7 +900,7 @@ define({
         "value": "ディレクトリの選択"
       },
       "reload": {
-        "value": "Reload File"
+        "value": "ファイルの再ロード"
       }
     },
     "menu": {
@@ -896,13 +913,18 @@ define({
     },
     "labels": {
       "info": {
-        "value": "Information"
+        "value": "情報"
       },
       "warn": {
         "value": "警告"
       },
       "error": {
         "value": "エラー"
+      }
+    },
+    "placeholders": {
+      "search": {
+        "value": "検索"
       }
     }
   },
@@ -960,13 +982,16 @@ define({
         "areYouSure": {
           "value": "変更を保存せずに終了してもよろしいですか。"
         },
+        "saveBeforeExiting": {
+          "value": "Do you want to save changes before exiting?"
+        },
         "needDownloading": {
-          "value": "変更はまだWDTモデル・ファイルにダウンロードされていません。<br/><br/>続行する前にダウンロードしますか。"
+          "value": "Your changes have not been download to the file, yet.<br/><br/>Download them before continuing?"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
+          "value": "新しい''{0}''インスタンスはまだWDTモデルに追加されていません。<br/><br/>続行する前に追加しますか。"
         }
       }
     }

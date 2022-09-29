@@ -6,7 +6,6 @@
    *        following custom CSS variables, at runtime.
    */
   --servers-glance-dom-calc-min-height: 450px;
-  --slideup-popup-calc-min-height: 36px;
   /*
    * END:   JS code will make adjustments to the
    *        above custom CSS variables, at runtime.
@@ -25,17 +24,18 @@
   --landing-page-subtree-color: #83837f;
   --landing-page-subtree-card-color: #70706c;
 
-  --ancillary-content-area-width: 330px;
+  --ancillary-content-area-width: 420px;
   --system-status-collapse-min-height: 340px;
   --system-status-expand-min-height: 450px;
   --servers-glance-dom-max-height: 450px;
   --table-dom-max-height: 500px;
   --project-sidebar-width: 12px;
   --data-providers-min-height: 70px;
-  --data-providers-min-width: 335px;
-  --projects-section-body-min-height: 270px;
-  --projects-section-body-max-height: 270px;
-  --navstrip-max-width: 45px;     /* DON'T CHANGE THIS!! Needs to be 45px, or else left edge of control will be cut off and dnd feature on MyHome will go bonkers */
+  --data-providers-min-width: 425px;
+  --projects-section-body-min-height: 260px;
+  --projects-section-body-max-height: 260px;
+  --navstrip-min-width: 45px;
+  --navstrip-max-width: 45px;
   --navstrip-min-height: 60px;
   --navstrip-resizer-width: 55px;
   --tab-container-toolbar-min-width: 336px;
@@ -45,7 +45,7 @@
 
   --slideup-popup-width: 430px;
   --slideup-popup-min-height: 36px;
-  --slideup-popup-content-width: 360px;
+  --slideup-popup-content-width: 450px;
   --slideup-popup-height: 36px;
   --slideup-popup-offset-top: 200px;
   --slideup-popup-z-index: 129;
@@ -68,7 +68,7 @@
   --sideways-tabstrip-tab-background-color: #f0f0f0;
 
   --domainConnectionDialog-width: 470px;
-  --domainConnectionDialog-min-height: 410px;
+  --domainConnectionDialog-min-height: 245px; /* 410px; */
   --modelDialog-width: 750px;
   --modelDialog-min-height: 245px;
   --modelCompositeDialog-width: 750px;
@@ -81,6 +81,8 @@
   --cfe-dialog-form-layout-min-width: 99%;
   --fileChooser-file-input-width: 92%;
   --fileReloader-file-input-width: 87%;
+
+  --dialog-background-color: white;
 
   --header-container-height: 34px;
 
@@ -128,6 +130,10 @@ body {
 
 #header-container {
   height: var(--header-container-height);
+}
+
+#header-container-images {
+  display: none;
 }
 
 /* get rid of blue border with image buttons */
@@ -239,6 +245,7 @@ div#header-warning {
 }
 
 #navstrip-container {
+  min-width: var(--navstrip-min-width);
   max-width: var(--navstrip-max-width);
   min-height: 100vh;
 }
@@ -279,6 +286,15 @@ canvas#console-state-bar {
   width: 12px;
   height: 24px;
   padding: 4px 5px 0 5px;
+}
+
+oj-button > img.cfe-toolbar-button-icon {
+  margin: 0 5px 0 5px;
+}
+
+oj-button > span.cfe-toolbar-button-label {
+  font-size: 12pt;
+  font-weight: 500;
 }
 
 #content-area-header {
@@ -890,7 +906,6 @@ div#tab-module.oj-flex-bar-end {
 #slideup-popup {
   height:  var(--slideup-popup-height);
   max-height: var(--slideup-popup-height);
-  min-height: calc(100vh - var(--slideup-popup-calc-min-height));
   z-index: var(--slideup-popup-z-index);
 }
 
@@ -945,15 +960,8 @@ div#tab-module.oj-flex-bar-end {
   background-color: var(--data-content-location-background-color);
 }
 
-#data-providers-toggle-strip {
-  background-color: #4c4744;
-  padding: 0 2px;
-  min-width: var(--project-sidebar-width);
-  min-height: calc(100vh - var(--data-providers-min-height));
-}
-
 #projects-section {
-  margin: 5px 0;
+  margin: 0 0 5px 0;
   min-width: var(--data-providers-min-width);
   max-width: var(--data-providers-min-width);
 }

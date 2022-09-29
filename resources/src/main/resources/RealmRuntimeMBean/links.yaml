@@ -3,7 +3,20 @@
 
 collectionLinks:
 - label: Realm Configurations
+  root: DomainConfiguration
   resourceData: Domain/SecurityConfiguration/Realms
+- label: Realms Security Data
+  root: SecurityData
+  resourceData: Domain/RealmsSecurityData
+  requiredCapabilities:
+  - RealmsSecurityData
+
 instanceLinks:
 - label: Realm Configuration
+  root: DomainConfiguration
   resourceData: Domain/SecurityConfiguration/Realms/<RealmRuntime>
+- label: Realm Security Data
+  root: SecurityData
+  resourceData: Domain/RealmsSecurityData/<RealmRuntime>
+  requiredCapabilities:
+  - RealmsSecurityData

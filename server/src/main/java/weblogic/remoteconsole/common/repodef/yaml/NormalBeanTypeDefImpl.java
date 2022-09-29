@@ -212,8 +212,8 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
-  public boolean isSupportsCustomViews() {
-    return getCustomizerSource().isSupportsCustomViews();
+  public boolean isSupportsCustomFilteringDashboards() {
+    return getCustomizerSource().isSupportsCustomFilteringDashboards();
   }
 
   @Override
@@ -427,6 +427,14 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   @Override
   BeanTypeDefSource getTypeDefSource() {
     return getSource();
+  }
+
+  @Override
+  boolean isEditable() {
+    if (getCustomizerSource().isEditableSpecifiedInYaml()) {
+      return getCustomizerSource().isEditable();
+    }
+    return getBeanRepoDefImpl().isEditable();
   }
 
   private BeanTypeDefExtensionSource getExtensionSource() {

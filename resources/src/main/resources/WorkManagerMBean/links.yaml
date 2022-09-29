@@ -3,9 +3,11 @@
 
 collectionLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedWorkManagerRuntimes
 
 instanceLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedWorkManagerRuntimes/<WorkManager>
   notFoundMessage: This work manager was not found on any of the currently running servers.

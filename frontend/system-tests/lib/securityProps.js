@@ -69,7 +69,8 @@ module.exports = function (driver, file) {
             await driver.sleep(3600);
             await admin.goToTabName(driver,"Cert Path Builder");
             console.log("Click Cert Path Builder drop down menu");
-            await admin.selectDropDownValue(driver,"CertPathBuilder|input","testCertPathProvider-1");
+            await admin.selectDropDownList(driver,"CertPathBuilder",
+                "oj-searchselect-filter-CertPathBuilder|input","ProvidertestCertPathProvider-1")
             await driver.sleep(2400);
 
             //await admin.saveAndCommitChanges(driver);

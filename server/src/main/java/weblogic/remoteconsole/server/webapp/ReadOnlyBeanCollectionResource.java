@@ -3,8 +3,11 @@
 
 package weblogic.remoteconsole.server.webapp;
 
+import javax.json.JsonObject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -26,6 +29,23 @@ public class ReadOnlyBeanCollectionResource extends BeanResource {
     getInvocationContext().setReload(reload);
     setTablePagePath();
     return getTable();
+  }
+
+  /**
+   * Customizes the table.
+   */
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response post(
+    @QueryParam("action") String action,
+    JsonObject requestBody
+  ) {
+    setTablePagePath();
+    if (CUSTOMIZE_TABLE.equals(action)) {
+      return customizeTable(requestBody);
+    }
+    return Response.status(Response.Status.METHOD_NOT_ALLOWED).build();
   }
 
   protected Response getTable() {

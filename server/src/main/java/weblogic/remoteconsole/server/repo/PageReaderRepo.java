@@ -22,16 +22,17 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 public abstract class PageReaderRepo extends PageRepo {
 
   private SimpleSearchManager simpleSearchManager = new SimpleSearchManager();
-  private CustomViewManager customViewManager = null;
-
+  private DashboardManager dashboardManager = null;
+  private TableCustomizationsManager tableCustomizationsManager = new TableCustomizationsManager();
+  
   private static final Logger LOGGER = Logger.getLogger(PageReaderRepo.class.getName());
 
   private static final Type CUSTOMIZE_PAGE_RETURN_TYPE = (new TypeReference<Response<Void>>() {}).getType();
 
   protected PageReaderRepo(PageRepoDef pageRepoDef, BeanRepo beanRepo) {
     super(pageRepoDef, beanRepo);
-    if (pageRepoDef.isSupportsCustomViews()) {
-      customViewManager = new CustomViewManager();
+    if (pageRepoDef.isSupportsDashboards()) {
+      dashboardManager = new DashboardManager();
     }
   }
 
@@ -123,6 +124,17 @@ public abstract class PageReaderRepo extends PageRepo {
     }
   }
 
+  public Response<InvocationContext> getActualSliceInvocationContext(InvocationContext ic) {
+    Response<InvocationContext> response = new Response<>();
+    Response<SlicePagePath> sliceResponse = getActualSlicePagePath(ic);
+    if (!sliceResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(sliceResponse);
+    }
+    InvocationContext actualIc = new InvocationContext(ic);
+    actualIc.setPagePath(sliceResponse.getResults());
+    return response.setSuccess(actualIc);
+  }
+
   // Expand a list of nav tree nodes.
   public Response<List<NavTreeNode>> expandNavTreeNodes(InvocationContext ic, List<NavTreeNode> nodes) {
     return (new NavTreeReader(ic)).expandNavTreeNodes(nodes);
@@ -153,7 +165,11 @@ public abstract class PageReaderRepo extends PageRepo {
     return simpleSearchManager;
   }
 
-  public CustomViewManager getCustomViewManager() {
-    return customViewManager;
+  public DashboardManager getDashboardManager() {
+    return dashboardManager;
+  }
+
+  public TableCustomizationsManager getTableCustomizationsManager() {
+    return tableCustomizationsManager;
   }
 }

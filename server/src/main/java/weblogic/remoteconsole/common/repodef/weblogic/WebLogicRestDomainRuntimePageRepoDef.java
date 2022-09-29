@@ -17,13 +17,13 @@ public class WebLogicRestDomainRuntimePageRepoDef extends WebLogicPageRepoDef {
       Root.DOMAIN_RUNTIME_NAME,
       mbeansVersion,
       mbeansVersion.findOrCreate(WebLogicRuntimeTreeBeanRepoDef.class),
-      Root.MONITORING_ROOT + "MBean"
+      Root.MONITORING_ROOT
     );
   }
 
   @Override
-  public boolean isSupportsCustomViews() {
-    // The monitoring tree supports custom views
+  public boolean isSupportsCustomFilteringDashboards() {
+    // The monitoring tree supports custom filtering dashboards
     return true;
   }
 }

@@ -101,6 +101,7 @@ class CreateFormReader extends FormReader {
       }
       form.getProperties().add(propResponse.getResults());
     }
+    addModelTokens(form); // when repo supports model tokens
     return response.setSuccess(form);
   }
 

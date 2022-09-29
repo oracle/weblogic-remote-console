@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2022, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 
@@ -10,9 +10,8 @@
     chroming="borderless"
     disabled="[[i18n.toolbar.buttons.home.disabled()]]"
   >
-    <!-- NOTE: Normally we put all styling in app.css, but we need it inline here in this case -->
-    <img style="margin: 0 5px 0 5px;" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.home.image + '.png'}" />
-    <span style="font-size: 12pt; font-weight: 500;" data-bind="text: [[i18n.toolbar.buttons.home.label]]"></span>
+    <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.home.image + '.png'}" />
+    <span class="cfe-toolbar-button-label" data-bind="text: [[i18n.toolbar.buttons.home.label]]"></span>
   </oj-button>
 </oj-bind-if>
 
@@ -23,22 +22,8 @@
     chroming="borderless"
     disabled="[[i18n.toolbar.buttons.preferences.disabled()]]"
   >
-    <!-- NOTE: Normally we put all styling in app.css, but we need it inline here in this case -->
-    <img style="margin: 0 5px 0 5px;" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.preferences.image + '.png'}" />
-    <span style="font-size: 12pt; font-weight: 500;" data-bind="text: [[i18n.toolbar.buttons.preferences.label]]"></span>
-  </oj-button>
-</oj-bind-if>
-
-<oj-bind-if test="[[i18n.toolbar.buttons.search.visible]]">
-  <oj-button
-    :id="[[i18n.toolbar.buttons.search.id]]"
-    on-oj-action="[[contentAreaHeaderButtonClickHandler]]"
-    chroming="borderless"
-    disabled="[[i18n.toolbar.buttons.search.disabled()]]"
-  >
-    <!-- NOTE: Normally we put all styling in app.css, but we need it inline here in this case -->
-    <img style="margin: 0 5px 0 5px;" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.search.image + '.png'}" />
-    <span style="font-size: 12pt; font-weight: 500;" data-bind="text: [[i18n.toolbar.buttons.search.label]]"></span>
+    <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.preferences.image + '.png'}" />
+    <span class="cfe-toolbar-button-label" data-bind="text: [[i18n.toolbar.buttons.preferences.label]]"></span>
   </oj-button>
 </oj-bind-if>
 

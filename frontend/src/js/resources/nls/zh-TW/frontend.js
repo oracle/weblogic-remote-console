@@ -34,6 +34,9 @@ define({
       "edit": {
         "tooltip": "管理"
       },
+      "deactivate": {
+        "tooltip": "Deactivate"
+      },
       "delete": {
         "tooltip": "移除"
       }
@@ -381,17 +384,17 @@ define({
       },
       "correctiveAction": {
         "filePathNotFound": {
-          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+          "detail": "<p>請編輯檔案名稱欄位中的路徑，然後按一下「確定」按鈕。或者，按一下上傳圖示並選擇其他檔案。</p>"
         },
         "fixModelFile": {
-          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+          "detail": "<p>請修正下方所列的問題，然後按一下「確定」按鈕。或者，請選擇其他檔案。</p>"
         },
         "yamlException": {
-          "detail": "{0} at line {1}, column {2}"
+          "detail": "{0} 在第 {1} 行，第 {2} 欄"
         },
         "wktModelContent": {
-          "summary": "Model Content Problems",
-          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
+          "summary": "模型內容問題",
+          "detail": "請使用<i>程式碼檢視</i>頁籤中的模型編輯器來解決問題。"
         }
       }
     },
@@ -417,6 +420,9 @@ define({
       "monitoring": {
         "tooltip": "監督樹狀結構"
       },
+      "security": {
+        "tooltip": "Security Data Tree"
+      },
       "modeling": {
         "tooltip": "WDT 模型"
       },
@@ -434,6 +440,7 @@ define({
       "configuration": "編輯樹狀結構",
       "view": "組態檢視樹狀結構",
       "monitoring": "監督樹狀結構",
+      "security": "Security Data Tree",
       "modeling": "WDT 模型",
       "composite": "WDT 複合模型",
       "properties": "特性清單"
@@ -445,9 +452,6 @@ define({
         },
         "preferences": {
           "label": "偏好設定"
-        },
-        "search": {
-          "label": "搜尋"
         }
       }
     }
@@ -530,15 +534,19 @@ define({
     "cards": {
       "configuration": {
         "label": "編輯樹狀結構",
-        "description": "<p>維護目前所使用 WebLogic 網域的組態。</p>"
+        "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
       },
       "view": {
         "label": "組態檢視樹狀結構",
-        "description": "<p>檢查目前所使用 WebLogic 網域的唯讀組態。</p>"
+        "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
       },
       "monitoring": {
         "label": "監督樹狀結構",
-        "description": "<p>檢視目前所使用 WebLogic 網域中所選資源的執行時期 MBean 資訊。</p>"
+        "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+      },
+      "security": {
+        "label": "Security Data Tree",
+        "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
       },
       "modeling": {
         "label": "WDT 模型樹狀結構",
@@ -593,7 +601,7 @@ define({
         "label": "刪除"
       },
       "customize": {
-        "label": "自訂"
+        "label": "自訂表格"
       }
     },
     "icons": {
@@ -676,6 +684,9 @@ define({
     "labels": {
       "totalRows": {
         "value": "資料列總數: {0}"
+      },
+      "reloadHidden": {
+        "value": "Reload the table to view the current {0} values"
       }
     }
   },
@@ -716,6 +727,9 @@ define({
       },
       "finish": {
         "label": "建立"
+      },
+      "customize": {
+        "label": "自訂表格"
       }
     },
     "icons": {
@@ -774,7 +788,10 @@ define({
       }
     },
     "messages": {
-      "save": "已新增購物車變更"
+      "savedTo": {
+        "shoppingcart": "Changes were added to cart!",
+        "customView": "Changes were saved!"
+      }
     },
     "icons": {
       "restart": {
@@ -802,7 +819,7 @@ define({
     "pageState": {
       "error": {
         "summary": "必要欄位未完成",
-        "detail": "{0} field is required, but no (or an invalid) value has been provided."
+        "detail": "尚未提供必要 {0} 欄位的值或提供的值無效。"
       }
     }
   },
@@ -883,7 +900,7 @@ define({
         "value": "選擇目錄"
       },
       "reload": {
-        "value": "Reload File"
+        "value": "重新載入檔案"
       }
     },
     "menu": {
@@ -896,13 +913,18 @@ define({
     },
     "labels": {
       "info": {
-        "value": "Information"
+        "value": "資訊"
       },
       "warn": {
         "value": "出現警告"
       },
       "error": {
         "value": "錯誤"
+      }
+    },
+    "placeholders": {
+      "search": {
+        "value": "搜尋"
       }
     }
   },
@@ -960,13 +982,16 @@ define({
         "areYouSure": {
           "value": "確定要結束但不儲存變更嗎？"
         },
+        "saveBeforeExiting": {
+          "value": "Do you want to save changes before exiting?"
+        },
         "needDownloading": {
-          "value": "尚未將您的變更下載至 WDT 模型檔案。<br/><br/>要先下載再繼續嗎？"
+          "value": "Your changes have not been download to the file, yet.<br/><br/>Download them before continuing?"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
+          "value": "您的新 ''{0}'' 執行處理尚未加到 WDT 模型。<br/><br/>要先將它加到模型後再繼續嗎？"
         }
       }
     }

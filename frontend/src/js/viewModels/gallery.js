@@ -36,7 +36,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
             const perspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
             beanTree['iconFile'] = perspective.iconFiles['light'];
             beanTree['content'] = { view: HtmlUtils.stringToNodeArray(oj.Translations.getTranslatedString(`wrc-gallery.cards.${beanTree.type}.description`))};
-            beanTree['provider'] = {id: dataProvider.id, name: dataProvider.name};
           });
         }
 
@@ -66,6 +65,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
             self.galleryItems.valueWillMutate();
             self.galleryItems.removeAll();
             self.galleryItems.valueHasMutated();
+          }
+          else {
+            self.galleryItems(loadGalleryItems());
           }
         });
 

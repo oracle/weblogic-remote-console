@@ -143,7 +143,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
         dialogDom += '    value=\'{{dialogFields().unresolvedValue}}\' ></oj-input-text></div>';
         dialogDom += '</oj-bind-if>';
       }
-      if (dialogFields.wktTool === 'true' && dialogFields.supportsModelTokens){
+      if (dialogFields.wktTool === 'true' && dialogFields.supportsModelTokens === 'true'){
         //Add the wkt variable list drop down to allow user to choose from.
         dialogDom += '<oj-option value=\'fromSelectWKTVariable\'>' + i18n.wdtOptionsDialog.selectPropsVariable + '</oj-option>';
         dialogDom += '<oj-bind-if test="' + radioSelectVariable + '">';
@@ -172,7 +172,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
 
       //If properties is available,
       //we will add the variable list drop down to allow user to choose from.
-      if (dialogFields.supportsPropSelect === true) {
+      if (dialogFields.supportsPropSelect === true && dialogFields.supportsModelTokens === 'true') {
         dialogDom += '<oj-option value=\'fromPropOptions\'>' + i18n.wdtOptionsDialog.selectPropsVariable + '</oj-option>';
         dialogDom += '<oj-bind-if test="' + radioPropOptions + '">';
         dialogDom += '      <div> <oj-select-single id=\'propSelect_' + dialogFields.id + '\'';
@@ -184,7 +184,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
 
       //If properties can be created,
       //we will provide the name and value field for user to add a property.
-      if (dialogFields.supportsPropCreate === true) {
+      if (dialogFields.supportsPropCreate === true && dialogFields.supportsModelTokens === 'true') {
         dialogDom += '<oj-option value=\'createPropOptions\'>' + i18n.wdtOptionsDialog.createPropsVariable + '</oj-option>';
         dialogDom += '<oj-bind-if test="' + radioPropCreate + '">';
         dialogDom += '      <div><oj-input-text id=\'textarea_' + dialogFields.id + '\'';
@@ -233,7 +233,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
 
       dialogDom += '<oj-option value=\'fromRegValue\'>' + i18n.wdtOptionsDialog.multiSelectUnset + '</oj-option>';
 
-      if (dialogFields.wktTool === 'true'){
+      if (dialogFields.wktTool === 'true' && dialogFields.supportsModelTokens === 'true'){
 
         //Add the wkt variable list drop down to allow user to choose from.
         dialogDom += '<oj-option value=\'fromSelectWKTVariable\'>' + i18n.wdtOptionsDialog.selectPropsVariable + '</oj-option>';
@@ -269,7 +269,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
       //If model token is supported and the page rdj has modelTokens
       //we will add the variable list drop down to allow user to choose
       //and provide the name and value field for user to add a property.
-      if (dialogFields.supportsPropSelect === true) {
+      if (dialogFields.supportsPropSelect === true && dialogFields.supportsModelTokens === 'true') {
         dialogDom += '<oj-option value=\'fromPropOptions\'>' + i18n.wdtOptionsDialog.selectPropsVariable + '</oj-option>';
         dialogDom += '<oj-bind-if test="' + radioPropOptions + '">';
         dialogDom += '      <div> <oj-select-single id=\'propSelect_' + dialogFields.id + '\'';
@@ -280,7 +280,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
         dialogDom += '</oj-bind-if>';
       }
 
-      if (dialogFields.supportsPropCreate === true) {
+      if (dialogFields.supportsPropCreate === true && dialogFields.supportsModelTokens === 'true') {
         dialogDom += '<oj-option value=\'createPropOptions\'>' + i18n.wdtOptionsDialog.createPropsVariable + '</oj-option>';
         dialogDom += '<oj-bind-if test="' + radioPropCreate + '">';
         dialogDom += '      <div><oj-input-text id=\'textarea_' + dialogFields.id + '\'';
@@ -314,7 +314,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
         function onEnterKey() {
           const ojInputs = dialog.querySelectorAll('.cfe-required-field');
           const ojInputsArray = Array.from(ojInputs);
-          const ojInputsArrayFiltered = ojInputsArray.filter(ojInput => ojInput.value !== null);
+          const ojInputsArrayFiltered = ojInputsArray.filter(ojInput => (ojInput.value !== null && ojInput.value !== ''));
           return (ojInputs.length !== ojInputsArrayFiltered.length);
         }
         function okClickHandler(event) {

@@ -16,6 +16,38 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
 
       const self = this;
 
+      this.i18n = {
+        buttons: {
+          yes: {
+            disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.yes.label')
+          },
+          no: {
+            disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.no.label')
+          },
+          ok: {
+            disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
+          },
+          cancel: {
+            disabled: false,
+            visible: ko.observable(false),
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
+          }
+        },
+        images: {
+          preloader: {
+            iconFile: 'preloader-rounded-blocks-grn_12x64x64'
+          }
+        },
+        dialog: {
+          title: ko.observable(''),
+          instructions: ko.observable(''),
+          prompt: ko.observable('')
+        }
+      };
+
       Runtime.setProperty(Runtime.PropertyName.CFE_NAME, oj.Translations.getTranslatedString('wrc-header.text.appName'));
       // Set runtime role based on value assigned to data-runtime-role
       // attribute.
@@ -55,6 +87,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         'configuration/{path}': { label: 'WebLogic', value: 'configuration', title: Runtime.getName() },
         'monitoring/{path}': { label: 'Monitoring', value: 'monitoring', title: Runtime.getName() },
         'view/{path}': { label: 'View', value: 'view', title: Runtime.getName() },
+        'security/{path}': { label: 'Security', value: 'security', title: Runtime.getName() },
         'modeling/{path}': { label: 'Modeling', value: 'modeling', title: Runtime.getName() },
         'composite/{path}': { label: 'Composite', value: 'composite', title: Runtime.getName() },
         'properties/{path}': { label: 'Properties', value: 'properties', title: Runtime.getName() }
@@ -225,13 +258,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       Controller.getSignal('perspectiveSelected').add((newPerspective) => {
         const dataProvider = DataProviderManager.getLastActivatedDataProvider();
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
-/*
-//MLW
-          if (CoreUtils.isUndefinedOrNull(newPerspective)) {
-            Logger.info(`[APPCONTROLLER] newPerspective is undefined`);
-            newPerspective = PerspectiveManager.getDefault();
-          }
-*/
           let active = PerspectiveManager.current();
           if (CoreUtils.isUndefinedOrNull(active)) {
             // There is no active perspective, so make newPerspective

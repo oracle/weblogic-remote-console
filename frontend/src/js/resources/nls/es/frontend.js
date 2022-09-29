@@ -34,6 +34,9 @@ define({
       "edit": {
         "tooltip": "Gestionar"
       },
+      "deactivate": {
+        "tooltip": "Deactivate"
+      },
       "delete": {
         "tooltip": "Eliminar"
       }
@@ -381,17 +384,17 @@ define({
       },
       "correctiveAction": {
         "filePathNotFound": {
-          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+          "detail": "<p>Edite la ruta en el campo de nombre de archivo y haga clic en el botón Aceptar. Como alternativa, haga clic en el icono de carga y seleccione otro archivo.</p>"
         },
         "fixModelFile": {
-          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+          "detail": "<p>Corrija los problemas mencionados a continuación y haga clic en el botón Aceptar. Como alternativa, seleccione otro archivo.</p>"
         },
         "yamlException": {
           "detail": "{0} en la línea {1}, columna {2}"
         },
         "wktModelContent": {
-          "summary": "Model Content Problems",
-          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
+          "summary": "Problemas de contenido de modelos",
+          "detail": "Utilice el editor de modelos en el separador <i>Vista de código</i> para solucionar problemas."
         }
       }
     },
@@ -417,6 +420,9 @@ define({
       "monitoring": {
         "tooltip": "Supervisar árbol"
       },
+      "security": {
+        "tooltip": "Security Data Tree"
+      },
       "modeling": {
         "tooltip": "Modelo WDT"
       },
@@ -434,6 +440,7 @@ define({
       "configuration": "Editar Árbol",
       "view": "Configurar árbol de vista",
       "monitoring": "Supervisar árbol",
+      "security": "Security Data Tree",
       "modeling": "Modelo WDT",
       "composite": "Modelo de compuesto WDT",
       "properties": "Lista de propiedades"
@@ -445,9 +452,6 @@ define({
         },
         "preferences": {
           "label": "Preferencias"
-        },
-        "search": {
-          "label": "Buscar"
         }
       }
     }
@@ -530,15 +534,19 @@ define({
     "cards": {
       "configuration": {
         "label": "Editar Árbol",
-        "description": "<p>Mantener la configuración del dominio de WebLogic con el que está trabajando actualmente.</p>"
+        "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
       },
       "view": {
         "label": "Configurar árbol de vista",
-        "description": "<p>Examinar la configuración de solo lectura del dominio de WebLogic con el que está trabajando actualmente.</p>"
+        "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
       },
       "monitoring": {
         "label": "Supervisar árbol",
-        "description": "<p>Ver la información del MBean de tiempo de ejecución para los recursos seleccionados del dominio de WebLogic con el que está trabajando actualmente.</p>"
+        "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+      },
+      "security": {
+        "label": "Security Data Tree",
+        "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
       },
       "modeling": {
         "label": "Árbol de modelo WDT",
@@ -593,7 +601,7 @@ define({
         "label": "Suprimir"
       },
       "customize": {
-        "label": "Personalizar"
+        "label": "Personalizar Tabla"
       }
     },
     "icons": {
@@ -676,6 +684,9 @@ define({
     "labels": {
       "totalRows": {
         "value": "Total de Filas: {0}"
+      },
+      "reloadHidden": {
+        "value": "Reload the table to view the current {0} values"
       }
     }
   },
@@ -716,6 +727,9 @@ define({
       },
       "finish": {
         "label": "Crear"
+      },
+      "customize": {
+        "label": "Personalizar Tabla"
       }
     },
     "icons": {
@@ -774,7 +788,10 @@ define({
       }
     },
     "messages": {
-      "save": "Cambios agregados al carro"
+      "savedTo": {
+        "shoppingcart": "Changes were added to cart!",
+        "customView": "Changes were saved!"
+      }
     },
     "icons": {
       "restart": {
@@ -802,7 +819,7 @@ define({
     "pageState": {
       "error": {
         "summary": "Campos necesarios incompletos",
-        "detail": "{0} field is required, but no (or an invalid) value has been provided."
+        "detail": "El campo {0} es necesario, pero no se ha proporcionado ningún valor o se ha proporcionado un valor no válido."
       }
     }
   },
@@ -883,7 +900,7 @@ define({
         "value": "Seleccionar directorio"
       },
       "reload": {
-        "value": "Reload File"
+        "value": "Volver a cargar archivo"
       }
     },
     "menu": {
@@ -896,13 +913,18 @@ define({
     },
     "labels": {
       "info": {
-        "value": "Information"
+        "value": "Información"
       },
       "warn": {
         "value": "Advertencia"
       },
       "error": {
         "value": "Error"
+      }
+    },
+    "placeholders": {
+      "search": {
+        "value": "Buscar"
       }
     }
   },
@@ -960,13 +982,16 @@ define({
         "areYouSure": {
           "value": "¿Seguro que desea salir sin guardar los cambios?"
         },
+        "saveBeforeExiting": {
+          "value": "Do you want to save changes before exiting?"
+        },
         "needDownloading": {
-          "value": "Sus cambios todavía no se han descargado en el archivo de modelo WDT.<br/><br/>¿Desea descargarlos antes de continuar?"
+          "value": "Your changes have not been download to the file, yet.<br/><br/>Download them before continuing?"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
+          "value": "La nueva instancia ''{0}'' no se ha agregado aún al modelo WDT.<br/><br/>¿Desea agregarla antes de continuar?"
         }
       }
     }

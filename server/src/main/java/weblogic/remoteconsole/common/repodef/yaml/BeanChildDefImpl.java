@@ -213,7 +213,7 @@ public class BeanChildDefImpl extends BaseBeanChildDefImpl {
 
   @Override 
   public boolean isEditable() {
-    return getTypeDefImpl().getBeanRepoDefImpl().isEditable();
+    return getChildTypeDefImpl().isEditable();
   }
 
   @Override

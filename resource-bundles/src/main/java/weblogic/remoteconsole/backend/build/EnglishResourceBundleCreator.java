@@ -76,7 +76,8 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
         WebLogicMBeansVersion mbeansVersion =
           WebLogicMBeansVersions.getVersion(
             weblogicVersion,
-            weblogicVersion.getCurrentPSU()
+            weblogicVersion.getCurrentPSU(),
+            WebLogicMBeansVersion.ALL_CAPABILITIES
           );
         (new EnglishResourceBundleCreator(mbeansVersion, bundleDir)).create();
       }

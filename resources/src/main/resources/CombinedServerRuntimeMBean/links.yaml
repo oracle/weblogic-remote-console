@@ -3,7 +3,9 @@
 
 collectionLinks:
 - label: Server Configurations
+  root: DomainConfiguration
   resourceData: Domain/Servers
 instanceLinks:
 - label: Server Configuration
+  root: DomainConfiguration
   resourceData: Domain/Servers/<ServerRuntime>

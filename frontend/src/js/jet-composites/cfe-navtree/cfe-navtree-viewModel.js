@@ -96,7 +96,7 @@ define([
               keys.forEach((key) => {
                 expandClickedNode.call(self, key);
               });
-              self.selectedItem('');
+              self.selectedItem(null);
             }
           })
           .finally(() => {
@@ -126,7 +126,7 @@ define([
 
                 // clear the expanded set, unset selected item
                 this.expanded.clear();
-                this.selectedItem('');
+                this.selectedItem(null);
               })
               .catch((response) => {
                 ViewModelUtils.failureResponseDefaultHandling(response);
@@ -170,57 +170,55 @@ define([
       this.signalBindings.push(binding);
 
       binding = signaling.navtreeSelectionCleared.add(() => {
-        this.selectedItem('');
+        self.selectedItem(null);
       });
 
       this.signalBindings.push(binding);
 
-      binding = signaling.dataProviderSelected.add(
-        (dataProvider, navtreeReset = false) => {
-          if (dataProvider.id !== this.beanTree.provider.id || navtreeReset) {
-            // We're changing to a new data provider, so replace
-            // the existing context.properties.beanTree and this.beanTree
-            // variables.
-            context.properties.beanTree = dataProvider.beanTrees[0];
-            this.beanTree = context.properties.beanTree;
-            // Add a "signal" property to this.beanTree, which
-            // indicates that it's a "replacement".
-            this.beanTree['signal'] = 'replacement';
-            // Next, change the existing context.properties.perspective
-            // variable and this.perspective knockout observable
-            context.properties.perspective = PerspectiveManager.getById(
-              this.beanTree.type
-            );
-            this.perspective(context.properties.perspective);
+      binding = signaling.dataProviderSelected.add((dataProvider, navtreeReset = false) => {
+        if (dataProvider.id !== this.beanTree.provider.id || navtreeReset) {
+          // We're changing to a new data provider, so replace
+          // the existing context.properties.beanTree and this.beanTree
+          // variables.
+          context.properties.beanTree = dataProvider.beanTrees[0];
+          this.beanTree = context.properties.beanTree;
+          // Add a "signal" property to this.beanTree, which
+          // indicates that it's a "replacement".
+          this.beanTree['signal'] = 'replacement';
+          // Next, change the existing context.properties.perspective
+          // variable and this.perspective knockout observable
+          context.properties.perspective = PerspectiveManager.getById(
+            this.beanTree.type
+          );
+          this.perspective(context.properties.perspective);
 
-            // clear the expanded set, unset selected item.
-            this.expanded.clear();
-            this.selectedItem('');
+          // clear the expanded set, unset selected item.
+          this.expanded.clear();
+          this.selectedItem(null);
 
-            let resolve;
-            this.busyContext.whenReady(10000).then(() => {
-              resolve = this.addBusyState();
+          let resolve;
+          this.busyContext.whenReady(10000).then(() => {
+            resolve = this.addBusyState();
 
-              // Finally, recreate a NavtreeManager using the new
-              // beanTree module-scoped variable.
-              this.navtreeManager = new NavtreeManager(this.beanTree);
-              this.datasource(this.navtreeManager.getDataProvider());
+            // Finally, recreate a NavtreeManager using the new
+            // beanTree module-scoped variable.
+            this.navtreeManager = new NavtreeManager(this.beanTree);
+            this.datasource(this.navtreeManager.getDataProvider());
 
-              this.navtreeManager
-                .refreshTreeModel()
-                .then(() => {
-                  this.navtreeManager.updateTreeView();
-                })
-                .catch((response) => {
-                  ViewModelUtils.failureResponseDefaultHandling(response);
-                })
-                .finally(() => {
-                  if (resolve) resolve();
-                });
-            });
-          }
+            this.navtreeManager
+              .refreshTreeModel()
+              .then(() => {
+                this.navtreeManager.updateTreeView();
+              })
+              .catch((response) => {
+                ViewModelUtils.failureResponseDefaultHandling(response);
+              })
+              .finally(() => {
+                if (resolve) resolve();
+              });
+          });
         }
-      );
+      });
 
       this.signalBindings.push(binding);
 
@@ -243,7 +241,7 @@ define([
 
               // clear the expanded set, unset selected item
               this.expanded.clear();
-              this.selectedItem('');
+              this.selectedItem(null);
 
               if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name)
                 router.go('home');
@@ -252,6 +250,12 @@ define([
             }
           });
         }
+      });
+
+      this.signalBindings.push(binding);
+
+      binding = signaling.unsavedChangesDetected.add((exitFormCallback) => {
+        self.canExitCallback = exitFormCallback;
       });
 
       this.signalBindings.push(binding);
@@ -351,7 +355,8 @@ define([
                 resourceData.substring(index + 1);
             }
             const path = encodeURIComponent(resourceData);
-            router.go('/' + self.beanTree.type + '/' + path);
+            ViewModelUtils.goToRouterPath(router, `/${self.beanTree.type}/${path}`, self.canExitCallback);
+            signaling.navtreeSelectionChanged.dispatch('navtree', node);
           }
         }
       }

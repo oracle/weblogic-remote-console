@@ -103,9 +103,7 @@ public class PageDescription {
     addIfNotEmpty(builder, "advancedProperties", sliceFormPropertyDefsToJson(sliceFormDef.getAdvancedPropertyDefs()));
     addIfNotEmpty(builder, "sections", sliceFormSectionDefsToJson(sliceFormDef.getSectionDefs()));
     addIfNotEmpty(builder, "presentation", sliceFormPresentationDefToJson(sliceFormDef.getPresentationDef()));
-    if (sliceFormDef.isReadOnly()) {
-      builder.add(READ_ONLY, true);
-    }
+    builder.add(READ_ONLY, sliceFormDef.isReadOnly());
     return builder.build();
   }
 
@@ -115,9 +113,7 @@ public class PageDescription {
     addIfNotEmpty(builder, "displayedColumns", columnPropertyDefsToJson(sliceTableDef.getDisplayedColumnDefs()));
     List<PagePropertyDef> sortedHiddenColumns = sortHiddenColumnDefs(sliceTableDef.getHiddenColumnDefs());
     addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sortedHiddenColumns));
-    if (sliceTableDef.isReadOnly()) {
-      builder.add(READ_ONLY, true);
-    }
+    builder.add(READ_ONLY, sliceTableDef.isReadOnly());
     return builder.build();
   }
 
@@ -229,6 +225,7 @@ public class PageDescription {
   private JsonObject columnPropertyDefToJson(PagePropertyDef propertyDef) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
     propertyDefToJson(builder, propertyDef);
+    addIfTrue(builder, "valueNotReturnedIfHidden", propertyDef.isDontReturnIfHiddenColumn());
     addIfTrue(builder, "key", propertyDef.isKey());
     return builder.build();
   }

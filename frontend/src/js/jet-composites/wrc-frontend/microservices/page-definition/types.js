@@ -387,12 +387,6 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           return readValue;
         }
 
-        // Check for array type that is a string, eg. JNDI Names
-        // Note: reference types are identity values
-        if (this.isArray(propertyName) && this.isStringType(propertyName)) {
-          return PageDefinitionUtils.getArrayOfStringConvertedValue(readValue, '\n');
-        }
-
         if (from === 'fromModelToken'){
           return {modelToken: readValue};
         }
@@ -401,6 +395,12 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             label: readValue,
             unresolvedReference: readValue
           };
+        }
+
+        // Check for array type that is a string, eg. JNDI Names
+        // Note: reference types are identity values
+        if (this.isArray(propertyName) && this.isStringType(propertyName)) {
+          return PageDefinitionUtils.getArrayOfStringConvertedValue(readValue, '\n');
         }
 
         // Address the remaining types where needed...

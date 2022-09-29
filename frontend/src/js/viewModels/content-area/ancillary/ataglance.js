@@ -72,7 +72,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       };
 
       function loadAtAGlanceSections(expandAfterLoad){
-        ViewModelUtils.setCursorType('progress');
+        ViewModelUtils.setPreloaderVisibility(true);
         AtAGlanceManager.getData()
           .then(reply => {
             // We only need to do something if reply
@@ -96,7 +96,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
             });
           })
           .finally(() => {
-            ViewModelUtils.setCursorType('default');
+            ViewModelUtils.setPreloaderVisibility(false);
           });
       }
 

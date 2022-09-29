@@ -34,6 +34,9 @@ define({
       "edit": {
         "tooltip": "Gérer"
       },
+      "deactivate": {
+        "tooltip": "Deactivate"
+      },
       "delete": {
         "tooltip": "Enlever"
       }
@@ -381,17 +384,17 @@ define({
       },
       "correctiveAction": {
         "filePathNotFound": {
-          "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
+          "detail": "<p>Modifiez le chemin dans le champ de nom de fichier, puis cliquez sur le bouton OK. Sinon, cliquez sur l'icône de téléchargement et choisissez un autre fichier.</p>"
         },
         "fixModelFile": {
-          "detail": "<p>Fix issue(s) cited below then click the OK button. Alternatively, choose a different file.</p>"
+          "detail": "<p>Corrigez les problèmes cités ci-dessous, puis cliquez sur le bouton OK. Sinon, choisissez un autre fichier.</p>"
         },
         "yamlException": {
-          "detail": "{0} at line {1}, column {2}"
+          "detail": "{0} à la ligne {1}, colonne {2}"
         },
         "wktModelContent": {
-          "summary": "Model Content Problems",
-          "detail": "Use model editor on <i>Code View</i> tab to resolve problems."
+          "summary": "Problèmes de contenu de modèle",
+          "detail": "Utilisez l'éditeur de modèle de l'onglet <i>Vue du code</i> pour résoudre les problèmes."
         }
       }
     },
@@ -417,6 +420,9 @@ define({
       "monitoring": {
         "tooltip": "Arborescence de la surveillance"
       },
+      "security": {
+        "tooltip": "Security Data Tree"
+      },
       "modeling": {
         "tooltip": "Modèle WDT"
       },
@@ -434,6 +440,7 @@ define({
       "configuration": "Modifier l'arborescence",
       "view": "Arborescence de la vue de configuration",
       "monitoring": "Arborescence de la surveillance",
+      "security": "Security Data Tree",
       "modeling": "Modèle WDT",
       "composite": "Modèle de composite WDT",
       "properties": "Liste des propriétés"
@@ -445,9 +452,6 @@ define({
         },
         "preferences": {
           "label": "Préférences"
-        },
-        "search": {
-          "label": "Rechercher"
         }
       }
     }
@@ -530,15 +534,19 @@ define({
     "cards": {
       "configuration": {
         "label": "Modifier l'arborescence",
-        "description": "<p>Gérez la configuration du domaine WebLogic avec lequel vous travaillez.</p>"
+        "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
       },
       "view": {
         "label": "Arborescence de la vue de configuration",
-        "description": "<p>Examinez la configuration en lecture seule du domaine WebLogic avec lequel vous travaillez.</p>"
+        "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
       },
       "monitoring": {
         "label": "Arborescence de la surveillance",
-        "description": "<p>Visualisez les informations du MBean d'exécution pour les ressources sélectionnées dans le domaine WebLogic avec lequel vous travaillez.</p>"
+        "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+      },
+      "security": {
+        "label": "Security Data Tree",
+        "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
       },
       "modeling": {
         "label": "Arborescence du modèle WDT",
@@ -560,7 +568,7 @@ define({
         "tooltip": "Annuler les modifications"
       },
       "commit": {
-        "tooltip": "Valider (commit) les modifications"
+        "tooltip": "Valider les modifications"
       }
     },
     "sections": {
@@ -593,7 +601,7 @@ define({
         "label": "Supprimer"
       },
       "customize": {
-        "label": "Personnaliser"
+        "label": "Personnaliser la table"
       }
     },
     "icons": {
@@ -629,7 +637,7 @@ define({
           "label": "Annuler les modifications"
         },
         "commit": {
-          "label": "Valider (commit) les modifications"
+          "label": "Valider les modifications"
         }
       }
     },
@@ -676,6 +684,9 @@ define({
     "labels": {
       "totalRows": {
         "value": "Nombre total de lignes : {0}"
+      },
+      "reloadHidden": {
+        "value": "Reload the table to view the current {0} values"
       }
     }
   },
@@ -716,6 +727,9 @@ define({
       },
       "finish": {
         "label": "Créer"
+      },
+      "customize": {
+        "label": "Personnaliser la table"
       }
     },
     "icons": {
@@ -757,7 +771,7 @@ define({
           "label": "Annuler les modifications"
         },
         "commit": {
-          "label": "Valider (commit) les modifications"
+          "label": "Valider les modifications"
         }
       }
     }
@@ -774,7 +788,10 @@ define({
       }
     },
     "messages": {
-      "save": "Modifications ajoutées au panier"
+      "savedTo": {
+        "shoppingcart": "Changes were added to cart!",
+        "customView": "Changes were saved!"
+      }
     },
     "icons": {
       "restart": {
@@ -802,7 +819,7 @@ define({
     "pageState": {
       "error": {
         "summary": "Champs requis incomplets",
-        "detail": "{0} field is required, but no (or an invalid) value has been provided."
+        "detail": "Le champ {0} est requis mais aucune valeur n''a été fournie (ou une valeur non valide est fournie)."
       }
     }
   },
@@ -883,7 +900,7 @@ define({
         "value": "Sélectionner un répertoire"
       },
       "reload": {
-        "value": "Reload File"
+        "value": "Recharger le fichier"
       }
     },
     "menu": {
@@ -896,13 +913,18 @@ define({
     },
     "labels": {
       "info": {
-        "value": "Information"
+        "value": "Informations"
       },
       "warn": {
         "value": "Avertissement"
       },
       "error": {
         "value": "Erreur"
+      }
+    },
+    "placeholders": {
+      "search": {
+        "value": "Rechercher"
       }
     }
   },
@@ -960,13 +982,16 @@ define({
         "areYouSure": {
           "value": "Voulez-vous quitter cette page sans enregistrer les modifications ?"
         },
+        "saveBeforeExiting": {
+          "value": "Do you want to save changes before exiting?"
+        },
         "needDownloading": {
-          "value": "Vos modifications n'ont pas encore été téléchargées vers le fichier de modèle WDT.<br/><br/>Voulez-vous les télécharger avant de continuer ?"
+          "value": "Your changes have not been download to the file, yet.<br/><br/>Download them before continuing?"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "Your new ''{0}'' instance has not been added to the WDT model, yet.<br/><br/>Add it before continuing?"
+          "value": "La nouvelle instance ''{0}'' n''a pas encore été ajoutée au modèle WDT.<br/><br/>Voulez-vous l''ajouter avant de continuer ?"
         }
       }
     }
@@ -1152,10 +1177,10 @@ define({
         "summary": "Impossible d'accéder au gestionnaire de modifications."
       },
       "changesCommitted": {
-        "summary": "Les modifications ont été validées (commit)."
+        "summary": "Les modifications ont été validées."
       },
       "changesNotCommitted": {
-        "summary": "Impossible de valider (commit) les modifications."
+        "summary": "Impossible de valider les modifications."
       },
       "changesDiscarded": {
         "summary": "Les modifications ont été annulées."

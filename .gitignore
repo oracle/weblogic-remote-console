@@ -35,6 +35,10 @@ frontend/**/.idea
 frontend/libs
 frontend/src/css/images
 frontend/oraclejetconfig.json
+frontend/electron-test/NewWDTModelFile.yml
+frontend/electron-test/electronTest.log
+frontend/electron-test/node_modules/
+frontend/electron-test/package-lock.json
 .vscode/*
 client.log.*
 /bin/
@@ -50,3 +54,4 @@ electron/node_modules/**
 
 hugo/*/docs/
 hugo/*/.vscode/
+hugo/*/.hugo_build.lock

@@ -288,11 +288,6 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
   }
 
   @Override
-  NavTreeDefSource getRootNavTreeDefSource(String type) {
-    return getYamlReader().getRootNavTreeDefSource(nameHandler.getUnfabricatedType(type));
-  }
-
-  @Override
   LinksDefSource getLinksDefSource(BeanTypeDef typeDef) {
     return getYamlReader().getLinksDefSource(nameHandler.getUnfabricatedTypeDef(typeDef));
   }

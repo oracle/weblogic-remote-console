@@ -21,7 +21,7 @@ properties:
 
 - name: ProductionModeEnabled
   label: Production Mode
-  dontAllowModelTokens: true # since needed to compute default values
+  supportsModelTokens: false # since needed to compute default values
 
 - name: ExalogicOptimizationsEnabled
   label: Enable Exalogic Optimizations
@@ -89,3 +89,8 @@ children:
   creatable: true
   asyncCreate: true
   asyncDelete: true
+
+- name: RealmsSecurityData
+  label: Realms
+  requiredCapabilities:
+  - RealmsSecurityData

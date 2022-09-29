@@ -29,6 +29,7 @@ public class CustomPagePropertyDef implements PagePropertyDef {
   private PagePropertyPresentationDef presentationDef;
   private PagePropertyExternalHelpDef externalHelpDef;
   private boolean pageLevelProperty;
+  private boolean dontReturnIfHiddenColumn;
 
   public CustomPagePropertyDef() {
   }
@@ -47,6 +48,7 @@ public class CustomPagePropertyDef implements PagePropertyDef {
     setPresentationDef(toClone.getPresentationDef());
     setExternalHelpDef(toClone.getExternalHelpDef());
     setPageLevelProperty(toClone.isPageLevelProperty());
+    setDontReturnIfHiddenColumn(toClone.isDontReturnIfHiddenColumn());
   }
 
   @Override
@@ -215,6 +217,20 @@ public class CustomPagePropertyDef implements PagePropertyDef {
 
   public CustomPagePropertyDef pageLevelProperty(boolean val) {
     setPageLevelProperty(val);
+    return this;
+  }
+
+  @Override
+  public boolean isDontReturnIfHiddenColumn() {
+    return dontReturnIfHiddenColumn;
+  }
+
+  public void setDontReturnIfHiddenColumn(boolean val) {
+    dontReturnIfHiddenColumn = val;
+  }
+
+  public CustomPagePropertyDef dontReturnIfHiddenColumn(boolean val) {
+    setDontReturnIfHiddenColumn(val);
     return this;
   }
 
