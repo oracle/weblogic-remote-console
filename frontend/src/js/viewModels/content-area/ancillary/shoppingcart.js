@@ -34,6 +34,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
           label: oj.Translations.getTranslatedString('wrc-shoppingcart.sections.restart.label')
         }
       ]);
+      this.displayOtherSections = ko.observable(true);
 
       this.i18n = {
         tabstrip: {
@@ -49,6 +50,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       };
 
       this.tabNode = ChangeManager.Entity.SHOPPING_CART.name;
+      this.canExitCallback = viewParams.canExitCallback;
 
       this.signalBindings = [];
 
@@ -61,6 +63,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
 
         binding = viewParams.signaling.perspectiveSelected.add((newPerspective) => {
           setTabStripTabsVisibility(newPerspective.id === 'configuration');
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
+          self.canExitCallback = exitFormCallback;
         });
 
         self.signalBindings.push(binding);
@@ -95,6 +103,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       function loadChangeManagerSections(){
         ChangeManager.getData()
           .then(data => {
+            self.displayOtherSections(data.changeManager.supportsChanges);
             let section, ele;
 
             section = self.changeManagerSections().find(item => item.id === ChangeManager.Section.ADDITIONS.name);
@@ -147,30 +156,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
 
       function updateChangeManagerSection(changeManager){
         if (changeManager !== null) {
-          if (changeManager.supportsChanges) {
-            let section = self.changeManagerSections().find(item => item.id === ChangeManager.Section.CHANGE_MANAGER.name);
-            section.content = changeManager;
-            section.count(1);
+          let section = self.changeManagerSections().find(item => item.id === ChangeManager.Section.CHANGE_MANAGER.name);
+          section.content = changeManager;
+          section.count(1);
 
-            self.i18n.tabstrip.tabs().forEach((tabButton) => {
-              tabButton.disabled = (!changeManager.hasChanges);
-              const ele = document.getElementById(tabButton.id);
-              switch (tabButton.id) {
-                case 'discard-tab-button':
-                  if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/discard-changes-' + (tabButton.disabled ? 'disabled' : 'blk') + '_24x24.png';
-                  break;
-                case 'commit-tab-button':
-                  if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/commit-changes-' + (tabButton.disabled ? 'disabled' : 'blk') + '_24x24.png';
-                  break;
-              }
-            });
+          self.i18n.tabstrip.tabs().forEach((tabButton) => {
+            tabButton.disabled = (!changeManager.hasChanges);
+            const ele = document.getElementById(tabButton.id);
+            switch (tabButton.id) {
+              case 'discard-tab-button':
+                if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/discard-changes-' + (tabButton.disabled ? 'disabled' : 'blk') + '_24x24.png';
+                break;
+              case 'commit-tab-button':
+                if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/commit-changes-' + (tabButton.disabled ? 'disabled' : 'blk') + '_24x24.png';
+                break;
+            }
+          });
 
-            const ele = document.getElementById('shoppingcart-tab');
-            if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + (changeManager.hasChanges ? 'non-empty' : 'empty') + '-tabstrip_24x24.png';
-          }
-          else {
-            viewParams.onTabStripContentChanged(ChangeManager.Entity.SHOPPING_CART.name, false);
-          }
+          const ele = document.getElementById('shoppingcart-tab');
+          if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + (changeManager.hasChanges ? 'non-empty' : 'empty') + '-tabstrip_24x24.png';
         }
       }
 
@@ -190,25 +194,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
 
         switch(id){
           case 'commit-tab-button':
-            ViewModelUtils.setCursorType('progress');
+            ViewModelUtils.setPreloaderVisibility(true);
             ChangeManager.commitChanges()
               .then((changeManager) => {
                 viewParams.signaling.shoppingCartModified.dispatch(ChangeManager.Entity.SHOPPING_CART.name, 'commit', changeManager);
                 viewParams.onTabStripContentChanged(ChangeManager.Entity.SHOPPING_CART.name, false);
               })
               .finally(() => {
-                ViewModelUtils.setCursorType('default');
+                ViewModelUtils.setPreloaderVisibility(false);
               });
             break;
           case 'discard-tab-button':
-            ViewModelUtils.setCursorType('progress');
+            ViewModelUtils.setPreloaderVisibility(true);
             ChangeManager.discardChanges()
               .then((changeManager) => {
                 viewParams.signaling.shoppingCartModified.dispatch(ChangeManager.Entity.SHOPPING_CART.name, 'discard', changeManager);
                 viewParams.onTabStripContentChanged(ChangeManager.Entity.SHOPPING_CART.name, false);
               })
               .finally(() => {
-                ViewModelUtils.setCursorType('default');
+                ViewModelUtils.setPreloaderVisibility(false);
               });
             break;
         }
@@ -218,7 +222,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         const path = event.target.attributes['data-path'].value;
         if (CoreUtils.isUndefinedOrNull(path)) return;
 
-        viewParams.parentRouter.go('/configuration/' + encodeURIComponent(path));
+        ViewModelUtils.goToRouterPath(viewParams.parentRouter, `/configuration/${encodeURIComponent(path)}`, self.canExitCallback);
         viewParams.onTabStripContentVisible(false);
       }.bind(this);
 

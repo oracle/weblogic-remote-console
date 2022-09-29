@@ -47,7 +47,7 @@ You can restore fields to their default value. Right-click on a field and click 
 
 The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely.
 
-If you installed the console extension, `console-rest-ext-1.0.war`, you can also see the specific changes you've made and the status of the lock in the Change Manager. If you need to undo a change, you must discard all shopping cart contents or manually revert the change in the Edit Tree perspective.
+If you installed the console extension, `console-rest-ext-2.0.war`, you can also see the specific changes you've made and the status of the lock in the Change Manager. If you need to undo a change, you must discard all shopping cart contents or manually revert the change in the Edit Tree perspective.
 
 The configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock in the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the WebLogic Remote Console and you will not be blocked from making changes with the other tools.
 
@@ -125,3 +125,56 @@ In most other cases, when you create a new MBean on a page, you are prompted to 
 {{% notice note %}}
 When you configure a bean property that references another bean, you must first create the other bean. For example, if you want to assign Server1 to Cluster1, you need to create Cluster1 first, unlike in the WebLogic Server Administration Console where you can choose to create Cluster1 during server creation.
 {{% /notice %}}
+
+## Managing users and groups
+
+You can easily manage the WebLogic Server users and groups that are configured as part of the default authentication provider (WebLogic Authentication Provider) within a security realm. Only the default authentication provider  is supported. If you're not using the default authentication provider, you'll need to manage its users and groups through its own external tools.
+
+Users and groups are managed in the Security Data Tree perspective. You must  be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See [Install the WebLogic Remote Console]({{< relref "setup#install" >}}) for instructions. 
+
+Any changes you make to users and groups are immediate - you don't need to commit or reboot the server to apply your changes.
+
+### Create a user 
+1. In the Security Data Tree perspective, expand Realms.
+1. Select the Security Realm to which you want to add users.
+1. Expand the Authentication Provider node and then select the authentication provider to which you want to add users.
+1. Expand Users and click **New**.
+1. Enter a Name, Description and Password for this user. User names must be unique in the security realm and passwords must be eight characters or longer.  
+1. Click **Create**.
+
+### Create groups
+
+1. In the Security Data Tree perspective, expand Realms.
+1. Select the Security Realm to which you want to add groups.
+1. Expand the Authentication Provider node and then select the authentication provider to which you want to add groups.
+1. Expand Groups and click **New**.
+1. Enter a Name and Description for this group. Group names must be unique in the security realm.
+1. Click **Create**.
+
+### Edit users
+
+1. In the Security Data Tree perspective, go to Realms > *realmName* > Authentication Providers > *providerName* > Users.
+1. Click the user that you want to edit. 
+1. Move through the various tabs to update the properties of the user. You cannot edit the name of a user - you must delete and create a new user.
+1. You can add users to groups. Under the Membership tab, select any Available group to which you want to add the user and move them over to Chosen.
+1. Click **Save**.
+
+### Edit groups
+
+1. In the Security Data Tree perspective, go to Realms > *realmName* > Authentication Providers > *providerName* > Groups.
+1. Click the group that you want to edit. You can modify the group description or, under the Membership tab, nest the current group under other groups. You cannot edit the name of a group - you must delete and create a new group.
+1. Click **Save**.
+
+### Delete users
+
+1. In the Security Data Tree perspective, go to Realms > *realmName* > Authentication Providers > *providerName* > Users.
+1. Beside the user that you want to delete, click the trash icon ![Settings icon](/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png).
+
+### Delete groups
+
+Deleting a group will not delete the users within that group.
+
+1. In the Security Data Tree perspective, go to Realms > *realmName* > Authentication Providers > *providerName* > Groups.
+1. Beside the group that you want to delete, click the trash icon ![Settings icon](/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png).
+
+

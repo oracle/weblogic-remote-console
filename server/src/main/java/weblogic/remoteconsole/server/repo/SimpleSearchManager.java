@@ -11,7 +11,7 @@ import weblogic.remoteconsole.server.PersistableFeature;
 import weblogic.remoteconsole.server.PersistenceManager;
 
 /**
- * TBD
+ * Utility class for managing recent simple searches, including their persistence.
  */
 public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearches> {
 
@@ -30,20 +30,23 @@ public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearc
   // for 50 seconds (unless the user explicitly does a reload)
   private static final int SEARCH_TIME_TO_EXPIRATION_TIME = 5;
 
+  SimpleSearchManager() {
+  }
+
   @Override
   protected PersistenceManager<PersistedRecentSearches> getPersistenceManager() {
     return PERSISTENCE_MANAGER;
   }
 
   @Override
-  protected void fromPersistedData(PersistedRecentSearches persistedData) {
+  protected void fromPersistedData(InvocationContext ic, PersistedRecentSearches persistedData) {
     List<SimpleSearch> newRecentSearches = new ArrayList<>();
     if (persistedData != null) {
       for (String recentSearch : persistedData.getRecentSearches()) {
         if (newRecentSearches.size() >= MAX_CACHED_SEARCHES) {
           break;
         }
-        SimpleSearch search = findSimpleSearch(recentSearch, false); // don't move to top
+        SimpleSearch search = findSimpleSearch(ic, recentSearch, false); // don't move to top
         if (search == null) {
           SimpleSearchCriteria criteria = new SimpleSearchCriteria();
           criteria.setContains(recentSearch);
@@ -57,7 +60,7 @@ public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearc
   }
 
   @Override
-  protected PersistedRecentSearches toPersistedData() {
+  protected PersistedRecentSearches toPersistedData(InvocationContext ic) {
     List<String> searchNames = new ArrayList<>();
     for (SimpleSearch recentSearch : recentSearches) {
       searchNames.add(recentSearch.getName());
@@ -67,13 +70,8 @@ public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearc
     return rtn;
   }
 
-  // How long search results are cached depends on how long it took to compute them.
-  // Cache them for this many times the
-  SimpleSearchManager() {
-  }
-
-  public synchronized List<SimpleSearch> getRecentSearches() {
-    refresh();
+  public synchronized List<SimpleSearch> getRecentSearches(InvocationContext ic) {
+    refresh(ic);
     return List.copyOf(recentSearches);
   }
 
@@ -86,16 +84,16 @@ public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearc
   //
   // Returns whether the search was successful as well as the new search's name.
   public synchronized Response<String> createSearch(InvocationContext ic, SimpleSearchCriteria criteria) {
-    refresh();
+    refresh(ic);
     Response<String> response = new Response<>();
     // Add the search to the list of recent searches but don't actually do it yet.
     // That will happen later when getSearchResults is called.
     SimpleSearch search = new SimpleSearch(criteria, getLanguage(ic), null, null, null);
-    recordSearch(search);
+    recordSearch(ic, search);
     return response.setSuccess(search.getName());
   }
 
-  private void recordSearch(SimpleSearch newSearch) {
+  private void recordSearch(InvocationContext ic, SimpleSearch newSearch) {
     List<SimpleSearch> newSearches = new ArrayList<>();
     newSearches.add(newSearch);
     for (SimpleSearch oldSearch : recentSearches) {
@@ -108,16 +106,16 @@ public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearc
     }
     recentSearches.clear();
     recentSearches.addAll(newSearches);
-    update();
+    update(ic);
   }
 
   // Get the results for a recent search.
   //
   // Returns NotFound if 'searchName' is not the name of a recent search in ic's locale.
   public synchronized Response<SimpleSearch> getSearchResults(InvocationContext ic, String searchName) {
-    refresh();
+    refresh(ic);
     Response<SimpleSearch> response = new Response<>();
-    SimpleSearch search = findSimpleSearch(searchName, true); // move to top
+    SimpleSearch search = findSimpleSearch(ic, searchName, true); // move to top
     if (search == null) {
       return response.setNotFound();
     }
@@ -141,11 +139,11 @@ public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearc
         new Date(endTime), // results date
         getExpirationDate(startTime, endTime)
       );
-    recordSearch(newSearch);
+    recordSearch(ic, newSearch);
     return response.setSuccess(newSearch);
   }
 
-  private SimpleSearch findSimpleSearch(String searchName, boolean moveToTop) {
+  private SimpleSearch findSimpleSearch(InvocationContext ic, String searchName, boolean moveToTop) {
     for (int i = 0; i < recentSearches.size(); i++) {
       SimpleSearch search = recentSearches.get(i);
       if (search.getName().equals(searchName)) {
@@ -153,7 +151,7 @@ public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearc
           // Move it to the top of the list since it's the most recently used one now
           recentSearches.remove(i);
           recentSearches.add(0, search);
-          update();
+          update(ic);
         }
         return search;
       }

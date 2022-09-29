@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -27,6 +27,17 @@ public class WebLogicMBeansVersion {
   // (since what mbeans a user can see depends on the user's roles)
   private Set<String> roles;
 
+  // The set of console extension capabilities this version supports
+  private Set<String> capabilities;
+
+  // e.g. WDT doesn't talk to a running server, therefore no
+  // remote console REST extension capabilities are available:
+  public static final Set<String> NO_CAPABILITIES = Set.of();
+
+  // e.g. the tool for building the english resource bundle wants
+  // to generate mappings for all features
+  public static final Set<String> ALL_CAPABILITIES = Set.of("All");
+
   public WebLogicVersion getWebLogicVersion() {
     return weblogicVersion;
   }
@@ -39,14 +50,20 @@ public class WebLogicMBeansVersion {
     return roles;
   }
 
+  public Set<String> getCapabilities() {
+    return capabilities;
+  }
+
   WebLogicMBeansVersion(
     WebLogicVersion weblogicVersion,
     WebLogicPSU psu,
-    Set<String> roles
+    Set<String> roles,
+    Set<String> capabilities
   ) {
     this.weblogicVersion = weblogicVersion;
     this.psu = psu;
     this.roles = roles;
+    this.capabilities = capabilities;
   }
 
   private <T> T putCache(Class<T> clazz, T value) {

@@ -31,7 +31,7 @@ import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
 
 /**
- * Base bean repo implemetation for WebLogic REST-based bean repos.
+ * Base bean repo implementation for WebLogic REST-based bean repos.
  */
 public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements BeanReaderRepo {
   private static final Logger LOGGER = Logger.getLogger(WebLogicRestBeanRepo.class.getName());

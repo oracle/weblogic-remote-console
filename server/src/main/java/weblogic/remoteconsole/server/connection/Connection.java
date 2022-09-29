@@ -1,8 +1,9 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.connection;
 
+import java.util.Set;
 import javax.ws.rs.client.Client;
 
 import weblogic.remoteconsole.common.utils.WebLogicPSU;
@@ -25,6 +26,18 @@ public interface Connection {
 
   /** Obtain the PSU. Returns null if using GA. */
   public WebLogicPSU getPSU();
+
+  /**
+   * Obtain the version of the console REST extension installed in the domain
+   * (returns null if the extension is not installed)
+   */
+  public String getConsoleExtensionVersion();
+
+  /**
+   * Obtain the capabilities of the console REST extension installed in the domain
+   * (returns an empty set if the extension is not installed)
+   */
+  public Set<String> getConsoleExtensionCapabilities();
 
   /** Obtain the Connection Username */
   public String getUsername();

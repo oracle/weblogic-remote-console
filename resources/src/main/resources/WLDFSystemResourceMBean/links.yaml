@@ -3,9 +3,11 @@
 
 collectionLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedWLDFRuntime/WLDFControlRuntime/SystemResourceControls
 
 instanceLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedWLDFRuntime/WLDFControlRuntime/SystemResourceControls/<WLDFSystemResource>
   notFoundMessage: This WLDF system resource was not found on any of the currently running servers.

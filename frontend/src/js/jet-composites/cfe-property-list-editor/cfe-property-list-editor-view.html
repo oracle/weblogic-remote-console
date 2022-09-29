@@ -6,18 +6,18 @@
 -->
 <div id="properties-table-container">
   <oj-table
-    id="properties-table"
-    class="cfe-model-properties-table"
-    aria-label="Editable Properties Table"
-    data="[[propertiesDataProvider]]"
-    edit-mode="[[editMode]]"
-    display="grid"
-    horizontal-grid-visible="enabled"
-    vertical-grid-visible="enabled"
-    layout="fixed"
-    columns='[[columnData]]'
-    on-oj-before-row-edit-end="[[onBeforeRowEditEndListener]]"
-    on-oj-animate-end="[[onAnimateEndListener]]"
+          id="properties-table"
+          class="cfe-model-properties-table"
+          aria-label="Editable Properties Table"
+          data="[[propertiesDataProvider]]"
+          edit-mode="[[editMode]]"
+          display="grid"
+          horizontal-grid-visible="enabled"
+          vertical-grid-visible="enabled"
+          layout="fixed"
+          columns='[[columnData]]'
+          on-oj-before-row-edit-end="[[onBeforeRowEditEndListener]]"
+          on-oj-animate-end="[[onAnimateEndListener]]"
   >
     <template slot="rowTemplate" data-oj-as="row">
       <tr data-bind="attr: {'data-uid': row.data.uid}">
@@ -37,9 +37,9 @@
             <oj-input-text value="{{row.data.Value}}" class="editable"></oj-input-text>
           </td>
         </oj-bind-if>
-        <oj-bind-if test="[[propertyListEditorRW]]">
+        <oj-bind-if test="[[isWritable]]">
           <td>
-            <oj-button display="icons" chroming="borderless" on-oj-action="[[row.data.remove]]">
+            <oj-button display="icons" chroming="borderless" on-oj-action="[[handleDeleteRow]]" data-bind="attr: {'data-uid': row.data.uid}">
               <span slot="endIcon" class="oj-ux-ico-trash"></span>
               <oj-bind-text value="[[deleteButtonTooltip]]"></oj-bind-text>
             </oj-button>
@@ -47,7 +47,7 @@
         </oj-bind-if>
       </tr>
     </template>
-    <oj-bind-if test="[[propertyListEditorRW]]">
+    <oj-bind-if test="[[isWritable]]">
       <template slot="headerTemplate" data-oj-as="header">
         <oj-button display="icons" chroming="borderless" on-oj-action="[[handleAddRow]]">
           <span slot="endIcon" class="oj-ux-ico-plus"></span>

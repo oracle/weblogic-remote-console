@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * TBD
+ * This POJO holds the results, and definition, of a simple search.
  */
 public class SimpleSearch {
   private SimpleSearchCriteria criteria;

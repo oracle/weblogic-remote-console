@@ -13,7 +13,7 @@ Before you can build the WebLogic Remote Console, you need to install the follow
 * [Java SE 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 * [Maven 3.6.1+](https://maven.apache.org/download.cgi)
 * [nodejs 14.16+](https://nodejs.org/en/download/) This download includes npm.
-* [Oracle JET 12.0.0 client libraries](https://www.oracle.com/tools/downloads/jet-downloads.html) To install the required Oracle JET software, run `npm install -g @oracle/ojet-cli@~12.0.0`. On Linux and macOS, you will need to use `sudo`.
+* [Oracle JET 12.1.0 client libraries](https://www.oracle.com/tools/downloads/jet-downloads.html) To install the required Oracle JET software, run `npm install -g @oracle/ojet-cli@~12.1.0`. On Linux and macOS, you will need to use `sudo`.
 
 You can verify you've installed the correct versions of the listed software by running the following commands:
 

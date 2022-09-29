@@ -3,7 +3,9 @@
 
 collectionLinks:
 - label: Min Threads Constraint Configurations
+  root: DomainConfiguration
   resourceData: Domain/SelfTuning/MinThreadsConstraints
 instanceLinks:
 - label: Min Threads Constraint Configuration
+  root: DomainConfiguration
   resourceData: Domain/SelfTuning/MinThreadsConstraints/<MinThreadsConstraintRuntime>

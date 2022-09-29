@@ -29,22 +29,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       var connectionsModels = ko.observableArray([]);
 
-      /**
-       * !!! DON'T CHANGE THE ORDER OF THE NEXT TWO LINES  !!!
-       * !!! THE initializeProject() CALL MUST COME BEFORE !!!
-       * !!! THE loadConnectionsModels() CALL              !!!
-       */
-
       this.i18n = {
         'icons': {
-          'collapse': {
-            iconFile: 'data-providers-collapse-icon_8x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.collapse.value')
-          },
-          'expand': {
-            iconFile: 'data-providers-expand-icon_8x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.expand.value')
-          },
           'choose': {
             iconFile: 'import-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.choose.value')
@@ -59,11 +45,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           },
           'import': {
             iconFile: 'project-import-icon-blk_24x24',
-            tooltip: 'Import'
+            tooltip: oj.Translations.getTranslatedString('wrc-common.buttons.import.label')
           },
           'export': {
             iconFile: 'project-export-icon-blk_24x24',
-            tooltip: 'Export'
+            tooltip: oj.Translations.getTranslatedString('wrc-common.buttons.export.label')
           },
           'more': {
             iconFile: 'more-vertical-brn-8x24',
@@ -80,6 +66,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           'edit': {
             iconFile: 'data-providers-manage-icon-brn_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-data-providers.icons.edit.tooltip')
+          },
+          'deactivate': {
+            iconFile: 'data-providers-deactivate-icon-brn_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-data-providers.icons.deactivate.tooltip')
           },
           'delete': {
             iconFile: 'data-providers-delete-icon-brn_24x24',
@@ -304,7 +294,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       // START: knockout observables referenced in dataproviders.html
       this.connectionsModelsSelectedItem = ko.observable('');
-      this.dataProvidersVisible = ko.observable();
       // Need to initialize observable with valid, throw
       // away data, because the view (dataproviders.html)
       // has <oj-bind-if> elements that use it in test
@@ -315,7 +304,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       this.contentFile = ko.observable();
       this.contentFiles = {};
       // END:   knockout observables referenced in dataproviders.html
+
       this.useSparseTemplate = ko.observableArray([]);
+
+      /**
+       * !!! DON'T CHANGE THE ORDER OF THE NEXT TWO LINES  !!!
+       * !!! THE initializeProject() CALL MUST COME BEFORE !!!
+       * !!! THE loadConnectionsModels() CALL              !!!
+       */
 
       this.project = initializeProject();
       this.projectAlias = ko.observable(CoreUtils.isNotUndefinedNorNull(this.project) ? this.project.name : '');
@@ -351,14 +347,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         }
       }
 
-      // Declare module-scoped variable that prevents
-      // user clicks on "Project Management" tabstrip,
-      // from reloading this module when if is already
-      // the currently selected tabstrip content being
-      // displayed.
       this.tabNode = 'dataproviders';
-      // Declare module-scoped variable for storing
-      // bindings to "add" signal handlers.
+      this.canExitCallback = viewParams.canExitCallback;
+
       this.signalBindings = [];
 
       this.connected = function () {
@@ -373,6 +364,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                   // Use ConsoleProjectManager to load newValue
                   // (i.e. project).
                   project = ConsoleProjectManager.createFromEntry(newValue);
+                  project.filename = (CoreUtils.isNotUndefinedNorNull(self.projectFiles['current']) ? self.projectFiles['current'].name : '');
                   setCurrentProject(project);
                   // Send notification that project was imported.
                   dispatchElectronApiSignal('project-changing');
@@ -385,41 +377,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           }
         });
 
-        this.dataProvidersVisibleSubscription = this.dataProvidersVisible.subscribe((newValue) => {
-          // Toggle visibility of the data provider section.
-          toggleDataProvidersSection(newValue);
-          // Send signal that will cause navtree-toggler to hide the navtree
-          viewParams.signaling.dataProviderSectionToggled.dispatch(newValue);
-        });
-
         if (ViewModelUtils.isElectronApiAvailable()) {
           window.electron_api.ipc.receive('on-project-switched', (switching) => {
-            switch(switching.action) {
-              case 'create':
-              case 'select':
-              case 'navigate': {
-                let project = ConsoleProjectManager.getByName(switching.from.name);
-                if (CoreUtils.isNotUndefinedNorNull(project)) {
-                  deactivateDataProviders([...project.dataProviders])
-                    .then(() => {
-                      project = ConsoleProjectManager.createFromEntry(switching.to);
-                      if (CoreUtils.isNotUndefinedNorNull(project)) {
-                        setCurrentProject(project);
-                        // Add "mouseenter" and "mouseleave" event
-                        // listener to list items
-                        addEventListeners();
-                        viewParams.signaling.projectSwitched.dispatch(switching.from);
-                        if (viewParams.onTabStripContentHidden()) viewParams.onTabStripContentVisible(true);
-                      }
-                    });
-                  }
-                }
-                break;
-              case 'rename':
-                ConsoleProjectManager.renameProject(switching.from.name, switching.to.name);
-                self.project.name = switching.to.name;
-                setProjectAlias(self.project.name);
-                break;
+            if (CoreUtils.isUndefinedOrNull(self.canExitCallback)) {
+              performProjectElectronMenuAction(switching);
+            }
+            else {
+              MessageDisplaying.displayMessage({
+                severity: 'info',
+                summary: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.summary'),
+                detail: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.detail')
+              }, 2500);
+              setTimeout(() => {
+                window.electron_api.ipc.invoke('current-project-setting', {action: switching.action, name: switching.from.name});
+              }, 5);
             }
           });
         }
@@ -428,24 +399,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // this module. In fact, the code for the add needs to
         // be moved here physically.
 
-        let binding = viewParams.signaling.showStartupTasksTriggered.add((startupTask) => {
-          chooseStartupTask(startupTask);
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.perspectiveChanged.add((newPerspective) => {
-          toggleDataProvidersToggleStrip(false);
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.backendConnectionLost.add(() => {
+        let binding = viewParams.signaling.backendConnectionLost.add(() => {
           removeEventListeners();
           clearConnectionsModels();
           self.project = initializeProject();
-          setProjectAlias('(Unnamed Project)');
-          toggleDataProvidersToggleStrip(false);
+          setProjectAlias(ConsoleProject.prototype.UNNAMED_PROJECT);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
+          self.canExitCallback = exitFormCallback;
         });
 
         self.signalBindings.push(binding);
@@ -469,7 +433,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       this.disconnected = function () {
         // Dispose of change subscriptions on knockout observables.
         self.projectFileContentsSubscription.dispose();
-        self.dataProvidersVisibleSubscription.dispose();
 
         // Remove all event listeners added earlier using
         // the addEventListeners() call.
@@ -492,18 +455,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       this.getCachedState = () => {
         return (CoreUtils.isNotUndefinedNorNull(self.project) ? self.project : {});
-      };
-
-      this.dataProvidersExpanderClickHandler = function (event) {
-        const state = event.currentTarget.parentNode.attributes['data-slideup-state'].value;
-        switch(state) {
-          case 'collapsed':
-            toggleDataProvidersToggleStrip(true);
-            break;
-          case 'expanded':
-            toggleDataProvidersToggleStrip(false);
-            break;
-        }
       };
 
       function setProjectAlias(name) {
@@ -549,7 +500,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                 // the auto-prefs.json file that CFE Electron
                 // uses for persisting project metadata.
                 Logger.info('[DATAPROVIDERS] ipcMain.handle()->ipcRenderer.invoke()->getWorkingProject() "current-project-requesting" reply=null');
-                project = ConsoleProjectManager.createFromEntry({name: '(Unnamed Project)'});
+                project = ConsoleProjectManager.createFromEntry({name: ConsoleProject.prototype.UNNAMED_PROJECT});
               }
               else {
                 // This means there was a "projects" field in
@@ -615,7 +566,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                   // ConsoleProject instance has worked,
                   // so just create a new one with a null
                   // name, and mark it as the default.
-                  project = ConsoleProjectManager.createFromEntry({name: '(Unnamed Project)', isDefault: true});
+                  project = ConsoleProjectManager.createFromEntry({name: ConsoleProject.prototype.UNNAMED_PROJECT, isDefault: true});
                 }
 
                 setCurrentProject(project);
@@ -755,6 +706,30 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                 }
                 break;
             }
+          });
+        };
+        return Promise.resolve(start());
+      }
+
+      function quiesceDataProviders(dataProviders) {
+        const start = async () => {
+          await CoreUtils.asyncForEach(dataProviders, async (dataProvider) => {
+            DataProviderManager.quiesceDataProvider(dataProvider)
+              .then( result => {
+                if (result.succeeded) {
+                  if (dataProvider.type !== DataProvider.prototype.Type.ADMINSERVER.name) {
+                    delete dataProvider['fileContents'];
+                    delete self.contentFiles[dataProvider.id];
+                  }
+                  viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
+                }
+                else {
+                  ViewModelUtils.failureResponseDefaultHandling(result.failure);
+                }
+              })
+              .catch(response => {
+                ViewModelUtils.failureResponseDefaultHandling(response.failure);
+              });
           });
         };
         return Promise.resolve(start());
@@ -1027,6 +1002,30 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         }
       }
 
+      function quiesceConnectionsModels(dataProviders){
+        let quiescedCount = 0;
+        for (const dataProvider of dataProviders) {
+          const index = connectionsModels().map(item => item.id).indexOf(dataProvider.id);
+          if (index !== -1) {
+            connectionsModels.valueWillMutate();
+            connectionsModels()[index].state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
+            connectionsModels()[index].connectivity = CoreTypes.Console.RuntimeMode.DETACHED.name;
+            if (dataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name) {
+              delete connectionsModels()[index].password;
+            }
+            connectionsModels.valueHasMutated();
+            quiescedCount++;
+          }
+        }
+        if (quiescedCount > 0) {
+          setTimeout(() => {
+              addEventListeners();
+              setListItemColor(connectionsModels());
+            }, 5
+          );
+        }
+      }
+
       function clearConnectionsModels() {
         connectionsModels.removeAll();
       }
@@ -1228,7 +1227,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             });
         }
         else {
-          if (CoreUtils.isNotUndefinedNorNull(window.electron_api)) {
+          if (ViewModelUtils.isElectronApiAvailable()) {
             // Get the file contents, so we can create
             // the multipart/form POST we need to get
             // a session for the provider type.
@@ -1306,7 +1305,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             }
           })
           .catch(response => {
-//MLW            dataProvider.file = '';
             dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
             viewParams.signaling.dataProviderLoadFailed.dispatch(dataProvider);
             delete dataProvider['fileContents'];
@@ -1330,8 +1328,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       function useSucceededHandler(dataProvider, navtreeReset) {
         if (self.project.name === null) {
           // Add selected data provider to "in-memory"
-          // project, using "InMemory" as the name.
-          self.project.name = '(Unnamed Project)';
+          // project, using ConsoleProject.prototype.UNNAMED_PROJECT
+          // as the name.
+          self.project.name = ConsoleProject.prototype.UNNAMED_PROJECT;
           ConsoleProjectManager.add(self.project);
         }
 
@@ -1354,10 +1353,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // runtime mode (e.g. "connected", "disconnected")
         // the CFE is running in.
         Runtime.setProperty(Runtime.PropertyName.CBE_DOMAIN_CONNECT_STATE, dataProvider.state);
-        Runtime.setProperty(Runtime.PropertyName.CBE_WLS_USERNAME, dataProvider.username);
         // Send signal about domain being changed, if
         // this is an "adminserver" data provider.
         if (dataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name) {
+          Runtime.setProperty(Runtime.PropertyName.CBE_WLS_USERNAME, dataProvider.username);
           viewParams.signaling.domainChanged.dispatch('dataproviders');
         }
         // Send signal about the runtime mode (e.g.
@@ -1371,6 +1370,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // change events. Doing this allows the end user
         // to repeatedly click on the same list item.
         self.connectionsModelsSelectedItem('');
+        // Select 'dataproviders' tab strip and collapse console Kiosk
+        viewParams.signaling.tabStripTabSelected.dispatch('dataproviders', 'dataproviders', false);
       }
 
       function removeSucceededHandler(dataProvider, showDialog = true) {
@@ -1946,8 +1947,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       function addProject(dialogParams) {
         const entryValues = new DialogFields();
-        entryValues.addField('name');
-        entryValues.addField('file');
+        entryValues.putValue('name', self.project.name);
+        entryValues.putValue('file', self.project.filename);
 
         self.dialogFields(entryValues);
 
@@ -1985,7 +1986,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       function dispatchElectronApiSignal(channel) {
         if (CoreUtils.isUndefinedOrNull(self.project)) {
-          self.project = ConsoleProjectManager.createFromEntry({name: '(Unnamed Project)'});
+          self.project = ConsoleProjectManager.createFromEntry({name: ConsoleProject.prototype.UNNAMED_PROJECT});
         }
 
         if (ViewModelUtils.isElectronApiAvailable()) {
@@ -2043,18 +2044,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       }
 
       function readImportedProjectFile(fileText) {
-        try {
-          // Remove any line breaks from fileText
-          const fileContents = CoreUtils.removeLineBreaks(fileText);
-          // Better to catch any JSON parsing issues, now.
-          const blob = JSON.parse(fileContents);
-          // There were no JSON parsing issues, so go ahead
-          // an trigger knockout change subscription.
-          self.projectFileContents(blob);
-        }
-        catch (error) {
-          ViewModelUtils.failureResponseDefaultHandling(error);
-        }
+        // Remove any line breaks from fileText
+        const fileContents = CoreUtils.removeLineBreaks(fileText);
+        ConsoleProjectManager.createFromJSONString(fileContents)
+          .then(project => {
+            // There were no JSON parsing issues and fileContents is the
+            // JSON representation of a project, so go ahead and trigger
+            // knockout change subscription.
+            self.projectFileContents(project);
+          })
+          .catch(response => {
+            if (CoreUtils.isNotUndefinedNorNull(response.failureType) && response.failureType === CoreTypes.FailureType.INCORRECT_CONTENT) {
+              response = Error(oj.Translations.getTranslatedString('wrc-common.messages.incorrectFileContent.detail', self.projectFile(), 'project'));
+              response.name = oj.Translations.getTranslatedString('wrc-common.title.incorrectFileContent.value');
+            }
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          });
       }
 
       function chooseStartupTask(startupTask = Runtime.getProperty(Runtime.PropertyName.CFE_STARTUP_TASK)) {
@@ -2578,7 +2583,44 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         document.getElementById('projectMoreMenu').open(event);
       };
 
-      this.projectMoreMenuClickListener = function (event) {
+      function performProjectElectronMenuAction(switching) {
+        function switchToProject(project) {
+          project = ConsoleProjectManager.createFromEntry(switching.to);
+          if (CoreUtils.isNotUndefinedNorNull(project)) {
+            setCurrentProject(project);
+            // Add "mouseenter" and "mouseleave" event
+            // listener to list items
+            addEventListeners();
+            viewParams.signaling.projectSwitched.dispatch(switching.from);
+            if (viewParams.onTabStripContentHidden()) viewParams.onTabStripContentVisible(true);
+          }
+        }
+
+        switch(switching.action) {
+          case 'create':
+          case 'select':
+          case 'navigate': {
+              let project = ConsoleProjectManager.getByName(switching.from.name);
+              if (CoreUtils.isNotUndefinedNorNull(project)) {
+                deactivateDataProviders([...project.dataProviders])
+                  .then(() => {
+                    switchToProject(project);
+                  });
+              }
+              else {
+                switchToProject(project);
+              }
+            }
+            break;
+          case 'rename':
+            ConsoleProjectManager.renameProject(switching.from.name, switching.to.name);
+            self.project.name = switching.to.name;
+            setProjectAlias(self.project.name);
+            break;
+        }
+      }
+
+      function performProjectMoreMenuAction(event) {
         const dialogParams = {
           id: event.target.value,
           accepts: 'application/yaml,application/x-yaml,application/json,text/plain'
@@ -2617,6 +2659,36 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             importProject(dialogParams);
             break;
         }
+      }
+
+      this.projectMoreMenuClickListener = function (event) {
+        if (CoreUtils.isNotUndefinedNorNull(self.canExitCallback)) {
+          const lastActivedDataProvider = DataProviderManager.getLastActivatedDataProvider();
+          const dialogMessageName = (CoreUtils.isNotUndefinedNorNull(lastActivedDataProvider) ? lastActivedDataProvider.name : 'Unknown');
+          const eventType = (['model', 'properties', 'modelComposite'].includes(lastActivedDataProvider.type) ? 'download' : 'exit');
+          self.canExitCallback(eventType, {dialogMessage: {name: dialogMessageName }})
+            .then(reply => {
+              if (eventType === 'download') {
+                if (reply !== null) {
+                  self.canExitCallback = undefined;
+                  performProjectMoreMenuAction(event);
+                }
+              }
+              else if (eventType === 'exit') {
+                if (reply) {
+                  self.canExitCallback = undefined;
+                  performProjectMoreMenuAction(event);
+                }
+              }
+            })
+            .catch(failure => {
+              ViewModelUtils.failureResponseDefaultHandling(failure);
+            });
+        }
+        else {
+          performProjectMoreMenuAction(event);
+        }
+
       }.bind(this);
 
       this.connectionsModelsIconBarClickListener = function(event) {
@@ -2630,6 +2702,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
         const actionSwitch = (value) => ({
           'edit': 'Edit',
+          'deactivate': 'Deactivate',
           'delete': 'Delete'
         })[value];
         const actionPart = actionSwitch(action);
@@ -2676,22 +2749,76 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             }
             editDataProvider(dataProvider);
         }
-        else {
+        else if (action === 'deactivate') {
           const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
-          deactivateDataProviders([dataProvider])
-            .then(() =>{
-              removeSucceededHandler(dataProvider);
-              dispatchElectronApiSignal('project-changing');
-              viewParams.onCachedStateChanged(self.tabNode, self.project);
-            })
-            .catch(response => {
-              ViewModelUtils.failureResponseDefaultHandling(response);
-            });
+          if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+            if (isSelectedDataProvider(dataProvider)) {
+              ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
+                .then(reply => {
+                  if (reply !== null) performDeactivateAction(dataProvider);
+                })
+                .catch(failure => {
+                  ViewModelUtils.failureResponseDefaultHandling(failure);
+                });
+            }
+            else {
+              performDeactivateAction(dataProvider);
+            }
+          }
+        }
+        else if (action === 'delete') {
+          const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
+          if (isSelectedDataProvider(dataProvider)) {
+            ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
+              .then(reply => {
+                if (reply !== null) performDeleteAction(dataProvider);
+              })
+              .catch(failure => {
+                ViewModelUtils.failureResponseDefaultHandling(failure);
+              });
+          }
+          else {
+            performDeleteAction(dataProvider);
+          }
         }
 
       };
 
-      function changeConnectionsModelsSelectedItem(dataProvider) {
+      function isSelectedDataProvider(dataProvider) {
+        const lastActivatedDataProvider = DataProviderManager.getLastActivatedDataProvider();
+        return (CoreUtils.isUndefinedOrNull(lastActivatedDataProvider) ? false : lastActivatedDataProvider.id === dataProvider.id)
+      }
+
+      function performDeactivateAction(dataProvider) {
+        const dataProviders = [dataProvider];
+        if (dataProvider.type !== DataProvider.prototype.Type.ADMINSERVER.name) {
+          const propertiesDataProvider = getPropertyListProvider(dataProvider.properties, true);
+          if (CoreUtils.isNotUndefinedNorNull(propertiesDataProvider)) {
+            dataProviders.push(propertiesDataProvider);
+          }
+        }
+        quiesceDataProviders(dataProviders)
+          .then(() =>{
+            quiesceConnectionsModels(dataProviders);
+          })
+          .catch(response => {
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          });
+      }
+
+      function performDeleteAction(dataProvider) {
+        deactivateDataProviders([dataProvider])
+          .then(() =>{
+            removeSucceededHandler(dataProvider);
+            dispatchElectronApiSignal('project-changing');
+            viewParams.onCachedStateChanged(self.tabNode, self.project);
+          })
+          .catch(response => {
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          });
+      }
+
+      function changeConnectionsModelsSelectedItem(dataProvider, navtreeReset = false) {
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
           // Choose what to do next, based on the type
           // of data provider this is.
@@ -2707,7 +2834,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                     // Not a password, just a comment
                     // password property.
                     dataProvider['password'] = reply.secret;
-                    selectAdminServerConnection(dataProvider);
+                    selectAdminServerConnection(dataProvider, navtreeReset);
                   }
                   else {
                     Logger.warn(`[DATAPROVIDERS] ${JSON.stringify(reply)}`);
@@ -2720,13 +2847,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             }
               break;
             case DataProvider.prototype.Type.MODEL.name:
-              selectWDTModel(dataProvider);
+              selectWDTModel(dataProvider, navtreeReset);
               break;
             case DataProvider.prototype.Type.COMPOSITE.name:
-              selectWDTCompositeModel(dataProvider);
+              selectWDTCompositeModel(dataProvider, navtreeReset);
               break;
             case DataProvider.prototype.Type.PROPERTIES.name:
-              selectPropertyList(dataProvider);
+              selectPropertyList(dataProvider, navtreeReset);
               break;
           }
         }
@@ -2740,18 +2867,57 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // change event triggering of a JET navigation
         // list control.
         if (self.connectionsModelsSelectedItem() !== '') {
-          // event.target.currentItem contains the id of
-          // the data provider the user clicked in the list.
+          self.connectionsModelsSelectedItem('');
+
           const dataProvider = connectionsModels().find(item => item.id === event.target.currentItem);
-          changeConnectionsModelsSelectedItem(dataProvider);
+          const previousDataProvider = DataProviderManager.getLastActivatedDataProvider();
+
+          if (CoreUtils.isUndefinedOrNull(previousDataProvider)) {
+            changeConnectionsModelsSelectedItem(dataProvider, true);
+          }
+          else if (previousDataProvider.id !== dataProvider.id) {
+            if (ViewModelUtils.isElectronApiAvailable() &&
+              ['model', 'properties', 'modelComposite'].includes(previousDataProvider.type)) {
+              changeConnectionsModelsSelectedItem(dataProvider);
+              return;
+            }
+
+            if (CoreUtils.isNotUndefinedNorNull(self.canExitCallback)) {
+              const eventType = (['model', 'properties', 'modelComposite'].includes(previousDataProvider.type) ? 'download' : 'exit');
+              self.canExitCallback(eventType, {dialogMessage: {name: previousDataProvider.name }})
+                .then(reply => {
+                  if (eventType === 'download') {
+                    if (reply !== null) {
+                      self.canExitCallback = undefined;
+                      changeConnectionsModelsSelectedItem(dataProvider);
+                    }
+                  }
+                  else if (eventType === 'exit') {
+                    if (reply) {
+                      self.canExitCallback = undefined;
+                      changeConnectionsModelsSelectedItem(dataProvider);
+                    }
+                  }
+                })
+                .catch(failure => {
+                  ViewModelUtils.failureResponseDefaultHandling(failure);
+                });
+            }
+            else {
+              changeConnectionsModelsSelectedItem(dataProvider);
+            }
+          }
+          else if (dataProvider.state === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
+            changeConnectionsModelsSelectedItem(dataProvider);
+          }
         }
       };
 
       this.newFileClickHandler = (event) => {
         const fileType = event.currentTarget.attributes['data-input-type'].value;
         const filepath = self.contentFile();
-        var data = '';
-        var mediaType = 'application/x-yaml';
+        let data = '';
+        let mediaType = 'application/x-yaml';
         switch (fileType) {
           case 'model':
             data = createNewWDTModelFile(filepath);
@@ -2759,6 +2925,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           case 'properties':
             data = createNewContentFile(newPropertyListContentFileData, filepath);
             mediaType = 'text/plain';
+            break;
+          case 'project':
+            mediaType = 'application/json';
             break;
         }
         if (!ViewModelUtils.isElectronApiAvailable() && filepath !== '') {
@@ -2804,7 +2973,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         if (CoreUtils.isNotUndefinedNorNull(dataprovider.file)) {
           // IFF file path values are not the same then update the data provider
           // so the provider editing and the loading of the provider at startup
-          // reflect the location of the file on disk
+          // reflect the location of the file on disk.
           if (dataprovider.file !== filePath) {
             dataprovider.putValue('file', filePath);
           }
@@ -2826,13 +2995,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                 switch(fileType) {
                   case 'properties':
                   case 'model': {
-                    self.contentFile(response.file);
-                  }
+                      self.contentFile(response.file);
+                    }
                     break;
                   case 'project': {
-                    self.projectFiles['current'] = new Blob([response.fileContents], {type: response.mediaType});
-                    self.projectFile(response.file);
-                  }
+                      self.projectFiles['current'] = new Blob([response.fileContents], {type: response.mediaType});
+                      self.projectFile(response.file);
+                    }
                     break;
                 }
               }
@@ -2886,19 +3055,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         }
       };
 
-      this.isElectronApiAvailable = () => {
+      this.isReloadable = () => {
         return ViewModelUtils.isElectronApiAvailable();
       };
-
-      /**
-       * Toggle the visibility of the entire data providers section.
-       * <p>Only a narrow strip with the collapse/expand icon at the top, will remain visible.</p>
-       * @param {boolean} visible
-       * @private
-       */
-      function toggleDataProvidersSection(visible) {
-        $('#projects-section').css({'display': (visible ? 'inline-flex' : 'none')});
-      }
 
       function onMouseEnter(event) {
         const listItemId = event.currentTarget.attributes['id'].value;
@@ -2924,20 +3083,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             .off('mouseenter', onMouseEnter)
             .off('mouseleave', onMouseLeave);
         });
-      }
-
-      function toggleDataProvidersToggleStrip(visible) {
-        const div = document.getElementById('data-providers-toggle-strip');
-        if (div !== null) {
-          const currentState = div.getAttribute('data-slideup-state');
-          if (visible && currentState !== 'expanded') {
-            div.setAttribute('data-slideup-state', 'expanded');
-          }
-          else {
-            div.setAttribute('data-slideup-state', (visible ? 'expanded': 'collapsed'));
-            self.dataProvidersVisible(visible);
-          }
-        }
       }
 
     }

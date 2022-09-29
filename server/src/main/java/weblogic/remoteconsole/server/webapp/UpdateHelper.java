@@ -7,7 +7,6 @@ import java.util.List;
 import javax.json.JsonObject;
 
 import weblogic.remoteconsole.common.repodef.PageDef;
-import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
@@ -29,39 +28,42 @@ public class UpdateHelper {
       response.copyUnsuccessfulResponse(existsResponse);
       return VoidResponseMapper.toResponse(ic, response);
     }
-    // Get the actual slice for this bean.
-    // i.e. if the type is heterogeneous, we need to get the instance's type
-    // to figure out which page to use so that we can unmarshal the request body.
-    Response<SlicePagePath> sliceResponse =
-      ic.getPageRepo().asPageReaderRepo().getActualSlicePagePath(ic);
-    if (!sliceResponse.isSuccess()) {
-      response.copyUnsuccessfulResponse(sliceResponse);
+    Response<InvocationContext> icResponse =
+      ic.getPageRepo().asPageReaderRepo().getActualSliceInvocationContext(ic);
+    if (!icResponse.isSuccess()) {
+      response.copyUnsuccessfulResponse(icResponse);
       return VoidResponseMapper.toResponse(ic, response);
     }
-    ic.setPagePath(sliceResponse.getResults());
+    InvocationContext actualIc = icResponse.getResults();
     // If this page is read-only, return MethodNotAllowed
-    Response<Boolean> readOnlyResponse = isReadOnly(ic);
+    Response<Boolean> readOnlyResponse = isReadOnly(actualIc);
     if (!readOnlyResponse.isSuccess()) {
       response.copyUnsuccessfulResponse(readOnlyResponse);
-      return VoidResponseMapper.toResponse(ic, response);
+      return VoidResponseMapper.toResponse(actualIc, response);
     }
     if (readOnlyResponse.getResults()) {
       return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED).build();
     }
     // Unmarshal the request body.
-    Response<List<FormProperty>> unmarshalResponse = FormRequestBodyMapper.fromRequestBody(ic, requestBody);
+    Response<List<FormProperty>> unmarshalResponse = FormRequestBodyMapper.fromRequestBody(actualIc, requestBody);
     if (!unmarshalResponse.isSuccess()) {
       response.copyUnsuccessfulResponse(unmarshalResponse);
-      return VoidResponseMapper.toResponse(ic, response);
+      return VoidResponseMapper.toResponse(actualIc, response);
     }
     // Update the underlying beans
-    response = ic.getPageRepo().asPageEditorRepo().update(ic, unmarshalResponse.getResults());
-    return VoidResponseMapper.toResponse(ic, response);
+    response = ic.getPageRepo().asPageEditorRepo().update(actualIc, unmarshalResponse.getResults());
+    return VoidResponseMapper.toResponse(actualIc, response);
   }
 
   public static Response<Boolean> isReadOnly(InvocationContext ic) {
     Response<Boolean> response = new Response<>();
-    Response<PageDef> pageDefResponse = ic.getPageRepo().asPageReaderRepo().getPageDef(ic);
+    Response<InvocationContext> icResponse =
+      ic.getPageRepo().asPageReaderRepo().getActualSliceInvocationContext(ic);
+    if (!icResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(icResponse);
+    }
+    InvocationContext actualIc = icResponse.getResults();
+    Response<PageDef> pageDefResponse = actualIc.getPageRepo().asPageReaderRepo().getPageDef(actualIc);
     if (!pageDefResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(pageDefResponse);
     }

@@ -43,6 +43,7 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
      * @param sections
      * @param populateCallback
      * @returns {HTMLElement}
+     * @private
      */
     function getSectionsFormLayout(options, pdjTypes, rdjData, sections, populateCallback) {
       // Upsert the values of the "name", "direction"
@@ -93,6 +94,7 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
      *
      * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
      * @returns {HTMLElement}
+     * @private
      */
     function createRawFormLayout(options) {
       const formLayout = document.createElement('oj-form-layout');
@@ -171,19 +173,20 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
         if (extra) this.extra = extra;
       },
       /**
-       * Determins if ``pdjData`` has a ``sliceForm.sections`` array, or not
+       * Determines if ``pdjData`` has a ``sliceForm.sections`` array, or not
        * @param {object} pdjData - The PDJ data for the form slice
        * @returns {boolean}
        */
-      hasFormLayoutSections(pdjData) {
-        let rtnval = false;
-        if (
-          CoreUtils.isNotUndefinedNorNull(pdjData) &&
-          CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm)
-        ) {
-          rtnval = CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm.sections);
-        }
+      hasFormLayoutSections: function(pdjData) {
+        let rtnval = this.hasCreateFormLayoutSections(pdjData);
+        if (!rtnval) rtnval = this.hasSliceFormLayoutSections(pdjData);
         return rtnval;
+      },
+      hasCreateFormLayoutSections: function(pdjData) {
+        return CoreUtils.isNotUndefinedNorNull(pdjData?.createForm?.sections);
+      },
+      hasSliceFormLayoutSections: function(pdjData) {
+        return CoreUtils.isNotUndefinedNorNull(pdjData?.sliceForm?.sections);
       },
       /**
        * Determines if the value of ``key` is a property of ``pdjData.sliceForm.presentation`` or not.
@@ -269,46 +272,27 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
             'pdjData object did not contain a \'sections\' property.'
           );
         }
+        const sections = (options.isEditing ? pdjData.sliceForm.sections : pdjData.createForm.sections);
 
         return getSectionsFormLayout(
           options,
           pdjTypes,
           rdjData,
-          pdjData.sliceForm.sections,
+          sections,
           populateCallback
         );
       },
 
       /**
-       * Returns a ``<oj-table>`` tag
-       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
-       * @param {object} pdjTypes - A ``pdjTypes`` instance for the properties in the ``pdjData`` parameter
-       * @param {object} rdjData - The RDJ data for the form slice
-       * @param {object} pdjData - The PDJ data for the form slice
-       * @param {function} populateCallback - Callback function that will populate the fields in the nested ``<oj-form-layout>`` tags
+       * Returns a ``<oj-table>`` tag for a slice table on the form
        * @returns {HTMLElement}
        */
-      createTable: function (
-        options,
-        pdjTypes,
-        rdjData,
-        pdjData,
-        populateCallback
-      ) {
+      createSliceTable: function () {
         const table = document.createElement('oj-table');
 
         let noData = document.createElement('template');
         noData.setAttribute('slot', 'noData');
         table.appendChild(noData);
-
-        populateCallback(
-          pdjData?.sliceTable?.displayedColumns,
-          table,
-          pdjTypes,
-          rdjData.data,
-          options.isSingleColumn,
-          options.isReadOnly
-        );
 
         return table;
       },

@@ -227,11 +227,11 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
          *
          * @param {string} url
          * @param {object} dataPayload
-         * @param {boolean} isFullPayload - optional, defaults to false, when set the dataPayload is the full payload
+         * @param {boolean} isFullPayload - Flag indicating whether ``dataPayload`` contains a JS property named "action", not not.
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-        save: function(url, dataPayload, isFullPayload = false) {
-          return CbeDataManager.postPayloadData({url: url}, dataPayload, isFullPayload);
+        save: function(url, dataPayload, isFullPayload) {
+          return CbeDataManager.postPayloadData(url, dataPayload, isFullPayload);
         },
         /**
          *
@@ -239,11 +239,22 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
          * @param {string} searchValue
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
-         simpleSearch: function(url, searchValue) {
+        simpleSearch: function(url, searchValue) {
            const searchPayload = { contains: searchValue };
-           return CbeDataManager.postPayloadData({url: url}, searchPayload, true);
+           return CbeDataManager.postPayloadData(url, searchPayload, true);
         },
         /**
+         *
+         * @param {string} url
+         * @param {[string]} displayedColumns - array of column names in the order they are displayed
+         * @param {boolean|undefined} reset - Flag indicating whether to reset the displayed columns, or not. Will be set to false, if not provided
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        customizeTable: function(url, displayedColumns, reset = false) {
+          const customizePayload = reset ? {} : { displayedColumns: displayedColumns };
+          return CbeDataManager.postPayloadData(url, customizePayload, true);
+        },
+       /**
          *
          * @param {string} uri
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
@@ -545,8 +556,8 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         },
 
         /**
-         * Ask CBE to create a WDT Composite Model provider specifing the names of the model providers to use for the composite.
-         * @param {{string: id, name: string, type: "modelComposite", modelProviders: [string]} dataProvider
+         * Ask CBE to create a WDT Composite Model provider specifying the names of the model providers to use for the composite.
+         * @param {{id: string, name: string, type: string, beanTrees?: [Array], state?: string, connectivity?: string, mode?: string}} dataProvider
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
         createComposite: function (dataProvider) {
@@ -575,7 +586,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
 
         /**
          * Ask CBE to use the WDT Composite Model provider.
-         * @param {{string: id, name: string, type: "modelComposite", modelProviders: [string]} dataProvider
+         * @param {{id: string, name: string, type: string, beanTrees?: [Array], state?: string, connectivity?: string, mode?: string}} dataProvider
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
         useComposite: function (dataProvider) {
@@ -697,7 +708,35 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
               response['body'] = {data: []};
               return Promise.resolve(response);
             });
+        },
+
+        /**
+         *
+         * @param {string} dataProviderId
+         * @param {string} providerType - CBE type for data provider. See ``CbeTypes.ProviderType`` frozen object.
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        quiesce: function(dataProviderId, providerType) {
+          return CbeDataManager.deleteProviderData(dataProviderId, providerType)
+            .catch(response =>{
+              // If it was a CBE_REST_API generated failure
+              // with a 403 (Bad Request) status code, we
+              // view this as a recoverable exception, likely
+              // caused by the CBE not getting completely into
+              // the state where the provider stuff works.
+              // The recovery action involves switching the
+              // Promise reject to a Promise resolve.
+              if (response.transport.status === 403) {
+                const reply = { body: { data: {} } };
+                return Promise.resolve(reply);
+              }
+              else {
+                // Rethrow response as a reject Promise.
+                return Promise.reject(response);
+              }
+            });
         }
+
       }
     }
   }

@@ -27,7 +27,54 @@ var cbePort = 0;
 var window;
 var projects;
 var current_project;
-var tablePrefs = {};
+var preferences = [
+  {
+    "sections": [
+      {
+        "key": "appExit",
+        "title": "Application Exit",
+        "properties": [
+          {
+            "defaultValue": true,
+            "label": "Detect Unsaved Changes",
+            "legalValues": [
+              { "label": "Equals", "value": "equals" }
+            ],
+            "name": "PropertyCriteria_DetectUnsavedChanges"
+          },
+          {
+            "label": "",
+            "name": "PropertyValue_DetectUnsavedChanges",
+            "type": "boolean",
+            "usedIf":
+              { "property": "PropertyCriteria_DetectUnsavedChanges", "values": ["equals"] }
+          }
+        ]
+      },
+      {
+        "key": "beforeUnload",
+        "title": "Before Unload",
+        "properties": [
+          {
+            "defaultValue": true,
+            "label": "Detect Unsaved Changes",
+            "legalValues": [
+              { "label": "Equals", "value": "equals" }
+            ],
+            "name": "PropertyCriteria_DetectUnsavedChanges"
+          },
+          {
+            "label": "",
+            "name": "PropertyValue_DetectUnsavedChanges",
+            "type": "boolean",
+            "usedIf":
+              { "property": "PropertyCriteria_DetectUnsavedChanges", "values": ["equals"] }
+          }
+        ]
+      }
+    ]
+  }
+];
 var width = 1600;
 var height = 1000;
 var started = false;
@@ -584,14 +631,22 @@ app.on('activate', () => {
 });
 
 if (canCheckForUpdates && !app.commandLine.hasSwitch("headless")) {
-  autoUpdater.checkForUpdates().then(result => {
-    newVersion = result.versionInfo.version;
-    if (app.isReady())
-      makeMenu();
-  });
+  autoUpdater.checkForUpdates()
+    .then(result => {
+      newVersion = result.versionInfo.version;
+      if (app.isReady())
+        makeMenu();
+    })
+    .catch(err => {});
 }
 
-app.setPath('userData', `${app.getPath('appData')}/weblogic-remote-console`);
+if (process.env.CONSOLE_USER_DATA_DIR) {
+  if (!fs.existsSync(process.env.CONSOLE_USER_DATA_DIR))
+    fs.mkdirSync(process.env.CONSOLE_USER_DATA_DIR, { recursive: true });
+  app.setPath('userData', process.env.CONSOLE_USER_DATA_DIR);
+}
+else
+  app.setPath('userData', `${app.getPath('appData')}/weblogic-remote-console`);
 
 var readline = require('readline');
 
@@ -600,9 +655,9 @@ function writeAutoPrefs() {
     version: `${version}`,
     width: width,
     height: height,
+    preferences: preferences,
     projects: getMaskedProjects(["password"]),
-    location: process.env.APPIMAGE ? process.env.APPIMAGE : app.getPath('exe'),
-    tablePrefs: tablePrefs
+    location: process.env.APPIMAGE ? process.env.APPIMAGE : app.getPath('exe')
   };
   fs.writeFileSync(`${app.getPath('userData')}/auto-prefs.json`, JSON.stringify(prefs, null, 4));
 }
@@ -615,12 +670,12 @@ function readAutoPrefs() {
       width = props["width"];
     if (props["height"])
       height = props["height"];
+    if (props["preferences"])
+      preferences = props["preferences"];
     if (props["projects"])
-      projects = props["projects"]
+      projects = props["projects"];
     else
       projects = [ ];
-
-    if (props["tablePrefs"]) tablePrefs = props["tablePrefs"];
 
     for (let i = 0; i < projects.length; i++)
       if (projects[i].current)
@@ -654,7 +709,7 @@ function processOptions() {
     checkPid = process.ppid;
   else
     checkPid = app.commandLine.getSwitchValue("check-pid");
-  if (checkPid != 0) {
+  if (checkPid !== 0) {
     setInterval(doCheckPid, 5000);
   }
   portOption = app.commandLine.getSwitchValue("port");
@@ -726,6 +781,8 @@ function start_cbe() {
     `-Dserver.port=${cbePort}`,
     "-jar",
     `${instDir}/backend/console.jar`,
+    "--persistenceDirectory",
+    `${app.getPath("userData")}`,
     "--showPort",
     "--stdin",
     "--properties",
@@ -915,20 +972,6 @@ ipcMain.handle('file-reading', async (event, arg) => {
     });
 });
 
-ipcMain.handle("table-customizing", async (event, arg) => {
-  const currentEntry = tablePrefs[arg.page];
-
-  if (currentEntry !== arg.fileContents) {
-    tablePrefs[arg.page] = arg.fileContents;
-    writeAutoPrefs();
-    return Promise.resolve();
-  }
-});
-
-ipcMain.handle("table-prefs-reading", async () => {
-  return Promise.resolve(tablePrefs);
-});
-
 ipcMain.handle('file-writing', async (event, arg) => {
   if (arg.filepath && arg.fileContents) {
     if (path.dirname(arg.filepath) === '.') {
@@ -946,6 +989,48 @@ ipcMain.handle('file-writing', async (event, arg) => {
       }
     };
     return Promise.resolve(response);
+  }
+});
+
+ipcMain.handle('preference-reading', async (event, arg) => {
+  ((line) => {
+    console.log(line);
+  })(`[MAIN] 'preference-reading' arg=${JSON.stringify(arg)}`);
+  const response = {};
+  const filepath = `${app.getPath('userData')}/auto-prefs.json`;
+  if (fs.existsSync(filepath)) {
+    try {
+      let value, index;
+      const props = JSON.parse(fs.readFileSync(filepath));
+      const prefs = props["preferences"] || [];
+      if (typeof prefs[0].sections !== 'undefined') {
+        index = prefs[0].sections.map(section => section.key).indexOf(arg.section);
+        if (index !== -1) {
+          const section = prefs[0].sections[index];
+          index = section.properties.map(property => property.name).indexOf(arg.name);
+          if (index !== -1) {
+            const pref = section.properties[index];
+            value = pref.defaultValue;
+            ((line) => {
+              console.log(line);
+            })(`[MAIN] 'preference-reading' pref=${JSON.stringify(pref)}`);
+          }
+        }
+      }
+      return Promise.resolve(value);
+    }
+    catch(err) {
+      response["transport"] = {statusText: err};
+      response["failureType"] = "UNEXPECTED";
+      response["failureReason"] = err;
+      return Promise.reject(response);
+    }
+  }
+  else {
+    response["transport"] = {statusText: `File does not exist: ${filepath}`};
+    response["failureType"] = "NOT_FOUND";
+    response["failureReason"] = `File does not exist: ${filepath}`;
+    return Promise.reject(response);
   }
 });
 
@@ -979,6 +1064,28 @@ ipcMain.handle('current-project-requesting', async (event, ...args) => {
     return current_project;
   }
   return null;
+});
+
+ipcMain.handle('current-project-setting', async (event, arg) => {
+  ((line) => {
+    console.log(line);
+  })(`[MAIN] 'current-project-setting' name=${JSON.stringify(arg)}`);
+  const project = getProject(arg);
+  if (typeof project !== 'undefined') {
+    switch(arg.action) {
+      case "create":
+      case "select":
+      case "navigate":
+        current_project = project;
+        makeCurrentCurrent();
+        break;
+      case "rename":
+        current_project.name = arg.name;
+        break;
+    }
+    writeAutoPrefs();
+    makeMenu();
+  }
 });
 
 ipcMain.handle('project-changing', async (event, arg) => {

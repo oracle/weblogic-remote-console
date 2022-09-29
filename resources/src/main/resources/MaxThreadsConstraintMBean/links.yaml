@@ -3,9 +3,11 @@
 
 collectionLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedMaxThreadsConstraintRuntimes
 
 instanceLinks:
 - label: Runtime Data
+  root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedMaxThreadsConstraintRuntimes/<MaxThreadsConstraint>
   notFoundMessage: This max threads constraint was not found on any of the currently running servers.

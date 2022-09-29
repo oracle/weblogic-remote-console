@@ -74,7 +74,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
       }.bind(this);
 
       function loadPerspectiveGroups() {
-        ViewModelUtils.setCursorType('progress');
+        ViewModelUtils.setPreloaderVisibility(true);
         const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(
           self.perspective.id
         );
@@ -120,7 +120,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
             ViewModelUtils.failureResponseDefaultHandling(response);
           })
           .finally(() => {
-            ViewModelUtils.setCursorType('default');
+            ViewModelUtils.setPreloaderVisibility(false);
           });
       }
 
@@ -407,7 +407,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
 
           if (name !== previousName) {
             const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(self.perspective.id);
-            ViewModelUtils.setCursorType('progress');
+            ViewModelUtils.setPreloaderVisibility(true);
             getGroupContents(beanTree, self.treeModel, name)
               .then(groupContents => {
                 self.treeModel = groupContents;
@@ -427,7 +427,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
                 toggleSubtreePageVisibility(name);
               })
               .finally(() => {
-                ViewModelUtils.setCursorType('default');
+                ViewModelUtils.setPreloaderVisibility(false);
               });
           }
           else {

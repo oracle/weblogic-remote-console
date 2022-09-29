@@ -113,10 +113,6 @@ class WebLogicBeanTypeYamlReader {
     return getYamlReader().getDefaultNavTreeDefSource(type);
   }
 
-  NavTreeDefSource getRootNavTreeDefSource(String type) {
-    return getYamlReader().getDefaultRootNavTreeDefSource(type);
-  }
-
   LinksDefSource getLinksDefSource(BeanTypeDef typeDef) {
     return getYamlReader().getDefaultLinksDefSource(typeDef);
   }

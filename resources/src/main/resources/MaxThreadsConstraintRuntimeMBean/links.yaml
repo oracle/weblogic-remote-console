@@ -3,7 +3,9 @@
 
 collectionLinks:
 - label: Max Threads Constraint Configurations
+  root: DomainConfiguration
   resourceData: Domain/SelfTuning/MaxThreadsConstraints
 instanceLinks:
 - label: Max Threads Constraint Configuration
+  root: DomainConfiguration
   resourceData: Domain/SelfTuning/MaxThreadsConstraints/<MaxThreadsConstraintRuntime>

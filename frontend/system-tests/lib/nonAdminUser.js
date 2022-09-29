@@ -114,7 +114,7 @@ module.exports = function (driver, file) {
         goToServerPage: async function (driver) {
             console.log("Click Home Image link");
             await driver.sleep(1200);
-            await driver.findElement(By.xpath("//span[@id=\'home_oj50|text\']/span")).click();
+            await driver.findElement(By.xpath("//span[@class='cfe-toolbar-button-label' and text()='Home']")).click();
             console.log("Click Config View Tree");
             await driver.findElement(By.xpath("//div[@id=\'view\']/img")).click();
             await driver.sleep(1200);
@@ -129,7 +129,8 @@ module.exports = function (driver, file) {
         goToAppDeploymentPage: async function(driver, landingImageName) {
             console.log("Click Home Image link");
             await driver.sleep(1200);
-            await driver.findElement(By.xpath("//span[@id=\'home_oj50|text\']/span")).click();
+            await driver.findElement(By.xpath("//span[@class='cfe-toolbar-button-label' and text()='Home']")).click();
+            //await driver.findElement(By.xpath("//span[@id=\'home_oj50|text\']/span")).click();
             console.log("Click Config View Tree");
             await driver.findElement(By.xpath("//img[@alt=\'"+landingImageName+"\']")).click();
             await driver.sleep(1200);

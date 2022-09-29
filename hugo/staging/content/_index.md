@@ -36,23 +36,23 @@ Whether you choose the desktop application or the browser-based tool, it's simpl
 
 ***
 ### What's new
-The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.3.0. This release was published in June 2022.
+The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.0. This release was published in September 2022.
 
 **New features**
 
-* Search: easily find references to beans within providers
-* WDT variables: manage WDT model tokens from a single location
-* Customizable tables: organize table columns to display the most pertinent information
-* Integration with the [WebLogic Kubernetes Toolkit UI](https://oracle.github.io/weblogic-toolkit-ui/)  
+* Dashboards: build detailed queries to search your Administration Server
+* Security Data Tree: new perspective for Administration Server providers where you can manage users and groups
+* Updated WebLogic Remote Console extension
 
 ***
 
 #### Previous Releases {id="prev_releases"}
 Documentation for prior releases of the WebLogic Remote Console:
-* [2.2.0](https://oracle.github.io/weblogic-remote-console/2.2.0/)
-* [2.1.0](https://oracle.github.io/weblogic-remote-console/2.1.0/)
-* [2.0.0](https://oracle.github.io/weblogic-remote-console/2.0.0/)
-* [1.1.0](https://oracle.github.io/weblogic-remote-console/1.1.0/)
+* [2.3.0](../2.3.0/)
+* [2.2.0](../2.2.0/)
+* [2.1.0](../2.1.0/)
+* [2.0.0](../2.0.0/)
+* [1.1.0](../1.1.0/)
 
 #### Need more help? Have a suggestion? Come and say, "Hello!" {id="help"}
 

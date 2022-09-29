@@ -18,8 +18,6 @@ import javax.ws.rs.core.Response;
  */
 public class EditableCollectionChildBeanResource  extends BeanResource {
 
-  private static final String UPDATE = "update";
-
   /**
    * Get the RDJ for a slice of the collection child.
    */
@@ -38,6 +36,7 @@ public class EditableCollectionChildBeanResource  extends BeanResource {
    * Handles the JAXRS POST method for this collection child.
    * <p>
    * If action is update, it modifies a slice of the child.
+   * If actioj is customizeTable, it customizes the slice table.
    * Otherwise, invokes an action on the child (e.g. start a server).
    */
   @POST
@@ -49,11 +48,13 @@ public class EditableCollectionChildBeanResource  extends BeanResource {
     JsonObject requestBody
   ) {
     setSlicePagePath(slice);
+    if (CUSTOMIZE_TABLE.equals(action)) {
+      return customizeTable(requestBody);
+    }
     if (UPDATE.equals(action)) {
       return updateSliceForm(requestBody);
-    } else {
-      return invokeAction(action, requestBody);
     }
+    return invokeAction(action, requestBody);
   }
 
   protected Response getSliceForm() {

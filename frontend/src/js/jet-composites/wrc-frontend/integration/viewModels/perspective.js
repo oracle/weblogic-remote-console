@@ -13,7 +13,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
   function (oj, ko, Router, ModuleElementUtils, HtmlUtils, Controller, DataOperations, MessageDisplaying, DataProviderManager, PerspectiveManager, BeanPathManager, BreadcrumbsManager, PageDefinitionCrossLinks, PageDefinitionUtils, ViewModelUtils, Runtime, CoreTypes, CbeTypes, CoreUtils, Logger) {
 
     function PerspectiveViewModel(viewParams) {
-      var self = this;
+      const self = this;
 
       this.i18n = {
         icons: {
@@ -34,7 +34,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
       };
 
-      // START: knockout observables referenced in perspective.html
+      // START: knockout observables referenced in view file
       this.selectedBeanPath = ko.observable();
       this.beanPathHistoryCount = ko.observable();
       const dataProvider = DataProviderManager.getLastActivatedDataProvider();
@@ -55,7 +55,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }.bind(this);
 
       this.wlsModuleConfig = ko.observable({ view: [], viewModel: null });
-      // END:   knockout observables referenced in perspective.html
+      // END:   knockout observables referenced in view file
 
       this.moreMenuItem = ko.observable('(None selected yet)');
       this.path = ko.observable();
@@ -67,17 +67,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.isDirty = function () {
         let rtnval = false;
         if (['modeling','properties'].includes(viewParams.perspective.id)) {
-          const formViewModel = self.wlsModuleConfig().viewModel;
-          if (formViewModel !== null) rtnval = formViewModel.isDirty();
+          const moduleConfigViewModel = self.wlsModuleConfig().viewModel;
+          if (moduleConfigViewModel !== null) {
+            rtnval = moduleConfigViewModel.isDirty();
+          }
         }
         return rtnval;
-      }.bind(this);
+      };
 
       this.canExit = function () {
         let rtnval = true;
         if (['modeling','properties'].includes(viewParams.perspective.id)) {
-          const formViewModel = self.wlsModuleConfig().viewModel;
-          if (formViewModel !== null) {
+          const moduleConfigViewModel = self.wlsModuleConfig().viewModel;
+          if (moduleConfigViewModel !== null) {
             let exitEntryType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'autoSave' : 'autoDownload');
             if (CoreUtils.isNotUndefinedNorNull(viewParams.identity)) {
               // This means that a router.go() is navigating away
@@ -90,12 +92,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               // because it's already served its purpose.
               delete viewParams['identity'];
             }
-            rtnval = formViewModel.canExit(exitEntryType);
+            if (CoreUtils.isNotUndefinedNorNull(moduleConfigViewModel.canExit)) {
+              return moduleConfigViewModel.canExit(exitEntryType)
+                .then(reply => {
+                  if (!reply) viewParams.signaling.beanTreeChanged.dispatch(viewParams.beanTree);
+                  return reply;
+                });
+            }
           }
         }
         return rtnval;
       };
 
+      // Declare module-scoped variable for storing
+      // bindings to "add" signal handlers.
       this.signalBindings = [];
 
       this.connected = function () {
@@ -122,7 +132,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               perspective: viewParams.perspective,
               beanTree: viewParams.beanTree,
               onBeanPathHistoryToggled: toggleBeanPathHistory,
-              onLandingPageSelected: selectedLandingPage
+              onLandingPageSelected: selectedLandingPage,
+              onCreateCancelled: cancelCreateAction
             };
             ModuleElementUtils.createConfig({
               viewPath: viewPath,
@@ -155,7 +166,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         setBeanPathHistoryVisibility(self.beanPathManager.getHistoryVisibility());
 
-        var stateParams = Router.rootInstance.observableModuleConfig().params.ojRouter.parameters;
+        const stateParams = Router.rootInstance.observableModuleConfig().params.ojRouter.parameters;
         // When using perspectives, you need to make sure
         // stateParams.path() doesn't return undefined, which
         // is possible because the navtree for the Configuration
@@ -170,6 +181,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             ViewModelUtils.failureResponseDefaultHandling(err);
           }
         }
+
         let binding = viewParams.signaling.domainChanged.add((source) => {
           const domainConnectState = Runtime.getProperty(Runtime.PropertyName.CBE_DOMAIN_CONNECT_STATE);
           Logger.log(`domainConnectState=${domainConnectState}`);
@@ -191,6 +203,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
+          self.canExitCallback = exitFormCallback;
+        });
+
+        self.signalBindings.push(binding);
+
       }.bind(this);
 
       this.disconnected = function () {
@@ -207,14 +225,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         this.router.dispose();
 
-        self.signalBindings.forEach(binding => {
-          binding.detach();
-        });
+        // Detach all signal "add" bindings.
+        self.signalBindings.forEach(binding => { binding.detach(); });
 
+        // Reinitialize module-scoped array for storing
+        // signal "add" bindings, so it can be GC'd by
+        // the JS engine.
         self.signalBindings = [];
+
       }.bind(this);
 
-      // Breadcrumb navigation
+      function cancelCreateAction(rawPath) {
+        renderPage(rawPath);
+      }
+
+      function clickedBreadCrumb(path) {
+        // Minimize Kiosk and navtree, if it is floating
+        viewParams.signaling.ancillaryContentAreaToggled.dispatch('breadcrumb', false);
+        // clear treenav selection
+        viewParams.signaling.navtreeSelectionCleared.dispatch();
+        viewParams.identity = path;
+        ViewModelUtils.goToRouterPath( self.router, `/${viewParams.beanTree.type}/${encodeURIComponent(path)}`, self.canExitCallback);
+      }
+
       this.breadcrumbClick = function (event) {
         clickedBreadCrumb(event.target.id);
       }.bind(this);
@@ -226,34 +259,42 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         viewParams.signaling.navtreeSelectionCleared.dispatch();
 
         if (viewParams.perspective.id === perspectiveId) {
-          self.router.go('/' + perspectiveId + '/' + encodeURIComponent(path));
+          ViewModelUtils.goToRouterPath(self.router, `/${perspectiveId}/${encodeURIComponent(path)}`, self.canExitCallback);
         }
         else {
           const perspective = PerspectiveManager.getById(perspectiveId);
           if (CoreUtils.isNotUndefinedNorNull(perspective)) {
-            ViewModelUtils.setCursorType('progress');
-            DataOperations.mbean.test(path)
+            ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)
               .then(reply => {
-                viewParams.signaling.beanTreeChanged.dispatch(dataProvider.getBeanTreeByPerspectiveId(perspectiveId));
-                viewParams.signaling.perspectiveSelected.dispatch(perspective);
-                viewParams.parentRouter.go('/' + perspectiveId + '/' + encodeURIComponent(path))
-              })
-              .catch(response => {
-                if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                  MessageDisplaying.displayMessage(
-                    {
-                      severity: 'info',
-                      summary: event.target.attributes['data-notFoundMessage'].value
-                    },
-                    2500
-                  );
+                if (reply) {
+                  ViewModelUtils.setPreloaderVisibility(true);
+                  DataOperations.mbean.test(path)
+                    .then(reply => {
+                      viewParams.signaling.beanTreeChanged.dispatch(dataProvider.getBeanTreeByPerspectiveId(perspectiveId));
+                      viewParams.signaling.perspectiveSelected.dispatch(perspective);
+                      viewParams.parentRouter.go(`/${perspectiveId}/${encodeURIComponent(path)}`);
+                    })
+                    .catch(response => {
+                      if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                        MessageDisplaying.displayMessage(
+                          {
+                            severity: 'info',
+                            summary: event.target.attributes['data-notFoundMessage'].value
+                          },
+                          2500
+                        );
+                      }
+                      else {
+                        ViewModelUtils.failureResponseDefaultHandling(response);
+                      }
+                    })
+                    .finally(() => {
+                      ViewModelUtils.setPreloaderVisibility(false);
+                    });
                 }
-                else {
-                  ViewModelUtils.failureResponseDefaultHandling(response);
-                }
               })
-              .finally(() => {
-                ViewModelUtils.setCursorType('default');
+              .catch(failure => {
+                ViewModelUtils.failureResponseDefaultHandling(failure);
               });
           }
         }
@@ -284,16 +325,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function selectedLandingPage(debugMessage) {
         Logger.log(debugMessage);
-        viewParams.parentRouter.go('/landing/' + viewParams.beanTree.type);
-      }
-
-      function clickedBreadCrumb(path) {
-        // Minimize Kiosk and navtree, if it is floating
-        viewParams.signaling.ancillaryContentAreaToggled.dispatch('breadcrumb', true);
-        // clear treenav selection
-        viewParams.signaling.navtreeSelectionCleared.dispatch();
-        viewParams.identity = path;
-        self.router.go('/' + viewParams.beanTree.type + '/' + encodeURIComponent(path));
+        ViewModelUtils.goToRouterPath(viewParams.parentRouter, `/landing/${viewParams.beanTree.type}`, self.canExitCallback);
       }
 
       async function addBeanPath(reply) {
@@ -332,7 +364,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         const suffix = (typeof slice !== 'undefined') ? '?slice=' + slice : '';
         const uri = (pathParam === '/' ? '' : pathParam) + suffix;
 
-        ViewModelUtils.setCursorType('progress');
+        ViewModelUtils.setPreloaderVisibility(true);
         DataOperations.mbean.get(uri)
           .then(reply => {
             return addBeanPath(reply);
@@ -385,7 +417,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
           })
           .finally(() => {
-            ViewModelUtils.setCursorType('default');
+            ViewModelUtils.setPreloaderVisibility(false);
           });
       }
 

@@ -102,16 +102,21 @@
                   <oj-bind-text value="[[item.data.name]]"></oj-bind-text>
                 </a>
                 <span :id="[[item.data.id + '-iconbar']]" class="cfe-project-provider-iconbar oj-navigationlist-item-end">
-                <a href="#" index="-1" data-item-action="info" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
-                  <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.info.iconFile + '.png', 'title': i18n.icons.info.tooltip}" />
-                </a>
-                <a href="#" index="-1" data-item-action="edit" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
-                  <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.edit.iconFile + '.png', 'title': i18n.icons.edit.tooltip}" />
-                </a>
-                <a href="#" index="-1" data-item-action="delete" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
-                  <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.delete.iconFile + '.png', 'title': i18n.icons.delete.tooltip}" />
-                </a>
-              </span>
+                  <a href="#" index="-1" data-item-action="info" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
+                    <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.info.iconFile + '.png', 'title': i18n.icons.info.tooltip}" />
+                  </a>
+                  <a href="#" index="-1" data-item-action="edit" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
+                    <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.edit.iconFile + '.png', 'title': i18n.icons.edit.tooltip}" />
+                  </a>
+                  <oj-bind-if test="[[item.data.state === 'connected']]">
+                    <a href="#" index="-1" data-item-action="deactivate" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
+                      <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.deactivate.iconFile + '.png', 'title': i18n.icons.deactivate.tooltip}" />
+                    </a>
+                  </oj-bind-if>
+                  <a href="#" index="-1" data-item-action="delete" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
+                    <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.delete.iconFile + '.png', 'title': i18n.icons.delete.tooltip}" />
+                  </a>
+                </span>
               </li>
             </template>
             <template slot="noData">
@@ -257,7 +262,7 @@
           </oj-bind-if>
         </oj-bind-if>
         <oj-bind-if test="[[dialogFields().action === 'existing']]">
-          <oj-input-text id="model-file-field" :class="[[isElectronApiAvailable() ? 'cfe-file-reloader-field' : 'cfe-file-chooser-field']]" value="{{contentFile}}" readonly="[[dialogFields().readonly]]"></oj-input-text>
+          <oj-input-text id="model-file-field" :class="[[isReloadable() ? 'cfe-file-reloader-field' : 'cfe-file-chooser-field']]" value="{{contentFile}}" readonly="[[dialogFields().readonly]]"></oj-input-text>
           <a href="#" tabindex="-1"
              :data-input="[[dialogFields().id]]"
              :data-input-type="[[dialogFields().type]]"
@@ -265,7 +270,7 @@
           >
             <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip}"/>
           </a>
-          <oj-bind-if test="[[isElectronApiAvailable()]]">
+          <oj-bind-if test="[[isReloadable()]]">
             <a href="#" index="-1"
                :data-input="[[dialogFields().id]]"
                on-click="[[reloadFileClickListener]]"
@@ -314,7 +319,7 @@
       <oj-input-text id="project-name-field" class="cfe-dialog-field" value='{{dialogFields().name}}'></oj-input-text>
 
       <oj-label slot="label" for="project-file-field"><oj-bind-text value="[[i18n.labels.project.file.value + '*']]"></oj-bind-text></oj-label>
-      <oj-input-text id="project-file-field" class="cfe-dialog-field" value='{{dialogFields().file}}'></oj-input-text>
+      <oj-input-text id="project-file-field" class="cfe-dialog-field" value='{{dialogFields().file}}' placeholder="e.g. myproject.json"></oj-input-text>
     </oj-form-layout>
   </div>
 

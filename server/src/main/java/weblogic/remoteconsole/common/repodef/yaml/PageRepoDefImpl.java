@@ -36,7 +36,8 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
   private String name;
   private BeanRepoDefImpl beanRepoDefImpl;
   private YamlReader yamlReader;
-  private String navTreeRootTypeName;
+  private String rootName;
+  private Optional<NavTreeDefImpl> rootNavTreeDefImpl;
 
   // Maps a page path's key  to the page definition (or null if the page doesn't exist)
   private Map<String, Optional<PageDefImpl>> pagePathToPageDefImplMap = new ConcurrentHashMap<>();
@@ -60,12 +61,12 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
     String name,
     BeanRepoDefImpl beanRepoImpl,
     YamlReader yamlReader,
-    String navTreeRootTypeName
+    String rootName
   ) {
     this.name = name;
     this.beanRepoDefImpl = beanRepoImpl;
     this.yamlReader = yamlReader;
-    this.navTreeRootTypeName = navTreeRootTypeName;
+    this.rootName = rootName;
   }
 
   @Override
@@ -239,13 +240,28 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
     return getNavTreeDefImpl(typeDef);
   }
 
-  private NavTreeDefImpl createNavTreeDefImpl(BeanTypeDef typeDef) {
-    NavTreeDefSource source;
-    if (typeDef == getBeanRepoDef().getRootTypeDef()) {
-      source = getYamlReader().getRootNavTreeDefSource(this.navTreeRootTypeName);
-    } else {
-      source = getYamlReader().getNavTreeDefSource(typeDef.getTypeName());
+  synchronized NavTreeDefImpl getRootNavTreeDefImpl() {
+    if (rootNavTreeDefImpl == null) {
+      rootNavTreeDefImpl = Optional.ofNullable(createRootNavTreeDefImpl());
     }
+    return  rootNavTreeDefImpl.isPresent() ? rootNavTreeDefImpl.get() : null;
+  }
+
+  @Override
+  public NavTreeDef getRootNavTreeDef() {
+    return getRootNavTreeDefImpl();
+  }
+
+  private NavTreeDefImpl createRootNavTreeDefImpl() {
+    NavTreeDefSource source = getYamlReader().getRootNavTreeDefSource(rootName);
+    if (source == null) {
+      return null;
+    }
+    return new NavTreeDefImpl(this, source, getBeanRepoDefImpl().getRootTypeDefImpl());
+  }
+
+  private NavTreeDefImpl createNavTreeDefImpl(BeanTypeDef typeDef) {
+    NavTreeDefSource source = getYamlReader().getNavTreeDefSource(typeDef.getTypeName());
     if (source == null) {
       return null;
     }

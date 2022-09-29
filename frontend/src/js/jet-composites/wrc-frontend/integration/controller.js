@@ -24,11 +24,11 @@ define(['ojs/ojcore', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', '
       navtreeToggled: new signals.Signal(),
       navtreeLoaded: new signals.Signal(),
       navtreeSelectionCleared: new signals.Signal(),
+      navtreeSelectionChanged: new signals.Signal(),
       navtreeUpdated: new signals.Signal(),
       navtreeResized: new signals.Signal(),
       navtreePlacementChanged: new signals.Signal(),
       popupMessageSent: new signals.Signal(),
-      showStartupTasksTriggered: new signals.Signal(),
       autoSyncCancelled: new signals.Signal(),
       readonlyChanged: new signals.Signal(),
       nonwritableChanged: new signals.Signal(),
@@ -38,6 +38,7 @@ define(['ojs/ojcore', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', '
       dataProviderLoadFailed: new signals.Signal(),
       projectSwitched: new signals.Signal(),
       beanTreeChanged: new signals.Signal(),
+      unsavedChangesDetected: new signals.Signal(),
       changesAutoDownloaded: new signals.Signal(),
       autoDownloadRequested: new signals.Signal(),
       formSliceSelected: new signals.Signal(),
@@ -94,7 +95,7 @@ define(['ojs/ojcore', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', '
 
       loadModule: (name) => {
         if (CoreUtils.isNotUndefinedNorNull(name)) {
-          const perspectiveNames = ['configuration', 'monitoring', 'modeling', 'view', 'composite', 'properties'];
+          const perspectiveNames = ['configuration', 'monitoring', 'modeling', 'view', 'security', 'composite', 'properties'];
           const pathPrefix = (perspectiveNames.includes(name) ? PATH_PREFIX : '');
           const viewPath = `${pathPrefix}views/${name}.html`;
           const modelPath = `${pathPrefix}viewModels/${name}`;

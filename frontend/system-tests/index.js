@@ -1,7 +1,11 @@
 'use strict';
 
 require('./tests/basic_test.js');
-require('./tests/navtree_test.js');
+require('./tests/navtree1_test.js');
+require('./tests/navtree2_test.js');
+require('./tests/navtree3_test.js');
+require('./tests/navtree4_test.js');
+require('./tests/navtree5_test.js');
 require('./tests/configPanel_test.js');
 require('./tests/domainProps_test.js');
 require('./tests/serverAndTemplate_test.js');

@@ -75,7 +75,29 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
        */
       activateAdminServerConnection: async function(dataProvider) {
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+          const isDeactivatedDataProvider = CoreUtils.isUndefinedOrNull(this.getDataProviderById(dataProvider.id));
+          if (isDeactivatedDataProvider) {
+            // We're working with a deactivated data provider. The entry
+            // has been removed from the dataproviders map, but it has
+            // everything needed to add it back.
+            const entry = {
+              id: dataProvider.id,
+              name: dataProvider.name,
+              type: dataProvider.type,
+              beanTrees: dataProvider.beanTrees,
+              url: dataProvider.url,
+              username: dataProvider.username,
+              password: dataProvider.password
+            };
+            // Add entry back into the dataproviders map
+            dataProvider = this.createAdminServerConnection(entry);
+          }
           const reply = await DomainConnectionManager.createConnection(dataProvider);
+          if (isDeactivatedDataProvider) {
+            reply.body.data.id = dataProvider.id;
+            reply.body.data.name = dataProvider.name;
+            dataProvider.populateFromResponse(reply.body.data);
+          }
           return Promise.resolve(reply);
         }
         else {
@@ -381,6 +403,19 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
       activateWDTCompositeModel: function(dataProvider) {
         return new Promise((resolve, reject) => {
           if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            if (CoreUtils.isUndefinedOrNull(this.getDataProviderById(dataProvider.id))) {
+              // We're working with a deactivated data provider. The entry
+              // has been removed from the dataproviders map, but it has
+              // everything needed to add it back.
+              const entry = {
+                id: dataProvider.id,
+                name: dataProvider.name,
+                type: dataProvider.type,
+                beanTrees: dataProvider.beanTrees
+              };
+              // Add entry back into the dataproviders map
+              dataProvider = this.createWDTCompositeModel(entry);
+            }
             DataOperations.composite.createComposite(dataProvider)
               .then(reply => {
                 DataOperations.composite.useComposite(dataProvider)
@@ -661,11 +696,56 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         return dataproviders.find(dataProvider => dataProvider.id === dataProviderId);
       },
       /**
+       * @param {string} dataProviderName
+       * @returns {DataProvider|undefined}
+       */
+      getDataProviderByName: function(dataProviderName) {
+        return dataproviders.find(dataProvider => dataProvider.name === dataProviderName);
+      },
+      /**
        *
        * @returns {Promise<{body: {data?: *, messages: [*]}} |{failureType: string, failureReason: *}>}
        */
       listDataProviders: function() {
         return DataOperations.providers.listing();
+      },
+      /**
+       *
+       * @param {DataProvider} dataProvider
+       * @returns {Promise<{body: {data?: *, messages: [*]}} |{failureType: string, failureReason: *}>}
+       */
+      quiesceDataProvider: function(dataProvider) {
+        return new Promise((resolve, reject) => {
+          const result = {succeeded: false};
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+              DataOperations.providers.quiesce(dataProvider.id, dataProvider.getBackendProviderType())
+                .then(reply => {
+                  removeDataProviderById(dataProvider.id);
+                  result.succeeded = true;
+                  result.data = dataProvider;
+                  resolve(result);
+                })
+                .catch(response => {
+                  result['failure'] = response;
+                  reject(result);
+                });
+            }
+            else {
+              removeDataProviderById(dataProvider.id);
+              result.succeeded = true;
+              result.data = dataProvider;
+              resolve(result);
+            }
+          }
+          else {
+            result['failure'] = {
+              failureType: CoreTypes.FailureType.UNEXPECTED,
+              failureReason: new Error('Required parameter is missing or null: \'dataProvider\'')
+            };
+            reject(result);
+          }
+        });
       }
 
     };

@@ -192,6 +192,6 @@ public interface BeanTypeDef {
   // Whether collections of this type are ordered
   public boolean isOrdered();
 
-  // Whether custom views can be created that return beans of this type
-  public boolean isSupportsCustomViews();
+  // Whether custom dashboards can be created that return beans of this type
+  public boolean isSupportsCustomFilteringDashboards();
 }

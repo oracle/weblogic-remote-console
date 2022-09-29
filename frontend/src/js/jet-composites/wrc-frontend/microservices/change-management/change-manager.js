@@ -61,10 +61,10 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         SHOPPING_CART: {name: 'shoppingcart'}
       }),
       /**
-       *
+       * @param {"edit"|"serverConfig"|"domainRuntime"|"securityData"|"compositeConfig"|"propertyList"} beanTreeName
        * @returns {Promise<any>}
        */
-      getLockState: function () {
+      getLockState: function (beanTreeName) {
         return new Promise((resolve, reject) => {
           const dataProvider = DataProviderManager.getLastActivatedDataProvider();
           if (CoreUtils.isUndefinedOrNull(dataProvider)) {
@@ -83,7 +83,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
             resolve(response.body.data);
           }
           else {
-            const uri = dataProvider.getBeanTreeChangeManagerUri();
+            const uri = dataProvider.getBeanTreeChangeManagerUri(beanTreeName);
             if (CoreUtils.isNotUndefinedNorNull(uri)) {
               DataOperations.changeManager.getLockState(uri)
                 .then(reply => {

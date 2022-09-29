@@ -335,6 +335,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         let field = document.createElement('cfe-property-list-editor');
         field.classList.add('cfe-property-list-editor');
         field.setAttribute('id', name);
+        field.setAttribute('property-list-name', name);
         field.setAttribute('properties-string', mapValue);
         field.setAttribute('readonly', readonly);
         field.setAttribute('name-header-label',  i18n['cfe-property-list-editor'].labels.nameHeader);

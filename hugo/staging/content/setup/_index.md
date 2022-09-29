@@ -22,8 +22,7 @@ The WebLogic Remote Console supports the following platforms:
         * Oracle Linux 8 and later
     * Debian 8 and later
 * macOS
-    * macOS 10.11 (El Capitan) or later
-    * Apple silicon (arm64)
+    * macOS 10.11 (El Capitan) or later (64-bit Intel)
 * Windows (64 bit only)
     * Windows 7 and later
 
@@ -34,9 +33,9 @@ Additionally, the WebLogic Remote Console *browser application* requires the use
 * Microsoft Edge
 * Mozilla Firefox
 
-The WebLogic Remote Console *desktop application* is based on the [Electron](https://www.electronjs.org/) framework and follows a subset of the [Electron system requirements](https://www.electronjs.org/docs/latest/tutorial/support#supported-platforms).
+The WebLogic Remote Console *desktop application* is based on the [Electron](https://www.electronjs.org/) framework.
 
-## Install the WebLogic Remote Console
+## Install the WebLogic Remote Console {id="install"}
 
 ### Desktop application {id="install_desktop"}
 
@@ -45,7 +44,7 @@ The WebLogic Remote Console *desktop application* is based on the [Electron](htt
 1. Run the installer.
 1. **Optional**: Install the WebLogic Remote Console extension in the WebLogic Server domain. The WebLogic Remote Console extension adds additional functionality when using the WebLogic Remote Console.
     1. Create a `management-services-ext` directory under the domain home.
-    1. Download the `console-rest-ext-1.0.war` from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases) and save it inside the `management-services-ext` directory you created in the previous step.
+    1. Download the `console-rest-ext-2.0.war` from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases) and save it inside the `management-services-ext` directory you created in the previous step. If you previously downloaded an earlier version of the extension, delete it and replace it with the latest version.
     1. Reboot the Administration Server if it is already running.
 1. Launch the WebLogic Remote Console application.
 
@@ -56,10 +55,10 @@ Your computer must have [Java SE 11](https://www.oracle.com/java/technologies/ja
 1. Extract the ZIP archive to a directory of your choice. Once its contents are extracted, it creates a `console` directory that includes:
     * The console executable file `console.jar`
     * The libraries required to use the console in the `libs` subdirectory
-    * The console extension, `console-rest-ext-1.0.war`, that you install in the WebLogic Server domain
+    * The console extension, `console-rest-ext-2.0.war`, that you install in the WebLogic Server domain
 1. **Optional**: Install the WebLogic Remote Console extension in the WebLogic Server domain. The WebLogic Remote Console extension adds additional functionality when using the WebLogic Remote Console.
     1. Create a `management-services-ext` directory under the domain home.
-    1. Download the `console-rest-ext-1.0.war` from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases) and save it in the `management-services-ext` directory you created in the previous step.
+    1. Download the `console-rest-ext-2.0.war` from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases) and save it in the `management-services-ext` directory you created in the previous step. If you previously downloaded an earlier version of the extension, delete it and replace it with the latest version.
     1. Reboot the Administration Server if it is already running.
 1. Open a command window and on the command line, enter `java -jar <console_home>/console.jar` where `<console_home>` is the directory where you unzipped the installer.
 1. Open a browser window and enter `http://localhost:8012` in the address bar.

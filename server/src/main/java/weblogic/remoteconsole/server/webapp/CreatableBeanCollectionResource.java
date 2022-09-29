@@ -49,26 +49,26 @@ public class CreatableBeanCollectionResource extends BeanResource {
     } else {
       throw
         new AssertionError(
-          "Invalid view:"
-            + view
-            + ", collection="
-            + getPageRepoRelativeUri()
-            + ", valid views are "
-            + VIEW_TABLE
-            + " and "
-            + VIEW_CREATE_FORM
-            + "."
+          "Invalid view:" + view + ", collection=" + getPageRepoRelativeUri() + "."
+          + " Valid views are " + VIEW_TABLE + " and " + VIEW_CREATE_FORM + "."
         );
     }
   }
 
   /**
-   * Creates a new child in the collection.
+   * Creates a new child in the collection or customizes the table's display.
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response post(JsonObject requestBody) {
+  public Response post(
+    @QueryParam("action") String action,
+    JsonObject requestBody
+  ) {
+    if (CUSTOMIZE_TABLE.equals(action)) {
+      setTablePagePath();
+      return customizeTable(requestBody);
+    }
     setCreateFormPagePath();
     return createCollectionChild(requestBody);
   }

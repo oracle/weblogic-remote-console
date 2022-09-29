@@ -13,6 +13,38 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
     function WdtModelDesignerComposite(context) {
       const self = this;
 
+      this.i18n = {
+        buttons: {
+          yes: {
+            disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.yes.label')
+          },
+          no: {
+            disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.no.label')
+          },
+          ok: {
+            disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
+          },
+          cancel: {
+            disabled: false,
+            visible: ko.observable(false),
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
+          }
+        },
+        images: {
+          preloader: {
+            iconFile: 'preloader-rounded-blocks-grn_12x64x64'
+          }
+        },
+        dialog: {
+          title: ko.observable(''),
+          instructions: ko.observable(''),
+          prompt: ko.observable('')
+        }
+      };
+
       const signaling = Controller.getSignaling();
 
       this.activatedProviders = [];
@@ -468,7 +500,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       function handleProviderActivated(dataProvider) {
         if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
           displayResourceDataFragment(dataProvider);
-          ViewModelUtils.setCursorType('progress');
+          ViewModelUtils.setPreloaderVisibility(true);
           // Load the "modeling" module
           Controller.loadModule('modeling')
             .then(moduleConfigPromise => {
@@ -488,7 +520,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
               if (index === -1) self.activatedProviders.push(dataProvider);
             })
             .finally(() => {
-              ViewModelUtils.setCursorType('default');
+              ViewModelUtils.setPreloaderVisibility(false);
             });
         }
       }

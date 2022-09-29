@@ -39,14 +39,14 @@ contextBridge.exposeInMainWorld(
         const validChannels = [
           'project-changing',
           'current-project-requesting',
+          'current-project-setting',
           'credentials-requesting',
           'file-creating',
           'file-choosing',
           'file-reading',
           'file-writing',
-          'window-app-quit',
-          'table-customizing',
-          'table-prefs-reading'
+          'preference-reading',
+          'window-app-quit'
         ];
         return new Promise((resolve, reject) => {
           if (validChannels.includes(channel)) {

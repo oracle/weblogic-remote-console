@@ -9,10 +9,12 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
-import weblogic.remoteconsole.server.repo.CustomViewDefManager;
+import weblogic.remoteconsole.server.repo.CustomFilteringDashboardDefManager;
 import weblogic.remoteconsole.server.repo.Form;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -56,14 +58,14 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
 
   private void addForm() {
     JsonObjectBuilder builder = Json.createObjectBuilder();
-    Form formData = getPage().asForm();
-    addPageInfo(formData);
-    if (formData.isExists()) {
+    Form form = getPage().asForm();
+    addPageInfo(form);
+    if (form.isExists()) {
       // Add the model tokens info if available
-      addModelTokens(formData);
+      addModelTokens(form);
 
       // Add the data using the form property values
-      for (FormProperty propertyValue : formData.getProperties()) {
+      for (FormProperty propertyValue : form.getProperties()) {
         builder.add(propertyValue.getName(), formPropertyValueToJson(propertyValue));
       }
       getEntityBuilder().add("data", builder);
@@ -89,12 +91,38 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
 
   private void addTable() {
     JsonArrayBuilder builder = Json.createArrayBuilder();
-    Table tableData = getPage().asTable();
-    addPageInfo(tableData);
-    for (TableRow tableRowValues : tableData.getRows()) {
+    Table table = getPage().asTable();
+    addPageInfo(table);
+    addDisplayedColumns(table);
+    addCustomizeTableLink(table);
+    for (TableRow tableRowValues : table.getRows()) {
       builder.add(tableRowToJson(tableRowValues));
     }
     getEntityBuilder().add("data", builder);
+  }
+
+  private void addCustomizeTableLink(Table table) {
+    String queryParams = "?action=customizeTable";
+    PagePath pagePath = getInvocationContext().getPagePath();
+    Path slicePath = (pagePath.isSlicePagePath()) ? pagePath.asSlicePagePath().getSlicePath() : new Path();
+    if (!slicePath.isEmpty()) {
+      queryParams = queryParams + "&slice=" + slicePath.getDotSeparatedPath();
+    }
+    getEntityBuilder().add(
+      "tableCustomizer",
+      getBackendRelativeUri(table.getSelf().getPath(), queryParams)
+    );
+  }
+
+  private void addDisplayedColumns(Table table) {
+    List<String> columns = table.getDisplayedColumns();
+    if (!columns.isEmpty()) {
+      JsonArrayBuilder builder = Json.createArrayBuilder();
+      for (String column : columns) {
+        builder.add(column);
+      }
+      getEntityBuilder().add("displayedColumns", builder);
+    }
   }
 
   private JsonObjectBuilder tableRowToJson(TableRow tableRowValues) {
@@ -141,29 +169,38 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     if (btp.isCreatable()) {
       getEntityBuilder().add("createForm", beanTreePathToJson(btp, "?view=createForm"));
     }
-    addCustomViewCreateFormLink(btp);
+    addCustomFilteringDashboardCreateFormLink(btp);
   }
 
-  // Add a link for getting the create form for creating custom views for beans
-  // like this bean to this bean's RDJ.
-  private void addCustomViewCreateFormLink(BeanTreePath btp) {
-    if (!CustomViewDefManager.isSupportsCustomViews(getInvocationContext(), btp)) {
+  // Add a link for getting the create form for creating custom filtering dashboards
+  // for beans like this bean to this bean's RDJ.
+  private void addCustomFilteringDashboardCreateFormLink(BeanTreePath btp) {
+    if (!CustomFilteringDashboardDefManager.isSupportsCustomFilteringDashboards(getInvocationContext(), btp)) {
       return;
     }
     // Create a query parameter that identifies this bean
     // (e.g. Servers/Server1).  It will be used as the
-    // template for creating a custom view for beans liks
-    // this one.
-    String queryParams = computeCustomViewCreateFormQueryParams(btp);
+    // template for creating a custom filtering dashboard
+    // for beans liks this one.
+    String queryParams = computeCustomFilteringDashboardCreateFormQueryParams(btp);
     String tree = btp.getSegments().get(0).getChildDef().getChildName();
-    Path customViewsPath = new Path(tree).childPath("CustomViews");
-    BeanTreePath customViewsBtp =
-      BeanTreePath.create(btp.getBeanRepo(), customViewsPath);
-    getEntityBuilder().add("customViewCreateForm", beanTreePathToJson(customViewsBtp, queryParams));
+    Path dashboardsPath = new Path(tree).childPath("Dashboards");
+    BeanTreePath dashboardsBtp =
+      BeanTreePath.create(btp.getBeanRepo(), dashboardsPath);
+    getEntityBuilder().add(
+      "dashboardCreateForm",
+      beanTreePathToJson(
+        dashboardsBtp, 
+        getInvocationContext().getLocalizer().localizeString(
+          LocalizedConstants.NEW_CUSTOM_FILTERING_DASHBOARD_LABEL
+        ),
+        queryParams
+      )
+    );
   }
 
-  private String computeCustomViewCreateFormQueryParams(BeanTreePath btp) {
-    return "?view=createForm&" + CustomViewDefManager.computePathQueryParam(btp);
+  private String computeCustomFilteringDashboardCreateFormQueryParams(BeanTreePath btp) {
+    return "?view=createForm&" + CustomFilteringDashboardDefManager.computePathQueryParam(btp);
   }
 
   private String getBeanTreePathKind(BeanTreePath btp) {

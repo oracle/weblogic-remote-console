@@ -43,6 +43,18 @@ public interface PageDef {
   // have been computed.
   public String getCustomizePageDefMethod();
 
+
+  // Returns whether this is a form.
+  public default boolean isFormDef() {
+    return this instanceof FormDef;
+  }
+
+  // Converts this form to a form.
+  // Throws a ClassCastException if the form is not a FormDef.
+  public default FormDef asFormDef() {
+    return (FormDef)this;
+  }
+
   // Returns whether this form is a slice form
   public default boolean isSliceFormDef() {
     return this instanceof SliceFormDef;

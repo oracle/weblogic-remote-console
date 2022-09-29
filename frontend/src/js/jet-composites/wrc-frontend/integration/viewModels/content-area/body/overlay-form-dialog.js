@@ -343,7 +343,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
           if (typeof dataPayload !== 'undefined') {
             Logger.log(`POST dataPayload=${JSON.stringify(dataPayload)}`);
-            DataOperations.mbean.save(viewParams.parentRouter.data.rdjUrl().replace('?dataAction=new', dataAction), dataPayload)
+            const rdjUrl = viewParams.parentRouter.data.rdjUrl().replace('?dataAction=new', dataAction);
+            DataOperations.mbean.save(rdjUrl, dataPayload)
               .then(reply => {
                 handleSaveResponse(reply, dataAction, dataPayload, eventType, isEdit);
               })
@@ -604,7 +605,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         const isUseCheckBoxesForBooleans = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, 'useCheckBoxesForBooleans');
         const isSingleColumn = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, 'singleColumn');
         const hasFormLayoutSections = PageDefinitionFormLayouts.hasFormLayoutSections(pdjData);
-        const isReadOnly = (self.readonly() && (['configuration','view','composite'].indexOf(viewParams.perspective.id) !== -1));
+        const isReadOnly = (self.readonly() && (['configuration','view','security','composite'].indexOf(viewParams.perspective.id) !== -1));
 
         if (hasFormLayoutSections) {
           formLayout = PageDefinitionFormLayouts.createSectionedFormLayout({labelWidthPcnt: '45%', maxColumns: '1', isReadOnly: isReadOnly, isSingleColumn: isSingleColumn}, pdjTypes, rdjData, pdjData, populateFormLayout);
@@ -618,12 +619,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           if (isSingleColumn) {
             formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({labelWidthPcnt: '32%', maxColumns: '1'} );
             div.append(formLayout);
-//MLW            document.documentElement.style.setProperty("--form-input-min-width", "32em");
           }
           else {
             formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({labelWidthPcnt: '45%', maxColumns: '2'} );
             div.append(formLayout);
-//MLW            document.documentElement.style.setProperty("--form-input-min-width", "15em");
           }
         }
 

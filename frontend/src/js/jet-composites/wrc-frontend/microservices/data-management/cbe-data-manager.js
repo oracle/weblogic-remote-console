@@ -417,7 +417,10 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
        */
       getAggregatedData: function (uri) {
         return new Promise((resolve, reject) => {
-          const rdjUrl = Runtime.getBackendUrl()+uri;
+          let rdjUrl = uri;
+          if (!rdjUrl.startsWith(Runtime.getBackendUrl())) {
+            rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
+          }
           getData.call(this, {url: rdjUrl})
             .then(reply => {
               return {rdjUrl: rdjUrl, rdjData: reply.body.data};
@@ -464,7 +467,10 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
        */
       putData: function (uri) {
         return new Promise((resolve, reject) => {
-          const rdjUrl = Runtime.getBackendUrl()+uri;
+          let rdjUrl = uri;
+          if (!rdjUrl.startsWith(Runtime.getBackendUrl())) {
+            rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
+          }
           getData.call(this, {url: rdjUrl})
             .then(reply => {
               return {rdjUrl: rdjUrl, rdjData: reply.body.data};
@@ -516,15 +522,19 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
 
       /**
        *
-       * @param {{serviceType: ServiceType, serviceComponentType: ServiceComponentType, uri: string}|{url: string}} options
+       * @param {string} url
        * @param {object} dataPayload
-       * @param {boolean} isFullPayload - optional, defaults to false, when set the dataPayload is converted directly to JSON
+       * @param {boolean} isFullPayload - Flag indicating whether ``dataPayload`` contains a JS property named "action", not not. Defaults to false.
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        */
-      postPayloadData: function (options, dataPayload, isFullPayload = false) {
+      postPayloadData: function (url, dataPayload, isFullPayload = false) {
         return new Promise((resolve, reject) => {
-          const url = getUrl.call(this, options);
-          const data = (!isFullPayload) ? JSON.stringify({ data: dataPayload }) : JSON.stringify(dataPayload);
+          if (!url.startsWith(Runtime.getBackendUrl())) {
+            url = `${Runtime.getBackendUrl()}${url}`;
+          }
+          // Wrap dataPayload variable in a JS property named "data",
+          // if isFullPayload is false.
+          const data = (!isFullPayload ? JSON.stringify({ data: dataPayload }) : JSON.stringify(dataPayload));
           const jqXHR = $.ajax({
             type: 'POST',
             url: url,
@@ -602,12 +612,14 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
 
       /**
        *
-       * @param {string} uri
+       * @param {string} url
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        */
-      deleteData: function (uri) {
+      deleteData: function (url) {
         return new Promise(function (resolve, reject) {
-          const url = `${Runtime.getBackendUrl()}${uri}`;
+          if (!url.startsWith(Runtime.getBackendUrl())) {
+            url = `${Runtime.getBackendUrl()}${url}`;
+          }
           HttpAdapter.delete(url, {})
             .then(reply => {
               reply['body'] = {
@@ -938,7 +950,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
        * @param {string} dataProviderId
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        * @example:
-       * DELETE /api/providers/AdminServerConnection/<dataProvider.name>
+       * DELETE /api/providers/AdminServerConnection/<dataProvider.id>
        */
       deleteConnectionData: function (dataProviderId) {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
@@ -1090,7 +1102,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       /**
        *
        * @param {string} dataProviderId
-       * @param {string} providerType
+       * @param {string} providerType - CBE type for provider. See ``CbeTypes.ProviderType`` frozen object.
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        * @example:
        * GET /api/providers/WDTModel/<dataProvider.id>
@@ -1103,7 +1115,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       /**
        *
        * @param {string} dataProviderId
-       * @param {string} providerType
+       * @param {string} providerType - CBE type for provider. See ``CbeTypes.ProviderType`` frozen object.
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        * @example:
        * DELETE /api/providers/WDTModel/<dataProvider.id>
@@ -1114,7 +1126,7 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       },
 
       /**
-       * Test the WDT Composite Model proivider
+       * Test the WDT Composite Model provider
        * @param {string} dataProviderId
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        */

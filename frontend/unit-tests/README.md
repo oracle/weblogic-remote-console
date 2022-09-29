@@ -41,6 +41,9 @@ The unit tests for the ``frontend`` are kept in the following location:
 ```
 The ``<REPO_HOME>/frontend/pom.xml`` file contains all the maven properties the `maven-exec-plugin` needs to run the tests.
 
+### Pre-requisites for Running the Existing ``frontend`` Unit Tests?
+You must ensure the value assigned to the ``JET_VERSION`` variable in the ``<REPO_HOME>/frontend/unit-tests/test-main.js`` file is correct, before attempting to run the existing unit tests. It needs to be the name of the directory immediately under ``<REPO_HOME>/frontend/web/js/libs/oj``, which should be something like ``v12.0.2``.
+
 ### How Do I Run the Existing ``frontend`` Unit Tests?
 There are two ways to run the unit tests under the ``<REPO_HOME>/frontend/unit-tests/specs`` directory:
 

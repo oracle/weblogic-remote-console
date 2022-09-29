@@ -69,8 +69,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
     BeanPropertyDefCustomizerSource pageLevelCustomizerSource
   ) {
     this.beanPropertyDefImpl =
-      new BeanPropertyDefImpl(
-        pageDefImpl.getTypeDefImpl(), // use the page's type
+      pageDefImpl.getTypeDefImpl().asYamlBasedBeanTypeDefImpl().createBeanPropertyDefImpl(
         new Path(), // the property lives at the page level
         pageLevelCustomizerSource.getDefinition(), // the PDY defines the property (v.s. FooBean.yaml)
         pageLevelCustomizerSource // and the PDY customizes the definition (just like for a bean based property)
@@ -190,8 +189,10 @@ class PagePropertyDefImpl implements PagePropertyDef {
 
   @Override public boolean isSupportsModelTokens() {
     if (isPageLevelProperty()) {
-      // Since this property is not backed by an mbean, it cannot be set to a model token.
-      return false;
+      if (!beanPropertyDefImpl.getCustomizerSource().isSupportsModelTokensSpecifiedInYaml()) {
+        // Since this property is not backed by an mbean, it cannot be set to a model token.
+        return false;
+      }
     }
     return beanPropertyDefImpl.isSupportsModelTokens();
   }
@@ -703,6 +704,11 @@ class PagePropertyDefImpl implements PagePropertyDef {
   @Override
   public Set<String> getSetRoles() {
     return beanPropertyDefImpl.getSetRoles();
+  }
+
+  @Override
+  public boolean isDontReturnIfHiddenColumn() {
+    return beanPropertyDefImpl.getCustomizerSource().isDontReturnIfHiddenColumn();
   }
 
   @Override

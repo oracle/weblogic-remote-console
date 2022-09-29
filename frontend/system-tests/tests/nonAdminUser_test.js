@@ -16,7 +16,7 @@ const password = require('../lib/admin').credential.password;
 const NonAdminUser = require('../lib/nonAdminUser');
 
 // NavTree Form, Table, Create, Shopping Cart Test Suite
-describe.only('Test Suite: nonAdminUsers Roles and Privileges', function () {
+describe.only('Test Suite: nonAdminUser_test for Roles and Privileges', function () {
     let driver;
     let file = "nonAdminUser.png";
     let element;

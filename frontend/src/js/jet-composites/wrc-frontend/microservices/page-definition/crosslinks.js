@@ -26,6 +26,7 @@ define(['ojs/ojcore', './utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
           'edit': (perspectiveId !== 'modeling' ? 'configuration' : 'modeling'),
           'serverConfig': 'view',
           'domainRuntime': 'monitoring',
+          'securityData': 'security',
           'compositeConfig': 'composite',
           'propertyList': 'properties'
         })[value];

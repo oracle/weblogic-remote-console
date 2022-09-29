@@ -44,7 +44,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
       if (CoreUtils.isNotUndefinedNorNull(type)) {
         switch(type) {
           case DataProvider.prototype.Type.ADMINSERVER:
-            types = ['configuration', 'view', 'monitoring'];
+            types = ['configuration', 'view', 'monitoring', 'security'];
             break;
           case DataProvider.prototype.Type.MODEL:
             types = ['modeling'];
@@ -69,7 +69,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
       let names = [];
       switch(type) {
         case DataProvider.prototype.Type.ADMINSERVER:
-          names = ['edit', 'serverConfig', 'domainRuntime'];
+          names = ['edit', 'serverConfig', 'domainRuntime', 'securityData'];
           break;
         case DataProvider.prototype.Type.MODEL:
           names = ['edit'];
@@ -89,6 +89,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
         'configuration': 'edit',
         'monitoring': 'domainRuntime',
         'view': 'serverConfig',
+        'security': 'securityData',
         'modeling': 'edit',
         'composite': 'compositeConfig',
         'properties': 'propertyList'
@@ -109,7 +110,12 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
       },
       BeanTreeName: Object.freeze({
         CONFIGURATION: {name: 'edit'},
-        MONITORING: {name: 'model'}
+        MONITORING: {name: 'domainRuntime'},
+        VIEW: {name: 'serverConfig'},
+        SECURITY: {name: 'securityData'},
+        MODELING: {name: 'edit'},
+        COMPOSITE: {name: 'compositeConfig'},
+        PROPERTIES: {name: 'propertyList'}
       }),
       /**
        *
@@ -174,6 +180,20 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
 
       /**
        *
+       * @returns {string}
+       */
+      getBackendProviderType: function() {
+        const typeSwitch = (value) => ({
+          'adminserver': CbeTypes.ProviderType.ADMIN_SERVER_CONNECTION.name,
+          'model': CbeTypes.ProviderType.WDT_MODEL.name,
+          'modelComposite': CbeTypes.ProviderType.WDT_COMPOSITE.name,
+          'properties': CbeTypes.ProviderType.PROPERTY_LIST.name
+        })[value];
+        return typeSwitch(this.type);
+      },
+
+      /**
+       *
        * @param {DataProviderType} type
        * @returns {Array}
        */
@@ -216,7 +236,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
       },
 
       /**
-       * @param {"edit"|"serverConfig"|"domainRuntime"} beanTreeName
+       * @param {"edit"|"serverConfig"|"domainRuntime"|"securityData"|"compositeConfig"|"propertyList"} beanTreeName
        * @returns {undefined|string}
        */
       getBeanTreeNavtreeUri: function(beanTreeName) {
@@ -226,10 +246,11 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
 
       /**
        *
+       * @param {"edit"|"serverConfig"|"domainRuntime"|"securityData"|"compositeConfig"|"propertyList"} beanTreeName
        * @returns {undefined|string}
        */
-      getBeanTreeChangeManagerUri: function() {
-        const beanTree = this.beanTrees.find(beanTree => beanTree.name === 'edit');
+      getBeanTreeChangeManagerUri: function(beanTreeName='edit') {
+        const beanTree = this.beanTrees.find(beanTree => beanTree.name === beanTreeName);
         return (CoreUtils.isNotUndefinedNorNull(beanTree) ? beanTree.changeManager : undefined);
       },
 
@@ -243,12 +264,13 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
       },
 
       getBeanTreesFromRoots: function(roots) {
-        let rtnval = ['configuration', 'view', 'monitoring', 'modeling', 'composite', 'properties'];
+        let rtnval = ['configuration', 'view', 'monitoring', 'security', 'modeling', 'composite', 'properties'];
         roots.forEach((root) => {
           const nameSwitch = (value) => ({
             'edit': 'configuration',
             'serverConfig': 'view',
             'domainRuntime': 'monitoring',
+            'securityData': 'security',
             'compositeConfig': 'composite',
             'propertyList': 'properties'
           })[value];
@@ -258,6 +280,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
               name: root.name,
               type: nameSwitch(root.name)
             };
+            beanTree['provider'] = {id: this.id, name: this.name};
             if (CoreUtils.isNotUndefinedNorNull(root.download)) beanTree['download'] = root.download;
             if (CoreUtils.isNotUndefinedNorNull(root.navtree)) beanTree['navtree'] = root.navtree;
             if (CoreUtils.isNotUndefinedNorNull(root.changeManager)) beanTree['changeManager'] = root.changeManager;

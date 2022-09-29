@@ -7,27 +7,28 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * This class manages the console backend's persisted data.
  *
  * It maintains an in-memory map from a 'key' that identifies a persistable
- * feature (e.g. TableCustomizations, RecentSearches, CustomViews) to
+ * feature (e.g. TableCustomizations, RecentSearches, Dashboards) to
  * the persisted data for that feature.  This data is shared by all
- * providers that support that feature.  For example, the 'CustomViews'
+ * providers that support that feature.  For example, the 'Dashboards'
  * are shared by all providers.
  *
  * Typically each provider has its own in-memory representation of the
- * data (e.g. the filtering rules and results for a custom view).
+ * data (e.g. the filtering rules and results for a custom filtering dashboard).
  * This cached data can become out of date when another provider
  * modifies the CBE-wide data for the feature.  To help with this,
  * the persistence manager timestamps the data so that providers
  * can tell when their cached data needs to be updated.
  * 
  * For example, if one provider creates, deletes or modifies a custom
- * view, then the other providers need to catch up if/when the user
- * tries to use the custom views in those providers.
+ * filtering dashboard, then the other providers need to catch up if/when the user
+ * tries to use the custom filtering dashboard in those providers.
  *
  * If the remote console supports persistence, then this class is initialized
  * with the name of the directory where the data should be stored
@@ -66,7 +67,7 @@ public class PersistenceManager<T> {
       LOGGER.finest("Persistence not supported.");
       return;
     }
-    mapper = new ObjectMapper();
+    mapper = new ObjectMapper().enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
     // FortifyIssueSuppression Path Manipulation
     // This is a from a command-line argument.  It's fine.
     persistenceDirectory = new File(persistenceDirectoryPath);
@@ -165,8 +166,9 @@ public class PersistenceManager<T> {
    * Set the state that's shared across the entire CBE for a feature,
    * e.g. the list of recent searches.
    * 
-   * It also records a timestamp so that providers can tell whether
-   * any data they've cached is out of date.
+   * It also records a timestamp so that we can tell when the
+   * state is out of date because the underlying persistence file
+   * has been changed.
    * 
    * If the remote console supports persistence, then the new
    * state will be persisted.  If data is not null, then it
@@ -183,6 +185,7 @@ public class PersistenceManager<T> {
     if (!supportsPersistence()) {
       return;
     }
+    persistenceDirectory.mkdirs();
     File file = getPersistenceFile();
     if (data == null) {
       if (file.exists()) {

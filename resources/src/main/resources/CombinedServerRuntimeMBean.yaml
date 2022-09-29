@@ -8,14 +8,14 @@ baseTypes:
 derivedTypes:
 - weblogic.management.runtime.RunningServerRuntimeMBean
 - weblogic.management.runtime.NotRunningServerRuntimeMBean
-descriptionHTML: '<p>Provides methods that transition servers from one state to another.
+descriptionHTML: "<p>Provides methods that transition servers from one state to another.
   This class is instantiated only on the Administration Server, but you can use it
   to transition the states of Managed Servers as well as Administration Servers.</p>  <p>You
   cannot use it to start an Administration Server, and if you want to use it to start
-  Managed Servers, you must first set up a Node Manager on each Managed Server''s
+  Managed Servers, you must first set up a Node Manager on each Managed Server's
   host machine.</p>  <p>If you want to use the methods that transition a server into
   the <code>ADMIN</code> state, you must first set up an administration channel for
-  that server.</p>'
+  that server.</p>"
 name: weblogic.management.runtime.CombinedServerRuntimeMBean
 properties:
 - defaultValue: {

@@ -18,7 +18,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
       this.i18n = {
         buttons: {
-          'new': { id: 'new', iconFile: 'new-icon-blk_24x24', disabled: false,
+          'new': { id: 'new', iconFile: 'new-icon-blk_24x24', disabled: false, visible: ko.observable(true),
             label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.new.label')
           },
           'write': { id: 'write', iconFile: 'write-wdt-model-blk_24x24', disabled: false, visible: ko.observable(true),
@@ -32,6 +32,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           },
           'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24',
             label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.customize.label')
+          },
+          'customView': { id: 'customView', iconFile: 'custom-view-icon-blk_24x24', disabled: false, visible: ko.observable(false),
+            label: ko.observable()
           }
         },
         icons: {
@@ -100,6 +103,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
       // sync-<state>-icon-blk_24x24.png is assigned to the
       // <img id="sync-icon">
       this.autoSyncEnabled = ko.observable(false);
+      this.showAutoSyncIcons = ko.observable(true);
 
       // Need initial values because table-toolbar.html has binding
       // expressions that reference changeManager
@@ -113,7 +117,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
       // This instance-scope variable is used to hold the
       // HTML for dynamic toolbar buttons
-      this.actionButtons = {html: ko.observable({}), buttons: []};
+      this.actionButtons = {html: ko.observable({}), buttons: [], visible: ko.observable(self.perspective.id === 'monitoring')};
 
       this.signalBindings=[];
       this.readonly = ko.observable();
@@ -123,7 +127,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
         const isNonCreatableCollection = rdjData.self.kind === 'nonCreatableCollection';
 
-        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, isNonCreatableCollection || !['configuration','modeling','properties'].includes(self.perspective.id));
+        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, isNonCreatableCollection || !['configuration','modeling','properties','security'].includes(self.perspective.id));
         self.readonly(Runtime.isReadOnly());
 
         let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
@@ -135,7 +139,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
         const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write'}.label`);
         self.i18n.buttons.write.label(label);
-        self.i18n.buttons.write.visible(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && ViewModelUtils.isElectronApiAvailable() && ['modeling','properties'].includes(self.perspective.id));
+        self.i18n.buttons.write.visible(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && ['modeling','properties'].includes(self.perspective.id));
+        self.i18n.buttons.new.visible(['configuration','modeling','security','properties'].includes(self.perspective.id));
 
         self.signalBindings.push(binding);
 
@@ -225,7 +230,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         else {
           switch (event.target.value){
             case 'commit':
-              ViewModelUtils.setCursorType('progress');
+              ViewModelUtils.setPreloaderVisibility(true);
               ChangeManager.commitChanges()
                 .then((changeManager) => {
                   self.changeManager(changeManager);
@@ -235,11 +240,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
                   ViewModelUtils.failureResponseDefaultHandling(response);
                 })
                 .finally(() => {
-                  ViewModelUtils.setCursorType('default');
+                  ViewModelUtils.setPreloaderVisibility(false);
                 });
               break;
             case 'discard':
-              ViewModelUtils.setCursorType('progress');
+              ViewModelUtils.setPreloaderVisibility(true);
               ChangeManager.discardChanges()
                 .then((changeManager) => {
                   self.changeManager(changeManager);
@@ -250,7 +255,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
                   ViewModelUtils.failureResponseDefaultHandling(response);
                 })
                 .finally(() => {
-                  ViewModelUtils.setCursorType('default');
+                  ViewModelUtils.setPreloaderVisibility(false);
                 });
               break;
           }
@@ -258,16 +263,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
       }.bind(this);
 
+      function resetIconsVisibleState(state) {
+        self.showAutoSyncIcons(state);
+      }
+
       this.isShoppingCartVisible = function() {
         // Default to false
         let visible = false;
-        if (ChangeManager.getMostRecent().supportsChanges) {
-          // The console extension is installed, but the
-          // shopping cart icon may be hidden for the
-          // current perspective.
-          visible = viewParams.isShoppingCartVisible();
-        }
-        else if (self.perspective.id === 'configuration') {
+        // The console extension is installed, but the
+        // shopping cart icon may be hidden for the
+        // current perspective.
+        if (self.perspective.id === 'configuration') {
           // The console extension isn't installed, but
           // there is one perspective where still showing
           // the shopping cart icon is required. That's
@@ -291,6 +297,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         self.actionButtons.html({ view: HtmlUtils.stringToNodeArray(results.html.innerHTML), data: self });
         self.actionButtons.buttons = results.buttons;
         updateActionButtonsState(self.readonly());
+        const rdjData = viewParams.parentRouter?.data?.rdjData();
+        const isCustomView = (self.perspective.id === 'monitoring' && CoreUtils.isNotUndefinedNorNull(rdjData?.dashboardCreateForm));
+        if (isCustomView) {
+          self.i18n.buttons.customView.label(rdjData?.dashboardCreateForm?.label);
+        }
+        self.i18n.buttons.customView.visible(isCustomView);
+        resetIconsVisibleState(self.perspective.id === 'monitoring');
       }.bind(this);
 
       function updateActionButtonsState(isReadOnly) {
@@ -307,9 +320,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
       }
 
       this.toggleHistoryClick = function (event) {
+        const withHistoryVisible = viewParams.onBeanPathHistoryToggled(!self.showBeanPathHistory());
         // Call function in table.js assigned to the
         // onBeanPathHistoryToggled field in viewParams
-        self.showBeanPathHistory(viewParams.onBeanPathHistoryToggled(!self.showBeanPathHistory()));
+        self.showBeanPathHistory(withHistoryVisible);
       };
 
       this.landingPageClick = function (event) {
@@ -395,6 +409,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
       }
 
       this.newAction = function (event) {
+        if (self.showBeanPathHistory()) {
+          const withHistoryVisible = viewParams.onBeanPathHistoryToggled(false);
+          self.showBeanPathHistory(withHistoryVisible);
+        }
         viewParams.newAction(event);
       };
 
@@ -404,6 +422,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
       this.customizeAction = (event) => {
         viewParams.onCustomizeButtonClicked(event);
+      };
+
+      this.customViewAction = (event) => {
+        if (self.showBeanPathHistory()) {
+          const withHistoryVisible = viewParams.onBeanPathHistoryToggled(false);
+          self.showBeanPathHistory(withHistoryVisible);
+        }
+        viewParams.onCustomViewButtonClicked(event);
       };
 
       this.actionsDialogButtonClicked = function (result) {
@@ -434,7 +460,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
         viewParams.onActionButtonClicked(dialogParams)
           .then((result) => {
-            ViewModelUtils.setCursorType('progress');
+            ViewModelUtils.setPreloaderVisibility(true);
             const pageDefinitionActions = viewParams.pageDefinitionActions();
             pageDefinitionActions.performActionOnChosenItems(result.chosenItems, result.urls)
               .then(replies => {
@@ -467,7 +493,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
                 ViewModelUtils.failureResponseDefaultHandling(response);
               })
               .finally(() => {
-                ViewModelUtils.setCursorType('default');
+                ViewModelUtils.setPreloaderVisibility(false);
               });
 
           });
