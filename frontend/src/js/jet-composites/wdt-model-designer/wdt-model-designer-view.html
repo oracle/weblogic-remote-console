@@ -104,10 +104,10 @@ available outside of a form or table.
     <oj-button id="dlgNoBtn">
       <span class="button-label" data-bind="text: [[i18n.buttons.no.label]]"></span>
     </oj-button>
-    <oj-bind-if test="[[i18n.buttons.cancel.visible()]]">
+    <div class="cfe-dialog-cancel">
       <oj-button id="dlgCancelBtn">
         <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
       </oj-button>
-    </oj-bind-if>
+    </div>
   </div>
 </oj-dialog>

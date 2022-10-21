@@ -1,0 +1,17 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Manages this domain's dashboards.</p>
+  <p>Note: Custom filtering dashboards are used to display all the instances
+  in the domain that match a type (e.g. Application Runtime) and a set of
+  user-defined filters (e.g. the HealthState is not ok and the application's
+  name contains the string 'med').</p>
+  <p>To create one, choose a node from the Navigation tree then click the 'New Dashboard' button.
+  For example, to create a custom filtering dashboard of Application Runtime instances,
+  navigate to 'Deployments -> Application Runtimes' then click 'New Dashboard'.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "Type"
+- name: "Date"
+- name: "NumberOfMatches"

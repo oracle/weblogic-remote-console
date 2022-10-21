@@ -1,0 +1,31 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+contents:
+- label: Policies
+  type: group
+  contents:
+  - label: Root Level
+    type: group
+    contents:
+    - child: Policies.RootLevel.Admin
+    - child: Policies.RootLevel.EJB
+    - child: Policies.RootLevel.JDBC
+    - child: Policies.RootLevel.JMS
+    - child: Policies.RootLevel.JMX
+    - child: Policies.RootLevel.JNDI
+    - child: Policies.RootLevel.ResourceAdapter
+    - child: Policies.RootLevel.Server
+    - child: Policies.RootLevel.URL
+    - child: Policies.RootLevel.WebService
+    - child: Policies.RootLevel.WorkContext
+  - label: Domain
+    type: group
+    contents:
+    - child: Policies.Domain.Configuration
+    - child: Policies.Domain.FileDownload
+    - child: Policies.Domain.FileUpload
+    - child: Policies.Domain.IdentityAssertion
+    - child: Policies.Domain.SSH
+    - child: Policies.Domain.UserLockout
+    - child: Policies.Domain.ViewLog
+  - child: Policies.JMSSystemResources

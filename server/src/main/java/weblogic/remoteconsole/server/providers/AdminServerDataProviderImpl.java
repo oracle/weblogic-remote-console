@@ -291,9 +291,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       "/" + UriUtils.API_URI
       + "/" + StringUtils.urlEncode(getName())
       + "/" + Root.DOMAIN_RUNTIME_NAME
-      + "/data"
-      + "/" + Root.MONITORING_ROOT
-      + "/DomainSecurityRuntime?slice=SecurityWarnings";
+      + "/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings";
     LocalizableString ls =
       hasSecurityValidationWarnings(connection)
         ? LocalizedConstants.SECURITY_VALIDATION_WARNINGS_WARNING_LINK_LABEL

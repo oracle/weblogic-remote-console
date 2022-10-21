@@ -104,13 +104,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
+          const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === 'shoppingcart');
+          tabNode.visible(false);
+//MLW          showTabStripContent('shoppingcart', false, false);
+        });
+
+        self.signalBindings.push(binding);
+/*
+///MLW
         binding = viewParams.signaling.dataProviderRemoved.add((dataProvider) => {
           showTabStripContent('shoppingcart', false, false);
           showTabStripContent('dataproviders', true, true);
         });
 
         self.signalBindings.push(binding);
-
+*/
         binding = viewParams.signaling.beanTreeChanged.add(newBeanTree => {
           if (newBeanTree.type !== 'home') {
             self.beanTreeName = newBeanTree.name;

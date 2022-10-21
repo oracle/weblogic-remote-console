@@ -1,0 +1,34 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.FileDownloadPolicyMBean
+baseTypes:
+- weblogic.management.security.authorization.PolicyMBean
+properties:
+- name: ear_request
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadMethodPolicyMBean
+- name: file
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadMethodPolicyMBean
+- name: wl_component_request
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadMethodPolicyMBean
+- name: wl_ear_resource_request
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadMethodPolicyMBean
+- name: wl_file_realm_request
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadMethodPolicyMBean
+- name: wl_init_replica_request
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadMethodPolicyMBean
+- name: wl_jsp_refresh_request
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadMethodPolicyMBean
+- name: wl_managed_server_independence_request
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadMethodPolicyMBean
+- name: wl_xml_entity_request
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadMethodPolicyMBean

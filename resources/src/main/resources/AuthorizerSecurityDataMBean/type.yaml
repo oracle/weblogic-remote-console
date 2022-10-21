@@ -1,0 +1,11 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.security.providers.authorization.DefaultAuthorizerSecurityDataMBean
+  value: weblogic.security.providers.authorization.DefaultAuthorizer
+- type: weblogic.security.providers.xacml.authorization.XACMLAuthorizerSecurityDataMBean
+  value: weblogic.security.providers.xacml.authorization.XACMLAuthorizer
+
+disableMBeanJavadoc: true

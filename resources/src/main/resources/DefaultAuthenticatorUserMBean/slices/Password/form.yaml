@@ -1,0 +1,17 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to change the password for the selected user.</p>
+  <p>The minimum password length for a user defined in the WebLogic
+  Authentication provider is eight characters. Do not use the
+  username/password <code>weblogic/weblogic</code> in production.</p>
+
+properties:
+- name: "Password"
+  label: "New Password"
+
+helpTopics:
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"

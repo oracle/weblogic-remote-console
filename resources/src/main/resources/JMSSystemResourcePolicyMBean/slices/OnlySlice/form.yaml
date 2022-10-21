@@ -1,0 +1,20 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to manage the security policy of your JMS system module
+  resource. Clients must satisfy this policy to access any resource within
+  this module (unless you have defined a policy for a specific resource in
+  the module).</p>
+
+properties:
+- name: "Expression"
+- name: "InheritedExpression"
+
+helpTopics:
+- label: "JMS Resources"
+  href: "roles/types.html#ROLES134"
+  type: "edocs"
+- label: "Security Policy Conditions"
+  href: "roles/sec_poly.html#ROLES175"
+  type: "edocs"

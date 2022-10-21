@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
   "dependencies": {
-    "@oracle/oraclejet": "12.1.0",
+    "@oracle/oraclejet": "~13.0.2",
     "jquery": "^3.6.0",
-    "jquery-ui": "^1.13.2",
+    "jquery-ui": "^1.13.0",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "@oracle/oraclejet-tooling": "~12.1.0",
+    "@oracle/oraclejet-tooling": "~13.0.0",
     "@types/chai": "^4.2.3",
     "@types/jquery": "^3.3.32",
     "@types/karma-fixture": "^0.2.5",

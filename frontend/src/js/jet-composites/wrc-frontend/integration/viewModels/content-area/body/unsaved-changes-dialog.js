@@ -239,21 +239,29 @@ define(['knockout'],
       confirmDialog.setAttribute('dialog-title', i18n.dialog.title());
       const span = document.getElementById('confirmDialogPrompt');
       span.innerHTML = i18n.dialog.prompt();
+      const div = document.querySelector('.cfe-dialog-cancel');
+      div.style.display = (i18n.buttons.cancel.visible() ? 'inline-flex' : 'none');
       return new Promise(function (resolve) {
         function onClose(reply) {
-          okBtn.removeEventListener('ojAction', okClickHandler);
+          yesBtn.removeEventListener('ojAction', yesClickHandler);
+          noBtn.removeEventListener('ojAction', noClickHandler);
           cancelBtn.removeEventListener('ojAction', cancelClickHandler);
           confirmDialog.removeEventListener('keyup', onKeyUp);
           resolve(reply);
         }
 
-        function okClickHandler(event) {
-          onClose(true);
+        function yesClickHandler(event) {
+          onClose({exitButton: 'yes'});
+          confirmDialog.close();
+        }
+
+        function noClickHandler() {
+          onClose({exitButton: 'no'});
           confirmDialog.close();
         }
 
         function cancelClickHandler() {
-          onClose(false);
+          onClose({exitButton: 'cancel'});
           confirmDialog.close();
         }
 
@@ -261,7 +269,7 @@ define(['knockout'],
           switch (event.key){
             case 'Enter':
               // Treat pressing the "Enter" key as clicking the "OK" button
-              okClickHandler(event);
+              yesClickHandler(event);
               // Suppress default handling of keyup event
               event.preventDefault();
               // Veto the keyup event, so JET will update the knockout
@@ -274,11 +282,14 @@ define(['knockout'],
           }
         }
 
-        const okBtn = document.getElementById('dlgYesBtn');
-        okBtn.addEventListener('ojAction', okClickHandler);
+        const yesBtn = document.getElementById('dlgYesBtn');
+        yesBtn.addEventListener('click', yesClickHandler);
 
-        const cancelBtn = document.getElementById('dlgNoBtn');
-        cancelBtn.addEventListener('ojAction', cancelClickHandler)
+        const noBtn = document.getElementById('dlgNoBtn');
+        noBtn.addEventListener('click', noClickHandler);
+
+        const cancelBtn = document.getElementById('dlgCancelBtn');
+        cancelBtn.addEventListener('click', cancelClickHandler);
 
         confirmDialog.addEventListener('keyup', onKeyUp);
 
@@ -286,7 +297,7 @@ define(['knockout'],
       });
     }
 
-  //public:
+    //public:
     return {
       showConfirmDialog: (name, i18n) => {
         switch (name) {

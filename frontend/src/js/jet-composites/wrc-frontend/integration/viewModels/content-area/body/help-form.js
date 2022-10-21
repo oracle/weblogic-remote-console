@@ -24,15 +24,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       }
     };
 
-    /**
-     *
-     * @param {object} viewParams
-     */
-    function HelpForm(viewParams) {
-      this.viewParams = viewParams;
-      this.rdjData = viewParams.parentRouter.data.rdjData();
-      this.pdjData = viewParams.parentRouter.data.pdjData();
-      this.perspective = viewParams.perspective;
+    function HelpForm(pdjData, rdjData, perspective) {
+      this.pdjData = pdjData;
+      this.rdjData = rdjData;
+      this.perspective = perspective;
     }
 
     /**

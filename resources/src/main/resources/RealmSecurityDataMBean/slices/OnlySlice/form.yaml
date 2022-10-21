@@ -1,0 +1,18 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: "<p>Use this page to navigate to the pages that manage this realm's security providers' data.</p>"
+
+properties:
+- name: Name
+
+helpTopics:
+- label: "Options for Securing EJB and Web Application Resources"
+  href: "roles/secejbwar.html"
+  type: "edocs"
+- label: "Understanding the Advanced Security Mode"
+  href: "roles/secejbwar.html#ROLES160"
+  type: "edocs"
+- label: "Using the Java Authorization Contract for Containers"
+  href: "scprg/server_prot.html#SCPRG401"
+  type: "edocs"

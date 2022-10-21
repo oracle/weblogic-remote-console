@@ -1,0 +1,41 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.RootLevelPoliciesMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+derivedTypes: []
+properties:
+- name: Admin
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: EJB
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: JDBC
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: JMS
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: JMX
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: JNDI
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: ResourceAdapter
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: Server
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: URL
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: WebService
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean
+- name: WorkContext
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPolicyMBean

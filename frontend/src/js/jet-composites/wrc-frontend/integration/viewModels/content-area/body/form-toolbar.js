@@ -190,6 +190,10 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
         self.signalBindings.push(binding);
 
+        // The Kiosk will more than likely just be in the
+        // way from here on out, so go ahead and hide it.
+        viewParams.signaling.ancillaryContentAreaToggled.dispatch('form-toolbar', false);
+
         // The establishment of this subscription will happen
         // BEFORE the Promise for ChangeManager.getLockState()
         // is resolved! The update of self.changeManager()
