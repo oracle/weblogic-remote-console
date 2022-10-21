@@ -1,0 +1,92 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.createResource
+getCollectionMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.getCollection
+disableMBeanJavadoc: true
+supportsCustomFilteringDashboards: false
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.management.CustomFilteringDashboardMBean
+  value: "Custom Filtering Dashboard"
+properties:
+- name: Type
+  getMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.getType
+- name: TemplateBeanKeyCriteria
+  legalValues:
+  - value: "unfiltered"
+    label: "Any"
+  - value: "equals"
+    label: "Equals"
+  - value: "contains"
+    label: "Contains"
+- name: TemplateIntPropertyCriteria
+  legalValues:
+  - value: "unfiltered"
+    label: "Any"
+  - value: "equals"
+    label: "Equals"
+  - value: "notEquals"
+    label: "Not Equals"
+  - value: "lessThan"
+    label: "Less Than"
+  - value: "lessThanOrEquals"
+    label: "Less Than or Equals"
+  - value: "greaterThan"
+    label: "Greater Than"
+  - value: "greaterThanOrEquals"
+    label: "Greater Than or Equals"
+- name: TemplateLongPropertyCriteria
+  legalValues:
+  - value: "unfiltered"
+    label: "Any"
+  - value: "equals"
+    label: "Equals"
+  - value: "notEquals"
+    label: "Not Equals"
+  - value: "lessThan"
+    label: "Less Than"
+  - value: "lessThanOrEquals"
+    label: "Less Than or Equals"
+  - value: "greaterThan"
+    label: "Greater Than"
+  - value: "greaterThanOrEquals"
+    label: "Greater Than or Equals"
+- name: TemplateDoublePropertyCriteria
+  legalValues:
+  - value: "unfiltered"
+    label: "Any"
+  - value: "equals"
+    label: "Equals"
+  - value: "notEquals"
+    label: "Not Equals"
+  - value: "lessThan"
+    label: "Less Than"
+  - value: "lessThanOrEquals"
+    label: "Less Than or Equals"
+  - value: "greaterThan"
+    label: "Greater Than"
+  - value: "greaterThanOrEquals"
+    label: "Greater Than or Equals"
+- name: TemplateBooleanPropertyCriteria
+  legalValues:
+  - value: "unfiltered"
+    label: "Any"
+  - value: "equals"
+    label: "Equals"
+- name: TemplateStringPropertyCriteria
+  legalValues:
+  - value: "unfiltered"
+    label: "Any"
+  - value: "equals"
+    label: "Equals"
+  - value: "notEquals"
+    label: "Not Equals"
+  - value: "contains"
+    label: "Contains"
+- name: TemplateGenericPropertyCriteria
+  legalValues:
+  - value: "unfiltered"
+    label: "Any"
+  - value: "contains"
+    label: "Contains"

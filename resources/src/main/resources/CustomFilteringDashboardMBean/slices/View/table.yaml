@@ -1,0 +1,11 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Displays all {0} instances in the domain matching this
+  custom filtering dashboard''s filters.</p>
+  <p>Use ''Customize Table'' to change which columns are displayed.
+  Use the reload button to refresh the results.</p>
+
+customizePageDefMethod: weblogic.remoteconsole.customizers.CustomFilteringDashboardMBeanCustomizer.customizeViewSliceDef
+customizePageMethod: weblogic.remoteconsole.customizers.CustomFilteringDashboardMBeanCustomizer.customizeViewSlice

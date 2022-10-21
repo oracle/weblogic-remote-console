@@ -1,0 +1,118 @@
+# Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+contents:
+- label: Environment
+  type: group
+  contents:
+  - child: DomainRuntime
+  - child: DomainRuntime.DomainSecurityRuntime
+    roles:
+      # Only admins can view the security warnings, and this node is only used for viewing them
+      allowed:
+      - Admin
+  - child: DomainRuntime.CombinedServerRuntimes
+  - child: DomainRuntime.AggregatedJVMRuntime
+  - child: DomainRuntime.NodeManagerRuntimes
+  - label: Clustering
+    type: group
+    contents:
+    - child: DomainRuntime.AggregatedClusterRuntime
+    - child: DomainRuntime.AggregatedAsyncReplicationRuntime
+    - child: DomainRuntime.AggregatedMANAsyncReplicationRuntime
+    - child: DomainRuntime.AggregatedMANReplicationRuntime
+    - child: DomainRuntime.AggregatedWANReplicationRuntime
+    - child: DomainRuntime.ElasticServiceManagerRuntime.ScalingTasks
+  - label: Migration
+    type: group
+    contents:
+    - child: DomainRuntime.MigrationDataRuntimes
+    - child: DomainRuntime.ServiceMigrationDataRuntimes
+  - label: ZDT
+    type: group
+    contents:
+    - child: DomainRuntime.RolloutService.AllWorkflows
+    - child: DomainRuntime.RolloutService.InactiveWorkflows
+    - child: DomainRuntime.RolloutService.StoppedWorkflows
+  - child: DomainRuntime.AggregatedServerChannelRuntimes
+  - child: DomainRuntime.EditSessionConfigurationManager.EditSessionConfigurations
+  - child: DomainRuntime.SystemComponentLifeCycleRuntimes
+- label: Scheduling
+  type: group
+  contents:
+  - child: DomainRuntime.AggregatedExecuteQueueRuntimes
+  - child: DomainRuntime.AggregatedMinThreadsConstraintRuntimes
+  - child: DomainRuntime.AggregatedMaxThreadsConstraintRuntimes
+  - child: DomainRuntime.AggregatedRequestClassRuntimes
+  - child: DomainRuntime.AggregatedWorkManagerRuntimes
+  - child: DomainRuntime.AggregatedConcurrentManagedObjectsRuntime.ManagedExecutorServiceRuntimes
+  - child: DomainRuntime.AggregatedConcurrentManagedObjectsRuntime.ManagedScheduledExecutorServiceRuntimes
+  - child: DomainRuntime.AggregatedConcurrentManagedObjectsRuntime.ManagedThreadFactoryRuntimes
+- label: Deployments
+  type: group
+  contents:
+  - child: DomainRuntime.AggregatedApplicationRuntimes
+  - child: DomainRuntime.DeploymentManager.AppDeploymentRuntimes
+  - child: DomainRuntime.AggregatedLibraryRuntimes
+  - child: DomainRuntime.DeploymentManager.LibDeploymentRuntimes
+  - child: DomainRuntime.DeploymentManager.DeploymentProgressObjects
+  - child: DomainRuntime.AggregatedWebServerRuntimes
+  - label: Web Services
+    type: group
+    contents:
+    - child: DomainRuntime.AggregatedWseeClusterFrontEndRuntime
+    - child: DomainRuntime.AggregatedWseeWsrmRuntime
+    - child: DomainRuntime.AggregatedEntityCacheCurrentStateRuntime
+    - child: DomainRuntime.AggregatedEntityCacheCumulativeRuntime
+  - label: Resource Adapters
+    type: group
+    contents:
+    - child: DomainRuntime.AggregatedConnectorServiceRuntime.ActiveRAs
+    - child: DomainRuntime.AggregatedConnectorServiceRuntime.InactiveRAs
+    - child: DomainRuntime.AggregatedConnectorServiceRuntime.RAs
+- label: Services
+  type: group
+  contents:
+  - label: Data Sources
+    type: group
+    contents:
+    - child: DomainRuntime.AggregatedJDBCServiceRuntime.JDBCDataSourceRuntimeMBeans
+    - child: DomainRuntime.AggregatedJDBCServiceRuntime.JDBCDriverRuntimeMBeans
+    - child: DomainRuntime.AggregatedJDBCServiceRuntime.JDBCMultiDataSourceRuntimeMBeans
+  - label: Messaging
+    type: group
+    contents:
+    - child: DomainRuntime.AggregatedJMSRuntime
+    - child: DomainRuntime.AggregatedSAFRuntime
+    - child: DomainRuntime.AggregatedPathServiceRuntimes
+    - child: DomainRuntime.AggregatedMessagingBridgeRuntimes
+  - label: Transactions
+    type: group
+    contents:
+    - child: DomainRuntime.AggregatedJTARuntime
+  - label: Persistence
+    type: group
+    contents:
+    - child: DomainRuntime.AggregatedPersistentStoreRuntimes
+    - child: DomainRuntime.AggregatedWLDFRuntime.WLDFAccessRuntime.DataAccessRuntimes
+- label: Security
+  type: group
+  contents:
+  - child: DomainRuntime.AggregatedServerSecurityRuntime.RealmRuntimes
+  - child: DomainRuntime.AggregatedServerSecurityRuntime.DefaultRealmRuntime.AuthenticatorRuntimes
+- label: Interoperability
+  type: group
+  contents:
+  - child: DomainRuntime.AggregatedJoltRuntime
+  - child: DomainRuntime.AggregatedWTCRuntime
+- label: Diagnostics
+  type: group
+  contents:
+  - child: DomainRuntime.AggregatedSNMPAgentRuntime
+  - child: DomainRuntime.SNMPAgentRuntime
+  - child: DomainRuntime.AggregatedWLDFRuntime.WLDFArchiveRuntimes
+  - child: DomainRuntime.AggregatedWLDFRuntime.WLDFInstrumentationRuntimes
+  - child: DomainRuntime.AggregatedWLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes
+  - child: DomainRuntime.AggregatedWLDFRuntime.WLDFDebugPatchesRuntime.DebugPatchTasks
+  - child: DomainRuntime.AggregatedWLDFRuntime.WLDFControlRuntime.SystemResourceControls
+- child: DomainRuntime.RecentSearches
+- child: DomainRuntime.Dashboards

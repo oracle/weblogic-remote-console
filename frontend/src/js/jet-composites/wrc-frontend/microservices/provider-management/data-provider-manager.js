@@ -66,6 +66,8 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         if (CoreUtils.isNotUndefinedNorNull(entry.url)) dataProvider['url'] = entry.url;
         if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider['username'] = entry.username;
         if (CoreUtils.isNotUndefinedNorNull(entry.password)) dataProvider['password'] = entry.password;
+        if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider['token'] = entry.token;
+        if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider['expires'] = entry.expires;
         return dataProvider;
       },
       /**
@@ -87,7 +89,9 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
               beanTrees: dataProvider.beanTrees,
               url: dataProvider.url,
               username: dataProvider.username,
-              password: dataProvider.password
+              password: dataProvider.password,
+              token: dataProvider.token,
+              expires: dataProvider.expires
             };
             // Add entry back into the dataproviders map
             dataProvider = this.createAdminServerConnection(entry);

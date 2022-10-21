@@ -1,0 +1,53 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: Groups
+  label: "Parent Groups"
+  optionsSources:
+  - Domain/RealmsSecurityData/<RealmSecurityData>/AuthenticationProviders/<AuthenticationProviderSecurityData>/Groups
+
+# Specify the user attributes' labels since otherwise they default to starting upper case:
+- name: c
+  label: c
+- name: departmentnumber
+  label: departmentnumber
+- name: displayname
+  label: displayname
+- name: employeenumber
+  label: employeenumber
+- name: employeetype
+  label: employeetype
+- name: facsimiletelephonenumber
+  label: facsimiletelephonenumber
+- name: givenname
+  label: givenname
+- name: homephone
+  label: homephone
+- name: homepostaladdress
+  label: homepostaladdress
+- name: l
+  label: l
+- name: mail
+  label: mail
+- name: mobile
+  label: mobile
+- name: pager
+  label: pager
+- name: postaladdress
+  label: postaladdress
+- name: postofficebox
+  label: postofficebox
+- name: preferredlanguage
+  label: preferredlanguage
+- name: st
+  label: st
+- name: street
+  label: street
+- name: telephonenumber
+  label: telephonenumber
+- name: title
+  label: title
+
+editable: true
+disableMBeanJavadoc: true

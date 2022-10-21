@@ -1219,6 +1219,117 @@ define({
           "details": "Having trouble sending and receiving data from provider! Please ensure it is accessible and try again."
         }
       }
+    },
+    "wrc-electron": {
+      "labels": {
+        "app": {
+          "appName": {
+            "value": "WebLogic Remote Console"
+          },
+          "copyright": {
+            "value": "Copyright (c) 2021, 2022, Oracle and/or its affiliates."
+          }
+        }
+      },
+      "menus": {
+        "app": {
+          "about": {
+            "value": "About {0}"
+          },
+          "services": {
+            "value": "Services"
+          },
+          "hide": {
+            "value": "Hide {0}"
+          },
+          "quit": {
+            "value": "Quit {0}"
+          }
+        },
+        "file": {
+          "newProject": {
+            "value": "New Project"
+          },
+          "switchToProject": {
+            "value": "Switch to Project"
+          },
+          "deleteProject": {
+            "value": "Delete Project"
+          },
+          "nameProject": {
+            "value": "Name Project..."
+          },
+          "renameProject": {
+            "value": "Rename \"{0}\"..."
+          }
+        },
+        "help": {
+          "checkForUpdates": {
+            "value": "Check for \"{0}\" Updates..."
+          },
+          "visit": {
+            "value": "Visit {0} Github Project"
+          }
+        }
+      },
+      "prompt": {
+        "file": {
+          "newProject": {
+            "title": {
+              "value": "New Project"
+            },
+            "label": {
+              "value": "Name"
+            }
+          },
+          "nameProject": {
+            "title": {
+              "value": "Name Project"
+            },
+            "label": {
+              "value": "Name"
+            }
+          },
+          "renameProject": {
+            "title": {
+              "value": "Rename \"{0}\""
+            },
+            "label": {
+              "value": "New name"
+            }
+          }
+        }
+      },
+      "dialog": {
+        "help": {
+          "checkForUpdates": {
+            "alreadyOnCurrent": {
+              "title": {
+                "value": "You Are Up To Date"
+              },
+              "message": {
+                "value": "Current version is {0}"
+              }
+            },
+            "newVersionAvailable": {
+              "title": {
+                "value": "Newer Version Available!"
+              },
+              "message": {
+                "value": "Go to https://github.com/oracle/weblogic-remote-console/releases to get version {0}"
+              }
+            },
+            "connectionIssue": {
+              "title": {
+                "value": "Connection Issue"
+              },
+              "message": {
+                "value": "Could not reach update site"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "ar-XB": false,

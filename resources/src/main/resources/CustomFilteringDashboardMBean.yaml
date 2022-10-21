@@ -1,0 +1,19 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.DashboardMBean
+derivedTypes: [
+  ]
+descriptionHTML: >
+  <p>A custom filtering dashboard displays monitoring information about all the
+  beans in the domain that match a set of user-defined filters,
+  for example, the list of Servers whose HealthState is not ok.</p>
+name: weblogic.management.CustomFilteringDashboardMBean
+properties:
+- descriptionHTML: "<p>The date of the monitoring information displayed in this dashboard.</p>"
+  name: Date
+  type: java.util.Date
+- descriptionHTML: "<p>The number of matching beans displayed in this filtering dashboard.</p>"
+  name: NumberOfMatches
+  type: long

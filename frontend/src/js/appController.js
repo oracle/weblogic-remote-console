@@ -15,6 +15,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       const NAVTREE_MAX_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty('navtree-max-width'), 10);
 
       const self = this;
+      const appName = oj.Translations.getTranslatedString('wrc-electron.labels.app.appName.value');
 
       this.i18n = {
         buttons: {
@@ -45,6 +46,144 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
           title: ko.observable(''),
           instructions: ko.observable(''),
           prompt: ko.observable('')
+        },
+        'wrc-electron': {
+          'labels': {
+            'app': {
+              'appName': {
+                'value': appName
+              },
+              'copyright': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.labels.app.copyright.value')
+              }
+            }
+          },
+          'menus': {
+            'app': {
+              'about': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.app.about.value', appName)
+              },
+              'services': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.app.services.value')
+              },
+              'hide': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.app.hide.value', appName)
+              },
+              'quit': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.app.quit.value', appName)
+              }
+            },
+            'file': {
+              'newProject': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.file.nameProject.value')
+              },
+              'switchToProject': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.file.switchToProject.value')
+              },
+              'deleteProject': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.file.deleteProject.value')
+              },
+              'nameProject': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.file.nameProject.value')
+              },
+              'renameProject': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.file.renameProject.value', '{0}')
+              }
+            },
+            'help': {
+              'checkForUpdates': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.help.checkForUpdates.value', appName)
+              },
+              'visit': {
+                'value': oj.Translations.getTranslatedString('wrc-electron.menus.help.visit.value', appName)
+              }
+            }
+          },
+          'prompt': {
+            'file': {
+              'newProject': {
+                'title': {
+                  'value': oj.Translations.getTranslatedString('wrc-electron.prompt.file.nameProject.title.value')
+                },
+                'label': {
+                  'value': oj.Translations.getTranslatedString('wrc-electron.prompt.file.nameProject.label.value')
+                }
+              },
+              'nameProject': {
+                'title': {
+                  'value': oj.Translations.getTranslatedString('wrc-electron.prompt.file.nameProject.title.value')
+                },
+                'label': {
+                  'value': oj.Translations.getTranslatedString('wrc-electron.prompt.file.nameProject.label.value')
+                }
+              },
+              'renameProject': {
+                'title': {
+                  'value': oj.Translations.getTranslatedString('wrc-electron.prompt.file.renameProject.title.value', appName)
+                },
+                'label': {
+                  'value': oj.Translations.getTranslatedString('wrc-electron.prompt.file.renameProject.label.value')
+                }
+              }
+            }
+          },
+          'dialog': {
+            'help': {
+              'checkForUpdates': {
+                'alreadyOnCurrent': {
+                  'title': {
+                    'value': oj.Translations.getTranslatedString('wrc-electron.dialog.help.checkForUpdates.alreadyOnCurrent.title.value')
+                  },
+                  'message': {
+                    'value': oj.Translations.getTranslatedString('wrc-electron.dialog.help.checkForUpdates.alreadyOnCurrent.message.value', appName)
+                  },
+                  'button': {
+                    'ok': {
+                      'value': oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
+                    }
+                  }
+                },
+                'newVersionAvailable': {
+                  'title': {
+                    'value': oj.Translations.getTranslatedString('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.title.value')
+                  },
+                  'message': {
+                    'value': oj.Translations.getTranslatedString('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.message.value', '{0}')
+                  },
+                  'button': {
+                    'ok': {
+                      'value': oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
+                    },
+                    'cancel': {
+                      'value': oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
+                    }
+                  }
+                },
+                'connectionIssue': {
+                  'title': {
+                    'value': oj.Translations.getTranslatedString('wrc-electron.dialog.help.checkForUpdates.connectionIssue.title.value')
+                  },
+                  'message': {
+                    'value': oj.Translations.getTranslatedString('wrc-electron.dialog.help.checkForUpdates.connectionIssue.message.value')
+                  },
+                  'button': {
+                    'ok': {
+                      'value': oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      };
+
+      const div = document.getElementById('globalBody');
+      div.onclick = (event) => {
+        if (event.metaKey) {
+          event.stopImmediatePropagation();
+          event.preventDefault();
+          return false;
         }
       };
 
@@ -55,13 +194,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
       Runtime.setProperty(Runtime.PropertyName.CFE_ROLE, ele.getAttribute('data-runtime-role'));
 
       if (ViewModelUtils.isElectronApiAvailable()) {
+        window.electron_api.ipc.invoke('translated-strings-sending', {i18n: this.i18n['wrc-electron']});
+
         window.electron_api.ipc.receive('start-app-quit', async () => {
           Logger.info('[APPCONTROLLER] \'start-app-quit\' Received event.');
           if (Controller.getSignal('appQuitTriggered').getNumListeners() > 0) {
             Controller.getSignal('appQuitTriggered').dispatch();
           }
           else {
-            window.electron_api.ipc.invoke('window-app-quit',  {preventQuit: false, source: 'appController.js'});
+            window.electron_api.ipc.invoke('window-app-quiting',  {preventQuitting: false, source: 'appController.js'});
           }
         });
       }
@@ -330,9 +471,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
             case CoreTypes.Console.RuntimeMode.UNATTACHED.name:
             case CoreTypes.Console.RuntimeMode.DETACHED.name:
               div.style.display = 'none';
-              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) router.go('home');
               break;
           }
+          if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) router.go('home');
         }
       });
 

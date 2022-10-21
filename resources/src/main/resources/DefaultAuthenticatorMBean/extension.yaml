@@ -1,0 +1,20 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+- array: true
+  descriptionHTML: "<p>This DefaultAuthenticator's users.</p>"
+  name: Users
+  relationship: containment
+  type: weblogic.security.providers.authentication.DefaultAuthenticatorUserMBean
+  getRoles:
+    allowed:
+    - Admin
+- array: true
+  descriptionHTML: "<p>This DefaultAuthenticator's groups.</p>"
+  name: Groups
+  relationship: containment
+  type: weblogic.security.providers.authentication.DefaultAuthenticatorGroupMBean
+  getRoles:
+    allowed:
+    - Admin
+

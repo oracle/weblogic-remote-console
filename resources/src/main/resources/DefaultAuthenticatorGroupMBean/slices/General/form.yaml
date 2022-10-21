@@ -1,0 +1,14 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page allows you to edit the description for this group.</p>
+
+properties:
+- name: "Name"
+- name: "Description"
+
+helpTopics:
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"

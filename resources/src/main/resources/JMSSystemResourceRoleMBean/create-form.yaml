@@ -1,0 +1,16 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: "<p>Use this page to define a security role that can be used only in the policy for this JMS system module.</p>"
+
+properties:
+- name: Name
+- name: Expression
+
+helpTopics:
+- label: "JMS Resources"
+  href: "roles/types.html#ROLES134"
+  type: "edocs"
+- label: "Security Role Conditions"
+  href: "roles/secroles.html#ROLES191"
+  type: "edocs"

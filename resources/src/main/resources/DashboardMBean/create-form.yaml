@@ -1,0 +1,36 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Create a custom filtering dashboard that displays a filtered list
+  of all {0} instances in the domain.</p>
+  <p>You can specify a set of filters now.  You can also change them later.
+  <p>The new dashboard will include all {0} instances in this domain that match all the filters.
+  If no filters are specified, then all {0} instances will be included.</p>
+  <p>The new dashboard will be included under the ''Dashboards'' section of the navigation tree.</p>
+
+customizePageDefMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.customizeCreateFormDef
+customizePageMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.customizeCreateForm
+
+properties:
+- name: "TemplateBeanKeyCriteria"
+- name: "TemplateBeanKeyValue"
+- name: "TemplateBeanKeyResult"
+- name: "TemplateIntPropertyCriteria"
+- name: "TemplateIntPropertyValue"
+- name: "TemplateLongPropertyCriteria"
+- name: "TemplateLongPropertyValue"
+- name: "TemplateDoublePropertyCriteria"
+- name: "TemplateDoublePropertyValue"
+- name: "TemplateBooleanPropertyCriteria"
+- name: "TemplateBooleanPropertyValue"
+- name: "TemplateStringPropertyCriteria"
+- name: "TemplateStringPropertyValue"
+- name: "TemplateGenericPropertyCriteria"
+- name: "TemplateGenericPropertyValue"
+
+sections:
+- properties:
+  - name: "Name"
+- title: "Name Filters"
+- title: "Property Filters"

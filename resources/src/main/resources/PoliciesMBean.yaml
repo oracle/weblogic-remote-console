@@ -1,0 +1,18 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.PoliciesMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+derivedTypes: []
+properties:
+- name: RootLevel
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPoliciesMBean
+- name: Domain
+  relationship: containment
+  type: weblogic.management.security.authorization.DomainPoliciesMBean
+- name: JMSSystemResources
+  relationship: containment
+  type: weblogic.management.security.authorization.JMSSystemResourcePolicyMBean
+  array: true

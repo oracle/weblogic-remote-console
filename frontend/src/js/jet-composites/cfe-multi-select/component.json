@@ -33,6 +33,11 @@
     "readonly": {
       "description": "Display only",
       "type": "boolean"
+    },
+    "displayWidth": {
+      "description": "The width setting for the component. Defaults to 700px.",
+      "type": "string",
+      "value": "700px"
     }
   },
   "methods": {
