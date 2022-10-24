@@ -9,7 +9,7 @@
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "@oracle/oraclejet-tooling": "~13.0.0",
+    "@oracle/oraclejet-tooling": "~13.1.0",
     "@types/chai": "^4.2.3",
     "@types/jquery": "^3.3.32",
     "@types/karma-fixture": "^0.2.5",
