@@ -1,0 +1,15 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: "Create a new user in this WebLogic Authentication provider."
+
+properties:
+  - name: Name
+  - name: Description
+  - name: Password
+    required: true
+
+helpTopics:
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"

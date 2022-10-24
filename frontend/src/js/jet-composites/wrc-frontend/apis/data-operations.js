@@ -114,6 +114,11 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
     }
 
     async function createAuthorizationHeader(dataProvider) {
+      // Check for token when creating connection
+      if (CoreUtils.isNotUndefinedNorNull(dataProvider.token)) {
+        return 'Bearer ' + dataProvider.token;
+      }
+
       // Use built-in, global btoa() method to create
       // an Authorization HTTP request header.
       //

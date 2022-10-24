@@ -22,7 +22,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright Â© 2020, 2022, Oracle und/oder verbundene Unternehmen.<br/>Oracle ist eine eingetragene Marke der Oracle Corporation und/oder ihrer verbundenen Unternehmen. Andere Namen und Bezeichnungen können Marken ihrer jeweiligen Inhaber sein.<br/>",
+      "copyrightLegal": "Copyright © 2020, 2022, Oracle und/oder verbundene Unternehmen.<br/>Oracle ist eine eingetragene Marke der Oracle Corporation und/oder ihrer verbundenen Unternehmen. Andere Namen und Bezeichnungen können Marken ihrer jeweiligen Inhaber sein.<br/>",
       "builtWith": "Mit Oracle JET erstellt"
     }
   },
@@ -1202,5 +1202,116 @@ define({
         "details": "Beim Senden und Empfangen von Daten vom Provider treten Probleme auf. Stellen Sie sicher, dass der Provider zugänglich ist, und wiederholen Sie den Vorgang."
       }
     }
-  }
+  },
+  "wrc-electron": {
+      "labels": {
+        "app": {
+          "appName": {
+            "value": "WebLogic Remote Console"
+          },
+          "copyright": {
+            "value": "Copyright © 2020, 2022, Oracle und/oder verbundene Unternehmen."
+          }
+        }
+      },
+      "menus": {
+        "app": {
+          "about": {
+            "value": "Um {0}"
+          },
+          "services": {
+            "value": "Dienstleistungen"
+          },
+          "hide": {
+            "value": "Ausblenden {0}"
+          },
+          "quit": {
+            "value": "Aufhören {0}"
+          }
+        },
+        "file": {
+          "newProject": {
+            "value": "Neues Projekt"
+          },
+          "switchToProject": {
+            "value": "Wechseln Sie zu Projekt"
+          },
+          "deleteProject": {
+            "value": "Projekt löschen"
+          },
+          "nameProject": {
+            "value": "Projekt benennen..."
+          },
+          "renameProject": {
+            "value": "Umbenennen \"{0}\"..."
+          }
+        },
+        "help": {
+          "checkForUpdates": {
+            "value": "Prüfen Auf \"{0}\" Aktualisierung..."
+          },
+          "visit": {
+            "value": "Besuch {0} Github-Projekt"
+          }
+        }
+      },
+      "prompt": {
+        "file": {
+          "newProject": {
+            "title": {
+              "value": "Neues Projekt"
+            },
+            "label": {
+              "value": "Name"
+            }
+          },
+          "nameProject": {
+            "title": {
+              "value": "Projekt benennen"
+            },
+            "label": {
+              "value": "Name"
+            }
+          },
+          "renameProject": {
+            "title": {
+              "value": "Umbenennen \"{0}\"..."
+            },
+            "label": {
+              "value": "Neuer Name"
+            }
+          }
+        }
+      },
+      "dialog": {
+        "help": {
+          "checkForUpdates": {
+            "alreadyOnCurrent": {
+              "title": {
+                "value": "Sie sind auf dem Laufenden"
+              },
+              "message": {
+                "value": "Aktuelle Version ist {0}"
+              }
+            },
+            "newVersionAvailable": {
+              "title": {
+                "value": "Neuere Version verfügbar!"
+              },
+              "message": {
+                "value": "Gehe zu https://github.com/oracle/weblogic-remote-console/releases Version zu bekommen {0}"
+              }
+            },
+            "connectionIssue": {
+              "title": {
+                "value": "Verbindungsprobleme"
+              },
+              "message": {
+                "value": "Update-Site konnte nicht erreicht werden"
+              }
+            }
+          }
+        }
+      }
+    }
 });

@@ -1,0 +1,13 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.RoleMapperSecurityDataMBean
+baseTypes:
+- weblogic.management.security.ProviderSecurityDataMBean
+derivedTypes:
+- weblogic.security.providers.xacml.authorization.XACMLRoleMapperSecurityDataMBean
+- weblogic.security.providers.authorization.DefaultRoleMapperSecurityDataMBean
+properties:
+- name: Roles
+  relationship: containment
+  type: weblogic.management.security.authorization.RolesMBean

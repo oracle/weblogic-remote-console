@@ -1,0 +1,15 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: "<p>This page lists the domain's JMS system modules.</p>"
+
+displayedColumns:
+- name: Name
+
+helpTopics:
+- label: "JMS Resources"
+  href: "roles/types.html#ROLES134"
+  type: "edocs"
+- label: "Security Role Conditions"
+  href: "roles/secroles.html#ROLES191"
+  type: "edocs"

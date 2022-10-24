@@ -1,0 +1,29 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.DomainPoliciesMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+derivedTypes: []
+properties:
+- name: Configuration
+  relationship: containment
+  type: weblogic.management.security.authorization.ConfigurationPolicyMBean
+- name: FileDownload
+  relationship: containment
+  type: weblogic.management.security.authorization.FileDownloadPolicyMBean
+- name: FileUpload
+  relationship: containment
+  type: weblogic.management.security.authorization.FileUploadPolicyMBean
+- name: IdentityAssertion
+  relationship: containment
+  type: weblogic.management.security.authorization.IdentityAssertionPolicyMBean
+- name: SSH
+  relationship: containment
+  type: weblogic.management.security.authorization.SSHPolicyMBean
+- name: UserLockout
+  relationship: containment
+  type: weblogic.management.security.authorization.UserLockoutPolicyMBean
+- name: ViewLog
+  relationship: containment
+  type: weblogic.management.security.authorization.ViewLogPolicyMBean

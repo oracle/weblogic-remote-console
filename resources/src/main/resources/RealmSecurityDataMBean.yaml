@@ -1,0 +1,24 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: []
+name: weblogic.management.security.RealmSecurityDataMBean
+properties:
+- name: Name
+  type: java.lang.String
+  descriptionHTML: The name of this realm.
+- name: AuthenticationProviders
+  relationship: containment
+  type: weblogic.management.security.authentication.AuthenticationProviderSecurityDataMBean
+  array: true
+- name: RoleMappers
+  relationship: containment
+  type: weblogic.management.security.authentication.RoleMapperSecurityDataMBean
+  array: true
+- name: Authorizers
+  relationship: containment
+  type: weblogic.management.security.authentication.AuthorizerSecurityDataMBean
+  array: true

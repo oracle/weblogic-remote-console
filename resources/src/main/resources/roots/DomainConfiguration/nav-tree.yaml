@@ -1,0 +1,72 @@
+# Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+contents:
+- label: Environment
+  type: group
+  contents:
+  - child: Domain
+  - child: Domain.Servers
+  - child: Domain.Clusters
+  - child: Domain.ServerTemplates
+  - child: Domain.Machines
+  - child: Domain.MigratableTargets
+  - child: Domain.VirtualHosts
+  - child: Domain.LogFilters
+  - child: Domain.SingletonServices
+  - child: Domain.StartupClasses
+  - child: Domain.ShutdownClasses
+  - child: Domain.CoherenceClusterSystemResources
+- label: Scheduling
+  type: group
+  contents:
+  - child: Domain.SelfTuning.WorkManagers
+  - child: Domain.SelfTuning.Capacities
+  - child: Domain.SelfTuning.ContextRequestClasses
+  - child: Domain.SelfTuning.FairShareRequestClasses
+  - child: Domain.SelfTuning.MaxThreadsConstraints
+  - child: Domain.SelfTuning.MinThreadsConstraints
+  - child: Domain.SelfTuning.ResponseTimeRequestClasses
+  - child: Domain.ManagedExecutorServiceTemplates
+  - child: Domain.ManagedScheduledExecutorServiceTemplates
+  - child: Domain.ManagedThreadFactoryTemplates
+- label: Deployments
+  type: group
+  contents:
+  - child: Domain.AppDeployments
+  - child: Domain.Libraries
+- label: Services
+  type: group
+  contents:
+  - child: Domain.JDBCSystemResources
+  - child: Domain.JMSServers
+  - child: Domain.JMSSystemResources
+  - child: Domain.JMSBridgeDestinations
+  - child: Domain.MessagingBridges
+  - child: Domain.JTA
+  - child: Domain.SAFAgents
+  - child: Domain.PathServices
+  - child: Domain.FileStores
+  - child: Domain.JDBCStores
+  - child: Domain.ForeignJNDIProviders
+  - child: Domain.XMLRegistries
+  - child: Domain.XMLEntityCaches
+  - child: Domain.MailSessions
+  # - child: Domain.OsgiFrameworks # not supported by WDT
+- label: Security
+  type: group
+  contents:
+  - child: Domain.SecurityConfiguration.Realms
+  - child: Domain.SecurityConfiguration.CertRevoc.CertRevocCas
+  - child: Domain.WebserviceSecurities
+- label: Interoperability
+  type: group
+  contents:
+  - child: Domain.WTCServers
+  - child: Domain.JoltConnectionPools
+- label: Diagnostics
+  type: group
+  contents:
+  - child: Domain.WLDFSystemResources
+  # - child: Domain.SNMPAgent            # not supported by WDT
+  # - child: Domain.SNMPAgentDeployments # not supoported by WDT
+- child: Domain.RecentSearches

@@ -203,12 +203,18 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
 
       /**
        * Changes the active element on the page back to the default (the <body> element)
-       * <[>Call this function to trigger JET change events, without having to press the tab or enter key.</p>
+       * <p>Call this function to trigger JET change events, without having to press the tab or enter key.</p>
        * @returns {HTMLElement}
        */
       blurActiveElement: () => {
         document.activeElement.blur();
         return document.activeElement;
+      },
+
+      cancelEventPropagation: (event) => {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        return false;
       },
 
       /**
@@ -218,7 +224,6 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
       isElectronApiAvailable: () => {
         return (CoreUtils.isNotUndefinedNorNull(window.electron_api));
       },
-
       /**
        *
        * @param {string} name

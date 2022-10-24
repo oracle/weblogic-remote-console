@@ -379,19 +379,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
         if (ViewModelUtils.isElectronApiAvailable()) {
           window.electron_api.ipc.receive('on-project-switched', (switching) => {
-            if (CoreUtils.isUndefinedOrNull(self.canExitCallback)) {
-              performProjectElectronMenuAction(switching);
-            }
-            else {
-              MessageDisplaying.displayMessage({
-                severity: 'info',
-                summary: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.summary'),
-                detail: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.detail')
-              }, 2500);
-              setTimeout(() => {
-                window.electron_api.ipc.invoke('current-project-setting', {action: switching.action, name: switching.from.name});
-              }, 5);
-            }
+            performProjectElectronMenuAction(switching);
           });
         }
 
@@ -426,6 +414,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             if (connectionsModels().length > 0) {
               setListItemColor(connectionsModels());
             }
+            checkLoginCustomUrl();
           }, 5
         );
       }.bind(this);
@@ -473,6 +462,69 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       function initializeDialogFields() {
         return {id: '0123456789012', name: '', type: DataProvider.prototype.Type.ADMINSERVER.name};
+      }
+
+      function checkLoginCustomUrl() {
+        return new Promise((resolve, reject) => {
+          if (ViewModelUtils.isElectronApiAvailable()) {
+            window.electron_api.ipc.invoke('current-login')
+              .then(reply => {
+                if (reply) {
+                  Logger.info('[DATAPROVIDERS] checkLoginCustomUrl() "current-login"');
+
+                  // TBD - Pass domain protocol and handle type error for bad URL
+                  const url = new URL(reply.customUrl);
+                  if (url.protocol !== 'wrc:') {
+                    Logger.info('[DATAPROVIDERS] checkLoginCustomUrl() "Invalid protocol!"');
+                    resolve(null);
+                    return;
+                  }
+                  const params = url.searchParams;
+                  const token = params.get('token');
+                  const expires = params.get('expires');
+                  const protocol = params.get('protocol');
+
+                  // Update the URL protocol so that URL host value is based on domain's URL
+                  url.protocol = (protocol ? protocol : 'http:');
+                  const domainUrl = `${url.protocol}//${url.host}`;
+
+                  // TBD - Determine handling of the provider based on the custom url
+                  const dataProviderName = 'loginProvider';
+                  var dataProvider = getAdminServerConnectionByName(dataProviderName);
+                  if (CoreUtils.isUndefinedOrNull(dataProvider)) {
+                    const entryValues = getDialogFields(DataProvider.prototype.Type.ADMINSERVER);
+                    entryValues.putValue('name', dataProviderName);
+                    dataProvider = addDialogFields(DataProvider.prototype.Type.ADMINSERVER, entryValues);
+                  }
+                  dataProvider.putValue('url', domainUrl);
+                  dataProvider.putValue('token', token);
+                  dataProvider.putValue('expires', expires);
+                  dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
+
+                  // Select the dataprovider
+                  Logger.info(`[DATAPROVIDERS] checkLoginCustomUrl() ${domainUrl}`);
+                  selectAdminServerConnection(dataProvider);
+                  resolve(dataProvider);
+                  return;
+                }
+                resolve(null);
+              })
+              .catch(failure => {
+                ViewModelUtils.failureResponseDefaultHandling(failure);
+                reject(failure);
+              });
+          }
+          resolve(null);
+        });
+      }
+
+      function getAdminServerConnectionByName(dataProviderName) {
+        var dataProvider;
+        const entry = connectionsModels().find(dataProvider => dataProvider.name === dataProviderName);
+        if (CoreUtils.isNotUndefinedNorNull(entry) && (entry.type === DataProvider.prototype.Type.ADMINSERVER.name)) {
+          dataProvider = entry;
+        }
+        return dataProvider;
       }
 
       /**
@@ -617,8 +669,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                 .then(wlsModuleConfig => {
                   if (CoreUtils.isUndefinedOrNull(wlsModuleConfig)) {
                     resolve(true);
-                  } else {
-                    resolve(wlsModuleConfig.viewModel.canExit(dataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name ? 'exit': 'navigation'));
+                  }
+                  else {
+                    const eventType = (ViewModelUtils.isElectronApiAvailable() ? 'autoDownload' : 'navigation');
+                    resolve(wlsModuleConfig.viewModel.canExit(eventType));
                   }
                 })
                 .catch(failure => {
@@ -717,11 +771,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             DataProviderManager.quiesceDataProvider(dataProvider)
               .then( result => {
                 if (result.succeeded) {
+                  viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
                   if (dataProvider.type !== DataProvider.prototype.Type.ADMINSERVER.name) {
                     delete dataProvider['fileContents'];
                     delete self.contentFiles[dataProvider.id];
                   }
-                  viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
                 }
                 else {
                   ViewModelUtils.failureResponseDefaultHandling(result.failure);
@@ -1032,8 +1086,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       function sortConnectionModels() {
         connectionsModels.sort((left, right) => {
-          return left.type === right.type ? 0 :
-            left.type === DataProvider.prototype.Type.ADMINSERVER.name ? -1 : 1;
+          if (left.type < right.type)
+            return -1;
+          if (left.type > right.type)
+            return 1;
+          return 0;
         });
         loadConnectionsModels();
         setTimeout(() => {
@@ -1369,7 +1426,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // to workaround the default JET behavior with
         // change events. Doing this allows the end user
         // to repeatedly click on the same list item.
-        self.connectionsModelsSelectedItem('');
+        self.connectionsModelsSelectedItem(null);
         // Select 'dataproviders' tab strip and collapse console Kiosk
         viewParams.signaling.tabStripTabSelected.dispatch('dataproviders', 'dataproviders', false);
       }
@@ -2220,7 +2277,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           accepts: 'application/yaml,application/x-yaml,application/json'
         };
 
-        self.connectionsModelsSelectedItem('');
+        self.connectionsModelsSelectedItem(null);
 
         // Set the dialog box based on createDialogFields()
         self.contentFile(self.dialogFields().file);
@@ -2320,7 +2377,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           accepts: 'application/yaml,application/x-yaml,application/json'
         };
 
-        self.connectionsModelsSelectedItem('');
+        self.connectionsModelsSelectedItem(null);
 
         // Setup the WDT Composite Model dialog values
         self.wdtProvidersSelectedValues(self.dialogFields().modelProviders);
@@ -2413,7 +2470,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           accepts: 'text/plain'
         };
 
-        self.connectionsModelsSelectedItem('');
+        self.connectionsModelsSelectedItem(null);
 
         // Set the dialog box based on createDialogFields()
         self.contentFile(self.dialogFields().file);
@@ -2550,7 +2607,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         if (ViewModelUtils.isElectronApiAvailable()) {
           // Set selected list item to '' in order to circumvent
           // default change event triggering, of JET.
-          self.connectionsModelsSelectedItem('');
+          self.connectionsModelsSelectedItem(null);
           return window.electron_api.ipc.invoke('credentials-requesting', options);
         }
         else {
@@ -2599,7 +2656,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         switch(switching.action) {
           case 'create':
           case 'select':
-          case 'navigate': {
+          case 'navigate':
+            if (switching.to.name !== self.project.name) {
               let project = ConsoleProjectManager.getByName(switching.from.name);
               if (CoreUtils.isNotUndefinedNorNull(project)) {
                 deactivateDataProviders([...project.dataProviders])
@@ -2668,17 +2726,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           const eventType = (['model', 'properties', 'modelComposite'].includes(lastActivedDataProvider.type) ? 'download' : 'exit');
           self.canExitCallback(eventType, {dialogMessage: {name: dialogMessageName }})
             .then(reply => {
-              if (eventType === 'download') {
-                if (reply !== null) {
-                  self.canExitCallback = undefined;
-                  performProjectMoreMenuAction(event);
-                }
-              }
-              else if (eventType === 'exit') {
-                if (reply) {
-                  self.canExitCallback = undefined;
-                  performProjectMoreMenuAction(event);
-                }
+              if (reply) {
+                self.canExitCallback = undefined;
+                performProjectMoreMenuAction(event);
               }
             })
             .catch(failure => {
@@ -2732,54 +2782,62 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         }
         else if (action === 'edit') {
           const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
-
-          self.responseMessage('');
-
-          switch(dialogParams.type) {
-            case DataProvider.prototype.Type.ADMINSERVER.name:
-              setResponseMessageVisibility('connection-response-message', false);
-              break;
-            case DataProvider.prototype.Type.MODEL.name:
-            case DataProvider.prototype.Type.PROPERTIES.name:
-              setResponseMessageVisibility('model-response-message', false);
-              break;
-            case DataProvider.prototype.Type.COMPOSITE.name:
-              setResponseMessageVisibility('model-composite-response-message', false);
-              break;
-            }
-            editDataProvider(dataProvider);
+          ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
+            .then(reply => {
+              if (reply === null)  {
+                ViewModelUtils.cancelEventPropagation(event);
+              }
+              else if (reply) {
+                self.canExitCallback = undefined;
+                performEditAction(dataProvider, dialogParams);
+              }
+              else {
+                performEditAction(dataProvider, dialogParams);
+              }
+            })
+            .catch(failure => {
+              ViewModelUtils.failureResponseDefaultHandling(failure);
+            });
         }
         else if (action === 'deactivate') {
           const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
           if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
-            if (isSelectedDataProvider(dataProvider)) {
-              ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
-                .then(reply => {
-                  if (reply !== null) performDeactivateAction(dataProvider);
-                })
-                .catch(failure => {
-                  ViewModelUtils.failureResponseDefaultHandling(failure);
-                });
-            }
-            else {
-              performDeactivateAction(dataProvider);
-            }
-          }
-        }
-        else if (action === 'delete') {
-          const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
-          if (isSelectedDataProvider(dataProvider)) {
             ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
               .then(reply => {
-                if (reply !== null) performDeleteAction(dataProvider);
+                if (reply === null)  {
+                  ViewModelUtils.cancelEventPropagation(event);
+                }
+                else if (reply) {
+                  self.canExitCallback = undefined;
+                  performDeactivateAction(dataProvider);
+                }
+                else {
+                  performDeactivateAction(dataProvider);
+                }
               })
               .catch(failure => {
                 ViewModelUtils.failureResponseDefaultHandling(failure);
               });
           }
-          else {
-            performDeleteAction(dataProvider);
-          }
+        }
+        else if (action === 'delete') {
+          const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
+          ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
+            .then(reply => {
+              if (reply === null)  {
+                ViewModelUtils.cancelEventPropagation(event);
+              }
+              else if (reply) {
+                self.canExitCallback = undefined;
+                performDeleteAction(dataProvider);
+              }
+              else {
+                performDeactivateAction(dataProvider);
+              }
+            })
+            .catch(failure => {
+              ViewModelUtils.failureResponseDefaultHandling(failure);
+            });
         }
 
       };
@@ -2787,6 +2845,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       function isSelectedDataProvider(dataProvider) {
         const lastActivatedDataProvider = DataProviderManager.getLastActivatedDataProvider();
         return (CoreUtils.isUndefinedOrNull(lastActivatedDataProvider) ? false : lastActivatedDataProvider.id === dataProvider.id)
+      }
+
+      function performEditAction(dataProvider, dialogParams) {
+        self.responseMessage('');
+
+        switch(dialogParams.type) {
+          case DataProvider.prototype.Type.ADMINSERVER.name:
+            setResponseMessageVisibility('connection-response-message', false);
+            break;
+          case DataProvider.prototype.Type.MODEL.name:
+          case DataProvider.prototype.Type.PROPERTIES.name:
+            setResponseMessageVisibility('model-response-message', false);
+            break;
+          case DataProvider.prototype.Type.COMPOSITE.name:
+            setResponseMessageVisibility('model-composite-response-message', false);
+            break;
+        }
+        editDataProvider(dataProvider);
       }
 
       function performDeactivateAction(dataProvider) {
@@ -2866,8 +2942,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // set to '', in order to circumvent the default
         // change event triggering of a JET navigation
         // list control.
-        if (self.connectionsModelsSelectedItem() !== '') {
-          self.connectionsModelsSelectedItem('');
+        if (self.connectionsModelsSelectedItem() !== null) {
+          self.connectionsModelsSelectedItem(null);
 
           const dataProvider = connectionsModels().find(item => item.id === event.target.currentItem);
           const previousDataProvider = DataProviderManager.getLastActivatedDataProvider();
@@ -2876,31 +2952,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             changeConnectionsModelsSelectedItem(dataProvider, true);
           }
           else if (previousDataProvider.id !== dataProvider.id) {
-            if (ViewModelUtils.isElectronApiAvailable() &&
-              ['model', 'properties', 'modelComposite'].includes(previousDataProvider.type)) {
-              changeConnectionsModelsSelectedItem(dataProvider);
-              return;
-            }
-
             if (CoreUtils.isNotUndefinedNorNull(self.canExitCallback)) {
-              const eventType = (['model', 'properties', 'modelComposite'].includes(previousDataProvider.type) ? 'download' : 'exit');
+              const eventType = (['model', 'properties', 'modelComposite'].includes(previousDataProvider.type) ? (ViewModelUtils.isElectronApiAvailable() ? 'autoDownload' : 'download') : 'exit');
               self.canExitCallback(eventType, {dialogMessage: {name: previousDataProvider.name }})
                 .then(reply => {
-                  if (eventType === 'download') {
-                    if (reply !== null) {
-                      self.canExitCallback = undefined;
-                      changeConnectionsModelsSelectedItem(dataProvider);
-                    }
+                  if (reply === null)  {
+                    ViewModelUtils.cancelEventPropagation(event);
                   }
-                  else if (eventType === 'exit') {
-                    if (reply) {
-                      self.canExitCallback = undefined;
-                      changeConnectionsModelsSelectedItem(dataProvider);
-                    }
+                  else if (['autoDownload', 'download'].includes(eventType)) {
+                    self.canExitCallback = undefined;
+                    changeConnectionsModelsSelectedItem(dataProvider);
                   }
-                })
-                .catch(failure => {
-                  ViewModelUtils.failureResponseDefaultHandling(failure);
+                  else {
+                    if (reply) changeConnectionsModelsSelectedItem(dataProvider);
+                  }
                 });
             }
             else {
@@ -2952,9 +3017,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           if (filepath !== '') {
             window.electron_api.ipc.invoke(channel, {filepath: filepath, fileContents: data})
               .then(reply => {
-                self.contentFile(reply.filePath);
-                if ((channel === 'file-writing') && CoreUtils.isNotUndefinedNorNull(dataprovider)) {
-                  checkDataproviderFilePath(dataprovider, self.contentFile());
+                if (reply.succeeded) {
+                  self.contentFile(reply.filePath);
+                  if ((channel === 'file-writing') && CoreUtils.isNotUndefinedNorNull(dataprovider)) {
+                    checkDataproviderFilePath(dataprovider, self.contentFile());
+                  }
                 }
               })
               .catch(error => {

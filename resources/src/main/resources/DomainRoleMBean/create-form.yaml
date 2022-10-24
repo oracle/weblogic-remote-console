@@ -1,0 +1,20 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to define a security role scoped to this domain.
+  This role can be used only by this realm's authorizer's domain level policies.</p>
+  <p>For example, this role can be used in polices that you create to determine who
+  can view a domain's log files.</p>
+
+properties:
+- name: Name
+- name: Expression
+
+helpTopics:
+- label: "Administrative Resources"
+  href: "roles/types.html#ROLES124"
+  type: "edocs"
+- label: "Security Role Conditions"
+  href: "roles/secroles.html#ROLES191"
+  type: "edocs"

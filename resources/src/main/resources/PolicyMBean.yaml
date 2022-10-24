@@ -1,0 +1,26 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.PolicyMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+derivedTypes:
+- weblogic.management.security.authorization.ConfigurationPolicyMBean
+- weblogic.management.security.authorization.FileDownloadPolicyMBean
+- weblogic.management.security.authorization.FileUploadPolicyMBean
+- weblogic.management.security.authorization.IdentityAssertionPolicyMBean
+- weblogic.management.security.authorization.JMSSystemResourcePolicyMBean
+- weblogic.management.security.authorization.QueuePolicyBean
+- weblogic.management.security.authorization.QueueMethodPolicyBean
+- weblogic.management.security.authorization.RootLevelPolicyMBean
+- weblogic.management.security.authorization.SSHPolicyMBean
+- weblogic.management.security.authorization.UserLockoutPolicyMBean
+- weblogic.management.security.authorization.ViewLogPolicyMBean
+properties:
+- name: Expression
+  descriptionHTML: "<p>TBD The policy expression</p>"
+  type: java.lang.String
+  writable: true
+- name: InheritedExpression
+  descriptionHTML: "<p>TBD The inherited policy expression</p>"
+  type: java.lang.String

@@ -341,26 +341,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 value = value || false;
                 ViewModelUtils.blurActiveElement();
                 if (value && self.isDirty()) {
-                  // This means that we're in an AS provider, so
-                  // we need to do the confirm dialog box.
-                  decideUnsavedChangesAppExitAction()
-                    .then(reply => {
-                      switch(reply.exitButton) {
-                        case 'yes': {
+                  if (isWdtForm()) {
+                    sendWindowAppQuit(false, 5);
+                  }
+                  else {
+                    decideUnsavedChangesAppExitAction()
+                      .then(reply => {
+                        switch(reply.exitButton) {
+                          case 'yes': {
                             onStartWindowQuit()
                               .then(result => {
                                 sendWindowAppQuit(result.isNotQuitable, result.waitMilliseconds);
                               });
                           }
-                          break;
-                        case 'no':
-                          sendWindowAppQuit(false, 5);
-                          break;
-                        case 'cancel':
-                          sendWindowAppQuit(true, 5);
-                          break;
-                      }
-                    });
+                            break;
+                          case 'no':
+                            sendWindowAppQuit(false, 5);
+                            break;
+                          case 'cancel':
+                            sendWindowAppQuit(true, 5);
+                            break;
+                        }
+                      });
+                  }
                 }
                 else {
                   sendWindowAppQuit(false, 5);
@@ -389,7 +392,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
-          const eventType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'exit' : 'autoSave');
+          const eventType = (ViewModelUtils.isElectronApiAvailable() ? 'autoSave' : (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name ? 'autoDownload' : 'exit'));
           exitForm(eventType).then(result => {});
         });
 
@@ -406,8 +409,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         self.signalBindings = [];
 
-        self.subscriptions.forEach((subscription) => {
-          subscription.dispose();
+        self.subscriptions.forEach((item) => {
+          if (item.name) {
+            item.subscription.dispose();
+          }
+          else {
+            item.dispose();
+          }
         });
 
         self.subscriptions = [];
@@ -473,7 +481,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function sendWindowAppQuit(isNotQuitable, waitMilliseconds) {
         if (ViewModelUtils.isElectronApiAvailable()) {
           setTimeout(() => {
-            window.electron_api.ipc.invoke('window-app-quit', {preventQuit: isNotQuitable, source: 'form.js'});
+            window.electron_api.ipc.invoke('window-app-quiting', {preventQuitting: isNotQuitable, source: 'form.js'});
           }, waitMilliseconds);
         }
       }
@@ -559,18 +567,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function stashDirtyFields() {
-        // The term "dirty fields" means fields with current
-        // values that have changed from what's in the RDJ.
-        // Calling the getDirtyFieldsPayload() function captures
-        // the "dirty fields" for later use, with the cacheDataPayload()
-        // function.
         const dataPayload = getDirtyFieldsPayload(true);
-        // Caching the captured dirty fields data payload, uses
-        // the self.pageRedoHistory.map, so we need to clear/reset
-        // it first.
         resetPageRedoHistory();
-        // Call cacheDataPayload() function to cache the dirty fields
-        // data payload, we captured earlier.
         cacheDataPayload(dataPayload);
       }
 
@@ -584,9 +582,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             self[`${FIELD_VALUES}${dialogFields.replacer}`]('');
             self[`${FIELD_VALUE_FROM}${dialogFields.replacer}`]('fromRegValue');
             multiElement.readonly=false;
-            // if ((dialogFields.wktTool === 'true') && dialogFields.originalValueFrom === 'fromModelToken') {
-            //   self.wdtForm.removeModelProperty(self.wdtForm.stripOutSign(dialogFields.originalValue));
-            // }
             break;
           case 'fromSelectWKTVariable': {
             const modelProp = self.wdtForm.getModelPropertyBasedOnUid(dialogFields.variableUid);
@@ -882,7 +877,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       };
 
       this.helpIconClick = function (event) {
-        new HelpForm(viewParams).handleHelpIconClicked(event);
+        new HelpForm(
+          viewParams.parentRouter.data.pdjData(),
+          viewParams.parentRouter.data.rdjData(),
+          viewParams.perspective
+        ).handleHelpIconClicked(event);
       };
 
       this.chosenItemsChanged = function (event) {
@@ -1202,6 +1201,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           if (pageState.succeeded) {
             saveBean('finish');
           }
+          else {
+            setFocusFormElement();
+          }
         }
       }
 
@@ -1218,8 +1220,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
        * @returns {boolean}
        */
       this.isDirty = function () {
-        const changes = this.determineChanges(true);
-        const numberOfChanges = Object.keys(changes).length;
+        let dataPayload = this.determineChanges(true);
+        if (dataPayload === null) dataPayload = {};
+        const numberOfChanges = Object.keys(dataPayload).length;
 
         return (numberOfChanges !== 0);
       };
@@ -1275,7 +1278,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             .then((moduleConfig) => {
               const isEdit = isEditing();
 
-              if (['autoSave', 'autoDownload', 'navigation'].includes(eventType)) {
+              if (['autoSave', 'navigation'].includes(eventType)) {
                 if (isEdit) {
                   const cancelSliceChange = moduleConfig.viewModel.getCancelSliceChange();
                   if (!cancelSliceChange) {
@@ -1287,21 +1290,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   else {
                     resolve(true);
                   }
-                } else {
+                }
+                else {
                   resolve(true);
                 }
               }
-              else if (eventType === 'download') {
+              else if (['download', 'autoDownload'].includes(eventType)) {
                 if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
                   if (!isEdit && CoreUtils.isNotUndefinedNorNull(self.createForm)) {
+                    setFocusFormElement();
                     MessageDisplaying.displayMessage({
                       severity: 'info',
                       summary: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.summary'),
                       detail: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.detail')
-                    }, 2500);
-                    resolve(false);
+                    }, 1500);
+                    resolve(null);
                   }
-                  else {
+                  else if (eventType === 'download') {
                     self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.changesNeedDownloading.value'));
                     self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value', '{0}').replace('{0}', options.dialogMessage.name));
                     self.i18n.buttons.cancel.visible(true);
@@ -1321,57 +1326,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                         }
                       });
                   }
-                }
-                else {
-                  resolve(true);
-                }
-              }
-              else if (['deactivate', 'delete'].includes(eventType)) {
-                if (isEdit) {
-                  const cancelSliceChange = moduleConfig.viewModel.getCancelSliceChange();
-                  if (!cancelSliceChange) {
-                    if (['configuration', 'security'].includes(viewParams.perspective.id)) {
-                      if (self.isDirty()) {
-                        decideUnsavedChangesDetectedAction(eventType)
-                          .then(reply => {
-                            resolve(reply);
-                          });
-                      }
-                      else {
-                        resolve(true);
-                      }
-                    }
-                    else {
-                      if (!ViewModelUtils.isElectronApiAvailable()) {
-                        if (self.isDirty() || isWdtForm()) {
-                          self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.changesNeedDownloading.value'));
-                          self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value', '{0}').replace('{0}', options.dialogMessage.name));
-                          self.i18n.buttons.cancel.visible(true);
-                          UnsavedChangesDialog.showConfirmDialog('ChangesNotDownloaded', self.i18n)
-                            .then(reply => {
-                              switch(reply.exitButton) {
-                                case 'yes':
-                                  downloadContentFile(eventType);
-                                  resolve(true);
-                                  break;
-                                case 'no':
-                                  resolve(false);
-                                  break;
-                                case 'cancel':
-                                  resolve(null);
-                                  break;
-                              }
-                            });
-                        }
-                        else {
-                          resolve(true);
-                        }
-                      }
-                      else {
-                        resolve(true);
-                      }
-                    }
-                  }
                   else {
                     resolve(true);
                   }
@@ -1380,13 +1334,56 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   resolve(true);
                 }
               }
+              else if (['edit', 'deactivate', 'delete'].includes(eventType)) {
+                if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+                  if (!isEdit && CoreUtils.isNotUndefinedNorNull(self.createForm)) {
+                    setFocusFormElement();
+                    MessageDisplaying.displayMessage({
+                      severity: 'info',
+                      summary: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.summary'),
+                      detail: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.detail')
+                    }, 1500);
+                    resolve(null);
+                  }
+                  else if (['configuration', 'security'].includes(viewParams.perspective.id)) {
+                    decideUnsavedChangesDetectedAction(eventType)
+                      .then(reply => {
+                        resolve(reply);
+                      });
+                  }
+                  else {
+                    self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.changesNeedDownloading.value'));
+                    self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value', '{0}').replace('{0}', options.dialogMessage.name));
+                    self.i18n.buttons.cancel.visible(true);
+                    UnsavedChangesDialog.showConfirmDialog('ChangesNotDownloaded', self.i18n)
+                      .then(reply => {
+                        switch (reply.exitButton) {
+                          case 'yes':
+                            downloadContentFile(eventType);
+                            resolve(true);
+                            break;
+                          case 'no':
+                            resolve(false);
+                            break;
+                          case 'cancel':
+                            resolve(null);
+                            break;
+                        }
+                      });
+                  }
+                }
+                else {
+                  resolve(true);
+                }
+              }
               else if (eventType === 'exit') {
                 if (!isEdit && CoreUtils.isNotUndefinedNorNull(self.createForm)) {
+                  setFocusFormElement();
                   MessageDisplaying.displayMessage({
                     severity: 'info',
                     summary: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.summary'),
                     detail: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.detail')
-                  }, 3000);
+                  }, 1500);
                   resolve(false);
                 }
                 else if (self.isDirty()) {
@@ -1401,6 +1398,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                     else {
                       decideUnsavedChangesDetectedAction()
                         .then(reply => {
+                          if (ViewModelUtils.isElectronApiAvailable() &&
+                            ['configuration', 'security'].includes(viewParams.perspective.id)) {
+                            setSubmenuItemsState(reply);
+                          }
                           if (reply) {
                             clearFormChanges();
                             resolve(reply);
@@ -1429,6 +1430,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         });
 
       };
+
+      function setSubmenuItemsState(state) {
+        if (ViewModelUtils.isElectronApiAvailable()) {
+          const submenuStates =  [
+            {id: 'newProject', state: state},
+            {id: 'switchToProject', state: state},
+            {id: 'deleteProject', state: state},
+            {id: 'nameProject', state: state},
+            {id: 'reload', state: state}
+          ];
+          window.electron_api.ipc.invoke('submenu-state-setting', submenuStates)
+            .then()
+            .catch(response => {
+              ViewModelUtils.failureResponseDefaultHandling(response);
+            });
+        }
+      }
 
       function getDirtyFieldsPayload(keepSaveToOrig) {
         const data = self.rdjData.data;
@@ -1561,20 +1579,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
 
             let displayValue = pdjTypes.getDisplayValue(key, self.rdjData.data[key], value);
+
             if (displayValue == null) {
               displayValue = '';
             }
-            // Toggling the ShowAdvancedFields checkbox always
-            // results in a self.dirtyFields.clear(), even after
-            // the "Save" button is clicked. If the user has made
-            // changes since the "Save" button was clicked, that
-            // self.dirtyFields.clear() call will blow away them
-            // away, which is not what we want. obsValue contains
-            // the saved value for key, so calling
-            // self[`${FIELD_VALUES}${key}`](obsValue) will trigger
-            // a knockout change, which is where our change handler
-            // does a self.dirtyFields.add() that puts the saved
-            // value back in the self.dirtyFields set.
+
             if (isWdtForm()) {
               const obsValue = pdjTypes.getObservableValue_WDT(key, self.rdjData.data[key], displayValue, value);
               self.doWdtDialogPopup = false;
@@ -1701,7 +1710,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function decideUnsavedChangesDetectedAction(eventType = 'exit') {
         self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.unsavedChanges.value'));
         self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.areYouSure.value', '{0}').replace('{0}', eventType));
-        self.i18n.buttons.cancel.visible(false);
+        self.i18n.buttons.cancel.visible(true);
         return UnsavedChangesDialog.showConfirmDialog('UnsavedChangesDetected', self.i18n);
       }
 
@@ -1950,9 +1959,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // Need to set self.createForm to undefined, so the table
         // customizer manager logic inside the setTimeout, works
         // correctly when clicking the "Cancel" button in all the
-        // wacky "New Dashboard" scenarios :-)
+        // different "New Dashboard" scenarios.
         self.createForm = undefined;
         clearFormChanges();
+        if (ViewModelUtils.isElectronApiAvailable()) {
+          setSubmenuItemsState(true);
+        }
+        viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
       }
 
       function clearFormChanges() {
@@ -1961,7 +1974,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         resetPageRedoHistory();
         self.debugFlagsEnabled(PageDefinitionFields.resetDebugFlagsEnabled(self.debugFlagItems()));
         self.multiSelectControls = {};
-        viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
       }
 
       function saveBean(eventType) {
@@ -2041,6 +2053,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             const url = `${rdjUrl}${dataAction}`;
             return DataOperations.mbean.save(url, dataPayload)
               .then(reply => {
+                if (ViewModelUtils.isElectronApiAvailable()) {
+                  viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
+                  setSubmenuItemsState(true);
+                }
                 return handleSaveResponse(reply, dataAction, dataPayload, eventType, isEdit);
               })
               .catch(response => {
@@ -2048,6 +2064,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
                     ViewModelUtils.failureResponseDefaultHandling(response);
                   }
+                }
+                if (ViewModelUtils.isElectronApiAvailable() && eventType === 'update') {
+                  setFocusFormElement();
+                  setSubmenuItemsState(false);
                 }
                 return handleSaveResponse(response, dataAction, dataPayload, eventType, isEdit);
               });
@@ -2086,7 +2106,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
         else if (response.body.messages.length === 0) {
           const identity = (CoreUtils.isNotUndefinedNorNull(response.body.data) && CoreUtils.isNotUndefinedNorNull(response.body.data.resourceData) && CoreUtils.isNotUndefinedNorNull(response.body.data.resourceData.resourceData) ? response.body.data.resourceData.resourceData : undefined);
-          saveSuceeded(eventType, dataPayload, isEdit, identity, response.body.data.messages);
+          if (['configuration', 'security'].includes(viewParams.perspective.id)) {
+            viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
+          }
+          saveSucceeded(eventType, dataPayload, isEdit, identity, response.body.data.messages);
           if (isWdtForm() && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
             const dataProvider = self.wdtForm.getDataProvider();
             if (window.api && window.api.ipc && dataProvider.modelArchiveEntries) {
@@ -2128,23 +2151,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             MessageDisplaying.displayResponseMessages(response.body.messages);
           }
         }
-
-        /*
-          if the response is not a 200 or 201 (CREATED) with no messages,
-          the CBE might have done a partial edit.
-
-          1) if the update fails:
-
-            a) display any error messages (global or field scoped)
-            b) repost the stored RDJ's data section to restore the old values
-            c) don't update the values on the screen (so that the user can try to correct them then click 'Save' again)
-
-          2) if the create fails, try to delete the object (since it may or may not have been created):
-
-            a) display any error messages (global or field scoped)
-            b) delete the new object (it may or may not have been created)
-            c) don't update the values on the screen (so that the user can try to correct them then click 'Save' again)
-        */
 
         if (isEdit) {
           // create a POST request to reverse the change.
@@ -2188,7 +2194,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
       }
 
-      function saveSuceeded(eventType, dataPayload, isEdit, identity, messages) {
+      function saveSucceeded(eventType, dataPayload, isEdit, identity, messages) {
+        setSubmenuItemsState(true);
+
         updateMultiSelectControls(dataPayload);
         cacheDataPayload(dataPayload);
         self.dirtyFields.clear();
@@ -2219,13 +2227,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           self.debugFlagItems(null);
         }
 
-        const treeaction = {
-          isEdit: isEdit,
-          path: decodeURIComponent(viewParams.parentRouter.data.rawPath())
-        };
+        if (Runtime.getDataProviderId() !== '') {
+          const treeaction = {
+            isEdit: isEdit,
+            path: decodeURIComponent(viewParams.parentRouter.data.rawPath())
+          };
 
-        // fix the navtree
-        viewParams.signaling.navtreeUpdated.dispatch(treeaction);
+          // fix the navtree
+          viewParams.signaling.navtreeUpdated.dispatch(treeaction);
+        }
 
         if (messages && messages.length > 0) {
           messages.forEach(message => {
@@ -2234,10 +2244,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               summary: message.message
             }, 2500);
           });
-        }
-
-        if (!isWdtForm()) {
-          viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
         }
 
         if (isEdit) {
@@ -2667,30 +2673,35 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
         });
 
+        const results = setFocusFormElement();
+
+        if (results.formElement) {
+          results.formElement.addEventListener('blur', onBlurFormLayout, true);
+        }
+
+        if (isWdtForm()) {
+          results.nodeList = document.querySelectorAll('#Source, #SourcePath, #Plan, #PlanPath');
+          if (results.nodeList !== null && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+            const arr = Array.from(results.nodeList);
+            arr.forEach((node) => {
+              node.addEventListener('change', onChangeLibAppDeploymentField);
+            });
+          }
+        }
+      }
+
+      function setFocusFormElement() {
         let nodeList;
         const formElement = document.getElementById('wlsform');
         if (formElement !== null) {
-          nodeList = formElement.querySelectorAll('oj-text-area.oj-textarea, oj-select-single.oj-text-field, oj-input-text.oj-text-field');
+          nodeList = formElement.querySelectorAll('oj-text-area.oj-textarea, oj-select-single.oj-text-field, oj-input-text.oj-text-field, oj-combobox-one.oj-text-field');
           if (nodeList !== null) {
             const arr = Array.from(nodeList);
             const index = arr.map(node => node.readonly).indexOf(false);
             if (index !== -1) arr[index].focus();
           }
         }
-
-        if (formElement) {
-          formElement.addEventListener('blur', onBlurFormLayout, true);
-        }
-
-        if (isWdtForm()) {
-          nodeList = document.querySelectorAll('#Source, #SourcePath, #Plan, #PlanPath');
-          if (nodeList !== null && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
-            const arr = Array.from(nodeList);
-            arr.forEach((node) => {
-              node.addEventListener('change', onChangeLibAppDeploymentField);
-            });
-          }
-        }
+        return {formElement: formElement, nodeList: nodeList};
       }
 
       function requiredFieldsComplete(name, newValue) {
@@ -2768,18 +2779,40 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
         }
 
-        const hasLosingFocusId = self.dirtyFields.has(losingFocusId);
+        const hasLosingFocusId = (self.dirtyFields.has(losingFocusId) && losingFocusId.indexOf('|') === -1);
 
         if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
           if (hasLosingFocusId) {
             viewParams.signaling.unsavedChangesDetected.dispatch(exitForm);
-            if (isWdtForm() && isEditing()) {
-              const eventType = (ViewModelUtils.isElectronApiAvailable() ? 'autoDownload' : 'autoSave');
-              updateContentFile(eventType).then(reply => {});
+            if (isEditing()) {
+              if (isWdtForm() && event.relatedTarget !== null) {
+                const eventType = (ViewModelUtils.isElectronApiAvailable() ? 'autoDownload' : 'autoSave');
+                updateContentFile(eventType).then(reply => {});
+              }
+            }
+            else if (ViewModelUtils.isElectronApiAvailable()) {
+              // Need to disable the Electron submenu items, because
+              // we're in a create form, data has been entered, and
+              // focus has left the form. This is an ANA scenario.
+              setSubmenuItemsState(false);
+            }
+          }
+          else if (ViewModelUtils.isElectronApiAvailable()) {
+            if (event?.relatedTarget?.tagName === 'A') {
+              // User clicked a selectable node in the navtree, and
+              // we're not in a UCD, CND or ANA situation. Need to
+              // enable the Electron submenu items.
+              setSubmenuItemsState(true);
+            }
+            else if (event?.relatedTarget?.className === 'oj-button-button') {
+              // User clicked a button in the content area header
+              // (e.g. "Home"), and we're not in a UCD, CND or ANA
+              // situation. Need to enable the Electron submenu items.
+              setSubmenuItemsState(true);
             }
           }
         }
-        else {
+        else if (losingFocusId.indexOf('|') === -1) {
           if (event.target.type === 'checkbox' && ['availableCheckboxset', 'chosenCheckboxset'].indexOf(event.target.name) === -1) {
             losingFocusId = event.target.value;
             if (!self.dirtyFields.has(losingFocusId)) self.dirtyFields.add(losingFocusId);
@@ -2790,37 +2823,41 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             if (newValue) newValue = newValue.trim();
             const rtnval = requiredFieldsComplete(losingFocusId, newValue);
             if (!rtnval) {
-              return cancelEventPropagation(event);
+              return ViewModelUtils.cancelEventPropagation(event);
             }
           }
 
           if (losingFocusId) {
             if (!isEditing()) {
-              if (losingFocusId.indexOf('|') === -1) {
-                const isExiting = (CoreUtils.isNotUndefinedNorNull(event.relatedTarget) && ['oj-tabbar-item-content', 'oj-navigationlist-item-content', 'oj-searchselect-filter'].some(item => event.relatedTarget.className.includes(item)));
-                if (isExiting) {
-                  const pageState = self.createForm.markAsFinished();
-                  if (pageState.succeeded) {
-                    self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.unsavedChanges.value'));
-                    self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.uncommitedCreate.abandonForm.value', self.rdjData.createForm.label));
-                    self.i18n.buttons.cancel.visible(false);
-                    UnsavedChangesDialog.showConfirmDialog('AbandonCreateForm', self.i18n)
-                      .then(reply => {
-                        if (reply) {
-                          updateContentFile('autoDownload').then(reply => {});
+              const isExiting = (CoreUtils.isNotUndefinedNorNull(event.relatedTarget) && ['oj-tabbar-item-content', 'oj-navigationlist-item-content', 'oj-searchselect-filter'].some(item => event.relatedTarget.className.includes(item)));
+              if (isExiting) {
+                if (self.dirtyFields.size > 0) {
+                  setFocusFormElement();
+                  self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.unsavedChanges.value'));
+                  self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.uncommitedCreate.abandonForm.value', self.rdjData.createForm.label));
+                  self.i18n.buttons.cancel.visible(true);
+                  UnsavedChangesDialog.showConfirmDialog('AbandonCreateForm', self.i18n)
+                    .then(reply => {
+                      switch(reply.exitButton) {
+                        case 'yes': {
+                          const pageState = self.createForm.markAsFinished();
+                          if (pageState.succeeded) {
+                            updateContentFile('autoDownload').then(reply => {});
+                          }
                         }
-                        else {
-                          return cancelEventPropagation(event);
-                        }
-                      });
-                  }
-                  else {
-                    return cancelEventPropagation(event);
-                  }
+                          break;
+                        case 'no':
+                          cancelBean('autoDownload');
+                          break;
+                        case 'cancel':
+                          ViewModelUtils.cancelEventPropagation(event);
+                          break;
+                      }
+                    });
                 }
               }
             }
-            else if (hasLosingFocusId) {
+            else {
               if (losingFocusId !== self.propertyListName && event.target.type !== 'checkbox') {
                 const value = self[`${FIELD_VALUES}${losingFocusId}`]();
                 if (typeof value === 'string' && !CoreUtils.isEmpty(value) &&
@@ -2838,12 +2875,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
           }
         }
-      }
-
-      function cancelEventPropagation(event) {
-        event.stopImmediatePropagation();
-        event.preventDefault();
-        return false;
       }
 
       function renderWizardForm(rdjData) {
@@ -2955,7 +2986,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         const hasFormLayoutSections = PageDefinitionFormLayouts.hasFormLayoutSections(pdjData);
         const isReadOnly = (self.readonly() && (['configuration', 'view', 'security', 'composite'].indexOf(viewParams.perspective.id) !== -1));
 
-        const isSliceTable = pdjData.sliceTable ? true : false;
+        const isSliceTable = pdjData.sliceTable;
 
         if (isSliceTable) {
           const tableLayout = PageDefinitionFormLayouts.createSliceTable();
@@ -3063,23 +3094,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               }
               //we  want to set the valueFrom, then continue with the rest of the code as normal.
               if (CoreUtils.isNotUndefinedNorNull(testShow.from)) {
-
-                // We no longer want to remove the variables automatically.  User will need to go to the
-                // Code View variable table to do the removal.
-
-                // if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name){
-                //   //if this is in WKT, we want to remove the previous model token from the datasource model.
-                //   //this use case is when user replace a token to regular text, directly on the form, without
-                //   //going through the dialog.
-                //   if ( (self[`${FIELD_VALUE_FROM}${replacer}`]() === 'fromModelToken') &&
-                //     (testShow.from !== 'fromModelToken')){
-                //     let objVal = self.rdjData.data[`${replacer}`];
-                //     if (CoreUtils.isNotUndefinedNorNull(objVal)){
-                //       const varName = self.wdtForm.stripOutSign(objVal.modelToken);
-                //       self.wdtForm.removeModelProperty(varName);
-                //     }
-                //   }
-                // }
                 self[`${FIELD_VALUE_FROM}${replacer}`](testShow.from);
               }
               if (isWizardForm()) {
@@ -3118,9 +3132,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
           viewParams.signaling.unsavedChangesDetected.dispatch(exitForm);
           resetAutoSyncToolbarIconsState();
+
           if (isEditing()){
             if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name && isWdtForm()) {
               onBlurFormLayout({target: {id: name, type: 'blur', cancelable: false, cancelBubble: true}});
+            }
+            else if (ViewModelUtils.isElectronApiAvailable()) {
+              setSubmenuItemsState(false);
             }
           }
         };
@@ -3799,16 +3817,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       };
 
       /*
-       * this function is called when user create a new resource using the overlay-form.
-       * we need to reload the rdj data so that the dropdown will refresh with the newly created item.
-       * There is a subscription for the change of rdj data and renderPage() will be called.  We need
-       * to set the flag 'loadRdjDoNotClearDirty' to true so renderPage() will not clean up the dirty field.
-       * This flag will be cleared in the setTimeout method at the end of  renderFormLayout().
-       *
-       * Also need to set the placement to 'embedded'. Otherwise, when user tries to leave the slice, isDirty() will not
-       * be called to determine if the unsaved warning dialog should be displayed.
-       * @private
-       */
+          * this function is called when user create a new resource using the overlay-form.
+          * we need to reload the rdj data so that the dropdown will refresh with the newly created item.
+          * There is a subscription for the change of rdj data and renderPage() will be called.  We need
+          * to set the flag 'loadRdjDoNotClearDirty' to true so renderPage() will not clean up the dirty field.
+          * This flag will be cleared in the setTimeout method at the end of  renderFormLayout().
+          *
+          * Also need to set the placement to 'embedded'. Otherwise, when user tries to leave the slice, isDirty() will not
+          * be called to determine if the unsaved warning dialog should be displayed.
+          * @private
+          */
       function refreshForm() {
         self.loadRdjDoNotClearDirty = true;
         const dataPayload = getDirtyFieldsPayload(true);
@@ -3943,7 +3961,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function createHelp(pdjData) {
-        const helpForm = new HelpForm(viewParams);
+        const helpForm = new HelpForm(
+          viewParams.parentRouter.data.pdjData(),
+          viewParams.parentRouter.data.rdjData(),
+          viewParams.perspective
+        );
 
         self.tableHelpColumns(helpForm.tableHelpColumns);
         helpForm.setPDJData(pdjData);

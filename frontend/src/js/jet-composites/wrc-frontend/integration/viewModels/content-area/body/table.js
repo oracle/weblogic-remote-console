@@ -299,6 +299,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           const data = self.pageDefinitionActions.createActionsDialog(dialogParams.id);
           data.field.setAttribute('on-chosen-items-changed', '[[chosenItemsChanged]]');
           data.field.setAttribute('readonly', dialogParams.isReadOnly);
+          data.field.setAttribute('display-width', '725px');
           self.availableItems = data.availableItems;
           self.actionsDialog.formLayout.html({ view: HtmlUtils.stringToNodeArray(data.formLayout.outerHTML), data: self });
           self.chosenItems = [];
@@ -382,11 +383,30 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         viewParams.onLandingPageSelected();
       }
 
+      function setSubmenuItemsState(state) {
+        if (CoreUtils.isNotUndefinedNorNull(window.electron_api)) {
+          const submenuStates =  [
+            {id: 'newProject', state: state},
+            {id: 'switchToProject', state: state},
+            {id: 'deleteProject', state: state},
+            {id: 'nameProject', state: state},
+            {id: 'reload', state: state}
+          ];
+          window.electron_api.ipc.invoke('submenu-state-setting', submenuStates)
+            .then()
+            .catch(response => {
+              ViewModelUtils.failureResponseDefaultHandling(response);
+            });
+        }
+      }
+
       function newBean(event) {
         const createFormUrl = viewParams.parentRouter.data.rdjData().createForm.resourceData;
+
         DataOperations.mbean.new(createFormUrl)
           .then(reply => {
             Logger.log(`reply=${JSON.stringify(reply)}`);
+            setSubmenuItemsState(false);
             viewParams.parentRouter.data.pdjUrl(reply.body.data.get('pdjUrl'));
             viewParams.parentRouter.data.pdjData(reply.body.data.get('pdjData'));
             viewParams.parentRouter.data.rdjData(reply.body.data.get('rdjData'));
@@ -394,7 +414,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           })
           .catch(response => {
             ViewModelUtils.failureResponseDefaultHandling(response);
-          })
+          });
       }
 
       this.selectedListener = function (event) {

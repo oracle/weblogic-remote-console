@@ -11,6 +11,7 @@
  */
 
 (function () {
+  // noinspection ES6ModulesDependencies
   requirejs.config(
     {
       baseUrl: 'js',

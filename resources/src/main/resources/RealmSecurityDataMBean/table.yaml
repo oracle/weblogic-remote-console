@@ -1,0 +1,30 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>A security realm is a container for the mechanisms--including users,
+  groups, security roles, security policies, and security providers--that
+  are used to protect WebLogic resources.
+  Security providers store their data outside of the WebLogic configuration.
+  For example, the WebLogic Authentication provider stores
+  its users and groups in the domain's embedded LDAP server.</p>
+  <p>This page lists each security realm that has been configured in this
+  WebLogic Server domain.  Click the name of the realm to explore and manage
+  its security providers' data.</p>
+
+displayedColumns:
+- name: "Name"
+
+helpTopics:
+- label: "Security Realms in WebLogic Server"
+  href: "secmg/overview.html#SECMG117"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
+# Uncomment when we add pages for managing roles and policies:
+#- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+#  href: "roles/index.html"
+#  type: "edocs"

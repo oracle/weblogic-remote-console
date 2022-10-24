@@ -83,6 +83,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout'
           .then(() => {
             const resolve = this.addBusyState();
             this.composite = context.element;
+            $('#available-chosen-container').css({width: context.properties.displayWidth});
             resolve();
           });
       };

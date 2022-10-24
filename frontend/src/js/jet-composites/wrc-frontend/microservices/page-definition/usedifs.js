@@ -6,16 +6,10 @@
  */
 'use strict';
 
-define(['wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function (CoreUtils, Logger) {
+define(['./common', 'wrc-frontend/core/utils'],
+  function (PageDefinitionCommon, CoreUtils) {
 
-    const FIELD_DISABLED = Object.freeze('fieldDisabled_');
-    const FIELD_UNSET = Object.freeze('fieldUnset_');
-    const FIELD_MESSAGES = Object.freeze('fieldMessages_');
-    const FIELD_SELECTDATA = Object.freeze('fieldSelectData_');
-    const FIELD_VALUES = Object.freeze('fieldValues_');
-
-    //public:
+  //public:
     return {
       /**
        * Returns one of the following:
@@ -141,72 +135,114 @@ define(['wrc-frontend/core/utils', 'ojs/ojlogger'],
       },
 
       setupUsedIfListeners: function (properties, isWdtForm, form) {
+        function isModelToken(newValue) {
+          return (
+            CoreUtils.isNotUndefinedNorNull(newValue) &&
+            (typeof newValue === 'string') &&
+            newValue.startsWith('@@PROP:') &&
+            newValue.endsWith('@@'));
+        }
+
+        // Extract properties that have a usedIf JS property
         const usedIfProperties = properties.filter(property => CoreUtils.isNotUndefinedNorNull(property.usedIf));
 
-        usedIfProperties.forEach((property) => {
-          let propertyName, name = property.name, usedIf = property.usedIf;
+        for (const property of usedIfProperties) {
+          const name = property.name;
+          const usedIf = property.usedIf;
+
+          let propertyName;
 
           if (form.createForm) {
             const replacer = form.createForm.getBackingDataAttributeReplacer(usedIf.property);
-            // replacer is only used with the property names used
-            // in the JDBC System Resource wizard. Only assign it
-            // to propertyName, if it's not undefined.
+            // If replacer is not undefined, we're in a create form that
+            // is the "Data Source" wizard. If that's the case, assign
+            // replacer to propertyName. Otherwise, assign usedIf.property
+            // to propertyName.
             propertyName = (CoreUtils.isNotUndefinedNorNull(replacer) ? replacer : usedIf.property);
           }
           else {
             propertyName = usedIf.property;
           }
 
-          let toggleDisableFunc = (newValue, pType) => {
-            // Prevent a property from becoming enabled/disabled
-            // when value has been unset
+          const toggleDisableFunc = (newValue) => {
             if (!isWdtForm) {
-              if (form[`${FIELD_UNSET}${name}`]() || form[`${FIELD_UNSET}${propertyName}`]()) {
-                Logger.log(`[FORM] Prevent usedIf handling for unset field: ${name}`);
+              // We're in an adminserver provider
+              if (form[`${PageDefinitionCommon.FIELD_UNSET}${name}`]() ||
+                  form[`${PageDefinitionCommon.FIELD_UNSET}${propertyName}`]()) {
+                // Prevent a property from becoming enabled/disabled
+                // when value has been unset
                 return;
               }
             }
 
-            // If the new value is a Model Token, always enable the field.
-            if (CoreUtils.isNotUndefinedNorNull(newValue) &&
-                (typeof newValue === 'string') &&
-                newValue.startsWith('@@PROP:') &&
-                newValue.endsWith('@@')) {
-              form[`${FIELD_DISABLED}${name}`](false);
+            // We're not in an adminserver provider
+            if (isModelToken()) {
+              // Value assigned to newValue is a model token, so
+              // enable the field (i.e. set the FIELD_DISABLED
+              // knockout observable to false).
+              form[`${PageDefinitionCommon.FIELD_DISABLED}${name}`](false);
             }
             else {
-              // See if the new value enables the field or not
-              let enabled = usedIf.values.find((item) => {
-                // if we are comparing to true/false (ie boolean), and the value is undefined
-                // of newValue === "" which is the case when user restore to default
-                // we want to enable the dependant field.
-                // we can only test for true/false here because in this call back, we don't have access
-                // to the pdjTypes of this field
-                if (isWdtForm &&
-                    (item === true || item === false) &&
-                    (CoreUtils.isUndefinedOrNull(newValue) || newValue === '')) {
-                  return true;
+              // Use arrow function syntax of find function on
+              // the usedIf.values array, to enable or disable
+              // the field (i.e. set the FIELD_DISABLED
+              // knockout observable to false or true).
+              usedIf.values.find((value) => {
+                if ((typeof value === 'boolean') && (typeof newValue === 'boolean')) {
+                  // This means that usedIf.values is an array containing
+                  // a single boolean, and the data type of newValue is
+                  // also a boolean. If value is true, then equate it to
+                  // newValue. Otherwise, use value assigned to newValue.
+                  const enabled = (value ? value === newValue : newValue);
+                  // Negate enabled variable to come up with value to use
+                  // with knockout variable.
+                  form[`${PageDefinitionCommon.FIELD_DISABLED}${name}`](!enabled);
                 }
-                return item === newValue;
-              }
-            );
-            form[`${FIELD_DISABLED}${name}`](!enabled);
+                else if (CoreUtils.isUndefinedOrNull(newValue) || (newValue === '')) {
+                  // It's possible for newValue to be undefined or an empty.
+                  // string (''). The latter happens if the user chooses the
+                  // "Reset to default" context menu item. In both cases, we
+                  // need to enable the field (i.e. set the FIELD_DISABLED
+                  // knockout observable to false).
+                  form[`${PageDefinitionCommon.FIELD_DISABLED}${name}`](false);
+                }
+                else {
+                  // This means usedIf.values is an array containing one or
+                  // more strings. Use includes function to determine if the
+                  // newValue is in that array or not.
+                  const enabled = usedIf.values.includes(newValue);
+                  // Negate enabled variable to come up with value to use
+                  // with knockout variable.
+                  form[`${PageDefinitionCommon.FIELD_DISABLED}${name}`](!enabled);
+                }
+              });
+            }
+
+          };
+
+          // Need to invoke callback programmatically, because
+          // the field with the usedIf JS property has a value
+          // BEFORE the knockout change subscription is created.
+          // This invocation is what allows the usedIf field to
+          // have the correct state, when the slice/tabstrip is
+          // initially displayed.
+          toggleDisableFunc(form[`${PageDefinitionCommon.FIELD_VALUES}${propertyName}`]());
+
+          // Look for knockout change subscription in the
+          // cache, with a name equal to name.
+          const subscribed = form.subscriptions.find(subscription => subscription.name === name);
+          if (CoreUtils.isUndefinedOrNull(subscribed)) {
+            // Didn't find one, so create one using the propertyName
+            // variable.
+            const subscription = form[`${PageDefinitionCommon.FIELD_VALUES}${propertyName}`].subscribe(toggleDisableFunc);
+            // Now, cache it using the name variable for the name.
+            form.subscriptions.push({name: name, subscription: subscription});
           }
-        };
 
-        // Call event callback to initialize, then set up
-        // subscription.
-        const oneProp = properties.find(element => element.name === propertyName);
-        let pType = '';
-        if (CoreUtils.isNotUndefinedNorNull(oneProp)) {
-          pType = oneProp.type;
-        }
-        toggleDisableFunc(form[`${FIELD_VALUES}${propertyName}`](), pType);
-        const subscription = form[`${FIELD_VALUES}${propertyName}`].subscribe(toggleDisableFunc);
-        form.subscriptions.push(subscription);
-      });
-    }
+        } // end of for-of
+      }
 
-  };
+    };
+
   }
 );

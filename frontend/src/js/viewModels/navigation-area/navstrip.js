@@ -92,7 +92,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
         }
       };
 
-      this.builtInsSelectedItem = ko.observable('');
+      this.builtInsSelectedItem = ko.observable(null);
 
       this.signalBindings = [];
 
@@ -118,7 +118,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
         binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
           self.canExitCallback = undefined;
-          self.builtInsSelectedItem('');
+          self.builtInsSelectedItem(null);
           self.builtInsDataProvider = loadBuiltInPerspectives(
             Preferences.general.themePreference(),
             Runtime.getDomainConnectState(),
@@ -222,7 +222,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
         ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)
           .then(reply => {
             if (reply) {
-              if (self.builtInsSelectedItem() !== '') {
+              if (self.builtInsSelectedItem() !== null) {
                 viewParams.signaling.beanTreeChanged.dispatch(beanTree);
               }
 
@@ -297,7 +297,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
       }
 
       function clearBuiltInsSelection(){
-        self.builtInsSelectedItem('');
+        self.builtInsSelectedItem(null);
       }
 
       function setThemePreference(theme) {

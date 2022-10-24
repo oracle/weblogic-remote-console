@@ -1,0 +1,21 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.management.security.AuthenticationProviderSecurityDataMBean
+name: weblogic.management.security.ProviderSecurityDataMBean
+properties:
+- name: Name
+  type: java.lang.String
+  descriptionHTML: The name of this security provider.
+- name: Type
+  type: java.lang.String
+- name: Description
+  type: java.lang.String
+  descriptionHTML: This security provider's description.
+- name: Version
+  type: java.lang.String
+  descriptionHTML: This security provider's version.

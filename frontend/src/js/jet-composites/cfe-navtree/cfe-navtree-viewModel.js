@@ -330,7 +330,7 @@ define([
       if (self.selectedItem() === event.detail.key) {
         // when something node is already open and it is selected, don't close it...
         // ... except if they click on the expanded icon (as opposed to clicking on the label)
-        let cl = event.detail.originalEvent.path[0].className;
+        let cl = (event.detail.originalEvent.path ? event.detail.originalEvent.path[0].className : '');
 
         if (!cl.includes('oj-navigationlist-expand-icon'))
           event.preventDefault();
