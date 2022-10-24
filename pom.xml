@@ -27,7 +27,7 @@
 
         <version.commons-lang>2.4</version.commons-lang>
         <version.helidon>2.5.1</version.helidon>
-        <version.jackson>2.13.4</version.jackson>
+        <version.jackson>2.13.4.1</version.jackson>
         <version.jackson.jaxrs>2.13.4</version.jackson.jaxrs>
         <version.jsoup>1.13.1</version.jsoup>
         <version.junit.jupiter>5.5.1</version.junit.jupiter>
