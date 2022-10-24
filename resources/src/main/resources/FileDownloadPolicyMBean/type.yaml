@@ -1,0 +1,25 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+editable: true
+disableMBeanJavadoc: true
+
+children:
+- name: ear_request
+  label: ear_request
+- name: file
+  label: file
+- name: wl_component_request
+  label: wl_component_request
+- name: wl_ear_resource_request
+  label: wl_ear_resource_request
+- name: wl_file_realm_request
+  label: wl_file_realm_request
+- name: wl_init_replica_request
+  label: wl_init_replica_request
+- name: wl_jsp_refresh_request
+  label: wl_jsp_refresh_request
+- name: wl_managed_server_independence_request
+  label: wl_managed_server_independence_request
+- name: wl_xml_entity_request
+  label: wl_xml_entity_request

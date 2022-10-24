@@ -1,0 +1,45 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to set or modify values for the attributes of the selected user.</p>
+  <p>These attributes conform to the user schema for representing
+  individuals in the inetOrgPerson LDAP object class, described in RFC 2798.
+  For example, <code>c</code> represents a two-letter ISO 3166 country code,
+  and <code>l</code> represents the user's written or spoken language.</p>
+
+properties:
+- name: c
+- name: departmentnumber
+- name: displayname
+- name: employeenumber
+- name: employeetype
+- name: facsimiletelephonenumber
+- name: givenname
+- name: homephone
+- name: homepostaladdress
+- name: l
+- name: mail
+- name: mobile
+- name: pager
+- name: postaladdress
+- name: postofficebox
+- name: preferredlanguage
+- name: st
+- name: street
+- name: telephonenumber
+- name: title
+
+helpTopics:
+- label: "Setting User Attributes"
+  href: "secmg/default_atn.html#SECMG462"
+  type: "edocs"
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring the WebLogic Authentication Provider"
+  href: "secmg/default_atn.html"
+  type: "edocs"

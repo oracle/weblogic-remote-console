@@ -21,3 +21,4 @@ require('./tests/scheduling_test');
 require('./tests/wdt_test');
 require('./tests/helpLink_test');
 require('./tests/nonAdminUser_test');
+require('./tests/ucdAsProvider_test');

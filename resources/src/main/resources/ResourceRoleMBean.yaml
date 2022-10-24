@@ -1,0 +1,19 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.ResourceRoleMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+derivedTypes:
+- weblogic.management.security.authorization.DomainRoleMBean
+- weblogic.management.security.authorization.GlobalRoleMBean
+- weblogic.management.security.authorization.JMSSystemResourceRoleMBean
+- weblogic.management.security.authorization.QueueRoleBean
+properties:
+- name: Name
+  descriptionHTML: "<p>TBD The name of this role.</p>"
+  type: java.lang.String
+- name: Expression
+  descriptionHTML: "<p>TBD The role expression</p>"
+  type: java.lang.String
+  writable: true

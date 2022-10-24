@@ -1,4 +1,4 @@
-/*! Copyright (c) 2020, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2022, Oracle and/or its affiliates. All rights reserved. */
 
 cfe-multi-select:not(.oj-complete){
   visibility: hidden;
@@ -14,24 +14,11 @@ cfe-multi-select{
 	width: 700px;
 }
 
-#available-container {
-	padding: 5px 10px 0 5px;
-}
-
-#chosen-container {
-	padding: 5px 0 0 10px;
-}
-
 #available-container,
 #chosen-container
 {
-	min-width: 200px;
-	max-width: 200px;
-}
-
-#available-container .oj-flex-item {
-	min-width: 200px;
-	padding: 5px 0 0 5px;
+	padding-top: 5px;
+	width: 45%;
 }
 
 #available-container > div,
@@ -53,6 +40,7 @@ cfe-multi-select{
 #available-chosen-buttonset {
 	width: 1px;
 	min-width: 47px;
+	margin: 0 10px;
 }
 
 #available-chosen-buttonset > div {

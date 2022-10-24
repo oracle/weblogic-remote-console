@@ -1,0 +1,16 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Manage this {0} custom filtering dashboard''s filters.</p>
+  <p>This dashboard will include all {0} instances in this domain that match all the filters.
+  If no filters are specified, then all {0} instances will be included.</p>
+
+customizePageDefMethod: weblogic.remoteconsole.customizers.CustomFilteringDashboardMBeanCustomizer.customizeEditSliceDef
+customizePageMethod: weblogic.remoteconsole.customizers.CustomFilteringDashboardMBeanCustomizer.customizeEditSlice
+
+sections:
+- properties:
+  - name: "Name"
+- title: "Name Filters"
+- title: "Property Filters"

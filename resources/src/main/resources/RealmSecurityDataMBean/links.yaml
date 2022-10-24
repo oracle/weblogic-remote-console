@@ -1,0 +1,19 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+collectionLinks:
+- label: Realm Configurations
+  root: DomainConfiguration
+  resourceData: Domain/SecurityConfiguration/Realms
+- label: Realms Runtime Data
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/AggregatedServerSecurityRuntime/RealmRuntimes
+
+instanceLinks:
+- label: Realm Configuration
+  root: DomainConfiguration
+  resourceData: Domain/SecurityConfiguration/Realms/<RealmSecurityData>
+- label: Realm Runtime Data
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/AggregatedServerSecurityRuntime/RealmRuntimes/<RealmSecurityData>
+  notFoundMessage: This realm was not found on any of the currently running servers.

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
@@ -17,6 +17,7 @@ import javax.ws.rs.core.MultivaluedMap;
  */
 @Priority(Priorities.AUTHENTICATION)
 public class ClientAuthFilter implements ClientRequestFilter {
+  private final boolean isBearerToken;
   private final String authHeader;
 
   /**
@@ -26,13 +27,15 @@ public class ClientAuthFilter implements ClientRequestFilter {
    */
   public ClientAuthFilter(String authHeader) {
     this.authHeader = authHeader;
+    this.isBearerToken = authHeader.startsWith("Bearer ");
   }
 
   @Override
   public void filter(ClientRequestContext request) throws IOException {
     MultivaluedMap<String, Object> headers = request.getHeaders();
     if (!headers.containsKey(HttpHeaders.AUTHORIZATION)) {
-      headers.add(HttpHeaders.AUTHORIZATION, authHeader);
+      // Bearer token placed into WebLogic specific HTTP header
+      headers.add((isBearerToken ? "weblogic-jwt-token" : HttpHeaders.AUTHORIZATION), authHeader);
     }
   }
 }

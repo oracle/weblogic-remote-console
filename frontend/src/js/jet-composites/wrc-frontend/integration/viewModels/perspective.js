@@ -92,7 +92,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               // because it's already served its purpose.
               delete viewParams['identity'];
             }
-            if (CoreUtils.isNotUndefinedNorNull(moduleConfigViewModel.canExit)) {
+            if (CoreUtils.isNotUndefinedNorNull(self.canExitCallback)) {
               return moduleConfigViewModel.canExit(exitEntryType)
                 .then(reply => {
                   if (!reply) viewParams.signaling.beanTreeChanged.dispatch(viewParams.beanTree);

@@ -1,0 +1,20 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.authentication.DefaultAuthenticatorGroupMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+properties:
+- name: Name
+  descriptionHTML: "<p>The name of this group.</p>"
+  type: java.lang.String
+- name: Description
+  descriptionHTML: "<p>A short description of this group.</p>"
+  type: java.lang.String
+  writable: true
+- name: Groups
+  descriptionHTML: "<p>This group can be a member of any of these parent groups.</p>"
+  type: weblogic.security.providers.authentication.DefaultAuthenticatorGroupMBean
+  array: true
+  relationship: reference
+  writable: true

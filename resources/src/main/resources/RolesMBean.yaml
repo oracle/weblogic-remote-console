@@ -1,0 +1,18 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.RolesMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+derivedTypes: []
+properties:
+- name: Global
+  relationship: containment
+  type: weblogic.management.security.authorization.GlobalRolesMBean
+- name: Domain
+  relationship: containment
+  type: weblogic.management.security.authorization.DomainRolesMBean
+- name: JMSSystemResources
+  relationship: containment
+  type: weblogic.management.security.authorization.JMSSystemResourceRolesMBean
+  array: true

@@ -1,0 +1,108 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.WebLogicMBean
+derivedTypes: [
+  weblogic.management.CustomFilteringDashboardMBean
+  ]
+descriptionHTML: >
+  <p>A dashboard displays monitoring information about the beans in this domain.</p>
+name: weblogic.management.DashboardMBean
+properties:
+- descriptionHTML: "<p>This dashboard's name.</p>"
+  name: Name
+  type: java.lang.String
+- descriptionHTML: "<p>This dashboard's type.</p>"
+  name: Type
+  type: java.lang.String
+- name: TemplateBeanKeyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - contains
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateBeanKeyValue
+  type: java.lang.String
+- name: TemplateBeanKeyResult
+  type: java.lang.String
+- name: TemplateIntPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  - lessThan
+  - lessThanOrEquals
+  - greaterThan
+  - greaterThanOrEquals
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateIntPropertyValue
+  type: int
+- name: TemplateLongPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  - lessThan
+  - lessThanOrEquals
+  - greaterThan
+  - greaterThanOrEquals
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateLongPropertyValue
+  type: long
+- name: TemplateDoublePropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  - lessThan
+  - lessThanOrEquals
+  - greaterThan
+  - greaterThanOrEquals
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateDoublePropertyValue
+  type: double
+- name: TemplateBooleanPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - "equals"
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateBooleanPropertyValue
+  type: boolean
+- name: TemplateStringPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  - contains
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateStringPropertyValue
+  type: java.lang.String
+- name: TemplateGenericPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - contains
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateGenericPropertyValue
+  type: java.lang.String

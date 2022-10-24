@@ -1,0 +1,105 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.authentication.DefaultAuthenticatorUserMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+properties:
+- name: Name
+  descriptionHTML: "<p>The login name of this user.</p>"
+  type: java.lang.String
+- name: Description
+  descriptionHTML: "<p>A short description of this user. For example, the user's full name.</p>"
+  type: java.lang.String
+  writable: true
+- name: Password
+  descriptionHTML: "<p>The new password of this user.</p>"
+  type: java.lang.String
+  encrypted: true
+  writable: true
+- name: Groups
+  descriptionHTML: "<p>	This user can be a member of any of these parent groups.</p>"
+  type: weblogic.security.providers.authentication.DefaultAuthenticatorGroupMBean
+  array: true
+  relationship: reference
+  writable: true
+- name: c
+  descriptionHTML: "<p>Two-letter ISO 3166 country code.</p>"
+  type: java.lang.String
+  writable: true
+- name: departmentnumber
+  descriptionHTML: "<p>Code for department to which the user belongs.</p>"
+  type: java.lang.String
+  writable: true
+- name: displayname
+  descriptionHTML: "<p>Preferred name of the user.</p>"
+  type: java.lang.String
+  writable: true
+- name: employeenumber
+  descriptionHTML: "<p>Numeric or alphanumeric identifier assigned to the user.</p>"
+  type: java.lang.String
+  writable: true
+- name: employeetype
+  descriptionHTML: "<p>Type of employment, which represents the employer to employee relationship.</p>"
+  type: java.lang.String
+  writable: true
+- name: facsimiletelephonenumber
+  descriptionHTML: "<p>Facsimile (fax) telephone number.</p>"
+  type: java.lang.String
+  writable: true
+- name: givenname
+  descriptionHTML: "<p>First name; that is, not surname (last name) or middle name.</p>"
+  type: java.lang.String
+  writable: true
+- name: homephone
+  descriptionHTML: "<p>Home telephone number.</p>"
+  type: java.lang.String
+  writable: true
+- name: homepostaladdress
+  descriptionHTML: "<p>Home postal address.</p>"
+  type: java.lang.String
+  writable: true
+- name: l
+  descriptionHTML: "<p>Name of a locality, such as a city, county or other geographic region.</p>"
+  type: java.lang.String
+  writable: true
+- name: mail
+  descriptionHTML: "<p>Electronic address of user (email).</p>"
+  type: java.lang.String
+  writable: true
+- name: mobile
+  descriptionHTML: "<p>Mobile telephone number.</p>"
+  type: java.lang.String
+  writable: true
+- name: pager
+  descriptionHTML: "<p>Pager telephone number.</p>"
+  type: java.lang.String
+  writable: true
+- name: postaladdress
+  descriptionHTML: "<p>Postal address at location of employment.</p>"
+  type: java.lang.String
+  writable: true
+- name: postofficebox
+  descriptionHTML: "<p>Post office box.</p>"
+  type: java.lang.String
+  writable: true
+- name: preferredlanguage
+  descriptionHTML: "<p>User's preferred written or spoken language.</p>"
+  type: java.lang.String
+  writable: true
+- name: st
+  descriptionHTML: "<p>Full name of state or province.</p>"
+  type: java.lang.String
+  writable: true
+- name: street
+  descriptionHTML: "<p>Physical location of user.</p>"
+  type: java.lang.String
+  writable: true
+- name: telephonenumber
+  descriptionHTML: "<p>User's telephone number in organization.</p>"
+  type: java.lang.String
+  writable: true
+- name: title
+  descriptionHTML: "<p>Title representing user's job function.</p>"
+  type: java.lang.String
+  writable: true

@@ -1,0 +1,28 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>An Authentication provider allows WebLogic Server to establish trust
+  by validating a user. Authentication providers store their data
+  outside of the WebLogic configuration.  For example, the WebLogic
+  Authentication provider stores its users and groups in the domain's
+  embedded LDAP server.</p>
+  <p>The WebLogic Remote Console provides pages for managing
+  some of the Authentication providers' data.  For example, it
+  provides pages for managing the WebLogic Authentication provider's
+  users and groups, but doesn't provide pages for managing an
+  external LDAP Authenticator's users and groups.</p>
+  <p>This page lists each security provider that has pages for managing its data.
+  Click the name of the provider to explore and manage its data.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "Description"
+- name: "Version"
+
+helpTopics:
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
