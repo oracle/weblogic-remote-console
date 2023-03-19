@@ -20,7 +20,7 @@ const FileUtils = (() => {
     return {
       file: filepath,
       fileContents: fs.readFileSync(filepath, 'utf8'),
-      mediaType: (filepath.endsWith(".json") ? "application/json" :  "application/x-yaml")
+      mediaType: (filepath.endsWith('.json') ? 'application/json' :  'application/x-yaml')
     };
   }
 
@@ -31,14 +31,14 @@ const FileUtils = (() => {
         fs.writeFile(
           filepath,
           fileContents,
-          {encoding: "utf8", flag: "w", mode: 0o666},
+          {encoding: 'utf8', flag: 'w', mode: 0o666},
           (err) => {
             if (err) {
               reject({
                 succeeded: false,
                 failure: {
                   transport: {statusText: err.code},
-                  failureType: "UNEXPECTED",
+                  failureType: 'UNEXPECTED',
                   failureReason: err.stack
                 }
               });
@@ -54,22 +54,22 @@ const FileUtils = (() => {
       if (fs.existsSync(filepath)) {
         try {
           const results = _readContentFile(filepath);
-          response["file"] = results.file;
-          response["fileContents"] = results.fileContents;
-          response["mediaType"] = results.mediaType;
+          response['file'] = results.file;
+          response['fileContents'] = results.fileContents;
+          response['mediaType'] = results.mediaType;
           return Promise.resolve(response);
         }
         catch(err) {
-          response["transport"] = {statusText: err};
-          response["failureType"] = "UNEXPECTED";
-          response["failureReason"] = err;
+          response['transport'] = {statusText: err};
+          response['failureType'] = 'UNEXPECTED';
+          response['failureReason'] = err;
           return Promise.reject(response);
         }
       }
       else {
-        response["transport"] = {statusText: `File does not exist: ${filepath}`};
-        response["failureType"] = "NOT_FOUND";
-        response["failureReason"] = `File does not exist: ${filepath}`;
+        response['transport'] = {statusText: `File does not exist: ${filepath}`};
+        response['failureType'] = 'NOT_FOUND';
+        response['failureReason'] = `File does not exist: ${filepath}`;
         return Promise.reject(response);
       }
     }

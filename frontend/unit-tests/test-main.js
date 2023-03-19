@@ -5,7 +5,7 @@
 var allTestFiles = [];
 var TEST_REGEXP = /\w\.spec\.js$/i;
 // Variable for JET version used in paths
-var JET_VERSION = 'v12.0.2';
+var JET_VERSION = '13.0.5';
 
 // Get a list of all the test files to include
 Object.keys(window.__karma__.files).forEach(function (file) {
@@ -31,8 +31,8 @@ require.config({
   paths: {
     'knockout': 'libs/knockout/knockout-3.5.1.debug',
     'knockout-mapping': 'libs/knockout/knockout.mapping-latest.debug',
-    'jquery': 'libs/jquery/jquery-3.6.0',
-    'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.12.1',
+    'jquery': 'libs/jquery/jquery-3.6.3',
+    'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.13.2',
     'hammerjs': 'libs/hammer/hammer-2.0.8',
     'ojdnd': 'libs/dnd-polyfill/dnd-polyfill-1.0.2',
     'ojs': `libs/oj/${JET_VERSION}/debug`,
@@ -48,12 +48,13 @@ require.config({
     'css': 'libs/require-css/css.min',
     'css-builder': 'libs/require-css/css-builder',
     'normalize': 'libs/require-css/normalize',
-    'chai': 'libs/chai/chai-4.3.4',
+    'chai': 'libs/chai/chai-4.3.6',
     'js-yaml' : 'libs/js-yaml/js-yaml',
     // The above fields should match main.js
-    "sinon": "../../node_modules/sinon/pkg/sinon",
-    "promise": "libs/es6-promise/es6-promise",
-    "wrc-frontend":"jet-composites/wrc-frontend/1.0.0"
+    'sinon': '../../node_modules/sinon/pkg/sinon',
+    'promise': 'libs/es6-promise/es6-promise',
+    'puppeteer': '../../node_modules/puppeteer/lib/esm/puppeteer',
+    'wrc-frontend': 'jet-composites/wrc-frontend/1.0.0'
   },
 
   // dynamically load all test files

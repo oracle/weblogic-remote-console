@@ -56,6 +56,7 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
             dataProvider['url'] = item.url;
             dataProvider['username'] = item.username;
             dataProvider['password'] = item.password;
+            dataProvider['sso'] = item.sso;
             break;
           case DataProvider.prototype.Type.MODEL.name:
             dataProvider['properties'] = item.properties;

@@ -1,0 +1,21 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>The following table lists the credential mappings configured for this remote resource.</p>
+
+displayedColumns:
+- name: Name
+- name: WLSUser
+- name: IdentityDomain
+- name: RemoteUser
+
+helpTopics:
+- label: "Configuring a WebLogic Credential Mapping Provider"
+  href: "secmg/credmapper.html#SECMG148"
+  type: "edocs"
+- label: "Enabling Trust Between WebLogic Server Domains"
+  href: "secmg/domain.html#SECMG404"
+  type: "edocs"
+- label: "The Credential Mapping Process"
+  href: "scovr/archtect.html#SCOVR234"
+  type: "edocs"

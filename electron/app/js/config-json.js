@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -28,8 +28,9 @@ const AppConfig = (() => {
       _config['quiet'] = options.quiet;
       _config['checkPpidMillis'] = options.checkPpidMillis;
       _config['executableJar'] = `${options.appPaths.exe}/${options.executablePath}`;
-      _config['javaBinary'] = `${options.appPaths.exe}/${options.javaPath}`;
+      _config['javaPath'] = `${options.appPaths.exe}/${options.javaPath}`;
       _config['persistenceDirectory'] = options.appPaths.userData;
+      AppConfig.read();
     },
     getFilename: () => {
       return `${_appPaths.userDataPath}/config.json`;
@@ -43,7 +44,7 @@ const AppConfig = (() => {
       if (settings.showPort) _config['showPort'] = settings.showPort;
       if (settings.quiet) _config['quiet'] = settings.quiet;
       if (settings.checkPpidMillis) _config['checkPpidMillis'] = settings.checkPpidMillis;
-      if (settings.javaPath) _config['javaBinary'] = `${_appPaths.exe}/${settings.javaPath}`;
+      if (settings.javaPath) _config['javaPath'] = `${settings.javaPath}`;
       if (settings.executablePath) _config['executableJar'] = `${_appPaths.exe}/${settings.executablePath}`;
     },
     read: () => {

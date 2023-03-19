@@ -1,11 +1,8 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page lists the credential providers that have been created for
-  the Web service security configuration. Click on the credential provider
-  name to modify its configuration and to add properties. Click New to
-  create a new credential provider. To delete a credential provider,
-  check the box next to its name and click Delete.</p>
+  the Web service security configuration.</p>
 
 displayedColumns:
 - name: "Name"

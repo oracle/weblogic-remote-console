@@ -1,0 +1,454 @@
+{
+  "Policy":{
+    "value":{
+      "resourceId":"type=<svr>, application=, server=ManagedServer2, action=lock",
+      "supportedPredicates":[
+        {
+          "className":"weblogic.entitlement.rules.OwnerIDDGroup",
+          "displayName":"Group has the same Identity Domain as the Resource Identity Domain",
+          "descriptionHTML":"Creates a condition for a security policy that is true when a specified group has the same identity domain as the resource identity domain.",
+          "arguments":[
+            {
+              "displayName":"Group Name Argument",
+              "descriptionHTML":"Group Name",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.IDDGroup",
+          "displayName":"Group has the same Identity Domain as the specified Identity Domain",
+          "descriptionHTML":"Creates a condition for a security policy that is true when a specified group has the same identity domain as the specified identity domain.",
+          "arguments":[
+            {
+              "displayName":"Group Name Argument",
+              "descriptionHTML":"Group Name",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"Identity Domain Argument",
+              "descriptionHTML":"Identity Domain",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.AdministrativeGroup",
+          "displayName":"Group Identity Domain has administrative rights in calling context",
+          "descriptionHTML":"Creates a condition for a security policy that is true when a specified group has the same identity domain as the resource or administrative identity domain.",
+          "arguments":[
+            {
+              "displayName":"Group Name Argument",
+              "descriptionHTML":"Group Name",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.Before",
+          "displayName":"Access occurs before",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the policy is being evaluated before the date and time specified in the predicate. The server timezone is used but an optional timezone offset can be specified.",
+          "arguments":[
+            {
+              "displayName":"Date",
+              "descriptionHTML":"Date in location specific format of \"y-MM-dd\". E.g.: April 25, 2006 is \"2006-04-25\". An optional time of the form \"y-MM-dd HH:mm:ss\" can be added. E.g.: \"2006-04-25 20:45:35\".",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"GMT offset",
+              "descriptionHTML":"The time ahead of GMT (enter as \"GMT+h:mm\") or behind GMT (enter as \"GMT-h:mm\"). E.g.: Eastern Standard Time in the USA would be \"GMT-5:00\".",
+              "array":false,
+              "optional":true
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.AdminIDDGroup",
+          "displayName":"Group has the same Identity Domain as the Administrative Identity Domain",
+          "descriptionHTML":"Creates a condition for a security policy that is true when a specified group has the same identity domain as the administrative identity domain.",
+          "arguments":[
+            {
+              "displayName":"Group Name Argument",
+              "descriptionHTML":"Group Name",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.UncheckedPolicy",
+          "displayName":"Allow access to everyone",
+          "descriptionHTML":"Creates a condition for a security policy that permits access to everyone.",
+          "arguments":[
+
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.InDevelopmentMode",
+          "displayName":"Server is in development mode",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the server is in development mode.",
+          "arguments":[
+
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.OwnerIDDUser",
+          "displayName":"User has the same Identity Domain as the Resource Identity Domain",
+          "descriptionHTML":"Creates a condition for a security policy that is true when a specified user has the same identity domain as the resource identity domain.",
+          "arguments":[
+            {
+              "displayName":"User Name Argument",
+              "descriptionHTML":"User Name",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.ContextElementStringEquals",
+          "displayName":"Context element's value equals a string constant",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the context element's value is equal to a string constant.",
+          "arguments":[
+            {
+              "displayName":"Context element name",
+              "descriptionHTML":"Name of the Context Element which value is to be evaluated",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"String value",
+              "descriptionHTML":"The string value to compare against.",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.TimePredicate",
+          "displayName":"Access occurs between specified hours",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the policy is being evaluated between the start and end times specified in the predicate. The server timezone is used but an optional timezone offset can be specified.",
+          "arguments":[
+            {
+              "displayName":"Starting time",
+              "descriptionHTML":"The earliest permissible time in the format of \"HH:mm:ss\". E.g.: \"20:45:35\".",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"Ending time",
+              "descriptionHTML":"The latest permissible time in the format of \"HH:mm:ss\". E.g.: \"20:45:35\".",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"GMT offset",
+              "descriptionHTML":"The time ahead of GMT (enter as \"GMT+h:mm\") or behind GMT (enter as \"GMT-h:mm\"). E.g.: Eastern Standard Time in the USA would be \"GMT-5:00\".",
+              "array":false,
+              "optional":true
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.IDCSAppRoleName",
+          "displayName":"Oracle Identity Cloud Service application role",
+          "descriptionHTML":"Creates a condition for a security policy that is true when a specified application role has the same role name and application name as those specified in the predicate.",
+          "arguments":[
+            {
+              "displayName":"Oracle Identity Cloud Service application role name",
+              "descriptionHTML":"Application role name that the Oracle Identity Cloud Service application role needs to match",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"Oracle Identity Cloud Service application name",
+              "descriptionHTML":"Application name that the Oracle Identity Cloud Service application role needs to match",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.After",
+          "displayName":"Access occurs after",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the policy is being evaluated after the date and time specified in the predicate. The server timezone is used but an optional timezone offset can be specified.",
+          "arguments":[
+            {
+              "displayName":"Date",
+              "descriptionHTML":"Date in location specific format of \"y-MM-dd\". E.g.: April 25, 2006 is \"2006-04-25\". An optional time of the form \"y-MM-dd HH:mm:ss\" can be added. E.g.: \"2006-04-25 20:45:35\".",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"GMT offset",
+              "descriptionHTML":"The time ahead of GMT (enter as \"GMT+h:mm\") or behind GMT (enter as \"GMT-h:mm\"). E.g.: Eastern Standard Time in the USA would be \"GMT-5:00\".",
+              "array":false,
+              "optional":true
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.ContextElementIsSet",
+          "displayName":"Context element defined",
+          "descriptionHTML":"Creates a condition for a security policy that is true when \t the specified context element attribute is defined and not null.",
+          "arguments":[
+            {
+              "displayName":"Context element name",
+              "descriptionHTML":"Name of the Context Element which value is to be evaluated",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.IsDayOfWeek",
+          "displayName":"Access occurs on specified days of the week",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the policy is being evaluated on the specified days of the week.",
+          "arguments":[
+            {
+              "displayName":"Day of week",
+              "descriptionHTML":"The day of the week: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"GMT offset",
+              "descriptionHTML":"The time ahead of GMT (enter as \"GMT+h:mm\") or behind GMT (enter as \"GMT-h:mm\"). E.g.: Eastern Standard Time in the USA would be \"GMT-5:00\".",
+              "array":false,
+              "optional":true
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.BeforeDayOfMonth",
+          "displayName":"Access occurs before the specified day of the month",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the policy is being evaluated on a day before the day of the month specified in the predicate. The server timezone is used but an optional timezone offset can be specified.",
+          "arguments":[
+            {
+              "displayName":"The day of the month",
+              "descriptionHTML":"The ordinal number of the day within the current month with values in the range from -31 to 31. Negative values count back from the end of the month, so the last day of the month is specified as -1. 0 indicates the day before the first day of the month.",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"GMT offset",
+              "descriptionHTML":"The time ahead of GMT (enter as \"GMT+h:mm\") or behind GMT (enter as \"GMT-h:mm\"). E.g.: Eastern Standard Time in the USA would be \"GMT-5:00\".",
+              "array":false,
+              "optional":true
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.AdminIDDUser",
+          "displayName":"User has the same Identity Domain as the Administrative Identity Domain",
+          "descriptionHTML":"Creates a condition for a security policy that is true when a specified user has the same identity domain as the administrative identity domain.",
+          "arguments":[
+            {
+              "displayName":"User Name Argument",
+              "descriptionHTML":"User Name",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.IsDayOfMonth",
+          "displayName":"Access occurs on the specified day of the month",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the policy is being evaluated on the day of the month specified in the predicate. The server timezone is used but an optional timezone offset can be specified.",
+          "arguments":[
+            {
+              "displayName":"The day of the month",
+              "descriptionHTML":"The ordinal number of the day within the current month with values in the range from -31 to 31. Negative values count back from the end of the month, so the last day of the month is specified as -1. 0 indicates the day before the first day of the month.",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"GMT offset",
+              "descriptionHTML":"The time ahead of GMT (enter as \"GMT+h:mm\") or behind GMT (enter as \"GMT-h:mm\"). E.g.: Eastern Standard Time in the USA would be \"GMT-5:00\".",
+              "array":false,
+              "optional":true
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.Scope",
+          "displayName":"Scope",
+          "descriptionHTML":"Creates a condition for a security policy that is true when a specified Scope has the same scope name and identity domain as those specified in the predicate.",
+          "arguments":[
+            {
+              "displayName":"String value",
+              "descriptionHTML":"The string value to compare against.",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"Identity Domain Argument",
+              "descriptionHTML":"Identity Domain",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.AfterDayOfMonth",
+          "displayName":"Access occurs after the specified day of the month",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the policy is being evaluated on a day after the day of the month specified in the predicate. The server timezone is used but an optional timezone offset can be specified.",
+          "arguments":[
+            {
+              "displayName":"The day of the month",
+              "descriptionHTML":"The ordinal number of the day within the current month with values in the range from -31 to 31. Negative values count back from the end of the month, so the last day of the month is specified as -1. 0 indicates the day before the first day of the month.",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"GMT offset",
+              "descriptionHTML":"The time ahead of GMT (enter as \"GMT+h:mm\") or behind GMT (enter as \"GMT-h:mm\"). E.g.: Eastern Standard Time in the USA would be \"GMT-5:00\".",
+              "array":false,
+              "optional":true
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.ContextElementNumberEquals",
+          "displayName":"Context element's value equals a numeric constant",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the context element's value is equal to a numeric constant.",
+          "arguments":[
+            {
+              "displayName":"Context element name",
+              "descriptionHTML":"Name of the Context Element which value is to be evaluated",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"Numeric value",
+              "descriptionHTML":"A numeric value.",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.ContextElementNumberGreater",
+          "displayName":"Context element's value is greater than a numeric constant",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the context element's value is greater than a numeric constant.",
+          "arguments":[
+            {
+              "displayName":"Context element name",
+              "descriptionHTML":"Name of the Context Element which value is to be evaluated",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"Numeric value",
+              "descriptionHTML":"A numeric value.",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.ExcludedPolicy",
+          "displayName":"Deny access to everyone",
+          "descriptionHTML":"Creates a condition for a security policy that denies access to everyone.",
+          "arguments":[
+
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.IDDUser",
+          "displayName":"User has the same Identity Domain as the specified Identity Domain",
+          "descriptionHTML":"Creates a condition for a security policy that is true when a specified user has the same identity domain as the specified identity domain.",
+          "arguments":[
+            {
+              "displayName":"User Name Argument",
+              "descriptionHTML":"User Name",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"Identity Domain Argument",
+              "descriptionHTML":"Identity Domain",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.InSecureMode",
+          "displayName":"Server is in secure mode",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the server is in secure mode.",
+          "arguments":[
+
+          ]
+        },
+        {
+          "className":"weblogic.entitlement.rules.ContextElementNumberLess",
+          "displayName":"Context element's value is less than a numeric constant",
+          "descriptionHTML":"Creates a condition for a security policy that is true when the context element's value is less than a numeric constant.",
+          "arguments":[
+            {
+              "displayName":"Context element name",
+              "descriptionHTML":"Name of the Context Element which value is to be evaluated",
+              "array":false,
+              "optional":false
+            },
+            {
+              "displayName":"Numeric value",
+              "descriptionHTML":"A numeric value.",
+              "array":false,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.console.wls.rest.extension.security.authorization.predicates.UserPredicate",
+          "displayName":"User",
+          "descriptionHTML":"User Predicate",
+          "arguments":[
+            {
+              "displayName":"User Argument Name",
+              "descriptionHTML":"User Argument Description",
+              "array":true,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.console.wls.rest.extension.security.authorization.predicates.GroupPredicate",
+          "displayName":"Group",
+          "descriptionHTML":"Group Predicate",
+          "arguments":[
+            {
+              "displayName":"Group Argument Name",
+              "descriptionHTML":"Add one or more groups to this condition. If you add multiple groups, the condition evaluates as true if the user is a member of ANY of the groups.",
+              "array":true,
+              "optional":false
+            }
+          ]
+        },
+        {
+          "className":"weblogic.console.wls.rest.extension.security.authorization.predicates.RolePredicate",
+          "displayName":"Role",
+          "descriptionHTML":"Role Predicate",
+          "arguments":[
+            {
+              "displayName":"Role Argument Name",
+              "descriptionHTML":"Add one or more roles to this condition. If you add multiple roles, the condition evaluates as true if the user is in ANY of the roles.",
+              "array":true,
+              "optional":false
+            }
+          ]
+        }
+      ],
+      "stringExpression":"?weblogic.entitlement.rules.InDevelopmentMode()",
+      "parsedExpression":{
+        "type":"predicate",
+        "name":"weblogic.entitlement.rules.InDevelopmentMode"
+      }
+    }
+  }
+}

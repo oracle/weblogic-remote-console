@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -35,14 +35,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         },
         images: {
           preloader: {
-            iconFile: 'preloader-rounded-blocks-grn_12x64x64'
+            iconFile: 'preloader-rounded-blocks-grn_12x64x64',
+            label: oj.Translations.getTranslatedString('wrc-common.tooltips.preloader.value')
           }
         },
         dialog: {
           title: ko.observable(''),
           instructions: ko.observable(''),
           prompt: ko.observable('')
-        }
+        },
+        'navtree': {
+          ariaLabel: {
+            value: oj.Translations.getTranslatedString('wrc-navigation.navtree.ariaLabel.value')
+          }
+        },
       };
 
       const signaling = Controller.getSignaling();

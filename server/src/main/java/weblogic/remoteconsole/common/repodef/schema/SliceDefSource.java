@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -13,6 +13,7 @@ public class SliceDefSource {
   private StringValue name = new StringValue();
   private StringValue label = new StringValue();
   private ListValue<SliceDefSource> slices = new ListValue<>();
+  private ListValue<String> requiredCapabilities = new ListValue<>();
 
   // The name of this slice (i.e. what to put into its PDJ url)
   // Not configured in yaml.  Instead, the CBE sets it.
@@ -44,5 +45,14 @@ public class SliceDefSource {
 
   public void addSlice(SliceDefSource value) {
     slices.add(value);
+  }
+
+  // The bean repo capabilities that are required for this slice to be present
+  public List<String> getRequiredCapabilities() {
+    return requiredCapabilities.getValue();
+  }
+  
+  public void setRequiredCapabilities(List<String> val) {
+    requiredCapabilities.setValue(val);
   }
 }

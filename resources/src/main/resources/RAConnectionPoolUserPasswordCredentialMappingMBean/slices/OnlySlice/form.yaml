@@ -1,0 +1,11 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to edit a credential mapping for this connection pool.</p>
+  <p>If the connection pool name is empty, then this mapping is a default for the resource adapter.</p>
+
+properties:
+- name: WLSUser
+- name: IdentityDomain
+- name: RemoteUser

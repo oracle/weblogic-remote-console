@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
     <p>This page displays statistics associated with JDBC data sources defined
@@ -41,3 +41,20 @@ displayedColumns:
 - name: "WaitingForConnectionHighCount"
 - name: "WaitingForConnectionSuccessTotal"
 - name: "WaitingForConnectionTotal"
+
+actions:
+- name: "start"
+- name: "resume"
+- name: "suspendActions"
+  label: "Suspend"
+  actions:
+    - name: "suspend"
+    - name: "forceSuspend"
+- name: "shutdownActions"
+  label: "Shutdown"
+  actions:
+  - name: "shutdown"
+  - name: "forceShutdown"
+- name: "shrink"
+- name: "reset"
+- name: "clearStatementCache"

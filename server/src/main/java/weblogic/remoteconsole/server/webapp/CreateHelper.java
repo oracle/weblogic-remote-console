@@ -103,30 +103,88 @@ public class CreateHelper {
     }
   }
 
-  private Response<String> getKey(InvocationContext ic, List<FormProperty> properties) {
+  protected Response<String> getKey(InvocationContext ic, List<FormProperty> properties) {
+    return
+      findRequiredStringProperty(
+        ic,
+        ic.getBeanTreePath().getTypeDef().getKeyPropertyDef().getPropertyPath(),
+        properties
+      );
+  }
+
+  protected Response<String> findRequiredStringProperty(
+    InvocationContext ic,
+    Path propertyPath,
+    List<FormProperty> properties
+  ) {
+    String value = findOptionalStringProperty(propertyPath, properties);
     Response<String> response = new Response<>();
+    if (StringUtils.isEmpty(value)) {
+      response.addFailureMessage(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.REQUIRED_PROPERTY_NOT_SPECIFIED,
+          propertyPath
+        )
+      );
+      return response.setUserBadRequest();
+    }
+    return response.setSuccess(value);
+  }
+
+  protected String findOptionalStringProperty(
+    Path propertyPath,
+    List<FormProperty> properties
+  ) {
     for (FormProperty property : properties) {
-      if (property.getPropertyDef().isKey()) {
-        // request bodies always send in settable values:
-        SettableValue settableValue = property.getValue().asSettable();
-        if (!settableValue.isUnset()) {
-          Value value = settableValue.getValue();
-          if (value.isString()) {
-            if (StringUtils.notEmpty(value.asString().getValue())) {
-              return response.setSuccess(value.asString().getValue());
-            }
-          } else {
-            throw new AssertionError("Non-string key " + property.getPropertyDef());
-          }
-        }
+      if (property.getPropertyDef().getPropertyPath().equals(propertyPath)) {
+        return getStringPropertyValue(property);
       }
     }
-    response.addFailureMessage(
-      ic.getLocalizer().localizeString(
-        LocalizedConstants.REQUIRED_PROPERTY_NOT_SPECIFIED,
-        ic.getBeanTreePath().getTypeDef().getKeyPropertyDef().getPropertyName()
-      )
-    );
-    return response.setUserBadRequest();
+    return null;
+  }
+
+  private String getStringPropertyValue(FormProperty property) {
+    // request bodies always send in settable values:
+    SettableValue settableValue = property.getValue().asSettable();
+    if (!settableValue.isUnset()) {
+      Value value = settableValue.getValue();
+      if (value.isString()) {
+        if (StringUtils.notEmpty(value.asString().getValue())) {
+          return value.asString().getValue();
+        }
+      } else {
+        throw new AssertionError("Non-string key " + property.getPropertyDef());
+      }
+    }
+    return null;
+  }
+
+
+  protected boolean findOptionalBooleanProperty(
+    Path propertyPath,
+    List<FormProperty> properties,
+    boolean dflt
+  ) {
+    for (FormProperty property : properties) {
+      if (property.getPropertyDef().getPropertyPath().equals(propertyPath)) {
+        return getBooleanPropertyValue(property, dflt);
+      }
+    }
+    return dflt;
+  }
+
+  private boolean getBooleanPropertyValue(FormProperty property, boolean dflt) {
+    // request bodies always send in settable values:
+    SettableValue settableValue = property.getValue().asSettable();
+    if (!settableValue.isUnset()) {
+      Value value = settableValue.getValue();
+      if (value.isBoolean()) {
+        return value.asBoolean().getValue();
+      } else {
+        throw new AssertionError("Non-boolean key " + property.getPropertyDef());
+      }
+    }
+    // TBD if the property has a default value, use it?
+    return dflt;
   }
 }

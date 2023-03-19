@@ -130,7 +130,6 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
       new WDTCompositePageRepo(
         WebLogicMBeansVersions.getVersion(
           WebLogicVersions.getCurrentVersion(),
-          null, // GA
           WebLogicMBeansVersion.NO_CAPABILITIES
         ),
         models,

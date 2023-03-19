@@ -1,0 +1,171 @@
+[
+  {
+    "uid":"0",
+    "parentUid":"-1",
+    "operator":"or",
+    "expression":"Group: grp7",
+    "options":{
+      "negated":false,
+      "combined":false,
+      "deleted":false
+    },
+    "predicate":{
+      "name":"weblogic.console.wls.rest.extension.security.authorization.predicates.GroupPredicate",
+      "arguments":[
+        {
+          "value":"grp7",
+          "array":true,
+          "optional":false,
+          "displayName":"Group Argument Name",
+          "descriptionHTML":"Add one or more groups to this condition. If you add multiple groups, the condition evaluates as true if the user is a member of ANY of the groups."
+        }
+      ],
+      "descriptionHTML":"Group Predicate",
+      "displayName":"Group"
+    }
+  },
+  {
+    "uid":"1",
+    "parentUid":"-1",
+    "expression":"NOT Combination",
+    "options":{
+      "negated":true,
+      "combined":true,
+      "deleted":false
+    },
+    "children":[
+      {
+        "uid":"2",
+        "parentUid":"1",
+        "operator":"or",
+        "expression":"User: usr11 or usr12",
+        "options":{
+          "negated":false,
+          "combined":false,
+          "deleted":false
+        },
+        "predicate":{
+          "name":"weblogic.console.wls.rest.extension.security.authorization.predicates.UserPredicate",
+          "arguments":[
+            {
+              "value":"usr11",
+              "array":true,
+              "optional":false,
+              "displayName":"User Argument Name",
+              "descriptionHTML":"User Argument Description"
+            },
+            {
+              "value":"usr12",
+              "array":true,
+              "optional":false,
+              "displayName":"User Argument Name",
+              "descriptionHTML":"User Argument Description"
+            }
+          ],
+          "descriptionHTML":"User Predicate",
+          "displayName":"User"
+        }
+      },
+      {
+        "uid":"3",
+        "parentUid":"1",
+        "operator":"and",
+        "expression":"Role: role1",
+        "options":{
+          "negated":false,
+          "combined":false,
+          "deleted":false
+        },
+        "predicate":{
+          "name":"weblogic.console.wls.rest.extension.security.authorization.predicates.RolePredicate",
+          "arguments":[
+            {
+              "value":"role1",
+              "array":true,
+              "optional":false,
+              "displayName":"Role Argument Name",
+              "descriptionHTML":"Add one or more roles to this condition. If you add multiple roles, the condition evaluates as true if the user is in ANY of the roles."
+            }
+          ],
+          "descriptionHTML":"Role Predicate",
+          "displayName":"Role"
+        },
+        "joiner":"and"
+      }
+    ]
+  },
+  {
+    "uid":"4",
+    "parentUid":"-1",
+    "operator":"and",
+    "expression":"Allow access to everyone",
+    "options":{
+      "negated":false,
+      "combined":false,
+      "deleted":false
+    },
+    "predicate":{
+      "name":"weblogic.entitlement.rules.UncheckedPolicy",
+      "arguments":[
+
+      ],
+      "descriptionHTML":"Creates a condition for a security policy that permits access to everyone.",
+      "displayName":"Allow access to everyone"
+    }
+  },
+  {
+    "uid":"5",
+    "parentUid":"-1",
+    "expression":"Combination",
+    "options":{
+      "negated":false,
+      "combined":true,
+      "deleted":false
+    },
+    "children":[
+      {
+        "uid":"6",
+        "parentUid":"5",
+        "operator":"or",
+        "expression":"NOT User: mwooten",
+        "options":{
+          "negated":true,
+          "combined":false,
+          "deleted":false
+        },
+        "predicate":{
+          "name":"weblogic.console.wls.rest.extension.security.authorization.predicates.UserPredicate",
+          "arguments":[
+            {
+              "value":"mwooten",
+              "array":true,
+              "optional":false,
+              "displayName":"User Argument Name",
+              "descriptionHTML":"User Argument Description"
+            }
+          ],
+          "descriptionHTML":"User Predicate",
+          "displayName":"User"
+        }
+      },
+      {
+        "uid":"7",
+        "parentUid":"5",
+        "expression":"Server is in development mode",
+        "options":{
+          "negated":false,
+          "combined":false,
+          "deleted":false
+        },
+        "predicate":{
+          "name":"weblogic.entitlement.rules.InDevelopmentMode",
+          "arguments":[
+
+          ],
+          "descriptionHTML":"Creates a condition for a security policy that is true when the server is in development mode.",
+          "displayName":"Server is in development mode"
+        }
+      }
+    ]
+  }
+]

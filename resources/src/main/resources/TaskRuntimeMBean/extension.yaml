@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: StartTime
@@ -7,3 +7,24 @@ properties:
 - name: EndTime
   type: java.util.Date
   descriptionHTML: '<p>The time this task ended.</p> '
+- name: Completed
+  type: boolean
+  descriptionHTML: '<p>Whether this task has completed.</p>'
+- name: Progress
+  type: java.lang.String
+  legalValues:
+  - "success"
+  - "failed"
+  - "processing"
+  - "pending"
+  descriptionHTML: '<p>How much progress this task has made.</p>'
+# Make copies of Status and Error since we don't
+# harvest or handle the @restName annotations
+# that rename them from status -> taskStatus and error -> taskError
+# It isn't worth adding infra for handling @restName since there are so few instances.
+- name: TaskStatus
+  descriptionHTML: '<p>The status of this task.</p> '
+  type: java.lang.String
+- name: TaskError
+  descriptionHTML: '<p>Returns an exception describing the error, if any, that occurred while performing this task.</p> '
+  type: java.lang.Exception

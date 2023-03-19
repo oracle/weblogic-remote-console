@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 subTypeDiscriminatorProperty: Type
 subTypes:
@@ -12,3 +12,77 @@ subTypes:
   value: JDBCOracleDataSourceRuntime
 - type: weblogic.management.runtime.JDBCDataSourceRuntimeMBean
   value: JDBCDataSourceRuntime
+
+# Note - the WLS console hides the actions of UCP data sources.
+# Also, it calls DataSourceRuntimeMBean.isOperationAllowed to
+# find out whether the data source currently supports the action.
+# Also, the JDBCDataSourceRuntimeMBean doesn't have a property that
+# indicates if it's UCP, so the WLS console looks at its
+# corresponding config mbean.
+#
+# It would be a lot of work to mimic this in the remote console.
+# The proper way to do it is to add custom properties for each
+# action that indicate whether the action can be invoked, and to
+# have each action 'usedIf' the corresponding property.
+#
+# For now, the actions just copy DataSourceRuntimeMBean.isOperationAllowed logic.
+actions:
+- name: "start"
+  label: "Start"
+  usedIf:
+    property: "State"
+    values:
+    - "Shutdown"
+- name: "resume"
+  label: "Resume"
+  usedIf:
+    property: "State"
+    values:
+    - "Suspended"
+- name: "suspend"
+  label: "Suspend"
+  usedIf:
+    property: "State"
+    values:
+    - "Running"
+- name: "forceSuspend"
+  label: "Force Suspend"
+  usedIf:
+    property: "State"
+    values:
+    - "Running"
+- name: "shutdown"
+  label: "Shutdown"
+  usedIf:
+    property: "State"
+    values:
+    - "Running"
+    - "Suspended"
+- name: "forceShutdown"
+  label: "Force Shutdown"
+  usedIf:
+    property: "State"
+    values:
+    - "Running"
+    - "Suspended"
+- name: "shrink"
+  label: "Shrink"
+  usedIf:
+    property: "State"
+    values:
+    - "Running"
+    - "Suspended"
+- name: "reset"
+  label: "Reset"
+  usedIf:
+    property: "State"
+    values:
+    - "Running"
+    - "Suspended"
+- name: "clearStatementCache"
+  label: "Clear Cache"
+  usedIf:
+    property: "State"
+    values:
+    - "Running"
+    - "Suspended"

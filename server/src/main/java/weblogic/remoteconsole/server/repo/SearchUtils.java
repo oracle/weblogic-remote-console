@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -31,11 +31,11 @@ public class SearchUtils {
   ) {
     PageDef pageDef = pageRepoDef.getPageDef(pageRepoDef.newTablePagePath(typeDef));
     if (pageDef != null) {
-      return pageDef.asTableDef().getDisplayedColumnDefs();
+      return removePageLevelProperties(pageDef.asTableDef().getDisplayedColumnDefs());
     }
     SliceFormDef formDef = getDefaultSliceFormDef(pageRepoDef, typeDef);
     if (formDef != null) {
-      return formDef.getPropertyDefs();
+      return removePageLevelProperties(formDef.getPropertyDefs());
     }
     throw new AssertionError(typeDef + " is not a table and does not have a slice form");
   }
@@ -124,16 +124,27 @@ public class SearchUtils {
     // Should call pageRepo.getPageDef(ic) so that it can call the page def's customizer.
     // But that returns a Response<Void>, which needs to bubble up many layers.
     // For now, since none of the pages that are searched customize their page defs,
-    // just use the page repo def to get the uncustomize page def.
+    // just use the page repo def to get the uncustomized page def.
     PageDef pageDef = pageRepoDef.getPageDef(pagePath);
-    if (pageDef != null) {
-      // weed out page-specific properties?
-      for (PagePropertyDef propertyDef : pageDef.getAllPropertyDefs()) {
+    // Weed out slice tables since they never hold properties about this bean
+    if (pageDef != null && !pageDef.isSliceTableDef()) {
+      for (PagePropertyDef propertyDef : removePageLevelProperties(pageDef.getAllPropertyDefs())) {
         String propertyName = propertyDef.getFormPropertyName();
         if (!propertyDefs.containsKey(propertyName)) {
           propertyDefs.put(propertyName, propertyDef);
         }
       }
     }
+  }
+
+  // Remove page-level properties since they're not on the underlying mbean
+  private static List<PagePropertyDef> removePageLevelProperties(List<PagePropertyDef> propertyDefs) {
+    List<PagePropertyDef> rtn = new ArrayList<>();
+    for (PagePropertyDef propertyDef : propertyDefs) {
+      if (!propertyDef.isPageLevelProperty()) {
+        rtn.add(propertyDef);
+      }
+    }
+    return rtn;
   }
 }

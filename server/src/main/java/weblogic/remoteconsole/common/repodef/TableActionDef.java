@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -6,7 +6,7 @@ package weblogic.remoteconsole.common.repodef;
 import java.util.List;
 
 /**
- * This interface describes an action on a table page
+ * This interface describes an action on a table or slice table page
  * (e.g. the action to start a server)
  *
  * It contains all of the information about the tree that the different

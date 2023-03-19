@@ -201,6 +201,67 @@ properties:
     values:
     - true
 
+- name: KeyStores
+  label: Keystores
+  legalValues:
+  - value: DemoIdentityAndDemoTrust
+    label: "Demo Identity and Demo Trust"
+  - value: CustomIdentityAndJavaStandardTrust
+    label: "Custom Identity and Java Standard Trust"
+  - value: CustomIdentityAndCustomTrust
+    label: "Custom Identity and Custom Trust"
+  - value: CustomIdentityAndCommandLineTrust
+    label: "Custom Identity and Command Line Trust"
+
+- name: CustomIdentityKeyStoreFileName
+  usedIf:
+    property: KeyStores
+    values:
+    - CustomIdentityAndJavaStandardTrust
+    - CustomIdentityAndCustomTrust
+    - CustomIdentityAndCommandLineTrust
+
+- name: CustomIdentityKeyStoreType
+  usedIf:
+    property: KeyStores
+    values:
+    - CustomIdentityAndJavaStandardTrust
+    - CustomIdentityAndCustomTrust
+    - CustomIdentityAndCommandLineTrust
+
+- name: CustomIdentityKeyStorePassPhrase
+  usedIf:
+    property: KeyStores
+    values:
+    - CustomIdentityAndJavaStandardTrust
+    - CustomIdentityAndCustomTrust
+    - CustomIdentityAndCommandLineTrust
+
+- name: CustomTrustKeyStoreFileName
+  usedIf:
+    property: KeyStores
+    values:
+    - CustomIdentityAndCustomTrust
+
+- name: CustomTrustKeyStoreType
+  usedIf:
+    property: KeyStores
+    values:
+    - CustomIdentityAndCustomTrust
+
+- name: CustomTrustKeyStorePassPhrase
+  usedIf:
+    property: KeyStores
+    values:
+    - CustomIdentityAndCustomTrust
+
+- name: JavaStandardTrustKeyStorePassPhrase
+  usedIf:
+    property: KeyStores
+    values:
+    - DemoIdentityAndDemoTrust
+    - CustomIdentityAndJavaStandardTrust
+
 children:
 
 - name: JTAMigratableTarget

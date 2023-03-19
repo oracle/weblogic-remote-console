@@ -22,3 +22,5 @@ require('./tests/wdt_test');
 require('./tests/helpLink_test');
 require('./tests/nonAdminUser_test');
 require('./tests/ucdAsProvider_test');
+require('./tests/cndWDTProvider_test');
+require('./tests/anaASAndWDTProviders_test');

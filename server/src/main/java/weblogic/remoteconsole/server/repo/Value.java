@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -229,7 +229,18 @@ public class Value {
     return (FileContentsValue)this;
   }
 
-  // Returns whether this value is not knowns
+  // Returns whether this value an entitleNet expression .
+  public boolean isEntitleNetExpression() {
+    return (this instanceof EntitleNetExpressionValue);
+  }
+  
+  // Converts this value to a EntitleNetExpressionValue.
+  // Throws a ClassCastException if this value isn't an EntitleNetExpressionValue.
+  public EntitleNetExpressionValue asEntitleNetExpression() {
+    return (EntitleNetExpressionValue)this;
+  }
+  
+  // Returns whether this value is not known
   // (e.g. an unset property that has a derived default)
   public boolean isUnknown() {
     return (this instanceof UnknownValue);

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -113,6 +113,7 @@ public class PageDescription {
     addIfNotEmpty(builder, "displayedColumns", columnPropertyDefsToJson(sliceTableDef.getDisplayedColumnDefs()));
     List<PagePropertyDef> sortedHiddenColumns = sortHiddenColumnDefs(sliceTableDef.getHiddenColumnDefs());
     addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sortedHiddenColumns));
+    addIfNotEmpty(builder, "actions", actionDefsToJson(sliceTableDef.getActionDefs()));
     builder.add(READ_ONLY, sliceTableDef.isReadOnly());
     return builder.build();
   }
@@ -447,6 +448,9 @@ public class PageDescription {
     if (propertyDef.isHealthState()) {
       // For now, just treat it as a string:
       return null;
+    }
+    if (propertyDef.isEntitleNetExpression()) {
+      return "entitleNetExpression";
     }
     throw new AssertionError("Unknown property type: " + propertyDef.getValueKind());
   }

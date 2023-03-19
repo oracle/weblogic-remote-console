@@ -61,7 +61,7 @@ const UserProjects = (() => {
   return {
     /**
      *
-     * @param {[{name: string, type: string, url?: string, username?: string, password?: string, file?: string, models?: [string], properties?: *}]} providers
+     * @param {[{name: string, type: string, url?: string, username?: string, password?: string, sso?: boolean, file?: string, models?: [string], properties?: *}]} providers
      * @returns {Array}
      */
      getFilteredProviders: (providers) => {
@@ -82,6 +82,7 @@ const UserProjects = (() => {
         if (providers[i].url) filteredProvider.url = providers[i].url;
         if (providers[i].username) filteredProvider.username = providers[i].username;
         if (providers[i].password) filteredProvider.password = providers[i].password;
+        if (providers[i].sso) filteredProvider.sso = providers[i].sso;
 
         // Filter out properties associated with model
         // provider type.
@@ -124,7 +125,7 @@ const UserProjects = (() => {
      */
      get: (name) => {
       let project;
-      if (name === "(Unnamed Project)") name = "(unnamed)";
+      if (name === '(Unnamed Project)') name = '(unnamed)';
       if (CoreUtils.isNotUndefinedNorNull(name)) {
         project = _projects.find(item => item.name === name);
       }
@@ -150,6 +151,9 @@ const UserProjects = (() => {
         result['chamge_state'] = 'new';
       }
       return result;
+    },
+    current: () => {
+      return _projects.find(project => typeof project.current !== 'undefined');
     },
     clean: (field) => {
       if (field) {
@@ -213,7 +217,7 @@ const UserProjects = (() => {
           // Creates the file, if it doesn't already exists.
           // The openstack.org convention is to use 4 spaces
           // for indentation.
-          fs.writeFileSync(filepath, JSON.stringify({ projects: getMaskedProjects(["password"]) }, null, 4));
+          fs.writeFileSync(filepath, JSON.stringify({ projects: getMaskedProjects(['password']) }, null, 4));
         }
         catch(err) {
           log('error', err);

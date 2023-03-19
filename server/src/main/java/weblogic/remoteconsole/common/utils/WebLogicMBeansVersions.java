@@ -14,41 +14,35 @@ public class WebLogicMBeansVersions {
   private WebLogicMBeansVersions() {
   }
 
-  // Maps from a weblogic version + psu + roles to a WebLogicMBeansVersion
+  // Maps from a weblogic version + roles to a WebLogicMBeansVersion
   private static Map<String, WebLogicMBeansVersion> versionsMap = new ConcurrentHashMap<>();
 
   public static WebLogicMBeansVersion getVersion(
     WebLogicVersion weblogicVersion,
-    WebLogicPSU psu,
     Set<String> capabilities
   ) {
-    return getVersion(weblogicVersion, psu, WebLogicRoles.ADMIN_ROLES, capabilities);
+    return getVersion(weblogicVersion, WebLogicRoles.ADMIN_ROLES, capabilities);
   }
 
   public static WebLogicMBeansVersion getVersion(
     WebLogicVersion weblogicVersion,
-    WebLogicPSU psu,
     Set<String> roles,
     Set<String> capabilities
   ) {
     return
       versionsMap.computeIfAbsent(
-        computeKey(weblogicVersion, psu, roles, capabilities),
-        k -> new WebLogicMBeansVersion(weblogicVersion, psu, roles, capabilities)
+        computeKey(weblogicVersion, roles, capabilities),
+        k -> new WebLogicMBeansVersion(weblogicVersion, roles, capabilities)
       );
   }
 
   private static String computeKey(
     WebLogicVersion weblogicVersion,
-    WebLogicPSU psu,
     Set<String> roles,
     Set<String> capabilities
   ) {
     StringBuilder sb = new StringBuilder();
     sb.append(weblogicVersion.getDomainVersion());
-    if (psu != null) {
-      sb.append("_psu_").append(psu.getName());
-    }
     if (roles.contains(WebLogicRoles.ADMIN)) {
       // The user is an Admin and has permission to do anything.
       // The user's other roles don't matter.

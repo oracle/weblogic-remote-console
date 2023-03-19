@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A security realm is a container for the mechanisms--including users,
@@ -7,8 +7,7 @@ introductionHTML: >
   security realms in a WebLogic Server domain, but only one can be set as
   the default security realm, which is reserved for domain administrative
   purposes.</p><p>This Security Realms page lists each security realm that
-  has been configured in this WebLogic Server domain. Click the name of
-  the realm to explore and configure that realm.</p>
+  has been configured in this WebLogic Server domain.</p>
 
 displayedColumns:
 - name: "Name"

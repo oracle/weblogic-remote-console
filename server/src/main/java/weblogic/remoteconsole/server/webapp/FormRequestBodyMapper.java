@@ -1,10 +1,11 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import javax.json.JsonArray;
@@ -16,7 +17,10 @@ import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BooleanValue;
+import weblogic.remoteconsole.server.repo.DateAsLongValue;
+import weblogic.remoteconsole.server.repo.DateValue;
 import weblogic.remoteconsole.server.repo.DoubleValue;
+import weblogic.remoteconsole.server.repo.EntitleNetExpressionValue;
 import weblogic.remoteconsole.server.repo.FileContentsValue;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.IntValue;
@@ -272,11 +276,20 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
     if (propertyDef.isReference()) {
       return getValueAsReference(propertyDef, jsonValue);
     }
+    // Note: DateAsLong properties return true for both isDateAsLong and isDate
+    // v.s. Date properties return false for isDateAsLong and true for isDate
+    // So, check for isDateAsLong first.
+    if (propertyDef.isDateAsLong()) {
+      return getValueAsDateAsLong(propertyDef, jsonValue);
+    }
     if (propertyDef.isDate()) {
       return getValueAsDate(propertyDef, jsonValue);
     }
     if (propertyDef.isProperties()) {
       return getValueAsProperties(propertyDef, jsonValue);
+    }
+    if (propertyDef.isEntitleNetExpression()) {
+      return getValueAsEntitleNetExpression(propertyDef, jsonValue);
     }
     throw new AssertionError("Unsupported property type " + propertyDef);
   }
@@ -379,7 +392,19 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
   }
 
   private Value getValueAsDate(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    throw new AssertionError("Setting Date properties is not currently supported.");
+    Date date = asDate(getPropertyName(propertyDef), jsonValue);
+    if (!isOK()) {
+      return null;
+    }
+    return new DateValue(date);
+  }
+
+  private Value getValueAsDateAsLong(PagePropertyDef propertyDef, JsonValue jsonValue) {
+    Date date = asDate(getPropertyName(propertyDef), jsonValue);
+    if (!isOK()) {
+      return null;
+    }
+    return new DateAsLongValue(date);
   }
 
   private Value getValueAsProperties(PagePropertyDef propertyDef, JsonValue jsonValue) {
@@ -396,6 +421,11 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
       properties.setProperty(key, value);
     }
     return new PropertiesValue(properties);
+  }
+
+  private Value getValueAsEntitleNetExpression(PagePropertyDef propertyDef, JsonValue jsonValue) {
+    // The CBE just passes them straight through as json values:
+    return new EntitleNetExpressionValue(jsonValue);
   }
 
   private String getPropertyName(PagePropertyDef propertyDef) {

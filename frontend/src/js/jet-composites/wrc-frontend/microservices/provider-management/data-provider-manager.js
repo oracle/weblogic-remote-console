@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -41,8 +41,16 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
       if (CoreUtils.isNotUndefinedNorNull(id)) {
         const index = dataproviders.map(dataProvider => dataProvider.id).indexOf(id);
         if (index !== -1) {
+          clearRunningTimer(dataproviders[index]);
           dataproviders.splice(index, 1);
         }
+      }
+    }
+
+    function clearRunningTimer(dataProvider) {
+      if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerId)) {
+        clearInterval(dataProvider.timerId);
+        delete dataProvider.timerId;
       }
     }
 
@@ -66,8 +74,20 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         if (CoreUtils.isNotUndefinedNorNull(entry.url)) dataProvider['url'] = entry.url;
         if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider['username'] = entry.username;
         if (CoreUtils.isNotUndefinedNorNull(entry.password)) dataProvider['password'] = entry.password;
-        if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider['token'] = entry.token;
-        if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider['expires'] = entry.expires;
+        if (CoreUtils.isNotUndefinedNorNull(entry.sso)) dataProvider['sso'] = entry.sso;
+        if (CoreUtils.isNotUndefinedNorNull(entry.token)) dataProvider['token'] = entry.token;
+        if (CoreUtils.isNotUndefinedNorNull(entry.expires)) dataProvider['expires'] = entry.expires;
+
+        // Clear data provider state based on sso setting when available
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.sso)) {
+          if (dataProvider.sso) {
+            delete dataProvider.username;
+            delete dataProvider.password;
+          } else {
+            delete dataProvider.token;
+            delete dataProvider.expires;
+          }
+        }
         return dataProvider;
       },
       /**
@@ -90,6 +110,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
               url: dataProvider.url,
               username: dataProvider.username,
               password: dataProvider.password,
+              sso: dataProvider.sso,
               token: dataProvider.token,
               expires: dataProvider.expires
             };
@@ -750,6 +771,35 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
             reject(result);
           }
         });
+      },
+      /**
+       * Start a timer for the data provider that will dispatch on the signal when the timer expires.
+       * @param {DataProvider} dataProvider
+       * @param {number} timeout
+       */
+       startDataProviderSsoTokenTimer: function (dataProvider, timeout) {
+        function timerExpired(dataProvider) {
+          // Clear the timer and dispatch the signal
+          clearRunningTimer(dataProvider);
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerExpiredSignal)) {
+            dataProvider.timerExpiredSignal.dispatch(dataProvider);
+          }
+        }
+
+        // Ensure any existing timer is cancelled
+        clearRunningTimer(dataProvider);
+
+        // Start the timer with the specified timeout
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerExpiredSignal)) {
+          dataProvider.putValue('timerId', setInterval(timerExpired, timeout, dataProvider));
+        }
+      },
+      /**
+       * Cancel any running timer for the specified data provider
+       * @param {DataProvider} dataProvider
+       */
+      cancelDataProviderSsoTokenTimer: function (dataProvider) {
+        clearRunningTimer(dataProvider);
       }
 
     };

@@ -75,6 +75,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.tabStripTabSelected.add((source, tabId, visibility) => {
+          if (source === 'perform-login') {
+            // When login action is the source, update the list of dataproviders as well as
+            // handling the tabstrip visibility. Note that use of dataProviderSelected will
+            // have additional effects on the console and is signaled when login completes.
+            setTabModuleConfig(tabId, self.perspectiveMemory.tabstrip.tab[tabId].cachedState);
+          }
           showTabStripContent(tabId, visibility);
         });
 

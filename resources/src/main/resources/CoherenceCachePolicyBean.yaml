@@ -1,0 +1,16 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.CoherenceCachePolicyBean
+baseTypes:
+- weblogic.management.security.authorization.PolicyMBean
+properties:
+- name: join
+  relationship: containment
+  type: weblogic.management.security.authorization.CoherenceCacheMethodPolicyBean
+- name: create
+  relationship: containment
+  type: weblogic.management.security.authorization.CoherenceCacheMethodPolicyBean
+- name: destroy
+  relationship: containment
+  type: weblogic.management.security.authorization.CoherenceCacheMethodPolicyBean

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -40,8 +40,8 @@ public class CustomFilteringDashboardMBeanCustomizer {
   }
 
   // Customizes the PDJ for configuring the filters for an existing custom filtering dashboard.
-  public static Response<PageDef> customizeEditSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
-    return CustomFilteringDashboardDefManager.customizeEditSliceDef(ic, uncustomizedPageDef);
+  public static Response<PageDef> customizeFiltersSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
+    return CustomFilteringDashboardDefManager.customizeFiltersSliceDef(ic, uncustomizedPageDef);
   }
 
   // Customize the PDJ for viewing the results (i.e. filtered beans) of an existing custom  filtering dashboard.
@@ -50,7 +50,7 @@ public class CustomFilteringDashboardMBeanCustomizer {
   }
 
   // Customizes the RDJ for configuring the filters for an existing custom filtering dashboard.
-  public static Response<Void> customizeEditSlice(InvocationContext ic, Page page) {
+  public static Response<Void> customizeFiltersSlice(InvocationContext ic, Page page) {
     Response<Void> response = new Response<>();
     // Get the dashboard (if it exists)
     Response<Dashboard> getResponse = getDashboardManager(ic).getDashboard(ic);

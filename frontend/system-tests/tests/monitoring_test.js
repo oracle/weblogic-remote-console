@@ -151,12 +151,13 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
                 "Consumers","consumer43");
             await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Services",
                 "Data Sources","JDBC Data Source Runtime MBeans");
-            await driver.sleep(600);
+            await driver.sleep(4800);
             console.log("Click JDBC Data Source Runtime MBeans pop down menu");
             await driver.findElement(By.css(".oj-end")).click();
-            await driver.sleep(600);
+            await driver.sleep(4800);
             console.log("Select JDBC Data Sources - Configuration View Tree");
-            await driver.findElement(By.xpath("//oj-option[@id=\'JDBC Datasources - Configuration View Tree\']/a")).click();
+            await driver.findElement(By.xpath("//oj-option[@id='JDBC Data Sources - Configuration View Tree']")).click();
+            await driver.sleep(4800);
             await admin.goToNavTreeLevelFourLink(driver, "monitoring", "Services",
                 "Persistence","Data Access Runtimes","JMSMessageLog/AdminJMSServer");
             console.log("TEST PASS ");

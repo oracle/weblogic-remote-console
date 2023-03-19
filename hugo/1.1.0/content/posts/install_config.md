@@ -117,7 +117,7 @@ You can configure SSL/TLS trust with the JDK using one of these options:
   1. Save your changes and open the Remote Console application.
 
 ## Connect to a WebLogic Domain Running on Kubernetes {id="k8s"}
-One of the benefits of the WebLogic Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For details about how to setup access to WebLogic Server domains running on Kubernetes, see [Use the Remote Console](https://oracle.github.io/weblogic-kubernetes-operator/userguide/managing-domains/accessing-the-domain/admin-console/) in the *WebLogic Kubernetes Operator User Guide*.
+One of the benefits of the WebLogic Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For details about how to setup access to WebLogic Server domains running on Kubernetes, see [Use the Remote Console](https://oracle.github.io/weblogic-kubernetes-operator/managing-domains/accessing-the-domain/remote-admin-console/) in the *WebLogic Kubernetes Operator User Guide*.
 
 ## Stop the Remote Console {id="stop"}
 To stop the Remote Console in the desktop application, close the desktop application.

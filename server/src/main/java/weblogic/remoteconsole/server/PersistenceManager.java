@@ -59,7 +59,7 @@ public class PersistenceManager<T> {
    * should store its data.
    * 
    * If the remote console does not support persistence then
-   * persistenceDirectortPath is null and the PersistenceManager
+   * persistenceDirectoryPath is null and the PersistenceManager
    * only stores the data in-memory.
    */
   public static void initialize(String persistenceDirectoryPath) {
@@ -218,6 +218,10 @@ public class PersistenceManager<T> {
 
   private File getPersistenceFile() {
     return new File(persistenceDirectory, key + ".json");
+  }
+
+  public static String getPersistenceFilePath() {
+    return (persistenceDirectory == null) ? null : persistenceDirectory.getPath();
   }
 
   /**

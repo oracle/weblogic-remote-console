@@ -19,71 +19,71 @@ const UserPrefs = (() => {
   const _appPaths = {};
   let _preferences = [
     {
-      "sections": [
+      'sections': [
         {
-          "key": "logging",
-          "title": "Logging",
-          "properties": [
+          'key': 'logging',
+          'title': 'Logging',
+          'properties': [
             {
-              "defaultValue": 'debug',
-              "label": "Logging Level",
-              "legalValues": [
-                {"label": "ERROR", "value": "error"},
-                {"label": "WARNING", "value": "warning"},
-                {"label": "INFO", "value": "info"},
-                {"label": "DEBUG", "value": "debug"},
-                {"label": "TRACE", "value": "trace"}
+              'defaultValue': 'debug',
+              'label': 'Logging Level',
+              'legalValues': [
+                {'label': 'ERROR', 'value': 'error'},
+                {'label': 'WARNING', 'value': 'warning'},
+                {'label': 'INFO', 'value': 'info'},
+                {'label': 'DEBUG', 'value': 'debug'},
+                {'label': 'TRACE', 'value': 'trace'}
               ],
-              "name": "PropertyCriteria_LoggingLevel"
+              'name': 'PropertyCriteria_LoggingLevel'
             },
             {
-              "label": "",
-              "name": "PropertyValue_LoggingLevel",
-              "type": "string",
-              "usedIf":
-                {"property": "PropertyCriteria_LoggingLevel", "values": ["error","warning","info","debug","trace"]}
+              'label': '',
+              'name': 'PropertyValue_LoggingLevel',
+              'type': 'string',
+              'usedIf':
+                {'property': 'PropertyCriteria_LoggingLevel', 'values': ['error','warning','info','debug','trace']}
             }
           ]
         },
         {
-          "key": "appExit",
-          "title": "Application Exit",
-          "properties": [
+          'key': 'appExit',
+          'title': 'Application Exit',
+          'properties': [
             {
-              "defaultValue": true,
-              "label": "Detect Unsaved Changes",
-              "legalValues": [
-                {"label": "Equals", "value": "equals"}
+              'defaultValue': true,
+              'label': 'Detect Unsaved Changes',
+              'legalValues': [
+                {'label': 'Equals', 'value': 'equals'}
               ],
-              "name": "PropertyCriteria_DetectUnsavedChanges"
+              'name': 'PropertyCriteria_DetectUnsavedChanges'
             },
             {
-              "label": "",
-              "name": "PropertyValue_DetectUnsavedChanges",
-              "type": "boolean",
-              "usedIf":
-                {"property": "PropertyCriteria_DetectUnsavedChanges", "values": ["equals"]}
+              'label': '',
+              'name': 'PropertyValue_DetectUnsavedChanges',
+              'type': 'boolean',
+              'usedIf':
+                {'property': 'PropertyCriteria_DetectUnsavedChanges', 'values': ['equals']}
             }
           ]
         },
         {
-          "key": "beforeUnload",
-          "title": "Before Unload",
-          "properties": [
+          'key': 'beforeUnload',
+          'title': 'Before Unload',
+          'properties': [
             {
-              "defaultValue": true,
-              "label": "Detect Unsaved Changes",
-              "legalValues": [
-                {"label": "Equals", "value": "equals"}
+              'defaultValue': true,
+              'label': 'Detect Unsaved Changes',
+              'legalValues': [
+                {'label': 'Equals', 'value': 'equals'}
               ],
-              "name": "PropertyCriteria_DetectUnsavedChanges"
+              'name': 'PropertyCriteria_DetectUnsavedChanges'
             },
             {
-              "label": "",
-              "name": "PropertyValue_DetectUnsavedChanges",
-              "type": "boolean",
-              "usedIf":
-                {"property": "PropertyCriteria_DetectUnsavedChanges", "values": ["equals"]}
+              'label': '',
+              'name': 'PropertyValue_DetectUnsavedChanges',
+              'type': 'boolean',
+              'usedIf':
+                {'property': 'PropertyCriteria_DetectUnsavedChanges', 'values': ['equals']}
             }
           ]
         }

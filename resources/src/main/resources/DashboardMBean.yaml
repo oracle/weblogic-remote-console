@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
@@ -74,6 +74,36 @@ properties:
       value: unfiltered
 - name: TemplateDoublePropertyValue
   type: double
+- name: TemplateDatePropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  - lessThan
+  - lessThanOrEquals
+  - greaterThan
+  - greaterThanOrEquals
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateDatePropertyValue
+  type: java.util.Date
+- name: TemplateDateAsLongPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  - lessThan
+  - lessThanOrEquals
+  - greaterThan
+  - greaterThanOrEquals
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateDateAsLongPropertyValue
+  type: long
 - name: TemplateBooleanPropertyCriteria
   type: java.lang.String
   legalValues:

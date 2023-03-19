@@ -26,7 +26,7 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
     let admin;
     let security;
     var sec = 1000;
-    this.timeout(800 * sec);
+    this.timeout(8000 * sec);
 
     beforeEach(async function () {
         // Get Browser driver

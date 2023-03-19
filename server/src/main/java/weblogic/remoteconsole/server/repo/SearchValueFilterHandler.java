@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.repo;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.remoteconsole.common.utils.DateUtils;
 import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
@@ -97,8 +98,12 @@ public abstract class SearchValueFilterHandler {
     if (value.isBeanTreePath()) {
       return new StringValue("" + value.asBeanTreePath().toString());
     }
-    // value.isDate ?
-    // value.isDateAsLong ?
+    if (value.isDate()) {
+      return new StringValue(DateUtils.formatDate(value.asDate().getValue()));
+    }
+    if (value.isDateAsLong()) {
+      return new StringValue(DateUtils.formatDate(value.asDateAsLong().asDate().getValue()));
+    }
     // value.isProperties ?
     return null;
   }
@@ -108,6 +113,14 @@ public abstract class SearchValueFilterHandler {
   }
 
   protected LongValue getValueAsLong(Value value) {
+    if (value.isDate()) {
+      long val = DateUtils.getRoundedDateAsLong(value.asDate().getValue());
+      return new LongValue(val);
+    }
+    if (value.isDateAsLong()) {
+      long val = DateUtils.getRoundedDateAsLong(value.asDateAsLong().asDate().getValue());
+      return new LongValue(val);
+    }
     if (value.isLong()) {
       return value.asLong();
     }

@@ -34,5 +34,5 @@ See the following list of [Known Issues](https://oracle.github.io/weblogic-remot
 
 We have a **public Slack channel** where you can get in touch with us to ask questions about using the WebLogic Remote Console or give us feedback
 or suggestions about what features and improvements you would like to see.  We would love to hear from you. To join our channel,
-please [visit this site to get an invitation](https://weblogic-slack-inviter.herokuapp.com/). The invitation email will include
+please [visit this site to get an invitation](https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1lnz4kpci-WdY2gWfeJc5jS_a_1Z06MA). The invitation email will include
 details of how to access our Slack workspace.  After you are logged in, please come to `#remote-console` and say, "hello!"

@@ -7,7 +7,7 @@
 'use strict';
 
 const fs = require('fs');
-const os = require("os");
+const os = require('os');
 
 const LoggingLevels = [
   'error',
@@ -19,12 +19,11 @@ const LoggingLevels = [
 
 let _logFilename;
 let _loggingLevel;
-let _origConsoleLog;
+let _isHeadlessMode;
 
-/* global process */
 (function () {
   _loggingLevel = 'info';
-  _origConsoleLog = console.log;
+  _isHeadlessMode = false;
   const _error = console.error;
   const _warning = console.warning;
   const _debug = console.debug;
@@ -32,39 +31,43 @@ let _origConsoleLog;
 
   console.error = function (line) {
     fs.appendFileSync(_logFilename, line + os.EOL);
-    _error.apply(console, arguments);
-  };
-
-  console.log = function (line) {
-    fs.appendFileSync(_logFilename, line + os.EOL);
-    _origConsoleLog.apply(console, arguments);
+    if (!_isHeadlessMode) _error.apply(console, arguments);
   };
 
   console.warning = function (line) {
     fs.appendFileSync(_logFilename, line + os.EOL);
-    _warning.apply(console, arguments);
+    if (!_isHeadlessMode) _warning.apply(console, arguments);
   };
 
   console.debug = function (line) {
     fs.appendFileSync(_logFilename, line + os.EOL);
-     _debug.apply(console, arguments);
+    if (!_isHeadlessMode) _debug.apply(console, arguments);
   };
 
   console.trace = function (line) {
     fs.appendFileSync(_logFilename, line + os.EOL);
-    _trace.apply(console, arguments);
+    if (!_isHeadlessMode) _trace.apply(console, arguments);
   };
 })();
 
 function initializeLog(options) {
+  const { pipeline } = require('stream');
+
+  pipeline(
+    process.stderr,
+    process.stdout,
+    (err) => {}
+  );
+
   _logFilename = _rotateLogfile(options.appPaths.userData, options.baseFilename);
   if (options.loggingLevel) _loggingLevel = options.loggingLevel;
+  if (options.isHeadlessMode) _isHeadlessMode = options.isHeadlessMode;
 }
 
 /**
- * 
- * @param {'utc'|'local'} type 
- * @returns 
+ *
+ * @param {'utc'|'local'} type
+ * @returns
  */
 function getLogEntryDateTime(type = 'local') {
   let date = new Date();
@@ -87,43 +90,54 @@ function getLogEntryLevel(level = 'info') {
   return levelSwitch(level);
 }
 
-function isLoggableLevel(level) {
-  return (LoggingLevels.indexOf(level) <= LoggingLevels.indexOf(_loggingLevel));
-}
-
-function getCaller(stacklog) {
-  let caller = '';
-  const stackParts = stacklog.stack.split('\n');
-  if (stackParts.length > 2) {
-    caller = stackParts[2].match(/([^\/]+\.js)/)[0];
-  }
-  return caller;
-}
-
 /**
  *
  * @param {string} [level='info']
  * @param {string} message
  */
 function log(level = 'info', message) {
+  function isLoggableLevel(level) {
+    return (LoggingLevels.indexOf(level) <= LoggingLevels.indexOf(_loggingLevel));
+  }
+
+  function getCaller(stacklog) {
+    let caller = '';
+    const stackParts = stacklog.stack.split('\n');
+    if (stackParts.length > 2) {
+      caller = stackParts[2].match(/([^/]+\.js)/)[0];
+    }
+    return caller;
+  }
+
   if (isLoggableLevel(level)) {
-    const caller = getCaller((new Error("StackLog")));
-    switch(level) {
+    const caller = getCaller((new Error('StackLog')));
+    switch (level) {
       case 'error':
-        ((line) => { console.error(line);})(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
+        ((line) => {
+          console.error(line);
+        })(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
         break;
       case 'warning':
-        ((line) => { console.warning(line);})(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
+        ((line) => {
+          console.warning(line);
+        })(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
         break;
       case 'debug':
-        ((line) => { console.debug(line);})(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
+        ((line) => {
+          console.debug(line);
+        })(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
         break;
       case 'trace':
-        ((line) => { console.trace(line);})(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
+        ((line) => {
+          console.trace(line);
+        })(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
         break;
       default:
-        ((line) => { console.log(line);})(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
-    }  
+        if (!_isHeadlessMode) {
+          ((line) => { console.log(line); })(message);
+        }
+        ((line) => { fs.appendFileSync(_logFilename, line + os.EOL); })(message);
+    }
   }
 }
 
@@ -136,19 +150,45 @@ function getLogLevels() {
 }
 
 /**
- * 
- * @param {'error'|'warning'|'info'|'debug'|'trace'} level 
+ *
+ * @param {'error'|'warning'|'info'|'debug'|'trace'} level
  */
 function setLoggingLevel(level) {
   _loggingLevel = level;
 }
 
+function setOptions(options) {
+  if (options) {
+    if (options.loggingLevel) _loggingLevel = options.loggingLevel;
+    if (options.isHeadlessMode) _isHeadlessMode = options.isHeadlessMode;
+  }
+}
+
 function _rotateLogfile(userDataPath, baseFilename) {
+  function appendLogEntries(file, rotateFilename) {
+    const w = fs.createWriteStream(rotateFilename, {flags: 'a'});
+    const r = fs.createReadStream(file);
+    r.pipe(w);
+    w.on('close', () => {
+      fs.unlink(file, (err) => {
+        if (err) {
+          console.error(err);
+        }
+      });
+    });
+  }
+
   const filename = `${baseFilename}.log`;
   const file = `${userDataPath}/${filename}`;
 
+  const logDate = (new Date()).toISOString().slice(0, 10);
+  const rotateFilename = `${userDataPath}/${baseFilename}-${logDate}.log`;
+
   if (fs.existsSync(file)) {
-    fs.renameSync(file, file.replace(filename, `${baseFilename}-1.log`));
+    if (!fs.existsSync(rotateFilename)) {
+      fs.closeSync(fs.openSync(rotateFilename, 'w'));
+    }
+    appendLogEntries(file, rotateFilename);
   }
 
   return file;
@@ -158,5 +198,6 @@ module.exports = {
   initializeLog,
   log,
   getLogLevels,
-  setLoggingLevel
+  setLoggingLevel,
+  setOptions
 };

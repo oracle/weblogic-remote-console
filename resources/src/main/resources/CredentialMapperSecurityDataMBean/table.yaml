@@ -1,0 +1,26 @@
+# Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>A Credential Mapping provider allows WebLogic Server to log
+  into a remote system on behalf of a subject that has already been
+  authenticated.  Credential Mapping providers store their data outside
+  of the WebLogic configuration.  For example, the Default Credential Mapping
+  provider stores its mappings in the domain's embedded LDAP server.</p>
+  <p>The WebLogic Remote Console provides pages for managing
+  some of the Credential Mapping providers' data.  For example, it
+  provides pages for managing the Default Credential Mapping provider's mappings.</p>
+  <p>This page lists each Credential Mapping provider that has pages for managing its data.
+  Navigate to the provider to explore and manage its data.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "Description"
+- name: "Version"
+
+helpTopics:
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"

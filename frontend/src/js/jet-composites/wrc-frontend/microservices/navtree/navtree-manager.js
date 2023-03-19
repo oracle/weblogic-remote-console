@@ -277,51 +277,82 @@ define([
     },
 
     /**
-     * Populates a given set of paths
-     * @param {Set} nodes - The set (i.e. paths) nodes that need to be populated
+     * Refresh the tree model and populate the nodes of the selected item when specified
      * @param {string} selectedItem - Path of node (e.g. Environment/Servers/AdminServer) that was selected
+     * @param {string} encodedPath - The encoded path of the selectedItem used to traverse the segments
      */
-    populateNodeSet: function (nodes, selectedItem) {
-      let promise = Promise.resolve(1);
+    populateNodeSet: function (selectedItem, encodedPath = null) {
+      // Get the parent path and the child name from the specified path
+      function getParentItem(path) {
+        let parentPath = '';
+        const pathSegments = path.split('/');
+        pathSegments.slice(0,-1).forEach(segment => {
+          if (parentPath.length > 0) parentPath += '/';
+          parentPath += segment;
+        });
+        return {path: parentPath, child: pathSegments.slice(-1)[0]};
+      }
 
-      let nodeValues = Array.from(nodes.values());
+      // Get the item value and decode the specified value when encoded
+      function getItem(value, isEncoded) {
+        return (isEncoded ? decodeURIComponent(value) : value);
+      }
 
-      // sort the node set based on the path to ensure breadth-first traversal
-      nodeValues.sort(function (a, b) {
-        function slashCount(string) {
-          return (string.match(/\//g) || []).length;
+      // Check if the selected item is not available in the tree model
+      if (selectedItem && (selectedItem !== '') && !this.treeModelReferences[selectedItem]) {
+        let treeRef;
+
+        // An encoded path requires the path segments to be decoded
+        const isEncoded = (encodedPath && encodedPath !== '') ? true : false;
+        const childPath = (encodedPath && encodedPath !== '') ? encodedPath : selectedItem;
+
+        // Create a path to the selected item in the tree model by
+        // finding the first available tree model node in the path
+        // of the selected item and save each child segment along
+        // that path so the contents can be requested...
+        let parentItem = getParentItem(childPath);
+        let childItems = [getItem(parentItem.child, isEncoded)];
+        while (!treeRef && (parentItem.path !== '')) {
+          treeRef = this.treeModelReferences[getItem(parentItem.path, isEncoded)];
+          if (!treeRef) {
+            parentItem = getParentItem(parentItem.path);
+            childItems.push(getItem(parentItem.child, isEncoded));
+          }
         }
 
-        return slashCount(a) - slashCount(b);
-      });
+        // Expand the tree model node that was found
+        // otherwise point to the root of the tree model
+        if (treeRef) treeRef.expanded = true;
+        else treeRef = this.treeModel;
 
-      // iterate over paths
-      nodeValues.forEach((n) => {
-        let node = this.nodes[n];
+        // Once the tree model node is found build the path
+        // to the selected item from the array of child items
+        if (treeRef) {
+          const childPathItems = childItems.reverse();
+          for (let i = 0; i < childPathItems.length; i++) {
+            let childContent = { name: childPathItems[i], expanded: true };
+            if (treeRef.contents) treeRef.contents.push(childContent);
+            else treeRef.contents = [childContent];
+            treeRef = childContent;
+          }
+        }
+      }
 
-        // If the node has been fetched at some point, mark it as expanded so the tree model can be
-        // refreshed with the contents later. Otherwise, refresh the tree model (so the parent of the node
-        // being expanded gets populated so there is a node reference) and expand the node.
+      return new Promise((resolve, reject) => {
+        // Ensure that the selected node is expanded
+        let node = (selectedItem && (selectedItem !== '')) ? this.nodes[selectedItem] : null;
         if (node && !node.contents) {
-          promise = promise.then(() => {
-            this.treeModelReferences[n].expanded = true;
-            node.expanded = true;
-          });
-        } else {
-          promise = promise
-            .then(() => {
-              return this.refreshTreeModel();
-            })
-            .then(() => {
-              this.updateTreeView();
-            })
-            .then(() => this.expandNode(n));
+          if (this.treeModelReferences[selectedItem])
+            this.treeModelReferences[selectedItem].expanded = true;
+          node.expanded = true;
         }
-      });
-
-      return promise.then(() => {
+        // Refresh and update the tree model
         this.refreshTreeModel().then(() => {
           this.updateTreeView(selectedItem);
+          resolve(1);
+        })
+        .catch((error) => {
+          reject(error);
         });
       });
     },

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -11,19 +11,19 @@
  */
 define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function (oj, Preferences, MessageDisplaying, CoreTypes, CoreUtils, Logger) {
-    const i18n = {
-      'labels': {
-        'unexpectedErrorResponse': {value: oj.Translations.getTranslatedString('wrc-view-model-utils.labels.unexpectedErrorResponse.value')}
-      },
-      'messages': {
-        'connectionRefused': {
-          'summary': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.summary'),
-          'details': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.details')
-        }
-      }
-    };
-
     return {
+      i18n: {
+        'labels': {
+          'unexpectedErrorResponse': {value: oj.Translations.getTranslatedString('wrc-view-model-utils.labels.unexpectedErrorResponse.value')}
+        },
+        'messages': {
+          'connectionRefused': {
+            'summary': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.summary'),
+            'details': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.details')
+          }
+        }
+      },
+
       /**
        * Determines if a given ``response`` has messages in it.
        * @param {{body: {data: any, [messages]: any}}|{failureType: FailureType, [failureReason]: any}|any} response
@@ -51,7 +51,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         if (CoreUtils.isError(response)) {
           errorMessage = {
             severity: 'error',
-            summary: i18n.labels.unexpectedErrorResponse.value,
+            summary: this.i18n.labels.unexpectedErrorResponse.value,
             detail: response.stack
           };
           bodyMessages.push(errorMessage);
@@ -134,11 +134,11 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
           // display the message. Use response.failureReason
           // to craft the summary property.
           if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
-            messageSummary = i18n.messages.connectionRefused.summary;
-            messageDetails = i18n.messages.connectionRefused.details;
+            messageSummary = this.i18n.messages.connectionRefused.summary;
+            messageDetails = this.i18n.messages.connectionRefused.details;
           }
           else {
-            messageSummary = (CoreUtils.isError(response.failureReason) ? response.failureReason.name : i18n.labels.unexpectedErrorResponse.value);
+            messageSummary = (CoreUtils.isError(response.failureReason) ? response.failureReason.name : this.i18n.labels.unexpectedErrorResponse.value);
             messageDetails = response.failureReason;
           }
 
@@ -292,7 +292,11 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
               }
             })
             .catch(failure => {
-              this.failureResponseDefaultHandling(failure);
+              MessageDisplaying.displayMessage({
+                severity: 'error',
+                summary: this.i18n.labels.unexpectedErrorResponse.value,
+                detail: failure.stack
+              });
             });
         }
         else {
@@ -314,6 +318,36 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         else {
           return Promise.resolve(true);
         }
+      },
+
+      setFocusFirstIncompleteField: (selectors) => {
+        const nodeList = document.querySelectorAll(selectors);
+        if (nodeList !== null) {
+          const arr = Array.from(nodeList);
+          const index = arr.findIndex(node => node.readOnly === false && (node.value === '' || node.value === null));
+          if (index !== -1)
+            arr[index].focus();
+          else
+            arr[0].focus();
+        }
+      },
+
+      getBrowserName: () => {
+        const agent = window.navigator.userAgent.toLowerCase();
+        switch (true) {
+          case agent.indexOf('edge') > -1: return 'MS Edge';
+          case agent.indexOf('edg/') > -1: return 'Edge ( chromium based)';
+          case agent.indexOf('opr') > -1 && !!window.opr: return 'Opera';
+          case agent.indexOf('chrome') > -1 && !!window.chrome: return 'Chrome';
+          case agent.indexOf('trident') > -1: return 'MS IE';
+          case agent.indexOf('firefox') > -1: return 'Mozilla Firefox';
+          case agent.indexOf('safari') > -1: return 'Safari';
+          default: return 'other';
+        }
+      },
+
+      copyToClipboard: async (text) => {
+        return navigator.clipboard.writeText(text);
       }
 
     }
