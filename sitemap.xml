@@ -24,7 +24,6 @@
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/</loc>
-    <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/develop/contribute/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
@@ -34,6 +33,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/reference/known_issues/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/security-data/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/userguide/dashboards/</loc>
     <lastmod>2022-07-26T00:00:00+00:00</lastmod>

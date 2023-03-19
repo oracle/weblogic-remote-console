@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.82.0" />
+    <meta name="description" content="Common issues with simple troubleshooting steps.">
+
+
+    <link rel="icon" href="/weblogic-remote-console/2.4.1/images/logo.png" type="image/png">
+
+    <title>Troubleshoot issues :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/2.4.1/css/nucleus.css?1679266409" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.1/css/fontawesome-all.min.css?1679266409" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.1/css/hybrid.css?1679266409" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.1/css/featherlight.min.css?1679266409" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.1/css/perfect-scrollbar.min.css?1679266409" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.1/css/auto-complete.css?1679266409" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.1/css/atom-one-dark-reasonable.css?1679266409" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.1/css/theme.css?1679266409" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.1/css/tabs.css?1679266409" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.1/css/hugo-theme.css?1679266409" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/2.4.1/js/jquery-3.6.0.min.js?1679266409"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/2.4.1/reference/troubleshoot/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.1">
+  <img src="https://oracle.github.io/weblogic-remote-console/2.4.1/images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/2.4.1/js/lunr.min.js?1679266409"></script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.1/js/auto-complete.js?1679266409"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.1";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.1/js/search.js?1679266409"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.1/setup/" title="Get started" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.1/setup/">
+          Get started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/setup/console/" title="Explore the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/setup/console/">
+        Explore the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/setup/admin-console-diff/" title="Differences with the Administration Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/setup/admin-console-diff/">
+        Differences with the Administration Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/" title="User guide" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.1/userguide/">
+          User guide
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/projects/" title="Projects" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/projects/">
+        Projects
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/providers/" title="Provider types" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.1/userguide/providers/">
+          Provider types
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/providers/administration-server/" title="Administration Servers" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/providers/administration-server/">
+        Administration Servers
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/providers/property-list/" title="Property lists" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/providers/property-list/">
+        Property lists
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/providers/wdt-model/" title="WDT model files" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/providers/wdt-model/">
+        WDT model files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/providers/wdt-composite/" title="WDT composite models" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/providers/wdt-composite/">
+        WDT composite models
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/dashboards/" title="Generate dashboards" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/dashboards/">
+        Generate dashboards
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/advanced-settings/" title="Customize connection settings" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/advanced-settings/">
+        Customize connection settings
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/upgrade/" title="Upgrade the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/upgrade/">
+        Upgrade the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/logging/" title="Check log files" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/logging/">
+        Check log files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/userguide/role-access/">
+        Understand access discrepancies
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.1/develop/" title="Development" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.1/develop/">
+          Development
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/develop/build-source/" title="Build from source" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/develop/build-source/">
+        Build from source
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/develop/contribute/" title="Contribute to WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/develop/contribute/">
+        Contribute to WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/develop/alternative-logging/" title="Use an alternative logging configuration file" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/develop/alternative-logging/">
+        Use an alternative logging configuration file
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/develop/docs-contribute/" title="Contribute to the documentation" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/develop/docs-contribute/">
+        Contribute to the documentation
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.1/reference/" title="Reference" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.1/reference/">
+          Reference
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/reference/faqs/" title="Frequently asked questions" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/reference/faqs/">
+        Frequently asked questions
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/reference/known_issues/" title="Known issues" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/reference/known_issues/">
+        Known issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/reference/troubleshoot/" title="Troubleshoot issues" class="dd-item active">
+        <a href="/weblogic-remote-console/2.4.1/reference/troubleshoot/">
+        Troubleshoot issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.1/reference/security-warnings/" title="Review security issues" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.1/reference/security-warnings/">
+        Review security issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 2.4.1.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/2.4.1/'>WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.1/reference/'>Reference</a> > Troubleshoot issues
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#check-log-files-for-errors">Check log files for errors</a></li>
+    <li><a href="#invalid">Diagnose invalid WebLogic configuration issues</a>
+      <ul>
+        <li><a href="#administration-server">Administration Server</a></li>
+        <li><a href="#wdt-model-files">WDT model files</a></li>
+      </ul>
+    </li>
+    <li><a href="#unresponsive">Unresponsive WebLogic Remote Console browser window</a></li>
+    <li><a href="#autoprefs">Error: Failure reading auto prefs</a></li>
+    <li><a href="#the-edit-tree--start-and-stop-buttons--create-buttons---is-missing">The <em>Edit Tree / start and stop buttons / create buttons / &hellip;</em> is missing</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Troubleshoot issues
+            </h1>
+          
+
+        
+
+
+<p>This page provides guidelines to help troubleshoot console issues.</p>
+<h2 id="check-log-files-for-errors">Check log files for errors</h2>
+<p>The WebLogic Remote Console provides log files for both front and back end processes. For instructions on how to access these log files, see <a href="/weblogic-remote-console/2.4.1/userguide/logging/">Check Log Files</a>.</p>
+<h2 id="invalid">Diagnose invalid WebLogic configuration issues</h2>
+<h3 id="administration-server">Administration Server</h3>
+<p>The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.</p>
+
+<div class="notices note" ><p>If you installed the console extension, you can view the contents of the shopping cart to see all of the pending changes. If you did not install the console extension, you can view the pending changes using the WebLogic Server Administration Console.</p>
+</div>
+
+<p>If the cause of the configuration error is not obvious:</p>
+<ul>
+<li>Check the output from the WebLogic Remote Console and the domain Administration Server.</li>
+<li>Check the WebLogic Administration Server log.</li>
+</ul>
+<p>If you are unable to determine the cause of the error, cancel the edits and make the configuration changes again.</p>
+<h3 id="wdt-model-files">WDT model files</h3>
+<p>The WebLogic Remote Console <em>does not</em> validate WDT model file settings. As a result, the WebLogic Remote Console may accept changes or values that are invalid and which may present problems when the model file is used to build or update a domain. For example, adding integer values that are invalid or out of range for a specific setting, or removing a server or target but not updating the deployments to select a different server or target can cause issues.</p>
+<p>For more information on acceptable values, refer to the <a href="https://oracle.github.io/weblogic-deploy-tooling/">WebLogic Deploy Tooling</a> documentation.</p>
+<h2 id="unresponsive">Unresponsive WebLogic Remote Console browser window</h2>
+<p>If the WebLogic Remote Console running in the browser becomes unresponsive, verify that the Administration Server to which you are connected is still running. If the server is down, restart it, then refresh the browser window.</p>
+<h2 id="autoprefs">Error: Failure reading auto prefs</h2>
+<p>If the WebLogic Remote Console desktop application shuts down unexpectedly with this error: <code>Failure reading auto prefs</code>, the <code>auto-prefs.json</code> file may be corrupted. <code>auto-prefs.json</code> saves state information about the WebLogic Remote Console and should not be modified by users unless it is corrupted.</p>
+<p>If the file is corrupted, you can reset it but you will lose all data regarding your projects.</p>
+<p>To reset the file, delete the <code>auto-prefs.json</code> file, then relaunch WebLogic Remote Console.</p>
+<p><code>auto-prefs.json</code> is located in:</p>
+<ul>
+<li>Linux: <code>$HOME/.config/weblogic-remote-console/auto-prefs.json</code></li>
+<li>macOS: <code>/Users/&lt;user&gt;/Library/Application Support/weblogic-remote-console/auto-prefs.json</code></li>
+<li>Windows: <code>C:\Users\&lt;user&gt;\AppData\Roaming\weblogic-remote-console\auto-prefs.json</code></li>
+</ul>
+<h2 id="the-edit-tree--start-and-stop-buttons--create-buttons---is-missing">The <em>Edit Tree / start and stop buttons / create buttons / &hellip;</em> is missing</h2>
+<p>Check the role of the user you used to log into the Administration Server. Only administrators have access to the full functionality of of WebLogic Remote Console. Users with other roles such as Deployers, Operators, or Monitors have limited access to areas outside the scope of their responsibility.</p>
+<!-- You can check the role of a user by expanding the Kiosk, and selecting the Info bubble ![Navpane icon](/weblogic-remote-console/images/icons/data-providers-info-icon-brn_24x24.png) beside the Administration Server connection with your user. -->
+<p>For an overview of what users in each role can view or do, see <a href="/weblogic-remote-console/2.4.1/userguide/role-access/">Understand Access Discrepancies</a>.</p>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.1/reference/known_issues/" title="Known issues"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/2.4.1/reference/security-warnings/" title="Review security issues" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/2.4.1/js/clipboard.min.js?1679266409"></script>
+    <script src="/weblogic-remote-console/2.4.1/js/perfect-scrollbar.min.js?1679266409"></script>
+    <script src="/weblogic-remote-console/2.4.1/js/perfect-scrollbar.jquery.min.js?1679266409"></script>
+    <script src="/weblogic-remote-console/2.4.1/js/jquery.sticky.js?1679266409"></script>
+    <script src="/weblogic-remote-console/2.4.1/js/featherlight.min.js?1679266409"></script>
+    <script src="/weblogic-remote-console/2.4.1/js/highlight.pack.js?1679266409"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/2.4.1/js/modernizr.custom-3.6.0.js?1679266409"></script>
+    <script src="/weblogic-remote-console/2.4.1/js/learn.js?1679266409"></script>
+    <script src="/weblogic-remote-console/2.4.1/js/hugo-learn.js?1679266409"></script>
+    
+        
+            <script src="/weblogic-remote-console/2.4.1/mermaid/mermaid.js?1679266409"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

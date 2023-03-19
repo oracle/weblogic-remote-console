@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.82.0" />
+    <meta name="description" content="How to manage security data in the WebLogic Remote Console">
+
+
+    <link rel="icon" href="/weblogic-remote-console/images/logo.png" type="image/png">
+
+    <title>Editing Security Data :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/css/nucleus.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1679266407" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1679266407"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/userguide/providers/administration-server/security-data/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console">
+  <img src="https://oracle.github.io/weblogic-remote-console/images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1679266407"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1679266407"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1679266407"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/setup/" title="Get started" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/setup/">
+          Get started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/setup/console/" title="Explore the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/setup/console/">
+        Explore the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/setup/admin-console-diff/" title="Differences with the Administration Console" class="dd-item ">
+        <a href="/weblogic-remote-console/setup/admin-console-diff/">
+        Differences with the Administration Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/userguide/" title="User guide" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/userguide/">
+          User guide
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/projects/" title="Projects" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/projects/">
+        Projects
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/userguide/providers/" title="Provider types" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/userguide/providers/">
+          Provider types
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/" title="Administration Servers" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/userguide/providers/administration-server/">
+          Administration Servers
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing Security Data" class="dd-item active">
+        <a href="/weblogic-remote-console/userguide/providers/administration-server/security-data/">
+        Editing Security Data
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/providers/property-list/" title="Property lists" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/providers/property-list/">
+        Property lists
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/providers/wdt-model/" title="WDT model files" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/providers/wdt-model/">
+        WDT model files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/providers/wdt-composite/" title="WDT composite models" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/providers/wdt-composite/">
+        WDT composite models
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/dashboards/" title="Generate dashboards" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/dashboards/">
+        Generate dashboards
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/advanced-settings/" title="Customize connection settings" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/advanced-settings/">
+        Customize connection settings
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/upgrade/" title="Upgrade the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/upgrade/">
+        Upgrade the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/logging/" title="Check log files" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/logging/">
+        Check log files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/role-access/">
+        Understand access discrepancies
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/develop/" title="Development" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/develop/">
+          Development
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/develop/build-source/" title="Build from source" class="dd-item ">
+        <a href="/weblogic-remote-console/develop/build-source/">
+        Build from source
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/develop/contribute/" title="Contribute to WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/develop/contribute/">
+        Contribute to WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/develop/alternative-logging/" title="Use an alternative logging configuration file" class="dd-item ">
+        <a href="/weblogic-remote-console/develop/alternative-logging/">
+        Use an alternative logging configuration file
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/develop/docs-contribute/" title="Contribute to the documentation" class="dd-item ">
+        <a href="/weblogic-remote-console/develop/docs-contribute/">
+        Contribute to the documentation
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/reference/" title="Reference" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/reference/">
+          Reference
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/reference/faqs/" title="Frequently asked questions" class="dd-item ">
+        <a href="/weblogic-remote-console/reference/faqs/">
+        Frequently asked questions
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/reference/known_issues/" title="Known issues" class="dd-item ">
+        <a href="/weblogic-remote-console/reference/known_issues/">
+        Known issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/reference/troubleshoot/" title="Troubleshoot issues" class="dd-item ">
+        <a href="/weblogic-remote-console/reference/troubleshoot/">
+        Troubleshoot issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/reference/security-warnings/" title="Review security issues" class="dd-item ">
+        <a href="/weblogic-remote-console/reference/security-warnings/">
+        Review security issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/'>WebLogic Remote Console</a> > <a href='/weblogic-remote-console/userguide/'>User guide</a> > <a href='/weblogic-remote-console/userguide/providers/'>Provider types</a> > <a href='/weblogic-remote-console/userguide/providers/administration-server/'>Administration Servers</a> > Editing Security Data
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#managing-users-and-groups">Managing users and groups</a></li>
+      </ul>
+    </li>
+    <li><a href="#managing-credential-mappers">Managing credential mappers</a>
+      <ul>
+        <li><a href="#ejbs">App Deployments: EJBs</a></li>
+        <li><a href="#jdbc-apps">App Deployments: JDBC Application</a></li>
+        <li><a href="#jdbc-modules">App Deployments: JDBC Modules</a></li>
+        <li><a href="#resource-adapters">App Deployments: Resource Adapters</a></li>
+        <li><a href="#data-sources">Data Sources</a></li>
+        <li><a href="#remote-resources">Remote Resources</a></li>
+        <li><a href="#credential-mappings">Credential mappings</a></li>
+        <li><a href="#credentials">Credentials</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Editing Security Data
+            </h1>
+          
+
+        
+
+
+<p>You can manage security data and supported security providers for your domain in the Security Data tree perspective.</p>
+
+<div class="notices note" ><p>You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See <a href="/weblogic-remote-console/setup/#install">Install the WebLogic Remote Console</a> for instructions.</p>
+</div>
+
+<p>Any changes you make within the Security Data perspective are immediate - you don&rsquo;t need to commit or reboot the server to apply your changes.</p>
+<h3 id="managing-users-and-groups">Managing users and groups</h3>
+<p>You can easily manage the WebLogic Server users and groups that are configured as part of the default authentication provider (WebLogic Authentication Provider) within a security realm. Only the default authentication provider is supported. If you&rsquo;re not using the default authentication provider, you&rsquo;ll need to manage its users and groups through its own external tools.</p>
+<h4 id="create-a-user">Create a user</h4>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm to which you want to add users.</li>
+<li>Expand the Authentication Provider node and then select the authentication provider to which you want to add users.</li>
+<li>Expand Users and click <strong>New</strong>.</li>
+<li>Enter a Name, Description and Password for this user. User names must be unique in the security realm and passwords must be eight characters or longer.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<h4 id="create-groups">Create groups</h4>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm to which you want to add groups.</li>
+<li>Expand the Authentication Provider node and then select the authentication provider to which you want to add groups.</li>
+<li>Expand Groups and click <strong>New</strong>.</li>
+<li>Enter a Name and Description for this group. Group names must be unique in the security realm.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<h4 id="edit-users">Edit users</h4>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Users.</li>
+<li>Click the user that you want to edit.</li>
+<li>Move through the various tabs to update the properties of the user. You cannot edit the name of a user - you must delete and create a new user.</li>
+<li>You can add users to groups. Under the Membership tab, select any Available group to which you want to add the user and move them over to Chosen.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h4 id="edit-groups">Edit groups</h4>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Groups.</li>
+<li>Click the group that you want to edit. You can modify the group description or, under the Membership tab, nest the current group under other groups. You cannot edit the name of a group - you must delete and create a new group.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h4 id="delete-users">Delete users</h4>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Users.</li>
+<li>Beside the user that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+</ol>
+<h4 id="delete-groups">Delete groups</h4>
+<p>Deleting a group will not delete the users within that group.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Groups.</li>
+<li>Beside the group that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+</ol>
+<h2 id="managing-credential-mappers">Managing credential mappers</h2>
+<p>A Credential Mapping provider lets WebLogic Server map a WebLogic resource to a set of credentials in an external system so that the WebLogic resource can log into that external system on behalf of a subject that has already been authenticated. You can map multiple WebLogic resources (of the same type) to the same external system (and even to the same subject within that system).</p>
+<p>You can manage the credential mappings for the default credential mapper provider (WebLogic Credential Mapping Provider) within a security realm. Only the default credential mapping provider is supported.</p>
+<p>The general process for mapping credentials remains the same across WebLogic resources:</p>
+<ol>
+<li>Configure an applicable MBean in the Edit Tree perspective such as deploying an app or adding a data source.</li>
+<li>Commit your changes and reboot the server if any of your changes are non-dynamic.</li>
+<li>In the Security Data Tree perspective, under Credential Mappers, find the corresponding node for the MBean. If necessary, define the properties of a WebLogic resource to identify it and form a connection between the MBean&rsquo;s configuration data and its security data.</li>
+<li>Create mappings for the WebLogic resource.</li>
+</ol>
+<p>You can create credential mappings for the following WebLogic resources:</p>
+<ul>
+<li>App Deployments
+<ul>
+<li><a href="#ejbs">EJBs</a></li>
+<li><a href="#jdbc-apps">JDBC applications</a></li>
+<li><a href="#jdbc-modules">JDBC modules</a></li>
+<li><a href="#resource-adapters">Resource adapters</a></li>
+</ul>
+</li>
+<li><a href="#data-sources">Data Sources</a></li>
+<li><a href="#remote-resources">Remote Resources</a></li>
+</ul>
+<h3 id="ejbs">App Deployments: EJBs</h3>
+<h4 id="identify-an-ejb-component">Identify an EJB Component</h4>
+<p>The first time you add a reference to an EJB component, you&rsquo;ll also create a credential mapping for that EJB component.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a EJB component. Go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; EJBs.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as required.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>A reference to the EJB component is added under the EJBs node. The name of the EJB component is generated by the properties of the application and those you set when adding the EJB component.</p>
+<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<h4 id="remove-a-reference-to-an-ejb-component">Remove a reference to an EJB Component</h4>
+<p>You cannot delete a reference to an EJB component with multiple credential mappings. To delete an EJB component reference, you must delete all of the credential mappings first - which will then delete the EJB component reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; EJBs.</li>
+<li>Beside the EJB component that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+</ol>
+<h3 id="jdbc-apps">App Deployments: JDBC Application</h3>
+<p>You can only add credential mappings for JDBC applications, not manage the JDBC applications themselves.</p>
+<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<h3 id="jdbc-modules">App Deployments: JDBC Modules</h3>
+<h4 id="identify-a-jdbc-module">Identify a JDBC Module</h4>
+<p>The first time you add a reference to a JDBC module, you&rsquo;ll also create a credential mapping for that JDBC module.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a JDBC module. Go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; JDBC Modules.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as required.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<h4 id="remove-a-reference-to-a-jdbc-module">Remove a reference to a JDBC Module</h4>
+<p>You cannot delete a reference to a JDBC module with multiple credential mappings. To delete a JDBC module reference, you must delete all of the credential mappings first - which will then delete the JDBC module reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; JDBC Module.</li>
+<li>Beside the JDBC module that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+</ol>
+<h3 id="resource-adapters">App Deployments: Resource Adapters</h3>
+<h4 id="identify-a-resource-adapter">Identify a Resource Adapter</h4>
+<p>The first time you add a reference to a resource adapter, you&rsquo;ll also create a credential mapping for that resource adapter.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a resource adapter. Go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; Resource Adapters.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as required.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>A reference to a resource adapter is added under the Remote Adapters node. The name of the resource adapter is generated by combining its property values.</p>
+<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<h4 id="remove-a-reference-to-resource-adapter">Remove a reference to Resource Adapter</h4>
+<p>You cannot delete a reference to a resource adapter with multiple credential mappings. To delete a resource adapter reference, you must delete all of the credential mappings first - which will then delete the resource adapter reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; Resource Adapter.</li>
+<li>Beside the Resource Adapter that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+</ol>
+<h3 id="data-sources">Data Sources</h3>
+<p>You can only add credential mappings for data sources, not manage the data sources themselves. You can manage data sources in the Edit tree perspective.</p>
+<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<h3 id="remote-resources">Remote Resources</h3>
+<h4 id="identify-a-remote-resource">Identify a remote resource</h4>
+<p>The first time you add a reference to a remote resource, you&rsquo;ll also create a credential mapping for that remote resource.</p>
+
+<div class="notices note" ><p>If you add a remote resource with the cross-domain protocol enabled, it will create a WebLogic Server user named cross-domain. Only the cross-domain user can be used to create credential mappings. While the WebLogic Remote Console will let you add other WebLogic Server users and credential mappings within the remote resource, the mappings will not work and will not provide access to the remote resource.</p>
+</div>
+
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a credential mapping. Navigate down to Credential Mappers &gt; <em>credentialMapperName</em> &gt; Remote Resources.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as needed. Certain fields are disabled depending on whether you choose to use the cross-domain protocol.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>A reference to a remote resource is added under the remote resources node. The name of the remote resource is generated by combining its property values.</p>
+<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<h4 id="remove-a-reference-to-a-remote-resource">Remove a reference to a remote resource</h4>
+<p>You cannot delete a reference to a remote resource with multiple credential mappings. To delete a remote resource reference, you must delete all of the credential mappings first - which will then delete the remote resource reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; Remote Resources.</li>
+<li>Beside the remote resource that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+</ol>
+<h3 id="credential-mappings">Credential mappings</h3>
+<h4 id="add-a-credential-mapping">Add a credential mapping</h4>
+<p>You can add a new credential mapping to associate another WebLogic resource to a remote user.</p>
+<p>The credential mappings and credentials for each WebLogic resource appear under the resource&rsquo;s node.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credential Mappings.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as needed. If you want to map to a remote user that is already referenced in the remote resource, disable the Create Credential toggle.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<h4 id="remap-a-weblogic-resource">Remap a WebLogic resource</h4>
+<p>You can edit a credential mapping to associate a WebLogic user for a WebLogic resource to a different remote user. The WebLogic Remote Console must already be aware of the remote user before you can remap the WebLogic Server user. If you want to remap the WebLogic resource to a new remote user, you must first add it to the WebLogic Remote Console.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credential Mappings.</li>
+<li>Select the credential mapping you want to edit.</li>
+<li>In the Remote User field, replace the current remote user with the username of the remote user you want to remap the WebLogic resource to.</li>
+<li>Click <strong>Save.</strong></li>
+</ol>
+<h4 id="delete-a-credential-mapping">Delete a credential mapping</h4>
+<p>When you delete a credential mapping, the remote user that the WebLogic resource was previously associated with is also deleted if it was the only credential mapping using that remote user.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credential Mappings.</li>
+<li>Beside the credential mapping that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+</ol>
+<h3 id="credentials">Credentials</h3>
+<h4 id="add-a-credential">Add a credential</h4>
+<p>After you have added the first set of credentials for a remote system to a WebLogic resource, you can add more users from that remote system.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credentials</li>
+<li>Click <strong>New</strong>.</li>
+<li>Enter the username and password for the remote user.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>You can now map a WebLogic user for the WebLogic resource to the new set of credentials.</p>
+<h4 id="change-a-remote-user-password">Change a remote user password</h4>
+<p>If the password of the remote user changes, you&rsquo;ll need to update it in the WebLogic Remote Console or the mapping will break and prevent the WebLogic resource from logging into the remote system.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credentials.</li>
+<li>Select the remote user whose password you want to change.</li>
+<li>Change the password.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h4 id="remove-a-credential">Remove a credential</h4>
+<p>Each WebLogic resource has its own set of credentials
+Removing a credential from the WebLogic Remote Console will not affect the user in the remote system.</p>
+<p>You cannot delete a credential that currently has a WebLogic resource mapped to it.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credential Mappings.</li>
+<li>You&rsquo;ll need to either map the current credential mapping to a different credential or delete all of the credential mappings using that credential:
+<ul>
+<li>Select any relevant mappings and update the Remote User field to a new remote user.</li>
+<li>Beside any credential mappings that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">. Once all credential mappings associated with the credential are deleted, the credential itself will also be automatically deleted and you can skip the rest of the steps.</li>
+</ul>
+</li>
+<li>Under the same WebLogic resource, expand the Credentials node.</li>
+<li>Beside the credential that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/userguide/providers/administration-server/" title="Administration Servers"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/userguide/providers/property-list/" title="Property lists" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1679266408"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1679266408"></script>
+    
+        
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1679266408"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

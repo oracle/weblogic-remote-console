@@ -51,17 +51,6 @@ Create a project   Open File &amp;gt; New Project.
     </item>
     
     <item>
-      <title>Administration Servers</title>
-      <link>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/</link>
-      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/</guid>
-      <description>The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
-You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.
-Connect to a WebLogic Administration Server  Start the WebLogic Administration Server. Expand the Kiosk and beside the project name, click ⋮.</description>
-    </item>
-    
-    <item>
       <title>Contribute to WebLogic Remote Console</title>
       <link>https://oracle.github.io/weblogic-remote-console/develop/contribute/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
@@ -81,8 +70,19 @@ Contributing to the WebLogic Remote Console repository Pull requests can be made
       <guid>https://oracle.github.io/weblogic-remote-console/reference/known_issues/</guid>
       <description>This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.
 Limitations In the current release of WebLogic Remote Console, you are unable to:
-  Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on.
+  Manage certain security data from WebLogic Server security providers that are external to the WebLogic configuration, such as roles, policies, and so on.
   Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.</description>
+    </item>
+    
+    <item>
+      <title>Editing Security Data</title>
+      <link>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/security-data/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/security-data/</guid>
+      <description>You can manage security data and supported security providers for your domain in the Security Data tree perspective.
+You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions.
+ Any changes you make within the Security Data perspective are immediate - you don&amp;rsquo;t need to commit or reboot the server to apply your changes.</description>
     </item>
     
     <item>

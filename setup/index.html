@@ -12,20 +12,20 @@
     <title>Get started :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1674750629" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1679266407" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1674750629"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1679266407"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1674750629"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1674750629"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1679266407"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1679266407"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1674750629"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1679266407"></script>
 
     
   </div>
@@ -224,6 +224,8 @@
         <ul>
           
           
+            
+          
           
 
         
@@ -237,13 +239,49 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/" title="Administration Servers" class="dd-item ">
-        <a href="/weblogic-remote-console/userguide/providers/administration-server/">
-        Administration Servers
+    <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/" title="Administration Servers" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/userguide/providers/administration-server/">
+          Administration Servers
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing Security Data" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/providers/administration-server/security-data/">
+        Editing Security Data
         
         </a>
     </li>
      
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
   
  
 
@@ -812,7 +850,7 @@
 <li><strong>Optional</strong>: Install the WebLogic Remote Console extension in the WebLogic Server domain. The WebLogic Remote Console extension adds additional functionality when using the WebLogic Remote Console.
 <ol>
 <li>Create a <code>management-services-ext</code> directory under the domain home.</li>
-<li>Download the <code>console-rest-ext-2.0.war</code> from <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a> and save it inside the <code>management-services-ext</code> directory you created in the previous step. If you previously downloaded an earlier version of the extension, delete it and replace it with the latest version.</li>
+<li>Download the latest WebLogic Remote Console extension, <code>console-rest-ext-x.x.war</code>, from <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a> and save it inside the <code>management-services-ext</code> directory you created in the previous step. If you have an earlier version of the extension already downloaded, delete it and replace it with the latest version.</li>
 <li>Reboot the Administration Server if it is already running.</li>
 </ol>
 </li>
@@ -826,13 +864,13 @@
 <ul>
 <li>The console executable file <code>console.jar</code></li>
 <li>The libraries required to use the console in the <code>libs</code> subdirectory</li>
-<li>The console extension, <code>console-rest-ext-2.0.war</code>, that you install in the WebLogic Server domain</li>
+<li>The console extension, <code>console-rest-ext-x.x.war</code>, that you install in the WebLogic Server domain</li>
 </ul>
 </li>
 <li><strong>Optional</strong>: Install the WebLogic Remote Console extension in the WebLogic Server domain. The WebLogic Remote Console extension adds additional functionality when using the WebLogic Remote Console.
 <ol>
 <li>Create a <code>management-services-ext</code> directory under the domain home.</li>
-<li>Download the <code>console-rest-ext-2.0.war</code> from <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a> and save it in the <code>management-services-ext</code> directory you created in the previous step. If you previously downloaded an earlier version of the extension, delete it and replace it with the latest version.</li>
+<li>Download the WebLogic Remote Console extension, <code>console-rest-ext-x.x.war</code>, from <a href="https://github.com/oracle/weblogic-remote-console/releases">https://github.com/oracle/weblogic-remote-console/releases</a> and save it in the <code>management-services-ext</code> directory you created in the previous step. If you have an earlier version of the extension already downloaded, delete it and replace it with the latest version.</li>
 <li>Reboot the Administration Server if it is already running.</li>
 </ol>
 </li>
@@ -1002,6 +1040,8 @@
 
                     
                     
+                        
+                    
                     
 
                     
@@ -1017,6 +1057,22 @@
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
             
         
@@ -1337,19 +1393,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1674750629"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1679266408"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1674750629"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1679266408"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1674750629"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1679266408"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

@@ -8,17 +8,6 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://oracle.github.io/weblogic-remote-console/userguide/providers/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Administration Servers</title>
-      <link>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/</link>
-      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/</guid>
-      <description>The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
-You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.
-Connect to a WebLogic Administration Server  Start the WebLogic Administration Server. Expand the Kiosk and beside the project name, click ⋮.</description>
-    </item>
-    
-    <item>
       <title>Property lists</title>
       <link>https://oracle.github.io/weblogic-remote-console/userguide/providers/property-list/</link>
       <pubDate>Tue, 22 Feb 2022 00:00:00 +0000</pubDate>

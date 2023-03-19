@@ -12,20 +12,20 @@
     <title>Administration Servers :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1674750629" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1674750629" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1679266407" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1674750629"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1679266407"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1674750629"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1674750629"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1679266407"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1679266407"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1674750629"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1679266407"></script>
 
     
   </div>
@@ -224,6 +224,8 @@
         <ul>
           
           
+            
+          
           
 
         
@@ -237,13 +239,49 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/" title="Administration Servers" class="dd-item active">
-        <a href="/weblogic-remote-console/userguide/providers/administration-server/">
-        Administration Servers
+    <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/" title="Administration Servers" class="dd-item
+        parent
+        active
+        
+        ">
+      <a href="/weblogic-remote-console/userguide/providers/administration-server/">
+          Administration Servers
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing Security Data" class="dd-item ">
+        <a href="/weblogic-remote-console/userguide/providers/administration-server/security-data/">
+        Editing Security Data
         
         </a>
     </li>
      
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
   
  
 
@@ -759,16 +797,6 @@
       </ul>
     </li>
     <li><a href="#create">Create MBeans</a></li>
-    <li><a href="#managing-users-and-groups">Managing users and groups</a>
-      <ul>
-        <li><a href="#create-a-user">Create a user</a></li>
-        <li><a href="#create-groups">Create groups</a></li>
-        <li><a href="#edit-users">Edit users</a></li>
-        <li><a href="#edit-groups">Edit groups</a></li>
-        <li><a href="#delete-users">Delete users</a></li>
-        <li><a href="#delete-groups">Delete groups</a></li>
-      </ul>
-    </li>
   </ul>
 </nav>
     </div>
@@ -793,7 +821,8 @@
         
 
 
-<p>The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are <a href="/weblogic-remote-console/setup/admin-console-diff/">some differences</a>.</p>
+
+	<p>The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are <a href="/weblogic-remote-console/setup/admin-console-diff/">some differences</a>.</p>
 <p>You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.</p>
 <!-- You can even choose to add the same Administration Server multiple times, as long as it's either in a different project or has a different user account associated. -->
 <h2 id="connect-to-a-weblogic-administration-server">Connect to a WebLogic Administration Server</h2>
@@ -831,7 +860,7 @@ As with the Administration Console, your management capabilities will be limited
 
 <h3 id="shopping_cart">Shopping cart</h3>
 <p>The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely.</p>
-<p>If you installed the console extension, <code>console-rest-ext-2.0.war</code>, you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager. If you need to undo a change, you must discard all shopping cart contents or manually revert the change in the Edit Tree perspective.</p>
+<p>If you installed the console extension, <code>console-rest-ext-x.x.war</code>, you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager. If you need to undo a change, you must discard all shopping cart contents or manually revert the change in the Edit Tree perspective.</p>
 <p>The configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock in the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the WebLogic Remote Console and you will not be blocked from making changes with the other tools.</p>
 
 <div class="notices note" ><p>We recommend against making changes using multiple tools because when one of the sessions activates their changes, it releases the lock and the other session will not be able to save or activate their changes.</p>
@@ -910,56 +939,12 @@ As with the Administration Console, your management capabilities will be limited
 <div class="notices note" ><p>When you configure a bean property that references another bean, you must first create the other bean. For example, if you want to assign Server1 to Cluster1, you need to create Cluster1 first, unlike in the WebLogic Server Administration Console where you can choose to create Cluster1 during server creation.</p>
 </div>
 
-<h2 id="managing-users-and-groups">Managing users and groups</h2>
-<p>You can easily manage the WebLogic Server users and groups that are configured as part of the default authentication provider (WebLogic Authentication Provider) within a security realm. Only the default authentication provider  is supported. If you&rsquo;re not using the default authentication provider, you&rsquo;ll need to manage its users and groups through its own external tools.</p>
-<p>Users and groups are managed in the Security Data Tree perspective. You must  be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See <a href="/weblogic-remote-console/setup/#install">Install the WebLogic Remote Console</a> for instructions.</p>
-<p>Any changes you make to users and groups are immediate - you don&rsquo;t need to commit or reboot the server to apply your changes.</p>
-<h3 id="create-a-user">Create a user</h3>
-<ol>
-<li>In the Security Data Tree perspective, expand Realms.</li>
-<li>Select the Security Realm to which you want to add users.</li>
-<li>Expand the Authentication Provider node and then select the authentication provider to which you want to add users.</li>
-<li>Expand Users and click <strong>New</strong>.</li>
-<li>Enter a Name, Description and Password for this user. User names must be unique in the security realm and passwords must be eight characters or longer.</li>
-<li>Click <strong>Create</strong>.</li>
-</ol>
-<h3 id="create-groups">Create groups</h3>
-<ol>
-<li>In the Security Data Tree perspective, expand Realms.</li>
-<li>Select the Security Realm to which you want to add groups.</li>
-<li>Expand the Authentication Provider node and then select the authentication provider to which you want to add groups.</li>
-<li>Expand Groups and click <strong>New</strong>.</li>
-<li>Enter a Name and Description for this group. Group names must be unique in the security realm.</li>
-<li>Click <strong>Create</strong>.</li>
-</ol>
-<h3 id="edit-users">Edit users</h3>
-<ol>
-<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Users.</li>
-<li>Click the user that you want to edit.</li>
-<li>Move through the various tabs to update the properties of the user. You cannot edit the name of a user - you must delete and create a new user.</li>
-<li>You can add users to groups. Under the Membership tab, select any Available group to which you want to add the user and move them over to Chosen.</li>
-<li>Click <strong>Save</strong>.</li>
-</ol>
-<h3 id="edit-groups">Edit groups</h3>
-<ol>
-<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Groups.</li>
-<li>Click the group that you want to edit. You can modify the group description or, under the Membership tab, nest the current group under other groups. You cannot edit the name of a group - you must delete and create a new group.</li>
-<li>Click <strong>Save</strong>.</li>
-</ol>
-<h3 id="delete-users">Delete users</h3>
-<ol>
-<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Users.</li>
-<li>Beside the user that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
-</ol>
-<h3 id="delete-groups">Delete groups</h3>
-<p>Deleting a group will not delete the users within that group.</p>
-<ol>
-<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Groups.</li>
-<li>Beside the group that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
-</ol>
 
 
-<footer class="footline">
+
+
+
+<footer class=" footline" >
 	
 </footer>
 
@@ -1086,6 +1071,8 @@ As with the Administration Console, your management capabilities will be limited
 
                     
                     
+                        
+                    
                     
 
                     
@@ -1094,6 +1081,22 @@ As with the Administration Console, your management capabilities will be limited
             
                 
                     
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -1106,13 +1109,13 @@ As with the Administration Console, your management capabilities will be limited
             
         
                     
+            
+        
+                    
                         
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1415,7 +1418,7 @@ As with the Administration Console, your management capabilities will be limited
 			<a class="nav nav-prev" href="/weblogic-remote-console/userguide/providers/" title="Provider types"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/weblogic-remote-console/userguide/providers/property-list/" title="Property lists" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing Security Data" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1425,19 +1428,19 @@ As with the Administration Console, your management capabilities will be limited
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1674750629"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1679266408"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1674750629"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1674750629"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1679266408"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1674750629"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1679266408"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
@@ -1447,4 +1450,3 @@ As with the Administration Console, your management capabilities will be limited
 
   </body>
 </html>
-
