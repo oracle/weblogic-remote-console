@@ -34,7 +34,7 @@
         <version.junit.jupiter>5.5.1</version.junit.jupiter>
         <version.lucene>9.0.0</version.lucene>
         <version.reflections>0.9.11</version.reflections>
-        <version.snakeyaml>1.33</version.snakeyaml>
+        <version.snakeyaml>2.0</version.snakeyaml>
         <version.console.backend>2.4.2</version.console.backend>
 
         <version.plugin.dependency-check>7.0.4</version.plugin.dependency-check>
