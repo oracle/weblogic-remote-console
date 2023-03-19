@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -285,13 +285,38 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
 
       /**
        * Returns a ``<oj-table>`` tag for a slice table on the form
+       * @params {{onMenuAction: string, onBeforeOpen: string, menuItem: {id: string, iconFile: string, label: string}}} params
        * @returns {HTMLElement}
        */
-      createSliceTable: function () {
+      createSliceTable: function (params) {
         const table = document.createElement('oj-table');
 
-        let noData = document.createElement('template');
+        const contextMenu = document.createElement('oj-menu');
+        contextMenu.setAttribute('slot', 'contextMenu');
+        contextMenu.setAttribute('on-oj-menu-action', params.onMenuAction);
+        contextMenu.setAttribute('on-oj-before-open', params.onBeforeOpen);
+        contextMenu.setAttribute('aria-label', 'Copy to Clipboard Context Menu');
+
+        for (const menuItem of params.menuItems) {
+          const option = document.createElement('oj-option');
+          option.setAttribute('id', menuItem.id);
+          option.setAttribute('value', menuItem.id);
+          const img = document.createElement('img');
+          img.className = 'option-icon';
+          img.setAttribute('src', `js/jet-composites/wrc-frontend/1.0.0/images/${menuItem.iconFile}.png`);
+          img.setAttribute('alt', menuItem.label);
+          option.append(img);
+          const span = document.createElement('span');
+          span.innerText = menuItem.label;
+          option.append(span);
+          contextMenu.append(option);
+        }
+
+        table.appendChild(contextMenu);
+
+        const noData = document.createElement('template');
         noData.setAttribute('slot', 'noData');
+
         table.appendChild(noData);
 
         return table;

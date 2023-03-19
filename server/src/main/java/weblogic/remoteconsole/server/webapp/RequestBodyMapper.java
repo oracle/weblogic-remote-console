@@ -1,9 +1,11 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
 
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Date;
 import javax.json.JsonArray;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
@@ -12,6 +14,7 @@ import javax.json.JsonValue;
 import javax.json.JsonValue.ValueType;
 
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import weblogic.remoteconsole.common.utils.DateUtils;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
@@ -147,6 +150,16 @@ public abstract class RequestBodyMapper<T> {
     return (value != null) ? asDouble(key, value) : 0;
   }
 
+  protected Date getRequiredDate(JsonObject object, String key) {
+    JsonValue value = getRequiredJsonValue(object, key);
+    return (value != null) ? asDate(key, value) : null;
+  }
+
+  protected Date getOptionalDate(JsonObject object, String key) {
+    JsonValue value = getOptionalJsonValue(object, key);
+    return (value != null) ? asDate(key, value) : null;
+  }
+
   protected BeanTreePath getRequiredBeanTreePath(JsonObject object, String key) {
     JsonValue value = getRequiredJsonValue(object, key);
     return (value != null) ? asBeanTreePath(key, value) : null;
@@ -261,6 +274,18 @@ public abstract class RequestBodyMapper<T> {
       return JsonNumber.class.cast(value).doubleValue();
     }
     return 0;
+  }
+
+  protected Date asDate(String key, JsonValue value) {
+    String dateAsString = asString(key, value);
+    if (isOK()) {
+      try {
+        return DateUtils.parseDate(dateAsString);
+      } catch (ParseException e) {
+        badFormat(e.getMessage());
+      }
+    }
+    return null;
   }
 
   protected boolean validateType(JsonValue value, String key, ValueType... typesWant) {

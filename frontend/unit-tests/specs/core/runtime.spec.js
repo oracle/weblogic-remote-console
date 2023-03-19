@@ -33,8 +33,8 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/cbe-types', 'wrc-fronten
           expect(pathUri).to.equal("/configuration/data");
         });
 
-        it('Return value of getLoggingLevel() should be 3 (INFO), as specified in ', function() {
-          expect(Runtime.getLoggingLevel()).to.equal(3);
+        it('Return value of getLoggingLevel() should be 1 (ERROR), as specified in ', function() {
+          expect(Runtime.getLoggingLevel()).to.equal(1);
         });
 
         it('Return value of getServiceConfig() should be a JS object with an monitoring', function() {

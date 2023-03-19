@@ -1,0 +1,160 @@
+[
+  {
+    "uid": "0",
+    "parentUid": "-1",
+    "operator": "and",
+    "expression": "Group: Is In (\"grp1\",\"grp2\")",
+    "options": {
+      "negated": false,
+      "combined": false,
+      "deleted": false
+    },
+    "predicate": {
+      "name": "weblogic.console.wls.rest.extension.security.authorization.predicates.GroupPredicate",
+      "arguments": [
+        {"value": "grp1", "array": true, "displayName": "Group Argument Name", "descriptionHTML": "Add one or more groups to this condition. If you add multiple groups, the condition evaluates as true if the user is a member of ANY of the groups.", "optional":  false},
+        {"value": "grp2", "array": true, "displayName": "Group Argument Name", "descriptionHTML": "Add one or more groups to this condition. If you add multiple groups, the condition evaluates as true if the user is a member of ANY of the groups.", "optional":  false}
+      ],
+      "descriptionHTML": "Group Predicate",
+      "displayName": "Group"
+    }
+  },
+  {
+    "uid": "1",
+    "parentUid": "-1",
+    "operator": "and",
+    "expression": "Role: Equals (\"Role2\")",
+    "options": {
+      "negated": false,
+      "combined": false,
+      "deleted": true
+    },
+    "predicate": {
+      "name": "weblogic.console.wls.rest.extension.security.authorization.predicates.RolePredicate",
+      "arguments": [
+        {"value": "Role2", "array": true, "displayName": "Role Argument Name", "descriptionHTML": "Add one or more roles to this condition. If you add multiple roles, the condition evaluates as true if the user is in ANY of the roles.", "optional":  false}
+      ],
+      "descriptionHTML": "Role Predicate",
+      "displayName": "Role"
+    }
+  },
+  {
+    "uid": "2",
+    "parentUid": "-1",
+    "expression": "Combination",
+    "options": {
+      "negated": false,
+      "combined": true,
+      "deleted": false
+    },
+    "children": [
+      {
+        "uid": "3",
+        "parentUid": "2",
+        "operator": "and",
+        "expression": "User: Not Equals (\"Mike\")",
+        "options": {
+          "negated": true,
+          "combined": false,
+          "deleted": false
+        },
+        "predicate": {
+          "name": "weblogic.console.wls.rest.extension.security.authorization.predicates.UserPredicate",
+          "arguments": [
+            {"value": "Mike", "array": true, "displayName": "User Argument Name", "descriptionHTML": "User Argument Description", "optional":  false}
+          ],
+          "descriptionHTML": "User Predicate",
+          "displayName": "User"
+        }
+      },
+      {
+        "uid": "4",
+        "parentUid": "2",
+        "operator": "and",
+        "expression": "User: Is In (\"usr1\",\"usr2\")",
+        "options": {
+          "negated": false,
+          "combined": false,
+          "deleted": false
+        },
+        "predicate": {
+          "name": "weblogic.console.wls.rest.extension.security.authorization.predicates.UserPredicate",
+          "arguments": [
+            {"value":  "usr1", "array": true, "displayName": "User Argument Name", "descriptionHTML": "User Argument Description", "optional":  false},
+            {"value":  "usr2", "array": true, "displayName": "User Argument Name", "descriptionHTML": "User Argument Description", "optional":  false}
+          ],
+          "descriptionHTML": "User Predicate",
+          "displayName": "User"
+        }
+      },
+      {
+        "uid": "5",
+        "parentUid": "2",
+        "operator": "and",
+        "expression": "Server is in development mode",
+        "options": {
+          "negated": false,
+          "combined": false,
+          "deleted": false
+        },
+        "predicate": {
+          "name": "weblogic.entitlement.rules.InDevelopmentMode",
+          "descriptionHTML": "Creates a condition for a security policy that is true when the server is in development mode.",
+          "displayName": "Server is in development mode"
+        }
+      },
+      {
+        "uid": "6",
+        "parentUid": "2",
+        "expression": "Combination",
+        "options": {
+          "negated": false,
+          "combined": true,
+          "deleted": false
+        },
+        "children": [
+          {
+            "uid": "7",
+            "parentUid": "6",
+            "operator": "or",
+            "expression": "Group: Is In (\"everyone\",\"nobody\")",
+            "options": {
+              "negated": true,
+              "combined": false,
+              "deleted": false
+            },
+            "predicate": {
+              "name": "weblogic.console.wls.rest.extension.security.authorization.predicates.GroupPredicate",
+              "arguments": [
+                {"value": "everyone", "array": true, "displayName": "Group Argument Name", "descriptionHTML": "Add one or more groups to this condition. If you add multiple groups, the condition evaluates as true if the user is a member of ANY of the groups.", "optional":  false},
+                {"value": "nobody", "array": true, "displayName": "Group Argument Name", "descriptionHTML": "Add one or more groups to this condition. If you add multiple groups, the condition evaluates as true if the user is a member of ANY of the groups.", "optional":  false}
+              ],
+              "descriptionHTML": "Group Predicate",
+              "displayName": "Group"
+            }
+          },
+          {
+            "uid": "8",
+            "parentUid": "6",
+            "operator": "none",
+            "expression": "Group has the same Identity Domain as the specified Identity Domain: (\"grp1\",\"domain1\",\"grp5\")",
+            "options": {
+              "negated": false,
+              "combined": false,
+              "deleted": false
+            },
+            "predicate": {
+              "name": "weblogic.console.wls.rest.extension.security.authorization.predicates.GroupPredicate",
+              "arguments": [
+                {"value": "grp7" ,"array": false, "displayName": "Group Name Argument", "descriptionHTML": "Group Name", "optional":  false},
+                {"value": "domain1", "array": false, "displayName": "Identity Domain Argument", "descriptionHTML": "Identity Domain", "optional":  false}
+              ],
+              "descriptionHTML": "Creates a condition for a security policy that is true when a specified group has the same identity domain as the specified identity domain.",
+              "displayName": "Group has the same Identity Domain as the specified Identity Domain"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

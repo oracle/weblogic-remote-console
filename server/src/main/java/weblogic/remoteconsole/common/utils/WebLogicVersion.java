@@ -1,10 +1,7 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Contains overall information about a Weblogic version, including how to get to its public
@@ -12,10 +9,14 @@ import java.util.List;
  */
 public class WebLogicVersion {
 
-  // Whether this instance is the current wls version,
+  // Whether this instance is the latest shipped wls version,
+  // i.e. the one that WDT uses.
+  private boolean currentVersion;
+
+  // Whether this instance is the latest wls version,
   // i.e. the one that the hand coded yaml files were
   // written to match.
-  private boolean currentVersion;
+  private boolean latestVersion;
 
   // The version returned by DomainMBean.getDomainVersion():
   private String domainVersion;
@@ -30,35 +31,24 @@ public class WebLogicVersion {
   // The directory, relative to docsUrl, of the url containing this release's public mbean javadoc
   private String mbeanJavadocDirectory;
 
-  private List<WebLogicPSU> psus = new ArrayList<>();
-
   WebLogicVersion(
+    boolean latestVersion,
     boolean currentVersion,
     String domainVersion,
     String fmwVersion,
     String docsUrl,
-    String mbeanJavadocDirectory,
-    WebLogicPSU... psus // newest to oldest
+    String mbeanJavadocDirectory
   ) {
+    this.latestVersion = latestVersion;
     this.currentVersion = currentVersion;
     this.domainVersion = domainVersion;
     this.fmwVersion = fmwVersion;
     this.docsUrl = docsUrl;
     this.mbeanJavadocDirectory = mbeanJavadocDirectory;
-    WebLogicPSU lastPSU = null;
-    for (WebLogicPSU psu : psus) {
-      this.psus.add(psu);
-      psu.setWebLogicVersion(this);
-      if (lastPSU == null) {
-        // The first version is the current version
-        psu.setCurrentPSU(true);
-      } else {
-        // Not the first version.
-        // Set the newer's PSU's previousPSU to this PSU
-        lastPSU.setPreviousPSU(psu);
-      }
-      lastPSU = psu;
-    }
+  }
+
+  public boolean isLatestVersion() {
+    return this.latestVersion;
   }
 
   public boolean isCurrentVersion() {
@@ -100,14 +90,6 @@ public class WebLogicVersion {
   // Get the url for a generic help topic, replacing @FMW_VERSION with this verion's fmw version
   public String getGenericHelpTopicUrl(String genericTopicUrl) {
     return genericTopicUrl.replaceAll("@FMW_VERSION@&amp;", getFmwVersion() + "&");
-  }
-
-  public List<WebLogicPSU> getPSUs() {
-    return psus;
-  }
-
-  public WebLogicPSU getCurrentPSU() {
-    return psus.isEmpty() ? null : psus.get(0);
   }
 
   @Override

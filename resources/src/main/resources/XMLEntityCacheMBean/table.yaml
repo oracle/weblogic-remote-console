@@ -1,8 +1,7 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
-  <p>This page lists the XML entity caches that have been configured for
-  WebLogic Server; click on the Name to see its full configuration.</p>
+  <p>This page lists the XML entity caches that have been configured for WebLogic Server.</p>
 
 displayedColumns:
 - name: "Name"

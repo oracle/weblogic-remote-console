@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -354,6 +354,43 @@ define(['wrc-frontend/core/utils'],
       }
     }
 
+    function isReadOnlySlice(pdjData, sliceName) {
+      // Default to using false as the return value
+      let rtnval = true;
+      // Now, the ridiculously complex logic the CBE forces
+      // the CFE to write, in order to determine if a slice
+      // is "readonly", or not.
+      if (pdjData?.sliceForm?.properties) {
+        // This means that the pdjData object has a nested
+        // sliceForm object, which has a nested properties
+        // array, so keep going. Next, see if the properties
+        // array has a property object with a name that
+        // matches the slice name.
+        const property = pdjData.sliceForm.properties.find(item => item.name === sliceName);
+        if (CoreUtils.isNotUndefinedNorNull(property)) {
+          // This means there was indeed a property object
+          // in the properties array that matched the slice name.
+          // Next, you need to see if the property object
+          // has a readOnly property.
+          if (CoreUtils.isUndefinedOrNull(property.readOnly)) {
+            // This means that the property object DOES NOT
+            // HAVE a readOnly property, so assign false to
+            // the return value.
+            rtnval = false;
+          }
+          else {
+            // This means that the property object HAS a
+            // readOnly property (which has a boolean type),
+            // but logically it could have true or false
+            // assigned to it. Use whatever is assigned to
+            // it as the return value for the function.
+            rtnval = property.readOnly;
+          }
+        }
+      }
+      return rtnval;
+    }
+
     return {
       getSliceFromPDJUrl: getSliceFromPDJUrl,
       parseQueryString: parseQueryString,
@@ -378,7 +415,8 @@ define(['wrc-frontend/core/utils'],
       getArrayOfStringConvertedValue: getArrayOfStringConvertedValue,
       convertArrayToPrintableList: convertArrayToPrintableList,
       getPlacementRouterParameter: getPlacementRouterParameter,
-      setPlacementRouterParameter: setPlacementRouterParameter
+      setPlacementRouterParameter: setPlacementRouterParameter,
+      isReadOnlySlice: isReadOnlySlice
     };
   }
 );

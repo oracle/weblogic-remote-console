@@ -1,0 +1,10 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to edit the credential for a remote user for this connection pool.</p>
+  <p>If the connection pool name is empty, then this credential is a default for the resource adapter.</p>
+
+properties:
+- name: Name
+- name: RemotePassword

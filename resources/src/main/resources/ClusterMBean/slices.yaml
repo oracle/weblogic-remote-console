@@ -8,6 +8,9 @@ slices:
 - name: Http
 - name: JTA
 - name: Migration
+  slices:
+    - name: General
+    - name: Candidates
 - name: Overload
 - name: Replication
 - name: Scheduler

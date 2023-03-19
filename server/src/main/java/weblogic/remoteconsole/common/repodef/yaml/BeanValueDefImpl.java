@@ -42,6 +42,7 @@ class BeanValueDefImpl implements BeanValueDef {
     javaTypeToValueKind.put("java.lang.RuntimeException", ValueKind.THROWABLE);
     javaTypeToValueKind.put("java.io.InputStream", ValueKind.FILE_CONTENTS);
     javaTypeToValueKind.put("weblogic.health.HealthState", ValueKind.HEALTH_STATE);
+    javaTypeToValueKind.put("EntitleNetExpression", ValueKind.ENTITLE_NET_EXPRESSION);
     javaTypeToValueKind.put("void", ValueKind.VOID);
   }
 

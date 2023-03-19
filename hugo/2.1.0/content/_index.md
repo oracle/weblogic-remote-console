@@ -25,7 +25,7 @@ The WebLogic Remote Console provides an alternative WebLogic Server administrati
 * Start and stop servers and applications
 * Monitor server and application performance
 
-For detailed information on the fields and procedures of the WebLogic Remote Console, you can often reference the online help of the WebLogic Administration Console: [12.2.1.3](https://docs.oracle.com/middleware/12213/wls/WLACH/index.html), [12.2.1.4](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/wlach/index.html), or [14.1.1.0](https://docs-uat.us.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlach/index.html).
+For detailed information on the fields and procedures of the WebLogic Remote Console, you can often reference the online help of the WebLogic Administration Console: [12.2.1.3](https://docs.oracle.com/middleware/12213/wls/WLACH/index.html), [12.2.1.4](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/wlach/index.html), or [14.1.1.0](https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlach/index.html).
 
 However, although the WebLogic Remote Console and the WebLogic Administration Console are similar, there are differences between them. See [Differences]({{< relref "admin-console-diff" >}}) for details on how they differ.
 
@@ -49,7 +49,7 @@ Documentation for prior releases of the WebLogic Remote Console:
 
 #### Need more help? Have a suggestion? Come and say, "Hello!" {id="help"}
 
-We have a **public Slack channel** where you can get in touch with us to ask questions about using the Remote Console or give us feedback or suggestions about what features and improvements you would like to see.  We would love to hear from you. To join our channel, please [visit this site to get an invitation](https://weblogic-slack-inviter.herokuapp.com/). The invitation email will include details of how to access our Slack workspace.  After you are logged in, please come to `#remote-console` and say, "hello!"
+We have a **public Slack channel** where you can get in touch with us to ask questions about using the Remote Console or give us feedback or suggestions about what features and improvements you would like to see.  We would love to hear from you. To join our channel, please [visit this site to get an invitation](https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ). The invitation email will include details of how to access our Slack workspace.  After you are logged in, please come to `#remote-console` and say, "hello!"
 
 #### Related Projects {id="rel_projects"}
 

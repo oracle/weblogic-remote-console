@@ -1,10 +1,8 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page lists the Web service security configurations that have
-  been created for this domain. Click on the security configuration name to
-  update it, such as create new credential providers, new token handlers,
-  or configure the timestamp properties.</p>
+  been created for this domain.</p>
 
 displayedColumns:
 - name: "Name"

@@ -10,7 +10,6 @@ properties:
 - name: Version
 
 helpTopics:
-#TBD
 - label: "Understanding Security for Oracle WebLogic Server"
   href: "scovr/index.html"
   type: "edocs"

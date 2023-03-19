@@ -1,0 +1,66 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Credential mapping for a JDBC module is the process in which WebLogic
+  Server usersare mapped to database users. If credential mapping is
+  enabled on the module, when an application requests a database connection
+  from the data source, WebLogic Server determines the current WebLogic
+  Server user and then sets the mapped database user as a light-weight
+  client ID on the database connection.</p>
+  <p>This feature relies on features in the JDBC driver and DBMS. It is not
+  supported for all drivers and database management systems.</p>
+  <p>This page creates the first credential and credential mapping for a JDBC module.</p>
+  <p>If the application is currently running on one or more servers, the module
+  and data source names can be found by navigating to the "Deployments" -> "Application Runtimes"
+  -> this application -> "Component Runtimes" in the monitoring tree.
+  Select the component corresponding to the JDBC module. Use its "Module Id" as
+  the module name and its "Name" as the data source name.</p>
+  <p>If the application is not currently running on any servers, look inside
+  inside the deployment to get the module and data source names.  For example,
+  weblogic-application.xml contains the module name and the name of the xml file
+  containing the data source's configuration.  That xml file contains the name
+  of the data source.</p>
+
+presentation:
+  singleColumn: true
+
+properties:
+- name: Module
+- name: DataSource
+- name: WLSUser
+  label: WebLogic User
+  required: true
+  definition:
+    type: java.lang.String
+    writable: true
+    descriptionHTML: "The credential mapping's WebLogic user's name."
+- name: IdentityDomain
+  definition:
+    type: java.lang.String
+    writable: true
+    descriptionHTML: >
+      <p>The credential mapping's identity domain.
+      If the domain's administrative identity domain has been set,
+      set the identity domain to the same value.</p>
+- name: RemoteUser
+  required: true
+  definition:
+    type: java.lang.String
+    writable: true
+    descriptionHTML: "The remote user's name."
+- name: RemotePassword
+  required: true
+  definition:
+    type: java.lang.String
+    writable: true
+    encrypted: true
+    descriptionHTML: "The remote user's password."
+
+helpTopics:
+- label: "Setting Database Security Credentials for Generic Data Sources"
+  href: "jdbca/jdbc_datasources.html#JDBCA161"
+  type: "edocs"
+- label: "Setting Database Security Credentials for GridLink Data Sources"
+  href: "jdbca/gridlink_datasources.html#JDBCA463"
+  type: "edocs"

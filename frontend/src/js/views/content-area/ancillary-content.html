@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2021,2022, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
  -->
 <oj-bind-if test="[[ancillaryContentAreaToggleVisible()]]">
@@ -14,15 +14,15 @@
         >
           <div id="slideup-header" data-state="collapsed" class="oj-flex-bar">
             <div id="slideup-title">
-              <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.changecenter.iconFile + '.png'}"/>
+              <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.changecenter.iconFile + '.png', alt: i18n.icons.changecenter.tooltip}"/>
               <span data-bind="text: i18n.icons.changecenter.tooltip"></span>
             </div>
             <div id="slideup-toggle">
               <oj-bind-if test="[[!ancillaryContentAreaVisible()]]">
-                <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.expand.iconFile + '.png', 'title': i18n.icons.expand.tooltip}"/>
+                <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.expand.iconFile + '.png', 'title': i18n.icons.expand.tooltip, alt: i18n.icons.expand.tooltip}"/>
               </oj-bind-if>
               <oj-bind-if test="[[ancillaryContentAreaVisible()]]">
-                <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.collapse.iconFile + '.png', 'title': i18n.icons.collapse.tooltip}"/>
+                <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.collapse.iconFile + '.png', 'title': i18n.icons.collapse.tooltip, alt: i18n.icons.collapse.tooltip}"/>
               </oj-bind-if>
             </div>
           </div>
@@ -49,7 +49,7 @@
             </oj-bind-for-each>
           </div>
 
-          <div id="tab-module" class="oj-flex-bar-end">
+          <div id="tab-module-ancillary-content" class="oj-flex-bar-end">
             <oj-module config="[[tabModuleConfig]]"></oj-module>
           </div>
         </div>

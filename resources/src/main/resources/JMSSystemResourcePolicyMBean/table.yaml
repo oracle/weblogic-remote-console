@@ -1,17 +1,10 @@
-# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
-introductionHTML: >
-  <p>This page displays information about each group that has been configured
-  in this WebLogic Authentication provider.</p>
-  <p>A group is an abstract, logical collection of users which has static membership.
-  Groups can be used to define security policies for WebLogic resources.</p>
-  <p>You do not have to use the default groups provided by WebLogic Server.
-  Oracle recommends creating groups that more closely reflect your own business structure and practices.</p>
+introductionHTML: "<p>This page lists the domain's JMS system modules.</p>"
 
 displayedColumns:
 - name: Name
-- name: Expression
-- name: InheritedExpression
+- name: HasPolicy
 
 helpTopics:
 - label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"

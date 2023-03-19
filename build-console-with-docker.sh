@@ -1,14 +1,15 @@
 #!/bin/bash
 
-# Copyright 2021, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Copyright 2021, 2023, Oracle Corporation and/or its affiliates.  All rights reserved.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 set -e
 
 # Run the command via "." to get the DOCKER_ID variable
-. ./run-this-in-docker.sh "
+. ./run-this-in-docker.sh builder "
 ./prep.sh build
-make
+chown -R oracle /build
+su oracle -c make
 "
 
 rm -rf runnable installer/target frontend/web

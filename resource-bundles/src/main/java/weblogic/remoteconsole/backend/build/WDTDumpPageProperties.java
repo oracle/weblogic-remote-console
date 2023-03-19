@@ -48,7 +48,6 @@ public class WDTDumpPageProperties extends WebLogicPageDefWalker {
       new WDTDumpPageProperties(
         WebLogicMBeansVersions.getVersion(
           WebLogicVersions.getCurrentVersion(),
-          WebLogicVersions.getCurrentVersion().getCurrentPSU(),
           WebLogicMBeansVersion.ALL_CAPABILITIES
         )
       ).walk();

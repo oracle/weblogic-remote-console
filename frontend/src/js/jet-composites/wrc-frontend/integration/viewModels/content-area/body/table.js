@@ -1,14 +1,14 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/wdt-model/archive', './table-sorter', './actions-dialog', './unsaved-changes-dialog', './set-sync-interval-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/actions', './help-form', './wdt-form', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojpagingcontrol', 'cfe-multi-select/loader'],
-  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, keySet, Controller, DataOperations, MessageDisplaying, ModelArchive, TableSorter, ActionsDialog, UnsavedChangesDialog, SetSyncIntervalDialog, ContentAreaContainerResizer, PageDataTypes, PageDefinitionActions, HelpForm, WdtForm, TableCustomizerManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './table-sorter', './actions-dialog', './unsaved-changes-dialog', './set-sync-interval-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/actions', './help-form', './wdt-form', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojpagingcontrol', 'cfe-multi-select/loader'],
+  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, keySet, Controller, DataOperations, MessageDisplaying, TableSorter, ActionsDialog, UnsavedChangesDialog, SetSyncIntervalDialog, ContentAreaContainerResizer, PageDataTypes, PageDefinitionActions, HelpForm, WdtForm, TableCustomizerManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Logger) {
     function TableViewModel(viewParams) {
       // Declare reference to instance of the ViewModel
       // that JET creates/manages the lifecycle of. This
@@ -32,6 +32,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             disabled: false,
             visible: ko.observable(false),
             label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
+          }
+        },
+        contextMenus: {
+          copyCellData: {
+            id: 'copyCellData',
+            iconFile: 'clipboard-copycell-icon-brn_24x24',
+            label: oj.Translations.getTranslatedString('wrc-common.contextMenus.copyData.cell.label')
+          },
+          copyRowData: {
+            id: 'copyRowData',
+            iconFile: 'clipboard-copyrow-icon-brn_24x24',
+            label: oj.Translations.getTranslatedString('wrc-common.contextMenus.copyData.row.label')
           }
         },
         prompts: {
@@ -99,7 +111,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           onSyncIntervalClicked: captureSyncInterval,
           onActionButtonClicked: renderActionsDialog,
           onCustomizeButtonClicked: toggleCustomizer,
-          onCustomViewButtonClicked: createCustomView
+          onDashboardButtonClicked: createDashboard
         }
       });
 
@@ -315,7 +327,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         });
       }
 
-      function createCustomView(event) {
+      function createDashboard(event) {
         const createFormUrl = viewParams.parentRouter.data.rdjData().dashboardCreateForm.resourceData;
         DataOperations.mbean.new(createFormUrl)
           .then(reply => {
@@ -351,8 +363,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         const options = {withHistoryVisible: withHistoryVisible, withHelpVisible: self.showHelp()};
         const offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#table-container', options);
         Logger.log(`max-height=calc(100vh - ${offsetMaxHeight}px)`);
-        const ele = document.querySelector('.cfe-table-form-content');
-        if (ele !== null) ele.style['max-height'] = `calc(100vh - ${offsetMaxHeight}px)`;
+        document.documentElement.style.setProperty('--form-container-calc-max-height', `${offsetMaxHeight}px`);
       }
 
       function toggleBeanPathHistory (withHistoryVisible) {
@@ -416,6 +427,88 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             ViewModelUtils.failureResponseDefaultHandling(response);
           });
       }
+
+      this.onContextMenuAction = (event) => {
+        const getClipboardData = (ele, menuItemId) => {
+          let clipboardData = '';
+          switch (menuItemId) {
+            case 'copyCellData':
+              clipboardData = ele.getAttribute('data-clipboard-copycelldata');
+              break;
+            case 'copyRowData':
+              clipboardData = ele.getAttribute('data-clipboard-copyrowdata');
+              break;
+          }
+          return clipboardData;
+        };
+
+        const getConfirmationMessageSummary = (clipboardData, menuItemId) => {
+          let messageSummary = oj.Translations.getTranslatedString('wrc-common.messages.copiedToClipboard.detail');
+          switch (menuItemId) {
+            case 'copyCellData':
+              if (clipboardData === '') messageSummary = oj.Translations.getTranslatedString('wrc-common.messages.emptyCellData.detail');
+              break;
+            case 'copyRowData':
+              if (clipboardData === '') messageSummary = oj.Translations.getTranslatedString('wrc-common.messages.emptyRowData.detail');
+              break;
+          }
+          return messageSummary;
+        };
+
+        const showConfirmationMessage = (message, clipboardData) => {
+          if (clipboardData !== '') {
+            ViewModelUtils.blurActiveElement();
+            ViewModelUtils.copyToClipboard(clipboardData)
+              .then(() => {
+                MessageDisplaying.displayMessage({
+                  severity: message.severity,
+                  summary: message.message
+                }, 2500);
+              })
+              .catch(failure => {
+                ViewModelUtils.failureResponseDefaultHandling(failure);
+              });
+          }
+          else {
+            MessageDisplaying.displayMessage({
+              severity: message.severity,
+              summary: message.message
+            }, 2500);
+          }
+        };
+
+        const ele = document.getElementById('table');
+
+        if (ele !== null) {
+          const menuItemId = event.detail.selectedValue;
+          const clipboardData = getClipboardData(ele, menuItemId);
+          const messageSummary = getConfirmationMessageSummary(clipboardData, menuItemId);
+
+          showConfirmationMessage({
+              severity: 'confirmation',
+              message: messageSummary
+            },
+            clipboardData
+          );
+        }
+      };
+
+      this.onContextMenuBeforeOpen = (event) => {
+        const target = event.detail.originalEvent.target;
+        if (CoreUtils.isNotUndefinedNorNull(target)) {
+          if (target.innerText === '' && target.parentElement.innerText === '') {
+            event.preventDefault();
+            return false;
+          }
+          else {
+            const ele = document.getElementById('table');
+            if (ele !== null) {
+              ele.setAttribute('data-clipboard-copycelldata', target.innerText);
+              ele.setAttribute('data-clipboard-copyrowdata', target.parentElement.innerText.replace(/^\t/, ''));
+            }
+          }
+        }
+      };
 
       this.selectedListener = function (event) {
         let id = null;
@@ -572,13 +665,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             if (isWdtTable() && window?.api?.ipc &&
               Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name &&
               rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries]/)) {
-              window.api.ipc.invoke('get-archive-entry-types')
-                .then(entryTypes => {
-                  const dataProvider = self.wdtForm.getDataProvider();
-                  const modelArchive = new ModelArchive(dataProvider.modelArchive, entryTypes);
-                  self.wdtForm.deleteModelArchivePaths(dataProvider, modelArchive, viewParams.signaling);
-                  delete dataProvider['modelArchivePaths'];
-                });
+              const dataProvider = self.wdtForm.getDataProvider();
+              const modelArchive = dataProvider.extensions.wktui.modelArchive;
+              self.wdtForm.deleteModelArchivePaths(dataProvider, modelArchive);
+              delete dataProvider['modelArchivePaths'];
             }
           })
           .then(() => {
@@ -753,7 +843,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         let pdjActions;
 
-        if (typeof pdjData.table.actions !== 'undefined') pdjActions = pdjData.table.actions;
+        if (CoreUtils.isNotUndefinedNorNull(pdjData.table.actions)) {
+          pdjActions = pdjData.table.actions;
+        }
+
         self.pageDefinitionActions = new PageDefinitionActions(pdjActions, rdjData);
 
         self.actionsDialog.formLayout.html({ view: HtmlUtils.stringToNodeArray('<p>'), data: self });

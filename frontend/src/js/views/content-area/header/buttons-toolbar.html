@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 
@@ -10,7 +10,7 @@
     chroming="borderless"
     disabled="[[i18n.toolbar.buttons.home.disabled()]]"
   >
-    <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.home.image + '.png'}" />
+    <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.home.image + '.png', alt: i18n.toolbar.buttons.home.label}" />
     <span class="cfe-toolbar-button-label" data-bind="text: [[i18n.toolbar.buttons.home.label]]"></span>
   </oj-button>
 </oj-bind-if>
@@ -22,7 +22,7 @@
     chroming="borderless"
     disabled="[[i18n.toolbar.buttons.preferences.disabled()]]"
   >
-    <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.preferences.image + '.png'}" />
+    <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.preferences.image + '.png', alt: i18n.toolbar.buttons.preferences.label}" />
     <span class="cfe-toolbar-button-label" data-bind="text: [[i18n.toolbar.buttons.preferences.label]]"></span>
   </oj-button>
 </oj-bind-if>

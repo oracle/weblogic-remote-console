@@ -1,15 +1,25 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['knockout', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils'],
-  function (ko, Preferences, Runtime, CoreUtils) {
+define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils'],
+  function (oj, ko, Preferences, Runtime, CoreUtils) {
     function NavTreeToggler(viewParams){
-      var self = this;
+      const self = this;
+
+      this.i18n = {
+        icons: {
+          navtree: {
+            toggler: {
+              tooltip: oj.Translations.getTranslatedString('wrc-header.icons.navtree.toggler.tooltip')
+            }
+          }
+        }
+      };
 
       // Begin with navtree being invisible and disabled
       this.navtreeVisible = ko.observable(false);

@@ -7,17 +7,11 @@
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/utils', './create-form', './help-form', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset'],
-  function (oj, ko, Router, ArrayDataProvider, HtmlUtils, DataOperations, MessageDisplaying, NavtreeManager, PerspectiveMemoryManager, PageDataTypes, PageDefinitionFields, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUtils, CreateForm, HelpForm, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/common', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/utils', './create-form', './help-form', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset'],
+  function (oj, ko, Router, ArrayDataProvider, HtmlUtils, DataOperations, MessageDisplaying, NavtreeManager, PerspectiveMemoryManager, PageDefinitionCommon, PageDataTypes, PageDefinitionFields, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, CreateForm, HelpForm, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function OverlayDialogViewModel(viewParams) {
 
-      const FIELD_DISABLED = Object.freeze('fieldDisabled_');
-      const FIELD_UNSET = Object.freeze('fieldUnset_');
-      const FIELD_MESSAGES = Object.freeze('fieldMessages_');
-      const FIELD_SELECTDATA = Object.freeze('fieldSelectData_');
-      const FIELD_VALUES = Object.freeze('fieldValues_');
-
-      var self = this;
+      const self = this;
 
       this.i18n = {
         introduction: {
@@ -29,6 +23,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         buttons: {
           'save': { id: 'save', iconFile: ko.observable('save-icon-blk_24x24'), disabled: ko.observable(false),
             label: ko.observable(oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.save.label'))
+          },
+          'cancel': { id: 'cancel', iconFile: 'cancel-icon-blk_24x24', disabled: false, visible: ko.observable(true),
+            label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
           },
           'finish': { id: 'finish', iconFile: 'add-icon-blk_24x24', disabled: ko.observable(true),
             label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.finish.label')
@@ -65,7 +62,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       this.pageRedoHistory = {};
       this.dynamicMessageFields = [];
       this.multiSelectControls = {};
-      this.saveButtonDisabledVoting = {checkboxSetChanged: true, multiSelectChanged: true, inputFieldChanged: true, nonInputFieldChanged: true};
       this.debugFlagItems = ko.observable();
       this.debugFlagsEnabled = ko.observableArray([]);
 
@@ -89,18 +85,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       this.subscriptions = [];
 
       this.connected = function () {
+        function createCreateForm() {
+          const pdjData = viewParams.parentRouter.data.pdjData();
+          if (CoreUtils.isNotUndefinedNorNull(pdjData.createForm)) {
+            const mode = CreateForm.prototype.Mode.SCROLLING;
+            self.createForm = new CreateForm(viewParams, rerenderWizardForm, mode);
+          }
+        }
+
+        createCreateForm();
+
         if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
           document.title = viewParams.parentRouter.data.pageTitle();
         }
 
         renderToolbarButtons();
-
-        const pdjData = viewParams.parentRouter.data.pdjData();
-        if (CoreUtils.isNotUndefinedNorNull(pdjData.createForm)) {
-          const mode = CreateForm.prototype.Mode.SCROLLING;
-          self.createForm = new CreateForm(viewParams, rerenderWizardForm, mode);
-        }
-
         renderPage();
 
         const rdjSub = viewParams.parentRouter.data.rdjData.subscribe(renderPage.bind(this));
@@ -117,6 +116,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           item.subscription.dispose();
         });
         self.valueSubscriptions = [];
+      };
+
+      this.cancelAction = function (event) {
+        closeDialog();
       };
 
       this.finishAction = function (event) {
@@ -167,12 +170,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         if (self.isWizardForm()) {
           let replacer = self.createForm.getBackingDataAttributeReplacer(fieldName);
           if (typeof replacer === 'undefined') replacer = fieldName;
-          if (typeof self[FIELD_VALUES + replacer] === 'undefined') {
-            self[FIELD_VALUES + replacer] = ko.observable();
+          if (typeof self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`] === 'undefined') {
+            self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`] = ko.observable();
             self.dirtyFields.add(fieldName);
           }
           createFieldValueSubscription(self.valueSubscriptions, fieldName, replacer);
-          self[FIELD_VALUES + replacer](values);
+          self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`](values);
         }
         const availableItems = self.multiSelectControls[fieldName].availableItems.concat(self.multiSelectControls[fieldName].chosenItems);
         const result = PageDefinitionFields.createMultiSelectControlItem(availableItems, fieldValue);
@@ -203,7 +206,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
       this.clearChosenFileClickHandler = function(event) {
         const name = event.currentTarget.attributes['data-input'].value;
-        self[`${FIELD_VALUES}${name}`](null);
+        self[`${PageDefinitionCommon.FIELD_VALUES}${name}`](null);
         self.createForm.clearUploadedFile(name);
         $('#' + name + '_clearChosen').css({'display':'none'});
       };
@@ -215,7 +218,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           const fileName = files[0].name;
           const fileExt = '.' + fileName.split('.').pop();
 
-          self[`${FIELD_VALUES}${name}`](fileName);
+          self[`${PageDefinitionCommon.FIELD_VALUES}${name}`](fileName);
           self.createForm.addUploadedFile(name, files[0]);
           $('#' + name + '_clearChosen').css({'display':'inline-flex'});
 
@@ -283,6 +286,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           }
         }
         return rtnval;
+      };
+
+      this.isWDTForm = () => {
+        // The same form is used for WDT model and Property List for uniform content file handling
+        return (['modeling', 'properties'].includes(viewParams.perspective.id));
       };
 
       function finishWizardForm() {
@@ -431,27 +439,31 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         viewParams.onSaveSuceeded(eventType);
         viewParams.onFormRefresh();
         viewParams.onSaveContent();
+        closeDialog();
+      }
+
+      function closeDialog() {
         const overlayFormDialog = document.getElementById('overlayFormDialog');
         if (overlayFormDialog !== 'null') overlayFormDialog.close();
       }
 
       function renderPage() {
+        function getIsEdit(pdjData) {
+          let rtnval;
+          if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm) || CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable)) {
+            rtnval = true;
+          }
+          else if (CoreUtils.isNotUndefinedNorNull(pdjData.createForm)) {
+            rtnval = false;
+          }
+          return rtnval;
+        }
+
         var pdjData = viewParams.parentRouter.data.pdjData();
         var rdjData = viewParams.parentRouter.data.rdjData();
 
-        let isEdit;
-
-        // If the observable updates and no longer references
-        // a table do nothing.. <perspective.id>.js will route
-        if (typeof pdjData.sliceForm !== 'undefined') {
-          isEdit = true;
-        }
-        else if (typeof pdjData.createForm !== 'undefined') {
-          isEdit = false;
-        }
-        else {
-          return;
-        }
+        const isEdit = getIsEdit(pdjData);
+        if (CoreUtils.isUndefinedOrNull(isEdit)) return;
 
         // update the wls-form component
         self.pdjData = viewParams.parentRouter.data.pdjData();
@@ -649,19 +661,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         // Define the callback function used when the field is updated
         const updatedFieldValueCallback = (newValue) => {
           self.dirtyFields.add(name);
+          if (self.isWDTForm()) {
+            if (CoreUtils.isUndefinedOrNull(self[`${PageDefinitionCommon.FIELD_VALUE_FROM}${name}`])) {
+              self[`${PageDefinitionCommon.FIELD_VALUE_FROM}${name}`] = ko.observable('fromRegValue');
+            }
+          }
           if (self.isWizardForm()) {
             self.createForm.backingDataAttributeValueChanged(name, newValue);
           }
           else {
             resetSaveButtonDisabledState({disabled: !self.isDirty()});
-            if (!self[`${FIELD_UNSET}${name}`]()) {
+            if (!self[`${PageDefinitionCommon.FIELD_UNSET}${name}`]()) {
               PageDefinitionUnset.addPropertyHighlight(name);
             }
           }
         };
 
         // Subscribe to the field then store the subscription with the field name
-        const subscription = self[`${FIELD_VALUES}${replacer}`].subscribe(updatedFieldValueCallback);
+        const subscription = self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`].subscribe(updatedFieldValueCallback);
         valueSubscriptions.push({ name: name, subscription: subscription });
       }
 
@@ -671,16 +688,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         if (index !== -1) {
           self.valueSubscriptions[index].subscription.dispose();
           self.valueSubscriptions.splice(index, 1);
-          self.dirtyFields.delete(name);
+          self.formPayloadManager.removeDirtyField(name);
         }
         let replacer = self.createForm.getBackingDataAttributeReplacer(name);
         if (typeof replacer === 'undefined') replacer = name;
-        if (typeof self[`${FIELD_VALUES}${replacer}`] !== 'undefined') delete self[`${FIELD_VALUES}${replacer}`];
-        if (typeof self[`${FIELD_SELECTDATA}${replacer}`] !== 'undefined') delete self[`${FIELD_SELECTDATA}${replacer}`];
-        if (typeof self[`${FIELD_MESSAGES}${replacer}`] !== 'undefined') {
-          index = self.dynamicMessageFields.indexOf(self[`${FIELD_MESSAGES}${replacer}`]);
+        if (typeof self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`] !== 'undefined') delete self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`];
+        if (typeof self[`${PageDefinitionCommon.FIELD_SELECTDATA}${replacer}`] !== 'undefined') delete self[`${PageDefinitionCommon.FIELD_SELECTDATA}${replacer}`];
+        if (typeof self[`${PageDefinitionCommon.FIELD_MESSAGES}${replacer}`] !== 'undefined') {
+          index = self.dynamicMessageFields.indexOf(self[`${PageDefinitionCommon.FIELD_MESSAGES}${replacer}`]);
           if (index !== -1) self.dynamicMessageFields.splice(index, 1);
-          delete self[`${FIELD_MESSAGES}${replacer}`];
+          delete self[`${PageDefinitionCommon.FIELD_MESSAGES}${replacer}`];
         }
 
         index = self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).map(nthChild1 => nthChild1.name).indexOf(replacer);
@@ -689,44 +706,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         if (CoreUtils.isNotUndefinedNorNull(self.multiSelectControls[replacer])) {
           delete self.multiSelectControls[replacer];
         }
-      }
-
-      function setupUsedIfListeners(properties) {
-        const usedIfProperties = properties.filter(property => CoreUtils.isNotUndefinedNorNull(property.usedIf));
-
-        usedIfProperties.forEach((property) => {
-          let propertyName, name = property.name, usedIf = property.usedIf;
-
-          if (self.createForm) {
-            const replacer = self.createForm.getBackingDataAttributeReplacer(usedIf.property);
-            // replacer is only used with the property names used
-            // in the JDBC System Resource wizard. Only assign it
-            // to propertyName, if it's not undefined.
-            propertyName = (CoreUtils.isNotUndefinedNorNull(replacer) ? replacer : usedIf.property);
-          }
-          else {
-            propertyName = usedIf.property;
-          }
-
-          let toggleDisableFunc = (newValue) => {
-            // Prevent a property from becoming enabled/disabled
-            // when value has been unset
-            if (self[`${FIELD_UNSET}${name}`]() || self[`${FIELD_UNSET}${propertyName}`]()) {
-              Logger.info('Prevent usedIf handling for unset field: ' + name);
-              return;
-            }
-
-            // See if the new value enables the field or not
-            const enabled = usedIf.values.find((item) => {return item === newValue; });
-            self[`${FIELD_DISABLED}${name}`](!enabled);
-          };
-
-          // Call event callback to initialize, then set up
-          // subscription.
-          toggleDisableFunc(self[`${FIELD_VALUES}${propertyName}`]());
-          const subscription = self[`${FIELD_VALUES}${propertyName}`].subscribe(toggleDisableFunc);
-          self.subscriptions.push(subscription);
-        });
       }
 
       function populateFormLayout(properties, formLayout, pdjTypes, dataValues, isSingleColumn, isReadOnly){
@@ -740,7 +719,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           if (self.isWizardForm()) {
             const result = self.createForm.getBackingDataAttributeReplacer(replacer);
             if (typeof result !== 'undefined') replacer = result;
-            if (typeof self[FIELD_VALUES + replacer] === 'undefined') {
+            if (typeof self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`] === 'undefined') {
               // Add name to wizard page in backing data
               self.createForm.addBackingDataPageData(name);
             }
@@ -780,7 +759,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
               self.perspectiveMemory.upsertNthChildrenItem.call(self.perspectiveMemory, {name: name, row: parseInt(i) + 1, col: 2, minHeight: '240px'});
             }
             else {
-              const dataProviderName = FIELD_SELECTDATA + replacer;
+              const dataProviderName = `${PageDefinitionCommon.FIELD_SELECTDATA}${replacer}`;
               const options = {
                 'name': name,
                 'isEdit': (typeof self.pdjData.sliceForm !== 'undefined'),
@@ -865,13 +844,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
               observableValue = pdjTypes.getObservableValue(name, dataValues[name], value);
             }
 
-            const observableName = FIELD_VALUES + replacer;
+            const observableName = `${PageDefinitionCommon.FIELD_VALUES}${replacer}`;
             if (typeof self[observableName] !== 'undefined') {
               if (!self.isWizardForm()) {
                 self[observableName](observableValue);
                 //the above call actually triggers the subscription and mark this as dirty.
                 //since the value hasn't really changed, we need to remove it from the dirtyField list.
-                self.dirtyFields.delete(name);
+                self.formPayloadManager.removeDirtyField(name);
               }
             }
             else {
@@ -882,13 +861,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             createFieldValueSubscription(self.valueSubscriptions, name, replacer);
 
             if (self.isWizardForm()) {
-              if (self[FIELD_VALUES + replacer]() === '') {
-                self[FIELD_VALUES + replacer](dataValues[name].value);
+              if (self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`]() === '') {
+                self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`](dataValues[name].value);
               }
             }
 
-            field.setAttribute('value', '{{' + FIELD_VALUES + replacer + '}}');
-            field.setAttribute('messages-custom', '[[' + FIELD_MESSAGES + replacer + ']]');
+            field.setAttribute('value', `{{${PageDefinitionCommon.FIELD_VALUES}${replacer}}}`);
+            field.setAttribute('messages-custom', `[[${PageDefinitionCommon.FIELD_MESSAGES}${replacer}]]`);
             field.setAttribute('display-options.messages', 'none');
           }
 
@@ -898,9 +877,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             field.append(messageArea);
           }
 
-          if (typeof self[FIELD_MESSAGES + replacer] === 'undefined') {
-            self[FIELD_MESSAGES + replacer] = ko.observableArray([]);
-            self.dynamicMessageFields.push(self[FIELD_MESSAGES + replacer]);
+          if (typeof self[`${PageDefinitionCommon.FIELD_MESSAGES}${replacer}`] === 'undefined') {
+            self[`${PageDefinitionCommon.FIELD_MESSAGES}${replacer}`] = ko.observableArray([]);
+            self.dynamicMessageFields.push(self[`${PageDefinitionCommon.FIELD_MESSAGES}${replacer}`]);
           }
 
           if (typeof field !== 'undefined') {
@@ -938,11 +917,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             }
 
             if (!self.isWizardForm()) {
-              self[`${FIELD_DISABLED}${name}`] = ko.observable(false);
-              field.setAttribute('disabled', `[[${FIELD_DISABLED}${name}]]`);
+              self[`${PageDefinitionCommon.FIELD_DISABLED}${name}`] = ko.observable(false);
+              field.setAttribute('disabled', `[[${PageDefinitionCommon.FIELD_DISABLED}${name}]]`);
 
               // Track a field unset action which restores that value to the default setting
-              self[`${FIELD_UNSET}${name}`] = ko.observable(false);
+              self[`${PageDefinitionCommon.FIELD_UNSET}${name}`] = ko.observable(false);
             }
           }
 
@@ -950,7 +929,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         }  //end of for loops
 
         if (!self.isWizardForm()) {
-          setupUsedIfListeners(properties);
+          PageDefinitionUsedIfs.setupUsedIfListeners(properties, self.isWDTForm(), self);
         }
       }
 
@@ -964,10 +943,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       function unsetProperty(action) {
         // Use the action to change the settings for the specified property
         if (CoreUtils.isNotUndefinedNorNull(action)) {
-          self[`${FIELD_UNSET}${action.field}`](action.unset);
-          self[`${FIELD_DISABLED}${action.field}`](action.disabled);
+          self[`${PageDefinitionCommon.FIELD_UNSET}${action.field}`](action.unset);
+          self[`${PageDefinitionCommon.FIELD_DISABLED}${action.field}`](action.disabled);
           self.dirtyFields.add(action.field);
-          self[`${FIELD_VALUES}${action.field}`]('');
+          self[`${PageDefinitionCommon.FIELD_VALUES}${action.field}`]('');
         }
       }
 
@@ -1010,7 +989,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
               const result = self.createForm.getBackingDataAttributeReplacer(replacer);
               if (CoreUtils.isNotUndefinedNorNull(result)) replacer = result;
             }
-            fieldValues[property.name] = self[`${FIELD_VALUES}${replacer}`];
+            fieldValues[property.name] = self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`];
           });
 
           if (self.createForm.hasMultiFormData()) {
@@ -1048,7 +1027,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       }
 
       function createHelp(pdjData) {
-        const helpForm = new HelpForm(viewParams);
+        const helpForm = new HelpForm(
+          viewParams.parentRouter.data.pdjData(),
+          viewParams.parentRouter.data.rdjData(),
+          viewParams.perspective
+        );
 
         self.tableHelpColumns(helpForm.tableHelpColumns);
         helpForm.setPDJData(pdjData);

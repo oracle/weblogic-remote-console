@@ -24,6 +24,8 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
             dataProvider = DataProviderManager.createAdminServerConnection({id: item.id, name: item.name, type: item.type, beanTrees: item.beanTrees || []  });
             if (CoreUtils.isNotUndefinedNorNull(item.url)) dataProvider.putValue('url', item.url);
             if (CoreUtils.isNotUndefinedNorNull(item.username)) dataProvider.putValue('username', item.username);
+            // Set the SSO state defaulting to false when no value is supplied
+            dataProvider.putValue('sso', (CoreUtils.isUndefinedOrNull(item.sso) ? false : item.sso));
             // Use state="disconnected" as an indicator that
             // this domain connection data provider is from
             // a saved project, which was loaded.

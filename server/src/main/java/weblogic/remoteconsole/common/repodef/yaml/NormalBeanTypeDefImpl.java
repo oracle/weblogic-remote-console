@@ -372,12 +372,15 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     if (subTypesMap.containsKey(subTypeDiscriminator)) {
       throw configurationError("duplicate subType value: " + subTypeDiscriminator);
     }
+    boolean required = false; // if a WLS release removes a derived type, just ignore it in that release
     BaseBeanTypeDefImpl subTypeDefImpl =
-      getBeanRepoDefImpl().getTypeDefImpl(StringUtils.getLeafClassName(subTypeName));
-    if (subTypesMap.containsValue(subTypeDefImpl)) {
-      throw configurationError("duplicate subType type: " + subTypeName);
+      getBeanRepoDefImpl().getTypeDefImpl(StringUtils.getLeafClassName(subTypeName), required);
+    if (subTypeDefImpl != null) {
+      if (subTypesMap.containsValue(subTypeDefImpl)) {
+        throw configurationError("duplicate subType type: " + subTypeName);
+      }
+      subTypesMap.put(subTypeDiscriminator, subTypeDefImpl);
     }
-    subTypesMap.put(subTypeDiscriminator, subTypeDefImpl);
   }
 
   private void addImmediateSubTypeSubTypes(
@@ -386,6 +389,10 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   ) {
     String subTypeDiscriminator = subTypeDefSource.getValue();
     BaseBeanTypeDefImpl subTypeDefImpl = subTypesMap.get(subTypeDiscriminator);
+    if (subTypeDefImpl == null) {
+      // This WLS release doesn't support this sub type
+      return;
+    }
     if (subTypeDefImpl == this) {
       // already handled it
       return;
@@ -401,21 +408,25 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     }
     for (String subSubTypeDiscriminator : subTypeDefImpl.getSubTypeDiscriminatorLegalValues()) {
       BaseBeanTypeDefImpl subSubTypeDefImpl = subTypeDefImpl.getSubTypeDefImpl(subSubTypeDiscriminator);
-      if (subTypesMap.containsKey(subSubTypeDiscriminator)) {
-        BaseBeanTypeDefImpl oldSubSubTypeDefImpl =
-          subTypesMap.get(subSubTypeDiscriminator);
-        if (subSubTypeDefImpl != oldSubSubTypeDefImpl) {
-          throw new AssertionError(
-            "Previously registered sub type mismatch:"
-            + " type=" + getTypeName()
-            + " subtype discriminator=" + subTypeDiscriminator
-            + " subtype=" + subTypeDefImpl.getTypeName()
-            + " subsubtype discriminator=" + subSubTypeDiscriminator
-            + " previous subsubtype=" + oldSubSubTypeDefImpl.getTypeName()
-            + " subsubtype=" + subSubTypeDefImpl.getTypeName()
-          );
+      if (subSubTypeDefImpl != null) {
+        if (subTypesMap.containsKey(subSubTypeDiscriminator)) {
+          BaseBeanTypeDefImpl oldSubSubTypeDefImpl =
+            subTypesMap.get(subSubTypeDiscriminator);
+          if (subSubTypeDefImpl != oldSubSubTypeDefImpl) {
+            throw new AssertionError(
+              "Previously registered sub type mismatch:"
+              + " type=" + getTypeName()
+              + " subtype discriminator=" + subTypeDiscriminator
+              + " subtype=" + subTypeDefImpl.getTypeName()
+              + " subsubtype discriminator=" + subSubTypeDiscriminator
+              + " previous subsubtype=" + oldSubSubTypeDefImpl.getTypeName()
+              + " subsubtype=" + subSubTypeDefImpl.getTypeName()
+            );
+          }
+          subTypesMap.put(subSubTypeDiscriminator, subSubTypeDefImpl);
+        } else {
+          // This WLS release doesn't support this sub type.  Ignore it.
         }
-        subTypesMap.put(subSubTypeDiscriminator, subSubTypeDefImpl);
       }
     }
   }

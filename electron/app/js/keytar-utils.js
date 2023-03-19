@@ -20,21 +20,21 @@ const KeyTarUtils = (() => {
   function isKeyTarInstalled() {
     let rtnval = false;
     try {
-      require.resolve("keytar");
+      require.resolve('keytar');
       rtnval = true;
     }
     catch(err) {
-      if (err.code !== "MODULE_NOT_FOUND") throw err;
+      if (err.code !== 'MODULE_NOT_FOUND') throw err;
     }
     return rtnval;
   }
 
   function loadKeyTar() {
     if (isKeyTarInstalled()) {
-      require.resolve("keytar");
+      require.resolve('keytar');
       // Load the keytar module if it hasn't been
       // loaded yet.
-      if (typeof _keytar === "undefined") {
+      if (typeof _keytar === 'undefined') {
         // Module-scope variable wasn't set, so
         // go ahead and call require to load the
         // keytar module and set the variable.
@@ -50,26 +50,26 @@ const KeyTarUtils = (() => {
     },
     removeKeytarAccount: (account) => {
       let rtnval = false;
-      getKeyTar();
-      if (typeof _keytar !== "undefined") {
+      KeyTarUtils.getKeyTar();
+      if (typeof _keytar !== 'undefined') {
         rtnval = _keytar.deletePassword('weblogic-remote-console', account);
       }
       return rtnval;
     },
     upsertKeytarEntries: (project) => {
       KeyTarUtils.getKeyTar();
-      if (typeof _keytar !== "undefined") {
+      if (typeof _keytar !== 'undefined') {
         for (const i in project.dataProviders) {
           // noinspection JSUnfilteredForInLoop
-          if (project.dataProviders[i].type === "adminserver") {
+          if (project.dataProviders[i].type === 'adminserver') {
             const account = `${project.name}-${project.dataProviders[i].name}-${project.dataProviders[i].username}`;
-            const password = project.dataProviders[i].password || "";
-            if (password !== "") _keytar.setPassword('weblogic-remote-console', account, password);
+            const password = project.dataProviders[i].password || '';
+            if (password !== '') _keytar.setPassword('weblogic-remote-console', account, password);
           }
         }
       }
       else {
-        log('info', `keytar is not installed or loaded, so skipping code that securely stores credentials for adminserver connection providers.`);
+        log('info', 'keytar is not installed or loaded, so skipping code that securely stores credentials for adminserver connection providers.');
       }
     }
 

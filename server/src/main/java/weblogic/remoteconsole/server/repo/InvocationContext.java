@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -57,6 +57,9 @@ public class InvocationContext {
   // null if not connected to a domain or not a resource that manages beans
   private BeanTreePath beanTreePath;
 
+  // identifies an instance in a slice table
+  private String identifier;
+
   // Lists the form/table properties that a GET operation should return.
   // If null, all of the form/table properties are returned.
   // If not, only properties that are on the form/table AND in
@@ -95,6 +98,7 @@ public class InvocationContext {
     this.provider = toClone.provider;
     this.localizer = toClone.localizer;
     this.beanTreePath = toClone.beanTreePath;
+    this.identifier = toClone.identifier;
     this.properties = toClone.properties;
     this.reload = toClone.reload;
     this.uriInfo = toClone.uriInfo;
@@ -137,6 +141,14 @@ public class InvocationContext {
 
   public void setIdentity(BeanTreePath beanTreePath) {
     this.beanTreePath = beanTreePath;
+  }
+
+  public String getIdentifier() {
+    return identifier;
+  }
+
+  public void setIdentifier(String identifier) {
+    this.identifier = identifier;
   }
 
   public PagePath getPagePath() {
@@ -183,12 +195,12 @@ public class InvocationContext {
 
   public void setLocales(List<Locale> locales) {
     this.locales = locales;
-    // Localize using the current weblogic version until we find
+    // Localize using the latest weblogic version until we find
     // out the actual domain version.
     this.localizer =
       new Localizer(
         WebLogicLocalizationUtils.getResourceBundleName(
-          WebLogicVersions.getCurrentVersion().getDomainVersion()
+          WebLogicVersions.getLatestVersion().getDomainVersion()
         ),
         this.locales
     );

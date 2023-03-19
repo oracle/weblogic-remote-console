@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.utils;
@@ -160,7 +160,7 @@ public class WebLogicRestClient {
     return response;
   }
 
-  private static WebTarget getWebTarget(
+  public static WebTarget getWebTarget(
     WebLogicRestRequest request
   ) throws WebLogicRestClientException {
     String targetUri = calculateTargetUri(request);
@@ -230,7 +230,7 @@ public class WebLogicRestClient {
     return calculatedTargetUri;
   }
 
-  private static Response handleProcessingException(
+  public static Response handleProcessingException(
     ProcessingException pe
   ) throws WebLogicRestClientException {
     Throwable t = pe.getCause();

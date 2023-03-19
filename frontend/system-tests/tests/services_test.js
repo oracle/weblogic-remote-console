@@ -28,6 +28,15 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     var sec = 1000;
     this.timeout(600*sec);
 
+    let dbSourceType = "Generic Data Source";
+    let dbType = "Oracle";
+    let dbDriver = "GENERIC_Oracle_DatabaseDriver";
+    let dbName = "pdb1.vcn2racregional.devweblogic2phx.oraclevcn.com";
+    let dbHost = "wlsqa.vcn2racregional.devweblogic2phx.oraclevcn.com";
+    let dbPort = "1521";
+    let dbUser = "admin";
+    let dbPassword = "welcome1";
+
     beforeEach(async function () {
         // Get Browser driver
         driver = getDriver(browser);
@@ -42,16 +51,16 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     //Test Case:
     // Create->modify(general tab)->delete testJMSServer-1
     //
-    it.skip('1. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete a new testJMSServer-1 ', async function() {
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete a new testJMSServer-1 ', async function() {
         file = "testJMSServer-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testJMSServer-1",2,"configuration","Services","JMS Servers");
-            await driver.sleep(1200);
+            await driver.sleep(7200);
             await services.modifyJMSServerGeneralTab(driver,"testJMSServer-1","General","","PagingFileLockingEnabled");
-            await driver.sleep(1200);
+            await driver.sleep(7200);
             await admin.deleteMBeanObject(driver,"testJMSServer-1","JMSServers",2,"configuration",
                 "Services","JMS Servers","","","",4);
-            await driver.sleep(1200);
+            await driver.sleep(7200);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -121,8 +130,8 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     it('4. Test Category: GAT/Risk1\n \t Test Scenario: create->save->delete a new testJDBCSysRes-1 ', async function() {
         file = "testJDBCSysRes-1.png";
         try {
-            await services.createJDBCSystemResource(driver,"testJDBCSysRes-1","testJdbcJNDIName-1","All","Generic Data Source",
-                "Oracle","GENERIC_Oracle_DatabaseDriver","orcl","provencelx.us.oracle.com","1521","system","oracle");
+            await services.createJDBCSystemResource(driver,"testJDBCSysRes-1","testJdbcJNDIName-1","All",
+                dbSourceType, dbType, dbDriver, dbName, dbHost, dbPort, dbUser, dbPassword);
             await admin.saveToShoppingCart(driver,"finish");
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","Data Sources");
             await driver.sleep(1200);
@@ -144,8 +153,8 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         'delete testJDBCSysRes-2 and testJDBCStore-2', async function() {
         file = "testJDBCStore-2.png";
         try {
-            await services.createJDBCSystemResource(driver,"testJDBCSysRes-2","testJdbcJNDIName-2","All","Generic Data Source",
-                "Oracle","GENERIC_Oracle_DatabaseDriver","orcl","provencelx.us.oracle.com","1521","system","oracle");
+            await services.createJDBCSystemResource(driver,"testJDBCSysRes-2","testJdbcJNDIName-2","AdminServer",
+                dbSourceType, dbType, dbDriver, dbName, dbHost, dbPort, dbUser, dbPassword);
             await admin.saveToShoppingCart(driver,"finish");
             console.log("Create a new JDBC Store");
             await admin.createNewMBeanObject(driver,"testJDBCStore-2",2,"configuration","Services",
@@ -173,7 +182,23 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     it('6. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testXMLRegistry-1 ', async function() {
         file = "testXMLRegistry-1.png";
         try {
-            await admin.createNewMBeanObject(driver,"testXMLRegistry-1",2,"configuration","Services","XML Registries");
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","XML Registries");
+            await driver.sleep(8400);
+            await admin.createNewMBeanFromLandingPage(driver,"testXMLRegistry-1");
+            await driver.sleep(8400);
+            console.log("Click Create button ");
+            element = driver.findElement(By.xpath("//span[@class='button-label' and text()='Create']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(9600);
+            console.log("Click Open Shopping Cart ");
+            element = driver.findElement(By.xpath("//img[@id='shoppingCartImage']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(9600);
+            console.log("Click commit button ");
+            await driver.findElement(By.xpath("//img[@id='commit-changes']")).click();
+            await driver.sleep(24000);
             await admin.deleteMBeanObject(driver,"testXMLRegistry-1","XML Registries",2,"configuration",
                 "Services","XML Registries","","","",2);
             console.log("TEST PASS ");
@@ -187,8 +212,8 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Create XML Entity Caches (testEntityCache-1)
     // Delete testEntityCache-1
     //
-    it('7. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testEntityCache-1 ', async function() {
-        file = "testXMLEntityCahe-1.png";
+    it.skip('7. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testEntityCache-1 ', async function() {
+        file = "testXMLEntityCache-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testEntityCache-1",2,"configuration","Services","XML Entity Caches");
             await admin.deleteMBeanObject(driver,"testEntityCache-1","XML Entity Caches",2,"configuration",
@@ -204,7 +229,7 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Create MailSession (testMailSession-1)
     // Delete testMailSession-1
     //
-    it('8. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testMailSession-1 ', async function() {
+    it.skip('8. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testMailSession-1 ', async function() {
         file = "testMailSession-1.png";
         try {
             await admin.createNewMBeanObject(driver,"testMailSession-1",2,"configuration","Services","Mail Sessions",
@@ -297,18 +322,19 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     //Test Case:
     // Create FileStore with Eclipse... menu from JMSServer
     //
-    it.skip('14. Test Category: GAT/Risk1\n \t Test Scenario: create->fileStore->EclipseMenu from testJMSServer-2 ', async function() {
+    it('14. Test Category: GAT/Risk1\n \t Test Scenario: create->fileStore->EclipseMenu from testJMSServer-2 ', async function() {
         file = "testFileStoreFromJMSServer-2.png";
         try {
             await admin.createNewMBeanObject(driver,"testJMSServer-2",2,"configuration","Services","JMS Servers");
-            await driver.sleep(4800);
+            await driver.sleep(1200);
             await services.createFileStoreFromJMSServerEclipseMenu(driver,"testJMSServer-2","testFileStore-2");
-            await admin.deleteMBeanObject(driver,"testJMSServer-2","JMSServers",2,"configuration",
-                "Services","JMS Servers");
-            await driver.sleep(4800);
+            await driver.sleep(1200);
             await admin.deleteMBeanObject(driver,"testFileStore-2","FileStores",2,"configuration",
-                "Services","File Stores");
-            await driver.sleep(800);
+                "Services","File Stores","","","",3);
+            await driver.sleep(1200);
+            await admin.deleteMBeanObject(driver,"testJMSServer-2","JMSServers",2,"configuration",
+                "Services","JMS Servers","","","",4);
+            await driver.sleep(6400);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

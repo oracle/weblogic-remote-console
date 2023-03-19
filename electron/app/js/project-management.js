@@ -37,7 +37,7 @@
       NAME_NOT_FOUND: {name: 'NAME_NOT_FOUND'}
     }),
     UNNAMED_PROJECT: {
-      name: "(unnamed)",
+      name: '(unnamed)',
       dataProviders: []
     },
     /**
@@ -122,7 +122,7 @@
         const project = UserProjects.get(newName);
         if (CoreUtils.isUndefinedOrNull(project)) {
           if (_current_project.name === '(unnamed)') {
-            _current_project.name = "(Unnamed Project)";
+            _current_project.name = '(Unnamed Project)';
           }
           results['renamed_project'] = JSON.parse(JSON.stringify(_current_project));
           _current_project.name = newName;
@@ -222,7 +222,11 @@
      * @returns {{name: string, current?: boolean, dataProviders: [{name: string, type: string, url: string, username: string, password: string}|{name: string, type: string, file: string}]}}
      */
     getCurrentProject: () => {
-      if (CoreUtils.isUndefinedOrNull(_current_project)) {
+      const project = UserProjects.current();
+      if (CoreUtils.isNotUndefinedNorNull(project)) {
+        ProjectManagement.setCurrentProject(project);
+      }
+      else {
         ProjectManagement.setCurrentProject(ProjectManagement.UNNAMED_PROJECT);
       }
       return _current_project;
@@ -257,8 +261,8 @@
           dataProviders: []
         };
 
-        if (entry.name === "(Unnamed Project)") {
-          changed_project.name = "(unnamed)";
+        if (entry.name === '(Unnamed Project)') {
+          changed_project.name = '(unnamed)';
         }
 
         if (CoreUtils.isUndefinedOrNull(entry.dataProviders)) {

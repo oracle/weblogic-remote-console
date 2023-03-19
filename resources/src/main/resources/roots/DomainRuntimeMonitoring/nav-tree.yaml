@@ -1,4 +1,4 @@
-# Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - label: Environment
@@ -108,7 +108,9 @@ contents:
   type: group
   contents:
   - child: DomainRuntime.AggregatedSNMPAgentRuntime
+    label: SNMP Agent Runtimes
   - child: DomainRuntime.SNMPAgentRuntime
+    label: Domain SNMP Agent Runtime
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFArchiveRuntimes
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFInstrumentationRuntimes
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes

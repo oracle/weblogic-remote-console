@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -106,6 +106,10 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
   @Override
   BeanTypeDefSource getBeanTypeDefSource(String type) {
     BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(nameHandler.getUnfabricatedType(type));
+    if (source == null) {
+      // The type doesn't exist in this WLS version.
+      return null;
+    }
     // Create the fabricated type that delegates to another type.
     source.setName(nameHandler.getFabricatedJavaType(source.getName()));
     source.setBaseTypes(nameHandler.getFabricatedJavaTypes(source.getBaseTypes()));
@@ -306,12 +310,11 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
   }
 
   private List<BeanActionDefSource> delegateActionDefs(List<BeanActionDefSource> actionDefs) {
+    // copy them as-is
     List<BeanActionDefSource> rtn = new ArrayList<>();
-    /*
     for (BeanActionDefSource actionDef : actionDefs) {
-      // Can/should we delegate actions?
+      rtn.add(actionDef);
     }
-    */
     return rtn;
   }
 }

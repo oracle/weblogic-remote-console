@@ -10,6 +10,13 @@ slices:
   - name: Http
   - name: IIOP
 - name: Cluster
+- name: Security
+  slices:
+  - name: Keystores
+  - name: SSL
+  - name: SAML20General
+  - name: SAML20IdentityProvider
+  - name: SAML20ServiceProvider
 - name: Migration
 - name: WebServices
   slices:
@@ -36,11 +43,6 @@ slices:
   - name: Security
   - name: Transactions
   - name: All
-- name: SAML
-  slices:
-  - name: SAML20General
-  - name: SAML20IdentityProvider
-  - name: SAML20ServiceProvider
 - name: Advanced
   slices:
   - name: Deployment

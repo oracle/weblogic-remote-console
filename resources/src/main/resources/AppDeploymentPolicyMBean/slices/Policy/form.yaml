@@ -1,0 +1,19 @@
+# Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to edit the security policy for this enterprise
+  application. Clients must satisfy this policy to access any resource
+  within this enterprise application (unless you have defined a policy for a
+  specific resource in the application).</p>
+
+properties:
+- name: "Policy"
+
+helpTopics:
+- label: "Application Resources"
+  href: "roles/types.html#ROLES127"
+  type: "edocs"
+- label: "Security Policy Conditions"
+  href: "roles/sec_poly.html#ROLES175"
+  type: "edocs"

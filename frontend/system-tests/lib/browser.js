@@ -9,6 +9,7 @@ const firefox = require('selenium-webdriver/firefox');
 const edge = require('selenium-webdriver/edge');
 const safari = require('selenium-webdriver/safari');
 const { Builder } = require('selenium-webdriver');
+const getenv = require('getenv');
 
 var ffOptions = new firefox.Options().headless();
 ffOptions.addArguments('--no-sandbox');
@@ -16,11 +17,15 @@ ffOptions.addArguments('--headless');
 ffOptions.addArguments('--disable-gpu');
 
 
-var chOptions   = new chrome.Options().headless();
+var chOptions   = new chrome.Options();
+chOptions.headless();
 chOptions.addArguments('--no-sandbox');
 chOptions.addArguments('--headless');
 chOptions.addArguments('--window-size=1920x1080');
 chOptions.addArguments('--disable-dev-shm-usage');
+if (getenv("CHROME_BROWSER")) {
+  chOptions.setChromeBinaryPath(getenv("CHROME_BROWSER"));
+}
 
 // Variables need for Accessibility and Globalization when run with GAT
 var chromeCap = webdriver.Capabilities.chrome();

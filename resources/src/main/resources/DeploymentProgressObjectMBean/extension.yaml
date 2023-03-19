@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: StartTime
@@ -7,3 +7,22 @@ properties:
 - name: EndTime
   type: java.util.Date
   descriptionHTML: '<p>The time this deployment operation ended.</p> '
+- name: Completed
+  type: boolean
+  descriptionHTML: '<p>Whether this task has completed.</p>'
+- name: Progress
+  type: java.lang.String
+  legalValues:
+  - "success"
+  - "failed"
+  - "processing"
+  - "pending"
+  descriptionHTML: '<p>How much progress this task has made.</p>'
+# Make a copy of Messages since we don't harvest or handle the @restName annotation
+# that renames it from messages -> deploymentMessages
+# It isn't worth adding infra for handling @restName since there are so few instances.
+- name: DeploymentMessages
+  type: java.lang.String
+  array: true
+  descriptionHTML: >
+    <p>Provides an ordered array of status messages generated for the current deployment operation.</p>

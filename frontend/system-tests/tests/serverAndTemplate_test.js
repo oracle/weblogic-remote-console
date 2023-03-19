@@ -127,6 +127,7 @@ describe.only('Test Suite: serverAndTemplate_test for Configuration-Servers-And-
         }
     })
 
+
     //Test Case:
     // Config AdminServer Debug properties for
     //    Application, Containers, Core, Diagnostics, Management, Messaging, Networking, Persistence, Security, Transaction, ALL
@@ -160,5 +161,53 @@ describe.only('Test Suite: serverAndTemplate_test for Configuration-Servers-And-
             console.log(e.toString() + " TEST FAIL");
         }
     })
+
+        //Test Case: Kebab menu
+        // Scenario: create->testServer-123, click create testCluster-123 from Cluster Kebab menu
+        // Save and commit changes
+        // Validate the Kebab menu action successful by deleted the recently created
+        // testCluster-123 and testServer-123 objets
+        //
+        it('6. Test Category: GAT/Risk1\n \t Test Scenario: Create Cluster Kebab menu for a Server ',
+            async function() {
+                file = "testServerKebabMenu.png";
+                try {
+                    await admin.createNewMBeanObject(driver,"testServer-123",2,"configuration",
+                        "Environment","Servers");
+                    await driver.sleep(1200);
+                    console.log("Click  More Action on CLuster menu");
+                    await driver.findElement(By.xpath("(//img[@title='More Actions'])[2]")).click();
+                    await driver.sleep(800);
+                    console.log("Select Create New Cluster...");
+                    await driver.findElement(
+                        By.xpath("//oj-option[@id='moreMenuItem_create_Cluster']")).click();
+                    await driver.sleep(800);
+                    console.log("Enter testCluster-123");
+                    await driver.findElement(By.xpath("//input[@id='Name|input']")).click();
+                    await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys("testCluster-123");
+                    await driver.sleep(800);
+                    console.log("Click Save button");
+                    await driver.findElement(
+                        By.xpath("//oj-button[@id=\'[[i18n.buttons.save.id]]\']/button/div/span/img")).click();
+                    await driver.sleep(800);
+                    await admin.commitChanges(driver);
+                    await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Clusters");
+                    await driver.sleep(800);
+                    console.log("Click to delete testCluster-123");
+                    await driver.findElement(By.xpath("//span[contains(@id, 'testCluster-123')]")).click();
+                    await driver.sleep(800);
+                    await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Servers");
+                    await driver.sleep(800);
+                    console.log("Click to delete testCluster-123");
+                    await driver.findElement(By.xpath("//span[contains(@id, 'testServer-123')]")).click();
+                    await driver.sleep(800);
+                    await admin.commitChanges(driver);
+                    await driver.sleep(800);
+                    console.log("TEST PASS ");
+                } catch (e) {
+                    await admin.takeScreenshot(driver, file);
+                    console.log(e.toString() + " TEST FAIL");
+                }
+            })
 
 })

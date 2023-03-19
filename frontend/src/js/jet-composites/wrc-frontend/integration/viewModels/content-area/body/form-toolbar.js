@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -43,7 +43,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24', disabled: false, visible: ko.observable(false),
             label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.customize.label')
           },
-          'customView': { id: 'customView', iconFile: 'custom-view-icon-blk_24x24', disabled: false, visible: ko.observable(false),
+          'dashboard': { id: 'dashboard', iconFile: 'custom-view-icon-blk_24x24', disabled: false, visible: ko.observable(false),
             label: ko.observable()
           }
         },
@@ -60,7 +60,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           'create': { id: 'create', iconFile: 'add-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.create.tooltip')
           },
-          'separator': { iconFile: 'separator-vertical_10x24'},
           'landing': { iconFile: 'landing-page-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.landing.tooltip')
           },
@@ -82,6 +81,10 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           },
           'shoppingcart': { iconFile: 'commit-to-cart-icon_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.shoppingcart.tooltip')
+          },
+          'separator': {
+            iconFile: 'separator-vertical_10x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-perspective.icons.separator.tooltip')
           }
         },
         menus: {
@@ -94,6 +97,15 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
             },
             'commit': { id: 'commit', iconFile: 'commit-changes-blk_24x24', visible: ko.observable(true), disabled: false,
               label: oj.Translations.getTranslatedString('wrc-form-toolbar.menu.shoppingcart.commit.label')
+            }
+          },
+          history: {
+            'clear': {
+              id: 'clear-history',
+              iconFile: 'erase-icon-blk_24x24',
+              disabled: false,
+              value: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.value'),
+              label: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.label')
             }
           }
         }
@@ -152,7 +164,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
         binding = viewParams.signaling.formSliceSelected.add((selectedSlice) => {
           if (self.perspective.id === 'monitoring') {
-            const visible = (selectedSlice.current.selection() === 'Edit');
+            const visible = (selectedSlice.current.selection() === 'Edit' || selectedSlice.current.selection() === 'Criteria' || selectedSlice.current.selection() === 'Filters');
             self.sliceReadOnly(!visible);
             self.i18n.buttons.save.visible(visible);
             this.resetIconsVisibleState(!visible);
@@ -163,6 +175,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
         binding = viewParams.signaling.nonwritableChanged.add((newRO) => {
           self.sliceReadOnly(newRO);
+          self.i18n.buttons.save.visible(!newRO);
         });
 
         self.signalBindings.push(binding);
@@ -411,12 +424,12 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           const pdjData = viewParams.parentRouter?.data?.pdjData();
           if (CoreUtils.isNotUndefinedNorNull(rdjData?.dashboardCreateForm)) {
             if (CoreUtils.isNotUndefinedNorNull(pdjData?.sliceTable?.readOnly)) {
-              self.i18n.buttons.customView.label(rdjData?.dashboardCreateForm?.label);
-              self.i18n.buttons.customView.visible(pdjData.sliceTable.readOnly);
+              self.i18n.buttons.dashboard.label(rdjData?.dashboardCreateForm?.label);
+              self.i18n.buttons.dashboard.visible(pdjData.sliceTable.readOnly);
             }
             else if (CoreUtils.isNotUndefinedNorNull(pdjData?.sliceForm?.readOnly)) {
-              self.i18n.buttons.customView.label(rdjData?.dashboardCreateForm?.label);
-              self.i18n.buttons.customView.visible(pdjData.sliceForm.readOnly);
+              self.i18n.buttons.dashboard.label(rdjData?.dashboardCreateForm?.label);
+              self.i18n.buttons.dashboard.visible(pdjData.sliceForm.readOnly);
             }
             else {
               buttonId = 'save';
@@ -426,7 +439,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
             buttonId = 'create';
           }
           if (CoreUtils.isNotUndefinedNorNull(buttonId)) {
-            showCustomViewToolbarButtons(buttonId);
+            showDashboardToolbarButtons(buttonId);
           }
         }
 
@@ -562,14 +575,14 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         self.autoSyncEnabled(false);
       }
 
-      function showCustomViewToolbarButtons(buttonId) {
+      function showDashboardToolbarButtons(buttonId) {
         resetSaveButtonDisplayState([{id: buttonId}]);
         self.i18n.buttons.save.visible(buttonId === 'create');
         self.i18n.buttons.cancel.visible(buttonId === 'create');
         toggleToolbarIconsVisibility(buttonId !== 'create');
       }
 
-      function supportsCustomViewCreation() {
+      function supportsDashboardCreation() {
         const rdjData = viewParams.parentRouter.data.rdjData();
         return (rdjData.navigation === 'Dashboards');
       }
@@ -582,11 +595,11 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
       this.cancelAction = function (event) {
         viewParams.cancelAction('cancel');
-        if (supportsCustomViewCreation()) {
+        if (supportsDashboardCreation()) {
           self.i18n.buttons.save.visible(false);
           self.i18n.buttons.cancel.visible(false);
           toggleToolbarIconsVisibility(true);
-          self.i18n.buttons.customView.visible(true);
+          self.i18n.buttons.dashboard.visible(true);
           self.sliceReadOnly(false);
         }
       };
@@ -621,17 +634,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         viewParams.deleteAction(uri);
       };
 
-      this.customViewAction = (event) => {
+      this.dashboardAction = (event) => {
         if (self.showBeanPathHistory()) {
           const withHistoryVisible = viewParams.onBeanPathHistoryToggled(false);
           self.showBeanPathHistory(withHistoryVisible);
         }
         const eleTabs = document.getElementById('cfe-form-tabstrip-container');
         if (eleTabs !== null) eleTabs.style.display = 'none';
-        showCustomViewToolbarButtons('create');
-        self.i18n.buttons.customView.visible(false);
+        showDashboardToolbarButtons('create');
+        self.i18n.buttons.dashboard.visible(false);
         self.sliceReadOnly(false);
-        viewParams.onCustomViewButtonClicked(event);
+        viewParams.onDashboardButtonClicked(event);
       };
 
       this.onSave = ko.observable(

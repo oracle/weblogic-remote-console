@@ -5,5 +5,5 @@ editable: true
 disableMBeanJavadoc: true
 
 properties:
-- name: Expression
+- name: Policy
   required: true

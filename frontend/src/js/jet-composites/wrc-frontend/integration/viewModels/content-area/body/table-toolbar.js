@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -33,7 +33,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24',
             label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.customize.label')
           },
-          'customView': { id: 'customView', iconFile: 'custom-view-icon-blk_24x24', disabled: false, visible: ko.observable(false),
+          'dashboard': { id: 'dashboard', iconFile: 'custom-view-icon-blk_24x24', disabled: false, visible: ko.observable(false),
             label: ko.observable()
           }
         },
@@ -59,6 +59,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           },
           'shoppingcart': { iconFile: 'commit-to-cart-icon_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.shoppingcart.tooltip')
+          },
+          'separator': {
+            iconFile: 'separator-vertical_10x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-perspective.icons.separator.tooltip')
           }
         },
         menus: {
@@ -71,6 +75,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
             },
             'commit': { id: 'commit', iconFile: 'commit-changes-blk_24x24', disabled: false, visible: ko.observable(true),
               label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.commit.label')
+            }
+          },
+          history: {
+            'clear': {
+              id: 'clear-history',
+              iconFile: 'erase-icon-blk_24x24',
+              disabled: false,
+              value: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.value'),
+              label: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.label')
             }
           }
         },
@@ -93,7 +106,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           suspend: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.suspend.value')},
           shutdown: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.shutdown.value')},
           restartSSL: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.restartSSL.value')},
-          stop: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.stop.value')}
+          stop: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.stop.value')},
+          download: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.download.value')},
+          shrink: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.shrink.value')},
+          reset: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.reset.value')},
+          clearStatementCache: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.clearStatementCache.value')}
         }
       };
 
@@ -298,11 +315,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         self.actionButtons.buttons = results.buttons;
         updateActionButtonsState(self.readonly());
         const rdjData = viewParams.parentRouter?.data?.rdjData();
-        const isCustomView = (self.perspective.id === 'monitoring' && CoreUtils.isNotUndefinedNorNull(rdjData?.dashboardCreateForm));
-        if (isCustomView) {
-          self.i18n.buttons.customView.label(rdjData?.dashboardCreateForm?.label);
+        const isDashboard = (self.perspective.id === 'monitoring' && CoreUtils.isNotUndefinedNorNull(rdjData?.dashboardCreateForm));
+        if (isDashboard) {
+          self.i18n.buttons.dashboard.label(rdjData?.dashboardCreateForm?.label);
         }
-        self.i18n.buttons.customView.visible(isCustomView);
+        self.i18n.buttons.dashboard.visible(isDashboard);
         resetIconsVisibleState(self.perspective.id === 'monitoring');
       }.bind(this);
 
@@ -424,12 +441,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         viewParams.onCustomizeButtonClicked(event);
       };
 
-      this.customViewAction = (event) => {
+      this.dashboardAction = (event) => {
         if (self.showBeanPathHistory()) {
           const withHistoryVisible = viewParams.onBeanPathHistoryToggled(false);
           self.showBeanPathHistory(withHistoryVisible);
         }
-        viewParams.onCustomViewButtonClicked(event);
+        viewParams.onDashboardButtonClicked(event);
       };
 
       this.actionsDialogButtonClicked = function (result) {
@@ -464,9 +481,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
             const pageDefinitionActions = viewParams.pageDefinitionActions();
             pageDefinitionActions.performActionOnChosenItems(result.chosenItems, result.urls)
               .then(replies => {
+                const isDownloadLogsAction = (dialogParams.action === 'download');
+                let messages = [];
                 replies.forEach((reply) => {
-                  if (reply.succeeded) {
-                    Logger.log(`[TABLETOOLBAR] actionUrl=${reply.data.actionUrl}`);
+                  if (isDownloadLogsAction) {
+                    if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
+                      messages = messages.concat(reply.messages);
+                    }
+                  }
+                  else if (reply.succeeded) {
+                    Logger.log(`[TABLE-TOOLBAR] actionUrl=${reply.data.actionUrl}`);
                   }
                   else {
                     if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
@@ -477,16 +501,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
                     }
                   }
                 }); // end-of forEach
-                const successes = replies.filter(reply => reply.succeeded);
-                if (successes.length > 0 && self.actionButtons.buttons[dialogParams.action].asynchronous) {
-                  self.syncClick({target: {attributes: {'data-interval': {
-                          value: '10'
-                        }}}});
+                if (isDownloadLogsAction) {
+                  MessageDisplaying.displayMessagesAsHTML(messages, oj.Translations.getTranslatedString('wrc-table-toolbar.prompts.download.value'), 'confirmation', 60000);
                 }
                 else {
-                  self.syncClick({target: {attributes: {'data-interval': {
-                          value: '0'
-                        }}}});
+                  const successes = replies.filter(reply => reply.succeeded);
+                  if (successes.length > 0 && self.actionButtons.buttons[dialogParams.action].asynchronous) {
+                    self.syncClick({target: {attributes: {'data-interval': {
+                            value: '10'
+                          }}}});
+                  }
+                  else {
+                    self.syncClick({target: {attributes: {'data-interval': {
+                            value: '0'
+                          }}}});
+                  }
                 }
               })
               .catch(response => {

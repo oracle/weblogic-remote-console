@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -20,6 +20,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           'history': {
             iconFile: 'beanpath-history-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-perspective.icons.history.tooltip')
+          },
+          'separator': {
+            iconFile: 'more-vertical-blk-24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-perspective.icons.separator.tooltip')
           }
         },
         menus: {
@@ -28,7 +32,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               id: 'clear-history',
               iconFile: 'erase-icon-blk_24x24',
               disabled: false,
-              value: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.value')
+              value: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.value'),
+              label: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.label')
             }
           }
         }

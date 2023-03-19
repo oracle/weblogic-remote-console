@@ -1,8 +1,11 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
 
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -11,6 +14,8 @@ import javax.json.JsonObject;
 import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.common.repodef.LocalizedConsoleRestExtensionConstants;
 import weblogic.remoteconsole.common.utils.Message;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -53,23 +58,21 @@ public class WebLogicRestInvoker {
     WebLogicRestRequest.Builder builder
   ) {
     Response<JsonObject> response = new Response<>();
-    try {
-      javax.ws.rs.core.Response restResponse =
-        WebLogicRestClient.post(
-          builder
-            .connection(ic.getConnection())
-            .path(path.getComponents())
-            .saveChanges(saveChanges)
-            .expandedValues(expandedValues)
-            .asynchronous(asynchronous)
-            // returns properties tagged @restInternal,
-            // e.g. some deprecated ServerRuntimeMBean properties the remote console uses:
-            .internal(true)
-            .build(),
-          requestBody
-        );
+    WebLogicRestRequest request =
+      builder
+        .connection(ic.getConnection())
+        .path(path.getRelativeUri())
+        .saveChanges(saveChanges)
+        .expandedValues(expandedValues)
+        .asynchronous(asynchronous)
+        // returns properties tagged @restInternal,
+        // e.g. some deprecated ServerRuntimeMBean properties the remote console uses:
+        .internal(true)
+        .build();
+
+    try (javax.ws.rs.core.Response restResponse = WebLogicRestClient.post(request, requestBody)) {
       boolean allowCreated = true;
-      return restResponseToResponse(restResponse, allowCreated, asynchronous);
+      return restResponseToResponse(ic, restResponse, allowCreated, asynchronous);
     } catch (WebLogicRestClientException e) {
       LOGGER.log(Level.WARNING, "Unexpected WebLogic Rest exception", e);
       return response.setServiceNotAvailable();
@@ -84,23 +87,20 @@ public class WebLogicRestInvoker {
     boolean saveChanges,
     boolean asynchronous
   ) {
-    try {
-      javax.ws.rs.core.Response restResponse =
-        WebLogicRestClient.post(
-          WebLogicRestRequest.builder()
-            .connection(ic.getConnection())
-            .path(path.getComponents())
-            .saveChanges(saveChanges)
-            .expandedValues(expandedValues)
-            .asynchronous(asynchronous)
-            // returns properties tagged @restInternal,
-            // e.g. some deprecated ServerRuntimeMBean properties the remote console uses:
-            .internal(true)
-            .build(),
-          parts
-        );
+    WebLogicRestRequest request =
+      WebLogicRestRequest.builder()
+      .connection(ic.getConnection())
+      .path(path.getRelativeUri())
+      .saveChanges(saveChanges)
+      .expandedValues(expandedValues)
+      .asynchronous(asynchronous)
+      // returns properties tagged @restInternal,
+      // e.g. some deprecated ServerRuntimeMBean properties the remote console uses:
+      .internal(true)
+      .build();
+    try (javax.ws.rs.core.Response restResponse = WebLogicRestClient.post(request, parts)) {
       boolean allowCreated = true;
-      return restResponseToResponse(restResponse, allowCreated, asynchronous);
+      return restResponseToResponse(ic, restResponse, allowCreated, asynchronous);
     } catch (WebLogicRestClientException e) {
       LOGGER.log(Level.WARNING, "Unexpected WebLogic Rest exception", e);
       return (new Response<JsonObject>()).setServiceNotAvailable();
@@ -113,18 +113,17 @@ public class WebLogicRestInvoker {
     boolean saveChanges,
     boolean asynchronous
   ) {
-    try {
-      javax.ws.rs.core.Response restResponse =
-        WebLogicRestClient.delete(
-          WebLogicRestRequest.builder()
-            .connection(ic.getConnection())
-            .path(path.getComponents())
-            .saveChanges(saveChanges)
-            .asynchronous(asynchronous)
-            .build()
-        );
+    WebLogicRestRequest request =
+      WebLogicRestRequest.builder()
+      .connection(ic.getConnection())
+      .path(path.getRelativeUri())
+      .saveChanges(saveChanges)
+      .asynchronous(asynchronous)
+      .build();
+
+    try (javax.ws.rs.core.Response restResponse = WebLogicRestClient.delete(request)) {
       boolean allowCreated = false;
-      return restResponseToResponse(restResponse, allowCreated, asynchronous);
+      return restResponseToResponse(ic, restResponse, allowCreated, asynchronous);
     } catch (WebLogicRestClientException e) {
       LOGGER.log(Level.WARNING, "Unexpected WebLogic Rest exception", e);
       return (new Response<JsonObject>()).setServiceNotAvailable();
@@ -132,13 +131,14 @@ public class WebLogicRestInvoker {
   }
 
   private static Response<JsonObject> restResponseToResponse(
+    InvocationContext ic,
     javax.ws.rs.core.Response restResponse,
     boolean allowCreated,
     boolean asynchronous
   ) {
     Response<JsonObject> response = new Response<>();
     JsonObject entity = ResponseHelper.getEntityAsJson(restResponse);
-    JsonObject entityWithoutMessages = moveMessagesToResponse(response, entity);
+    JsonObject entityWithoutMessages = moveMessagesToResponse(ic, response, entity);
     int status = restResponse.getStatus();
     if (Status.OK.getStatusCode() == status
         || (Status.CREATED.getStatusCode() == status && allowCreated)
@@ -156,7 +156,11 @@ public class WebLogicRestInvoker {
     return response.setServiceNotAvailable();
   }
 
-  private static JsonObject moveMessagesToResponse(Response<JsonObject> response, JsonObject entityJson) {
+  private static JsonObject moveMessagesToResponse(
+    InvocationContext ic,
+    Response<JsonObject> response,
+    JsonObject entityJson
+  ) {
     if (entityJson == null || !entityJson.containsKey("messages")) {
       return entityJson;
     }
@@ -167,10 +171,39 @@ public class WebLogicRestInvoker {
         new Message(
           messageJson.getString("severity"),
           messageJson.getString("field", null),
-          messageJson.getString("message")
+          localizeWebLogicRestMessage(ic, messageJson.getString("message"))
         )
       );
     }
     return Json.createObjectBuilder(entityJson).remove("messages").build();
+  }
+
+  private static String localizeWebLogicRestMessage(InvocationContext ic, String message) {
+    if (message.startsWith(LocalizedConsoleRestExtensionConstants.KEY_PREFIX)) {
+      String constantKey = message.split(" ")[0];
+      LocalizableString ls = LocalizedConsoleRestExtensionConstants.findConstant(constantKey);
+      if (ls != null) {
+        Object[] args = getArgsFromUnlocalizedMessage(message, constantKey);
+        return ic.getLocalizer().localizeString(ls, args);
+      }
+    }
+    // The message doesn't require localization
+    return message;
+  }
+
+  private static Object[] getArgsFromUnlocalizedMessage(String message, String constantKey) {
+    List<Object> args = new ArrayList<>();
+    int startOfArgs = constantKey.length() + 1; // i.e. the character after the space after the key
+    if (message.length() > startOfArgs) {
+      // The message has a list of args (as a json array in string form)
+      String argsAsJsonArray = message.substring(startOfArgs);
+      try (StringReader reader = new StringReader(argsAsJsonArray)) {
+        JsonArray ja = Json.createReader(reader).readArray();
+        for (int i = 0; i < ja.size(); i++) {
+          args.add(ja.getString(i)); // only support string args
+        }
+      }
+    }
+    return args.toArray();
   }
 }

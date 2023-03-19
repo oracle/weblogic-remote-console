@@ -1,13 +1,15 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
+import weblogic.remoteconsole.common.utils.DateUtils;
 import weblogic.remoteconsole.common.utils.Path;
 
 /**
@@ -120,6 +122,18 @@ class DashboardsToPersistedDashboards {
       persisted = numberPropertyToPersistedData(criteria, value.asDouble().getValue(), persisted);
     } else if (sourceDef.isBoolean()) {
       persisted = booleanPropertyToPersistedData(criteria, value.asBoolean().getValue(), persisted);
+    } else if (sourceDef.isDate()) {
+      persisted = numberPropertyToPersistedData(
+        criteria,
+        getPersistedValueFromDate(value.asDate().getValue()),
+        persisted
+      );
+    } else if (sourceDef.isDateAsLong()) {
+      persisted = numberPropertyToPersistedData(
+        criteria,
+        getPersistedValueFromDate(value.asDateAsLong().asDate().getValue()),
+        persisted
+      );
     } else {
       persisted = genericPropertyToPersistedData(criteria, value.asString().getValue(), persisted);
     }
@@ -127,6 +141,11 @@ class DashboardsToPersistedDashboards {
       throw new AssertionError("Unsupported criteria " + sourceDef + " " + criteria);
     }
     return persisted;
+  }
+
+  private static String getPersistedValueFromDate(Date date) {
+    // Persist the date in its formatted string form:
+    return DateUtils.formatDate(date);
   }
 
   // Convert an in-memory custom filtering dashboard string property to its persistent form.

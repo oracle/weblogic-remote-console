@@ -1,21 +1,27 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page displays the status information related to this workflow task.</p>
 
 properties:
 - name: "Name"
-- name: "Type"
-- name: "StartTime"
-- name: "Description"
-- name: "EndTime"
+- name: "WorkflowName"
+- name: "WorkflowType"
+- name: "WorkflowId"
+- name: "WorkflowTarget"
 - name: "Progress"
+- name: "StartTime"
+- name: "EndTime"
+- name: "TaskError"
+advancedProperties:
+- name: "Completed"
 - name: "Running"
-- name: "Status"
+- name: "TaskStatus"
+- name: "SystemTask"
+- name: "Type"
+- name: "Description"
 - name: "NumCompletedCommands"
 - name: "NumTotalCommands"
 - name: "ProgressString"
 - name: "StatusHistory"
-- name: "WorkflowId"
-- name: "WorkflowTarget"
-- name: "WorkflowType"
+

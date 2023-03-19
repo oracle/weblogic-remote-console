@@ -1,8 +1,9 @@
-# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
 - name: DatasourceType
+  label: "Data Source Type"
   required: true
   writable: createOnly
   supportsModelTokens: false # since it's used to determine which pages are displayed
@@ -18,3 +19,5 @@ properties:
     label: UCP Data Source
   - value: PROXY
     label: Proxy Data Source
+- name: DefaultDatasource
+  label: "Default Data Source"

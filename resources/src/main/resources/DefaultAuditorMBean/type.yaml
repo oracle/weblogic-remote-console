@@ -1,11 +1,10 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
 - name: ActiveContextHandlerEntries
   helpSummaryHTML: >
-    <p>Select the ContextHandler entries you want this Audit provider to
-    handle and move them from Available to Chosen with the arrow buttons.</p>
+    <p>Specifies the ContextHandler entries you want this Audit provider to handle.</p>
   helpDetailsHTML: >
     <p>An Audit Event includes a <code>ContextHandler</code> that can
     hold a variety of information or objects. By default, none of the

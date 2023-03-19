@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2021, Oracle and/or its affiliates.
+ Copyright (c) 2021,2022, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
   <oj-dialog
@@ -20,7 +20,7 @@
               <oj-button id="[[i18n.buttons.save.id]]" on-oj-action="[[onSave]]" chroming="borderless"
                  disabled="[[i18n.buttons.save.disabled()]]">
                 <img class="button-icon" slot="startIcon"
-                   data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.save.iconFile() + '.png'}" />
+                   data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.save.iconFile() + '.png', alt: i18n.buttons.save.label}" />
                 <span class="button-label">
                   <oj-bind-text value="[[i18n.buttons.save.label()]]"></oj-bind-text>
                 </span>
@@ -32,10 +32,21 @@
             <oj-button id="[[i18n.buttons.finish.id]]" on-oj-action="[[finishAction]]" chroming="borderless"
                disabled="[[i18n.buttons.finish.disabled]]">
               <img class="button-icon" slot="startIcon"
-                data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.finish.iconFile + '.png'}" />
+                data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.finish.iconFile + '.png', alt: i18n.buttons.finish.label}" />
               <span class="button-label">
                 <oj-bind-text value="[[i18n.buttons.finish.label]]"></oj-bind-text>
               </span>
+            </oj-button>
+          </oj-bind-if>
+
+          <oj-bind-if test="[[i18n.buttons.cancel.visible()]]">
+            <oj-button id="[[i18n.buttons.cancel.id]]" on-oj-action="[[cancelAction]]" chroming="borderless"
+                       disabled="[[i18n.buttons.cancel.disabled]]">
+              <img class="button-icon" slot="startIcon"
+                   data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.cancel.iconFile + '.png', alt: i18n.buttons.cancel.label}" />
+              <span class="button-label">
+              <oj-bind-text value="[[i18n.buttons.cancel.label]]"></oj-bind-text>
+            </span>
             </oj-button>
           </oj-bind-if>
 
@@ -46,7 +57,7 @@
 
             <div id="page-help-toolbar-icon" class="oj-flex-item">
               <a on-click="[[helpPageClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.help.tooltip}">
-                <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png'}" />
+                <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png', alt: i18n.introduction.toggleHelp.text}" />
               </a>
             </div>
 

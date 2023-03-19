@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -1148,8 +1148,21 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       listDataProviders: function() {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return getData.call(this, {url: url});
-      }
+      },
 
+      /**
+       * submitPolicy is used by DataOperation for submitting any policy change.
+       * @param uri
+       * @param dataPayload
+       * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: *, messages?: *}}|{failureType: exports.FailureType, failureReason?: *}|{Error}>}
+       */
+      submitPolicy: function(uri, dataPayload){
+        let rdjUrl = uri;
+        if (!rdjUrl.startsWith(Runtime.getBackendUrl())) {
+          rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
+        }
+        return postData.call(this, {url: rdjUrl}, dataPayload);
+      }
     };
 
   }

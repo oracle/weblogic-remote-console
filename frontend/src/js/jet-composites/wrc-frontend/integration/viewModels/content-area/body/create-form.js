@@ -1,14 +1,14 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/pages', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger'],
-  function (oj, ko, HtmlUtils, Preferences, Runtime, MessageDisplaying, DataOperations, NavtreeManager, PageDataTypes, PageDefinitionUsedIfs, PageDefinitionPages, PageDefinitionUtils, ViewModelUtils, CbeTypes, CbeUtils, CoreUtils, CoreTypes, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/pages', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger'],
+  function (oj, ko, HtmlUtils, Preferences, Runtime, MessageDisplaying, DataOperations, PageDataTypes, PageDefinitionUsedIfs, PageDefinitionPages, PageDefinitionUtils, ViewModelUtils, CbeTypes, CbeUtils, CoreUtils, CoreTypes, Logger) {
     /**
      *
      * @param viewParams
@@ -427,7 +427,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       };
     }
 
-    //public:
+  //public:
     CreateForm.prototype = {
       Mode: Object.freeze({
         SCROLLING : {name: 'SCROLLING'},

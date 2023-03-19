@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="intro" class="cfe-table-form-instructions">
@@ -36,6 +36,21 @@ The Universal Permissive License (UPL), Version 1.0
       <template slot="cellTemplate" data-oj-as="cell">
         <oj-bind-text value="[[cell.data.data]]"></oj-bind-text>
       </template>
+      <oj-menu
+        slot="contextMenu"
+        on-oj-menu-action="[[onContextMenuAction]]"
+        on-oj-before-open="[[onContextMenuBeforeOpen]]"
+        aria-label="Copy to Clipboard Context Menu"
+      >
+        <oj-option id="[[i18n.contextMenus.copyCellData.id]]" value="[[i18n.contextMenus.copyCellData.id]]">
+          <img class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.contextMenus.copyCellData.iconFile + '.png', alt: ' + i18n.contextMenus.copyCellData.label + '}" />
+          <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.contextMenus.copyCellData.label]]"></oj-bind-text></span>
+        </oj-option>
+        <oj-option id="[[i18n.contextMenus.copyRowData.id]]" value="[[i18n.contextMenus.copyRowData.id]]">
+          <img class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.contextMenus.copyRowData.iconFile + '.png', alt: ' + i18n.contextMenus.copyRowData.label + '}" />
+          <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.contextMenus.copyRowData.label]]"></oj-bind-text></span>
+        </oj-option>
+      </oj-menu>
     </oj-table>
     <div id="paging">
       <span><oj-bind-text value="[[i18n.labels.totalRows.value]]"></oj-bind-text></span>

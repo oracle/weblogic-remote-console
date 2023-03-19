@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -210,7 +210,6 @@ public class LocalizedConstants {
       "The search string must not be empty."
     );
 
-
   // Indicates that a bean can't be created because one with that name already exists
   public static final LocalizableString ALREADY_EXISTS =
     addConstant(
@@ -291,8 +290,110 @@ public class LocalizedConstants {
       " "
     );
 
-  // Returns all of the constants (used when the resource bundles are
-  // generated at build time)
+  public static final LocalizableString DOWNLOADLOGFILE_ERROR =
+    addConstant(
+      "downloadLogFileError",
+      "Error in creating log file: "
+    );
+
+  public static final LocalizableString NO_JMS_MESSAGES =
+    addConstant(
+      "noUnfilteredJmsMessages",
+      "<p>This destination has no messages.</p>"
+    );
+
+  public static final LocalizableString ALL_UNFILTERED_JMS_MESSAGES =
+    addConstant(
+      "allUnfilteredJmsMessages",
+      "<p>This unfiltered table displays all {0} messages in this destination.</p>"
+    );
+
+  public static final LocalizableString SOME_UNFILTERED_JMS_MESSAGES =
+    addConstant(
+      "someUnfilteredJmsMessages",
+      "<p>This destination has {0} messages."
+      + " This unfiltered table displays the first {1} sorted messages.</p>"
+      + "<ul>"
+      +   "<li>Sorted on: {2}</li>"
+      +   "<li>Ascending: {3}</li>"
+      + "</ul>"
+    );
+
+  public static final LocalizableString NO_FILTERED_JMS_MESSAGES =
+    addConstant(
+      "noFilteredJmsMessages",
+      "<p>This destination has {0} messages."
+      + " It does not have any matching messages.</p>"
+      + "<ul>"
+      +   "<li>JMS message selector: {1}</li>"
+      + "</ul>"
+    );
+
+  public static final LocalizableString ALL_FILTERED_JMS_MESSAGES =
+    addConstant(
+      "allFilteredJmsMessages",
+      "<p>This destination has {0} messages."
+      + " This filtered table displays all {1} matching messages.</p>"
+      + "<ul>"
+      +   "<li>JMS message selector: {2}</li>"
+      + "</ul>"
+    );
+
+  public static final LocalizableString SOME_FILTERED_JMS_MESSAGES =
+    addConstant(
+      "someFilteredJmsMessages",
+      "<p>This destination has {0} messages."
+      + " This filtered table lists the first {2} of {1} sorted matching messages.</p>"
+      + "<ul>"
+      +   "<li>JMS message selector: {3}</li>"
+      +   "<li>Sorted on: {4}</li>"
+      +   "<li>Ascending: {5}</li>"
+      + "</ul>"
+    );
+
+  public static final LocalizableString TX_STATUS_ACTIVE =
+    addConstant("txStatusActive", "active");
+
+  public static final LocalizableString TX_STATUS_PRE_PREPARING =
+    addConstant("txStatusPrePreparing", "pre-preparing");
+
+  public static final LocalizableString TX_STATUS_PRE_PREPARED =
+    addConstant("txStatusPrePrepared", "pre-prepared");
+
+  public static final LocalizableString TX_STATUS_PREPARING =
+    addConstant("txStatusPerparing", "preparing");
+
+  public static final LocalizableString TX_STATUS_PREPARED =
+    addConstant("txStatusPrepared", "prepared");
+
+  public static final LocalizableString TX_STATUS_LOGGING =
+    addConstant("txStatusLogging", "logging");
+
+  public static final LocalizableString TX_STATUS_COMMITTING =
+    addConstant("txStatusCommitting", "committing");
+
+  public static final LocalizableString TX_STATUS_COMMITTED =
+    addConstant("txStatusCommitted", "committed");
+
+  public static final LocalizableString TX_STATUS_ROLLING_BACK =
+    addConstant("txStatusRollingBack", "rolling-back");
+
+  public static final LocalizableString TX_STATUS_MARKED_ROLLBACK =
+    addConstant("txStatusMarkedRollback", "marked-rollback");
+
+  public static final LocalizableString TX_STATUS_ROLLEDBACK =
+    addConstant("txStatusRolledback", "rolledback");
+
+  public static final LocalizableString TX_STATUS_NEW =
+    addConstant("txStatusNew", "new");
+
+  public static final LocalizableString TX_STATUS_SUSPENDED =
+    addConstant("txStatusSuspended", "suspended");
+
+  public static final LocalizableString TX_STATUS_UNKNOWN =
+    addConstant("txStatusUnknown", "unknown");
+
+  // Returns all of the constants (used when the resource bundles are generated at build time)
   public static List<LocalizableString> getAllConstants() {
     return allConstants;
   }

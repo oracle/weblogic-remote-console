@@ -14,7 +14,7 @@
  * @example
  *  AutoPrefs.read(`${app.getPath('appData')}/weblogic-remote-console`);
  *  let props = {
- *    version: '2.4.1',
+ *    version: '2.4.2',
  *    location: '/Applications/WebLogic Remote Console.app/Contents/MacOS/WebLogic Remote Console'
  *  };
  *  AutoPrefs.set(props);

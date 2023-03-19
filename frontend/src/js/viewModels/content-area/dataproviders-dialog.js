@@ -475,6 +475,25 @@ define(['knockout'],
             break;
         }
         return rtnval;
+      },
+
+      /**
+       * Update the connection dialog fields that depended on the SSO state
+       *
+       * @param {boolean} ssoEnabled - The current SSO setting value
+       */
+       updateSsoDependentFields: (ssoEnabled = false) => {
+         const classDialogField = 'cfe-dialog-field';
+         const ssoDepdendentFields = [];
+         ssoDepdendentFields.push(document.getElementById('username-field'));
+         ssoDepdendentFields.push(document.getElementById('password-field'));
+         ssoDepdendentFields.forEach((field) => {
+           if (field != null) {
+             field.disabled = ssoEnabled;
+             if (!ssoEnabled) field.classList.add(classDialogField);
+             else field.classList.remove(classDialogField);
+           }
+         });
       }
 
     };
