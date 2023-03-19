@@ -22,7 +22,7 @@
     "dotenv": "^8.2.0",
     "eslint": "^8.33.0",
     "fixture": "^0.1.2",
-    "geckodriver": "^1.22.3",
+    "geckodriver": "^3.2.0",
     "getenv": "^1.0.0",
     "karma": "^4.3.0",
     "karma-chai": "^0.1.0",
