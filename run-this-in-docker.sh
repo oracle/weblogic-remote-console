@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2020, 2022, Oracle Corporation and/or its affiliates.
+# Copyright 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 cleanup() {
@@ -12,7 +12,26 @@ cleanup() {
 }
 
 set -e
-tmpdir="/tmp/console-build.$$"
+case "$1" in
+builder|runner)
+  IMAGE=${CONSOLE_BUILD_IMAGE:-wls-docker-dev-local.dockerhub-phx.oci.oraclecorp.com/remote-console-build:2.4.2}
+  ;;
+weblogic)
+  IMAGE=${CONSOLE_WEBLOGIC_IMAGE:-container-registry.oracle.com/middleware/weblogic:14.1.1.0}
+  ;;
+*)
+  echo "Usage: $0 [builder|runner|weblogic] command" >&2
+  exit 1
+esac
+
+shift
+
+if [ -d /tmp/rancher-desktop ]
+then
+  tmpdir="/tmp/rancher-desktop/console-build.$$"
+else
+  tmpdir="/tmp/console-build.$$"
+fi
 mkdir -p $tmpdir
 tmp="$tmpdir/script"
 
@@ -22,6 +41,8 @@ set -e
 set -x
 umask 000
 $PREP_COMMANDS
+export DOWNLOAD_JAVA_URL=$DOWNLOAD_JAVA_URL
+export DOWNLOAD_NODE_URL=$DOWNLOAD_NODE_URL
 export NPM_PREP_COMMANDS="$NPM_PREP_COMMANDS"
 export JAVA_OPTS="$JAVA_OPTS"
 export MW_HOME=/u01/oracle
@@ -49,7 +70,7 @@ trap "cleanup" EXIT
 
 # Docker doesn't like use of the interactive option when not running on a
 # terminal, but it's nice to be able to hit <ctrl-C>.
-if [ -t 0 ]
+if [ -t 0 -a -t 1 ]
 then
   it_option=-it
 else
@@ -67,6 +88,7 @@ DOCKER_ID=$(docker run -d \
   --user=root \
   $it_option \
   --entrypoint=/tmp/script \
-  ${CONSOLE_BUILD_IMAGE:-container-registry.oracle.com/middleware/weblogic:14.1.1.0}
+  $IMAGE
 )
-timeout 28800 docker attach --no-stdin $DOCKER_ID
+#timeout 28800 docker attach --no-stdin $DOCKER_ID
+docker attach --no-stdin $DOCKER_ID

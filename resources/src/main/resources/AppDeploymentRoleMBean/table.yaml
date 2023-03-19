@@ -1,0 +1,24 @@
+# Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page summarizes the security roles that can be used in the policy
+  for this enterprise application. These roles cannot be used in policies
+  for individual modules or other resources within this application.</p>
+  <dl>
+    <dt>Note:</dt>
+    <dd>If you are using the <code>DD Only</code> security model for this
+    deployment, then you cannot use the Administration Console to modify its
+    security roles.</dd>
+  </dl>
+
+displayedColumns:
+- name: "Name"
+
+helpTopics:
+- label: "Security Role Conditions"
+  href: "roles/secroles.html#ROLES191"
+  type: "edocs"
+- label: "Application Resources"
+  href: "roles/types.html#ROLES127"
+  type: "edocs"

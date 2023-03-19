@@ -116,7 +116,8 @@ module.exports = function (driver, file) {
             await driver.sleep(1200);
             await driver.findElement(By.xpath("//span[@class='cfe-toolbar-button-label' and text()='Home']")).click();
             console.log("Click Config View Tree");
-            await driver.findElement(By.xpath("//div[@id=\'view\']/img")).click();
+            //await driver.findElement(By.xpath("//div[@id=\'view\']/img")).click();
+            await driver.findElement(By.xpath("//div[@id='view-site-panel-card']/img")).click();
             await driver.sleep(1200);
             console.log("Click Environment Navtree link");
             await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();

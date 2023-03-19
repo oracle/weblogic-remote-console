@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -14,7 +14,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
       this.i18n = {
         header: {
           app: {
-            version: { value: Runtime.getProperty(Runtime.PropertyName.CFE_VERSION) }
+            version: { value: Runtime.getProperty(Runtime.PropertyName.CFE_VERSION) },
+            name: ko.observable()
           },
           icons: {
             wrcApp: {iconFile: 'wrc-app-icon-color_88x78'},
@@ -39,6 +40,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
       // Initialize instance-scope variables used in header.html
       this.appInfoTitleClass = (viewParams.smScreen ? 'branding-area-title-sm' : 'branding-area-title-md');
       this.appName = oj.Translations.getTranslatedString('wrc-header.text.appName');
+      this.i18n.header.app.name(this.appName);
       this.domainsConnectState = ko.observable();
       this.linkLabel = ko.observable();
       this.linkResourceData = ko.observable();

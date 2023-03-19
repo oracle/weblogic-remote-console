@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -23,137 +23,121 @@ public class WebLogicVersions {
   // It's sorted, oldest to newest
   private static Map<Long, WebLogicVersion> versionNumberToVersion = new TreeMap<>();
 
-  // Records the current version (i.e. during the build, we check that all of the pages
-  // in the current version refer to properties that exist, v.s. for earlier versions,
+  // Records the latest version (i.e. during the build, we check that all of the pages
+  // in the latest version refer to properties that exist, v.s. for earlier versions,
   // the property might be missing)
+  private static WebLogicVersion latestVersion = null;
+
+  // Records the current version (i.e. the latest shipped WLS version that we support)
+  // (e.g. WDT uses this version)
   private static WebLogicVersion currentVersion = null;
 
   // Initialize the versions.
   // Must be newest to oldest.
   static {
 
+    // No 14.1.2.0.0 specific docs yet since 14.1.2 hasn't shipped yet
+    // The 14.1.2.0.0 release is in progress
+    addVersion(
+      "14.1.2.0.0",
+      "wls14110",
+      "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0",
+      "wlmbr/mbeans"
+    );
+
     addVersion(
       "14.1.1.0.0",
       "wls14110",
       "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0",
       "wlmbr/mbeans",
-      new WebLogicPSU(
-        "psu210930",
-        "securityConfiguration.secureMode.warnOnInsecureDataSources"
-      ),
-       new WebLogicPSU(
-        "psu210701",
-        "securityConfiguration.checkCertificatesExpirationDays",
-        "securityConfiguration.checkCertificatesIntervalDays",
-        "securityConfiguration.checkIdentityCertificates",
-        "securityConfiguration.checkTrustCertificates",
-        "securityConfiguration.secureMode.warnOnAnonymousRequests",
-        "securityConfiguration.secureMode.warnOnPatches",
-        "securityConfiguration.secureMode.warnOnPorts",
-        "securityConfiguration.secureMode.warnOnUserLockout",
-        "securityConfiguration.secureMode.warnOnUsernamePasswords"
-      )
+      true // this is the latest shipped WLS version we support (i.e. the current version)
+    );
+
+    // No 12.2.1.6.0 specific docs yet:
+    // The 12.2.1.6.0 release is used by Oracle applications and is not a public release
+    addVersion(
+      "12.2.1.6.0",
+      "fmw122140",
+      "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4",
+      "wlmbr/mbeans"
+    );
+
+    // No 12.2.1.5.0 specific docs yet:
+    // The 12.2.1.5.0 release is used by Oracle applications and is not a public release
+    addVersion(
+      "12.2.1.5.0",
+      "fmw122140",
+      "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4",
+      "wlmbr/mbeans"
     );
 
     addVersion(
       "12.2.1.4.0",
       "fmw122140",
       "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4",
-      "wlmbr/mbeans",
-      new WebLogicPSU(
-        "psu210930",
-        "securityConfiguration.secureMode.warnOnInsecureDataSources"
-      ),
-      new WebLogicPSU(
-        "psu210630",
-        "securityConfiguration.checkCertificatesExpirationDays",
-        "securityConfiguration.checkCertificatesIntervalDays",
-        "securityConfiguration.checkIdentityCertificates",
-        "securityConfiguration.checkTrustCertificates",
-        "securityConfiguration.secureMode.warnOnAnonymousRequests",
-        "securityConfiguration.secureMode.warnOnPatches",
-        "securityConfiguration.secureMode.warnOnPorts",
-        "securityConfiguration.secureMode.warnOnUserLockout",
-        "securityConfiguration.secureMode.warnOnUsernamePasswords"
-      ),
-      new WebLogicPSU(
-        "psu210330",
-        "securityConfiguration.remoteAnonymousRMIIIOPEnabled",
-        "securityConfiguration.remoteAnonymousRMIT3Enabled"
-      ),
-      new WebLogicPSU(
-        "psu200624",
-        "restfulManagementServices.CORSAllowedCredentials",
-        "restfulManagementServices.CORSAllowedHeaders",
-        "restfulManagementServices.CORSAllowedMethods",
-        "restfulManagementServices.CORSAllowedOrigins",
-        "restfulManagementServices.CORSEnabled",
-        "restfulManagementServices.CORSExposedHeaders",
-        "restfulManagementServices.CORSMaxAge"
-      )
+      "wlmbr/mbeans"
     );
 
     addVersion(
       "12.2.1.3.0",
       "fmw122130",
       "https://docs.oracle.com/middleware/12213/wls",
-      "WLMBR/mbeans",
-      new WebLogicPSU(
-        "psu210923",
-        "securityConfiguration.secureMode.warnOnInsecureDataSources"        
-      ),
-      new WebLogicPSU(
-        "psu210630",
-        "securityConfiguration.checkCertificatesExpirationDays",
-        "securityConfiguration.checkCertificatesIntervalDays",
-        "securityConfiguration.checkIdentityCertificates",
-        "securityConfiguration.checkTrustCertificates",
-        "securityConfiguration.secureMode.warnOnAnonymousRequests",
-        "securityConfiguration.secureMode.warnOnPatches",
-        "securityConfiguration.secureMode.warnOnPorts",
-        "securityConfiguration.secureMode.warnOnUserLockout",
-        "securityConfiguration.secureMode.warnOnUsernamePasswords"
-      ),
-      new WebLogicPSU(
-        "psu210329",
-        "securityConfiguration.remoteAnonymousRMIIIOPEnabled",
-        "securityConfiguration.remoteAnonymousRMIT3Enabled"
-      ),
-      new WebLogicPSU(
-        "psu200227",
-        "restfulManagementServices.CORSAllowedCredentials",
-        "restfulManagementServices.CORSAllowedHeaders",
-        "restfulManagementServices.CORSAllowedMethods",
-        "restfulManagementServices.CORSAllowedOrigins",
-        "restfulManagementServices.CORSEnabled",
-        "restfulManagementServices.CORSExposedHeaders",
-        "restfulManagementServices.CORSMaxAge"        
-      )
+      "WLMBR/mbeans"
     );
+
   }
 
-  private static WebLogicVersion addVersion(
+  private static void addVersion(
+    String domainVersion,
+    String fmwVersion,
+    String docsUrl,
+    String mbeanJavadocDirectory
+  ) {
+    addVersion(domainVersion, fmwVersion, docsUrl, mbeanJavadocDirectory, false);
+  }
+
+  private static void addVersion(
     String domainVersion,
     String fmwVersion,
     String docsUrl,
     String mbeanJavadocDirectory,
-    WebLogicPSU... psus // newest to oldest
+    boolean isCurrentVersion
   ) {
-    boolean isCurrentVersion = versionStringToVersion.isEmpty();
+    String resourceName = "harvestedWeblogicBeanTypes/" + domainVersion + "/DomainMBean.yaml";
+    if (Thread.currentThread().getContextClassLoader().getResource(resourceName) == null) {
+      // There are no harvested yamls for this release in this RC build.
+      // Don't add this version
+      return;
+    }
+    boolean isLatestVersion = versionStringToVersion.isEmpty();
     WebLogicVersion version =
-      new WebLogicVersion(isCurrentVersion, domainVersion, fmwVersion, docsUrl, mbeanJavadocDirectory, psus);
+      new WebLogicVersion(
+        isLatestVersion,
+        isCurrentVersion,
+        domainVersion,
+        fmwVersion,
+        docsUrl,
+        mbeanJavadocDirectory
+      );
     versionStringToVersion.put(domainVersion, version);
     versionNumberToVersion.put(getVersionNumber(domainVersion), version);
+    if (isLatestVersion) {
+      latestVersion = version;
+    }
     if (isCurrentVersion) {
       currentVersion = version;
     }
-    return version;
   }
 
-  // Get the current (i.e. latest) weblogic version.  All of the properties on all the pages
-  // must exist for this version.
+  // Get the current (i.e. latest shipped) weblogic version.
   public static WebLogicVersion getCurrentVersion() {
     return currentVersion;
+  }
+
+  // Get the current (i.e. latest) weblogic version.
+  // All of the properties on all the pages must exist for this version.
+  public static WebLogicVersion getLatestVersion() {
+    return latestVersion;
   }
 
   // Get the list of supported weblogic versions.

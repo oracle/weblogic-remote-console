@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -66,6 +66,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
           optionsArray.push(option);
           legalValueWidth = option.label.length;
         }
+       // checking if value is part of legalValues, if it is not, add it to dropdown 
+        if (value && !legalValues.some((option) => option.value.toLowerCase() === value.toLowerCase())) {
+          optionsArray.push({ value: value, label: value });
+        }
         if (legalValueWidth > 40) field.className = 'cfe-form-select-one-wide';
         // for creating new, we want to set the value to be the first legal value instead of leaving it blank,
         // as this will be a required field.
@@ -82,7 +86,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
       return {optionsArray, warning}
     }
 
-    //public:
+  //public:
     return {
       addFieldIcons: function (params) {
         let container = document.createElement('div');
@@ -185,14 +189,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
           for (let i = 0; i < menuItems.length; i++) {
             if (menuItems[i].visible) {
               const menuItem = document.createElement('oj-option');
+              menuItem.classList.add(...menuItems[i].classes);
+              menuItem.setAttribute('role', menuItems[i].role);
               menuItem.setAttribute('data-index', menuItems[i].index);
               menuItem.setAttribute('id', menuItems[i].id);
               menuItem.setAttribute('value', menuItems[i].id);
               menuItem.setAttribute('disabled', menuItems[i].disabled);
-              const span = document.createElement('span');
-              span.classList.add('cfe-more-menuitem');
-              span.innerText = menuItems[i].label;
-              menuItem.append(span);
+              if (menuItems[i].role !== 'separator') {
+                const span = document.createElement('span');
+                span.classList.add('cfe-more-menuitem');
+                span.innerText = menuItems[i].label;
+                menuItem.append(span);
+              }
               menu.append(menuItem);
             }
           }
@@ -326,12 +334,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
 
       /**
        * Create a cfe-property-list-editor for type properties.
-       * @param {object} mapValue
        * @param {name} name
+       * @param {object} mapValue
        * @param readonly
        * @returns field
        */
-      createPropertyListEditor: function (mapValue, name, readonly) {
+      createPropertyListEditor: function (name, mapValue, readonly) {
         let field = document.createElement('cfe-property-list-editor');
         field.classList.add('cfe-property-list-editor');
         field.setAttribute('id', name);
@@ -345,10 +353,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         return field;
       },
 
+      createPolicyEditor: function (name, readonly) {
+        let field = document.createElement('cfe-policy-editor');
+        field.classList.add('cfe-policy-editor');
+        field.setAttribute('id', name);
+        field.setAttribute('readonly', readonly);
+        return field;
+      },
+
       /**
        * Create a cfe-multi-select for type reference-dynamic-enum with array property set to true.
        * @param {object} dataValues
        * @param {name} name
+       * @param {object} pdjTypes
        * @returns {{chosenItems: Array, field: HTMLElement, origChosenLabels: Array, availableItems: Array}}
        */
       createMultiSelect: function (dataValues, name, pdjTypes) {
@@ -527,7 +544,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
       },
 
       createSwitch: function (options) {
-        const field = document.createElement('oj-switch')
+        const field = document.createElement('oj-switch');
         field.classList.add(options['className']);
         field.setAttribute('disabled', options['disabled'] || false);
         return field;
@@ -535,7 +552,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
 
       createLabel: function (name, pdjTypes, helpInstruction) {
         const label = document.createElement('oj-label');
-        label.innerHTML = pdjTypes.getLabel(name) + (pdjTypes.isRequired(name) ? '*': '');
+        label.innerHTML = `${pdjTypes.getLabel(name)}${(pdjTypes.isRequired(name) ? '*': '')}`;
         label.style.color = '#161513';
         label.setAttribute('for', name);
         label.setAttribute('slot', 'label');
@@ -591,6 +608,250 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         const fakeDiv = document.createElement('div');
         fakeDiv.innerHTML = pdjTypes.getHelpInstruction(name);
         return fakeDiv.innerText;
+      },
+
+      /**
+       *
+       * @param {[{name: string, label: string, menuItems: [{name: string, label: string}]}]} params
+       * @returns {HTMLElement}
+       * @example:
+       *
+       * const params = {buttons: [
+       *   {
+       *     name: 'policyAction',
+       *     label: 'Action',
+       *     buttonClickListener: 'actionButtonClicked',
+       *     launchMenuListener: 'launchActionMenu',
+       *     menuClickListener: 'actionMenuClickListener',
+       *     menuItems: [
+       *       {name: 'addCondition', label: 'Add Condition...'},
+       *       {name: 'combine', label: 'Combine'},
+       *       {name: 'uncombine', label: 'Uncombine'},
+       *       {name: 'moveup', label: 'Move Up'},
+       *       {name: 'movedown', label: 'Move Down'},
+       *       {name: 'remove', label: 'Remove'},
+       *       {name: 'negate', label: 'Negate'}
+       *     ]
+       *   }
+       * ]};
+       * const results['html'] = PageDefinitionFields.createMenuButtons(params);
+       * console.log(results.html.innerHTML);
+       * self.actionMenuButton.html({ view: HtmlUtils.stringToNodeArray(results.html.innerHTML), data: self });
+       */
+      createMenuButtons: function (params) {
+        function createButton(action) {
+          const button = {html: document.createElement('oj-menu-button')};
+          button.html.setAttribute('id', action.name);
+          button.html.setAttribute('chroming', 'borderless');
+          button.html.innerText = action.label;
+          return button;
+        }
+
+        function createMenu(action) {
+          let option;
+          const menu = document.createElement('oj-menu');
+          menu.setAttribute('id', `${action.name}Menu`);
+          menu.setAttribute('on-oj-action', `[[${action.menuClickListener}]]`);
+          menu.setAttribute('slot', 'menu');
+          for (const menuItem of action.menuItems) {
+            option = document.createElement('oj-option');
+            option.setAttribute('id', menuItem.name);
+            option.setAttribute('value', menuItem.name);
+            option.setAttribute('disabled', `[[${menuItem.observable}]]`);
+            const span = document.createElement('span');
+            span.innerText = menuItem.label;
+            option.append(span);
+            menu.append(option);
+          }
+          return menu;
+        }
+
+        const menuButtons = {html: document.createElement('p')};
+
+        if (params.buttons.length > 0) {
+          const div = document.createElement('div');
+          div.setAttribute('id', 'menu-button-container');
+          menuButtons.html = div;
+          for (const action of params.buttons) {
+            const button = createButton(action);
+            const menu = createMenu(action);
+            button.html.append(menu);
+            menuButtons.html.append(button.html);
+          }
+        }
+
+        return menuButtons.html;
+      },
+
+      createIconbars: function (params) {
+        function createIcon(action, iconItem) {
+          const div = document.createElement('div');
+          const linkRef = document.createElement('a');
+          const image = document.createElement('img');
+
+          image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + iconItem.iconFile + '.png');
+
+          if (iconItem.label === '---') {
+            div.classList.add('toolbar-separator-vertical');
+          }
+          else {
+            div.setAttribute('id', iconItem.name);
+            div.classList.add('cfe-iconbar-icon-item');
+
+            image.classList.add('oj-flex-item','cfe-iconbar-icon');
+            image.setAttribute('id', iconItem.name);
+
+            linkRef.setAttribute('href', '#');
+            linkRef.setAttribute('tabindex', '-1');
+            linkRef.setAttribute('title', iconItem.label);
+            linkRef.setAttribute('disabled', `[[${iconItem.observable}]]`);
+            linkRef.setAttribute('on-click', `[[${action.iconClickListener}]]`);
+          }
+
+          linkRef.append(image);
+          div.append(linkRef);
+
+          return div;
+        }
+
+        function createIconbar(action) {
+          const div = document.createElement('div');
+          div.classList.add('oj-flex','oj-sm-flex-items-initial','oj-sm-justify-content-flex-start','cfe-flex-items-pad');
+          for (const iconItem of action.iconItems) {
+            const icon = createIcon(action, iconItem);
+            div.append(icon);
+          }
+          return div;
+        }
+
+        const iconbars = {html: document.createElement('p')};
+
+        if (params.iconbars.length > 0) {
+          const div = document.createElement('div');
+          div.setAttribute('id', 'iconbars-container');
+          div.classList.add('oj-flex-item', 'cfe-iconbar');
+          iconbars.html = div;
+          for (const action of params.iconbars) {
+            const iconbar = createIconbar(action);
+            iconbars.html.append(iconbar);
+          }
+        }
+
+        return iconbars.html;
+      },
+
+      createButtonSets: function (params) {
+        function createButton(action, buttonSetItem) {
+          const button = {html: document.createElement('oj-button')};
+          button.html.setAttribute('id', buttonSetItem.name);
+          button.html.setAttribute('on-oj-action', `[[${action.buttonClickListener}]]`);
+          button.html.setAttribute('chroming', 'borderless');
+          button.html.setAttribute('disabled', `[[${buttonSetItem.observable}]]`);
+          button.html.innerText = buttonSetItem.label;
+
+          const image = document.createElement('img');
+          image.classList.add('button-icon');
+          image.setAttribute('slot', 'startIcon');
+          image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + buttonSetItem.iconFile + '.png');
+
+          const span = document.createElement('span');
+          span.classList.add('button-icon');
+          span.innerText = buttonSetItem.label;
+
+          image.append(span);
+          button.html.append(image);
+
+          return button;
+        }
+
+        function createButtonMenu(buttonSetItem) {
+          const div = document.createElement('div');
+          div.classList.add('cfe-button-menu');
+
+          const link = document.createElement('a');
+          link.setAttribute('id', `${buttonSetItem.name}Launcher`);
+          link.setAttribute('href', '#');
+          link.setAttribute('tabindex', '-1');
+          link.setAttribute('data-action', buttonSetItem.name);
+          link.setAttribute('data-menu-id', `${buttonSetItem.name}Menu`);
+          link.setAttribute('on-click', `[[${buttonSetItem.launchMenuListener}]]`);
+
+          const image = document.createElement('img');
+          image.classList.add('button-icon');
+          image.setAttribute('slot', 'startIcon');
+          image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + buttonSetItem.iconFile + '.png');
+
+          link.append(image);
+
+          const span = document.createElement('span');
+          span.innerText = buttonSetItem.label;
+
+          link.append(span);
+          div.append(link);
+
+          const menu = document.createElement('oj-menu');
+          menu.setAttribute('id', `${buttonSetItem.name}Menu`);
+          menu.setAttribute('data-action', buttonSetItem.name);
+          menu.setAttribute('aria-labelledby', `${buttonSetItem.name}Launcher`);
+          menu.setAttribute('on-oj-menu-action', `[[${buttonSetItem.menuClickListener}]]`);
+          menu.setAttribute('open-options.launcher', `${buttonSetItem.name}Launcher`);
+          if (buttonSetItem.observable) menu.setAttribute('disabled', `[[${buttonSetItem.observable}]]`);
+
+          let option;
+
+          for (const menuItem of buttonSetItem.menuItems) {
+            option = document.createElement('oj-option');
+            option.setAttribute('id', menuItem.name);
+            option.setAttribute('value', menuItem.name);
+
+            if (menuItem.label !== '---') {
+              option.setAttribute('disabled', `[[${menuItem.observable}]]`);
+              const span = document.createElement('span');
+              span.innerText = menuItem.label;
+              option.append(span);
+            }
+
+            menu.append(option);
+          }
+
+          div.append(menu);
+
+          return div;
+        }
+
+        function createButtonSet(action) {
+          const div = document.createElement('div');
+          div.classList.add('oj-flex-bar-start', action.className);
+          for (const buttonSetItem of action.buttonSetItems) {
+            let button;
+            switch (buttonSetItem.type) {
+              case 'button':
+                button = createButton(action, buttonSetItem);
+                div.append(button.html);
+                break;
+              case 'buttonMenu':
+                button = createButtonMenu(buttonSetItem);
+                div.append(button);
+                break;
+            }
+          }
+          return div;
+        }
+
+        const buttonsets = {html: document.createElement('p')};
+
+        if (params.buttonsets.length > 0) {
+          const div = document.createElement('div');
+          div.setAttribute('id', 'buttonsets-container');
+          div.classList.add('oj-flex-bar');
+          buttonsets.html = div;
+          for (const action of params.buttonsets) {
+            const buttonset = createButtonSet(action);
+            buttonsets.html.append(buttonset);
+          }
+        }
+
+        return buttonsets.html;
       },
 
       getDebugFlagItems: function (debugFlags, debugFlagsEnabled) {

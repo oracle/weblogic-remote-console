@@ -1,5 +1,5 @@
 name: WebLogic Remote Console
-version: '2.4.1'
+version: '2.4.2'
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
   version: '1.0'
@@ -40,7 +40,7 @@ console-backend:
       path: /providers
 settings:
   logging:
-    defaultLevel: INFO
+    defaultLevel: ERROR
   autoSync:
     minimumSecs: 30
   autoDownloadTimer:
@@ -52,6 +52,8 @@ settings:
     light:
       - '#dcd6d1'
       - '#b6a29a'
+  sso:
+    domainLoginUri: ''
   projectManagement:
     startup:
       task: choose

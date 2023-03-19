@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A Role Mapping provider supports dynamic role associations by
@@ -7,8 +7,7 @@ introductionHTML: >
   security realm, and you can configure multiple Role Mapping providers
   in a security realm.</p><p>When one or more Role Mapping providers
   are configured, this Role Mappers page displays key information about
-  each of them. To configure a Role Mapping provider, click the name of
-  the provider.</p>
+  each of them.</p>
 
 displayedColumns:
 - name: "Name"

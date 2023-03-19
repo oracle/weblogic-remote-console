@@ -1,5 +1,5 @@
 <!--
-  Copyright (c) 2021,2022, Oracle and/or its affiliates.
+  Copyright (c) 2021,2022,2023, Oracle and/or its affiliates.
   The Universal Permissive License (UPL), Version 1.0
 -->
 
@@ -7,7 +7,9 @@
   <!-- column 1 -->
   <div id="navtree-container" class="oj-flex-item">
     <div class="left_panel">
-      <oj-bind-dom config="[[navtree.html]]"></oj-bind-dom>
+      <nav :aria-label="[[i18n.navtree.ariaLabel.value]]">
+        <oj-bind-dom config="[[navtree.html]]"></oj-bind-dom>
+      </nav>
     </div>
   </div>
 
@@ -41,7 +43,7 @@
 </div>
 
 <div id="preloader-image">
-  <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.images.preloader.iconFile + '.png'}" />
+  <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.images.preloader.iconFile + '.png', alt: i18n.images.preloader.label}" />
 </div>
 
 <oj-popup

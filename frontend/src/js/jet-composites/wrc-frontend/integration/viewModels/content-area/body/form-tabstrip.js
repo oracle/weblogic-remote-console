@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -27,13 +27,11 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
       this.disconnected = function () {
       };
 
-      this.selectionChanged = function (d) {
+      this.selectionChanged = function (event) {
         //the 'this' in the following line is bound to $current.data
         // (which is a tabDataProvider) in form.html
         self.currentSlice = this;
         const level = this.level;
-
-        viewParams.signaling.formSliceSelected.dispatch({current: self.currentSlice});
 
         // initialize the slice history stack with the default tab
         if (CoreUtils.isUndefinedOrNull(this.sliceHistory)) {
@@ -112,19 +110,17 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
           return;
         }
 
-        let rdj;
-
         let sliceParam = getQualifiedSlice(level);
 
         if (sliceParam !== '') {
           const pdjSlices = self?.pdjData?.sliceForm?.slices || self.pdjData?.sliceTable?.slices;
 
           if (pdjSlices) {
-            const sliceName = (sliceParam.split('.'))[0];
-            const index = pdjSlices.map(pdjSlice => pdjSlice.name).indexOf(sliceName);
+            const sliceParamsSliceName = (sliceParam.split('.'))[0];
+            const index = pdjSlices.map(pdjSlice => pdjSlice.name).indexOf(sliceParamsSliceName);
             if (index === -1 && pdjSlices.length > 0) {
-              // pdjSlices does not contain sliceName, so set
-              // sliceParam to default slice (e.g. 'General')
+              // pdjSlices does not contain sliceParamsSliceName, so
+              // so sliceParam to default slice (e.g. 'General')
               sliceParam = pdjSlices[0].name;
             }
           }
@@ -142,7 +138,8 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
               rdj: viewParams.parentRouter.data.rdjData(),
               pdj: viewParams.parentRouter.data.pdjData(),
             };
-          } else {
+          }
+          else {
             // Remove backendUrl from viewParams.parentRouter.data.rdjUrl()
             // and add slice query string
             const uri = `${viewParams.parentRouter.data
@@ -153,11 +150,13 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
               .then((reply) => {
                 return {
                   rdj: reply.body.data.get('rdjData'),
-                  pdj: reply.body.data.get('pdjData'),
+                  pdj: reply.body.data.get('pdjData')
                 };
               });
           }
         }
+
+        let rdj;
 
         getData()
           .then((reply) => {
@@ -287,9 +286,12 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
             self.pdjData = pdjData;
             self.rdjData = rdj;
 
-            const isNonWritable = pdjData.sliceForm
+            let isNonWritable = pdjData.sliceForm
               ? pdjData.sliceForm.readOnly === true
               : pdjData.sliceTable.readOnly === true;
+
+//MLW - variant
+            if (self.sliceName === 'Policy') isNonWritable = true;
 
             if (isNonWritable !== self.sliceReadOnly) {
               self.sliceReadOnly = isNonWritable;

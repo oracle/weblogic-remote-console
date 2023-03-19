@@ -23,8 +23,8 @@ module.exports = function (driver, file) {
                 "AdminServer");
             await driver.sleep(2400);
             var server_name;
-            element = driver.findElement(By.xpath("//oj-input-text[@id=\'Name\']/div/div/div/div"));
-            await driver.sleep(300);
+            element = driver.findElement(By.xpath("//oj-input-text[@id='Name']/div/div/div/div"));
+            await driver.sleep(1200);
             var promise = element.getText();
             promise.then(function (text) {
                 server_name = text;

@@ -8,6 +8,29 @@ derivedTypes:
 - weblogic.security.providers.xacml.authorization.XACMLRoleMapperSecurityDataMBean
 - weblogic.security.providers.authorization.DefaultRoleMapperSecurityDataMBean
 properties:
-- name: Roles
+- name: AppDeployments
   relationship: containment
-  type: weblogic.management.security.authorization.RolesMBean
+  type: weblogic.management.security.authorization.AppDeploymentRolesMBean
+  array: true
+- name: CoherenceClusterSystemResources
+  relationship: containment
+  type: weblogic.management.security.authorization.CoherenceClusterSystemResourceRolesMBean
+  array: true
+- name: Domain
+  relationship: containment
+  type: weblogic.management.security.authorization.DomainRolesMBean
+- name: Global
+  relationship: containment
+  type: weblogic.management.security.authorization.GlobalRolesMBean
+- name: JDBCSystemResources
+  relationship: containment
+  type: weblogic.management.security.authorization.JDBCSystemResourceRolesMBean
+  array: true
+- name: JMSSystemResources
+  relationship: containment
+  type: weblogic.management.security.authorization.JMSSystemResourceRolesMBean
+  array: true
+- name: Servers
+  relationship: containment
+  type: weblogic.management.security.authorization.ServerRolesMBean
+  array: true

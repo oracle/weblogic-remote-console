@@ -4,3 +4,4 @@ contents:
 - child: AuthenticationProviders
 - child: RoleMappers
 - child: Authorizers
+- child: CredentialMappers

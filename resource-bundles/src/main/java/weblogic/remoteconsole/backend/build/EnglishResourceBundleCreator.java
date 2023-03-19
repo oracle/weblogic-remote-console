@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.backend.build;
@@ -18,6 +18,7 @@ import weblogic.remoteconsole.common.repodef.HelpTopicDef;
 import weblogic.remoteconsole.common.repodef.LegalValueDef;
 import weblogic.remoteconsole.common.repodef.LinkDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.common.repodef.LocalizedConsoleRestExtensionConstants;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.NavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
@@ -76,7 +77,6 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
         WebLogicMBeansVersion mbeansVersion =
           WebLogicMBeansVersions.getVersion(
             weblogicVersion,
-            weblogicVersion.getCurrentPSU(),
             WebLogicMBeansVersion.ALL_CAPABILITIES
           );
         (new EnglishResourceBundleCreator(mbeansVersion, bundleDir)).create();
@@ -92,6 +92,9 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
   private void create() throws Exception {
     walk();
     for (LocalizableString ls : LocalizedConstants.getAllConstants()) {
+      addResourceDefinition(ls);
+    }
+    for (LocalizableString ls : LocalizedConsoleRestExtensionConstants.getAllConstants()) {
       addResourceDefinition(ls);
     }
     writeResourceBundles();
@@ -157,6 +160,7 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
 
   private void processSliceTableDef(SliceTableDef sliceTableDef) {
     processPagePropertyDefs(sliceTableDef.getAllPropertyDefs());
+    processTableActionDefs(sliceTableDef.getActionDefs());
   }
 
   private void processCreateFormDef(CreateFormDef createFormDef) {

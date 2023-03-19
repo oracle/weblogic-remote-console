@@ -1,15 +1,18 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
+import weblogic.remoteconsole.common.utils.DateUtils;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 
@@ -195,6 +198,12 @@ class PersistedDashboardsToDashboards {
     if (sourceDef.isBoolean()) {
       return computeBooleanProperty(propertyDef, filter);
     }
+    if (sourceDef.isDate()) {
+      return computeDateProperty(propertyDef, filter);
+    }
+    if (sourceDef.isDateAsLong()) {
+      return computeDateAsLongProperty(propertyDef, filter);
+    }
     return computeGenericProperty(propertyDef, filter);
   }
 
@@ -289,6 +298,57 @@ class PersistedDashboardsToDashboards {
         );
     } catch (NumberFormatException e) {
       throw new AssertionError(getPropertyPath(propertyDef) + " must be  double: " + value);
+    }
+  }
+
+  // Compute an in-memory date property of a custom filtering dashboard by
+  // starting with its default unfiltered one then overlaying its persisted filter.
+  private static CustomFilteringDashboardProperty computeDateProperty(
+    CustomFilteringDashboardPropertyDef propertyDef,
+    PersistedPropertyFilter filter
+  ) {
+    String criteria = getNumberPropertyCriteria(propertyDef, filter);
+    Object value = getNumberPropertyValue(propertyDef, filter);
+    return
+      new CustomFilteringDashboardProperty(
+        propertyDef,
+        criteria,
+        new DateValue(getDateFromPersistedValue(propertyDef, value))
+      );
+  }
+
+  // Compute an in-memory date as long property of a custom filtering dashboard by
+  // starting with its default unfiltered one then overlaying its persisted filter.
+  private static CustomFilteringDashboardProperty computeDateAsLongProperty(
+    CustomFilteringDashboardPropertyDef propertyDef,
+    PersistedPropertyFilter filter
+  ) {
+    String criteria = getNumberPropertyCriteria(propertyDef, filter);
+    Object value = getNumberPropertyValue(propertyDef, filter);
+    return
+      new CustomFilteringDashboardProperty(
+        propertyDef,
+        criteria,
+        new DateAsLongValue(getDateFromPersistedValue(propertyDef, value))
+      );
+  }
+
+  private static Date getDateFromPersistedValue(
+    CustomFilteringDashboardPropertyDef propertyDef,
+    Object value
+  ) {
+    try {
+      // The date was persisted in its string form:
+      return DateUtils.parseDate((String)value);
+    } catch (ParseException e) {
+      long sampleTime = 1675691213448L;
+      throw new AssertionError(
+        getPropertyPath(propertyDef)
+        + " must be a date and time, e.g. "
+        + DateUtils.formatDate(new Date(sampleTime))
+        + " : "
+        + value
+      );
     }
   }
 

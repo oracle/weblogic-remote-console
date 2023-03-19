@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="table-toolbar-container" class="oj-flex">
@@ -13,7 +13,7 @@
               <oj-button id="[[i18n.buttons.new.id]]" on-oj-action="[[newAction]]" chroming="borderless"
                          disabled="[[i18n.buttons.new.disabled]]">
                 <img class="button-icon" slot="startIcon"
-                     data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.new.iconFile + '.png'}" />
+                     data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.new.iconFile + '.png', alt: i18n.buttons.new.label}" />
                 <span class="button-label">
                   <oj-bind-text value="[[i18n.buttons.new.label]]"></oj-bind-text>
                 </span>
@@ -23,7 +23,7 @@
               <oj-button id="[[i18n.buttons.write.id]]" on-oj-action="[[writeContentFileAction]]" chroming="borderless"
                          disabled="[[i18n.buttons.write.disabled]]">
                 <img class="button-icon" slot="startIcon"
-                     data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.write.iconFile + '.png'}" />
+                     data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.write.iconFile + '.png', alt: i18n.buttons.write.label}" />
                 <span class="button-label">
                   <oj-bind-text value="[[i18n.buttons.write.label]]"></oj-bind-text>
                 </span>
@@ -36,17 +36,17 @@
 
           <!-- Customize button is always visible on a table toolbar -->
           <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed">
-            <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png'}"/>
+            <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png', alt: i18n.buttons.customize.label}"/>
             <span class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
             <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
           </a>
-          <oj-bind-if test="[[i18n.buttons.customView.visible()]]">
-            <oj-button id="[[i18n.buttons.customView.id]]" on-oj-action="[[customViewAction]]" chroming="borderless"
-                       disabled="[[i18n.buttons.customView.disabled]]">
+          <oj-bind-if test="[[i18n.buttons.dashboard.visible()]]">
+            <oj-button id="[[i18n.buttons.dashboard.id]]" on-oj-action="[[dashboardAction]]" chroming="borderless"
+                       disabled="[[i18n.buttons.dashboard.disabled]]">
               <img class="button-icon" slot="startIcon"
-                   data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customView.iconFile + '.png'}" />
+                   data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.dashboard.iconFile + '.png', alt: i18n.buttons.dashboard.label}" />
               <span class="button-label">
-                  <oj-bind-text value="[[i18n.buttons.customView.label]]"></oj-bind-text>
+                  <oj-bind-text value="[[i18n.buttons.dashboard.label]]"></oj-bind-text>
                 </span>
             </oj-button>
           </oj-bind-if>
@@ -62,37 +62,37 @@
 
       <div id="landing-page-toolbar-icon" class="oj-flex-item">
         <a on-click="[[landingPageClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.landing.tooltip}">
-          <img id="landing-page-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.landing.iconFile + '.png'}"/>
+          <img id="landing-page-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.landing.iconFile + '.png', alt: i18n.icons.landing.tooltip}"/>
         </a>
       </div>
 
       <div class="toolbar-separator-vertical">
         <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
-        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/separator-vertical_10x24.png'}"/>
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.separator.iconFile + '.png', alt: i18n.icons.separator.tooltip}"/>
       </div>
 
       <div id="toggle-history-toolbar-icon" class="oj-flex-item">
         <a on-click="[[toggleHistoryClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.history.tooltip}">
-          <img id="toggle-history" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showBeanPathHistory() ? 'toggle-beanpath-history-on-blk_24x24' : 'toggle-beanpath-history-off-blk_24x24']] + '.png'}"/>
+          <img id="toggle-history" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showBeanPathHistory() ? 'toggle-beanpath-history-on-blk_24x24' : 'toggle-beanpath-history-off-blk_24x24']] + '.png', alt: i18n.icons.history.tooltip}"/>
         </a>
       </div>
 <!--
       <div id="toggle-instructions-toolbar-icon" class="oj-flex-item">
         <a on-click="[[toggleInstructionsClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.instructions.tooltip}">
-          <img id="toggle-instructions" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showInstructions() ? 'toggle-instructions-on-blk_24x24' : 'toggle-instructions-off-blk_24x24']] + '.png'}"/>
+          <img id="toggle-instructions" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showInstructions() ? 'toggle-instructions-on-blk_24x24' : 'toggle-instructions-off-blk_24x24']] + '.png', alt: i18n.icons.instructions.tooltip}"/>
         </a>
       </div>
 -->
       <div id="page-help-toolbar-icon" class="oj-flex-item">
         <a on-click="[[helpPageClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.help.tooltip}">
-          <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png'}"/>
+          <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png', alt: i18n.icons.help.tooltip}"/>
         </a>
       </div>
 
       <oj-bind-if test="[[showAutoSyncIcons]]">
         <div class="toolbar-separator-vertical">
           <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
-          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/separator-vertical_10x24.png'}"/>
+          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.separator.iconFile + '.png', alt: i18n.icons.separator.tooltip}"/>
         </div>
 
         <div id="sync-toolbar-icon" class="oj-flex-item">
@@ -103,7 +103,7 @@
 
         <div id="sync-interval-toolbar-icon" class="oj-flex-item">
           <a on-click="[[syncIntervalClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.syncInterval.tooltip}">
-            <img id="sync-interval-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.syncInterval.iconFile + '.png'}"/>
+            <img id="sync-interval-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.syncInterval.iconFile + '.png', alt: i18n.icons.syncInterval.tooltip}"/>
           </a>
         </div>
       </oj-bind-if>
@@ -111,7 +111,7 @@
       <oj-bind-if test="[[isShoppingCartVisible()]]">
         <div class="toolbar-separator-vertical">
           <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
-          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/separator-vertical_10x24.png'}" />
+          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.separator.iconFile + '.png', alt: i18n.icons.separator.tooltip}"/>
         </div>
       </oj-bind-if>
 
@@ -120,7 +120,7 @@
           <a id="shoppingCartMenuLauncher" href="#" tabindex="-1"
              on-click="[[launchShoppingCartMenu]]"
           >
-            <img id="shoppingCartImage" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + [[(changeManager().isLockOwner && changeManager().hasChanges ? 'non-empty' : 'empty')]] + '-tabstrip_24x24.png'}" />
+            <img id="shoppingCartImage" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + [[(changeManager().isLockOwner && changeManager().hasChanges ? 'non-empty' : 'empty')]] + '-tabstrip_24x24.png', alt: i18n.menus.shoppingcart.view.label}" />
           </a>
         </oj-bind-if>
 
@@ -140,13 +140,13 @@
           </oj-bind-if>
           <oj-bind-if test="[[!readonly()]]">
             <oj-option :id="[[i18n.menus.shoppingcart.discard.id]]" value="[[i18n.menus.shoppingcart.discard.id]]" disabled="[[!changeManager().hasChanges]]">
-              <img id="discard-changes" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[i18n.menus.shoppingcart.discard.iconFile]] + '.png'}"/>
+              <img id="discard-changes" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[i18n.menus.shoppingcart.discard.iconFile]] + '.png', alt: i18n.menus.shoppingcart.discard.label}"/>
               <span><oj-bind-text value="[[i18n.menus.shoppingcart.discard.label]]"></oj-bind-text></span>
             </oj-option>
           </oj-bind-if>
           <oj-bind-if test="[[!readonly()]]">
             <oj-option :id="[[i18n.menus.shoppingcart.commit.id]]" value="[[i18n.menus.shoppingcart.commit.id]]" disabled="[[!changeManager().hasChanges]]" visible="[[i18n.menus.shoppingcart.commit.visible()]]">
-              <img id="commit-changes" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[i18n.menus.shoppingcart.commit.iconFile]] + '.png'}"/>
+              <img id="commit-changes" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[i18n.menus.shoppingcart.commit.iconFile]] + '.png', alt: i18n.menus.shoppingcart.commit.label}"/>
               <span><oj-bind-text value="[[i18n.menus.shoppingcart.commit.label]]"></oj-bind-text></span>
             </oj-option>
           </oj-bind-if>

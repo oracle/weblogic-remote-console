@@ -26,10 +26,8 @@ public abstract class WebLogicBeanRepoDef extends BeanRepoDefImpl {
     // we're not building the english resource bundle (i.e. capabilities isn't set
     // to All)
     removeMissingPropertiesAndTypes = true;
-    if (mbeansVersion.getWebLogicVersion().isCurrentVersion()
+    if (mbeansVersion.getWebLogicVersion().isLatestVersion()
         && mbeansVersion.getRoles().contains(WebLogicRoles.ADMIN)
-        && mbeansVersion.getPSU() != null
-        && mbeansVersion.getPSU().isCurrentPSU()
         && mbeansVersion.getCapabilities().contains("All")
     ) {
       removeMissingPropertiesAndTypes = false;

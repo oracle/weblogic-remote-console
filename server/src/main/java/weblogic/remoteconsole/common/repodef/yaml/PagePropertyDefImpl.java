@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -256,15 +256,25 @@ class PagePropertyDefImpl implements PagePropertyDef {
       }
       for (LegalValueDefImpl customizerVal : customizerVals) {
         if (findLegalValueDefImpl(customizerVal, sourceVals) == null) {
-          StringBuilder sb = new StringBuilder();
-          sb.append("trying to customize a legal value that doesn't exist: ");
-          sb.append(customizerVal.getValueAsString());
-          sb.append(". allowed:");
-          for (LegalValueDefImpl sourceVal : sourceVals) {
-            sb.append(" ");
-            sb.append(sourceVal.getValueAsString());
+          // The bean doesn't support this legal value
+          if (!getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().isRemoveMissingPropertiesAndTypes()) {
+            // The newest version of WLS doesn't have this legal value.
+            // That means our hand-coded yamls don't match the newest version of WLS.
+            StringBuilder sb = new StringBuilder();
+            sb.append("trying to customize a legal value that doesn't exist: ");
+            sb.append(customizerVal.getValueAsString());
+            sb.append(". allowed:");
+            for (LegalValueDefImpl sourceVal : sourceVals) {
+              sb.append(" ");
+              sb.append(sourceVal.getValueAsString());
+            }
+            throw beanPropertyDefImpl.configurationError(sb.toString());
+          } else {
+            // That's OK - just omit it.
+            // For example, a newer version of WLS added the legal value
+            // and we're using yamls from an older version of WLS that doesn't
+            // have it.
           }
-          throw beanPropertyDefImpl.configurationError(sb.toString());
         }
       }
     }
@@ -447,7 +457,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
         // This isn't allowed.
         throw new AssertionError(
           getPropertyPath()
-          + " specifies helpSummaryHTML but not helpDetailsHTML: "
+          + " specifies helpDetailsHTML but not helpSummaryHTML: "
           + getPageDef().getPagePath()
         );
       }

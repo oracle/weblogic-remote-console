@@ -5,6 +5,8 @@ doit_docker() {
   cat > $tmp/script <<!
 #!/bin/bash
 $NPM_PREP_COMMANDS
+export DOWNLOAD_JAVA_URL=$DOWNLOAD_JAVA_URL
+export DOWNLOAD_NODE_URL=$DOWNLOAD_NODE_URL
 set -e
 [ -z "$DEBUG" ] || export DEBUG="$DEBUG"
 [ -n "$FPM_DEBUG" ] || export DEBUG="$FPM_DEBUG"
@@ -13,7 +15,7 @@ export https_proxy=$https_proxy
 export no_proxy=$no_proxy
 if [ -n "$https_proxy" ]
 then
-  export ELECTRON_GET_USE_PROXY=true GLOBAL_AGENT_HTTPS_PROXY=$https_proxy
+  export ELECTRON_GET_USE_PROXY=true GLOBAL_AGENT_HTTPS_PROXY=$https_proxy GLOBAL_AGENT_NO_PROXY="$no_proxy" GLOBAL_AGENT_HTTP_PROXY="$http_proxy"
 fi
 umask 000
 cp -rp /build.in/. /build
@@ -48,7 +50,14 @@ fi
 case "$(uname -a)" in
 *indow*|*Msys*)
   os=windows
-  pathsep=';'
+  # It depends on what shell you are running
+  case "$PATH" in
+  *';'*';'*)
+    pathsep=';'
+    ;;
+  *)
+    pathsep=:
+  esac
   ;;
 *arwin*)
   os=darwin
@@ -59,7 +68,12 @@ case "$(uname -a)" in
   pathsep=:
 esac
 
-tmp=/tmp/${0##*/}.$$
+if [ -d /tmp/rancher-desktop ]
+then
+  tmp="/tmp/rancher-desktop/${0##*/}.$$"
+else
+  tmp="/tmp/${0##*/}.$$"
+fi
 if [ "$PWD" = /build ]
 then
   trap copyout EXIT

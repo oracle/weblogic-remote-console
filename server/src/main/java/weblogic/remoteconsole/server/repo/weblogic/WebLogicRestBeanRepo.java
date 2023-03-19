@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -178,12 +178,15 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
     // e.g. if beanPath is DomainRuntime/ServerLifeCycleRuntimes/Server1 and actionDef is start
     // then return domainRuntime/ServerLifeCycleRuntimes/Server1/start
 
+    BeanTreePath actionBeanPath =
+      WebLogicBeanTypeActionHelper.getHelper(beanPath).getActionBeanPath(beanPath);
+
     // e.g. convert DomainRuntime to domainRuntime and start the path with it
-    String rootBeanName = beanPath.getPath().getFirstComponent();
+    String rootBeanName = actionBeanPath.getPath().getFirstComponent();
     Path restActionPath = new Path(getWebLogicRestTreeName(rootBeanName));
 
     // add in the rest of the bean tree path, e.g. ServerLifeCycleRuntimes/Server1
-    restActionPath.addPath(getTreeRelativeRestPath(beanPath));
+    restActionPath.addPath(getTreeRelativeRestPath(actionBeanPath));
 
     // If the action is on a mandatory singleton beneath collection child,
     // add the path from the child to the singleton
@@ -261,6 +264,9 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
       }
       return builder.build();
     }
+    if (value.isEntitleNetExpression()) {
+      return value.asEntitleNetExpression().getValue();
+    }
     if (value.isArray()) {
       JsonArrayBuilder builder = Json.createArrayBuilder();
       boolean arrElement = true;
@@ -272,7 +278,7 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
     throw new AssertionError("Unsupported value : " + value);
   }
 
-  protected Path getTreeRelativeRestPath(BeanTreePath beanTreePath) {
+  public static Path getTreeRelativeRestPath(BeanTreePath beanTreePath) {
     Path restPath = new Path();
     boolean first = true;
     for (BeanTreePathSegment segment : beanTreePath.getSegments()) {

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -143,10 +143,10 @@ public class CustomFilteringDashboardDefManager {
       );
   }
 
-  // Customize a custom filtering dashboard's edit slice PDJ.
+  // Customize a custom filtering dashboard's filters slice PDJ.
   // It starts off with the standard one defined in yaml
   // then adds properties for filtering beans by their path and properties.
-  public static Response<PageDef> customizeEditSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
+  public static Response<PageDef> customizeFiltersSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
     Response<PageDef> response = new Response<>();
     Response<CustomFilteringDashboardDef> dashboardDefResponse = getDashboardDef(ic);
     if (!dashboardDefResponse.isSuccess()) {
@@ -457,6 +457,12 @@ public class CustomFilteringDashboardDefManager {
       }
       if (pagePropertyDef.isBoolean()) {
         return "TemplateBooleanProperty";
+      }
+      if (pagePropertyDef.isDate()) {
+        return "TemplateDateProperty";
+      }
+      if (pagePropertyDef.isDate()) {
+        return "TemplateDateAsLongProperty";
       }
       if (pagePropertyDef.isString() || pagePropertyDef.isHealthState()) {
         return "TemplateStringProperty";

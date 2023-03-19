@@ -39,6 +39,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				properties['console-backend.retryAttempts'] = config['console-backend']['retryAttempts'];
 				properties['settings.autoSync.minimumSecs'] = config['settings']['autoSync']['minimumSecs'];
 				properties['settings.autoDownloadTimer.minimumSecs'] = config['settings']['autoDownloadTimer']['minimumSecs'];
+				properties['settings.sso.domainLoginUri'] = config['settings']['sso']['domainLoginUri'];
 				properties['settings.projectManagement.location'] = config['settings']['projectManagement']['location'];
 				properties['settings.projectManagement.startup.task'] = config['settings']['projectManagement']['startup']['task'];
 				properties['settings.projectManagement.startup.project'] = config['settings']['projectManagement']['startup']['project'];
@@ -87,6 +88,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				CFE_LOGGING_DEFAULT_LEVEL: {name: 'console-frontend.logging.defaultLevel'},
 				CFE_AUTO_SYNC_SECS: {name: 'settings.autoSync.minimumSecs'},
 				CFE_AUTO_DOWNLOAD_TIMER_SECS: {name: 'settings.autoDownloadTimer.minimumSecs'},
+				CFE_SSO_DOMAIN_LOGIN_URI: {name: 'settings.sso.domainLoginUri'},
 				CFE_PROJECT_MANAGEMENT_LOCATION: {name: 'settings.projectManagement.location'},
 				CFE_IS_READONLY: {name: 'console-frontend.isReadOnly'},
 				CFE_CURRENT_THEME: {name: 'settings.themes'},
@@ -167,6 +169,15 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 					DEBUG: 4,
 				}[level]);
 				return levelSwitch(level);
+			},
+
+			isConfiguredSso: function () {
+				const domainLoginUri = this.getSsoDomainLoginUri();
+				return CoreUtils.isNotUndefinedNorNull(domainLoginUri) && (domainLoginUri.length > 0);
+			},
+
+			getSsoDomainLoginUri: function () {
+				return this.getProperty(this.PropertyName.CFE_SSO_DOMAIN_LOGIN_URI);
 			},
 
 			getProperty: function (name) {

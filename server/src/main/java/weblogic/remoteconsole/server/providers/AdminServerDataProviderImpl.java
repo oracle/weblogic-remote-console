@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -14,10 +14,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.core.Response;
 
-import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
-import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
@@ -25,7 +23,6 @@ import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.connection.Connection;
 import weblogic.remoteconsole.server.connection.ConnectionManager;
-import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestDomainRuntimePageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestEditPageRepo;
@@ -194,7 +191,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
           // Other users are not allowed to edit the configuration
         }
         // See if the domain has a version of the remote console rest extension installed that supports security data.
-        if (connection.getConsoleExtensionCapabilities().contains("RealmsSecurityData")) {
+        if (connection.getCapabilities().contains("RealmsSecurityData")) {
           // Only admins are allowed to manage the security data.
           if (roles.contains(WebLogicRoles.ADMIN)) {
             securityDataRoot.setPageRepo(new WebLogicRestSecurityDataPageRepo(mbeansVersion));
@@ -246,6 +243,11 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       connection = CONNECTION_MANAGER.getConnection(connectionId);
       ret.add("domainVersion", connection.getWebLogicVersion().getDomainVersion());
       ret.add("domainName", connection.getDomainName());
+      JsonArrayBuilder capabilities = Json.createArrayBuilder();
+      for (String capability : connection.getCapabilities()) {
+        capabilities.add(capability);
+      }
+      ret.add("capabilities", capabilities);
       if (connectionWarning != null) {
         ret.add("connectionWarning", connectionWarning);
       }
@@ -284,49 +286,26 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   private void addLinksToJSON(JsonObjectBuilder jsonBuilder, Connection connection, InvocationContext ic) {
-    if (!supportsSecurityValidationWarnings(connection)) {
-      return;
+    LocalizableString label = getSecurityValidationWarningsLabel(connection);
+    if (label == null) {
+      return; // the domain doesn't support security validation warnings
     }
     String resourceData =
       "/" + UriUtils.API_URI
       + "/" + StringUtils.urlEncode(getName())
       + "/" + Root.DOMAIN_RUNTIME_NAME
       + "/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings";
-    LocalizableString ls =
-      hasSecurityValidationWarnings(connection)
-        ? LocalizedConstants.SECURITY_VALIDATION_WARNINGS_WARNING_LINK_LABEL
-        : LocalizedConstants.SECURITY_VALIDATION_WARNINGS_INFO_LINK_LABEL;
-    String label = ic.getLocalizer().localizeString(ls);
     jsonBuilder.add(
       "links",
       Json.createArrayBuilder().add(
         Json.createObjectBuilder()
-          .add("label", label)
+          .add("label", ic.getLocalizer().localizeString(label))
           .add("resourceData", resourceData)
       )
     );
   }
 
-  private boolean supportsSecurityValidationWarnings(Connection connection) {
-    if (connection == null) {
-      return false; // We're not connected yet so can't tell if the domain supports warnings.
-    }
-    BeanRepo beanRepo = viewRoot.getPageRepo().getBeanRepo();
-    BeanTypeDef typeDef = beanRepo.getBeanRepoDef().getTypeDef("DomainSecurityRuntimeMBean");
-    if (typeDef == null) {
-      return false; // The domain doesn't support security validation warnings.
-    }
-    Path actionPath = new Path("hasSecurityValidationWarnings");
-    if (!typeDef.hasActionDef(actionPath)) {
-      return false; // The user isn't allowed to view the warnings.
-    }
-    return true;
-  }
-
-  private boolean hasSecurityValidationWarnings(Connection connection) {
-    if (!supportsSecurityValidationWarnings(connection)) {
-      return false;
-    }
+  private LocalizableString getSecurityValidationWarningsLabel(Connection connection) {
     WebLogicRestRequest request =
       WebLogicRestRequest.builder()
         .connection(connection)
@@ -335,7 +314,14 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     JsonObject postData = Json.createObjectBuilder().build();
     try (Response response = WebLogicRestClient.post(request, postData)) {
       if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-        return ResponseHelper.getEntityAsJson(response).getBoolean("return");
+        boolean hasWarnings = ResponseHelper.getEntityAsJson(response).getBoolean("return");
+        return 
+          hasWarnings
+            ? LocalizedConstants.SECURITY_VALIDATION_WARNINGS_WARNING_LINK_LABEL
+            : LocalizedConstants.SECURITY_VALIDATION_WARNINGS_INFO_LINK_LABEL;
+      } else if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+        // The domain doesn't support security validation warnings.
+        return null;
       } else {
         LOGGER.finest(
           "hasSecurityValidationWarnings failed:"
@@ -346,7 +332,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     } catch (Exception exc) {
       LOGGER.log(Level.FINEST, "hasSecurityValidationWarnings failed: " + exc.toString(), exc);
     }
-    return false;
+    return null; // Something went wrong.
   }
 
   @Override

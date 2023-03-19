@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
@@ -10,7 +10,7 @@ collectionLinks:
 # customizer, because the names are different.  The runtime mbeans have
 # names like "Default[t3][1]", as opposed to the configuration which is just
 # t3.  It is not a big deal, though, because we can get to the right table
-# and clicking on "t3" is not a huge burden.
+# and navigating to "t3" is not a huge burden.
 instanceLinks:
 - label: Server Channel Configurations
   root: DomainConfiguration

@@ -1,26 +1,62 @@
-# Copyright (c) 2022, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 name: weblogic.management.security.authorization.PolicyMBean
 baseTypes:
 - weblogic.management.WebLogicMBean
 derivedTypes:
+- weblogic.management.security.authorization.AppDeploymentPolicyBean
+- weblogic.management.security.authorization.CoherenceCachePolicyBean
+- weblogic.management.security.authorization.CoherenceCacheMethodPolicyBean
+- weblogic.management.security.authorization.CoherenceServicePolicyBean
+- weblogic.management.security.authorization.CoherenceServiceMethodPolicyBean
+- weblogic.management.security.authorization.CoherenceClusterSystemResourcePolicyMBean
 - weblogic.management.security.authorization.ConfigurationPolicyMBean
 - weblogic.management.security.authorization.FileDownloadPolicyMBean
 - weblogic.management.security.authorization.FileUploadPolicyMBean
 - weblogic.management.security.authorization.IdentityAssertionPolicyMBean
+- weblogic.management.security.authorization.JDBCSystemResourcePolicyMBean
+- weblogic.management.security.authorization.JDBCSystemResourceMethodPolicyMBean
 - weblogic.management.security.authorization.JMSSystemResourcePolicyMBean
 - weblogic.management.security.authorization.QueuePolicyBean
 - weblogic.management.security.authorization.QueueMethodPolicyBean
 - weblogic.management.security.authorization.RootLevelPolicyMBean
+- weblogic.management.security.authorization.ServerPolicyBean
+- weblogic.management.security.authorization.ServerMethodPolicyBean
 - weblogic.management.security.authorization.SSHPolicyMBean
+- weblogic.management.security.authorization.TopicPolicyBean
+- weblogic.management.security.authorization.TopicMethodPolicyBean
+- weblogic.management.security.authorization.UniformDistributedQueuePolicyBean
+- weblogic.management.security.authorization.UniformDistributedQueueMethodPolicyBean
+- weblogic.management.security.authorization.UniformDistributedTopicPolicyBean
+- weblogic.management.security.authorization.UniformDistributedTopicMethodPolicyBean
 - weblogic.management.security.authorization.UserLockoutPolicyMBean
 - weblogic.management.security.authorization.ViewLogPolicyMBean
 properties:
-- name: Expression
-  descriptionHTML: "<p>TBD The policy expression</p>"
+- name: HasPolicy
+  descriptionHTML: "<p>Whether a policy has been defined for this resource.</p>"
+  type: boolean
+- name: Policy
+  descriptionHTML: "<p>The conditions that determine the access control of this resource.</p>"
+  type: EntitleNetExpression
+  writable: true
+- name: PolicyStringExpression
+  descriptionHTML: "<p>The conditions that determine the access control of this resource.</p>"
   type: java.lang.String
   writable: true
-- name: InheritedExpression
-  descriptionHTML: "<p>TBD The inherited policy expression</p>"
+- name: PolicyResourceId
+  descriptionHTML: "<p>The security resource id of this resource.</p>"
+  type: java.lang.String
+- name: HasDefaultPolicy
+  descriptionHTML: "<p>Whether a default policy has been defined for this resource.</p>"
+  type: boolean
+- name: DefaultPolicy
+  descriptionHTML: "<p>The default policy conditions that determine the access control of this resource.</p>"
+  type: EntitleNetExpression
+- name: DefaultPolicyStringExpression
+  descriptionHTML: "<p>The default policy conditions that determine the access control of this resource.</p>"
+  type: java.lang.String
+- name: DefaultPolicyResourceId
+  descriptionHTML: >
+    <p>The security resource id of the resource that defines the default policy conditions for this resource.</p>
   type: java.lang.String

@@ -5,6 +5,11 @@ define({
         "appName": "WebLogic Remote Console"
       },
       "icons": {
+        "navtree": {
+          "toggler": {
+            "tooltip": "Toggle Navigation Tree visibility"
+          }
+        },
         "connectivity": {
           "online": {
             "tooltip": "Online"
@@ -23,7 +28,7 @@ define({
     },
     "wrc-footer": {
       "text": {
-        "copyrightLegal": "Copyright © 2020, 2022, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
+        "copyrightLegal": "Copyright © 2020, 2023, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
         "builtWith": "Built with Oracle JET"
       }
     },
@@ -128,6 +133,9 @@ define({
             },
             "username": {
               "label": "Username:"
+            },
+            "sso": {
+              "label": "SSO:"
             },
             "roles": {
               "label": "Roles:"
@@ -407,6 +415,9 @@ define({
       "checkboxes": {
         "useSparseTemplate": {
           "label": "Use Sparse Template"
+        },
+        "usesso": {
+          "label": "Single Sign-On"
         }
       }
     },
@@ -432,6 +443,18 @@ define({
         },
         "properties": {
           "tooltip": "Property List Editor"
+        }
+      }
+    },
+    "wrc-navigation": {
+      "navstrip": {
+        "ariaLabel": {
+          "value": "Navigation Strip"
+        }
+      },
+      "navtree": {
+        "ariaLabel": {
+          "value": "Navigation Tree"
         }
       }
     },
@@ -481,12 +504,16 @@ define({
       "icons": {
         "history": {
           "tooltip": "History"
+        },
+        "separator" : {
+          "tooltip": "Separator"
         }
       },
       "menus": {
         "history": {
           "clear": {
-            "value": "Clear History"
+            "value": "Clear History",
+            "label": "Clear History"
           }
         }
       }
@@ -673,6 +700,23 @@ define({
         },
         "stop": {
           "value": "Stop"
+        },
+        "download": {
+          "value": "Download Logs"
+        },
+        "shrink": {
+          "value": "Shrink"
+        },
+        "reset": {
+          "value": "Reset"
+        },
+        "clearStatementCache": {
+          "value": "Clear Cache"
+        }
+      },
+      "prompts": {
+        "download": {
+          "value": "Downloaded log file locations:"
         }
       }
     },
@@ -791,7 +835,7 @@ define({
       "messages": {
         "savedTo": {
           "shoppingcart": "Changes were added to cart!",
-          "customView": "Changes were saved!"
+          "generic": "Changes were saved!"
         },
         "action": {
           "notAllowed": {
@@ -827,6 +871,108 @@ define({
         "error": {
           "summary": "Incomplete Required Fields",
           "detail": "{0} field is required, but no (or an invalid) value has been provided."
+        }
+      }
+    },
+    "wrc-policy-management": {
+      "menus": {
+        "action": {
+          "addCondition": { "label": "Add Condition" },
+          "combine": { "label": "Combine" },
+          "uncombine": { "label": "Uncombine" },
+          "moveup": { "label": "Move Up" },
+          "movedown": { "label": "Move Down" },
+          "remove": { "label": "Remove" },
+          "negate": { "label": "Negate" }
+        }
+      },
+      "messages": {
+        "requiredFieldsMissing": {detail: "One or more of the required fields contain no data!"},
+        "conditionHasNoArgValues": {summary: "The selected condition has no argument values to edit!"}
+      },
+      "buttonMenus": {
+        "action": {
+          "addCondition": {
+            "above": {"label": "Add Above Checked Condition..."},
+            "below": {"label": "Add Below Checked Condition..."}
+          }
+        }
+      },
+      "contextMenus": {
+        "action": {
+          "addCondition": {
+            "at": {"label": "Add New First Condition..."},
+            "above": {"label": "Add Condition Above Row Clicked..."},
+            "below": {"label": "Add Condition Below Row Clicked..."}
+          }
+        }
+      }
+    },
+    "wrc-policy-editor": {
+      "labels": {
+        "monthDay": {"value": "Range: -31 to 31"},
+        "dateTime": {"value": "Format: y-MM-dd HH:mm:ss [HH:mm:ss] (e.g. 2006-04-25 00:00:00)"},
+        "time": {"value": "Format: HH:mm:ss (e.g. 14:22:47)"},
+        "gmtOffset": {"value": "Format: GMT+|-h:mm (e.g. GMT-5:00)"},
+        "weekDay": {"value": "e.g. Sunday, Monday, Tuesday, ..."},
+        "or": {"value": "or"},
+        "not": {"value": "NOT"},
+        "combination": {"value": "Combination"},
+        "nodata": {
+          "Policy1": {"value": "Use <b>+ Add Condition</b> button to add a policy condition."},
+          "Policy": {"value": "There are no security policy conditions defined for this policy."},
+          "DefaultPolicy": {"value": "No default security policy conditions defined."}
+        }
+      },
+      "tables": {
+        "policyConditions": {
+          "columns": {
+            "header": {
+              "combination": "Combination",
+              "operator": "Operator",
+              "expression": "Condition Phrase"
+            }
+          },
+          "dropdowns": {
+            "operator": {
+              "or": "Or",
+              "and": "And"
+            }
+          }
+        }
+      },
+      "wizard": {
+        "title": "Policy Management",
+        "pages": {
+          "choosePredicate": {
+            "header": {
+              "title": "Choose a Predicate",
+              "instructions": "Choose the predicate for your new condition from the dropdown list."
+            },
+            "body": {
+              "labels": {
+                "predicateList": "Predicate List"
+              },
+              "help": {
+                "predicateList": "The predicate list is a list of available predicates which can be used to make up a security policy condition."
+              }
+            }
+          },
+          "manageArgumentValues": {
+            "header": {
+              "title": "Group Predicate",
+              "instructions": "Begin typing into the <i></i> field to add argument values or search for existing ones. Press Enter to add typed-in value to the list. To edit existing argument value, click it and modify using the popup input field."
+            },
+            "body": {
+              "labels": {
+                "conditionPhrase": "Condition Phrase",
+                "negate": "Negate Condition"
+              },
+              "help": {
+                "negate": "Converts condition to have the opposite meaning (e.g. \"equals\" becomes \"not equals\", \"in\" becomes \"not in\")."
+              }
+            }
+          }
         }
       }
     },
@@ -873,6 +1019,18 @@ define({
         },
         "savenow": {
           "label": "Save Now"
+        },
+        "action": {
+          "label": "Action"
+        },
+        "next": {
+          "label": "Next"
+        },
+        "previous": {
+          "label": "Previous"
+        },
+        "finish": {
+          "label": "Finish"
         }
       },
       "tooltips": {
@@ -908,6 +1066,18 @@ define({
         },
         "reload": {
           "value": "Reload File"
+        },
+        "delete": {
+          "value": "Delete"
+        },
+        "remove": {
+          "value": "Remove"
+        },
+        "noData" : {
+          "value": "No Data"
+        },
+        "preloader" : {
+          "value": "Preloader"
         }
       },
       "menu": {
@@ -942,6 +1112,21 @@ define({
       "messages": {
         "incorrectFileContent": {
           "detail": "'{0}' contains JSON, but it is not a JSON representation of a {1}!"
+        },
+        "copiedToClipboard" : {
+          "detail": "Data was copied to clipboard!"
+        },
+        "emptyCellData" : {
+          "detail": "Data not copied to clipboard because selected cell was empty!"
+        },
+        "emptyRowData" : {
+          "detail": "Data not copied to clipboard because selected row was empty!"
+        }
+      },
+      "contextMenus": {
+        "copyData": {
+          "cell": {"label": "Copy Cell to Clipboard"},
+          "row": {"label": "Copy Row to Clipboard"}
         }
       }
     },
@@ -1227,7 +1412,7 @@ define({
             "value": "WebLogic Remote Console"
           },
           "copyright": {
-            "value": "Copyright (c) 2021, 2022, Oracle and/or its affiliates."
+            "value": "Copyright (c) 2021, 2023, Oracle and/or its affiliates."
           }
         }
       },

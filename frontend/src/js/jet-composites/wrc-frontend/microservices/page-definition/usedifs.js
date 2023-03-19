@@ -189,14 +189,18 @@ define(['./common', 'wrc-frontend/core/utils'],
               // knockout observable to false or true).
               usedIf.values.find((value) => {
                 if ((typeof value === 'boolean') && (typeof newValue === 'boolean')) {
+                  let enabled;
                   // This means that usedIf.values is an array containing
                   // a single boolean, and the data type of newValue is
-                  // also a boolean. If value is true, then equate it to
-                  // newValue. Otherwise, use value assigned to newValue.
-                  const enabled = (value ? value === newValue : newValue);
-                  // Negate enabled variable to come up with value to use
-                  // with knockout variable.
-                  form[`${PageDefinitionCommon.FIELD_DISABLED}${name}`](!enabled);
+                  // also a boolean.
+                  if (!value) {
+                    enabled = newValue;
+                  }
+                  else {
+                    enabled = (value !== newValue);
+                  }
+                  // Assign enabled variable to knockout variable.
+                  form[`${PageDefinitionCommon.FIELD_DISABLED}${name}`](enabled);
                 }
                 else if (CoreUtils.isUndefinedOrNull(newValue) || (newValue === '')) {
                   // It's possible for newValue to be undefined or an empty.

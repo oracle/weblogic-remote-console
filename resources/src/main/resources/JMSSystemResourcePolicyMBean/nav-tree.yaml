@@ -2,3 +2,6 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - child: Queues
+- child: Topics
+- child: UniformDistributedQueues
+- child: UniformDistributedTopics

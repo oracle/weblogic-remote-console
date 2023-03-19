@@ -4,15 +4,18 @@
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
+
+'use strict';
+
 const { contextBridge, ipcRenderer } = require('electron');
 
-/* global process */
 contextBridge.exposeInMainWorld(
   'electron_api',
   {
     ipc: {
       receive: (channel, func) => {
         const validChannels = [
+          'on-login',
           'on-project-switched',
           'start-app-quit'
         ];
@@ -26,6 +29,7 @@ contextBridge.exposeInMainWorld(
       },
       cancelReceive: (channel) => {
         const validChannels = [
+          'on-login',
           'on-project-switched'
         ];
         if (validChannels.includes(channel)) {
@@ -39,6 +43,7 @@ contextBridge.exposeInMainWorld(
         const validChannels = [
           'translated-strings-sending',
           'current-login',
+          'perform-login',
           'project-changing',
           'current-project-requesting',
           'credentials-requesting',
@@ -63,7 +68,7 @@ contextBridge.exposeInMainWorld(
           else {
             reject({
               transport: {statusText: channel},
-              failureType: "INVALID_CHANNEL",
+              failureType: 'INVALID_CHANNEL',
               failureReason: new Error(`Renderer attempted to send to an invalid channel: ${channel}`)
             });
           }

@@ -25,10 +25,12 @@ module.exports = function (driver, file) {
                                                    expirationScanIntervalTF) {
             await admin.goToNavTreeLevelThreeLink(driver, "configuration", "Services", "JMS Servers",
                 jmsServerName, tabName);
+            await driver.sleep(3600);
             await admin.goToFirstTabFromNavTree(driver, 2, 1, jmsServerName, "configuration",
                 "Services", "JMS Servers", "", "");
-            await driver.sleep(300);
+            await driver.sleep(3600);
             await admin.enableOjSwitchCheckBox(driver, pagingFileLockingEnabledCB, "3");
+            await driver.sleep(3600);
             //Advanced Fields Test
             //await admin.enableCheckBox(driver,'show-advanced-fields');
             await admin.discardChanges(driver);
@@ -148,22 +150,23 @@ module.exports = function (driver, file) {
             await admin.goToNavTreeLevelThreeLink(driver, "configuration", "Services", "JMS Servers",
                 jmsServer);
             await driver.sleep(4800);
-            element = driver.findElement(By.xpath("//a[@id=\'moreIcon_PersistentStore\']/img"));
+            element = driver.findElement(By.xpath("//a[@id='moreIcon_PersistentStore']/img"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await driver.sleep(4800);
             await element.click();
-            element = driver.findElement(By.xpath("//span[contains(.,\'Create New File Store...\')]"));
+            await driver.sleep(9800);
+            element = driver.findElement(By.xpath("//span[contains(.,'Create New File Store...')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
-            await driver.sleep(4800);
+            await driver.sleep(9800);
             await driver.findElement(By.id("Name|input")).click();
-            await driver.sleep(4800);
+            await driver.sleep(6400);
             console.log("Enter FileStore name: " + fileStoreName);
             await driver.findElement(By.id("Name|input")).sendKeys(fileStoreName);
-            await driver.sleep(2400);
+            await driver.sleep(6400);
 
             console.log("Click create button to create " + fileStoreName);
             element = await driver.findElement(
-                By.xpath("//oj-button[@id=\'[[i18n.buttons.save.id]]\']/button"));
+                By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button"));
             await driver.sleep(4800);
             if (element.isEnabled()) {
                 await element.click();

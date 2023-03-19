@@ -1,0 +1,21 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+editable: true
+disableMBeanJavadoc: true
+
+properties:
+- name: Module
+  writable: createOnly
+  required: true
+- name: DataSource
+  writable: createOnly
+  required: true
+
+children:
+- name: Credentials
+  creatable: true
+- name: CredentialMappings
+  creatable: true
+
+createResourceMethod: weblogic.remoteconsole.customizers.UserPasswordCredentialMapperJDBCModuleMBeanCustomizer.createResource

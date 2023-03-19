@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage all the server debug flags.
@@ -22,9 +22,9 @@ properties:
 - name: ServerDebug.DebugBeanTreeHarvesterResolution
 - name: ServerDebug.DebugBeanTreeHarvesterThreading
 # deprecated - name: ServerDebug.DebugBootstrapServlet
-- name: ServerDebug.DebugBuzzProtocol
-- name: ServerDebug.DebugBuzzProtocolDetails
-- name: ServerDebug.DebugBuzzProtocolHttp
+# removed in 14.1.2 - name: ServerDebug.DebugBuzzProtocol
+# removed in 14.1.2 - name: ServerDebug.DebugBuzzProtocolDetails
+# removed in 14.1.2 - name: ServerDebug.DebugBuzzProtocolHttp
 - name: ServerDebug.DebugCertRevocCheck
 - name: ServerDebug.DebugClassLoadingContextualTrace
 - name: ServerDebug.DebugClassLoadingVerbose

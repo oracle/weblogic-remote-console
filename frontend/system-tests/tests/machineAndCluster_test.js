@@ -102,4 +102,98 @@ describe.only('Test Suite: machineAndCluster_test for Machine and Cluster functi
         }
     })
 
+    //Test Case: test addAllToChosen (multi-select) button at Cluster Migration->Candidates tab
+    // After (multi-select) button click, go to Migratable Targets navTree node
+    // Change Not Download dialog appears -> CLick Yes button
+    //
+    it('4. Test Category: GAT/Risk3\n \t Test Scenario: ' +
+        'addAllToChosen (multi-select) button at Cluster Migration->Candidates tab ', async function() {
+        file = "addAllToChosenButtonAtClusterMigration.png";
+        try {
+            await admin.goToNavTreeLevelThreeLink(driver,"configuration",
+                "Environment", "Clusters","Cluster1");
+            await driver.sleep(1200);
+            console.log("Click Migration tab ");
+            element = driver.findElement(By.xpath("//span[contains(.,'Migration')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(600);
+            console.log("Click Candidates tab ");
+            element = driver.findElement(By.xpath("//span[contains(.,'Candidates')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(600);
+            console.log("Click addAllToChosen button ");
+            element = driver.findElement(By.xpath("//oj-button[@id='addAllToChosen']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(600);
+            console.log("Click Migratable Targets NavTree Node ");
+            element = driver.findElement(By.xpath("//span[contains(.,'Migratable Targets')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            console.log("Click Yes button at Change Not Downloaded Dialog ");
+            await driver.sleep(600);
+            element = await driver.findElement(
+                By.xpath("//oj-button[@id='dlgYesBtn']/button/div/span")).click();
+            await driver.sleep(600);
+            console.log("TEST PASS ");
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+    //Test Case: test addToChosen (single-select) button at Migration Tagets-> Servers Candidates tab
+    // From Migratable Targets navTree node -> click ManagedServer1(migratble) -> Candidates tab
+    // Select AdminServer -> ManagedServer1(migratble) -> click addToChosen button
+    // Click Save button -> click Machines navtree tab to validate the change (CND) dialog should not appear
+    // Click Shopping Cart to Discard Changes
+    //
+    it('5. Test Category: GAT/Risk3\n \t Test Scenario: ' +
+        'test addToChosen (single-select) button at Migration Tagets-> Candidates tab', async function() {
+        file = "addoChosenButtonAtClusterMigration.png";
+        try {
+            await admin.goToNavTreeLevelThreeLink(driver,"configuration",
+                "Environment", "Migratable Targets","ManagedServer1");
+            await driver.sleep(1200);
+            console.log("Click Candidates tab ");
+            element = driver.findElement(By.xpath("//span[contains(.,'Candidates')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(600);
+            console.log("Click select to add AdminServer to candidates list");
+            element = driver.findElement(By.xpath("//oj-option[text()='AdminServer']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(600);
+            console.log("Click select to add ManagedServer1 to candidates list");
+            await driver.findElement(By.xpath("//oj-option[text()='ManagedServer1']")).click();
+            await driver.sleep(600);
+            console.log("Click addToChosen button ");
+            element = driver.findElement(By.xpath("//oj-button[@id='addToChosen']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(600);
+            await driver.findElement(By.xpath("//span[contains(.,'Save')]")).click();
+            await driver.sleep(600);
+            console.log("Click Machines NavTree Node ");
+            element = driver.findElement(By.xpath("//span[contains(.,'Machines')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(600);
+            console.log("Click Shopping Cart Image Icon");
+            element = driver.findElement(By.xpath("//img[@id='shoppingCartImage']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(600);
+            console.log("Click discard changes from shopping cart");
+            await driver.findElement(By.xpath("//span[contains(.,'Discard Changes')]")).click();
+            console.log("TEST PASS ");
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
 })

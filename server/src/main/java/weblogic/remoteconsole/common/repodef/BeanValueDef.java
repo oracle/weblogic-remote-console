@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -75,6 +75,11 @@ public interface BeanValueDef {
     return ValueKind.HEALTH_STATE == getValueKind();
   }
 
+  // Determines whether this value is an EntitleNetExpression
+  public default boolean isEntitleNetExpression() {
+    return ValueKind.ENTITLE_NET_EXPRESSION == getValueKind();
+  }
+
   // Determines whether this value is void (e.g. a void method)
   public default boolean isVoid() {
     return ValueKind.VOID == getValueKind();
@@ -94,6 +99,7 @@ public interface BeanValueDef {
     THROWABLE,
     FILE_CONTENTS,
     HEALTH_STATE,
+    ENTITLE_NET_EXPRESSION,
     VOID
   }
 

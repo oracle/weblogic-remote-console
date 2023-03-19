@@ -39,16 +39,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.popupMessageSent.add((message, autoTimeout) => {
+        binding = viewParams.signaling.popupMessageSent.add((message, autoTimeout, cancelAffordance = 'autoTimeout') => {
           if (!message) {
             self.messages.removeAll();
           }
           else {
             if (CoreUtils.isNotUndefinedNorNull(message.severity) && ['confirmation', 'info'].includes(message.severity) ) {
-              message.autoTimeout = autoTimeout || 1500;
-              const value = parseInt(message.autoTimeout);
-              if (isNaN(value) || message.autoTimeout < 1000 || message.autoTimeout > 60000) {
-                message.autoTimeout = 1500;
+              if (cancelAffordance !== 'userDismissed') {
+                message.autoTimeout = autoTimeout || 1500;
+                const value = parseInt(message.autoTimeout);
+                if (isNaN(value) || message.autoTimeout < 1000 || message.autoTimeout > 60000) {
+                  message.autoTimeout = 1500;
+                }
               }
             }
             self.messages.push(message);

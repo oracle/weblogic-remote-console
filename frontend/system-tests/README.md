@@ -25,7 +25,7 @@ Or, run command below to install chromedriver:
 npm config rm proxy
 npm config rm https-proxy
 npm config set noproxy localhost,127.0.0.1,.local,.oracle.com,.oraclecorp.com
-npm config set registry https://artifacthub-tip.oraclecorp.com/api/npm/npmjs-remote
+npm config set registry https://artifacthub-phx.oci.oraclecorp.com/api/npm/npmjs-remote
 npm config set chromedriver_cdnurl http://chromedriver.storage.googleapis.com
 ```
 Details to config npm registry is [here](https://confluence.oraclecorp.com/confluence/display/JET/JET+CLI+Setup)

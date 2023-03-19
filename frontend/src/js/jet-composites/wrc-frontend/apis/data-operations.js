@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -694,6 +694,12 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         downloadPropertyList: function(dataProvider) {
           const uri = dataProvider.getBeanTreeDownloadUri();
           return CbeDataManager.downloadProviderData(uri);
+        }
+      },
+
+      policy: {
+        submitPolicyChange: function(rdjUrl, dataPayload) {
+          return CbeDataManager.submitPolicy(rdjUrl, dataPayload);
         }
       },
 

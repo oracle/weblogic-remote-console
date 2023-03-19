@@ -163,10 +163,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
         }
       },
 
+      displayMessagesAsHTML: function (messages, summary, severity = 'error', autoCloseInterval = 1500) {
+        const messagesHTML = this.getErrorMessagesAsHTML(messages);
+        if (messagesHTML.indexOf('<li>') !== -1) {
+          const messagesAsHTML = {
+            html: { view: HtmlUtils.stringToNodeArray(messagesHTML) },
+            severity: severity,
+            summary: summary
+          };
+          getPopupMessageSentSignal().dispatch(messagesAsHTML, autoCloseInterval, 'userDismissed');
+        }
+      },
+
       getErrorMessagesAsHTML: (messages) => {
         let errorMessagesHTML = '<ul>';
         messages.forEach((message) => {
-          errorMessagesHTML += '<li>' + message.detail + '</li>';
+          errorMessagesHTML += '<li>' + (message.detail ? message.detail : message.message) + '</li>';
         });
         if (errorMessagesHTML.indexOf('<li>') !== -1) {
           errorMessagesHTML += '</ul>';

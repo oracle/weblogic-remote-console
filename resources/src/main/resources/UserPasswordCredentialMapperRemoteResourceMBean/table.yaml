@@ -1,0 +1,26 @@
+# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Credential mappings let you map WebLogic Server users to remote users.</p>
+  <p>The following table lists the remote resources in this realm that have
+  one or more configured user password credential mappings.
+  These mappings can be used by any WebLogic Server application or service.</p>
+
+displayedColumns:
+- name: Name
+- name: Protocol
+- name: RemoteHost
+- name: RemotePort
+- name: Path
+- name: Method
+
+helpTopics:
+- label: "Configuring a WebLogic Credential Mapping Provider"
+  href: "secmg/credmapper.html#SECMG148"
+  type: "edocs"
+- label: "Enabling Trust Between WebLogic Server Domains"
+  href: "secmg/domain.html#SECMG404"
+  type: "edocs"
+- label: "The Credential Mapping Process"
+  href: "scovr/archtect.html#SCOVR234"
+  type: "edocs"

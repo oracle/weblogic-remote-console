@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -9,6 +9,7 @@ import java.util.List;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
+import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
@@ -43,6 +44,10 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   @Override
   BeanTypeDefSource getBeanTypeDefSource(String type) {
     BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(NAME_HANDLER.getUnfabricatedType(type));
+    if (source == null) {
+      // The type doesn't exist in this WLS version.
+      return null;
+    }
     // Add a server property that contains a reference to the corresponding ServerRuntimeMBean
     // that parents the corresponding unaggregated bean (used by the corresponding slice tables pages)
     BeanPropertyDefSource server = new BeanPropertyDefSource();
@@ -53,7 +58,7 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     source.setName(NAME_HANDLER.getFabricatedJavaType(source.getName()));
     source.setBaseTypes(NAME_HANDLER.getFabricatedJavaTypes(source.getBaseTypes()));
     source.setDerivedTypes(NAME_HANDLER.getFabricatedJavaTypes(source.getDerivedTypes()));
-    source.getActions().clear(); // ignore actions since we can't aggregate them
+    // allow the actions to flow through as-is
     source.setProperties(aggregatePropertyDefs(source.getProperties()));
     source.getProperties().add(server);
     return source;
@@ -210,10 +215,10 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       return null;
     }
     source.setProperties(aggregatePropertyDefs(source.getProperties()));
-    if (source.getProperties().isEmpty()) {
+    // allow the actions to flow through as-is
+    if (source.getProperties().isEmpty() && source.getActions().isEmpty()) {
       return null;
     }
-    source.getActions().clear(); // ignore actions since we can't aggregate them
     return source;
   }
 
@@ -226,8 +231,8 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
 
   @Override
   SliceTableDefSource getSliceTableDefSource(SlicePagePath pagePath, SlicesDefImpl slicesDefImpl) {
-    SliceFormDefSource unaggSource =
-      getYamlReader().getSliceFormDefSource(NAME_HANDLER.getUnfabricatedSlicePagePath(pagePath), slicesDefImpl);
+    SlicePagePath unaggPagePath = NAME_HANDLER.getUnfabricatedSlicePagePath(pagePath);
+    SliceFormDefSource unaggSource = getYamlReader().getSliceFormDefSource(unaggPagePath, slicesDefImpl);
     if (unaggSource == null) {
       // This type doesn't support this slice.
       return null;
@@ -241,7 +246,8 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
 
     // There isn't a custom table for the aggregated type.
     // Create a default one that has a Server column plus a column for every property
-    // on the unaggregated type's form for this slice.
+    // on the unaggregated type's form for this slice plus a copy of the
+    // unaggregated type's table's actions
     SliceTableDefSource source = new SliceTableDefSource();
     source.setIntroductionHTML(unaggSource.getIntroductionHTML());
     source.setHelpTopics(unaggSource.getHelpTopics());
@@ -251,6 +257,14 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     source.getDisplayedColumns().addAll(unaggSource.getProperties());
     source.getHiddenColumns().addAll(unaggSource.getAdvancedProperties());
     source.setGetTableRowsMethod("weblogic.remoteconsole.customizers.AggregatedMBeanCustomizer.getSliceTableRows");
+    source.setActionMethod("weblogic.remoteconsole.customizers.AggregatedMBeanCustomizer.invokeAction");
+    TablePagePath unaggTablePath = PagePath.newTablePagePath(unaggPagePath.getPagesPath());
+    TableDefSource unaggTableSource = getYamlReader().getTableDefSource(unaggTablePath);
+    if (unaggTableSource != null) {
+      // The unaggregated type has a table.  Copy over its actions to aggregated instance's slice table.
+      source.setActions(unaggTableSource.getActions());
+    }
+
     return source;
   }
 

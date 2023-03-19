@@ -5,6 +5,6 @@ subTypes:
 - type: weblogic.security.providers.xacml.authorization.XACMLRoleMapperSecurityDataMBean
   value: weblogic.security.providers.xacml.authorization.XACMLRoleMapper
 - type: weblogic.security.providers.authorization.DefaultRoleMapperSecurityDataMBean
-  value: weblogic.security.providers.DefaultRoleMapper
+  value: weblogic.security.providers.authorization.DefaultRoleMapper
 
 disableMBeanJavadoc: true

@@ -4,6 +4,6 @@
 instanceLinks:
 - label: XACML Role Mapper Security Data
   root: SecurityData
-  resourceData: Domain/RealmsSecurityData/<Realm>/AuthenticationProviders/<AuthenticationProvider>
+  resourceData: Domain/RealmsSecurityData/<Realm>/RoleMappers/<RoleMapper>
   requiredCapabilities:
   - XACMLRoleMapperSecurityData

@@ -178,6 +178,9 @@ module.exports = function (driver, file) {
             const path = require('path');
             const fileName = process.env.OLDPWD + path.sep + file;
             await this.importProject(driver,projectFileName);
+            if (System.getenv("CONSOLE_TEST_PASSWORD")) {
+              password = System.getenv("CONSOLE_TEST_PASSWORD");
+            }
             await this.selectDomainConnection(driver,domConName);
             try {
                 console.log("Create Domain Connection");
@@ -484,26 +487,26 @@ module.exports = function (driver, file) {
             switch(navTreeLevel.toString()) {
                 case '2':
                     await this.goToNavTreeLevelTwoLink(driver,navImageMenuLink,levelOneLink,levelTwoLink);
-                    console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+" New button");
+                    console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"");
                     break;
                 case '3':
                     await this.goToNavTreeLevelThreeLink(driver,navImageMenuLink,levelOneLink,
                         levelTwoLink,levelThreeLink);
                         console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
-                        "->"+levelThreeLink+" New button");
+                        "->"+levelThreeLink+"");
                     break;
                 case '4':
                     await this.goToNavTreeLevelFourLink(driver,navImageMenuLink,levelOneLink,
                         levelTwoLink,levelThreeLink,levelFourLink);
                         console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
-                        "->"+levelThreeLink+"->"+levelFourLink+" New button");
+                        "->"+levelThreeLink+"->"+levelFourLink+"");
                     break;
             }
             await driver.sleep(2400);
             console.log("Click new button to create " + objectMBeanName);
             element = await driver.findElement(
                 By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button"));
-            await driver.sleep(900);
+            await driver.sleep(2400);
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -529,7 +532,7 @@ module.exports = function (driver, file) {
                 }
             }
             await this.saveAndCommitChanges(driver);
-            await driver.sleep(1200);
+            await driver.sleep(9600);
         },
 
 
@@ -556,7 +559,7 @@ module.exports = function (driver, file) {
             console.log("Enter object name: " + objectMBeanName);
             await driver.findElement(By.id("Name|input")).clear();
             await driver.findElement(By.id("Name|input")).sendKeys(objectMBeanName);
-            await driver.sleep(900);
+            await driver.sleep(7200);
             if (extraField == "searchselect") {
                 //await this.selectDropDownList(driver,fieldTwo,itemList,fieldThree);
                 await this.selectDropDownValue(driver,fieldTwo,itemList);
@@ -612,9 +615,9 @@ module.exports = function (driver, file) {
                     await element.click();
                     break;
             }
-            await driver.sleep(1200);
+            await driver.sleep(8400);
             await this.commitChanges(driver);
-            await driver.sleep(1200);
+            await driver.sleep(9600);
         },
 
         //
@@ -1016,7 +1019,8 @@ module.exports = function (driver, file) {
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             }
             if (divLevel.toString() == "3") {
-                element = await driver.findElement(By.xpath("//oj-switch[@id=\'"+idName+"\']/div/div/div"));
+                //element = await driver.findElement(By.xpath("//oj-switch[@id=\'"+idName+"\']/div/div/div"));
+                element = await driver.findElement(By.xpath("//oj-switch[@id=\'"+idName+"\']/div[1]/div"));
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             }
             await driver.sleep(300);
@@ -1102,14 +1106,14 @@ module.exports = function (driver, file) {
         saveToShoppingCart: async function(driver,buttonId) {
             console.log("Click create/save to shopping cart");
             if (buttonId == "finish")
-                element = driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons."+buttonId+".id]]\']/button/div/span"));
+                element = driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons."+buttonId+".id]]']/button/div/span"));
             else
-                element = driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.save.id]]\']/button/div/span"));
+                element = driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span[1]/img"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await driver.sleep(2400);
+            await driver.sleep(8400);
             if (element.isEnabled()) {
                 await element.click();
-                await driver.sleep(4800);
+                await driver.sleep(8400);
             }
         },
 
@@ -1126,13 +1130,13 @@ module.exports = function (driver, file) {
 
         // View changes in Shopping Cart
         viewChanges: async function(driver) {
-            console.log("Click view changes link from shopping cart");
-            await driver.sleep(1200);
-            element = driver.findElement(By.id("shoppingCartImage"));
+            console.log("Click Shopping Cart Image to expand its menu option....");
+            element = driver.findElement((By.xpath("//img[@id='shoppingCartImage']")));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
                 await element.click();
             }
+            console.log("Click View Changes menu");
             await driver.sleep(1200);
             await driver.findElement(By.linkText("View Changes")).click();
             await driver.sleep(1200);
@@ -1140,30 +1144,29 @@ module.exports = function (driver, file) {
 
         // Discard changes in Shopping Cart
         discardChanges: async function(driver) {
-            console.log("Click discard changes from shopping cart");
-            element = driver.findElement(By.id("shoppingCartImage"));
+            console.log("Click Shopping Cart Image to expand its menu option....");
+            element = driver.findElement((By.xpath("//img[@id='shoppingCartImage']")));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
                 await element.click();
             }
             await driver.sleep(1200);
-            await driver.findElement(By.xpath("//a[@id=\'shoppingCartMenuLauncher\']/img")).click();
-            await driver.sleep(1200);
-            await driver.findElement(By.xpath("//span[contains(.,\'Discard Changes\')]")).click();
+            console.log("Click Discard Changes menu");
+            await driver.findElement(By.xpath("//span[contains(.,'Discard Changes')]")).click();
             await driver.sleep(1200);
         },
         // Commit changes in Shopping Cart
         commitChanges: async function(driver) {
-            console.log("Click commit changes");
-            element = driver.findElement(By.id("shoppingCartImage"));
+            console.log("Click Shopping Cart Image to expand its menu option....");
+            element = driver.findElement((By.xpath("//img[@id='shoppingCartImage']")));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.sleep(1200);
             if (element.isEnabled()) {
                 await element.click();
             }
             await driver.sleep(1200);
-            await driver.findElement(By.xpath("//a[@id=\'shoppingCartMenuLauncher\']/img")).click();
-            await driver.sleep(1200);
-            await driver.findElement(By.xpath("//span[contains(.,\'Commit Changes\')]")).click();
+            console.log("Click Commit Changes menu");
+            await driver.findElement(By.xpath("//span[contains(.,'Commit Changes')]")).click();
             await driver.sleep(1200);
         },
 
@@ -1181,10 +1184,10 @@ module.exports = function (driver, file) {
         goToHelpPage: async function (driver) {
             await driver.get(adminUrl);
             await driver.sleep(1200);
-            element = driver.findElement(By.xpath("//li[@id=\'help\']/img"))
+            element = driver.findElement(By.xpath("//li[@id='help']/img"))
             if (element.isEnabled())
                 await element.click();
-            else element = driver.findElement(By.xpath("//img[@alt=\'help\']"))
+            else element = driver.findElement(By.xpath("//img[@alt='help']"))
             return element.click();
         },
         assertLinkPresent: async function () {
