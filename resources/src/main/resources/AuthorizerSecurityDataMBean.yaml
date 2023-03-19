@@ -8,6 +8,29 @@ derivedTypes:
 - weblogic.security.providers.xacml.authorization.XACMLAuthorizerSecurityDataMBean
 - weblogic.security.providers.authorization.DefaultAuthorizerSecurityDataMBean
 properties:
-- name: Policies
+- name: AppDeployments
   relationship: containment
-  type: weblogic.management.security.authorization.PoliciesMBean
+  type: weblogic.management.security.authorization.AppDeploymentPolicyMBean
+  array: true
+- name: CoherenceClusterSystemResources
+  relationship: containment
+  type: weblogic.management.security.authorization.CoherenceClusterSystemResourcePolicyMBean
+  array: true
+- name: Domain
+  relationship: containment
+  type: weblogic.management.security.authorization.DomainPoliciesMBean
+- name: JMSSystemResources
+  relationship: containment
+  type: weblogic.management.security.authorization.JMSSystemResourcePolicyMBean
+  array: true
+- name: JDBCSystemResources
+  relationship: containment
+  type: weblogic.management.security.authorization.JDBCSystemResourcePolicyMBean
+  array: true
+- name: RootLevel
+  relationship: containment
+  type: weblogic.management.security.authorization.RootLevelPoliciesMBean
+- name: Servers
+  relationship: containment
+  type: weblogic.management.security.authorization.ServerPolicyMBean
+  array: true

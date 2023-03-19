@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -91,6 +91,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                 'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.domain.version.label')},
               'username': {'value': ko.observable(),
                 'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.domain.username.label')},
+              'sso': {'value': ko.observable(),
+                'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.domain.sso.label')},
               'roles': {'value': ko.observable(),
                 'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.domain.roles.label')},
               'connectTimeout': {'value': ko.observable(),
@@ -277,6 +279,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           'useSparseTemplate': {
             id: 'sparse',
             label: oj.Translations.getTranslatedString('wrc-data-providers.checkboxes.useSparseTemplate.label')
+          },
+          'usesso': {
+            id: 'sso',
+            label: oj.Translations.getTranslatedString('wrc-data-providers.checkboxes.usesso.label')
           }
         },
         'dialog': {
@@ -381,6 +387,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           window.electron_api.ipc.receive('on-project-switched', (switching) => {
             performProjectElectronMenuAction(switching);
           });
+          window.electron_api.ipc.receive('on-login', (event) => {
+            handleLoginCustomUrl(event);
+          });
         }
 
         // Be sure to create a binding for any signaling add in
@@ -398,6 +407,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
         binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
           self.canExitCallback = exitFormCallback;
+        });
+
+        self.signalBindings.push(binding);
+
+        // Handle signal that sso token has expired
+        binding = viewParams.signaling.ssoTokenExpired.add((dataProvider) => {
+          handleSsoTokenExpired(dataProvider);
         });
 
         self.signalBindings.push(binding);
@@ -431,6 +447,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // for the events for project switched
         if (ViewModelUtils.isElectronApiAvailable()) {
           window.electron_api.ipc.cancelReceive('on-project-switched');
+          window.electron_api.ipc.cancelReceive('on-login');
         }
 
         // Detach all signal "add" bindings.
@@ -444,6 +461,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       this.getCachedState = () => {
         return (CoreUtils.isNotUndefinedNorNull(self.project) ? self.project : {});
+      };
+
+      this.onOjFocus = (event) => {
+        ViewModelUtils.setFocusFirstIncompleteField('input.oj-inputtext-input, input.oj-inputpassword-input');
       };
 
       function setProjectAlias(name) {
@@ -470,44 +491,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             window.electron_api.ipc.invoke('current-login')
               .then(reply => {
                 if (reply) {
+                  // Handle the login by processing the custom URL during initial startup
                   Logger.info('[DATAPROVIDERS] checkLoginCustomUrl() "current-login"');
-
-                  // TBD - Pass domain protocol and handle type error for bad URL
-                  const url = new URL(reply.customUrl);
-                  if (url.protocol !== 'wrc:') {
-                    Logger.info('[DATAPROVIDERS] checkLoginCustomUrl() "Invalid protocol!"');
-                    resolve(null);
-                    return;
-                  }
-                  const params = url.searchParams;
-                  const token = params.get('token');
-                  const expires = params.get('expires');
-                  const protocol = params.get('protocol');
-
-                  // Update the URL protocol so that URL host value is based on domain's URL
-                  url.protocol = (protocol ? protocol : 'http:');
-                  const domainUrl = `${url.protocol}//${url.host}`;
-
-                  // TBD - Determine handling of the provider based on the custom url
-                  const dataProviderName = 'loginProvider';
-                  var dataProvider = getAdminServerConnectionByName(dataProviderName);
-                  if (CoreUtils.isUndefinedOrNull(dataProvider)) {
-                    const entryValues = getDialogFields(DataProvider.prototype.Type.ADMINSERVER);
-                    entryValues.putValue('name', dataProviderName);
-                    dataProvider = addDialogFields(DataProvider.prototype.Type.ADMINSERVER, entryValues);
-                  }
-                  dataProvider.putValue('url', domainUrl);
-                  dataProvider.putValue('token', token);
-                  dataProvider.putValue('expires', expires);
-                  dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-
-                  // Select the dataprovider
-                  Logger.info(`[DATAPROVIDERS] checkLoginCustomUrl() ${domainUrl}`);
-                  selectAdminServerConnection(dataProvider);
-                  resolve(dataProvider);
-                  return;
+                  resolve(processCustomUrl(reply.customUrl));
                 }
-                resolve(null);
+                else {
+                  resolve(null);
+                }
               })
               .catch(failure => {
                 ViewModelUtils.failureResponseDefaultHandling(failure);
@@ -518,9 +508,138 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         });
       }
 
-      function getAdminServerConnectionByName(dataProviderName) {
+      function handleLoginCustomUrl(event) {
+        if (event) {
+          // Handle the login by processing the custom URL after returning from the browser
+          Logger.info('[DATAPROVIDERS] handleLoginCustomUrl() "on-login"');
+          processCustomUrl(event.customUrl);
+        }
+      }
+
+      function processCustomUrl(customUrl) {
+        // Validate custom url
+        var url;
+        try {
+          url = new URL(customUrl);
+          if (url.protocol !== 'wrc:') {
+            Logger.info('[DATAPROVIDERS] processCustomUrl() "Invalid protocol!"');
+            return null;
+          }
+        }
+        catch (error) {
+          Logger.info(`[DATAPROVIDERS] processCustomUrl() "Invalid URL!" (${error})`);
+          return null;
+        }
+        const params = url.searchParams;
+        const token = params.get('token');
+        const expires = params.get('expires');
+        const protocol = params.get('protocol');
+        const providerName = params.get('providerName');
+
+        // Update the URL protocol so that URL host value is based on domain's URL
+        url.protocol = (protocol ? protocol : 'http:');
+        const domainUrl = `${url.protocol}//${url.host}`;
+
+        // Handle creation/setup of the data provider based on the custom url parameters
+        // Update the domain url based on the custom url as the url syntax allowed in the browser is more flexible
+        var dataProvider = CoreUtils.isNotUndefinedNorNull(providerName) ? getSsoAdminServerConnectionByName(providerName) : null;
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider) && (dataProvider.state !== CoreTypes.Domain.ConnectState.CONNECTED.name)) {
+          dataProvider.putValue('url', domainUrl);
+        }
+
+        // When the sso data provider is not found double check by domain url
+        dataProvider = CoreUtils.isUndefinedOrNull(dataProvider) ? getSsoAdminServerConnectionByUrl(domainUrl) : dataProvider;
+
+        // Create a new sso data provider when existing entry was not found...
+        if (CoreUtils.isUndefinedOrNull(dataProvider)) {
+          const entryValues = getDialogFields(DataProvider.prototype.Type.ADMINSERVER);
+          entryValues.putValue('name', `SSO${entryValues.id}`);
+          entryValues.putValue('url', domainUrl);
+          dataProvider = addDialogFields(DataProvider.prototype.Type.ADMINSERVER, entryValues);
+          dataProvider.sso = true;
+          dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
+        }
+
+        // When the sso data provider is not connected, setup the token for the connection.
+        // Otherwise, continue with the existing token as swapping tokens needs backend support.
+        if (dataProvider.state !== CoreTypes.Domain.ConnectState.CONNECTED.name) {
+          Logger.info(`[DATAPROVIDERS] processCustomUrl() using token for ${dataProvider.name}`);
+          dataProvider.putValue('token', token);
+
+          // Setup a timer to fire when the token expires
+          const expireSeconds = parseInt(expires);
+          const timeout = (!isNaN(expireSeconds) && (expireSeconds > 60) ? expireSeconds - 60 : 300) * 1000;
+          dataProvider.putValue('expires', expireSeconds);
+          dataProvider.putValue('timerExpiredSignal', viewParams.signaling.ssoTokenExpired);
+          DataProviderManager.startDataProviderSsoTokenTimer(dataProvider, timeout);
+        }
+
+        // Select the sso data provider
+        Logger.info(`[DATAPROVIDERS] processCustomUrl() switch to ${dataProvider.name} (${dataProvider.url})`);
+        switchSsoAdminServerConnection(dataProvider);
+        return dataProvider;
+      }
+
+      function switchSsoAdminServerConnection(dataProvider) {
+        const curDataProvider = DataProviderManager.getLastActivatedDataProvider();
+        if (CoreUtils.isNotUndefinedNorNull(curDataProvider)) {
+          // Check for a currently active data provider with changes before selecting the sso data provider
+          if ((curDataProvider.id !== dataProvider.id) && CoreUtils.isNotUndefinedNorNull(self.canExitCallback)) {
+            const eventType = (['model', 'properties', 'modelComposite'].includes(curDataProvider.type) ? (ViewModelUtils.isElectronApiAvailable() ? 'autoDownload' : 'download') : 'exit');
+            self.canExitCallback(eventType, { dialogMessage: { name: curDataProvider.name } })
+              .then(reply => {
+                if (reply === null) {
+                  // Canceled, stay on current data provider
+                  return;
+                }
+                else if (['autoDownload', 'download'].includes(eventType)) {
+                  self.canExitCallback = undefined;
+                  selectAdminServerConnection(dataProvider);
+                }
+                else {
+                  // When reply is yes then continue with sso data provider
+                  if (reply) selectAdminServerConnection(dataProvider);
+                }
+              });
+            return;
+          }
+          // Check if the currently active data provider is the same as the sso data provider
+          // and skip selecting the sso data provider when currently connected to the domain...
+          else if ((curDataProvider.id === dataProvider.id) && (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name)) {
+            return;
+          }
+        }
+        // Continue with sso data provider
+        selectAdminServerConnection(dataProvider);
+      }
+
+      function clearSsoTokenState(dataProvider) {
+        // Clear the sso data provider of the token in the event of a connection/token issue
+        Logger.info(`[DATAPROVIDERS] clearSsoTokenState() ${dataProvider.name} (${dataProvider.id})`);
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.token)) {
+          DataProviderManager.cancelDataProviderSsoTokenTimer(dataProvider);
+          delete dataProvider.token;
+          delete dataProvider.expires;
+        }
+      }
+
+      function handleSsoTokenExpired(dataProvider) {
+        // Deactivate (disconnect) the data provider when the token expires
+        Logger.info(`[DATAPROVIDERS] handleSsoTokenExpired() ${dataProvider.name} (${dataProvider.id})`);
+        performDeactivateAction(dataProvider);
+      }
+
+      function getSsoAdminServerConnectionByName(dataProviderName) {
+        return getSsoAdminServerConnectionByAttribute('name', dataProviderName);
+      }
+
+      function getSsoAdminServerConnectionByUrl(domainUrl) {
+        return getSsoAdminServerConnectionByAttribute('url', domainUrl);
+      }
+
+      function getSsoAdminServerConnectionByAttribute(attrib, value) {
         var dataProvider;
-        const entry = connectionsModels().find(dataProvider => dataProvider.name === dataProviderName);
+        const entry = connectionsModels().find(dataProvider => dataProvider.sso && (dataProvider[attrib] === value));
         if (CoreUtils.isNotUndefinedNorNull(entry) && (entry.type === DataProvider.prototype.Type.ADMINSERVER.name)) {
           dataProvider = entry;
         }
@@ -832,6 +951,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dialogFields.putValue('url', 'http://localhost:7001');
             dialogFields.addField('username');
             dialogFields.addField('password');
+            dialogFields.putValue('ssoOption', (Runtime.isConfiguredSso() && ViewModelUtils.isElectronApiAvailable()));
+            dialogFields.putValue('ssoCheckbox', []);
             break;
           case DataProvider.prototype.Type.MODEL:
             dialogFields.putValue('selectProps', true);
@@ -870,6 +991,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dialogFields.putValue('url', dataProvider.url);
             dialogFields.putValue('username', dataProvider.username);
             dialogFields.putValue('password', dataProvider.password);
+            dialogFields.putValue('ssoOption', (Runtime.isConfiguredSso() && ViewModelUtils.isElectronApiAvailable()));
+            dialogFields.putValue('ssoCheckbox', (dataProvider.sso ? [self.i18n.checkboxes.usesso.id] : []));
             break;
           case DataProvider.prototype.Type.MODEL.name:
             dialogFields.putValue('selectProps', true);
@@ -899,6 +1022,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dataProvider.putValue('url', dialogFields.url);
             dataProvider.putValue('username', dialogFields.username);
             dataProvider.putValue('password', dialogFields.password);
+            dataProvider.putValue('sso', (dialogFields.ssoCheckbox.length > 0));
             break;
           case DataProvider.prototype.Type.MODEL:
             dataProvider = DataProviderManager.createWDTModel({id: dialogFields.id, name: dialogFields.name, type: dialogFields.type, beanTrees: []});
@@ -935,6 +1059,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               self.dialogFields().url = dataProvider.url;
               self.dialogFields().username = dataProvider.username;
               self.dialogFields().password = dataProvider.password;
+              self.dialogFields().ssoCheckbox = (dataProvider.sso ? [self.i18n.checkboxes.usesso.id] : []);
               break;
             case DataProvider.prototype.Type.MODEL.name:
               self.dialogFields().propProvider = dataProvider.propProvider;
@@ -970,6 +1095,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dataProvider.putValue('url', dialogFields.url);
             dataProvider.putValue('username', dialogFields.username);
             dataProvider.putValue('password', dialogFields.password);
+            dataProvider.putValue('sso', (dialogFields.ssoCheckbox.length > 0));
             break;
           case DataProvider.prototype.Type.MODEL.name:
             dataProvider.putValue('file', dialogFields.file);
@@ -1066,6 +1192,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             connectionsModels()[index].connectivity = CoreTypes.Console.RuntimeMode.DETACHED.name;
             if (dataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name) {
               delete connectionsModels()[index].password;
+              delete connectionsModels()[index].token;
+              delete connectionsModels()[index].expires;
             }
             connectionsModels.valueHasMutated();
             quiescedCount++;
@@ -1114,7 +1242,61 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         }
       }
 
+      // Perform login handling for an admin server connection using sso setup and
+      // return false when the data provider does not require the login handling...
+      function performAdminServerConnectionSsoLogin(dataProvider) {
+        if (!ViewModelUtils.isElectronApiAvailable() || !dataProvider.sso || CoreUtils.isNotUndefinedNorNull(dataProvider.token)) {
+          // Skip login when the data provider is not set for sso or has a token
+          return false;
+        }
+
+        // Proceed to exec the browser and initiate the login process...
+        var loginUrl = null;
+        var url = dataProvider.url.trim();
+        if (url.length > 0) url = (url.substring(url.length - 1) === '/') ? url.slice(0, -1) : url;
+        try {
+          loginUrl = new URL(url + Runtime.getSsoDomainLoginUri());
+          loginUrl.searchParams.set('providerName', dataProvider.name);
+        }
+        catch (error) {
+          errorPerformAdminServerConnectionSsoLogin(dataProvider, error.message);
+          return true;
+        }
+        window.electron_api.ipc.invoke('perform-login', { name: dataProvider.name, loginUrl: loginUrl.toString() })
+          .then((reply) => {
+            Logger.info(`[DATAPROVIDERS] performAdminServerConnectionSsoLogin() ${loginUrl}`);
+            setListItemColor([dataProvider]);
+            self.responseMessage('');
+            setResponseMessageVisibility('connection-response-message', false);
+            self.project.upsertDataProvider(dataProvider);
+            updateConnectionsModels(dataProvider);
+            dispatchElectronApiSignal('project-changing');
+            viewParams.onCachedStateChanged(self.tabNode, self.project);
+            // Select 'dataproviders' tab strip and collapse console Kiosk
+            // Specify the source of the signal as the login action which
+            // updates the list of dataproviders in the Kiosk. Note the SSO
+            // dataprovider is not active without a token so the dataprovider
+            // selected signal will be used after the token is obtained!
+            viewParams.signaling.tabStripTabSelected.dispatch('perform-login', 'dataproviders', false);
+          })
+          .catch(response => {
+            errorPerformAdminServerConnectionSsoLogin(dataProvider, response);
+          });
+        return true;
+      }
+
+      function errorPerformAdminServerConnectionSsoLogin(dataProvider, response) {
+        setListItemColor([dataProvider]);
+        self.responseMessage(`${response}`);
+        setResponseMessageVisibility('connection-response-message', true);
+        editAdminServerConnection(dataProvider);
+      }
+
       function selectAdminServerConnection(dataProvider, navtreeReset = false) {
+        // Check/Perform login handling on a dataprovider with sso setup,
+        // otherwise continue through and select the data provider...
+        if (performAdminServerConnectionSsoLogin(dataProvider)) return;
+
         if (dataProvider.state === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
           DataProviderManager.activateAdminServerConnection(dataProvider)
             .then(reply => {
@@ -1132,6 +1314,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                 setListItemColor([dataProvider]);
                 self.responseMessage(reply.failureReason);
                 setResponseMessageVisibility('connection-response-message', true);
+                // Clear an sso data provider so a new token can be obtained on next connection
+                clearSsoTokenState(dataProvider);
                 editAdminServerConnection(dataProvider);
               }
             })
@@ -1658,6 +1842,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             self.i18n.popups.info.domain.url.value(dataProvider.url);
             self.i18n.popups.info.domain.version.value(dataProvider.domainVersion);
             self.i18n.popups.info.domain.username.value(dataProvider.username);
+            self.i18n.popups.info.domain.sso.value(dataProvider.sso);
             self.i18n.popups.info.domain.roles.value(dataProvider.userRoles);
             self.i18n.popups.info.domain.connectTimeout.value(dataProvider.connectTimeout);
             self.i18n.popups.info.domain.readTimeout.value(dataProvider.readTimeout);
@@ -1677,6 +1862,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         popup.open('#' + dataProvider.id);
       }
 
+      // Handle the SSO setting changing on the connection dialog box
+      this.ssoAdminServerConnectionStateChanged = function (event) {
+        DataProvidersDialog.updateSsoDependentFields(event.detail.value.length > 0);
+      };
+
+      // Handle the SSO setting before connection dialog box displayed
+      function setSsoAdminServerConnectionState(checkbox) {
+        DataProvidersDialog.updateSsoDependentFields(checkbox.length > 0);
+      }
+
       function addAdminServerConnection(dialogParams){
         const entryValues = getDialogFields(DataProvider.prototype.Type.ADMINSERVER);
         self.dialogFields(entryValues);
@@ -1685,6 +1880,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.connections.add.value'));
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
 
+        setSsoAdminServerConnectionState(self.dialogFields().ssoCheckbox);
         self.responseMessage('');
         setResponseMessageVisibility('connection-response-message',false);
 
@@ -2200,6 +2396,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       function editAdminServerConnection(dataProvider) {
         const entryValues = createDialogFields(dataProvider);
         self.dialogFields(entryValues);
+        setSsoAdminServerConnectionState(self.dialogFields().ssoCheckbox);
 
         self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.connections.value'));
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.connections.edit.value'));
@@ -2216,11 +2413,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             if (reply) {
               // FortifyIssueSuppression(C9827329D56593134375D08BC3A21847) Password Management: Password in Comment
               // Not a password, just a comment password property.
-              const removeRequired = (dataProvider.url !== self.dialogFields().url || dataProvider.username !== self.dialogFields().username || dataProvider.password !== self.dialogFields().password);
+              const removeRequired = (dataProvider.url !== self.dialogFields().url
+                                     || dataProvider.username !== self.dialogFields().username
+                                     || dataProvider.password !== self.dialogFields().password
+                                     || dataProvider.sso !== (self.dialogFields().ssoCheckbox.length > 0));
               if ((removeRequired) && (dataProvider.state !== CoreTypes.Domain.ConnectState.DISCONNECTED.name)) {
                 removeDataProvider(dataProvider)
                   .then(reply =>{
                     if (reply.succeeded) {
+                      // When SSO state changes, signal provider removal to ensure proper state until activate
+                      clearSsoTokenState(dataProvider);
+                      if (dataProvider.sso !== (self.dialogFields().ssoCheckbox.length > 0)) {
+                        viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
+                      }
                       dataProvider = updateDataProvider(dataProvider, self.dialogFields());
                       dataProvider = DataProviderManager.createAdminServerConnection(dataProvider);
                       // Set state to disabled, because we need to set
@@ -2901,6 +3106,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           switch(dataProvider.type) {
             case DataProvider.prototype.Type.ADMINSERVER.name: {
               const options = {project: {name: self.project.name}, provider: {name: dataProvider.name, username: dataProvider.username, password: dataProvider.password}};
+              if (dataProvider.sso) {
+                // Skip credentials when data provider is setup for sso
+                selectAdminServerConnection(dataProvider, navtreeReset);
+                break;
+              }
+              // Otherwise, get the connection credentials
               getAdminServerConnectionCredentials(options)
                 .then(reply => {
                   if (reply.succeeded) {

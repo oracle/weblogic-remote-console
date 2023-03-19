@@ -20,9 +20,6 @@ public class WebLogicMBeansVersion {
   // Describes the overall WebLogic version
   private WebLogicVersion weblogicVersion;
 
-  // The PSU (null if using GA)
-  private WebLogicPSU psu;
-
   // The set of role for viewing the mbeans
   // (since what mbeans a user can see depends on the user's roles)
   private Set<String> roles;
@@ -42,10 +39,6 @@ public class WebLogicMBeansVersion {
     return weblogicVersion;
   }
 
-  public WebLogicPSU getPSU() {
-    return psu;
-  }
-
   public Set<String> getRoles() {
     return roles;
   }
@@ -56,12 +49,10 @@ public class WebLogicMBeansVersion {
 
   WebLogicMBeansVersion(
     WebLogicVersion weblogicVersion,
-    WebLogicPSU psu,
     Set<String> roles,
     Set<String> capabilities
   ) {
     this.weblogicVersion = weblogicVersion;
-    this.psu = psu;
     this.roles = roles;
     this.capabilities = capabilities;
   }

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -27,6 +27,7 @@ import weblogic.remoteconsole.server.repo.BooleanValue;
 import weblogic.remoteconsole.server.repo.DateAsLongValue;
 import weblogic.remoteconsole.server.repo.DateValue;
 import weblogic.remoteconsole.server.repo.DoubleValue;
+import weblogic.remoteconsole.server.repo.EntitleNetExpressionValue;
 import weblogic.remoteconsole.server.repo.HealthStateValue;
 import weblogic.remoteconsole.server.repo.IntValue;
 import weblogic.remoteconsole.server.repo.LongValue;
@@ -110,6 +111,10 @@ class WebLogicRestValueBuilder {
     if (valueDef.isHealthState()) {
       return new HealthStateValue(getHealthState(jsonValue));
     }
+    if (valueDef.isEntitleNetExpression()) {
+      // The CBE just passes them straight through as json values:
+      return new EntitleNetExpressionValue(jsonValue);
+    }
     if (valueDef.isThrowable()) {
       return new ThrowableValue(getThrowable(jsonValue));
     }
@@ -159,7 +164,7 @@ class WebLogicRestValueBuilder {
   }
 
   private Throwable getThrowable(JsonValue jsonValue) {
-    if ((jsonValue == null) || jsonValue != JsonValue.NULL) {
+    if ((jsonValue == null) || jsonValue == JsonValue.NULL) {
       return null;
     }
     JsonObject jsonObj = jsonValue.asJsonObject();

@@ -14,8 +14,10 @@ target
 **/.settings
 **/.settings/*
 release.properties
+release-info
 **/pom.xml.releaseBackup
 *.hold
+*.log
 .flattened-pom.xml
 CBE*.out
 console-0.9-*
@@ -39,14 +41,21 @@ frontend/electron-test/NewWDTModelFile.yml
 frontend/electron-test/electronTest.log
 frontend/electron-test/node_modules/
 frontend/electron-test/package-lock.json
+frontend/electron-test/newPropFile.prop
+frontend/electron-test/newUC001BWDTModelFile.yml
+frontend/electron-test/newUC002BWDTModelFile.yml
+frontend/electron-test/newUC003BWDTModelFile.yml
+frontend/electron-test/newUC017BWDTModelFile.yml
+frontend/electron-test/newWDTModelTokenFile.yml
 .vscode/*
 client.log.*
-/bin/
+bin/*
 weblogic-bean-info-harvester/build-*
 run/work
 fortify-output/**
 owasp-output/**
 frontend/seleniumTest.log
+everypage-oracle-tests/
 
 electron/dist/**
 electron/extraFiles/**
@@ -55,3 +64,5 @@ electron/node_modules/**
 hugo/*/docs/
 hugo/*/.vscode/
 hugo/*/.hugo_build.lock
+
+*start-weblogic.out

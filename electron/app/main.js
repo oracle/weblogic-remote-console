@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -14,10 +14,10 @@ const net = require('net');
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
-const { spawn } = require("child_process");
-const { execFile } = require("child_process");
+const { spawn } = require('child_process');
+const { execFile } = require('child_process');
 
-const { app, ipcMain } = require('electron');
+const { app, ipcMain, shell } = require('electron');
 
 const logger = require('./js/console-logger');
 
@@ -63,7 +63,7 @@ let showPort = false;
 let useTokenNotCookie = false;
 let quiet = false;
 let login = null;
-let lines = [ ];
+let lines = [];
 
 (() => {
   function updateUserDataPath() {
@@ -112,45 +112,28 @@ let lines = [ ];
   ProjectManager.selectCurrentProject();
 })();
 
-// On Mac OS, the "Finder" prevents starting the Remote Console when it
-// has already been started, even if it was only started for use by WKT UI.
-// This is different than Windows and Linux where the passive Remote Console
-// instance started for WKT UI is not seen as an instance of the Remote
-// Console.  Given the limitations of the Mac OS user interface, it will be
-// impossible to do as well as Windows and Linux, where the user can launch as
-// many copies of the Remote Console as they choose.  Instead, we will allow the
-// user to have, at most, two Remote Consoles, the passive one used by WKT UI
-// and an active one that is actually a Remote Console that they can use.
-// 
-// We will be able to make this work on the Mac by recognizing that the user
-// has clicked on the Remote Console and interpreting that as the desire to
-// have a real one, not the passive one.
-//
-// Electron on Mac OS does give an "activate" notification when the user clicks.
-// Therefore, if there is no Remote Console running when we get the
-// notification, we start one.  There are three ways to know that there is
-// already a Remote Console running:
-// 1.  We are a Remote Console ourselves.  This is indicated by the "window"
-//     variable, which is where the remote console is displayed and is set by the
-//     "ready" notification, which comes before any "activate" notification.
-// 2.  We've already started one ourselves and it is still running.
-// 3.  If a Remote Console was started *prior* to launching WKT UI and the user
-//     clicked on our process, neither of the above conditions is true, but
-//     we also don't want to launch another because that is not consistent with
-//     the user's click.
-//     We can tell that this has occurred by using the "single instance lock".
-//     On Mac OS, we grab the lock whenever we create the window (the lock is
-//     automatically released on process exit).  Therefore, if nobody is holding
-//     the lock, then we are free to start a new process to start a window and
-//     grab the lock.  Since we are testing the lock before creating the new
-//     process, there is a timing window where if a user clicks really quickly,
-//     we will try to create more than necessary and they will die right away.
-//     This will actually be the behavior the user would expect since, on the
-//     Mac, only a single active instance is allowed.
-// Technically, we could live without #2 since #3 will cover it, but it feels
-// like checking a variable is nice and light weight.
+// On Mac OS, "activate" signifies that the user has "clicked" on the Remote
+// Console, whether in the "Finder" or the taskbar.  Most of the time, the Mac
+// will handle this perfectly fine:  if it is not running, it starts it and if 
+// it is already running, it makes it current.  The problem is that with the
+// "headless" version running for WKT UI, the one that is "running" could be
+// non-functional as far as user interaction is concerned.  So, when the user
+// chooses to click on the Remote Console and the only version running is
+// "headless", we start a "headed" version.
 app.on('activate', () => {
-  if (!window && !another_me && app.requestSingleInstanceLock()) {
+  logger.log('debug', `Event activate (${process.pid})`);
+  // window is set for "headed" instances.  So, if it is set, we are good.
+  // If not, then we want to see if there is already a headed instance running
+  // and only start a headed instance if there is not.  Regretfully, at this
+  // time, we don't have a way of knowing that there is a headed instance.  We
+  // can, however, use the "single instance lock" to come close.  Only a headed
+  // instance will grab the lock.  So, if someone is holding the lock then we
+  // are good.  However, if the user created two headed instances and closed the
+  // one that had the lock, we'll end up starting an instance here even though
+  // there already is one.  This new instance *will* grab the lock, so another
+  // click will not start yet another.  This is not an important issue; we will
+  // fix it soon.
+  if (!window && app.requestSingleInstanceLock()) {
     app.releaseSingleInstanceLock();
     start_another_me();
   }
@@ -165,7 +148,7 @@ function doCheckPid() {
 }
 
 function doit() {
-  if (!app.commandLine.hasSwitch("headless")) {
+  if (!app.commandLine.hasSwitch('headless')) {
     AppWindow.load(`http://localhost:${cbePort}/`);
   }
 }
@@ -177,61 +160,56 @@ function processCmdLineOptions() {
     cbePort = config['server.port'];
   }
 
-  if (app.commandLine.hasSwitch("check-ppid"))
+  if (app.commandLine.hasSwitch('check-ppid'))
     checkPid = process.ppid;
   else
-    checkPid = app.commandLine.getSwitchValue("check-pid");
+    checkPid = app.commandLine.getSwitchValue('check-pid');
 
   if (checkPid !== 0) {
     setInterval(doCheckPid, checkPpidMillis);
   }
 
-  const portOption = app.commandLine.getSwitchValue("port");
+  const portOption = app.commandLine.getSwitchValue('port');
   if (portOption) {
     cbePort = portOption;
   }
 
-  const stdinOption = app.commandLine.hasSwitch("stdin");
+  const stdinOption = app.commandLine.hasSwitch('stdin');
   if (stdinOption) {
     let readlineStdin = readline.createInterface({
       input: process.stdin,
     });
-    readlineStdin.on("close", () => {
+    readlineStdin.on('close', () => {
       process.exit();
     });
   }
 
   // Windows folds case in arguments it seems
-  showPort = app.commandLine.hasSwitch("showPort") ||
-    app.commandLine.hasSwitch("showport");
-  useTokenNotCookie = app.commandLine.hasSwitch("useTokenNotCookie") ||
-    app.commandLine.hasSwitch("usetokennotcookie");
-  quiet = app.commandLine.hasSwitch("quiet");
-
-  // Check for WRC custom URL
-  if (app.commandLine.hasSwitch("login")) {
-    login = app.commandLine.getSwitchValue("login");
-  }
+  showPort = app.commandLine.hasSwitch('showPort') ||
+    app.commandLine.hasSwitch('showport');
+  useTokenNotCookie = app.commandLine.hasSwitch('useTokenNotCookie') ||
+    app.commandLine.hasSwitch('usetokennotcookie');
+  quiet = app.commandLine.hasSwitch('quiet');
 }
 
 function start_cbe() {
-  var instDir = path.dirname(app.getPath("exe"));
+  var instDir = path.dirname(app.getPath('exe'));
   let filename = AppConfig.getFilename();
   let spawnArgs = [
     `-Dserver.port=${cbePort}`,
-    "-jar",
+    '-jar',
     `${instDir}/backend/console.jar`,
-    "--persistenceDirectory",
-    `${app.getPath("userData")}`,
-    "--showPort",
-    "--stdin",
-    "--properties",
+    '--persistenceDirectory',
+    `${app.getPath('userData')}`,
+    '--showPort',
+    '--stdin',
+    '--properties',
     filename,
   ];
   if (useTokenNotCookie) {
     spawnArgs.push('--useTokenNotCookie');
   }
-  const cbe = spawn(instDir + "/customjre/bin/java", spawnArgs);
+  const cbe = spawn(AppConfig.get('javaPath'), spawnArgs);
 
   let readlineStderr = readline.createInterface({
     input: cbe.stderr,
@@ -241,56 +219,56 @@ function start_cbe() {
     input: cbe.stdout,
   });
 
-  readlineStderr.on("line", (line) => {
-    console.log(line);
+  readlineStderr.on('line', (line) => {
+    logger.log('info', line);
     lines.push(line);
   });
 
-  readlineStderr.on("close", () => {
+  readlineStderr.on('close', () => {
     if (!started) {
       let i = lines.length - 40;
       if (i < 0) i = 0;
-      var last40 = "Java Process Output";
-      for (; i < lines.length; i++) last40 = last40 + "\n" + lines[i];
+      var last40 = 'Java Process Output';
+      for (; i < lines.length; i++) last40 = last40 + '\n' + lines[i];
       AppWindow.showJavaProcessErrorMessageBox(
-        "Remote Console Error - Java Process",
+        'Remote Console Error - Java Process',
         `${last40}`,
-        ["Exit"]
+        ['Exit']
       );
     }
     process.exit();
   });
 
-  readlineStdout.on("line", (line) => {
-    console.log(line);
-    if (line.startsWith("Port=")) {
-      if (showPort) logger.log(line);
-      cbePort = line.replace("Port=", "");
+  readlineStdout.on('line', (line) => {
+    if (line.startsWith('Port=')) {
+      console.log(line);
+      cbePort = line.replace('Port=', '');
       started = true;
       doit();
     }
+    logger.log('debug', line);
   });
 }
 
-function start_another_me() {
-  another_me = execFile(`${instDir}/WebLogic Remote Console`, () => {
+// This is only used on Mac
+function start_another_me(event = null) {
+  logger.log('debug', `Starting another remote console (${process.pid})`);
+  const execArg = (event ? `${event.customUrl}` : null);
+  another_me = execFile(`${instDir}/WebLogic Remote Console`, (execArg ? [execArg] : []), () => {
     another_me = null;
   });
 }
 
 app.whenReady()
   .then(() => {
+    logger.setOptions({ isHeadlessMode: app.commandLine.hasSwitch('headless')});
     processCmdLineOptions();
 
-    if (!app.commandLine.hasSwitch("headless")) {
-      // As described earlier, the Mac will only support one running
-      // Remote Console (with a head)
-      if (OSUtils.isMacOS()) {
-        if (!app.requestSingleInstanceLock()) {
-          process.exit();
-          process.kill(process.pid, 9);
-        }
-      }
+    if (!app.commandLine.hasSwitch('headless')) {
+      // Attempt to obtain the single instance lock.  This is not used as a
+      // "lock", really, but as a signifier that we have a running instance
+      // that is not headless.  See app.on for "activate" above.
+      app.requestSingleInstanceLock();
 
       const params = {
         version: version,
@@ -300,7 +278,7 @@ app.whenReady()
         supportsAutoUpgrades: !instDir.startsWith('/opt/')
       };
 
-      if (params.supportsAutoUpgrades && !app.commandLine.hasSwitch("headless")) {
+      if (params.supportsAutoUpgrades && !app.commandLine.hasSwitch('headless')) {
         const autoUpdateInfo = getAutoUpdateInfo();
         if (autoUpdateInfo.version !== version) {
           params['version'] = autoUpdateInfo.version;
@@ -308,13 +286,17 @@ app.whenReady()
       }
 
       window = AppWindow.initialize(
-        "Initializing...",
+        'Initializing...',
         params,
         path.dirname(app.getPath('exe')),
         app.getPath('userData')
       );
 
       AppWindow.renderAppMenu();
+    }
+    else {
+      if (OSUtils.isMacOS())
+        app.dock.hide();
     }
     start_cbe();
   })
@@ -351,17 +333,17 @@ ipcMain.handle('file-creating', async (event, arg) => {
       properties: ['createDirectory'],
       filters: { name: 'Supported Formats', extensions: FileUtils.fileExtensions }
     };
-    return showFileCreatingSaveDialog(dialogParams)
+    return AppWindow.showFileCreatingSaveDialog(dialogParams)
       .then(result => {
         if (!result.canceled) {
           return FileUtils.writeFileAsync(result.filePath, arg.fileContents)
             .then(reply => {
-              reply["filePath"] = result.filePath;
+              reply['filePath'] = result.filePath;
               return Promise.resolve(reply);
             });
         }
         else {
-          return Promise.resolve({succeeded: false, filePath: ""});
+          return Promise.resolve({succeeded: false, filePath: ''});
         }
       });
   }
@@ -369,9 +351,9 @@ ipcMain.handle('file-creating', async (event, arg) => {
     const response = {
       succeeded: false,
       failure: {
-        transport: {statusText: "Missing or invalid parameter"},
-        failureType: "VERIFICATION",
-        failureReason: "Parameters cannot be undefined, null or an empty string: arg.fileContents!"
+        transport: {statusText: 'Missing or invalid parameter'},
+        failureType: 'VERIFICATION',
+        failureReason: 'Parameters cannot be undefined, null or an empty string: arg.fileContents!'
       }
     };
     return Promise.resolve(response);
@@ -381,13 +363,13 @@ ipcMain.handle('file-creating', async (event, arg) => {
 ipcMain.handle('file-reading', async (event, arg) => {
   return FileUtils.createFileReadingResponse(arg.filepath)
     .catch(response => {
-      if (arg.allowDialog && (response.failureType === "NOT_FOUND")) {
+      if (arg.allowDialog && (response.failureType === 'NOT_FOUND')) {
         const dialogParams = {
           defaultPath: arg.filepath,
           properties: ['openFile'],
           filters: { name: 'Supported Formats', extensions: FileUtils.fileExtensions }
         };
-        return showFileReadingOpenDialog(dialogParams)
+        return AppWindow.showFileReadingOpenDialog(dialogParams)
           .then(dialogReturnValue => {
             if (dialogReturnValue.filePaths.length > 0) {
               return FileUtils.createFileReadingResponse(dialogReturnValue.filePaths[0]);
@@ -417,9 +399,9 @@ ipcMain.handle('file-writing', async (event, arg) => {
     const response = {
       succeeded: false,
       failure: {
-        transport: {statusText: "Missing or invalid parameter"},
-        failureType: "VERIFICATION",
-        failureReason: "Parameters cannot be undefined, null or an empty string: arg.filepath, arg.fileContents!"
+        transport: {statusText: 'Missing or invalid parameter'},
+        failureType: 'VERIFICATION',
+        failureReason: 'Parameters cannot be undefined, null or an empty string: arg.filepath, arg.fileContents!'
       }
     };
     return Promise.resolve(response);
@@ -442,7 +424,7 @@ ipcMain.handle('preference-reading', async (event, arg) => {
 });
 
 ipcMain.handle('file-choosing', async (event, dialogParams) => {
-  return showFileChoosingOpenDialog(dialogParams)
+  return AppWindow.showFileChoosingOpenDialog(dialogParams)
     .then(dialogReturnValue => {
       if (dialogReturnValue.filePaths.length > 0) {
         const filepath = dialogReturnValue.filePaths[0];
@@ -455,7 +437,7 @@ ipcMain.handle('file-choosing', async (event, dialogParams) => {
     .catch(err => {
       const response = {
         transport: {statusText: err},
-        failureType: "UNEXPECTED",
+        failureType: 'UNEXPECTED',
         failureReason: err
       };
       return Promise.reject(response);
@@ -464,8 +446,10 @@ ipcMain.handle('file-choosing', async (event, dialogParams) => {
 
 ipcMain.handle('current-login', async (event, ...args) => {
   if (login) {
+    logger.log('info', `IPC current login obtained custom URL (${process.pid})`);
+
     // Create the reply with the current login state
-    const reply = {action: "login", customUrl: login};
+    const reply = {action: 'login', customUrl: login};
 
     // Clear the login state then return the reply
     login = null;
@@ -474,13 +458,45 @@ ipcMain.handle('current-login', async (event, ...args) => {
   return null;
 });
 
+ipcMain.handle('perform-login', async (event, arg) => {
+  return new Promise(function (resolve, reject) {
+    if (arg) {
+      logger.log('info', `IPC perform login: ${arg.loginUrl}`);
+
+      // Validate the URL content and exec the user's browser
+      try {
+        const loginUrl = new URL(arg.loginUrl);
+        if (!['https:', 'http:'].includes(loginUrl.protocol.toLowerCase())) {
+          logger.log('error', `IPC perform login invalid protocol: ${loginUrl.protocol}`);
+          reject(new Error(`Invalid protocol '${loginUrl.protocol}'`));
+        }
+        else {
+          shell.openExternal(arg.loginUrl)
+            .then(() => {
+              resolve(true);
+            })
+            .catch((error) => {
+              logger.log('error', `IPC perform login failed open: ${error}`);
+              reject(new Error(`${error}`));
+            });
+          }
+      }
+      catch (error) {
+        logger.log('error', `IPC perform login failed: ${error}`);
+        reject(new Error(`${error.message}`));
+      }
+    }
+    resolve(false);
+  });
+});
+
 ipcMain.handle('current-project-requesting', async (event, ...args) => {
   // You don't need to return an explicit Promise
   // here, because the async keyword before the
   // "(event, ...args)" in the method signature,
   // does that implicitly.
   const current_project = ProjectManager.getCurrentProject();
-  if (typeof current_project !== "undefined") {
+  if (typeof current_project !== 'undefined') {
     return current_project;
   }
   return null;
@@ -499,7 +515,7 @@ ipcMain.handle('project-changing', async (event, arg) => {
   // here, because the async keyword before the
   // "(event, ...args)" in the method signature,
   // does that implicitly.
-  return `Saved it!`;
+  return 'Saved it!';
 });
 
 /**
@@ -511,27 +527,27 @@ ipcMain.handle('credentials-requesting', async (event, arg) => {
   return new Promise(function (resolve, reject) {
     function isValidProvider(project, provider) {
       const provider1 = project.dataProviders.find(item => item.name === provider.name && item.username === provider.username);
-      return (typeof provider1 !== "undefined");
+      return (typeof provider1 !== 'undefined');
     }
 
     const reply = {succeeded: false};
 
     try {
       const keytar = getKeyTar();
-      if (typeof keytar !== "undefined") {
+      if (typeof keytar !== 'undefined') {
         const project = ProjectManager.getProject(arg.project.name);
-        if (typeof project !== "undefined") {
+        if (typeof project !== 'undefined') {
           if (isValidProvider(project, arg.provider)) {
             const account = `${project.name}-${arg.provider.name}-${arg.provider.username}`;
             keytar.getPassword('weblogic-remote-console', account)
               .then(secret => {
                 if (secret !== null) {
                   reply.succeeded = true;
-                  reply["secret"] = secret;
+                  reply['secret'] = secret;
                 }
                 else {
-                  reply["failure"] = {
-                    failureType: "NO_MATCHING_KEYTAR_ACCOUNT",
+                  reply['failure'] = {
+                    failureType: 'NO_MATCHING_KEYTAR_ACCOUNT',
                     failureReason: `Unable to retrieve secret for '${account}' keytar account`
                   };
                 }
@@ -539,25 +555,25 @@ ipcMain.handle('credentials-requesting', async (event, arg) => {
               });
           }
           else {
-            reply["failure"] = {
-              failureType: "INVALID_PROVIDER",
+            reply['failure'] = {
+              failureType: 'INVALID_PROVIDER',
               failureReason: `Provider named '${arg.provider.name}' is not associated with the specified project: '${arg.project.name}'`
             };
             resolve(reply);
           }
         }
         else {
-          reply["failure"] = {
-            failureType: "INVALID_PROJECT",
+          reply['failure'] = {
+            failureType: 'INVALID_PROJECT',
             failureReason: `Unable to find a project named '${arg.project.name}'`
           };
           resolve(reply);
         }
       }
       else {
-        reply["failure"] = {
-          failureType: "KEYTAR_NOT_LOADABLE",
-          failureReason: `keytar is not installed or loadable, so skipping code that securely retrieves stored credentials.`
+        reply['failure'] = {
+          failureType: 'KEYTAR_NOT_LOADABLE',
+          failureReason: 'keytar is not installed or loadable, so skipping code that securely retrieves stored credentials.'
         };
         resolve(reply);
       }
@@ -565,7 +581,7 @@ ipcMain.handle('credentials-requesting', async (event, arg) => {
     catch(err) {
       const response = {
         transport: {statusText: err.code},
-        failureType: "UNEXPECTED",
+        failureType: 'UNEXPECTED',
         failureReason: err.stack
       };
       reject(response);

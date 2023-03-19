@@ -16,9 +16,9 @@ import javax.ws.rs.core.Response;
 import weblogic.remoteconsole.common.utils.Message;
 import weblogic.remoteconsole.common.utils.MessageUtils;
 
-abstract class WebLogicRestClientHelper {
+public class WebLogicRestClientHelper {
 
-  static Response getWebLogicRestErrorMessages(Response response) {
+  public static Response getWebLogicRestErrorMessages(Response response) {
     List<Message> messages = new ArrayList<>();
     if (!addMessagesFromJsonEntity(response, messages)) {
       if (!addMessageFromStringEntity(response, messages)) {
@@ -37,7 +37,7 @@ abstract class WebLogicRestClientHelper {
         .build();
   }
 
-  static MultivaluedMap<String, Object> createHeaders(WebLogicRestRequest request) {
+  public static MultivaluedMap<String, Object> createHeaders(WebLogicRestRequest request) {
     MultivaluedMap<String, Object> headers = new MultivaluedHashMap<>();
     headers.add("Content-type", MediaType.APPLICATION_JSON);
     headers.add("X-Requested-By", "ConsoleBackendRestClient");
@@ -49,7 +49,7 @@ abstract class WebLogicRestClientHelper {
     return headers;
   }
 
-  static boolean isErrorResponse(String httpMethod, int httpStatus) {
+  public static boolean isErrorResponse(String httpMethod, int httpStatus) {
     boolean result;
     switch (httpMethod) {
       case "PUT":

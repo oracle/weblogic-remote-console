@@ -2,15 +2,16 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 contents:
-- label: Roles
+- child: AppDeployments
+- child: CoherenceClusterSystemResources
+- label: Domain
   type: group
   contents:
-  - label: Global
-    type: group
-    contents:
-    - child: Roles.Global.Roles
-  - label: Domain
-    type: group
-    contents:
-    - child: Roles.Domain.Roles
-  - child: Roles.JMSSystemResources
+  - child: Domain.Roles
+- label: Global
+  type: group
+  contents:
+  - child: Global.Roles
+- child: JDBCSystemResources
+- child: JMSSystemResources
+- child: Servers

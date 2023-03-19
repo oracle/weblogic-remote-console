@@ -22,3 +22,7 @@ properties:
   relationship: containment
   type: weblogic.management.security.authentication.AuthorizerSecurityDataMBean
   array: true
+- name: CredentialMappers
+  relationship: containment
+  type: weblogic.management.security.credentials.CredentialMapperSecurityDataMBean
+  array: true

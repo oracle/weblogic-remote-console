@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -15,8 +15,10 @@ public class CustomSliceTableDef implements SliceTableDef {
   private CustomPageDef pageDef = new CustomPageDef();
   private List<PagePropertyDef> displayedColumnDefs = new ArrayList<>();
   private List<PagePropertyDef> hiddenColumnDefs = new ArrayList<>();
-  private String getTableRowsMethod;
   private List<PagePropertyDef> allPropertyDefs = new ArrayList<>();
+  private List<TableActionDef> actionDefs = new ArrayList<>();
+  private String getTableRowsMethod;
+  private String actionMethod;
 
   public CustomSliceTableDef() {
   }
@@ -25,8 +27,9 @@ public class CustomSliceTableDef implements SliceTableDef {
     pageDef = new CustomPageDef(toClone);
     getDisplayedColumnDefs().addAll(toClone.getDisplayedColumnDefs());
     getHiddenColumnDefs().addAll(toClone.getHiddenColumnDefs());
-    setGetTableRowsMethod(toClone.getGetTableRowsMethod());
     computeAllPropertyDefs();
+    setGetTableRowsMethod(toClone.getGetTableRowsMethod());
+    setActionMethod(toClone.getActionMethod());
   }
 
   @Override
@@ -60,20 +63,6 @@ public class CustomSliceTableDef implements SliceTableDef {
   }
 
   @Override
-  public String getGetTableRowsMethod() {
-    return getTableRowsMethod;
-  }
-
-  public void setGetTableRowsMethod(String val) {
-    getTableRowsMethod = val;
-  }
-
-  public CustomSliceTableDef presentationDef(String val) {
-    setGetTableRowsMethod(val);
-    return this;
-  }
-
-  @Override
   public List<PagePropertyDef> getAllPropertyDefs() {
     return allPropertyDefs;
   }
@@ -82,6 +71,48 @@ public class CustomSliceTableDef implements SliceTableDef {
     allPropertyDefs.clear();
     allPropertyDefs.addAll(getDisplayedColumnDefs());
     allPropertyDefs.addAll(getHiddenColumnDefs());
+  }
+
+  @Override
+  public List<TableActionDef> getActionDefs() {
+    return actionDefs;
+  }
+
+  public void setActionDefs(List<TableActionDef> val) {
+    actionDefs = val;
+  }
+
+  public CustomSliceTableDef actionDefs(List<TableActionDef> val) {
+    setActionDefs(val);
+    return this;
+  }
+
+  @Override
+  public String getGetTableRowsMethod() {
+    return getTableRowsMethod;
+  }
+
+  public void setGetTableRowsMethod(String val) {
+    getTableRowsMethod = val;
+  }
+
+  public CustomSliceTableDef getTableRowsMethod(String val) {
+    setGetTableRowsMethod(val);
+    return this;
+  }
+
+  @Override
+  public String getActionMethod() {
+    return actionMethod;
+  }
+
+  public void setActionMethod(String val) {
+    actionMethod = val;
+  }
+
+  public CustomSliceTableDef actionMethod(String val) {
+    actionMethod(val);
+    return this;
   }
 
   @Override

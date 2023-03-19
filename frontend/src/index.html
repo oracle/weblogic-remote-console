@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!--
- Copyright (c) 2020, 2022, Oracle Corp. and/or its affiliates.
+ Copyright (c) 2020, 2022, 2023, Oracle Corp. and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
-<html lang="en-us">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
@@ -41,29 +41,34 @@
       <div id="spa-resizer" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
         <div id="navtree-container">
           <div class="left_panel">
-            <oj-bind-dom config="[[navtree.html]]"></oj-bind-dom>
+            <nav :aria-label="[[i18n.navtree.ariaLabel.value]]">
+              <oj-bind-dom config="[[navtree.html]]"></oj-bind-dom>
+            </nav>
           </div>
         </div>
 
-        <div id="content-area-container" class="right_panel oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
-          <!-- row 1 -->
-          <div id="content-area-header">
-            <oj-module config="[[contentAreaHeaderModuleConfig]]"></oj-module>
-          </div>
+        <main>
+          <div id="content-area-container" class="right_panel oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+            <!-- row 1 -->
+            <div id="content-area-header">
+              <oj-module config="[[contentAreaHeaderModuleConfig]]"></oj-module>
+            </div>
 
-          <!-- row 2 (a nested column-oriented flexbox) -->
-          <div id="content-area-body" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
-            <!-- column 1 -->
-            <div id="table-form-container" class="oj-flex-item">
-              <oj-module config="[[moduleConfig]]"></oj-module>
-            </div>
-            <!-- column 2, right-aligned -->
-            <div id="ancillary-content-area-container"
-                 class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end">
-              <oj-module config="[[ancillaryContentAreaModuleConfig]]"></oj-module>
+
+            <!-- row 2 (a nested column-oriented flexbox) -->
+            <div id="content-area-body" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
+              <!-- column 1 -->
+              <div id="table-form-container" class="oj-flex-item">
+                <oj-module config="[[moduleConfig]]"></oj-module>
+              </div>
+              <!-- column 2, right-aligned -->
+              <div id="ancillary-content-area-container"
+                   class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end">
+                <oj-module config="[[ancillaryContentAreaModuleConfig]]"></oj-module>
+              </div>
             </div>
           </div>
-        </div>
+        </main>
 
       </div> <!-- ending div for "spa-resizer" -->
     </div> <!-- ending div for "middle-container" -->
@@ -73,7 +78,7 @@
     </footer>
 
     <div id="preloader-image">
-      <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.images.preloader.iconFile + '.png'}" />
+      <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.images.preloader.iconFile + '.png', alt: i18n.images.preloader.label}" />
     </div>
     <!--
     The confirmDialog oj-dialog needs to be here, because it has to be

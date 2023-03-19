@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.connection;
@@ -33,11 +33,9 @@ import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
-import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
-import weblogic.remoteconsole.common.utils.WebLogicPSU;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
@@ -151,9 +149,8 @@ public class ConnectionManager {
     String domainUrl,
     String domainName,
     WebLogicVersion weblogicVersion,
-    WebLogicPSU psu,
     String consoleExtensionVersion,
-    Set<String> consoleExtensionCapabilities,
+    Set<String> capabilities,
     String username,
     Client client
   ) {
@@ -169,9 +166,8 @@ public class ConnectionManager {
         domainUrl,
         domainName,
         weblogicVersion,
-        psu,
         consoleExtensionVersion,
-        consoleExtensionCapabilities,
+        capabilities,
         username,
         client
       );
@@ -270,9 +266,8 @@ public class ConnectionManager {
       return
         WebLogicMBeansVersions.getVersion(
           connection.getWebLogicVersion(),
-          connection.getPSU(),
           roles,
-          connection.getConsoleExtensionCapabilities()
+          connection.getCapabilities()
         );
     }
     return null;
@@ -352,18 +347,20 @@ public class ConnectionManager {
       // This response is from a trusted source - WebLogic - and is,
       // therefore, not a forging risk
       LOGGER.finest("Response from checking role: " + response.toString());
-      JsonObject entity = ResponseHelper.getEntityAsJson(response);
-      if ((entity != null) && entity.containsKey(RETURN)) {
-        // FortifyIssueSuppression Log Forging
-        // This data is from a trusted source - WebLogic - and is,
-        // therefore, not a forging risk
-        LOGGER.fine(
-          "Check role result for"
-          + " role '" + roleName + "'"
-          + " and user '" + connection.getUsername() + "'"
-          + " is: " + entity.toString()
-        );
-        result = entity.getBoolean(RETURN, true);
+      if (Status.OK.getStatusCode() == response.getStatus()) {
+        JsonObject entity = ResponseHelper.getEntityAsJson(response);
+        if ((entity != null) && entity.containsKey(RETURN)) {
+          // FortifyIssueSuppression Log Forging
+          // This data is from a trusted source - WebLogic - and is,
+          // therefore, not a forging risk
+          LOGGER.fine(
+            "Check role result for"
+            + " role '" + roleName + "'"
+            + " and user '" + connection.getUsername() + "'"
+            + " is: " + entity.toString()
+          );
+          result = entity.getBoolean(RETURN, true);
+        }
       }
     } catch (Exception exc) {
       // Log the exception and proceed without a result
@@ -415,10 +412,9 @@ public class ConnectionManager {
     }
 
     WebLogicVersion weblogicVersion = WebLogicVersions.getVersion(domainVersion);
-    WebLogicPSU psu = findPSU(entity, weblogicVersion);
 
     String consoleExtensionVersion = getConsoleExtensionVersion(entity);
-    Set<String> consoleExtensionCapabilities = getConsoleExtensionCapabilities(entity);
+    Set<String> capabilities = getCapabilities(domainUrl, client, entity);
     if (consoleExtensionVersion != null) {
       LOGGER.info(
         "The domain has version '" + consoleExtensionVersion + "' of the WebLogic Remote Console Extension installed."
@@ -436,13 +432,9 @@ public class ConnectionManager {
     sb
       .append(">>>> Connected to the WebLogic Domain '")
       .append(domainName)
-      .append("' with version '");
-    if (psu != null) {
-      sb.append(psu);
-    } else {
-      sb.append(weblogicVersion).append(" GA");
-    }
-    sb.append("' <<<<");
+      .append("' with version '")
+      .append(weblogicVersion)
+      .append("' <<<<");
     LOGGER.info(sb.toString());
 
     // Create the connection and return the response
@@ -452,9 +444,8 @@ public class ConnectionManager {
           domainUrl,
           domainName,
           weblogicVersion,
-          psu,
           consoleExtensionVersion,
-          consoleExtensionCapabilities,
+          capabilities,
           username,
           client
         )
@@ -476,6 +467,75 @@ public class ConnectionManager {
     return version;
   }
 
+  private Set<String> getCapabilities(String domainUrl, Client client, JsonObject entity) {
+    Set<String> consoleExtensionCapabilities = getConsoleExtensionCapabilities(entity);
+    Set<String> beanCapabilities = getBeanCapabilities(domainUrl, client, consoleExtensionCapabilities);
+    Set<String> capabilities = new HashSet<>(consoleExtensionCapabilities);
+    capabilities.addAll(beanCapabilities);
+    return capabilities;
+  }
+
+  // Find the capabilities depend on whether the domain has the required mbeans
+  private Set<String> getBeanCapabilities(String domainUrl, Client client, Set<String> consoleExtensionCapabilities) {
+    if (consoleExtensionCapabilities.contains("BeansSupport")) {
+      WebLogicRestRequest webLogicRestRequest =
+        WebLogicRestRequest.builder()
+          .path("/domainConfig/consoleBackend/beansSupport")
+          .serverUrl(domainUrl)
+          .client(client)
+          .build();
+      JsonObject capabilityToBeanFeature = getCapabilityToBeanFeature();
+      try (Response response = WebLogicRestClient.post(webLogicRestRequest, capabilityToBeanFeature)) {
+        // FortifyIssueSuppression Log Forging
+        // This response is from a trusted source - WebLogic - and is,
+        // therefore, not a forging risk
+        LOGGER.finest("Response from beansSupport: " + response.toString());
+        if (Status.OK.getStatusCode() == response.getStatus()) {
+          JsonObject entity = ResponseHelper.getEntityAsJson(response);
+          if (entity != null) {
+            LOGGER.finest("Entity from beansSupport: " + entity);
+            Set<String> beanCapabilities = new HashSet<>();
+            for (String beanCapability : capabilityToBeanFeature.keySet()) {
+              if (entity.getBoolean(beanCapability, false)) {
+                beanCapabilities.add(beanCapability);
+              }
+            }
+            return beanCapabilities;
+          }
+        }
+      } catch (Exception exc) {
+        // Log the exception and proceed without a result
+        LOGGER.finest("Unable to determine bean capabilities '" + domainUrl + "' because " + exc.toString());
+        LOGGER.log(Level.FINEST, "Failure when getting bean capabilities: " + exc.toString(), exc);
+      }
+    }
+    return Set.of();
+  }
+
+  // Probably should move this into its own class
+  private JsonObject getCapabilityToBeanFeature() {
+    return
+      Json.createObjectBuilder()
+        .add(
+          "JMSMessages",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.management.runtime.JMSMessageManagementRuntimeMBean")
+            .add("action", "getJMSMessages")
+            .add(
+              "params",
+              Json.createArrayBuilder().add("selector").add("max").add("sortOn").add("ascending")
+            )
+        )
+        .add(
+          "JTATransactions",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.management.runtime.JTARuntimeMBean")
+            .add("action", "currentTransactions")
+        )
+        .build();
+  }
+
+  // Find the capabilities that depend on the console extension's version
   private Set<String> getConsoleExtensionCapabilities(JsonObject entity) {
     String version = getConsoleExtensionVersion(entity);
     if (version == null) {
@@ -558,82 +618,8 @@ public class ConnectionManager {
   }
 
   /**
-   * Determines which PSU to view the domain as (i.e. the domain supports
-   * at least that PSU and not the next PSU that made mbean changes).
-   *
-   * This determines which version of the bean infos the remote console
-   * will use for this connection.
-   *
-   * Returns null if the remote console should use the GA version of the bean infos.
-   */
-  private WebLogicPSU findPSU(JsonObject entity, WebLogicVersion version) {
-    for (WebLogicPSU psu : version.getPSUs()) {
-      if (matchesPSU(entity, psu)) {
-        return psu;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Determines whether the domain has the mbean properties that
-   * indicate that it is using at least the input PSU.
-   */
-  private boolean matchesPSU(JsonObject entity, WebLogicPSU psu) {
-    Boolean matchesPSU = null;
-    for (Path marker : psu.getMarkerMBeanProperties()) {
-      boolean containsMarker = containsMarker(entity, marker);
-      if (matchesPSU == null) {
-        matchesPSU = containsMarker;
-      } else {
-        if (matchesPSU != containsMarker) {
-          LOGGER.warning(
-            "The domain is not using GA or a supported PSU."
-            + " Only found some of the markers for '" + psu + "'."
-          );
-          LOGGER.finest("PSU Markers: " + entity);
-          return false;
-        }
-      }
-    }
-    if (!matchesPSU) {
-      // None of the markers were found.  The domain doesn't use this PSU.
-      return false;
-    }
-    WebLogicPSU previousPSU = psu.getPreviousPSU();
-    if (previousPSU != null) {
-      boolean matchesPreviousPSU = matchesPSU(entity, previousPSU);
-      if (matchesPreviousPSU != matchesPSU) {
-        LOGGER.warning(
-          " The domain is not using GA or a supported PSU."
-          + " '" + psu + "' markers were found but '" + previousPSU + "' markers were not found."
-        );
-        return false;
-      }
-    }
-    // All of the markers were found for this PSU and all previous PSUs.  The domain is using this PSU.
-    return true;
-  }
-
-  /**
-   * Determines whether the domain has a has a domain level property that
-   * was added in a PSU.
-   */
-  private boolean containsMarker(JsonObject entity, Path marker) {
-    List<String> components = marker.getComponents();
-    for (int i = 0; i < components.size() - 1; i++) {
-      String child = components.get(i);
-      if (!entity.containsKey(child)) {
-        return false;
-      }
-      entity = entity.getJsonObject(child);
-    }
-    return entity.containsKey(marker.getLastComponent());
-  }
-
-  /**
    * Creates the WebLogic REST domainConfig query for returning the domain
-   * info needed to determine the domain's name, version and PSU.
+   * info needed to determine the domain's name and version.
    */
   private JsonObject getDomainFieldsQuery() {
     BeanQueryBuilder builder = new BeanQueryBuilder();
@@ -642,26 +628,13 @@ public class ConnectionManager {
     BeanQueryBuilder consoleBackendBuilder = builder.getChild(CONSOLE_BACKEND);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_VERSION);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_CAPABILITIES);
-    for (WebLogicVersion version : WebLogicVersions.getSupportedVersions()) {
-      for (WebLogicPSU psu : version.getPSUs()) {
-        for (Path marker : psu.getMarkerMBeanProperties()) {
-          List<String> components = marker.getComponents();
-          BeanQueryBuilder markerBuilder = builder;
-          for (int i = 0; i < components.size() - 1; i++) {
-            markerBuilder = markerBuilder.getChild(components.get(i));
-          }
-          markerBuilder.addField(marker.getLastComponent());
-        }
-      }
-    }
     JsonObject query = builder.toJson().build();
     return query;
   }
 
   /**
    * A helper class used for building the WLS REST query used
-   * to return the domain's name, version and the marker properties
-   * that are used to determine which PSU the domain is using.
+   * to return the domain's name and version.
    */
   private static class BeanQueryBuilder {
     private Set<String> fields = new HashSet<>();

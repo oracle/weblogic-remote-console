@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle Corp and/or its affiliates.
+ * Copyright (c) 2020, 2022, 2023, Oracle Corp and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -87,7 +87,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
             tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.properties.tooltip')
           },
           'nodata': { iconFile: 'navstrip-icon-nodata-blk_48x48',
-            tooltip: ''
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.noData.value')
+          }
+        },
+        'navstrip': {
+          ariaLabel: {
+            value: oj.Translations.getTranslatedString('wrc-navigation.navstrip.ariaLabel.value')
           }
         }
       };

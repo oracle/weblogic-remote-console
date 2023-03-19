@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -14,10 +14,6 @@ displayedColumns:
   definition:
     type: "java.lang.String"
     descriptionHTML: "The id of the security validation warning."
-- name: "Description"
-  definition:
-    type: "java.lang.String"
-    descriptionHTML: "The description of the security validation warning."
 - name: "Server"
   definition:
     type: "java.lang.String"
@@ -26,3 +22,7 @@ displayedColumns:
   definition:
     type: "java.lang.String"
     descriptionHTML: "The cluster of the server to which the security validation warning applies."
+- name: "Description"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The description of the security validation warning."

@@ -1,0 +1,120 @@
+<!--
+  Copyright (c) 2022,2023, Oracle and/or its affiliates.
+  Licensed under The Universal Permissive License (UPL), Version 1.0
+  as shown at https://oss.oracle.com/licenses/upl/
+
+-->
+
+<oj-bind-if test="[[ pages.indexOf('choose-predicate') !== -1 ]]">
+  <div class="cfe-wizard-page-header">
+    <div class="cfe-wizard-page-header-title">
+      <span data-bind="html: i18n.wizard.pages.choosePredicate.header.title"></span>
+    </div>
+    <div class="cfe-wizard-page-header-instructions">
+      <span data-bind="html: i18n.wizard.pages.choosePredicate.header.instructions"></span>
+    </div>
+  </div>
+
+  <div class="cfe-wizard-page-body">
+    <oj-form-layout id="choose-predicate-form-layout" class="oj-formlayout-full-width" label-edge="start" label-width="40%">
+      <oj-label slot="label" label-edge="start" for="predicate" help.definition="[[i18n.wizard.pages.choosePredicate.body.help.predicateList]]">
+        <oj-bind-text value="[[`${i18n.wizard.pages.choosePredicate.body.labels.predicateList} *`]]"></oj-bind-text>
+      </oj-label>
+      <oj-select-single
+        id="predicate"
+        class="cfe-wizard-select-one"
+        data="[[predicatesDataProvider]]"
+        value="{{chosenPredicate}}"
+        on-value-changed="[[chosenPredicateValueChanged]]"
+        disabled="false"
+      >
+      </oj-select-single>
+    </oj-form-layout>
+  </div>
+</oj-bind-if>
+
+<oj-bind-if test="[[ pages.indexOf('manage-argument-values') !== -1 ]]">
+
+  <oj-bind-if test="[[ pages.indexOf('choose-predicate') !== -1 ]]">
+    <hr class="cfe-horizontal-line" />
+  </oj-bind-if>
+
+  <div class="cfe-wizard-page-header">
+      <div class="cfe-wizard-page-header-title">
+        <span data-bind="html: manageArgumentValues.header.title"></span>
+      </div>
+      <div class="cfe-wizard-page-header-instructions">
+        <span data-bind="html: manageArgumentValues.header.instructions"></span>
+      </div>
+  </div>
+
+  <div class="cfe-wizard-page-body">
+    <oj-form-layout id="manage-argument-values-form-layout" class="oj-formlayout-full-width" label-edge="start" label-width="40%">
+
+      <oj-bind-if test="[[typeof argumentsValue() !== 'undefined' && argumentsValue().array === false]]">
+        <oj-bind-for-each data="[[parameters]]" as="parameter">
+          <template>
+            <oj-label slot="label" :for="[[parameter.data.displayName]]" help.definition="[[parameter.data.descriptionHTML]]">
+              <oj-bind-text value="[[`${parameter.data.displayName}${!parameter.data.optional ? ' *' : ''}`]]"></oj-bind-text>
+            </oj-label>
+            <oj-input-text
+              :id="[[parameter.data.displayName]]"
+              :class='[[parameter.data.optional ? "cfe-wizard-input-optional" : "cfe-wizard-input-required"]]'
+              autofocus="true"
+              value='{{parameter.data.value}}'
+              placeholder="[[parameter.data.placeholder]]"
+              :title="[[parameter.data.placeholder]]"
+              on-value-changed="[[parametersValuesChanged]]"
+            >
+            </oj-input-text>
+          </template>
+        </oj-bind-for-each>
+      </oj-bind-if>
+
+      <oj-bind-if test="[[typeof argumentsValue() !== 'undefined' && argumentsValue().array === true]]">
+        <oj-label slot="label" :for="[[argumentsValue().displayName]]" help.definition="[[argumentsValue().descriptionHTML]]">
+          <oj-bind-text value="[[`${argumentsValue().displayName} *`]]"></oj-bind-text>
+        </oj-label>
+        <oj-combobox-many
+          :id="[[argumentsValue().displayName]]"
+          class="cfe-wizard-combobox-many"
+          options="[[parametersDataProvider]]"
+          value="{{parametersValues}}"
+          on-value-changed="[[parametersValuesChanged]]"
+        >
+        </oj-combobox-many>
+      </oj-bind-if>
+
+      <oj-label slot="label" for="expression">
+        <oj-bind-text value="[[i18n.wizard.pages.manageArgumentValues.body.labels.conditionPhrase]]"></oj-bind-text>
+      </oj-label>
+      <oj-input-text id="expression" class="cfe-wizard-input-text" disabled="true" value="[[conditionPhrase]]"></oj-input-text>
+    </oj-form-layout>
+  </div>
+</oj-bind-if>
+
+<oj-popup
+  id="edit-argument-value-popup"
+  class="edit-argument-value-popup"
+  auto-dismiss="none"
+  modality="modal"
+  chrome="none"
+  tail="none"
+>
+  <div class="edit-argument-value-popup-body">
+    <div class="edit-argument-value-popup-header">
+      <oj-button
+        id="popupCancelBtn"
+        class="oj-button-sm"
+        display="icons"
+        chroming="borderless"
+        on-oj-action="[[onPopupCancelBtnClicked]]"
+      >
+        <span slot="startIcon" class="oj-ux-ico-close"></span>Cancel
+      </oj-button>
+    </div>
+    <div class="edit-argument-value-popup-content oj-sm-padding-2x">
+      <oj-input-text id="edit-arguments-value-input" value="{{editArgumentVal}}"></oj-input-text>
+    </div>
+  </div>
+</oj-popup>

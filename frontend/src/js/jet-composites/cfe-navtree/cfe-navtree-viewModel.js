@@ -137,6 +137,8 @@ define([
           });
         }
         else {
+          let encodedSelectedItem = null;
+
           // if navtree needs updating, add node and each of its ancestors to expanded Set
           if (treeaction.update) {
             let iterPath = '';
@@ -149,13 +151,17 @@ define([
 
             this.perspectiveMemory.navtree.keySet = this.expanded;
             self.selectedItem(decodeURIComponent(treeaction.path));
+
+            // Save the path from the rdjData.navigation to use with navtree refresh
+            encodedSelectedItem = treeaction.path;
           }
           else if (treeaction.delete) {
             if (CoreUtils.isNotUndefinedNorNull(treeaction.path)) {
               // Remove from the expanded node list the deleted path
               // and any descendent paths that may have been expanded
               const expandedList = Array.from(this.expanded().values());
-              const removeList = expandedList.filter(path => path.startsWith(treeaction.path));
+              const deletedPath = decodeURIComponent(treeaction.path);
+              const removeList = expandedList.filter(path => path.startsWith(deletedPath));
               if (removeList.length > 0) {
                 this.expanded.delete(removeList);
                 this.perspectiveMemory.navtree.keySet = this.expanded;
@@ -163,7 +169,7 @@ define([
             }
           }
 
-          this.navtreeManager.populateNodeSet(this.expanded(), this.selectedItem());
+          this.navtreeManager.populateNodeSet(this.selectedItem(), encodedSelectedItem);
         }
       });
 

@@ -155,7 +155,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // Validate Toggle Visibility of History Icon and its functionality for (Server, ServerTemplate and Cluster) Objects
     // Validate History of MBean Tree View Action Bar
     //
-    it.skip('3. Test Category: GAT/Risk1\n \t Test Scenario: Validate Toggle Visibility of History Icon and its functionality for ' +
+    it('3. Test Category: GAT/Risk1\n \t Test Scenario: Validate Toggle Visibility of History Icon and its functionality for ' +
         '(Server, ServerTemplate and Cluster) Objects, And History of MBean Tree View Action Bar', async function() {
         file = "TestUtilities_Icon-1.png";
         try {
@@ -186,8 +186,8 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             console.log("Click Drop down button menu");
             await driver.findElement(By.css(".oj-combobox-arrow")).click();
             await driver.sleep(900);
-            console.log("Click Domain/Server Templates/TestServerTemplate-2 Link");
-            await driver.findElement(By.id("oj-listbox-result-label-2")).click();
+            console.log("Click Server Templates | TestServerTemplate-2 Link");
+            await driver.findElement(By.id("oj-listbox-result-label-6")).click();
             console.log("Click Drop down button menu");
             await driver.findElement(By.css(".oj-combobox-arrow")).click();
             console.log("Click toggle history input bar");
@@ -213,21 +213,19 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     //Test Case:
     // Validate Auto-reload Interval and Stop Reload Interval functionality for Server Object
     // Validate Home Landing-Page icon
-    // FIXME
-    it.skip('4. Test Category: GAT/Risk1\n \t Test Scenario: Validate Auto-reload Interval and Stop Reload Interval functionality ' +
+    //
+    it('4. Test Category: GAT/Risk1\n \t Test Scenario: Validate Auto-reload Interval and Stop Reload Interval functionality ' +
         'for Server Object. Validate Home Landing-Page icon', async function() {
         file = "TestUtilities_Icon-2.png";
         try {
             let object_count = 1;
-            let reloadValue = 15;
-
-            await admin.createMBeanObjectFromLandingPage(driver,"TestServer-3","Edit Tree","EnvironmentChevron",
-                "Servers",1);
-            await driver.sleep(900);
-            await admin.saveToShoppingCart(driver);
-            await driver.sleep(900);
+            let reloadValue = 5;
             console.log("Click Home Landing Page Icon");
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers");
+            await admin.goToLandingPanelSubTreeCard(driver,"Monitoring Tree","EnvironmentChevron",
+                "Servers");
+            console.log("Click AdminServer");
+            await driver.findElement(By.xpath("//td[contains(.,\'AdminServer\')]")).click();
+            await driver.sleep(3600);
             console.log("Click Set Auto-reload Interval Icon");
             await driver.sleep(3600);
             element = driver.findElement(By.id("sync-interval-icon"));
@@ -253,7 +251,6 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
                 await element.click();
             }
             await driver.sleep(900);
-            await admin.discardChanges(driver);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -307,9 +304,133 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.findElement(By.xpath("//oj-button[1]/button/div/span/span")).click();
 
             console.log("Click Middle Container");
-            await driver.findElement(By.xpath("//div[@id=\'middle-container\']")).click();
+            await driver.findElement(By.xpath("//div[@id='middle-container']")).click();
             await driver.sleep(600);
             console.log("TEST PASS ");
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+    //Test Case:
+    // Search Utility
+    // From Edit Tree -> Environment -> Servers page -> enter to search Admin keyword
+    // The search will yield 3 elements (AdminJMSServer, AdminServer, MyAdminJMWModule)
+    // Click at AdminServer 2nd row -> validate if AdminServer edit page shows up
+    it('6. Test Category: GAT/Risk3\n \t Test Scenario: Search Utility for Admin key word ', async function() {
+        file = "searchUtilityAdminKeyWord.png";
+        try {
+            await admin.goToNavTreeLevelOneLink(driver,"configuration","Environment");
+            await driver.sleep(1200);
+            console.log("Enter Element Search for AdminServer");
+            element = driver.findElement(By.xpath("//input[@type='text']"));
+            await element.sendKeys("Admin");
+            await element.sendKeys(Key.ENTER);
+            await driver.sleep(2400);
+            await driver.findElement(By.xpath("//oj-table[@id='table']/div/table/tbody/tr[2]/td")).click();
+            await driver.executeScript("window.scrollTo(0,0)")
+            await driver.sleep(2400);
+            var server_name;
+            element = driver.findElement(By.xpath("//oj-input-text[@id='Name']/div/div/div/div"));
+            await driver.sleep(300);
+            var promise = element.getText();
+            promise.then(function (text) {
+                server_name = text;
+            });
+            if (element.isEnabled()) {
+                await element.click();
+                console.log("Server Name is: " + server_name);
+                await driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']")).click();
+                console.log("TEST PASS ");
+            }
+            else {
+                console.log("Element Search has no AdminServer page! ");
+                console.log("TEST FAIL ");
+            }
+            await driver.sleep(1200);
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+    //Test Case:
+    // Search Utility
+    // From Edit Tree -> enter to search Server keyword
+    // The search will yield 3 elements (AdminJMSServer, AdminServer, JMSServer1, JMSServer1Subdeploy,....)
+    // Click AdminJMSServer 1st row -> Switch to Configuration View Tree Search breadcrumbs
+    // Click Reset -> Add All Left -> Cancel button
+    // Click select breadcrumbs-container menu to switch back to Edit Tree view
+    // Click to look for AdminJMSServer name in test page for confirm if operation successfull
+    it('7. Test Category: GAT/Risk3\n \t Test Scenario: Search Utility for Server key word ' +
+        'Test out breadcrumbs-container menu, Reset, Cancel, Arrow button....', async function() {
+        file = "searchUtilityWithServerKeyWord.png";
+        try {
+            await admin.goToNavStripImageMenuLink(driver,"configuration");
+            await driver.sleep(1200);
+            console.log("Enter Element Search for Server");
+            element = driver.findElement(By.xpath("//input[@type='text']"));
+            await element.sendKeys("Server");
+            await element.sendKeys(Key.ENTER);
+            await driver.sleep(8400);
+            console.log("Click at Recent Search breadcrumbs-container");
+            await driver.findElement(
+                By.xpath("//*[@id='breadcrumbs-container']/ul/li[2]/oj-menu-button/button/div/span[2]")).click();
+            await driver.sleep(8400);
+            console.log("Click to select Recent Searches - Configuration View Tree");
+            await driver.findElement(By.xpath("//span")).click();
+            await driver.sleep(8600);
+            await driver.executeScript("window.scrollTo(0,0)");
+            console.log("Click Customizer Table");
+            await driver.findElement(By.xpath("//span[@id='table-customizer-toggler']")).click();
+            await driver.sleep(8400);
+            console.log("Click Reset button");
+            await driver.findElement(By.xpath("//oj-button[@id='reset']")).click();
+            await driver.sleep(900);
+            await driver.executeScript("window.scrollTo(0,0)");
+            console.log("Click Add All Left button");
+            await driver.sleep(900);
+            await driver.findElement(By.xpath("//oj-button[@id='remoteAll']")).click();
+            await driver.sleep(900);
+            console.log("Click Cancel button");
+            await driver.findElement(By.xpath("//oj-button[@id='cancel']")).click();
+            await driver.sleep(900);
+            await driver.executeScript("window.scrollTo(0,0)");
+            console.log("Click Customizer Table");
+            await driver.findElement(By.xpath("//a[@id='customize']/span")).click();
+            await driver.sleep(2400);
+            console.log("Select 1st row of element in the Customizer Table");
+            await driver.findElement(By.xpath("//oj-table[@id='table']/div/table/tbody/tr/td")).click();
+            await driver.sleep(900);
+            console.log("Click select breadcrumbs-container menu");
+            await driver.findElement(
+                By.xpath("//div[@id='breadcrumbs-container']/ul/li[2]/oj-menu-button")).click();
+            await driver.sleep(8400);
+            console.log("Click to switch to AdminJMSServer - Edit Tree");
+            await driver.findElement(By.xpath("//span[contains(.,'AdminJMSServer - Edit Tree')]")).click();
+            await driver.sleep(8400);
+            await driver.executeScript("window.scrollTo(0,0)");
+            element = driver.findElement(By.xpath("//oj-input-text[@id='Name']"));
+            await driver.sleep(2400);
+            var server_name;
+            element = driver.findElement(By.xpath("//oj-input-text[@id='Name']/div/div/div/div"));
+            await driver.sleep(2400);
+            var promise = element.getText();
+            promise.then(function (text) {
+                server_name = text;
+            });
+            if (element.isEnabled()) {
+                await element.click();
+                console.log("Server Name is: " + server_name);
+                await driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']")).click();
+                console.log("TEST PASS ");
+            }
+            else {
+                console.log("Element Search has no AdminServer page! ");
+                console.log("TEST FAIL ");
+            }
+            await driver.sleep(1200);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");

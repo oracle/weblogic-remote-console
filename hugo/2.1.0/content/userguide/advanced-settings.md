@@ -238,4 +238,4 @@ or
 results in the HTTP session Cookie including the `SameSite` attribute with a value of `Lax`.
 
 ## Connect to a WebLogic domain running on kubernetes {id="k8s"}
-One of the benefits of the WebLogic Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For details about how to setup access to WebLogic Server domains running on Kubernetes, see [Use the Remote Console](https://oracle.github.io/weblogic-kubernetes-operator/userguide/managing-domains/accessing-the-domain/admin-console/) in the *WebLogic Kubernetes Operator User Guide*.
+One of the benefits of the WebLogic Remote Console is the ability to connect to, and manage, a WebLogic Server domain running on Kubernetes. For details about how to setup access to WebLogic Server domains running on Kubernetes, see [Use the Remote Console](https://oracle.github.io/weblogic-kubernetes-operator/managing-domains/accessing-the-domain/remote-admin-console/) in the *WebLogic Kubernetes Operator User Guide*.

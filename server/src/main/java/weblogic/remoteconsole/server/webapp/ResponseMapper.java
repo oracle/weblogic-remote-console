@@ -1,9 +1,8 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 import javax.json.Json;
@@ -13,6 +12,7 @@ import javax.json.JsonValue;
 
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.utils.DateUtils;
 import weblogic.remoteconsole.common.utils.Message;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -39,8 +39,6 @@ public abstract class ResponseMapper<T> {
   private InvocationContext invocationContext;
   private JsonObjectBuilder entityBuilder;
   private Response<T> response;
-
-  private static final String DISPLAYED_DATE_TIME_FORMAT = "EEE MMM dd kk:mm:ss z yyyy";
 
   protected ResponseMapper(InvocationContext invocationContext, Response<T> response) {
     this.invocationContext = invocationContext;
@@ -210,6 +208,10 @@ public abstract class ResponseMapper<T> {
     if (value.isThrowable()) {
       return throwableToJson(value.asThrowable());
     }
+    if (value.isEntitleNetExpression()) {
+      // The CBE just passes them straight through as json values:
+      return value.asEntitleNetExpression().getValue();
+    }
     throw new AssertionError("Unsupported value: " + value.getClass());
   }
 
@@ -279,12 +281,7 @@ public abstract class ResponseMapper<T> {
   }
 
   private JsonValue dateToJson(Date date) {
-    String dateAsString = "";
-    if (date != null) {
-      // Convert the date to an user-visible string.
-      dateAsString = new SimpleDateFormat(DISPLAYED_DATE_TIME_FORMAT).format(date);
-    }
-    return Json.createValue(dateAsString);
+    return Json.createValue(StringUtils.nonNull(DateUtils.formatDate(date)));
   }
 
   protected JsonValue beanTreePathToJson(BeanTreePath beanTreePath) {

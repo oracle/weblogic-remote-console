@@ -1,14 +1,14 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/wdt-model/archive', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojlogger'],
-  function (oj, ko, ArrayDataProvider, DataProviderManager, ModelArchive, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojlogger'],
+  function (oj, ko, ArrayDataProvider, DataProviderManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Logger) {
 
     const i18n = {
       'messages': {
@@ -909,27 +909,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
         }
         return paths;
       },
-      deleteModelArchivePaths: (dataProvider, modelArchive, signaling) => {
+      deleteModelArchivePaths: (dataProvider, modelArchive) => {
         if (dataProvider.modelArchivePaths) {
           dataProvider.modelArchivePaths.forEach((path) => {
-            const paths = modelArchive.removeFromArchive(path);
-            for (const i in paths) {
-              signaling.modelArchiveUpdated.dispatch(dataProvider, {operation: 'remove', path: paths[i]});
-            }
+            modelArchive.removeFromArchive(path)
+              .then(() => {
+              })
+              .catch(response => {
+                ViewModelUtils.failureResponseDefaultHandling(response);
+              });
           });
-          dataProvider['modelArchive'] = modelArchive.archiveRoots;
         }
       },
-      deleteModelArchiveEntry: function(paths, signaling, self) {
-        if (window?.api?.ipc &&
-          Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
-          window.api.ipc.invoke('get-archive-entry-types')
-            .then(entryTypes => {
-              const dataProvider = self.getDataProvider();
-              dataProvider.putValue('modelArchivePaths', paths);
-              const modelArchive = new ModelArchive(dataProvider.modelArchive, entryTypes);
-              self.deleteModelArchivePaths(dataProvider, modelArchive, signaling);
-            });
+      deleteModelArchiveEntry: function(paths, self) {
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+          const dataProvider = self.getDataProvider();
+          dataProvider.putValue('modelArchivePaths', paths);
+          const modelArchive = dataProvider.extensions.wktui.modelArchive;
+          self.deleteModelArchivePaths(dataProvider, modelArchive);
         }
       },
       /**

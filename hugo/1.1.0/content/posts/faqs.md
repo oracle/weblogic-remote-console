@@ -21,7 +21,7 @@ Visit your cloud providers' documentation for more specific instructions on how 
 
 #### Can I connect the WebLogic Remote Console to domains using the WebLogic Kubernetes Operator?
 
-Yes. For details on how to set up access to WebLogic Server domains running on Kubernetes, see [Use the WebLogic Remote Console](https://oracle.github.io/weblogic-kubernetes-operator/userguide/managing-domains/accessing-the-domain/admin-console/) in the *WebLogic Kubernetes Operator User Guide*.
+Yes. For details on how to set up access to WebLogic Server domains running on Kubernetes, see [Use the WebLogic Remote Console](https://oracle.github.io/weblogic-kubernetes-operator/managing-domains/accessing-the-domain/remote-admin-console/) in the *WebLogic Kubernetes Operator User Guide*.
 
 #### Can I use both the WebLogic Remote Console and the WebLogic Server Administration Console?
 

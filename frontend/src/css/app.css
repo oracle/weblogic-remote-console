@@ -1,4 +1,4 @@
-/*! Copyright (c) 2020, 2022, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates. All rights reserved. */
 
 :root {
   /*
@@ -656,6 +656,13 @@ oj-dialog[id="startupTaskChooserDialog"] div.oj-dialog-footer
   background-color: white;
 }
 
+oj-dialog[id="domainConnectionDialog"] .oj-form.oj-enabled div.oj-user-assistance-inline-container.oj-efficient,
+oj-dialog[id="modelDialog"] .oj-form.oj-enabled div.oj-user-assistance-inline-container.oj-efficient,
+oj-dialog[id="modelCompositeDialog"] .oj-form.oj-enabled div.oj-user-assistance-inline-container.oj-efficient
+{
+  min-height: 0.3125rem;
+}
+
 oj-dialog[id="domainConnectionDialog"] {
   width: var(--domainConnectionDialog-width);
   min-height: var(--domainConnectionDialog-min-height);
@@ -725,7 +732,8 @@ oj-dialog[id="importProjectDialog"]
   background-color: white;
 }
 
-div#tab-module.oj-flex-bar-end {
+div#tab-module-ancillary-content.oj-flex-bar-end,
+div#tab-module-home.oj-flex-bar-end {
   margin-left: 0;
 }
 

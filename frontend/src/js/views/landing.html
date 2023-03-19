@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2020, 2022, Oracle and/or its affiliates. The Universal Permissive License (UPL), Version 1.0
+Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates. The Universal Permissive License (UPL), Version 1.0
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="landing-page">
@@ -24,7 +24,7 @@ Copyright (c) 2020, 2022, Oracle and/or its affiliates. The Universal Permissive
                 </oj-bind-if>
 
                 <div class="landing-page-panel-footer oj-flex-item">
-                  <span id="landing-page-panel-title" data-bind="text: group.data.label"></span>
+                  <span data-bind="text: group.data.label"></span>
                   <oj-bind-if test="[[typeof group.data.path === 'undefined']]">
                     <span :id="[[group.data.name + 'Chevron']]" class="landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-s"></span>
                   </oj-bind-if>

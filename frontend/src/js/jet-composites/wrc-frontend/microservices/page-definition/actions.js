@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -59,7 +59,11 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
       'suspend': {iconFile: 'action-suspend-icon-blk_24x24', visible: true, disabled: false},
       'shutdown': {iconFile: 'action-stop-icon-blk_24x24', visible: true, disabled: false},
       'restartSSL': {iconFile: 'action-restart-icon-blk_24x24', visible: true, disabled: false},
-      'stop': {iconFile: 'action-stop-icon-blk_24x24', visible: true, disabled: false}
+      'stop': {iconFile: 'action-stop-icon-blk_24x24', visible: true, disabled: false},
+      'download': {iconFile: 'action-download-icon-blk_24x24', visible: true, disabled: false},
+      'shrink': {iconFile: 'action-shrink-icon-blk_24x24', visible: true, disabled: false},
+      'reset': {iconFile: 'action-reset-icon-blk_24x24', visible: true, disabled: false},
+      'clearStatementCache': {iconFile: 'action-clear-icon-blk_24x24', visible: true, disabled: false}
     });
 
     /**
@@ -411,7 +415,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
             .then(reply => {
               return {
                 succeeded: true,
-                data: reply.body.data
+                data: reply.body.data,
+                messages: reply.body.messages
               };
             })
             .catch(response => {

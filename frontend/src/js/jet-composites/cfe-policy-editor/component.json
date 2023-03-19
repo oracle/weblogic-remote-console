@@ -1,0 +1,271 @@
+{
+  "name": "cfe-policy-editor",
+  "version": "1.0.0",
+  "jetVersion": "^11.1.0",
+  "displayName": "A user friendly, translatable name of the component.",
+  "description": "A translatable high-level description for the component.",
+  "properties": {
+    "operatorLegalValues": {
+      "description": "Legal values for the 'Operator' dropdown in the 'Policy Conditions' table",
+      "type": "array",
+      "value": [
+        { "value": "or", "label": "Or" },
+        { "value": "and", "label": "And" }
+      ]
+    },
+    "tableColumnHeaders": {
+      "description": "Column headers for the 'Policy Conditions' table",
+      "type": "object",
+      "value": {
+        "operator": "Operator",
+        "expression":  "Condition Label"
+      }
+    },
+    "combinationLabel": {
+      "description": "",
+      "type": "string",
+      "value": "Combination"
+    },
+    "readonly": {
+      "description": "Indicates if this policy editor is read only, defaults to false.",
+      "type": "boolean",
+      "value": false
+    }
+  },
+  "methods": {
+    "getCheckedPolicyConditionUids": {
+      "description": "Returns array of Policy Condition uids, for the rows currently checked in the table."
+    },
+    "setActionItems": {
+      "description": "Gives Policy Editor the actions to include in notification.data property of 'conditionChecked' events.",
+      "params" : [
+        {
+          "description": "The action items to include in notification.data property of 'conditionChecked' events.",
+          "name" : "actionItems",
+          "type": "object"
+        }
+      ]
+    },
+    "setPolicyConditions": {
+      "description": "Updates the FlattenedTreeDataProviderView with the return value from a PolicyData.createPolicyConditions(section) call",
+      "params" : [
+        {
+          "description": "Array of PolicyCondition objects that was returned from PolicyData.createPolicyConditions(section) call",
+          "name" : "data",
+          "type": "array"
+        }
+      ]
+    },
+    "refreshPolicyConditions": {
+      "description": ""
+    },
+    "setSupportedPredicatesList": {
+      "description": "",
+      "params" : [
+        {
+          "description": "",
+          "name" : "data",
+          "type": "array"
+        }
+      ]
+    },
+    "setTranslationStrings": {
+      "description": "Updates the i18n strings used in the Policy Editor and Policy Editor Wizard",
+      "params" : [
+        {
+          "description": "",
+          "name" : "section",
+          "type": "string"
+        },
+        {
+          "description": "",
+          "name" : "i18n",
+          "type": "object"
+        }
+      ]
+    },
+    "setWizardPageModuleConfig": {
+      "description": "Tell editor to load the moduleCconfig for the wizard, which is inside an oj-dialog element on the control's view.",
+      "params": [
+        {
+          "description": "The module name for the wizard",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "description": "The viewParams for the wizard module",
+          "name": "viewParams",
+          "type": "object"
+        }
+      ]
+
+    },
+    "getWizardPageInput": {
+      "description": "",
+      "params" : [
+        {
+          "description": "",
+          "name" : "action",
+          "type": "object"
+        },
+        {
+          "description": "",
+          "name" : "policyCondition",
+          "type": "object"
+        },
+        {
+          "description": "",
+          "name" : "failureMessage",
+          "type": "string"
+        }
+      ]
+    },
+    "performPolicyEditorAction": {
+      "description": "Perform an action associated with managing a policy (e.g. add a condition, move a condition up in the evaluation order, remove a condition, etc.)d",
+      "params": [
+        {
+          "description": "A JS object containing information needed to perform the action.",
+          "name": "action",
+          "type": "object"
+        }
+      ]
+    },
+    "fieldValueChangedCallback": {
+      "description": "",
+      "params": [
+        {
+          "description": "",
+          "name": "callback",
+          "type": "function"
+        }
+      ]
+    },
+    "sendFieldValueChangedEvent": {
+      "description": "",
+      "params": [
+        {
+          "description": "",
+          "name": "fieldName",
+          "type": "string"
+        },
+        {
+          "description": "",
+          "name": "fieldValue",
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "events": {
+    "conditionCheckedChanged": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "notification": {
+          "displayName": "data",
+          "description": "",
+          "type": "object"
+        },
+        "target": {
+          "displayName": "policyCondition",
+          "description": "",
+          "type": "object"
+        }
+      }
+    },
+    "policyConditionAdded": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "notification": {
+          "displayName": "data",
+          "description": "",
+          "type": "object"
+        },
+        "target": {
+          "displayName": "policyCondition",
+          "description": "",
+          "type": "object"
+        }
+      }
+    },
+    "policyConditionModified": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "notification": {
+          "displayName": "data",
+          "description": "",
+          "type": "object"
+        },
+        "target": {
+          "displayName": "policyCondition",
+          "description": "",
+          "type": "object"
+        }
+      }
+    },
+    "policyConditionsCombined": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "notification": {
+          "displayName": "data",
+          "description": "",
+          "type": "object"
+        }
+      }
+    },
+    "policyConditionsUncombined": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "notification": {
+          "displayName": "data",
+          "description": "",
+          "type": "object"
+        }
+      }
+    },
+    "policyConditionMoved": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "notification": {
+          "displayName": "data",
+          "description": "",
+          "type": "object"
+        },
+        "target": {
+          "displayName": "policyCondition",
+          "description": "",
+          "type": "object"
+        }
+      }
+    },
+    "policyConditionRemoved": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "notification": {
+          "displayName": "data",
+          "description": "",
+          "type": "object"
+        }
+      }
+    },
+    "policyConditionNegated": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "notification": {
+          "displayName": "data",
+          "description": "",
+          "type": "object"
+        }
+      }
+    }
+  },
+  "slots": {
+  }
+}

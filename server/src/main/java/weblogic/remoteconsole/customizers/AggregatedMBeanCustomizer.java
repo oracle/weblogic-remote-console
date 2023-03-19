@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -11,12 +11,14 @@ import java.util.TreeMap;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.SliceTableDef;
+import weblogic.remoteconsole.common.repodef.TableActionDef;
 import weblogic.remoteconsole.common.repodef.weblogic.AggregatedRuntimeMBeanNameHandler;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
+import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -33,6 +35,27 @@ public class AggregatedMBeanCustomizer {
   private static final AggregatedRuntimeMBeanNameHandler NAME_HANDLER = AggregatedRuntimeMBeanNameHandler.INSTANCE;
 
   private AggregatedMBeanCustomizer() {
+  }
+
+  public static Response<Value> invokeAction(InvocationContext ic, TableActionDef tableActionDef) {
+    BeanTreePath aggBTP = ic.getBeanTreePath();
+    BeanRepo beanRepo = aggBTP.getBeanRepo();
+
+    // e.g. DomainRuntime.ServerRuntimes.*.Foo.Bar
+    Path unaggPath = NAME_HANDLER.getUnfabricatedBeanTreePath(aggBTP).getPath();
+    
+    // fill in the server name, i.e. DomainRuntime.ServerRuntimes.<ServerName>.Foo.Bar
+    unaggPath.getComponents().set(2, ic.getIdentifier());
+
+    // delegate the action to the unagg bean
+    InvocationContext unaggIc = new InvocationContext(ic);
+    unaggIc.setIdentity(BeanTreePath.create(beanRepo, unaggPath));
+    unaggIc.setIdentifier(null);
+    // We could make a new page path for unaggPath and
+    // find its corresponding table page's action def.
+    // However, since the aggregated type makes copies of
+    // the unaggregated actions, the aggregated one works too.
+    return beanRepo.asBeanReaderRepo().invokeAction(unaggIc, tableActionDef, List.of());
   }
 
   public static Response<List<TableRow>> getSliceTableRows(
@@ -127,12 +150,10 @@ public class AggregatedMBeanCustomizer {
     TableRow row = new TableRow();
     // Add a cell for each property that exists in this instance on this server
     for (PagePropertyDef propertyDef : sliceTableDef.getAllPropertyDefs()) {
+      boolean isServer = "Server".equals(propertyDef.getPropertyName());
       // The value of the Server property is the server runtime's identity.
       // The value of any other property is the one from the search results.
-      Value value =
-        "Server".equals(propertyDef.getPropertyName())
-          ? server
-          : rowResults.getValue(propertyDef);
+      Value value = isServer ? server : rowResults.getValue(propertyDef);
       if (value != null) {
         row.getCells().add(
           new TableCell(
@@ -140,6 +161,11 @@ public class AggregatedMBeanCustomizer {
             getCellValue(propertyDef, value)
           )
         );
+        if (isServer && !sliceTableDef.getActionDefs().isEmpty()) {
+          // This slice table has actions and this is the server property.
+          // Add an "identifier" property too that's set to the server's name.
+          row.setIdentifier(server.getLastSegment().getKey());
+        }
       } else {
         // This bean doesn't have a value for this property (e.g. heterogeneous types)
       }
@@ -198,7 +224,7 @@ public class AggregatedMBeanCustomizer {
     }
     if (unfixedPath.length() > 3) {
       // We have stuff after the server name.
-      // Add add the singular name of the uncombined collection and the rest of the stuff
+      // Add the singular name of the uncombined collection and the rest of the stuff
       // after the server name.
   
       // ServerRuntimes or ServerLifeCycleRuntimes :
@@ -207,8 +233,8 @@ public class AggregatedMBeanCustomizer {
       // DomainRuntime/CombinedServerRuntimes/Server1/ServerRuntime :
       fixedPath.addComponent(StringUtils.getSingular(uncombinedCollection));
 
-      // DomainRuntime/CombinedServerRunties/Server1/ServerRuntime/... :
-      fixedPath.addPath(unfixedPath.subPath(0, unfixedPath.length()));
+      // DomainRuntime/CombinedServerRuntimes/Server1/ServerRuntime/... :
+      fixedPath.addPath(unfixedPath.subPath(3, unfixedPath.length()));
     }
     return fixedPath;
   }

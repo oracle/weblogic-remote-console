@@ -218,7 +218,6 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
         new WDTPageRepo(
           WebLogicMBeansVersions.getVersion(
             WebLogicVersions.getCurrentVersion(),
-            null, // GA
             WebLogicMBeansVersion.NO_CAPABILITIES
           ),
           model,

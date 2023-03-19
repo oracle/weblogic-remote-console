@@ -1,0 +1,26 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page creates a credential mapping, which enables you to map a
+  WebLogic Server user ID to a remote system user ID, typically a database
+  user account.</p>
+  <p>If credential mapping is enabled on the data source, when an
+  application requests a database connection from the data source, WebLogic
+  Server determines the current WebLogic Server user ID and then sets the
+  mapped database ID as a light-weight client ID on the database
+  connection.</p>
+
+presentation:
+  singleColumn: true
+
+properties:
+- name: WLSUser
+- name: IdentityDomain
+- name: RemoteUser
+- name: CreateCredential
+- name: RemotePassword
+  usedIf:
+    property: CreateCredential
+    values:
+    - true

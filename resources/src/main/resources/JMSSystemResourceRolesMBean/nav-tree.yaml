@@ -3,3 +3,6 @@
 contents:
 - child: Roles
 - child: Queues
+- child: Topics
+- child: UniformDistributedQueues
+- child: UniformDistributedTopics

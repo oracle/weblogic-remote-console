@@ -1,4 +1,4 @@
-/*! Copyright (c) 2020, 2022, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2023, Oracle and/or its affiliates. All rights reserved. */
 
 :root {
   /*
@@ -6,6 +6,7 @@
    *        following custom CSS variables, at runtime.
    */
   --form-container-calc-max-width: 10px;
+  --form-container-calc-max-height: 360px;
   --form-container-calc-min-width: 310px;
   --form-input-min-width: 15em;
   --form-input-min-switch-width: 7.25em;
@@ -439,13 +440,14 @@ oj-input-text.cfe-form-readonly-text > div > div > div.oj-text-field-readonly-di
 {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+  color: gray !important;
+  cursor: default;
   font-weight: normal;
   white-space: pre-wrap;
   background-color: transparent;
   border-color: transparent;
   border-left-width: 0;
   border-right-width: 0;
-  color: rgb(22, 21, 19);
   font-size: 1.0em;         /* 12pt; */
   font-weight: normal;
   line-height: 1.25rem;
@@ -587,6 +589,7 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 .cfe-table-form-content {
   min-width: var(--form-container-fixed-min-width);
   max-width: calc(100vw - var(--form-container-calc-max-width));    /* Any form, table or article wider than var(--content-area-max-width) will have a horizontal scroll bar */
+  max-height: calc(100vh - var(--form-container-calc-max-height));
   margin: 0.3125rem 0 0 0;
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
@@ -596,6 +599,10 @@ oj-table.wlstable {
   overflow: auto;
   height: calc(100vh - var(--form-container-calc-max-height));
   z-index: 1;
+}
+
+oj-table.wlstable tr:not(.oj-table-body-message-row) {
+  cursor: pointer;
 }
 
 #wlsform > div > div:nth-child(+n+0) {
@@ -1131,3 +1138,57 @@ oj-list-view[id="selectedColumnList"]  .oj-listview-item-layout
 {
   min-height: .5rem;
 }
+
+div[id="menu-button-container"] .oj-button,
+div[id="menu-button-container"] .oj-button-nocomp
+{
+  margin: 0.3125rem 0 0 0;
+  font-size: 1.0em;       /* 12pt; */
+  display: inline-flex;
+  vertical-align: baseline;
+}
+
+.cfe-iconbar {
+  visibility: visible;
+}
+
+.cfe-iconbar-icon {
+  vertical-align: middle;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.cfe-iconbar-icon-item {
+  margin: 0 0.188rem 0 0;
+}
+
+.cfe-buttonset {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+.cfe-button-menu {
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--oj-button-height);
+  font-size: var(--oj-button-font-size);
+}
+
+.cfe-button-menu:hover {
+  background-color: #f1f1f1;
+}
+
+.cfe-button-menu > a {
+  text-decoration: none;
+}
+
+.cfe-button-menu > a > span {
+  padding: 0 0.938rem 0 0.188rem;  /* 0 15px 0 3px */
+}
+
+.cfe-button-menu > a > img {
+  vertical-align: text-top;
+}
+

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -116,6 +116,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         if (CoreUtils.isUndefinedOrNull(value)) {
           return;
         }
+
+        // Strip '-site-panel-card' suffix from value
+        value = value.replace('-site-panel-card', '');
 
         const beanTree = getSelectedBeanTree(value);
         if (CoreUtils.isUndefinedOrNull(beanTree)) {

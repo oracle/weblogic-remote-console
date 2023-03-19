@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -8,8 +8,10 @@ import java.util.List;
 
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.SliceDef;
+import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.SlicesDef;
 import weblogic.remoteconsole.common.repodef.schema.SliceDefSource;
+import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
@@ -25,9 +27,42 @@ class SliceDefImpl implements SliceDef {
 
   private LocalizableString label;
 
+  private Path slice = new Path();
+
   private List<SliceDef> contentDefs = new ArrayList<>();
 
-  SliceDefImpl(
+  static SliceDefImpl createSliceDefImpl(
+    SlicesDefImpl slicesDefImpl,
+    SliceDefSource source,
+    SliceDefImpl sliceDefImpl
+  ) {
+    SliceDefImpl newSliceDefImpl = new SliceDefImpl(slicesDefImpl, source, sliceDefImpl);
+    if (newSliceDefImpl.getSource().getSlices().isEmpty()) {
+      // See whether the yaml file for this slice exists.
+
+      // create the page path to this slice
+      PageRepoDefImpl pageRepo = slicesDefImpl.getPageRepoDefImpl();
+      SlicePagePath pagePath =
+        pageRepo.newSlicePagePath(slicesDefImpl.getTypeDef(), newSliceDefImpl.getSlice());
+
+      // see whether a yalm file for this slice exists
+      YamlReader reader = pageRepo.getYamlReader();
+      if (reader.getSliceFormDefSource(pagePath, slicesDefImpl) == null
+            && reader.getSliceTableDefSource(pagePath, slicesDefImpl) == null) {
+        // the yaml for this slice doesn't exist. skip the slice.
+        return null;
+      }
+    } else {
+      // See whether the yaml file for any of this slice's child slices exists.
+      if (newSliceDefImpl.getContentDefs().isEmpty()) {
+        // none of the child slices' yaml files exist. skip the slice.
+        return null;
+      }
+    }
+    return newSliceDefImpl;
+  }
+
+  private SliceDefImpl(
     SlicesDefImpl slicesDefImpl,
     SliceDefSource source,
     SliceDefImpl sliceDefImpl
@@ -35,6 +70,10 @@ class SliceDefImpl implements SliceDef {
     this.slicesDefImpl = slicesDefImpl;
     this.source = source;
     this.sliceDefImpl = sliceDefImpl;
+    if (sliceDefImpl != null) {
+      slice = sliceDefImpl.getSlice();
+    }
+    slice = slice.childPath(source.getName());
     String englishLabel = getSource().getLabel();
     if (StringUtils.isEmpty(englishLabel)) {
       // There isn't a custom label.  Use the name.
@@ -42,7 +81,12 @@ class SliceDefImpl implements SliceDef {
     }
     this.label = new LocalizableString(getLocalizationKey("label"), englishLabel);
     for (SliceDefSource sliceDefSource : getSource().getSlices()) {
-      getContentDefs().add(new SliceDefImpl(getSlicesDefImpl(), sliceDefSource, this));
+      if (slicesDefImpl.getBeanRepoDefImpl().supportsCapabilities(sliceDefSource.getRequiredCapabilities())) {
+        SliceDefImpl newSliceDefImpl = createSliceDefImpl(getSlicesDefImpl(), sliceDefSource, this);
+        if (newSliceDefImpl != null) {
+          getContentDefs().add(newSliceDefImpl);
+        }
+      }
     }
   }
 
@@ -61,6 +105,10 @@ class SliceDefImpl implements SliceDef {
 
   private SliceDefImpl getSliceDefImpl() {
     return this.sliceDefImpl;
+  }
+
+  private Path getSlice() {
+    return this.slice;
   }
 
   @Override

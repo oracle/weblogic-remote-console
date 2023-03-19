@@ -20,6 +20,8 @@ properties:
     label: SDMB
   - value: imb
     label: IMB
+  - value: ssludp
+    label: SSLUDP
 
 - name: ClusteringMode
   legalValues:

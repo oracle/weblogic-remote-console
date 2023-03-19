@@ -1,0 +1,17 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page describes this connection pool.</p>
+  <p>If the connection pool name is empty, then this page describes the defaults for the resource adapter.</p>
+
+properties:
+- name: Module
+- name: EISType
+- name: ConnectionPool
+- name: ResourceId
+
+helpTopics:
+- label: "Password Credential Mapping"
+  href: "adapt/security.html#ADAPT209"
+  type: "edocs"

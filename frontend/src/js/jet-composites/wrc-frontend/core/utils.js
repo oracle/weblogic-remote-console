@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022,2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -46,6 +46,35 @@ define(
       isSame: function(a, b) {
         return JSON.stringify(a) === JSON.stringify(b);
       },
+      getDifference: function(array1, array2, searchIn) {
+        function array1Diff(searchIn) {
+          return array1.filter(object1 => {
+            return !array2.some(object2 => {
+              if (searchIn)
+                return object1[searchIn] === object2[searchIn];
+              else
+                return object1 === object2;
+            });
+          });
+        }
+
+        function array2Diff(searchIn) {
+          return array2.filter(object2 => {
+            return !array1.some(object1 => {
+              if (searchIn)
+                return object2[searchIn] === object1[searchIn];
+              else
+                return object2 === object1;
+            });
+          });
+        }
+
+        let diff = array1Diff(searchIn);
+        if (!diff) {
+          diff = array2Diff(searchIn);
+        }
+        return diff;
+      },
       isNotUndefinedNorNull: function (value) {
         return (value != null);
       },
@@ -75,16 +104,16 @@ define(
       isError: function (reason) {
         return (this.isNotUndefinedNorNull(reason) && reason instanceof Error);
       },
-      getLastIndex: function(array, searchKey, searchValue) {
-        const index = array.slice().reverse().findIndex(x => x[searchKey] === searchValue);
+      getLastIndex: function(array, searchIn, searchValue) {
+        const index = array.slice().reverse().findIndex(x => x[searchIn] === searchValue);
         const count = array.length - 1;
         return (index >= 0 ? count - index : index);
       },
-      getValues: function(array, searchKey) {
+      getValues: function(array, searchIn) {
         let values = [];
-        const results = array.filter(x => typeof x[searchKey] !== 'undefined');
+        const results = array.filter(x => typeof x[searchIn] !== 'undefined');
         results.forEach((result) => {
-          values.push(result[searchKey]);
+          values.push(result[searchIn]);
         });
         return values;
       },
@@ -99,7 +128,9 @@ define(
       shallowCopy: (array) => {
         if (array) return [...array];
         return [];
-      }
+      },
+      getFunctionNames: (obj) => Object.getOwnPropertyNames(obj).filter(item => typeof obj[item] === 'function')
+
     };
 
   }

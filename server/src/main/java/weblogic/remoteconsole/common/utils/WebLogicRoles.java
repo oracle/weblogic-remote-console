@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Contains information about the standarcx Weblogic roles that the remote console supports.
+ * Contains information about the standard Weblogic roles that the remote console supports.
  */
 public class WebLogicRoles {
   private WebLogicRoles() {

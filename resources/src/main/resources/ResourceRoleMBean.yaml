@@ -1,19 +1,34 @@
-# Copyright (c) 2022, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 name: weblogic.management.security.authorization.ResourceRoleMBean
 baseTypes:
 - weblogic.management.WebLogicMBean
 derivedTypes:
+- weblogic.management.security.authorization.AppDeploymentRoleMBean
+- weblogic.management.security.authorization.CoherenceCacheRoleMBean
+- weblogic.management.security.authorization.CoherenceServiceRoleMBean
 - weblogic.management.security.authorization.DomainRoleMBean
 - weblogic.management.security.authorization.GlobalRoleMBean
+- weblogic.management.security.authorization.JDBCSystemResourceRoleMBean
 - weblogic.management.security.authorization.JMSSystemResourceRoleMBean
 - weblogic.management.security.authorization.QueueRoleBean
+- weblogic.management.security.authorization.ServerRoleBean
+- weblogic.management.security.authorization.TopicRoleBean
+- weblogic.management.security.authorization.UniformDistributedQueueRoleBean
+- weblogic.management.security.authorization.UniformDistributedTopicRoleBean
 properties:
 - name: Name
-  descriptionHTML: "<p>TBD The name of this role.</p>"
+  descriptionHTML: "<p>The name of this role.</p>"
   type: java.lang.String
-- name: Expression
-  descriptionHTML: "<p>TBD The role expression</p>"
+- name: Policy
+  descriptionHTML: "<p>The conditions determining membership in this role.</p>"
+  type: EntitleNetExpression
+  writable: true
+- name: PolicyStringExpression
+  descriptionHTML: "<p>The conditions determining membership in this role.</p>"
   type: java.lang.String
   writable: true
+- name: PolicyResourceId
+  descriptionHTML: "<p>The security resource id of this resource.</p>"
+  type: java.lang.String

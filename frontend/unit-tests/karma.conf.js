@@ -7,11 +7,19 @@ module.exports = function (config) {
   process.env.CHROME_BIN = require('puppeteer').executablePath();
 
   var sourcePreprocessors = 'coverage';
+  var settings = {
+    browsers: ['ChromeHeadlessNoSandbox'],
+    runThenExit: true
+  };
+
   function isDebug(argument) {
     return argument === '--debug';
   }
+
   if (process.argv.some(isDebug)) {
     sourcePreprocessors = [];
+    settings.runThenExit = false;
+    settings.browsers = ['ChromeDebugging'];
   }
 
   config.set({
@@ -51,8 +59,8 @@ module.exports = function (config) {
       },
 
       // Test files
-      { pattern: 'unit-tests/specs/**', included: false },
-//      { pattern: 'unit-tests/specs/core/**', included: false },
+//MLW      { pattern: 'unit-tests/specs/**', included: false },
+      { pattern: 'unit-tests/specs/microservices/policy-management/UseCaseTests/addCondition**', included: false },
 
       // .json files for fixtures
       { pattern: 'unit-tests/fixtures/**'},
@@ -90,6 +98,12 @@ module.exports = function (config) {
       variableName: '__json__'
     },
 
+    logReporter: {
+      outputPath: 'unit-tests/fixtures/microservices/policy-management/results/',
+      logFileName: 'rdjParsedExpression.txt',
+      filter_key: 'log-filter'
+    },
+
     preprocessors: {
       'unit-tests/fixtures/**/*.json': ['json_fixtures'],
       'web/js/jet-composites/wrc-frontend/1.0.0/core/**/*.js': sourcePreprocessors,
@@ -105,7 +119,10 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha', 'coverage'],
+    reporters: [
+      'mocha',
+      'coverage'
+    ],
 
     coverageReporter: {
       includeAllSources: true,
@@ -136,17 +153,22 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['ChromeHeadlessNoSandbox'],
+    browsers: settings.browsers,
+
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
         flags: ['--no-sandbox']
+      },
+      ChromeDebugging: {
+        base: 'Chrome',
+        flags: ['--remote-debugging-port=9333']
       }
     },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
+    singleRun: settings.runThenExit,
 
     // Concurrency level
     // how many browser should be started simultaneous

@@ -48,7 +48,8 @@ define(['ojs/ojcore', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', '
       modelArchiveUpdated: new signals.Signal(),
       appQuitTriggered: new signals.Signal(),
       domainSecurityWarning: new signals.Signal(),
-      modelConsoleSizeChanged: new signals.Signal()
+      modelConsoleSizeChanged: new signals.Signal(),
+      ssoTokenExpired: new signals.Signal()
     });
 
     const PATH_PREFIX = 'jet-composites/wrc-frontend/1.0.0/integration/';

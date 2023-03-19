@@ -73,8 +73,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
             await driver.sleep(2400);
             console.log("Enter testCLuster-1 name");
             await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys("testCluster-1");
-            await driver.sleep(4800);
-
+            await driver.sleep(2400);
+            console.log("Click Create button");
+            await driver.findElement(
+                By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span[1]/img")).click();
+            await driver.sleep(2400);
             console.log("Click Navtree Machines");
             await driver.findElement(By.xpath("//span[contains(.,'Machines')]")).click();
             await driver.sleep(2400);
@@ -102,7 +105,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
             await driver.sleep(4800);
             console.log("Click Services Landing Page");
             element = await driver.findElement(By.id("Services"));
-            //element = driver.findElement(By.xpath("//span[@class='oj-navigationlist-item-label' and text()='Services']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             element.click();
             await driver.sleep(4800);
@@ -119,7 +121,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
             await driver.findElement(By.xpath("//input[@id='Name|input']")).click();
             await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys("testJMSServer-1");
             await driver.sleep(4800);
-
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -421,7 +422,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
 
                console.log("Click WDT Model Tree");
-               await driver.findElement(By.xpath("//img[@alt=\'WDT Model\']")).click();
+               await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
                await driver.sleep(2400);
                console.log("Click Navtree Environment");
                await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
@@ -612,7 +613,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
 
                 console.log("Click WDT Model Tree");
-                await driver.findElement(By.xpath("//img[@alt=\'WDT Model\']")).click();
+                await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
                 await driver.sleep(2800);
                 console.log("Click Navtree Environment");
                 await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
@@ -639,11 +640,13 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(600);
                 await driver.findElement(By.id("Name|input")).sendKeys("testRealm-3");
                 await driver.sleep(2400);
-                console.log("Click Ok button");
-                await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.save.id]]\']/button/div/span/img")).click();
+                console.log("Click Create button");
+                await driver.findElement(By.xpath("//span[text()='Create']")).click();
                 await driver.sleep(2400);
-                console.log("Enter Domain SecurityConfiguration_AdministrativeIdentityDomain = welcome1");
-                await driver.findElement(By.id("SecurityConfiguration_Credential|input")).sendKeys("welcome1");
+                console.log("Enter SecurityConfiguration_AdministrativeIdentityDomain = welcome1");
+                element =  driver.findElement(By.id("SecurityConfiguration_AdministrativeIdentityDomain|input"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await element.sendKeys("welcome1");
 
                 await admin.enableOjSwitchCheckBox(driver,"SecurityConfiguration_DowngradeUntrustedPrincipals",3);
                 await driver.sleep(2400);
@@ -716,7 +719,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
 
                 console.log("Click WDT Model Tree");
-                await driver.findElement(By.xpath("//img[@alt=\'WDT Model\']")).click();
+                await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
+                //await driver.findElement(By.xpath("//img[@alt=\'WDT Model\']")).click();
                 await driver.sleep(2800);
                 console.log("Click Navtree Environment");
                 await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
@@ -810,7 +814,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
                 await driver.sleep(4800);
                 console.log("Click WDT Model Tree");
-                await driver.findElement(By.xpath("//img[@alt=\'WDT Model\']")).click();
+                await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
                 await driver.sleep(2800);
                 console.log("Click Navtree Environment");
                 await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();

@@ -9,3 +9,15 @@ properties:
   relationship: containment
   type: weblogic.management.security.authorization.QueuePolicyBean
   array: true
+- name: UniformDistributedQueues
+  relationship: containment
+  type: weblogic.management.security.authorization.UniformDistributedQueuePolicyBean
+  array: true
+- name: Topics
+  relationship: containment
+  type: weblogic.management.security.authorization.TopicPolicyBean
+  array: true
+- name: UniformDistributedTopics
+  relationship: containment
+  type: weblogic.management.security.authorization.UniformDistributedTopicPolicyBean
+  array: true

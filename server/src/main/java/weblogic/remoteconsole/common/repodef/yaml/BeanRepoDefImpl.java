@@ -69,6 +69,10 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
   }
 
   BaseBeanTypeDefImpl getTypeDefImpl(String typeName) {
+    return getTypeDefImpl(typeName, true);
+  }
+
+  BaseBeanTypeDefImpl getTypeDefImpl(String typeName, boolean required) {
     Optional<BaseBeanTypeDefImpl> opt = getTypeNameToTypeDefImplMap().get(typeName);
     if (opt == null) {
       opt = Optional.ofNullable(createTypeDefImpl(typeName));
@@ -77,7 +81,7 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
     if (opt.isPresent()) {
       return opt.get();
     }
-    if (!isRemoveMissingPropertiesAndTypes()) {
+    if (required && !isRemoveMissingPropertiesAndTypes()) {
       throw new AssertionError("Can't find type " + typeName);
     }
     return null;

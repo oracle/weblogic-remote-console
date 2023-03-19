@@ -11,4 +11,7 @@ children:
 - name: Authorizers
   requiredCapabilities:
   - AuthorizersSecurityData
+- name: CredentialMappers
+  requiredCapabilities:
+  - CredentialMappersSecurityData
 disableMBeanJavadoc: true

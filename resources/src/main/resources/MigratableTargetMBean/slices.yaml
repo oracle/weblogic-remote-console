@@ -4,4 +4,5 @@ alternateSliceSources:
 - ReferenceableBean/slices
 slices:
 - name: General
+- name: Candidates
 - name: ReferencedBy

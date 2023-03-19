@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -9,7 +9,6 @@ import javax.json.JsonObject;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.TableActionDef;
-import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -31,6 +30,7 @@ public class InvokeActionHelper {
   // Table row actions don't take arguments and don't return values
   private static javax.ws.rs.core.Response invokeTableRowAction(InvocationContext ic, String action) {
     Response<Void> response = new Response<>();
+    // Note: might need to handle heterogeneous types (for slice table actions)
     // Make sure the bean supports the action
     Response<TableActionDef> findActionResponse = findTableActionDef(ic, action);
     if (!findActionResponse.isSuccess()) {
@@ -51,18 +51,11 @@ public class InvokeActionHelper {
 
   private static Response<TableActionDef> findTableActionDef(InvocationContext ic, String action) {
     Response<TableActionDef> response = new Response<>();
-    // The action is invoked on a collection child, so we're passed a slice page path.
-    // Get the corresponding table page path since that's where the action defs live.
-    TablePagePath tablePagePath = PagePath.newTablePagePath(ic.getPagePath().getPagesPath());
-    InvocationContext tableIc = new InvocationContext(ic);
-    tableIc.setPagePath(tablePagePath);
-    Response<PageDef> pageDefResponse = tableIc.getPageRepo().asPageReaderRepo().getPageDef(tableIc);
-    if (!pageDefResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(pageDefResponse);
+    Response<List<TableActionDef>> actionsResponse = getTableActionDefs(ic);
+    if (!actionsResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(actionsResponse);
     }
-    TableDef tableDef = pageDefResponse.getResults().asTableDef();
-    List<TableActionDef> actionDefs = tableDef.getActionDefs();
-    TableActionDef tableActionDef = findTableActionDef(actionDefs, new Path(action));
+    TableActionDef tableActionDef = findTableActionDef(actionsResponse.getResults(), new Path(action));
     if (tableActionDef != null) {
       response.setSuccess(tableActionDef);
     } else {
@@ -87,5 +80,30 @@ public class InvokeActionHelper {
       }
     }
     return null;
+  }
+
+  private static Response<List<TableActionDef>> getTableActionDefs(InvocationContext ic) {
+    Response<List<TableActionDef>> response = new Response<>();
+    Response<PageDef> pageDefResponse = ic.getPageRepo().asPageReaderRepo().getPageDef(ic);
+    if (!pageDefResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(pageDefResponse);
+    }
+    PageDef pageDef = pageDefResponse.getResults();
+    if (pageDef.isSliceTableDef()) {
+      // The action invoked on a row of a slice table.  Return the slice table's actions.
+      response.setSuccess(pageDef.asSliceTableDef().getActionDefs());
+    } else {
+      // The action is invoked on a collection child, so we're passed a slice page path.
+      // Get the corresponding table page path since that's where the action defs live.
+      TablePagePath tablePagePath = PagePath.newTablePagePath(ic.getPagePath().getPagesPath());
+      InvocationContext tableIc = new InvocationContext(ic);
+      tableIc.setPagePath(tablePagePath);
+      Response<PageDef> tablePageDefResponse = tableIc.getPageRepo().asPageReaderRepo().getPageDef(tableIc);
+      if (!tablePageDefResponse.isSuccess()) {
+        return response.copyUnsuccessfulResponse(tablePageDefResponse);
+      }
+      response.setSuccess(tablePageDefResponse.getResults().asTableDef().getActionDefs());
+    }
+    return response;
   }
 }

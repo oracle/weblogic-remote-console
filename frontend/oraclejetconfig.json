@@ -20,5 +20,6 @@
   "defaultTheme": "redwood",
   "defaultCssvars": "disabled",
   "generatorVersion": "12.0.0",
-  "architecture": "mvvm"
+  "architecture": "mvvm",
+  "watchInterval": 1000
 }

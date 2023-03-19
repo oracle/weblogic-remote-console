@@ -1,11 +1,13 @@
 /**
  * @license
- * Copyright (c) 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
 
 'use strict';
+
+const { execFile } = require('child_process');
 
 /**
  * See {@link https://stackabuse.com/javascripts-immediately-invoked-function-expressions/}
@@ -150,6 +152,23 @@ const WindowManagement = (() => {
    */
   function populateFileMenu(appMenuTemplate) {
     /**
+     * A closure that creates the "New Window" submenu item, under the "File" menu
+     * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures}
+     */
+    function createNewWindowSubmenu() {
+      fileMenu.submenu.push({
+        id: 'newWindow',
+        accelerator: 'CommandOrControl+N',
+        label: 'New Window',
+        click(item) {
+          const runme = process.env.APPIMAGE ?
+            process.env.APPIMAGE :
+            app.getPath('exe');
+          execFile(runme);
+        }
+      });
+    }
+    /**
      * A closure that creates the "New Project" submenu item, under the "File" menu
      * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures}
      */
@@ -170,12 +189,12 @@ const WindowManagement = (() => {
               if (results.succeeded) {
                 current_project = results.current_project;
                 generateAppMenu();
-                _window.webContents.send('on-project-switched', {action: "create", from: results.previous_project, to: results.current_project});
+                _window.webContents.send('on-project-switched', {action: 'create', from: results.previous_project, to: results.current_project});
               }
               else {
                 switch(results.resultReason) {
                   case ProjectManager.ResultReason.ALREADY_EXISTS:
-                    showPopupMessage({title: "Project Already Exist", severity: "warning", details: `A project named "${name}" already exists!`});
+                    showPopupMessage({title: 'Project Already Exist', severity: 'warning', details: `A project named "${name}" already exists!`});
                     break;
                   case ProjectManager.ResultReason.CANNOT_BE_NULL:
                     break;
@@ -183,7 +202,7 @@ const WindowManagement = (() => {
               }
             })
             .catch(err => {
-              reject(new Error('Failed to create project'));
+              Promise.reject(new Error('Failed to create project'));
             });
         }
       });
@@ -209,7 +228,7 @@ const WindowManagement = (() => {
               if  (results.succeeded) {
                 current_project = results.current_project;
                 generateAppMenu();
-                _window.webContents.send('on-project-switched', {action: "select", from: results.previous_project, to: results.current_project});
+                _window.webContents.send('on-project-switched', {action: 'select', from: results.previous_project, to: results.current_project});
               }
             }
           });
@@ -250,7 +269,7 @@ const WindowManagement = (() => {
               // Update current_project using results returned from the
               // call to ProjectManager.deleteProject.
               current_project = results.current_project;
-              _window.webContents.send('on-project-switched', {action: "navigate", from: results.deleted_project, to: results.current_project});
+              _window.webContents.send('on-project-switched', {action: 'navigate', from: results.deleted_project, to: results.current_project});
               generateAppMenu();
             }
           }
@@ -295,13 +314,13 @@ const WindowManagement = (() => {
               const results = ProjectManager.renameCurrentProject(name);
               if (results.succeeded) {
                 current_project = results.current_project;
-                _window.webContents.send('on-project-switched', {action: "rename", from: results.renamed_project, to: results.current_project});
+                _window.webContents.send('on-project-switched', {action: 'rename', from: results.renamed_project, to: results.current_project});
                 generateAppMenu();
               }
               else {
                 switch(results.resultReason) {
                   case ProjectManager.ResultReason.ALREADY_EXISTS:
-                    showPopupMessage({title: "Project Already Exist", severity: "warning", details: `A project named "${name}" already exists!`});
+                    showPopupMessage({title: 'Project Already Exist', severity: 'warning', details: `A project named "${name}" already exists!`});
                     break;
                   case ProjectManager.ResultReason.NAME_NOT_CHANGED:
                   case ProjectManager.ResultReason.CANNOT_BE_NULL:
@@ -310,7 +329,7 @@ const WindowManagement = (() => {
               }
             })
             .catch(err => {
-              reject(new Error('Failed to create project'));
+              Promise.reject(new Error('Failed to create project'));
             });
         }
       });
@@ -321,6 +340,7 @@ const WindowManagement = (() => {
     // Declare function-scoped reference to the current project
     let current_project = ProjectManager.getCurrentProject();
 
+    createNewWindowSubmenu();
     createNewProjectSubmenu();
     populateSwitchToProjectSubmenu();
     populateDeleteProjectSubmenu();
@@ -659,7 +679,7 @@ const WindowManagement = (() => {
         dialog.showMessageBoxSync(_window, {
           title: title,
           buttons: buttons,
-          type: "error",
+          type: 'error',
           message: message,
         });
       }
@@ -696,6 +716,13 @@ const WindowManagement = (() => {
       }
       else {
         return Promise.reject(Error('_window variable is undefined, which implies that either AppWindow.initialize() was not called, or an error happened when it was called. Check the JS console or log.'));
+      }
+    },
+    processCustomUrl: (customUrl) => {
+      if (_window) {
+        if (_window.isMinimized()) _window.restore();
+        _window.focus();
+        _window.webContents.send('on-login', {action: 'token', customUrl: customUrl});
       }
     }
 

@@ -27,9 +27,9 @@ function createFailure(reason, failureType = 'UNEXPECTED') {
 }
 
 function populateResponseFailure(err, response, failureType = 'UNEXPECTED') {
-  response["transport"] = {statusText: err};
-  response["failureType"] = failureType;
-  response["failureReason"] = err;
+  response['transport'] = {statusText: err};
+  response['failureType'] = failureType;
+  response['failureReason'] = err;
 }
 
 module.exports = {

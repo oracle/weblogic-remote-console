@@ -25,7 +25,6 @@ import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
 import weblogic.remoteconsole.common.repodef.yaml.SlicesDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.YamlReader;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
-import weblogic.remoteconsole.common.utils.WebLogicPSU;
 
 /**
  * Utility class for reading yaml files describing the pages
@@ -46,12 +45,7 @@ class WebLogicYamlReader extends YamlReader {
     // Search for hand coded yamls first (e.g. for fabricated types)
     typesYamlDirectories.add("");
     String gaDir = "harvestedWeblogicBeanTypes/" + mbeansVersion.getWebLogicVersion().getDomainVersion();
-    WebLogicPSU psu = mbeansVersion.getPSU();
-    if (psu != null) {
-      // Search the PSU version of the yamls first
-      typesYamlDirectories.add(gaDir + "/" + psu.getName());
-    }
-    // Search the GA version of the yamls
+    // Search the harvested yamls
     typesYamlDirectories.add(gaDir);
   }
 

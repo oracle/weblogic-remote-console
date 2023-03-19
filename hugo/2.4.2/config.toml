@@ -1,0 +1,30 @@
+# analytics
+googleAnalytics = "UA-129126578-2"
+
+baseURL = "/"
+languageCode = "en-us"
+title = "WebLogic Remote Console"
+
+# Change the default theme to be use when building the site with Hugo
+theme = "hugo-theme-learn"
+
+publishDir = "docs"
+
+[module]
+[[module.mounts]]
+  source = 'static'
+  target = 'static'
+[[module.mounts]]
+  source = '../../frontend/src/js/jet-composites/wrc-frontend/images/'
+  target = 'static/images/icons'
+
+# For search functionality
+[outputs]
+  home = [ "HTML", "RSS", "JSON"]
+
+[params]
+  # disable the copy to clipboard links
+  disableInlineCopyToClipBoard = true
+
+[markup.goldmark.renderer]
+unsafe= true

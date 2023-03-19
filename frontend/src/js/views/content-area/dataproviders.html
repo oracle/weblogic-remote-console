@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ Copyright (c) 2021, 2022, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="data-providers-container" data-content-location="kiosk">
@@ -20,10 +20,10 @@
           <div class="oj-helper-margin-start-auto">
 <!--
             <a href="#" index="-1" data-item-action="export" on-click="[[projectsToolbarIconClickListener]]">
-              <img class=".cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.export.iconFile() + '.png', 'title': i18n.icons.export.tooltip}"/>
+              <img class=".cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.export.iconFile() + '.png', 'title': i18n.icons.export.tooltip, alt: i18n.icons.export.tooltip}"/>
             </a>
             <a href="#" index="-1" data-item-action="import" on-click="[[projectsToolbarIconClickListener]]">
-              <img class=".cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.import.iconFile + '.png', 'title': i18n.icons.import.tooltip}"/>
+              <img class=".cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.import.iconFile + '.png', 'title': i18n.icons.import.tooltip, alt: i18n.icons.import.tooltip}"/>
             </a>
 -->
           </div>
@@ -41,7 +41,7 @@
                href="#" tabindex="-1"
                on-click="[[launchProjectMoreMenu]]"
             >
-              <img id="project-more-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.more.iconFile + '.png', 'title': i18n.icons.more.tooltip}" />
+              <img id="project-more-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.more.iconFile + '.png', 'title': i18n.icons.more.tooltip, alt: i18n.icons.more.tooltip}" />
             </a>
             <oj-menu
               id="projectMoreMenu"
@@ -96,25 +96,25 @@
             on-selection-changed="[[connectionsModelsSelectedItemChanged]]"
           >
             <template slot="itemTemplate" data-oj-as="item">
-              <li data-bind="attr: {id: item.data.id}" class="cfe-project-provider-listitem">
+              <li role="list" data-bind="attr: {id: item.data.id}" class="cfe-project-provider-listitem">
                 <a href="#">
                   <span :class="[[item.data.class]]"></span>
                   <oj-bind-text value="[[item.data.name]]"></oj-bind-text>
                 </a>
                 <span :id="[[item.data.id + '-iconbar']]" class="cfe-project-provider-iconbar oj-navigationlist-item-end">
                   <a href="#" index="-1" data-item-action="info" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
-                    <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.info.iconFile + '.png', 'title': i18n.icons.info.tooltip}" />
+                    <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.info.iconFile + '.png', 'title': i18n.icons.info.tooltip, alt: i18n.icons.info.tooltip}" />
                   </a>
                   <a href="#" index="-1" data-item-action="edit" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
-                    <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.edit.iconFile + '.png', 'title': i18n.icons.edit.tooltip}" />
+                    <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.edit.iconFile + '.png', 'title': i18n.icons.edit.tooltip, alt: i18n.icons.edit.tooltip}" />
                   </a>
                   <oj-bind-if test="[[item.data.state === 'connected']]">
                     <a href="#" index="-1" data-item-action="deactivate" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
-                      <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.deactivate.iconFile + '.png', 'title': i18n.icons.deactivate.tooltip}" />
+                      <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.deactivate.iconFile + '.png', 'title': i18n.icons.deactivate.tooltip, alt: i18n.icons.deactivate.tooltip}" />
                     </a>
                   </oj-bind-if>
                   <a href="#" index="-1" data-item-action="delete" :data-item-type="[[item.data.type]]" :data-item-id="[[item.data.id]]" on-click="[[connectionsModelsIconBarClickListener]]">
-                    <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.delete.iconFile + '.png', 'title': i18n.icons.delete.tooltip}" />
+                    <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.delete.iconFile + '.png', 'title': i18n.icons.delete.tooltip, alt: i18n.icons.delete.tooltip}" />
                   </a>
                 </span>
               </li>
@@ -154,10 +154,18 @@
       </span>
       <br/>
     </oj-bind-if>
-    <span><b><oj-bind-text value="[[i18n.popups.info.domain.username.label]]"></oj-bind-text></b>
-      <span><oj-bind-text value="[[i18n.popups.info.domain.username.value()]]"></oj-bind-text></span>
-    </span>
-    <br/>
+    <oj-bind-if test="i18n.popups.info.domain.sso.value() === false">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.username.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.username.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="i18n.popups.info.domain.sso.value() === true">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.sso.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.sso.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
     <oj-bind-if test="typeof i18n.popups.info.domain.roles.value() !== 'undefined'">
       <span><b><oj-bind-text value="[[i18n.popups.info.domain.roles.label]]"></oj-bind-text></b>
         <span><oj-bind-text value="[[i18n.popups.info.domain.roles.value()]]"></oj-bind-text></span>
@@ -197,7 +205,12 @@
   </oj-bind-if>
 </oj-popup>
 
-<oj-dialog id="domainConnectionDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide">
+<oj-dialog
+  id="domainConnectionDialog"
+  dialog-title="[[i18n.dialog.title]]"
+  initial-visibility="hide"
+  on-oj-focus="[[onOjFocus]]"
+>
   <div slot="body">
     <div class="cfe-dialog-prompt">
       <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
@@ -206,6 +219,14 @@
     <oj-form-layout id="domain-connect-form-layout" label-edge="start" label-width="36%">
       <oj-label slot="label" for="connection-name-field"><oj-bind-text value="[[i18n.labels.connections.name.value + '*']]"></oj-bind-text></oj-label>
       <oj-input-text id="connection-name-field" class="cfe-dialog-field" value='{{dialogFields().name}}'></oj-input-text>
+
+      <oj-bind-if test="[[dialogFields().ssoOption]]">
+        <oj-label slot="label" for="sso-field"><oj-bind-text value="[[i18n.checkboxes.usesso.label]]"></oj-bind-text></oj-label>
+        <oj-checkboxset id="sso-field" value="{{dialogFields().ssoCheckbox}}" on-value-changed="[[ssoAdminServerConnectionStateChanged]]">
+          <oj-option id="use-sso-option" value="[[i18n.checkboxes.usesso.id]]">
+          </oj-option>
+        </oj-checkboxset>
+      </oj-bind-if>
 
       <oj-label slot="label" for="username-field"><oj-bind-text value="[[i18n.labels.connections.username.value + '*']]"></oj-bind-text></oj-label>
       <oj-input-text id="username-field" class="cfe-dialog-field" value='{{dialogFields().username}}'></oj-input-text>
@@ -251,7 +272,7 @@
              :data-input-type="[[dialogFields().type]]"
              on-click="[[newFileClickHandler]]"
           >
-            <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip}"/>
+            <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip, alt: i18n.dialog.tooltip}"/>
           </a>
           <oj-bind-if test="[[dialogFields().checkbox]]">
             <oj-checkboxset value="{{useSparseTemplate}}">
@@ -268,14 +289,14 @@
              :data-input-type="[[dialogFields().type]]"
              on-click="[[chooseFileClickHandler]]"
           >
-            <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip}"/>
+            <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip, alt: i18n.dialog.tooltip}"/>
           </a>
           <oj-bind-if test="[[isReloadable()]]">
             <a href="#" index="-1"
                :data-input="[[dialogFields().id]]"
                on-click="[[reloadFileClickListener]]"
             >
-              <img class="reload-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.reload.iconFile + '.png', 'title': i18n.icons.reload.tooltip}" />
+              <img class="reload-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.reload.iconFile + '.png', 'title': i18n.icons.reload.tooltip, alt: i18n.icons.reload.tooltip}" />
             </a>
           </oj-bind-if>
         </oj-bind-if>
@@ -349,7 +370,7 @@
            data-input-type="project"
            on-click="[[chooseFileClickHandler]]"
         >
-          <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.choose.iconFile + '.png', 'title': i18n.icons.choose.tooltip}"/>
+          <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.choose.iconFile + '.png', 'title': i18n.icons.choose.tooltip, alt: i18n.icons.choose.tooltip}"/>
         </a>
       </div>
     </oj-form-layout>

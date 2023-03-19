@@ -164,7 +164,7 @@ define(['wrc-frontend/microservices/project-management/console-project-manager',
         it('Return value should be [{name: "edit", type: "configuration"}, {name: "serverConfig", type: "view"}, {name: "domainRuntime", type: "monitoring"}]', function() {
           const beanTrees = DataProvider.prototype.getBeanTreesByType(DataProvider.prototype.Type.ADMINSERVER);
           console.log(`beanTrees=${JSON.stringify(beanTrees)}`);
-          expect(CoreUtils.isSame(beanTrees, [{name: "edit", type: "configuration"}, {name: "serverConfig", type: "view"}, {name: "domainRuntime", type: "monitoring"}])).to.equal(true);
+          expect(CoreUtils.isSame(beanTrees, [{name: "edit", type: "configuration"}, {name: "serverConfig", type: "view"}, {name: "domainRuntime", type: "monitoring"}, {"name":"securityData","type":"security"}])).to.equal(true);
         });
 
         it('Return value should be [{name: "edit", type: "modeling"}]', function() {

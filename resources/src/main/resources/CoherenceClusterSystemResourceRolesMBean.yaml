@@ -1,0 +1,15 @@
+# Copyright (c) 2022, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.CoherenceClusterSystemResourceRolesMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+properties:
+- name: CoherenceCaches
+  relationship: containment
+  type: weblogic.management.security.authorization.CoherenceCacheRolesBean
+  array: true
+- name: CoherenceServices
+  relationship: containment
+  type: weblogic.management.security.authorization.CoherenceServiceRolesBean
+  array: true

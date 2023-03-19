@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -24,6 +24,7 @@ import weblogic.remoteconsole.server.repo.Option;
 import weblogic.remoteconsole.server.repo.OptionsSource;
 import weblogic.remoteconsole.server.repo.Page;
 import weblogic.remoteconsole.server.repo.Response;
+import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Table;
 import weblogic.remoteconsole.server.repo.TableCell;
 import weblogic.remoteconsole.server.repo.TableRow;
@@ -127,6 +128,11 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
 
   private JsonObjectBuilder tableRowToJson(TableRow tableRowValues) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
+    String identifier = tableRowValues.getIdentifier();
+    if (!StringUtils.isEmpty(identifier)) {
+      TableCell cellValue = new TableCell("identifier", new StringValue(identifier));
+      builder.add(cellValue.getName(), tableCellToJson(cellValue));
+    }
     for (TableCell cellValue : tableRowValues.getCells()) {
       builder.add(cellValue.getName(), tableCellToJson(cellValue));
     }

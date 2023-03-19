@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.connection;
@@ -6,7 +6,6 @@ package weblogic.remoteconsole.server.connection;
 import java.util.Set;
 import javax.ws.rs.client.Client;
 
-import weblogic.remoteconsole.common.utils.WebLogicPSU;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 
 /** The implementation of Connection interface holding connection information */
@@ -16,9 +15,8 @@ public class ConnectionImpl implements Connection {
   private String domainUrl;
   private String domainName;
   private WebLogicVersion weblogicVersion;
-  private WebLogicPSU psu;
   private String consoleExtensionVersion;
-  private Set<String> consoleExtensionCapabilities;
+  private Set<String> capabilities;
   private String username;
   private Client client;
 
@@ -28,9 +26,8 @@ public class ConnectionImpl implements Connection {
     String domainUrl,
     String domainName,
     WebLogicVersion weblogicVersion,
-    WebLogicPSU psu,
     String consoleExtensionVersion,
-    Set<String> consoleExtensionCapabilities,
+    Set<String> capabilities,
     String username,
     Client client
   ) {
@@ -38,9 +35,8 @@ public class ConnectionImpl implements Connection {
     this.domainUrl = domainUrl;
     this.domainName = domainName;
     this.weblogicVersion = weblogicVersion;
-    this.psu = psu;
     this.consoleExtensionVersion = consoleExtensionVersion;
-    this.consoleExtensionCapabilities = consoleExtensionCapabilities;
+    this.capabilities = capabilities;
     this.username = username;
     this.client = client;
   }
@@ -66,18 +62,13 @@ public class ConnectionImpl implements Connection {
   }
 
   @Override
-  public WebLogicPSU getPSU() {
-    return psu;
-  }
-
-  @Override
   public String getConsoleExtensionVersion() {
     return consoleExtensionVersion;
   }
 
   @Override
-  public Set<String> getConsoleExtensionCapabilities() {
-    return consoleExtensionCapabilities;
+  public Set<String> getCapabilities() {
+    return capabilities;
   }
 
   @Override

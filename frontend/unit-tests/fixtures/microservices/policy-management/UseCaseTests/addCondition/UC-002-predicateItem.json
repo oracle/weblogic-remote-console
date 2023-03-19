@@ -1,0 +1,30 @@
+{
+  "uid":"0",
+  "parentUid":"-1",
+  "operator":"or",
+  "expression":"Role: role1",
+  "options":{
+    "negated":false,
+    "combined":false,
+    "deleted":false,
+    "insertion":{
+      "type": "above",
+      "checkedItem": {"uid":  "0", "parentUid":  "-1"},
+      "addedItem": {"uid":  "1", "parentUid":  "-1"}
+    }
+  },
+  "predicate":{
+    "name":"weblogic.console.wls.rest.extension.security.authorization.predicates.RolePredicate",
+    "arguments":[
+      {
+        "value":"role1",
+        "array":true,
+        "optional":false,
+        "displayName":"Role Argument Name",
+        "descriptionHTML":"Add one or more roles to this condition. If you add multiple roles, the condition evaluates as true if the user is in ANY of the roles."
+      }
+    ],
+    "descriptionHTML":"Role Predicate",
+    "displayName":"Role"
+  }
+}
