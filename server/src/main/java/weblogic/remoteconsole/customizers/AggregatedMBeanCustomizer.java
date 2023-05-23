@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.SliceTableDef;
-import weblogic.remoteconsole.common.repodef.TableActionDef;
 import weblogic.remoteconsole.common.repodef.weblogic.AggregatedRuntimeMBeanNameHandler;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -21,6 +21,7 @@ import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
+import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.TableCell;
@@ -37,7 +38,11 @@ public class AggregatedMBeanCustomizer {
   private AggregatedMBeanCustomizer() {
   }
 
-  public static Response<Value> invokeAction(InvocationContext ic, TableActionDef tableActionDef) {
+  public static Response<Value> invokeAction(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     BeanTreePath aggBTP = ic.getBeanTreePath();
     BeanRepo beanRepo = aggBTP.getBeanRepo();
 
@@ -55,7 +60,7 @@ public class AggregatedMBeanCustomizer {
     // find its corresponding table page's action def.
     // However, since the aggregated type makes copies of
     // the unaggregated actions, the aggregated one works too.
-    return beanRepo.asBeanReaderRepo().invokeAction(unaggIc, tableActionDef, List.of());
+    return beanRepo.asBeanReaderRepo().invokeAction(unaggIc, pageActionDef, List.of());
   }
 
   public static Response<List<TableRow>> getSliceTableRows(
@@ -157,7 +162,7 @@ public class AggregatedMBeanCustomizer {
       if (value != null) {
         row.getCells().add(
           new TableCell(
-            propertyDef.getFormPropertyName(),
+            propertyDef.getFormFieldName(),
             getCellValue(propertyDef, value)
           )
         );
@@ -170,6 +175,7 @@ public class AggregatedMBeanCustomizer {
         // This bean doesn't have a value for this property (e.g. heterogeneous types)
       }
     }
+    row.getCells().add(new TableCell("identity", fixReference(rowResults.getBeanTreePath())));
     return row;
   }
 

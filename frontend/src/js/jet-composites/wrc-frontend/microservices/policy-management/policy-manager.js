@@ -29,7 +29,7 @@ define(['./policy-data', 'wrc-frontend/apis/data-operations', 'wrc-frontend/core
 
       /**
        * Submits the policy changes.
-       * @param {{Policy: value: {parsedExpression: ParsedExpressionNode}}} fieldValue
+       * @param {{Policy: {value: {parsedExpression: ParsedExpressionNode}}}} fieldValue
        * @param {string} stringExpression
        * @param {string} rdjUrl
        * @returns {Promise<{object}>}

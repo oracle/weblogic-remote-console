@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -82,7 +82,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/preferences/prefer
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderLoadFailed.add((dataProvider) => {
-          setNavTreeDisabledState(true);
+          if (dataProvider.id === Runtime.getDataProviderId()) {
+            setNavTreeDisabledState(true);
+          }
         });
 
         self.signalBindings.push(binding);

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -146,6 +146,19 @@ public class CustomSliceFormDef implements SliceFormDef {
 
   public CustomSliceFormDef helpTopicDefs(List<HelpTopicDef> val) {
     setHelpTopicDefs(val);
+    return this;
+  }
+
+  public List<PageActionDef> getActionDefs() {
+    return formDef.getActionDefs();
+  }
+
+  public void setActionDefs(List<PageActionDef> val) {
+    formDef.setActionDefs(val);
+  }
+
+  public CustomSliceFormDef actionDefs(List<PageActionDef> val) {
+    setActionDefs(val);
     return this;
   }
 

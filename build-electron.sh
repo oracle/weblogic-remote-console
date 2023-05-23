@@ -1,4 +1,16 @@
 #!/bin/bash
+do_docker_pull() {
+  for i in 1 2 3
+  do
+    if docker pull $1
+    then
+      return 0
+    fi
+    sleep $(($i * 30))
+  done
+  exit 1
+}
+
 set -e
 doit_docker() {
   mkdir -p $tmp
@@ -25,6 +37,8 @@ export ALREADY_IN_DOCKER=true
 rm -rf /build.in/electron/dist
 cp -rp electron/dist /build.in/electron
 !
+  ELECTRON_BUILDER_IMAGE=${ELECTRON_BUILDER_IMAGE:-electronuserland/builder:12}
+  do_docker_pull $ELECTRON_BUILDER_IMAGE
   chmod a+x $tmp/script
   docker run \
     --network=host \
@@ -32,7 +46,7 @@ cp -rp electron/dist /build.in/electron
     --mount type=bind,source="$PWD",destination=/build.in \
     --mount type=bind,source="$tmp/script",destination=/tmp/script,ro \
     --entrypoint=/tmp/script \
-    ${ELECTRON_BUILDER_IMAGE:-electronuserland/builder:12}
+    $ELECTRON_BUILDER_IMAGE
 }
 
 # If we're running inside docker, copy the output out at the end
@@ -128,32 +142,50 @@ darwin)
 esac
 mkdir -p "$extra"
 
+if [ "$os" = windows ]
+then
+  extra_modules=",jdk.crypto.mscapi"
+fi
+
 # Make a Custom JRE (if we had modules, we could do more, but this is fine)
-jlink --output "$extra"/customjre --no-header-files --no-man-pages --compress=2 --strip-debug --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.sql,java.xml,jdk.unsupported
+jlink --output "$extra"/customjre --no-header-files --no-man-pages --compress=2 --strip-debug --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.sql,java.xml,jdk.unsupported$extra_modules
 
 mkdir -p "$extra"/backend
 cp -rp ../runnable/* "$extra"/backend
 cp -p package.json "$extra"
+if [ "$1" = internal ]
+then
+  shift
+  cp -p internal-feed-url.json "$extra/feed-url.json"
+fi
 
 npm run dist "$@"
 
 case "$os" in
 darwin)
-  # Create a second copy of the executable for use by WKT UI, so that Mac OS thinks
-  # that they are two separate programs and let's you run them.
-  cd dist/mac
-  cp -p "WebLogic Remote Console.app/Contents/MacOS/WebLogic Remote Console" "WebLogic Remote Console.app/Contents/MacOS/Embeddable Remote Console"
-  zip ../*.zip "WebLogic Remote Console.app/Contents/MacOS/Embeddable Remote Console"
-  cd ../..
+  for mac_dir in dist/mac*
+  do
+    mac_suffix=${mac_dir#dist/mac}
+    # Create a second copy of the executable for use by WKT UI, so that Mac OS thinks
+    # that they are two separate programs and let's you run them.
+    cd $mac_dir
+    cp -p "WebLogic Remote Console.app/Contents/MacOS/WebLogic Remote Console" "WebLogic Remote Console.app/Contents/MacOS/Embeddable Remote Console"
+    zip ../*.zip "WebLogic Remote Console.app/Contents/MacOS/Embeddable Remote Console"
+    cd ../..
+  done
 esac
 
 if set | grep -q CODESIGNBUREAU
 then
   case "$os" in
   darwin)
-    ./signMac dist/mac/"WebLogic Remote Console.app" signed/mac/"WebLogic Remote Console.app"
-    # Regenerate using the signed version
-    "$(npm bin)/electron-builder" -p never --pd="signed/mac/WebLogic Remote Console.app"
+    for mac_dir in dist/mac*
+    do
+      mac_suffix=${mac_dir#dist/mac}
+      ./signMac $mac_dir/"WebLogic Remote Console.app" signed/mac${mac_suffix}/"WebLogic Remote Console.app"
+      # Regenerate using the signed version
+      "$(npm bin)/electron-builder" -p never --pd="signed/mac${mac_suffix}/WebLogic Remote Console.app"
+    done
     ;;
   windows)
     rm -rf "$tmp"/*

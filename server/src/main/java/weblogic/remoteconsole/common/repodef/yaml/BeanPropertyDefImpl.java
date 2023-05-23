@@ -1,9 +1,8 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
@@ -18,13 +17,7 @@ import weblogic.remoteconsole.common.repodef.schema.DefaultValueDefSource;
 import weblogic.remoteconsole.common.repodef.schema.ValueDefSource;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
-import weblogic.remoteconsole.server.repo.ArrayValue;
-import weblogic.remoteconsole.server.repo.BooleanValue;
-import weblogic.remoteconsole.server.repo.DoubleValue;
-import weblogic.remoteconsole.server.repo.IntValue;
-import weblogic.remoteconsole.server.repo.LongValue;
 import weblogic.remoteconsole.server.repo.NullReference;
-import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.UnknownValue;
 import weblogic.remoteconsole.server.repo.Value;
 
@@ -101,7 +94,7 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
   }
 
   @Override
-  public String getFormPropertyName() {
+  public String getFormFieldName() {
     String formName = getCustomizerSource().getFormName();
     if (StringUtils.isEmpty(formName)) {
       return getPropertyPath().getUnderscoreSeparatedPath();
@@ -139,15 +132,6 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
     return parentPath;
   }
 
-  @Override
-  public boolean isOrdered() {
-    if (!isArray()) {
-      return false;
-    } else {
-      return getCustomizerSource().isOrdered();
-    }
-  }
-  
   // Allows the type to force the Name property to be the key property if
   // it wasn't annotated that way in the WLS mbeans and no other property
   // on the type is the key property
@@ -308,37 +292,6 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
       return UnknownValue.INSTANCE;
     }
     return defaultValue;
-  }
-
-  private Value getDefaultValueForType() {
-    if (isReferenceAsReferences()) {
-      return NullReference.INSTANCE;
-    }
-    if (isArray()) {
-      return new ArrayValue(new ArrayList<Value>());
-    }
-    if (isDateAsLong()) {
-      return UnknownValue.INSTANCE;
-    }
-    if (isString()) {
-      return new StringValue(null);
-    }
-    if (isBoolean()) {
-      return new BooleanValue(false);
-    }
-    if (isInt()) {
-      return new IntValue(0);
-    }
-    if (isLong()) {
-      return new LongValue(0);
-    }
-    if (isDouble()) {
-      return new DoubleValue(0);
-    }
-    if (isReference()) {
-      return NullReference.INSTANCE;
-    }
-    return UnknownValue.INSTANCE;
   }
 
   @Override

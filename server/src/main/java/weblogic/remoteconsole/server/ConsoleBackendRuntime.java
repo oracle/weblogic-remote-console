@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server;
@@ -12,6 +12,7 @@ import io.helidon.config.ConfigSources;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.connection.Connection;
 import weblogic.remoteconsole.server.connection.ConnectionManager;
+import weblogic.remoteconsole.server.token.SsoTokenManager;
 import weblogic.remoteconsole.server.utils.WebLogicProperties;
 
 /** A singleton that provides runtime information for the WebLogic Console Backend. */
@@ -27,6 +28,7 @@ public class ConsoleBackendRuntime {
 
   // Console Backend Runtime Singleton State
   private final ConnectionManager connectionManager;
+  private final SsoTokenManager ssoTokenManager;
   private final Map<String, String> properties = new HashMap<String, String>();
   private volatile Config config;
   private volatile Mode mode = Mode.STANDALONE;
@@ -37,6 +39,7 @@ public class ConsoleBackendRuntime {
   private ConsoleBackendRuntime() {
     this.logger = Logger.getLogger(ConsoleBackendRuntime.class.getName());
     this.connectionManager = new ConnectionManager(getConfig());
+    this.ssoTokenManager = new SsoTokenManager(getConfig());
   }
 
   /**
@@ -45,6 +48,14 @@ public class ConsoleBackendRuntime {
    */
   public ConnectionManager getConnectionManager() {
     return connectionManager;
+  }
+
+  /**
+   * Obtain the SSO Token Manager which manages the SSO tokens used with the Console Backend
+   * connections to WebLogic Domains
+   */
+  public SsoTokenManager getSsoTokenManager() {
+    return ssoTokenManager;
   }
 
   /**

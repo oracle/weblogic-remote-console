@@ -40,26 +40,27 @@ actions:
     values:
     - "Suspended"
 - name: "suspend"
-  label: "Suspend"
+  label: "Suspend gracefully"
   usedIf:
     property: "State"
     values:
     - "Running"
 - name: "forceSuspend"
-  label: "Force Suspend"
+  label: "Force suspend"
   usedIf:
     property: "State"
     values:
     - "Running"
 - name: "shutdown"
   label: "Shutdown"
+  helpLabel: "Shutdown gracefully"
   usedIf:
     property: "State"
     values:
     - "Running"
     - "Suspended"
 - name: "forceShutdown"
-  label: "Force Shutdown"
+  label: "Force shutdown"
   usedIf:
     property: "State"
     values:
@@ -80,7 +81,7 @@ actions:
     - "Running"
     - "Suspended"
 - name: "clearStatementCache"
-  label: "Clear Cache"
+  label: "Clear cache"
   usedIf:
     property: "State"
     values:

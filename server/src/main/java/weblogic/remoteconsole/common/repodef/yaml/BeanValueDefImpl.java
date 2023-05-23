@@ -1,8 +1,9 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -12,6 +13,15 @@ import weblogic.remoteconsole.common.repodef.BeanValueDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanValueDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanValueDefSource;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.server.repo.ArrayValue;
+import weblogic.remoteconsole.server.repo.BooleanValue;
+import weblogic.remoteconsole.server.repo.DoubleValue;
+import weblogic.remoteconsole.server.repo.IntValue;
+import weblogic.remoteconsole.server.repo.LongValue;
+import weblogic.remoteconsole.server.repo.NullReference;
+import weblogic.remoteconsole.server.repo.StringValue;
+import weblogic.remoteconsole.server.repo.UnknownValue;
+import weblogic.remoteconsole.server.repo.Value;
 
 /**
  * yaml-based implementation of the BeanValueDef interface.
@@ -90,6 +100,15 @@ class BeanValueDefImpl implements BeanValueDef {
   }
 
   @Override
+  public boolean isOrdered() {
+    if (!isArray()) {
+      return false;
+    } else {
+      return customizerSource.isOrdered();
+    }
+  }
+
+  @Override
   public BeanTypeDef getReferenceTypeDef() {
     if (isReference()) {
       return typeDefImpl.getBeanRepoDef().getTypeDef(StringUtils.getLeafClassName(getJavaType()));
@@ -121,6 +140,37 @@ class BeanValueDefImpl implements BeanValueDef {
       }
     }
     return false;
+  }
+
+  protected Value getDefaultValueForType() {
+    if (isReferenceAsReferences()) {
+      return NullReference.INSTANCE;
+    }
+    if (isArray()) {
+      return new ArrayValue(new ArrayList<Value>());
+    }
+    if (isDateAsLong()) {
+      return UnknownValue.INSTANCE;
+    }
+    if (isString()) {
+      return new StringValue(null);
+    }
+    if (isBoolean()) {
+      return new BooleanValue(false);
+    }
+    if (isInt()) {
+      return new IntValue(0);
+    }
+    if (isLong()) {
+      return new LongValue(0);
+    }
+    if (isDouble()) {
+      return new DoubleValue(0);
+    }
+    if (isReference()) {
+      return NullReference.INSTANCE;
+    }
+    return UnknownValue.INSTANCE;
   }
 
   private String getJavaType() {

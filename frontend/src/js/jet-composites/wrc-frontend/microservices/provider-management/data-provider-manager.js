@@ -42,6 +42,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         const index = dataproviders.map(dataProvider => dataProvider.id).indexOf(id);
         if (index !== -1) {
           clearRunningTimer(dataproviders[index]);
+          dataproviders[index].removeStatus();
           dataproviders.splice(index, 1);
         }
       }
@@ -74,18 +75,14 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         if (CoreUtils.isNotUndefinedNorNull(entry.url)) dataProvider['url'] = entry.url;
         if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider['username'] = entry.username;
         if (CoreUtils.isNotUndefinedNorNull(entry.password)) dataProvider['password'] = entry.password;
-        if (CoreUtils.isNotUndefinedNorNull(entry.sso)) dataProvider['sso'] = entry.sso;
-        if (CoreUtils.isNotUndefinedNorNull(entry.token)) dataProvider['token'] = entry.token;
+        if (CoreUtils.isNotUndefinedNorNull(entry.settings)) dataProvider['settings'] = entry.settings;
         if (CoreUtils.isNotUndefinedNorNull(entry.expires)) dataProvider['expires'] = entry.expires;
 
         // Clear data provider state based on sso setting when available
-        if (CoreUtils.isNotUndefinedNorNull(dataProvider.sso)) {
-          if (dataProvider.sso) {
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.settings) && CoreUtils.isNotUndefinedNorNull(dataProvider.settings.sso)) {
+          if (dataProvider.settings.sso) {
             delete dataProvider.username;
             delete dataProvider.password;
-          } else {
-            delete dataProvider.token;
-            delete dataProvider.expires;
           }
         }
         return dataProvider;
@@ -110,10 +107,11 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
               url: dataProvider.url,
               username: dataProvider.username,
               password: dataProvider.password,
-              sso: dataProvider.sso,
-              token: dataProvider.token,
               expires: dataProvider.expires
             };
+            if (CoreUtils.isNotUndefinedNorNull(dataProvider.settings) && Object.keys(dataProvider.settings).length > 0) {
+              entry['settings'] = dataProvider.settings;
+            }
             // Add entry back into the dataproviders map
             dataProvider = this.createAdminServerConnection(entry);
           }
@@ -129,6 +127,109 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
           const response = {
             failureType: CoreTypes.FailureType.UNEXPECTED,
             failureReason: new Error('Required parameter is missing or null: \'id\'')
+          };
+          return Promise.reject(response);
+        }
+      },
+      /**
+       *
+       * @param {DataProvider} dataProvider
+       * @returns {Promise<{succeeded: boolean, data: any, failure?: any}>}
+       */
+      activateSsoAdminServerConnection: (dataProvider) => {
+        return new Promise((resolve, reject) => {
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+            DomainConnectionManager.createSsoConnection(dataProvider)
+              .then(reply => {
+                dataProvider.populateFromResponse(reply.body.data);
+                if (CoreUtils.isNotUndefinedNorNull(dataProvider?.status?.ssoid) && (dataProvider.status.ssoid !== '')) {
+                  DomainConnectionManager.pollSsoConnection(dataProvider)
+                    .then(reply => {
+                      resolve(reply);
+                    })
+                    .catch(response => {
+                      reject(response);
+                    });
+                }
+                else {
+                  const response = {
+                    failureType: CoreTypes.FailureType.UNEXPECTED,
+                    failureReason: new Error('Required parameter is missing: \'SSO Identifier\'')
+                  };
+                  reject(response);
+                }
+              })
+              .catch(response => {
+                reject(response);
+              });
+          }
+          else {
+            const response = {
+              failureType: CoreTypes.FailureType.UNEXPECTED,
+              failureReason: new Error('Required parameter is missing or null: \'dataProvider\'')
+            };
+            reject(response);
+          }
+        });
+      },
+      /**
+       * Start polling of the SSO admin connection and signal when the token is available.
+       * @param {DataProvider} dataProvider
+       * @param {number} timeout
+       */
+      startPollSsoAdminServerConnection: function (dataProvider, timeout) {
+        function timerExpired(dataProvider) {
+          // Clear the timer and poll for the token availability...
+          clearRunningTimer(dataProvider);
+          DomainConnectionManager.pollSsoConnection(dataProvider)
+            .then(reply => {
+              if (reply && reply.body.data.available) {
+                // When token is available capture the expire time and signal on the data provider
+                const expires = parseInt(reply.body.data.expires || 300);
+                const expireSeconds = (isNaN(expires) ? 300 : expires);
+                dataProvider.putValue('expires', expireSeconds);
+                if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerExpiredSignal)) {
+                  dataProvider.timerExpiredSignal.dispatch(dataProvider);
+                }
+              }
+              else {
+                // Otherwise continue polling...
+                if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerExpiredSignal)) {
+                  dataProvider.putValue('timerId', setInterval(timerExpired, timeout, dataProvider));
+                }
+              }
+            })
+            .catch(response => {
+              // Error polling, indicate problem and signal on the data provider
+              Logger.info(`Polling SSO AdminServerConnection() - ${dataProvider.name}:  ${response.failureReason})`);
+              dataProvider.putValue('expires', -1);
+              if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerExpiredSignal)) {
+                dataProvider.timerExpiredSignal.dispatch(dataProvider);
+              }
+            });
+        }
+
+        // Ensure any existing timer is cancelled
+        clearRunningTimer(dataProvider);
+
+        // Start the timer with the specified timeout
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerExpiredSignal)) {
+          dataProvider.putValue('timerId', setInterval(timerExpired, timeout, dataProvider));
+        }
+      },
+      /**
+       *
+       * @param {DataProvider} dataProvider
+       * @returns {Promise<{succeeded: boolean, data: any, failure?: any}>}
+       */
+      useSsoAdminServerConnection: (dataProvider) => {
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+          return DomainConnectionManager.useSsoConnection(dataProvider);
+        }
+        else {
+          const response = {
+            failureType: CoreTypes.FailureType.UNEXPECTED,
+            failureReason: new Error('Required parameter is missing or null: \'dataProvider\'')
           };
           return Promise.reject(response);
         }

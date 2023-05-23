@@ -105,6 +105,11 @@ public class InvocationContext {
     this.pagePath = toClone.pagePath;
   }
 
+  public InvocationContext(InvocationContext toClone, BeanTreePath beanTreePath) {
+    this(toClone);
+    setIdentity(beanTreePath);
+  }
+
   public PageRepo getPageRepo() {
     return pageRepo;
   }

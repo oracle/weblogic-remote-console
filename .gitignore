@@ -14,7 +14,6 @@ target
 **/.settings
 **/.settings/*
 release.properties
-release-info
 **/pom.xml.releaseBackup
 *.hold
 *.log
@@ -36,7 +35,6 @@ frontend/.DS_Store
 frontend/**/.idea
 frontend/libs
 frontend/src/css/images
-frontend/oraclejetconfig.json
 frontend/electron-test/NewWDTModelFile.yml
 frontend/electron-test/electronTest.log
 frontend/electron-test/node_modules/
@@ -66,3 +64,7 @@ hugo/*/.vscode/
 hugo/*/.hugo_build.lock
 
 *start-weblogic.out
+
+# These are side effects of the WKTUI tests
+frontend/wktui-tests/node_modules/**
+weblogic-toolkit-ui/

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -61,7 +61,7 @@ const UserProjects = (() => {
   return {
     /**
      *
-     * @param {[{name: string, type: string, url?: string, username?: string, password?: string, sso?: boolean, file?: string, models?: [string], properties?: *}]} providers
+     * @param {[{name: string, type: string, url?: string, username?: string, password?: string, settings?: *, file?: string, models?: [string], properties?: *}]} providers
      * @returns {Array}
      */
      getFilteredProviders: (providers) => {
@@ -82,7 +82,7 @@ const UserProjects = (() => {
         if (providers[i].url) filteredProvider.url = providers[i].url;
         if (providers[i].username) filteredProvider.username = providers[i].username;
         if (providers[i].password) filteredProvider.password = providers[i].password;
-        if (providers[i].sso) filteredProvider.sso = providers[i].sso;
+        if (providers[i].settings) filteredProvider.settings = providers[i].settings;
 
         // Filter out properties associated with model
         // provider type.
@@ -187,21 +187,51 @@ const UserProjects = (() => {
     clear: () => {
       _projects = [];
     },
-    read: (userDataPath) => {
+    getUserDataPath: () => { 
+      return _appPaths.userDataPath;
+    },
+    getPath: (userDataPath) => { 
+      return `${userDataPath}/user-projects.json`;
+    },
+    read: (userDataPath, _window) => {
       if (CoreUtils.isUndefinedOrNull(userDataPath)) userDataPath = _appPaths.userDataPath;
       if (userDataPath) {
         // Update _appPaths.userDataPath with value passed as
         // function argument, regardless.
         _appPaths.userDataPath = userDataPath;
         // Construct full path to user-projects.json file
-        const filepath = `${userDataPath}/user-projects.json`;
+        const filepath = UserProjects.getPath(userDataPath);
         if (fs.existsSync(filepath)) {
-          try {
-            const data = JSON.parse(fs.readFileSync(filepath).toString());
-            _projects = data.projects;
-          }
-          catch(err) {
-            log('error', err);
+          const data = JSON.parse(fs.readFileSync(filepath).toString());
+          if (JSON.stringify(_projects) !== JSON.stringify(data.projects)) {
+            // _window isn't passed on the initial read, which is what we want,
+            // since we don't need to notify
+            if (_window) {
+              const current_before_update = UserProjects.current();
+              _projects = data.projects;
+              // The project listed as "current" in the file isn't necessarily
+              // current in this process.  Unset it
+              const current_in_file = UserProjects.current();
+              if (current_in_file)
+                current_in_file.current = false;
+              if (current_before_update) {
+                const current_in_new = UserProjects.get(current_before_update.name)
+                if (current_in_new) {
+                  current_in_new.current = true;
+                  if (JSON.stringify(current_in_new) !== JSON.stringify(current_before_update)) {
+                    const fakeName = Math.random();
+                    _window.webContents.send('on-project-switched', {action: 'navigate', from: current_before_update, to: {name: fakeName} });
+                    _window.webContents.send('on-project-switched', {action: 'navigate', from: {name: fakeName}, to: current_in_new});
+                  }
+                }
+                else if (_projects.length != 0)
+                  _window.webContents.send('on-project-switched', {action: 'navigate', from: current_before_update.name, to: _projects[0] });
+                else
+                  _window.webContents.send('on-project-switched', {action: 'navigate', from: current_before_update.name, to: {name: '(unnamed)'} });
+              }
+            }
+            else
+              _projects = data.projects;
           }
         }
       }

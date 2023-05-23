@@ -115,6 +115,12 @@ define(['knockout', './controller', 'wrc-frontend/microservices/policy-managemen
             event.preventDefault();
             return false;
           }
+          const reply = viewParams.validatePolicyCondition(results.data.policyCondition);
+          if (!reply.succeeded) {
+            viewParams.displayFailureMessage(reply.failureMessage);
+            event.preventDefault();
+            return false;
+          }
           onClose(true);
           wizard.close();
         }

@@ -33,6 +33,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
         await driver.quit();
     })
 
+
     //
     //  Create testCluster-1, testServer-1 and testServerTemplate-1
     //  Save to shopping cart
@@ -40,10 +41,8 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     //  Select AdminServer from Configuration->Environment-Servers menu
     //  Assign TestCluster-1 to AdminServer
     //
-
     //Test Case:
     // Validate Addition and Modification items in Shopping Cart (Server, ServerTemplate and Cluster) Objects
-    //
     it('1. Test Category: GAT/Risk1\n \t Test Scenario: Validate Addition and Modification items in Shopping Cart for (Server, ServerTemplate and Cluster) ' +
         'Objects', async function() {
         file = "TestShoppingCart-1.png";
@@ -51,7 +50,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Edit Tree","EnvironmentChevron",
                 "Clusters",1);
             await admin.saveToShoppingCart(driver);
-            await driver.sleep(2400);
+            await driver.sleep(240000);
             await admin.createMBeanObjectFromLandingPage(driver,"TestServer-1","Edit Tree","EnvironmentChevron",
                 "Servers",1);
             await driver.sleep(2400);
@@ -60,11 +59,14 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
                 "Server Templates",1);
             await driver.sleep(2400);
             await admin.saveToShoppingCart(driver);
-            await driver.sleep(900);
+            await driver.sleep(2400);
             await admin.viewChanges(driver);
             await driver.sleep(2400);
             console.log("Click Additions header text pool link");
-            await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-additions-header\']/a")).click();
+            await driver.sleep(2400);
+            //await driver.findElement(By.xpath("//span[@id='oj-collapsible-additions-header']/a")).click();
+            await driver.findElement(By.xpath("//span[@id='additions-count']")).click();
+            await driver.sleep(2400);
             await driver.sleep(2400);
             console.log("Click Domain/Server Templates/TestServerTemplate-1 link");
             await driver.findElement(By.linkText("/Domain/Server Templates/TestServerTemplate-1")).click();
@@ -85,7 +87,9 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.sleep(2400);
             await admin.viewChanges(driver);
             console.log("Click Additions header text pool link");
-            await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-additions-header\']/a")).click();
+            //  await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-additions-header\']/a")).click();
+            await driver.findElement(By.xpath("//span[@id='additions-count']")).click();
+
             console.log("Click Domain/Servers/TestServer-1 link");
             await driver.findElement(By.linkText("/Domain/Servers/TestServer-1")).click();
             await driver.sleep(2400);
@@ -105,7 +109,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
         'icon to collapse/expand Shopping Cart Menu section', async function() {
         file = "TestShoppingCart-2.png";
         try {
-           let object_count = 2;
+            let object_count = 2;
             await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Edit Tree","EnvironmentChevron",
                 "Clusters",1);
             await admin.saveAndCommitChanges(driver);
@@ -123,11 +127,12 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await admin.viewChanges(driver);
 
             console.log("Click Removal header text pool link");
-            await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-removals-header\']/a")).click();
+            // await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-removals-header\']/a")).click();
+            await driver.findElement(By.xpath("//span[@id='additions-count']")).click();
             await driver.sleep(900);
             if (await driver.findElement(
                 By.xpath("//div[@id=\'shoppingcart-tab-container-toolbar\']/div/div/a["+object_count+"]/img")));
-                console.log("Found " +object_count+ " objects (TestCluster-1 and TestServer-1) in Shopping Cart Removal menu");
+            console.log("Found " +object_count+ " objects (TestCluster-1 and TestServer-1) in Shopping Cart Removal menu");
             await driver.sleep(900);
             console.log("Click Toggle icon to collapse Shopping Cart menu section");
             await driver.findElement(By.xpath("//div[@id=\'slideup-toggle\']/img")).click();
@@ -362,7 +367,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // Click AdminJMSServer 1st row -> Switch to Configuration View Tree Search breadcrumbs
     // Click Reset -> Add All Left -> Cancel button
     // Click select breadcrumbs-container menu to switch back to Edit Tree view
-    // Click to look for AdminJMSServer name in test page for confirm if operation successfull
+    // Click to look for AdminJMSServer name in test page for confirm if operation successful
     it('7. Test Category: GAT/Risk3\n \t Test Scenario: Search Utility for Server key word ' +
         'Test out breadcrumbs-container menu, Reset, Cancel, Arrow button....', async function() {
         file = "searchUtilityWithServerKeyWord.png";
@@ -431,6 +436,140 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
                 console.log("TEST FAIL ");
             }
             await driver.sleep(1200);
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+
+    //Test Case:
+    // Search Utility with WDT Provider
+    // From WDT Edit Tree -> create testServer-1, testCluster-1, testMachine-1, testJMSServer-1
+    // Enter 'test' at Search utility
+    // Go to Recently Search box and check if 'test' keyword appears in Search box
+    // Click at 'test' search keyword
+    // Verify search will yield 4 elements (testServer-1, testCluster-1, testMachine-1, testJMSServer-1,....)
+    it('8. Test Category: GAT/Risk1\n \t Test Scenario: Search Utility with WDT Provider, ' +
+        'test search keyword will yield 4 elements (testServer-1, testCluster-1, testMachine-1, testJMSServer-1)',
+        async function () {
+        file = "searchWithTestKeyWordForWDTProvider.png";
+        try {
+            const projFile = "frontend/system-tests/lib/domainProject.json";
+            const path = require('path');
+            const prjFile = process.env.OLDPWD + path.sep + projFile;
+            await admin.importProject(driver,prjFile);
+            await driver.sleep(4800);
+            await admin.createNewWDTModelFile(driver,"testWDTProviderName","testWDTFile");
+            await driver.sleep(2400);
+            await admin.selectTree(driver,"testWDTProviderName");
+            await driver.sleep(4800);
+
+            console.log("Click WDT Model Tree");
+            await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
+            await driver.sleep(2400);
+            console.log("Click Navtree Environment");
+            await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
+            await driver.sleep(2400);
+            console.log("Click Navtree Server");
+            await driver.findElement(By.xpath("//span[contains(.,'Servers')]")).click();
+            await driver.sleep(4800)
+            console.log("Click Servers New button");
+            await driver.findElement(
+                By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
+            await driver.sleep(2400);
+            console.log("Enter testServer-1 name");
+            await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys("testServer-1");
+            await driver.sleep(2400);
+            console.log("Click Create button");
+            await driver.findElement(
+                By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span[1]/img")).click();
+            await driver.sleep(2400);
+
+            console.log("Click Navtree Cluster");
+            await driver.findElement(By.xpath("//span[contains(.,'Clusters')]")).click()
+            await driver.sleep(2400);
+            console.log("Click Cluster New button");
+            await driver.findElement(
+                By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
+            await driver.sleep(2400);
+            console.log("Enter testCLuster-1 name");
+            await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys("testCluster-1");
+            await driver.sleep(2400);
+            console.log("Click Create button");
+            await driver.findElement(
+                By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span[1]/img")).click();
+            await driver.sleep(2400);
+            console.log("Click Navtree Machines");
+            await driver.findElement(By.xpath("//span[contains(.,'Machines')]")).click();
+            await driver.sleep(2400);
+            console.log("Click Machine New button");
+            element = driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            element.click();
+            console.log("Enter testMachine-1 name");
+            await driver.sleep(2400);
+            await driver.findElement(By.xpath("//oj-input-text[@id='Name']/div/div/input")).sendKeys("testMachine-1");
+            await driver.sleep(2400);
+            console.log("Click Create button");
+            await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span/img")).click();
+            await driver.sleep(4800);
+
+            console.log("Click expand Kiosk menu...");
+            await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click()
+            await driver.sleep(4800);
+            await driver.findElement(By.xpath("//div/ul/li[3]/a/span[2]")).click();
+            await driver.sleep(4800);
+            console.log("Click WDT Model Tree");
+            await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
+            await driver.sleep(4800);
+            console.log("Click Landing Page Image");
+            await driver.findElement(By.xpath("//*[@id='landing-page-icon']")).click();
+            await driver.sleep(4800);
+            console.log("Click Services Landing Page");
+            element = await driver.findElement(By.id("Services"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            element.click();
+            await driver.sleep(4800);
+            console.log("Click Landing Page Services -> JMS Servers");
+            element = await driver.findElement(By.xpath("//span[contains(.,'JMS Servers')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            element.click();
+            await driver.sleep(2400);
+            console.log("Click JMSServer New button");
+            await driver.findElement(
+                By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
+            await driver.sleep(2400);
+            console.log("Enter testJMSServer-1 name");
+            await driver.findElement(By.xpath("//input[@id='Name|input']")).click();
+            await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys("testJMSServer-1");
+            await driver.sleep(2400);
+            console.log("Click Save button");
+            await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span/img")).click();
+            await driver.sleep(2400);
+            console.log("Enter 'test' at Search Input Container");
+            element = driver.findElement(By.xpath("//*[@id='searchInputContainer_cfe-simple-search']/div/input"));
+            await element.clear();
+            await element.sendKeys("test");
+            await element.sendKeys(Key.ENTER);
+            await driver.sleep(4800);
+            console.log("Click Recent Searches Node");
+            element = await driver.findElement(By.xpath("//span[contains(.,'Recent Searches')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(2400);
+            console.log("Click at 'test' Searches Node");
+            await driver.findElement(By.xpath("//td[text()='test']")).click()
+            await driver.sleep(2400);
+            driver.findElements(By.xpath("//td[text()='testJMSServer-1']")).then((elements) => {
+                if (elements.length > 0) {
+                    console.log("Element testJMSServer-1 exit");
+                    console.log("Test PASS");
+                } else {
+                    console.log("Element testJMSServer-1 doesn't exit");
+                    console.log("Test FAIL");
+                }
+            });
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");

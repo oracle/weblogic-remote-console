@@ -2,7 +2,7 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "2.4.2",
+  "version": "2.4.4",
   "main": "app/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -33,6 +33,7 @@
       "app/js/project-management.js",
       "app/js/user-prefs-json.js",
       "app/js/user-projects-json.js",
+      "app/js/watcher.js",
       "app/js/window-management.js",
       "package.json",
       "node_modules"
@@ -78,8 +79,10 @@
   "description": "A remote console for WebLogic",
   "copyright": "Copyright (c) 2021, 2023, Oracle and/or its affiliates.",
   "dependencies": {
+    "chokidar": "^3.5.3",
     "electron-prompt": "^1.6.2",
     "electron-updater": "^5.3.0",
+    "fs-extra": "^8.1.0",
     "keytar": "^7.9.0"
   },
   "devDependencies": {

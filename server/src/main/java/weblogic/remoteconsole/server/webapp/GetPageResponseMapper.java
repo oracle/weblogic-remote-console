@@ -7,9 +7,13 @@ import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
+import weblogic.remoteconsole.common.repodef.ActionInputFormPagePath;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -28,18 +32,19 @@ import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Table;
 import weblogic.remoteconsole.server.repo.TableCell;
 import weblogic.remoteconsole.server.repo.TableRow;
+import weblogic.remoteconsole.server.webapp.UriUtils;
 
 /**
  * Converts a Response<Page> to a JAXRS Response.
  */
 public class GetPageResponseMapper extends ResponseMapper<Page> {
 
-  public static javax.ws.rs.core.Response toResponse(InvocationContext invocationContext, Response<Page> response) {
-    return new GetPageResponseMapper(invocationContext, response).toResponse();
+  public static javax.ws.rs.core.Response toResponse(InvocationContext ic, Response<Page> response) {
+    return new GetPageResponseMapper(ic, response).toResponse();
   }
 
-  private GetPageResponseMapper(InvocationContext invocationContext, Response<Page> response) {
-    super(invocationContext, response);
+  private GetPageResponseMapper(InvocationContext ic, Response<Page> response) {
+    super(ic, response);
   }
 
   @Override
@@ -60,7 +65,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
   private void addForm() {
     JsonObjectBuilder builder = Json.createObjectBuilder();
     Form form = getPage().asForm();
-    addPageInfo(form);
+    addPageInfo();
     if (form.isExists()) {
       // Add the model tokens info if available
       addModelTokens(form);
@@ -93,7 +98,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
   private void addTable() {
     JsonArrayBuilder builder = Json.createArrayBuilder();
     Table table = getPage().asTable();
-    addPageInfo(table);
+    addPageInfo();
     addDisplayedColumns(table);
     addCustomizeTableLink(table);
     for (TableRow tableRowValues : table.getRows()) {
@@ -145,25 +150,27 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     return builder;
   }
 
-  private void addPageInfo(Page page) {
-    addSelf(page);
-    addBreadCrumbs(page);
-    addLinks(page);
-    addChangeManagerStatus(page);
-    addIntroductionHTML(page);
+  private void addPageInfo() {
+    addSelf();
+    addBreadCrumbs();
+    addLinks();
+    addChangeManagerStatus();
+    addIntroductionHTML();
+    addActions();
   }
 
-  private void addSelf(Page page) {
-    Path navigation = page.getNavTreePath();
+  private void addSelf() {
+    Path navigation = getPage().getNavTreePath();
     if (!navigation.isEmpty()) {
       getEntityBuilder().add("navigation", navigation.getRelativeUri());
     }
-    BeanTreePath btp = page.getSelf();
+    BeanTreePath btp = getPage().getSelf();
+    PagePath pagePath = getPage().getPageDef().getPagePath();
     JsonObjectBuilder builder =
       Json.createObjectBuilder(
         beanTreePathToJson(
           btp,
-          getPage().getPageDef().getPagePath().getRDJQueryParams()
+          pagePath.getRDJQueryParams()
         ).asJsonObject()
       );
     String kind = getBeanTreePathKind(btp);
@@ -174,6 +181,10 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     getEntityBuilder().add("self", builder.build());
     if (btp.isCreatable()) {
       getEntityBuilder().add("createForm", beanTreePathToJson(btp, "?view=createForm"));
+    }
+    if (pagePath.isActionInputFormPagePath()) {
+      ActionInputFormPagePath aifpp = pagePath.asActionInputFormPagePath();
+      addRDJLink(getEntityBuilder(), btp, aifpp.getParentPagePath(), "invoker", "action=" + aifpp.getAction());
     }
     addCustomFilteringDashboardCreateFormLink(btp);
   }
@@ -230,17 +241,17 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     return null; // This isn't a kind the CFE needs to know about today
   }
 
-  private void addBreadCrumbs(Page page) {
+  private void addBreadCrumbs() {
     JsonArrayBuilder builder = Json.createArrayBuilder();
-    for (BeanTreePath breadCrumb : page.getBreadCrumbs()) {
+    for (BeanTreePath breadCrumb : getPage().getBreadCrumbs()) {
       builder.add(valueToJson(breadCrumb));
     }
     getEntityBuilder().add("breadCrumbs", builder);
   }
 
-  private void addLinks(Page page) {
+  private void addLinks() {
     JsonArrayBuilder linksBuilder = Json.createArrayBuilder();
-    for (Link link : page.getLinks()) {
+    for (Link link : getPage().getLinks()) {
       JsonObjectBuilder linkBuilder =
         Json.createObjectBuilder()
         .add("label", link.getLabel())
@@ -257,17 +268,48 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     getEntityBuilder().add("links", linksBuilder);
   }
 
-  private void addChangeManagerStatus(Page page) {
+  private void addChangeManagerStatus() {
     ChangeManagerStatusResponseMapper.addChangeManagerStatus(
       getEntityBuilder(),
-      page.getChangeManagerStatus()
+      getPage().getChangeManagerStatus()
     );
   }
 
-  private void addIntroductionHTML(Page page) {
-    String localizedIntroductionHTML = page.getLocalizedIntroductionHTML();
+  private void addIntroductionHTML() {
+    String localizedIntroductionHTML = getPage().getLocalizedIntroductionHTML();
     if (StringUtils.notEmpty(localizedIntroductionHTML)) {
       getEntityBuilder().add("introductionHTML", localizedIntroductionHTML);
+    }
+  }
+
+  private void addActions() {
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    addActions(builder, getPage().getSelf(), getPage().getPageDef().getActionDefs());
+    JsonObject actions = builder.build();
+    if (!actions.isEmpty()) {
+      getEntityBuilder().add("actions", actions);
+    }
+  }
+
+  private void addActions(
+    JsonObjectBuilder builder,
+    BeanTreePath btp,
+    List<PageActionDef> actionDefs
+  ) {
+    for (PageActionDef actionDef : actionDefs) {
+      if (actionDef.isInvokable()) {
+        String action = actionDef.getActionName();
+        ActionInputFormDef inputForm = actionDef.getInputFormDef();
+        PagePath pagePath = getPage().getPageDef().getPagePath();
+        JsonObjectBuilder actionBuilder = Json.createObjectBuilder();
+        if (inputForm != null) {
+          addRDJLink(actionBuilder, btp, pagePath, "inputForm", "actionForm=inputForm&action=" + action);
+        } else {
+          addRDJLink(actionBuilder, btp, pagePath, "invoker", "action=" + action);
+        }
+        builder.add(action, actionBuilder);
+      }
+      addActions(builder, btp, actionDef.getActionDefs());
     }
   }
 
@@ -325,6 +367,19 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
 
     // Add model tokens to the response JSON
     getEntityBuilder().add("modelTokens", modelTokensBuilder);
+  }
+
+  private void addRDJLink(
+    JsonObjectBuilder builder,
+    BeanTreePath btp,
+    PagePath pagePath,
+    String link,
+    String extraQps
+  ) {
+    String baseQps = pagePath.getRDJQueryParams();
+    String separator = StringUtils.isEmpty(baseQps) ? "?" : "&";
+    String qps = baseQps + separator + extraQps;
+    builder.add(link, Json.createObjectBuilder().add("resourceData", getBackendRelativeUri(btp, qps)));
   }
 
   private Page getPage() {

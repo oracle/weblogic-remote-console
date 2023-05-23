@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -88,7 +88,7 @@ define([
           .refreshTreeModel()
           .then(() => {
             this.navtreeManager.updateTreeView();
-            const keys = [...self.expanded()._keys];
+            const keys = Array.from(self.expanded().values());
             keys.sort((e1, e2) => {
               e1.split('/').length - e2.split('/').length;
             });

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -34,7 +34,13 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
         resourceDataFragment: null,
         slices: [],
         syncInterval: null,
-        nthChildren: []
+        nthChildren: [],
+        switches: {
+          addToArchive: {
+            'SourcePath': true,
+            'PlanPath': true
+          }
+        }
       };
       this.navtree = {
         keySet: null,
@@ -183,6 +189,16 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       setNthChildMinHeight: function (name, minHeight) {
         const index = getNthChildrenIndex.call(this, name);
         if (index !== -1) this.contentPage.nthChildren[index].minHeight = minHeight;
+      },
+      getAddToArchiveSwitchValue: function(fieldName) {
+        if (fieldName.startsWith('Source')) fieldName = 'SourcePath';
+        if (fieldName.startsWith('Plan')) fieldName = 'PlanPath';
+        return this.contentPage.switches.addToArchive[fieldName];
+      },
+      setAddToArchiveSwitchValue: function(fieldName, value) {
+        if (fieldName.startsWith('Source')) fieldName = 'SourcePath';
+        if (fieldName.startsWith('Plan')) fieldName = 'PlanPath';
+        this.contentPage.switches.addToArchive[fieldName] = value;
       },
       getTabstripTabCachedState: function (tabId) {
         return this.tabstrip.tab[tabId].cachedState;

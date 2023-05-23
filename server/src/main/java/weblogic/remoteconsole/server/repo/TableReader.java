@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -48,7 +48,7 @@ public class TableReader extends PageReader {
         ? customizations.getDisplayedColumns()
         : getTableCustomizationsManager().getDefaultDisplayedColumns(tableDef);
     for (PagePropertyDef propDef : tableDef.getAllPropertyDefs()) {
-      if (displayedColumns.contains(propDef.getFormPropertyName()) || !propDef.isDontReturnIfHiddenColumn()) {
+      if (displayedColumns.contains(propDef.getFormFieldName()) || !propDef.isDontReturnIfHiddenColumn()) {
         propDefs.add(propDef);
       }
     }
@@ -149,7 +149,7 @@ public class TableReader extends PageReader {
         rowValue = UnknownValue.INSTANCE;
       }
       row.getCells().add(
-        new TableCell(propDef.getFormPropertyName(), rowValue)
+        new TableCell(propDef.getFormFieldName(), rowValue)
       );
     }
     return response.setSuccess(row);

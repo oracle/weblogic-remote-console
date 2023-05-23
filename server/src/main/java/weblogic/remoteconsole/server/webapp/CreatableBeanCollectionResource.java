@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -37,15 +37,17 @@ public class CreatableBeanCollectionResource extends BeanResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(
     @QueryParam("view") @DefaultValue(VIEW_TABLE) String view,
-    @QueryParam("reload") @DefaultValue("false") boolean reload
+    @QueryParam("reload") @DefaultValue("false") boolean reload,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @QueryParam("action") @DefaultValue("") String action
   ) {
     getInvocationContext().setReload(reload);
     if (VIEW_TABLE.equals(view)) {
-      setTablePagePath();
-      return getTable();
+      setTablePagePath(actionForm, action);
+      return getTablePage();
     } else if (VIEW_CREATE_FORM.equals(view)) {
-      setCreateFormPagePath();
-      return getCreateForm();
+      setCreateFormPagePath(actionForm, action);
+      return getCreateFormPage();
     } else {
       throw
         new AssertionError(
@@ -56,44 +58,59 @@ public class CreatableBeanCollectionResource extends BeanResource {
   }
 
   /**
-   * Creates a new child in the collection or customizes the table's display.
+   * Handles customizing slice tables, creating child beans and invoking actions.
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response post(
-    @QueryParam("action") String action,
+    @QueryParam("action") @DefaultValue(CREATE) String action,
     JsonObject requestBody
   ) {
     if (CUSTOMIZE_TABLE.equals(action)) {
       setTablePagePath();
       return customizeTable(requestBody);
     }
-    setCreateFormPagePath();
-    return createCollectionChild(requestBody);
+    if (CREATE.equals(action)) {
+      setCreateFormPagePath();
+      return createCollectionChild(requestBody);
+    }
+    return invokeAction(action, requestBody);
   }
 
   protected Response createCollectionChild(JsonObject requestBody) {
     return CreateHelper.create(getInvocationContext(), requestBody);
   }
 
+  protected Response getCreateFormPage() {
+    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
+      return getCreateFormActionInputForm();
+    } else {
+      return getCreateForm();
+    }
+  }
+
   protected Response getCreateForm() {
-    return
-      GetPageResponseMapper.toResponse(
-        getInvocationContext(),
-        getInvocationContext()
-          .getPageRepo().asPageReaderRepo()
-          .getPage(getInvocationContext())
-      );
+    return getPage();
+  }
+
+  protected Response getCreateFormActionInputForm() {
+    return getPage();
+  }
+
+  protected Response getTablePage() {
+    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
+      return getTableActionInputForm();
+    } else {
+      return getTable();
+    }
   }
 
   protected Response getTable() {
-    return
-      GetPageResponseMapper.toResponse(
-        getInvocationContext(),
-        getInvocationContext()
-          .getPageRepo().asPageReaderRepo()
-          .getPage(getInvocationContext())
-      );
+    return getPage();
+  }
+
+  protected Response getTableActionInputForm() {
+    return getPage();
   }
 }

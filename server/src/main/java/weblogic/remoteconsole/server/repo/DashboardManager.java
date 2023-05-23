@@ -260,7 +260,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     List<SearchProperty> searchProperties
   ) {
     PagePropertyDef pagePropertyDef = property.getPropertyDef().getSourcePropertyDef();
-    String propertyName = pagePropertyDef.getFormPropertyName();
+    String propertyName = pagePropertyDef.getFormFieldName();
     if (!displayedColumns.contains(propertyName) && pagePropertyDef.isDontReturnIfHiddenColumn()) {
       // This property is for a hidden column which shouldn't be returned
       // (e.g. ServerLifeCycleRuntimeMBean State, which takes a long time to compute)
@@ -283,7 +283,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     Value value = property.getValue();
     boolean completed = false;
     beanFilter.setRequired(true);
-    beanFilter.setPropertyName(sourcePropertyDef.getFormPropertyName());
+    beanFilter.setPropertyName(sourcePropertyDef.getFormFieldName());
     if (!sourcePropertyDef.isArray()) {
       completed = true;
       if (sourcePropertyDef.isString() || sourcePropertyDef.isHealthState()) {

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -132,6 +132,35 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/apis/data-operations', 'wrc-f
             });
         });
 
+      },
+
+      createSsoConnection: function(dataProvider) {
+        Logger.info(`[DOMAINCONNECTIONMANAGER] Creating SSO connection: providerId='${dataProvider.id}', providerName='${dataProvider.name}', providerUrl='${dataProvider.url}'`);
+        // Creating an SSO connection only creates the provider then does polling of the connection to check the SSO token...
+        return DataOperations.connection.stageConnection(dataProvider);
+      },
+
+      pollSsoConnection: function(dataProvider) {
+        Logger.info(`[DOMAINCONNECTIONMANAGER] Polling SSO connection: providerId='${dataProvider.id}', providerName='${dataProvider.name}', providerUrl='${dataProvider.url}'`);
+        // Check if the SSO token for the connection is available...
+        return DataOperations.connection.pollConnectionToken(dataProvider);
+      },
+
+      useSsoConnection: function(dataProvider) {
+        Logger.info(`[DOMAINCONNECTIONMANAGER] Using SSO connection: providerId='${dataProvider.id}', providerName='${dataProvider.name}', providerUrl='${dataProvider.url}'`);
+        return new Promise((resolve, reject) => {
+          DataOperations.connection.useConnection(dataProvider)
+            .then(reply => {
+              // Process the connection response now that the
+              // connection was established using the SSO token...
+              processConnectionResponse(reply.body.data);
+              resolve(reply);
+            })
+            .catch(response => {
+              // Reject when any error on startup...
+              reject(response);
+            });
+        });
       },
 
       // FortifyIssueSuppression Password Management: Password in Comment

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -127,15 +127,18 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
             this.putValue('name', this.name);
             this.putValue('type', DataProvider.prototype.Type.ADMINSERVER.name);
             this.putValue('url', responsePayload.domainUrl);
-            this.putValue('connectTimeout', parseInt(responsePayload.connectTimeout || 10000));
-            this.putValue('readTimeout', parseInt(responsePayload.readTimeout || 20000));
+            this.putStatus('connectTimeout', parseInt(responsePayload.connectTimeout || 10000));
+            this.putStatus('readTimeout', parseInt(responsePayload.readTimeout || 20000));
+            this.putStatus('insecure', responsePayload.insecure || false);
+            this.putStatus('sso', responsePayload.sso || false);
+            this.putStatus('ssoid', responsePayload.ssoid || '');
             this.putValue('mode', responsePayload.mode);
             this.putValue('anyConnectionAttemptSuccessful', responsePayload.anyConnectionAttemptSuccessful || false);
             this.putValue('lastConnectionAttemptSuccessful', responsePayload.lastConnectionAttemptSuccessful || false);
             this.putValue('state', responsePayload.state || CoreTypes.Domain.ConnectState.DISCONNECTED.name);
             this.putValue('connectivity', responsePayload.connectivity || CoreTypes.Console.RuntimeMode.DETACHED.name);
-            this.putValue('domainVersion',responsePayload.domainVersion || '');
-            this.putValue('domainName', responsePayload.domainName || '');
+            this.putStatus('domainVersion',responsePayload.domainVersion || '');
+            this.putStatus('domainName', responsePayload.domainName || '');
             if (CoreUtils.isNotUndefinedNorNull(responsePayload.links)){
               this.putValue('linkLabel', responsePayload.links[0].label);
               this.putValue('linkResourceData', responsePayload.links[0].resourceData);
@@ -143,7 +146,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
               this.putValue('linkLabel', '');
               this.putValue('linkResourceData', '');
             }
-            if (CoreUtils.isNotUndefinedNorNull(responsePayload.roles)) this.putValue('userRoles', responsePayload.roles.join(','));
+            if (CoreUtils.isNotUndefinedNorNull(responsePayload.roles)) this.putStatus('userRoles', responsePayload.roles.join(','));
             if (this['state'] === CoreTypes.Domain.ConnectState.CONNECTED.name) this.putValue('activationDatetime', new Date());
             this.beanTrees = this.getBeanTreesFromRoots(responsePayload.roots);
             break;
@@ -305,6 +308,26 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
 
       putValue: function(name, value) {
         this[name] = value;
+      },
+
+      putSetting: function(name, value) {
+        if (!this.settings) this['settings'] = {};
+        this.settings[name] = value;
+      },
+
+      removeSetting: function(name) {
+        if (!this.settings) return;
+        delete this.settings[name];
+      },
+
+      putStatus: function(name, value) {
+        if (!this.status) this['status'] = {};
+        this.status[name] = value;
+      },
+
+      removeStatus: function() {
+        if (!this.status) return;
+        delete this['status'];
       }
 
     };

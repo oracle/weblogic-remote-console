@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -59,19 +59,9 @@ class PageReader extends PageManager {
 
   protected void setPageDef(Page page, PageDef pageDef) {
     page.setPageDef(pageDef);
-    page.setBackendRelativePDJURI(getBackendRelativePDJURI(pageDef.getPagePath()));
-  }
-
-  private String getBackendRelativePDJURI(PagePath pagePath) {
-    Path connectionRelativePath = new Path();
-    String pageRepoName =
-      getInvocationContext().getPageRepo().getPageRepoDef().getName();
-    connectionRelativePath.addComponent(pageRepoName);
-    connectionRelativePath.addComponent("pages");
-    return
-      UriUtils.getBackendRelativeUri(getInvocationContext(), connectionRelativePath)
-      + "/"
-      + pagePath.getPDJURI();
+    page.setBackendRelativePDJURI(
+      UriUtils.getBackendRelativePDJUri(getInvocationContext(), pageDef.getPagePath())
+    );
   }
 
   protected void addCollectionToSearch(

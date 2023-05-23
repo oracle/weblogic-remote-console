@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -89,6 +89,9 @@ const AutoPrefs = (() => {
     clear: () => {
       _fields = {};
     },
+    getPath: (userDataPath) => { 
+      return `${userDataPath}/auto-prefs.json`;
+    },
     /**
      * Populates the in-memory data that ``AutoPrefs`` knows about, by reading and parsing the JSON content in the ``auto-prefs.json`` file.
      * <p>If the <code>userDataPath</code> argument was passed, it's used as the path to the <code>auto-prefs.json</code> file. Otherwise, a check is done to see if a <code>userDataPath</code> in-memory field has been set. If so, then the value assigned to that field is used used as the path to the <code>auto-prefs.json</code> file.</p>
@@ -101,7 +104,7 @@ const AutoPrefs = (() => {
         // function argument, regardless.
         _appPaths.userDataPath = userDataPath;
         // Construct full path to auto-prefs.json file
-        const filepath = `${userDataPath}/auto-prefs.json`;
+        const filepath = AutoPrefs.getPath(userDataPath);
         if (fs.existsSync(filepath)) {
           try {
             const props = JSON.parse(fs.readFileSync(filepath));

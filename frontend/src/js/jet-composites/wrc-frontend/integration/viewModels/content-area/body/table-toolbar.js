@@ -110,7 +110,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           download: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.download.value')},
           shrink: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.shrink.value')},
           reset: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.reset.value')},
-          clearStatementCache: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.clearStatementCache.value')}
+          clearStatementCache: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.clearStatementCache.value')},
+          pauseActions: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.pause.value')},
+          resumeActions: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.resume.value')}
         }
       };
 

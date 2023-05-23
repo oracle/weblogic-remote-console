@@ -9,6 +9,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 import weblogic.console.backend.build.PropertiesSorter;
+import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
@@ -21,13 +22,15 @@ import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConsoleRestExtensionConstants;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.NavTreeNodeDef;
+import weblogic.remoteconsole.common.repodef.PageActionDef;
+import weblogic.remoteconsole.common.repodef.PageActionExternalHelpDef;
+import weblogic.remoteconsole.common.repodef.PageActionParamDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyExternalHelpDef;
 import weblogic.remoteconsole.common.repodef.SliceDef;
 import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.repodef.SliceTableDef;
-import weblogic.remoteconsole.common.repodef.TableActionDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicLocalizationUtils;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicPageDefWalker;
@@ -128,12 +131,10 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
 
   @Override
   protected void processPageDef(PageDef pageDef) {
-    if ("true".equals(System.getenv("refactor"))) {
-      LOGGER.info("processPageDef " + pageDef.getPagePath());
-    }
     addResourceDefinition(pageDef.getIntroductionHTML());
     addResourceDefinition(pageDef.getHelpPageTitle());
     processHelpTopicDefs(pageDef.getHelpTopicDefs());
+    processPageActionDefs(pageDef.getActionDefs());
     if (pageDef.isSliceFormDef()) {
       processSliceFormDef(pageDef.asSliceFormDef());
     } else if (pageDef.isSliceTableDef()) {
@@ -142,8 +143,10 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
       processCreateFormDef(pageDef.asCreateFormDef());
     } else if (pageDef.isTableDef()) {
       processTableDef(pageDef.asTableDef());
+    } else if (pageDef.isActionInputFormDef()) {
+      processActionInputFormDef(pageDef.asActionInputFormDef());
     } else {
-      throw new AssertionError("PageDef not a SliceFormDef, CreateFormDef or TableDef: " + pageDef.getPagePath());
+      throw new AssertionError("Unknown PageDef type: " + pageDef.getPagePath());
     }
   }
 
@@ -160,7 +163,6 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
 
   private void processSliceTableDef(SliceTableDef sliceTableDef) {
     processPagePropertyDefs(sliceTableDef.getAllPropertyDefs());
-    processTableActionDefs(sliceTableDef.getActionDefs());
   }
 
   private void processCreateFormDef(CreateFormDef createFormDef) {
@@ -177,18 +179,44 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
 
   private void processTableDef(TableDef tableDef) {
     processPagePropertyDefs(tableDef.getAllPropertyDefs());
-    processTableActionDefs(tableDef.getActionDefs());
   }
 
-  private void processTableActionDefs(List<TableActionDef> actionDefs) {
-    for (TableActionDef actionDef : actionDefs) {
-      processTableActionDef(actionDef);
+  private void processActionInputFormDef(ActionInputFormDef inputFormDef) {
+    for (PageActionParamDef paramDef : inputFormDef.getParamDefs()) {
+      processPageActionParamDef(paramDef);
     }
   }
 
-  private void processTableActionDef(TableActionDef actionDef) {
+  private void processPageActionParamDef(PageActionParamDef paramDef) {
+    addResourceDefinition(paramDef.getLabel());
+    addResourceDefinition(paramDef.getHelpSummaryHTML());
+    addResourceDefinition(paramDef.getDetailedHelpHTML());
+  }
+
+  private void processPageActionDefs(List<PageActionDef> actionDefs) {
+    for (PageActionDef actionDef : actionDefs) {
+      processPageActionDef(actionDef);
+    }
+  }
+
+  private void processPageActionDef(PageActionDef actionDef) {
     addResourceDefinition(actionDef.getLabel());
-    processTableActionDefs(actionDef.getActionDefs());
+    if (actionDef.isInvokable()) {
+      addResourceDefinition(actionDef.getHelpLabel());
+      addResourceDefinition(actionDef.getHelpSummaryHTML());
+      addResourceDefinition(actionDef.getDetailedHelpHTML());
+      PageActionExternalHelpDef externalHelpDef = actionDef.getExternalHelpDef();
+      if (externalHelpDef != null) {
+        addResourceDefinition(externalHelpDef.getLabel());
+        addResourceDefinition(externalHelpDef.getIntroLabel());
+        addResourceDefinition(externalHelpDef.getTitle());
+      }
+      ActionInputFormDef inputFormDef = actionDef.getInputFormDef();
+      if (inputFormDef != null) {
+        processPageDef(inputFormDef);
+      }
+    }
+    processPageActionDefs(actionDef.getActionDefs());
   }
 
   private void processPagePropertyDefs(List<PagePropertyDef> propertyDefs) {
@@ -208,6 +236,7 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
     PagePropertyExternalHelpDef externalHelpDef = propertyDef.getExternalHelpDef();
     if (externalHelpDef != null) {
       addResourceDefinition(externalHelpDef.getLabel());
+      addResourceDefinition(externalHelpDef.getIntroLabel());
       addResourceDefinition(externalHelpDef.getTitle());
     }
     // Get the property's default values to force them to be constructed and validated

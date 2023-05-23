@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -12,21 +12,80 @@
  * See {@link https://stackabuse.com/javascripts-immediately-invoked-function-expressions/}
  * @type {{UNNAMED_PROJECT, ResultReason, addNewProject, renameCurrentProject, deleteProject, readProjects, getDeletableProjects, selectProject, getCurrentProject, makeNewFromCurrent, setProjects, getSwitchableProjects, selectCurrentProject, setCurrentProject, processChangedProject, getProject}}
  */
- const ProjectManagement = (() => {
+const ProjectManagement = (() => {
   const fs = require('fs');
+  const fsextra = require('fs-extra');
   const {log} = require('./console-logger');
 
   // Declare variable for IIFE class used to manage data
   // persisted in the user-projects.json file
   const UserProjects = require('./user-projects-json');
-  const {upsertKeytarEntries} = require('./keytar-utils');
   const CoreUtils = require('./core-utils');
+  let keytar;
+  try {
+    keytar = require('./keytar-utils');
+    if (!keytar.getKeyTar())
+      keytar = null;
+  } catch(err) {
+    keytar = null;
+  }
 
   let _projects;
   let _current_project;
+  let timerId = 0;
+  let _busy = false;
 
-  function writeProjects(userDataPath) {
-    UserProjects.write(userDataPath);
+  /**
+   * @private
+   */
+  function touchBusyFile() {
+    const busyFile = `${UserProjects.getUserDataPath()}/busy-${_current_project.name}`;
+    fsextra.ensureFileSync(busyFile);
+    const now = new Date();
+    fsextra.utimesSync(busyFile, now, now);
+  }
+
+  /**
+   * @private
+   */
+  function keepTouchingBusyFile() {
+    if (timerId != 0) {
+      return;
+    }
+    try {
+      timerId = setInterval(touchBusyFile, 1000);
+    } catch(err) {
+      log('error', `Failed to set the interval ${err}`);
+    }
+  }
+
+  /**
+   * @private
+   */
+  function stopTouchingBusyFile() {
+    if (timerId != 0) {
+      clearInterval(timerId);
+      timerId = 0;
+    }
+  }
+
+  /**
+   * @private
+   */
+  function checkBusyFile() {
+    // Just a little extra safety check
+    if (timerId != 0) {
+      stopTouchingBusyFile();
+    }
+    const busyFile = `${UserProjects.getUserDataPath()}/busy-${_current_project.name}`;
+    if (!fs.existsSync(busyFile))
+      return false;
+    const stats = fs.statSync(busyFile);
+    if (stats.mtime <= (new Date() - 1499)) {
+      fs.rmSync(busyFile);
+      return false;
+    }
+    return true;
   }
 
   return {
@@ -56,6 +115,20 @@
     getSwitchableProjects: () => {
       return UserProjects.getAll().filter(project => CoreUtils.isUndefinedOrNull(project.current));
     },
+    markProjectBusyState: (busy) => {
+      _busy = busy;
+      if (busy) {
+        touchBusyFile();
+        keepTouchingBusyFile();
+      }
+      else
+        stopTouchingBusyFile();
+    },
+    isCurrentProjectBusy: () => {
+      if (_busy)
+        return true;
+      return checkBusyFile();
+    },
     getProject: (name) => {
       return UserProjects.get(name);
     },
@@ -69,6 +142,8 @@
      * @param {{name: string, current?: boolean, dataProviders: [{name: string, type: string, url: string, username: string, password: string}|{name: string, type: string, file: string}]}} project
      */
     setCurrentProject: (project) => {
+      if (_current_project?.name !== project.name)
+        _busy = false;
       _current_project = project;
       UserProjects.clean('current');
       _current_project.current = true;
@@ -88,6 +163,7 @@
         UserProjects.clean('current');
         results['previous_project'] = JSON.parse(JSON.stringify(_current_project));
         const project = UserProjects.get(newName);
+        _busy = false;
         if (CoreUtils.isUndefinedOrNull(project)) {
           _current_project = {
             name: newName,
@@ -147,6 +223,7 @@
       const results = {succeeded: false};
       // Attempt to get project to be deleted
       const deleted_project = UserProjects.get(name);
+      _busy = false;
       if (CoreUtils.isUndefinedOrNull(deleted_project)) {
         // Didn't find a project in the projects array with
         // a name equal to name. Just assign the undefined
@@ -238,7 +315,8 @@
       const existing_project = UserProjects.get(_current_project.name);
       if (CoreUtils.isNotUndefinedNorNull(existing_project)) {
         _current_project.dataProviders = UserProjects.getFilteredProviders(_current_project.dataProviders);
-        upsertKeytarEntries(_current_project);
+        if (keytar)
+          keytar.upsertKeytarEntries(_current_project);
       }
       UserProjects.upsert(_current_project);
       ProjectManagement.setCurrentProject(_current_project);
@@ -273,7 +351,8 @@
 
         // Create (or update) the keytar account for any
         // AS data provider, in changed_project.
-        upsertKeytarEntries(changed_project);
+        if (keytar)
+          keytar.upsertKeytarEntries(changed_project);
 
         return changed_project;
       }

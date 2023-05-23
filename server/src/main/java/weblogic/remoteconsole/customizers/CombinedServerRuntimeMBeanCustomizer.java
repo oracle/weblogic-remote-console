@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -9,12 +9,14 @@ import java.util.List;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
+import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanActionArg;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
+import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
@@ -27,31 +29,59 @@ public class CombinedServerRuntimeMBeanCustomizer {
   private CombinedServerRuntimeMBeanCustomizer() {
   }
 
-  public static Response<Value> start(InvocationContext ic) {
+  public static Response<Value> start(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     return delegateToServerLifeCycleRuntimeAction(ic, "start");
   }
 
-  public static Response<Value> resume(InvocationContext ic) {
+  public static Response<Value> resume(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     return delegateToServerLifeCycleRuntimeAction(ic, "resume");
   }
 
-  public static Response<Value> suspend(InvocationContext ic) {
+  public static Response<Value> suspend(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     return delegateToServerLifeCycleRuntimeAction(ic, "suspend");
   }
 
-  public static Response<Value> forceSuspend(InvocationContext ic) {
+  public static Response<Value> forceSuspend(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     return delegateToServerLifeCycleRuntimeAction(ic, "forceSuspend");
   }
 
-  public static Response<Value> forceShutdown(InvocationContext ic) {
+  public static Response<Value> forceShutdown(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     return delegateToServerLifeCycleRuntimeAction(ic, "forceShutdown");
   }
 
-  public static Response<Value> restartSSL(InvocationContext ic) {
+  public static Response<Value> restartSSL(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     return delegateToServerRuntimeAction(ic, "restartSSLChannels");
   }
 
-  public static Response<Value> gracefulShutdown(InvocationContext ic) {
+  public static Response<Value> shutdown(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     // Get the configured timeout and whether to ignore sessions from the corresponding server mbean,
     // then invoke shutdown on the server lifecycle runtime mbean passing in those values.
 

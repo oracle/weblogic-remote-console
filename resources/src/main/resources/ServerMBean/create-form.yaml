@@ -1,6 +1,16 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: Create a new Server
 properties:
 - name: Name
+- name: ServerToClone
+  label: "Copy settings from another server"
+  optionsSources:
+  - Domain/Servers
+  definition:
+    descriptionHTML: '<p>Optionally, select a server to copy its settings to the new server.</p> '
+    relationship: reference
+    type: weblogic.management.configuration.ServerMBean
+    writable: true
+    defaultValue: {}

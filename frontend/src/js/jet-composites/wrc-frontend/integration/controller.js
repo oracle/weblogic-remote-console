@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -49,6 +49,7 @@ define(['ojs/ojcore', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'signals', '
       appQuitTriggered: new signals.Signal(),
       domainSecurityWarning: new signals.Signal(),
       modelConsoleSizeChanged: new signals.Signal(),
+      ssoPollingCompleted: new signals.Signal(),
       ssoTokenExpired: new signals.Signal()
     });
 

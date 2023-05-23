@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -14,6 +14,7 @@ import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
+import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.utils.Path;
@@ -68,9 +69,18 @@ class BeanActionDefImpl extends BeanValueDefImpl implements BeanActionDef {
 
   private void initializeParams() {
     for (BeanActionParamDefSource paramSource : source.getParameters()) {
-      paramDefImpls.add(new BeanActionParamDefImpl(this, paramSource));
+      paramDefImpls.add(new BeanActionParamDefImpl(this, paramSource, getParamCustomizer(paramSource)));
     }
     paramDefs = Collections.unmodifiableList(paramDefImpls);
+  }
+
+  private BeanActionParamDefCustomizerSource getParamCustomizer(BeanActionParamDefSource paramSource) {
+    for (BeanActionParamDefCustomizerSource customizer : customizerSource.getParameters()) {
+      if (paramSource.getName().equals(customizer.getName())) {
+        return customizer;
+      }
+    }
+    return new BeanActionParamDefCustomizerSource();
   }
 
   BaseBeanTypeDefImpl getTypeDefImpl() {
@@ -104,6 +114,10 @@ class BeanActionDefImpl extends BeanValueDefImpl implements BeanActionDef {
 
   List<BeanActionParamDefImpl> getParamDefImpls() {
     return paramDefImpls;
+  }
+
+  public BeanActionParamDefImpl getParamDefImpl(String paramName) {
+    return (BeanActionParamDefImpl)getParamDef(paramName);
   }
 
   @Override
@@ -149,6 +163,15 @@ class BeanActionDefImpl extends BeanValueDefImpl implements BeanActionDef {
       getTypeDefImpl().getLocalizationKey(
         "actions." + getActionPath().getDotSeparatedPath() + "." + key
       );
+  }
+
+  BeanActionParamDefImpl getActionParamDefImpl(String paramName) {
+    for (BeanActionParamDefImpl paramDefImpl : paramDefImpls) {
+      if (paramDefImpl.getParamName().equals(paramName)) {
+        return paramDefImpl;
+      }
+    }
+    throw new AssertionError("Can't find param " + this + " " + paramName);
   }
 
   @Override

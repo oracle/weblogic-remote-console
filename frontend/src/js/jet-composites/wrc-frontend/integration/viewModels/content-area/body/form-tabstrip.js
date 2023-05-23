@@ -33,6 +33,8 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
         self.currentSlice = this;
         const level = this.level;
 
+//MLW        viewParams.signaling.formSliceSelected.dispatch({current: self.currentSlice});
+
         // initialize the slice history stack with the default tab
         if (CoreUtils.isUndefinedOrNull(this.sliceHistory)) {
           this.sliceHistory = [self.tabArrays()[0][0].name];
@@ -286,12 +288,9 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
             self.pdjData = pdjData;
             self.rdjData = rdj;
 
-            let isNonWritable = pdjData.sliceForm
+            const isNonWritable = pdjData.sliceForm
               ? pdjData.sliceForm.readOnly === true
               : pdjData.sliceTable.readOnly === true;
-
-//MLW - variant
-            if (self.sliceName === 'Policy') isNonWritable = true;
 
             if (isNonWritable !== self.sliceReadOnly) {
               self.sliceReadOnly = isNonWritable;
