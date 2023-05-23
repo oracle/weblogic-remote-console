@@ -19,25 +19,23 @@ import javax.ws.rs.core.Response;
 public class EditableCollectionChildBeanResource extends BeanResource {
 
   /**
-   * Get the RDJ for a slice of the collection child.
+   * Get the RDJ for a slice of a bean.
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(
     @QueryParam("slice") @DefaultValue("") String slice,
-    @QueryParam("reload") @DefaultValue("false") boolean reload
+    @QueryParam("reload") @DefaultValue("false") boolean reload,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @QueryParam("action") @DefaultValue("") String action
   ) {
     getInvocationContext().setReload(reload);
-    setSlicePagePath(slice);
-    return getSliceForm();
+    setSlicePagePath(slice, actionForm, action);
+    return getSlicePage();
   }
 
   /**
-   * Handles the JAXRS POST method for this collection child.
-   * <p>
-   * If action is update, it modifies a slice of the child.
-   * If actioj is customizeTable, it customizes the slice table.
-   * Otherwise, invokes an action on the child (e.g. start a server).
+   * Handles customizing slice tables, modifying the bean and invoking actions.
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -48,8 +46,8 @@ public class EditableCollectionChildBeanResource extends BeanResource {
     @QueryParam("identifier") @DefaultValue("") String identifier,
     JsonObject requestBody
   ) {
-    setSlicePagePath(slice);
     getInvocationContext().setIdentifier(identifier);
+    setSlicePagePath(slice);
     if (CUSTOMIZE_TABLE.equals(action)) {
       return customizeTable(requestBody);
     }
@@ -58,22 +56,24 @@ public class EditableCollectionChildBeanResource extends BeanResource {
     }
     return invokeAction(action, requestBody);
   }
-
-  protected Response getSliceForm() {
-    return
-      GetPageResponseMapper.toResponse(
-        getInvocationContext(),
-        getInvocationContext()
-          .getPageRepo().asPageReaderRepo()
-          .getPage(getInvocationContext())
-      );
-  }
   
   protected Response updateSliceForm(JsonObject requestBody) {
     return UpdateHelper.update(getInvocationContext(), requestBody);
   }
 
-  protected Response invokeAction(String action, JsonObject requestBody) {
-    return InvokeActionHelper.invokeAction(getInvocationContext(), action, requestBody);
+  protected Response getSlicePage() {
+    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
+      return getSliceActionInputForm();
+    } else {
+      return getSlice();
+    }
+  }
+
+  protected Response getSlice() {
+    return getPage();
+  }
+
+  protected Response getSliceActionInputForm() {
+    return getPage();
   }
 }

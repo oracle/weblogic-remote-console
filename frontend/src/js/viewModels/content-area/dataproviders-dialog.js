@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -13,6 +13,7 @@ define(['knockout'],
     function showDomainConnectionDialog(domainConnectionDialog, dialogParams, i18n, isUniqueDataProviderNameCallback) {
       return new Promise(function (resolve) {
         function onClose(reply) {
+          insecureCheckbox.removeEventListener('change', insecureClickHandler);
           okBtn.removeEventListener('ojAction', okClickHandler);
           cancelBtn.removeEventListener('ojAction', cancelClickHandler);
           domainConnectionDialog.removeEventListener('keyup', onKeyUp);
@@ -60,6 +61,18 @@ define(['knockout'],
               break;
           }
         }
+
+        function insecureClickHandler() {
+          dialogParams.insecure = (insecureCheckbox.checked ? [insecureCheckbox.value] : []);
+        }
+
+        function insecureSetup() {
+          insecureCheckbox.checked = (dialogParams.insecure.length > 0);
+          insecureCheckbox.addEventListener('change', insecureClickHandler);
+        }
+
+        const insecureCheckbox = document.getElementById('insecure-checkbox');
+        insecureSetup();
 
         const okBtn = document.getElementById('dlgOkBtn11');
         okBtn.addEventListener('ojAction', okClickHandler);
@@ -367,6 +380,39 @@ define(['knockout'],
       });
     }
 
+    function showProjectBusyDialog(projectBusyDialog, i18n) {
+      return new Promise(function (resolve) {
+        function onClose(reply) {
+          okBtn.removeEventListener('ojAction', okClickHandler);
+          projectBusyDialog.removeEventListener('keyup', onKeyUp);
+          resolve(reply);
+        }
+
+        function okClickHandler(event) {
+          onClose(true);
+          projectBusyDialog.close();
+        }
+
+        function onKeyUp(event) {
+          switch (event.key){
+            case 'Enter':
+            case 'Escape':
+              okClickHandler(event);
+              // Suppress default handling of keyup event
+              event.preventDefault();
+              // Veto the keyup event, so JET will update the knockout
+              // observable associated with the <oj-input-text> element
+              return false;
+          }
+        }
+
+        const okBtn = document.getElementById('dlgOkBtn18');
+        okBtn.addEventListener('ojAction', okClickHandler);
+
+        projectBusyDialog.addEventListener('keyup', onKeyUp);
+      });
+    }
+
     function showStartupTaskChooserDialog(startupTaskChooserDialog, dialogParams, i18n) {
       return new Promise(function (resolve) {
         function onClose(reply) {
@@ -471,6 +517,12 @@ define(['knockout'],
             const startupTaskChooserDialog = document.getElementById('startupTaskChooserDialog');
             rtnval = showStartupTaskChooserDialog(startupTaskChooserDialog, dialogParams, i18n);
             startupTaskChooserDialog.open();
+          }
+            break;
+          case 'ProjectBusy': {
+            const projectBusyDialog = document.getElementById('projectBusyDialog');
+            rtnval = showProjectBusyDialog(projectBusyDialog, i18n);
+            projectBusyDialog.open();
           }
             break;
         }

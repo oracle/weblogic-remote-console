@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -42,22 +42,30 @@ public class PageDescriptionsResource extends BaseResource {
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response getPageDescription(
     @PathParam("typeName") String typeName,
-    @QueryParam("view") @DefaultValue("") String view
+    @QueryParam("view") @DefaultValue("") String view,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @QueryParam("action") @DefaultValue("") String action
   ) {
     // FortifyIssueSuppression Log Forging
     // The values are scrubbed by cleanStringForLogging
     LOGGER.fine("getPageDescription"
       + " typeName=" + StringUtils.cleanStringForLogging(typeName)
       + " view=" + StringUtils.cleanStringForLogging(view)
+      + " actionForm=" + StringUtils.cleanStringForLogging(actionForm)
+      + " action=" + StringUtils.cleanStringForLogging(action)
     );
-    return GetPageDescResponseMapper.toResponse(getInvocationContext(), getResponse(typeName, view));
+    return
+      GetPageDescResponseMapper.toResponse(
+        getInvocationContext(),
+        getResponse(typeName, view, actionForm, action)
+      );
   }
 
-  private Response<JsonObject> getResponse(String typeName, String view) {
+  private Response<JsonObject> getResponse(String typeName, String view, String actionForm, String action) {
     InvocationContext ic = getInvocationContext();
     Response<JsonObject> response = new Response<>();
     PageRepo pageRepo = ic.getPageRepo();
-    PagePath pagePath = computePagePath(typeName, view);
+    PagePath pagePath = computePagePath(typeName, view, actionForm, action);
     if (pagePath == null) {
       return response.setNotFound();
     }
@@ -72,7 +80,19 @@ public class PageDescriptionsResource extends BaseResource {
     return response.setSuccess(pageDesc);
   }
 
-  private PagePath computePagePath(String typeName, String view) {
+  private PagePath computePagePath(String typeName, String view, String actionForm, String action) {
+    PagePath basePagePath = computeBasePagePath(typeName, view);
+    if (basePagePath != null && "inputForm".equals(actionForm)) {
+      if (StringUtils.isEmpty(action)) {
+        throw new AssertionError("Action must be specified for input forms: type=" + typeName + " view=" + view);
+      }
+      return PagePath.newActionInputFormPagePath(basePagePath, action);
+    } else {
+      return basePagePath;
+    }
+  }
+
+  private PagePath computeBasePagePath(String typeName, String view) {
     PageRepoDef pageRepoDef = getInvocationContext().getPageRepo().getPageRepoDef();
     BeanTypeDef typeDef = pageRepoDef.getBeanRepoDef().getTypeDef(typeName);
     if (typeDef == null) {

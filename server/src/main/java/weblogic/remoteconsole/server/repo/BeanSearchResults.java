@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -22,7 +22,7 @@ public interface BeanSearchResults {
   public BeanTreePath getBeanTreePath();
 
   // Get a property of this bean. If it's an array, don't
-  // sort the values (whic means the order can change each
+  // sort the values (which means the order can change each
   // time a search is made).
   // Returns null if the search results don't include this property.
   public Value getUnsortedValue(BeanPropertyDef propertyDef);

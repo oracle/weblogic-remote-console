@@ -1,5 +1,6 @@
 #!/bin/bash
 set -ex
+set -o errtrace
 JAR="$PWD/CSS-Client.jar"
 if [ -z "$1" -o -z "$2" ]
 then
@@ -16,7 +17,7 @@ signDir() {
     zip="$tmp/${1##*/}.zip"
     rm -f "$zip"
     ditto -c -k --sequesterRsrc --keepParent "$1" "$zip"
-    java -jar "$JAR" sign -hardened_runtime -server_timeout 40 -entitlement_file_path entitlements.mac.plist -signed_location $tmp -sign_method apple -file_to_sign "$zip" -deep -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID
+    java -jar "$JAR" sign -hardened_runtime -server_timeout 40 -entitlement_file_path entitlements.mac.plist -signed_location $tmp -sign_method apple -file_to_sign "$zip" -deep -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID -server UK
     ditto -x -k "$zip" "${1%/*}"
 }
 
@@ -26,7 +27,7 @@ notarizeDir() {
     zip="$tmp/${1##*/}.zip"
     rm -f "$zip"
     ditto -c -k --sequesterRsrc --keepParent "$1" "$zip"
-    java -jar "$JAR" mac_notarize -file_to_notarize "$zip" -download_location "$tmp" -bundle_id remote.console -server_timeout 40 -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID
+    java -jar "$JAR" mac_notarize -file_to_notarize "$zip" -download_location "$tmp" -bundle_id remote.console -server_timeout 40 -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID -server UK
     ditto -x -k "$zip" "${1%/*}"
     rm -f $tmp/*
 }
@@ -60,9 +61,9 @@ cp -rp "$src/Contents/MacOS/customjre/legal" "$target/Contents/MacOS/customjre"
 
 # Find all of the files that represent code.  The electron-builder software uses
 # file names and some guessing, but the use of file here seems more reliable.
-find "$target/Contents/"[FMR]* -type f -print0 | xargs -0 file | grep :.*x86_64 | cut -f1 -d: | while read i
+find "$target/Contents/"[FMR]* -type f -print0 | xargs -0 file | egrep ':.*x86_64:.*arm64' | cut -f1 -d: | while read i
 do
-    java -jar "$JAR" sign -hardened_runtime -entitlement_file_path entitlements.mac.plist -signed_location "$tmp" -sign_method binary -file_to_sign "$i" -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID
+    java -jar "$JAR" sign -hardened_runtime -entitlement_file_path entitlements.mac.plist -signed_location "$tmp" -sign_method binary -file_to_sign "$i" -user $SIGN_USER -global_uid $SIGN_GLOBAL_ID -server UK
     mv -f "$tmp/${i##*/}" "$i"
     chmod a+x "$i"
     # Checks to see that the signing worked

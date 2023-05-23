@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -95,7 +95,7 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
       List<FormProperty> properties = response.getResults().asForm().getProperties();
       for (int i = 0; i < properties.size(); i++) {
         FormProperty prop = properties.get(i);
-        String name = prop.getPropertyDef().getPropertyPath().getDotSeparatedPath();
+        String name = prop.getFieldDef().asBeanPropertyDef().getPropertyPath().getDotSeparatedPath();
         if (PROPERTY_DATASOURCE_TYPE.equals(name)) {
           properties.set(i, customizeDataSourceType(prop));
         } else if (PROPERTY_GRIDLINK_FAN_ENABLED.equals(name)) {
@@ -114,7 +114,7 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
     // change the DatasourceType property's value to GENERIC.
     return
       new FormProperty(
-        property.getPropertyDef(),
+        property.getFieldDef(),
         new SettableValue(new StringValue(DATASOURCE_TYPE_GENERIC), false)
       );
   }
@@ -124,7 +124,7 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
     // Change it to true for GridLink data sources.
     return
       new FormProperty(
-        property.getPropertyDef(),
+        property.getFieldDef(),
         new SettableValue(new BooleanValue(true), false)
       );
   }
@@ -917,7 +917,9 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
 
     private FormProperty findFormProperty(String propertyName) {
       for (FormProperty formProperty : formProperties) {
-        if (formProperty.getPropertyDef().getPropertyPath().getDotSeparatedPath().equals(propertyName)) {
+        String formPropName =
+          formProperty.getFieldDef().asBeanPropertyDef().getPropertyPath().getDotSeparatedPath();
+        if (formPropName.equals(propertyName)) {
           return formProperty;
         }
       }

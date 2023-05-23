@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -110,6 +110,22 @@ class AggregatedRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSearchH
       JsonObject first = unaggregatedBeanResults.values().iterator().next();
       bldr.add("name", first.get("name"));
       bldr.add("type", first.get("type"));
+      BeanPropertyDef discDef =
+        aggregatedBeanPath.getTypeDef().getSubTypeDiscriminatorPropertyDef();
+      if (discDef != null) {
+        String discName = discDef.getOnlinePropertyName();
+        if (first.containsKey(discName)) {
+          bldr.add(discName, first.get(discName));
+        } else {
+          throw
+            new AssertionError(
+              "subtypediscriminator missing from unaggregated search results:"
+              + " " + aggregatedBeanPath
+              + " " + discDef
+              + " " + first
+            );
+        }
+      }
     } else {
       // There are no instances.  Set the type to the base type.
       bldr.add("type", aggregatedBeanPath.getLastSegment().getChildDef().getChildTypeDef().getInstanceName());

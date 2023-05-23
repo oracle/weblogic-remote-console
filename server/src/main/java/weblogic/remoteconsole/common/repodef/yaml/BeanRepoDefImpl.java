@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -28,8 +28,6 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
   protected BeanRepoDefImpl(WebLogicMBeansVersion mbeansVersion) {
     this.mbeansVersion = mbeansVersion;
   }
-
-  protected abstract boolean isRemoveMissingPropertiesAndTypes();
 
   protected abstract boolean isEditable();
 
@@ -69,10 +67,6 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
   }
 
   BaseBeanTypeDefImpl getTypeDefImpl(String typeName) {
-    return getTypeDefImpl(typeName, true);
-  }
-
-  BaseBeanTypeDefImpl getTypeDefImpl(String typeName, boolean required) {
     Optional<BaseBeanTypeDefImpl> opt = getTypeNameToTypeDefImplMap().get(typeName);
     if (opt == null) {
       opt = Optional.ofNullable(createTypeDefImpl(typeName));
@@ -81,9 +75,11 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
     if (opt.isPresent()) {
       return opt.get();
     }
-    if (required && !isRemoveMissingPropertiesAndTypes()) {
-      throw new AssertionError("Can't find type " + typeName);
-    }
+    LOGGER.finest(
+      "Missing type"
+      + " " + getMBeansVersion().getWebLogicVersion()
+      + " " + typeName
+    );
     return null;
   }
 

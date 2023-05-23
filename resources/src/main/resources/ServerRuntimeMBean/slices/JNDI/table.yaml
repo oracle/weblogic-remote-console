@@ -1,0 +1,26 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p> Displays the bindings in this server's JNDI tree.</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.ServerRuntimeMBeanCustomizer.getJNDISliceTableRows
+
+displayedColumns:
+- name: "Context"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The context that contains the binding."
+- name: "Name"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The binding's name in the context that contains it."
+- name: "Class"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The bound object's java class."
+- name: "toString"
+  label: "toString"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: "The bound object's toString results."

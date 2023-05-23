@@ -1,11 +1,30 @@
 #!/bin/bash
 
-# Copyright 2020, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Copyright 2020, 2023, Oracle Corporation and/or its affiliates.  All rights reserved.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
+set -e
+
 mydir=$PWD
-cd ..
-if find $mydir -name '*.java' | xargs java -jar build-tools/checkstyle-8.36-all.jar -c=build-tools/src/main/resources/checkstyle/customized_google_checks.xml | grep WARN
+CHECKSTYLE_JAR="$mydir/target/checkstyle.jar"
+# DOWNLOAD_CHECKSTYLE_URL=${DOWNLOAD_CHECKSTYLE_URL:-https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.10.0/checkstyle-10.10.0-all.jar}
+DOWNLOAD_CHECKSTYLE_URL=${DOWNLOAD_CHECKSTYLE_URL:-https://github.com/checkstyle/checkstyle/releases/download/checkstyle-8.36/checkstyle-8.36-all.jar}
+if ! unzip -v "$CHECKSTYLE_JAR" > /dev/null 2>&1
 then
+  mkdir -p "${CHECKSTYLE_JAR%/*}"
+  if ! curl -s -L -o "$CHECKSTYLE_JAR" ${DOWNLOAD_CHECKSTYLE_URL}
+  then
+    echo Cannot download checkstyle, exiting >&2
+    exit 1
+  fi
+fi
+
+tmp="/tmp/checkstyle.out"
+rm -f "$tmp"
+
+cd ..
+if ! java -jar "$CHECKSTYLE_JAR" -c=build-tools/src/main/resources/checkstyle/customized_google_checks.xml $(find "$mydir" -name '*.java') > $tmp 2>&1 || grep -q WARN "$tmp"
+then
+  cat $tmp
   exit 1
 fi

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
-import weblogic.remoteconsole.common.repodef.TableActionDef;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
 import weblogic.remoteconsole.common.utils.StringUtils;
 
@@ -46,6 +46,8 @@ public abstract class PageReaderRepo extends PageRepo {
       reader = new CreateFormReader(ic);
     } else if (ic.getPagePath().isTablePagePath()) {
       reader = new TableReader(ic);
+    } else if (ic.getPagePath().isActionInputFormPagePath()) {
+      reader = new ActionInputFormReader(ic);
     } else {
       throw new AssertionError("Unknown PagePath type : " + ic.getPagePath());
     }
@@ -61,6 +63,8 @@ public abstract class PageReaderRepo extends PageRepo {
       return customizePage(ic, (new CreateFormReader(ic)).getCreateForm());
     } else if (ic.getPagePath().isTablePagePath()) {
       return customizePage(ic, (new TableReader(ic)).getTable());
+    } else if (ic.getPagePath().isActionInputFormPagePath()) {
+      return customizePage(ic, (new ActionInputFormReader(ic)).getInputForm());
     } else {
       throw new AssertionError("Unknown PagePath type : " + ic.getPagePath());
     }
@@ -150,15 +154,17 @@ public abstract class PageReaderRepo extends PageRepo {
     return getBeanRepo().asBeanReaderRepo().verifyDoesntExist(ic, beanPath);
   }
 
-  // Invoke an action on the collection child bean that a row of a table refers to.
-  // For example, on the Servers table page, invoke the 'start' action on the row for 'AdminServer'.
+  // Invoke an action a bean.
   //
   // The invocation content identifies the bean to invoke the action on.
   //
-  // The action must not take any input arguments and must not return a value
-  // that should be displayed to the user.
-  public Response<Void> invokeTableRowAction(InvocationContext ic, TableActionDef tableActionDef) {
-    return (new TableRowActionInvoker(ic, tableActionDef)).invokeAction();
+  // The action must not return a value that should be displayed to the user.
+  public Response<Void> invokeAction(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
+    return (new ActionInvoker(ic, pageActionDef, formProperties)).invokeAction();
   }
 
   public SimpleSearchManager getSimpleSearchManager() {

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, 2023, Oracle Corp and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle Corp and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -147,8 +147,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderLoadFailed.add((dataProvider) => {
-          clearNavStripIcons();
-          clearBuiltInsSelection();
+          const beanTree = builtIns().find(item => item.provider.id === dataProvider.id);
+          const clearNavstripIcons = (CoreUtils.isNotUndefinedNorNull(beanTree));
+          if (clearNavstripIcons) {
+            clearNavStripIcons();
+            clearBuiltInsSelection();
+          }
         });
 
         self.signalBindings.push(binding);

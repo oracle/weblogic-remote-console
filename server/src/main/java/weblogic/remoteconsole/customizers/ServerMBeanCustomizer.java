@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -10,6 +10,7 @@ import weblogic.remoteconsole.server.repo.BeanEditorRepo;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
+import weblogic.remoteconsole.server.webapp.BaseResource;
 
 /** 
  * Custom code for processing the ServerMBean
@@ -18,6 +19,15 @@ public class ServerMBeanCustomizer {
   private static final String IDENTITY = "identity";
 
   private ServerMBeanCustomizer() {
+  }
+
+  // Customize the ServerMBean collection's JAXRS resource
+  public static BaseResource createResource(InvocationContext ic) {
+    if (ic.getBeanTreePath().isCollection() && ic.getBeanTreePath().isCreatable()) {
+      return new ServerMBeanCreatableBeanCollectionResource();
+    } else {
+      return null;
+    }
   }
 
   // If an automatically created migratable target was created for a server,

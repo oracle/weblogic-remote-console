@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -13,10 +13,12 @@ import weblogic.remoteconsole.common.utils.Path;
 public class BeanValueDefCustomizerSource {
   private BooleanValue referenceAsReferences = new BooleanValue();
   private BooleanValue dateAsLong = new BooleanValue();
+  private BooleanValue ordered = new BooleanValue();
 
   protected void merge(BeanValueDefCustomizerSource from, Path fromContainedBeanPath) {
     referenceAsReferences.merge(from.referenceAsReferences, fromContainedBeanPath);
     dateAsLong.merge(from.dateAsLong, fromContainedBeanPath);
+    ordered.merge(from.ordered, fromContainedBeanPath);
   }
 
   // Indicates that even though the value is an array of references,
@@ -43,5 +45,15 @@ public class BeanValueDefCustomizerSource {
 
   public void setDateAsLong(boolean value) {
     dateAsLong.setValue(value);
+  }
+
+  // Whether an array's values' order must be maintained.
+  // Must not be specified for non-array fields.
+  public boolean isOrdered() {
+    return ordered.getValue();
+  }
+
+  public void setOrdered(boolean value) {
+    ordered.setValue(value);
   }
 }

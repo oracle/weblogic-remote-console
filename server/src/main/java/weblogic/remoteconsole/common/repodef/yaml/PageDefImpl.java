@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -10,11 +10,13 @@ import java.util.List;
 
 import weblogic.remoteconsole.common.repodef.HelpTopicDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.HelpTopicDefSource;
+import weblogic.remoteconsole.common.repodef.schema.PageActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
 import weblogic.remoteconsole.common.utils.Path;
@@ -28,17 +30,21 @@ public abstract class PageDefImpl implements PageDef {
   private BaseBeanTypeDefImpl typeDefImpl;
   private PagePath pagePath;
   private PageDefSource source;
+  private String pageKey;
   private LocalizableString introductionHTML;
   private List<HelpTopicDefImpl> helpTopicDefImpls = new ArrayList<>();
   private List<HelpTopicDef> helpTopicDefs;
   private LocalizableString helpPageTitle;
   private List<PagePropertyDefImpl> allPropertyDefImpls = new ArrayList<>();
   private List<PagePropertyDef> allPropertyDefs;
+  private List<PageActionDefImpl> actionDefImpls = new ArrayList<>();
+  private List<PageActionDef> actionDefs;
 
-  protected PageDefImpl(PageRepoDefImpl pageRepoDefImpl, PagePath pagePath, PageDefSource source) {
+  protected PageDefImpl(PageRepoDefImpl pageRepoDefImpl, PagePath pagePath, PageDefSource source, String pageKey) {
     this.pageRepoDefImpl = pageRepoDefImpl;
     this.pagePath = pagePath;
     this.source = source;
+    this.pageKey = pageKey;
     this.typeDefImpl =
       getPageRepoDefImpl()
       .getBeanRepoDefImpl()
@@ -48,6 +54,14 @@ public abstract class PageDefImpl implements PageDef {
     customizePageDefSource();
     this.introductionHTML = createIntroductionHTML();
     createHelpTopicDefsAndImpls();
+  }
+
+  // Must be called by the base constructor after
+  // all the page's properties have been created:
+  protected void finishPropertyBasedInitialization() {
+    createActionDefImpls(source.getActions());
+    initializeHelpPageTitle();
+    createUsedIfDefImpls();
   }
 
   PageRepoDefImpl getPageRepoDefImpl() {
@@ -65,6 +79,10 @@ public abstract class PageDefImpl implements PageDef {
 
   protected PageDefSource getSource() {
     return source;
+  }
+
+  String getPageKey() {
+    return pageKey;
   }
 
   @Override
@@ -93,6 +111,32 @@ public abstract class PageDefImpl implements PageDef {
   @Override
   public List<PagePropertyDef> getAllPropertyDefs() {
     return allPropertyDefs;
+  }
+
+  List<PageActionDefImpl> getActionDefImpls() {
+    return actionDefImpls;
+  }
+
+  @Override
+  public List<PageActionDef> getActionDefs() {
+    return actionDefs;
+  }
+
+  PageActionDefImpl findActionDefImpl(String action) {
+    return findActionDefImpl(getActionDefImpls(), action);
+  }
+
+  private PageActionDefImpl findActionDefImpl(List<PageActionDefImpl> actionDefImpls, String action) {
+    for (PageActionDefImpl actionDefImpl : actionDefImpls) {
+      if (actionDefImpl.getActionName().equals(action)) {
+        return actionDefImpl;
+      }
+      PageActionDefImpl childActionDefImpl = findActionDefImpl(actionDefImpl.getActionDefImpls(), action);
+      if (childActionDefImpl != null) {
+        return childActionDefImpl;
+      }
+    }
+    return null;
   }
 
   @Override
@@ -175,6 +219,16 @@ public abstract class PageDefImpl implements PageDef {
     }
   }
 
+  private void createActionDefImpls(List<PageActionDefSource> actionCustomizerSources) {
+    for (PageActionDefSource actionCustomizerSource : actionCustomizerSources) {
+      PageActionDefImpl actionDefImpl = PageActionDefImpl.create(this, actionCustomizerSource);
+      if (actionDefImpl != null) {
+        actionDefImpls.add(actionDefImpl);
+      }
+    }
+    this.actionDefs = Collections.unmodifiableList(actionDefImpls);
+  }
+
   private LocalizableString createIntroductionHTML() {
     String englishIntroductionHTML = getSource().getIntroductionHTML();
     if (StringUtils.isEmpty(englishIntroductionHTML)) {
@@ -217,10 +271,8 @@ public abstract class PageDefImpl implements PageDef {
   protected abstract String getEnglishHelpPageTitle(String typeInstanceName);
 
   String getLocalizationKey(String key) {
-    return getTypeDefImpl().getLocalizationKey(getPageKey() + "." + key);
+    return getTypeDefImpl().getLocalizationKey(pageKey + "." + key);
   }
-
-  protected abstract String getPageKey();
 
   SliceFormDefImpl asSliceFormDefImpl() {
     return (SliceFormDefImpl)this;

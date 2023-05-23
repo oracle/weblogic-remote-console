@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -66,7 +66,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderLoadFailed.add((dataProvider) => {
-          setContentAreaHeaderBranding({label: '', info: ''});
+          if (dataProvider.id === Runtime.getDataProviderId()) {
+            setContentAreaHeaderBranding({label: '', info: ''});
+          }
         });
 
         self.signalBindings.push(binding);

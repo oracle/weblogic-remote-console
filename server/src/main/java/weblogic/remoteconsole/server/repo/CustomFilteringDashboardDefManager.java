@@ -174,7 +174,7 @@ public class CustomFilteringDashboardDefManager {
       properties.set(
         i,
         new FormProperty(
-          property.getPropertyDef(),
+          property.getFieldDef(),
           Value.unsettableValue(property.getValue())
         )
       );
@@ -228,7 +228,7 @@ public class CustomFilteringDashboardDefManager {
         formNameToPropertyDef = new TreeMap<>();
         localizedLabelToFormNameToPropertyDef.put(localizedLabel, formNameToPropertyDef);
       }
-      formNameToPropertyDef.put(pagePropertyDef.getFormPropertyName(), propertyDef);
+      formNameToPropertyDef.put(pagePropertyDef.getFormFieldName(), propertyDef);
     }
     List<CustomFilteringDashboardPropertyDef> sortedPropertyDefs = new ArrayList<>();
     for (Map<String,CustomFilteringDashboardPropertyDef> formNameToPropertyDef :
@@ -316,7 +316,7 @@ public class CustomFilteringDashboardDefManager {
     }
     Map<String,PagePropertyDef> templatePagePropertyDefs = new HashMap<>();
     for (PagePropertyDef templatePagePropertyDef : uncustomizedCreateFormDef.getAllPropertyDefs()) {
-      templatePagePropertyDefs.put(templatePagePropertyDef.getFormPropertyName(), templatePagePropertyDef);
+      templatePagePropertyDefs.put(templatePagePropertyDef.getFormFieldName(), templatePagePropertyDef);
     }
     List<PagePropertyDef> basicPagePropertyDefs =
       SearchUtils.getBasicPagePropertyDefs(ic.getPageRepo().getPageRepoDef(), btpTemplate.getTypeDef());
@@ -353,20 +353,20 @@ public class CustomFilteringDashboardDefManager {
       BeanChildDef childDef = segmentTemplate.getChildDef();
       if (childDef.isCollection()) {
         LocalizableString name = childDef.getSingularLabel();
-        String baseFormPropertyName = childDef.getChildName();
+        String baseFormFieldName = childDef.getChildName();
         PagePropertyDef criteriaDef =
           customizePropertyDef(
             ic,
             name,
             templatePagePropertyDefs.get("TemplateBeanKeyCriteria"),
-            "BeanKeyCriteria_" + baseFormPropertyName
+            "BeanKeyCriteria_" + baseFormFieldName
           );
         CustomPagePropertyDef valueDef =
           customizePropertyDef(
             ic,
             LocalizedConstants.UNLABELED_PROPERTY,
             templatePagePropertyDefs.get("TemplateBeanKeyValue"),
-            "BeanKeyValue_" + baseFormPropertyName
+            "BeanKeyValue_" + baseFormFieldName
           );
         setValuesPropertyUsedIfDef(criteriaDef, valueDef);
         if (segmentTemplate.isKeySet()) {
@@ -377,7 +377,7 @@ public class CustomFilteringDashboardDefManager {
             ic,
             name,
             templatePagePropertyDefs.get("TemplateBeanKeyResult"),
-            "BeanKeyResult_" + baseFormPropertyName
+            "BeanKeyResult_" + baseFormFieldName
           );
         segmentDef = new CustomFilteringDashboardPathSegmentDef(segmentTemplate, criteriaDef, valueDef, resultDef);
       } else {
@@ -396,11 +396,11 @@ public class CustomFilteringDashboardDefManager {
     // Get the form names of all of the basic properties
     Set<String> basicFormNames = new HashSet<>();
     for (PagePropertyDef pagePropertyDef : basicPagePropertyDefs) {
-      basicFormNames.add(pagePropertyDef.getFormPropertyName());
+      basicFormNames.add(pagePropertyDef.getFormFieldName());
     }
     List<PagePropertyDef> advancedPagePropertyDefs = new ArrayList<>();
     for (PagePropertyDef pagePropertyDef : allPagePropertyDefs) {
-      if (!basicFormNames.contains(pagePropertyDef.getFormPropertyName())) {
+      if (!basicFormNames.contains(pagePropertyDef.getFormFieldName())) {
         advancedPagePropertyDefs.add(pagePropertyDef);
       }
     }
@@ -417,13 +417,13 @@ public class CustomFilteringDashboardDefManager {
     for (PagePropertyDef sourcePropertyDef : pagePropertyDefs) {
       if (!sourcePropertyDef.isKey()) {
         String baseTemplatePropertyFormName = getBaseTemplatePagePropertyDefName(sourcePropertyDef);
-        String baseFormPropertyName = sourcePropertyDef.getFormPropertyName();
+        String baseFormFieldName = sourcePropertyDef.getFormFieldName();
         PagePropertyDef criteriaDef =
           customizePropertyDef(
             ic,
             sourcePropertyDef.getLabel(),
             templatePagePropertyDefs.get(baseTemplatePropertyFormName + "Criteria"),
-            "PropertyCriteria_" + baseFormPropertyName
+            "PropertyCriteria_" + baseFormFieldName
           )
           .helpSummaryHTML(sourcePropertyDef.getHelpSummaryHTML())
           .detailedHelpHTML(sourcePropertyDef.getDetailedHelpHTML())
@@ -433,7 +433,7 @@ public class CustomFilteringDashboardDefManager {
             ic,
             LocalizedConstants.UNLABELED_PROPERTY,
             templatePagePropertyDefs.get(baseTemplatePropertyFormName + "Value"),
-            "PropertyValue_" + baseFormPropertyName
+            "PropertyValue_" + baseFormFieldName
           );
         setValuesPropertyUsedIfDef(criteriaDef, valueDef);
         propertyDefs.add(new CustomFilteringDashboardPropertyDef(sourcePropertyDef, criteriaDef, valueDef));
@@ -475,11 +475,11 @@ public class CustomFilteringDashboardDefManager {
     InvocationContext ic,
     LocalizableString label,
     PagePropertyDef uncustomizedPagePropertyDef,
-    String formPropertyName
+    String formFieldName
   ) {
     CustomPagePropertyDef rtn =
       new CustomPagePropertyDef(uncustomizedPagePropertyDef)
-        .formPropertyName(formPropertyName)
+        .formFieldName(formFieldName)
         .writable(true);
     if (label != null) {
       rtn.setLabel(label);

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 public class ReadOnlyOptionalSingletonBeanResource extends BeanResource {
 
   /**
-   * Get a read-only optional singleton's RDJ.
+   * Get the RDJ for a slice of a bean.
    * 
    * Returns a 200 without a "data" property in the response
    * if the singleton does not exist.
@@ -28,15 +28,17 @@ public class ReadOnlyOptionalSingletonBeanResource extends BeanResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(
     @QueryParam("slice") @DefaultValue("") String slice,
-    @QueryParam("reload") @DefaultValue("false") boolean reload
+    @QueryParam("reload") @DefaultValue("false") boolean reload,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @QueryParam("action") @DefaultValue("") String action
   ) {
     getInvocationContext().setReload(reload);
-    setSlicePagePath(slice);
-    return getSliceForm();
+    setSlicePagePath(slice, actionForm, action);
+    return getSlicePage();
   }
 
   /**
-   * Customizes the slice table.
+   * Handles customizing slice tables and invoking actions.
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -44,22 +46,30 @@ public class ReadOnlyOptionalSingletonBeanResource extends BeanResource {
   public Response post(
     @QueryParam("slice") @DefaultValue("") String slice,
     @QueryParam("action") String action,
+    @QueryParam("identifier") @DefaultValue("") String identifier,
     JsonObject requestBody
   ) {
+    getInvocationContext().setIdentifier(identifier);
     setSlicePagePath(slice);
     if (CUSTOMIZE_TABLE.equals(action)) {
       return customizeTable(requestBody);
     }
-    return defaultPost(requestBody);
+    return invokeAction(action, requestBody);
   }
 
-  protected Response getSliceForm() {
-    return
-      GetPageResponseMapper.toResponse(
-        getInvocationContext(),
-        getInvocationContext()
-          .getPageRepo().asPageReaderRepo()
-          .getPage(getInvocationContext())
-      );
+  protected Response getSlicePage() {
+    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
+      return getSliceActionInputForm();
+    } else {
+      return getSlice();
+    }
+  }
+
+  protected Response getSlice() {
+    return getPage();
+  }
+
+  protected Response getSliceActionInputForm() {
+    return getPage();
   }
 }

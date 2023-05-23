@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023 Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -15,7 +15,6 @@ contextBridge.exposeInMainWorld(
     ipc: {
       receive: (channel, func) => {
         const validChannels = [
-          'on-login',
           'on-project-switched',
           'start-app-quit'
         ];
@@ -29,7 +28,6 @@ contextBridge.exposeInMainWorld(
       },
       cancelReceive: (channel) => {
         const validChannels = [
-          'on-login',
           'on-project-switched'
         ];
         if (validChannels.includes(channel)) {
@@ -42,7 +40,7 @@ contextBridge.exposeInMainWorld(
       invoke: async (channel, arg) => {
         const validChannels = [
           'translated-strings-sending',
-          'current-login',
+          'complete-login',
           'perform-login',
           'project-changing',
           'current-project-requesting',
@@ -51,7 +49,8 @@ contextBridge.exposeInMainWorld(
           'file-choosing',
           'file-reading',
           'file-writing',
-          'submenu-state-setting',
+          'is-busy',
+          'unsaved-changes',
           'preference-reading',
           'window-app-quiting'
         ];

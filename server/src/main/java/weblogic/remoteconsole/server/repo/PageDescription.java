@@ -13,12 +13,17 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
+import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
+import weblogic.remoteconsole.common.repodef.BeanValueDef;
 import weblogic.remoteconsole.common.repodef.CreateFormDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPresentationDef;
 import weblogic.remoteconsole.common.repodef.FormSectionDef;
 import weblogic.remoteconsole.common.repodef.HelpTopicDef;
 import weblogic.remoteconsole.common.repodef.LegalValueDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.common.repodef.PageActionDef;
+import weblogic.remoteconsole.common.repodef.PageActionExternalHelpDef;
+import weblogic.remoteconsole.common.repodef.PageActionParamDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
@@ -30,7 +35,6 @@ import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.repodef.SliceFormPresentationDef;
 import weblogic.remoteconsole.common.repodef.SliceTableDef;
 import weblogic.remoteconsole.common.repodef.SlicesDef;
-import weblogic.remoteconsole.common.repodef.TableActionDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.repodef.UsedIfDef;
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -68,6 +72,9 @@ public class PageDescription {
     if (pageDef.isCreateFormDef()) {
       addIfNotEmpty(builder, "createForm", createFormDefToJson(pageDef.asCreateFormDef()));
     }
+    if (pageDef.isActionInputFormDef()) {
+      addIfNotEmpty(builder, "actionInputForm", actionInputFormDefToJson(pageDef.asActionInputFormDef()));
+    }
     return builder.build();
   }
 
@@ -93,6 +100,7 @@ public class PageDescription {
     List<PagePropertyDef> sortedHiddenColumns = sortHiddenColumnDefs(tableDef.getHiddenColumnDefs());
     addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sortedHiddenColumns));
     addIfNotEmpty(builder, "actions", actionDefsToJson(tableDef.getActionDefs()));
+    builder.add("requiresRowSelection", requiresRowSelection(tableDef.getActionDefs()));
     return builder.build();
   }
 
@@ -103,6 +111,7 @@ public class PageDescription {
     addIfNotEmpty(builder, "advancedProperties", sliceFormPropertyDefsToJson(sliceFormDef.getAdvancedPropertyDefs()));
     addIfNotEmpty(builder, "sections", sliceFormSectionDefsToJson(sliceFormDef.getSectionDefs()));
     addIfNotEmpty(builder, "presentation", sliceFormPresentationDefToJson(sliceFormDef.getPresentationDef()));
+    addIfNotEmpty(builder, "actions", actionDefsToJson(sliceFormDef.getActionDefs()));
     builder.add(READ_ONLY, sliceFormDef.isReadOnly());
     return builder.build();
   }
@@ -114,6 +123,7 @@ public class PageDescription {
     List<PagePropertyDef> sortedHiddenColumns = sortHiddenColumnDefs(sliceTableDef.getHiddenColumnDefs());
     addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sortedHiddenColumns));
     addIfNotEmpty(builder, "actions", actionDefsToJson(sliceTableDef.getActionDefs()));
+    builder.add("requiresRowSelection", requiresRowSelection(sliceTableDef.getActionDefs()));
     builder.add(READ_ONLY, sliceTableDef.isReadOnly());
     return builder.build();
   }
@@ -122,9 +132,16 @@ public class PageDescription {
     JsonObjectBuilder builder = Json.createObjectBuilder();
     addIfNotEmpty(builder, "properties", createFormPropertyDefsToJson(createFormDef.getPropertyDefs()));
     addIfNotEmpty(builder, "sections", createFormSectionDefsToJson(createFormDef.getSectionDefs()));
+    addIfNotEmpty(builder, "actions", actionDefsToJson(createFormDef.getActionDefs()));
     addIfNotEmpty(builder, "presentation", createFormPresentationDefToJson(createFormDef.getPresentationDef()));
     // Don't have to worry about read only create forms since they're only used to write
     // (v.s. a slice form can be used to only view)
+    return builder.build();
+  }
+
+  private JsonObject actionInputFormDefToJson(ActionInputFormDef inputFormDef) {
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    builder.add("properties", actionParamDefsToJson(inputFormDef.getParamDefs()));
     return builder.build();
   }
 
@@ -259,18 +276,67 @@ public class PageDescription {
     return builder.build();
   }
 
-  private JsonArray actionDefsToJson(List<TableActionDef> actionDefs) {
+  private JsonArray actionParamDefsToJson(List<PageActionParamDef> paramDefs) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
-    for (TableActionDef actionDef : actionDefs) {
+    for (PageActionParamDef paramDef : paramDefs) {
+      builder.add(actionParamDefToJson(paramDef));
+    }
+    return builder.build();
+  }
+
+  private JsonObject actionParamDefToJson(PageActionParamDef paramDef) {
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    addIfTrue(builder, "ordered", paramDef.isOrdered());
+    addIfNotEmpty(builder, "name", paramDef.getFormFieldName());
+    // action params always use the same label on the page and help page:
+    addIfNotEmpty(builder, "label", paramDef.getLabel());
+    addIfNotEmpty(builder, "helpLabel", paramDef.getLabel());
+    addIfNotEmpty(builder, "type", getType(paramDef, true));
+    addIfTrue(builder, "array", isArray(paramDef));
+    addIfNotEmpty(builder, "helpSummaryHTML", paramDef.getHelpSummaryHTML());
+    addIfNotEmpty(builder, "detailedHelpHTML", paramDef.getDetailedHelpHTML());
+    addIfTrue(builder, "required", paramDef.isRequired());
+    return builder.build();
+  }
+
+  private JsonArray actionDefsToJson(List<PageActionDef> actionDefs) {
+    JsonArrayBuilder builder = Json.createArrayBuilder();
+    for (PageActionDef actionDef : actionDefs) {
       builder.add(actionDefToJson(actionDef));
     }
     return builder.build();
   }
 
-  private JsonObject actionDefToJson(TableActionDef actionDef) {
+  private boolean requiresRowSelection(List<PageActionDef> actionDefs) {
+    for (PageActionDef actionDef : actionDefs) {
+      if (requiresRowSelection(actionDef)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean requiresRowSelection(PageActionDef actionDef) {
+    if (requiresRowSelection(actionDef.getActionDefs())) {
+      return true;
+    }
+    if (actionDef.isInvokable() && !"none".equals(actionDef.getRows())) {
+      return true;
+    }
+    return false;
+  }
+
+  private JsonObject actionDefToJson(PageActionDef actionDef) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
     addIfNotEmpty(builder, "name", actionDef.getActionPath().getDotSeparatedPath());
     addIfNotEmpty(builder, "label", actionDef.getLabel());
+    if (actionDef.isInvokable()) {
+      addIfNotEmpty(builder, "rows", actionDef.getRows());
+      addIfNotEmpty(builder, "helpLabel", actionDef.getHelpLabel());
+      addIfNotEmpty(builder, "helpSummaryHTML", actionDef.getHelpSummaryHTML());
+      addIfNotEmpty(builder, "detailedHelpHTML", actionDef.getDetailedHelpHTML());
+      addIfNotEmpty(builder, "externalHelp", pageActionExternalHelpDefToJson(actionDef.getExternalHelpDef()));
+    }
     addIfTrue(builder, "asynchronous", actionDef.isAsynchronous());
     addIfNotEmpty(builder, "usedIf", usedIfDefToJson(actionDef.getUsedIfDef()));
     addIfNotEmpty(builder, "actions", actionDefsToJson(actionDef.getActionDefs()));
@@ -301,8 +367,10 @@ public class PageDescription {
   // property info returned for both columns and forms
   private void propertyDefToJson(JsonObjectBuilder builder, PagePropertyDef propertyDef) {
     addIfTrue(builder, "ordered", propertyDef.isOrdered());
-    addIfNotEmpty(builder, "name", propertyDef.getFormPropertyName());
+    addIfNotEmpty(builder, "name", propertyDef.getFormFieldName());
+    // properties always use the same label on the page and help page:
     addIfNotEmpty(builder, "label", propertyDef.getLabel());
+    addIfNotEmpty(builder, "helpLabel", propertyDef.getLabel());
     addIfNotEmpty(builder, "type", getPropertyType(propertyDef));
     addIfTrue(builder, "array", isArray(propertyDef));
     addIfNotEmpty(builder, "helpSummaryHTML", propertyDef.getHelpSummaryHTML());
@@ -319,6 +387,19 @@ public class PageDescription {
     JsonObjectBuilder builder = Json.createObjectBuilder();
     addIfNotEmpty(builder, "title", externalHelpDef.getTitle());
     addIfNotEmpty(builder, "label", externalHelpDef.getLabel());
+    addIfNotEmpty(builder, "introLabel", externalHelpDef.getIntroLabel());
+    addIfNotEmpty(builder, "href", externalHelpDef.getHref());
+    return builder.build();
+  }
+
+  private JsonObject pageActionExternalHelpDefToJson(PageActionExternalHelpDef externalHelpDef) {
+    if (externalHelpDef == null) {
+      return null;
+    }
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    addIfNotEmpty(builder, "title", externalHelpDef.getTitle());
+    addIfNotEmpty(builder, "label", externalHelpDef.getLabel());
+    addIfNotEmpty(builder, "introLabel", externalHelpDef.getIntroLabel());
     addIfNotEmpty(builder, "href", externalHelpDef.getHref());
     return builder.build();
   }
@@ -384,7 +465,7 @@ public class PageDescription {
       return null;
     }
     JsonObjectBuilder builder = Json.createObjectBuilder();
-    addIfNotEmpty(builder, "property", usedIfDef.getPropertyDef().getFormPropertyName());
+    addIfNotEmpty(builder, "property", usedIfDef.getPropertyDef().getFormFieldName());
     builder.add("values", valuesToJson(usedIfDef.getValues()));
     return builder.build();
   }
@@ -404,55 +485,59 @@ public class PageDescription {
     return builder.build();
   }
 
-  private boolean isArray(PagePropertyDef propertyDef) {
-    if (propertyDef.isReferenceAsReferences()) {
+  private boolean isArray(BeanValueDef valueDef) {
+    if (valueDef.isReferenceAsReferences()) {
       return false;
     }
-    return propertyDef.isArray();
+    return valueDef.isArray();
   }
 
   private String getPropertyType(PagePropertyDef propertyDef) {
-    if (propertyDef.isString()) {
+    return getType(propertyDef, isWritable(propertyDef));
+  }
+
+  private String getType(BeanValueDef valueDef, boolean writable) {
+    if (valueDef.isString()) {
       return null; // don't write out out since it's the default type
     }
-    if (propertyDef.isInt()) {
+    if (valueDef.isInt()) {
       return "int";
     }
-    if (propertyDef.isLong()) {
+    if (valueDef.isLong()) {
       return "long";
     }
-    if (propertyDef.isDouble()) {
+    if (valueDef.isDouble()) {
       return "double";
     }
-    if (propertyDef.isBoolean()) {
+    if (valueDef.isBoolean()) {
       return "boolean";
     }
-    if (propertyDef.isSecret()) {
+    if (valueDef.isSecret()) {
       return "secret";
     }
-    if (propertyDef.isDate()) {
+    if (valueDef.isDate()) {
       return "date";
     }
-    if (propertyDef.isProperties()) {
+    if (valueDef.isProperties()) {
       return "properties";
     }
-    if (propertyDef.isReference()) {
-      return (isWritable(propertyDef)) ? "reference-dynamic-enum" : "reference";
+    if (valueDef.isReference()) {
+      return (writable) ? "reference-dynamic-enum" : "reference";
     }
-    if (propertyDef.isThrowable()) {
+    if (valueDef.isThrowable()) {
       return "throwable";
     }
-    if (propertyDef.isFileContents()) {
+    if (valueDef.isFileContents()) {
       return "fileContents";
     }
-    if (propertyDef.isHealthState()) {
+    if (valueDef.isHealthState()) {
       // For now, just treat it as a string:
       return null;
     }
-    if (propertyDef.isEntitleNetExpression()) {
+    if (valueDef.isEntitleNetExpression()) {
       return "entitleNetExpression";
     }
-    throw new AssertionError("Unknown property type: " + propertyDef.getValueKind());
+    throw new AssertionError("Unknown value type: " + valueDef.getValueKind());
   }
 
   private boolean isWritable(PagePropertyDef propertyDef) {

@@ -99,6 +99,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                 'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.domain.connectTimeout.label')},
               'readTimeout': {'value': ko.observable(),
                 'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.domain.readTimeout.label')},
+              'insecure': {'value': ko.observable(),
+                'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.domain.insecure.label')},
               'anyAttempt': {'value': ko.observable(),
                 'label': oj.Translations.getTranslatedString('wrc-data-providers.popups.info.domain.anyAttempt.label')},
               'lastAttempt': {'value': ko.observable(),
@@ -283,6 +285,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           'usesso': {
             id: 'sso',
             label: oj.Translations.getTranslatedString('wrc-data-providers.checkboxes.usesso.label')
+          },
+          'insecure': {
+            id: 'insecure',
+            label: oj.Translations.getTranslatedString('wrc-data-providers.checkboxes.insecure.label')
           }
         },
         'dialog': {
@@ -387,9 +393,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           window.electron_api.ipc.receive('on-project-switched', (switching) => {
             performProjectElectronMenuAction(switching);
           });
-          window.electron_api.ipc.receive('on-login', (event) => {
-            handleLoginCustomUrl(event);
-          });
         }
 
         // Be sure to create a binding for any signaling add in
@@ -407,6 +410,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
         binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
           self.canExitCallback = exitFormCallback;
+        });
+
+        self.signalBindings.push(binding);
+
+        // Handle signal that sso token polling completed
+        binding = viewParams.signaling.ssoPollingCompleted.add((dataProvider) => {
+          handleSsoPollingCompleted(dataProvider);
         });
 
         self.signalBindings.push(binding);
@@ -430,7 +440,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             if (connectionsModels().length > 0) {
               setListItemColor(connectionsModels());
             }
-            checkLoginCustomUrl();
           }, 5
         );
       }.bind(this);
@@ -447,7 +456,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         // for the events for project switched
         if (ViewModelUtils.isElectronApiAvailable()) {
           window.electron_api.ipc.cancelReceive('on-project-switched');
-          window.electron_api.ipc.cancelReceive('on-login');
         }
 
         // Detach all signal "add" bindings.
@@ -483,167 +491,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
 
       function initializeDialogFields() {
         return {id: '0123456789012', name: '', type: DataProvider.prototype.Type.ADMINSERVER.name};
-      }
-
-      function checkLoginCustomUrl() {
-        return new Promise((resolve, reject) => {
-          if (ViewModelUtils.isElectronApiAvailable()) {
-            window.electron_api.ipc.invoke('current-login')
-              .then(reply => {
-                if (reply) {
-                  // Handle the login by processing the custom URL during initial startup
-                  Logger.info('[DATAPROVIDERS] checkLoginCustomUrl() "current-login"');
-                  resolve(processCustomUrl(reply.customUrl));
-                }
-                else {
-                  resolve(null);
-                }
-              })
-              .catch(failure => {
-                ViewModelUtils.failureResponseDefaultHandling(failure);
-                reject(failure);
-              });
-          }
-          resolve(null);
-        });
-      }
-
-      function handleLoginCustomUrl(event) {
-        if (event) {
-          // Handle the login by processing the custom URL after returning from the browser
-          Logger.info('[DATAPROVIDERS] handleLoginCustomUrl() "on-login"');
-          processCustomUrl(event.customUrl);
-        }
-      }
-
-      function processCustomUrl(customUrl) {
-        // Validate custom url
-        var url;
-        try {
-          url = new URL(customUrl);
-          if (url.protocol !== 'wrc:') {
-            Logger.info('[DATAPROVIDERS] processCustomUrl() "Invalid protocol!"');
-            return null;
-          }
-        }
-        catch (error) {
-          Logger.info(`[DATAPROVIDERS] processCustomUrl() "Invalid URL!" (${error})`);
-          return null;
-        }
-        const params = url.searchParams;
-        const token = params.get('token');
-        const expires = params.get('expires');
-        const protocol = params.get('protocol');
-        const providerName = params.get('providerName');
-
-        // Update the URL protocol so that URL host value is based on domain's URL
-        url.protocol = (protocol ? protocol : 'http:');
-        const domainUrl = `${url.protocol}//${url.host}`;
-
-        // Handle creation/setup of the data provider based on the custom url parameters
-        // Update the domain url based on the custom url as the url syntax allowed in the browser is more flexible
-        var dataProvider = CoreUtils.isNotUndefinedNorNull(providerName) ? getSsoAdminServerConnectionByName(providerName) : null;
-        if (CoreUtils.isNotUndefinedNorNull(dataProvider) && (dataProvider.state !== CoreTypes.Domain.ConnectState.CONNECTED.name)) {
-          dataProvider.putValue('url', domainUrl);
-        }
-
-        // When the sso data provider is not found double check by domain url
-        dataProvider = CoreUtils.isUndefinedOrNull(dataProvider) ? getSsoAdminServerConnectionByUrl(domainUrl) : dataProvider;
-
-        // Create a new sso data provider when existing entry was not found...
-        if (CoreUtils.isUndefinedOrNull(dataProvider)) {
-          const entryValues = getDialogFields(DataProvider.prototype.Type.ADMINSERVER);
-          entryValues.putValue('name', `SSO${entryValues.id}`);
-          entryValues.putValue('url', domainUrl);
-          dataProvider = addDialogFields(DataProvider.prototype.Type.ADMINSERVER, entryValues);
-          dataProvider.sso = true;
-          dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-        }
-
-        // When the sso data provider is not connected, setup the token for the connection.
-        // Otherwise, continue with the existing token as swapping tokens needs backend support.
-        if (dataProvider.state !== CoreTypes.Domain.ConnectState.CONNECTED.name) {
-          Logger.info(`[DATAPROVIDERS] processCustomUrl() using token for ${dataProvider.name}`);
-          dataProvider.putValue('token', token);
-
-          // Setup a timer to fire when the token expires
-          const expireSeconds = parseInt(expires);
-          const timeout = (!isNaN(expireSeconds) && (expireSeconds > 60) ? expireSeconds - 60 : 300) * 1000;
-          dataProvider.putValue('expires', expireSeconds);
-          dataProvider.putValue('timerExpiredSignal', viewParams.signaling.ssoTokenExpired);
-          DataProviderManager.startDataProviderSsoTokenTimer(dataProvider, timeout);
-        }
-
-        // Select the sso data provider
-        Logger.info(`[DATAPROVIDERS] processCustomUrl() switch to ${dataProvider.name} (${dataProvider.url})`);
-        switchSsoAdminServerConnection(dataProvider);
-        return dataProvider;
-      }
-
-      function switchSsoAdminServerConnection(dataProvider) {
-        const curDataProvider = DataProviderManager.getLastActivatedDataProvider();
-        if (CoreUtils.isNotUndefinedNorNull(curDataProvider)) {
-          // Check for a currently active data provider with changes before selecting the sso data provider
-          if ((curDataProvider.id !== dataProvider.id) && CoreUtils.isNotUndefinedNorNull(self.canExitCallback)) {
-            const eventType = (['model', 'properties', 'modelComposite'].includes(curDataProvider.type) ? (ViewModelUtils.isElectronApiAvailable() ? 'autoDownload' : 'download') : 'exit');
-            self.canExitCallback(eventType, { dialogMessage: { name: curDataProvider.name } })
-              .then(reply => {
-                if (reply === null) {
-                  // Canceled, stay on current data provider
-                  return;
-                }
-                else if (['autoDownload', 'download'].includes(eventType)) {
-                  self.canExitCallback = undefined;
-                  selectAdminServerConnection(dataProvider);
-                }
-                else {
-                  // When reply is yes then continue with sso data provider
-                  if (reply) selectAdminServerConnection(dataProvider);
-                }
-              });
-            return;
-          }
-          // Check if the currently active data provider is the same as the sso data provider
-          // and skip selecting the sso data provider when currently connected to the domain...
-          else if ((curDataProvider.id === dataProvider.id) && (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name)) {
-            return;
-          }
-        }
-        // Continue with sso data provider
-        selectAdminServerConnection(dataProvider);
-      }
-
-      function clearSsoTokenState(dataProvider) {
-        // Clear the sso data provider of the token in the event of a connection/token issue
-        Logger.info(`[DATAPROVIDERS] clearSsoTokenState() ${dataProvider.name} (${dataProvider.id})`);
-        if (CoreUtils.isNotUndefinedNorNull(dataProvider.token)) {
-          DataProviderManager.cancelDataProviderSsoTokenTimer(dataProvider);
-          delete dataProvider.token;
-          delete dataProvider.expires;
-        }
-      }
-
-      function handleSsoTokenExpired(dataProvider) {
-        // Deactivate (disconnect) the data provider when the token expires
-        Logger.info(`[DATAPROVIDERS] handleSsoTokenExpired() ${dataProvider.name} (${dataProvider.id})`);
-        performDeactivateAction(dataProvider);
-      }
-
-      function getSsoAdminServerConnectionByName(dataProviderName) {
-        return getSsoAdminServerConnectionByAttribute('name', dataProviderName);
-      }
-
-      function getSsoAdminServerConnectionByUrl(domainUrl) {
-        return getSsoAdminServerConnectionByAttribute('url', domainUrl);
-      }
-
-      function getSsoAdminServerConnectionByAttribute(attrib, value) {
-        var dataProvider;
-        const entry = connectionsModels().find(dataProvider => dataProvider.sso && (dataProvider[attrib] === value));
-        if (CoreUtils.isNotUndefinedNorNull(entry) && (entry.type === DataProvider.prototype.Type.ADMINSERVER.name)) {
-          dataProvider = entry;
-        }
-        return dataProvider;
       }
 
       /**
@@ -951,6 +798,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dialogFields.putValue('url', 'http://localhost:7001');
             dialogFields.addField('username');
             dialogFields.addField('password');
+            dialogFields.putValue('insecureCheckbox', []);
             dialogFields.putValue('ssoOption', (Runtime.isConfiguredSso() && ViewModelUtils.isElectronApiAvailable()));
             dialogFields.putValue('ssoCheckbox', []);
             break;
@@ -991,8 +839,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dialogFields.putValue('url', dataProvider.url);
             dialogFields.putValue('username', dataProvider.username);
             dialogFields.putValue('password', dataProvider.password);
+            dialogFields.putValue('insecureCheckbox', (dataProvider?.settings?.insecure ? [self.i18n.checkboxes.insecure.id] : []));
             dialogFields.putValue('ssoOption', (Runtime.isConfiguredSso() && ViewModelUtils.isElectronApiAvailable()));
-            dialogFields.putValue('ssoCheckbox', (dataProvider.sso ? [self.i18n.checkboxes.usesso.id] : []));
+            dialogFields.putValue('ssoCheckbox', (dataProvider?.settings?.sso ? [self.i18n.checkboxes.usesso.id] : []));
             break;
           case DataProvider.prototype.Type.MODEL.name:
             dialogFields.putValue('selectProps', true);
@@ -1022,7 +871,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dataProvider.putValue('url', dialogFields.url);
             dataProvider.putValue('username', dialogFields.username);
             dataProvider.putValue('password', dialogFields.password);
-            dataProvider.putValue('sso', (dialogFields.ssoCheckbox.length > 0));
+            if (dialogFields.insecureCheckbox.length > 0) dataProvider.putSetting('insecure', true);
+            if (dialogFields.ssoCheckbox.length > 0) dataProvider.putSetting('sso', true);
             break;
           case DataProvider.prototype.Type.MODEL:
             dataProvider = DataProviderManager.createWDTModel({id: dialogFields.id, name: dialogFields.name, type: dialogFields.type, beanTrees: []});
@@ -1059,7 +909,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               self.dialogFields().url = dataProvider.url;
               self.dialogFields().username = dataProvider.username;
               self.dialogFields().password = dataProvider.password;
-              self.dialogFields().ssoCheckbox = (dataProvider.sso ? [self.i18n.checkboxes.usesso.id] : []);
+              self.dialogFields().insecureCheckbox = (dataProvider?.settings?.insecure ? [self.i18n.checkboxes.insecure.id] : []);
+              self.dialogFields().ssoCheckbox = (dataProvider?.settings?.sso ? [self.i18n.checkboxes.usesso.id] : []);
               break;
             case DataProvider.prototype.Type.MODEL.name:
               self.dialogFields().propProvider = dataProvider.propProvider;
@@ -1095,7 +946,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             dataProvider.putValue('url', dialogFields.url);
             dataProvider.putValue('username', dialogFields.username);
             dataProvider.putValue('password', dialogFields.password);
-            dataProvider.putValue('sso', (dialogFields.ssoCheckbox.length > 0));
+            if (dialogFields.insecureCheckbox.length > 0)
+              dataProvider.putSetting('insecure', true);
+            else dataProvider.removeSetting('insecure');
+            if (dialogFields.ssoCheckbox.length > 0)
+              dataProvider.putSetting('sso', true);
+            else dataProvider.removeSetting('sso');
             break;
           case DataProvider.prototype.Type.MODEL.name:
             dataProvider.putValue('file', dialogFields.file);
@@ -1192,7 +1048,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
             connectionsModels()[index].connectivity = CoreTypes.Console.RuntimeMode.DETACHED.name;
             if (dataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name) {
               delete connectionsModels()[index].password;
-              delete connectionsModels()[index].token;
               delete connectionsModels()[index].expires;
             }
             connectionsModels.valueHasMutated();
@@ -1242,46 +1097,188 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         }
       }
 
+      function handleSsoTokenExpired(dataProvider) {
+        // Deactivate (disconnect) the data provider when the token expires
+        Logger.info(`[DATAPROVIDERS] handleSsoTokenExpired() ${dataProvider.name} (${dataProvider.id})`);
+        performDeactivateAction(dataProvider);
+      }
+
+      function handleSsoPollingCompleted(dataProvider) {
+        Logger.info(`[DATAPROVIDERS] handleSsoPollingCompleted() ${dataProvider.name} (${dataProvider.expires})`);
+        // Handle the token not found by deleting the sso data provider...
+        if (dataProvider.expires === -1) {
+          handleSsoPollingFailed(dataProvider);
+          return;
+        }
+        // Select the sso data provider
+        Logger.info(`[DATAPROVIDERS] handleSsoPollingCompleted() switch to ${dataProvider.name} (${dataProvider.url})`);
+        switchSsoAdminServerConnection(dataProvider);
+      }
+
+      function handleSsoPollingFailed(dataProvider) {
+        clearSsoTokenState(dataProvider);
+        // Set the state as connected so the remove will delete the data provider from the backend
+        dataProvider.state = CoreTypes.Domain.ConnectState.CONNECTED.name;
+        removeDataProvider(dataProvider)
+          .then(reply => {
+            if (reply.succeeded) {
+              Logger.info(`[DATAPROVIDERS] handleSsoPollingFailed() ${dataProvider.name} (${dataProvider.id})`);
+              dataProvider = DataProviderManager.createAdminServerConnection(dataProvider);
+              dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
+              replaceConnectionsModels(dataProvider);
+            }
+            else {
+              ViewModelUtils.failureResponseDefaultHandling(reply.failure);
+            }
+          })
+          .catch(response => {
+            ViewModelUtils.failureResponseDefaultHandling(response.failure);
+          });
+      }
+
+      function clearSsoTokenState(dataProvider) {
+        // Clear the sso data provider of the token in the event of a connection/token issue
+        Logger.info(`[DATAPROVIDERS] clearSsoTokenState() ${dataProvider.name} (${dataProvider.id})`);
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.expires)) {
+          DataProviderManager.cancelDataProviderSsoTokenTimer(dataProvider);
+          delete dataProvider.expires;
+        }
+      }
+
+      function switchSsoAdminServerConnection(dataProvider) {
+        const curDataProvider = DataProviderManager.getLastActivatedDataProvider();
+        if (CoreUtils.isNotUndefinedNorNull(curDataProvider)) {
+          // Check for a currently active data provider with changes before selecting the sso data provider
+          if ((curDataProvider.id !== dataProvider.id) && CoreUtils.isNotUndefinedNorNull(self.canExitCallback)) {
+            const eventType = (['model', 'properties', 'modelComposite'].includes(curDataProvider.type) ? (ViewModelUtils.isElectronApiAvailable() ? 'autoDownload' : 'download') : 'exit');
+            self.canExitCallback(eventType, { dialogMessage: { name: curDataProvider.name } })
+              .then(reply => {
+                if (reply === null) {
+                  // Canceled, stay on current data provider
+                  return;
+                }
+                else if (['autoDownload', 'download'].includes(eventType)) {
+                  self.canExitCallback = undefined;
+                  selectSsoAdminServerConnection(dataProvider);
+                }
+                else {
+                  // When reply is yes then continue with sso data provider
+                  if (reply) selectSsoAdminServerConnection(dataProvider);
+                }
+              });
+            return;
+          }
+          // Check if the currently active data provider is the same as the sso data provider
+          // and skip selecting the sso data provider when currently connected to the domain...
+          else if ((curDataProvider.id === dataProvider.id) && (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name)) {
+            return;
+          }
+        }
+        // Continue with sso data provider
+        selectSsoAdminServerConnection(dataProvider);
+      }
+
+      function selectSsoAdminServerConnection(dataProvider) {
+        // Setup the token expiration timer...
+        dataProvider.putValue('timerExpiredSignal', viewParams.signaling.ssoTokenExpired);
+        DataProviderManager.startDataProviderSsoTokenTimer(dataProvider, (dataProvider.expires * 1000));
+
+        // Indicate the login is complete...
+        dispatchCompleteSsoAdminServerConnection(dataProvider);
+
+        // Start the data provider...
+        startSsoAdminServerConnection(dataProvider);
+      }
+
+      function dispatchCompleteSsoAdminServerConnection(dataProvider) {
+        if (ViewModelUtils.isElectronApiAvailable()) {
+          window.electron_api.ipc.invoke('complete-login', {name: dataProvider.name})
+            .then()
+            .catch(response => {
+              ViewModelUtils.failureResponseDefaultHandling(response);
+            });
+        }
+      }
+
+      function startSsoAdminServerConnection(dataProvider) {
+        // Establish the connection using the sso token...
+        DataProviderManager.useSsoAdminServerConnection(dataProvider)
+          .then(reply => {
+            dataProvider.populateFromResponse(reply.body.data);
+            if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+              self.project.upsertDataProvider(dataProvider);
+              updateConnectionsModels(dataProvider);
+              dispatchElectronApiSignal('project-changing');
+              viewParams.onCachedStateChanged(self.tabNode, self.project);
+              useSucceededHandler(dataProvider);
+            }
+            else if (dataProvider.state === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
+              setListItemColor([dataProvider]);
+              self.responseMessage(reply.failureReason);
+              setResponseMessageVisibility('connection-response-message', true);
+              // Clear an sso data provider so a new token can be obtained on next connection
+              clearSsoTokenState(dataProvider);
+              editAdminServerConnection(dataProvider);
+            }
+          })
+          .catch(response => {
+            clearSsoTokenState(dataProvider);
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          });
+      }
+
       // Perform login handling for an admin server connection using sso setup and
       // return false when the data provider does not require the login handling...
       function performAdminServerConnectionSsoLogin(dataProvider) {
-        if (!ViewModelUtils.isElectronApiAvailable() || !dataProvider.sso || CoreUtils.isNotUndefinedNorNull(dataProvider.token)) {
-          // Skip login when the data provider is not set for sso or has a token
+        if (!ViewModelUtils.isElectronApiAvailable() || !dataProvider?.settings?.sso ) {
+          // Skip login when the data provider is not set for sso
           return false;
         }
 
-        // Proceed to exec the browser and initiate the login process...
-        var loginUrl = null;
-        var url = dataProvider.url.trim();
-        if (url.length > 0) url = (url.substring(url.length - 1) === '/') ? url.slice(0, -1) : url;
-        try {
-          loginUrl = new URL(url + Runtime.getSsoDomainLoginUri());
-          loginUrl.searchParams.set('providerName', dataProvider.name);
-        }
-        catch (error) {
-          errorPerformAdminServerConnectionSsoLogin(dataProvider, error.message);
-          return true;
-        }
-        window.electron_api.ipc.invoke('perform-login', { name: dataProvider.name, loginUrl: loginUrl.toString() })
-          .then((reply) => {
-            Logger.info(`[DATAPROVIDERS] performAdminServerConnectionSsoLogin() ${loginUrl}`);
-            setListItemColor([dataProvider]);
-            self.responseMessage('');
-            setResponseMessageVisibility('connection-response-message', false);
-            self.project.upsertDataProvider(dataProvider);
-            updateConnectionsModels(dataProvider);
-            dispatchElectronApiSignal('project-changing');
-            viewParams.onCachedStateChanged(self.tabNode, self.project);
-            // Select 'dataproviders' tab strip and collapse console Kiosk
-            // Specify the source of the signal as the login action which
-            // updates the list of dataproviders in the Kiosk. Note the SSO
-            // dataprovider is not active without a token so the dataprovider
-            // selected signal will be used after the token is obtained!
-            viewParams.signaling.tabStripTabSelected.dispatch('perform-login', 'dataproviders', false);
+        Logger.info(`[DATAPROVIDERS] performAdminServerConnectionSsoLogin() ${dataProvider.name}`);
+        DataProviderManager.activateSsoAdminServerConnection(dataProvider)
+          .then(reply => {
+            // Proceed to exec the browser and initiate the login process...
+            // TBD - Do URL and valid protocol checks earlier or cleanup in the edit action
+            var loginUrl = null;
+            var url = dataProvider.url.trim();
+            if (url.length > 0) url = (url.substring(url.length - 1) === '/') ? url.slice(0, -1) : url;
+            try {
+              loginUrl = new URL(url + Runtime.getSsoDomainLoginUri());
+              loginUrl.searchParams.set('ssoid', dataProvider.status.ssoid);
+              loginUrl.searchParams.set('port', new URL(Runtime.getBackendUrl()).port);
+            }
+            catch (error) {
+              errorPerformAdminServerConnectionSsoLogin(dataProvider, error.message);
+              return;
+            }
+            window.electron_api.ipc.invoke('perform-login', { name: dataProvider.name, loginUrl: loginUrl.toString() })
+              .then((reply) => {
+                Logger.info(`[DATAPROVIDERS] performAdminServerConnectionSsoLogin() ${loginUrl}`);
+                setListItemColor([dataProvider]);
+                self.responseMessage('');
+                setResponseMessageVisibility('connection-response-message', false);
+                self.project.upsertDataProvider(dataProvider);
+                updateConnectionsModels(dataProvider);
+                dataProvider.putValue('timerExpiredSignal', viewParams.signaling.ssoPollingCompleted);
+                DataProviderManager.startPollSsoAdminServerConnection(dataProvider, 1000);
+                dispatchElectronApiSignal('project-changing');
+                viewParams.onCachedStateChanged(self.tabNode, self.project);
+                // Select 'dataproviders' tab strip and collapse console Kiosk
+                // Specify the source of the signal as the login action which
+                // updates the list of dataproviders in the Kiosk. Note the SSO
+                // dataprovider is not active at this time so the dataprovider
+                // selected signal will be used after the token is obtained!
+                viewParams.signaling.tabStripTabSelected.dispatch('perform-login', 'dataproviders', false);
+              })
+              .catch(response => {
+                errorPerformAdminServerConnectionSsoLogin(dataProvider, response);
+              });
           })
           .catch(response => {
-            errorPerformAdminServerConnectionSsoLogin(dataProvider, response);
+            ViewModelUtils.failureResponseDefaultHandling(response);
           });
+
         return true;
       }
 
@@ -1314,8 +1311,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                 setListItemColor([dataProvider]);
                 self.responseMessage(reply.failureReason);
                 setResponseMessageVisibility('connection-response-message', true);
-                // Clear an sso data provider so a new token can be obtained on next connection
-                clearSsoTokenState(dataProvider);
                 editAdminServerConnection(dataProvider);
               }
             })
@@ -1838,14 +1833,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         self.i18n.popups.info.provider.id.value(dataProvider.id);
         switch(dataProvider.type){
           case DataProvider.prototype.Type.ADMINSERVER.name:
-            self.i18n.popups.info.domain.name.value(dataProvider.domainName);
+            self.i18n.popups.info.domain.name.value(dataProvider?.status?.domainName);
             self.i18n.popups.info.domain.url.value(dataProvider.url);
-            self.i18n.popups.info.domain.version.value(dataProvider.domainVersion);
+            self.i18n.popups.info.domain.version.value(dataProvider?.status?.domainVersion);
             self.i18n.popups.info.domain.username.value(dataProvider.username);
-            self.i18n.popups.info.domain.sso.value(dataProvider.sso);
-            self.i18n.popups.info.domain.roles.value(dataProvider.userRoles);
-            self.i18n.popups.info.domain.connectTimeout.value(dataProvider.connectTimeout);
-            self.i18n.popups.info.domain.readTimeout.value(dataProvider.readTimeout);
+            self.i18n.popups.info.domain.roles.value(dataProvider?.status?.userRoles);
+            self.i18n.popups.info.domain.connectTimeout.value(dataProvider?.status?.connectTimeout);
+            self.i18n.popups.info.domain.readTimeout.value(dataProvider?.status?.readTimeout);
+            if (dataProvider.state === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
+              self.i18n.popups.info.domain.insecure.value(dataProvider?.settings?.insecure ? true : false);
+              self.i18n.popups.info.domain.sso.value(dataProvider?.settings?.sso ? true : false);
+            }
+            else {
+              self.i18n.popups.info.domain.insecure.value(dataProvider?.status?.insecure ? true : false);
+              self.i18n.popups.info.domain.sso.value(dataProvider?.status?.sso ? true : false);
+            }
             break;
           case DataProvider.prototype.Type.MODEL.name:
             self.i18n.popups.info.model.file.value(CoreUtils.isNotUndefinedNorNull(dataProvider.file) ? dataProvider.file : oj.Translations.getTranslatedString('wrc-data-providers.prompts.info.fileNotSet.value'));
@@ -1875,6 +1877,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       function addAdminServerConnection(dialogParams){
         const entryValues = getDialogFields(DataProvider.prototype.Type.ADMINSERVER);
         self.dialogFields(entryValues);
+        dialogParams.insecure = self.dialogFields().insecureCheckbox;
 
         self.i18n.dialog.title(self.i18n.titles.add.connections.value);
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.connections.add.value'));
@@ -1887,6 +1890,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         DataProvidersDialog.showDataProvidersDialog('AddAdminServerConnection', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
+              self.dialogFields().insecureCheckbox = dialogParams.insecure;
               const dataProvider = addDialogFields(DataProvider.prototype.Type.ADMINSERVER, self.dialogFields());
               dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
               selectAdminServerConnection(dataProvider);
@@ -2393,6 +2397,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         return (result.length === 0);
       }
 
+      function getBooleanSettingChanged(setting, checkboxLength) {
+        // See if the setting changed from previous state
+        // IFF setting is available and true, determine if the checkbox in unchecked
+        // Otherwise determine if the checkbox is checked
+        return (setting ? (checkboxLength <= 0) : (checkboxLength > 0));
+      }
+
       function editAdminServerConnection(dataProvider) {
         const entryValues = createDialogFields(dataProvider);
         self.dialogFields(entryValues);
@@ -2405,33 +2416,33 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
         const dialogParams = {
           type: dataProvider.type,
           id: dataProvider.id,
-          accepts: 'application/yaml,application/x-yaml,application/json'
+          accepts: 'application/yaml,application/x-yaml,application/json',
+          insecure: self.dialogFields().insecureCheckbox
         };
 
         DataProvidersDialog.showDataProvidersDialog('EditAdminServerConnection', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
+              self.dialogFields().insecureCheckbox = dialogParams.insecure;
               // FortifyIssueSuppression(C9827329D56593134375D08BC3A21847) Password Management: Password in Comment
               // Not a password, just a comment password property.
               const removeRequired = (dataProvider.url !== self.dialogFields().url
                                      || dataProvider.username !== self.dialogFields().username
-                                     || dataProvider.password !== self.dialogFields().password
-                                     || dataProvider.sso !== (self.dialogFields().ssoCheckbox.length > 0));
-              if ((removeRequired) && (dataProvider.state !== CoreTypes.Domain.ConnectState.DISCONNECTED.name)) {
+                                     || dataProvider.password !== self.dialogFields().password);
+              // Check the insecure and sso flags as these required removing the current dataprovider instance upon change
+              const insecureChange = getBooleanSettingChanged(dataProvider?.settings?.insecure, self.dialogFields().insecureCheckbox.length);
+              const ssoChange = getBooleanSettingChanged(dataProvider?.settings?.sso, self.dialogFields().ssoCheckbox.length);
+              if ((removeRequired || insecureChange || ssoChange) && (dataProvider.state !== CoreTypes.Domain.ConnectState.DISCONNECTED.name)) {
                 removeDataProvider(dataProvider)
                   .then(reply =>{
                     if (reply.succeeded) {
-                      // When SSO state changes, signal provider removal to ensure proper state until activate
                       clearSsoTokenState(dataProvider);
-                      if (dataProvider.sso !== (self.dialogFields().ssoCheckbox.length > 0)) {
-                        viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
-                      }
                       dataProvider = updateDataProvider(dataProvider, self.dialogFields());
                       dataProvider = DataProviderManager.createAdminServerConnection(dataProvider);
                       // Set state to disabled, because we need to set
                       // things up to get a provider session.
                       dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-                      replaceConnectionsModels(dataProvider);
+                      editRemovedDataProvider(dataProvider);
                       // Dispatch the dataProviderSelected singal using navtreeReset as true
                       selectAdminServerConnection(dataProvider, true);
                     }
@@ -2512,7 +2523,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                       dataProvider = updateDataProvider(dataProvider, self.dialogFields());
                       dataProvider = DataProviderManager.createWDTModel(dataProvider);
                       dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-                      replaceConnectionsModels(dataProvider);
+                      editRemovedDataProvider(dataProvider);
                       // Dispatch the dataProviderSelected singal using navtreeReset as true
                       selectWDTModel(dataProvider, true);
                     }
@@ -2610,7 +2621,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                       dataProvider = updateDataProvider(dataProvider, self.dialogFields());
                       dataProvider = DataProviderManager.createWDTCompositeModel(dataProvider);
                       dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-                      replaceConnectionsModels(dataProvider);
+                      editRemovedDataProvider(dataProvider);
                       // Dispatch the dataProviderSelected singal using navtreeReset as true
                       selectWDTCompositeModel(dataProvider, true);
                     }
@@ -2696,7 +2707,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
                       dataProvider = updateDataProvider(dataProvider, self.dialogFields());
                       dataProvider = DataProviderManager.createPropertyList(dataProvider);
                       dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
-                      replaceConnectionsModels(dataProvider);
+                      editRemovedDataProvider(dataProvider);
                       // Dispatch the dataProviderSelected singal using navtreeReset as true
                       selectPropertyList(dataProvider, true);
                     }
@@ -2723,6 +2734,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               setResponseMessageVisibility('model-response-message', false);
             }
           });
+      }
+
+      function editRemovedDataProvider(dataProvider) {
+        replaceConnectionsModels(dataProvider);
+        // Signal provider removal to ensure proper state until activate
+        viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
+        // Signal the project changes with new provider settings
+        dispatchElectronApiSignal('project-changing');
+        viewParams.onCachedStateChanged(self.tabNode, self.project);
       }
 
       function editUpdateDataProvider(dataProvider, dialogFields) {
@@ -2986,23 +3006,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           }
         }
         else if (action === 'edit') {
-          const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
-          ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
-            .then(reply => {
-              if (reply === null)  {
-                ViewModelUtils.cancelEventPropagation(event);
-              }
-              else if (reply) {
-                self.canExitCallback = undefined;
-                performEditAction(dataProvider, dialogParams);
-              }
-              else {
-                performEditAction(dataProvider, dialogParams);
-              }
-            })
-            .catch(failure => {
-              ViewModelUtils.failureResponseDefaultHandling(failure);
-            });
+          if (ViewModelUtils.isElectronApiAvailable()) {
+            window.electron_api.ipc.invoke('is-busy')
+              .then(reply => {
+                if (reply)
+                  showBusyPopup();
+                else
+                  editAction(dialogParams);
+              }).catch(failure => {
+                Logger.error(`failure in IPC: ${failure}`);
+                showBusyPopup();
+              });
+          }
+          else
+            editAction(dialogParams);
         }
         else if (action === 'deactivate') {
           const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
@@ -3026,26 +3043,75 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           }
         }
         else if (action === 'delete') {
-          const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
-          ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
-            .then(reply => {
-              if (reply === null)  {
-                ViewModelUtils.cancelEventPropagation(event);
-              }
-              else if (reply) {
-                self.canExitCallback = undefined;
-                performDeleteAction(dataProvider);
-              }
-              else {
-                performDeactivateAction(dataProvider);
-              }
-            })
-            .catch(failure => {
-              ViewModelUtils.failureResponseDefaultHandling(failure);
-            });
+          if (ViewModelUtils.isElectronApiAvailable()) {
+            window.electron_api.ipc.invoke('is-busy')
+              .then(reply => {
+                if (reply)
+                  showBusyPopup();
+                else
+                  deleteAction(dialogParams);
+              }).catch(failure => {
+                Logger.error(`failure in IPC: ${failure}`);
+                showBusyPopup();
+              });
+          }
+          else
+            deleteAction(dialogParams);
         }
 
       };
+
+      function showBusyPopup() {
+        self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-data-providers.titles.project-busy.value'));
+        self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.project-busy.value'));
+        self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
+
+        DataProvidersDialog.showDataProvidersDialog('ProjectBusy', null, self.i18n, undefined)
+          .then()
+          .catch(reason => {
+            ViewModelUtils.failureResponseDefaultHandling(reason);
+          });
+      }
+
+      function deleteAction(dialogParams) {
+        const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
+        ViewModelUtils.abandonUnsavedChanges('delete', self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
+          .then(reply => {
+            if (reply === null)  {
+              ViewModelUtils.cancelEventPropagation(event);
+            }
+            else if (reply) {
+              self.canExitCallback = undefined;
+              performDeleteAction(dataProvider);
+            }
+            else {
+              performDeactivateAction(dataProvider);
+            }
+          })
+          .catch(failure => {
+            ViewModelUtils.failureResponseDefaultHandling(failure);
+          });
+      }
+
+      function editAction(dialogParams) {
+        const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
+        ViewModelUtils.abandonUnsavedChanges('edit', self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
+          .then(reply => {
+            if (reply === null)  {
+              ViewModelUtils.cancelEventPropagation(event);
+            }
+            else if (reply) {
+              self.canExitCallback = undefined;
+              performEditAction(dataProvider, dialogParams);
+            }
+            else {
+              performEditAction(dataProvider, dialogParams);
+            }
+          })
+          .catch(failure => {
+            ViewModelUtils.failureResponseDefaultHandling(failure);
+            });
+      }
 
       function isSelectedDataProvider(dataProvider) {
         const lastActivatedDataProvider = DataProviderManager.getLastActivatedDataProvider();
@@ -3106,7 +3172,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           switch(dataProvider.type) {
             case DataProvider.prototype.Type.ADMINSERVER.name: {
               const options = {project: {name: self.project.name}, provider: {name: dataProvider.name, username: dataProvider.username, password: dataProvider.password}};
-              if (dataProvider.sso) {
+              if (dataProvider?.settings?.sso) {
                 // Skip credentials when data provider is setup for sso
                 selectAdminServerConnection(dataProvider, navtreeReset);
                 break;

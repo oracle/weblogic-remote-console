@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -87,6 +87,14 @@ class CustomFormDef {
 
   void setHelpTopicDefs(List<HelpTopicDef> val) {
     pageDef.setHelpTopicDefs(val);
+  }
+
+  List<PageActionDef> getActionDefs() {
+    return pageDef.getActionDefs();
+  }
+
+  void setActionDefs(List<PageActionDef> val) {
+    pageDef.setActionDefs(val);
   }
 
   String getCustomizePageMethod() {

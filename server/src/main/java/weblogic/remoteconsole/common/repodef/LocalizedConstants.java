@@ -393,6 +393,21 @@ public class LocalizedConstants {
   public static final LocalizableString TX_STATUS_UNKNOWN =
     addConstant("txStatusUnknown", "unknown");
 
+  public static final LocalizableString MBEAN_EXTERNAL_HELP_INTRO_LABEL =
+    addConstant("mbeanExternalHelpIntroLabel", "MBean:");
+
+  public static final LocalizableString MBEAN_ATTRIBUTE_EXTERNAL_HELP_INTRO_LABEL =
+    addConstant("mbeanPropertyExternalHelpIntroLabel", "MBean Attribute:");
+
+  public static final LocalizableString MBEAN_OPERATION_EXTERNAL_HELP_INTRO_LABEL =
+    addConstant("mbeanOperationExternalHelpIntroLabel", "MBean Operation:");
+
+  public static final LocalizableString SSO_TOKEN_UNAVAILABLE =
+    addConstant(
+      "ssoTokenUnavailable",
+      "Unable to connect, token is unavailable."
+    );
+
   // Returns all of the constants (used when the resource bundles are generated at build time)
   public static List<LocalizableString> getAllConstants() {
     return allConstants;

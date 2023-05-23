@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -19,20 +19,22 @@ import javax.ws.rs.core.Response;
 public class ReadOnlyBeanCollectionResource extends BeanResource {
 
   /**
-   * Gets the RDJ for the collection's table.
+   * Get the RDJ for a collection of beans.
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(
-    @QueryParam("reload") @DefaultValue("false") boolean reload
+    @QueryParam("reload") @DefaultValue("false") boolean reload,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @QueryParam("action") @DefaultValue("") String action
   ) {
     getInvocationContext().setReload(reload);
-    setTablePagePath();
-    return getTable();
+    setTablePagePath(actionForm, action);
+    return getTablePage();
   }
 
   /**
-   * Customizes the table.
+   * Handles customizing the table and invoking actions.
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -45,16 +47,22 @@ public class ReadOnlyBeanCollectionResource extends BeanResource {
     if (CUSTOMIZE_TABLE.equals(action)) {
       return customizeTable(requestBody);
     }
-    return Response.status(Response.Status.METHOD_NOT_ALLOWED).build();
+    return invokeAction(action, requestBody);
+  }
+
+  protected Response getTablePage() {
+    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
+      return getTableActionInputForm();
+    } else {
+      return getTable();
+    }
   }
 
   protected Response getTable() {
-    return
-      GetPageResponseMapper.toResponse(
-        getInvocationContext(),
-        getInvocationContext()
-          .getPageRepo().asPageReaderRepo()
-          .getPage(getInvocationContext())
-      );
+    return getPage();
+  }
+
+  protected Response getTableActionInputForm() {
+    return getPage();
   }
 }

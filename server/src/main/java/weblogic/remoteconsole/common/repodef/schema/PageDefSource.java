@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -14,6 +14,7 @@ public class PageDefSource {
   private StringValue customizePageDefSourceMethod = new StringValue();
   private StringValue customizePageDefMethod = new StringValue();
   private StringValue customizePageMethod = new StringValue();
+  private ListValue<PageActionDefSource> actions = new ListValue<>();
 
   // The page's english introduction text.
   public String getIntroductionHTML() {
@@ -33,8 +34,21 @@ public class PageDefSource {
     helpTopics.setValue(value);
   }
 
-  public void addHelpTopics(HelpTopicDefSource value) {
+  public void addHelpTopic(HelpTopicDefSource value) {
     helpTopics.add(value);
+  }
+
+  // The actions that can be invoked on this page.
+  public List<PageActionDefSource> getActions() {
+    return actions.getValue();
+  }
+
+  public void setActions(List<PageActionDefSource> value) {
+    actions.setValue(value);
+  }
+
+  public void addAction(PageActionDefSource value) {
+    actions.add(value);
   }
 
   // Specifies a custom static method to call to customize this page's definition's source

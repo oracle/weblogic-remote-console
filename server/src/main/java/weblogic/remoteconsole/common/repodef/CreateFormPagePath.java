@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -14,18 +14,17 @@ public class CreateFormPagePath extends PagePath {
   }
 
   @Override
+  public String getPDJQueryParams() {
+    return "?view=createForm";
+  }
+
+  @Override
   public String getRDJQueryParams() {
     return "?view=createForm";
   }
 
   @Override
-  public String getPDJURI() {
-    // PDJ & RDJ need the same query params:
-    return super.getPDJURI() + getRDJQueryParams();
-  }
-
-  @Override
-  protected String computeKey() {
+  public String computeKey() {
     return super.computeKey() + "kind=<createForm>";
   }
 }

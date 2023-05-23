@@ -394,16 +394,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         viewParams.onLandingPageSelected();
       }
 
-      function setSubmenuItemsState(state) {
+      function notifyUnsavedChanges(state) {
         if (CoreUtils.isNotUndefinedNorNull(window.electron_api)) {
-          const submenuStates =  [
-            {id: 'newProject', state: state},
-            {id: 'switchToProject', state: state},
-            {id: 'deleteProject', state: state},
-            {id: 'nameProject', state: state},
-            {id: 'reload', state: state}
-          ];
-          window.electron_api.ipc.invoke('submenu-state-setting', submenuStates)
+          window.electron_api.ipc.invoke('unsaved-changes', state)
             .then()
             .catch(response => {
               ViewModelUtils.failureResponseDefaultHandling(response);
@@ -417,7 +410,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         DataOperations.mbean.new(createFormUrl)
           .then(reply => {
             Logger.log(`reply=${JSON.stringify(reply)}`);
-            setSubmenuItemsState(false);
+            notifyUnsavedChanges(true);
             viewParams.parentRouter.data.pdjUrl(reply.body.data.get('pdjUrl'));
             viewParams.parentRouter.data.pdjData(reply.body.data.get('pdjData'));
             viewParams.parentRouter.data.rdjData(reply.body.data.get('rdjData'));

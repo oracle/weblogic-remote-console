@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -372,9 +372,8 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     if (subTypesMap.containsKey(subTypeDiscriminator)) {
       throw configurationError("duplicate subType value: " + subTypeDiscriminator);
     }
-    boolean required = false; // if a WLS release removes a derived type, just ignore it in that release
     BaseBeanTypeDefImpl subTypeDefImpl =
-      getBeanRepoDefImpl().getTypeDefImpl(StringUtils.getLeafClassName(subTypeName), required);
+      getBeanRepoDefImpl().getTypeDefImpl(StringUtils.getLeafClassName(subTypeName));
     if (subTypeDefImpl != null) {
       if (subTypesMap.containsValue(subTypeDefImpl)) {
         throw configurationError("duplicate subType type: " + subTypeName);

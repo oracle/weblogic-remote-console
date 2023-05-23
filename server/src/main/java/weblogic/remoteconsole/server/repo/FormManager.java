@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -47,7 +47,7 @@ class FormManager extends PageManager {
   }
 
   private static BeanPropertyValue convertFormPropertyValueToBeanPropertyValue(FormProperty formProperty) {
-    BeanPropertyDef propertyDef = formProperty.getPropertyDef();
+    BeanPropertyDef propertyDef = formProperty.getFieldDef().asBeanPropertyDef();
     SettableValue settableValue = formProperty.getValue().asSettable(); // write always uses SettableValues
     if (propertyDef.isReferenceAsReferences() && settableValue.getValue() != null) {
       // Convert from a null reference or a single reference to a list of references

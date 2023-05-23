@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -22,12 +22,16 @@ public class SliceFormDefImpl extends FormDefImpl implements SliceFormDef {
   private SliceFormPresentationDefImpl presentationDefImpl;
 
   public SliceFormDefImpl(PageRepoDefImpl pageRepoDefImpl, PagePath pagePath, SliceFormDefSource source) {
-    super(pageRepoDefImpl, pagePath, source);
+    super(
+      pageRepoDefImpl,
+      pagePath,
+      source,
+      "slice." + pagePath.asSlicePagePath().getSlicePath().getDotSeparatedPath()
+    );
     this.advancedPropertyDefImpls = createPropertyDefImpls(source.getAdvancedProperties());
     this.advancedPropertyDefs = Collections.unmodifiableList(getAdvancedPropertyDefImpls());
     this.presentationDefImpl = new SliceFormPresentationDefImpl(this, source.getPresentation());
-    createUsedIfDefImpls();
-    initializeHelpPageTitle();
+    finishPropertyBasedInitialization();
   }
 
   List<PagePropertyDefImpl> getAdvancedPropertyDefImpls() {
@@ -77,10 +81,5 @@ public class SliceFormDefImpl extends FormDefImpl implements SliceFormDef {
       }
     }
     throw new AssertionError("Can't find slice " + sliceName + " " + this);
-  }
-
-  @Override
-  protected String getPageKey() {
-    return "slice." + getPagePath().asSlicePagePath().getSlicePath().getDotSeparatedPath();
   }
 }

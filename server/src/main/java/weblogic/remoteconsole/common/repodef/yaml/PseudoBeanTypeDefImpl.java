@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -12,7 +12,6 @@ import weblogic.remoteconsole.common.repodef.DeleteBeanCustomizerDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PseudoBeanTypeDefSource;
-import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
@@ -48,6 +47,7 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     inheritedTypeDefImpls.add(baseTypeDefImpl);
     copyPropertyDefImpls();
     copyChildDefImpls();
+    copyActionDefImpls();
     initializeContainedDefsAndImpls();
   }
 
@@ -56,9 +56,6 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     Set<String> exclude = new HashSet<>();
     include.addAll(getSource().getInclude());
     exclude.addAll(getSource().getExclude());
-    if (include.isEmpty() && exclude.isEmpty()) {
-      throw new AssertionError("Neither include or exclude is specified for " + getTypeName());
-    }
     if (!include.isEmpty() && !exclude.isEmpty()) {
       throw new AssertionError("Both include and exclude are specified for " + getTypeName());
     }
@@ -70,11 +67,15 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
           // The pseudo type lists which properties to include, and this property is one of them.
           copy = true;
         }
-      } else {
+      } else if (!exclude.isEmpty()) {
         if (!exclude.contains(propertyName)) {
           // The pseudo type lists which properties to exclude, and this property is not one of them.
           copy = true;
         }
+      } else {
+        // The pseudo type doesn't list which properties to include or exclude.
+        // Copy them all.
+        copy = true;
       }
       if (copy) {
         addPropertyDefImpl(
@@ -97,6 +98,20 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
           childDefImpl.getParentPath(),
           childDefImpl.getSource(),
           childDefImpl.getCustomizerSource()
+        )
+      );
+    }
+  }
+
+  private void copyActionDefImpls() {
+    // Currently pseudo types can't trim down the base type's actions, so copy them all.
+    for (BeanActionDefImpl actionDefImpl : getBaseTypeDefImpl().getActionNameToActionDefImplMap().values()) {
+      addActionDefImpl(
+        new BeanActionDefImpl(
+          this,
+          actionDefImpl.getParentPath(),
+          actionDefImpl.getSource(),
+          actionDefImpl.getCustomizerSource()
         )
       );
     }
@@ -173,16 +188,6 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   @Override
   BaseBeanTypeDefImpl getSubTypeDefImpl(String subTypeDiscriminator) {
     return getBaseTypeDefImpl().getSubTypeDefImpl(subTypeDiscriminator);
-  }
-
-  @Override
-  public boolean hasChildDef(Path childPath, boolean searchSubTypes) {
-    return getBaseTypeDefImpl().hasChildDef(childPath, searchSubTypes);
-  }
-
-  @Override
-  BaseBeanChildDefImpl getChildDefImpl(Path childPath, boolean searchSubTypes) {
-    return getBaseTypeDefImpl().getChildDefImpl(childPath, searchSubTypes);
   }
 
   @Override

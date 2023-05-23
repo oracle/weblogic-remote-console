@@ -61,6 +61,7 @@ module.exports = function (config) {
       // Test files
 //MLW      { pattern: 'unit-tests/specs/**', included: false },
       { pattern: 'unit-tests/specs/microservices/policy-management/UseCaseTests/addCondition**', included: false },
+      { pattern: 'unit-tests/specs/microservices/policy-management/UseCaseTests/removeCondition**', included: false },
 
       // .json files for fixtures
       { pattern: 'unit-tests/fixtures/**'},

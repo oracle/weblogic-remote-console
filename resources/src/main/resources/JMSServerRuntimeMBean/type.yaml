@@ -1,0 +1,27 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+actions:
+- name: forceCommitSelectedTransactions
+  actionMethod: weblogic.remoteconsole.customizers.JMSServerRuntimeMBeanCustomizer.forceCommitSelectedTransactions
+  mbeanOperation:
+    operation: forceCommit
+  inputForm: # empty form to force the user to confirm commiting the transaction
+    introductionHTML: >
+      Force the work associated with the selected transaction branches to be committed.
+  definition:
+    type: void
+    descriptionHTML: >
+     <p>Causes the work associated with the selected transaction branches to be committed.</p>
+- name: forceRollbackSelectedTransactions
+  actionMethod: weblogic.remoteconsole.customizers.JMSServerRuntimeMBeanCustomizer.forceRollbackSelectedTransactions
+  mbeanOperation:
+    operation: forceRollback
+  inputForm: # empty form to force the user to confirm rolling back the transaction
+    introductionHTML: >
+      Force the work associated with the selected transaction branches to be rolled back.
+  definition:
+    type: void
+    descriptionHTML: >
+     <p>Causes the work associated with the selected transaction branches to be rolled back.</p>
+
+

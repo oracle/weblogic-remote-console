@@ -16,9 +16,8 @@ public class CustomSliceTableDef implements SliceTableDef {
   private List<PagePropertyDef> displayedColumnDefs = new ArrayList<>();
   private List<PagePropertyDef> hiddenColumnDefs = new ArrayList<>();
   private List<PagePropertyDef> allPropertyDefs = new ArrayList<>();
-  private List<TableActionDef> actionDefs = new ArrayList<>();
+  private List<PageActionDef> actionDefs = new ArrayList<>();
   private String getTableRowsMethod;
-  private String actionMethod;
 
   public CustomSliceTableDef() {
   }
@@ -29,7 +28,6 @@ public class CustomSliceTableDef implements SliceTableDef {
     getHiddenColumnDefs().addAll(toClone.getHiddenColumnDefs());
     computeAllPropertyDefs();
     setGetTableRowsMethod(toClone.getGetTableRowsMethod());
-    setActionMethod(toClone.getActionMethod());
   }
 
   @Override
@@ -74,15 +72,15 @@ public class CustomSliceTableDef implements SliceTableDef {
   }
 
   @Override
-  public List<TableActionDef> getActionDefs() {
+  public List<PageActionDef> getActionDefs() {
     return actionDefs;
   }
 
-  public void setActionDefs(List<TableActionDef> val) {
+  public void setActionDefs(List<PageActionDef> val) {
     actionDefs = val;
   }
 
-  public CustomSliceTableDef actionDefs(List<TableActionDef> val) {
+  public CustomSliceTableDef actionDefs(List<PageActionDef> val) {
     setActionDefs(val);
     return this;
   }
@@ -98,20 +96,6 @@ public class CustomSliceTableDef implements SliceTableDef {
 
   public CustomSliceTableDef getTableRowsMethod(String val) {
     setGetTableRowsMethod(val);
-    return this;
-  }
-
-  @Override
-  public String getActionMethod() {
-    return actionMethod;
-  }
-
-  public void setActionMethod(String val) {
-    actionMethod = val;
-  }
-
-  public CustomSliceTableDef actionMethod(String val) {
-    actionMethod(val);
     return this;
   }
 
