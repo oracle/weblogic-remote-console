@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -28,14 +28,6 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
   private static final String VIEW_SLICE = "slice";
   private static final String VIEW_CREATE_FORM = "createForm";
 
-  // The JAXRS POST method can be used to either update a slice of the optional singleton
-  // or to create the optional singleton.
-  // The caller needs to send in a query parameter to choose which one.
-  // These constants match the values the caller can use.
-  //
-  // I'd prefer to use an enum, but that's tricky with @QueryParam and @DefaultValue annotations
-  private static final String CREATE = "create";
-
   /**
    * Handles the JAXRS GET method for this singleton.
    * <p>
@@ -47,15 +39,17 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
   public Response get(
     @QueryParam("view") @DefaultValue(VIEW_SLICE) String view,
     @QueryParam("slice") @DefaultValue("") String slice,
-    @QueryParam("reload") @DefaultValue("false") boolean reload
+    @QueryParam("reload") @DefaultValue("false") boolean reload,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @QueryParam("action") @DefaultValue("") String action
   ) {
     getInvocationContext().setReload(reload);
     if (VIEW_SLICE.equals(view)) {
-      setSlicePagePath(slice);
-      return getSliceForm();
+      setSlicePagePath(slice, actionForm, action);
+      return getSlicePage();
     } else if (VIEW_CREATE_FORM.equals(view)) {
-      setCreateFormPagePath();
-      return getCreateForm();
+      setCreateFormPagePath(actionForm, action);
+      return getCreateFormPage();
     } else {
       throw
         new AssertionError(
@@ -66,20 +60,18 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
   }
 
   /**
-   * Handles the JAXRS POST method for this singleton.
-   * <p>
-   * If the action is customizeTable, it updates the slice table's customizations.
-   * If action is update, it modifies a slice of the singleton.
-   * If action is create, it creates the singleton.
+   * Handles customizing slice tables, creating the bean, modifying the bean and invoking actions.
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response post(
-    @QueryParam("action") @DefaultValue(UPDATE) String action,
     @QueryParam("slice") @DefaultValue("") String slice,
+    @QueryParam("action") @DefaultValue(UPDATE) String action,
+    @QueryParam("identifier") @DefaultValue("") String identifier,
     JsonObject requestBody
   ) {
+    getInvocationContext().setIdentifier(identifier);
     if (CUSTOMIZE_TABLE.equals(action)) {
       setSlicePagePath(slice);
       return customizeTable(requestBody);      
@@ -91,11 +83,7 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
       setCreateFormPagePath();
       return createOptionalSingleton(requestBody);
     } else {
-      throw
-        new AssertionError(
-          "Invalid action:" + action + ", singleton=" + getPageRepoRelativeUri() + "."
-          + " Valid actions are " + CUSTOMIZE_TABLE + ", " + UPDATE + " and " + CREATE + "."
-        );
+      return invokeAction(action, requestBody);
     }
   }
 
@@ -108,24 +96,36 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
     return deleteOptionalSingleton();
   }
 
-  protected Response getSliceForm() {
-    return
-      GetPageResponseMapper.toResponse(
-        getInvocationContext(),
-        getInvocationContext()
-          .getPageRepo().asPageReaderRepo()
-          .getPage(getInvocationContext())
-      );
+  protected Response getSlicePage() {
+    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
+      return getSliceActionInputForm();
+    } else {
+      return getSlice();
+    }
+  }
+
+  protected Response getSlice() {
+    return getPage();
+  }
+
+  protected Response getSliceActionInputForm() {
+    return getPage();
+  }
+
+  protected Response getCreateFormPage() {
+    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
+      return getCreateFormActionInputForm();
+    } else {
+      return getCreateForm();
+    }
   }
 
   protected Response getCreateForm() {
-    return
-      GetPageResponseMapper.toResponse(
-        getInvocationContext(),
-        getInvocationContext()
-          .getPageRepo().asPageReaderRepo()
-          .getPage(getInvocationContext())
-      );
+    return getPage();
+  }
+
+  protected Response getCreateFormActionInputForm() {
+    return getPage();
   }
 
   protected Response updateSliceForm(JsonObject requestBody) {

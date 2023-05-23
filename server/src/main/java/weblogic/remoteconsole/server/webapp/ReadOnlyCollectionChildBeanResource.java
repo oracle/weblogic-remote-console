@@ -19,22 +19,23 @@ import javax.ws.rs.core.Response;
 public class ReadOnlyCollectionChildBeanResource extends BeanResource {
 
   /**
-   * Gets the RDJ for a slice of the child.
+   * Get the RDJ for a slice of a bean.
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(
     @QueryParam("slice") @DefaultValue("") String slice,
-    @QueryParam("reload") @DefaultValue("false") boolean reload
+    @QueryParam("reload") @DefaultValue("false") boolean reload,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @QueryParam("action") @DefaultValue("") String action
   ) {
     getInvocationContext().setReload(reload);
-    setSlicePagePath(slice);
-    return getSliceForm();
+    setSlicePagePath(slice, actionForm, action);
+    return getSlicePage();
   }
 
   /**
-   * Customize the slice table or
-   * invoke an action on the child (e.g. start a server).
+   * Handles customizing slice tables and invoking actions.
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -45,25 +46,27 @@ public class ReadOnlyCollectionChildBeanResource extends BeanResource {
     @QueryParam("identifier") @DefaultValue("") String identifier,
     JsonObject requestBody
   ) {
-    setSlicePagePath(slice);
     getInvocationContext().setIdentifier(identifier);
+    setSlicePagePath(slice);
     if (CUSTOMIZE_TABLE.equals(action)) {
       return customizeTable(requestBody);
     }
     return invokeAction(action, requestBody);
   }
 
-  protected Response getSliceForm() {
-    return
-      GetPageResponseMapper.toResponse(
-        getInvocationContext(),
-        getInvocationContext()
-          .getPageRepo().asPageReaderRepo()
-          .getPage(getInvocationContext())
-      );
+  protected Response getSlicePage() {
+    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
+      return getSliceActionInputForm();
+    } else {
+      return getSlice();
+    }
   }
 
-  protected Response invokeAction(String action, JsonObject requestBody) {
-    return InvokeActionHelper.invokeAction(getInvocationContext(), action, requestBody);
+  protected Response getSlice() {
+    return getPage();
+  }
+
+  protected Response getSliceActionInputForm() {
+    return getPage();
   }
 }

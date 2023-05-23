@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
@@ -21,6 +21,7 @@ import weblogic.remoteconsole.server.providers.ProviderManager;
 import weblogic.remoteconsole.server.repo.Frontend;
 import weblogic.remoteconsole.server.repo.FrontendManager;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.token.SsoTokenManager;
 import weblogic.remoteconsole.server.webapp.RemoteConsoleResource;
 import weblogic.remoteconsole.server.webapp.UriUtils;
 import weblogic.remoteconsole.server.webapp.WebAppUtils;
@@ -83,6 +84,13 @@ public class SessionFilter implements ContainerRequestFilter {
     // Check if this request is for the JAX-RS resources in the Console Backend
     if ((segs.size() == 0) || !segs.get(0).getPath().equals(UriUtils.API_URI)) {
       LOGGER.fine("Ignoring request NOT for Console Backend JAX-RS resource!");
+      return;
+    }
+
+    // Skip session id handling for the SSO token endpoint
+    if ((segs.size() > 1) && segs.get(1).getPath().equals(RemoteConsoleResource.SSO_TOKEN_PATH)) {
+      LOGGER.fine("Setup SsoTokenManager for request!");
+      SsoTokenManager.setInRequestContext(requestContext);
       return;
     }
 

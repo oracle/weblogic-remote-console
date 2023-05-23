@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -21,10 +22,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.utils.Message;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.PersistenceManager;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
+import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
@@ -51,11 +54,19 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
   /**
    * Customize the WLDFDataAccessRuntimeMBean for downloading log files.
    */
-  public static Response<Value> downloadLogAsJson(InvocationContext ic) {
+  public static Response<Value> downloadLogAsJson(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     return downloadLog(ic, MediaType.APPLICATION_JSON);
   }
 
-  public static Response<Value> downloadLogAsPlainText(InvocationContext ic) {
+  public static Response<Value> downloadLogAsPlainText(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
     return downloadLog(ic, MediaType.TEXT_PLAIN);
   }
 

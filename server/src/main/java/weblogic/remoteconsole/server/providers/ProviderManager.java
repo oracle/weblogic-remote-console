@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -11,17 +11,27 @@ import javax.json.JsonObject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 
+import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.repo.Frontend;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.token.SsoTokenManager;
 
 public class ProviderManager {
+  private static final SsoTokenManager SSO_TOKEN_MANAGER =
+    ConsoleBackendRuntime.INSTANCE.getSsoTokenManager();
+
   private Map<String,Provider> providers = new ConcurrentHashMap<>();
 
   public AdminServerDataProvider createAdminServerDataProvider(
     String name,
     String url,
-    String authorizationHeader) {
-    AdminServerDataProvider ret = new AdminServerDataProviderImpl(name, url, authorizationHeader);
+    String authorizationHeader,
+    boolean useSso) {
+    // Ignore the authorization header when using SSO tokens
+    String auth = useSso ? null : authorizationHeader;
+    AdminServerDataProvider ret = new AdminServerDataProviderImpl(name, url, auth);
+    // Obtain an SSO token ID from the SSO token manager
+    ret.setSsoTokenId(useSso ? SSO_TOKEN_MANAGER.add(ret) : null);
     providers.put(name, ret);
     return ret;
   }
@@ -72,6 +82,7 @@ public class ProviderManager {
   }
 
   public void deleteProvider(String name) {
+    removeSsoToken(name);
     terminateProvider(name);
     providers.remove(name);
   }
@@ -85,7 +96,30 @@ public class ProviderManager {
   }
 
   public boolean startProvider(String name, InvocationContext ic) {
-    return providers.get(name).start(ic);
+    Provider provider = providers.get(name);
+    boolean connected = isProviderConnected(provider);
+    boolean started = provider.start(ic);
+    if (started && !connected) {
+      removeSsoToken(name);
+    }
+    return started;
+  }
+
+  public void removeSsoToken(String name) {
+    AdminServerDataProvider provider =
+      (AdminServerDataProvider) getProvider(name, AdminServerDataProviderImpl.TYPE_NAME);
+    if (provider != null) {
+      SSO_TOKEN_MANAGER.remove(provider);
+    }
+  }
+
+  private boolean isProviderConnected(Provider provider) {
+    // Return provider is connected unless determined otherwise!
+    boolean result = true;
+    if (provider instanceof AdminServerDataProvider) {
+      result = ((AdminServerDataProvider)provider).isConnected();
+    }
+    return result;
   }
 
   public static ProviderManager getFromContext(ResourceContext context) {

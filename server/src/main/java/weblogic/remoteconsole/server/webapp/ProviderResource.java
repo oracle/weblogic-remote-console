@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -38,6 +38,7 @@ import javax.ws.rs.core.Response.Status;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.server.providers.AdminServerDataProvider;
 import weblogic.remoteconsole.server.providers.AdminServerDataProviderImpl;
 import weblogic.remoteconsole.server.providers.PropertyListDataProviderImpl;
 import weblogic.remoteconsole.server.providers.Provider;
@@ -63,11 +64,15 @@ public class ProviderResource extends BaseResource {
   public static final String PROPERTY_LISTS = "propertyLists";
   public static final String PROVIDER_TYPE = "providerType";
   public static final String PROVIDER_NAME = "name";
+  public static final String PROVIDER_SETTINGS = "settings";
+  public static final String PROVIDER_INSECURE = "insecure";
+  public static final String PROVIDER_SSO = "sso";
   public static final String TEST_ACTION = "test";
   @Context HttpHeaders headers;
 
   static {
     reservedNames.add(RemoteConsoleResource.ABOUT_PATH);
+    reservedNames.add(RemoteConsoleResource.SSO_TOKEN_PATH);
     reservedNames.add("providers");
     reservedNames.add(AdminServerDataProviderImpl.TYPE_NAME);
     reservedNames.add(WDTModelDataProviderImpl.TYPE_NAME);
@@ -120,6 +125,10 @@ public class ProviderResource extends BaseResource {
       }
       if (action.equals("start")) {
         prov.start(ic);
+      }
+      // Remove the token after the provider action completes
+      if (prov.getType().equals(AdminServerDataProviderImpl.TYPE_NAME)) {
+        pm.removeSsoToken(prov.getName());
       }
       return WebAppUtils.addCookieFromContext(resourceContext,
         Response.ok(prov.toJSON(ic), MediaType.APPLICATION_JSON)).build();
@@ -412,8 +421,10 @@ public class ProviderResource extends BaseResource {
       return Response.status(
         Status.BAD_REQUEST.getStatusCode(), "Missing URL").build();
     }
+    // The provider SSO setting will ignore the authorization header
     String url = jurl.getString();
-    if (StringUtils.isEmpty(url) || StringUtils.isEmpty(authorizationHeader)) {
+    boolean sso = getSsoAdminServerDataProviderSetting(data);
+    if (StringUtils.isEmpty(url) || (!sso && StringUtils.isEmpty(authorizationHeader))) {
       LOGGER.fine("POST create bad request");
       return Response.status(Status.BAD_REQUEST.getStatusCode(),
         "Missing Admin Server Data Provider Content").build();
@@ -421,13 +432,39 @@ public class ProviderResource extends BaseResource {
     // Now obtain the domain URL and try connecting to the domain with the
     // supplied credentials
     LOGGER.fine("POST data: " + data.toString());
-    pm.createAdminServerDataProvider(name, url, authorizationHeader);
+    updateAdminServerDataProvider(pm.createAdminServerDataProvider(name, url, authorizationHeader, sso), data);
     InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
     return
       WebAppUtils.addCookieFromContext(
         resourceContext,
         Response.status(Status.CREATED).entity(pm.getJSON(name, ic)).type(MediaType.APPLICATION_JSON)
       ).build();
+  }
+
+  private static boolean getSsoAdminServerDataProviderSetting(JsonObject data) {
+    JsonObject bag = data.getJsonObject(PROVIDER_SETTINGS);
+    if ((bag != null) && (bag != JsonValue.NULL)) {
+      JsonValue sso = bag.get(PROVIDER_SSO);
+      if ((sso != null) && (sso != JsonValue.NULL) && bag.getBoolean(PROVIDER_SSO)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private static void updateAdminServerDataProvider(AdminServerDataProvider provider, JsonObject data) {
+    // Check if any settings are provided for the connection
+    JsonObject bag = data.getJsonObject(PROVIDER_SETTINGS);
+    if ((bag == null) || (bag == JsonValue.NULL)) {
+      LOGGER.finest("No supplied AdminServerConnection settings!");
+      return;
+    }
+
+    // Check for insecure connection setting
+    JsonValue insecure = bag.get(PROVIDER_INSECURE);
+    if ((insecure != null) && (insecure != JsonValue.NULL) && bag.getBoolean(PROVIDER_INSECURE)) {
+      provider.setInsecureConnection(true);
+    }
   }
 
   private static Response submitWDTModelDataProviderInfo(

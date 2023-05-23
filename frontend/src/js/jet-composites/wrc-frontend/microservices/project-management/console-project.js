@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -56,7 +56,9 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
             dataProvider['url'] = item.url;
             dataProvider['username'] = item.username;
             dataProvider['password'] = item.password;
-            dataProvider['sso'] = item.sso;
+            if (CoreUtils.isNotUndefinedNorNull(item.settings) && Object.keys(item.settings).length > 0) {
+              dataProvider['settings'] = item.settings;
+            }
             break;
           case DataProvider.prototype.Type.MODEL.name:
             dataProvider['properties'] = item.properties;

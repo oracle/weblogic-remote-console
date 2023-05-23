@@ -14,6 +14,13 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
       this.policyData = policyData;
       this.section = section;
       this.rdjUrl = rdjUrl
+      var _resetPolicyEditor = false;
+      this.resetPolicyEditor = (value) => {
+        if (CoreUtils.isNotUndefinedNorNull(value) && typeof value === 'boolean') {
+          _resetPolicyEditor = value;
+        }
+        return _resetPolicyEditor;
+      };
     }
 
     function getActionButtonSet() {
@@ -42,7 +49,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
 //MLW                {type: 'button', name: 'moveup', label: PolicyForm.prototype.i18n.buttonsets.action.moveup.label, iconFile: PolicyForm.prototype.i18n.buttonsets.action.moveup.iconFile, observable: 'actionButtonSet.buttonSetItems.moveup.disabled'},
 //MLW                {type: 'button', name: 'movedown', label: PolicyForm.prototype.i18n.buttonsets.action.movedown.label, iconFile: PolicyForm.prototype.i18n.buttonsets.action.movedown.iconFile, observable: 'actionButtonSet.buttonSetItems.movedown.disabled'},
                 {type: 'button', name: 'remove', label: PolicyForm.prototype.i18n.buttonsets.action.remove.label, iconFile: PolicyForm.prototype.i18n.buttonsets.action.remove.iconFile, observable: 'actionButtonSet.buttonSetItems.remove.disabled'},
-                {type: 'button', name: 'negate', label: PolicyForm.prototype.i18n.buttonsets.action.negate.label, iconFile: PolicyForm.prototype.i18n.buttonsets.action.negate.iconFile, observable: 'actionButtonSet.buttonSetItems.negate.disabled'}
+                {type: 'button', name: 'negate', label: PolicyForm.prototype.i18n.buttonsets.action.negate.label, iconFile: PolicyForm.prototype.i18n.buttonsets.action.negate.iconFile, observable: 'actionButtonSet.buttonSetItems.negate.disabled'},
+                {type: 'button', name: 'reset', label: PolicyForm.prototype.i18n.buttonsets.action.reset.label, iconFile: PolicyForm.prototype.i18n.buttonsets.action.reset.iconFile, observable: 'actionButtonSet.buttonSetItems.reset.disabled'}
               ]
             }
           ]
@@ -60,7 +68,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
         {name: 'moveup', disabled: event.detail.notification.disabled.moveup},
         {name: 'movedown', disabled: event.detail.notification.disabled.movedown},
         {name: 'remove', disabled: event.detail.notification.disabled.remove},
-        {name: 'negate', disabled: event.detail.notification.disabled.negate}
+        {name: 'negate', disabled: event.detail.notification.disabled.negate},
+        {name: 'reset', disabled: event.detail.notification.disabled.reset}
       ];
       this.setButtonSetItemsState(event.detail.notification.actionItems, states);
     }
@@ -213,7 +222,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
         const results = this.policyData.combinePolicyConditions(
           this.policyData,
           this.section,
-          event.detail.notification.combinedUids
+          event.detail.notification.combinedUids,
+          event.detail.notification.relocatedUids
         );
 
         if (results.succeeded) {
@@ -243,14 +253,24 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
         );
 
         if (results.succeeded) {
-          policyChangeSuccessHandler(
-            results.policyConditions,
-            controlElement
-          );
-          controlElement.sendFieldValueChangedEvent(
-            this.section,
-            results.parsedExpression
-          );
+          const fieldValue = {
+            Policy: {
+              value: {
+                parsedExpression: results.parsedExpression
+              }
+            }
+          };
+          PolicyManager.submitPolicyChange(fieldValue, results.stringExpression, this.rdjUrl)
+            .then(reply => {
+              controlElement.sendPolicyEditorResetEvent();
+            })
+            .catch(response => {
+              validatePolicyChangeFailureHandler(
+                  response,
+                  results,
+                  event.detail.notification.action
+              );
+            });
         }
         else {
           MessageDisplaying.displayMessagesAsHTML(results.failure.messages);
@@ -302,6 +322,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
             results.policyConditions,
             controlElement
           );
+          controlElement.performAutoUncombineAction();
           controlElement.sendFieldValueChangedEvent(
             this.section,
             results.parsedExpression
@@ -436,6 +457,14 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
       }
     }
 
+    function performResetConditionAction(action) {
+      const controlElement = document.getElementById('wrc-policy-editor');
+
+      if (controlElement !== null) {
+        controlElement.sendPolicyEditorResetEvent();
+      }
+    }
+
     function performAction(action) {
       switch(action) {
         case 'addCondition':
@@ -458,6 +487,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
           break;
         case 'negate':
           performNegateConditionAction.call(this, action);
+          break;
+        case 'reset':
+          performResetConditionAction.call(this, action);
           break;
       }
     }
@@ -489,12 +521,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
             },
             'negate': {id: 'negate', iconFile: 'policy-negate-brn_24x24', disabled: false,
               'label': oj.Translations.getTranslatedString('wrc-policy-management.menus.action.negate.label')
+            },
+            'reset': {id: 'reset', iconFile: 'policy-reset-brn_24x24', disabled: false,
+              'label': oj.Translations.getTranslatedString('wrc-policy-management.menus.action.reset.label')
             }
           }
         },
         messages: {
           requiredFieldsMissing: {detail: oj.Translations.getTranslatedString('wrc-policy-management.messages.requiredFieldsMissing.detail')},
-          conditionHasNoArgValues: {summary: oj.Translations.getTranslatedString('wrc-policy-management.messages.conditionHasNoArgValues.summary')}
+          argumentValueHasWrongFormat: {summary: oj.Translations.getTranslatedString('wrc-policy-management.messages.argumentValueHasWrongFormat.summary', '{0}')},
+          conditionHasNoArgValues: {summary: oj.Translations.getTranslatedString('wrc-policy-management.messages.conditionHasNoArgValues.summary')},
+          conditionAlreadyExists: {summary: oj.Translations.getTranslatedString('wrc-policy-management.messages.conditionAlreadyExists.summary')}
         },
         'buttonMenus': {
           'action': {
@@ -625,7 +662,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
             'moveup': {disabled: ko.observable(false)},
             'movedown': {disabled: ko.observable(false)},
             'remove': {disabled: ko.observable(false)},
-            'negate': {disabled: ko.observable(false)}
+            'negate': {disabled: ko.observable(false)},
+            'reset': {disabled: ko.observable(false)}
           };
         }
 
@@ -679,9 +717,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
        * @param {object} rdjData
        * @param {object} pdjData
        * @param {object} buttonSetItems
-       * @param {{'fieldValueChanged': function}} formFieldCallbacks
+       * @param {{'fieldValueChanged': function, 'policyEditorReset': function}} formCallbacks
        */
-      renderPolicyForm: function (policyData, pdjTypes, rdjData, pdjData, buttonSetItems, formFieldCallbacks) {
+      renderPolicyForm: function (policyData, pdjTypes, rdjData, pdjData, buttonSetItems, formCallbacks) {
         const controlElement = document.getElementById('wrc-policy-editor');
 
         if (controlElement !== null) {
@@ -718,14 +756,16 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
             {name: 'moveup', disabled: true},
             {name: 'movedown', disabled: true},
             {name: 'remove', disabled: true},
-            {name: 'negate', disabled: true}
+            {name: 'negate', disabled: true},
+            {name: 'reset', disabled: false}
           ];
 
           this.setButtonSetItemsState(buttonSetItems, states);
 
           controlElement.setActionItems(buttonSetItems);
 
-          controlElement.fieldValueChangedCallback(formFieldCallbacks.fieldValueChanged);
+          controlElement.fieldValueChangedCallback(formCallbacks.fieldValueChanged);
+          controlElement.policyEditorResetCallback(formCallbacks.policyEditorReset);
 
           // Set event functions that serve as callbacks
           controlElement.onConditionCheckedChanged = (event) => {
@@ -753,12 +793,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
             onPolicyConditionNegated.call(this, event);
           };
 
-//MLW - variant          controlElement.readonly = (CoreUtils.isUndefinedOrNull(pdjData.sliceForm.properties[0]?.readOnly) ? false : pdjData.sliceForm.properties[0].readOnly);
-          controlElement.readonly = true;
+          controlElement.readonly = (CoreUtils.isUndefinedOrNull(pdjData.sliceForm.properties[0]?.readOnly) ? false : pdjData.sliceForm.properties[0].readOnly);
 
           controlElement.setTranslationStrings(this.section, PolicyForm.prototype.i18n);
-
           controlElement.setSupportedPredicatesList(policyData.getSupportedPredicatesList(this.section, PolicyForm.prototype.i18n));
+
+          if (this.resetPolicyEditor()) {
+            this.policyData = PolicyManager.createPolicyData(rdjData);
+            policyData = this.policyData;
+            this.resetPolicyEditor(false);
+          }
+
           const policyConditions = policyData.getPolicyConditions(this.section);
           controlElement.setPolicyConditions(policyConditions);
         }
@@ -830,7 +875,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
        *    {name: 'moveup', disabled: true},
        *    {name: 'movedown', disabled: true},
        *    {name: 'remove', disabled: true},
-       *    {name: 'negate', disabled: true}
+       *    {name: 'negate', disabled: true},
+       *    {name: 'reset', disabled: false}
        *  ];
        *  self.policyForm.setButtonSetItemsState(buttonSetItems, states);
        */
@@ -838,6 +884,23 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
         for (const state of states) {
           buttonSetItems[state.name].disabled(state.disabled);
         }
+      },
+
+      importPolicyData: function (filename, policyData = undefined) {
+        // TODO: Allow user to set this.policyData instance
+        //      variable from a JSON file, or the policyData
+        //      parameter. This facilitates working with
+        //      verification use cases, and provides a
+        //      a mechanism for creating a policy from
+        //      a previously exported policy.
+      },
+
+      exportPolicyData: function (filename, policyData = undefined) {
+        // TODO: Allow user to write this.policyData instance
+        //      variable (or the policyData) out to a JSON file.
+        //      This facilitates working with verification use
+        //      cases, and provides a mechanism for saving a
+        //      policy that can later be imported.
       }
 
     };

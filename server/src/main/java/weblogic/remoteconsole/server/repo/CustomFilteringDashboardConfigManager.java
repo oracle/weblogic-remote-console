@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -82,12 +82,12 @@ public class CustomFilteringDashboardConfigManager {
           new CustomFilteringDashboardPathSegment(
             segmentDef,
             getStringPropertyValue(
-              segmentDef.getCriteriaPropertyDef().getFormPropertyName(),
+              segmentDef.getCriteriaPropertyDef().getFormFieldName(),
               formProperties,
               previousSegment.getCriteria()
             ),
             getStringPropertyValue(
-              segmentDef.getValuePropertyDef().getFormPropertyName(),
+              segmentDef.getValuePropertyDef().getFormFieldName(),
               formProperties,
               previousSegment.getValue()
             )
@@ -102,12 +102,12 @@ public class CustomFilteringDashboardConfigManager {
         new CustomFilteringDashboardProperty(
           propertyDef,
           getStringPropertyValue(
-            propertyDef.getCriteriaPropertyDef().getFormPropertyName(),
+            propertyDef.getCriteriaPropertyDef().getFormFieldName(),
             formProperties,
             previousProperty.getCriteria()
           ),
           getPropertyValue(
-            propertyDef.getValuePropertyDef().getFormPropertyName(),
+            propertyDef.getValuePropertyDef().getFormFieldName(),
             formProperties,
             previousProperty.getValue()
           )
@@ -237,41 +237,41 @@ public class CustomFilteringDashboardConfigManager {
   }
 
   private static String getStringPropertyValue(
-    String formPropertyName,
+    String formFieldName,
     List<FormProperty> properties,
     String defaultValue
   ) {
     return
       getPropertyValue(
-        formPropertyName,
+        formFieldName,
         properties,
         new StringValue(defaultValue)
       ).asString().getValue();
   }
 
   private static Value getPropertyValue(
-    String formPropertyName,
+    String formFieldName,
     List<FormProperty> properties,
     Value defaultValue
   ) {
-    Value value = findPropertyValue(formPropertyName, properties);
+    Value value = findPropertyValue(formFieldName, properties);
     return (value != null) ? value : defaultValue;
   }
 
   private static Value findPropertyValue(
-    String formPropertyName,
+    String formFieldName,
     List<FormProperty> properties
   ) {
-    FormProperty property = findProperty(formPropertyName, properties);
+    FormProperty property = findProperty(formFieldName, properties);
     return (property != null) ? property.getValue().asSettable().getValue() : null;
   }
 
   private static FormProperty findProperty(
-    String formPropertyName,
+    String formFieldName,
     List<FormProperty> properties
   ) {
     for (FormProperty property : properties) {
-      if (formPropertyName.equals(property.getName())) {
+      if (formFieldName.equals(property.getName())) {
         return property;
       }
     }

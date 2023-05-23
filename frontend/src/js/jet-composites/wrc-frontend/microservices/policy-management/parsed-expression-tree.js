@@ -8,26 +8,24 @@
 'use strict';
 
 /**
- * @typedef {{uid?: string, parentUid?: string, arguments? [string], children? : [ParsedExpressionNode], type: 'and'|'or'|'group'|'negate'|'predicate'}} ParsedExpressionNode
+ * @typedef {{uid?: string, parentUid?: string, arguments?: [string], children? : [ParsedExpressionNode], type: 'and'|'or'|'group'|'negate'|'predicate'}} ParsedExpressionNode
  * @type {ParsedExpressionNode}
  * @typedef {{uid: string, parentUid: string, isLastSibling: boolean, isLastCondition: boolean, operator: 'none'|'and'|'or'|undefined, joiner: 'none'|'and'|'or'|undefined, expression: string, options: {negated: boolean, combined: boolean, insertion?: Insertion},children?:[PolicyCondition],predicate: {name: string,arguments:[Argument],descriptionHTML: string,displayName: string}}} PolicyCondition
  * @type {PolicyCondition}
  * @typedef {[{before: {uid: string, parentUid: string}, after: {uid: string, parentUid: string}}]} RecomputedUids
  * @type {RecomputedUids}
- * @typedef {[{uid: string, parentUid: string, previousValue: boolean, value: boolean}]} NegatedItems
+ * @typedef {[{uid: string, parentUid: string, isLastSibling?: boolean, previousValue: boolean, value: boolean}]} NegatedItems
  * @type {NegatedItems}
- * @typedef {[{uid: string, parentUid: string}]} RemovedUids
+ * @typedef {[{uid: string, parentUid: string, isLastSibling?: boolean}]} RemovedUids
  * @type {CombinedItems}
  * @typedef {[{uid: string, parentUid: string}]} CombinedItems
- * @type {UncombinedUids}
- * @typedef {[{uid: string, parentUid: string}]} UncombinedUids
+ * @type {UncombinedItems}
+ * @typedef {[{uid: string, parentUid: string}]} UncombinedItems
  * @type {RemovedUids}
  * @typedef {{direction: 'moveup'|'movedown'|'moveout', before: {uid: string, parentUid: string}, after: {uid: string, parentUid: string}}} Movement
  * @type {Movement}
  * @typedef {{type: 'above'|'below'|'at', checkedItem: {uid: string, parentUid: string}, addedItem?: {uid: string, parentUid: string}, parentExpression?: {type: 'or'|'and'}}} Insertion
  * @type {Insertion}
- * @typedef {{selected: ParsedExpressionNode, parentExpression: ParsedExpressionNode, index: number}|{}} FindTargetedExpressionResult
- * @type {FindTargetedExpressionResult}
  */
 define(['wrc-frontend/core/utils'],
   function(CoreUtils){

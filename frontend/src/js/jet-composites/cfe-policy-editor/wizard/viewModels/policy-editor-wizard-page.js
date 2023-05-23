@@ -279,6 +279,28 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojarraydataprovider', 'wrc-frontend/co
         // ones they do that to.
         const filteredArgumentValues = self.parameters().filter(item => CoreUtils.isNotUndefinedNorNull(item.value) && item.value !== '');
 
+        // The CBE will accept just "GMT" as the value for the
+        // "GMT Offset" field. When it does, the embedded LDAP
+        // store the security policy data is stored in will get
+        // corrupted, so we need to validate the value entered
+        // in the "GMT Offset" field, here.
+        const index = filteredArgumentValues.map(argumentValue => argumentValue.type).indexOf('GMTOffset');
+        if (index !== -1) {
+          const gmtOffsetArgument = filteredArgumentValues[index];
+          if (CoreUtils.isNotUndefinedNorNull(gmtOffsetArgument.value) &&
+              gmtOffsetArgument.value !== ''
+          ) {
+            const regex = /GMT[+-][0-9]{1,2}:[0-9]{2}\b/;
+            if (regex.test(gmtOffsetArgument.value)) {
+              viewParams.clearFailureMessage();
+            }
+            else {
+              delete filteredArgumentValues[index];
+              viewParams.displayFailureMessage(viewParams.i18n.messages.argumentValueHasWrongFormat.summary.replace('{0}', gmtOffsetArgument.displayName));
+            }
+          }
+        }
+
         // Next, update the arguments array in the
         // self.policyCondition.predicate and send
         // it in a 'argument-values-changed' type
@@ -302,7 +324,7 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojarraydataprovider', 'wrc-frontend/co
 
         viewParams.dispatchStepEvent({
           type: 'argument-values-changed',
-          data: self.policyCondition
+          data: upsertArgumentsProperties(self.policyCondition)
         });
 
         updateNavigablePages('manage-argument-values');
@@ -435,6 +457,20 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojarraydataprovider', 'wrc-frontend/co
           ele.setAttribute('disabled', (argumentValues.length === 0));
         }
       }
+
+      function upsertArgumentsProperties(policyCondition) {
+        if (CoreUtils.isNotUndefinedNorNull(policyCondition.predicate['arguments']) &&
+            (policyCondition.predicate['arguments'].length > 0)
+        ) {
+          const predicate = self.supportedPredicatesList.find(item => item.value === policyCondition.predicate.name);
+          for (const i in policyCondition.predicate['arguments']) {
+            const index = predicate['arguments'].map(item => item.displayName).indexOf(policyCondition.predicate['arguments'][i].displayName);
+            if (index !== -1) policyCondition.predicate['arguments'][i]['optional'] = predicate['arguments'][index].optional;
+          }
+        }
+        return policyCondition;
+      }
+
 
       function getChosen() {
         // item.value is predicate.name in the following line of code

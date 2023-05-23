@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -30,6 +30,7 @@ import weblogic.remoteconsole.server.repo.InvocationContext;
 public class RemoteConsoleResource extends BaseResource {
   public static final String PROVIDER_MANAGEMENT_PATH = "providers";
   public static final String ABOUT_PATH = "about";
+  public static final String SSO_TOKEN_PATH = "token";
 
   @Context ResourceContext resourceContext;
   @Context HttpHeaders headers;
@@ -43,6 +44,11 @@ public class RemoteConsoleResource extends BaseResource {
   @Path(PROVIDER_MANAGEMENT_PATH)
   public ProviderResource getProviderResource() {
     return new ProviderResource();
+  }
+
+  @Path(SSO_TOKEN_PATH)
+  public SsoTokenResource getSsoTokenResource() {
+    return new SsoTokenResource();
   }
 
   @Path(Root.EDIT_NAME)

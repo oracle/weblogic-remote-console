@@ -105,7 +105,7 @@ oj-row-expander:has(span.oj-rowexpander-depth-1) ~ div.cfe-policy-editor-joiner
 
 oj-row-expander:has(span.oj-rowexpander-depth-2) ~ div.cfe-policy-editor-joiner
 {
-	margin-left: 	1.25rem;		/* 20px */
+	margin-left: 	2.5rem;		/* 20px */
 }
 
 oj-row-expander:has(span.oj-rowexpander-depth-3) ~ div.cfe-policy-editor-joiner
@@ -125,7 +125,7 @@ oj-row-expander:has(span.oj-rowexpander-depth-5) ~ div.cfe-policy-editor-joiner
 
 oj-row-expander:has(span.oj-rowexpander-depth-0) ~ div.cfe-policy-editor-operator
 {
-	margin-left: 	1.5rem;   /* 24px; */
+	margin-left: 	1.25rem;   /* 24px; */
 }
 
 oj-row-expander:has(span.oj-rowexpander-depth-1) ~ div.cfe-policy-editor-operator
@@ -299,4 +299,9 @@ oj-button[id="popupCancelBtn"] span
 
 #wizard-response-message > span > p {
 	margin-bottom: 0;
+}
+
+div.cfe-policy-editor-operator oj-select-single,
+div.cfe-policy-editor-joiner oj-select-single {
+	background-color: #e4e5e7;
 }

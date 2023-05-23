@@ -1,5 +1,5 @@
 name: WebLogic Remote Console
-version: '2.4.2'
+version: '2.4.4'
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
   version: '1.0'
@@ -38,6 +38,8 @@ console-backend:
       path: /connection
     - id: providers
       path: /providers
+    - id: token
+      path: /token
 settings:
   logging:
     defaultLevel: ERROR

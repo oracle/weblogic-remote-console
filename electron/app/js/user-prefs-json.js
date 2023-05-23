@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -116,6 +116,9 @@ const UserPrefs = (() => {
     putAll: (preferences) => {
       _preferences = preferences;
     },
+    getPath: (userDataPath) => { 
+      return `${userDataPath}/user-prefs.json`;
+    },
     read: (userDataPath) => {
       if (!userDataPath) userDataPath = _appPaths.userDataPath;
       if (userDataPath) {
@@ -123,7 +126,7 @@ const UserPrefs = (() => {
         // function argument, regardless.
         _appPaths.userDataPath = userDataPath;
         // Construct full path to user-prefs.json file
-        const filepath = `${userDataPath}/user-prefs.json`;
+        const filepath = UserPrefs.getPath(userDataPath);
         if (fs.existsSync(filepath)) {
           try {
             const data = JSON.parse(fs.readFileSync(filepath).toString());

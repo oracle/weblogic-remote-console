@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -9,11 +9,23 @@ package weblogic.remoteconsole.server.providers;
 public interface AdminServerDataProvider extends ConnectionOrientedProvider {
   public String getURL();
 
-  public String getAuthorizationHeader();
+  public boolean isSsoTokenAvailable();
+
+  public long getSsoTokenExpires();
+
+  public void setSsoTokenId(String value);
+
+  public String getSsoTokenId();
+
+  public boolean setSsoToken(String token, String domainUrl, long expires);
 
   public long getConnectTimeout();
 
   public long getReadTimeout();
 
-  public boolean isDisableHostnameVerification();
+  public boolean isDisabledHostnameVerification();
+
+  public void setInsecureConnection(boolean value);
+
+  public boolean isInsecureConnection();
 }

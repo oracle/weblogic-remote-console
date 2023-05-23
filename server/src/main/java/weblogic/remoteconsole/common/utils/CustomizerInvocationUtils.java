@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -39,6 +39,10 @@ public class CustomizerInvocationUtils {
     return method;
   }
 
+  public static void checkSignature(Method method, Type returnTypeWant, List<Type> argTypesWant) {
+    checkSignature(method, returnTypeWant, argTypesWant.toArray(new Type[0]));
+  }
+
   public static void checkSignature(Method method, Type returnTypeWant, Type... argTypesWant) {
     checkReturnType(method, returnTypeWant);
     checkArgTypes(method, argTypesWant);
@@ -48,6 +52,10 @@ public class CustomizerInvocationUtils {
     if (!want.equals(method.getGenericReturnType())) {
       throw new AssertionError(method + " must return a " + want);
     }
+  }
+
+  public static void checkArgTypes(Method method, List<Type> want) {
+    checkArgTypes(method, want.toArray(new Type[0]));
   }
 
   public static void checkArgTypes(Method method, Type... want) {

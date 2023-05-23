@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -39,7 +39,7 @@ public class DomainSecurityRuntimeMBeanCustomizer {
   private DomainSecurityRuntimeMBeanCustomizer() {
   }
 
-  // Customize the DomainSecurityRUntimeMBean's JAXRS resource
+  // Customize the DomainSecurityRuntimeMBean's JAXRS resource
   public static BaseResource createResource(InvocationContext ic) {
     return new DomainSecurityRuntimeMBeanResource();
   }

@@ -22,6 +22,9 @@ define({
           },
           "unattached": {
             "tooltip": "Unattached"
+          },
+          "insecure": {
+            "text": "Not secure"
           }
         }
       }
@@ -145,6 +148,9 @@ define({
             },
             "readTimeout": {
               "label": "Read Timeout:"
+            },
+            "insecure": {
+              "label": "Insecure:"
             },
             "anyAttempt": {
               "label": "Any Connections Attempted:"
@@ -287,6 +293,9 @@ define({
           "startup": {
             "value": "Which startup task are you interested in performing?"
           }
+        },
+        "project-busy": {
+          "value": "Please save or abandon unsaved changes before making changes to any part of the project"
         }
       },
       "titles": {
@@ -340,6 +349,9 @@ define({
           "task": {
             "value": "Startup Task"
           }
+        },
+        "project-busy": {
+          "value": "Project Busy"
         }
       },
       "messages": {
@@ -418,6 +430,9 @@ define({
         },
         "usesso": {
           "label": "Single Sign-On"
+        },
+        "insecure": {
+          "label": "Insecure Connection"
         }
       }
     },
@@ -712,6 +727,9 @@ define({
         },
         "clearStatementCache": {
           "value": "Clear Cache"
+        },
+        "pause": {
+          "value": "Pause"
         }
       },
       "prompts": {
@@ -883,12 +901,15 @@ define({
           "moveup": { "label": "Move Up" },
           "movedown": { "label": "Move Down" },
           "remove": { "label": "Remove" },
-          "negate": { "label": "Negate" }
+          "negate": { "label": "Negate" },
+          "reset": { "label": "Reset" }
         }
       },
       "messages": {
         "requiredFieldsMissing": {detail: "One or more of the required fields contain no data!"},
-        "conditionHasNoArgValues": {summary: "The selected condition has no argument values to edit!"}
+        "argumentValueHasWrongFormat": {summary: "The '{0}' field contains incorrectly formatted data!"},
+        "conditionHasNoArgValues": {summary: "The selected condition has no argument values to edit!"},
+        "conditionAlreadyExists": {summary: "This security policy already has a condition built using the selected predicate, or one with matching argument values!"}
       },
       "buttonMenus": {
         "action": {
@@ -906,6 +927,9 @@ define({
             "below": {"label": "Add Condition Below Row Clicked..."}
           }
         }
+      },
+      "instructions": {
+        "policyEditor": {"value": "<p>To specify the location of the new condition, put a check next to the relative condition then click the <b>+Add Condition</b> button.</p>"}
       }
     },
     "wrc-policy-editor": {
@@ -919,8 +943,7 @@ define({
         "not": {"value": "NOT"},
         "combination": {"value": "Combination"},
         "nodata": {
-          "Policy1": {"value": "Use <b>+ Add Condition</b> button to add a policy condition."},
-          "Policy": {"value": "There are no security policy conditions defined for this policy."},
+          "Policy": {"value": "Use <b>+ Add Condition</b> button to add a policy condition."},
           "DefaultPolicy": {"value": "No default security policy conditions defined."}
         }
       },
@@ -1106,7 +1129,7 @@ define({
       },
       "title": {
         "incorrectFileContent": {
-          "value": "Incorrect File Content"
+          "value": "Incorrect Content Detected"
         }
       },
       "messages": {
@@ -1150,7 +1173,7 @@ define({
       },
       "wdtOptionsDialog": {
         "title": "Edit: {0}",
-        "default": "Default. (Unset)",
+        "default": "Unset Value",
         "instructions": "Enter token to add to the list of selectable items.",
         "enterValue": "Enter Value",
         "selectValue": "Select Value",
@@ -1164,7 +1187,7 @@ define({
         "enterVariable": "Enter Variable",
         "variableName": "Variable Name (Required)",
         "variableValue": "Variable Value",
-        "multiSelectUnset": "\"Default. (Select from Available Items List)\""
+        "multiSelectUnset": "Select Value from Available Items List"
       }
     },
     "wrc-unsaved-changes": {
@@ -1402,6 +1425,10 @@ define({
         "connectionRefused": {
           "summary": "Connection Issue",
           "details": "Having trouble sending and receiving data from provider! Please ensure it is accessible and try again."
+        },
+        "pathNotFound": {
+          "summary": "Path Not Found",
+          "details": "'{0}' is not a file or directory accessible on the local filesystem."
         }
       }
     },

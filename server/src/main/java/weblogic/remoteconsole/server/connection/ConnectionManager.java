@@ -4,6 +4,7 @@
 package weblogic.remoteconsole.server.connection;
 
 import java.nio.charset.StandardCharsets;
+import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,6 +23,10 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
@@ -50,7 +55,6 @@ public class ConnectionManager {
 
   // String constants for handling WebLogic REST response mapping
   private static final String NAME = "name";
-  private static final String DOMAINNAME = "domainName";
   private static final String DOMAINVER = "domainVersion";
   private static final String RETURN = "return";
   private static final String CONSOLE_BACKEND = "consoleBackend";
@@ -119,14 +123,42 @@ public class ConnectionManager {
     }
   }
 
-  /** Disable host name verification for outbound connections*/
+  /** Disable host name verification for all outbound connections */
   private static void disableHNV() {
     javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
-      new javax.net.ssl.HostnameVerifier() {
+      new HostnameVerifier() {
         public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
           return true;
         }
       });
+  }
+
+  /** Setup the JAX-RS client with an SSLContext that allows connections without any certificates */
+  private static void setInsecureConnection(ClientBuilder builder) throws Exception {
+    // Turn off hostname verification
+    builder.hostnameVerifier(
+      new HostnameVerifier() {
+        public boolean verify(String host, javax.net.ssl.SSLSession ssl) {
+          return true;
+        }
+      });
+
+    // Allow connection without certificates
+    SSLContext context = SSLContext.getInstance("TLS");
+    context.init(null, new TrustManager[] {
+      new X509TrustManager() {
+        public void checkClientTrusted(X509Certificate[] certs, String type) {
+        }
+
+        public void checkServerTrusted(X509Certificate[] certs, String type) {
+        }
+
+        public X509Certificate[] getAcceptedIssuers() {
+          return new X509Certificate[0];
+        }
+      }
+    }, null);
+    builder.sslContext(context);
   }
 
   /** Get a UUID using a secure random number generator */
@@ -200,30 +232,51 @@ public class ConnectionManager {
    * using the supplied HTTP Authorization header.
    *
    * @param domainUrl The WebLogic Domain URL
-   * @param authorization The HTTP Authorization Header Value
+   * @param auth The HTTP Authorization Header Value
    * @param locales The locales used to obtain a message
+   * @param insecure The flag to indicate an insecure connection without certificate checks
    * @return The connection response
    */
-  public ConnectionResponse tryConnection(String domainUrl, String authorization, List<Locale> locales) {
+  public ConnectionResponse tryConnection(String domainUrl, String auth, List<Locale> locales, boolean insecure) {
 
-    // Create the JAX-RS client for use with the connection using the suppplied credentials
-    Client client =
+    // Setup the JAX-RS client for use with the connection using the suppplied authorization header
+    ClientBuilder builder =
       ClientBuilder.newBuilder()
         .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
         .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
         .register(JacksonJsonProvider.class)
         .register(MultiPartFeature.class)
-        .register(ClientAuthFeature.authorization(authorization))
-        .build();
+        .register(ClientAuthFeature.authorization(auth));
+
+    // IFF the insecure flag is true then setup the connection so that certificates are not required
+    if (insecure) {
+      try {
+        setInsecureConnection(builder);
+      } catch (Exception exc) {
+        LOGGER.log(Level.FINEST, "Failure setting insecure connection: " + exc.toString(), exc);
+        return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, null, "Unable to setup insecure connection");
+      }
+    }
+
+    // Create the JAX-RS client
+    Client client = builder.build();
 
     // Obtain the username from the authorization header
-    String username = getUsernameFromHeader(authorization);
+    String username = getUsernameFromHeader(auth);
     if (username == null) {
       username = DEFAULT_USERNAME_UNKNOWN;
     }
 
     // Try to get WebLogic version from RESTful Management endpoint
-    return connect(domainUrl, username, client, locales);
+    ConnectionResponse result = connect(domainUrl, username, client, locales);
+
+    // Return the result and IFF successful with the insecure flag then log the connection state!
+    if (insecure && result.isSuccess()) {
+      Connection connection = getConnection(result.getConnectionId());
+      String domainName = (connection != null) ? connection.getDomainName() : "";
+      LOGGER.warning(">>>> Insecure connection was established for WebLogic Domain '" + domainName + "' <<<<");
+    }
+    return result;
   }
 
   // FortifyIssueSuppression Password Management: Password in Comment

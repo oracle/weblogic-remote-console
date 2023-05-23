@@ -67,6 +67,11 @@ class SliceReader extends FormReader {
       getBeanRepo().asBeanReaderRepo().createSearchBuilder(getInvocationContext(), includeIsSet);
     // Fetch the identity so we can check whether the bean exists:
     builder.addProperty(getBeanTreePath(), getBeanTreePath().getTypeDef().getIdentityPropertyDef());
+    // Also fetch the subtype discriminator so we can figure out what kind of bean it is.
+    BeanPropertyDef discDef = getBeanTreePath().getTypeDef().getSubTypeDiscriminatorPropertyDef();
+    if (discDef != null) {
+      builder.addProperty(getBeanTreePath(), discDef);
+    }
     if (builder.isChangeManagerBeanRepoSearchBuilder()) {
       builder.asChangeManagerBeanRepoSearchBuilder().addChangeManagerStatus();
     }

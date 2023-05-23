@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -116,7 +116,7 @@ public class TableCustomizationsManager extends PersistableFeature<PersistedTabl
   private static List<String> getColumns(List<PagePropertyDef> columnDefs) {
     List<String> columns = new ArrayList<>();
     for (PagePropertyDef columnDef : columnDefs) {
-      columns.add(columnDef.getFormPropertyName());
+      columns.add(columnDef.getFormFieldName());
     }
     return columns;
   }

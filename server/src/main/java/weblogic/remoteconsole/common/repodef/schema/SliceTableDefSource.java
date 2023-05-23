@@ -12,9 +12,7 @@ import java.util.List;
 public class SliceTableDefSource extends PageDefSource {
   private ListValue<BeanPropertyDefCustomizerSource> displayedColumns = new ListValue<>();
   private ListValue<BeanPropertyDefCustomizerSource> hiddenColumns = new ListValue<>();
-  private ListValue<TableActionDefCustomizerSource> actions = new ListValue<>();
   private StringValue getTableRowsMethod = new StringValue();
-  private StringValue actionMethod = new StringValue();
 
   // The columns to initially display in the table.
   public List<BeanPropertyDefCustomizerSource> getDisplayedColumns() {
@@ -42,20 +40,6 @@ public class SliceTableDefSource extends PageDefSource {
     hiddenColumns.add(value);
   }
 
-  // The actions that can be invoked on rows of this slice table 
-  // (e.g. start data source on a server from the aggregated data source's slice table).
-  public List<TableActionDefCustomizerSource> getActions() {
-    return actions.getValue();
-  }
-
-  public void setActions(List<TableActionDefCustomizerSource> value) {
-    actions.setValue(value);
-  }
-
-  public void addActions(TableActionDefCustomizerSource value) {
-    actions.add(value);
-  }
-
   // Specifics a custom static method to call to customize getting this page's table rows.
   // The format is <package>.<class>.<method>
   //
@@ -70,21 +54,5 @@ public class SliceTableDefSource extends PageDefSource {
 
   public void setGetTableRowsMethod(String value) {
     getTableRowsMethod.setValue(value);
-  }
-
-  // Specifics a custom static method to call to invoke an action on this slice table.
-  // The format is <package>.<class>.<method>
-  //
-  // required signature:
-  //  public static Response<Value> <method>(InvocationContext ic, TableActionDef tableActionDef)
-  //
-  // The CBE ensures that the bean referenced by ic exists
-  // before calling this method.
-  public String getActionMethod() {
-    return actionMethod.getValue();
-  }
-
-  public void setActionMethod(String value) {
-    actionMethod.setValue(value);
   }
 }

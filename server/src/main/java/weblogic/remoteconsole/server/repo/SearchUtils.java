@@ -129,7 +129,7 @@ public class SearchUtils {
     // Weed out slice tables since they never hold properties about this bean
     if (pageDef != null && !pageDef.isSliceTableDef()) {
       for (PagePropertyDef propertyDef : removePageLevelProperties(pageDef.getAllPropertyDefs())) {
-        String propertyName = propertyDef.getFormPropertyName();
+        String propertyName = propertyDef.getFormFieldName();
         if (!propertyDefs.containsKey(propertyName)) {
           propertyDefs.put(propertyName, propertyDef);
         }
@@ -141,7 +141,7 @@ public class SearchUtils {
   private static List<PagePropertyDef> removePageLevelProperties(List<PagePropertyDef> propertyDefs) {
     List<PagePropertyDef> rtn = new ArrayList<>();
     for (PagePropertyDef propertyDef : propertyDefs) {
-      if (!propertyDef.isPageLevelProperty()) {
+      if (!propertyDef.isPageLevelField()) {
         rtn.add(propertyDef);
       }
     }

@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2021, 2022, 2023, Oracle and/or its affiliates.
+ Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="data-providers-container" data-content-location="kiosk">
@@ -154,7 +154,7 @@
       </span>
       <br/>
     </oj-bind-if>
-    <oj-bind-if test="i18n.popups.info.domain.sso.value() === false">
+    <oj-bind-if test="typeof i18n.popups.info.domain.username.value() !== 'undefined'">
       <span><b><oj-bind-text value="[[i18n.popups.info.domain.username.label]]"></oj-bind-text></b>
         <span><oj-bind-text value="[[i18n.popups.info.domain.username.value()]]"></oj-bind-text></span>
       </span>
@@ -180,6 +180,13 @@
       <span><b><oj-bind-text value="[[i18n.popups.info.domain.readTimeout.label]]"></oj-bind-text></b>
         <span><oj-bind-text value="[[i18n.popups.info.domain.readTimeout.value()]]"></oj-bind-text></span>
       </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="i18n.popups.info.domain.insecure.value() === true">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.insecure.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.insecure.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
     </oj-bind-if>
   </oj-bind-if>
   <oj-bind-if test="providerInfo.type() === 'model'">
@@ -236,6 +243,25 @@
 
       <oj-label slot="label" for="url-field"><oj-bind-text value="[[i18n.labels.connections.url.value + '*']]"></oj-bind-text></oj-label>
       <oj-input-text id="url-field" class="cfe-dialog-field" value='{{dialogFields().url}}'></oj-input-text>
+
+      <oj-label slot="label" for="insecure-field"></oj-label>
+      <!-- Replace the oj-checkboxset with HTML input checkbox to workaround TypeError for the dialog box -->
+      <!-- <oj-checkboxset id="insecure-field" value="{{dialogFields().insecureCheckbox}}">
+             <oj-option id="use-insecure-option" value="[[i18n.checkboxes.insecure.id]]">
+               <oj-bind-text value="[[i18n.checkboxes.insecure.label]]"></oj-bind-text>
+             </oj-option>
+           </oj-checkboxset> -->
+      <div id="insecure-field" class="oj-form-control-container">
+        <span id="insecure-checkbox-area" class="oj-choice-item oj-enabled">
+          <input type="checkbox" id="insecure-checkbox" name="insecure-field"
+                 :value="[[i18n.checkboxes.insecure.id]]" class="cfe-checkbox-input">
+          <label for="insecure-checkbox" class="oj-checkboxset oj-checkbox-label oj-enabled">
+            <span class="oj-radiocheckbox-label-text">
+              <oj-bind-text value="[[i18n.checkboxes.insecure.label]]"></oj-bind-text>
+            </span>
+          </label>
+        </span>
+      </div>
     </oj-form-layout>
 
     <div id="connection-response-message">
@@ -474,6 +500,19 @@
     </oj-button>
     <oj-button id="dlgCancelBtn17">
       <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>
+<oj-dialog id="projectBusyDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide">
+  <div slot="body">
+    <div class="cfe-dialog-prompt">
+      <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
+    </div>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgOkBtn18">
+      <span class="button-label" data-bind="text: [[i18n.buttons.ok.label()]]"></span>
     </oj-button>
   </div>
 </oj-dialog>

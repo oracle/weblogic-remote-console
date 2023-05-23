@@ -11,7 +11,7 @@ const { execFile } = require('child_process');
 
 /**
  * See {@link https://stackabuse.com/javascripts-immediately-invoked-function-expressions/}
- * @type {{showFileChoosingOpenDialog, showFailureStartingDialog, renderAppMenu, showFileReadingOpenDialog, showJavaProcessErrorDialog, destroy, showFileCreatingSaveDialog, initialize, setAppSubmenuItemsState}}
+ * @type {{showFileChoosingOpenDialog, showFailureStartingDialog, renderAppMenu, showFileReadingOpenDialog, showJavaProcessErrorDialog, destroy, showFileCreatingSaveDialog, initialize, notifyState}}
  */
 const WindowManagement = (() => {
   const path = require('path');
@@ -20,7 +20,7 @@ const WindowManagement = (() => {
   const prompt = require('electron-prompt');
 
   const ProjectManager = require('./project-management');
-  const {checkForUpdates} = require('./auto-update-utils');
+  const AutoUpdateUtils = require('./auto-update-utils');
   const CoreUtils = require('./core-utils');
   const OSUtils = require('./os-utils');
   // Declare variable for IIFE class used to manage data
@@ -29,6 +29,8 @@ const WindowManagement = (() => {
 
   let _window;
   let _params;
+  let newVersion;
+  let downloadURL = 'https://github.com/oracle/weblogic-remote-console/releases';
 
   /**
    * Creates a new instance of the ``BrowserWindow`` class, using the specified parameter values.
@@ -138,6 +140,7 @@ const WindowManagement = (() => {
 
     populateFileMenu(appMenuTemplate);
     populateHelpMenu(appMenuTemplate);
+    maybeAddUpdateMenu(appMenuTemplate);
     layoutAppMenu(appMenuTemplate);
 
     // Sets menu as the application menu on macOS. On Windows
@@ -395,9 +398,9 @@ const WindowManagement = (() => {
           id: 'checkForUpdates',
           label: `Check for ${_params.productName} Updates`,
           click() {
-            checkForUpdates()
+            AutoUpdateUtils.checkForUpdates()
               .then(result => {
-                const newVersion = result.version;
+                newVersion = result.version;
                 if (newVersion === _params.version) {
                   showOnLatestVersionMessageBox(
                     'You Are Up To Date',
@@ -408,12 +411,12 @@ const WindowManagement = (() => {
                 else {
                   showNewerVersionAvailableMessageBox(
                     'Newer Version Available!',
-                    `Go to https://github.com/oracle/weblogic-remote-console/releases to get version ${newVersion}?`,
+                    `Go to ${new URL(downloadURL).host} to get version ${AutoUpdateUtils.getVersion()}?`,
                     ['Ok', 'Cancel']
                   )
                     .then((choice) => {
                       if (choice.response === 0)
-                        shell.openExternal('https://github.com/oracle/weblogic-remote-console/releases').then();
+                        shell.openExternal(downloadURL).then();
                     });
                 }
               })
@@ -445,6 +448,29 @@ const WindowManagement = (() => {
 
     // Concatenate additional submenu items to helpMenu.
     helpMenu.submenu = [].concat(helpMenu.submenu, helpSubmenu);
+  }
+
+  /**
+   * Populate the update section if there is an update to be had
+   * @param {[Menu]} appMenuTemplate
+   * @private
+   */
+  function maybeAddUpdateMenu(appMenuTemplate) {
+    if (!newVersion || (newVersion === _params.version))
+      return;
+    appMenuTemplate.push(
+      {
+        label: 'Updates Available - Click here',
+        submenu: [
+          {
+            label: `Go to ${new URL(downloadURL).host} to get version ${newVersion}`,
+            click() {
+              shell.openExternal(downloadURL).then();
+            }
+          }
+        ]
+      }
+    );
   }
 
   /**
@@ -601,6 +627,20 @@ const WindowManagement = (() => {
 
       _params = params;
 
+      if (params.feedURL)
+        downloadURL = params.feedURL;
+
+      if (_params.supportsAutoUpgrades) {
+        AutoUpdateUtils.checkForUpdates()
+          .then(result => {
+            newVersion = result.versionInfo.version;
+            if (newVersion !== _params.version) {
+              if (_window)
+                generateAppMenu()
+            }
+        });
+      }
+
       _window = createBrowserWindow(title, AutoPrefs.get('width'), AutoPrefs.get('height'));
       _window.webContents.session.clearCache();
 
@@ -630,14 +670,21 @@ const WindowManagement = (() => {
      * Enable or disable submenu items of an application menu item
      * @param {[{id: string, state: boolean}]} items
      * @example
-     *  setAppSubmenuItemsState([{id: 'newProject', state: false}]);
+     *  notifyState([{id: 'newProject', state: false}]);
      *
      *    or
      *
-     *  setAppSubmenuItemsState([{id: 'newProject', state: false},{id: 'nameProject', true}]);
+     *  notifyState([{id: 'newProject', state: false},{id: 'nameProject', true}]);
      */
-    setAppSubmenuItemsState: (items) => {
+    notifyState: (state) => {
       if (Menu.getApplicationMenu()) {
+        const items =  [
+          {id: 'newProject', state: state},
+          {id: 'switchToProject', state: state},
+          {id: 'deleteProject', state: state},
+          {id: 'nameProject', state: state},
+          {id: 'reload', state: state}
+        ];
         let submenuItem;
         for (const item of items) {
           // Get the array of submenu items for the submenu
@@ -718,11 +765,10 @@ const WindowManagement = (() => {
         return Promise.reject(Error('_window variable is undefined, which implies that either AppWindow.initialize() was not called, or an error happened when it was called. Check the JS console or log.'));
       }
     },
-    processCustomUrl: (customUrl) => {
+    showMainWindow: () => {
       if (_window) {
         if (_window.isMinimized()) _window.restore();
         _window.focus();
-        _window.webContents.send('on-login', {action: 'token', customUrl: customUrl});
       }
     }
 

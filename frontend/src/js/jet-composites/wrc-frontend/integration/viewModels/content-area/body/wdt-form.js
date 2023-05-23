@@ -168,7 +168,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
         dialogDom += '      label-hint=\' ' + i18n.wdtOptionsDialog.variableValue + '\' ';
         dialogDom += '      value=\'{{dialogFields().itemValue}}\' ></oj-input-text></div>';
         dialogDom += '</oj-bind-if>';
-        }
+      }
 
       //If properties is available,
       //we will add the variable list drop down to allow user to choose from.
@@ -580,7 +580,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
           const index = dataProvider.modelProperties.map(property => property.Name).indexOf(propertyName);
           if (index !== -1) {
             if (CoreUtils.isNotUndefinedNorNull(propertyValue))
-                dataProvider.modelProperties[index].Value = propertyValue;
+              dataProvider.modelProperties[index].Value = propertyValue;
           } else {
             this.addModelProperty(propertyName, propertyValue);
           }
@@ -895,15 +895,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
       },
       getModelArchivePaths: (properties, self) => {
         let paths = [];
-        for (const property of properties) {
-          if (property) {
-            if (property.modelToken) {
-              const variableName = property.modelToken.match(/@@PROP:(.+)@@/);
-              const value = self.getModelPropertyValue(variableName[1]);
-              if (CoreUtils.isNotUndefinedNorNull(value)) paths.push(value);
-            }
-            else if (CoreUtils.isNotUndefinedNorNull(property.value)) {
-              paths.push(property.value)
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+          for (const property of properties) {
+            if (property) {
+              if (property.modelToken) {
+                const variableName = property.modelToken.match(/@@PROP:(.+)@@/);
+                const value = self.getModelPropertyValue(variableName[1]);
+                if (CoreUtils.isNotUndefinedNorNull(value) && value !== '') {
+                  paths.push(value);
+                }
+              }
+              else if (CoreUtils.isNotUndefinedNorNull(property.value) && property.value !== '') {
+                paths.push(property.value)
+              }
             }
           }
         }
@@ -912,12 +916,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
       deleteModelArchivePaths: (dataProvider, modelArchive) => {
         if (dataProvider.modelArchivePaths) {
           dataProvider.modelArchivePaths.forEach((path) => {
-            modelArchive.removeFromArchive(path)
-              .then(() => {
-              })
-              .catch(response => {
-                ViewModelUtils.failureResponseDefaultHandling(response);
-              });
+            if (CoreUtils.isNotUndefinedNorNull(path) &&
+              path.startsWith('wlsdeploy/')
+            ) {
+              modelArchive.removeFromArchive(path)
+                .then(() => {
+                })
+                .catch(response => {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                });
+            }
           });
         }
       },

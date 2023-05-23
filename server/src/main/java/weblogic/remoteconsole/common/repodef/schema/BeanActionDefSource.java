@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class BeanActionDefSource extends BeanValueDefSource {
   private StringValue name = new StringValue();
+  private StringValue descriptionHTML = new StringValue();
   private StringValue remoteName = new StringValue();
   private ListValue<BeanActionParamDefSource> parameters = new ListValue<>();
   private BooleanValue extension =  new BooleanValue();
@@ -29,6 +30,15 @@ public class BeanActionDefSource extends BeanValueDefSource {
 
   public void setName(String value) {
     name.setValue(value);
+  }
+
+  // The action's description
+  public String getDescriptionHTML() {
+    return descriptionHTML.getValue();
+  }
+
+  public void setDescriptionHTML(String val) {
+    descriptionHTML.setValue(val);
   }
 
   // The name of the action when the CBE needs to invoke it

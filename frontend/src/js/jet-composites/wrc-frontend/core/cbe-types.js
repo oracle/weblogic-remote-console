@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -17,7 +17,8 @@ define(
         SECURITY: {name: 'security'},
         INFORMATION: {name: 'information'},
         CONNECTING: {name: 'connecting'},
-        PROVIDERS: {name: 'providers'}
+        PROVIDERS: {name: 'providers'},
+        TOKEN: {name: 'token'}
       }),
       serviceTypeFromName: function (name) {
         return Object.values(this.ServiceType).find(serviceType => serviceType.name === name);

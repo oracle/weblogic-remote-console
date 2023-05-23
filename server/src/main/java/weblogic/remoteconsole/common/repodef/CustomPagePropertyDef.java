@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -47,7 +47,7 @@ public class CustomPagePropertyDef implements PagePropertyDef {
     setUsedIfDef(toClone.getUsedIfDef());
     setPresentationDef(toClone.getPresentationDef());
     setExternalHelpDef(toClone.getExternalHelpDef());
-    setPageLevelProperty(toClone.isPageLevelProperty());
+    setPageLevelProperty(toClone.isPageLevelField());
     setDontReturnIfHiddenColumn(toClone.isDontReturnIfHiddenColumn());
   }
 
@@ -207,7 +207,7 @@ public class CustomPagePropertyDef implements PagePropertyDef {
   }
 
   @Override
-  public boolean isPageLevelProperty() {
+  public boolean isPageLevelField() {
     return pageLevelProperty;
   }
 
@@ -263,16 +263,16 @@ public class CustomPagePropertyDef implements PagePropertyDef {
   }
 
   @Override
-  public String getFormPropertyName() {
-    return beanPropertyDef.getFormPropertyName();
+  public String getFormFieldName() {
+    return beanPropertyDef.getFormFieldName();
   }
 
-  public void setFormPropertyName(String val) {
-    beanPropertyDef.setFormPropertyName(val);
+  public void setFormFieldName(String val) {
+    beanPropertyDef.setFormFieldName(val);
   }
 
-  public CustomPagePropertyDef formPropertyName(String val) {
-    setFormPropertyName(val);
+  public CustomPagePropertyDef formFieldName(String val) {
+    setFormFieldName(val);
     return this;
   }
 

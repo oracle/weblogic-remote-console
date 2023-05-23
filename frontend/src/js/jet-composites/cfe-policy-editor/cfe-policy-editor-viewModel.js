@@ -31,7 +31,9 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           nodata: ko.observable()
         },
         messages: {
-          conditionHasNoArgValues: {summary: ko.observable()}
+          argumentValueHasWrongFormat: {summary: ko.observable()},
+          conditionHasNoArgValues: {summary: ko.observable()},
+          conditionAlreadyExists: {summary: ko.observable()}
         },
         contextMenus: {
           action: {
@@ -64,13 +66,15 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           moveup: ko.observable(true),
           movedown: ko.observable(true),
           remove: ko.observable(true),
-          negate: ko.observable(true)
+          negate: ko.observable(true),
+          reset: ko.observable(true)
         },
       };
 
       this.responseMessage = ko.observable('');
 
       this.fieldValueChanged = undefined;
+      this.policyEditorReset = undefined;
       this.readOnly = ko.observable(context.properties.readonly);
 
       this.wizardPageModuleConfig = ko.observable({view: [], viewModel: null});
@@ -98,6 +102,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
       );
       this.policyConditionsDataProvider = ko.observable();
       this.flattenedPolicyConditions = [];
+      this.previousPolicyConditions = [];
 
       this.selectedRows = new keySet.ObservableKeySet();
 
@@ -139,6 +144,23 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           }
         };
         self.checkedValueChanged(fauxEvent);
+      }
+
+      function validatePolicyCondition(policyCondition) {
+        let reply = {succeeded: true };
+        for (const condition of self.flattenedPolicyConditions) {
+          if ( CoreUtils.isNotUndefinedNorNull(condition.predicate) &&
+                CoreUtils.isNotUndefinedNorNull(condition.predicate.name) &&
+                condition.predicate.name === policyCondition.predicate.name) {
+            const isDeeplyEqual = CoreUtils.isDeepEqual(condition.predicate, policyCondition.predicate);
+            if (isDeeplyEqual) {
+              reply.succeeded = false;
+              reply['failureMessage'] = self.i18n.messages.conditionAlreadyExists.summary();
+              break;
+            }
+          }
+        }
+        return reply;
       }
 
       function handleAddConditionActionResults(results, action) {
@@ -241,6 +263,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
         disabled['movedown'] = true;
         disabled['remove'] = true;
         disabled['negate'] = true;
+        disabled['reset'] = false;
 
         const params = {
           'bubbles': true,
@@ -266,6 +289,15 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           }
         }
       };
+
+      function getWizardTitle(action) {
+        if (action.insertion.type === 'at') {
+          return context.properties.i18n.contextMenus.action.addCondition.at.label;
+        }
+        else if (['above','below'].includes(action.insertion.type)) {
+          return context.properties.i18n.buttonMenus.action.addCondition[action.insertion.type].label;
+        }
+      }
 
       function editPolicyCondition(action, policyCondition, failureMessage) {
         function updatePredicateArguments(predicate) {
@@ -294,6 +326,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
             supportedPredicatesList: self.supportedPredicatesList,
             policyCondition: policyCondition
           },
+          validatePolicyCondition: validatePolicyCondition,
           displayFailureMessage: displayFailureMessage,
           clearFailureMessage: clearFailureMessage
         };
@@ -301,6 +334,8 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
         updatePredicateArguments(policyCondition.predicate);
 
         if (action.id === 'addCondition') {
+          self.i18n.wizard.title(getWizardTitle(action));
+
           PolicyEditorWizard.startWizard('manage-argument-values', self.wizardPageModuleConfig, viewParams)
             .then(results => {
               handleAddConditionActionResults(results, action);
@@ -310,6 +345,8 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           if (CoreUtils.isNotUndefinedNorNull(policyCondition.predicate['arguments']) &&
             (policyCondition.predicate['arguments'].length > 0)
           ) {
+            self.i18n.wizard.title(context.properties.i18n.wizard.title);
+
             PolicyEditorWizard.startWizard('manage-argument-values', self.wizardPageModuleConfig, viewParams)
               .then(results => {
                   handleEditConditionActionResults(results, action);
@@ -497,6 +534,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
        */
       this.performPolicyEditorAction = (action) => {
         function performAddConditionAction(action) {
+          self.i18n.wizard.title(getWizardTitle(action));
 
           const viewParams = {
             editorAction: action.id,
@@ -505,6 +543,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
               supportedPredicatesList: self.supportedPredicatesList,
               insertion: action.insertion
             },
+            validatePolicyCondition: validatePolicyCondition,
             displayFailureMessage: displayFailureMessage,
             clearFailureMessage: clearFailureMessage
           };
@@ -516,14 +555,15 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
         }
 
         function performCombineAction(action) {
-          const dispatchPolicyConditionsCombinedEvent = (action, checkedUids) => {
+          const dispatchPolicyConditionsCombinedEvent = (action, checkedUids, relocatedUids) => {
 
             const params = {
               'bubbles': true,
               'detail': {
                 'notification': {
                   type: action.id,
-                  combinedUids: checkedUids
+                  combinedUids: checkedUids,
+                  relocatedUids: relocatedUids
                 }
               }
             };
@@ -531,6 +571,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
             context.element.dispatchEvent(new CustomEvent('policyConditionsCombined', params));
           };
 
+          // Capture uids of the checked sibling conditions
           const checkedUids = self.getCheckedPolicyConditionUids();
 
           // Doing a combine action requires at least two
@@ -541,9 +582,21 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
             // the same value assigned to their parentUid
             // property.
             if (haveSameParentUid) {
-              // They do, so go ahead and dispatch the event
-              // to event listeners.
-              dispatchPolicyConditionsCombinedEvent(action, checkedUids);
+              // They do, so capture all the policy conditions
+              // with checkedUids[0].parentUid assigned to the
+              // parentUid property.
+              const siblingUids = self.flattenedPolicyConditions.filter(policyCondition => (policyCondition.parentUid === checkedUids[0].parentUid)).map(policyCondition => { return { uid: policyCondition.uid, parentUid: policyCondition.parentUid}; });
+              // Next, capture uids of the sibling policy
+              // conditions that weren't checked, of which
+              // some will be relocated to be under the
+              // new "Combination" condition.
+              const diffUids = CoreUtils.getDifference(siblingUids, checkedUids, 'uid');
+              // Finally, filter out sibling uids that are
+              // less than checkedUids[0].uid, because they
+              // won't be relocated.
+              const relocatedUids = diffUids.filter(item => ~~item.uid > ~~checkedUids[0].uid);
+              // Dispatch event to event listeners.
+              dispatchPolicyConditionsCombinedEvent(action, checkedUids, relocatedUids);
             }
           }
         }
@@ -630,13 +683,17 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
             return policyConditions.map((child) => {
               if (child.parentUid === parentUid) {
                 removedUids.push(
-                  {uid: child.uid, parentUid: child.parentUid}
+                  {
+                    uid: child.uid,
+                    parentUid: child.parentUid,
+                    isLastSibling: child.isLastSibling
+                  }
                 );
               }
               if (child.children) {
-                children = [...children, ...child.children];
-                if (~~child.uid > ~~parentUid) {
-                  // Only update parentUid if child.uid is a uid greater
+                children = [...child.children];
+                if (child.parentUid !== '-1' && (~~child.uid > ~~parentUid)) {
+                  // Only update parentUid if child.uid is uid greater
                   // than the current value assigned to parentUid.
                   parentUid = child.uid;
                 }
@@ -671,10 +728,16 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
 
             if (policyCondition.options.combined) {
               let parentUid = policyCondition.uid;
-              removedItems = [{uid: policyCondition.uid, parentUid: policyCondition.parentUid}];
+              removedItems = [
+                {
+                  uid: policyCondition.uid,
+                  parentUid: policyCondition.parentUid,
+                  isLastSibling: policyCondition.isLastSibling
+                }
+              ];
               // This means we're removing a "Combination" policy
               // condition, which means we need to remove it and
-              // all of it's descendants.
+              // all of its descendants.
               captureRemovedUids(data, policyCondition, parentUid, removedItems);
             }
             else {
@@ -682,7 +745,11 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
               // not a "Combination" policy condition, and therefore
               // it will be the only thing removed.
               removedItems.push(
-                {uid: policyCondition.uid, parentUid: policyCondition.parentUid}
+                {
+                  uid: policyCondition.uid,
+                  parentUid: policyCondition.parentUid,
+                  isLastSibling: policyCondition.isLastSibling
+                }
               );
             }
 
@@ -709,7 +776,13 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           for (const policyCondition of self.flattenedPolicyConditions) {
             if (policyCondition.checked().length > 0) {
               negatedItems.push(
-                {uid: policyCondition.uid, parentUid: policyCondition.parentUid, previousValue: policyCondition.options.negated, value: !policyCondition.options.negated}
+                {
+                  uid: policyCondition.uid,
+                  parentUid: policyCondition.parentUid,
+                  isLastSibling: policyCondition.isLastSibling,
+                  previousValue: policyCondition.options.negated,
+                  value: !policyCondition.options.negated
+                }
               );
             }
           }
@@ -749,8 +822,10 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           const isFirstSibling = (toggledUid === '0') || (typeof options.firstCheckedUid !== 'undefined') && combinedUids.includes('' + (~~options.firstCheckedUid - 1));
           const isLastSibling = (typeof options.lastCheckedUid !== 'undefined') && combinedUids.includes('' + (~~options.lastCheckedUid + 1));
           const haveSameParentUids = (options.checkedItems.filter(item => item.parentUid !== policyCondition.parentUid).length === 0);
-          const isSingleCombinedChecked = (options.checkedItems.filter(item => combinedUids.indexOf[item.uid] !== -1).length < 2);
-          const onlyCombinedChecked = (options.checkedItems.filter(item => combinedUids.indexOf(item.uid) === -1).length === 0);
+          const hasMoreThanTwoSiblings = (options.checkedItems.length > 0 && self.flattenedPolicyConditions.filter(policyCondition => (policyCondition.parentUid === options.checkedItems[0].parentUid)).map(policyCondition => { return { uid: policyCondition.uid, parentUid: policyCondition.parentUid}; }).length > 2);
+          const isSingleCombinedChecked = (combinedUids.length > 0 && options.checkedItems.length > 0 && combinedUids.includes(options.checkedItems[0].uid));
+          const isSoleCombinedChild = (!isSingleCombinedChecked && combinedUids.length > 0 && options.checkedItems.length > 0 && self.flattenedPolicyConditions.filter(item => item.parentUid === options.checkedItems[0].parentUid).length === 1);
+          const onlyCombinedChecked = (combinedUids.length > 0 && options.checkedItems.filter(item => combinedUids.indexOf(item.uid) === -1).length === 0);
 
           const disabled = {};
 
@@ -763,37 +838,34 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
             disabled['movedown'] = true;
             disabled['remove'] = true;
             disabled['negate'] = true;
+            disabled['reset'] = true;
           }
           else {
             disabled['above'] = (
-              (policyCondition.options.combined) ||
+              (policyCondition.options.combined && policyCondition.parentUid !== '-1') ||
               (options.checkedItems.length === 0) ||
               (options.checkedItems.length > 1)
             );
 
             disabled['below'] = (
-              (policyCondition.isLastSibling) ||
+              (policyCondition.options.combined && policyCondition.parentUid !== '-1') ||
               (options.checkedItems.length === 0) ||
               (options.checkedItems.length > 1)
             );
 
-            disabled['combine'] = true;
-/*
-//MLW
+//MLW            disabled['combine'] = true;
+
               disabled['combine'] = !(
               (options.checkedItems.length > 1) &&
               haveSameParentUids &&
-              isSingleCombinedChecked
+              hasMoreThanTwoSiblings
             );
-*/
 
-            disabled['uncombine'] = true;
-/*
             disabled['uncombine'] = !(
-              (options.checkedItems.length > 0) &&
+              (options.checkedItems.length === 1) &&
               onlyCombinedChecked
             );
-*/
+
             disabled['moveup'] = true;
 /*
 //MLW
@@ -819,12 +891,15 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
 
             disabled['remove'] = (
               (options.checkedItems.length === 0) ||
-              (options.checkedItems.length > 1)
+              (options.checkedItems.length > 1) ||
+              isSoleCombinedChild
             );
 
             disabled['negate'] = (
               (options.checkedItems.length === 0)
             );
+
+            disabled['reset'] = false;
           }
 
           const params = {
@@ -888,6 +963,9 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           }
           const disabled = dispatchConditionCheckedChangedEvent(toggledUid, policyCondition, options, combinedUids);
         }
+        else {
+          disableAllActions(self.actionItems);
+        }
       };
 
       this.fieldValueChangedCallback = (callback) => {
@@ -906,6 +984,55 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
               }
             }
           );
+        }
+      };
+
+      this.policyEditorResetCallback = (callback) => {
+        self.policyEditorReset = callback;
+      };
+
+      this.sendPolicyEditorResetEvent = () => {
+        self.policyEditorReset();
+      };
+
+      this.performAutoUncombineAction = () => {
+        const dispatchPolicyConditionsUncombinedEvent = (action, combinedUids) => {
+
+          const params = {
+            'bubbles': true,
+            'detail': {
+              'notification': {
+                type: action.id,
+                combinedUids: combinedUids
+              }
+            }
+          };
+
+          context.element.dispatchEvent(new CustomEvent('policyConditionsUncombined', params));
+        };
+
+        const getAutoUncombinedItems = (policyConditions, autoUncombinedItems) => {
+          let children = [];
+          return policyConditions.map((child) => {
+            if (child.options.combined) {
+              if (child.children.length < 2) {
+                autoUncombinedItems.push({uid: child.uid, parentUid: child.parentUid});
+              }
+            }
+
+            if (child.children) {
+              children = [...children, ...child.children];
+              getAutoUncombinedItems(children, autoUncombinedItems);
+            }
+          });
+        };
+
+        let autoUncombinedItems = [];
+
+        getAutoUncombinedItems(this.policyConditions(), autoUncombinedItems);
+
+        if (autoUncombinedItems.length > 0) {
+          dispatchPolicyConditionsUncombinedEvent({id: 'uncombine'}, autoUncombinedItems);
         }
       };
 
@@ -976,7 +1103,9 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           self.i18n.wizard.title(i18n.wizard.title);
           self.i18n.labels.nodata(i18n.labels.nodata[section]);
 
+          self.i18n.messages.argumentValueHasWrongFormat.summary(i18n.messages.argumentValueHasWrongFormat.summary);
           self.i18n.messages.conditionHasNoArgValues.summary(i18n.messages.conditionHasNoArgValues.summary);
+          self.i18n.messages.conditionAlreadyExists.summary(i18n.messages.conditionAlreadyExists.summary);
 
           self.i18n.contextMenus.action.at.label(i18n.contextMenus.action.addCondition.at.label);
           self.i18n.contextMenus.action.above.label(i18n.contextMenus.action.addCondition.above.label);
@@ -1016,6 +1145,10 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
           };
 
           let flattened = [];
+
+          self.policyConditions.valueWillMutate();
+          self.policyConditions([]);
+          self.policyConditions.valueHasMutated();
 
           flattenPolicyConditions([...data], flattened);
 
