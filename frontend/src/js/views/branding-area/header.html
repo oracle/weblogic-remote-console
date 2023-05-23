@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
+Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="header-container">
@@ -15,6 +15,7 @@ Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
     <img id="offline-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.offline.iconFile + '.png', title: i18n.header.icons.connectivity.offline.tooltip, alt: i18n.header.icons.connectivity.offline.tooltip}"/>
     <img id="detached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.detached.iconFile + '.png', title: i18n.header.icons.connectivity.detached.tooltip, alt: i18n.header.icons.connectivity.detached.tooltip}"/>
     <img id="unattached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.unattached.iconFile + '.png', title: i18n.header.icons.connectivity.unattached.tooltip, alt: i18n.header.icons.connectivity.unattached.tooltip}"/>
+    <img id="insecure-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.insecure.iconFile + '.png', title: i18n.header.icons.connectivity.insecure.text, alt: i18n.header.icons.connectivity.insecure.text}"/>
   </div>
 
   <div class="oj-flex-bar">
@@ -50,6 +51,14 @@ Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
     </div>
 
     <div id="domain-connect-info" class="oj-flex-bar-end">
+      <div id="wrc-insecure-state" class="branding-area-insecure-connection" style="display: none;">
+        <img id="wrc-insecure-icon" class="branding-area-insecure-icon"
+          data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.insecure.iconFile + '.png',
+                            title: i18n.header.icons.connectivity.insecure.title, alt: i18n.header.icons.connectivity.insecure.text}" />
+        <span id="wrc-insecure-text" class="branding-area-insecure-text">
+          <oj-bind-text value="[[i18n.header.icons.connectivity.insecure.text]]"></oj-bind-text>
+        </span>
+      </div>
       <canvas id="console-state-bar" width="12" height="24" data-bind="attr: {title: i18n.header.icons.connectivity.unattached.tooltip}"></canvas>
 
       <oj-module config="[[domainConnectionModuleConfig]]"></oj-module>

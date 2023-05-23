@@ -2,6 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 instanceName: ServerRuntime
+disableMBeanJavadoc: true
 
 subTypeDiscriminatorProperty: Type
 subTypes:
@@ -63,16 +64,25 @@ actions:
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.start
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+    descriptionHTML: >
+      <p>Uses the Node Manager to start a Managed Server.</p>
+  mbeanOperation:
+    type: ServerLifeCycleRuntimeMBean
+    operation: start
   usedIf:
     property: "State"
     values:
     - "NOT_RUNNING"
-
 - name: "resume"
   label: "Resume"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.resume
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+    descriptionHTML: >
+      <p>Transitions the server from <code>ADMIN</code> to <code>RUNNING</code> state.</p>
+  mbeanOperation:
+    type: ServerLifeCycleRuntimeMBean
+    operation: resume
   usedIf:
     property: "State"
     values:
@@ -84,6 +94,12 @@ actions:
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.suspend
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+    descriptionHTML: >
+      <p>Gracefully suspends server to <code>ADMIN</code> state.
+      New requests are rejected and inflight work is allowed to complete.</p> 
+  mbeanOperation:
+    type: ServerLifeCycleRuntimeMBean
+    operation: suspend
   usedIf:
     property: "State"
     values:
@@ -94,6 +110,13 @@ actions:
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceSuspend
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+    descriptionHTML: >
+      <p>Transitions the server from RUNNING to ADMIN state forcefully cancelling inflight work.</p>
+      <p>Work that cannot be cancelled is dropped.
+      Applications are brought into the admin mode forcefully.</p>
+  mbeanOperation:
+    type: ServerLifeCycleRuntimeMBean
+    operation: forceSuspend
   usedIf:
     property: "State"
     values:
@@ -101,9 +124,17 @@ actions:
 
 - name: "gracefulShutdown"
   label: "Shutdown when work completes"
-  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.gracefulShutdown
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.shutdown
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+    descriptionHTML: >
+      <p>Gracefully transitions a server to the <code>SHUTDOWN</code> state.
+      The server completes all current work before it shuts down.</p>
+      <p>This method is the same as calling:</p>
+      <p><code>shutdown(timeout, ignoreSessions, false);</code></p>
+  mbeanOperation:
+    type: ServerLifeCycleRuntimeMBean
+    operation: shutdown_timeout_ignoreSessions
   usedIf:
     property: "State"
     values:
@@ -116,6 +147,15 @@ actions:
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceShutdown
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
+    descriptionHTML: >
+      <p>Immediately transitions a server to the <code>SHUTDOWN</code> state.
+      The server immediately terminates all current work,
+      moves through the <code>SHUTTING_DOWN</code> state,
+      and ends in the <code>SHUTDOWN</code> state.</p>
+      <p>You can forcefully shut down a server from any state except <code>UNKNOWN</code>.</p>
+  mbeanOperation:
+    type: ServerLifeCycleRuntimeMBean
+    operation: forceShutdown
   usedIf:
     property: "State"
     values:
@@ -134,6 +174,10 @@ actions:
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.restartSSL
   definition:
     type: "void"
+    descriptionHTML: >
+      <p>Restart all SSL channels on which the server is listening.
+      This could be necessary because of some change that the server is not aware of,
+      for instance updates to the keystore.</p>
     # If we don't customize restartSSL's roles, it will inherit CombinedServerRuntimeMBean's
     # roles which would allow Operator and Admin.
     # However, restartSSL delegates to ServerRunimeMBean.restartSSLChannels which can only be accessed by Admin.
@@ -141,6 +185,9 @@ actions:
     roles:
       allowed:
       - Admin
+  mbeanOperation:
+    type: ServerRuntimeMBean
+    operation: restartSSLChannels
   usedIf:
     property: "State"
     values:

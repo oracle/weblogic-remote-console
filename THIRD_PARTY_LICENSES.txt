@@ -39,6 +39,10 @@ Copyright (c) 2007- Tatu Saloranta, tatu.saloranta@iki.fi
 com.fasterxml.jackson.core-jackson-databind
   (no copyright notices found)
 
+crc-32
+   2. Grant of Copyright License. Subject to the terms and conditions of
+   Copyright (C) 2014-present   SheetJS LLC
+
 detect-libc
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright {yyyy} {name of copyright owner}
@@ -62,9 +66,10 @@ io.helidon.microprofile.server-helidon-microprofile-server
 Copyright (c) 2018, 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2022 Oracle and/or its affiliates.
 Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
-Copyright (c) 2019, 2021 Oracle and/or its affiliates.
-Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2019, 2023 Oracle and/or its affiliates.
+Copyright (c) 2019, 2023 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2021 Oracle and/or its affiliates.
+Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 Copyright (c) 2018, 2021 Oracle and/or its affiliates.
 
@@ -90,6 +95,293 @@ org.yaml-snakeyaml
 Copyright (c) 2008, SnakeYAML
 Copyright 2003-2010 Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland
 Copyright (c) 2008 Google Inc.
+-------- Dependencies Summary
+com.fasterxml.jackson.core:jackson-annotations:2.13.4
+com.fasterxml.jackson.core:jackson-core:2.13.4
+com.fasterxml.jackson.core:jackson-databind:2.13.4.2
+io.helidon.bundles:helidon-bundles-security:2.6.0
+io.helidon.common:helidon-common-configurable:2.6.0
+io.helidon.common:helidon-common-context:2.6.0
+io.helidon.common:helidon-common-crypto:2.6.0
+io.helidon.common:helidon-common-http:2.6.0
+io.helidon.common:helidon-common-key-util:2.6.0
+io.helidon.common:helidon-common-mapper:2.6.0
+io.helidon.common:helidon-common-media-type:2.6.0
+io.helidon.common:helidon-common-reactive:2.6.0
+io.helidon.common:helidon-common-service-loader:2.6.0
+io.helidon.common:helidon-common:2.6.0
+io.helidon.config:helidon-config-encryption:2.6.0
+io.helidon.config:helidon-config-metadata:2.6.0
+io.helidon.config:helidon-config-mp:2.6.0
+io.helidon.config:helidon-config-object-mapping:2.6.0
+io.helidon.config:helidon-config-yaml-mp:2.6.0
+io.helidon.config:helidon-config-yaml:2.6.0
+io.helidon.config:helidon-config:2.6.0
+io.helidon.fault-tolerance:helidon-fault-tolerance:2.6.0
+io.helidon.health:helidon-health-checks:2.6.0
+io.helidon.health:helidon-health-common:2.6.0
+io.helidon.health:helidon-health:2.6.0
+io.helidon.jersey:helidon-jersey-client:2.6.0
+io.helidon.jersey:helidon-jersey-common:2.6.0
+io.helidon.jersey:helidon-jersey-media-jsonp:2.6.0
+io.helidon.jersey:helidon-jersey-server:2.6.0
+io.helidon.logging:helidon-logging-common:2.6.0
+io.helidon.media:helidon-media-common:2.6.0
+io.helidon.media:helidon-media-jsonp:2.6.0
+io.helidon.metrics:helidon-metrics-api:2.6.0
+io.helidon.metrics:helidon-metrics-service-api:2.6.0
+io.helidon.metrics:helidon-metrics:2.6.0
+io.helidon.microprofile.bundles:helidon-microprofile-core:2.6.0
+io.helidon.microprofile.bundles:helidon-microprofile:2.6.0
+io.helidon.microprofile.cdi:helidon-microprofile-cdi:2.6.0
+io.helidon.microprofile.config:helidon-microprofile-config:2.6.0
+io.helidon.microprofile.health:helidon-microprofile-health:2.6.0
+io.helidon.microprofile.jwt:helidon-microprofile-jwt-auth:2.6.0
+io.helidon.microprofile.metrics:helidon-microprofile-metrics:2.6.0
+io.helidon.microprofile.openapi:helidon-microprofile-openapi:2.6.0
+io.helidon.microprofile.rest-client:helidon-microprofile-rest-client:2.6.0
+io.helidon.microprofile.server:helidon-microprofile-server:2.6.0
+io.helidon.microprofile.tracing:helidon-microprofile-tracing:2.6.0
+io.helidon.microprofile.weld:weld-core-impl:2.6.0
+io.helidon.microprofile.weld:weld-se-core:2.6.0
+io.helidon.microprofile:helidon-microprofile-fault-tolerance:2.6.0
+io.helidon.microprofile:helidon-microprofile-security:2.6.0
+io.helidon.openapi:helidon-openapi:2.6.0
+io.helidon.security.abac:helidon-security-abac-policy:2.6.0
+io.helidon.security.abac:helidon-security-abac-role:2.6.0
+io.helidon.security.abac:helidon-security-abac-scope:2.6.0
+io.helidon.security.abac:helidon-security-abac-time:2.6.0
+io.helidon.security.integration:helidon-security-integration-common:2.6.0
+io.helidon.security.integration:helidon-security-integration-jersey-client:2.6.0
+io.helidon.security.integration:helidon-security-integration-jersey:2.6.0
+io.helidon.security.integration:helidon-security-integration-webserver:2.6.0
+io.helidon.security.providers:helidon-security-providers-abac:2.6.0
+io.helidon.security.providers:helidon-security-providers-common:2.6.0
+io.helidon.security.providers:helidon-security-providers-header:2.6.0
+io.helidon.security.providers:helidon-security-providers-http-auth:2.6.0
+io.helidon.security.providers:helidon-security-providers-http-sign:2.6.0
+io.helidon.security.providers:helidon-security-providers-jwt:2.6.0
+io.helidon.security.providers:helidon-security-providers-oidc-common:2.6.0
+io.helidon.security.providers:helidon-security-providers-oidc:2.6.0
+io.helidon.security:helidon-security-annotations:2.6.0
+io.helidon.security:helidon-security-jwt:2.6.0
+io.helidon.security:helidon-security-util:2.6.0
+io.helidon.security:helidon-security:2.6.0
+io.helidon.service-common:helidon-service-common-rest-cdi:2.6.0
+io.helidon.service-common:helidon-service-common-rest:2.6.0
+io.helidon.tracing:helidon-tracing-config:2.6.0
+io.helidon.tracing:helidon-tracing-jersey-client:2.6.0
+io.helidon.tracing:helidon-tracing-jersey:2.6.0
+io.helidon.tracing:helidon-tracing-tracer-resolver:2.6.0
+io.helidon.tracing:helidon-tracing:2.6.0
+io.helidon.webclient:helidon-webclient-jaxrs:2.6.0
+io.helidon.webclient:helidon-webclient-security:2.6.0
+io.helidon.webclient:helidon-webclient-tracing:2.6.0
+io.helidon.webclient:helidon-webclient:2.6.0
+io.helidon.webserver:helidon-webserver-cors:2.6.0
+io.helidon.webserver:helidon-webserver-jersey:2.6.0
+io.helidon.webserver:helidon-webserver-static-content:2.6.0
+io.helidon.webserver:helidon-webserver:2.6.0
+io.netty:netty-buffer:4.1.86.Final
+io.netty:netty-codec-dns:4.1.86.Final
+io.netty:netty-codec-http2:4.1.86.Final
+io.netty:netty-codec-http:4.1.86.Final
+io.netty:netty-codec-socks:4.1.86.Final
+io.netty:netty-codec:4.1.86.Final
+io.netty:netty-common:4.1.86.Final
+io.netty:netty-handler-proxy:4.1.86.Final
+io.netty:netty-handler:4.1.86.Final
+io.netty:netty-resolver-dns:4.1.86.Final
+io.netty:netty-resolver:4.1.86.Final
+io.netty:netty-transport-native-unix-common:4.1.86.Final
+io.netty:netty-transport:4.1.86.Final
+io.opentracing.contrib:opentracing-tracerresolver:0.1.8
+io.opentracing:opentracing-api:0.33.0
+io.opentracing:opentracing-noop:0.33.0
+io.opentracing:opentracing-util:0.33.0
+io.smallrye:smallrye-open-api-jaxrs:2.0.26
+jakarta.enterprise:jakarta.enterprise.cdi-api:2.0.2
+jakarta.inject:jakarta.inject-api:1.0
+jakarta.json.bind:jakarta.json.bind-api:1.0.2
+jakarta.validation:jakarta.validation-api:2.0.2
+org.apache.lucene:lucene-analyzers-common:8.11.1
+org.apache.lucene:lucene-core:9.0.0
+org.apache.lucene:lucene-queries:9.0.0
+org.apache.lucene:lucene-queryparser:9.0.0
+org.apache.lucene:lucene-sandbox:9.0.0
+org.eclipse.microprofile.config:microprofile-config-api:1.4
+org.eclipse.microprofile.fault-tolerance:microprofile-fault-tolerance-api:2.1.1
+org.eclipse.microprofile.health:microprofile-health-api:2.2
+org.eclipse.microprofile.jwt:microprofile-jwt-auth-api:1.1.1
+org.eclipse.microprofile.metrics:microprofile-metrics-api:2.3.2
+org.eclipse.microprofile.opentracing:microprofile-opentracing-api:1.3.3
+org.eclipse.microprofile.rest.client:microprofile-rest-client-api:2.0
+org.glassfish.hk2:osgi-resource-locator:1.0.3
+org.javassist:javassist:3.25.0-GA
+org.jboss.classfilewriter:jboss-classfilewriter:1.2.5.Final
+org.jboss.logging:jboss-logging:3.4.1.Final
+org.jboss.weld.environment:weld-environment-common:3.1.6.Final
+org.jboss.weld:weld-api:3.1.SP2
+org.jboss.weld:weld-spi:3.1.SP2
+org.jboss:jandex:2.3.1.Final
+org.osgi:org.osgi.annotation.versioning:1.0.0
+org.reactivestreams:reactive-streams:1.0.3
+-------- License used by Dependencies
+SPDX:Apache-2.0
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+   1. Definitions.
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+----------------------- Dependencies Grouped by License ------------
+
+readdir-glob
+   2. Grant of Copyright License. Subject to the terms and conditions of
+   Copyright 2020 Yann Armelin
 
 rxjs
  2. Grant of Copyright License. Subject to the terms and conditions of
@@ -97,6 +389,12 @@ rxjs
 
 tunnel-agent
 No Copyright
+
+websocket-driver
+Copyright 2010-2020 James Coglan
+
+websocket-extensions
+Copyright 2014-2020 James Coglan
 
 com.fasterxml.jackson.jaxrs-jackson-jaxrs-json-provider
 This software has different license text, which is included at the end of this document
@@ -281,10 +579,71 @@ SPDX:Apache-2.0
       of your accepting any such warranty or additional liability.
 
 -- --------------------------------------------------------------------------------
+The following packages are licensed under The 2-Clause BSD License, Version 2.0
+
+css-select
+Copyright (c) Felix Böhm
+
+css-what
+Copyright (c) Felix Böhm
+
+domelementtype
+Copyright (c) Felix Böhm
+
+domhandler
+Copyright (c) Felix Böhm
+
+domutils
+Copyright (c) Felix Böhm
+
+entities
+Copyright (c) Felix Böhm
+
+extract-zip
+Copyright (c) 2014 Max Ogden and other contributors
+
+nth-check
+Copyright (c) Felix Böhm
+
+terser
+Copyright 2012-2018 (c) Mihai Bazon <mihai.bazon@gmail.com>
+will keep comments like `/*! Copyright Notice */`.
+
+
+
+The 2-Clause BSD License, Version 2.0
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this
+   list of conditions and the following disclaimer in the documentation and/or
+   other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+-- --------------------------------------------------------------------------------
 The following packages are licensed under The 3-Clause BSD License, Version 2.0
 
 ieee754
 Copyright 2008 Fair Oaks Labs, Inc.
+
+qs
+Copyright (c) 2014, Nathan LaFreniere and other [contributors](https://github.com/ljharb/qs/graphs/contributors)
+
+source-map
+Copyright (c) 2009-2011, Mozilla Foundation and contributors
 
 
 
@@ -315,6 +674,139 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+-- --------------------------------------------------------------------------------
+The following packages are licensed under CC0 1.0 Universal Public Domain Dedication
+
+mdn-data
+  any person's Copyright and Related Rights in the Work. Further, Affirmer
+1. Copyright and Related Rights. A Work made available under CC0 may be
+Copyright and Related Rights in the Work and the meaning and intended legal
+Copyright and Related Rights in the Work or (ii) assert any associated claims
+Related Rights"). Copyright and Related Rights include, but are not limited
+Work (the "Affirmer"), to the extent that he or she is an owner of Copyright
+exclusive Copyright and Related Rights (defined below) upon the creator and
+protected by copyright and related or neighboring rights ("Copyright and
+unconditional license to exercise Affirmer's Copyright and Related Rights in
+unconditionally waives, abandons, and surrenders all of Affirmer's Copyright
+
+
+
+CC0 1.0 Universal Public Domain Dedication
+
+Statement of Purpose
+
+The laws of most jurisdictions throughout the world automatically confer
+exclusive Copyright and Related Rights (defined below) upon the creator and
+subsequent owner(s) (each and all, an "owner") of an original work of
+authorship and/or a database (each, a "Work").
+
+Certain owners wish to permanently relinquish those rights to a Work for the
+purpose of contributing to a commons of creative, cultural and scientific
+works ("Commons") that the public can reliably and without fear of later
+claims of infringement build upon, modify, incorporate in other works, reuse
+and redistribute as freely as possible in any form whatsoever and for any
+purposes, including without limitation commercial purposes. These owners may
+contribute to the Commons to promote the ideal of a free culture and the
+further production of creative, cultural and scientific works, or to gain
+reputation or greater distribution for their Work in part through the use and
+efforts of others.
+
+For these and/or other purposes and motivations, and without any expectation
+of additional consideration or compensation, the person associating CC0 with a
+Work (the "Affirmer"), to the extent that he or she is an owner of Copyright
+and Related Rights in the Work, voluntarily elects to apply CC0 to the Work
+and publicly distribute the Work under its terms, with knowledge of his or her
+Copyright and Related Rights in the Work and the meaning and intended legal
+effect of CC0 on those rights.
+
+1. Copyright and Related Rights. A Work made available under CC0 may be
+   protected by copyright and related or neighboring rights ("Copyright and
+   Related Rights"). Copyright and Related Rights include, but are not limited
+   to, the following:
+
+  i. the right to reproduce, adapt, distribute, perform, display, communicate,
+     and translate a Work;
+
+  ii. moral rights retained by the original author(s) and/or performer(s);
+
+  iii. publicity and privacy rights pertaining to a person's image or likeness
+       depicted in a Work;
+
+  iv. rights protecting against unfair competition in regards to a Work,
+      subject to the limitations in paragraph 4(a), below;
+
+  v. rights protecting the extraction, dissemination, use and reuse of data in
+     a Work;
+
+  vi. database rights (such as those arising under Directive 96/9/EC of the
+      European Parliament and of the Council of 11 March 1996 on the legal
+      protection of databases, and under any national implementation thereof,
+      including any amended or successor version of such directive); and
+
+  vii. other similar, equivalent or corresponding rights throughout the world
+       based on applicable law or treaty, and any national implementations thereof.
+
+2. Waiver. To the greatest extent permitted by, but not in contravention of,
+   applicable law, Affirmer hereby overtly, fully, permanently, irrevocably and
+   unconditionally waives, abandons, and surrenders all of Affirmer's Copyright
+   and Related Rights and associated claims and causes of action, whether now
+   known or unknown (including existing as well as future claims and causes of
+   action), in the Work (i) in all territories worldwide, (ii) for the maximum
+   duration provided by applicable law or treaty (including future time
+   extensions), (iii) in any current or future medium and for any number of
+   copies, and (iv) for any purpose whatsoever, including without limitation
+   commercial, advertising or promotional purposes (the "Waiver"). Affirmer makes
+   the Waiver for the benefit of each member of the public at large and to the
+   detriment of Affirmer's heirs and successors, fully intending that such Waiver
+   shall not be subject to revocation, rescission, cancellation, termination, or
+   any other legal or equitable action to disrupt the quiet enjoyment of the Work
+   by the public as contemplated by Affirmer's express Statement of Purpose.
+
+3. Public License Fallback. Should any part of the Waiver for any reason be
+   judged legally invalid or ineffective under applicable law, then the Waiver
+   shall be preserved to the maximum extent permitted taking into account
+   Affirmer's express Statement of Purpose. In addition, to the extent the Waiver
+   is so judged Affirmer hereby grants to each affected person a royalty-free,
+   non transferable, non sublicensable, non exclusive, irrevocable and
+   unconditional license to exercise Affirmer's Copyright and Related Rights in
+   the Work (i) in all territories worldwide, (ii) for the maximum duration
+   provided by applicable law or treaty (including future time extensions), (iii)
+   in any current or future medium and for any number of copies, and (iv) for any
+   purpose whatsoever, including without limitation commercial, advertising or
+   promotional purposes (the "License"). The License shall be deemed effective as
+   of the date CC0 was applied by Affirmer to the Work. Should any part of the
+   License for any reason be judged legally invalid or ineffective under
+   applicable law, such partial invalidity or ineffectiveness shall not
+   invalidate the remainder of the License, and in such case Affirmer hereby
+   affirms that he or she will not (i) exercise any of his or her remaining
+   Copyright and Related Rights in the Work or (ii) assert any associated claims
+   and causes of action with respect to the Work, in either case contrary to
+   Affirmer's express Statement of Purpose.
+
+4. Limitations and Disclaimers.
+
+  a. No trademark or patent rights held by Affirmer are waived, abandoned,
+     surrendered, licensed or otherwise affected by this document.
+
+  b. Affirmer offers the Work as-is and makes no representations or warranties
+     of any kind concerning the Work, express, implied, statutory or otherwise,
+     including without limitation warranties of title, merchantability, fitness
+     for a particular purpose, non infringement, or the absence of latent or
+     other defects, accuracy, or the present or absence of errors, whether or not
+     discoverable, all to the greatest extent permissible under applicable law.
+
+  c. Affirmer disclaims responsibility for clearing rights of other persons
+     that may apply to the Work or any use thereof, including without limitation
+     any person's Copyright and Related Rights in the Work. Further, Affirmer
+     disclaims responsibility for obtaining any necessary consents, permissions
+     or other rights required for any use of the Work.
+
+  d. Affirmer understands and acknowledges that Creative Commons is not a
+     party to this document and has no duty or obligation with respect to this
+     CC0 or use of the Work.
+
+For more information, please see
+<http://creativecommons.org/publicdomain/zero/1.0/>
 -- --------------------------------------------------------------------------------
 The following packages are licensed under Eclipse Public License - v 2.0
 
@@ -1055,8 +1547,24 @@ Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
 -- --------------------------------------------------------------------------------
 The following packages are licensed under ISC License
 
+anymatch
+Copyright (c) 2019 Elan Shanker, Paul Miller (https://paulmillr.com)
+
+boolbase
+Copyright (c) 2014-2015, Felix Boehm <me@feedic.com>
+
+fs.realpath
+Copyright Joyent, Inc. and other Node contributors.
+Copyright (c) Isaac Z. Schlueter and Contributors
+
+glob
+Copyright (c) Isaac Z. Schlueter and Contributors
+
 graceful-fs
 Copyright (c) 2011-2022 Isaac Z. Schlueter, Ben Noordhuis, and Contributors
+
+inflight
+Copyright (c) Isaac Z. Schlueter
 
 inherits
 Copyright (c) Isaac Z. Schlueter
@@ -1070,12 +1578,18 @@ Copyright (c) Isaac Z. Schlueter and Contributors
 lru-cache
 Copyright (c) Isaac Z. Schlueter and Contributors
 
+minimatch
+Copyright (c) Isaac Z. Schlueter and Contributors
+
 once
 Copyright (c) Isaac Z. Schlueter and Contributors
 
 sax
 Copyright Mathias Bynens <https://mathiasbynens.be/>
 Copyright (c) Isaac Z. Schlueter and Contributors
+
+setprototypeof
+Copyright (c) 2015, Wes Todd
 
 wrappy
 Copyright (c) Isaac Z. Schlueter and Contributors
@@ -1084,6 +1598,9 @@ yallist
 Copyright (c) Isaac Z. Schlueter and Contributors
 
 yallist
+Copyright (c) Isaac Z. Schlueter and Contributors
+
+@trysound/sax
 Copyright (c) Isaac Z. Schlueter and Contributors
 
 
@@ -1105,11 +1622,58 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -- --------------------------------------------------------------------------------
 The following packages are licensed under The MIT License
 
+accepts
+Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+acorn
+Copyright (C) 2012-2022 by various contributors (see AUTHORS)
+
+archiver-utils
+Copyright (c) 2015 Chris Talkington.
+
+archiver
+Copyright (c) 2012-2014 Chris Talkington, contributors.
+
+array-flatten
+Copyright (c) 2014 Blake Embrey (hello@blakeembrey.com)
+
+async
+Copyright (c) 2010-2018 Caolan McMahon
+
+asynckit
+Copyright (c) 2016 Alex Indigo
+
+balanced-match
+Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
+
 base64-js
 Copyright (c) 2014 Jameson Little
 
+batch
+Copyright (c) 2013 TJ Holowaychuk <tj@vision-media.ca>
+
+binary-extensions
+Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
+
 bl
 Copyright (c) 2013-2019 bl contributors
+
+body-parser
+Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+body
+Copyright (c) 2012 Raynos.
+
+brace-expansion
+Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
+
+braces
+Copyright (c) 2014-2018, Jon Schlinkert.
+
+buffer-from
+Copyright (c) 2016, 2018 Linus Unnebäck
 
 buffer
 Copyright (c) Feross Aboukhadijeh, and other contributors.
@@ -1117,8 +1681,59 @@ Copyright (c) Feross Aboukhadijeh, and other contributors.
 builder-util-runtime
 Copyright (c) 2015 Loopline Systems
 
+bytes
+Copyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>
+Copyright (c) 2015 Jed Watson <jed.watson@me.com>
+
+chokidar
+Copyright (c) 2012-2019 Paul Miller (https://paulmillr.com), Elan Shanker
+
+combined-stream
+Copyright (c) 2011 Debuggable Limited <felix@debuggable.com>
+
+commander
+Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
+
+compress-commons
+Copyright (c) 2014 Chris Talkington, contributors.
+
+concat-map
+No Copyright
+
+concat-stream
+Copyright (c) 2013 Max Ogden
+
+connect-livereload
+Copyright (c) 2013 intesso
+
+content-disposition
+Copyright (c) 2014-2017 Douglas Christopher Wilson
+
+content-type
+Copyright (c) 2015 Douglas Christopher Wilson
+
+continuable-cache
+Copyright (c) 2013 Colingo.
+
+cookie-signature
+Copyright (c) 2012–2019 LearnBoost <tj@learnboost.com> and other contributors
+
+cookie
+Copyright (c) 2012-2014 Roman Shtylman <shtylman@gmail.com>
+Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+
 core-util-is
 Copyright Node.js contributors. All rights reserved.
+
+crc32-stream
+Copyright (c) 2014 Chris Talkington, contributors.
+
+css-tree
+Copyright (C) 2016-2019 by Roman Dvornov
+
+csso
+Copyright (C) 2011-2015 by Sergey Kryzhanovsky
+Copyright (C) 2015-2019 by Roman Dvornov
 
 debug
 Copyright (c) 2014-2017 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
@@ -1131,6 +1746,21 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 deep-extend
 Copyright (c) 2013-2018, Viacheslav Lotsmanov
 
+delayed-stream
+Copyright (c) 2011 Debuggable Limited <felix@debuggable.com>
+
+depd
+Copyright (c) 2014-2017 Douglas Christopher Wilson
+
+destroy
+Copyright (c) 2014 Jonathan Ong me@jongleberry.com
+
+dom-serializer
+Copyright (c) 2014 The cheeriojs contributors
+
+ee-first
+Copyright (c) 2014 Jonathan Ong me@jongleberry.com
+
 electron-prompt
 Copyright (c) 2020 p-sam
 
@@ -1140,22 +1770,98 @@ Copyright (c) 2015 Loopline Systems
 emoji-regex
 Copyright Mathias Bynens <https://mathiasbynens.be/>
 
+encodeurl
+Copyright (c) 2016 Douglas Christopher Wilson
+
 end-of-stream
 Copyright (c) 2014 Mathias Buus
+
+error
+No Copyright
+
+escape-html
+Copyright (c) 2012-2013 TJ Holowaychuk
+Copyright (c) 2015 Andreas Lubbe
+Copyright (c) 2015 Tiancheng "Timothy" Gu
+
+etag
+Copyright (c) 2014-2016 Douglas Christopher Wilson
 
 expand-template
 Copyright (c) 2018 Lars-Magnus Skog
 
+express
+Copyright (c) 2009-2014 TJ Holowaychuk <tj@vision-media.ca>
+Copyright (c) 2013-2014 Roman Shtylman <shtylman+expressjs@gmail.com>
+Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+faye-websocket
+Copyright (c) 2010-2015 James Coglan
+
+fill-range
+Copyright (c) 2014-present, Jon Schlinkert.
+
+finalhandler
+Copyright (c) 2014-2017 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+form-data
+Copyright (c) 2012 Felix Geisendörfer (felix@debuggable.com) and contributors
+
+forwarded
+Copyright (c) 2014-2017 Douglas Christopher Wilson
+
+fresh
+Copyright (c) 2012 TJ Holowaychuk <tj@vision-media.ca>
+Copyright (c) 2016-2017 Douglas Christopher Wilson <doug@somethingdoug.com>
+
 fs-constants
 Copyright (c) 2018 Mathias Buus
+
+gaze
+Copyright (c) 2018 Kyle Robinson Young
 
 github-from-package
 No Copyright
 
+globule
+Copyright (c) 2018 "Cowboy" Ben Alman
+Copyright (c) 2018 "Cowboy" Ben Alman  
+
 hammerjs
 Copyright (C) 2011-2014 by Jorik Tangelder (Eight Media)
 
+http-errors
+Copyright (c) 2014 Jonathan Ong me@jongleberry.com
+Copyright (c) 2016 Douglas Christopher Wilson doug@somethingdoug.com
+
+http-parser-js
+  Copyright Joyent, Inc. and other Node contributors. All rights reserved.
+  Copyright Node.js contributors. All rights reserved.
+  Copyright io.js contributors. All rights reserved.
+Copyright (c) 2015 Tim Caswell (https://github.com/creationix) and other
+
+iconv-lite
+Copyright (c) 2011 Alexander Shtuchkin
+
+ipaddr.js
+Copyright (C) 2011-2017 whitequark <whitequark@whitequark.org>
+
+is-binary-path
+Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
+
+is-extglob
+Copyright (c) 2014-2016, Jon Schlinkert
+
 is-fullwidth-code-point
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+is-glob
+Copyright (c) 2014-2017, Jon Schlinkert.
+
+is-number
+Copyright (c) 2014-present, Jon Schlinkert.
+
+is-wsl
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 jquery-ui
@@ -1177,15 +1883,69 @@ Copyright (c) 2010 Steven Sanderson, the Knockout.js team, and other contributor
 lazy-val
 No Copyright
 
+lazystream
+Copyright (c) 2013 J. Pommerening, contributors.
+
+livereload-js
+Copyright (c) 2010-2012 Andrey Tarantsov
+
+lodash.defaults
+Copyright and related rights for sample code are waived via CC0. Sample
+Copyright jQuery Foundation and other contributors <https://jquery.org/>
+
+lodash.difference
+Copyright jQuery Foundation and other contributors <https://jquery.org/>
+
 lodash.escaperegexp
+Copyright jQuery Foundation and other contributors <https://jquery.org/>
+
+lodash.flatten
+Copyright and related rights for sample code are waived via CC0. Sample
 Copyright jQuery Foundation and other contributors <https://jquery.org/>
 
 lodash.isequal
 Copyright JS Foundation and other contributors <https://js.foundation/>
 Copyright and related rights for sample code are waived via CC0. Sample
 
+lodash.isfunction
+Copyright JS Foundation and other contributors <https://js.foundation/>
+
+lodash.isplainobject
+Copyright and related rights for sample code are waived via CC0. Sample
+Copyright jQuery Foundation and other contributors <https://jquery.org/>
+
+lodash.mergewith
+Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+
+lodash.remove
+Copyright jQuery Foundation and other contributors <https://jquery.org/>
+
+lodash.union
+Copyright jQuery Foundation and other contributors <https://jquery.org/>
+
+lodash
+Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+
+media-typer
+Copyright (c) 2014 Douglas Christopher Wilson
+
+merge-descriptors
+Copyright (c) 2013 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+methods
+Copyright (c) 2013-2014 TJ Holowaychuk <tj@vision-media.ca>
+Copyright (c) 2015-2016 Douglas Christopher Wilson <doug@somethingdoug.com>
+
 mgrs
 Copyright (c) 2012, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral, Calvin Metcalf
+
+mime-db
+Copyright (c) 2014 Jonathan Ong me@jongleberry.com
+
+mime-types
+Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 minimist
 No Copyright
@@ -1193,17 +1953,54 @@ No Copyright
 mkdirp-classic
 Copyright (c) 2020 James Halliday (mail@substack.net) and Mathias Buus
 
+mkdirp
+Copyright 2010 James Halliday (mail@substack.net)
+Copyright James Halliday (mail@substack.net) and Isaac Z. Schlueter (i@izs.me)
+
 ms
 Copyright (c) 2016 Zeit, Inc.
+
+nanocolors
+Copyright 2021 Jorge Bucaran <mail@jorgebucaran.com>,
 
 napi-build-utils
 Copyright (c) 2018 inspiredware
 
+negotiator
+Copyright (c) 2012-2014 Federico Romero
+Copyright (c) 2012-2014 Isaac Z. Schlueter
+Copyright (c) 2014-2015 Douglas Christopher Wilson
+
 node-abi
 Copyright (c) 2016 Lukas Geiger
 
+normalize-path
+Copyright (c) 2014-2018, Jon Schlinkert.
+Copyright © 2018, [Jon Schlinkert](https://github.com/jonschlinkert).
+
 object-assign
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+on-finished
+Copyright (c) 2013 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2014 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+open
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+parseurl
+Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2014-2017 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+path-is-absolute
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+path-to-regexp
+Copyright (c) 2014 Blake Embrey (hello@blakeembrey.com)
+
+picomatch
+Copyright (c) 2017-present, Jon Schlinkert.
+Copyright © 2017-present, [Jon Schlinkert](https://github.com/jonschlinkert).
 
 preact
 Copyright (c) 2015-present Jason Miller
@@ -1217,8 +2014,19 @@ Copyright (c) 2015 Calvin Metcalf
 proj4
 Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
 
+proxy-addr
+Copyright (c) 2014-2016 Douglas Christopher Wilson
+
 pump
 Copyright (c) 2014 Mathias Buus
+
+range-parser
+Copyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>
+Copyright (c) 2015-2016 Douglas Christopher Wilson <doug@somethingdoug.com
+
+raw-body
+Copyright (c) 2013-2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 rc
 Copyright (c) 2011 Dominic Tarr
@@ -1228,10 +2036,14 @@ readable-stream
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
 Copyright Node.js contributors. All rights reserved.
 
+readdirp
+Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
+
 require-css
 Copyright (C) 2013 Guy Bedford
 
 requirejs-text
+Copyright and related rights for sample code are waived via CC0. Sample
 Copyright jQuery Foundation and other contributors, https://jquery.org/
 
 requirejs
@@ -1240,6 +2052,28 @@ Copyright jQuery Foundation and other contributors, https://jquery.org/
 safe-buffer
 Copyright (c) Feross Aboukhadijeh
 MIT. Copyright (C) [Feross Aboukhadijeh](http://feross.org)
+
+safe-json-parse
+Copyright (c) 2013 Raynos.
+
+safer-buffer
+Copyright (c) 2018 Nikita Skovoroda <chalkerx@gmail.com>
+
+send
+Copyright (c) 2012 TJ Holowaychuk
+Copyright (c) 2014-2016 Douglas Christopher Wilson
+
+serve-index
+Copyright (c) 2010 Sencha Inc.
+Copyright (c) 2011 LearnBoost
+Copyright (c) 2011 TJ Holowaychuk
+Copyright (c) 2014-2015 Douglas Christopher Wilson
+
+serve-static
+Copyright (c) 2010 Sencha Inc.
+Copyright (c) 2011 LearnBoost
+Copyright (c) 2011 TJ Holowaychuk
+Copyright (c) 2014-2016 Douglas Christopher Wilson
 
 signals
 No Copyright
@@ -1251,6 +2085,19 @@ simple-get
 Copyright (c) Feross Aboukhadijeh
 MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org).
 
+source-map-support
+Copyright (c) 2014 Evan Wallace
+
+stable
+Copyright (C) 2018 Angry Bytes and contributors.
+
+statuses
+Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2016 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+string-template
+Copyright (c) 2013 Matt Esch.
+
 string-width
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
@@ -1258,20 +2105,71 @@ string_decoder
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
 Copyright Node.js contributors. All rights reserved.
 
+svgo
+## License and Copyright
+Copyright (c) Kir Belevich
+
 tar-fs
 Copyright (c) 2014 Mathias Buus
 
 tar-stream
 Copyright (c) 2014 Mathias Buus
 
+tiny-lr
+Copyright (c) 2012-2016 Mickael Daniel
+
+to-regex-range
+Copyright (c) 2015-present, Jon Schlinkert.
+
+toidentifier
+Copyright (c) 2016 Douglas Christopher Wilson <doug@somethingdoug.com>
+
+type-is
+Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+
 typed-emitter
 Copyright (c) 2018 Andy Wermke
+
+typedarray
+Copyright (c) 2010, Linden Research, Inc.
+Copyright (c) 2012, Joshua Bell
+
+underscore
+Copyright (c) 2009-2022 Jeremy Ashkenas, Julian Gonggrijp, and DocumentCloud and Investigative Reporters & Editors
+
+unpipe
+Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 util-deprecate
 Copyright (c) 2014 Nathan Rajlich <nathan@tootallnate.net>
 
+utils-merge
+Copyright (c) 2013-2017 Jared Hanson
+
+vary
+Copyright (c) 2014-2017 Douglas Christopher Wilson
+
 wkt-parser
 Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
+
+zip-stream
+Copyright (c) 2014 Chris Talkington, contributors.
+
+@jridgewell/resolve-uri
+Copyright 2019 Justin Ridgewell <jridgewell@google.com>
+
+@jridgewell/set-array
+Copyright 2022 Justin Ridgewell <jridgewell@google.com>
+
+@jridgewell/source-map
+Copyright 2019 Justin Ridgewell <jridgewell@google.com>
+
+@jridgewell/sourcemap-codec
+Copyright (c) 2015 Rich Harris
+
+@jridgewell/trace-mapping
+Copyright 2022 Justin Ridgewell <justin@ridgewell.name>
 
 @types/geojson
     Copyright (c) Microsoft Corporation.
@@ -1507,6 +2405,15 @@ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -- --------------------------------------------------------------------------------
 The following packages are licensed under The Universal Permissive License (UPL), Version 1.0
 
+@oracle/oraclejet-preact
+Copyright (c) 2013-2020 Scott Sauyet and Michael Hurley
+Copyright (c) 2018 Andrew Branch
+Copyright (c) 2021 Floating UI contributors
+
+@oracle/oraclejet-tooling
+Copyright (c) 2023 Oracle and/or its affiliates and released  under the 
+Copyright (c) 2023 Oracle and/or its affiliates.
+
 @oracle/oraclejet
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright [yyyy] [name of copyright owner]
@@ -1522,9 +2429,8 @@ Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons
 Copyright (c) 2015-present Jason Miller
 Copyright (c) 2017 Chai.js Assertion Library
 Copyright (c) 2017 Don McCurdy
-Copyright (c) 2022 Oracle and/or its affiliates and released  under the 
-Copyright (c) 2022 Oracle and/or its affiliates.
-Copyright (c) __YEARS__, __NAMES__
+Copyright (c) 2023 Oracle and/or its affiliates and released under the
+Copyright (c) 2023 Oracle and/or its affiliates.
 Copyright 2012 Igor Vaynberg
 Copyright 2014, ZURB
 Copyright OpenJS Foundation and other contributors, https://openjsf.org/
@@ -1673,11 +2579,13 @@ Copyright (c) 2020 Oracle and/or its affiliates.
 io.helidon.config-helidon-config-yaml-mp
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2022 Oracle and/or its affiliates.
+Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.config-helidon-config-yaml
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2022 Oracle and/or its affiliates.
+Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.fault-tolerance-helidon-fault-tolerance
@@ -1718,6 +2626,7 @@ Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 
 io.helidon.metrics-helidon-metrics-api
 Copyright (c) 2021 Oracle and/or its affiliates.
+Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 
 io.helidon.metrics-helidon-metrics-service-api
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
@@ -1725,6 +2634,7 @@ Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.metrics-helidon-metrics
 Copyright (c) 2021 Oracle and/or its affiliates.
+Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 
 io.helidon.microprofile.cdi-helidon-microprofile-cdi
 Copyright (c) 2020 Oracle and/or its affiliates. All rights reserved.
@@ -1974,6 +2884,9 @@ Copyright 2008, Red Hat Middleware LLC, and individual contributors
 org.reactivestreams-reactive-streams
   (no copyright notices found)
 
+sumchecker
+Copyright 2016, 2017, 2019, 2021 Mark Lee and contributors
+
 com.fasterxml.jackson.jaxrs-jackson-jaxrs-base
 This software has different license text, which is included at the end of this document
   (no copyright notices found)
@@ -2155,6 +3068,81 @@ SPDX:Apache-2.0
       defend, and hold each Contributor harmless for any liability
       incurred by, or claims asserted against, such Contributor by reason
       of your accepting any such warranty or additional liability.
+
+-- --------------------------------------------------------------------------------
+The following packages are licensed under The 2-Clause BSD License, Version 2.0
+
+extract-zip
+Copyright (c) 2014 Max Ogden and other contributors
+
+http-cache-semantics
+Copyright 2016-2018 Kornel Lesiński
+
+
+
+The 2-Clause BSD License, Version 2.0
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this
+   list of conditions and the following disclaimer in the documentation and/or
+   other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+-- --------------------------------------------------------------------------------
+The following packages are licensed under The 3-Clause BSD License, Version 2.0
+
+global-agent
+Copyright (c) 2019, Gajus Kuizinas (http://gajus.com/)
+
+roarr
+Copyright (c) 2019, Gajus Kuizinas (http://gajus.com/)
+
+sprintf-js
+Copyright (c) 2007-2014, Alexandru Marasteanu <hello [at) alexei (dot] ro>
+Copyright (c) 2007-present, Alexandru Mărășteanu <hello@alexei.ro>
+
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+  - Neither the name of the Eclipse Foundation, Inc. nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -- --------------------------------------------------------------------------------
 The following packages are licensed under COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
@@ -3290,6 +4278,210 @@ Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
 
 
 -- --------------------------------------------------------------------------------
+The following packages are licensed under ISC License
+
+json-stringify-safe
+Copyright (c) Isaac Z. Schlueter and Contributors
+
+semver
+Copyright (c) Isaac Z. Schlueter and Contributors
+
+
+
+ISC License
+
+Permission to use, copy, modify, and/or distribute this software
+for any purpose with or without fee is hereby granted, provided
+that the above copyright notice and this permission notice
+appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE
+LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+-- --------------------------------------------------------------------------------
+The following packages are licensed under The MIT License
+
+boolean
+Copyright (c) 2014-2022 the native web.
+
+buffer-crc32
+Copyright (c) 2013 Brian J. Brennan
+
+cacheable-lookup
+Copyright (c) 2019 Szymon Marczak
+
+cacheable-request
+Copyright (c) 2017 Luke Childs
+
+clone-response
+Copyright (c) 2017 Luke Childs
+
+defer-to-connect
+Copyright (c) 2018 Szymon Marczak
+
+define-properties
+Copyright (C) 2015 Jordan Harband
+
+detect-node
+Copyright (c) 2017 Ilya Kantor
+
+electron
+Copyright (c) 2013-2020 GitHub Inc.
+Copyright (c) Electron contributors
+
+env-paths
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+es6-error
+Copyright (c) 2015 Ben Youngblood
+
+escape-string-regexp
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+
+fd-slicer
+Copyright (c) 2014 Andrew Kelley
+
+fs-extra
+Copyright (c) 2011-2017 JP Richardson
+
+function-bind
+Copyright (c) 2013 Raynos.
+
+get-intrinsic
+Copyright (c) 2020 Jordan Harband
+
+get-stream
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+globalthis
+Copyright (c) 2016 Jordan Harband
+
+got
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+has-property-descriptors
+Copyright (c) 2022 Inspect JS
+
+has-symbols
+Copyright (c) 2016 Jordan Harband
+
+has
+Copyright (c) 2013 Thiago de Arruda
+
+http2-wrapper
+Copyright (c) 2018 Szymon Marczak
+
+json-buffer
+Copyright (c) 2013 Dominic Tarr
+
+jsonfile
+Copyright (c) 2012-2015, JP Richardson <jprichardson@gmail.com>
+
+keyv
+Copyright (c) 2017 Luke Childs
+
+lowercase-keys
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+matcher
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+
+mimic-response
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+normalize-url
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+object-keys
+Copyright (C) 2013 Jordan Harband
+
+p-cancelable
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+pend
+Copyright (c) 2014 Andrew Kelley
+
+progress
+Copyright (c) 2017 TJ Holowaychuk <tj@vision-media.ca>
+
+quick-lru
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+resolve-alpn
+Copyright (c) 2018 Szymon Marczak
+
+responselike
+Copyright (c) 2017 Luke Childs
+
+semver-compare
+No Copyright
+
+serialize-error
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+
+universalify
+Copyright (c) 2017, Ryan Zimmerman <opensrc@ryanzim.com>
+
+yauzl
+Copyright (c) 2014 Josh Wolfe
+
+@electron/get
+Copyright (c) Contributors to the Electron project
+
+@sindresorhus/is
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+
+@szmarczak/http-timer
+Copyright (c) 2018 Szymon Marczak
+
+@types/cacheable-request
+    Copyright (c) Microsoft Corporation.
+
+@types/http-cache-semantics
+    Copyright (c) Microsoft Corporation.
+
+@types/keyv
+    Copyright (c) Microsoft Corporation.
+
+@types/node
+    Copyright (c) Microsoft Corporation.
+
+@types/node
+    Copyright (c) Microsoft Corporation.
+
+@types/responselike
+    Copyright (c) Microsoft Corporation. All rights reserved.
+
+@types/yauzl
+    Copyright (c) Microsoft Corporation.
+
+
+
+The MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-- --------------------------------------------------------------------------------
 The following packages are licensed under The Oracle Software License
 
 org.jvnet.mimepull-mimepull
@@ -3337,9 +4529,13 @@ Third Party Development Code Dependencies
 =========================================
 The following packages are licensed under Apache License, Version 2.0
 
-crc-32
+chromedriver
    2. Grant of Copyright License. Subject to the terms and conditions of
-   Copyright (C) 2014-present   SheetJS LLC
+   Copyright 2014 Giovanni Bassi and Elemar Jr.
+
+chromium-bidi
+   2. Grant of Copyright License. Subject to the terms and conditions of
+   Copyright [yyyy] [name of copyright owner]
 
 doctrine
 Copyright JS Foundation and other contributors, https://js.foundation
@@ -3358,20 +4554,15 @@ Copyright 2112 Matthew Eernisse (mde@fleegix.org)
 jake
 Copyright 2112 Matthew Eernisse (mde@fleegix.org)
 
+karma-log-reporter
+No Copyright
+
 log4js
 Copyright 2015 Gareth Jones (with contributions from many other people)
-
-puppeteer-core
-   2. Grant of Copyright License. Subject to the terms and conditions of
-   Copyright 2017 Google Inc.
 
 puppeteer
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright 2017 Google Inc.
-
-readdir-glob
-   2. Grant of Copyright License. Subject to the terms and conditions of
-   Copyright 2020 Yann Armelin
 
 selenium-webdriver
 Copyright 2016 Software Freedom Conservancy (SFC)
@@ -3379,20 +4570,11 @@ Copyright 2016 Software Freedom Conservancy (SFC)
 spdx-correct
 Copyright spdx-correct.js contributors
 
-sumchecker
-Copyright 2016, 2017, 2019, 2021 Mark Lee and contributors
-
 typescript
 Copyright (c) Microsoft Corporation. All rights reserved.
 
 validate-npm-package-license
 No Copyright
-
-websocket-driver
-Copyright 2010-2020 James Coglan
-
-websocket-extensions
-Copyright 2014-2020 James Coglan
 
 workerpool
    2. Grant of Copyright License. Subject to the terms and conditions of
@@ -3599,21 +4781,6 @@ SPDX:Apache-2.0
 -- --------------------------------------------------------------------------------
 The following packages are licensed under The 2-Clause BSD License, Version 2.0
 
-css-select
-Copyright (c) Felix Böhm
-
-css-what
-Copyright (c) Felix Böhm
-
-domelementtype
-Copyright (c) Felix Böhm
-
-domhandler
-Copyright (c) Felix Böhm
-
-domutils
-Copyright (c) Felix Böhm
-
 dotenv-expand
 Copyright (c) 2016, Scott Motte
 
@@ -3625,9 +4792,6 @@ Copyright (c) 2015, Scott Motte
 
 electron-osx-sign
 Copyright (c) 2015-2016 Zhuo Lu, Jason Hinkle, et al.
-
-entities
-Copyright (c) Felix Böhm
 
 escodegen
 Copyright (c) 2009-2011, Mozilla Foundation and contributors
@@ -3654,21 +4818,8 @@ Copyright (C) 2013 [Yusuke Suzuki](http://github.com/Constellation)
 extract-zip
 Copyright (c) 2014 Max Ogden and other contributors
 
-extract-zip
-Copyright (c) 2014 Max Ogden and other contributors
-
-http-cache-semantics
-Copyright 2016-2018 Kornel Lesiński
-
 normalize-package-data
 Copyright (c) Meryn Stol ("Author")
-
-nth-check
-Copyright (c) Felix Böhm
-
-terser
-Copyright 2012-2018 (c) Mihai Bazon <mihai.bazon@gmail.com>
-will keep comments like `/*! Copyright Notice */`.
 
 uglify-js
 Copyright 2012-2019 (c) Mihai Bazon <mihai.bazon@gmail.com>
@@ -3722,9 +4873,6 @@ Copyright (c) 2013, Joel Feenstra
 flat
 Copyright (c) 2014, Hugh Kennedy
 
-global-agent
-Copyright (c) 2019, Gajus Kuizinas (http://gajus.com/)
-
 istanbul-lib-coverage
 Copyright 2012-2015 Yahoo! Inc.
 
@@ -3752,27 +4900,14 @@ Copyright (c) 2010-2017, Christian Johansen, christian@cjohansen.no
 pad
 Copyright (c) 2008-2012, SARL Adaltas.
 
-qs
-Copyright (c) 2014, Nathan LaFreniere and other [contributors](https://github.com/ljharb/qs/graphs/contributors)
-
 remap-istanbul
 Copyright (c) 2004-2015, The Dojo Foundation
-
-roarr
-Copyright (c) 2019, Gajus Kuizinas (http://gajus.com/)
 
 serialize-javascript
 Copyright 2014 Yahoo! Inc.
 
 sinon
 Copyright (c) 2010-2017, Christian Johansen, christian@cjohansen.no
-
-source-map
-Copyright (c) 2009-2011, Mozilla Foundation and contributors
-
-sprintf-js
-Copyright (c) 2007-2014, Alexandru Marasteanu <hello [at) alexei (dot] ro>
-Copyright (c) 2007-present, Alexandru Mărășteanu <hello@alexei.ro>
 
 @humanwhocodes/object-schema
 Copyright (c) 2019, Human Who Codes
@@ -3896,7 +5031,7 @@ Rights include other Copyright and Similar Rights.
 
 The following packages are licensed under Creative Commons Attribution 4.0 International Public License:
 
-caniuse-lite@1.0.30001271
+caniuse-lite
 No Copyright
 
 
@@ -4242,18 +5377,6 @@ Creative Commons may be contacted at creativecommons.org.
 -- --------------------------------------------------------------------------------
 The following packages are licensed under CC0 1.0 Universal Public Domain Dedication
 
-mdn-data
-  any person's Copyright and Related Rights in the Work. Further, Affirmer
-1. Copyright and Related Rights. A Work made available under CC0 may be
-Copyright and Related Rights in the Work and the meaning and intended legal
-Copyright and Related Rights in the Work or (ii) assert any associated claims
-Related Rights"). Copyright and Related Rights include, but are not limited
-Work (the "Affirmer"), to the extent that he or she is an owner of Copyright
-exclusive Copyright and Related Rights (defined below) upon the creator and
-protected by copyright and related or neighboring rights ("Copyright and
-unconditional license to exercise Affirmer's Copyright and Related Rights in
-unconditionally waives, abandons, and surrenders all of Affirmer's Copyright
-
 spdx-license-ids
 No Copyright
 
@@ -4381,14 +5504,8 @@ The following packages are licensed under ISC License
 abbrev
 Copyright (c) Isaac Z. Schlueter and Contributors
 
-anymatch
-Copyright (c) 2019 Elan Shanker, Paul Miller (https://paulmillr.com)
-
 at-least-node
 Copyright (c) 2020 Ryan Zimmerman <opensrc@ryanzim.com>
-
-boolbase
-Copyright (c) 2014-2015, Felix Boehm <me@feedic.com>
 
 browser-stdout
 Copyright 2018 kumavis
@@ -4417,10 +5534,6 @@ Copyright (c) 2018-2020, Andrea Giammarchi, @WebReflection
 fs-minipass
 Copyright (c) Isaac Z. Schlueter and Contributors
 
-fs.realpath
-Copyright Joyent, Inc. and other Node contributors.
-Copyright (c) Isaac Z. Schlueter and Contributors
-
 get-caller-file
 Copyright 2018 Stefan Penner
 
@@ -4430,22 +5543,13 @@ Copyright (c) 2015, 2019 Elan Shanker, 2021 Blaine Bublitz <blaine.bublitz@gmail
 glob
 Copyright (c) Isaac Z. Schlueter and Contributors
 
-glob
-Copyright (c) Isaac Z. Schlueter and Contributors
-
 hosted-git-info
 Copyright (c) 2015, Rebecca Turner
 
 hosted-git-info
 Copyright (c) 2015, Rebecca Turner
-
-inflight
-Copyright (c) Isaac Z. Schlueter
 
 isexe
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-json-stringify-safe
 Copyright (c) Isaac Z. Schlueter and Contributors
 
 lru-cache
@@ -4453,9 +5557,6 @@ Copyright (c) Isaac Z. Schlueter and Contributors
 
 minimalistic-assert
 Copyright 2015 Calvin Metcalf
-
-minimatch
-Copyright (c) Isaac Z. Schlueter and Contributors
 
 minipass
 Copyright (c) 2017-2023 npm, Inc., Isaac Z. Schlueter, and Contributors
@@ -4481,12 +5582,6 @@ Copyright (c) Isaac Z. Schlueter and Contributors
 sanitize-filename
 Copyright (C) 2004 Sam Hocevar \<sam@hocevar.net>
 
-semver
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-setprototypeof
-Copyright (c) 2015, Wes Todd
-
 signal-exit
 Copyright (c) 2015, Contributors
 
@@ -4511,9 +5606,6 @@ Copyright (c) 2016, Contributors
 yargs-parser
 Copyright (c) 2016, Contributors
 
-@trysound/sax
-Copyright (c) Isaac Z. Schlueter and Contributors
-
 
 
 ISC License
@@ -4536,18 +5628,11 @@ The following packages are licensed under The MIT License
 7zip-bin
 Copyright (c) 2016 Vladimir Krivosheev
 
-accepts
-Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
-Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
-
 acorn-jsx
 Copyright (C) 2012-2017 by Ingvar Stepanyan
 
 acorn-walk
 Copyright (C) 2012-2018 by various contributors (see AUTHORS)
-
-acorn
-Copyright (C) 2012-2022 by various contributors (see AUTHORS)
 
 adm-zip
 Copyright (c) 2012 Another-D-Mention Software and other contributors
@@ -4585,12 +5670,6 @@ No Copyright
 app-builder-lib
 Copyright (c) 2015 Loopline Systems
 
-archiver-utils
-Copyright (c) 2015 Chris Talkington.
-
-archiver
-Copyright (c) 2012-2014 Chris Talkington, contributors.
-
 arr-diff
 Copyright (c) 2014-2017, Jon Schlinkert
 
@@ -4599,9 +5678,6 @@ Copyright (c) 2014-2016, Jon Schlinkert.
 
 array-find-index
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
-array-flatten
-Copyright (c) 2014 Blake Embrey (hello@blakeembrey.com)
 
 arraybuffer.slice
 Copyright (C) 2013 Rase-
@@ -4627,21 +5703,15 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 async-limiter
 Copyright (c) 2017 Samuel Reed <samuel.trace.reed@gmail.com>
 
-async
-Copyright (c) 2010-2018 Caolan McMahon
-
-asynckit
-Copyright (c) 2016 Alex Indigo
-
 available-typed-arrays
 Copyright (c) 2020 Inspect JS
+
+axios
+# Copyright (c) 2014-present Matt Zabriskie & Collaborators
 
 backo2
 Copyright (c) 2014 Mark Mokryn <mokesmokes@gmail.com>
 Copyright (c) 2014 TJ Holowaychuk <tj@vision-media.ca>
-
-balanced-match
-Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
 
 base64-arraybuffer
 Copyright (c) 2012 Niklas von Hertzen
@@ -4649,14 +5719,8 @@ Copyright (c) 2012 Niklas von Hertzen
 base64id
 Copyright (c) 2012-2016 Kristian Faeldt <faeldt_kristian@cyberagent.co.jp>
 
-batch
-Copyright (c) 2013 TJ Holowaychuk <tj@vision-media.ca>
-
 better-assert
 Copyright (c) 2012 TJ Holowaychuk <tj@vision-media.ca>
-
-binary-extensions
-Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
 
 blob
 Copyright (C) 2014 Rase-
@@ -4669,22 +5733,6 @@ Copyright (c) 2013-2018 Petka Antonov
 
 bn.js
 Copyright Fedor Indutny, 2015.
-
-body-parser
-Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
-Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
-
-body
-Copyright (c) 2012 Raynos.
-
-boolean
-Copyright (c) 2014-2022 the native web.
-
-brace-expansion
-Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
-
-braces
-Copyright (c) 2014-2018, Jon Schlinkert.
 
 brorand
 Copyright Fedor Indutny, 2014.
@@ -4718,16 +5766,10 @@ Copyright (c) 2016, 2018 Linus Unnebäck
 buffer-alloc
 Copyright (c) 2016, 2018 Linus Unnebäck
 
-buffer-crc32
-Copyright (c) 2013 Brian J. Brennan
-
 buffer-equal
 No Copyright
 
 buffer-fill
-Copyright (c) 2016, 2018 Linus Unnebäck
-
-buffer-from
 Copyright (c) 2016, 2018 Linus Unnebäck
 
 buffer-xor
@@ -4738,16 +5780,6 @@ Copyright (c) 2015 Loopline Systems
 
 builtin-status-codes
 Copyright (c) Ben Drucker <bvdrucker@gmail.com> (bendrucker.me)
-
-bytes
-Copyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>
-Copyright (c) 2015 Jed Watson <jed.watson@me.com>
-
-cacheable-lookup
-Copyright (c) 2019 Szymon Marczak
-
-cacheable-request
-Copyright (c) 2017 Luke Childs
 
 call-bind
 Copyright (c) 2020 Jordan Harband
@@ -4776,9 +5808,6 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 check-error
 Copyright (c) 2013 Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.com)
 
-chokidar
-Copyright (c) 2012-2019 Paul Miller (https://paulmillr.com), Elan Shanker
-
 chromium-pickle-js
 No Copyright
 
@@ -4787,9 +5816,6 @@ Copyright (c) 2016-2023 Thomas Watson Steen
 
 cipher-base
 Copyright (c) 2017 crypto-browserify contributors
-
-clone-response
-Copyright (c) 2017 Luke Childs
 
 clone
 Copyright © 2011-2015 Paul Vorbach <paul@vorba.ch>
@@ -4811,17 +5837,14 @@ colors
 combine-source-map
 Copyright 2013 Thorsten Lorenz. 
 
-combined-stream
-Copyright (c) 2011 Debuggable Limited <felix@debuggable.com>
-
-commander
-Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
-
 commander
 Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
 
 compare-version
 Copyright © Kevin Mårtensson
+
+compare-versions
+Copyright (c) 2015-2021 Ole Michelsen
 
 component-bind
 Copyright (c) 2012 TJ Holowaychuk
@@ -4832,18 +5855,6 @@ Copyright (c) 2014 Component contributors <dev@component.io>
 component-inherit
 No Copyright
 
-compress-commons
-Copyright (c) 2014 Chris Talkington, contributors.
-
-concat-map
-No Copyright
-
-concat-stream
-Copyright (c) 2013 Max Ogden
-
-connect-livereload
-Copyright (c) 2013 intesso
-
 connect
 Copyright (c) 2010 Sencha Inc.
 Copyright (c) 2011 LearnBoost
@@ -4853,36 +5864,14 @@ Copyright (c) 2015 Douglas Christopher Wilson
 constants-browserify
 Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
 
-content-disposition
-Copyright (c) 2014-2017 Douglas Christopher Wilson
-
-content-type
-Copyright (c) 2015 Douglas Christopher Wilson
-
-continuable-cache
-Copyright (c) 2013 Colingo.
-
 convert-source-map
 Copyright 2013 Thorsten Lorenz. 
-
-cookie-signature
-Copyright (c) 2012–2019 LearnBoost <tj@learnboost.com> and other contributors
-
-cookie
-Copyright (c) 2012-2014 Roman Shtylman <shtylman@gmail.com>
-Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
-
-core-util-is
-Copyright Node.js contributors. All rights reserved.
 
 core-util-is
 Copyright Node.js contributors. All rights reserved.
 
 cosmiconfig
 Copyright (c) 2015 David Clark
-
-crc32-stream
-Copyright (c) 2014 Chris Talkington, contributors.
 
 create-ecdh
 Copyright (c) 2014-2017 createECDH contributors
@@ -4904,13 +5893,6 @@ Copyright (c) 2018 Made With MOXY Lda <hello@moxy.studio>
 
 crypto-browserify
 Copyright (c) 2013 Dominic Tarr
-
-css-tree
-Copyright (C) 2016-2019 by Roman Dvornov
-
-csso
-Copyright (C) 2011-2015 by Sergey Kryzhanovsky
-Copyright (C) 2015-2019 by Roman Dvornov
 
 currently-unhandled
 Copyright (c) James Talmage <james@talmage.io> (github.com/jamestalmage)
@@ -4938,26 +5920,8 @@ Copyright (c) 2012, 2013 Thorsten Lorenz <thlorenz@gmx.de>
 defaults
 Copyright (c) 2015 Elijah Insua
 
-defer-to-connect
-Copyright (c) 2018 Szymon Marczak
-
-define-properties
-Copyright (C) 2015 Jordan Harband
-
-delayed-stream
-Copyright (c) 2011 Debuggable Limited <felix@debuggable.com>
-
-depd
-Copyright (c) 2014-2017 Douglas Christopher Wilson
-
 des.js
 Copyright Fedor Indutny, 2015.
-
-destroy
-Copyright (c) 2014 Jonathan Ong me@jongleberry.com
-
-detect-node
-Copyright (c) 2017 Ilya Kantor
 
 di
 Copyright (C) 2013 Vojta Jína.
@@ -4974,14 +5938,8 @@ Copyright (c) 2015 Loopline Systems
 dom-serialize
 Copyright 2017 Nathan Rajlich
 
-dom-serializer
-Copyright (c) 2014 The cheeriojs contributors
-
 domain-browser
 <ul><li>Copyright &copy; 2013+ <a href="http://bevry.me">Bevry Pty Ltd</a></li></ul>
-
-ee-first
-Copyright (c) 2014 Jonathan Ong me@jongleberry.com
 
 electron-builder
 Copyright (c) 2015 Loopline Systems
@@ -4989,18 +5947,11 @@ Copyright (c) 2015 Loopline Systems
 electron-publish
 Copyright (c) 2015 Loopline Systems
 
-electron
-Copyright (c) 2013-2020 GitHub Inc.
-Copyright (c) Electron contributors
-
 elliptic
 Copyright Fedor Indutny, 2014.
 
 emoji-regex
 Copyright Mathias Bynens <https://mathiasbynens.be/>
-
-encodeurl
-Copyright (c) 2016 Douglas Christopher Wilson
 
 engine.io-client
 Copyright (c) 2014-2015 Automattic <dev@cloudup.com>
@@ -5014,17 +5965,8 @@ Copyright (c) 2014 Guillermo Rauch <guillermo@learnboost.com>
 ent
 No Copyright
 
-env-paths
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
 error-ex
 Copyright (c) 2015 JD Ballard
-
-error
-No Copyright
-
-es6-error
-Copyright (c) 2015 Ben Youngblood
 
 es6-object-assign
 Copyright (c) 2015-2017 Rubén Norte <rubennorte@gmail.com>
@@ -5032,22 +5974,11 @@ Copyright (c) 2015-2017 Rubén Norte <rubennorte@gmail.com>
 escalade
 Copyright (c) Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
 
-escape-html
-Copyright (c) 2012-2013 TJ Holowaychuk
-Copyright (c) 2015 Andreas Lubbe
-Copyright (c) 2015 Tiancheng "Timothy" Gu
-
-escape-string-regexp
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-
 eslint-utils
 Copyright (c) 2018 Toru Nagashima
 
 eslint
 Copyright OpenJS Foundation and other contributors, <www.openjsf.org>
-
-etag
-Copyright (c) 2014-2016 Douglas Christopher Wilson
 
 eventemitter3
 Copyright (c) 2014 Arnout Kazemier
@@ -5057,11 +5988,6 @@ Copyright Joyent, Inc. and other Node contributors.
 
 evp_bytestokey
 Copyright (c) 2017 crypto-browserify contributors
-
-express
-Copyright (c) 2009-2014 TJ Holowaychuk <tj@vision-media.ca>
-Copyright (c) 2013-2014 Roman Shtylman <shtylman+expressjs@gmail.com>
-Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 extend-shallow
 Copyright (c) 2014-2015, 2017, Jon Schlinkert.
@@ -5079,20 +6005,8 @@ Copyright (c) 2017 Evgeny Poberezkin
 fast-levenshtein
 Copyright (c) 2013 [Ramesh Nair](http://www.hiddentao.com/)
 
-faye-websocket
-Copyright (c) 2010-2015 James Coglan
-
-fd-slicer
-Copyright (c) 2014 Andrew Kelley
-
 file-entry-cache
 Copyright (c) 2015 Roy Riojas
-
-fill-range
-Copyright (c) 2014-present, Jon Schlinkert.
-
-finalhandler
-Copyright (c) 2014-2017 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 find-up
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
@@ -5112,24 +6026,8 @@ Copyright (c) 2012 Raynos.
 form-data
 Copyright (c) 2012 Felix Geisendörfer (felix@debuggable.com) and contributors
 
-form-data
-Copyright (c) 2012 Felix Geisendörfer (felix@debuggable.com) and contributors
-
-forwarded
-Copyright (c) 2014-2017 Douglas Christopher Wilson
-
-fresh
-Copyright (c) 2012 TJ Holowaychuk <tj@vision-media.ca>
-Copyright (c) 2016-2017 Douglas Christopher Wilson <doug@somethingdoug.com>
-
-fs-extra
-Copyright (c) 2011-2017 JP Richardson
-
-function-bind
-Copyright (c) 2013 Raynos.
-
-gaze
-Copyright (c) 2018 Kyle Robinson Young
+fs
+None
 
 gensync
 Copyright 2018 Logan Smyth <loganfsmyth@gmail.com>
@@ -5137,31 +6035,17 @@ Copyright 2018 Logan Smyth <loganfsmyth@gmail.com>
 get-func-name
 Copyright (c) 2013 Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.com)
 
-get-intrinsic
-Copyright (c) 2020 Jordan Harband
-
 get-stdin
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
-get-stream
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+getenv
+Copyright (c) 2012-2019 Christoph Tavan <dev@tavan.de>
 
 globals
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
-globalthis
-Copyright (c) 2016 Jordan Harband
-
-globule
-Copyright (c) 2018 "Cowboy" Ben Alman
-Copyright (c) 2018 "Cowboy" Ben Alman  
-
 gopd
 Copyright (c) 2022 Jordan Harband
-
-got
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 graceful-readlink
 Copyright (c) 2015 Zhiye Li
@@ -5181,17 +6065,8 @@ Not Copyright
 has-flag
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
-has-property-descriptors
-Copyright (c) 2022 Inspect JS
-
-has-symbols
-Copyright (c) 2016 Jordan Harband
-
 has-tostringtag
 Copyright (c) 2021 Inspect JS
-
-has
-Copyright (c) 2013 Thiago de Arruda
 
 hash-base
 Copyright (c) 2016 Kirill Fomichev
@@ -5208,24 +6083,11 @@ Copyright Fedor Indutny, 2017.
 html-escaper
 Copyright (C) 2017-present by Andrea Giammarchi - @WebReflection
 
-http-errors
-Copyright (c) 2014 Jonathan Ong me@jongleberry.com
-Copyright (c) 2016 Douglas Christopher Wilson doug@somethingdoug.com
-
-http-parser-js
-  Copyright Joyent, Inc. and other Node contributors. All rights reserved.
-  Copyright Node.js contributors. All rights reserved.
-  Copyright io.js contributors. All rights reserved.
-Copyright (c) 2015 Tim Caswell (https://github.com/creationix) and other
-
 http-proxy-agent
 Copyright (c) 2013 Nathan Rajlich &lt;nathan@tootallnate.net&gt;
 
 http-proxy
 Copyright (c) 2010-2016 Charlie Robbins, Jarrett Cruger & the Contributors.
-
-http2-wrapper
-Copyright (c) 2018 Szymon Marczak
 
 https-browserify
 Copyright (c) James Halliday
@@ -5235,9 +6097,6 @@ Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
 
 https-proxy-agent
 Copyright (c) 2013 Nathan Rajlich &lt;nathan@tootallnate.net&gt;
-
-iconv-lite
-Copyright (c) 2011 Alexander Shtuchkin
 
 iconv-lite
 Copyright (c) 2011 Alexander Shtuchkin
@@ -5263,17 +6122,14 @@ No Copyright
 inline-source-map
 Copyright 2013 Thorsten Lorenz. 
 
-ipaddr.js
-Copyright (C) 2011-2017 whitequark <whitequark@whitequark.org>
+ip-regex
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 is-arguments
 Copyright (c) 2014 Jordan Harband
 
 is-arrayish
 Copyright (c) 2015 JD Ballard
-
-is-binary-path
-Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
 
 is-callable
 Copyright (c) 2015 Jordan Harband
@@ -5287,9 +6143,6 @@ Copyright (c) 2014 Dave Justice
 is-extendable
 Copyright (c) 2015-2017, Jon Schlinkert.
 
-is-extglob
-Copyright (c) 2014-2016, Jon Schlinkert
-
 is-finite
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
@@ -5299,14 +6152,8 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 is-generator-function
 Copyright (c) 2014 Jordan Harband
 
-is-glob
-Copyright (c) 2014-2017, Jon Schlinkert.
-
 is-nan
 Copyright (c) 2014 Jordan Harband
-
-is-number
-Copyright (c) 2014-present, Jon Schlinkert.
 
 is-path-inside
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
@@ -5332,11 +6179,16 @@ Copyright (c) 2015 Jordan Harband
 is-unicode-supported
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
+is-url
+No Copyright
+
 is-utf8
 Copyright (C) 2014 Wei Fanzhe
 
-is-wsl
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+is2
+Copyright (c) 2011 Enrico Marino
+Copyright (c) 2013 Edmond Meinfelder
+Copyright (c) 2013,2014 Edmond Meinfelder
 
 isarray
 Copyright (c) 2013 Julian Gruber &lt;julian@juliangruber.com&gt;
@@ -5359,9 +6211,6 @@ Copyright (c) 2014, 2015, 2016, 2017, 2018 Simon Lydell
 jsesc
 Copyright Mathias Bynens <https://mathiasbynens.be/>
 
-json-buffer
-Copyright (c) 2013 Dominic Tarr
-
 json-parse-even-better-errors
 Copyright 2017 Kat Marchán
 Copyright npm, Inc.
@@ -5374,9 +6223,6 @@ No Copyright
 
 json5
 Copyright (c) 2012-2018 Aseem Kishore, and [others].
-
-jsonfile
-Copyright (c) 2012-2015, JP Richardson <jprichardson@gmail.com>
 
 jszip
   "Copyright" also means copyright-like laws that apply to other kinds of
@@ -5413,12 +6259,6 @@ Copyright (C) 2016-2019 Erik Barke, Monounity.
 karma
 Copyright (C) 2011-2019 Google, Inc.
 
-keyv
-Copyright (c) 2017 Luke Childs
-
-lazystream
-Copyright (c) 2013 J. Pommerening, contributors.
-
 levn
 Copyright (c) George Zahariev
 
@@ -5428,52 +6268,19 @@ lie
 lines-and-columns
 Copyright (c) 2015 Brian Donovan
 
-livereload-js
-Copyright (c) 2010-2012 Andrey Tarantsov
-
 load-json-file
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 locate-path
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
-lodash.defaults
-Copyright and related rights for sample code are waived via CC0. Sample
-Copyright jQuery Foundation and other contributors <https://jquery.org/>
-
-lodash.difference
-Copyright jQuery Foundation and other contributors <https://jquery.org/>
-
-lodash.flatten
-Copyright and related rights for sample code are waived via CC0. Sample
-Copyright jQuery Foundation and other contributors <https://jquery.org/>
-
 lodash.get
-Copyright jQuery Foundation and other contributors <https://jquery.org/>
-
-lodash.isfunction
-Copyright JS Foundation and other contributors <https://js.foundation/>
-
-lodash.isplainobject
-Copyright and related rights for sample code are waived via CC0. Sample
 Copyright jQuery Foundation and other contributors <https://jquery.org/>
 
 lodash.memoize
 Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
 
 lodash.merge
-Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
-
-lodash.mergewith
-Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
-
-lodash.remove
-Copyright jQuery Foundation and other contributors <https://jquery.org/>
-
-lodash.union
-Copyright jQuery Foundation and other contributors <https://jquery.org/>
-
-lodash
 Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
 
 log-symbols
@@ -5485,50 +6292,23 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 loupe
 Copyright (c) 2011-2013 Jake Luer jake@alogicalparadox.com
 
-lowercase-keys
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
 make-dir
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 map-obj
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
-matcher
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-
 md5.js
 Copyright (c) 2016 Kirill Fomichev
-
-media-typer
-Copyright (c) 2014 Douglas Christopher Wilson
 
 meow
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
-merge-descriptors
-Copyright (c) 2013 Jonathan Ong <me@jongleberry.com>
-Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
-
-methods
-Copyright (c) 2013-2014 TJ Holowaychuk <tj@vision-media.ca>
-Copyright (c) 2015-2016 Douglas Christopher Wilson <doug@somethingdoug.com>
-
 miller-rabin
 Copyright Fedor Indutny, 2014.
 
-mime-db
-Copyright (c) 2014 Jonathan Ong me@jongleberry.com
-
-mime-types
-Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
-Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
-
 mime
 Copyright (c) 2010 Benjamin Thomas, Robert Kieffer
-
-mimic-response
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 minimalistic-crypto-utils
 Copyright Fedor Indutny, 2017.
@@ -5541,9 +6321,8 @@ Copyright Isaac Z. Schlueter and Contributors
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
 Copyright Node.js contributors. All rights reserved.
 
-mkdirp
-Copyright 2010 James Halliday (mail@substack.net)
-Copyright James Halliday (mail@substack.net) and Isaac Z. Schlueter (i@izs.me)
+mitt
+Copyright (c) 2021 Jason Miller
 
 mkdirp
 Copyright 2010 James Halliday (mail@substack.net)
@@ -5553,19 +6332,11 @@ mocha
 Copyright (c) 2011-2022 OpenJS Foundation and contributors, https://openjsf.org
 Copyright 2011-2022 OpenJS Foundation and contributors. Licensed [MIT](https://github.com/mochajs/mocha/blob/master/LICENSE).
 
-nanocolors
-Copyright 2021 Jorge Bucaran <mail@jorgebucaran.com>,
-
 nanoid
 Copyright 2017 Andrey Sitnik <andrey@sitnik.ru>
 
 natural-compare
 Copyright (c) 2012-2015 Lauri Rooden <lauri@rooden.ee>  
-
-negotiator
-Copyright (c) 2012-2014 Federico Romero
-Copyright (c) 2012-2014 Isaac Z. Schlueter
-Copyright (c) 2014-2015 Douglas Christopher Wilson
 
 neo-async
 Based on Async.js, Copyright Caolan McMahon
@@ -5580,31 +6351,11 @@ Copyright (c) 2017 Sergey Rubanov (https://github.com/chicoxyzzy)
 node-status-codes
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
-normalize-path
-Copyright (c) 2014-2018, Jon Schlinkert.
-Copyright © 2018, [Jon Schlinkert](https://github.com/jonschlinkert).
-
-normalize-url
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
-object-assign
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
 object-component
 No Copyright
 
 object-is
 Copyright (c) 2014 Jordan Harband
-
-object-keys
-Copyright (C) 2013 Jordan Harband
-
-on-finished
-Copyright (c) 2013 Jonathan Ong <me@jongleberry.com>
-Copyright (c) 2014 Douglas Christopher Wilson <doug@somethingdoug.com>
-
-open
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 optionator
 Copyright (c) George Zahariev
@@ -5613,9 +6364,6 @@ os-browserify
 Copyright (c) 2017 CoderPuppy
 
 os-tmpdir
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
-p-cancelable
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 p-limit
@@ -5639,17 +6387,10 @@ Copyright (c) 2015 Gal Koren
 parseuri
 Copyright (c) 2014 Gal Koren
 
-parseurl
-Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
-Copyright (c) 2014-2017 Douglas Christopher Wilson <doug@somethingdoug.com>
-
 path-browserify
 Copyright (c) 2013 James Halliday
 
 path-exists
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
-path-is-absolute
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 path-key
@@ -5657,9 +6398,6 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 path-parse
 Copyright (c) 2015 Javier Blanco
-
-path-to-regexp
-Copyright (c) 2014 Blake Embrey (hello@blakeembrey.com)
 
 path-type
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
@@ -5669,13 +6407,6 @@ Copyright (c) 2011-2013 Jake Luer jake@alogicalparadox.com
 
 pbkdf2
 Copyright (c) 2014 Daniel Cousens
-
-pend
-Copyright (c) 2014 Andrew Kelley
-
-picomatch
-Copyright (c) 2017-present, Jon Schlinkert.
-Copyright © 2017-present, [Jon Schlinkert](https://github.com/jonschlinkert).
 
 pify
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
@@ -5701,17 +6432,8 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 prettier
 Copyright © James Long and contributors
 
-process-nextick-args
-Copyright (c) 2015 Calvin Metcalf
-
 process
 Copyright (c) 2013 Roman Shtylman <shtylman@gmail.com>
-
-progress
-Copyright (c) 2017 TJ Holowaychuk <tj@vision-media.ca>
-
-proxy-addr
-Copyright (c) 2014-2016 Douglas Christopher Wilson
 
 proxy-from-env
 Copyright (C) 2016-2018 Rob Wu <rob@robwu.nl>
@@ -5728,22 +6450,11 @@ Copyright (c) 2013-2018 Franck34
 queue-microtask
 Copyright (c) Feross Aboukhadijeh
 
-quick-lru
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
 randombytes
 Copyright (c) 2017 crypto-browserify
 
 randomfill
 Copyright (c) 2017 crypto-browserify
-
-range-parser
-Copyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>
-Copyright (c) 2015-2016 Douglas Christopher Wilson <doug@somethingdoug.com
-
-raw-body
-Copyright (c) 2013-2014 Jonathan Ong <me@jongleberry.com>
-Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 read-all-stream
 Copyright (c) Vsevolod Strukchinsky <floatdrop@gmail.com>
@@ -5756,9 +6467,6 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 read-pkg
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
-readdirp
-Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
 
 redent
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
@@ -5775,17 +6483,11 @@ Copyright (c) 2011 Troy Goode <troygoode@gmail.com>
 requires-port
 Copyright (c) 2015 Unshift.io, Arnout Kazemier,  the Contributors.
 
-resolve-alpn
-Copyright (c) 2018 Szymon Marczak
-
 resolve-from
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 resolve
 Copyright (c) 2012 James Halliday
-
-responselike
-Copyright (c) 2017 Luke Childs
 
 reusify
 Copyright (c) 2015 Matteo Collina
@@ -5798,34 +6500,6 @@ Copyright (c) 2016 crypto-browserify
 
 run-parallel
 Copyright (c) Feross Aboukhadijeh
-
-safe-json-parse
-Copyright (c) 2013 Raynos.
-
-safer-buffer
-Copyright (c) 2018 Nikita Skovoroda <chalkerx@gmail.com>
-
-semver-compare
-No Copyright
-
-send
-Copyright (c) 2012 TJ Holowaychuk
-Copyright (c) 2014-2016 Douglas Christopher Wilson
-
-serialize-error
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-
-serve-index
-Copyright (c) 2010 Sencha Inc.
-Copyright (c) 2011 LearnBoost
-Copyright (c) 2011 TJ Holowaychuk
-Copyright (c) 2014-2015 Douglas Christopher Wilson
-
-serve-static
-Copyright (c) 2010 Sencha Inc.
-Copyright (c) 2011 LearnBoost
-Copyright (c) 2011 TJ Holowaychuk
-Copyright (c) 2014-2016 Douglas Christopher Wilson
 
 setimmediate
 Copyright (c) 2012 Barnesandnoble.com, llc, Donavon West, and Domenic Denicola
@@ -5855,21 +6529,11 @@ Copyright (c) 2014 Guillermo Rauch <guillermo@learnboost.com>
 socket.io
 Copyright (c) 2014-2018 Automattic <dev@cloudup.com>
 
-source-map-support
-Copyright (c) 2014 Evan Wallace
-
 spdx-expression-parse
 Copyright (c) 2015 Kyle E. Mitchell & other authors listed in AUTHORS
 
-stable
-Copyright (C) 2018 Angry Bytes and contributors.
-
 stat-mode
 Copyright (c) 2016 Nathan Rajlich <n@n8.io>
-
-statuses
-Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
-Copyright (c) 2016 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 stream-browserify
 Copyright (c) James Halliday
@@ -5879,9 +6543,6 @@ Copyright (c) 2015 John Hiesey
 
 streamroller
 Copyright (c) 2013 Gareth Jones
-
-string-template
-Copyright (c) 2013 Matt Esch.
 
 string-width
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
@@ -5905,9 +6566,8 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 supports-preserve-symlinks-flag
 Copyright (c) 2022 Inspect JS
 
-svgo
-## License and Copyright
-Copyright (c) Kir Belevich
+tcp-port-used
+Copyright (c) 2013 jut-io
 
 temp-file
 No Copyright
@@ -5929,9 +6589,6 @@ timers-browserify
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
 Copyright © 2012 J. Ryan Stinnett <jryans@gmail.com>
 
-tiny-lr
-Copyright (c) 2012-2016 Mickael Daniel
-
 tmp-promise
 No Copyright
 
@@ -5943,12 +6600,6 @@ Copyright (c) 2014 KARASZI István
 
 to-fast-properties
 Copyright (c) 2014 Petka Antonov
-
-to-regex-range
-Copyright (c) 2015-present, Jon Schlinkert.
-
-toidentifier
-Copyright (c) 2016 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 tr46
 Copyright (c) Sebastian Mayr
@@ -5973,29 +6624,12 @@ Copyright (c) 2013 Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.
 type-fest
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https:/sindresorhus.com)
 
-type-is
-Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
-Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
-
-typedarray
-Copyright (c) 2010, Linden Research, Inc.
-Copyright (c) 2012, Joshua Bell
-
 ultron
 Copyright (c) 2015 Unshift.io, Arnout Kazemier,  the Contributors.
 
 unbzip2-stream
 Copyright (c) 2017 by Jan Boelsche (jan@lagomorph.de)
 Copyright 2011 by antimatter15 (antimatter15@gmail.com)
-
-underscore
-Copyright (c) 2009-2022 Jeremy Ashkenas, Julian Gonggrijp, and DocumentCloud and Investigative Reporters & Editors
-
-universalify
-Copyright (c) 2017, Ryan Zimmerman <opensrc@ryanzim.com>
-
-unpipe
-Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 unzip-response
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
@@ -6014,12 +6648,6 @@ useragent
 
 util
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
-
-utils-merge
-Copyright (c) 2013-2017 Jared Hanson
-
-vary
-Copyright (c) 2014-2017 Douglas Christopher Wilson
 
 vm-browserify
 No Copyright
@@ -6069,17 +6697,11 @@ Copyright 2010 James Halliday (mail@substack.net); Modified work Copyright 2014 
 yargs
 Copyright 2010 James Halliday (mail@substack.net); Modified work Copyright 2014 Contributors (ben@npmjs.com)
 
-yauzl
-Copyright (c) 2014 Josh Wolfe
-
 yeast
 Copyright (c) 2015 Unshift.io, Arnout Kazemier,  the Contributors.
 
 yocto-queue
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-
-zip-stream
-Copyright (c) 2014 Chris Talkington, contributors.
 
 @babel/code-frame
 Copyright (c) 2014-present Sebastian McKenzie and other contributors
@@ -6147,9 +6769,6 @@ Copyright (c) 2014-present Sebastian McKenzie and other contributors
 @develar/schema-utils
 Copyright JS Foundation and other contributors
 
-@electron/get
-Copyright (c) Contributors to the Electron project
-
 @electron/universal
 No Copyright
 
@@ -6161,18 +6780,6 @@ Copyright (c) 2019 CFWare, LLC
 
 @jridgewell/gen-mapping
 Copyright 2022 Justin Ridgewell <jridgewell@google.com>
-
-@jridgewell/resolve-uri
-Copyright 2019 Justin Ridgewell <jridgewell@google.com>
-
-@jridgewell/set-array
-Copyright 2022 Justin Ridgewell <jridgewell@google.com>
-
-@jridgewell/sourcemap-codec
-Copyright (c) 2015 Rich Harris
-
-@jridgewell/trace-mapping
-Copyright 2022 Justin Ridgewell <justin@ridgewell.name>
 
 @malept/flatpak-bundler
 Copyright (c) 2016 Endless Mobile, Inc.
@@ -6186,17 +6793,11 @@ Copyright (c) Denis Malinochkin
 @nodelib/fs.walk
 Copyright (c) Denis Malinochkin
 
-@sindresorhus/is
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-
-@szmarczak/http-timer
-Copyright (c) 2018 Szymon Marczak
+@testim/chrome-version
+Copyright (c) 2018-2019 Testim.io
 
 @tootallnate/once
 Copyright (c) 2020 Nathan Rajlich
-
-@types/cacheable-request
-    Copyright (c) Microsoft Corporation.
 
 @types/chai
     Copyright (c) Microsoft Corporation.
@@ -6210,17 +6811,11 @@ Copyright (c) Microsoft Corporation.
 @types/glob
 Copyright (c) Microsoft Corporation.
 
-@types/http-cache-semantics
-    Copyright (c) Microsoft Corporation.
-
 @types/jquery
     Copyright (c) Microsoft Corporation.
 
 @types/karma-fixture
 Copyright (c) Microsoft Corporation. All rights reserved.
-
-@types/keyv
-    Copyright (c) Microsoft Corporation.
 
 @types/minimatch
     Copyright (c) Microsoft Corporation.
@@ -6233,12 +6828,6 @@ Copyright (c) Microsoft Corporation. All rights reserved.
 
 @types/node
     Copyright (c) Microsoft Corporation.
-
-@types/node
-    Copyright (c) Microsoft Corporation.
-
-@types/responselike
-    Copyright (c) Microsoft Corporation. All rights reserved.
 
 @types/sinon-chai
     Copyright (c) Microsoft Corporation.
@@ -6256,9 +6845,6 @@ Copyright (c) Microsoft Corporation.
     Copyright (c) Microsoft Corporation.
 
 @types/yargs
-    Copyright (c) Microsoft Corporation.
-
-@types/yauzl
     Copyright (c) Microsoft Corporation.
 
 
@@ -6710,61 +7296,6 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
 
   This Source Code Form is "Incompatible With Secondary Licenses", as
   defined by the Mozilla Public License, v. 2.0.
--- --------------------------------------------------------------------------------
-The following packages are licensed under The Universal Permissive License (UPL), Version 1.0
-
-@oracle/oraclejet-tooling
-Copyright (c) 2022 Oracle and/or its affiliates and released  under the 
-Copyright (c) 2022 Oracle and/or its affiliates.
-
-
-
-The Universal Permissive License (UPL), Version 1.0
-
-Subject to the condition set forth below, permission is
-hereby granted to any person obtaining a copy of this
-software, associated documentation and/or data
-(collectively the "Software"), free of charge and under
-any and all copyright rights in the Software, and any
-and all patent rights owned or freely licensable by
-each licensor hereunder covering either (i) the
-unmodified Software as contributed to or provided by
-such licensor, or (ii) the Larger Works (as defined
-below), to deal in both
-
-    (a) the Software, and
-
-    (b) any piece of software and/or hardware listed
-        in the lrgrwrks.txt file if one is included
-        with the Software (each a "Larger Work" to
-        which the Software is contributed by such
-        licensors),
-
-without restriction, including without limitation
-the rights to copy, create derivative works of,
-display, perform, and distribute the Software and
-make, use, sell, offer for sale, import, export,
-have made, and have sold the Software and the Larger
-Work(s), and to sublicense the foregoing rights on
-either these or other terms.
-
-This license is subject to the following condition:
-
-The above copyright notice and either this complete
-permission notice or at a minimum a reference to the
-UPL must be included in all copies or substantial
-portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY
-OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
-OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
 -- --------------------------------------------------------------------------------
 The following packages are licensed under Do What The F*ck You Want To Public License
 

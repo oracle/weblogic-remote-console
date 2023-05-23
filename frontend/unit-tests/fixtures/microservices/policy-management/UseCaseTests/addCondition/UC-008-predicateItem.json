@@ -1,0 +1,32 @@
+{
+  "uid": "0",
+  "parentUid": "-1",
+  "isLastSibling": false,
+  "isLastCondition": false,
+  "expression": "Server is in development mode",
+  "options": {
+    "negated": false,
+    "combined": false,
+    "deleted": false,
+    "insertion": {
+      "type": "above",
+      "checkedItem": {
+        "uid": "4",
+        "parentUid": "3"
+      },
+      "addedItem": {
+        "uid": "4",
+        "parentUid": "3",
+        "isFirstSibling": true
+      },
+      "parentExpression": {
+        "type": "or"
+      }
+    }
+  },
+  "predicate": {
+    "name": "weblogic.entitlement.rules.InDevelopmentMode",
+    "descriptionHTML": "Creates a condition for a security policy that is true when the server is in development mode.",
+    "displayName": "Server is in development mode"
+  }
+}

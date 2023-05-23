@@ -63,7 +63,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
       'download': {iconFile: 'action-download-icon-blk_24x24', visible: true, disabled: false},
       'shrink': {iconFile: 'action-shrink-icon-blk_24x24', visible: true, disabled: false},
       'reset': {iconFile: 'action-reset-icon-blk_24x24', visible: true, disabled: false},
-      'clearStatementCache': {iconFile: 'action-clear-icon-blk_24x24', visible: true, disabled: false}
+      'clearStatementCache': {iconFile: 'action-clear-icon-blk_24x24', visible: true, disabled: false},
+      'pauseActions': {iconFile: 'action-pause-icon-blk_24x24', visible: true, disabled: false},
+      'resumeActions': {iconFile: 'action-resume-icon-blk_24x24', visible: true, disabled: false}
     });
 
     /**

@@ -1,30 +1,40 @@
 {
-  "uid":"0",
-  "parentUid":"-1",
-  "operator":"or",
-  "expression":"Role: role1",
-  "options":{
-    "negated":false,
-    "combined":false,
-    "deleted":false,
-    "insertion":{
-      "type": "above",
-      "checkedItem": {"uid":  "0", "parentUid":  "-1"},
-      "addedItem": {"uid":  "1", "parentUid":  "-1"}
+  "uid": "0",
+  "parentUid": "-1",
+  "isLastSibling": false,
+  "isLastCondition": false,
+  "expression": "Group: add_to_top",
+  "options": {
+    "negated": false,
+    "combined": false,
+    "deleted": false,
+    "insertion": {
+      "type": "at",
+      "checkedItem": {
+        "uid": "0",
+        "parentUid": "-1"
+      },
+      "addedItem": {
+        "uid": "0",
+        "parentUid": "-1",
+        "isFirstSibling": true
+      },
+      "parentExpression": {
+        "type": "or"
+      }
     }
   },
-  "predicate":{
-    "name":"weblogic.console.wls.rest.extension.security.authorization.predicates.RolePredicate",
-    "arguments":[
+  "predicate": {
+    "name": "weblogic.console.wls.rest.extension.security.authorization.predicates.GroupPredicate",
+    "arguments": [
       {
-        "value":"role1",
-        "array":true,
-        "optional":false,
-        "displayName":"Role Argument Name",
-        "descriptionHTML":"Add one or more roles to this condition. If you add multiple roles, the condition evaluates as true if the user is in ANY of the roles."
+        "value": "add_to_top",
+        "array": true,
+        "displayName": "Group Argument Name",
+        "descriptionHTML": "Add one or more groups to this condition. If you add multiple groups, the condition evaluates as true if the user is a member of ANY of the groups."
       }
     ],
-    "descriptionHTML":"Role Predicate",
-    "displayName":"Role"
+    "descriptionHTML": "Group Predicate",
+    "displayName": "Group"
   }
 }

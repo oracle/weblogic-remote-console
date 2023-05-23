@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
@@ -33,6 +34,9 @@ import weblogic.remoteconsole.server.repo.Value;
  * It implements the page-specific features and delegates the rest to a BeanPropertyDefImpl.
  */
 class PagePropertyDefImpl implements PagePropertyDef {
+
+  private static final Logger LOGGER = Logger.getLogger(PagePropertyDefImpl.class.getName());
+
   private PageDefImpl pageDefImpl;
   private BeanPropertyDefImpl beanPropertyDefImpl;
   BeanPropertyDefCustomizerSource pageLevelCustomizerSource;
@@ -44,8 +48,6 @@ class PagePropertyDefImpl implements PagePropertyDef {
   private List<LegalValueDefImpl> legalValueDefImpls = new ArrayList<>();
   private List<LegalValueDef> legalValueDefs;
   private PagePropertyUsedIfDefImpl usedIfDefImpl;
-  private static final String PARA_BEGIN = "<p>";
-  private static final String PARA_END = "</p>";
 
   // The page property is backed by a bean property
   PagePropertyDefImpl(
@@ -54,7 +56,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
     BeanPropertyDefCustomizerSource pageLevelCustomizerSource
   ) {
     // Overlay the page-level customizations with the type-level customizations,
-    // the use the merged customizations to create a clone of the type-level BeanPropertyDefImpl.
+    // then use the merged customizations to create a clone of the type-level BeanPropertyDefImpl.
     this.beanPropertyDefImpl =
       beanPropertyDefImpl.clone(
         mergeCustomizerSources(beanPropertyDefImpl.getCustomizerSource(), pageLevelCustomizerSource)
@@ -63,7 +65,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   // The page property is not backed by a bean property (i.e. is a computed property that's only on the page)
-  // Instead, it's 'definition' contains the rest of the property's description.
+  // Instead, its 'definition' contains the rest of the property's description.
   PagePropertyDefImpl(
     PageDefImpl pageDefImpl,
     BeanPropertyDefCustomizerSource pageLevelCustomizerSource
@@ -188,7 +190,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   @Override public boolean isSupportsModelTokens() {
-    if (isPageLevelProperty()) {
+    if (isPageLevelField()) {
       if (!beanPropertyDefImpl.getCustomizerSource().isSupportsModelTokensSpecifiedInYaml()) {
         // Since this property is not backed by an mbean, it cannot be set to a model token.
         return false;
@@ -257,24 +259,16 @@ class PagePropertyDefImpl implements PagePropertyDef {
       for (LegalValueDefImpl customizerVal : customizerVals) {
         if (findLegalValueDefImpl(customizerVal, sourceVals) == null) {
           // The bean doesn't support this legal value
-          if (!getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().isRemoveMissingPropertiesAndTypes()) {
-            // The newest version of WLS doesn't have this legal value.
-            // That means our hand-coded yamls don't match the newest version of WLS.
-            StringBuilder sb = new StringBuilder();
-            sb.append("trying to customize a legal value that doesn't exist: ");
-            sb.append(customizerVal.getValueAsString());
-            sb.append(". allowed:");
-            for (LegalValueDefImpl sourceVal : sourceVals) {
-              sb.append(" ");
-              sb.append(sourceVal.getValueAsString());
-            }
-            throw beanPropertyDefImpl.configurationError(sb.toString());
-          } else {
-            // That's OK - just omit it.
-            // For example, a newer version of WLS added the legal value
-            // and we're using yamls from an older version of WLS that doesn't
-            // have it.
-          }
+          // That's OK - just omit it.
+          // For example, a newer version of WLS added the legal value
+          // and we're using yamls from an older version of WLS that doesn't
+          // have it.
+          LOGGER.finest(
+            "Missing legal value"
+            + " " + getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
+            + " " + this
+            + " " + customizerVal.getValueAsString()
+          );
         }
       }
     }
@@ -312,7 +306,6 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   private void initializeHelp() {
-    validateHelpHTMLProperties();
     initializeHelpSummaryHTML();
     initializeDetailedHelpHTML();
     initializePagePropertyExternalHelpDef();
@@ -334,7 +327,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
     }
     MBeanAttributeDefSource source = beanPropertyDefImpl.getCustomizerSource().getMbeanAttribute();
     String attributeName = source.getAttribute();
-    if (StringUtils.isEmpty(attributeName) && isPageLevelProperty()) {
+    if (StringUtils.isEmpty(attributeName) && isPageLevelField()) {
       // This property is a custom property defined on the page
       // i.e. not one backed by an mbean.
       // So, there is no external mbean javadoc available for it.
@@ -388,155 +381,24 @@ class PagePropertyDefImpl implements PagePropertyDef {
       new LocalizableString(getDetailedHelpHTMLLocalizationKey(), getEnglishDetailedHelpHTML());
   }
 
-  private void validateHelpHTMLProperties() {
-    if (StringUtils.notEmpty(beanPropertyDefImpl.getCustomizerSource().getHelpHTML())) {
-      if (StringUtils.notEmpty(beanPropertyDefImpl.getCustomizerSource().getHelpSummaryHTML())) {
-        throw new AssertionError(
-          "Specified HelpHTML and HelpSummaryHTML for"
-          + " " + getPropertyPath()
-          + " " + getPageDef().getPagePath()
-        );
-      }
-      if (StringUtils.notEmpty(beanPropertyDefImpl.getCustomizerSource().getHelpDetailsHTML())) {
-        throw new AssertionError(
-          "Specified HelpHTML and HelpDetailsHTML for"
-          + " " + getPropertyPath()
-          + " " + getPageDef().getPagePath()
-        );
-      }
-    }
-  }
-
   private String getEnglishHelpSummaryHTML() {
-    String pdyHelp = beanPropertyDefImpl.getCustomizerSource().getHelpHTML();
-    if (StringUtils.notEmpty(pdyHelp)) {
-      // The PDY specified HelpHTML.
-      // Use it as the summary.
-      return pdyHelp;
-    }
-    String pdySummary = beanPropertyDefImpl.getCustomizerSource().getHelpSummaryHTML();
-    if (StringUtils.notEmpty(pdySummary)) {
-      // The PDY specified HelpDetailsHTML.
-      // Use it as the summary.
-      return pdySummary;
-    }
-    // The PDY didn't specify HelpHTML or HelpDetailsHTML.
-    // Use the first sentence of the description harvested from the bean info.
-    String harvestedHelp = beanPropertyDefImpl.getSource().getDescriptionHTML();
-    return getSummary(harvestedHelp);
+    return
+      HelpHTMLUtils.getEnglishHelpSummaryHTML(
+        beanPropertyDefImpl.getSource().getDescriptionHTML(),
+        beanPropertyDefImpl.getCustomizerSource().getHelpHTML(),
+        beanPropertyDefImpl.getCustomizerSource().getHelpSummaryHTML(),
+        beanPropertyDefImpl.getCustomizerSource().getHelpDetailsHTML()
+      );
   }
 
   private String getEnglishDetailedHelpHTML() {
-    String pdyHelp = beanPropertyDefImpl.getCustomizerSource().getHelpHTML();
-    if (StringUtils.notEmpty(pdyHelp)) {
-      // The PDY specified HelpHTML.
-      // Use it as the full help.
-      return pdyHelp;
-    }
-    String pdySummary = beanPropertyDefImpl.getCustomizerSource().getHelpSummaryHTML();
-    String pdyDetails = beanPropertyDefImpl.getCustomizerSource().getHelpDetailsHTML();
-    String harvestedHelp = beanPropertyDefImpl.getSource().getDescriptionHTML();
-    if (StringUtils.notEmpty(pdySummary)) {
-      if (StringUtils.notEmpty(pdyDetails)) {
-        // The PDY customized the summary and details.
-        // Combine them to get the full help.
-        return pdySummary + pdyDetails;
-      } else {
-        // The PDY customized the summary but not the details.
-        // Replace the first sentence of the harested help
-        // with the summary from the PDY.
-        return replaceSummary(harvestedHelp, pdySummary);
-      }
-    } else {
-      if (StringUtils.isEmpty(pdyDetails)) {
-        // The PDY didn't customize the summary or details.
-        // Return all the harvested help.
-        return harvestedHelp;
-      } else {
-        // The PDY customized the details but not the summary.
-        // This isn't allowed.
-        throw new AssertionError(
-          getPropertyPath()
-          + " specifies helpDetailsHTML but not helpSummaryHTML: "
-          + getPageDef().getPagePath()
-        );
-      }
-    }
-  }
-
-  private String replaceSummary(String harvestedHelp, String pdySummary) {
-    String harvestedSummary = getSummary(harvestedHelp); // strips off <p> stuff
-    pdySummary = getFirstParagraph(pdySummary); // strips off <p> stuff
-    int idx = harvestedHelp.indexOf(harvestedSummary);
-    String harvestedBeforeSummary = harvestedHelp.substring(0, idx);
-    String harvestedAfterSummary = harvestedHelp.substring(idx + harvestedSummary.length());
-    return harvestedBeforeSummary + pdySummary + harvestedAfterSummary;
-  }
-
-  private String getSummary(String html) {
-    if (html == null) {
-      return null;
-    }
-    return getFirstSentenceInParagraph(getFirstParagraph(html.trim()));
-  }
-
-  private String getFirstSentenceInParagraph(String paragraph) {
-    // Look for first dot followed by whitespace.
-    // If not found, return the entire paragraph.
-    for (int i = 0; i < paragraph.length();) {
-      int idx = paragraph.indexOf('.', i);
-      if (idx != -1) {
-        // Found the next dot.
-        // Bump the cursor past the dot.
-        i = idx + 1;
-        if (i < paragraph.length()) {
-          // There's a character following the dot.
-          char next = paragraph.charAt(i);
-          if (Character.isWhitespace(next)) {
-            // The dot is followed by whitespace.
-            // Return the characters up to and including the dot.
-            return paragraph.substring(0, i);
-          } else {
-            // The dot is not followed by whitespace.
-            // Keep going so we can look for another dot.
-            // We've already bumped the cursor past this dot.
-          }
-        } else {
-          // There isn't a character following the dot.
-          // Bump the cursor to the end of the paragraph.
-          i = paragraph.length();
-        }
-      } else {
-        // Didn't find another dot.
-        // Bump the cursor to the end of the paragraph.
-        i = paragraph.length();
-      }
-    }
-    // Didn't find a dot followed by whitespace.
-    // Return the entire paragraph
-    return paragraph;
-  }
-
-  private String getFirstParagraph(String trimmedHTML) {
-    if (trimmedHTML.startsWith(PARA_BEGIN)) {
-      int idx = trimmedHTML.indexOf(PARA_END);
-      if (idx != -1) {
-        // <p>blah</p> - return blah
-        return trimmedHTML.substring(PARA_BEGIN.length(), idx);
-      } else {
-        // <p>blah - return blah
-        return trimmedHTML.substring(PARA_BEGIN.length());
-      }
-    } else {
-      int idx = trimmedHTML.indexOf(PARA_BEGIN);
-      if (idx != -1) {
-        // blah<p> - return blah
-        return trimmedHTML.substring(0, idx);
-      } else {
-        // blah - return blah
-        return trimmedHTML;
-      }
-    }
+    return
+      HelpHTMLUtils.getEnglishDetailedHelpHTML(
+        beanPropertyDefImpl.getSource().getDescriptionHTML(),
+        beanPropertyDefImpl.getCustomizerSource().getHelpHTML(),
+        beanPropertyDefImpl.getCustomizerSource().getHelpSummaryHTML(),
+        beanPropertyDefImpl.getCustomizerSource().getHelpDetailsHTML()
+      );
   }
 
   private String getLabelLocalizationKey() {
@@ -570,7 +432,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
   
   private String getLocalizationKey(String key, boolean pageLevel) {
-    if (pageLevel || isPageLevelProperty()) {
+    if (pageLevel || isPageLevelField()) {
       return
         getPageDefImpl().getLocalizationKey(
           "properties." + getPropertyPath().getDotSeparatedPath() + "." + key
@@ -581,7 +443,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   @Override
-  public boolean isPageLevelProperty() {
+  public boolean isPageLevelField() {
     return pageLevelCustomizerSource.getDefinition() != null;
   }
 
@@ -598,8 +460,8 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   @Override
-  public String getFormPropertyName() {
-    return beanPropertyDefImpl.getFormPropertyName();
+  public String getFormFieldName() {
+    return beanPropertyDefImpl.getFormFieldName();
   }
 
   @Override
@@ -659,7 +521,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
 
   @Override
   public boolean isSupportsUnresolvedReferences() {
-    if (isPageLevelProperty()) {
+    if (isPageLevelField()) {
       // Since this property is not backed by an mbean, it cannot be set to an unresolved reference.
       return false;
     }

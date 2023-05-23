@@ -49,11 +49,13 @@ actions:
   label: "Suspend"
   actions:
     - name: "suspend"
+      label: "Gracefully"
     - name: "forceSuspend"
 - name: "shutdownActions"
   label: "Shutdown"
   actions:
   - name: "shutdown"
+    label: "Gracefully"
   - name: "forceShutdown"
 - name: "shrink"
 - name: "reset"

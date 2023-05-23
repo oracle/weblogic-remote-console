@@ -1,13 +1,20 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule'],
-  function(oj, ko, ModuleElementUtils, Runtime, Preferences, CoreTypes, CoreUtils) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule', 'wrc-frontend/integration/viewModels/utils'],
+  function(oj, ko, ModuleElementUtils, Runtime, Preferences, CoreTypes, CoreUtils, ViewModelUtils) {
+    function notifyUnsavedChanges(state) {
+      window.electron_api?.ipc.invoke('unsaved-changes', state)
+        .then()
+        .catch(response => {
+          ViewModelUtils.failureResponseDefaultHandling(response);
+        });
+    }
     function HeaderTemplate(viewParams){
       const self = this;
 
@@ -31,6 +38,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
               },
               unattached: {iconFile: 'console-state-bar-clr_13x30',
                 tooltip: oj.Translations.getTranslatedString('wrc-header.icons.connectivity.unattached.tooltip')
+              },
+              insecure: {iconFile: 'alert-insecure-connection-blk_24x24',
+                text: oj.Translations.getTranslatedString('wrc-header.icons.connectivity.insecure.text'),
+                title: oj.Translations.getTranslatedString('wrc-data-providers.checkboxes.insecure.label')
               }
             }
           }
@@ -75,6 +86,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
       this.signalBindings = [];
 
       this.connected = function () {
+        notifyUnsavedChanges(false);
         setThemePreference(Preferences.general.themePreference());
 
         let binding = viewParams.signaling.modeChanged.add((newMode) => {
@@ -93,21 +105,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
 
         binding = viewParams.signaling.projectSwitched.add((fromProject) => {
           setConsoleStateBar(CoreTypes.Console.RuntimeMode.UNATTACHED.name);
+          setConsoleConnectionInsecureState(false);
+          clearConsoleSecurityWarningLink();
         });
 
         self.signalBindings.push(binding);
 
         //setup for security warning link.
         binding = viewParams.signaling.dataProviderSelected.add(dataProvider => {
-          this.linkLabel(dataProvider.linkLabel);
-          this.linkResourceData(dataProvider.linkResourceData);
+          setConsoleSecurityWarningLink(dataProvider);
+          setConsoleConnectionInsecureState(dataProvider?.status?.insecure ? true : false);
         });
 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.domainSecurityWarning.add(dataProvider => {
-          this.linkLabel(dataProvider.linkLabel);
-          this.linkResourceData(dataProvider.linkResourceData);
+          setConsoleSecurityWarningLink(dataProvider);
         });
 
         self.signalBindings.push(binding);
@@ -115,6 +128,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
         binding = viewParams.signaling.dataProviderRemoved.add((removedDataProvider) => {
           if (removedDataProvider.id === Runtime.getDataProviderId()) {
             setConsoleStateBar(CoreTypes.Console.RuntimeMode.UNATTACHED.name);
+            setConsoleConnectionInsecureState(false);
+            clearConsoleSecurityWarningLink();
           }
         });
 
@@ -188,6 +203,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
               break;
           }
         }
+      }
+
+      function setConsoleConnectionInsecureState(isDisplayed) {
+        const div = document.getElementById('wrc-insecure-state');
+        if (div !== null) div.style.display = (isDisplayed ? 'inline-flex' : 'none');
+      }
+
+      function setConsoleSecurityWarningLink(dataProvider) {
+        self.linkLabel(dataProvider.linkLabel);
+        self.linkResourceData(dataProvider.linkResourceData);
+      }
+
+      function clearConsoleSecurityWarningLink() {
+        self.linkLabel('');
+        self.linkResourceData('');
       }
 
     }

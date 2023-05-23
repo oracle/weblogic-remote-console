@@ -2,21 +2,90 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions:
+
 - name: "start"
   type: "void"
+  descriptionHTML: >
+    <p>Starts a data source that has a health state of <code>Shutdown</code>.</p>
+    <p>If successful, the health state is set to <code>Running</code>.</p>
+    <p>This is a privileged operation that can only be invoked by an authorized user.</p>
+
 - name: "resume"
   type: "void"
+  descriptionHTML: >
+    <p>Restores all access to and operations on a data source that has a health state of <code>Suspended</code>.</p>
+    <p>If successful, the health state is set to <code>Running</code>.</p>
+    <p>This is a privileged operation that can only be invoked by an authorized user.</p>
+
 - name: "suspend"
   type: "void"
+  descriptionHTML: >
+    <p>Synchronously, gracefully suspends a data source that has the health state of
+    <code>Running</code> and  disables existing connections.
+    This operation immediately marks the data source as suspended and no further connections are created.
+    Idle (not reserved) connections are marked as disabled.
+    After a timeout period for the suspend operation,
+    all remaining connections in the pool are marked as suspended
+    and the following exception is thrown for any operations on the connection,
+    indicating that the data source is suspended:
+    java.sql.SQLRecoverableException: Connection has been administratively disabled. Try later.
+    If graceful suspend is done as part of a graceful shutdown operation,
+    connections are immediately closed when no longer reserved or at the end of the timeout period.
+    If not done as part of a shutdown operation, these connections remain in the pool and
+    are not closed because the pool may be resumed.</p>
+    <p>By default, the timeout period is 60 seconds.
+    You can change the value of this timeout period by configuring or dynamically
+    setting Inactive Connection Timeout Seconds to a non-zero value.</p>
+    <p>Setting IgnoreInUseConnectionsEnabled to false causes the operation to fail
+    if in-use connections exist.</p>
+    <p>If successful, the health state is set to <code>Suspended</code>.</p>
+    <p>This is a privileged operation that can only be invoked by an authorized user.</p>
+
 - name: "forceSuspend"
   type: "void"
+  descriptionHTML: >
+    <p>Forcefully suspends a data source that has the health state of <code>Running</code>,
+    including disconnecting all current connection users.
+    All current connections are closed and recreated.</p>
+    <p>If successful, the health state is set to <code>Suspended</code>.</p>
+    <p>This is a privileged operation that can only be invoked by an authorized user.</p>
+
 - name: "shutdown"
   type: "void"
+  descriptionHTML: >
+    <p>Gracefully, synchronously shuts down a data source that has a health state of <code>Running</code>.
+    A graceful (non-forced) datasource shutdown operation involves first gracefully suspending
+    the data source and then releasing the associated resources including the connections.
+    After the datasource is gracefully suspended, all remaining in-use connections are closed and
+    the datasource is marked as shut down.</p>
+    <p>If successful, the health state is set to <code>Shutdown</code>.</p>
+    <p>This is a privileged operation that can only be invoked by an authorized user.</p>
+
 - name: "forceShutdown"
   type: "void"
+  descriptionHTML: >
+     <p>Forcefully shuts down a data source that has a health state of <code>Running</code>,
+     including forcing the disconnection of all current connection users.</p>
+     <p>If successful, the health state is set to <code>Shutdown</code>.</p>
+     <p>This is a privileged operation that can only be invoked by an authorized user.</p>
+
 - name: "shrink"
   type: "void"
+  descriptionHTML: >
+    <p>Shrinks the database connection pool in the data source to either the current number
+    of reserved connections or the initial size of the connection pool, which ever is greater.</p>
+    <p>This is a privileged operation that can only be invoked by an authorized user.</p>
+
 - name: "reset"
   type: "void"
+  descriptionHTML: >
+    <p>Resets the connection pool in the data source by shutting down and recreating
+    all available database connections in the pool.</p>
+    <p>Use when a data source is in the health state of <code>Unhealthy</code> and needs to be reinitialized.</p>
+    <p>This is a privileged operation that can only be invoked by an authorized user.</p>
+
 - name: "clearStatementCache"
   type: "void"
+  descriptionHTML: >
+    <p>For each connection in the connection pool,
+    clears the statement cache of Prepared and Callable Statements.</p>

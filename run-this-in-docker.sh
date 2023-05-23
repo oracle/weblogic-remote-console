@@ -2,6 +2,18 @@
 # Copyright 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
+do_docker_pull() {
+  for i in 1 2 3
+  do
+    if docker pull $1
+    then
+      return 0
+    fi
+    sleep $(($i * 30))
+  done
+  exit 1
+}
+
 cleanup() {
   rm -rf $tmpdir
   if [ -n "$DOCKER_ID" ]
@@ -77,6 +89,7 @@ else
   it_option=
 fi
 set -x
+do_docker_pull $IMAGE
 DOCKER_ID=$(docker run -d \
   --name console-build.$$ \
   --network=host \

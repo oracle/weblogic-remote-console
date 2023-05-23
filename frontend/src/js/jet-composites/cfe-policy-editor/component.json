@@ -130,6 +130,16 @@
         }
       ]
     },
+    "performAutoUncombineAction": {
+      "description": "Perform an auto-uncombine action after a remove condition",
+      "params": [
+        {
+          "description": "A JS object containing information needed to perform the action.",
+          "name": "action",
+          "type": "object"
+        }
+      ]
+    },
     "fieldValueChangedCallback": {
       "description": "",
       "params": [
@@ -154,6 +164,20 @@
           "type": "object"
         }
       ]
+    },
+    "policyEditorResetCallback": {
+      "description": "",
+      "params": [
+        {
+          "description": "",
+          "name": "callback",
+          "type": "function"
+        }
+      ]
+    },
+    "sendPolicyEditorResetEvent": {
+      "description": "",
+      "params": []
     }
   },
   "events": {

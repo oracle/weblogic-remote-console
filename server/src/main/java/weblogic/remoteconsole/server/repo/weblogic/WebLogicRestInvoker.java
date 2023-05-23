@@ -35,6 +35,43 @@ public class WebLogicRestInvoker {
 
   private static final Logger LOGGER = Logger.getLogger(WebLogicRestInvoker.class.getName());
 
+  public static Response<JsonObject> get(
+    InvocationContext ic,
+    Path path,
+    boolean expandedValues
+  ) {
+    WebLogicRestRequest.Builder builder = WebLogicRestRequest.builder();
+    builder.root(WebLogicRestRequest.CURRENT_WEBLOGIC_REST_API_ROOT);
+    return get(ic, path, expandedValues, builder);
+  }
+
+  public static Response<JsonObject> get(
+    InvocationContext ic,
+    Path path,
+    boolean expandedValues,
+    WebLogicRestRequest.Builder builder
+  ) {
+    Response<JsonObject> response = new Response<>();
+    WebLogicRestRequest request =
+      builder
+        .connection(ic.getConnection())
+        .path(path.getRelativeUri())
+        .expandedValues(expandedValues)
+        // returns properties tagged @restInternal,
+        // e.g. some deprecated ServerRuntimeMBean properties the remote console uses:
+        .internal(true)
+        .build();
+
+    try (javax.ws.rs.core.Response restResponse = WebLogicRestClient.get(request)) {
+      boolean allowCreated = false;
+      boolean asynchronous = false;
+      return restResponseToResponse(ic, restResponse, allowCreated, asynchronous);
+    } catch (WebLogicRestClientException e) {
+      LOGGER.log(Level.WARNING, "Unexpected WebLogic Rest exception", e);
+      return response.setServiceNotAvailable();
+    }
+  }
+
   public static Response<JsonObject> post(
     InvocationContext ic,
     Path path,

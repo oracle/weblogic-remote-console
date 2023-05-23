@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+import weblogic.remoteconsole.common.repodef.ActionInputFormPagePath;
 import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
@@ -125,6 +126,8 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
       return createCreateFormDefImpl(pagePath.asCreateFormPagePath());
     } else if (pagePath.isTablePagePath()) {
       return createTableDefImpl(pagePath.asTablePagePath());
+    } else if (pagePath.isActionInputFormPagePath()) {
+      return createActionInputFormDefImpl(pagePath.asActionInputFormPagePath());
     } else {
       throw new AssertionError("Not a table, slice form or create form : " + pagePath);
     }
@@ -159,6 +162,15 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
       }
     }
     return null;
+  }
+
+  private ActionInputFormDefImpl createActionInputFormDefImpl(ActionInputFormPagePath pagePath) {
+    PageDefImpl parentPageDefImpl = getPageDefImpl(pagePath.getParentPagePath());
+    if (parentPageDefImpl == null) {
+      return null;
+    }
+    PageActionDefImpl actionDefImpl = parentPageDefImpl.findActionDefImpl(pagePath.getAction());
+    return (actionDefImpl != null) ? actionDefImpl.getInputFormDefImpl() : null;
   }
 
   private SlicePagePath resolveSlicePagePath(SlicePagePath pagePath, SlicesDefImpl slicesDefImpl) {

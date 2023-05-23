@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -9,7 +9,7 @@ package weblogic.remoteconsole.common.repodef.schema;
  */
 public class BeanActionParamDefSource extends BeanValueDefSource {
   private StringValue name = new StringValue();
-  private StringValue label = new StringValue();
+  private StringValue descriptionHTML = new StringValue();
 
   // The name of parameter.
   public String getName() {
@@ -20,12 +20,12 @@ public class BeanActionParamDefSource extends BeanValueDefSource {
     name.setValue(value);
   }
 
-  // The english label to display for this parameter.
-  public String getLabel() {
-    return label.getValue();
+  // The parameter's description
+  public String getDescriptionHTML() {
+    return descriptionHTML.getValue();
   }
 
-  public void setLabel(String value) {
-    this.label.setValue(value);
+  public void setDescriptionHTML(String val) {
+    descriptionHTML.setValue(val);
   }
 }

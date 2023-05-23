@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -16,6 +16,7 @@ class CustomPageDef {
   private LocalizableString introductionHTML;
   private LocalizableString helpPageTitle;
   private List<HelpTopicDef> helpTopicDefs = new ArrayList<>();
+  private List<PageActionDef> actionDefs = new ArrayList<>();
   private String customizePageMethod;
   private String customizePageDefMethod;
 
@@ -27,6 +28,7 @@ class CustomPageDef {
     setIntroductionHTML(toClone.getIntroductionHTML());
     setHelpPageTitle(toClone.getHelpPageTitle());
     getHelpTopicDefs().addAll(toClone.getHelpTopicDefs());
+    getActionDefs().addAll(toClone.getActionDefs());
     setCustomizePageMethod(toClone.getCustomizePageMethod());
     setCustomizePageDefMethod(toClone.getCustomizePageDefMethod());
   }
@@ -61,6 +63,14 @@ class CustomPageDef {
 
   void setHelpTopicDefs(List<HelpTopicDef> val) {
     helpTopicDefs = val;
+  }
+
+  List<PageActionDef> getActionDefs() {
+    return actionDefs;
+  }
+
+  void setActionDefs(List<PageActionDef> val) {
+    actionDefs = val;
   }
 
   String getCustomizePageMethod() {

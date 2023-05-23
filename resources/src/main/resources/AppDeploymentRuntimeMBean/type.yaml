@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 actions:
 
@@ -8,20 +8,38 @@ actions:
 - name: "startInAdminMode"
   label: "Start servicing only administration requests"
   actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.startInAdminMode
+  mbeanOperation:
+    operation: start_targets_deploymentOptions
+  helpHTML: >
+    <p>Start this application in admin mode on all running servers to which it is deployed.
+    This is an asynchronous operation that returns immediately.
+    The returned DeploymentProgressObjectMBean can be used to determine when the operation is completed.</p>
   definition:
     type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
 
 - name: "stop"
-  label: "When work completes"
+  label: "Stop when work completes"
 
 - name: "forceStop"
   label: "Force stop now"
   actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.forceStop
+  mbeanOperation:
+    operation: stop_targets_deploymentOptions
+  helpHTML: >
+    <p>Forcibly stop this application on all running servers to which it is deployed.
+    This is an asynchronous operation that returns immediately.
+    The returned DeploymentProgressObjectMBean can be used to determine when the operation is completed.</p>
   definition:
     type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
 
 - name: "stopToAdminMode"
-  label: "Stop, but continue servicing administration requests"
+  label: "Stop servicing non-administration requests"
   actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.stopToAdminMode
+  mbeanOperation:
+    operation: stop_targets_deploymentOptions
+  helpHTML: >
+    <p>Gracefully stop this application to admin mode on all running servers to which it is deployed.
+    This is an asynchronous operation that returns immediately.
+    The returned DeploymentProgressObjectMBean can be used to determine when the operation is completed.</p>
   definition:
     type: "weblogic.management.runtime.DeploymentProgressObjectMBean"

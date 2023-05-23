@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -175,7 +175,11 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
         binding = viewParams.signaling.nonwritableChanged.add((newRO) => {
           self.sliceReadOnly(newRO);
-          self.i18n.buttons.save.visible(!newRO);
+          if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name &&
+              self.perspective.id !== 'modeling'
+          ) {
+            self.i18n.buttons.save.visible(!newRO);
+          }
         });
 
         self.signalBindings.push(binding);

@@ -1,0 +1,40 @@
+{
+  "uid": "0",
+  "parentUid": "-1",
+  "isLastSibling": false,
+  "isLastCondition": false,
+  "expression": "User: user_add_above",
+  "options": {
+    "negated": false,
+    "combined": false,
+    "deleted": false,
+    "insertion": {
+      "type": "above",
+      "checkedItem": {
+        "uid": "0",
+        "parentUid": "-1"
+      },
+      "addedItem": {
+        "uid": "0",
+        "parentUid": "-1",
+        "isFirstSibling": true
+      },
+      "parentExpression": {
+        "type": "or"
+      }
+    }
+  },
+  "predicate": {
+    "name": "weblogic.console.wls.rest.extension.security.authorization.predicates.UserPredicate",
+    "arguments": [
+      {
+        "value": "user_add_above",
+        "array": true,
+        "displayName": "User Argument Name",
+        "descriptionHTML": "User Argument Description"
+      }
+    ],
+    "descriptionHTML": "User Predicate",
+    "displayName": "User"
+  }
+}

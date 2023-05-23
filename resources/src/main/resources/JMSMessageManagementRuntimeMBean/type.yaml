@@ -1,0 +1,111 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+
+- name: "exportMessages"
+  inputForm:
+    introductionHTML: >
+      Export the messages matching the selector to the specified file in XML representation.
+    customizePageMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.customizeExportMessagesActionInputForm
+    parameters:
+    - name: "selector"
+    - name: "file"
+    - name: "timeout"
+
+- name: "exportSelectedMessages"
+  mbeanOperation:
+    operation: exportMessages
+  inputForm:
+    introductionHTML: >
+      Export the selected messages to the specified file in XML representation.
+    parameters:
+    - name: "file"
+    - name: "timeout"
+  definition:
+    type: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
+    descriptionHTML: "Exports the selected messages to the specified file in XML representation"
+    parameters:
+    - name: file
+      type: java.lang.String
+      descriptionHTML: "The absolute path of the file to which the matching messages will be written."
+    - name: timeout
+      type: int
+      descriptionHTML: >
+        The maximum amount of time in seconds to perform the export operation.
+        A value of 0 indicates no timeout applies.
+
+- name: "importMessages"
+  inputForm:
+    introductionHTML: >
+      "Import the messages from the specified file."
+    parameters:
+    - name: "file"
+    - name: "applyOverrides"
+
+- name: "moveMessages"
+  inputForm:
+    introductionHTML: >
+      <p>Move the set of messages that match the specified selector to the target destination.</p>
+      <p>The move operation is guaranteed to be atomic for the selected messages.
+      Message header state, such as expiration time, time-to-deliver, JMSXUserID,
+      delivery mode, unit-of-order and priority are preserved.</>
+    customizePageMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.customizeMoveMessagesActionInputForm
+    parameters:
+    - name: "selector"
+    - name: "targetDestination"
+      optionsMethod: "weblogic.remoteconsole.customizers.JMSMessageManagementMBeanCustomizer.getAllDestinations"
+    - name: "timeout"
+
+- name: "moveSelectedMessages"
+  mbeanOperation:
+    operation: moveMessages
+  inputForm:
+    introductionHTML: >
+      <p>Move the selected messages to the target destination.</p>
+      <p>The move operation is guaranteed to be atomic for the selected messages.
+      Message header state, such as expiration time, time-to-deliver, JMSXUserID,
+      delivery mode, unit-of-order and priority are preserved.</>
+    parameters:
+    - name: "targetDestination"
+      optionsMethod: "weblogic.remoteconsole.customizers.JMSMessageManagementMBeanCustomizer.getAllDestinations"
+    - name: "timeout"
+  definition:
+    type: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
+    descriptionHTML: >
+      <p>Moves the selected messages to the target destination.
+      The move operation is guaranteed to be atomic for the selected messages.
+      Message header state, such as expiration time, time-to-deliver, JMSXUserID,
+      delivery mode, unit-of-order, priority and destination are preserved.</p>
+    parameters:
+    - name: targetDestination
+      type: weblogic.management.runtime.JMSDestinationRuntimeMBean
+      descriptionHTML: "A JMS destination that the messages will be moved to."
+    - name: timeout
+      type: int
+      descriptionHTML: "The timeout value for the move operation transaction."
+
+- name: "deleteMessages"
+  inputForm:
+    introductionHTML: >
+      Delete the set of messages that match the specified selector.
+    customizePageMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.customizeDeleteMessagesActionInputForm
+    parameters:
+    - name: "selector"
+
+- name: "deleteSelectedMessages"
+  mbeanOperation:
+    operation: deleteMessages
+  # use a no-arg input form to force the user to confirm the delete (since it cannot be undone)
+  inputForm:
+    introductionHTML: >
+      Delete the selected messages.
+  definition:
+    descriptionHTML: >
+      Delete the selected messages.
+    type: int # v.s. Integer
+
+children:
+- name: Tasks
+  requiredCapabilities:
+  - JMSMessages

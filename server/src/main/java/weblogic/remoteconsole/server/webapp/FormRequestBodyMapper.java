@@ -14,7 +14,7 @@ import javax.json.JsonValue;
 
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import weblogic.remoteconsole.common.repodef.PageDef;
-import weblogic.remoteconsole.common.repodef.PagePropertyDef;
+import weblogic.remoteconsole.common.repodef.PageFieldDef;
 import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BooleanValue;
 import weblogic.remoteconsole.server.repo.DateAsLongValue;
@@ -44,8 +44,8 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
   private static final String PROP_VALUE = "value";
   private static final String PROP_MODEL_TOKEN = "modelToken";
   private static final String PROP_UNRESOLVED_REFERENCE = "unresolvedReference";
-  private boolean isSliceForm;
-  private List<PagePropertyDef> propertyDefs;
+  private PageDef pageDef;
+  private List<PageFieldDef> fieldDefs;
 
   public static Response<List<FormProperty>> fromRequestBody(
     InvocationContext ic,
@@ -67,13 +67,13 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
       getResponse().copyUnsuccessfulResponse(pageDefResponse);
       return;
     }
-    PageDef pageDef = pageDefResponse.getResults();
+    pageDef = pageDefResponse.getResults();
     if (pageDef.isSliceFormDef()) {
-      isSliceForm = true;
-      propertyDefs = pageDef.asSliceFormDef().getAllPropertyDefs();
+      fieldDefs = new ArrayList<>(pageDef.asSliceFormDef().getAllPropertyDefs());
     } else if (pageDef.isCreateFormDef()) {
-      isSliceForm = false;
-      propertyDefs = pageDef.asCreateFormDef().getAllPropertyDefs();
+      fieldDefs = new ArrayList<>(pageDef.asCreateFormDef().getAllPropertyDefs());
+    } else if (pageDef.isActionInputFormDef()) {
+      fieldDefs = new ArrayList<>(pageDef.asActionInputFormDef().getParamDefs());
     } else {
       throw new AssertionError("Not a slice form or create form: " + getInvocationContext().getPagePath());
     }
@@ -115,11 +115,11 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
   }
 
   private FormProperty getFormProperty(String name, JsonObject propertiesJson) {
-    PagePropertyDef propertyDef = getPropertyDef(name);
+    PageFieldDef fieldDef = getFieldDef(name);
     if (!isOK()) {
       return null;
     }
-    if (isReadOnly(propertyDef)) {
+    if (isReadOnly(fieldDef)) {
       // ignore read-only properties so that the CFE can always send back the RDJ
       // instead of trimming it to writable properties.
       return null;
@@ -128,7 +128,7 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
     if (!isOK()) {
       return null;
     }
-    Value value = getPropertyValue(propertyDef, propertyJson);
+    Value value = getPropertyValue(fieldDef, propertyJson);
     if (!isOK()) {
       return null;
     }
@@ -137,7 +137,7 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
       // because the caller posted back the form from GET and the user didn't set the value.
       return null;
     }
-    return new FormProperty(propertyDef, value);
+    return new FormProperty(fieldDef, value);
   }
 
   private FormProperty getFormProperty(FormDataBodyPart uploadedFile) {
@@ -145,16 +145,16 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
       return null;
     }
     String name = uploadedFile.getFormDataContentDisposition().getName();
-    PagePropertyDef propertyDef = getPropertyDef(name);
+    PageFieldDef fieldDef = getFieldDef(name);
     if (!isOK()) {
       return null;
     }
-    if (isReadOnly(propertyDef)) {
+    if (isReadOnly(fieldDef)) {
       // ignore read-only properties so that the CFE can always send back the RDJ
       // instead of trimming it to writable properties.
       return null;
     }
-    if (!propertyDef.isFileContents()) {
+    if (!fieldDef.isFileContents()) {
       badFormat("Property is not an uploaded file: " + name);
       return null;
     }
@@ -164,33 +164,40 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
         uploadedFile.getEntityAs(InputStream.class),
         uploadedFile.getMediaType().getType()
       );
-    return new FormProperty(propertyDef, new SettableValue(value));
+    return new FormProperty(fieldDef, new SettableValue(value));
   }
 
-  private boolean isReadOnly(PagePropertyDef propertyDef) {
-    if (isSliceForm) {
-      return !propertyDef.isUpdateWritable();
+  private boolean isReadOnly(PageFieldDef fieldDef) {
+    if (pageDef.isSliceFormDef()) {
+      return !fieldDef.asPagePropertyDef().isUpdateWritable();
+    }
+    if (pageDef.isCreateFormDef()) {
+      return !fieldDef.asPagePropertyDef().isCreateWritable();
+    }
+    if (pageDef.isActionInputFormDef()) {
+      // Currently action parameters are always writable:
+      return false;
     } else {
-      return !propertyDef.isCreateWritable();
+      throw new AssertionError("Unsupported form " + pageDef + " " + fieldDef);
     }
   }
 
-  private PagePropertyDef getPropertyDef(String name) {
-    for (PagePropertyDef propertyDef : propertyDefs) {
-      if (getPropertyName(propertyDef).equals(name)) {
-        return propertyDef;
+  private PageFieldDef getFieldDef(String name) {
+    for (PageFieldDef fieldDef : fieldDefs) {
+      if (getFieldName(fieldDef).equals(name)) {
+        return fieldDef;
       }
     }
-    badFormat("Unsupported property name: " + name);
+    badFormat("Unsupported field name: " + name);
     return null;
   }
 
-  private Value getPropertyValue(PagePropertyDef propertyDef, JsonObject propertyJson) {
-    String propertyName = getPropertyName(propertyDef);
+  private Value getPropertyValue(PageFieldDef fieldDef, JsonObject propertyJson) {
+    String fieldName = getFieldName(fieldDef);
     boolean hasValue = propertyJson.containsKey(PROP_VALUE);
     boolean hasModelToken = propertyJson.containsKey(PROP_MODEL_TOKEN);
     if (hasValue && hasModelToken) {
-      badFormat(propertyName + " specifies " + PROP_VALUE + " and " + PROP_MODEL_TOKEN);
+      badFormat(fieldName + " specifies " + PROP_VALUE + " and " + PROP_MODEL_TOKEN);
       return null;
     }
     if (!hasValue && !hasModelToken) {
@@ -199,7 +206,7 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
         return null;
       }
       if (set) {
-        badFormat(propertyName + " doesn't specify " + PROP_VALUE + " or " + PROP_MODEL_TOKEN);
+        badFormat(fieldName + " doesn't specify " + PROP_VALUE + " or " + PROP_MODEL_TOKEN);
         return null;
       } else {
         // continue - the user wants to unset the property
@@ -207,27 +214,27 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
       }
     }
     Value value =
-      (hasValue && propertyDef.isArray() && !propertyDef.isReferenceAsReferences())
-      ? getValueAsArrayValue(propertyDef, propertyJson)
-      : getSingleValue(propertyDef, propertyJson);
+      (hasValue && fieldDef.isArray() && !fieldDef.isReferenceAsReferences())
+      ? getValueAsArrayValue(fieldDef, propertyJson)
+      : getSingleValue(fieldDef, propertyJson);
     if (value == null) {
       return null;
     }
     return createSettableValue(propertyJson, value);
   }
 
-  private Value getValueAsArrayValue(PagePropertyDef propertyDef, JsonObject propertyJson) {
+  private Value getValueAsArrayValue(PageFieldDef fieldDef, JsonObject propertyJson) {
     JsonArray itemsJson = getRequiredJsonArray(propertyJson, PROP_VALUE);
     if (!isOK()) {
       return null;
     }
     List<Value> values = new ArrayList<>();
     for (int i = 0; i < itemsJson.size(); i++) {
-      JsonObject itemJson = asJsonObject(getPropertyName(propertyDef), itemsJson.get(i));
+      JsonObject itemJson = asJsonObject(getFieldName(fieldDef), itemsJson.get(i));
       if (!isOK()) {
         return null;
       }
-      Value value = getSingleValue(propertyDef, itemJson);
+      Value value = getSingleValue(fieldDef, itemJson);
       if (!isOK()) {
         return null;
       }
@@ -236,65 +243,65 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
     return new ArrayValue(values);
   }
 
-  private Value getSingleValue(PagePropertyDef propertyDef, JsonObject json) {
-    String propertyName = getPropertyName(propertyDef);
+  private Value getSingleValue(PageFieldDef fieldDef, JsonObject json) {
+    String fieldName = getFieldName(fieldDef);
     boolean hasValue = json.containsKey(PROP_VALUE);
     boolean hasModelToken = json.containsKey(PROP_MODEL_TOKEN);
     if (hasValue && hasModelToken) {
-      badFormat(propertyName + " specifies " + PROP_VALUE + " and " + PROP_MODEL_TOKEN);
+      badFormat(fieldName + " specifies " + PROP_VALUE + " and " + PROP_MODEL_TOKEN);
       return null;
     }
     if (!hasValue && !hasModelToken) {
-      badFormat(propertyName + " does not specify " + PROP_VALUE + " or " + PROP_MODEL_TOKEN);
+      badFormat(fieldName + " does not specify " + PROP_VALUE + " or " + PROP_MODEL_TOKEN);
       return null;
     }
     if (hasModelToken) {
-      return getValueAsModelToken(propertyDef, json);
+      return getValueAsModelToken(fieldDef, json);
     }
     JsonValue jsonValue = getRequiredJsonValue(json, PROP_VALUE);
     if (!isOK()) {
       return null;
     }
-    if (propertyDef.isString()) {
-      return getValueAsString(propertyDef, jsonValue);
+    if (fieldDef.isString()) {
+      return getValueAsString(fieldDef, jsonValue);
     }
-    if (propertyDef.isBoolean()) {
-      return getValueAsBoolean(propertyDef, jsonValue);
+    if (fieldDef.isBoolean()) {
+      return getValueAsBoolean(fieldDef, jsonValue);
     }
-    if (propertyDef.isInt()) {
-      return getValueAsInt(propertyDef, jsonValue);
+    if (fieldDef.isInt()) {
+      return getValueAsInt(fieldDef, jsonValue);
     }
-    if (propertyDef.isLong()) {
-      return getValueAsLong(propertyDef, jsonValue);
+    if (fieldDef.isLong()) {
+      return getValueAsLong(fieldDef, jsonValue);
     }
-    if (propertyDef.isDouble()) {
-      return getValueAsDouble(propertyDef, jsonValue);
+    if (fieldDef.isDouble()) {
+      return getValueAsDouble(fieldDef, jsonValue);
     }
-    if (propertyDef.isSecret()) {
-      return getValueAsSecret(propertyDef, jsonValue);
+    if (fieldDef.isSecret()) {
+      return getValueAsSecret(fieldDef, jsonValue);
     }
-    if (propertyDef.isReference()) {
-      return getValueAsReference(propertyDef, jsonValue);
+    if (fieldDef.isReference()) {
+      return getValueAsReference(fieldDef, jsonValue);
     }
     // Note: DateAsLong properties return true for both isDateAsLong and isDate
     // v.s. Date properties return false for isDateAsLong and true for isDate
     // So, check for isDateAsLong first.
-    if (propertyDef.isDateAsLong()) {
-      return getValueAsDateAsLong(propertyDef, jsonValue);
+    if (fieldDef.isDateAsLong()) {
+      return getValueAsDateAsLong(fieldDef, jsonValue);
     }
-    if (propertyDef.isDate()) {
-      return getValueAsDate(propertyDef, jsonValue);
+    if (fieldDef.isDate()) {
+      return getValueAsDate(fieldDef, jsonValue);
     }
-    if (propertyDef.isProperties()) {
-      return getValueAsProperties(propertyDef, jsonValue);
+    if (fieldDef.isProperties()) {
+      return getValueAsProperties(fieldDef, jsonValue);
     }
-    if (propertyDef.isEntitleNetExpression()) {
-      return getValueAsEntitleNetExpression(propertyDef, jsonValue);
+    if (fieldDef.isEntitleNetExpression()) {
+      return getValueAsEntitleNetExpression(fieldDef, jsonValue);
     }
-    throw new AssertionError("Unsupported property type " + propertyDef);
+    throw new AssertionError("Unsupported field type " + fieldDef);
   }
 
-  private Value getValueAsModelToken(PagePropertyDef propertyDef, JsonObject propertyJson) {
+  private Value getValueAsModelToken(PageFieldDef fieldDef, JsonObject propertyJson) {
     String modelToken = getRequiredString(propertyJson, PROP_MODEL_TOKEN);
     if (!isOK()) {
       return null;
@@ -302,85 +309,88 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
     return new ModelToken(modelToken);
   }
 
-  private Value getValueAsString(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    String val = asString(getPropertyName(propertyDef), jsonValue);
+  private Value getValueAsString(PageFieldDef fieldDef, JsonValue jsonValue) {
+    String val = asString(getFieldName(fieldDef), jsonValue);
     if (!isOK()) {
       return null;
     }
     return new StringValue(val);
   }
 
-  private Value getValueAsBoolean(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    boolean val = asBoolean(getPropertyName(propertyDef), jsonValue);
+  private Value getValueAsBoolean(PageFieldDef fieldDef, JsonValue jsonValue) {
+    boolean val = asBoolean(getFieldName(fieldDef), jsonValue);
     if (!isOK()) {
       return null;
     }
     return new BooleanValue(val);
   }
 
-  private Value getValueAsInt(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    int val = asInt(getPropertyName(propertyDef), jsonValue);
+  private Value getValueAsInt(PageFieldDef fieldDef, JsonValue jsonValue) {
+    int val = asInt(getFieldName(fieldDef), jsonValue);
     if (!isOK()) {
       return null;
     }
     return new IntValue(val);
   }
 
-  private Value getValueAsLong(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    long val = asLong(getPropertyName(propertyDef), jsonValue);
+  private Value getValueAsLong(PageFieldDef fieldDef, JsonValue jsonValue) {
+    long val = asLong(getFieldName(fieldDef), jsonValue);
     if (!isOK()) {
       return null;
     }
     return new LongValue(val);
   }
 
-  private Value getValueAsDouble(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    double val = asDouble(getPropertyName(propertyDef), jsonValue);
+  private Value getValueAsDouble(PageFieldDef fieldDef, JsonValue jsonValue) {
+    double val = asDouble(getFieldName(fieldDef), jsonValue);
     if (!isOK()) {
       return null;
     }
     return new DoubleValue(val);
   }
 
-  private Value getValueAsSecret(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    String val = asString(getPropertyName(propertyDef), jsonValue);
+  private Value getValueAsSecret(PageFieldDef fieldDef, JsonValue jsonValue) {
+    String val = asString(getFieldName(fieldDef), jsonValue);
     if (!isOK()) {
       return null;
     }
     return new SecretValue(val);
   }
 
-  private Value getValueAsReference(PagePropertyDef propertyDef, JsonValue jsonValue) {
+  private Value getValueAsReference(PageFieldDef fieldDef, JsonValue jsonValue) {
     if (jsonValue == JsonValue.NULL) {
       return NullReference.INSTANCE;
     }
-    JsonObject jsonObject = asJsonObject(propertyDef.getPropertyName(), jsonValue);
+    JsonObject jsonObject = asJsonObject(fieldDef.getFormFieldName(), jsonValue);
     if (!isOK()) {
       return null;
     }
     boolean haveResolvedRef = jsonObject.containsKey(PROP_RESOURCE_DATA);
     boolean haveUnresolvedRef = jsonObject.containsKey(PROP_UNRESOLVED_REFERENCE);
     if (haveResolvedRef && haveUnresolvedRef) {
-      badFormat(propertyDef + " specifies both " + PROP_RESOURCE_DATA + " and " + PROP_UNRESOLVED_REFERENCE);
+      badFormat(fieldDef + " specifies both " + PROP_RESOURCE_DATA + " and " + PROP_UNRESOLVED_REFERENCE);
       return null;
     }
     if (!haveResolvedRef && !haveUnresolvedRef) {
-      badFormat(propertyDef + " doesn't specify " + PROP_RESOURCE_DATA + " or " + PROP_UNRESOLVED_REFERENCE);
+      badFormat(fieldDef + " doesn't specify " + PROP_RESOURCE_DATA + " or " + PROP_UNRESOLVED_REFERENCE);
       return null;
     }
     if (haveResolvedRef) {
-      return asBeanTreePath(propertyDef.getPropertyName(), jsonValue);
+      return asBeanTreePath(fieldDef.getFormFieldName(), jsonValue);
     } else {
-      return asUnresolvedReference(propertyDef, jsonValue);
+      return asUnresolvedReference(fieldDef, jsonValue);
     }
   }
 
-  private UnresolvedReference asUnresolvedReference(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    if (!propertyDef.isSupportsUnresolvedReferences()) {
-      badFormat(propertyDef + " doesn't support unresolved references");
+  private UnresolvedReference asUnresolvedReference(PageFieldDef fieldDef, JsonValue jsonValue) {
+    if (!fieldDef.isPagePropertyDef()) {
+      throw new AssertionError("Unresolved references not supported for " + fieldDef + " " + jsonValue);
+    }
+    if (!fieldDef.asPagePropertyDef().isSupportsUnresolvedReferences()) {
+      badFormat(fieldDef + " doesn't support unresolved references");
       return null;
     }
-    JsonObject jsonObject = asJsonObject(propertyDef.getPropertyName(), jsonValue);
+    JsonObject jsonObject = asJsonObject(fieldDef.getFormFieldName(), jsonValue);
     if (!isOK()) {
       return null;
     }
@@ -391,24 +401,24 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
     return new UnresolvedReference(key);
   }
 
-  private Value getValueAsDate(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    Date date = asDate(getPropertyName(propertyDef), jsonValue);
+  private Value getValueAsDate(PageFieldDef fieldDef, JsonValue jsonValue) {
+    Date date = asDate(getFieldName(fieldDef), jsonValue);
     if (!isOK()) {
       return null;
     }
     return new DateValue(date);
   }
 
-  private Value getValueAsDateAsLong(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    Date date = asDate(getPropertyName(propertyDef), jsonValue);
+  private Value getValueAsDateAsLong(PageFieldDef fieldDef, JsonValue jsonValue) {
+    Date date = asDate(getFieldName(fieldDef), jsonValue);
     if (!isOK()) {
       return null;
     }
     return new DateAsLongValue(date);
   }
 
-  private Value getValueAsProperties(PagePropertyDef propertyDef, JsonValue jsonValue) {
-    JsonObject jsonObject = asJsonObject(getPropertyName(propertyDef), jsonValue);
+  private Value getValueAsProperties(PageFieldDef fieldDef, JsonValue jsonValue) {
+    JsonObject jsonObject = asJsonObject(getFieldName(fieldDef), jsonValue);
     if (!isOK()) {
       return null;
     }
@@ -423,13 +433,13 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
     return new PropertiesValue(properties);
   }
 
-  private Value getValueAsEntitleNetExpression(PagePropertyDef propertyDef, JsonValue jsonValue) {
+  private Value getValueAsEntitleNetExpression(PageFieldDef fieldDef, JsonValue jsonValue) {
     // The CBE just passes them straight through as json values:
     return new EntitleNetExpressionValue(jsonValue);
   }
 
-  private String getPropertyName(PagePropertyDef propertyDef) {
-    return propertyDef.getFormPropertyName();
+  private String getFieldName(PageFieldDef fieldDef) {
+    return fieldDef.getFormFieldName();
   }
 
   private SettableValue createSettableValue(JsonObject propertyJson, Value value) {

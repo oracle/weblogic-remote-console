@@ -47,15 +47,17 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     ConsoleBackendRuntimeConfig.getConnectionTimeout();
   private static final long READ_TIMEOUT =
     ConsoleBackendRuntimeConfig.getReadTimeout();
-  private static final boolean DISABLE_HOSTNAME_VERIFICATION =
-    ConsoleBackendRuntimeConfig.isHostnameVerificationDisabled();
   private static final Logger LOGGER =
     Logger.getLogger(AdminServerDataProviderImpl.class.getName());
 
   private String connectionId;
   private String name;
   private String url;
+  private String ssoTokenId;
   private String authorizationHeader;
+  private long ssoTokenExpires;
+  private boolean isDisabledHostnameVerification = false;
+  private boolean isInsecureConnection = false;
   private WebLogicMBeansVersion mbeansVersion;
   private String connectionWarning;
   private String lastMessage;
@@ -125,8 +127,32 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   @Override
-  public String getAuthorizationHeader() {
-    return authorizationHeader;
+  public boolean isSsoTokenAvailable() {
+    return (ssoTokenId != null) && (authorizationHeader != null);
+  }
+
+  @Override
+  public long getSsoTokenExpires() {
+    return ssoTokenExpires;
+  }
+
+  @Override
+  public void setSsoTokenId(String value) {
+    ssoTokenId = value;
+  }
+
+  @Override
+  public String getSsoTokenId() {
+    return ssoTokenId;
+  }
+
+  @Override
+  public boolean setSsoToken(String token, String domainUrl, long expires) {
+    if (url.equalsIgnoreCase(domainUrl)) {
+      authorizationHeader = (token != null) ? ("Bearer " + token) : null;
+      ssoTokenExpires = (expires > 0) ? expires : 0L;
+    }
+    return (authorizationHeader != null);
   }
 
   @Override
@@ -140,8 +166,18 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   @Override
-  public boolean isDisableHostnameVerification() {
-    return DISABLE_HOSTNAME_VERIFICATION;
+  public boolean isDisabledHostnameVerification() {
+    return (isInsecureConnection ? true : isDisabledHostnameVerification);
+  }
+
+  @Override
+  public void setInsecureConnection(boolean value) {
+    isInsecureConnection = value;
+  }
+
+  @Override
+  public boolean isInsecureConnection() {
+    return isInsecureConnection;
   }
 
   @Override
@@ -160,6 +196,11 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   @Override
+  public boolean isConnected() {
+    return (connectionId != null);
+  }
+
+  @Override
   public void test(InvocationContext ic) {
     start(ic);
   }
@@ -169,8 +210,12 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     ic.setProvider(this);
     Connection connection = null;
     if (connectionId == null) {
+      // Ensure that a provider used for SSO has the token available!
+      if ((getSsoTokenId() != null) && !isSsoTokenAvailable()) {
+        throw new FailedRequestException(Response.Status.UNAUTHORIZED.getStatusCode(), getTokenUnavailable(ic));
+      }
       ConnectionManager.ConnectionResponse result =
-        CONNECTION_MANAGER.tryConnection(url, authorizationHeader, ic.getLocales());
+        CONNECTION_MANAGER.tryConnection(url, authorizationHeader, ic.getLocales(), isInsecureConnection);
       if (result.isSuccess()) {
         isLastConnectionAttemptSuccessful = true;
         isAnyConnectionAttemptSuccessful = true;
@@ -221,6 +266,13 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     }
   }
 
+  // Get the response message when no token is available for the provider
+  private JsonObject getTokenUnavailable(InvocationContext ic) {
+    isLastConnectionAttemptSuccessful = false;
+    lastMessage = ic.getLocalizer().localizeString(LocalizedConstants.SSO_TOKEN_UNAVAILABLE);
+    return toJSON(ic);
+  }
+
   @Override
   public Map<String, Root> getRoots() {
     return roots;
@@ -234,6 +286,15 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     ret.add(ProviderResource.DOMAIN_URL, getURL());
     ret.add("connectTimeout", getConnectTimeout());
     ret.add("readTimeout", getReadTimeout());
+    if (isInsecureConnection()) {
+      ret.add("insecure", true);
+    }
+    if (getSsoTokenId() != null) {
+      ret.add("sso", true);
+      if (authorizationHeader == null) {
+        ret.add("ssoid", getSsoTokenId());
+      }
+    }
     ret.add("mode", "standalone");
     ret.add("anyConnectionAttemptSuccessful", isAnyConnectionAttemptSuccessful());
     ret.add("lastConnectionAttemptSuccessful", isLastConnectionAttemptSuccessful());

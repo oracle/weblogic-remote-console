@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -114,11 +114,8 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
     }
 
     async function createAuthorizationHeader(dataProvider) {
-      // Check for token when creating connection
-      if (CoreUtils.isNotUndefinedNorNull(dataProvider.token)) {
-        return 'Bearer ' + dataProvider.token;
-      }
-
+      // The authorization header is not used for sso token
+      if (dataProvider?.settings?.sso) return undefined;
       // Use built-in, global btoa() method to create
       // an Authorization HTTP request header.
       //
@@ -396,6 +393,11 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
             domainUrl: dataProvider.url
           };
 
+          // Add the dataProvider settings when any setting is supplied
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider.settings) && Object.keys(dataProvider.settings).length > 0) {
+            dataPayload['settings'] = dataProvider.settings;
+          }
+
           // Use Promise chain to do the work
           return new Promise((resolve, reject) => {
             createAuthorizationHeader(dataProvider)
@@ -450,6 +452,26 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
               return response;
             });
 
+        },
+
+        /**
+         * Check status of SSO token
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        pollConnectionToken: function (dataProvider) {
+          return new Promise((resolve, reject) => {
+            CbeDataManager.pollConnectionTokenData(dataProvider.status.ssoid)
+              .then(reply => {
+                reply.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.DETACHED.name;
+                resolve(reply);
+              })
+              .catch(response => {
+                if (response.failureType !== CoreTypes.FailureType.CBE_REST_API) {
+                  response['failureReason'] = this.messages.backendNotReachable.detail;
+                }
+                reject(response);
+              })
+          });
         },
 
         /**

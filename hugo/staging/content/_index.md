@@ -36,20 +36,17 @@ Whether you choose the desktop application or the browser-based tool, it's simpl
 
 ***
 ### What's new
-The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.2. This release was published in March 2023.
+The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.4. <!--This release was published in March 2023.-->
 
 **New features**
 
-* Security Data Tree: manage credential mappings to remote systems
-* Enhanced accessibility features: improved keyboard navigation
-* Updates to  the WebLogic Remote Console extension
-* Copy data from tables to your clipboard with a right-click
-* Specify an alternative JDK location
-* Multi-window support
+* Security polices and roles editor
+* Copy settings from an existing server to a new one
 ***
 
 #### Previous Releases {id="prev_releases"}
 Documentation for prior releases of the WebLogic Remote Console:
+* [2.4.2](2.4.2/)
 * [2.4.1](2.4.1/)
 * [2.4.0](2.4.0/)
 * [2.3.0](2.3.0/)

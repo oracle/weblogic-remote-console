@@ -136,4 +136,9 @@ class SliceDefImpl implements SliceDef {
     // across slices if they happen to have the same text.
     return "slices." + getName() + "." + key;
   }
+
+  @Override
+  public String toString() {
+    return "slice<" + slice + ">";
+  }
 }

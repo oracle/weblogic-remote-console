@@ -4,14 +4,18 @@
 package weblogic.remoteconsole.common.repodef.weblogic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
+import weblogic.remoteconsole.common.repodef.schema.BeanActionDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
@@ -21,6 +25,7 @@ import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
 import weblogic.remoteconsole.common.repodef.schema.MBeanAttributeDefSource;
+import weblogic.remoteconsole.common.repodef.schema.MBeanOperationDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PseudoBeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceFormDefSource;
@@ -121,15 +126,26 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
 
   @Override
   PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(String type) {
-    if (getYamlReader().getPseudoBeanTypeDefSource(nameHandler.getUnfabricatedType(type)) != null) {
-      throw new AssertionError("Delegated types are not supported for pseudo types: " + type);
+    PseudoBeanTypeDefSource source = getYamlReader().getPseudoBeanTypeDefSource(nameHandler.getUnfabricatedType(type));
+    if (source == null) {
+      // This isn't a pseudo type
+      return null;
     }
-    return null;
+    String name = source.getName();
+    if (nameHandler.isFabricatableType(name)) {
+      source.setName(nameHandler.getFabricatedJavaType(name));
+    }
+    String baseType = source.getBaseType();
+    if (nameHandler.isFabricatableType(baseType)) {
+      source.setBaseType(nameHandler.getFabricatedJavaType(baseType));
+    }
+    return source;
   }
 
   @Override
   public BeanTypeDefCustomizerSource getBeanTypeDefCustomizerSource(BeanTypeDef typeDef) {
     List<BeanPropertyDefCustomizerSource> undelPropertyCustomizers = new ArrayList<>();
+    List<BeanActionDefCustomizerSource> undelActionCustomizers = new ArrayList<>();
     BeanTypeDef undelTypeDef = nameHandler.getUnfabricatedTypeDef(typeDef);
     BeanTypeDefCustomizerSource source =
       getYamlReader().getBeanTypeDefCustomizerSource(undelTypeDef);
@@ -137,10 +153,13 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
       source = new BeanTypeDefCustomizerSource();
     } else {
       undelPropertyCustomizers = source.getProperties();
+      undelActionCustomizers = source.getActions();
       source.setProperties(new ArrayList<>());
+      source.setActions(new ArrayList<>());
     }
     source.setInstanceName(undelTypeDef.getInstanceName());
     delegateProperties(undelTypeDef, undelPropertyCustomizers, source);
+    delegateActions(undelTypeDef, undelActionCustomizers, source);
     delegateSubTypes(source);
     return source;
   }
@@ -162,11 +181,11 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
   ) {
     BeanPropertyDefCustomizerSource propertyCustomizer =
       findOrCreatePropertyCustomizer(undelPropertyDef, undelPropertyCustomizers);
-    fixMBeanJavadocLink(undelPropertyDef, propertyCustomizer);
+    fixMBeanAttributeJavadocLink(undelPropertyDef, propertyCustomizer);
     source.addProperty(propertyCustomizer);
   }
 
-  private void fixMBeanJavadocLink(
+  private void fixMBeanAttributeJavadocLink(
     BeanPropertyDef undelPropertyDef,
     BeanPropertyDefCustomizerSource propertyCustomizer
   ) {
@@ -221,6 +240,123 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
     // It wasn't.  Make one.
     BeanPropertyDefCustomizerSource rtn = new BeanPropertyDefCustomizerSource();
     rtn.setName(propertyName);
+    return rtn;
+  }
+
+  private void delegateActions(
+    BeanTypeDef undelTypeDef,
+    List<BeanActionDefCustomizerSource> undelActionCustomizers,
+    BeanTypeDefCustomizerSource source
+  ) {
+    Set<String> localActionNames = getLocalActionNames(undelTypeDef, undelActionCustomizers);
+    for (BeanActionDef undelActionDef : undelTypeDef.getActionDefs()) {
+      if (localActionNames.contains(undelActionDef.getActionPath().toString())) {
+        delegateAction(undelActionDef, undelActionCustomizers, source);
+      }
+    }
+  }
+
+  private Set<String> getLocalActionNames(
+    BeanTypeDef undelTypeDef,
+    List<BeanActionDefCustomizerSource> undelActionCustomizers
+  ) {
+    // Make a set of the actions defined or customized on this type (v.s. inherited)
+    Set<String> rtn = new HashSet<>();
+    {
+      BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(undelTypeDef.getTypeName());
+      if (source != null) {
+        for (BeanActionDefSource actionSource : source.getActions()) {
+          rtn.add(actionSource.getName());
+        }
+      }
+    }
+    {
+      BeanTypeDefExtensionSource source = getYamlReader().getBeanTypeDefExtensionSource(undelTypeDef);
+      if (source != null) {
+        for (BeanActionDefSource actionSource : source.getActions()) {
+          rtn.add(actionSource.getName());
+        }
+      }
+    }
+    {
+      for (BeanActionDefCustomizerSource actionSource :  undelActionCustomizers) {
+        rtn.add(actionSource.getName());
+      }
+    }
+    return rtn;
+  }
+
+  private void delegateAction(
+    BeanActionDef undelActionDef,
+    List<BeanActionDefCustomizerSource> undelActionCustomizers,
+    BeanTypeDefCustomizerSource source
+  ) {
+    BeanActionDefCustomizerSource actionCustomizer =
+      findOrCreateActionCustomizer(undelActionDef, undelActionCustomizers);
+    fixMBeanOperationJavadocLink(undelActionDef, actionCustomizer);
+    source.addAction(actionCustomizer);
+  }
+
+  private void fixMBeanOperationJavadocLink(
+    BeanActionDef undelActionDef,
+    BeanActionDefCustomizerSource actionCustomizer
+  ) {
+    // Find the leaf action def
+    Path parentPath = undelActionDef.getParentPath();
+    if (!parentPath.isEmpty()) {
+      // The action lives in a child bean.
+      // Find the corresponding action on the child bean.
+      boolean searchSubTypes = true;
+      BeanChildDef childDef =
+        undelActionDef
+          .getTypeDef()
+          .getChildDef(parentPath, searchSubTypes);
+      if (childDef != null) {
+        undelActionDef =
+          childDef
+            .getChildTypeDef()
+            .getActionDef(
+              new Path(undelActionDef.getActionName()),
+            searchSubTypes
+          );
+      } else {
+        // The child isn't visible (e.g. excluded).  Skip the action.
+        return;
+      }
+    } else {
+      // The action lives directly on the bean.
+    }
+    BeanTypeDef undelTypeDef = undelActionDef.getTypeDef();
+    if (!nameHandler.isFabricatableTypeDef(undelTypeDef)) {
+      // The bean type isn't delegated so we don't need to fix its mbean javadoc link
+      return;
+    }
+    MBeanOperationDefSource undelMbeanOp = actionCustomizer.getMbeanOperation();
+    if (StringUtils.isEmpty(undelMbeanOp.getType())) {
+      // The mbean type wasn't customized, so defaults to the bean type.
+      // The bean type is delegated, so switch the mbean type to the
+      // undelegated bean type.
+      MBeanOperationDefSource delMbeanOp = new MBeanOperationDefSource();
+      delMbeanOp.setType(undelTypeDef.getTypeName());
+      delMbeanOp.setOperation(undelMbeanOp.getOperation());
+      actionCustomizer.setMbeanOperation(delMbeanOp);
+    }
+  }
+
+  private BeanActionDefCustomizerSource findOrCreateActionCustomizer(
+    BeanActionDef undelActionDef,
+    List<BeanActionDefCustomizerSource> undelActionCustomizers
+  ) {
+    String actionName = undelActionDef.getActionPath().getDotSeparatedPath();
+    // See if the action was customized on the undelegated type.
+    for (BeanActionDefCustomizerSource ac : undelActionCustomizers) {
+      if (ac.getName().equals(actionName)) {
+        return ac;
+      }
+    }
+    // It wasn't.  Make one.
+    BeanActionDefCustomizerSource rtn = new BeanActionDefCustomizerSource();
+    rtn.setName(actionName);
     return rtn;
   }
 

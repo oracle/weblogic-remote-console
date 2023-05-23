@@ -9,7 +9,7 @@
 
 /**
  * See {@link https://stackabuse.com/javascripts-immediately-invoked-function-expressions/}
- * @type {{getFilename, getAll, set, read, get, initialize, write}}
+ * @type {{getPath, getAll, set, read, get, initialize, write}}
  */
 const AppConfig = (() => {
   const fs = require('fs');
@@ -32,7 +32,7 @@ const AppConfig = (() => {
       _config['persistenceDirectory'] = options.appPaths.userData;
       AppConfig.read();
     },
-    getFilename: () => {
+    getPath: () => {
       return `${_appPaths.userDataPath}/config.json`;
     },
     getAll: () => {
@@ -48,9 +48,9 @@ const AppConfig = (() => {
       if (settings.executablePath) _config['executableJar'] = `${_appPaths.exe}/${settings.executablePath}`;
     },
     read: () => {
-      if (fs.existsSync(AppConfig.getFilename())) {
+      if (fs.existsSync(AppConfig.getPath())) {
         try {
-          const settings = JSON.parse(fs.readFileSync(AppConfig.getFilename()).toString());
+          const settings = JSON.parse(fs.readFileSync(AppConfig.getPath()).toString());
           AppConfig.set(settings);
         }
         catch(err) {
@@ -60,7 +60,7 @@ const AppConfig = (() => {
     },
     write: () => {
       // Creates the file, if it doesn't exists
-      fs.writeFileSync(AppConfig.getFilename(), JSON.stringify(_config, null, 4));
+      fs.writeFileSync(AppConfig.getPath(), JSON.stringify(_config, null, 4));
     }
   };
 

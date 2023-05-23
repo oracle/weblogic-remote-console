@@ -1,5 +1,43 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: TransactionLogStoreRuntimeMBean.HealthState
   label: JTA Health State
+
+actions:
+- name: forceCommitSelectedTransactions
+  actionMethod: weblogic.remoteconsole.customizers.JTARuntimeMBeanCustomizer.forceCommitSelectedTransactions
+  mbeanOperation:
+    operation: forceCommit
+  inputForm:
+    introductionHTML: >
+      "<p>Force the selected transactions to be committed.</p>"
+    parameters:
+    - name: "global"
+  definition:
+    type: void
+    descriptionHTML: "<p>Forces the selected transactions to be committed.</p>"
+    parameters:
+    - name: global
+      type: boolean
+      descriptionHTML: >
+        When true applies to all server participants,
+        when false applies only to the local server participant.
+- name: forceRollbackSelectedTransactions
+  actionMethod: weblogic.remoteconsole.customizers.JTARuntimeMBeanCustomizer.forceRollbackSelectedTransactions
+  mbeanOperation:
+    operation: forceRollback
+  inputForm:
+    introductionHTML: >
+      "<p>Force the selected transactions to be rolled-back.</p>"
+    parameters:
+    - name: "global"
+  definition:
+    type: void
+    descriptionHTML: "<p>Forces the selected transactions to be rolled-back.</p>"
+    parameters:
+    - name: global
+      type: boolean
+      descriptionHTML: >
+        When true applies to all server participants,
+        when false applies only to the local server participant.

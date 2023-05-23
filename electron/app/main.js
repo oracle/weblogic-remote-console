@@ -17,7 +17,7 @@ const readline = require('readline');
 const { spawn } = require('child_process');
 const { execFile } = require('child_process');
 
-const { app, ipcMain, shell } = require('electron');
+const { app, ipcMain, shell, dialog } = require('electron');
 
 const logger = require('./js/console-logger');
 
@@ -29,22 +29,39 @@ const FileUtils = require('./js/file-utils');
 // Declare variable for IIFE class used to manage data
 // persisted in the user-prefs.json file
 const UserPrefs = require('./js/user-prefs-json');
+// persisted in the auto-prefs.json file
+const AutoPrefs = require('./js/auto-prefs-json');
 // Declare variable for IIFE class used to manage data
 // persisted in the config.json file
 const AppConfig = require('./js/config-json');
 // Declare variable for IIFE class used to manage projects
-const ProjectManager = require('./js/project-management');
+const ProjectManagement = require('./js/project-management');
+// Declare variable for IIFE class used to read and write projects
+const UserProjects = require('./js/user-projects-json');
+// Declare variable for IIFE class used to watch for changes to files
+const Watcher = require('./js/watcher');
 // Declare variable for IIFE class used to manage window
 // and menu for app
 const AppWindow = require('./js/window-management');
 
 // Declare functions from module that wraps keytar usage
 const {getKeyTar} = require('./js/keytar-utils');
-// Declare functions from module that wraps auto-updater usage
-const {getAutoUpdateInfo} = require('./js/auto-update-utils');
 
 const instDir = path.dirname(app.getPath('exe'));
 const { homepage, productName, version, copyright } = require(`${instDir}/package.json`);
+
+let feedURL;
+
+if (process.env.CONSOLE_FEED_URL)
+  feedURL = process.env.CONSOLE_FEED_URL;
+else if (fs.existsSync(`${instDir}/feed-url.json`))
+  feedURL = require(`${instDir}/feed-url.json`).feedURL;
+
+if (feedURL) {
+  const { setFeedURL } = require('./js/auto-update-utils');
+  setFeedURL(feedURL);
+}
+
 
 const AppConstants = Object.freeze({
   EXECUTABLE_JAR_FILE: 'backend/console.jar',
@@ -62,7 +79,6 @@ let stdinOption = false;
 let showPort = false;
 let useTokenNotCookie = false;
 let quiet = false;
-let login = null;
 let lines = [];
 
 (() => {
@@ -108,8 +124,8 @@ let lines = [];
   };
   AppConfig.initialize(options);
 
-  ProjectManager.readProjects(userDataPath);
-  ProjectManager.selectCurrentProject();
+  ProjectManagement.readProjects(userDataPath);
+  ProjectManagement.selectCurrentProject();
 })();
 
 // On Mac OS, "activate" signifies that the user has "clicked" on the Remote
@@ -194,7 +210,7 @@ function processCmdLineOptions() {
 
 function start_cbe() {
   var instDir = path.dirname(app.getPath('exe'));
-  let filename = AppConfig.getFilename();
+  let filename = AppConfig.getPath();
   let spawnArgs = [
     `-Dserver.port=${cbePort}`,
     '-jar',
@@ -270,20 +286,20 @@ app.whenReady()
       // that is not headless.  See app.on for "activate" above.
       app.requestSingleInstanceLock();
 
+      // We don't have a UI to do upgrades if it is headless and the updater
+      // doesn't support Linux, unless it is an App Image yet (enhancement is
+      // supposedly on the way for the other formats)
+      const supportsAutoUpgrades = !app.commandLine.hasSwitch('headless') &&
+        !(OSUtils.isLinuxOS() && !process.env.APPIMAGE);
+
       const params = {
         version: version,
         productName: productName,
         copyright: copyright,
         homepage: homepage,
-        supportsAutoUpgrades: !instDir.startsWith('/opt/')
+        feedURL: feedURL,
+        supportsAutoUpgrades: supportsAutoUpgrades
       };
-
-      if (params.supportsAutoUpgrades && !app.commandLine.hasSwitch('headless')) {
-        const autoUpdateInfo = getAutoUpdateInfo();
-        if (autoUpdateInfo.version !== version) {
-          params['version'] = autoUpdateInfo.version;
-        }
-      }
 
       window = AppWindow.initialize(
         'Initializing...',
@@ -298,6 +314,7 @@ app.whenReady()
       if (OSUtils.isMacOS())
         app.dock.hide();
     }
+    Watcher.initialize(app.getPath('userData'), window, [UserProjects, UserPrefs, AutoPrefs, AppConfig]);
     start_cbe();
   })
   .catch(err => {
@@ -444,24 +461,15 @@ ipcMain.handle('file-choosing', async (event, dialogParams) => {
     });
 });
 
-ipcMain.handle('current-login', async (event, ...args) => {
-  if (login) {
-    logger.log('info', `IPC current login obtained custom URL (${process.pid})`);
-
-    // Create the reply with the current login state
-    const reply = {action: 'login', customUrl: login};
-
-    // Clear the login state then return the reply
-    login = null;
-    return reply;
-  }
-  return null;
+ipcMain.handle('complete-login', async (event, arg) => {
+  logger.log('info', `IPC complete login: ${arg.name}`);
+  AppWindow.showMainWindow();
 });
 
 ipcMain.handle('perform-login', async (event, arg) => {
   return new Promise(function (resolve, reject) {
     if (arg) {
-      logger.log('info', `IPC perform login: ${arg.loginUrl}`);
+      logger.log('info', `IPC perform login: ${arg.loginUrl} (${arg.name})`);
 
       // Validate the URL content and exec the user's browser
       try {
@@ -495,19 +503,24 @@ ipcMain.handle('current-project-requesting', async (event, ...args) => {
   // here, because the async keyword before the
   // "(event, ...args)" in the method signature,
   // does that implicitly.
-  const current_project = ProjectManager.getCurrentProject();
+  const current_project = ProjectManagement.getCurrentProject();
   if (typeof current_project !== 'undefined') {
     return current_project;
   }
   return null;
 });
 
-ipcMain.handle('submenu-state-setting', async (event, arg) => {
-  AppWindow.setAppSubmenuItemsState(arg);
+ipcMain.handle('unsaved-changes', async (event, busy) => {
+  ProjectManagement.markProjectBusyState(busy);
+  AppWindow.notifyState(!busy);
+});
+
+ipcMain.handle('is-busy', async (event) => {
+  return ProjectManagement.isCurrentProjectBusy();
 });
 
 ipcMain.handle('project-changing', async (event, arg) => {
-  const result = ProjectManager.processChangedProject(arg);
+  const result = ProjectManagement.processChangedProject(arg);
   if (result.succeeded) {
     AppWindow.renderAppMenu();
   }
@@ -532,10 +545,11 @@ ipcMain.handle('credentials-requesting', async (event, arg) => {
 
     const reply = {succeeded: false};
 
+    let keytar;
     try {
-      const keytar = getKeyTar();
+      keytar = getKeyTar();
       if (typeof keytar !== 'undefined') {
-        const project = ProjectManager.getProject(arg.project.name);
+        const project = ProjectManagement.getProject(arg.project.name);
         if (typeof project !== 'undefined') {
           if (isValidProvider(project, arg.provider)) {
             const account = `${project.name}-${arg.provider.name}-${arg.provider.username}`;
@@ -579,12 +593,21 @@ ipcMain.handle('credentials-requesting', async (event, arg) => {
       }
     }
     catch(err) {
-      const response = {
-        transport: {statusText: err.code},
-        failureType: 'UNEXPECTED',
-        failureReason: err.stack
-      };
-      reject(response);
+      if (keytar) {
+          const response = {
+          transport: {statusText: err.code},
+          failureType: 'UNEXPECTED',
+          failureReason: err.stack
+        };
+        reject(response);
+      }
+      else {
+        reply['failure'] = {
+          failureType: 'NO_MATCHING_KEYTAR_ACCOUNT',
+          failureReason: 'Unable to retrieve secrets'
+        };
+        resolve(reply);
+      }
     }
   });
 

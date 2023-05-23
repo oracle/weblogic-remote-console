@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -943,6 +943,18 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
               });
             });
         });
+      },
+
+      /**
+       *
+       * @param {string} ssoid
+       * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+       * @example:
+       * GET /api/token?ssoid=id
+       */
+      pollConnectionTokenData: function (ssoid) {
+        const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.TOKEN);
+        return getData.call(this, {url: `${url}?ssoid=${ssoid}`});
       },
 
       /**

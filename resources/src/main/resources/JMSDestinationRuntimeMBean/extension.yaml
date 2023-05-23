@@ -1,0 +1,28 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+
+- name: "pauseProduction"
+  type: "void"
+  descriptionHTML: <p>Pauses the production on the destination.</p>
+
+- name: "resumeProduction"
+  type: "void"
+  descriptionHTML: <p>Resumes the production operations on the destination.</p>
+
+- name: "pauseInsertion"
+  type: "void"
+  descriptionHTML: <p>Pauses the insertion on the destination.</p>
+
+- name: "resumeInsertion"
+  type: "void"
+  descriptionHTML: <p>Resumes the insertion operations on the destination.</p>
+
+- name: "pauseConsumption"
+  type: "void"
+  descriptionHTML: <p>Pauses the consumption on the destination.</p>
+
+- name: "resumeConsumption"
+  type: "void"
+  descriptionHTML: <p>Resumes the consumption operations on the destination.</p>

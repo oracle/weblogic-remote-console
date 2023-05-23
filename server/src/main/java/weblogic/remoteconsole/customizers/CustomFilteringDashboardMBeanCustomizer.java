@@ -77,7 +77,7 @@ public class CustomFilteringDashboardMBeanCustomizer {
     // Make it easy to find these properties by name:
     Map<String,PagePropertyDef> nameToPagePropertyDef = new HashMap<>();
     for (PagePropertyDef pagePropertyDef : page.getPageDef().getAllPropertyDefs()) {
-      nameToPagePropertyDef.put(pagePropertyDef.getFormPropertyName(), pagePropertyDef);
+      nameToPagePropertyDef.put(pagePropertyDef.getFormFieldName(), pagePropertyDef);
     }
     // There always should be a name property.
     form.getProperties().add(
@@ -94,13 +94,13 @@ public class CustomFilteringDashboardMBeanCustomizer {
         // Add properties for filtering this segment (criteria & value).
         form.getProperties().add(
           new FormProperty(
-            nameToPagePropertyDef.get(segmentDef.getCriteriaPropertyDef().getFormPropertyName()),
+            nameToPagePropertyDef.get(segmentDef.getCriteriaPropertyDef().getFormFieldName()),
             new StringValue(segment.getCriteria())
           )
         );
         form.getProperties().add(
           new FormProperty(
-            nameToPagePropertyDef.get(segmentDef.getValuePropertyDef().getFormPropertyName()),
+            nameToPagePropertyDef.get(segmentDef.getValuePropertyDef().getFormFieldName()),
             new StringValue(segment.getValue())
           )
         );
@@ -112,13 +112,13 @@ public class CustomFilteringDashboardMBeanCustomizer {
       CustomFilteringDashboardPropertyDef propertyDef = property.getPropertyDef();
       form.getProperties().add(
         new FormProperty(
-          nameToPagePropertyDef.get(propertyDef.getCriteriaPropertyDef().getFormPropertyName()),
+          nameToPagePropertyDef.get(propertyDef.getCriteriaPropertyDef().getFormFieldName()),
           new StringValue(property.getCriteria())
         )
       );
       form.getProperties().add(
         new FormProperty(
-          nameToPagePropertyDef.get(propertyDef.getValuePropertyDef().getFormPropertyName()),
+          nameToPagePropertyDef.get(propertyDef.getValuePropertyDef().getFormFieldName()),
           property.getValue()
         )
       );
@@ -181,7 +181,7 @@ public class CustomFilteringDashboardMBeanCustomizer {
           // Add this segment's key to the results
           row.getCells().add(
             new TableCell(
-              segmentDef.getResultPropertyDef().getFormPropertyName(),
+              segmentDef.getResultPropertyDef().getFormFieldName(),
               new StringValue(key)
             )
           );
@@ -191,7 +191,7 @@ public class CustomFilteringDashboardMBeanCustomizer {
       for (SearchBeanPropertyResults propertyResults : beanResults.getPropertiesResults()) {
         row.getCells().add(
           new TableCell(
-            propertyResults.getPropertyDef().getFormPropertyName(),
+            propertyResults.getPropertyDef().getFormFieldName(),
             propertyResults.getValue()
           )
         );

@@ -318,7 +318,7 @@ public abstract class ResponseMapper<T> {
     }
   }
 
-  private JsonValue getBackendRelativeUri(BeanTreePath beanTreePath, String queryParams) {
+  protected JsonValue getBackendRelativeUri(BeanTreePath beanTreePath, String queryParams) {
     if (beanTreePath == null) {
       return JsonValue.NULL;
     }

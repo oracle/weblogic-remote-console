@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -96,9 +96,12 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
         return propertyDefImpl;
       }
     }
-    if (!getBeanRepoDefImpl().isRemoveMissingPropertiesAndTypes()) {
-      throw new AssertionError("Can't find property " + getTypeName() + " " + propertyPath);
-    }
+    LOGGER.finest(
+      "Missing property"
+      + " " + getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
+      + " " + getTypeName()
+      + " " + propertyPath
+    );
     return null;
   }
 
@@ -185,9 +188,12 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
         return childDefImpl;
       }
     }
-    if (!getBeanRepoDefImpl().isRemoveMissingPropertiesAndTypes()) {
-      throw new AssertionError("Can't find child " + getTypeName() + " " + childPath);
-    }
+    LOGGER.finest(
+      "Missing child"
+      + " " + getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
+      + " " + getTypeName()
+      + " " + childPath
+    );
     return null;
   }
 
@@ -274,9 +280,12 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
         return actionDefImpl;
       }
     }
-    if (!getBeanRepoDefImpl().isRemoveMissingPropertiesAndTypes()) {
-      throw new AssertionError("Can't find action " + getTypeName() + " " + actionPath);
-    }
+    LOGGER.finest(
+      "Missing action"
+      + " " + getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
+      + " " + getTypeName()
+      + " " + actionPath
+    );
     return null;
   }
 

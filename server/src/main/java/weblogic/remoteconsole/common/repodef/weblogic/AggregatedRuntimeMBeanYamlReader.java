@@ -4,14 +4,19 @@
 package weblogic.remoteconsole.common.repodef.weblogic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
+import weblogic.remoteconsole.common.repodef.schema.BeanActionDefCustomizerSource;
+import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
@@ -20,6 +25,7 @@ import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
 import weblogic.remoteconsole.common.repodef.schema.MBeanAttributeDefSource;
+import weblogic.remoteconsole.common.repodef.schema.MBeanOperationDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PseudoBeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceFormDefSource;
@@ -29,6 +35,7 @@ import weblogic.remoteconsole.common.repodef.schema.SubTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
 import weblogic.remoteconsole.common.repodef.yaml.SlicesDefImpl;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * Fabricates the yaml for an aggregated runtime mbean type.
@@ -66,15 +73,26 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
 
   @Override
   PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(String type) {
-    if (getYamlReader().getPseudoBeanTypeDefSource(NAME_HANDLER.getUnfabricatedType(type)) != null) {
-      throw new AssertionError("Aggregated types are not supported for pseudo types: " + type);
+    PseudoBeanTypeDefSource source = getYamlReader().getPseudoBeanTypeDefSource(NAME_HANDLER.getUnfabricatedType(type));
+    if (source == null) {
+      // This isn't a pseudo type
+      return null;
     }
-    return null;
+    String name = source.getName();
+    if (NAME_HANDLER.isFabricatableType(name)) {
+      source.setName(NAME_HANDLER.getFabricatedJavaType(name));
+    }
+    String baseType = source.getBaseType();
+    if (NAME_HANDLER.isFabricatableType(baseType)) {
+      source.setBaseType(NAME_HANDLER.getFabricatedJavaType(baseType));
+    }
+    return source;
   }
 
   @Override
   public BeanTypeDefCustomizerSource getBeanTypeDefCustomizerSource(BeanTypeDef typeDef) {
     List<BeanPropertyDefCustomizerSource> unaggPropertyCustomizers = new ArrayList<>();
+    List<BeanActionDefCustomizerSource> unaggActionCustomizers = new ArrayList<>();
     BeanTypeDef unaggTypeDef = NAME_HANDLER.getUnfabricatedTypeDef(typeDef);
     BeanTypeDefCustomizerSource source =
       getYamlReader().getBeanTypeDefCustomizerSource(unaggTypeDef);
@@ -82,10 +100,13 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       source = new BeanTypeDefCustomizerSource();
     } else {
       unaggPropertyCustomizers = source.getProperties();
+      unaggActionCustomizers = source.getActions();
       source.setProperties(new ArrayList<>());
+      source.setActions(new ArrayList<>());
     }
     source.setInstanceName(unaggTypeDef.getInstanceName());
     aggregateProperties(unaggTypeDef, unaggPropertyCustomizers, source);
+    aggregateActions(unaggTypeDef, unaggActionCustomizers, source);
     aggregateSubTypes(unaggTypeDef, source);
     return source;
   }
@@ -116,11 +137,11 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   ) {
     BeanPropertyDefCustomizerSource propertyCustomizer =
       findOrCreatePropertyCustomizer(unaggPropertyDef, unaggPropertyCustomizers);
-    fixMBeanJavadocLink(unaggPropertyDef, propertyCustomizer);
+    fixMBeanAttributeJavadocLink(unaggPropertyDef, propertyCustomizer);
     source.addProperty(propertyCustomizer);
   }
 
-  private void fixMBeanJavadocLink(
+  private void fixMBeanAttributeJavadocLink(
     BeanPropertyDef unaggPropertyDef,
     BeanPropertyDefCustomizerSource propertyCustomizer
   ) {
@@ -130,7 +151,8 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       // The property lives in a child bean.  Find the corresponding property on the child bean.
       boolean searchSubTypes = true;
       unaggPropertyDef =
-        unaggPropertyDef.getTypeDef() // e.g. ServerMBean
+        unaggPropertyDef
+          .getTypeDef() // e.g. ServerMBean
           .getChildDef(parentPath, searchSubTypes) // e.g. SSL
           .getChildTypeDef() // e.g. SSLMBean
           .getPropertyDef(
@@ -167,6 +189,121 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     BeanPropertyDefCustomizerSource rtn = new BeanPropertyDefCustomizerSource();
     rtn.setName(propertyName);
     return rtn;
+  }
+
+  private void aggregateActions(
+    BeanTypeDef unaggTypeDef,
+    List<BeanActionDefCustomizerSource> unaggActionCustomizers,
+    BeanTypeDefCustomizerSource source
+  ) {
+    Set<String> localActionNames = getLocalActionNames(unaggTypeDef, unaggActionCustomizers);
+    for (BeanActionDef unaggActionDef : unaggTypeDef.getActionDefs()) {
+      if (localActionNames.contains(unaggActionDef.getActionPath().toString())) {
+        aggregateAction(unaggActionDef, unaggActionCustomizers, source);
+      }
+    }
+  }
+
+  private Set<String> getLocalActionNames(
+    BeanTypeDef undelTypeDef,
+    List<BeanActionDefCustomizerSource> unaggActionCustomizers
+  ) {
+    // Make a set of the actions defined or customized on this type (v.s. inherited)
+    Set<String> rtn = new HashSet<>();
+    {
+      BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(undelTypeDef.getTypeName());
+      if (source != null) {
+        for (BeanActionDefSource actionSource : source.getActions()) {
+          rtn.add(actionSource.getName());
+        }
+      }
+    }
+    {
+      BeanTypeDefExtensionSource source = getYamlReader().getBeanTypeDefExtensionSource(undelTypeDef);
+      if (source != null) {
+        for (BeanActionDefSource actionSource : source.getActions()) {
+          rtn.add(actionSource.getName());
+        }
+      }
+    }
+    {
+      for (BeanActionDefCustomizerSource actionSource :  unaggActionCustomizers) {
+        rtn.add(actionSource.getName());
+      }
+    }
+    return rtn;
+  }
+
+  private void aggregateAction(
+    BeanActionDef unaggActionDef,
+    List<BeanActionDefCustomizerSource> unaggActionCustomizers,
+    BeanTypeDefCustomizerSource source
+  ) {
+    BeanActionDefCustomizerSource actionCustomizer =
+      findActionCustomizer(unaggActionDef, unaggActionCustomizers);
+    if (actionCustomizer != null) {
+      fixMBeanOperationJavadocLink(unaggActionDef, actionCustomizer);
+    } else {
+      actionCustomizer = new BeanActionDefCustomizerSource();
+      actionCustomizer.setName(unaggActionDef.getActionName());
+    }
+    actionCustomizer.setActionMethod(
+       "weblogic.remoteconsole.customizers.AggregatedMBeanCustomizer.invokeAction"
+    );
+    source.addAction(actionCustomizer);
+  }
+
+  private void fixMBeanOperationJavadocLink(
+    BeanActionDef unaggActionDef,
+    BeanActionDefCustomizerSource actionCustomizer
+  ) {
+    // Find the leaf action def
+    Path parentPath = unaggActionDef.getParentPath();
+    if (!parentPath.isEmpty()) {
+      // The action lives in a child bean.  Find the corresponding action on the child bean.
+      boolean searchSubTypes = true;
+      unaggActionDef =
+        unaggActionDef
+          .getTypeDef()
+          .getChildDef(parentPath, searchSubTypes)
+          .getChildTypeDef()
+          .getActionDef(
+            new Path(unaggActionDef.getActionName()),
+            searchSubTypes
+          );
+    } else {
+      // The action lives directly on the bean.
+    }
+    BeanTypeDef unaggTypeDef = unaggActionDef.getTypeDef();
+    if (!NAME_HANDLER.isFabricatableTypeDef(unaggTypeDef)) {
+      // The bean type isn't aggregated so we don't need to fix its mbean javadoc link
+      return;
+    }
+    MBeanOperationDefSource unaggMbeanOp = actionCustomizer.getMbeanOperation();
+    if (StringUtils.isEmpty(unaggMbeanOp.getType())) {
+      // The mbean type wasn't customized, so defaults to the bean type.
+      // The bean type is aggregated, so switch the mbean type to the
+      // unaggregated bean type.
+      MBeanOperationDefSource aggMbeanOp = new MBeanOperationDefSource();
+      aggMbeanOp.setType(unaggTypeDef.getTypeName());
+      aggMbeanOp.setOperation(unaggMbeanOp.getOperation());
+      actionCustomizer.setMbeanOperation(aggMbeanOp);
+    }
+  }
+
+  private BeanActionDefCustomizerSource findActionCustomizer(
+    BeanActionDef unaggActionDef,
+    List<BeanActionDefCustomizerSource> unaggActionCustomizers
+  ) {
+    String actionName = unaggActionDef.getActionPath().getDotSeparatedPath();
+    // See if the action was customized on the unaggregated type.
+    for (BeanActionDefCustomizerSource ac : unaggActionCustomizers) {
+      if (ac.getName().equals(actionName)) {
+        return ac;
+      }
+    }
+    // It wasn't.
+    return null;
   }
 
   private void aggregateSubTypes(BeanTypeDef unaggTypeDef, BeanTypeDefCustomizerSource source) {
@@ -257,7 +394,6 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     source.getDisplayedColumns().addAll(unaggSource.getProperties());
     source.getHiddenColumns().addAll(unaggSource.getAdvancedProperties());
     source.setGetTableRowsMethod("weblogic.remoteconsole.customizers.AggregatedMBeanCustomizer.getSliceTableRows");
-    source.setActionMethod("weblogic.remoteconsole.customizers.AggregatedMBeanCustomizer.invokeAction");
     TablePagePath unaggTablePath = PagePath.newTablePagePath(unaggPagePath.getPagesPath());
     TableDefSource unaggTableSource = getYamlReader().getTableDefSource(unaggTablePath);
     if (unaggTableSource != null) {
@@ -285,7 +421,7 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     }
 
     // First see if we have a custom table for this aggregated type.
-    // (they must be used if the table wants extra columns)
+    // (there must be used if the table wants extra columns)
 
     // There isn't a custom table for the aggregated type. Create a default one.
     TableDefSource source = new TableDefSource();

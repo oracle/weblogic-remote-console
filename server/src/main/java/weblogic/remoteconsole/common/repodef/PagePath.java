@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -44,8 +44,13 @@ public abstract class PagePath {
     return new CreateFormPagePath(pagesPath);
   }
 
-  // get the query params that need to be added to PDJ and RDJ urls to identity this page.
-  public String getQueryParams() {
+  // Create a new action input form page path
+  public static ActionInputFormPagePath newActionInputFormPagePath(PagePath pagePath, String action) {
+    return new ActionInputFormPagePath(pagePath, action);
+  }
+
+  // get the query params that need to be added to the PDJ url to identity this page.
+  public String getPDJQueryParams() {
     return "";
   }
 
@@ -56,8 +61,8 @@ public abstract class PagePath {
 
   // get the relative URI from api/<provider>/<tree>/pages to this page's PDJ.
   // e.g. DomainMBean?view=Security.General for the domain's security general slice form.
-  public String getPDJURI() {
-    return getPagesPath().getTypeDef().getTypeName() + getQueryParams();
+  public String getPDJUri() {
+    return getPagesPath().getTypeDef().getTypeName() + getPDJQueryParams();
   }
 
   // Returns whether this page path is a table page path.
@@ -93,12 +98,23 @@ public abstract class PagePath {
     return (CreateFormPagePath)this;
   }
 
+  // Returns whether this page path is an action input form page path.
+  public boolean isActionInputFormPagePath() {
+    return (this instanceof ActionInputFormPagePath);
+  }
+
+  // Converts this page path to an action input form page path.
+  // Throws a ClassCastException if this page path is not an ActionInputFormPagePath
+  public ActionInputFormPagePath asActionInputFormPagePath() {
+    return (ActionInputFormPagePath)this;
+  }
+
   @Override
   public String toString() {
     return getKey();
   }
 
-  protected String computeKey() {
+  public String computeKey() {
     return getPagesPath().getKey();
   }
 }

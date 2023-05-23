@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -23,7 +23,7 @@ import weblogic.remoteconsole.server.repo.Value;
  * has separate interfaces for the values (BeanPropertyDef) and the
  * contained beans (BeanChildDef).
  */
-public interface BeanPropertyDef extends BeanValueDef {
+public interface BeanPropertyDef extends BeanFieldDef {
 
   // The page-relative bean type containing this property, e.g. Server
   public BeanTypeDef getTypeDef();
@@ -31,12 +31,6 @@ public interface BeanPropertyDef extends BeanValueDef {
   // The name of the property in the leaf bean that contains the property,
   // e.g. SSL's "ListenPort"
   public String getPropertyName();
-
-  // The name that is used to identify this property in forms in the HTTP api.
-  // Typically it's the same as getPropertyPath().getUnderscoreSeparatedPath()
-  // However, sometimes the form name of the property needs to
-  // be different (especially for wizards).
-  public String getFormPropertyName();
 
   // The online WLS REST name of the property (e.g. listenPort instead of ListenPort)
   public String getOnlinePropertyName();
@@ -55,9 +49,6 @@ public interface BeanPropertyDef extends BeanValueDef {
   public default Path getPropertyPath() {
     return getParentPath().childPath(getPropertyName());
   }
-
-  // Whether this is an ordered array.
-  public boolean isOrdered();
 
   // Whether this is the key property for this type (used as the identity for collection children).
   // For example, if this is the Name property on the Server type, then isKey returns true.
@@ -78,9 +69,6 @@ public interface BeanPropertyDef extends BeanValueDef {
   // creating a Server but only the ListenPort can be modified after the Server
   // has been created.
   public boolean isUpdateWritable();
-
-  // Whether this property's value must be specified.
-  public boolean isRequired();
 
   // If this property has special java code for getting its value,
   // this method returns how to invoke that code.
@@ -154,17 +142,6 @@ public interface BeanPropertyDef extends BeanValueDef {
       return getStandardDefaultValue();
     }
     return value;
-  }
-
-  // Returns whether this a page property def.
-  public default boolean isPagePropertyDef() {
-    return (this instanceof PagePropertyDef);
-  }
-
-  // Converts this bean property def to a page property def.
-  // Throws a ClassCastException if this bean property def isn't a page property def.
-  public default PagePropertyDef asPagePropertyDef() {
-    return (PagePropertyDef)this;
   }
 
   // The roles that are allowed to get (read) this property
