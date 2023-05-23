@@ -9,23 +9,23 @@
 
     <link rel="icon" href="/weblogic-remote-console/images/logo.png" type="image/png">
 
-    <title>Editing Security Data :: WebLogic Remote Console</title>
+    <title>Editing security data :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1684881167" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1679266407"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1684881167"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1679266407"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1679266407"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1684881167"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1684881167"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1679266407"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1684881167"></script>
 
     
   </div>
@@ -266,9 +266,9 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing Security Data" class="dd-item active">
+      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing security data" class="dd-item active">
         <a href="/weblogic-remote-console/userguide/providers/administration-server/security-data/">
-        Editing Security Data
+        Editing security data
         
         </a>
     </li>
@@ -768,7 +768,7 @@
             
           
           
-            <a href='/weblogic-remote-console/'>WebLogic Remote Console</a> > <a href='/weblogic-remote-console/userguide/'>User guide</a> > <a href='/weblogic-remote-console/userguide/providers/'>Provider types</a> > <a href='/weblogic-remote-console/userguide/providers/administration-server/'>Administration Servers</a> > Editing Security Data
+            <a href='/weblogic-remote-console/'>WebLogic Remote Console</a> > <a href='/weblogic-remote-console/userguide/'>User guide</a> > <a href='/weblogic-remote-console/userguide/providers/'>Provider types</a> > <a href='/weblogic-remote-console/userguide/providers/administration-server/'>Administration Servers</a> > Editing security data
           
         
           
@@ -787,9 +787,20 @@
     <div class="wrapper">
 <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#user_groups">Managing users and groups</a>
       <ul>
-        <li><a href="#managing-users-and-groups">Managing users and groups</a></li>
+        <li><a href="#create-a-user">Create a user</a></li>
+        <li><a href="#create-groups">Create groups</a></li>
+        <li><a href="#edit-users">Edit users</a></li>
+        <li><a href="#edit-groups">Edit groups</a></li>
+        <li><a href="#delete-users">Delete users</a></li>
+        <li><a href="#delete-groups">Delete groups</a></li>
+      </ul>
+    </li>
+    <li><a href="#managing-security-policies-and-roles">Managing Security Policies and Roles</a>
+      <ul>
+        <li><a href="#security-roles">Security roles</a></li>
+        <li><a href="#sec_policies">Security policies</a></li>
       </ul>
     </li>
     <li><a href="#managing-credential-mappers">Managing credential mappers</a>
@@ -821,7 +832,7 @@
           
             <h1>
               
-              Editing Security Data
+              Editing security data
             </h1>
           
 
@@ -834,9 +845,9 @@
 </div>
 
 <p>Any changes you make within the Security Data perspective are immediate - you don&rsquo;t need to commit or reboot the server to apply your changes.</p>
-<h3 id="managing-users-and-groups">Managing users and groups</h3>
+<h2 id="user_groups">Managing users and groups</h2>
 <p>You can easily manage the WebLogic Server users and groups that are configured as part of the default authentication provider (WebLogic Authentication Provider) within a security realm. Only the default authentication provider is supported. If you&rsquo;re not using the default authentication provider, you&rsquo;ll need to manage its users and groups through its own external tools.</p>
-<h4 id="create-a-user">Create a user</h4>
+<h3 id="create-a-user">Create a user</h3>
 <ol>
 <li>In the Security Data Tree perspective, expand Realms.</li>
 <li>Select the Security Realm to which you want to add users.</li>
@@ -845,7 +856,7 @@
 <li>Enter a Name, Description and Password for this user. User names must be unique in the security realm and passwords must be eight characters or longer.</li>
 <li>Click <strong>Create</strong>.</li>
 </ol>
-<h4 id="create-groups">Create groups</h4>
+<h3 id="create-groups">Create groups</h3>
 <ol>
 <li>In the Security Data Tree perspective, expand Realms.</li>
 <li>Select the Security Realm to which you want to add groups.</li>
@@ -854,7 +865,7 @@
 <li>Enter a Name and Description for this group. Group names must be unique in the security realm.</li>
 <li>Click <strong>Create</strong>.</li>
 </ol>
-<h4 id="edit-users">Edit users</h4>
+<h3 id="edit-users">Edit users</h3>
 <ol>
 <li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Users.</li>
 <li>Click the user that you want to edit.</li>
@@ -862,22 +873,156 @@
 <li>You can add users to groups. Under the Membership tab, select any Available group to which you want to add the user and move them over to Chosen.</li>
 <li>Click <strong>Save</strong>.</li>
 </ol>
-<h4 id="edit-groups">Edit groups</h4>
+<h3 id="edit-groups">Edit groups</h3>
 <ol>
 <li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Groups.</li>
 <li>Click the group that you want to edit. You can modify the group description or, under the Membership tab, nest the current group under other groups. You cannot edit the name of a group - you must delete and create a new group.</li>
 <li>Click <strong>Save</strong>.</li>
 </ol>
-<h4 id="delete-users">Delete users</h4>
+<h3 id="delete-users">Delete users</h3>
 <ol>
 <li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Users.</li>
 <li>Beside the user that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
 </ol>
-<h4 id="delete-groups">Delete groups</h4>
+<h3 id="delete-groups">Delete groups</h3>
 <p>Deleting a group will not delete the users within that group.</p>
 <ol>
 <li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Groups.</li>
 <li>Beside the group that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+</ol>
+<h2 id="managing-security-policies-and-roles">Managing Security Policies and Roles</h2>
+<p>Use security policies to manage who can access a resource in a WebLogic Server domain.</p>
+<p>A resource is an entity (such as a Web Service or a server instance) or an action (such as a method in a Web Service or the act of shutting down a server instance). For a list of resource types, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/types.html">Resource Types You Can Secure with Policies</a>.</p>
+<p>A security policy specifies which users, groups, or roles can access the resource according to a set of conditions. Whenever possible, you should use security roles to determine access control. A security role, like a security group, grants an identity to a user. Unlike a group, however, membership in a role can be based on a set of conditions that are evaluated at runtime.</p>
+<p>For most types of WebLogic resources, you can use the WebLogic Remote Console to define the security policies and roles that restrict access. However, for Web application and EJB resources, you can also use deployment descriptors.</p>
+<p>The general process to secure a WebLogic resource is:</p>
+<ol>
+<li>Create <a href="#user_groups">users and groups</a></li>
+<li><strong>Optional</strong>: Manage default security roles or create new ones. We recommend that you use roles to secure WebLogic resources (instead of users or groups) to increase efficiency for administrators who work with many users. You can use the default roles that WebLogic Server provides or create your own.</li>
+<li>Create and apply security policies.</li>
+</ol>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/intro.html#GUID-E454A766-0F19-472B-A470-F2BD9B6BEF64">Securing Resources Using Roles and Policies for Oracle WebLogic Server</a>.</p>
+<h3 id="security-roles">Security roles</h3>
+<p>A security role is an identity granted to users or groups based on specific conditions. Multiple users or groups can be granted the same security role and a user or group can be in more than one security role. Security roles are used by policies to determine who can access a WebLogic resource.</p>
+<p>WebLogic Server provides a default set of roles that you can use with any policy (global roles). You can create your own global roles or create roles that can be used by policies only for a specific resource (scoped roles). For example, you can place all of your system administrators in WebLogic Server&rsquo;s Admin role. You can then create a scoped role for a specific EJB that contains highly sensitive business logic. When you create a policy for the EJB, you can specify that only the scoped role can access the EJB.</p>
+<p>If two roles conflict, the role of a narrower scope overrides the role of the broader scope. For example, a scoped role for an EJB resource overrides a global role or a scoped role for the enterprise application that contains the EJB.</p>
+<p>Security roles are created within a security realm, and the roles can be used only when the realm is active.</p>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-79645C45-C982-454D-A22C-6115B86EDAD3">Overview of Security Roles</a>.</p>
+<h4 id="create-global-roles">Create global roles</h4>
+<p>Before creating a new global security role, review the <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-84859935-E7A5-4D3E-8A11-CBF63F93571A">Global Security Roles</a> in <em>Securing Resources Using Roles and Policies for Oracle WebLogic Server</em> to assess if an existing role is sufficient for your needs.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a global role.</li>
+<li>Expand Role Mappers &gt; XACMLRoleMapper &gt; Global &gt; Roles.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Enter a name for the new global role and click <strong>Create</strong>.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible you use the Group condition which grants the security role to all members of the specified group. See <a href="#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
+<p>For a description of conditions in the Predicate List, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-06D3F08F-5A98-4649-A3F4-5D08B76C72CD">Security Role Conditions</a></p>
+<h4 id="create-scoped-roles">Create scoped roles</h4>
+<p>Scoped roles can only be used with policies that apply to specific resources.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a scoped role.</li>
+<li>Expand Role Mappers &gt; XACMLRoleMapper &gt; <em>Resource</em> &gt; Roles.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Enter a name for the new scoped role and click <strong>Create</strong>.</li>
+</ol>
+<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses We recommend that whenever possible, that you use the Group condition which grants the security role to all members of a specified group. See <a href="#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
+<p>For a description of conditions in the Predicate List, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-06D3F08F-5A98-4649-A3F4-5D08B76C72CD">Security Role Conditions</a></p>
+<h3 id="sec_policies">Security policies</h3>
+<p>A security policy specifies the conditions that users, groups, or roles must meet to access a resource. Policies must have one or more conditions and you can combine conditions to create complex policies for more dynamic access control.</p>
+<p>Root level policies apply to all instances of a specific resource type, for example, all JMS resources in your domain. All default security policies are root level policies.</p>
+<p>You can also create policies that only apply to a specific resource instance. If the instance contains other resources, the policy will apply to the included resource as well. For example, you can create a policy for an entire JMS system resource, or for a particular queue or topic within that resource.</p>
+<p>The policy of a narrower scope overrides policy of a broader scope. For example, if you create a security policy for a JMS system resource and a policy for a JMS queue within that system resource, the JMS queue will be protected by its own policy and will ignore the policy for the system resource.</p>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/sec_poly.html">Security Policies</a> in <em>Securing Resources Using Roles and Policies for Oracle WebLogic Server</em>.</p>
+<p>It&rsquo;s recommended that you use the Role condition where possible. Basing conditions on security roles lets you create one security policy that takes into account multiple users or groups, and is a more efficient method of management.</p>
+<p>See <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/sec_poly.html#GUID-F91088E1-EFA5-42BE-BD14-27127C797F23">Security Policy Conditions</a> in <em>Securing Resources Using Roles and Policies for Oracle WebLogic Server</em> to learn more.</p>
+<h4 id="create-a-policy-for-resource-instances">Create a policy for resource instances</h4>
+<p>You can create a security policy that only applies to a specific resource instance. If the instance contains other resources, the policy will apply to the included resources as well.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm that contains the resource instance where you want to add a policy.</li>
+<li>Expand Authorizers &gt; XACMLAuthorizer &gt; <em>resourceInstance</em>.</li>
+<li>Click <strong>Add Condition</strong> to open the Add New First Condition dialog box.</li>
+<li>Select a predicate from the <strong>Predicate List</strong>. Depending on the predicate you choose, you may need to configure arguments for the condition.</li>
+<li>Click <strong>OK</strong>.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<p>You can add more conditions to the policy to increase its complexity.</p>
+<h4 id="edit-policy">Edit a policy</h4>
+<p>You can edit a policy by modifying a condition&rsquo;s arguments or by modifying the relationships between conditions in the policy.</p>
+<ol>
+<li>Go to the policy that you want to edit.</li>
+<li>Click on the condition you want to edit.
+You can only edit the arguments of the condition. If you want to use a different predicate for the condition, you must add a new condition.</li>
+</ol>
+<p>Conditions have three different types of relationships: AND, OR, and Combination.</p>
+<ul>
+<li>AND: All of the conditions joined by an AND operator must be met.</li>
+<li>OR: At least one of the conditions joined by an OR operator must be met.</li>
+<li>Combination: Two or more conditions are combined and must be evaluated as a group. Conditions <em>within</em> a combination are themselves related to each other through AND or OR operators.</li>
+</ul>
+<p>By default, a new condition is added as a simple condition at the top of the list of conditions. To insert a new condition elsewhere, select an existing condition and then click Add Condition. You&rsquo;ll get a dropdown list with options to add the new condition either above or below the selected condition. The order of conditions is not meaningful to how the policy is interpreted.</p>
+<p>A policy can contain multiple simple or compound conditions or a mix of simple and compound conditions. You can also nest compound conditions.</p>
+
+<div class="notices tip" ><p>Why use compound conditions? Consider this scenario: a resource exists where you want Administrators to always have access, but Deployers to only have access between 9 am and 5 pm. The following policy would address both requirements.</p>
+<ul>
+<li>
+<p>Condition 1 (simple): Role: Admin</p>
+<ul>
+<li><strong>OR</strong></li>
+</ul>
+</li>
+<li>
+<p>Condition 2 (compound): Role: Deployer <strong>AND</strong> access occurs between 09:00:00 and 17:00:00 GMT -7:00</p>
+</li>
+</ul>
+</div>
+
+<p>Use the actions on the Policy page to edit a policy.</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add Condition</td>
+<td>Adds a new condition to the policy. You can choose to add the new condition above or below another condition.</td>
+</tr>
+<tr>
+<td>Combine</td>
+<td>When multiple conditions are selected, you can combine them to create a compound condition.</td>
+</tr>
+<tr>
+<td>Uncombine</td>
+<td>When a compound condition is selected, you can break it into independent conditions.</td>
+</tr>
+<tr>
+<td>Remove</td>
+<td>Deletes a simple or compound condition from the policy. When there are no conditions in a policy, the default policy will apply.</td>
+</tr>
+<tr>
+<td>Negate</td>
+<td>Reverses the meaning of a condition. The criteria to access a resource becomes the opposite of the original condition.</td>
+</tr>
+<tr>
+<td>Reset</td>
+<td>Reverts the policy to its last <em>saved</em> change, not the last change. It&rsquo;s recommended that you save your policy frequently or you may unintentionally lose several changes using the Reset action.</td>
+</tr>
+</tbody>
+</table>
+<p>You can also edit a policy from its <strong>Advanced</strong> tab where the policy is expressed as string. Any changes made to a policy in the Advanced tab are reflected in the main Policy tab, and vice versa.</p>
+<h4 id="delete-a-policy">Delete a policy</h4>
+<p>Before you delete a policy, make sure that the default security policy for the resource instance will provide adequate access control.</p>
+<ol>
+<li>Go to the policy you want to delete.</li>
+<li>Delete all of the conditions in the policy.</li>
+<li>Click <strong>Save</strong>.</li>
 </ol>
 <h2 id="managing-credential-mappers">Managing credential mappers</h2>
 <p>A Credential Mapping provider lets WebLogic Server map a WebLogic resource to a set of credentials in an external system so that the WebLogic resource can log into that external system on behalf of a subject that has already been authenticated. You can map multiple WebLogic resources (of the same type) to the same external system (and even to the same subject within that system).</p>
@@ -1528,19 +1673,19 @@ Removing a credential from the WebLogic Remote Console will not affect the user 
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1679266408"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1679266408"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1679266408"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1679266408"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1679266408"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1684881167"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1679266408"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1679266408"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1679266408"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1684881167"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1679266408"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1684881167"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

@@ -12,20 +12,20 @@
     <title>Customize connection settings :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1684881167" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1679266407"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1684881167"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1679266407"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1679266407"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1684881167"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1684881167"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1679266407"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1684881167"></script>
 
     
   </div>
@@ -266,9 +266,9 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing Security Data" class="dd-item ">
+      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing security data" class="dd-item ">
         <a href="/weblogic-remote-console/userguide/providers/administration-server/security-data/">
-        Editing Security Data
+        Editing security data
         
         </a>
     </li>
@@ -794,6 +794,7 @@
     <li><a href="#samesite">Set the SameSite cookie attribute if required for web browser support</a></li>
     <li><a href="#k8s">Connect to a WebLogic domain running on Kubernetes</a></li>
     <li><a href="#altjdk">Specify an alternative location for the JDK</a></li>
+    <li><a href="#insecure">Establish an insecure connection to an Administration Server</a></li>
   </ul>
 </nav>
     </div>
@@ -831,7 +832,9 @@
 <li><a href="#network_timeout">Change the network timeout settings for the server </a></li>
 <li><a href="#hostname">Disable host name verification in the connections to the WebLogic domain </a></li>
 <li><a href="#samesite">Set the SameSite cookie attribute if required for web browser support </a></li>
-<li><a href="#k8s">Connect to a WebLogic domain running on kubernetes </a></li>
+<li><a href="#k8s">Connect to a WebLogic domain running on Kubernetes</a></li>
+<li><a href="#altjdk">Specify an alternative location for the JDK</a></li>
+<li><a href="#insecure">Establish an insecure connection to an Administration Server</a></li>
 </ul>
 <h3 id="desktopapp">Edit Java system properties in the desktop application</h3>
 <p>If you installed the WebLogic Remote Console desktop application, you can edit a <code>config.json</code> file with your preferred settings before launching the application.</p>
@@ -899,16 +902,22 @@
 <td>-Dconsole.connectTimeoutMillis</td>
 </tr>
 <tr>
-<td>server.host</td>
-<td>127.0.0.1</td>
-<td>server.host</td>
-<td>-Dserver.host</td>
+<td>http.nonProxyHosts</td>
+<td>N/A</td>
+<td>http.nonProxyHosts</td>
+<td>-Dhttp.nonProxyHosts</td>
 </tr>
 <tr>
-<td>server.port</td>
-<td>8012</td>
-<td>server.port</td>
-<td>-Dserver.port</td>
+<td>http.proxyHost / https.proxyHost</td>
+<td>N/A</td>
+<td>http.proxyHost / https.proxyHost</td>
+<td>-Dhttp.proxyHost / -Dhttps.proxyHost</td>
+</tr>
+<tr>
+<td>http.proxyPort / https.proxyPort</td>
+<td>80 / 443</td>
+<td>http.proxyPort / https.proxyPort</td>
+<td>-Dhttp.proxyPort / -Dhttps.proxyPort</td>
 </tr>
 <tr>
 <td>javax.net.ssl.trustStore</td>
@@ -922,8 +931,21 @@
 <td>javax.net.ssl.trustStoreType</td>
 <td>-Djavax.net.ssl.trustStoreType</td>
 </tr>
+<tr>
+<td>server.host</td>
+<td>127.0.0.1</td>
+<td>server.host</td>
+<td>-Dserver.host</td>
+</tr>
+<tr>
+<td>server.port</td>
+<td>8012</td>
+<td>server.port</td>
+<td>-Dserver.port</td>
+</tr>
 </tbody>
 </table>
+<p>You can learn about other system properties related to networking at <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/net/doc-files/net-properties.html">Networking Properties</a> in the Java Platform, SE and JDK 11 API Specification.</p>
 <h2 id="ssl">Connect to a WebLogic domain using SSL/TLS</h2>
 <p>If you specify HTTPS for the domain URL in the Connect to WebLogic Domain window, then the WebLogic Remote Console uses SSL/TLS to communicate with the WebLogic domain.</p>
 <p>The SSL/TLS connection requires trust in the WebLogic domain, where the trust configuration is handled by the underlying JDK JSSE support. By default, the JDK uses the <code>cacerts</code> truststore provided with the JDK. If the WebLogic domain requires additional trust, separate trust, or is using the WebLogic demo trust (<code>demotrust.jks</code>), then you can use the JDK system properties when starting the Remote Console.</p>
@@ -1083,6 +1105,15 @@
 <p>If you want the WebLogic Remote Console application to use a JDK at a different location, add an entry for <code>javaPath</code> to the <code>config.json</code> file. For example, if you want to point to a Java executable in <code>/usr/bin/java</code> add:</p>
 <pre><code>{&quot;javaPath&quot;: &quot;/usr/bin/java&quot;}
 </code></pre><p>On Windows, the path character <code>\</code> must be escaped.</p>
+<h2 id="insecure">Establish an insecure connection to an Administration Server</h2>
+<p>You can allow WebLogic Remote Console to connect to an Administration Server regardless of warnings about expired, untrusted, or missing certificates.</p>
+<p>We <em>strongly</em> recommend that you only enable this setting for development or demonstration environments.</p>
+<ol>
+<li><strong>Optional</strong>: Update the <code>config.json</code> file to add HTTPS proxy server settings.</li>
+<li>Open the Kiosk and add a new Admin Server Connection Provider or edit an existing provider.</li>
+<li>Enable the <strong>Insecure Connection</strong> checkbox.</li>
+<li>Click <strong>OK</strong> to save your settings.</li>
+</ol>
 
 
 <footer class="footline">
@@ -1568,19 +1599,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1679266407"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1684881167"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1679266407"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1684881167"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1679266407"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1684881167"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

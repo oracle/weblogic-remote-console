@@ -12,20 +12,20 @@
     <title>Explore the WebLogic Remote Console :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1679266407" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1679266407" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1684881167" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1679266407"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1684881167"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1679266407"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1679266407"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1684881167"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1684881167"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1679266407"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1684881167"></script>
 
     
   </div>
@@ -266,9 +266,9 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing Security Data" class="dd-item ">
+      <li data-nav-id="/weblogic-remote-console/userguide/providers/administration-server/security-data/" title="Editing security data" class="dd-item ">
         <a href="/weblogic-remote-console/userguide/providers/administration-server/security-data/">
-        Editing Security Data
+        Editing security data
         
         </a>
     </li>
@@ -849,14 +849,14 @@
         <td>Administration Server</td>
         <td>
             <ul>
-                <li>Edit Tree: an editable representation of the WebLogic Server domain. Enter this perspective when you want to make and commit changes to the domain.</li>
-                <li>Configuration Tree: a read-only representation of the WebLogic Server domain. Enter this perspective if you want to see the current settings of the domain, without making any changes.
+                <li>Edit Tree: an editable view of the WebLogic Server domain. Enter this perspective when you want to make and commit changes to the domain.</li>
+                <li>Configuration Tree: a read-only view of the WebLogic Server domain. Enter this perspective if you want to see the current settings of the domain, without making any changes.
                     <ul>
                         <li>Changes made in the Edit Tree perspective won't appear in the Configuration Tree perspective until you commit them, or for non-dynamic changes, until you restart the server.</li>
                     </ul>
                 </li>
                 <li>Monitoring Tree: an overview of the runtime statistics for the running domain. You can view statistics by server or aggregated across servers. For example, applications running on Server1  vs. applications running on one or more servers. The Monitoring Tree also provides some control operations such as starting or stopping servers or applications.</li>
-                <li>Security Data Tree: an editable overview of supported security providers in the security realm. You can manage users, groups, and credential mappings.</li>
+                <li>Security Data Tree: an editable view of the security providers' data in the security realm. This includes users, groups, policies, and so on.</li>
             </ul>
         </td>
     </tr>
@@ -866,11 +866,11 @@
     </tr>
     <tr>
         <td>WDT Model File</td>
-        <td>WDT Model Tree: an editable representation of a WDT model for a WebLogic Server domain.</td>
+        <td>WDT Model Tree: an editable view of a WDT model for a WebLogic Server domain.</td>
     </tr>
     <tr>
         <td>WDT Composite Model</td>
-        <td>WDT Composite Model Tree: a read-only representation of multiple, merged WDT model files for a WebLogic Server domain.</td>
+        <td>WDT Composite Model Tree: a read-only view of multiple, merged WDT model files for a WebLogic Server domain.</td>
     </tr>
 </table>
 <h2 id="nav_dom">Navigate the domain</h2>
@@ -974,10 +974,6 @@
 
 <h2 id="multi-window-support">Multi-window support</h2>
 <p>You can open multiple instances of the WebLogic Remote Console to increase your productivity. Whether you want multiple windows to compare different views of the same provider or to work with distinct projects simultaneously, you can open a set of console windows that caters to your needs. Select <strong>New Window</strong> from the File menu to open a new WebLogic Remote Console window.</p>
-
-<div class="notices note" ><p>Certain changes will not sync across multiple windows. Administrative changes to projects and providers - adding a new provider to a project, renaming provider, and so on - will only appear in the window where the change was made. To see the changes in other windows, you need to close the other windows and open new ones. Additionally, if you edit the same WDT model file in multiple windows, changes from one window may overwrite those of another window. Save carefully and regularly.</p>
-</div>
-
 
 
 <footer class="footline">
@@ -1457,19 +1453,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1679266407"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1684881167"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1679266407"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1679266407"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1684881167"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1679266407"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1684881167"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

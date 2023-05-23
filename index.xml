@@ -14,7 +14,7 @@
       
       <guid>https://oracle.github.io/weblogic-remote-console/develop/build-source/</guid>
       <description>Prerequisites Before you can build the WebLogic Remote Console, you need to install the following software in your local build environment:
- Java SE 11 Maven 3.6.1+ nodejs 14.16+ This download includes npm. Oracle JET 13.0.0 client libraries To install the required Oracle JET software, run npm install --location=global @oracle/ojet-cli@~13.0.0. On Linux and macOS, you will need to use sudo.  You can verify you&amp;rsquo;ve installed the correct versions of the listed software by running the following commands:</description>
+ Java SE 11 Maven 3.6.1+ nodejs 14.16+ This download includes npm. Oracle JET 14.1.0 client libraries To install the required Oracle JET software, run npm install --location=global @oracle/ojet-cli@~14.1.0. On Linux and macOS, you will need to use sudo.  You can verify you&amp;rsquo;ve installed the correct versions of the listed software by running the following commands:</description>
     </item>
     
     <item>
@@ -75,7 +75,7 @@ Limitations In the current release of WebLogic Remote Console, you are unable to
     </item>
     
     <item>
-      <title>Editing Security Data</title>
+      <title>Editing security data</title>
       <link>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/security-data/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -114,7 +114,7 @@ We recommend that you use the desktop application over the browser application w
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/advanced-settings/</guid>
       <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
  Edit Java system properties in the desktop application Edit Java system properties in the browser-based application Java system properties  Some possible customizations:
- Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on kubernetes   Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
+ Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on Kubernetes Specify an alternative location for the JDK Establish an insecure connection to an Administration Server  Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
     </item>
     
     <item>
