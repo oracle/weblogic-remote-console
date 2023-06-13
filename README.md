@@ -16,7 +16,7 @@ The WebLogic Remote Console provides an alternative WebLogic Server administrati
 * Start and stop servers and applications
 * Monitor server and application performance
 
-## Get Started
+## Getting Started
 You can install the WebLogic Remote Console as a desktop or browser application, depending on your usecases although the desktop application is recommended. Both versions are available to download from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases).
 
 Review the system requirements at [Get Started](https://oracle.github.io/weblogic-remote-console/setup/)
@@ -36,3 +36,18 @@ We have a **public Slack channel** where you can get in touch with us to ask que
 or suggestions about what features and improvements you would like to see.  We would love to hear from you. To join our channel,
 please [visit this site to get an invitation](https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1lnz4kpci-WdY2gWfeJc5jS_a_1Z06MA). The invitation email will include
 details of how to access our Slack workspace.  After you are logged in, please come to `#remote-console` and say, "hello!"
+
+## Contributing
+
+This project welcomes contributions from the community. Before submitting a pull request, please [review our contribution guide](./CONTRIBUTING.md)
+
+## Security
+
+Please consult the [security guide](./SECURITY.md) for our responsible security vulnerability disclosure process
+
+## License
+
+Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+
+Released under the Universal Permissive License v1.0 as shown at
+<https://oss.oracle.com/licenses/upl/>.
