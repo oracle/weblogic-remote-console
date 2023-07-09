@@ -11,7 +11,6 @@ import javax.json.JsonObject;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
-import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
@@ -61,6 +60,17 @@ public class InvokeActionHelper {
 
   protected Response<Void> invokeAction() {
     Response<Void> response = new Response<>();
+    // Make sure the bean exists
+    {
+      Response<Void> r =
+        getInvocationContext().getPageRepo().asPageReaderRepo().verifyExists(
+          getInvocationContext(),
+          getInvocationContext().getBeanTreePath()
+        );
+      if (!r.isSuccess()) {
+        return response.copyUnsuccessfulResponse(r);
+      }
+    }
     // Note: might need to handle heterogeneous types (for slice table actions)
     // Make sure the bean supports the action
     {
@@ -77,17 +87,6 @@ public class InvokeActionHelper {
         return response.copyUnsuccessfulResponse(r);
       }
       formProperties = r.getResults();
-    }
-    // Make sure the bean exists
-    {
-      Response<Void> r =
-        getInvocationContext().getPageRepo().asPageReaderRepo().verifyExists(
-          getInvocationContext(),
-          getInvocationContext().getBeanTreePath()
-        );
-      if (!r.isSuccess()) {
-        return response.copyUnsuccessfulResponse(r);
-      }
     }
     // Invoke the action
     if (getInvocationContext().getBeanTreePath().isCollection()) {
@@ -213,27 +212,7 @@ public class InvokeActionHelper {
     if (!pageDefResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(pageDefResponse);
     }
-    PageDef pageDef = pageDefResponse.getResults();
-    if (pageDef.isTableDef()) {
-      // The action is invoked on a table.
-      return response.setSuccess(pageDef.asTableDef().getActionDefs());
-    }
-    if (pageDef.isSliceTableDef()) {
-      // The action is invoked on a row of a slice table.
-      return response.setSuccess(pageDef.asSliceTableDef().getActionDefs());
-    }
-    // The action is invoked on a collection child, so we're passed a slice page path.
-    // Get the corresponding table page path since that's where the action defs live.
-    // Note: remove this once the CFE always invokes actions via the table / slice table
-    // instead per-row, and replace it with returning the slice form's actions.
-    TablePagePath tablePagePath = PagePath.newTablePagePath(getInvocationContext().getPagePath().getPagesPath());
-    InvocationContext tableIc = new InvocationContext(getInvocationContext());
-    tableIc.setPagePath(tablePagePath);
-    Response<PageDef> tablePageDefResponse = tableIc.getPageRepo().asPageReaderRepo().getPageDef(tableIc);
-    if (!tablePageDefResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(tablePageDefResponse);
-    }
-    return response.setSuccess(tablePageDefResponse.getResults().asTableDef().getActionDefs());
+    return response.setSuccess(pageDefResponse.getResults().getActionDefs());
   }
 
   private Response<List<FormProperty>> unmarshalInputForm() {

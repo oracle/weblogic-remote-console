@@ -54,10 +54,12 @@ fortify-output/**
 owasp-output/**
 frontend/seleniumTest.log
 everypage-oracle-tests/
+build-tools/download-bin
 
 electron/dist/**
 electron/extraFiles/**
 electron/node_modules/**
+electron/signed/**
 
 hugo/*/docs/
 hugo/*/.vscode/

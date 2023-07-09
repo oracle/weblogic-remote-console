@@ -1,14 +1,14 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojcheckboxset'],
-  function (oj, ko, HtmlUtils, MessageDisplaying, Runtime, ChangeManager, PerspectiveMemoryManager, PageDefinitionUtils, ViewModelUtils, CoreTypes, CoreUtils, Logger) {
+define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojcheckboxset'],
+  function (oj, ko, Runtime, ChangeManager, PerspectiveMemoryManager, ViewModelUtils, CoreTypes, CoreUtils, Logger) {
     function TableToolbar(viewParams) {
       const self = this;
 
@@ -91,28 +91,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           'selectItems': {
             value: oj.Translations.getTranslatedString('wrc-table-toolbar.instructions.selectItems.value', '{0}')
           }
-        },
-        messages: {
-          'action': {
-            'cannotPerform': {
-              summary: oj.Translations.getTranslatedString('wrc-table-toolbar.messages.action.cannotPerform.summary'),
-              detail: oj.Translations.getTranslatedString('wrc-table-toolbar.messages.action.cannotPerform.detail', '{0}', '{1}')
-            }
-          }
-        },
-        labels: {
-          start: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.start.value')},
-          resume: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.resume.value')},
-          suspend: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.suspend.value')},
-          shutdown: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.shutdown.value')},
-          restartSSL: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.restartSSL.value')},
-          stop: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.stop.value')},
-          download: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.download.value')},
-          shrink: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.shrink.value')},
-          reset: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.reset.value')},
-          clearStatementCache: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.clearStatementCache.value')},
-          pauseActions: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.pause.value')},
-          resumeActions: {value: oj.Translations.getTranslatedString('wrc-table-toolbar.labels.resume.value')}
         }
       };
 
@@ -134,10 +112,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
       this.showInstructions = ko.observable(true);
       this.showBeanPathHistory = ko.observable(this.perspectiveMemory.beanPathHistory.visibility);
 
-      // This instance-scope variable is used to hold the
-      // HTML for dynamic toolbar buttons
-      this.actionButtons = {html: ko.observable({}), buttons: [], visible: ko.observable(self.perspective.id === 'monitoring')};
-
       this.signalBindings=[];
       this.readonly = ko.observable();
 
@@ -153,7 +127,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           self.readonly(newRO);
           self.i18n.menus.shoppingcart.discard.visible(!newRO);
           self.i18n.menus.shoppingcart.commit.visible(!newRO);
-          updateActionButtonsState(newRO);
         });
 
         const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write'}.label`);
@@ -309,13 +282,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         }
       }
 
-      this.renderToolbarButtons = function () {
-        const pageDefinitionActions = viewParams.pageDefinitionActions();
-        const results = pageDefinitionActions.createActionsButtons();
-        Logger.log(results.html.innerHTML);
-        self.actionButtons.html({ view: HtmlUtils.stringToNodeArray(results.html.innerHTML), data: self });
-        self.actionButtons.buttons = results.buttons;
-        updateActionButtonsState(self.readonly());
+      this.renderToolbarButtons =  function () {
         const rdjData = viewParams.parentRouter?.data?.rdjData();
         const isDashboard = (self.perspective.id === 'monitoring' && CoreUtils.isNotUndefinedNorNull(rdjData?.dashboardCreateForm));
         if (isDashboard) {
@@ -324,19 +291,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         self.i18n.buttons.dashboard.visible(isDashboard);
         resetIconsVisibleState(self.perspective.id === 'monitoring');
       }.bind(this);
-
-      function updateActionButtonsState(isReadOnly) {
-        const pageDefinitionActions = viewParams.pageDefinitionActions();
-
-        if (isReadOnly) {
-          self.actionButtons.buttons = pageDefinitionActions.disableAllActionsButtons(self.actionButtons.buttons);
-        }
-        else {
-          self.actionButtons.buttons = pageDefinitionActions.populateActionsButtonsStates(self.actionButtons.buttons);
-        }
-
-        self.actionButtons.buttons = pageDefinitionActions.populateActionsButtonsStates(self.actionButtons.buttons);
-      }
 
       this.toggleHistoryClick = function (event) {
         const withHistoryVisible = viewParams.onBeanPathHistoryToggled(!self.showBeanPathHistory());
@@ -368,7 +322,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           // Just reload and ensure the sync state is not running.
           if (autoSyncEnabled) {
             self.autoSyncEnabled(false);
-            updateActionButtonsState();
           }
         }
         else {
@@ -449,103 +402,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           self.showBeanPathHistory(withHistoryVisible);
         }
         viewParams.onDashboardButtonClicked(event);
-      };
-
-      this.actionsDialogButtonClicked = function (result) {
-        Logger.log('[TABLE] okBtn was clicked, or ENTER key was pressed!');
-      };
-
-      this.actionButtonClicked = function (event) {
-        const label = self.i18n.labels[event.currentTarget.attributes['data-action'].value].value;
-        const dialogParams = {
-          id: event.currentTarget.id,
-          action: event.currentTarget.attributes['data-action'].value,
-          title: label,
-          instructions: self.i18n.instructions.selectItems.value.replace('{0}', label),
-          label: label,
-          isReadOnly: false
-        };
-
-        viewParams.signaling.tabStripTabSelected.dispatch('table-toolbar', 'shoppingcart', false);
-        const detail = self.i18n.messages.action.cannotPerform.detail.replace('{0}', dialogParams.label);
-        if (self.autoSyncEnabled()) {
-          MessageDisplaying.displayMessage({
-            severity: 'confirmation',
-            summary: self.i18n.messages.action.cannotPerform.summary,
-            detail:  detail.replace('{1}', self.i18n.icons.sync.tooltip)
-          }, 3000);
-          return false;
-        }
-
-        viewParams.onActionButtonClicked(dialogParams)
-          .then((result) => {
-            ViewModelUtils.setPreloaderVisibility(true);
-            const pageDefinitionActions = viewParams.pageDefinitionActions();
-            pageDefinitionActions.performActionOnChosenItems(result.chosenItems, result.urls)
-              .then(replies => {
-                const isDownloadLogsAction = (dialogParams.action === 'download');
-                let messages = [];
-                replies.forEach((reply) => {
-                  if (isDownloadLogsAction) {
-                    if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
-                      messages = messages.concat(reply.messages);
-                    }
-                  }
-                  else if (reply.succeeded) {
-                    Logger.log(`[TABLE-TOOLBAR] actionUrl=${reply.data.actionUrl}`);
-                  }
-                  else {
-                    if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
-                      MessageDisplaying.displayResponseMessages(reply.messages);
-                    }
-                    else {
-                      MessageDisplaying.displayMessage(reply.data, 5000);
-                    }
-                  }
-                }); // end-of forEach
-                if (isDownloadLogsAction) {
-                  MessageDisplaying.displayMessagesAsHTML(messages, oj.Translations.getTranslatedString('wrc-table-toolbar.prompts.download.value'), 'confirmation', 60000);
-                }
-                else {
-                  const successes = replies.filter(reply => reply.succeeded);
-                  if (successes.length > 0 && self.actionButtons.buttons[dialogParams.action].asynchronous) {
-                    self.syncClick({target: {attributes: {'data-interval': {
-                            value: '10'
-                          }}}});
-                  }
-                  else {
-                    self.syncClick({target: {attributes: {'data-interval': {
-                            value: '0'
-                          }}}});
-                  }
-                }
-              })
-              .catch(response => {
-                ViewModelUtils.failureResponseDefaultHandling(response);
-              })
-              .finally(() => {
-                ViewModelUtils.setPreloaderVisibility(false);
-              });
-
-          });
-      };
-
-      this.launchActionMenu = function(event) {
-        event.preventDefault();
-        const menuId = event.target.id.replace('Launcher', '');
-        document.getElementById(menuId).open(event);
-      };
-
-      this.actionMenuClickListener = function (event) {
-        event.preventDefault();
-        const fauxEvent = {
-          currentTarget: {
-            id:  event.target.id,
-            innerText: event.target.innerText,
-            attributes: event.target.attributes
-          }
-        };
-        self.actionButtonClicked(fauxEvent);
       };
     }
 

@@ -53,33 +53,35 @@ describe.only('Test Suite: deploy_test for Application and Library',
                    "DeploymentsChevron","App Deployments");
                console.log("Click New button");
                await driver.findElement(
-                   By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img")).click();
+                   By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
                await driver.sleep(2400);
                console.log("Enter App Deployment Name = sample");
                await driver.findElement(By.id("Name|input")).clear();
                await driver.findElement(By.id("Name|input")).sendKeys("sample");
                await driver.sleep(2400);
                console.log("Click to choose All available targets");
-               element = driver.findElement(By.xpath("//oj-button[@id=\'addAllToChosen\']/button/div/span/span"));
+               element = driver.findElement(By.xpath("//oj-button[@id='addAllToChosen']/button/div/span/span"));
                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                element.click();
                await driver.sleep(2400);
                console.log("Click Choose File to deploy");
-               element = driver.findElement(By.xpath("//img[@title=\'Choose File\']"));
+               element = driver.findElement(By.xpath("//img[@title='Choose File']"));
                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                element.click();
                await driver.sleep(2400);
                console.log("Click select " +deployWarFilePath+ " to deploy");
-               await driver.findElement(By.xpath("//input[@id=\'file-chooser\']")).sendKeys(deployWarFilePath);
+               await driver.findElement(By.xpath("//input[@id='file-chooser']")).sendKeys(deployWarFilePath);
                driver.sleep(2400);
                console.log("Click Create button");
-               await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.finish.id]]\']/button/div/span/img")).click();
+               await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.finish.id]]']/button/div/span[1]/img")).click();
+               driver.sleep(2400);
+               //Workaround by clicking away to avoid  shoppingCartImage StaleElementReferenceException problem
+               await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree", "DeploymentsChevron",
+                   "App Deployments");
                driver.sleep(2400);
                await admin.commitChanges(driver);
-               driver.sleep(2400);
                await admin.deleteMBeanObject(driver,"sample","App Deployments",2,"configuration","Deployments","App Deployments","","","",7);
                console.log("TEST PASS ");
-
            } catch (e) {
                await admin.takeScreenshot(driver, file);
                console.log(e.toString() + " TEST FAIL");
@@ -107,7 +109,7 @@ describe.only('Test Suite: deploy_test for Application and Library',
                     "DeploymentsChevron","Libraries");
                 console.log("Click New button");
                 await driver.findElement(
-                    By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img")).click();
+                    By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
                 await driver.sleep(2400);
                 console.log("Enter JAR LibApp Deployment Name = testLib");
                 await driver.findElement(By.id("Name|input")).clear();
@@ -115,35 +117,40 @@ describe.only('Test Suite: deploy_test for Application and Library',
                 await driver.sleep(2400);
 
                 console.log("Click Choose File to deploy");
-                element = driver.findElement(By.xpath("//img[@title=\'Choose File\']"));
+                element = driver.findElement(By.xpath("//img[@title='Choose File']"));
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                 element.click();
                 await driver.sleep(2400);
                 console.log("Click select " +deployLibJarFilePath+ " to deploy");
-                await driver.findElement(By.xpath("//input[@id=\'file-chooser\']")).sendKeys(deployLibJarFilePath);
+                await driver.findElement(By.xpath("//input[@id='file-chooser']")).sendKeys(deployLibJarFilePath);
                 driver.sleep(2400);
                 console.log("Click Create button");
-                await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.finish.id]]\']/button/div/span/img")).click();
+                await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.finish.id]]']/button/div/span/img")).click();
                 driver.sleep(2400);
+                //Workaround by clicking away to avoid shoppingCartImage StaleElementReferenceException problem
+                await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
+                    "DeploymentsChevron","Libraries");
                 await admin.commitChanges(driver);
                 driver.sleep(7200);
-
+                //Workaround by clicking away to avoid shoppingCartImage StaleElementReferenceException problem
+                await admin.goToNavTreeLevelThreeLink(driver,"configuration","Deployments",
+                    "Libraries","testLib");
                 console.log("Modify TestLib to select AdminServer as target");
                 console.log("Click Targets tab");
-                await driver.findElement(By.xpath("//span[contains(.,\'Targets\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Targets')]")).click();
                 await driver.sleep(4800);
                 console.log("Select AdminServer as target");
                 try {
                     //Check if AdminServer is the 3 elements in the Targets list of docker domain
                     element = driver.findElement(
-                        By.xpath("//oj-checkboxset[@id=\'availableCheckboxset\']/div/span[3]/span/input"));
+                        By.xpath("//oj-checkboxset[@id='availableCheckboxset']/div/span[3]/span/input"));
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     if (element.isEnabled()) {
                         await element.click();
                     } else {
                         //AdminServer is the only item in the Targets list
                         element = driver.findElement(
-                            By.xpath("//oj-checkboxset[@id=\'availableCheckboxset\']/div/span/span/input"));
+                            By.xpath("//oj-checkboxset[@id='availableCheckboxset']/div/span/span/input"));
                         driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                         await element.click();
                     }
@@ -152,7 +159,7 @@ describe.only('Test Suite: deploy_test for Application and Library',
                 }
                 await driver.sleep(800);
                 await driver.findElement(
-                    By.xpath("//oj-button[@id=\'addToChosen\']/button/div/span")).click()
+                    By.xpath("//oj-button[@id='addToChosen']/button/div/span")).click()
                 await driver.sleep(800);
                 await admin.saveAndCommitChanges(driver);
                 await driver.sleep(3600);

@@ -6,6 +6,10 @@ properties:
 
 actions:
 - name: forceCommitSelectedTransactions
+  label: "Force Commit"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
   actionMethod: weblogic.remoteconsole.customizers.JTARuntimeMBeanCustomizer.forceCommitSelectedTransactions
   mbeanOperation:
     operation: forceCommit
@@ -24,6 +28,10 @@ actions:
         When true applies to all server participants,
         when false applies only to the local server participant.
 - name: forceRollbackSelectedTransactions
+  label: "Force Rollback"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
   actionMethod: weblogic.remoteconsole.customizers.JTARuntimeMBeanCustomizer.forceRollbackSelectedTransactions
   mbeanOperation:
     operation: forceRollback

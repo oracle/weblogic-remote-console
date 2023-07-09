@@ -391,6 +391,10 @@ define(['wrc-frontend/core/utils'],
       return rtnval;
     }
 
+    function getThrowableMessage(throwable) {
+      return (CoreUtils.isNotUndefinedNorNull(throwable) && CoreUtils.isNotUndefinedNorNull(throwable.message) ? throwable.message : throwable);
+    }
+
     return {
       getSliceFromPDJUrl: getSliceFromPDJUrl,
       parseQueryString: parseQueryString,
@@ -416,7 +420,8 @@ define(['wrc-frontend/core/utils'],
       convertArrayToPrintableList: convertArrayToPrintableList,
       getPlacementRouterParameter: getPlacementRouterParameter,
       setPlacementRouterParameter: setPlacementRouterParameter,
-      isReadOnlySlice: isReadOnlySlice
+      isReadOnlySlice: isReadOnlySlice,
+      getThrowableMessage: getThrowableMessage
     };
   }
 );

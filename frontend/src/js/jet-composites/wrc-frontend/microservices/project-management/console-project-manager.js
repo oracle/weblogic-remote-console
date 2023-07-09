@@ -24,7 +24,16 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
             dataProvider = DataProviderManager.createAdminServerConnection({id: item.id, name: item.name, type: item.type, beanTrees: item.beanTrees || []  });
             if (CoreUtils.isNotUndefinedNorNull(item.url)) dataProvider.putValue('url', item.url);
             if (CoreUtils.isNotUndefinedNorNull(item.username)) dataProvider.putValue('username', item.username);
-            if (CoreUtils.isNotUndefinedNorNull(item.settings)) dataProvider.putValue('settings', item.settings);
+            if (CoreUtils.isNotUndefinedNorNull(item.settings)) {
+              // Copy all the settings
+              dataProvider.putValue('settings', item.settings);
+              // Remove the SSO setting in browser mode as the SSO setting is not supported for browser mode,
+              // the removal of the setting here prevents the import of a project saved from electron...
+              if (CoreUtils.isUndefinedOrNull(window.electron_api)) {
+                delete dataProvider.settings.sso;
+              }
+            }
+
             // Use state="disconnected" as an indicator that
             // this domain connection data provider is from
             // a saved project, which was loaded.

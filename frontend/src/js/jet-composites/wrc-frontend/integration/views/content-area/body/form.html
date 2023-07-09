@@ -1,27 +1,20 @@
 <!--
- Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div class="cfe-table-form-container">
+  <oj-module config="[[overlayFormDialogModuleConfig]]"></oj-module>
+  <oj-module config="[[formToolbarModuleConfig]]"></oj-module>
+  <oj-module config="[[tableCustomizerModuleConfig]]"></oj-module>
 
-  <oj-module config="[[overlayFormDialogModuleConfig]]">
-  </oj-module>
+  <div id="intro" class="cfe-table-form-instructions">
+    <hr>
+    <oj-bind-dom config="[[introductionHTML]]"></oj-bind-dom>
+  </div>
 
   <div class="cfe-table-form-content-header oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
-
-    <oj-module config="[[formToolbarModuleConfig]]">
-    </oj-module>
-
-    <oj-module config="[[tableCustomizerModuleConfig]]">
-    </oj-module>
-
-    <oj-module config="[[formTabStripModuleConfig]]">
-    </oj-module>
-
-    <div id="intro" class="cfe-table-form-instructions">
-      <hr>
-      <oj-bind-dom config="[[introductionHTML]]" />
-    </div>
+    <oj-module config="[[formTabStripModuleConfig]]"></oj-module>
+    <oj-module config="[[formActionsStripModuleConfig]]"></oj-module>
 
     <!-- Position "show-advanced-fields" checkboxset on the right side -->
     <div id="show-advanced-fields-container" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end oj-flex-items-pad">
@@ -44,7 +37,7 @@
     <input class="cfe-file-chooser" id="file-chooser" type="file"/>
 
     <oj-bind-if test="[[!showHelp()]]">
-      <oj-bind-dom label-edge="inside" config="[[ formDom ]]" />
+      <oj-bind-dom label-edge="inside" config="[[ formDom ]]"></oj-bind-dom>
     </oj-bind-if>
     <oj-bind-if test="[[showHelp()]]">
       <oj-table
@@ -56,10 +49,10 @@
         columns='[[tableHelpColumns]]'
       >
         <template slot="domTemplate" data-oj-as="cell">
-          <oj-bind-dom config="[[cell.data]]" />
+          <oj-bind-dom config="[[cell.data]]"></oj-bind-dom>
         </template>
       </oj-table>
-      <oj-bind-dom config="[[helpFooterDom]]" />
+      <oj-bind-dom config="[[helpFooterDom]]"></oj-bind-dom>
     </oj-bind-if>
   </div>
 

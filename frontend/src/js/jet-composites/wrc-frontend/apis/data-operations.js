@@ -725,6 +725,35 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         }
       },
 
+      actions: {
+        getActionInputFormData: (uri) => {
+          return CbeDataManager.getAggregatedData(uri)
+            .catch(response =>{
+              if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
+              }
+              else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                // Try to make FailureType more accurate, if
+                // it was a CBE_REST_API generated failure
+                if (response.transport.status === 404) {
+                  // Switch it to FailureType.NOT_FOUND
+                  response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
+                }
+              }
+              // Rethrow updated (or not updated) reject
+              return Promise.reject(response);
+            });
+        },
+
+        getActionData: (uri) => {
+          return CbeDataManager.getActionData(uri);
+        },
+
+        postActionData: (uri, dataPayload) => {
+          return CbeDataManager.postActionData(uri, dataPayload);
+        }
+      },
+
       providers: {
         /**
          *

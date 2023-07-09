@@ -20,6 +20,12 @@ $NPM_PREP_COMMANDS
 export DOWNLOAD_JAVA_URL=$DOWNLOAD_JAVA_URL
 export DOWNLOAD_NODE_URL=$DOWNLOAD_NODE_URL
 set -e
+if [ "$1" = internal ] && ! type zip > /dev/null 2>&1
+then
+  # Assume it is Debian linux, which is what the electron builder image is
+  apt -qq update -qq
+  apt -qq install -y zip -qq
+fi
 [ -z "$DEBUG" ] || export DEBUG="$DEBUG"
 [ -n "$FPM_DEBUG" ] || export DEBUG="$FPM_DEBUG"
 export http_proxy=$http_proxy
@@ -33,6 +39,8 @@ umask 000
 cp -rp /build.in/. /build
 cd /build
 export ALREADY_IN_DOCKER=true
+mkdir -p /root/.npm
+chmod -R 777 /root
 ./build-electron.sh $*
 rm -rf /build.in/electron/dist
 cp -rp electron/dist /build.in/electron
@@ -114,8 +122,7 @@ then
   PATH="$NEW_JAVA_BIN$pathsep$PATH"
 fi
 
-# For some reason, electron build is failing with 16.  Just use 14 for now.
-NEW_NPM="$(run/get_npm.14)"
+NEW_NPM="$(run/get_npm)"
 if [ -n "$NEW_NPM" ]
 then
   PATH="$NEW_NPM$pathsep$PATH"
@@ -129,6 +136,7 @@ if [ -n "$https_proxy" ]
 then
   export ELECTRON_GET_USE_PROXY=true GLOBAL_AGENT_HTTPS_PROXY=$https_proxy
 fi
+
 npm install
 
 rm -rf dist
@@ -152,11 +160,28 @@ jlink --output "$extra"/customjre --no-header-files --no-man-pages --compress=2 
 
 mkdir -p "$extra"/backend
 cp -rp ../runnable/* "$extra"/backend
-cp -p package.json "$extra"
 if [ "$1" = internal ]
 then
   shift
+
+  # Make sure the updater knows the version by its internal build name
+  sed /\"version\":/s/\",/-internal-$(date +%y%m%d)\",/ package.json > "$extra"/package.json
+
+  # Make sure the header shows the version by its internal build name
+  mkdir -p frontend/js/jet-composites/wrc-frontend/1.0.0/config
+  unzip -q -p "$extra"/backend/console.jar frontend/js/jet-composites/wrc-frontend/1.0.0/config/console-frontend-jet.yaml |
+    sed -e /^version:/s/\'\$/-internal-$(date +%y%m%d)\'/ \
+      > frontend/js/jet-composites/wrc-frontend/1.0.0/config/console-frontend-jet.yaml
+  zip -q "$extra"/backend/console.jar frontend/js/jet-composites/wrc-frontend/1.0.0/config/console-frontend-jet.yaml
+  rm -rf frontend
+  # Point to the internal feed
   cp -p internal-feed-url.json "$extra/feed-url.json"
+else
+  if [ "$1" = external ]
+  then
+    shift
+  fi
+  cp -p package.json "$extra"
 fi
 
 npm run dist "$@"

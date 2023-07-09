@@ -9,6 +9,7 @@ actions:
 
 - name: "downloadLogAsJson"
   label: "Download logs as json"
+  # don't specify polling since are no columns in the table that are affected by this action
   actionMethod: weblogic.remoteconsole.customizers.WLDFDataAccessRuntimeMBeanCustomizer.downloadLogAsJson
   definition:
     type: "void"
@@ -17,6 +18,7 @@ actions:
 
 - name: "downloadLogAsPlainText"
   label: "Download logs as text"
+  # don't specify polling since are no columns in the table that are affected by this action
   actionMethod: weblogic.remoteconsole.customizers.WLDFDataAccessRuntimeMBeanCustomizer.downloadLogAsPlainText
   definition:
     type: "void"

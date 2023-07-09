@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -35,12 +35,12 @@ define(['ojs/ojarraydataprovider'],
           });
         }
       }
-      const options = { keyAttributes: '_id'};
+      const options = { keyAttributes: keyAttributes};
       if (sortEnabled && (direction === 'ascending')) options['implicitSort'] = [{ attribute: sortProperty, direction: direction}];
       return new ArrayDataProvider(rowsArray, options);
     }
 
-    //public:
+  //public:
     return {
       sort: (rowsArray, keyAttributes, sortEnabled, sortProperty, direction) => {
         return sortRowsArray(rowsArray, keyAttributes, sortEnabled, sortProperty, direction);

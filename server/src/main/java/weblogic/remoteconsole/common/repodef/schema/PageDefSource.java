@@ -5,6 +5,9 @@ package weblogic.remoteconsole.common.repodef.schema;
 
 import java.util.List;
 
+import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
+import weblogic.remoteconsole.common.utils.StringUtils;
+
 /**
  * This POJO mirrors the yaml source file format for configuring information about any page.
  */
@@ -64,7 +67,9 @@ public class PageDefSource {
   }
 
   public void setCustomizePageDefSourceMethod(String value) {
-    customizePageDefSourceMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      customizePageDefSourceMethod.setValue(value);
+    }
   }
 
   // Specifies a custom static method to call to customize this page's definition.
@@ -81,7 +86,9 @@ public class PageDefSource {
   }
 
   public void setCustomizePageDefMethod(String value) {
-    customizePageDefMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      customizePageDefMethod.setValue(value);
+    }
   }
 
   // Specifies a custom static method to call to customize the data for this page.
@@ -99,7 +106,9 @@ public class PageDefSource {
   }
 
   public void setCustomizePageMethod(String value) {
-    customizePageMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      customizePageMethod.setValue(value);
+    }
   }
 
   // Whether this is a form.

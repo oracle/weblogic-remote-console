@@ -3,17 +3,12 @@
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
-/*
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Set;
-*/
-
 import java.util.List;
 
 import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.PageActionParamDef;
+import weblogic.remoteconsole.common.repodef.PageFieldPresentationDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefSource;
 import weblogic.remoteconsole.common.utils.Path;
@@ -29,6 +24,7 @@ class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActio
   private LocalizableString helpSummaryHTML;
   private LocalizableString detailedHelpHTML;
   private LocalizableString label;
+  private PageActionParamPresentationDefImpl presentationDefImpl;
 
   static PageActionParamDefImpl create(
     ActionInputFormDefImpl inputFormDefImpl,
@@ -43,6 +39,7 @@ class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActio
       BeanActionParamDefCustomizerSource customizerSource = new BeanActionParamDefCustomizerSource();
       customizerSource.merge(beanParamDefImpl.getCustomizerSource(), new Path());
       customizerSource.merge(pageLevelCustomizerSource, new Path());
+      customizerSource.setName(paramName);
       return
         new PageActionParamDefImpl(
           inputFormDefImpl,
@@ -76,6 +73,7 @@ class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActio
     this.pageLevelCustomizerSource = pageLevelCustomizerSource;
     initializeLabel();
     initializeHelp();
+    initializePresentationDef();
   }
 
   ActionInputFormDefImpl getInputFormDefImpl() {
@@ -121,6 +119,15 @@ class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActio
     return detailedHelpHTML;
   }
 
+  PageActionParamPresentationDefImpl getPresentationDefImpl() {
+    return presentationDefImpl;
+  }
+
+  @Override
+  public PageFieldPresentationDef getPresentationDef() {
+    return getPresentationDefImpl();
+  }
+
   @Override
   public boolean isPageLevelField() {
     return pageLevelCustomizerSource.getDefinition() != null;
@@ -155,6 +162,15 @@ class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActio
           getCustomizerSource().getHelpDetailsHTML()
         )
       );
+  }
+
+  private void initializePresentationDef() {
+    this.presentationDefImpl =
+      new PageActionParamPresentationDefImpl(this, getCustomizerSource().getPresentation());
+  }
+
+  String getInlineFieldHelpLocalizationKey() {
+    return getLocalizationKey("inlineFieldHelp");
   }
 
   @Override

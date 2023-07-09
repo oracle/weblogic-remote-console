@@ -13,6 +13,11 @@ import java.util.List;
  */
 public interface PageFieldDef extends BeanFieldDef {
 
+  // Info about how to present this property to the user.
+  // (e.g. inline field help or whether to display a number as hex).
+  // Returns null if there are no special presentation rules for this property.
+  public PageFieldPresentationDef getPresentationDef();
+
   // Get the help summary.
   // The UI should either display the summary or the details.
   // It should not display both since typically the detailed help

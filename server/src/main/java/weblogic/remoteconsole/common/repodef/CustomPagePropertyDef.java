@@ -25,8 +25,8 @@ public class CustomPagePropertyDef implements PagePropertyDef {
   private List<String> optionsSources = new ArrayList<>();
   private boolean allowNoneOption;
   private LocalizableString label;
+  private PageFieldPresentationDef presentationDef;
   private PagePropertyUsedIfDef usedIfDef;
-  private PagePropertyPresentationDef presentationDef;
   private PagePropertyExternalHelpDef externalHelpDef;
   private boolean pageLevelProperty;
   private boolean dontReturnIfHiddenColumn;
@@ -179,15 +179,15 @@ public class CustomPagePropertyDef implements PagePropertyDef {
   }
 
   @Override
-  public PagePropertyPresentationDef getPresentationDef() {
+  public PageFieldPresentationDef getPresentationDef() {
     return presentationDef;
   }
 
-  public void setPresentationDef(PagePropertyPresentationDef val) {
+  public void setPresentationDef(PageFieldPresentationDef val) {
     presentationDef = val;
   }
 
-  public CustomPagePropertyDef presentationDef(PagePropertyPresentationDef val) {
+  public CustomPagePropertyDef presentationDef(PageFieldPresentationDef val) {
     setPresentationDef(val);
     return this;
   }
@@ -329,6 +329,20 @@ public class CustomPagePropertyDef implements PagePropertyDef {
 
   public CustomPagePropertyDef ordered(boolean val) {
     setOrdered(val);
+    return this;
+  }
+
+  @Override
+  public boolean isMultiLineString() {
+    return beanPropertyDef.isMultiLineString();
+  }
+
+  public void setMultiLineString(boolean val) {
+    beanPropertyDef.setMultiLineString(val);
+  }
+
+  public CustomPagePropertyDef multiLineString(boolean val) {
+    setMultiLineString(val);
     return this;
   }
 

@@ -1,9 +1,12 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
 
 import java.util.List;
+
+import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
+import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * This POJO mirrors the yaml source file format for customizing information about type,
@@ -111,7 +114,9 @@ public class BeanTypeDefCustomizerSource {
   }
 
   public void setDeleteMethod(String value) {
-    deleteMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      deleteMethod.setValue(value);
+    }
   }
 
   // Specifics the name of a custom static method to call to create the JAXRS resource 
@@ -127,7 +132,9 @@ public class BeanTypeDefCustomizerSource {
   }
 
   public void setCreateResourceMethod(String value) {
-    createResourceMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      createResourceMethod.setValue(value);
+    }
   }
 
   // Specifics the name of a custom static method to call get a collection of this type.
@@ -145,7 +152,9 @@ public class BeanTypeDefCustomizerSource {
   }
 
   public void setGetCollectionMethod(String value) {
-    getCollectionMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      getCollectionMethod.setValue(value);
+    }
   }
 
   // Used to turn off the entire type's mbean javadoc links.

@@ -2,7 +2,7 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "main": "app/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -55,11 +55,21 @@
     },
     "linux": {
       "target": [
-        "rpm",
-        "deb",
-        "appimage"
+        { "target": "rpm" },
+        { "target": "deb" },
+        { "target": "appimage" },
+        {
+          "target": "zip"
+        }
       ],
+      "artifactName": "${productName}-${version}-${os}.${ext}",
       "category": "Utility"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
     },
     "nsis": {
       "runAfterFinish": "false",
@@ -86,8 +96,8 @@
     "keytar": "^7.9.0"
   },
   "devDependencies": {
-    "electron": "^22.1.0",
-    "electron-builder": "^23.6.0",
+    "electron": "^25.0.0",
+    "electron-builder": "^24.4.0",
     "eslint": "^8.33.0"
   }
 }

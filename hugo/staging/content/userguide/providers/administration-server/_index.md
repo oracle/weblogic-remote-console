@@ -46,7 +46,7 @@ You can restore fields to their default value. Right-click on a field and click 
 
 The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely.
 
-If you installed the console extension, `console-rest-ext-x.x.war`, you can also see the specific changes you've made and the status of the lock in the Change Manager. If you need to undo a change, you must discard all shopping cart contents or manually revert the change in the Edit Tree perspective.
+If you installed the console extension, `{{<console_rest_ext>}}`, you can also see the specific changes you've made and the status of the lock in the Change Manager. If you need to undo a change, you must discard all shopping cart contents or manually revert the change in the Edit Tree perspective.
 
 The configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock in the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the WebLogic Remote Console and you will not be blocked from making changes with the other tools.
 

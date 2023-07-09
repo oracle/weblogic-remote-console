@@ -216,4 +216,101 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
         }
     })
 
+    // JNDI TreeView ClassName
+    // Test if user is able to view and click at ClassName 'weblogic.ejb.container.internal.StatelessEJBHomeImpl'
+    // At Monitoring -> Environment -> Servers -> AdminServer -> JNDI Tab (1st Row in the table)
+    //
+    it('8. Test Category: GAT/Risk1\n \t Test Scenario: Monitoring -> Environment -> Servers -> AdminServer', async function () {
+        file = "monitoringAdminServerJNDIClassName.png";
+        try {
+            await admin.goToNavTreeLevelThreeLink(driver,"monitoring","Environment",
+                "Servers","AdminServer");
+            await driver.sleep(1200);
+            await admin.goToTabName(driver,'JNDI');
+            element = driver.findElement(
+                By.xpath("//td[text()='weblogic.ejb.container.internal.StatelessEJBHomeImpl']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            console.log("Click ClassName 'weblogic.ejb.container.internal.StatelessEJBHomeImpl' ");
+            await driver.sleep(900);
+            if (element.isEnabled()) {
+                await element.click();
+                console.log("Successfully to view and click at ClassName 'weblogic.ejb.container.internal.StatelessEJBHomeImpl'");
+                console.log("TEST PASS ");
+                await driver.sleep(1200);
+            }
+            else {
+                console.log("Unable to click at ClassName 'weblogic.ejb.container.internal.StatelessEJBHomeImpl'");
+                console.log("TEST FAIL ");
+            }
+            await driver.sleep(900);
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+    // JNDI TreeView Context
+    // Test if user is able to view and click at the list of JNDI Context name below from the
+    // Monitoring -> Environment -> Servers -> AdminServer -> JNDI Tab
+    // AdminJMSServer@com.oracle.medrec.jms, java:global.medrec.medrec-domain-impl, ejb.mgmt, java:global.mejb,...
+    //
+    it('9. Test Category: GAT/Risk1\n \t Test Scenario: Monitoring -> Environment -> Servers -> AdminServer', async function () {
+        file = "monitoringAdminServerJNDIContext.png, java:global.medrec.medrec-domain-impl, weblogic.cluster.migration" +
+            "ejb.mgmt, java:global.mejb "
+        try {
+            await admin.goToNavTreeLevelThreeLink(driver,"monitoring","Environment",
+                "Servers","AdminServer");
+            await driver.sleep(1200);
+            await admin.goToTabName(driver,'JNDI');
+            await driver.sleep(4800);
+            await driver.executeScript("window.scrollTo(0,0)");
+            element = driver.findElement(
+                By.xpath("//*[@id='table']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            console.log("Click at JNDI Table");
+            await element.click();
+            await driver.sleep(2400);
+            element = driver.findElement(
+                By.xpath("//td[text()='AdminJMSServer@com.oracle.medrec.jms']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            console.log("Click at Context 'AdminJMSServer@com.oracle.medrec.jms'");
+            await element.click();
+            await driver.sleep(2400);
+            element = driver.findElement(
+                By.xpath("//td[text()='ejb.mgmt']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            console.log("Click at Context 'ejb.mgmt'");
+            await element.click();
+            await driver.sleep(2400);
+            element = driver.findElement(
+                By.xpath("//td[text()='java:global.medrec.medrec-domain-impl']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            console.log("Click at Context 'java:global.medrec.medrec-domain-impl'");
+            await element.click();
+            await driver.sleep(2400);
+            element = driver.findElement(
+                By.xpath("//td[text()='java:global.medrec.medrec-facade-impl']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            console.log("Click at Context 'java:global.medrec.medrec-facade-impl'");
+            await element.click();
+            await driver.sleep(2400);
+
+            console.log("Click at Context 'java:global.mejb'");
+            if (element.isEnabled()) {
+                await element.click();
+                console.log("Successfully to view and click at Context 'java:global.mejb'");
+                console.log("TEST PASS ");
+                await driver.sleep(2400);
+            }
+            else {
+                console.log("Unable to click at Context 'java:global.mejb'");
+                console.log("TEST FAIL ");
+            }
+            await driver.sleep(2400);
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
 })

@@ -1124,7 +1124,7 @@ module.exports = function (driver, file) {
             await driver.sleep(600);
             if (element.isEnabled()) {
                 await element.click();
-                await driver.sleep(900);
+                await driver.sleep(8400);
             }
         },
 
@@ -1160,14 +1160,14 @@ module.exports = function (driver, file) {
             console.log("Click Shopping Cart Image to expand its menu option....");
             element = driver.findElement((By.xpath("//img[@id='shoppingCartImage']")));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await driver.sleep(1200);
+            await driver.sleep(9800);
             if (element.isEnabled()) {
                 await element.click();
             }
             await driver.sleep(1200);
             console.log("Click Commit Changes menu");
             await driver.findElement(By.xpath("//span[contains(.,'Commit Changes')]")).click();
-            await driver.sleep(1200);
+            await driver.sleep(9800);
         },
 
         // Save modified elements then commit changes

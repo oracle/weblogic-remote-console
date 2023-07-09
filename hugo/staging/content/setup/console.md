@@ -19,7 +19,7 @@ The WebLogic Remote Console presents a simple user interface that varies slightl
 
 * **Kiosk** - manage the details of your current [project]({{< relref "userguide/projects" >}}), its [providers]({{< relref "userguide/providers" >}}) and their connection details. You can also import and export project files here. On Administration Server providers, the Kiosk also includes the Shopping Cart which contains the Change Manager, as well as any changes you’ve made to the domain configuration. You can commit (or discard) changes directly from the Shopping Cart. 
     
-    If you have the console extension, `console-rest-ext-x.x.war`, installed, you can see the specific pending changes for your domain.
+    If you have the console extension, `{{<console_rest_ext>}}`, installed, you can see the specific pending changes for your domain.
 
 * **NavStrip** - toggle the visibility of the navigation tree (![Navpane icon](/weblogic-remote-console/images/icons/navigation-icon-toggle-off-blk_24x24.png)) and, in an Administration Server provider, move between perspectives. 
 
@@ -124,6 +124,24 @@ The WebLogic Remote Console provides several types of online help on each page.
 * Use the ? icon to the left of each field to access summary and detailed help for the field. If you hover over the ?, a summary help description displays. Click the ? icon to display a more detailed help description, if available.
 * Click the ? icon in the top right of the content pane to toggle the view of the reference information for all of the fields displayed on the page.
 
+## WebLogic Remote Console extension {id="ext"}
+
+The WebLogic Remote Console extension is a complementary component that you can add to your WebLogic domain to enhance the functionality of the WebLogic Remote Console when managing domains. 
+
+After you install the extension, you'll be able to:
+
+* View pending changes in the Shopping Cart
+* Manage security data stored in the embedded LDAP server (users, groups, roles, policies, credential mappings)
+* Inspect the JNDI table
+* Manage JMS messages and JTA transactions
+
+To install the extension:
+
+1. Create a `management-services-ext` directory under the domain home.
+1. Download the latest WebLogic Remote Console extension, `{{<console_rest_ext>}}`, from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases) and save it inside the `management-services-ext` directory you created in the previous step.
+1. Reboot the Administration Server if it is already running.
+1. In the WebLogic Remote Console, disconnect, then re-connect to the Administration Server.
+
 ## Supplemental customization {id="files"}
 
 While you should perform all configuration of the WebLogic Remote Console from within its graphical user interface, occasionally there are circumstances where that's not possible. In those cases, you can view some of the data files upon which the WebLogic Remote Console builds its customizations. 
@@ -139,7 +157,7 @@ These files are located in the following directories:
 |`auto-prefs.json`| Describes the user interface of the WebLogic Remote Console, including its dimensions, projects and providers. |
 |`config.json`| Describes the connection settings for the WebLogic Remote Console. You will need to create this file manually. See [Customize connection settings]({{< relref "userguide/advanced-settings" >}}) for more information. |
 |`dashboards.json`| Records the details of existing dashboards. See [Generate dashboards]({{< relref "userguide/dashboards" >}}) for more information. |
-|`out.log`| Collects log entries for the current session of the WebLogic Remote Console. There is also an `out-1.log` file which holds a copy of the previous session's log entries. See [Check log files]({{< relref "userguide/logging" >}}) for more information. |
+|`out.log`| Collects log entries for the current session of the WebLogic Remote Console. At the start of each session, log entries from the previous session are moved to a new file marked by date: `out-yyyy-mm-dd`. See [Check log files]({{< relref "userguide/logging" >}}) for more information. |
 |`recent-searches.json`| Lists the search terms for any searches that you've executed. See [Search]({{< relref "setup/console#nav_dom" >}}) for more information. |
 |`table-customizations.json`| Describes any table customizations you've saved. See [Customizable tables]({{< relref "setup/console#cust_table" >}}) for more information. |
 

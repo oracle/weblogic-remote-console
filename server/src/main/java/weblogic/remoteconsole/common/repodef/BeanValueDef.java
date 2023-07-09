@@ -127,4 +127,9 @@ public interface BeanValueDef {
   // Determines whether a property that the bean repo handles as a long
   // really holds a date, thus should be presented to the user as a date.
   public boolean isDateAsLong();
+
+  // Indicates that this value is a multi-lined string
+  // (i.e. can contain newline characters and should be
+  // displayed in a text area instead of a text box).
+  public boolean isMultiLineString();
 }

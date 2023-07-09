@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -58,6 +58,13 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         return retval;
       },
 
+      getHelpLabel: function(propertyName) {
+        let retval = null;
+        if (this.pdjTypes[propertyName].helpLabel !== undefined)
+          retval = this.pdjTypes[propertyName].helpLabel;
+        return retval;
+      },
+
       /** Return the externalHelp object for the property */
       getExternalHelp: function(propertyName) {
         let retval = null;
@@ -83,7 +90,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           if (javadocHref !== undefined) {
             link = '<a target=_blank rel=noopener href=' + javadocHref + '>' + label + '</a>';
           }
-          result = helpDetailed + '<p> MBean Attribute:<br><code>' + link + '</code></p>'
+          result = `${helpDetailed}<p>${externalHelp.introLabel}<br><code>${link}</code></p>`;
         }
         return result;
       },
@@ -147,7 +154,16 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           }
         }
       },
-
+      
+      getWidthPresentation: function(propertyName) {
+        let rtnval = null;
+        if (CoreUtils.isNotUndefinedNorNull(this.pdjTypes[propertyName].presentation) &&
+          CoreUtils.isNotUndefinedNorNull(this.pdjTypes[propertyName].presentation.width)
+        ) {
+          rtnval = `cfe-${this.pdjTypes[propertyName].presentation.width}-width-hint`;
+        }
+        return rtnval;
+      },
 
       /** Check if the property is required */
       isRequired: function(propertyName) {
@@ -265,6 +281,16 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
       /** Check if the property is a string */
       isStringType: function(propertyName) {
         return (this.getType(propertyName) === 'string');
+      },
+
+      /** Check if the property is a Java throwable */
+      isThrowableType: function(propertyName) {
+        return (this.getType(propertyName) === 'throwable');
+      },
+
+      /** Check if the property is a multi-line string */
+      isMultiLineStringType: function(propertyName) {
+        return (this.getType(propertyName) === 'multiLineString');
       },
 
       /** Check if the property is one of the number types */
@@ -482,6 +508,9 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           case 'entitleNetExpression':
             result = displayValue;
             break;
+          case 'throwable':
+            result = PageDefinitionUtils.getThrowableMessage(value);
+            break;
           case 'properties':
             if (displayValue === null) {
               // When there is no display value then return the actual value
@@ -687,7 +716,11 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             }
             // All other array types display using the string conversion for that type
             displayValue = PageDefinitionUtils.getArrayOfStringDisplayValue(value, ', ');
-          } else {
+          }
+          else if (this.isThrowableType(propertyName)) {
+            displayValue = PageDefinitionUtils.getThrowableMessage(value);
+          }
+          else {
             // The value is NOT an array
             if (this.isReferenceType(propertyName)) {
               displayValue = PageDefinitionUtils.getNameFromCollectionChild(value);
