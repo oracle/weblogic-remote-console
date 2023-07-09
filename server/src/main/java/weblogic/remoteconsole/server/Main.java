@@ -1,11 +1,10 @@
-// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -13,9 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 import io.helidon.microprofile.server.Server;
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -25,28 +21,6 @@ public final class Main {
   private static final String LOGGING_FILE = "logging.properties";
 
   public static final String WLS_CONSOLE_BACKEND = "WebLogic Console Backend";
-
-  private static void readPropertyFile(String file) throws IOException {
-    // FortifyIssueSuppression Path Manipulation
-    // This is a command-line argument.  It's fine.
-    File propfile = new File(file);
-    if (!propfile.exists()) {
-      return;
-    }
-    FileReader reader = new FileReader(propfile);
-    JsonReader jsReader = Json.createReader(reader);
-    try {
-      JsonObject obj = jsReader.readObject();
-      for (String prop : obj.keySet()) {
-        // FortifyIssueSuppression Setting Manipulation
-        // This is intentional
-        System.setProperty(prop, obj.getString(prop));
-      }
-    } finally {
-      jsReader.close();
-      reader.close();
-    }
-  }
 
   private static void readStandardInput() {
     java.io.BufferedReader reader = new java.io.BufferedReader(
@@ -110,7 +84,7 @@ public final class Main {
         if (args.length == i) {
           usage();
         }
-        readPropertyFile(args[i]);
+        new PropertyFileHandler(args[i]);
       } else if (args[i].equals("--persistenceDirectory")) {
         i++;
         if (args.length == i) {

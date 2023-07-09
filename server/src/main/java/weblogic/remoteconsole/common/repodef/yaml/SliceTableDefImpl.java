@@ -40,7 +40,6 @@ public class SliceTableDefImpl extends PageDefImpl implements SliceTableDef {
   @Override
   protected void createUsedIfDefImpls() {
     // Don't create usedIfs for the columns since they're never used
-    // And don't create usedIfs for actions since they were created along with the actions
   }
 
   List<PagePropertyDefImpl> getDisplayedColumnDefImpls() {

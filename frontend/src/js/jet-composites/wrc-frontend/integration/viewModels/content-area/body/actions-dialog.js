@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -10,55 +10,74 @@
 define(
   function () {
 
-    function showActionsDialog(dialogParams, i18n) {
-      return new Promise(function (resolve, reject) {
-        i18n.actionsDialog.title(dialogParams.title);
-        i18n.actionsDialog.instructions(dialogParams.instructions);
-        i18n.actionsDialog.buttons.ok.label(dialogParams.label);
-        i18n.actionsDialog.buttons.ok.disabled(true);
-
-        const okBtn = document.getElementById('dlgOkBtn2');
-        const cancelBtn = document.getElementById('dlgCancelBtn2');
-        const actionsDialog = document.getElementById('actionsDialog');
-
-        function okClickHandler() {
-          resolve({exitAction: i18n.actionsDialog.buttons.ok.label});
-          actionsDialog.close();
+    function showConfirmDialogStyleActionsInput(i18n) {
+      const confirmDialog = document.getElementById('confirmDialog');
+      confirmDialog.setAttribute('dialog-title', i18n.dialog.title());
+      const span = document.getElementById('confirmDialogPrompt');
+      span.innerHTML = i18n.dialog.prompt();
+      const div = document.querySelector('.cfe-dialog-cancel');
+      div.style.display = (i18n.buttons.cancel.visible() ? 'inline-flex' : 'none');
+      return new Promise(function (resolve) {
+        function onClose(reply) {
+          yesBtn.removeEventListener('ojAction', yesClickHandler);
+          noBtn.removeEventListener('ojAction', noClickHandler);
+          cancelBtn.removeEventListener('ojAction', cancelClickHandler);
+          confirmDialog.removeEventListener('keyup', onKeyUp);
+          resolve(reply);
         }
-        okBtn.addEventListener('click', okClickHandler);
-
+        
+        function yesClickHandler(event) {
+          onClose({exitButton: 'yes'});
+          confirmDialog.close();
+        }
+        
+        function noClickHandler() {
+          onClose({exitButton: 'no'});
+          confirmDialog.close();
+        }
+        
         function cancelClickHandler() {
-          reject({exitAction: i18n.actionsDialog.buttons.cancel.label});
-          actionsDialog.close();
+          onClose({exitButton: 'cancel'});
+          confirmDialog.close();
         }
-        cancelBtn.addEventListener('click', cancelClickHandler);
-
+        
         function onKeyUp(event) {
-          if (event.key === 'Enter') {
-            // Treat pressing the "Enter" key as clicking the "OK" button
-            okClickHandler();
-            // Suppress default handling of keyup event
-            event.preventDefault();
-            // Veto the keyup event
-            return false;
+          switch (event.key){
+            case 'Enter':
+              // Treat pressing the "Enter" key as clicking the "OK" button
+              yesClickHandler(event);
+              // Suppress default handling of keyup event
+              event.preventDefault();
+              // Veto the keyup event, so JET will update the knockout
+              // observable associated with the <oj-input-text> element
+              return false;
+            case 'Escape':
+              // Treat pressing the "Escape" key as clicking the "Cancel" button
+              cancelClickHandler();
+              break;
           }
         }
-
-        actionsDialog.addEventListener('ojClose', function (event) {
-          okBtn.removeEventListener('click', okClickHandler);
-          cancelBtn.removeEventListener('click', cancelClickHandler);
-        });
-
-        actionsDialog.open();
+        
+        const yesBtn = document.getElementById('dlgYesBtn');
+        yesBtn.addEventListener('click', yesClickHandler);
+        
+        const noBtn = document.getElementById('dlgNoBtn');
+        noBtn.addEventListener('click', noClickHandler);
+        
+        const cancelBtn = document.getElementById('dlgCancelBtn');
+        cancelBtn.addEventListener('click', cancelClickHandler);
+        
+        confirmDialog.addEventListener('keyup', onKeyUp);
+        
+        confirmDialog.open();
       });
     }
-
+    
   //public:
     return {
-      showActionsDialog: (dialogParams, i18n) => {
-        return showActionsDialog(dialogParams, i18n);
+      showConfirmDialogStyleActionsInput: (i18n) => {
+        return showConfirmDialogStyleActionsInput(i18n);
       }
-
     };
 
   }

@@ -288,7 +288,7 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
        * @params {{onMenuAction: string, onBeforeOpen: string, menuItem: {id: string, iconFile: string, label: string}}} params
        * @returns {HTMLElement}
        */
-      createSliceTable: function (params) {
+      createSliceTableFormLayout: function (params) {
         const table = document.createElement('oj-table');
 
         const contextMenu = document.createElement('oj-menu');

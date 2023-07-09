@@ -5,7 +5,10 @@ package weblogic.remoteconsole.server.token;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.Map;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -24,8 +27,15 @@ public class SsoTokenManager {
   private static final int SEED_SIZE = 16;
   private static final int NONCE_SIZE = 8;
 
+  // Default SSO timer settings that align with application.yaml
+  public static final long DEFAULT_SSO_TIMER_SECONDS = 30L;
+  public static final long DEFAULT_SSO_TIMEOUT_SECONDS = 300L;
+
+  private long ssoTimerMillis;
+  private long ssoTimeoutMillis;
   private SecureRandom nonceGenerator = null;
-  private volatile Map<String, AdminServerDataProvider> ssoTokenIdMap;
+  private volatile Timer ssoTimer = null;
+  private volatile ConcurrentHashMap<String, ProviderEntry> ssoTokenIdMap;
 
   /**
    * Set the Console Backend instance of the SsoTokenManager in the JAX-RS request context...
@@ -35,11 +45,17 @@ public class SsoTokenManager {
   }
 
   /**
-   * Obtain the SsoTokenManager reference from the JAX-RS request context...
+   * Get the Console Backend instance of the SsoTokenManager from the JAX-RS request context...
+   */
+  public static SsoTokenManager getFromRequestContext(ContainerRequestContext requestContext) {
+    return (SsoTokenManager) requestContext.getProperty(SsoTokenManager.class.getName());
+  }
+
+  /**
+   * Obtain the SsoTokenManager reference from the JAX-RS resource context...
    */
   public static SsoTokenManager getFromResourceContext(ResourceContext resourceContext) {
-    ContainerRequestContext requestContext = resourceContext.getResource(ContainerRequestContext.class);
-    return (SsoTokenManager) requestContext.getProperty(SsoTokenManager.class.getName());
+    return getFromRequestContext(resourceContext.getResource(ContainerRequestContext.class));
   }
 
   /**
@@ -47,6 +63,12 @@ public class SsoTokenManager {
    */
   public SsoTokenManager(Config config) {
     // Config settings to handle timeouts for map entries plus defaults
+    ssoTimerMillis = (config
+        .get("ssoTimerSeconds").asLong()
+        .orElse(DEFAULT_SSO_TIMER_SECONDS)) * 1000L;
+    ssoTimeoutMillis = (config
+        .get("ssoTimeoutSeconds").asLong()
+        .orElse(DEFAULT_SSO_TIMEOUT_SECONDS)) * 1000L;
     ssoTokenIdMap = new ConcurrentHashMap<>();
   }
 
@@ -61,7 +83,7 @@ public class SsoTokenManager {
    * Get the AdminServerDataProvider that maps to the SSO token ID...
    */
   public AdminServerDataProvider get(String ssoid) {
-    AdminServerDataProvider provider = ssoTokenIdMap.get(ssoid);
+    AdminServerDataProvider provider = getProviderFromEntry(ssoid);
     LOGGER.fine("Get provider with ssoid '" + ssoid + (provider == null ? "' NOT FOUND!" : "'"));
     return provider;
   }
@@ -73,7 +95,8 @@ public class SsoTokenManager {
   public String add(AdminServerDataProvider provider) {
     String ssoid = getNonce();
     LOGGER.fine("Add provider '" + provider.getName() + "' ssoid: " + ssoid);
-    ssoTokenIdMap.put(ssoid, provider);
+    addProviderEntry(ssoid, provider);
+    checkSsoTimer();
     return ssoid;
   }
 
@@ -86,8 +109,64 @@ public class SsoTokenManager {
     if (ssoid != null) {
       LOGGER.fine("Remove provider '" + provider.getName() + "' ssoid: " + ssoid);
       ssoTokenIdMap.remove(ssoid);
+      checkSsoTimer();
     }
     return ssoid;
+  }
+
+  /**
+   * Determine if the HTTP/S origin is allowed based on the current provider entries...
+   * @return true when found, otherwise false
+   */
+  public boolean isAllowedOrigin(String origin) {
+    boolean result = false;
+    if ((origin != null) && !origin.isBlank()) {
+      String allowed = ssoTokenIdMap.searchValues(1, (entry) -> {
+        // Check origin against provider domain url
+        String domainUrl = entry.getProvider().getURL();
+        if (origin.equalsIgnoreCase(domainUrl)) {
+          return domainUrl;
+        }
+        return null;
+      });
+      result = (allowed != null) ? true : false;
+    }
+    LOGGER.fine("isAllowedOrigin('" + origin + "') returning: " + result);
+    return result;
+  }
+
+  /**
+   * Create and add the ProviderEntry for the AdminServerDataProvider including the timeout...
+   */
+  private void addProviderEntry(String ssoid, AdminServerDataProvider provider) {
+    ssoTokenIdMap.put(ssoid, new ProviderEntry(provider, ssoTimeoutMillis));
+  }
+
+  /**
+   * Get the AdminServerDataProvider from the ProviderEntry or return null...
+   */
+  private AdminServerDataProvider getProviderFromEntry(String ssoid) {
+    AdminServerDataProvider provider = null;
+    ProviderEntry entry = ssoTokenIdMap.get(ssoid);
+    if (entry != null) {
+      provider = entry.getProvider();
+    }
+    return provider;
+  }
+
+  /**
+   * Check on the state of the SSO timer task to ensure running or canceled...
+   */
+  private synchronized void checkSsoTimer() {
+    if (ssoTokenIdMap.isEmpty() && (ssoTimer != null)) {
+      ssoTimer.cancel();
+      ssoTimer = null;
+      LOGGER.fine("Canceled SSO timer!");
+    } else if (!ssoTokenIdMap.isEmpty() && (ssoTimer == null)) {
+      ssoTimer = new Timer("SsoTokenManager", true);
+      ssoTimer.schedule(new SsoTokenTimer(), ssoTimerMillis, ssoTimerMillis);
+      LOGGER.fine("Started SSO timer with interval millis: " + ssoTimerMillis);
+    }
   }
 
   /**
@@ -108,5 +187,46 @@ public class SsoTokenManager {
    */
   private void initializeNonceGenerator() {
     nonceGenerator.setSeed(nonceGenerator.generateSeed(SEED_SIZE));
+  }
+
+  private class ProviderEntry {
+    private long expireTime;
+    private AdminServerDataProvider provider;
+
+    ProviderEntry(AdminServerDataProvider adminServerDataProvider, long timeout) {
+      provider = adminServerDataProvider;
+      expireTime = System.currentTimeMillis() + timeout;
+    }
+
+    AdminServerDataProvider getProvider() {
+      return provider;
+    }
+
+    long getExpireTime() {
+      return expireTime;
+    }
+  }
+
+  private class SsoTokenTimer extends TimerTask {
+    public void run() {
+      LOGGER.fine("SsoTokenTimer executing with SSO timeout millis: " + ssoTimeoutMillis);
+      Set<String> removes = new LinkedHashSet<>();
+      long now = System.currentTimeMillis();
+      ssoTokenIdMap.forEach((ssoid, entry) -> {
+        // Check for expired entry
+        if (now > entry.getExpireTime()) {
+          removes.add(ssoid);
+        }
+      });
+      if (!removes.isEmpty()) {
+        LOGGER.fine("SsoTokenTimer removing expired entries: " + removes);
+        removes.forEach(ssoid -> {
+          // Remove expired entry
+          ssoTokenIdMap.remove(ssoid);
+        });
+      }
+      // Check on SSO timer state...
+      checkSsoTimer();
+    }
   }
 }

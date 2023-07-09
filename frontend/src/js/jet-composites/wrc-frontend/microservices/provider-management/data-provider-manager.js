@@ -48,10 +48,11 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
       }
     }
 
-    function clearRunningTimer(dataProvider) {
+    function clearRunningTimer(dataProvider, clearPollCount = false) {
       if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerId)) {
         clearInterval(dataProvider.timerId);
         delete dataProvider.timerId;
+        if (clearPollCount) delete dataProvider.timerPollCount;
       }
     }
 
@@ -76,7 +77,6 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         if (CoreUtils.isNotUndefinedNorNull(entry.username)) dataProvider['username'] = entry.username;
         if (CoreUtils.isNotUndefinedNorNull(entry.password)) dataProvider['password'] = entry.password;
         if (CoreUtils.isNotUndefinedNorNull(entry.settings)) dataProvider['settings'] = entry.settings;
-        if (CoreUtils.isNotUndefinedNorNull(entry.expires)) dataProvider['expires'] = entry.expires;
 
         // Clear data provider state based on sso setting when available
         if (CoreUtils.isNotUndefinedNorNull(dataProvider.settings) && CoreUtils.isNotUndefinedNorNull(dataProvider.settings.sso)) {
@@ -88,6 +88,28 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         return dataProvider;
       },
       /**
+       * @param {DataProvider} dataProvider
+       * @returns {Entry} entry from dataProvider
+       */
+      getEntryFromDataProvider: function (dataProvider) {
+        // We're working with a deactivated data provider. The entry
+        // has been removed from the dataproviders map, but it has
+        // everything needed to add it back.
+        const entry = {
+          id: dataProvider.id,
+          name: dataProvider.name,
+          type: dataProvider.type,
+          beanTrees: dataProvider.beanTrees,
+          url: dataProvider.url,
+          username: dataProvider.username,
+          password: dataProvider.password,
+        };
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.settings) && Object.keys(dataProvider.settings).length > 0) {
+          entry['settings'] = dataProvider.settings;
+        }
+        return entry;
+      },
+      /**
        *
        * @param {DataProvider} dataProvider
        * @returns {Promise<{body: {data?: *, messages: [*]}} |{failureType: string, failureReason: *}>}
@@ -96,24 +118,8 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
           const isDeactivatedDataProvider = CoreUtils.isUndefinedOrNull(this.getDataProviderById(dataProvider.id));
           if (isDeactivatedDataProvider) {
-            // We're working with a deactivated data provider. The entry
-            // has been removed from the dataproviders map, but it has
-            // everything needed to add it back.
-            const entry = {
-              id: dataProvider.id,
-              name: dataProvider.name,
-              type: dataProvider.type,
-              beanTrees: dataProvider.beanTrees,
-              url: dataProvider.url,
-              username: dataProvider.username,
-              password: dataProvider.password,
-              expires: dataProvider.expires
-            };
-            if (CoreUtils.isNotUndefinedNorNull(dataProvider.settings) && Object.keys(dataProvider.settings).length > 0) {
-              entry['settings'] = dataProvider.settings;
-            }
             // Add entry back into the dataproviders map
-            dataProvider = this.createAdminServerConnection(entry);
+            dataProvider = this.createAdminServerConnection(this.getEntryFromDataProvider(dataProvider));
           }
           const reply = await DomainConnectionManager.createConnection(dataProvider);
           if (isDeactivatedDataProvider) {
@@ -136,7 +142,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
        * @param {DataProvider} dataProvider
        * @returns {Promise<{succeeded: boolean, data: any, failure?: any}>}
        */
-      activateSsoAdminServerConnection: (dataProvider) => {
+      activateSsoAdminServerConnection: function (dataProvider) {
         return new Promise((resolve, reject) => {
           if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
             DomainConnectionManager.createSsoConnection(dataProvider)
@@ -178,9 +184,26 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
        * @param {number} timeout
        */
       startPollSsoAdminServerConnection: function (dataProvider, timeout) {
+        const ssoMaxPollCount = Runtime.getSsoMaxPollCount();
+
+        function pollFailure(dataProvider) {
+          dataProvider.putValue('expires', -1);
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerExpiredSignal)) {
+            dataProvider.timerExpiredSignal.dispatch(dataProvider);
+          }
+        }
+
         function timerExpired(dataProvider) {
           // Clear the timer and poll for the token availability...
           clearRunningTimer(dataProvider);
+
+          // Increment and check on upper bound of polling...
+          if (++dataProvider.timerPollCount > ssoMaxPollCount) {
+            Logger.info(`Polling SSO AdminServerConnection() - Exceeded limit of ${ssoMaxPollCount}`);
+            pollFailure(dataProvider);
+            return;
+          }
+
           DomainConnectionManager.pollSsoConnection(dataProvider)
             .then(reply => {
               if (reply && reply.body.data.available) {
@@ -202,10 +225,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
             .catch(response => {
               // Error polling, indicate problem and signal on the data provider
               Logger.info(`Polling SSO AdminServerConnection() - ${dataProvider.name}:  ${response.failureReason})`);
-              dataProvider.putValue('expires', -1);
-              if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerExpiredSignal)) {
-                dataProvider.timerExpiredSignal.dispatch(dataProvider);
-              }
+              pollFailure(dataProvider);
             });
         }
 
@@ -214,6 +234,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
 
         // Start the timer with the specified timeout
         if (CoreUtils.isNotUndefinedNorNull(dataProvider.timerExpiredSignal)) {
+          dataProvider.putValue('timerPollCount', 0);
           dataProvider.putValue('timerId', setInterval(timerExpired, timeout, dataProvider));
         }
       },
@@ -899,8 +920,8 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
        * Cancel any running timer for the specified data provider
        * @param {DataProvider} dataProvider
        */
-      cancelDataProviderSsoTokenTimer: function (dataProvider) {
-        clearRunningTimer(dataProvider);
+      cancelDataProviderSsoTimer: function (dataProvider) {
+        clearRunningTimer(dataProvider, true);
       }
 
     };

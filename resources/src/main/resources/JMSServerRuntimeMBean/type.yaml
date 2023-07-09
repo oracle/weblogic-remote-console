@@ -2,6 +2,10 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 actions:
 - name: forceCommitSelectedTransactions
+  label: "Force Commit"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
   actionMethod: weblogic.remoteconsole.customizers.JMSServerRuntimeMBeanCustomizer.forceCommitSelectedTransactions
   mbeanOperation:
     operation: forceCommit
@@ -13,6 +17,10 @@ actions:
     descriptionHTML: >
      <p>Causes the work associated with the selected transaction branches to be committed.</p>
 - name: forceRollbackSelectedTransactions
+  label: "Force Rollback"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
   actionMethod: weblogic.remoteconsole.customizers.JMSServerRuntimeMBeanCustomizer.forceRollbackSelectedTransactions
   mbeanOperation:
     operation: forceRollback

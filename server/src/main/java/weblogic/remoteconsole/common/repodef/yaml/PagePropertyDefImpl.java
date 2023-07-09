@@ -16,9 +16,9 @@ import weblogic.remoteconsole.common.repodef.GetPropertyValueCustomizerDef;
 import weblogic.remoteconsole.common.repodef.LegalValueDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.PageDef;
+import weblogic.remoteconsole.common.repodef.PageFieldPresentationDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyExternalHelpDef;
-import weblogic.remoteconsole.common.repodef.PagePropertyPresentationDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyUsedIfDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.LegalValueDefCustomizerSource;
@@ -135,7 +135,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   @Override
-  public PagePropertyPresentationDef getPresentationDef() {
+  public PageFieldPresentationDef getPresentationDef() {
     return presentationDefImpl;
   }
 
@@ -482,6 +482,11 @@ class PagePropertyDefImpl implements PagePropertyDef {
   @Override
   public boolean isOrdered() {
     return beanPropertyDefImpl.isOrdered();
+  }
+
+  @Override
+  public boolean isMultiLineString() {
+    return beanPropertyDefImpl.isMultiLineString();
   }
 
   @Override

@@ -122,13 +122,11 @@ public class ProviderResource extends BaseResource {
       InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
       if (action.equals("test")) {
         prov.test(ic);
+        removeSsoTokenAdminServerConnection(pm, prov);
       }
       if (action.equals("start")) {
         prov.start(ic);
-      }
-      // Remove the token after the provider action completes
-      if (prov.getType().equals(AdminServerDataProviderImpl.TYPE_NAME)) {
-        pm.removeSsoToken(prov.getName());
+        removeSsoTokenAdminServerConnection(pm, prov);
       }
       return WebAppUtils.addCookieFromContext(resourceContext,
         Response.ok(prov.toJSON(ic), MediaType.APPLICATION_JSON)).build();
@@ -138,6 +136,13 @@ public class ProviderResource extends BaseResource {
         resourceContext,
         Response.status(Status.BAD_REQUEST.getStatusCode(), "No such provider")
       ).build();
+  }
+
+  // Remove the SSO token after the provider action completed successfully
+  private static void removeSsoTokenAdminServerConnection(ProviderManager pm, Provider provider) {
+    if (provider.getType().equals(AdminServerDataProviderImpl.TYPE_NAME)) {
+      pm.removeSsoToken(provider.getName());
+    }
   }
 
   @GET

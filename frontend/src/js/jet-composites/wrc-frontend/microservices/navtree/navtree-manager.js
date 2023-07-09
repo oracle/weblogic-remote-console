@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -150,7 +150,8 @@ define([
                 if (existingChild) {
                   Object.assign(existingChild, n);
                   childNode = existingChild;
-                } else {
+                }
+                else if (node.children && n) {
                   childNode = n;
                   node.children.push(childNode);
                   childrenHaveMutated = true;
@@ -347,15 +348,17 @@ define([
           node.expanded = true;
         }
         // Refresh and update the tree model
-        this.refreshTreeModel().then(() => {
-          this.updateTreeView(selectedItem);
-          resolve(1);
-        })
-        .catch((error) => {
-          reject(error);
-        });
+        this.refreshTreeModel()
+          .then(() => {
+            this.updateTreeView(selectedItem);
+            resolve(1);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       });
-    },
+    }
+
   };
 
   return NavtreeManager;

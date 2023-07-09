@@ -109,6 +109,19 @@ class BeanValueDefImpl implements BeanValueDef {
   }
 
   @Override
+  public boolean isMultiLineString() {
+    if (customizerSource.isMultiLineString()) {
+      ValueKind kind = javaTypeToValueKind.get(getJavaType());
+      if ((ValueKind.STRING == kind) && !isArray()) {
+        return true;
+      } else {
+        throw configurationError("specified multiLineString on a property that is not a string");
+      }
+    }
+    return false;
+  }
+
+  @Override
   public BeanTypeDef getReferenceTypeDef() {
     if (isReference()) {
       return typeDefImpl.getBeanRepoDef().getTypeDef(StringUtils.getLeafClassName(getJavaType()));

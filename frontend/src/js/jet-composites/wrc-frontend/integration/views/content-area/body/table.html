@@ -2,14 +2,17 @@
  Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 The Universal Permissive License (UPL), Version 1.0
 -->
+<oj-module config="[[tableToolbarModuleConfig]]"></oj-module>
+<oj-module config="[[tableCustomizerModuleConfig]]"></oj-module>
+
 <div id="intro" class="cfe-table-form-instructions">
+  <hr>
   <oj-bind-dom config="[[introductionHTML]]"></oj-bind-dom>
 </div>
 
-<oj-module config="[[tableToolbarModuleConfig]]"></oj-module>
+<oj-module config="[[tableActionsStripModuleConfig]]"></oj-module>
 
 <div id="table-container" class="oj-flex-item cfe-table-form-content">
-  <oj-module config="[[tableCustomizerModuleConfig]]"></oj-module>
   <oj-bind-if test="[[!showHelp()]]">
     <oj-table
       id='table'
@@ -27,9 +30,25 @@ The Universal Permissive License (UPL), Version 1.0
       columns-default='[[tableSortable]]'
       class=".oj-table-data-cell-no-padding"
     >
+      <template slot="selectorCellTemplate" data-oj-as="cell">
+        <oj-selector
+          slot="selector"
+          selected-keys="[[checkedRowsKeySet]]"
+          on-selected-keys-changed="[[checkedRowsChanged]]"
+          selection-mode="multiple"
+          :row-key="[[$current.data._id]]"
+          data-oj-clickthrough="disabled"
+        >
+        </oj-selector>
+      </template>
       <template slot="deleteCellTemplate">
-        <oj-button :id="[[$current.data._id]]" :class="cfe-delete-row-button" display="icons" chroming="borderless"
-                   on-click="{{ $current.data.listener }}">
+        <oj-button
+          :id="[[$current.data._id]]"
+          :class="cfe-delete-row-button"
+          display="icons"
+          chroming="borderless"
+          on-click="{{ $current.data.listener }}"
+        >
           <span class="oj-ux-ico-trash"></span>
         </oj-button>
       </template>

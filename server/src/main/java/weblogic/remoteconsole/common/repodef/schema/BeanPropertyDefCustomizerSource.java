@@ -31,7 +31,6 @@ public class BeanPropertyDefCustomizerSource extends BeanFieldDefCustomizerSourc
   private Value<BeanPropertyDefSource> definition = new Value<>(null);
   private BooleanValue supportsModelTokens = new BooleanValue(true);
   private BooleanValue dontReturnIfHiddenColumn = new BooleanValue();
-  private Value<BeanPropertyPresentationDefSource> presentation = new Value<>(new BeanPropertyPresentationDefSource());
 
   public void merge(BeanPropertyDefCustomizerSource from, Path fromContainedBeanPath) {
     super.merge(from, fromContainedBeanPath);
@@ -45,7 +44,6 @@ public class BeanPropertyDefCustomizerSource extends BeanFieldDefCustomizerSourc
     definition.merge(from.definition, fromContainedBeanPath);
     supportsModelTokens.merge(from.supportsModelTokens, fromContainedBeanPath);
     dontReturnIfHiddenColumn.merge(from.dontReturnIfHiddenColumn, fromContainedBeanPath);
-    presentation.merge(from.presentation, fromContainedBeanPath);
     mergeUsedIf(from, fromContainedBeanPath);
   }
 
@@ -172,16 +170,5 @@ public class BeanPropertyDefCustomizerSource extends BeanFieldDefCustomizerSourc
 
   public void setDontReturnIfHiddenColumn(boolean val) {
     dontReturnIfHiddenColumn.setValue(val);
-  }
-
-  // Info about how to present this property to the user.
-  // (e.g. inline field help or whether to display a number as hex).
-  // Returns null if there are no special presentation rules for this field.
-  public BeanPropertyPresentationDefSource getPresentation() {
-    return presentation.getValue();
-  }
-
-  public void setPresentation(BeanPropertyPresentationDefSource value) {
-    presentation.setValue(value);
   }
 }

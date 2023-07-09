@@ -14,11 +14,13 @@ public class BeanValueDefCustomizerSource {
   private BooleanValue referenceAsReferences = new BooleanValue();
   private BooleanValue dateAsLong = new BooleanValue();
   private BooleanValue ordered = new BooleanValue();
+  private BooleanValue multiLineString = new BooleanValue();
 
   protected void merge(BeanValueDefCustomizerSource from, Path fromContainedBeanPath) {
     referenceAsReferences.merge(from.referenceAsReferences, fromContainedBeanPath);
     dateAsLong.merge(from.dateAsLong, fromContainedBeanPath);
     ordered.merge(from.ordered, fromContainedBeanPath);
+    multiLineString.merge(from.multiLineString, fromContainedBeanPath);
   }
 
   // Indicates that even though the value is an array of references,
@@ -55,5 +57,16 @@ public class BeanValueDefCustomizerSource {
 
   public void setOrdered(boolean value) {
     ordered.setValue(value);
+  }
+
+  // Indicates that this value is a multi-lined string
+  // (i.e. can contain newline characters and should be
+  // displayed in a text area instead of a text box).
+  public boolean isMultiLineString() {
+    return multiLineString.getValue();
+  }
+
+  public void setMultiLineString(boolean value) {
+    multiLineString.setValue(value);
   }
 }

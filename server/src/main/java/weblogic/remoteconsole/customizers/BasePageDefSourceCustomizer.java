@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import weblogic.remoteconsole.common.repodef.PagePath;
+import weblogic.remoteconsole.common.repodef.schema.BeanFieldPresentationDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanPropertyPresentationDefSource;
 import weblogic.remoteconsole.common.repodef.schema.DefaultValueDefSource;
 import weblogic.remoteconsole.common.repodef.schema.FormSectionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LegalValueDefCustomizerSource;
@@ -207,9 +207,9 @@ class BasePageDefSourceCustomizer {
   // Set a property's inline field help
   protected void setInlineFieldHelp(BeanPropertyDefCustomizerSource property, String inlineFieldHelp) {
     // Create a presentation if there isn't one yet
-    BeanPropertyPresentationDefSource presentation = property.getPresentation();
+    BeanFieldPresentationDefSource presentation = property.getPresentation();
     if (presentation == null) {
-      presentation = new BeanPropertyPresentationDefSource();
+      presentation = new BeanFieldPresentationDefSource();
       property.setPresentation(presentation);
     }
     // Add the inline field help to the presentation

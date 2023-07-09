@@ -7,7 +7,10 @@
 
 'use strict';
 
+const fs = require('fs');
 const { execFile } = require('child_process');
+var supportsAutoUpgrades = false;
+var findString = '';
 
 /**
  * See {@link https://stackabuse.com/javascripts-immediately-invoked-function-expressions/}
@@ -19,6 +22,7 @@ const WindowManagement = (() => {
   const {app, BrowserWindow, Menu, dialog, shell} = require('electron');
   const prompt = require('electron-prompt');
 
+  const ConfigJSON = require('./config-json');
   const ProjectManager = require('./project-management');
   const AutoUpdateUtils = require('./auto-update-utils');
   const CoreUtils = require('./core-utils');
@@ -108,6 +112,37 @@ const WindowManagement = (() => {
             label: 'Select All',
             accelerator: 'CommandOrControl+A',
             role: 'selectall'
+          },
+          {
+            label: 'Find',
+            accelerator: 'CommandOrControl+F',
+            click(item) {
+              prompt({
+                title: 'Find in Page',
+                label: '',
+                buttonLabels: { ok: 'Find' },
+                value: `${findString}`,
+                resizable: true,
+                alwaysOnTop: true
+              }).then(string => {
+                if (string != null) {
+                  findString = string;
+                  if (string == '')
+                    _window.webContents.stopFindInPage('clearSelection');
+                  else
+                    _window.webContents.findInPage(string, { findNext: true });
+                }
+                else
+                  _window.webContents.stopFindInPage('clearSelection');
+              });
+            }
+          },
+          {
+            label: 'Find Next',
+            accelerator: 'CommandOrControl+G',
+            click(item) {
+              _window.webContents.findInPage(findString, { findNext: true });
+            }
           }
         ]
       },
@@ -164,7 +199,7 @@ const WindowManagement = (() => {
         accelerator: 'CommandOrControl+N',
         label: 'New Window',
         click(item) {
-          const runme = process.env.APPIMAGE ?
+          const runme = (process.env.APPIMAGE && fs.existsSync(process.env.APPIMAGE)) ?
             process.env.APPIMAGE :
             app.getPath('exe');
           execFile(runme);
@@ -391,8 +426,10 @@ const WindowManagement = (() => {
 
     const helpMenu = appMenuTemplate.find(item => item.id === 'help');
 
-    if (_params.supportsAutoUpgrades) {
-      // Add "Check for Updates" menu item to helpMenu.
+    // Add "Check for Updates" menu item only if it is supported and
+    // we haven't already determined that there is a new version.
+    if (_params.supportsUpgradeCheck &&
+        (!newVersion || (newVersion === _params.version))) {
       helpMenu.submenu.push(
         {
           id: 'checkForUpdates',
@@ -409,15 +446,30 @@ const WindowManagement = (() => {
                   );
                 }
                 else {
-                  showNewerVersionAvailableMessageBox(
-                    'Newer Version Available!',
-                    `Go to ${new URL(downloadURL).host} to get version ${AutoUpdateUtils.getVersion()}?`,
-                    ['Ok', 'Cancel']
-                  )
+                  if (supportsAutoUpgrades) {
+                    showNewerVersionAvailableMessageBox(
+                      'Newer Version Available!',
+                      `Go to ${new URL(downloadURL).host} to view update or download and install it?`,
+                      ['Go to site', 'Download and install it', 'Cancel']
+                    )
+                    .then((choice) => {
+                      if (choice.response === 0)
+                        shell.openExternal(downloadURL).then();
+                      else if (choice.response === 1)
+                        AutoUpdateUtils.doUpdate(_window);
+                    });
+                  }
+                  else {
+                    showNewerVersionAvailableMessageBox(
+                      'Newer Version Available!',
+                      `Go to ${new URL(downloadURL).host} to view update?`,
+                      ['Go to site', 'Cancel']
+                    )
                     .then((choice) => {
                       if (choice.response === 0)
                         shell.openExternal(downloadURL).then();
                     });
+                  }
                 }
               })
               .catch(err => {
@@ -458,19 +510,75 @@ const WindowManagement = (() => {
   function maybeAddUpdateMenu(appMenuTemplate) {
     if (!newVersion || (newVersion === _params.version))
       return;
+    const submenu = [
+      {
+        label: `Go to ${new URL(downloadURL).host} to get version ${newVersion}`,
+        click() {
+          shell.openExternal(downloadURL).then();
+        }
+      }
+    ];
+    if (supportsAutoUpgrades) {
+      submenu.push({
+            label: `Update to version ${newVersion}`,
+            click() {
+              AutoUpdateUtils.doUpdate(_window);
+            }
+          }
+        );
+    }
     appMenuTemplate.push(
       {
         label: 'Updates Available - Click here',
-        submenu: [
-          {
-            label: `Go to ${new URL(downloadURL).host} to get version ${newVersion}`,
-            click() {
-              shell.openExternal(downloadURL).then();
-            }
-          }
-        ]
+        submenu: submenu
       }
     );
+  }
+
+  function doProxySettings(label) {
+    if (!label)
+      label = 'Enter proxy setting (e.g. http://proxy.example.com:80)';
+    let current = '';
+    let path = ConfigJSON.getPath();
+    let data = {};
+    if (fs.existsSync(path)) {
+      try {
+        data = JSON.parse(fs.readFileSync(path).toString());
+        if (data["proxy"])
+          current = data["proxy"];
+      }
+      catch(err) {
+        log('error', err);
+      }
+    }
+    prompt({
+      title: 'Modify Proxy Settings',
+      width: 450,
+      label: `${label}`,
+      buttonLabels: { ok: 'Set' },
+      value: `${current}`,
+      resizable: true,
+      alwaysOnTop: true
+    }).then(string => {
+      if (string != null) {
+        let good = true;
+        if (string != '') {
+          try {
+            new URL(string);
+          } catch (err) {
+            good = false;
+            doProxySettings(`"${string}" is not a valid URL. Enter a URL`);
+          }
+        }
+        if (good && (current != string)) {
+          if (string == '')
+            delete data.proxy;
+          else
+            data["proxy"] = string;
+          fs.writeFileSync(path, JSON.stringify(data, null, 4));
+        }
+      }
+    });
   }
 
   /**
@@ -538,6 +646,14 @@ const WindowManagement = (() => {
           }
         ]
       });
+      fileMenu.submenu.push(
+        {
+          label: 'Modify Proxy Settings',
+          click() {
+            doProxySettings();
+          }
+        }
+      );
     }
     else {
       fileMenu.submenu.push(
@@ -549,6 +665,12 @@ const WindowManagement = (() => {
           label: 'Preferences',
           click() {
             app.showAboutPanel();
+          }
+        },
+        {
+          label: 'Modify Proxy Settings',
+          click() {
+            doProxySettings();
           }
         },
         {
@@ -596,7 +718,7 @@ const WindowManagement = (() => {
   return {
     /**
      * @param {string} title
-     * @param {{version: string, productName: string, copyright: string, homepage: string, supportsAutoUpgrades: boolean}} params
+     * @param {{version: string, productName: string, copyright: string, homepage: string, supportsUpgradeCheck: boolean, supportsAutoUpgrades: boolean}} params
      * @param {string} exePath
      * @param {string} userDataPath
      * @returns {BrowserWindow}
@@ -622,7 +744,11 @@ const WindowManagement = (() => {
       AutoPrefs.read(userDataPath);
       AutoPrefs.set({
         version: params.version,
-        location: (process.env.APPIMAGE ? process.env.APPIMAGE : exePath)
+        location: (
+          (process.env.APPIMAGE && fs.existsSync(process.env.APPIMAGE)) ?
+          process.env.APPIMAGE :
+          exePath
+        )
       });
 
       _params = params;
@@ -630,7 +756,7 @@ const WindowManagement = (() => {
       if (params.feedURL)
         downloadURL = params.feedURL;
 
-      if (_params.supportsAutoUpgrades) {
+      if (_params.supportsUpgradeCheck) {
         AutoUpdateUtils.checkForUpdates()
           .then(result => {
             newVersion = result.versionInfo.version;
@@ -640,6 +766,7 @@ const WindowManagement = (() => {
             }
         });
       }
+      supportsAutoUpgrades = _params.supportsAutoUpgrades;
 
       _window = createBrowserWindow(title, AutoPrefs.get('width'), AutoPrefs.get('height'));
       _window.webContents.session.clearCache();
@@ -771,7 +898,6 @@ const WindowManagement = (() => {
         _window.focus();
       }
     }
-
   };
 
 })();

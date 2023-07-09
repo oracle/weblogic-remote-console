@@ -1,13 +1,13 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/integration/controller', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/data-management/cbe-data-storage', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/cbe-types', 'ojs/ojlogger'],
-  function (oj, ko, ModuleElementUtils, Controller, Runtime, CbeDataStorage, DataOperations, MessageDisplaying, PageDefinitionUtils, CoreUtils, CbeTypes, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/integration/controller', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/data-management/cbe-data-storage', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/cbe-types', 'ojs/ojlogger'],
+  function (oj, ko, ModuleElementUtils, Controller, Runtime, CbeDataStorage, DataOperations, MessageDisplaying, PageDefinitionUtils, ViewModelUtils, CoreUtils, CbeTypes, Logger) {
 
     const i18n = {
       menus: {
@@ -382,11 +382,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
                 signaling: viewParams.signaling,
                 perspective: viewParams.perspective,
                 beanTree: viewParams.beanTree,
-                title: PageDefinitionUtils.filterPathSegments(optionsSourceConfig.breadcrumbs, 'data').join('/'),
-                property: optionsSourceConfig.property,
-                onSaveSuceeded: updateShoppingCartCallback,
-                onFormRefresh: refreshFormCallback,
-                onSaveContent: saveContentCallback
+                overlayDialogParams: {
+                  title: PageDefinitionUtils.filterPathSegments(optionsSourceConfig.breadcrumbs, 'data').join('/'),
+                  instructions: null,
+                  linkedResource: {
+                    label: optionsSourceConfig.property.name
+                  },
+                  formLayout: {
+                    minWidth: parseInt(ViewModelUtils.getCustomCssProperty('overlayDialog-min-width'), 10)
+                  },
+                  onSaveSuceeded: updateShoppingCartCallback,
+                  onFormRefresh: refreshFormCallback,
+                  onSaveContent: saveContentCallback
+                }
               }
             });
           });
