@@ -1,24 +1,24 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
 import weblogic.remoteconsole.common.repodef.LocalizableString;
-import weblogic.remoteconsole.common.repodef.PagePropertyDef;
-import weblogic.remoteconsole.common.repodef.PagePropertyPresentationDef;
-import weblogic.remoteconsole.common.repodef.schema.BeanPropertyPresentationDefSource;
+import weblogic.remoteconsole.common.repodef.PageFieldDef;
+import weblogic.remoteconsole.common.repodef.PageFieldPresentationDef;
+import weblogic.remoteconsole.common.repodef.schema.BeanFieldPresentationDefSource;
 
 /**
- * yaml-based implemetation of the PagePropertyPresentationDef interface
+ * yaml-based implemetation of the PageFieldPresentationDef interface when parented by a property
  */
-class PagePropertyPresentationDefImpl implements PagePropertyPresentationDef {
-  private BeanPropertyPresentationDefSource source;
+class PagePropertyPresentationDefImpl implements PageFieldPresentationDef {
+  private BeanFieldPresentationDefSource source;
   private PagePropertyDefImpl pagePropertyDefImpl;
   private LocalizableString inlineFieldHelp;
 
   public PagePropertyPresentationDefImpl(
     PagePropertyDefImpl pagePropertyDefImpl,
-    BeanPropertyPresentationDefSource source
+    BeanFieldPresentationDefSource source
   ) {
     this.pagePropertyDefImpl = pagePropertyDefImpl;
     this.source = source;
@@ -34,7 +34,7 @@ class PagePropertyPresentationDefImpl implements PagePropertyPresentationDef {
   }
 
   @Override
-  public PagePropertyDef getPropertyDef() {
+  public PageFieldDef getFieldDef() {
     return getPropertyDefImpl();
   }
 
@@ -48,11 +48,17 @@ class PagePropertyPresentationDefImpl implements PagePropertyPresentationDef {
     return source.isDisplayAsHex();
   }
 
+  @Override
+  public String getWidth() {
+    return (source.getWidth() == null) ? null : source.getWidth().toString();
+  }
+
   public String toString() {
     return
-      "PropertyPresentationDef: "
-      + " propertyDef " + getPropertyDef()
+      "PagePropertyPresentationDef: "
+      + " fieldDef " + getFieldDef()
       + " inlineFieldHelp " + getInlineFieldHelp()
-      + " displayasHex " + isDisplayAsHex();
+      + " displayasHex " + isDisplayAsHex()
+      + " width " + getWidth();
   }
 }

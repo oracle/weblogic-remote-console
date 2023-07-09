@@ -24,6 +24,7 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
   private String offlinePropertyName;
   private Path parentPath = new Path();
   private boolean ordered;
+  private boolean multiLineString;
   private boolean key;
   private boolean createWritable;
   private boolean updateWritable;
@@ -168,6 +169,20 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   public CustomBeanPropertyDef ordered(boolean val) {
     setOrdered(val);
+    return this;
+  }
+
+  @Override
+  public boolean isMultiLineString() {
+    return multiLineString;
+  }
+
+  public void setMultiLineString(boolean val) {
+    multiLineString = val;
+  }
+
+  public CustomBeanPropertyDef multiLineString(boolean val) {
+    setMultiLineString(val);
     return this;
   }
 

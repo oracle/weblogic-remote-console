@@ -36,10 +36,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
         syncInterval: null,
         nthChildren: [],
         switches: {
-          addToArchive: {
-            'SourcePath': true,
-            'PlanPath': true
-          }
+          addToArchive: []
         }
       };
       this.navtree = {
@@ -57,6 +54,50 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
 
     function getNthChildrenIndex(name) {
       return this.contentPage.nthChildren.map(nthChild => nthChild.name).indexOf(name);
+    }
+
+    /**
+     *
+     * @param {string} key
+     * @param {string} fieldName
+     * @returns {{hasKey: boolean, hasFieldName: boolean, index?: number}}
+     * @private
+     */
+    function hasAddToArchiveSwitchValue(key, fieldName) {
+      // Declare return variable, using false as the
+      // default values for the hasKey and hasFieldName
+      // properties
+      let result = {hasKey: false, hasFieldName: false};
+      // Check to see if values assigned to the key
+      // and fieldName parameters, are not undefined
+      // or null.
+      if ((typeof key !== 'undefined' && key !== null) &&
+        (typeof fieldName !== 'undefined' && fieldName !== null)
+      ) {
+        // They aren't, so use built-in map function
+        // to look for index of JS object in addToArchive
+        // array, with a name that matches key.
+        const index = this.contentPage.switches.addToArchive.map(item => item.name).indexOf(key);
+        if (index !== -1) {
+          // Found one, so figure out the fieldName
+          // for switch value we're working with.
+          if (fieldName.startsWith('Source')) fieldName = 'SourcePath';
+          if (fieldName.startsWith('Plan')) fieldName = 'PlanPath';
+          // Use index to declare const variable for
+          // JS object found in addToArchive array.
+          const data = this.contentPage.switches.addToArchive[index];
+          // Update hasKey JS property in return
+          // variable for this function.
+          result.hasKey =  true;
+          // Update hasFieldName JS property in
+          // return variable for this function.
+          result.hasFieldName = (typeof data[fieldName] !== 'undefined');
+          // Add index JS object to return variable
+          // for this function.
+          result['index'] = index;
+        }
+      }
+      return result;
     }
 
     PerspectiveMemory.prototype = {
@@ -190,15 +231,110 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
         const index = getNthChildrenIndex.call(this, name);
         if (index !== -1) this.contentPage.nthChildren[index].minHeight = minHeight;
       },
-      getAddToArchiveSwitchValue: function(fieldName) {
-        if (fieldName.startsWith('Source')) fieldName = 'SourcePath';
-        if (fieldName.startsWith('Plan')) fieldName = 'PlanPath';
-        return this.contentPage.switches.addToArchive[fieldName];
+      /**
+       * Determine value of switch associated with a given `key` and `fieldName`.
+       * @param {string} key
+       * @param {string} fieldName
+       * @param {string|null} fieldValue
+       * @returns {boolean}
+       * @example
+       *  const value = self.perspectiveMemory.computeAddToArchiveSwitchValue.call(self.perspectiveMemory, rdjData.data['Name'].value, 'SourcePath', rdjData.data['SourcePath'].value);
+       */
+      computeAddToArchiveSwitchValue: function(key, fieldName, fieldValue) {
+        // Declare return variable, using false
+        // as the default value.
+        let archiveSwitchValue = false;
+        // Check to see if values assigned to the key,
+        // fieldName and fieldValue parameters, are
+        // not undefined or null.
+        if ((typeof key !== 'undefined' && key !== null) &&
+          (typeof fieldName !== 'undefined' && fieldName !== null) &&
+          (typeof fieldValue !== 'undefined' && fieldValue !== null)
+        ) {
+          // They aren't, so use value assigned to
+          // fieldValue to determine value of the
+          // return variable. Set it to true, if
+          // fieldValue starts with "wlsdeploy/".
+          // Otherwise, assign false.
+          archiveSwitchValue = (fieldValue.trim().startsWith('wlsdeploy/'));
+          // We're computing the switch value, but
+          // we should still use this opportunity
+          // to update the addToArchive array, if
+          // we can.
+          const index = this.contentPage.switches.addToArchive.map(item => item.name).indexOf(key);
+          if (index !== -1) {
+            if (fieldName.startsWith('Source')) fieldName = 'SourcePath';
+            if (fieldName.startsWith('Plan')) fieldName = 'PlanPath';
+            this.contentPage.switches.addToArchive[index][fieldName] = archiveSwitchValue;
+          }
+        }
+        return archiveSwitchValue;
       },
-      setAddToArchiveSwitchValue: function(fieldName, value) {
-        if (fieldName.startsWith('Source')) fieldName = 'SourcePath';
-        if (fieldName.startsWith('Plan')) fieldName = 'PlanPath';
-        this.contentPage.switches.addToArchive[fieldName] = value;
+      /**
+       * Add or update switch value associated with a given `key` and `fieldName`.
+       * @param {string} key
+       * @param {string} fieldName
+       * @param {boolean} switchValue
+       * @example
+       *  const key = self.rdjData.data['Name'].value;
+       *  const fieldName = 'SourcePath';
+       *  const switchValue = false;
+       *  self.perspectiveMemory.upsertAddToArchiveSwitchValue.call(self.perspectiveMemory, key, fieldName, switchValue);
+       */
+      upsertAddToArchiveSwitchValue: function(key, fieldName, switchValue) {
+        // Check to see if values assigned to the key,
+        // fieldName and fieldValue parameters, are
+        // not undefined or null.
+        if ((typeof key !== 'undefined' && key !== null) &&
+          (typeof fieldName !== 'undefined' && fieldName !== null) &&
+          (typeof switchValue !== 'undefined' && switchValue !== null)
+        ) {
+          // They aren't, so figure out the fieldName
+          // for switch value we're working with.
+          if (fieldName.startsWith('Source')) fieldName = 'SourcePath';
+          if (fieldName.startsWith('Plan')) fieldName = 'PlanPath';
+          // Call function that determines if there
+          // is already a JS object in addToArchive
+          // array, associated with key.
+          const result = hasAddToArchiveSwitchValue.call(this, key, fieldName);
+          if (result.hasKey) {
+            // Found one, so upsert fieldName property
+            // with switchValue.
+            this.contentPage.switches.addToArchive[result.index][fieldName] = switchValue;
+          }
+          else if (key !== '') {
+            // This means key wasn't undefined, null
+            // or an empty string, and we need to add
+            // a new JS object to the addToArchive
+            // array.
+            const data = {name: key};
+            data[fieldName] = switchValue;
+            this.contentPage.switches.addToArchive.push(data);
+          }
+        }
+      },
+      /**
+       * Remove switch value data associated with a given `key`.
+       * @param {string} key
+       * @example
+       *  const key = 'tst';
+       *  self.perspectiveMemory.removeAddToArchiveSwitchValue.call(self.perspectiveMemory, key);
+       */
+      removeAddToArchiveSwitchValue: function(key) {
+        // Check to see if key is not undefined or null.
+        if (typeof key !== 'undefined' && key !== null) {
+          // It isn't, so use built-in map function
+          // to look for index of JS object in
+          // addToArchive array, with a name that
+          // matches key.
+          const index = this.contentPage.switches.addToArchive.map(item => item.name).indexOf(key);
+          if (index !== -1) {
+            // Found one, so use index and built-in
+            // splice function to remove JS object
+            // from addToArchive array.
+            this.contentPage.switches.addToArchive.splice(index, 1);
+          }
+        }
       },
       getTabstripTabCachedState: function (tabId) {
         return this.tabstrip.tab[tabId].cachedState;

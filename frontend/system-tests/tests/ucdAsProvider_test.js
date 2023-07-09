@@ -285,7 +285,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
     //Test case UC-009A on the wiki page below:
     //   https://confluence.oraclecorp.com/confluence/pages/viewpage.action?pageId=4763969598
     //
-    it('6. Test Category: GAT/Risk1\n \t Test Scenario: UC-009A: ', async function () {
+    it.only('6. Test Category: GAT/Risk1\n \t Test Scenario: UC-009A: ', async function () {
         file = "UC-009A.png";
         try {
             //Go to AdminServer
@@ -295,27 +295,27 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             element = driver.findElement(By.xpath("//oj-input-text[@id='ListenAddress']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.sendKeys("localhost");
-            await driver.sleep(1200);
+            await driver.sleep(3600);
             console.log("Click Visibility toggle-history-toolbar-icon");
             element = await driver.findElement(
                 By.xpath("//*[@id='toggle-history-toolbar-icon']/a")).click();
-            await driver.sleep(600);
+            await driver.sleep(7200);
             console.log("Click to expand choices in History Tool");
             element = await driver.findElement(
                 By.xpath("//*[@id='oj-combobox-choice-beanpath']/span[2]/a")).click();
-            await driver.sleep(1200);
+            await driver.sleep(7200);
             console.log("Select Server in the toggle-history-toolbar list box");
             element = await driver.findElement(
                 By.xpath("//div[@class='oj-listbox-result-label' and text()='Servers']")).click();
-            await driver.sleep(1200);
+            await driver.sleep(7200);
             console.log("Click Yes button at Unsaved Changes Detected Dialog.");
             element = await driver.findElement(
                 By.xpath("//oj-button[@id='dlgYesBtn']/button/div/span")).click();
-            await driver.sleep(1200);
+            await driver.sleep(7200);
             console.log("Click at AdminServer");
             element = driver.findElement(By.xpath("//span[contains(.,'AdminServer')]"));
             await element.click();
-            await driver.sleep(1200);
+            await driver.sleep(7200);
             //Verify if ListenAddress != localhost
             element = driver.findElement(By.xpath("//oj-input-text[@id='ListenAddress']"));
             console.log("Verify if ListenAddress != localhost")

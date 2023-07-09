@@ -1,5 +1,5 @@
 name: WebLogic Remote Console
-version: '2.4.4'
+version: '2.4.5'
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
   version: '1.0'
@@ -55,7 +55,47 @@ settings:
       - '#dcd6d1'
       - '#b6a29a'
   sso:
+    maxPollCount: 1800
     domainLoginUri: ''
+  actions:
+    - id: start
+      iconFile: action-start-icon-blk_24x24
+    - id: startActions
+      iconFile: action-start-icon-blk_24x24
+    - id: resume
+      iconFile: action-resume-icon-blk_24x24
+    - id: suspendActions
+      iconFile: action-suspend-icon-blk_24x24
+    - id: shutdownActions
+      iconFile: action-stop-icon-blk_24x24
+    - id: restartSSL
+      iconFile: action-restart-icon-blk_24x24
+    - id: stop
+      iconFile: action-stop-icon-blk_24x24
+    - id: stopActions
+      iconFile: action-stop-icon-blk_24x24
+    - id: download
+      iconFile: action-download-icon-blk_24x24
+    - id: shrink
+      iconFile: action-shrink-icon-blk_24x24
+    - id: reset
+      iconFile: action-reset-icon-blk_24x24
+    - id: clearStatementCache
+      iconFile: action-clear-icon-blk_24x24
+    - id: pauseActions
+      iconFile: action-pause-icon-blk_24x24
+    - id: resumeActions
+      iconFile: action-resume-icon-blk_24x24
+    - id: forceCommitSelectedTransactions
+      iconFile: action-commit-icon-blk_24x24
+    - id: forceRollbackSelectedTransactions
+      iconFile: action-rollback-icon-blk_24x24
+    - id: deleteActions
+      iconFile: delete-icon-blk_24x24
+    - id: exportActions
+      iconFile: action-export-3d-icon-blk_24x24
+    - id: importMessages
+      iconFile: action-import-3d-icon-blk_24x24
   projectManagement:
     startup:
       task: choose

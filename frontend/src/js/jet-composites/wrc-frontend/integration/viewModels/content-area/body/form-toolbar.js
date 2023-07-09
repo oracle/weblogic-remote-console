@@ -7,10 +7,10 @@
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout'],
-  function (oj, ko, Runtime, ChangeManager, PerspectiveMemoryManager, PageDefinitionUtils, ViewModelUtils, CoreTypes, CoreUtils) {
+define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout'],
+  function (oj, ko, Runtime, ChangeManager, PerspectiveMemoryManager, ViewModelUtils, CoreTypes, CoreUtils, Logger) {
     function FormToolbar(viewParams) {
-      var self = this;
+      const self = this;
 
       this.perspective = viewParams.perspective;
 
@@ -44,7 +44,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
             label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.customize.label')
           },
           'dashboard': { id: 'dashboard', iconFile: 'custom-view-icon-blk_24x24', disabled: false, visible: ko.observable(false),
-            label: ko.observable()
+            label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.dashboard.label')
           }
         },
         icons: {
@@ -428,11 +428,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           const pdjData = viewParams.parentRouter?.data?.pdjData();
           if (CoreUtils.isNotUndefinedNorNull(rdjData?.dashboardCreateForm)) {
             if (CoreUtils.isNotUndefinedNorNull(pdjData?.sliceTable?.readOnly)) {
-              self.i18n.buttons.dashboard.label(rdjData?.dashboardCreateForm?.label);
               self.i18n.buttons.dashboard.visible(pdjData.sliceTable.readOnly);
             }
             else if (CoreUtils.isNotUndefinedNorNull(pdjData?.sliceForm?.readOnly)) {
-              self.i18n.buttons.dashboard.label(rdjData?.dashboardCreateForm?.label);
               self.i18n.buttons.dashboard.visible(pdjData.sliceForm.readOnly);
             }
             else {
@@ -605,6 +603,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           toggleToolbarIconsVisibility(true);
           self.i18n.buttons.dashboard.visible(true);
           self.sliceReadOnly(false);
+          const eleTabs = document.getElementById('cfe-form-tabstrip-container');
+          if (eleTabs !== null) eleTabs.style.display = 'inline-flex';
         }
       };
 
@@ -650,7 +650,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         self.sliceReadOnly(false);
         viewParams.onDashboardButtonClicked(event);
       };
-
+      
       this.onSave = ko.observable(
         function (event) {
           // event.target.id;

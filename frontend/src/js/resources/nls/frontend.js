@@ -697,41 +697,6 @@ define({
           }
         }
       },
-      "labels": {
-        "start": {
-          "value": "Start"
-        },
-        "resume": {
-          "value": "Resume"
-        },
-        "suspend": {
-          "value": "Suspend"
-        },
-        "shutdown": {
-          "value": "Shutdown"
-        },
-        "restartSSL": {
-          "value": "Restart SSL"
-        },
-        "stop": {
-          "value": "Stop"
-        },
-        "download": {
-          "value": "Download Logs"
-        },
-        "shrink": {
-          "value": "Shrink"
-        },
-        "reset": {
-          "value": "Reset"
-        },
-        "clearStatementCache": {
-          "value": "Clear Cache"
-        },
-        "pause": {
-          "value": "Pause"
-        }
-      },
       "prompts": {
         "download": {
           "value": "Downloaded log file locations:"
@@ -793,6 +758,9 @@ define({
         },
         "customize": {
           "label": "Customize Table"
+        },
+        "dashboard": {
+          "label": "New Dashboard"
         }
       },
       "icons": {
@@ -882,6 +850,15 @@ define({
             }
           }
         }
+      },
+      "labels": {
+        "relatedTopics": {
+          "value": "<b>Related Topics:</b>"
+        }
+      },
+      "tabs": {
+        "attributes" : {label: "Attributes"},
+        "actions" : {label: "Actions"}
       }
     },
     "wrc-create-form": {
@@ -1238,12 +1215,26 @@ define({
           "unableToPerform": {
             "summary": "Message",
             "detail": "Console backend call generated a '{0}' response when attempting to perform specified action on '{1}'."
+          },
+          "actionNotPerformed": {
+            "detail": "Unable to perform '{0}' action on one or more of the checked items."
+          },
+          "actionSucceeded": {
+            "summary": "The '{0}' action was successfully performed!"
           }
         }
       },
       "labels": {
         "cannotDetermineExactCause": {
           "value": "Cannot determine exact cause. Check JavaScript Console for hints."
+        }
+      }
+    },
+    "wrc-actions-strip": {
+      "dialogs": {
+        "cannotBeUndone": {
+          "title": "Action Confirmation",
+          "prompt": "The '{0}' action cannot be undone!<br/><br/>Continue?"
         }
       }
     },

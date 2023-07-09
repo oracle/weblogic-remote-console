@@ -11,13 +11,7 @@ This page lists the limitations and known issues (and their workarounds if avail
 ## Limitations
 In the current release of WebLogic Remote Console, you are unable to: 
 
-* Manage certain security data from WebLogic Server security providers that are external to the WebLogic configuration, such as roles, policies, and so on.
-
 * Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.
-
-* JNDI tree viewer
-
-* (On macOS) Run multiple WebLogic Remote Console applications at a time. This does not include the WebLogic Remote Console instance running within the [WebLogic Kubernetes Toolkit UI](https://oracle.github.io/weblogic-toolkit-ui/) - you can run the WebLogic Remote Console and WKT UI simultaneously.
 
 ## Minimum web browser viewport size
 **Issue** The font sizes in the WebLogic Remote Console are governed by the Oracle JET Redwood style. They are larger than the ones used in the WebLogic Server Administration Console, and the entry fields are a bit larger in height and width. As a result, the overall viewing area inside your web browser's viewport (the portion where all the web content appears), needs to be of a minimum size to have an enjoyable experience using the WebLogic Remote Console.

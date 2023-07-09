@@ -4,16 +4,22 @@
 actions:
 
 - name: "exportMessages"
+  # don't specify polling since are no columns in the table that are affected by this action
   inputForm:
     introductionHTML: >
       Export the messages matching the selector to the specified file in XML representation.
     customizePageMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.customizeExportMessagesActionInputForm
     parameters:
     - name: "selector"
+      multiLineString: true
     - name: "file"
+      presentation:
+        width: "lg"
+      required: true
     - name: "timeout"
 
 - name: "exportSelectedMessages"
+  # don't specify polling since are no columns in the table that are affected by this action
   mbeanOperation:
     operation: exportMessages
   inputForm:
@@ -21,6 +27,9 @@ actions:
       Export the selected messages to the specified file in XML representation.
     parameters:
     - name: "file"
+      required: true
+      presentation:
+        width: "lg"
     - name: "timeout"
   definition:
     type: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
@@ -36,14 +45,23 @@ actions:
         A value of 0 indicates no timeout applies.
 
 - name: "importMessages"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
   inputForm:
     introductionHTML: >
       "Import the messages from the specified file."
     parameters:
     - name: "file"
+      required: true
+      presentation:
+        width: "lg"
     - name: "applyOverrides"
 
 - name: "moveMessages"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
   inputForm:
     introductionHTML: >
       <p>Move the set of messages that match the specified selector to the target destination.</p>
@@ -53,11 +71,15 @@ actions:
     customizePageMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.customizeMoveMessagesActionInputForm
     parameters:
     - name: "selector"
+      multiLineString: true
     - name: "targetDestination"
-      optionsMethod: "weblogic.remoteconsole.customizers.JMSMessageManagementMBeanCustomizer.getAllDestinations"
+      optionsMethod: "weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.getAllDestinations"
     - name: "timeout"
 
 - name: "moveSelectedMessages"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
   mbeanOperation:
     operation: moveMessages
   inputForm:
@@ -68,7 +90,8 @@ actions:
       delivery mode, unit-of-order and priority are preserved.</>
     parameters:
     - name: "targetDestination"
-      optionsMethod: "weblogic.remoteconsole.customizers.JMSMessageManagementMBeanCustomizer.getAllDestinations"
+      optionsMethod: "weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.getAllDestinations"
+      required: true
     - name: "timeout"
   definition:
     type: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
@@ -86,14 +109,21 @@ actions:
       descriptionHTML: "The timeout value for the move operation transaction."
 
 - name: "deleteMessages"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
   inputForm:
     introductionHTML: >
       Delete the set of messages that match the specified selector.
     customizePageMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.customizeDeleteMessagesActionInputForm
     parameters:
     - name: "selector"
+      multiLineString: true
 
 - name: "deleteSelectedMessages"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
   mbeanOperation:
     operation: deleteMessages
   # use a no-arg input form to force the user to confirm the delete (since it cannot be undone)

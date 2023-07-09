@@ -62,6 +62,10 @@ actions:
 - name: "start"
   label: "Start"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.start
+  polling:
+    # typically starting a server takes a while
+    reloadSeconds: 10
+    maxAttempts: 10
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
     descriptionHTML: >
@@ -69,13 +73,13 @@ actions:
   mbeanOperation:
     type: ServerLifeCycleRuntimeMBean
     operation: start
-  usedIf:
-    property: "State"
-    values:
-    - "NOT_RUNNING"
 - name: "resume"
   label: "Resume"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.resume
+  polling:
+    # typically resuming a server is very fast
+    reloadSeconds: 5
+    maxAttempts: 10
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
     descriptionHTML: >
@@ -83,15 +87,14 @@ actions:
   mbeanOperation:
     type: ServerLifeCycleRuntimeMBean
     operation: resume
-  usedIf:
-    property: "State"
-    values:
-    - "STANDBY"
-    - "ADMIN"
 
 - name: "suspend"
   label: "Suspend when work completes"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.suspend
+  polling:
+    # typically gracefully suspending a server is fast if there isn't much in-progress work
+    reloadSeconds: 5
+    maxAttempts: 20
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
     descriptionHTML: >
@@ -100,14 +103,14 @@ actions:
   mbeanOperation:
     type: ServerLifeCycleRuntimeMBean
     operation: suspend
-  usedIf:
-    property: "State"
-    values:
-    - "RUNNING"
 
 - name: "forceSuspend"
   label: "Force suspend now"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceSuspend
+  polling:
+    # typically force suspending a server is fast
+    reloadSeconds: 5
+    maxAttempts: 10
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
     descriptionHTML: >
@@ -117,14 +120,14 @@ actions:
   mbeanOperation:
     type: ServerLifeCycleRuntimeMBean
     operation: forceSuspend
-  usedIf:
-    property: "State"
-    values:
-    - "RUNNING"
 
 - name: "gracefulShutdown"
   label: "Shutdown when work completes"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.shutdown
+  polling:
+    # typically gracefully shutting down a server is relatively fast if there isn't much in-progress work
+    reloadSeconds: 5
+    maxAttempts: 20
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
     descriptionHTML: >
@@ -135,16 +138,14 @@ actions:
   mbeanOperation:
     type: ServerLifeCycleRuntimeMBean
     operation: shutdown_timeout_ignoreSessions
-  usedIf:
-    property: "State"
-    values:
-    - "RUNNING"
-    - "STANDBY"
-    - "ADMIN"
 
 - name: "forceShutdown"
   label: "Force shutdown now"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceShutdown
+  polling:
+    # typically force shutting down a server is relatively fast
+    reloadSeconds: 5
+    maxAttempts: 10
   definition:
     type: "weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean"
     descriptionHTML: >
@@ -156,22 +157,11 @@ actions:
   mbeanOperation:
     type: ServerLifeCycleRuntimeMBean
     operation: forceShutdown
-  usedIf:
-    property: "State"
-    values:
-    - "RUNNING"
-    - "SUSPENDING"
-    - "STARTING"
-    - "SHUTTING_DOWN"
-    - "SHUTDOWN_IN_PROCESS"
-    - "STANDBY"
-    - "ADMIN"
-    - "FAILED"
-    - "SUSPENDING"
 
 - name: "restartSSL"
   label: "Restart SSL"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.restartSSL
+  # don't configure polling since this action is synchronous
   definition:
     type: "void"
     descriptionHTML: >
@@ -188,7 +178,3 @@ actions:
   mbeanOperation:
     type: ServerRuntimeMBean
     operation: restartSSLChannels
-  usedIf:
-    property: "State"
-    values:
-    - "RUNNING"

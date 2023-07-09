@@ -63,12 +63,11 @@ define([
       if (context) {
         self.busyContext = Context.getContext(context).getBusyContext();
       }
-    };
+    }.bind(this);
 
-    this.addBusyState = function () {
-      let options = { description: '#nav fetching data' };
+    this.addBusyState = function (options) {
       return self.busyContext.addBusyState(options);
-    };
+    }.bind(this);
 
     this.signalBindings = [];
 
@@ -78,10 +77,11 @@ define([
     this.connected = function () {
       this.setBusyContext();
 
-      let resolve;
+      let resolveBusyState;
 
-      this.busyContext.whenReady(10000).then(() => {
-        resolve = this.addBusyState();
+      this.busyContext.whenReady(10000)
+      .then(() => {
+        resolveBusyState = this.addBusyState({ description: '#nav fetching data' });
 
         $('#navtree-container').css({ display: 'inline-flex' });
         this.navtreeManager
@@ -99,8 +99,11 @@ define([
               self.selectedItem(null);
             }
           })
+          .catch((response) => {
+            ViewModelUtils.failureResponseDefaultHandling(response);
+          })
           .finally(() => {
-            if (resolve) resolve();
+            if (resolveBusyState) resolveBusyState();
           });
       });
 
@@ -112,29 +115,30 @@ define([
         }
 
         if (treeaction.clearTree) {
-          let resolve;
-          this.busyContext.whenReady(10000).then(() => {
-            resolve = this.addBusyState();
+          let resolveBusyState;
+          this.busyContext.whenReady(10000)
+            .then(() => {
+              resolveBusyState = this.addBusyState({ description: '#nav fetching data' });
 
-            // refresh the subtree
-            this.navtreeManager = new NavtreeManager(this.beanTree);
-            this.navtreeManager
-              .refreshTreeModel()
-              .then(() => {
-                this.navtreeManager.updateTreeView();
-                this.datasource(this.navtreeManager.getDataProvider());
+              // refresh the subtree
+              this.navtreeManager = new NavtreeManager(this.beanTree);
+              this.navtreeManager
+                .refreshTreeModel()
+                .then(() => {
+                  this.navtreeManager.updateTreeView();
+                  this.datasource(this.navtreeManager.getDataProvider());
 
-                // clear the expanded set, unset selected item
-                this.expanded.clear();
-                this.selectedItem(null);
-              })
-              .catch((response) => {
-                ViewModelUtils.failureResponseDefaultHandling(response);
-              })
-              .finally(() => {
-                if (resolve) resolve();
-              });
-          });
+                  // clear the expanded set, unset selected item
+                  this.expanded.clear();
+                  this.selectedItem(null);
+                })
+                .catch((response) => {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                })
+                .finally(() => {
+                  if (resolveBusyState) resolveBusyState();
+                });
+            });
         }
         else {
           let encodedSelectedItem = null;
@@ -202,16 +206,17 @@ define([
           this.expanded.clear();
           this.selectedItem(null);
 
-          let resolve;
-          this.busyContext.whenReady(10000).then(() => {
-            resolve = this.addBusyState();
+          let resolveBusyState;
+          this.busyContext.whenReady(10000)
+            .then(() => {
+              resolveBusyState = this.addBusyState({ description: '#nav fetching data' });
 
-            // Finally, recreate a NavtreeManager using the new
-            // beanTree module-scoped variable.
-            this.navtreeManager = new NavtreeManager(this.beanTree);
-            this.datasource(this.navtreeManager.getDataProvider());
+              // Finally, recreate a NavtreeManager using the new
+              // beanTree module-scoped variable.
+              this.navtreeManager = new NavtreeManager(this.beanTree);
+              this.datasource(this.navtreeManager.getDataProvider());
 
-            this.navtreeManager
+              this.navtreeManager
               .refreshTreeModel()
               .then(() => {
                 this.navtreeManager.updateTreeView();
@@ -220,7 +225,7 @@ define([
                 ViewModelUtils.failureResponseDefaultHandling(response);
               })
               .finally(() => {
-                if (resolve) resolve();
+                if (resolveBusyState) resolveBusyState();
               });
           });
         }
@@ -237,10 +242,11 @@ define([
 
       binding = signaling.dataProviderRemoved.add((dataProvider) => {
         if (this.beanTree.provider.id === dataProvider.id) {
-          let resolve;
+          let resolveBusyState;
           // refresh the subtree
-          this.busyContext.whenReady(10000).then(() => {
-            resolve = self.addBusyState();
+          this.busyContext.whenReady(10000)
+          .then(() => {
+            resolveBusyState = self.addBusyState({ description: '#nav fetching data' });
             try {
               this.navtreeManager = new NavtreeManager(this.beanTree);
               this.datasource(self.navtreeManager.getDataProvider());
@@ -249,10 +255,12 @@ define([
               this.expanded.clear();
               this.selectedItem(null);
 
-              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name)
+              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
                 router.go('home');
-            } finally {
-              if (resolve) resolve();
+              }
+            }
+            finally {
+              if (resolveBusyState) resolveBusyState();
             }
           });
         }
@@ -398,7 +406,7 @@ define([
     function expandClickedNode(nodeId) {
       let resolve;
       this.busyContext.whenReady(10000).then(() => {
-        resolve = this.addBusyState();
+        resolve = this.addBusyState({ description: '#nav fetching data' });
         self.navtreeManager.expandNode(nodeId).finally(() => {
           if (resolve) resolve();
         });

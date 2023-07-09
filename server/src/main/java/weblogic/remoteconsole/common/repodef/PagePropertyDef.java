@@ -23,11 +23,6 @@ public interface PagePropertyDef extends PageFieldDef, BeanPropertyDef {
   // If null, then it should always be displayed.
   public PagePropertyUsedIfDef getUsedIfDef();
 
-  // Info about how to present this property to the user.
-  // (e.g. inline field help or whether to display a number as hex).
-  // Returns null if there are no special presentation rules for this property.
-  public PagePropertyPresentationDef getPresentationDef();
-
   // Info about linking to external documentation about this property
   // (e.g. links to mbean javadoc about this property).
   // Returns null if there is no external documentation available.

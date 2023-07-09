@@ -257,7 +257,9 @@ function start_cbe() {
 
   readlineStdout.on('line', (line) => {
     if (line.startsWith('Port=')) {
-      console.log(line);
+      // This *needs* to be stdout, which console.log() may be, but may not be
+      if (showPort)
+        process.stdout.write(line + '\n');
       cbePort = line.replace('Port=', '');
       started = true;
       doit();
@@ -286,11 +288,24 @@ app.whenReady()
       // that is not headless.  See app.on for "activate" above.
       app.requestSingleInstanceLock();
 
-      // We don't have a UI to do upgrades if it is headless and the updater
-      // doesn't support Linux, unless it is an App Image yet (enhancement is
-      // supposedly on the way for the other formats)
-      const supportsAutoUpgrades = !app.commandLine.hasSwitch('headless') &&
+      // No way to prompt for updates in a headless process
+      const supportsUpgradeCheck = !app.commandLine.hasSwitch('headless');
+
+      // On Linux, only AppImages can be updated in place
+      const supportsAutoUpgrades = supportsUpgradeCheck &&
         !(OSUtils.isLinuxOS() && !process.env.APPIMAGE);
+
+      // This is, obviously, a hack.  Here's the deal:
+      // the Auto-Updater will only check for updates on Linux if the file is
+      // an AppImage.  However, we want something a little different.  We want
+      // to be able to *check* for a new image no matter what format, but only
+      // *do* the update if it is a supported format.  So, we'll lie to the
+      // Auto-Updater by setting the APPIMAGE, but our code will know better.
+      // We'll know it isn't real because it isn't really a file.  This will
+      // no longer be necessary in the near future when the Auto Updater
+      // supports all formats on Linux.
+      if (supportsUpgradeCheck && OSUtils.isLinuxOS && !process.env.APPIMAGE)
+        process.env.APPIMAGE = `/${Math.random()}/${Math.random()}`;
 
       const params = {
         version: version,
@@ -298,6 +313,7 @@ app.whenReady()
         copyright: copyright,
         homepage: homepage,
         feedURL: feedURL,
+        supportsUpgradeCheck: supportsUpgradeCheck,
         supportsAutoUpgrades: supportsAutoUpgrades
       };
 
@@ -462,20 +478,20 @@ ipcMain.handle('file-choosing', async (event, dialogParams) => {
 });
 
 ipcMain.handle('complete-login', async (event, arg) => {
-  logger.log('info', `IPC complete login: ${arg.name}`);
+  logger.log('debug', `'complete-login' provider='${arg.name}'`);
   AppWindow.showMainWindow();
 });
 
 ipcMain.handle('perform-login', async (event, arg) => {
   return new Promise(function (resolve, reject) {
     if (arg) {
-      logger.log('info', `IPC perform login: ${arg.loginUrl} (${arg.name})`);
+      logger.log('debug', `'perform-login' provider='${arg.name}' url='${arg.loginUrl}'`);
 
       // Validate the URL content and exec the user's browser
       try {
         const loginUrl = new URL(arg.loginUrl);
         if (!['https:', 'http:'].includes(loginUrl.protocol.toLowerCase())) {
-          logger.log('error', `IPC perform login invalid protocol: ${loginUrl.protocol}`);
+          logger.log('error', `'perform-login' invalid protocol=${loginUrl.protocol}`);
           reject(new Error(`Invalid protocol '${loginUrl.protocol}'`));
         }
         else {
@@ -484,13 +500,13 @@ ipcMain.handle('perform-login', async (event, arg) => {
               resolve(true);
             })
             .catch((error) => {
-              logger.log('error', `IPC perform login failed open: ${error}`);
+              logger.log('error', `'perform-login' failed open error=${error}`);
               reject(new Error(`${error}`));
             });
           }
       }
       catch (error) {
-        logger.log('error', `IPC perform login failed: ${error}`);
+        logger.log('error', `'perform-login' failed error=${error}`);
         reject(new Error(`${error.message}`));
       }
     }

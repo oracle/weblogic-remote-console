@@ -66,9 +66,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
           optionsArray.push(option);
           legalValueWidth = option.label.length;
         }
-       // checking if value is part of legalValues, if it is not, add it to dropdown 
-        if (value && !legalValues.some((option) => option.value.toLowerCase() === value.toLowerCase())) {
-          optionsArray.push({ value: value, label: value });
+       // checking if value is part of legalValues, if it is not, add it to dropdown
+        const dataValue = (dataValues[name] != null) ? dataValues[name].value : undefined;
+        if (dataValue && !legalValues.some((option) => `${option.value}''`.toLowerCase() === `${dataValue}''`.toLowerCase())) {
+          optionsArray.push({ value: dataValue, label: `${dataValue}''` });
         }
         if (legalValueWidth > 40) field.className = 'cfe-form-select-one-wide';
         // for creating new, we want to set the value to be the first legal value instead of leaving it blank,

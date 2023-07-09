@@ -1,5 +1,13 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to enable the Coherence security framework. 
+      If you do not enable security, then any non-WebLogic Server JVM can access the Coherence cluster without going through WebLogic Server authorization.
+  </p>
+
+properties:
+  - name: "CoherenceClusterResource.CoherenceClusterParams.SecurityFrameworkEnabled"
 
 helpTopics:
 - label: "Configuring and Managing Coherence Clusters "

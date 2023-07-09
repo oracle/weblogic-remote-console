@@ -13,13 +13,13 @@ import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageActionExternalHelpDef;
-import weblogic.remoteconsole.common.repodef.PageActionUsedIfDef;
+import weblogic.remoteconsole.common.repodef.PageActionPollingDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
+import weblogic.remoteconsole.common.repodef.schema.BeanActionPollingDefSource;
 import weblogic.remoteconsole.common.repodef.schema.MBeanOperationDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PageActionDefSource;
-import weblogic.remoteconsole.common.repodef.schema.UsedIfDefSource;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
@@ -36,9 +36,9 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
   private LocalizableString helpLabel;
   private ActionInputFormDefImpl inputFormDefImpl;
   private PageActionExternalHelpDefImpl externalHelpDefImpl;
-  private PageActionUsedIfDefImpl usedIfDefImpl;
   private List<PageActionDefImpl> actionDefImpls = new ArrayList<>();
   private List<PageActionDef> actionDefs;
+  private PageActionPollingDefImpl pollingDefImpl;
 
   static PageActionDefImpl create(PageDefImpl pageDefImpl, PageActionDefSource pageActionDefSource) {
     if (!pageActionDefSource.getActions().isEmpty()) {
@@ -105,11 +105,9 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
     super(typeDefImpl, parentPath, beanActionDefSource, beanActionDefCustomizerSource);
     this.pageActionDefSource = pageActionDefSource;
     this.pageDefImpl = pageDefImpl;
-    // since we always create the actions after the columns,
-    // we can rely on the property referenced by the usedIf already having been created
-    createUsedIfDefImpl();
     createActionDefImpls();
     this.actionDefs = Collections.unmodifiableList(getActionDefImpls());
+    initializePollingDef();
     // Initialize the label after the actions since the i18n key depends
     // on whether this action contains actions or not.
     initializeLabels();
@@ -123,15 +121,6 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
     }
   }
 
-  // The PageDefImpl will call this after all the properties on the page have been created,
-  // making it possible for the used if to find the property that it references.
-  private void createUsedIfDefImpl() {
-    UsedIfDefSource usedIfSource = getCustomizerSource().getUsedIf();
-    if (usedIfSource != null) {
-      usedIfDefImpl = new PageActionUsedIfDefImpl(this, usedIfSource);
-    }
-  }
-
   private void createActionDefImpls() {
     for (PageActionDefSource childPageActionDefSource : pageActionDefSource.getActions()) {
       PageActionDefImpl actionDefImpl = create(pageDefImpl, childPageActionDefSource);
@@ -139,15 +128,6 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
         actionDefImpls.add(actionDefImpl);
       }
     }
-  }
-
-  PageActionUsedIfDefImpl getUsedIfDefImpl() {
-    return usedIfDefImpl;
-  }
-
-  @Override
-  public PageActionUsedIfDef getUsedIfDef() {
-    return getUsedIfDefImpl();
   }
 
   PageDefImpl getPageDefImpl() {
@@ -225,6 +205,20 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
   @Override
   public ActionInputFormDef getInputFormDef() {
     return getInputFormDefImpl();
+  }
+
+  PageActionPollingDefImpl getPollingDefImpl() {
+    return pollingDefImpl;
+  }
+
+  @Override
+  public PageActionPollingDef getPollingDef() {
+    return getPollingDefImpl();
+  }
+
+  private void initializePollingDef() {
+    BeanActionPollingDefSource polling = getCustomizerSource().getPolling();
+    this.pollingDefImpl = (polling != null) ? new PageActionPollingDefImpl(this, polling) : null;
   }
 
   private void initializeHelp() {

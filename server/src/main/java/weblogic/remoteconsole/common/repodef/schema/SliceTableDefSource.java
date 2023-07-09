@@ -5,6 +5,9 @@ package weblogic.remoteconsole.common.repodef.schema;
 
 import java.util.List;
 
+import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
+import weblogic.remoteconsole.common.utils.StringUtils;
+
 /**
  * This POJO mirrors the yaml source file format for configuring information about
  * a slice table page, e.g. DomainSecurityRuntimeMBean/slices/SecurityWarnings/table.yaml
@@ -53,6 +56,8 @@ public class SliceTableDefSource extends PageDefSource {
   }
 
   public void setGetTableRowsMethod(String value) {
-    getTableRowsMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      getTableRowsMethod.setValue(value);
+    }
   }
 }

@@ -8,15 +8,16 @@
   --form-container-calc-max-width: 10px;
   --form-container-calc-max-height: 360px;
   --form-container-calc-min-width: 310px;
-  --form-input-min-width: 15em;
+  --form-input-min-width: 16em;
   --form-input-min-switch-width: 7.25em;
+  --overlayDialog-calc-min-width: 1135px;
 
   /*
    * END:   JS code will make adjustments to the
    *        above custom CSS variables, at runtime.
    */
 
-  --table-form-container-width-offset: 340px;
+  --table-form-container-width-offset: 30rem;   /* 480px; */
   --form-container-fixed-min-width: 1060px;
 
   --container-resizer-offset-max-height: 72; /* 80; */
@@ -45,9 +46,28 @@
   --min-width-17em: 17em;
   --min-width-15em: 15em;
 
+  --width-hint-base-em: 12em;   /* 192px */
+
+  --width-hint-xs: 5.625em;  /* 90px; */
+  --width-hint-sm:   7.5em;  /* 120px; */
+  --width-hint-12em:  12em;  /* 192px; */
+  --width-hint-md:    15em;  /* 240px; */
+  --width-hint-16em:  16em;  /* 256px; */
+  --width-hint-17em:  17em;  /* 272px; */
+  --width-hint-18em:  18em;  /* 288px; */
+  --width-hint-20em:  20em;  /* 320px; */
+  --width-hint-lg:    24em;  /* 384px; */
+  --width-hint-28em:  28em;  /* 448px; */
+  --width-hint-30em:  30em;  /* 480px; */
+  --width-hint-xl:    32em;  /* 512px; */
+  --width-hint-xxl:   36em;  /* 576px; */
+  --width-hint-36em:  36em;  /* 576px; */
+  --width-hint-40em:  40em;  /* 640px; */
+  --width-hint-45em:  45em;  /* 720px; */
+
   --input-text-wide-width: 18rem;
-  --single-select-one-wide-width: 630px;
-  --single-select-one-md-width: 250px;
+  --single-select-one-wide-width: 39.375em;   /* 630px; */
+  --single-select-one-md-width: 15.625em;     /* 250px; */
 
   --form-layout-row-height: 2.4em;
   --form-section-title-background-color: #dfdcda; /* #ede7e4 #dfdcda; */
@@ -65,7 +85,10 @@
   --actionsDialog-background-color: #f9f7f6;
   --actionDialog-width: 750px;
   --actionDialog-min-height: 390px;
-  --overlayDialog-min-width: 1135px;
+
+  --overlayDialog-actionInput-width: 620px; /* 38.75rem; */
+  --overlayDialog-min-width: 1135px;        /* 70.938rem; */
+
 
   --spacing-medium: 0.3125rem;
 
@@ -92,7 +115,7 @@
   --runtime-role-display: inline-flex;
   --paging-position: fixed;
   --paging-bottom: 2rem;
-  --form-container-calc-max-height: 405px;
+  --form-container-calc-max-height: 430px;
   --oj-form-layout-column-gutter: 1.5rem;
 }
 
@@ -101,23 +124,28 @@
   --runtime-role-display: none;
   --paging-position: unset;
   --paging-bottom: unset;
-  --form-container-calc-max-height: 430px;
+  --form-container-calc-max-height: 421px;
   --oj-form-layout-column-gutter: .5rem;
 }
 
 #form-toolbar-buttons > div[id='form-toolbar-save-button'],
 #form-toolbar-icons > div > div[id='landing-page-toolbar-icon'],
 #form-toolbar-icons > div > div.toolbar-separator-vertical,
+#form-toolbar-icons > div > div[id='toggle-history-toolbar-icon'],
+#form-toolbar-icons > div > div[id='page-help-toolbar-icon'],
 #form-toolbar-icons > div > div[id='sync-toolbar-icon'],
 #form-toolbar-icons > div > div[id='sync-interval-toolbar-icon'],
 #form-toolbar-icons > div > div[id='shoppingcart-toolbar-icon'],
 #table-toolbar-icons > div > div[id='landing-page-toolbar-icon'],
+#table-toolbar-icons > div > div[id='toggle-history-toolbar-icon'],
+#table-toolbar-icons > div > div[id='page-help-toolbar-icon'],
 #table-toolbar-icons > div > div.toolbar-separator-vertical,
 #table-toolbar-icons > div > div[id='sync-toolbar-icon'],
 #table-toolbar-icons > div > div[id='sync-interval-toolbar-icon'],
 #table-toolbar-icons > div > div[id='shoppingcart-toolbar-icon']
 {
   display: var(--runtime-role-display);
+  align-self: self-end;
 }
 
 #preloader-image {
@@ -169,10 +197,6 @@ oj-menu[id$="Menu"] .oj-menu-dropdown .oj-menu-item > a {
   border-top-width: 0;
   border-top-color: transparent;
   border-top-style: solid;
-}
-
-#landing-page-icon {
-  vertical-align: middle;
 }
 
 .toolbar-separator-vertical {
@@ -293,10 +317,6 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
   height: 1.875rem;
 }
 
-#toggle-history-toolbar-icon {
-  margin-top: 0.125rem;
-}
-
 #shoppingCartImage,
 #saveToShoppingCartImage
 {
@@ -343,6 +363,30 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
   font-size: 1.0em;    /* 12pt; */
 }
 
+.cfe-xs-width-hint {
+  min-width: var(--width-hint-xs);
+}
+
+.cfe-sm-width-hint {
+  min-width: var(--width-hint-sm);
+}
+
+.cfe-md-width-hint {
+  min-width: var(--width-hint-md);
+}
+
+.cfe-lg-width-hint {
+  min-width: var(--width-hint-lg);
+}
+
+.cfe-xl-width-hint {
+  min-width: var(--width-hint-xl);
+}
+
+.cfe-xxl-width-hint {
+  min-width: var(--width-hint-xxl);
+}
+
 .cfe-form-input-integer-sm {
   max-width: var(--form-input-integer-max-width);
 }
@@ -360,11 +404,6 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
 {
   line-height: 1rem;
   font-size: 1em;    /* 12pt; */
-}
-
-.cfe-form-input-textarea > div.oj-text-field-container > div.oj-text-field-middle > textarea
-{
-  white-space: pre;
 }
 
 .cfe-form-input-textarea > div.oj-text-field-container
@@ -516,17 +555,17 @@ oj-option#show-advanced-fields > span
 }
 
 .cfe-form-tabstrip {
-  margin: 0.3125rem 0 0 0.3125rem;
+  margin: 0.3125rem 0 0.3125rem 0.3125rem;
   max-width: 100%;
   font-size: 0.92em;        /* 11pt; */
 }
 
 #form-tabstrip-container {
-  margin-top: 0.625rem;
+  margin-top: 0;  /* 0.625rem; */
 }
 
 div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabbar-item-no-icon {
-  height: 1rem;
+  height: 1.2rem;
   margin: 0.3125rem 0.125rem;
 }
 
@@ -541,13 +580,19 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 }
 
 .cfe-table-form-container {
+/*
+//MLW
   max-width: calc(100vw - var(--table-form-container-width-offset));
+*/
   margin: 0.3125rem 0.3125rem 0 0;
+}
+
+.cfe-overlay-container {
+  width: 100%;
 }
 
 .cfe-table-form-content-header
 {
-  position: -webkit-sticky;
   position: sticky;
 }
 
@@ -559,6 +604,7 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 #form-toolbar-container,
 #table-toolbar-container
 {
+  max-width: calc(100vw - var(--table-form-container-width-offset));
   height: 2.25rem;
 }
 
@@ -588,16 +634,19 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 
 .cfe-table-form-content {
   min-width: var(--form-container-fixed-min-width);
-  max-width: calc(100vw - var(--form-container-calc-max-width));    /* Any form, table or article wider than var(--content-area-max-width) will have a horizontal scroll bar */
+/*
+//MLW
+  max-width: calc(100vw - var(--form-container-calc-max-width));
+*/
   max-height: calc(100vh - var(--form-container-calc-max-height));
-  margin: 0.3125rem 0 0 0;
+  margin: 0;
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 oj-table.wlstable {
   overflow: auto;
-  height: calc(100vh - var(--form-container-calc-max-height));
+  max-height: calc(100vh - var(--form-container-calc-max-height));
   z-index: 1;
 }
 
@@ -718,14 +767,9 @@ oj-combobox-one#beanpath > div > div > div > input.oj-combobox-input {
   margin: 0 0 0 0.9375rem;
 }
 
-#linked-property-label {
-  margin: 0.3125rem 0 0.625rem 0;
-}
-
 oj-dialog#actionsDialog div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog#syncIntervalDialog div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog#confirmDialog div.oj-dialog-header h1.oj-dialog-title,
-oj-dialog#overlayFormDialog div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog#wdtOptionsDialog div.oj-dialog-header h1.oj-dialog-title
 {
   overflow: hidden;
@@ -745,7 +789,6 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-header h1.oj-dialog-title
 oj-dialog#actionsDialog div.oj-dialog-header,
 oj-dialog#syncIntervalDialog div.oj-dialog-header,
 oj-dialog#confirmDialog div.oj-dialog-header,
-oj-dialog#overlayFormDialog div.oj-dialog-header,
 oj-dialog#wdtOptionsDialog div.oj-dialog-header
 {
   border-width: 0 0 1px 0;
@@ -767,7 +810,6 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-header
 oj-dialog#actionsDialog div.oj-dialog-body,
 oj-dialog#syncIntervalDialog div.oj-dialog-body,
 oj-dialog#confirmDialog div.oj-dialog-body,
-oj-dialog#overlayFormDialog div.oj-dialog-body,
 oj-dialog#wdtOptionsDialog div.oj-dialog-body
 {
   position: relative;
@@ -780,7 +822,6 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-body
 
 oj-dialog#syncIntervalDialog div.oj-dialog-body,
 oj-dialog#confirmDialog div.oj-dialog-body,
-oj-dialog#overlayFormDialog div.oj-dialog-body,
 oj-dialog#wdtOptionsDialog div.oj-dialog-body
 {
   background-color: white;
@@ -825,11 +866,6 @@ oj-dialog[id="actionsDialog"] {
 
 oj-dialog[id="syncIntervalDialog"] {
   width: var(--syncIntervalDialog-width);
-  background-color: var(--dialog-background-color);
-}
-
-oj-dialog[id="overlayFormDialog"] {
-  min-width: var(--overlayDialog-min-width);
   background-color: var(--dialog-background-color);
 }
 
@@ -1007,9 +1043,94 @@ oj-table[id="table"] .oj-table-column-header {
   align-items: center;
 }
 
+oj-table[id="table"] .cfe-table-column-header-selector {
+  margin-left: 14px;
+}
+
+oj-table[id="table"] .cfe-table-column-header-selector > input {
+  height: 16px;
+  width: 16px;
+  padding: 0;
+  margin: 0;
+}
+
+oj-table[id="table"] > div.oj-table-scroller > table,
+oj-table[id="help-table"] > div.oj-table-scroller > table
+{
+  border-collapse: collapse;
+}
+
+oj-table[id="table"] > div.oj-table-scroller > table > thead > tr  th,
+oj-table[id="help-table"] > div.oj-table-scroller > table > thead > tr  th {
+  position: sticky;
+  top: 0px;
+}
+
 .oj-formlayout-inline-label .oj-label-required-icon, .oj-formlayout-inline-label .oj-label-help-icon, .oj-formlayout-inline-label label, .oj-formlayout-inline-label .oj-label-help-icon-anchor {
   float: none;
   font-size: 1.08em;   /* 13pt */
+}
+
+#overlay-form-linked-resource {
+  margin: 0.625rem 0 0.3125rem 0;
+}
+
+.cfe-overlay-form-dialog-toolbar {
+  margin: 0.313rem 0 0 0;   /* 5px */
+}
+
+oj-dialog[id="overlayFormDialog"] {
+  min-width: var(--overlayDialog-calc-min-width);
+  background-color: var(--dialog-background-color);
+}
+
+oj-dialog[id="overlayFormDialog"] div.oj-dialog-header h1.oj-dialog-title
+{
+  overflow: hidden;
+  cursor: default;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  align-self: center;
+  font-size: 1.17em;    /* 14pt; */
+  line-height: var(--oj-dialog-title-line-height);
+  color: var(--oj-dialog-title-text-color);
+  font-weight: var(--oj-dialog-title-font-weight);
+  margin: 0;
+  padding: 0;
+}
+
+oj-dialog[id="overlayFormDialog"] div.oj-dialog-header
+{
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem .75rem 0.25rem .75rem;
+  background-color: transparent;
+  background-image: none;
+  border-bottom-color: transparent;
+  font-size: 1em;       /* 12pt; */
+  line-height: 1.33rem;
+  color: rgb(22, 21, 19);
+  font-weight: 900;
+  min-height: 2.25rem;
+}
+
+oj-dialog[id="overlayFormDialog"] div.oj-dialog-body
+{
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0 0.625rem 0 0.3125rem;
+  text-align: start;
+  font-size: 1em;       /* 12pt; */
+}
+
+oj-dialog[id="overlayFormDialog"] div.oj-dialog-body
+{
+  background-color: white;
 }
 
 /*
@@ -1162,9 +1283,13 @@ div[id="menu-button-container"] .oj-button-nocomp
   margin: 0 0.188rem 0 0;
 }
 
-.cfe-buttonset {
-  position: -webkit-sticky;
+.cfe-actions-strip-container,
+.cfe-buttonset
+{
   position: sticky;
+/*  margin: 0.313rem 0 0 0; */
+  background-color: #eaeaea;  /* #f3f3f3; */
+  width: 100%;
 }
 
 .cfe-button-menu {

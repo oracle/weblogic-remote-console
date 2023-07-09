@@ -12,7 +12,7 @@ The advantage of the WebLogic Remote Console is that it does not need to be colo
 
 As for the WDT metadata models, they are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them 'offline' before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models. See the [WebLogic Deploy Tooling](https://oracle.github.io/weblogic-deploy-tooling/) documentation for more information.
 
-Simply launch the desktop application and connect to an Administration Server or WDT model. Or, you can start the console in a browser and then connect to the Administration Server.
+Simply launch WebLogic Remote Console and connect to an Administration Server or WDT model.
 
 The WebLogic Remote Console is fully supported with WebLogic Server 12.2.1.3, 12.2.1.4, and 14.1.1.0.
 
@@ -32,20 +32,21 @@ However, although the WebLogic Remote Console and the WebLogic Administration Co
 
 ### Get started {id="get_started"}
 
-Whether you choose the desktop application or the browser-based tool, it's simple to install the WebLogic Remote Console and get up and running within moments. See [Install WebLogic Remote Console]({{< relref "setup" >}}) for instructions.
+It's simple to install the WebLogic Remote Console and get up and running within moments. See [Install WebLogic Remote Console]({{< relref "setup" >}}) for instructions.
 
 ***
 ### What's new
-The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.4. <!--This release was published in March 2023.-->
+The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.5. <!--This release was published in March 2023.-->
 
 **New features**
 
-* Security polices and roles editor
-* Copy settings from an existing server to a new one
+* Simplified upgrade process
+
 ***
 
 #### Previous Releases {id="prev_releases"}
 Documentation for prior releases of the WebLogic Remote Console:
+* [2.4.4](2.4.4/)
 * [2.4.2](2.4.2/)
 * [2.4.1](2.4.1/)
 * [2.4.0](2.4.0/)

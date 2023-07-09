@@ -29,61 +29,47 @@ subTypes:
 actions:
 - name: "start"
   label: "Start"
-  usedIf:
-    property: "State"
-    values:
-    - "Shutdown"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
 - name: "resume"
   label: "Resume"
-  usedIf:
-    property: "State"
-    values:
-    - "Suspended"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
 - name: "suspend"
   label: "Suspend gracefully"
-  usedIf:
-    property: "State"
-    values:
-    - "Running"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
 - name: "forceSuspend"
   label: "Force suspend"
-  usedIf:
-    property: "State"
-    values:
-    - "Running"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
 - name: "shutdown"
   label: "Shutdown"
   helpLabel: "Shutdown gracefully"
-  usedIf:
-    property: "State"
-    values:
-    - "Running"
-    - "Suspended"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
 - name: "forceShutdown"
   label: "Force shutdown"
-  usedIf:
-    property: "State"
-    values:
-    - "Running"
-    - "Suspended"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
 - name: "shrink"
   label: "Shrink"
-  usedIf:
-    property: "State"
-    values:
-    - "Running"
-    - "Suspended"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
 - name: "reset"
   label: "Reset"
-  usedIf:
-    property: "State"
-    values:
-    - "Running"
-    - "Suspended"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
 - name: "clearStatementCache"
   label: "Clear cache"
-  usedIf:
-    property: "State"
-    values:
-    - "Running"
-    - "Suspended"
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10

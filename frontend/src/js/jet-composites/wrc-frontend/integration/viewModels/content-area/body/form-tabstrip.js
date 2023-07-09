@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -148,12 +148,17 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
               .rdjUrl()
               .replace(Runtime.getBackendUrl(), '')}?slice=${sliceParam}`;
 
+            ViewModelUtils.setPreloaderVisibility(true);
+
             return DataOperations.tabstrip.getSlice(uri)
               .then((reply) => {
                 return {
                   rdj: reply.body.data.get('rdjData'),
                   pdj: reply.body.data.get('pdjData')
                 };
+              })
+              .finally(() => {
+                ViewModelUtils.setPreloaderVisibility(false);
               });
           }
         }

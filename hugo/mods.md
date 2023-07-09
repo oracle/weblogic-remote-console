@@ -75,3 +75,19 @@ th {
     border: 1px solid #eaeaea;
 }
 ```
+
+### Expand label and content
+
+Adds styling to expand/collapse to [Expand Shortcode](https://learn.netlify.app/en/shortcodes/expand/)
+
+```
+div.expand-label {
+    background-color: #f7f7f7;
+    padding: 0.5rem;
+}
+div.expand-content {
+    background-color: #f7f7f7;
+    padding: 0.5rem 2rem;
+    margin-top: 0.5rem;
+}
+```
