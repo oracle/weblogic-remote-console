@@ -12,20 +12,20 @@
     <title>Property lists :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1688916311" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1688916311"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1684881167"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1684881167"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1688916311"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1688916311"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1684881167"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1688916311"></script>
 
     
   </div>
@@ -811,10 +811,6 @@
 
 <p>Property lists are an editable set of key-value pairs.</p>
 <p>You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a <a href="/weblogic-remote-console/userguide/providers/wdt-model/#model_tokens">WDT model token</a> and edit token values from within the property list.</p>
-
-<div class="notices note" ><p>We recommend that you use the desktop application over the browser application when working with property list files.</p>
-</div>
-
 <h2 id="create-a-new-property-list">Create a new property list</h2>
 <ol>
 <li>Expand the Kiosk and beside the project name, click ⋮. Select <strong>Create Provider for New Property List</strong>.</li>
@@ -833,11 +829,6 @@
 <li>Click <strong>OK</strong> to upload the file.</li>
 </ol>
 <h2 id="edit-a-property-list">Edit a property list</h2>
-
-<div class="notices info" ><p>The browser application behaves differently than the desktop application. While changes to the property list file are still saved automatically as you move around the console, they are <em>not</em> saved to your computer. This means that once you&rsquo;re satisfied with your changes, you <em>must</em> click <strong>Download File</strong> to download the updated property list file to your computer.</p>
-<p>Do not refresh the browser page or you will lose all your changes.</p>
-</div>
-
 <p>If the property list you edit is connected to a WDT model file as a <a href="/weblogic-remote-console/userguide/providers/wdt-model/#wdt_variables">WDT variable</a>, any changes you make to a property <em>name</em> will not be reflected in the WDT model file. The WDT model file assumes you&rsquo;ve added an entirely new property and the former WDT variable becomes a standalone WDT model token that&rsquo;s not associated with the property list.</p>
 <ol>
 <li>Expand the Kiosk and select the property list you want to edit.</li>
@@ -846,10 +837,10 @@
 <li>Enter a new property name and property value.</li>
 <li>To delete a row, click  beside the property row that you want to delete.</li>
 <li>You can also reorder the properties alphabetically (or reverse-alphabetically) by clicking the arrows in the title bar.</li>
-<li>Click <strong>Save Now</strong> (<strong>Download File</strong> in the browser application) to save your changes to the property list file.</li>
+<li>Click <strong>Save Now</strong> to save your changes to the property list file.</li>
 </ol>
 <h2 id="delete-a-property-list">Delete a property list</h2>
-<p>This will only remove the property list from the WebLogic Remote Console. The file will remain in the location designated on your computer. However, if you are using the browser application (and want to keep this property list file), make sure to download the file before deleting it in WebLogic Remote Console.</p>
+<p>This will only remove the property list from the WebLogic Remote Console. The file will remain in the location designated on your computer.</p>
 <p>If you delete a property list that&rsquo;s connected to a WDT model file, the WDT model file will remain unchanged but all WDT variables are converted to standalone WDT model tokens.</p>
 <ol>
 <li>Expand the Kiosk and beside the property list you want to delete, click the <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon"> icon.</li>
@@ -1343,19 +1334,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1688916311"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1688916311"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1684881167"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1688916311"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

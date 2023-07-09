@@ -12,20 +12,20 @@
     <title>WDT model files :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1684881167" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1684881167" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1688916311" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1688916311"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1684881167"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1684881167"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1688916311"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1688916311"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1684881167"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1688916311"></script>
 
     
   </div>
@@ -817,8 +817,7 @@
 <p>WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them &lsquo;offline&rsquo; before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.</p>
 <p>See the <a href="https://oracle.github.io/weblogic-deploy-tooling/">WebLogic Deploy Tooling</a> documentation for more information.</p>
 
-<div class="notices note" ><p>We recommend that you use the desktop application over the browser application when working with WDT model files.</p>
-<p>Additionally, the WebLogic Remote Console assumes WDT model files are in YAML format. If you upload a file with no file extension, the WebLogic Remote Console will convert it to YAML format after you save your changes.</p>
+<div class="notices note" ><p>The WebLogic Remote Console assumes WDT model files are in YAML format. If you upload a file with no file extension, the WebLogic Remote Console will convert it to YAML format after you save your changes.</p>
 </div>
 
 <h2 id="create-a-new-wdt-model-file">Create a new WDT model file</h2>
@@ -888,14 +887,9 @@
 <p>The WebLogic Remote Console auto-saves any changes you make to the WDT model file. You don&rsquo;t need to commit changes to WDT model files.</p>
 </li>
 <li>
-<p>After you finish making changes, you can click <strong>Save Now</strong> (in the desktop application) or <strong>Download File</strong> (in the browser) to ensure all changes are saved and downloaded to your computer.</p>
+<p>After you finish making changes, you can click <strong>Save Now</strong> to ensure all changes are saved and downloaded to your computer.</p>
 </li>
 </ol>
-
-<div class="notices info" ><p>The browser application behaves differently than the desktop application. While changes to the WDT model file are still saved automatically as you move around the console, they are <em>not</em> saved to your computer. This means that once you&rsquo;re satisfied with your changes, you <em>must</em> click <strong>Download File</strong> to download the updated WDT model file to your computer.</p>
-<p>Do not refresh the browser page or you will lose all your changes.</p>
-</div>
-
 
 <div class="notices tip" ><p>If you want to restore fields to their default value, right-click on a field and click <strong>Restore to default</strong>.</p>
 </div>
@@ -908,7 +902,7 @@
 <p>WDT variables make it even easier to manage WDT model tokens in the WebLogic Remote Console. When you add WDT variables to your WDT model file, you create a link between the WDT model file and a <a href="/weblogic-remote-console/userguide/providers/property-list/">property list</a>. You can then pull in properties from the property list and use them as WDT model tokens. Then, when you want to update a property value, just open the associated property list and make your changes there.</p>
 <p>You can use both standalone WDT model tokens and WDT variables in a WDT model file, but only one property list provider per WDT model file. Multiple WDT model files can use the same property list.</p>
 <h2 id="delete-a-wdt-model-file">Delete a WDT model file</h2>
-<p>This will only remove the WDT model file from the WebLogic Remote Console. It will remain in the location designated on your computer. However, if you are using the browser application (and want to keep this WDT model file), make sure to download the file before deleting it in WebLogic Remote Console.</p>
+<p>This will only remove the WDT model file from the WebLogic Remote Console. It will remain in the location designated on your computer.</p>
 <p>This will not delete any associated property list providers.</p>
 <ol>
 <li>Expand the Kiosk and beside the WDT model file, click the <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon"> icon.</li>
@@ -1413,19 +1407,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1688916311"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1684881167"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1684881167"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1688916311"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1684881167"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1688916311"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

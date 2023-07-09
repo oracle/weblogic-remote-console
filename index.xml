@@ -70,8 +70,7 @@ Contributing to the WebLogic Remote Console repository Pull requests can be made
       <guid>https://oracle.github.io/weblogic-remote-console/reference/known_issues/</guid>
       <description>This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.
 Limitations In the current release of WebLogic Remote Console, you are unable to:
-  Manage certain security data from WebLogic Server security providers that are external to the WebLogic configuration, such as roles, policies, and so on.
-  Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.</description>
+ Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.  Minimum web browser viewport size Issue The font sizes in the WebLogic Remote Console are governed by the Oracle JET Redwood style. They are larger than the ones used in the WebLogic Server Administration Console, and the entry fields are a bit larger in height and width.</description>
     </item>
     
     <item>
@@ -103,7 +102,7 @@ Dashboards are only available for Administration Server providers (in the Monito
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/property-list/</guid>
       <description>Property lists are an editable set of key-value pairs.
 You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.
-We recommend that you use the desktop application over the browser application when working with property list files.</description>
+Create a new property list  Expand the Kiosk and beside the project name, click ⋮.</description>
     </item>
     
     <item>
@@ -113,8 +112,8 @@ We recommend that you use the desktop application over the browser application w
       
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/advanced-settings/</guid>
       <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
- Edit Java system properties in the desktop application Edit Java system properties in the browser-based application Java system properties  Some possible customizations:
- Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on Kubernetes Specify an alternative location for the JDK Establish an insecure connection to an Administration Server  Edit Java system properties in the desktop application If you installed the WebLogic Remote Console desktop application, you can edit a config.</description>
+ Edit Java system properties Java system properties  Some possible customizations:
+ Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Configure a proxy server Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on Kubernetes Specify an alternative location for the JDK Establish an insecure connection to an Administration Server  Edit Java system properties You can create a file that modifies the WebLogic Remote Console according to your preferences.</description>
     </item>
     
     <item>
@@ -123,9 +122,8 @@ We recommend that you use the desktop application over the browser application w
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://oracle.github.io/weblogic-remote-console/reference/troubleshoot/</guid>
-      <description>This page provides guidelines to help troubleshoot console issues.
-Check log files for errors The WebLogic Remote Console provides log files for both front and back end processes. For instructions on how to access these log files, see Check Log Files.
-Diagnose invalid WebLogic configuration issues Administration Server The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.</description>
+      <description>Learn how to prevent and recover from issues in the WebLogic Remote Console.
+Basic troubleshooting steps  Review Known issues to see if there is a workaround. Check the log files for errors. The WebLogic Remote Console provides log files for both front and back end processes. See Check Log Files to learn how to access these files. Update to the latest versions of the WebLogic Remote Console and the WebLogic Remote Console extension.</description>
     </item>
     
     <item>
@@ -170,8 +168,10 @@ You must have the July 2021 Patch Set Update (PSU) for WebLogic Server applied t
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/upgrade/</guid>
-      <description>We encourage you to stay up to date with the latest version of the WebLogic Remote Console since it is regularly updated to work with the latest versions of WebLogic Server, including patches.
-The WebLogic Remote Console extension is periodically updated to incorporate new functionality. When upgrading the WebLogic Remote Console, check to see if there&amp;rsquo;s a newer version of the extension available so you can enjoy all of the newest features.</description>
+      <description>Upgrade to the latest WebLogic Remote Console and take advantage of the latest features in both the console and WebLogic Server.
+The WebLogic Remote Console extension is periodically updated. Check if there&amp;rsquo;s also a newer version of the extension available when you upgrade the WebLogic Remote Console.
+Delete and replace any previous versions of the extension. Keeping multiple versions of the extension installed can lead to unexpected behavior.
+ If you use config.</description>
     </item>
     
     <item>
@@ -182,7 +182,7 @@ The WebLogic Remote Console extension is periodically updated to incorporate new
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/wdt-model/</guid>
       <description>WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them &amp;lsquo;offline&amp;rsquo; before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.
 See the WebLogic Deploy Tooling documentation for more information.
-We recommend that you use the desktop application over the browser application when working with WDT model files.</description>
+The WebLogic Remote Console assumes WDT model files are in YAML format. If you upload a file with no file extension, the WebLogic Remote Console will convert it to YAML format after you save your changes.</description>
     </item>
     
     <item>

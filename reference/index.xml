@@ -25,8 +25,7 @@ Can I connect the WebLogic Remote Console to domains running in WebLogic on Orac
       <guid>https://oracle.github.io/weblogic-remote-console/reference/known_issues/</guid>
       <description>This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.
 Limitations In the current release of WebLogic Remote Console, you are unable to:
-  Manage certain security data from WebLogic Server security providers that are external to the WebLogic configuration, such as roles, policies, and so on.
-  Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.</description>
+ Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.  Minimum web browser viewport size Issue The font sizes in the WebLogic Remote Console are governed by the Oracle JET Redwood style. They are larger than the ones used in the WebLogic Server Administration Console, and the entry fields are a bit larger in height and width.</description>
     </item>
     
     <item>
@@ -35,9 +34,8 @@ Limitations In the current release of WebLogic Remote Console, you are unable to
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://oracle.github.io/weblogic-remote-console/reference/troubleshoot/</guid>
-      <description>This page provides guidelines to help troubleshoot console issues.
-Check log files for errors The WebLogic Remote Console provides log files for both front and back end processes. For instructions on how to access these log files, see Check Log Files.
-Diagnose invalid WebLogic configuration issues Administration Server The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.</description>
+      <description>Learn how to prevent and recover from issues in the WebLogic Remote Console.
+Basic troubleshooting steps  Review Known issues to see if there is a workaround. Check the log files for errors. The WebLogic Remote Console provides log files for both front and back end processes. See Check Log Files to learn how to access these files. Update to the latest versions of the WebLogic Remote Console and the WebLogic Remote Console extension.</description>
     </item>
     
     <item>

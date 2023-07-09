@@ -15,7 +15,7 @@
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/property-list/</guid>
       <description>Property lists are an editable set of key-value pairs.
 You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.
-We recommend that you use the desktop application over the browser application when working with property list files.</description>
+Create a new property list  Expand the Kiosk and beside the project name, click ⋮.</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@ We recommend that you use the desktop application over the browser application w
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/wdt-model/</guid>
       <description>WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them &amp;lsquo;offline&amp;rsquo; before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.
 See the WebLogic Deploy Tooling documentation for more information.
-We recommend that you use the desktop application over the browser application when working with WDT model files.</description>
+The WebLogic Remote Console assumes WDT model files are in YAML format. If you upload a file with no file extension, the WebLogic Remote Console will convert it to YAML format after you save your changes.</description>
     </item>
     
     <item>
