@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -39,7 +39,9 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				properties['console-backend.retryAttempts'] = config['console-backend']['retryAttempts'];
 				properties['settings.autoSync.minimumSecs'] = config['settings']['autoSync']['minimumSecs'];
 				properties['settings.autoDownloadTimer.minimumSecs'] = config['settings']['autoDownloadTimer']['minimumSecs'];
+				properties['settings.sso.maxPollCount'] = config['settings']['sso']['maxPollCount'];
 				properties['settings.sso.domainLoginUri'] = config['settings']['sso']['domainLoginUri'];
+				properties['settings.actions'] = config['settings']['actions'];
 				properties['settings.projectManagement.location'] = config['settings']['projectManagement']['location'];
 				properties['settings.projectManagement.startup.task'] = config['settings']['projectManagement']['startup']['task'];
 				properties['settings.projectManagement.startup.project'] = config['settings']['projectManagement']['startup']['project'];
@@ -88,12 +90,14 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				CFE_LOGGING_DEFAULT_LEVEL: {name: 'console-frontend.logging.defaultLevel'},
 				CFE_AUTO_SYNC_SECS: {name: 'settings.autoSync.minimumSecs'},
 				CFE_AUTO_DOWNLOAD_TIMER_SECS: {name: 'settings.autoDownloadTimer.minimumSecs'},
+				CFE_SSO_MAX_POLL_COUNT: {name: 'settings.sso.maxPollCount'},
 				CFE_SSO_DOMAIN_LOGIN_URI: {name: 'settings.sso.domainLoginUri'},
 				CFE_PROJECT_MANAGEMENT_LOCATION: {name: 'settings.projectManagement.location'},
 				CFE_IS_READONLY: {name: 'console-frontend.isReadOnly'},
 				CFE_CURRENT_THEME: {name: 'settings.themes'},
 				CFE_STARTUP_PROJECT: {name: 'settings.projectManagement.startup.project'},
 				CFE_STARTUP_TASK: {name: 'settings.projectManagement.startup.task'},
+				CFE_ACTIONS: {name: 'settings.actions'},
 				CBE_PROVIDER_ID: {name: 'console-backend.providerId'},
 				CBE_NAME: {name: 'console-backend.name'},
 				CBE_VERSION: {name: 'console-backend.version'},
@@ -131,6 +135,10 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 
 			getStartupTask: () => {
 				return properties['settings.projectManagement.startup.task'];
+			},
+
+			getSettingsActions: () => {
+				return properties['settings.actions'];
 			},
 
 			getPollingMillis: function () {
@@ -174,6 +182,10 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 			isConfiguredSso: function () {
 				const domainLoginUri = this.getSsoDomainLoginUri();
 				return CoreUtils.isNotUndefinedNorNull(domainLoginUri) && (domainLoginUri.length > 0);
+			},
+
+			getSsoMaxPollCount: function () {
+				return this.getProperty(this.PropertyName.CFE_SSO_MAX_POLL_COUNT);
 			},
 
 			getSsoDomainLoginUri: function () {

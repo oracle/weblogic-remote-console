@@ -698,11 +698,12 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       /**
        * Sends data pertaining to a lifecycle action to the CBE REST API.
        * @param {string} uri - Resource path sent to CBE REST API endpoint. This does not include the ``scheme://host:port`` portion of the URL.
+       * @param {object} dataPayload
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
        */
-      postActionData: function (uri) {
+      postActionData: function (uri, dataPayload) {
         const actionUrl = `${Runtime.getBackendUrl()}${uri}`;
-        return postData.call(this, {url: actionUrl}, {})
+        return postData.call(this, {url: actionUrl}, dataPayload)
           .then(reply => {
             reply.body['data'] = {actionUrl: actionUrl};
             return Promise.resolve(reply);

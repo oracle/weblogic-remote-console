@@ -166,10 +166,15 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
 
       /**
        * Returns JSON string representation of project, containing only the properties that should be saved to a file.
+       * @param {array:string} providerKeyExclusions - optional list of keys to remove from each provider
        * @returns {string}
        */
-      getAsDownloadFormatted: function() {
-        return JSON.stringify(getAsDownloadFormatted.call(this));
+      getAsDownloadFormatted: function(providerKeyExclusions = ['password']) {
+        const downloadFormatted = getAsDownloadFormatted.call(this);
+        downloadFormatted.dataProviders.forEach(provider => {
+          providerKeyExclusions.forEach(key => delete provider[key]);
+        });
+        return JSON.stringify(downloadFormatted);
       }
     };
 

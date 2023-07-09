@@ -39,7 +39,7 @@ describe.only('Test Suite: helpLink_test: From Server ' +
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Servers");
             await driver.sleep(4800);
             console.log("Click Help Page Link Icon");
-            element = driver.findElement(By.xpath("//div[@id=\'page-help-toolbar-icon\']/a/img"));
+            element = driver.findElement(By.xpath("//div[@id='page-help-toolbar-icon']/a/img"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             element.click();
             await driver.sleep(4800);
@@ -51,7 +51,7 @@ describe.only('Test Suite: helpLink_test: From Server ' +
             return await driver.getAllWindowHandles().then(async function (handles) {
                 console.log("Check if there are "+handles.length+" window tabs on the browser");
                 var isHandleCount2 = (handles.length == 2);
-                let expectedTitle = "ServerMBean";
+                let expectedTitle = "WebLogic Remote Console - Servers";
                 console.log("Switch to window 2")
                 driver.switchTo().window(handles[handles.length - 1]);
                 var title = await driver.getTitle();
@@ -84,13 +84,13 @@ describe.only('Test Suite: helpLink_test: From Server ' +
             return await driver.getAllWindowHandles().then(async function (handles) {
                 console.log("Check if there is 3 window tabs on the browser");
                 var isHandleCount2 = (handles.length == 3);
-                let expectedTitle = "Configure Database Connectivity";
+                let expectedTitle = "WebLogic Remote Console - JDBCSystemResources";
                 console.log("Switch to window 2")
                 driver.switchTo().window(handles[handles.length - 1]);
                 var title = await driver.getTitle();
                 console.log("Verify if this window title is "+title);
                 assert.equal(title,expectedTitle);
-                expectedTitle = "WebLogic Remote Console - JDBCSystemResources";
+                expectedTitle = "Administering JDBC Data Sources for Oracle WebLogic Server";
                 console.log("Switch to window 3")
                 driver.switchTo().window(handles[handles.length - 2]);
                 var title = await driver.getTitle();

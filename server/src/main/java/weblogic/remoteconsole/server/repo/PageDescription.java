@@ -24,11 +24,12 @@ import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageActionExternalHelpDef;
 import weblogic.remoteconsole.common.repodef.PageActionParamDef;
+import weblogic.remoteconsole.common.repodef.PageActionPollingDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
+import weblogic.remoteconsole.common.repodef.PageFieldPresentationDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyExternalHelpDef;
-import weblogic.remoteconsole.common.repodef.PagePropertyPresentationDef;
 import weblogic.remoteconsole.common.repodef.PagesPath;
 import weblogic.remoteconsole.common.repodef.SliceDef;
 import weblogic.remoteconsole.common.repodef.SliceFormDef;
@@ -296,6 +297,7 @@ public class PageDescription {
     addIfNotEmpty(builder, "helpSummaryHTML", paramDef.getHelpSummaryHTML());
     addIfNotEmpty(builder, "detailedHelpHTML", paramDef.getDetailedHelpHTML());
     addIfTrue(builder, "required", paramDef.isRequired());
+    addIfNotEmpty(builder, "presentation", pageFieldPresentationDefToJson(paramDef.getPresentationDef()));
     return builder.build();
   }
 
@@ -337,9 +339,8 @@ public class PageDescription {
       addIfNotEmpty(builder, "detailedHelpHTML", actionDef.getDetailedHelpHTML());
       addIfNotEmpty(builder, "externalHelp", pageActionExternalHelpDefToJson(actionDef.getExternalHelpDef()));
     }
-    addIfTrue(builder, "asynchronous", actionDef.isAsynchronous());
-    addIfNotEmpty(builder, "usedIf", usedIfDefToJson(actionDef.getUsedIfDef()));
     addIfNotEmpty(builder, "actions", actionDefsToJson(actionDef.getActionDefs()));
+    addIfNotEmpty(builder, "polling", pageActionPollingDefToJson(actionDef.getPollingDef()));
     return builder.build();
   }
 
@@ -361,7 +362,7 @@ public class PageDescription {
     addIfTrue(builder, "restartNeeded", writable && propertyDef.isRestartNeeded());
     addIfTrue(builder, "supportsModelTokens", propertyDef.isSupportsModelTokens());
     addIfTrue(builder, "supportsUnresolvedReferences", propertyDef.isSupportsUnresolvedReferences());
-    addIfNotEmpty(builder, "presentation", pagePropertyPresentationDefToJson(propertyDef.getPresentationDef()));
+    addIfNotEmpty(builder, "presentation", pageFieldPresentationDefToJson(propertyDef.getPresentationDef()));
   }
 
   // property info returned for both columns and forms
@@ -404,13 +405,24 @@ public class PageDescription {
     return builder.build();
   }
 
-  private JsonObject pagePropertyPresentationDefToJson(PagePropertyPresentationDef presentationDef) {
+  private JsonObject pageActionPollingDefToJson(PageActionPollingDef pollingDef) {
+    if (pollingDef == null) {
+      return null;
+    }
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    builder.add("reloadSeconds", pollingDef.getReloadSeconds());
+    builder.add("maxAttempts", pollingDef.getMaxAttempts());
+    return builder.build();
+  }
+
+  private JsonObject pageFieldPresentationDefToJson(PageFieldPresentationDef presentationDef) {
     if (presentationDef == null) {
       return null;
     }
     JsonObjectBuilder builder = Json.createObjectBuilder();
     addIfNotEmpty(builder, "inlineFieldHelp", presentationDef.getInlineFieldHelp());
     addIfTrue(builder, "displayAsHex", presentationDef.isDisplayAsHex());
+    addIfNotEmpty(builder, "width", presentationDef.getWidth());
     return builder.build();
   }
 
@@ -498,6 +510,9 @@ public class PageDescription {
 
   private String getType(BeanValueDef valueDef, boolean writable) {
     if (valueDef.isString()) {
+      if (valueDef.isMultiLineString()) {
+        return "multiLineString";
+      }
       return null; // don't write out out since it's the default type
     }
     if (valueDef.isInt()) {

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -24,10 +24,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       }
     };
 
-    function HelpForm(pdjData, rdjData, perspective) {
+    function HelpForm(pdjData, perspectiveId) {
       this.pdjData = pdjData;
-      this.rdjData = rdjData;
-      this.perspective = perspective;
+      this.perspectiveId = perspectiveId;
     }
 
     /**
@@ -118,7 +117,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
         // Create PageDataTypes instance using the form's slice
         // properties and perspective
-        const pdjTypes = new PageDataTypes(properties, this.perspective.id);
+        const pdjTypes = new PageDataTypes(properties, this.perspectiveId);
 
         for (let i = 0; i < properties.length; i++) {
           const name = properties[i].name;

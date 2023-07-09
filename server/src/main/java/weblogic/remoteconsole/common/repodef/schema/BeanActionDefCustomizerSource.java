@@ -5,7 +5,9 @@ package weblogic.remoteconsole.common.repodef.schema;
 
 import java.util.List;
 
+import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * This POJO mirrors the yaml source file format for customizing information about an action on
@@ -18,12 +20,12 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   private StringValue helpSummaryHTML = new StringValue();
   private StringValue helpDetailsHTML = new StringValue();
   private StringValue helpHTML = new StringValue();
-  private Value<UsedIfDefSource> usedIf = new Value<>(null);
   private StringValue actionMethod = new StringValue();
   private Value<BeanActionDefSource> definition = new Value<>(null);
   private Value<MBeanOperationDefSource> mbeanOperation = new Value<>(new MBeanOperationDefSource());
   private Value<ActionInputFormDefSource> inputForm = new Value<>(null);
   private ListValue<BeanActionParamDefCustomizerSource> parameters = new ListValue<>();
+  private Value<BeanActionPollingDefSource> polling = new Value<>(null);
 
   public void merge(BeanActionDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
@@ -34,8 +36,8 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
     definition.merge(from.definition, fromContainedBeanPath);
     mbeanOperation.merge(from.mbeanOperation, fromContainedBeanPath);
     inputForm.merge(from.inputForm, fromContainedBeanPath);
+    polling.merge(from.polling, fromContainedBeanPath);
     mergeHelp(from, fromContainedBeanPath);
-    mergeUsedIf(from, fromContainedBeanPath);
     mergeParameters(from, fromContainedBeanPath);
   }
 
@@ -51,12 +53,6 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
       helpSummaryHTML.copyFrom(from.helpSummaryHTML, fromContainedBeanPath);
       helpDetailsHTML.copyFrom(from.helpDetailsHTML, fromContainedBeanPath);
       helpHTML.copyFrom(from.helpHTML, fromContainedBeanPath);
-    }
-  }
-
-  private void mergeUsedIf(BeanActionDefCustomizerSource from, Path fromContainedBeanPath) {
-    if (from.usedIf.isSpecifiedInYaml()) {
-      setUsedIf(new UsedIfDefSource(from.getUsedIf(), fromContainedBeanPath));
     }
   }
 
@@ -150,16 +146,6 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
     helpHTML.setValue(value);
   }
 
-  // When this action should be enabled.
-  // If not specified, then this action should always be enabled.
-  public UsedIfDefSource getUsedIf() {
-    return usedIf.getValue();
-  }
-
-  public void setUsedIf(UsedIfDefSource value) {
-    usedIf.setValue(value);
-  }
-
   // Customizes the implementation of this action.  Optional.
   // The format is <package>.<class>.<method>
   //
@@ -173,8 +159,9 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setActionMethod(String value) {
-
-    actionMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      actionMethod.setValue(value);
+    }
   }
 
   // If this action was not configured in type.yaml or extension.yaml,
@@ -220,6 +207,17 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
 
   public void addParameter(BeanActionParamDefCustomizerSource value) {
     parameters.add(value);
+  }
+
+
+  // Info about how how the CFE should poll after invoking this action.
+  // Returns null if there the CFE should not poll.
+  public BeanActionPollingDefSource getPolling() {
+    return polling.getValue();
+  }
+
+  public void setPolling(BeanActionPollingDefSource value) {
+    polling.setValue(value);
   }
 
   public String toString() {

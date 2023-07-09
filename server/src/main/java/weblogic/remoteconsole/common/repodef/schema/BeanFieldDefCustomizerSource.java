@@ -5,7 +5,9 @@ package weblogic.remoteconsole.common.repodef.schema;
 
 import java.util.List;
 
+import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * This POJO mirrors the yaml source file format for customizing information
@@ -25,6 +27,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   private BooleanValue allowNullReference = new BooleanValue();
   private StringValue getMethod = new StringValue();
   private StringValue optionsMethod = new StringValue();
+  private Value<BeanFieldPresentationDefSource> presentation = new Value<>(new BeanFieldPresentationDefSource());
 
   public void merge(BeanFieldDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
@@ -36,6 +39,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
     allowNullReference.merge(from.allowNullReference, fromContainedBeanPath);
     getMethod.merge(from.getMethod, fromContainedBeanPath);
     optionsMethod.merge(from.optionsMethod, fromContainedBeanPath);
+    presentation.merge(from.presentation, fromContainedBeanPath);
     mergeHelp(from, fromContainedBeanPath);
   }
 
@@ -181,7 +185,9 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setGetMethod(String value) {
-    getMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      getMethod.setValue(value);
+    }
   }
 
   // Since the method's @Source annotations are relative to the bean that specified the method:
@@ -199,12 +205,25 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setOptionsMethod(String value) {
-    optionsMethod.setValue(value);
+    if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
+      optionsMethod.setValue(value);
+    }
   }
 
   // Since the method's @Source annotations are relative to the bean that specified the method:
   public Path getOptionsMethodContainedBeanPath() {
     return optionsMethod.getContainedBeanPath();
+  }
+
+  // Info about how to present this field to the user.
+  // (e.g. inline field help or whether to display a number as hex).
+  // Returns null if there are no special presentation rules for this field.
+  public BeanFieldPresentationDefSource getPresentation() {
+    return presentation.getValue();
+  }
+
+  public void setPresentation(BeanFieldPresentationDefSource value) {
+    presentation.setValue(value);
   }
 
   public String toString() {

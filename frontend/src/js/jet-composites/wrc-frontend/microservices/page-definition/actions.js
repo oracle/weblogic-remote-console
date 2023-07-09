@@ -53,21 +53,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
       }
     };
 
-    const SUPPORTED_ACTIONS = Object.freeze({
-      'start': {iconFile: 'action-start-icon-blk_24x24', visible: true, disabled: false},
-      'resume': {iconFile: 'action-resume-icon-blk_24x24', visible: true, disabled: false},
-      'suspend': {iconFile: 'action-suspend-icon-blk_24x24', visible: true, disabled: false},
-      'shutdown': {iconFile: 'action-stop-icon-blk_24x24', visible: true, disabled: false},
-      'restartSSL': {iconFile: 'action-restart-icon-blk_24x24', visible: true, disabled: false},
-      'stop': {iconFile: 'action-stop-icon-blk_24x24', visible: true, disabled: false},
-      'download': {iconFile: 'action-download-icon-blk_24x24', visible: true, disabled: false},
-      'shrink': {iconFile: 'action-shrink-icon-blk_24x24', visible: true, disabled: false},
-      'reset': {iconFile: 'action-reset-icon-blk_24x24', visible: true, disabled: false},
-      'clearStatementCache': {iconFile: 'action-clear-icon-blk_24x24', visible: true, disabled: false},
-      'pauseActions': {iconFile: 'action-pause-icon-blk_24x24', visible: true, disabled: false},
-      'resumeActions': {iconFile: 'action-resume-icon-blk_24x24', visible: true, disabled: false}
-    });
-
     /**
      *
      * @param {string} action
@@ -244,9 +229,15 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/data-management/cb
     }
 
     function getButtonIconFile(actionName) {
-      let iconFile = 'no-toolbar-icon_24x24';
-      if (typeof SUPPORTED_ACTIONS[actionName] !== 'undefined') {
-        iconFile = SUPPORTED_ACTIONS[actionName].iconFile;
+      let iconFile = 'action-empty-icon-blk_24x24';
+      const actions = Runtime.getActions();
+      if (CoreUtils.isNotUndefinedNorNull(actions)) {
+        if (actionName === 'suspend') actionName = 'suspendActions';
+        if (actionName === 'shutdown') actionName = 'shutdownActions';
+        const index = actions.buttons.map(button => button.id).indexOf(actionName);
+        if (index !== -1) {
+          iconFile = actions.buttons[index].iconFile;
+        }
       }
       return iconFile;
     }

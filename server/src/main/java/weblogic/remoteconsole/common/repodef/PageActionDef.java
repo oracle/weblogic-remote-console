@@ -53,10 +53,6 @@ public interface PageActionDef extends BeanActionDef {
   // Only leaf actions can be invoked
   public List<PageActionDef> getActionDefs();
 
-  // Returns when the action should be displayed.
-  // Returns null if the action should always be displayed.
-  public PageActionUsedIfDef getUsedIfDef();
-
   // How many rows this action needs:
   // none     - the action takes no rows (i.e. applies to the entire table)
   // one      - the action takes exactly one row
@@ -73,4 +69,10 @@ public interface PageActionDef extends BeanActionDef {
   // The input form for gathering the args needed to invoke this action.
   // Returns null if no args are needed.
   ActionInputFormDef getInputFormDef();
+
+  // Whether, and how, the CFE should auto reload the table
+  // after invoking this action.  Returns null if the CFE should
+  // not turn on auto reload.
+  public PageActionPollingDef getPollingDef();
+
 }

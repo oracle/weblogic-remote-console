@@ -1118,6 +1118,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
       function handleSsoPollingFailed(dataProvider) {
         clearSsoTokenState(dataProvider);
         // Set the state as connected so the remove will delete the data provider from the backend
+        // Removal at this point is a best effort attempt to do cleanup thus any problem is only logged
         dataProvider.state = CoreTypes.Domain.ConnectState.CONNECTED.name;
         removeDataProvider(dataProvider)
           .then(reply => {
@@ -1128,20 +1129,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               replaceConnectionsModels(dataProvider);
             }
             else {
-              ViewModelUtils.failureResponseDefaultHandling(reply.failure);
+              Logger.info(`[DATAPROVIDERS] handleSsoPollingFailed() ${dataProvider.name}: ${reply.failure}`);
             }
           })
           .catch(response => {
-            ViewModelUtils.failureResponseDefaultHandling(response.failure);
+            Logger.info(`[DATAPROVIDERS] handleSsoPollingFailed() ${dataProvider.name}: ${response.failure}`);
           });
       }
 
       function clearSsoTokenState(dataProvider) {
         // Clear the sso data provider of the token in the event of a connection/token issue
         Logger.info(`[DATAPROVIDERS] clearSsoTokenState() ${dataProvider.name} (${dataProvider.id})`);
-        if (CoreUtils.isNotUndefinedNorNull(dataProvider.expires)) {
-          DataProviderManager.cancelDataProviderSsoTokenTimer(dataProvider);
-          delete dataProvider.expires;
+        delete dataProvider.expires;
+        DataProviderManager.cancelDataProviderSsoTimer(dataProvider);
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider.status)) {
+          delete dataProvider.status.ssoid;
         }
       }
 
@@ -1235,11 +1237,28 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
           return false;
         }
 
+        // IFF already connected then return to activate the data provider
+        if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+          return false;
+        }
+
+        // Clear out any current SSO token handling if SSO login already in progress on the data provider
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider?.status?.ssoid) && (dataProvider.status.ssoid !== '')) {
+          clearSsoTokenState(dataProvider);
+        }
+
+        // Check and add back the provider into the dataproviders if the provider was previously deactivated
+        if (CoreUtils.isUndefinedOrNull(DataProviderManager.getDataProviderById(dataProvider.id))) {
+          dataProvider = DataProviderManager.createAdminServerConnection(DataProviderManager.getEntryFromDataProvider(dataProvider));
+          dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
+          replaceConnectionsModels(dataProvider);
+        }
+
         Logger.info(`[DATAPROVIDERS] performAdminServerConnectionSsoLogin() ${dataProvider.name}`);
         DataProviderManager.activateSsoAdminServerConnection(dataProvider)
           .then(reply => {
             // Proceed to exec the browser and initiate the login process...
-            // TBD - Do URL and valid protocol checks earlier or cleanup in the edit action
+            // The domain URL and valid protocol checks can be earlier in the edit action
             var loginUrl = null;
             var url = dataProvider.url.trim();
             if (url.length > 0) url = (url.substring(url.length - 1) === '/') ? url.slice(0, -1) : url;
@@ -2432,11 +2451,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider',  'wrc-frontend/micr
               // Check the insecure and sso flags as these required removing the current dataprovider instance upon change
               const insecureChange = getBooleanSettingChanged(dataProvider?.settings?.insecure, self.dialogFields().insecureCheckbox.length);
               const ssoChange = getBooleanSettingChanged(dataProvider?.settings?.sso, self.dialogFields().ssoCheckbox.length);
+              if (ssoChange) clearSsoTokenState(dataProvider);
               if ((removeRequired || insecureChange || ssoChange) && (dataProvider.state !== CoreTypes.Domain.ConnectState.DISCONNECTED.name)) {
                 removeDataProvider(dataProvider)
                   .then(reply =>{
                     if (reply.succeeded) {
-                      clearSsoTokenState(dataProvider);
                       dataProvider = updateDataProvider(dataProvider, self.dialogFields());
                       dataProvider = DataProviderManager.createAdminServerConnection(dataProvider);
                       // Set state to disabled, because we need to set

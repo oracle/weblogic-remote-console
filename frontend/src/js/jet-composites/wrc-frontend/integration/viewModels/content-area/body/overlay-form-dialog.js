@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -74,6 +74,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       this.readonly = ko.observable(Runtime.isReadOnly());
       this.introductionHTML = ko.observable();
 
+      this.responseMessage = ko.observable('');
+
+      this.hasLinkedResource = ko.observable(false);
+
       this.showHelp = ko.observable(false);
       this.showInstructions = ko.observable(true);
       this.helpDataSource = ko.observableArray([]);
@@ -129,9 +133,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
       this.onSave = ko.observable(
         function (event) {
-          // clear treenav selection
-          viewParams.signaling.navtreeSelectionCleared.dispatch();
-          saveBean('update');
+          if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.onSubmit)) {
+            if (isActionInputForm(self.pdjData)) {
+              const results = createActionInputFormPayload();
+              delete results.properties;
+              const pageState = hasIncompleteRequiredFields(results);
+              if (pageState.succeeded) {
+                viewParams.overlayDialogParams.onSubmit(self.rdjData, results, {action: viewParams.overlayDialogParams.action, label: viewParams.overlayDialogParams.title});
+                closeDialog();
+              }
+              else {
+                MessageDisplaying.displayErrorMessagesHTML(
+                  pageState.messages,
+                  pageState.summary,
+                  1500
+                );
+              }
+            }
+          }
+          else {
+            // clear treenav selection
+            viewParams.signaling.navtreeSelectionCleared.dispatch();
+            saveBean('update');
+          }
         }
       );
 
@@ -159,7 +183,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       this.helpIconClick = function (event) {
         new HelpForm(viewParams).handleHelpIconClicked(event);
       };
-
+      
+      this.onOjFocus = (event) => {
+        ViewModelUtils.setFocusFirstIncompleteField('input.oj-inputtext-input, input.oj-inputpassword-input, textarea.oj-textarea-input');
+      };
+      
       this.chosenItemsChanged = function (event) {
         const fieldName = event.currentTarget.id;
         const fieldValue = event.detail.value;
@@ -270,12 +298,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         return results.data;
       };
 
-      function showModalDialog(title, propertyLabel) {
+      function showModalDialog(title, linkedResource, formLayout) {
+        self.hasLinkedResource(CoreUtils.isNotUndefinedNorNull(linkedResource) && CoreUtils.isNotUndefinedNorNull(linkedResource.label));
+
+        if (self.hasLinkedResource()) {
+          const ele = document.getElementById('overlay-form-linked-resource');
+          if (ele !== null) {
+            ele.innerText = linkedResource.label;
+          }
+        }
+
         const overlayFormDialog = document.getElementById('overlayFormDialog');
-        overlayFormDialog.setAttribute('dialog-title', title);
-        const ele = document.getElementById('linked-property-label');
-        if (ele !== null) ele.innerText = propertyLabel;
-        overlayFormDialog.open();
+        if (CoreUtils.isNotUndefinedNorNull(overlayFormDialog)) {
+          overlayFormDialog.setAttribute('dialog-title', title);
+          document.documentElement.style.setProperty('--overlayDialog-calc-min-width', `${formLayout.minWidth}px`);
+          overlayFormDialog.open();
+        }
       }
 
       this.isWizardForm = () => {
@@ -312,6 +350,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       };
 
       function renderToolbarButtons() {
+        if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.submitIconFile)) {
+          self.i18n.icons.create.iconFile = viewParams.overlayDialogParams.submitIconFile;
+        }
+        if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.submitButtonLabel)) {
+          self.i18n.icons.create.tooltip = viewParams.overlayDialogParams.submitButtonLabel;
+        }
+
         const ele = document.getElementById('form-toolbar-save-button');
         if (ele !== null) ele.style.display = 'inline-flex';
         resetSaveButtonDisplayState([{id: 'create'}]);
@@ -334,6 +379,50 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           self.i18n.buttons.save.label(self.i18n.icons[button.id].tooltip);
           self.i18n.buttons.save.iconFile(self.i18n.icons[button.id].iconFile);
         });
+      }
+      
+      function hasIncompleteRequiredFields(results) {
+        const pageState = {succeeded: true, messages: [], summary: ''};
+
+        if (CoreUtils.isNotUndefinedNorNull(results.properties)) {
+          const pdjTypes = new PageDataTypes(results.properties, viewParams.perspective.id);
+          results.properties.forEach((property) => {
+            if (property.required) {
+              const value = pdjTypes.getConvertedObservableValue(property.name, results.data[property.name].value);
+              const completed = (typeof value !== 'undefined' && value !== null);
+              if (!completed) {
+                pageState.messages.push({
+                  severity: 'error',
+                  detail: oj.Translations.getTranslatedString('wrc-create-form.pageState.error.detail', property.label)
+                });
+                pageState.succeeded = false;
+              }
+            }
+          });
+        }
+
+        if (!pageState.succeeded) {
+          pageState.summary = oj.Translations.getTranslatedString('wrc-create-form.pageState.error.summary');
+        }
+
+        return pageState;
+      }
+      
+      function setResponseMessageVisibility(visible) {
+        const div = document.getElementById('overlay-response-message');
+        if (div !== null) {
+          div.style.display = (visible ? 'inline-flex' : 'none');
+        }
+      }
+
+      function displayFailureMessage(failureMessage) {
+        setResponseMessageVisibility(true);
+        self.responseMessage(`<p>${failureMessage}</p>`);
+      }
+      
+      function clearFailureMessage() {
+        self.responseMessage('<p></p>');
+        setResponseMessageVisibility(false);
       }
 
       function saveBean(eventType) {
@@ -436,9 +525,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         const pathSegments = PageDefinitionUtils.pathSegmentsFromIdentity(identity);
         Logger.info(`[OVERLAYFORMDIALOG] path=${pathSegments.join('/')}`);
 
-        viewParams.onSaveSuceeded(eventType);
-        viewParams.onFormRefresh();
-        viewParams.onSaveContent();
+        if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.onSaveSuceeded)) {
+          viewParams.overlayDialogParams.onSaveSuceeded(eventType);
+        }
+        
+        if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.onFormRefresh)) {
+          viewParams.overlayDialogParams.onFormRefresh();
+        }
+        
+        if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.onSaveContent)) {
+          viewParams.overlayDialogParams.onSaveContent();
+        }
+
         closeDialog();
       }
 
@@ -450,7 +548,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       function renderPage() {
         function getIsEdit(pdjData) {
           let rtnval;
-          if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm) || CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable)) {
+          if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm) ||
+            CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable)
+          ) {
+            rtnval = true;
+          }
+          else if (isActionInputForm(pdjData)) {
             rtnval = true;
           }
           else if (CoreUtils.isNotUndefinedNorNull(pdjData.createForm)) {
@@ -459,6 +562,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           return rtnval;
         }
 
+        function getBindHTML(pdjData, rdjData) {
+          let bindHtml = '<p>';
+          if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.instructions)) {
+            bindHtml = `<p>${viewParams.overlayDialogParams.instructions}</p>`;
+          }
+          else if (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML)) {
+            bindHtml = pdjData.introductionHTML;
+          }
+          else if (CoreUtils.isNotUndefinedNorNull(rdjData.introductionHTML)) {
+            bindHtml = rdjData.introductionHTML;
+          }
+          return bindHtml;
+        }
+        
         var pdjData = viewParams.parentRouter.data.pdjData();
         var rdjData = viewParams.parentRouter.data.rdjData();
 
@@ -468,24 +585,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         // update the wls-form component
         self.pdjData = viewParams.parentRouter.data.pdjData();
         self.rdjData = viewParams.parentRouter.data.rdjData();
-
-        const toggleHelpIntroduction = self.i18n.introduction.toggleHelp.text.replace('{0}','<img src=\'js/jet-composites/wrc-frontend/1.0.0/images/' + self.i18n.introduction.toggleHelp.iconFile + '\'>');
-        const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
+        
+        const bindHtml = getBindHTML(self.pdjData, self.rdjData);
         self.introductionHTML({ view: HtmlUtils.stringToNodeArray(bindHtml) });
-
+        
         pdjData = viewParams.parentRouter.data.pdjData();
         rdjData = viewParams.parentRouter.data.rdjData();
-
+        
         if (CoreUtils.isNotUndefinedNorNull(rdjData) && CoreUtils.isNotUndefinedNorNull(pdjData)) {
           self.perspectiveMemory.contentPage.nthChildren = [];
 
           renderFormLayout(pdjData, rdjData);
         }
-      }
-
-      function getIntroductionHtml(pdjIntro, rdjIntro) {
-        const bindHtml = (CoreUtils.isNotUndefinedNorNull(rdjIntro) ? rdjIntro : pdjIntro);
-        return (CoreUtils.isNotUndefinedNorNull(bindHtml) ? bindHtml : '<p>');
       }
 
       function rerenderWizardForm(pdjData, rdjData, direction, removed) {
@@ -520,15 +631,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         createHelp(pdjData);
 
         self.overlayFormDom({ view: HtmlUtils.stringToNodeArray(div.outerHTML), data: self });
+        
+        const onRender = (pdjData) => {
+          Context.getPageContext().getBusyContext().whenReady()
+            .then(() => {
+              renderSpecialHandlingFields();
+              showModalDialog(
+                viewParams.overlayDialogParams.title,
+                viewParams.overlayDialogParams.linkedResource,
+                viewParams.overlayDialogParams.formLayout
+              );
+              
+              setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+            });
+        };
 
-        setTimeout(() => {
-            Context.getPageContext().getBusyContext().whenReady()
-              .then( () => {
-                renderSpecialHandlingFields();
-                showModalDialog(viewParams.title, viewParams.property.name);
-              });
-          }, 5
-        );
+        // Call setTimeout passing in the callback function and the
+        // timeout milliseconds. Here, we use the bind() method to
+        // pass parameters (pdjData, in this case) to the callback.
+        setTimeout(onRender.bind(undefined, pdjData), 5);
+        // DON'T PUT ANY CODE IN THIS FUNCTION AFTER THIS POINT !!!
       }
 
       function setFormContainerMaxHeight(withHistoryVisible){
@@ -584,8 +706,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         const dataPayload = results.data;
 
         for (const [key, value] of Object.entries(dataPayload)) {
-          if (CoreUtils.isNotUndefinedNorNull(value) && typeof value.value !== 'undefined') {
-            if (typeof rdjData.data[key] === 'undefined') {
+          if (CoreUtils.isNotUndefinedNorNull(value) &&
+            CoreUtils.isNotUndefinedNorNull(value.value)
+          ) {
+            if (CoreUtils.isUndefinedOrNull(rdjData.data[key])) {
               rdjData.data[key] = {value: undefined};
             }
             rdjData.data[key].value = value.value;
@@ -594,12 +718,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
         const pdjTypes = new PageDataTypes(properties, viewParams.perspective.id);
 
-        if (typeof rdjData.data !== 'undefined') {
+        if (CoreUtils.isNotUndefinedNorNull(rdjData.data)) {
           //formLayout is built as single column, so just pass in the params as true.
           populateFormLayout(properties, formLayout, pdjTypes, rdjData.data, true, false)
         }
 
         return div;
+      }
+
+      function isActionInputForm(pdjData) {
+        return (CoreUtils.isNotUndefinedNorNull(pdjData.actionInputForm));
       }
 
       function renderForm(pdjData, rdjData) {
@@ -628,12 +756,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           div.append(formLayout);
         }
         else {
-          if (isSingleColumn) {
-            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({labelWidthPcnt: '32%', maxColumns: '1'} );
+          if (isActionInputForm(pdjData)) {
+            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout(viewParams.overlayDialogParams.formLayout.options);
+            div.append(formLayout);
+          }
+          else if (isSingleColumn) {
+            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({labelWidthPcnt: '32%', maxColumns: '1'});
             div.append(formLayout);
           }
           else {
-            formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({labelWidthPcnt: '45%', maxColumns: '2'} );
+            formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({labelWidthPcnt: '45%', maxColumns: '2'});
             div.append(formLayout);
           }
         }
@@ -669,7 +801,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           if (self.isWizardForm()) {
             self.createForm.backingDataAttributeValueChanged(name, newValue);
           }
-          else {
+          else if (!isActionInputForm(self.pdjData)) {
             resetSaveButtonDisabledState({disabled: !self.isDirty()});
             if (!self[`${PageDefinitionCommon.FIELD_UNSET}${name}`]()) {
               PageDefinitionUnset.addPropertyHighlight(name);
@@ -783,9 +915,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           else if (pdjTypes.isSecretType(name)) {
             field = PageDefinitionFields.createInputPassword('cfe-form-input-password');
           }
-          else if (pdjTypes.isArray(name) || pdjTypes.isPropertiesType(name)) {
+          else if (pdjTypes.isArray(name) || pdjTypes.isPropertiesType(name) || pdjTypes.isMultiLineStringType(name)) {
             const options = {
-              'className': 'cfe-form-input-textarea',
+              'className': (pdjTypes.getWidthPresentation(name) !== null ? pdjTypes.getWidthPresentation(name) : 'cfe-form-input-textarea'),
               'resize-behavior': 'vertical',
               'placeholder': pdjTypes.getInLineHelpPresentation(name),
               'readonly': pdjTypes.isReadOnly(name) || isReadOnly
@@ -816,7 +948,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           }
           else {
             const options = {
-              'className': pdjTypes.isNumberType(name)? 'cfe-form-input-integer-sm' : 'cfe-form-input-text',
+              'className': pdjTypes.isNumberType(name) ? 'cfe-form-input-integer-sm' : (pdjTypes.getWidthPresentation(name) !== null ? pdjTypes.getWidthPresentation(name) : 'cfe-form-input-text'),
               'placeholder': pdjTypes.getInLineHelpPresentation(name),
               'readonly': isReadOnly
             };
@@ -848,9 +980,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             if (typeof self[observableName] !== 'undefined') {
               if (!self.isWizardForm()) {
                 self[observableName](observableValue);
-                //the above call actually triggers the subscription and mark this as dirty.
-                //since the value hasn't really changed, we need to remove it from the dirtyField list.
-                self.formPayloadManager.removeDirtyField(name);
+                if (CoreUtils.isNotUndefinedNorNull(self.formPayloadManager)) {
+                  //the above call actually triggers the subscription and mark this as dirty.
+                  //since the value hasn't really changed, we need to remove it from the dirtyField list.
+                  self.formPayloadManager.removeDirtyField(name);
+                }
               }
             }
             else {
@@ -1009,7 +1143,36 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
         return results;
       }
-
+      
+      function createActionInputFormPayload() {
+        const results = {properties: self.pdjData.actionInputForm.properties, data: null};
+        results.data = getActionInputFormFieldValues(results.properties);
+        return results;
+      }
+      
+      function getActionInputFormFieldValues(properties) {
+        const data = self.rdjData.data;
+        let dataPayload = {};
+        
+        if (properties.length > 0) {
+          const pdjTypes = new PageDataTypes(properties, viewParams.perspective.id);
+          
+          //loop through all of the dirtyFields
+          for (const property of properties) {
+            const fieldObv = self[`${PageDefinitionCommon.FIELD_VALUES}${property.name}`];
+            
+            if (CoreUtils.isNotUndefinedNorNull(fieldObv)) {
+              const fieldValue = fieldObv();
+              const value = pdjTypes.getConvertedObservableValue(property.name, fieldValue);
+              dataPayload[property.name] = {value: value};
+              self.dirtyFields.delete(property.name);
+            }
+          }
+        }
+        
+        return dataPayload;
+      }
+      
       function getSliceProperties(pdjData) {
         let properties;
         if (self.isWizardForm()) {
@@ -1018,6 +1181,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         else {
           if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm)) {
             properties = pdjData.sliceForm.properties;
+          }
+          else if (isActionInputForm(pdjData)) {
+            properties = pdjData.actionInputForm.properties;
           }
 
           if (CoreUtils.isUndefinedOrNull(properties)) properties = pdjData.createForm.properties;

@@ -26,17 +26,30 @@ public class CustomizerInvocationUtils {
     return null;
   }
 
+  public static boolean methodExists(String customizerName) {
+    return (getMethod(customizerName, false)) != null;
+  }
+
   public static Method getMethod(String customizerName) {
+    return getMethod(customizerName, true);
+  }
+
+  public static Method getMethod(String customizerName, boolean mustExist) {
     int idx = customizerName.lastIndexOf(".");
     if (idx < 1 || idx >= customizerName.length() - 1) {
       throw new AssertionError("Not <java class name>.<method name> : " + customizerName);
     }
     String javaClassName = customizerName.substring(0, idx);
-    Class clazz = findJavaClass(javaClassName);
-    String methodName = customizerName.substring(idx + 1);
-    Method method = findMethod(clazz, methodName);
-    checkThrows(method);
-    return method;
+    Class clazz = findJavaClass(javaClassName, mustExist);
+    if (clazz != null) {
+      String methodName = customizerName.substring(idx + 1);
+      Method method = findMethod(clazz, methodName, mustExist);
+      if (method != null) {
+        checkThrows(method);
+      }
+      return method;
+    }
+    return null;
   }
 
   public static void checkSignature(Method method, Type returnTypeWant, List<Type> argTypesWant) {
@@ -72,7 +85,7 @@ public class CustomizerInvocationUtils {
     throw new AssertionError(method + " must throw not throw typed exceptions");
   }
 
-  private static Method findMethod(Class clazz, String methodName) {
+  private static Method findMethod(Class clazz, String methodName, boolean mustExist) {
     if (StringUtils.isEmpty(methodName)) {
       throw new AssertionError("method name not specified");
     }
@@ -86,22 +99,24 @@ public class CustomizerInvocationUtils {
         }
       }
     }
-    if (rtn == null) {
+    if (rtn == null && mustExist) {
       throw new AssertionError(clazz + " does not have a public method named " + methodName);
     }
     return rtn;
   }
 
-  public static Class findJavaClass(String javaClassName) {
+  private static Class findJavaClass(String javaClassName, boolean mustExist) {
     if (StringUtils.isEmpty(javaClassName)) {
       throw new AssertionError("javaClassName not specified");
     }
-    Class clazz = null;
     try {
       return Class.forName(javaClassName);
     } catch (ClassNotFoundException e) {
-      throw new AssertionError("Can't find class " + javaClassName);
+      if (mustExist) {
+        throw new AssertionError("Can't find class " + javaClassName);
+      }
     }
+    return null;
   }
 
   private static void rethrow(Throwable t) {
