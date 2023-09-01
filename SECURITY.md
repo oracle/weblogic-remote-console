@@ -19,11 +19,11 @@ security features are welcome on GitHub Issues.
 
 ## Security updates, alerts and bulletins
 
-Security updates will be released on a regular cadence. Many of our projects
-will typically release security fixes in conjunction with the
-Oracle Critical Patch Update program. Additional
-information, including past advisories, is available on our [security alerts][4]
-page.
+There are two different ways to address security fixes in the WebLogic Remote Console:
+
+Any Security fixes required by the WebLogic Remote Console application will be released soon after the Security vulnerability has been reported/found.
+Fixes for the WebLogic Remote Console components that run on WebLogic Server will be addressed on a quarterly basis in conjunction with other CPU fixes.
+@lfeigen could you review?
 
 ## Security-related information
 
