@@ -1,0 +1,135 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.WebDeploymentMBean
+- weblogic.management.configuration.ComponentMBean
+derivedTypes:
+- weblogic.management.configuration.WebServiceComponentMBean
+descriptionHTML: 'Provides methods for configuring a Java EE web application that
+  is deployed on a WebLogic Server instance. WebLogic Server instantiates this interface
+  only when you deploy a web application. <p>This interface can configure web applications
+  that are deployed as a WAR file or an exploded directory. </p> '
+name: weblogic.management.configuration.WebAppComponentMBean
+properties:
+- defaultValue:
+    value:
+      value: null
+  deprecated: '8.0.0.0 Use weblogic.xml. '
+  descriptionHTML: '<p>Provides the name of the AuthFilter Servlet class, which will
+    be called before and after all authentication and authorization checks in the
+    Web Application.</p> '
+  name: AuthFilter
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic
+  deprecated: '8.1.0.0 Use weblogic.xml. '
+  descriptionHTML: '<p>Provides the name of the Realm in the Basic Authentication
+    HTTP dialog box, which pops up on the browsers. authRealmName is now set in weblogic.xml.</p> '
+  name: AuthRealmName
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '8.1.0.0 Use weblogic.xml or update using console. '
+  descriptionHTML: '<p>Specifies whether the target should automatically generate
+    an HTML directory listing if no suitable index file is found.</p> <p/> <p>Indicates
+    whether or not to automatically generate an HTML directory listing if no suitable
+    index file is found.</p> '
+  name: IndexDirectoryEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p> Per-application property to determine the behavior of monitoring
+    in JAX-RS applications. When the property is set to <code>true</code> the monitoring
+    is turned on (if not overridden by properties set directly in application). If
+    the property is set to <code>false</code> the monitoring for all JAX-RS applications
+    is disabled. If the property is not set then the global property (WebAppContainerMBean.isJaxRsMonitoringDefaultBehavior())
+    is being considered. </p> '
+  name: JaxRsMonitoringDefaultBehavior
+  type: java.lang.Boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  deprecated: '8.0.0.0 Use weblogic.xml. '
+  descriptionHTML: '<p>Specifies whether classes loaded in the WEB-INF directory will
+    be loaded in preference to classes loaded in the application or system calssloader.</p>
+    <p/> <p>Deprecated the setting from console beginning with version 8.1. You must
+    now set this in weblogic.xml.</p> '
+  name: PreferWebInfClasses
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  deprecated: ' '
+  descriptionHTML: '<p>Indicates whether servlet extensions should be treated as though
+    they are lower case even if they are written in upper case.</p> <p/> <p>If True,
+    the server treats all .extensions except .html as lower case. This is only necessary
+    on WindowsNT. This property is being deprecated. The extension comparision will
+    be case insensitive by default on Win32.</p> '
+  name: ServletExtensionCaseSensitive
+  restartNeeded: true
+  supported: false
+  transient: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  deprecated: '8.1.0.0 Use weblogic.xml or update using console. '
+  descriptionHTML: '<p>The amount of time (in seconds) that WebLogic Server waits
+    to check if a servlet was modified and needs to be reloaded.</p> <p/> <p>How often
+    WebLogic checks whether a servlet has been modified, and if so reloads it. When
+    the value is set to -1, the servlet is never reloaded, and when the vlue is set
+    to 0, the servlet is reloaded after each check.</p> '
+  name: ServletReloadCheckSecs
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  deprecated: '8.0.0.0 Use weblogic.xml or update using console. '
+  descriptionHTML: '<p>Specifies whether runtime MBeans will be created for session
+    monitoring.</p> <p/> <p>If true, then runtime MBeans will be created for sessions;
+    otherwise, they will not.</p> '
+  name: SessionMonitoringEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 5
+  deprecated: '8.1.0.0 Use weblogic.xml or update using console. '
+  descriptionHTML: '<p>This provides size of the pool used for single threaded mode
+    servlets. It</p> <p/> <p>defines the size of the pool used for SingleThreadedModel
+    instance pools.</p> '
+  name: SingleThreadedServletPoolSize
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+roles:
+  allowed:
+  - Deployer

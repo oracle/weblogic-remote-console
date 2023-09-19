@@ -136,8 +136,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.onSubmit)) {
             if (isActionInputForm(self.pdjData)) {
               const results = createActionInputFormPayload();
-              delete results.properties;
               const pageState = hasIncompleteRequiredFields(results);
+              delete results.properties;
               if (pageState.succeeded) {
                 viewParams.overlayDialogParams.onSubmit(self.rdjData, results, {action: viewParams.overlayDialogParams.action, label: viewParams.overlayDialogParams.title});
                 closeDialog();
@@ -567,11 +567,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.instructions)) {
             bindHtml = `<p>${viewParams.overlayDialogParams.instructions}</p>`;
           }
-          else if (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML)) {
-            bindHtml = pdjData.introductionHTML;
-          }
           else if (CoreUtils.isNotUndefinedNorNull(rdjData.introductionHTML)) {
             bindHtml = rdjData.introductionHTML;
+          }
+          else if (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML)) {
+            bindHtml = pdjData.introductionHTML;
           }
           return bindHtml;
         }
@@ -736,6 +736,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         div.style.display = 'block';
 
         const properties = getSliceProperties(pdjData);
+
+        if (isActionInputForm(pdjData)) {
+          for (let i = 0; i < properties.length; i++) {
+            if (CoreUtils.isUndefinedOrNull(properties[i].type)) properties[i]['presentation'] = {width: 'lg'};
+          }
+        }
 
         // Setup PDJ type information for the properties being handled on this form
         const pdjTypes = new PageDataTypes(properties, viewParams.perspective.id);

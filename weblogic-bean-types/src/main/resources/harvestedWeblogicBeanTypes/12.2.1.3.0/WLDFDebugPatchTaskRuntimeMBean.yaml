@@ -1,0 +1,33 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.TaskRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface provides monitoring over activation and deactivation
+  tasks for dynamic debug patches '
+name: weblogic.management.runtime.WLDFDebugPatchTaskRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ActivationTask
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ApplicationName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ModuleName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: Patches
+  type: java.lang.String

@@ -1,0 +1,189 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.SingletonServiceBaseMBean
+- weblogic.management.configuration.TargetMBean
+derivedTypes:
+- weblogic.management.configuration.JTAMigratableTargetMBean
+descriptionHTML: 'A target that is suitable for services that shall be active on at
+  most one server of a cluster at a time. '
+name: weblogic.management.configuration.MigratableTargetMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of servers that are candidates to host the migratable
+    services deployed to this migratable target. If the constrainedCandidateServers
+    list is empty, all servers in the cluster are returned. If the constrainedCandidateServers
+    list is not empty, only those servers will be returned. The user-preferred server
+    will be the first element in the list.</p> '
+  name: AllCandidateServers
+  relationship: reference
+  transient: true
+  type: weblogic.management.configuration.ServerMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the cluster this singleton service is associated with.</p> '
+  name: Cluster
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.ClusterMBean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The (user-restricted) list of servers that can host the migratable
+    services deployed to this migratable target. The migratable service will not be
+    allowed to migrate to a server that is not in the returned list of servers.</p>  <p>For
+    example, this feature may be used to configure two servers that have access to
+    a dual-ported ported disk. All servers in this list must be part of the cluster
+    that is associated with the migratable target.</p> '
+  name: ConstrainedCandidateServers
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.ServerMBean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns true if the MigratableTarget is critical to the overall
+    health of the WLS Server</p> '
+  name: Critical
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: manual
+  descriptionHTML: '<p>Defines the type of migration policy to use for the services
+    hosted by this migratable target. Valid options are:</p> <ul> <li><code>Manual
+    Service Migration Only</code> Indicates that no automatic migration of services
+    hosted by this migratable target will occur.</li> <li><code>Auto-Migrate Exactly-Once
+    Services</code> Indicates that if at least one Managed Server in the candidate
+    server list is running, the services hosted by this migratable target will be
+    active somewhere in the cluster if servers should fail or are administratively
+    shut down (either gracefully or forcibly). For example, it is a recommended best
+    practice to use this policy when a migratable target hosts a path service, so
+    if its preferred server fails or is shut down, the path service will automatically
+    migrate to another candidate server, and so will always be active in the cluster.
+    <p><b>Notes</b> <br/>This value can lead to target grouping on a server member.
+    For example, if you have five exactly-once migratable targets and only one Managed
+    Server is started in the cluster, then all five targets will be activated on that
+    server. <br/>This policy does not apply for JTA service migration.</p></li> <li><code>Auto-Migrate
+    Failure-Recovery Services</code> Indicates that the services hosted by this migratable
+    target will only start if the migratable target''s User Preferred Server (UPS)
+    is started. If an administrator manually shuts down the UPS, either gracefully
+    or forcibly, then a failure-recovery service will not migrate. However, if the
+    UPS fails due to an internal error, then the service will be migrated to another
+    candidate server. If such a candidate server is unavailable (due to either a manual
+    shutdown or an internal failure), then the migration framework will first attempt
+    to reactivate the service on its UPS server. If the UPS server is not available
+    at that time, then the service will be migrated to another candidate server.</li>
+    <li><code>Auto-Migrate Shutdown-Recovery Services</code> Indicates that the services
+    hosted by this migratable target will migrate to one of the candidate servers,
+    if server is administratively shut down (either gracefully or forcibly). Once
+    recovery is done, service is migrated back to failed server.</li> </ul> '
+  legalValues:
+  - manual
+  - exactly-once
+  - failure-recovery
+  - shutdown-recovery
+  name: MigrationPolicy
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether or not the post-deactivation script is allowed
+    to run on a different machine.</p>  <p>Normally, when auto migration occurs, the
+    post-deactivation script will be run on the service''s current location, and the
+    pre-activation script on the service''s new location. If the current location
+    is unreachable for some reason, this value will be checked to see if it is safe
+    to run it on the service''s new machine.</p>  <p>This is useful if the post-deactivation
+    script controls access to a networked resource and does not need any data from
+    the current machine.</p> '
+  name: NonLocalPostAllowed
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 6
+  descriptionHTML: '<p>Specifies how many restart attempts to make before migrating
+    the failed service.</p>  <p>Note that these are consecutive attempts. If the value
+    is set to 6, and the service restart fails 5 times before succeeding, but then
+    fails again later, it will not instantly migrate. Each failure gets its own count
+    of restart attempts.</p>  <p>A value of 0 is identical to setting getRestartOnFailure
+    to false. A value of -1 indicates the service should <i> never</i> be migrated;
+    instead, it will be restarted until it either works or the server shuts down.</p> '
+  name: NumberOfRestartAttempts
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the path to the post-migration script to run after
+    a migratable target is fully deactivated. The script <i>must</i> be in the <code><i>MIDDLEWARE_HOME</i>/user_projects/domains/<i>mydomain</i>/bin/service_migration</code>
+    directory.</p>  <p>After the migratable target is deactivated, if there is a script
+    specified, <i>and</i> Node Manager is available, then the script will run. Specifying
+    a script without an available Node Manager will result in an error upon migration.</p> '
+  name: PostScript
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether or not a failure during execution of the
+    post-deactivation script is fatal to the migration.</p>  <p>If it is fatal, the
+    migratable target will <i>not</i> be automatically migrated until an administrator
+    manually migrates it to a server, thus reactivating it.</p>  <p><b>Note:</b> Enabling
+    this value will result in weakening the exactly-once guarantee. It is provided
+    to prevent more dangerous data corruption if the post-deactivation script fails.
+    Also if this value is enabled, then the script may be called more than once by
+    the migration framework after the Migratable Target is deactivated or the server
+    or machine hosting the Migratable Target crashed or is network partitioned. The
+    script is expected not to return different exit values when invoked multiple times
+    in such scenarios.</p> '
+  name: PostScriptFailureFatal
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the path to the pre-migration script to run before
+    a migratable target is actually activated. The script <i>must</i> be in the <code><i>MIDDLEWARE_HOME</i>/user_projects/domains/<i>mydomain</i>/bin/service_migration</code>
+    directory.</p>  <p>Before the migratable target is activated, if there is a script
+    specified, <i>and</i> Node Manager is available, then the script will run. Specifying
+    a script without an available Node Manager will result in an error upon migration.</p>  <p>If
+    the script fails or cannot be found, migration will not proceed on the current
+    server, and will be tried on the next suitable server. This could be the next
+    server in the candidate server list, or in the cluster, if there is no candidate
+    server list.</p> '
+  name: PreScript
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether or not a failed service will first be deactivated
+    and reactivated in place, instead of being migrated.</p>  <p>The number of restart
+    attempts is controlled by getNumberOfRestartAttempts. Once these restart attempts
+    are exhausted, the service will migrate. A restarting migratable target will deactivate
+    all services on it in order, then reactivate them all.</p> '
+  name: RestartOnFailure
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 30
+  descriptionHTML: '<p>Specifies how many seconds to wait in between attempts to restart
+    the failed service.</p> '
+  name: SecondsBetweenRestarts
+  type: int
+  writable: true

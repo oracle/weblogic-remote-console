@@ -1,0 +1,327 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.TargetableBean
+derivedTypes:
+- weblogic.j2ee.descriptor.wl.QueueBean
+- weblogic.j2ee.descriptor.wl.UniformDistributedDestinationBean
+- weblogic.j2ee.descriptor.wl.TopicBean
+descriptionHTML: '<p>This bean contains all the attributes of destinations that are
+  common between queues and topics.</p> '
+name: weblogic.j2ee.descriptor.wl.DestinationBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specifies whether messages landing on this destination should
+    attach the credential of the sending user. You should consult the JMSXUserID documentation
+    in <i>Programming WebLogic JMS</i> before using this feature.</p>  <ul> <li><b>Supports</b>
+    The JMSXUserID property is set with the security principal of the sending user
+    if requested. The sender can request its identity to be attached to its messages
+    by using a connection factory with the AttachJMSXUserID security property enabled.</li>  <li><b>Never</b>
+    The JMSXUserID property is never set with the security principal of the sending
+    user no matter how the AttachJMSXUserID property is configured on connection factories.</li>  <li><b>Always</b>
+    The JMSXUserID property is always set with the security principal of the sending
+    user no matter how the AttachJMSXUserID property is configured on connection factories.</li>
+    </ul>  <p>This attribute is dynamically configurable. A dynamic change of this
+    attribute will affect only messages received after the update has been made.</p> '
+  legalValues:
+  - supports
+  - never
+  - always
+  name: AttachSender
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specifies whether consumption is paused on a destination at
+    startup.</p>  <ul> <li><b>default</b> If a JMS template is specified, then this
+    value inherits the template''s Consumption Paused At Startup value. If no JMS
+    template is configured for the destination, then the Default value is equivalent
+    to <b>false</b>.</li>  <li><b>false</b> Consumption Paused is explicitly disabled
+    for this destination. </li>  <li><b>true</b> Consumption Paused is explicitly
+    turned on for this destination.</li> </ul> '
+  name: ConsumptionPausedAtStartup
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether WebLogic Server creates a system-generated
+    unit-of-order name based on the domain, JMS server, and destination name. Any
+    message arriving at this destination that does not already belong to a unit-of-order
+    is assigned this default name.</p>  <p>This field is recommended for advanced
+    use. Generally, it is  recommended to set a message unit-of-order using application
+    calls or connection factory configuration. When relying on a destination default
+    unit order to enforce ordering with a distributed destination, the application
+    must be aware that unit-of-order routing doesn''t apply. Instead the application
+    must specifically ensure that any particular set of messages that must be processed
+    in order are all sent to the same specific member destination even in the event
+    of process failures or service migration. </p> '
+  name: DefaultUnitOfOrder
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p><code>DeliveryFailureParams</code> control what should happen
+    to messages when failures occur. They allow the adminstrator to control error
+    destinations, logging and other actions that might be taken when a message can
+    not be delivered or when other failures are detected.</p> '
+  name: DeliveryFailureParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.DeliveryFailureParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Many delivery parameters can be set by the JMS client. Setting
+    an override causes the current value of a delivery parameter to be ignored and
+    replaced by the value set here.</p> '
+  name: DeliveryParamsOverrides
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.DeliveryParamsOverridesBean
+- array: true
+  defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The list of potential destination keys for sorting the messages
+    that arrive on a JMS destination.</p>  <p>The keys are ordered from most significant
+    to least significant. If more than one key is specified, a key based on the JMSMessageID
+    can only be the last key in the list.</p>  <p><b>Note:</b> If JMSMessageID is
+    not defined in the key, it is implicitly assumed to be the last key and is set
+    as "Ascending" (FIFO) for the sort order.</p> '
+  name: DestinationKeys
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>Specifies the maximum length of time, in milliseconds, before
+    undelivered messages in an incomplete UOW are expired. Such messages will then
+    follow the expiration policy defined for undeliverable messages.</p>  <p><b>Note:</b>
+    An error destination for UOW messages cannot be configured with a Unit-of-Work
+    Handling Policy of <b>Single Message Delivery</b> value.</p>  <p>This attribute
+    is effective only if the Unit-of-Work Handling Policy is set to <b>Single Message
+    Delivery</b> value. A value of -1 means that UOW messages will never expire.</p> '
+  name: IncompleteWorkExpirationTime
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specifies whether new message insertion is paused on a destination
+    at startup.</p>  <ul> <li><b>default</b> If a JMS template is specified, then
+    this value inherits the template''s Insertion Paused At Startup value. If no JMS
+    template is configured for the destination, then the Default value is equivalent
+    to <b>false</b>.</li>  <li><b>false</b> Insertion Paused is explicitly disabled
+    for this destination.</li>  <li><b>true</b> Insertion Paused is explicitly turned
+    on for this destination.</li> </ul> '
+  name: InsertionPausedAtStartup
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>A reference name for a destination or a member of a distributed
+    destination that provides a way to lookup that destination without JNDI using
+    <code>javax.jms.Session createQueue </code> or <code>createTopic</code>. See "How
+    to Lookup a Destination" in  <i>Programming JMS</i> for more information on how
+    to use this attribute.</p>  <p>This name must be unique within the scope of the
+    JMS server to which this destination is targeted. However, it does not need to
+    be unique within the scope of an entire JMS module or WebLogic Cluster. For example,
+    two queues can have the same destination name as long as those queues are targeted
+    to different JMS servers.</p>  <p><b>Note:</b> Since this name must be unique
+    within the scope of a JMS server, verify whether other JMS modules may contain
+    destination names that conflict with this name. It is the responsibility of the
+    deployer to resolve the destination names targeted to JMS servers.</p> '
+  name: JMSCreateDestinationIdentifier
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The global JNDI name used to look up the destination within
+    the JNDI namespace.</p>  <p>In a clustered environment, this name is propagated
+    to the entire cluster. If you want the JNDI name to be bound only on the local
+    server, and not propagated to the rest of the cluster, then use the <code>Local
+    JNDI Name</code> parameter.</p>  <p>If not specified, the destination name will
+    not be advertised through the global JNDI namespace.</p> '
+  name: JNDIName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Round-Robin
+  descriptionHTML: '<p>Determines how messages are distributed to the members of this
+    destination.</p>  <p>Choose from the following distribution techniques:</p> <ul>
+    <li><b>Round-Robin</b> The system maintains an ordering of physical topic members
+    within the set by distributing the messaging load across the topic members one
+    at a time in the order that they are defined in the configuration file. Each WebLogic
+    Server instance maintains an identical ordering, but may be at a different point
+    within the ordering. If weights are assigned to any of the topic members in the
+    set, then those members appear multiple times in the ordering.</li>  <li><b>Random</b>
+    The weight assigned to the topic members is used to compute a weighted distribution
+    for the members of the set. The messaging load is distributed across the topic
+    members by pseudo-randomly accessing the distribution. In the short run, the load
+    will not be directly proportional to the weight. In the long run, the distribution
+    will approach the limit of the distribution. A pure random distribution can be
+    achieved by setting all the weights to the same value, which is typically set
+    to 1.</li> </ul>  <p> Note: This attribute is ignored by standalone/singleton
+    Queues and Topics, it only applies to distributed destinations. </p> '
+  legalValues:
+  - Round-Robin
+  - Random
+  name: LoadBalancingPolicy
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The local JNDI name used to look up the destination within
+    the JNDI namespace of the server where the destination resource is targeted. In
+    a clustered environment, this name is bound only on the local server instance
+    and is not propagated to the rest of the cluster.</p>  <p>A destination can have
+    both a local JNDI name and a (global) JNDI name.</p> '
+  name: LocalJNDIName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The maximum size of a message that is accepted from producers
+    on this destination.</p>  <p>The message size includes the message body, any user-defined
+    properties, and the user-defined JMS header fields: <code>JMSCorrelationID</code>
+    and <code>JMSType</code>. Producers sending messages that exceed the configured
+    maximum message size for the destination receive a <code>ResourceAllocationException</code>.</p>  <p>The
+    maximum message size is only enforced for the initial production of a message.
+    Messages that are redirected to an error destination or forwarded to a member
+    of a distributed destination are not checked for size. For instance, if a destination
+    and its corresponding error destination are configured with a maximum message
+    size of 128K bytes and 64K bytes, respectively, a message of 96K bytes could be
+    redirected to the error destination (even though it exceeds the 64K byte maximum),
+    but a producer could not directly send the 96K byte message to the error destination.</p>  <p>This
+    attribute is dynamically configurable, but only incoming messages are impacted;
+    stored messages are not impacted.</p> '
+  name: MaximumMessageSize
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>These parameters control how the WebLogic Server performs message
+    logging.</p>  <p>They allow the adminstrator to configure the server to change
+    message logging when a message life cycle changes are detected.</p> '
+  name: MessageLoggingParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.MessageLoggingParamsBean
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Controls how long destinations are willing to wait to create
+    full batches of available messages (if at all) for delivery to consumers. At the
+    minimum value, batching is disabled; at the default value, less-than-full batches
+    will not wait and are delivered immediately with currently available messages;
+    tuning higher than the default value controls the maximum wait time for additional
+    messages before less-than-full batches are delivered to consumers.</p>  <p>The
+    maximum message count of a full batch is controlled by the JMS connection factory''s
+    Messages Maximum setting.</p> '
+  name: MessagingPerformancePreference
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specifies whether new message production is paused on a destination
+    at startup.</p>  <ul> <li><b>default</b> If a JMS template is specified, then
+    this value inherits the template''s Production Paused At Startup value. If no
+    JMS template is configured for the destination, then the Default value is equivalent
+    to <b>false</b>.</li>  <li><b>false</b> Production Paused is explicitly disabled
+    for this destination.</li>  <li><b>true</b> Production Paused is explicitly turned
+    on for this destination.</li> </ul> '
+  name: ProductionPausedAtStartup
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>A Quota controls the allotment of system resources available
+    to destinations. For example, the number of bytes a destination is allowed to
+    store can be configured with a Quota.</p> '
+  name: Quota
+  relationship: reference
+  type: weblogic.j2ee.descriptor.wl.QuotaBean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specifies whether a user can send messages to a destination
+    using Store-and-Forward.</p>  <ul> <li><b>All</b> All users can send messages
+    to this destination using Store-and-Forward.</li>  <li><b>None</b> Remote users
+    can not send messages to a destination using Store-and-Forward.</li> </ul>  <p>This
+    attribute is dynamically configurable. A dynamic change of this attribute will
+    affect only messages sent after the update has been made.</p> '
+  legalValues:
+  - All
+  - None
+  name: SAFExportPolicy
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The JMS template from which the destination is derived. A template
+    provides an efficient means of defining multiple destinations with similar configuration
+    values.</p>  <p>If a JMS template is specified, destination parameters that are
+    set to their default values will instead inherit their values from the JMS template
+    at run-time. However, if a JMS template is not defined, then the configuration
+    values for the destination must be specified as part of the destination.</p>  <p>Although
+    you can dynamically modify the configuration of a JMS template, the configuration
+    values on a destination are static.</p> '
+  name: Template
+  redeployNeeded: true
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.j2ee.descriptor.wl.TemplateBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>A threshold is an action point that must be exceeded in order
+    to produce a given effect. These action points may cause logging, flow control,
+    or other actions, as defined by the specific points whose values have been exceeded.</p> '
+  name: Thresholds
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.ThresholdParamsBean
+- defaultValue:
+    value:
+      value: Hash
+  descriptionHTML: '<p>Determines how a distributed destination member is selected
+    as the destination for a message that is part of a unit-of-order. <b>Hash</b>,
+    indicates that a message producer computes the member destination from the <code>hashCode</code>
+    of the unit-of-order. <b>PathService</b> indicates that the configured Path Service
+    determines the member destination.</p>  <p>Unit-of-Order Routing can be set programmatically
+    with WLProducer, or administratively on the connection factory or destination.
+    </p>  <p>Unit of Order Routing is not dynamically configurable.</p>  <p> Note:
+    This attribute is ignored by standalone/singleton Queues and Topics, it only applies
+    to distributed destinations. </p> '
+  name: UnitOfOrderRouting
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specifies whether the Unit-of-Work (UOW) feature is enabled
+    for this destination. A UOW is a set of messages that are processed as a single
+    unit.</p> <ul> <li> <b>Pass-Through</b> By default, this destination does not
+    treat messages as part of a UOW.</li> <li> <b>Single Message Delivery</b> This
+    value should only be selected if UOW consumers are receiving messages on this
+    destination. When selected, UOW messages are formed into a list and are consumed
+    as an <code>ObjectMessage</code> containing the list.</li> </ul> '
+  legalValues:
+  - PassThrough
+  - SingleMessageDelivery
+  name: UnitOfWorkHandlingPolicy
+  type: java.lang.String
+  writable: true

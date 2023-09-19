@@ -1,0 +1,58 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.runtime.EditSessionConfigurationRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The original creator of the edit session.</p> '
+  name: Creator
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current editor of the edit session. The editor owns the
+    lock.</p> '
+  name: CurrentEditor
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The description of the edit session configuration.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the edit session configuration.</p> '
+  name: EditSessionName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JNDI name of the related <code>EditSessionServer</code>.</p> '
+  name: EditSessionServerJndi
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns <code>true</code> if another edit session activates
+    its changes after the last activation of this edit session or after its creation
+    but before this edit session was ever activated.</p>  <p>It indicates that this
+    edit session configuration is probably not the actual runtime configuration. Use
+    the resolve method to merge changes to this configuration.</p>  <p>If this edit
+    session configuration was also modified then there can be conflicts between this
+    session and the runtime configuration. Use the resolve method to remove possible
+    inconsistencies.</p> '
+  name: MergeNeeded
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The partition name to which this edit session belongs.</p> '
+  name: PartitionName
+  type: java.lang.String
+roles:
+  allowed:
+  - Deployer

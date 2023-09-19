@@ -1,0 +1,86 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Defines the set of types (beans) that are harvested. The WLDF
+  framework allows the harvesting of all designated server-local Weblogic Server runtime
+  MBeans, and most customer MBeans that are registered in the local server''s runtime
+  MBean server. Configuration MBeans cannot be harvested.</p> '
+name: weblogic.diagnostics.descriptor.WLDFHarvestedTypeBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether this type is enabled. Note that enabling
+    a type will have no effect unless the Harvester component is also enabled.</p>  <p>A
+    <code>true</code> value means that this type is harvested. A <code>false</code>
+    value indicates that that this type is not harvested.</p> '
+  name: Enabled
+  type: boolean
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The harvested attributes for this type. If a list of attributes
+    is provided, only those attributes are harvested; otherwise all harvestable attributes
+    are harvested.</p> '
+  name: HarvestedAttributes
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The harvested instances of this type.</p>  <p>The configuration
+    of a type can optionally provide a set of identifiers for specific instances.
+    If this list is provided, only the provided instances are harvested; otherwise
+    all instances of the type are harvested.</p>  <p>The identifier for an instance
+    must be a valid JMX ObjectName or an ObjectName pattern.</p> '
+  name: HarvestedInstances
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether this type is known at startup.  Normally,
+    if a type is not available, the Harvester will keep looking for it. If a type
+    is designated as "known", the Harvester issues a validation fault if the type
+    cannot be immediately resolved.</p>  <p>A <code>true</code> value means that this
+    type is known. A <code>false</code> value indicates that this type may not be
+    known.</p>  <p>This flag is useful for WebLogic Server types, where the type information
+    is always available.  In this case, setting the flag to true results in earlier
+    detection and reporting of problems.</p>  <p>This flag is optional, but is recommended
+    for WebLogic Server types.</p> '
+  name: KnownType
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The type name. For WebLogic Server runtime MBeans, the type
+    name is the fully qualified name of the defining interface. For customer MBeans,
+    the type name is the fully qualified MBean implementation class.</p> '
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ServerRuntime
+  descriptionHTML: '<p>The namespace for the harvested type definition.</p> '
+  legalValues:
+  - ServerRuntime
+  - DomainRuntime
+  name: Namespace
+  nullable: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

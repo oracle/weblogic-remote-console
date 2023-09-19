@@ -1,0 +1,21 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.WebserviceSecurityConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Encapsulates information about a particular token handler that
+  has been configured for a Web Service security configuration.</p> '
+name: weblogic.management.configuration.WebserviceTokenHandlerMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the order in which the token handlers execute on
+    a given token. </p> <p>If you do not specify an order, it is determined by the
+    order in which you added the token handlers. </p> '
+  name: HandlingOrder
+  type: int
+  writable: true

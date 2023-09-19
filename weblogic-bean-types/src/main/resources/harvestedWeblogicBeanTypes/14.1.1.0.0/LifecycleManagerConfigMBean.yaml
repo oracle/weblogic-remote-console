@@ -1,0 +1,169 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'LifecycleManagerConfigMBean maintains the information necessary
+  to enable and configure a LifecycleManager instance associated with this domain.  LifecycleManager
+  instances may either be local or remote to this domain. User credentials may be
+  configured to support authentication, especially important when interaction with
+  a remote domain. '
+name: weblogic.management.configuration.LifecycleManagerConfigMBean
+properties:
+- defaultValue:
+    value:
+      value: 120000
+  descriptionHTML: '<p>Returns the Lifecycle configuration lock timeout. This is used
+    when the persistence type is LifecycleManagerConfigMBean.PERSISTENCE_TYPE_XML,
+    while attempting to lock the configuration file to persist configuration changes.
+    </p> '
+  name: ConfigFileLockTimeout
+  type: long
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.LifecycleManagerEndPointMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the LifecycleManager endpoints that have been configured
+    as involved with this domain.</p> '
+  name: ConfiguredEndPoints
+  relationship: containment
+  type: weblogic.management.configuration.LifecycleManagerEndPointMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the name of the DataSource that should be used when
+    LifecycleManager is configured to maintain its configuration in a database.</p> '
+  name: DataSourceName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: none
+  descriptionHTML: '<p>The deployment model for LifecycleManager services in this
+    domain.</p> '
+  legalValues:
+  - none
+  - admin
+  - cluster
+  name: DeploymentType
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Determine if LifeycleManager features are available, either
+    locally on this admin server or remotely via a configured endpoint.</p> '
+  name: Enabled
+  transient: true
+  type: boolean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the REST endpoints for each LifecycleManager that is
+    participating in the management of this domain.</p> '
+  name: EndPoints
+  relationship: reference
+  transient: true
+  type: weblogic.management.configuration.LifecycleManagerEndPointMBean
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: 'Returns setting for connect timeout for LCM initiated REST requests
+    which may have been triggered by OOB, sync, patching. 0 return implies that the
+    option is disabled (i.e., timeout of infinity). '
+  name: LCMInitiatedConnectTimeout
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: 'Returns setting for connect timeout for LCM initiated REST requests
+    triggered by Elasticity 0 return implies that the option is disabled (i.e., timeout
+    of infinity). '
+  name: LCMInitiatedConnectTimeoutForElasticity
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: ' '
+  name: LCMInitiatedReadTimeout
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: ' '
+  name: LCMInitiatedReadTimeoutForElasticity
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Determine if LifecycleManager should listen for configuration
+    changes on this server.</p> '
+  name: OutOfBandEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 2
+  descriptionHTML: '<p>Get periodic interval for lifecycle configuration synchronization
+    in hours. When synchronizing configuration, Lifecycle contacts the different runtimes
+    that are registered with it, gets the list of partitions from those runtimes,
+    and ensure that its configuration is synchronized with those runtimes. </p> '
+  name: PeriodicSyncInterval
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: XML
+  descriptionHTML: '<p>The persistence model that is used by this LifecycleManager
+    service. Either database or a local XML file may be used for an admin server deployment,
+    but a database configuration model is required for a cluster deployment.</p> '
+  legalValues:
+  - XML
+  - database
+  name: PersistenceType
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 180000
+  descriptionHTML: '<p>Returns the activation timeout in milliseconds for Lifecycle
+    configuration propagation to managed server. </p> '
+  name: PropagationActivateTimeout
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: 60000
+  descriptionHTML: '<p>The timeout in milliseconds for waiting for a server to be
+    ready to receive requests.</p> '
+  name: ServerReadyTimeout
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: 600000
+  descriptionHTML: '<p>Returns the timeout in milliseconds for accessing server runtime
+    mbeans. </p> '
+  name: ServerRuntimeTimeout
+  type: long
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cluster target defined in the current domain that should
+    host the LifecycleManager service when running deployed in Cluster mode.</p> '
+  name: Target
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.TargetMBean
+  writable: true

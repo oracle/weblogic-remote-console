@@ -44,6 +44,17 @@ properties:
       value: unfiltered
 - name: TemplateIntPropertyValue
   type: int
+- name: TemplateIntEnumPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateIntEnumPropertyValue
+  type: int
 - name: TemplateLongPropertyCriteria
   type: java.lang.String
   legalValues:
@@ -125,6 +136,17 @@ properties:
     value:
       value: unfiltered
 - name: TemplateStringPropertyValue
+  type: java.lang.String
+- name: TemplateStringEnumPropertyCriteria
+  type: java.lang.String
+  legalValues:
+  - unfiltered
+  - equals
+  - notEquals
+  defaultValue:
+    value:
+      value: unfiltered
+- name: TemplateStringEnumPropertyValue
   type: java.lang.String
 - name: TemplateGenericPropertyCriteria
   type: java.lang.String

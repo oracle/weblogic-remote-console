@@ -27,6 +27,10 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
       this.disconnected = function () {
       };
 
+      this.renderTabStrip = function (visibility = true) {
+        $('#form-tabstrip-container').css({display: (visibility ? 'inline-flex' : 'none')});
+      };
+
       this.selectionChanged = function (event) {
         //the 'this' in the following line is bound to $current.data
         // (which is a tabDataProvider) in form.html

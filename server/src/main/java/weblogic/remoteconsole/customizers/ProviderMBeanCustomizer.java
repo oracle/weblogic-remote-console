@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -82,7 +82,28 @@ public class ProviderMBeanCustomizer {
       "weblogic.security.providers.authentication.VirtualUserAuthenticationProviderImpl",
       "weblogic.security.providers.authentication.VirtualUserAuthenticator"
     );
-
+    // JRF authentication providers:
+    providerClassNameToType.put(
+      "oracle.security.agent.access.wls.asserter.CSAAsserterProvider",
+      "oracle.security.agent.access.filter.CloudSecurityAgentAsserter"
+    );
+    providerClassNameToType.put(
+      "oracle.security.jps.wls.providers.authentication.idm.CrossTenantAuthenticationProviderImpl",
+      "oracle.security.jps.wls.providers.authentication.idm.CrossTenantAuthenticator"
+    );
+    providerClassNameToType.put(
+      "oracle.security.wls.oam.providers.authenticator.OAMAuthenticationProviderImpl",
+      "oracle.security.wls.oam.providers.authenticator.OAMAuthenticator"
+    );
+    providerClassNameToType.put(
+      "oracle.security.wls.oam.providers.asserter.OAMIdentityAssertionProviderImpl",
+      "oracle.security.wls.oam.providers.asserter.OAMIdentityAsserter"
+    );
+    providerClassNameToType.put(
+      "oracle.security.jps.wls.providers.trust.TrustServiceAsserterProviderImpl",
+      "oracle.security.jps.wls.providers.trust.TrustServiceIdentityAsserter"
+    );
+  
     // role mappers
     providerClassNameToType.put(
       "weblogic.security.providers.authorization.DefaultRoleMapperProviderImpl",
@@ -119,6 +140,11 @@ public class ProviderMBeanCustomizer {
     providerClassNameToType.put(
       "com.bea.security.saml2.providers.SAML2CredentialMapperProviderImpl",
       "com.bea.security.saml2.providers.SAML2CredentialMapper"
+    );
+    // JRF credential mappers:
+    providerClassNameToType.put(
+      "oracle.security.wls.oam.providers.credentials.OAMCredentialMappingProviderImpl",
+      "oracle.security.wls.oam.providers.credentials.OAMCredentialMapper"
     );
 
     // cert path providers
@@ -174,9 +200,10 @@ public class ProviderMBeanCustomizer {
     }
 
     // Try to map the provider's providerClassName to its type.
-    String value = providerClassNameToType.get(providerClassName.getValue().asString().getValue());
+    String pcn = providerClassName.getValue().asString().getValue();
+    String value = providerClassNameToType.get(pcn);
     if (value == null) {
-      throw new AssertionError("Unknown providerClassName " + providerClassName);
+      value = pcn; // Just use the provider class name.  It should get mapped to a default sub type later.
     }
     response.setSuccess(new SettableValue(new StringValue(value), false));
     return response;

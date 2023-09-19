@@ -1,0 +1,16 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ManagedExternalServerStartMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'The NodeManager does not directly create the command to start a
+  SystemComponent.  This is done through a plugin architecture.  So the following
+  properties are not used when starting a SystemComponent from the NodeManager: #getJavaVendor
+  #getJavaHome #getClassPath #getMWHome #getArguments '
+name: weblogic.management.configuration.SystemComponentStartMBean
+properties: [
+  ]

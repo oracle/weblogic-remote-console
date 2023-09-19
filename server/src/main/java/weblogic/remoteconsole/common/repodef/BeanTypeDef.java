@@ -1,9 +1,8 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import weblogic.remoteconsole.common.utils.Path;
@@ -47,17 +46,7 @@ public interface BeanTypeDef {
 
   public BeanTypeDef getSubTypeDef(String subTypeDiscriminator);
 
-  public default List<BeanTypeDef> getSubTypeDefs() {
-    List<BeanTypeDef> rtn = new ArrayList<>();
-    if (isHeterogeneous()) {
-      for (String  subTypeDiscriminator : getSubTypeDiscriminatorLegalValues()) {
-        rtn.add(getSubTypeDef(subTypeDiscriminator));
-      }
-    } else {
-      rtn.add(this);
-    }
-    return rtn;
-  }
+  public List<BeanTypeDef> getSubTypeDefs();
 
   // need to support this bean's & contained beans' properties,
   // including folding, since our type.yamls let an outer

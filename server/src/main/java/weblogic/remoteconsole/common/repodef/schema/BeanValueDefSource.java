@@ -1,7 +1,9 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
+
+import java.util.List;
 
 /**
  * This POJO mirrors the yaml source file format for configuring harvested
@@ -12,6 +14,7 @@ package weblogic.remoteconsole.common.repodef.schema;
 public class BeanValueDefSource {
   private StringValue type = new StringValue();
   private BooleanValue array = new BooleanValue();
+  private ListValue<Object> legalValues = new ListValue<>();
 
   // java type of the value in the WebLogic bean tree,
   // e.g. java.lang.String, boolean, weblogic.management.configuration.ServerMBean
@@ -43,5 +46,21 @@ public class BeanValueDefSource {
     // By default, if the type ends with Bean (e.g. ServerMBean, WLDFBean),
     // then it's a reference.  We only have to worry about fancier rules for properties.
     return getType().endsWith("Bean");
+  }
+
+
+  // The list of legal values for this value.
+  // The values must match its type.
+  public List<Object> getLegalValues() {
+    return legalValues.getValue();
+  }
+
+  public void setLegalValues(List<Object> val) {
+    ScalarUtils.validateScalars(val);
+    legalValues.setValue(val);
+  }
+
+  public void addLegalValue(Object val) {
+    legalValues.add(val);
   }
 }

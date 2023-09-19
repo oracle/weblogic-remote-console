@@ -7,7 +7,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 
@@ -129,6 +133,33 @@ public class ProviderManager {
 
   public Collection<Provider> getAll() {
     return providers.values();
+  }
+
+  public static JsonArray getAllHelp(InvocationContext ic) {
+    JsonObjectBuilder objectBuilder;
+    JsonArrayBuilder ret = Json.createArrayBuilder();
+
+    objectBuilder = Json.createObjectBuilder();
+    objectBuilder.add("type", AdminServerDataProviderImpl.TYPE_NAME);
+    objectBuilder.add("help", AdminServerDataProviderImpl.getHelp(ic));
+    ret.add(objectBuilder.build());
+
+    objectBuilder = Json.createObjectBuilder();
+    objectBuilder.add("type", WDTModelDataProviderImpl.TYPE_NAME);
+    objectBuilder.add("help", WDTModelDataProviderImpl.getHelp(ic));
+    ret.add(objectBuilder.build());
+
+    objectBuilder = Json.createObjectBuilder();
+    objectBuilder.add("type", WDTCompositeDataProviderImpl.TYPE_NAME);
+    objectBuilder.add("help", WDTCompositeDataProviderImpl.getHelp(ic));
+    ret.add(objectBuilder.build());
+
+    objectBuilder = Json.createObjectBuilder();
+    objectBuilder.add("type", PropertyListDataProviderImpl.TYPE_NAME);
+    objectBuilder.add("help", PropertyListDataProviderImpl.getHelp(ic));
+    ret.add(objectBuilder.build());
+
+    return ret.build();
   }
 
   public JsonObject getJSON(String name, InvocationContext ic) {

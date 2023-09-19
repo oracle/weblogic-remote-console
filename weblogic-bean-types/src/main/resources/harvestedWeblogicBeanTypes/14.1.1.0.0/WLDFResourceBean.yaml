@@ -1,0 +1,35 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The top of the WebLogic Diagnostic Framework (WLDF) module bean
+  tree.</p>  <p>All WLDF modules have a WLDFResourceBean as their root bean (a bean
+  with no parent). </p> '
+name: weblogic.diagnostics.descriptor.WLDFResourceBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Diagnostic Harvester configuration for this deployment.</p> '
+  name: Harvester
+  relationship: containment
+  type: weblogic.diagnostics.descriptor.WLDFHarvesterBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Diagnostic Instrumentation configuration for this deployment.</p> '
+  name: Instrumentation
+  relationship: containment
+  type: weblogic.diagnostics.descriptor.WLDFInstrumentationBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Diagnostic Policy and Action configuration for this deployment.</p> '
+  name: WatchNotification
+  relationship: containment
+  type: weblogic.diagnostics.descriptor.WLDFWatchNotificationBean
+roles:
+  allowed:
+  - Deployer

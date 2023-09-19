@@ -1,0 +1,54 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.j2ee.descriptor.wl.ManagedScheduledExecutorServiceBean
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.ManagedExecutorServiceBean
+properties:
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: ' '
+  name: DispatchPolicy
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: Id
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: ' '
+  name: LongRunningPriority
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: ' '
+  name: MaxConcurrentLongRunningRequests
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  key: true
+  name: Name
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

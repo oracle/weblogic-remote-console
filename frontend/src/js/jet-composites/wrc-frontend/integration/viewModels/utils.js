@@ -120,7 +120,9 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         // then re-create the response object with
         // the actual failureType and failureReason
         // properties.
-        if (CoreUtils.isError(response)) {
+        if (CoreUtils.isError(response) ||
+          CoreUtils.isUndefinedOrNull(response.failureType)
+        ) {
           response = {
             failureType: CoreTypes.FailureType.UNEXPECTED,
             failureReason: response
@@ -192,6 +194,14 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         if (['progress', 'wait', 'default'].includes(type)) {
           document.body.style.cursor = type;
         }
+      },
+
+      setTableCursor:  (navigationProperty) => {
+        let cursor = 'pointer';
+        if (navigationProperty === 'none') {
+          cursor = 'default';
+        }
+        document.documentElement.style.setProperty('--table-cursor', cursor);
       },
 
       setPreloaderVisibility: (visible) => {
@@ -348,6 +358,29 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
 
       copyToClipboard: async (text) => {
         return navigator.clipboard.writeText(text);
+      },
+
+      helpIconClickListener: (event) => {
+        const instructionHelp = event.currentTarget.attributes['help.definition'].value;
+        const detailedHelp = event.currentTarget.attributes['data-detailed-help'].value;
+
+        if (detailedHelp !== null) {
+          const popup = document.getElementById(event.target.getAttribute('aria-describedby'))
+
+          if (popup != null) {
+            const content = popup.getElementsByClassName('oj-label-help-popup-container')[0];
+            if (content != null) {
+              if (popup.classList.contains('cfe-detail-popup')) {
+                content.innerHTML = instructionHelp;
+                popup.classList.remove('cfe-detail-popup');
+              }
+              else {
+                content.innerHTML = detailedHelp;
+                popup.classList.add('cfe-detail-popup');
+              }
+            }
+          }
+        }
       }
 
     }

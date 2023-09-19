@@ -1,0 +1,47 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for monitoring individual WebLogic Jolt connections</p> '
+name: weblogic.management.runtime.JoltConnectionRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The connection Address.</p> '
+  name: Address
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Connection Alive indicator.</p> '
+  name: Alive
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Request Error Count.</p> '
+  name: ErrorCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Connection in Transaction indicator.</p> '
+  name: InTransaction
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Last Access Date and Time.</p> '
+  name: LastAccessTime
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Pending Request Count.</p> '
+  name: PendingRequestCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Request Count.</p> '
+  name: RequestCount
+  type: int

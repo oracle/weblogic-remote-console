@@ -1,0 +1,38 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Represents persistence configuration for web services.</p> '
+name: weblogic.management.configuration.WebServicePersistenceMBean
+properties:
+- defaultValue:
+    value:
+      value: WseeStore
+  descriptionHTML: 'Get the name of the logical store to use, by default, for all
+    web services persistent state in this server. '
+  name: DefaultLogicalStoreName
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.WebServiceLogicalStoreMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Get an array of all defined logical stores for this VM (non-WLS). '
+  name: WebServiceLogicalStores
+  relationship: containment
+  type: weblogic.management.configuration.WebServiceLogicalStoreMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.WebServicePhysicalStoreMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Get an array of all defined physical stores for this VM (non-WLS). '
+  name: WebServicePhysicalStores
+  relationship: containment
+  type: weblogic.management.configuration.WebServicePhysicalStoreMBean

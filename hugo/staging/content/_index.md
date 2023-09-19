@@ -36,16 +36,19 @@ It's simple to install the WebLogic Remote Console and get up and running within
 
 ***
 ### What's new
-The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.5. <!--This release was published in March 2023.-->
+The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.6. <!--This release was published in March 2023.-->
 
 **New features**
 
-* Simplified upgrade process
+* Simplified customization of WebLogic Remote Console settings
+* New Preferences dialog box for WebLogic Remote Console
+* Configure proxy server settings on a per-administration server provider basis
 
 ***
 
 #### Previous Releases {id="prev_releases"}
 Documentation for prior releases of the WebLogic Remote Console:
+* [2.4.5](2.4.5/)
 * [2.4.4](2.4.4/)
 * [2.4.2](2.4.2/)
 * [2.4.1](2.4.1/)

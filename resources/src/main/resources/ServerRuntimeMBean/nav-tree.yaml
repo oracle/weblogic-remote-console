@@ -82,8 +82,11 @@ contents:
 - label: Diagnostics
   type: group
   contents:
+  - child: WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes
+    label: Logs and Archives
   - child: SNMPAgentRuntime
   - child: WLDFRuntime.WLDFArchiveRuntimes
+    label: Archive Runtimes
   - child: WLDFRuntime.WLDFInstrumentationRuntimes
-  - child: WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes
+    label: Instrumentation Runtimes
   - child: WLDFRuntime.WLDFDebugPatchesRuntime.DebugPatchTasks

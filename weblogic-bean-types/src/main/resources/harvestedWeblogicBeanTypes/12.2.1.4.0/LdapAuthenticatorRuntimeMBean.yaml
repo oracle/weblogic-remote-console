@@ -1,0 +1,57 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.AuthenticatorRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used to monitor per LdapAuthenticator runtime cache
+  metrics and connection pool.</p> '
+name: weblogic.management.runtime.LdapAuthenticatorRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: GroupCacheHits
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: GroupCacheQueries
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: GroupCacheSize
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  excludeFromRest: No default REST mapping for Timestamp
+  name: GroupCacheStatStartTimeStamp
+  supported: false
+  type: java.sql.Timestamp
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: UserCacheHits
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: UserCacheQueries
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: UserCacheSize
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  excludeFromRest: No default REST mapping for Timestamp
+  name: UserCacheStatStartTimeStamp
+  supported: false
+  type: java.sql.Timestamp

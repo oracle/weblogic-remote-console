@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -15,6 +15,13 @@ properties:
   required: false # otherwise it defaults to true since DomainMBean's Name has an @key annotation
   helpSummaryHTML: >
     <p>The name of this WebLogic Server domain.</p>
+  helpDetailsHTML: >
+    <p>An alphanumeric name for this domain.</p>  <p>For more information
+    on domain naming conventions, see Domain and Server Name Restrictions</a> in
+    Understanding Domain Configuration for Oracle WebLogic Server.</p>  <p>This
+    name is included as one of the key properties in the MBean''s
+    <code>javax.management.ObjectName</code>:</p>
+    <p><code>Name=<i>user-specified-name</i></code></p> '
 
 - name: AdministrationPortEnabled
   label: Enable Administration Port

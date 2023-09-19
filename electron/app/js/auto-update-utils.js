@@ -8,6 +8,7 @@
 'use strict';
 
 const { autoUpdater } = require('electron-updater');
+const I18NUtils = require('./i18n-utils');
 const { dialog } = require('electron');
 
 let _updateInfo;
@@ -15,15 +16,15 @@ let _window;
 
 (() => {
   autoUpdater.autoDownload = false;
-  autoUpdater.allowDowngrade = false;
+  autoUpdater.allowDowngrade = true;
   autoUpdater.on('update-downloaded', () => {
     dialog.showMessageBox(
       _window,
       {
-        message: 'Update downloaded and will be installed upon exit',
-        buttons: [ 'Restart', 'Cancel' ],
-        type: 'info',
-        title: `Restart now with ${_updateInfo.version}?`
+        title: `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.restartNow.message', getVersion())}`,
+        message: `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.updateDownloaded.message')}`,
+        buttons: [ `${I18NUtils.get('wrc-common.buttons.restart.label')}`, `${I18NUtils.get('wrc-common.buttons.cancel.label')}` ],
+        type: 'info'
       }
     ).then((choice) => {
       if (choice.response === 0)
@@ -53,10 +54,10 @@ async function doUpdate(window) {
     dialog.showMessageBox(
       _window,
       {
-        title: 'Download failed',
-        buttons: [ 'Ok' ],
+        title: `${I18NUtils.get('wrc-electron.menus.updates.downloadFailed.title')}`,
+        buttons: [ `${I18NUtils.get('wrc-common.buttons.ok.label')}` ],
         type: 'info',
-        message: `Error from downloader: ${error}?`
+        message: `${I18NUtils.get('wrc-electron.menus.updates.downloadFailed.message', error)}`
       }
     );
   }

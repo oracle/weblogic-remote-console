@@ -1,9 +1,8 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
-    <p>This page displays common configuration information for this SAML
-    Credential Mapping Version 2 provider.</p>
+  <p>Use this page to define the common configuration of this Credential Mapping Version 2 Provider.</p>
 
 properties:
 - name: Name

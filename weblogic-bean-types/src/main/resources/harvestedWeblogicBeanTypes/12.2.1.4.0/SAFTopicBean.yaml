@@ -1,0 +1,19 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.SAFDestinationBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Store-and-Forward (SAF) topics are used for asynchronous and
+  disconnected peer communications. A message delivered to a SAF topic will be forwarded
+  to a remote JMS topic. Several aspects of a SAF topic''s behavior can be configured
+  with a SAFDestination bean.</p> '
+name: weblogic.j2ee.descriptor.wl.SAFTopicBean
+properties: [
+  ]
+roles:
+  allowed:
+  - Deployer

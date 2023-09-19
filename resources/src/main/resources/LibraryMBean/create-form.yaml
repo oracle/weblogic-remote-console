@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: Create a new Library
 sections:
@@ -37,3 +37,33 @@ sections:
     - false
   properties:
   - name: SourcePath
+  - name: NonNullStagingMode
+    label: "Staging Mode"
+    legalValues:
+      - value: "default"
+        label: "Default"
+      - value: "nostage"
+        label: "No Stage"
+      - value: "stage"
+        label: "Stage"
+      - value: "external_stage"
+        label: "External Stage"
+    definition:
+      name: NonNullStagingMode
+      type: java.lang.String
+      legalValues:
+        - "default"
+        - "nostage"
+        - "stage"
+        - "external_stage"
+      writable: true
+      defaultValue:
+        value:
+          value: "default"
+      descriptionHTML: '<p>Specifies whether a deployment''s files are copied from a source
+         on the Administration Server to the Managed Server''s staging area during application
+         preparation. </p> <p>Staging mode for an application can only be set the first
+         time the application is deployed. Once the staging mode for an application is
+         set, it cannot be changed while the application is configured in the domain. The
+         only way to change the staging mode is to undeploy and then redeploy the application.</p>
+       <p>This attribute overrides the server''s staging mode. </p> '

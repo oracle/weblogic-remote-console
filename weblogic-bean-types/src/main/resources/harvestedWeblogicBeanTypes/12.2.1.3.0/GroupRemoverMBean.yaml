@@ -1,0 +1,16 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.management.security.authentication.GroupEditorMBean
+descriptionHTML: 'Provides a method for removing groups. An Authentication provider
+  MBean can optionally implement this MBean. The WebLogic Server Administration Console
+  detects when an Authentication provider implements this MBean and automatically
+  provides a tab for using these methods. '
+name: weblogic.management.security.authentication.GroupRemoverMBean
+properties: [
+  ]

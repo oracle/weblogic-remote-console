@@ -60,7 +60,6 @@ displayedColumns:
 - name: "ServerRuntime.SSLListenPort"
 - name: "ServerRuntime.ThreadPoolRuntime.SharedCapacityForWorkManagers"
 - name: "ServerRuntime.ThreadPoolRuntime.StandbyThreadCount"
-- name: "ServerRuntime.StateVal"
 # excluded - name: "SubsystemHealthStates"
 - name: "ServerRuntime.ThreadPoolRuntime.Suspended"
 # - name: "Timers"

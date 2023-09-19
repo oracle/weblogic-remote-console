@@ -1,0 +1,420 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationPropertiesMBean
+derivedTypes:
+- weblogic.management.configuration.PartitionTemplateMBean
+descriptionHTML: 'A domain partition. A configuration may define zero or more partitions. '
+name: weblogic.management.configuration.PartitionMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The administrative virtual target that is automatically created
+    for this partition that has the domain''s admin server as its physical target.
+    </p> '
+  name: AdminVirtualTarget
+  relationship: containment
+  type: weblogic.management.configuration.AdminVirtualTargetMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'All the available targets for this partition. '
+  name: AvailableTargets
+  relationship: reference
+  type: weblogic.management.configuration.TargetMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JNDI name of the Batch runtime''s JobRepository data source,
+    which will be used to store data for Batch jobs submitted from applications deployed
+    to the partition. When a Java EE component submits a Batch job, the Batch runtime
+    updates the JobRepository tables using this data source, which is obtained by
+    looking up the data source''s JNDI name. </p> '
+  name: BatchJobsDataSourceJndiName
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the application-scoped Managed Executor Service
+    instance that will be used to run Batch jobs that are submitted from applications
+    deployed to the partition. A Managed Executor Service Template by the same name
+    must exist for the domain when a Batch job is submitted in the partition. If this
+    name returns null, then the Batch runtime will use the default Java EE Managed
+    Executor Service that is bound to the default JNDI name of: <code>java:comp/DefaultManagedExecutorService</code>.
+    </p> '
+  name: BatchJobsExecutorServiceName
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.CoherencePartitionCacheConfigMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of all the Coherence partition cache config beans
+    in this partition. These beans allow definition of shared caches and cache properties.</p> '
+  name: CoherencePartitionCacheConfigs
+  relationship: containment
+  type: weblogic.management.configuration.CoherencePartitionCacheConfigMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The data source required to support the persistence of jobs
+    scheduled with the job scheduler.</p> '
+  name: DataSourceForJobScheduler
+  relationship: reference
+  type: weblogic.management.configuration.JDBCSystemResourceMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The data source partition configuration.</p> '
+  name: DataSourcePartition
+  relationship: containment
+  type: weblogic.management.configuration.DataSourcePartitionMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'A list of default targets for the partition (if any). '
+  name: DefaultTargets
+  relationship: reference
+  type: weblogic.management.configuration.TargetMBean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Determines if tracking of resource consumption metrics of this
+    Partition is initiated eagerly from the time the Partition is started, or if it
+    is initiated lazily on first access of PartitionResourceMetricsRuntimeMBean. '
+  name: EagerTrackingOfResourceMetricsEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.ForeignJNDIProviderOverrideMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the ForeignJNDIProviderOverride MBeans in this partition. '
+  name: ForeignJNDIProviderOverrides
+  relationship: containment
+  type: weblogic.management.configuration.ForeignJNDIProviderOverrideMBean
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of seconds a graceful shutdown operation waits before
+    forcing a shut down. A graceful shutdown gives WebLogic Server subsystems time
+    to complete certain application processing currently in progress. If subsystems
+    are unable to complete processing within the number of seconds that you specify
+    here, the partition will force shutdown automatically.</p> <p/> <p>A value of
+    <code>0</code> means that the partition will wait indefinitely for a graceful
+    shutdown to complete.</p> <p/> <p>The graceful shutdown timeout applies only to
+    graceful shutdown operations.</p> '
+  name: GracefulShutdownTimeout
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Indicates whether a graceful shutdown operation drops all HTTP
+    sessions immediately.</p> <p>If this is set to <code>false</code>, a graceful
+    shutdown operation waits for HTTP sessions to complete or timeout.</p> '
+  name: IgnoreSessionsDuringShutdown
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The collection of internal application deployments in this
+    partition.</p> '
+  name: InternalAppDeployments
+  relationship: containment
+  transient: true
+  type: weblogic.management.configuration.AppDeploymentMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The collection of internal libraries in this partition.</p> '
+  name: InternalLibraries
+  relationship: containment
+  transient: true
+  type: weblogic.management.configuration.LibraryMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.JDBCSystemResourceOverrideMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the JDBCSystemResourceOverride MBeans in this partition. '
+  name: JDBCSystemResourceOverrides
+  relationship: containment
+  type: weblogic.management.configuration.JDBCSystemResourceOverrideMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.JMSSystemResourceOverrideMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the JMS system resource overrides in this partition. '
+  name: JMSSystemResourceOverrides
+  relationship: containment
+  type: weblogic.management.configuration.JMSSystemResourceOverrideMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JTA partition configuration for this domain.</p> '
+  name: JTAPartition
+  relationship: containment
+  type: weblogic.management.configuration.JTAPartitionMBean
+- defaultValue:
+    value:
+      value: WEBLOGIC_TIMERS
+  descriptionHTML: '<p>The table name to use for storing timers active with the Job
+    Scheduler.</p> '
+  name: JobSchedulerTableName
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.MailSessionOverrideMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the MailSessionOverride MBeans in this partition. '
+  name: MailSessionOverrides
+  relationship: containment
+  type: weblogic.management.configuration.MailSessionOverrideMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.ManagedExecutorServiceTemplateMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the managed executor service templates. '
+  name: ManagedExecutorServiceTemplates
+  relationship: containment
+  type: weblogic.management.configuration.ManagedExecutorServiceTemplateMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.ManagedScheduledExecutorServiceTemplateMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the ManagedScheduledExecutorServiceTemplateMBeans. '
+  name: ManagedScheduledExecutorServiceTemplates
+  relationship: containment
+  type: weblogic.management.configuration.ManagedScheduledExecutorServiceTemplateMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.ManagedThreadFactoryTemplateMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'List of the ManagedThreadFactory templates. '
+  name: ManagedThreadFactoryTemplates
+  relationship: containment
+  type: weblogic.management.configuration.ManagedThreadFactoryTemplateMBean
+- defaultValue:
+    value:
+      value: 50
+  descriptionHTML: 'The maximum number of running long-running requests that can be
+    submitted to all the Managed Executor Services or Managed Scheduled Executor Services
+    in the partition on the current server. '
+  name: MaxConcurrentLongRunningRequests
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 50
+  descriptionHTML: 'The maximum number of running threads that can be created by all
+    the Managed Thread Factories in the partition on the current server. '
+  name: MaxConcurrentNewThreads
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The user-specified name of this MBean instance.</p> <p/> <p>This
+    name is included as one of the key properties in the MBean''s <code>javax.management.ObjectName</code>:</p>
+    <p/> <p><code>Name=<i>user-specified-name</i></code></p> '
+  key: true
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Determines if the modules of applications will be deployed in
+    parallel.  This setting can be overridden at the per-application level. See AppDeploymentMBean.isParallelDeployModules() '
+  name: ParallelDeployApplicationModules
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Determines if applications will be deployed in parallel. '
+  name: ParallelDeployApplications
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The ID for this partition. '
+  name: PartitionID
+  type: java.lang.String
+- defaultValue:
+    productionModeValue:
+      value: 120
+    secureModeValue:
+      value: 120
+    value:
+      value: 30
+  descriptionHTML: '<p>The number of seconds a force shutdown operation waits before
+    timing out. If the operation does not complete within the configured timeout period,
+    the partition will shutdown automatically if the state of the server at that time
+    was <code>SHUTTING_DOWN</code>.</p> <p/> <p>A value of <code>0</code> means that
+    the partition will wait indefinitely for the life cycle operation to complete.</p> '
+  name: PartitionLifeCycleTimeoutVal
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The partition-specific logging configuration. '
+  name: PartitionLog
+  relationship: containment
+  type: weblogic.management.configuration.PartitionLogMBean
+- creators:
+  - weblogic.management.configuration.PartitionWorkManagerMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The partition-level work manager policy set by the system administrator
+    for this partition.</p> '
+  name: PartitionWorkManager
+  relationship: containment
+  type: weblogic.management.configuration.PartitionWorkManagerMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>A reference to a partition-level work manager policy set by
+    the system administrator.</p> '
+  name: PartitionWorkManagerRef
+  relationship: reference
+  type: weblogic.management.configuration.PartitionWorkManagerMBean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'The partition''s primary identity domain. '
+  name: PrimaryIdentityDomain
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 250
+  descriptionHTML: 'The maximum number of elements retained for monitoring RCM usage
+    requests over time. '
+  name: RCMHistoricalDataBufferLimit
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The security realm for this partition. '
+  name: Realm
+  relationship: reference
+  type: weblogic.management.security.RealmMBean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'The contents of this resource''s deployment plan, returned as
+    a byte[] containing the XML. '
+  excludeFromRest: No default REST mapping for byte[]
+  getRoles:
+    allowed:
+    - Deployer
+  name: ResourceDeploymentPlan
+  sensitive: true
+  supported: false
+  transient: true
+  type: byte
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'A zip file containing the external descriptors referenced in the
+    deployment plan. '
+  excludeFromRest: No default REST mapping for byte[]
+  getRoles:
+    allowed:
+    - Deployer
+  name: ResourceDeploymentPlanExternalDescriptors
+  sensitive: true
+  supported: false
+  transient: true
+  type: byte
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The resource deployment plan path.</p> '
+  name: ResourceDeploymentPlanPath
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.ResourceGroupMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the resource groups in this partition. '
+  name: ResourceGroups
+  relationship: containment
+  type: weblogic.management.configuration.ResourceGroupMBean
+- creators:
+  - weblogic.management.configuration.ResourceManagerMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The resource manager policy assigned to the partition.</p> '
+  name: ResourceManager
+  relationship: containment
+  type: weblogic.management.configuration.ResourceManagerMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>A resource manager reference from the resource management.</p> '
+  name: ResourceManagerRef
+  relationship: reference
+  type: weblogic.management.configuration.ResourceManagerMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The Work Manager configuration for this partition. '
+  name: SelfTuning
+  relationship: containment
+  type: weblogic.management.configuration.SelfTuningMBean
+- defaultValue:
+    productionModeValue:
+      value: 0
+    value:
+      value: 0
+  descriptionHTML: '<p>The timeout value for a partition''s start and resume operations.
+    If the partition fails to start within the timeout period, it will force a shutdown.</p>
+    <p/> <p>A value of <code>0</code> means that the server will wait indefinitely
+    for the operation to complete.</p> '
+  name: StartupTimeout
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The file system for the partition''s system files. </p> '
+  name: SystemFileSystem
+  relationship: containment
+  type: weblogic.management.configuration.PartitionFileSystemMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The directory path on the Administration Server where the uploaded
+    applications for this partition are placed.</p> '
+  name: UploadDirectoryName
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The file system for the partition''s user files. </p> '
+  name: UserFileSystem
+  relationship: containment
+  type: weblogic.management.configuration.PartitionUserFileSystemMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Configures an unique WebServiceMBean for all targets of the partition.
+    Return the WebServiceMBean configuration for this partition '
+  name: WebService
+  relationship: containment
+  type: weblogic.management.configuration.WebServiceMBean

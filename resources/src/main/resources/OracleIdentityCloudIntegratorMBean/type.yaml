@@ -1,4 +1,4 @@
-# Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -31,3 +31,11 @@ properties:
 
 - name: ClientIDTokenClaim
   offlineName: ClientIdTokenClaim
+
+#- name: ActiveTypes
+#  legalValues:
+#  - value: idcs_user_assertion
+#  - value: Idcs_user_assertion
+#  - value: Authorization
+#  - value: REMOTE_USER
+#  - value: IDCS_REMOTE_USER

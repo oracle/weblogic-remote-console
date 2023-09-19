@@ -1,0 +1,93 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Use this interface to define a REST action, which is sent when
+  a diagnostic policy evaluates to <code>true</code>.</p> <p>Note: As of WebLogic
+  Server 12.2.1, the terms <i>watch</i> and <i>notification</i> are replaced by <i>policy</i>
+  and <i>action</i>, respectively. However, the definition of these terms has not
+  changed.</p> '
+name: weblogic.diagnostics.descriptor.WLDFRESTNotificationBean
+properties:
+- defaultValue:
+    value:
+      value: application/json
+  descriptionHTML: '<p>Configures the Accept header of the HTTP request to the REST
+    end point. The response entity of the REST invocation is ignored by the server.</p> '
+  legalValues:
+  - application/json
+  - text/plain
+  - text/xml
+  - text/html
+  name: AcceptedResponseType
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Allows customizing the JSON object delivered to the REST end
+    point.</p> '
+  name: CustomNotificationProperties
+  type: java.util.Properties
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The REST end point URL which will be invoked with the action
+    payload.</p> '
+  name: EndpointURL
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: None
+  descriptionHTML: '<p>The HTTP authentication mode when invoking the REST end point
+    URL.</p> '
+  legalValues:
+  - None
+  - Basic
+  name: HttpAuthenticationMode
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The HTTP authentication password when the REST end point is
+    secured.</p> '
+  encrypted: true
+  name: HttpAuthenticationPassword
+  restartNeeded: true
+  transient: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The encrypted HTTP authentication password when the REST end
+    point is secured.</p> '
+  encrypted: true
+  name: HttpAuthenticationPasswordEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The HTTP authentication user name when the REST end point is
+    secured.</p> '
+  name: HttpAuthenticationUserName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: PUT
+  descriptionHTML: '<p>The REST method for invoking the end point.</p> '
+  legalValues:
+  - PUT
+  - POST
+  name: RestInvocationMethodType
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

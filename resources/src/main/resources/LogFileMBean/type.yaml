@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -15,6 +15,7 @@ properties:
     property: RotationType
     values:
       - "bySize"
+      - "bySizeOrTime"
 
 - name: RotationTime
   label: Begin rotation time
@@ -22,6 +23,7 @@ properties:
     property: RotationType
     values:
       - "byTime"
+      - "bySizeOrTime"
 
 - name: FileTimeSpan
   label: Rotation interval
@@ -29,6 +31,7 @@ properties:
     property: RotationType
     values:
       - "byTime"
+      - "bySizeOrTime"
 
 - name: NumberOfFilesLimited
   label: Limit number of retained files
@@ -37,6 +40,7 @@ properties:
     values:
       - "bySize"
       - "byTime"
+      - "bySizeOrTime"
       - "none"
 
 - name: FileCount
@@ -53,6 +57,7 @@ properties:
     values:
       - "bySize"
       - "byTime"
+      - "bySizeOrTime"
       - "none"
 
 - name: RotateLogOnStartup
@@ -62,4 +67,5 @@ properties:
     values:
       - "bySize"
       - "byTime"
+      - "bySizeOrTime"
       - "none"

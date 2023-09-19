@@ -1,0 +1,34 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to create and configure an allowlist for this domain. </p>
+  <p>WebLogic Server uses JEP 290 allowlists and blocklists to filter incoming serialized Java objects to protect
+  against deserialization exploits. Allowlists are configuration files that define a list of the WebLogic Server
+  and customer application classes and packages that you wish to allow to be deserialized. You can create and configure
+  allowlists to control which packages and classes are deserialized (or blocked) in running systems.</p>
+  <p>By default, WebLogic Server includes a JEP 290 blocklist filter that includes a set of prohibited classes
+  and packages, and the ability to define dynamic blocklists using configuration files you can update or replace
+  while the server is running. While both approaches have benefits, the allowlist model is more secure because
+  it only allows deserialization of classes known to be required by WebLogic Server and customer applications.</p>
+  <p>To create an allowlist that contains the classes and packages that are deserialized in the applications in your domain,
+  you enable recording, which records all of the classes and packages used in both WebLogic Server and customer application deserialization.
+  When deserialization occurs, each class is recorded in the allowlist configuration file.
+  When you have executed all of the code paths that perform deserialization and are satisfied with the allow list,
+  turn off recording and then configure WebLogic Server to use the allowlist configuration file for the JEP 290 filtering.</p>
+
+properties:
+- name: "AllowList.AllowListViolationAction"
+- name: "AllowList.SerialPropFilePollingInterval"
+- name: "AllowList.AllowListRecordingEnabled"
+- name: "AllowList.SynthesizeAllowListEnabled"
+- name: "AllowList.CoherenceClassesAlwaysBlock"
+- name: "SecurityConfiguration.OutboundReferenceHostAllowList"
+
+helpTopics:
+- label: "Using JEP 290 in Oracle WebLogic Server"
+  href: "secmg/conf-security-for-domain.html#GUID-74A34AA1-B139-431C-B87A-578DAAA682B1"
+  type: "edocs"
+- label: "Using an Allowlist for JEP 290 Filtering"
+  href: "secmg/conf-security-for-domain.html#GUID-0538F8EA-675D-4348-A888-8E79631D0EC9"
+  type: "edocs"

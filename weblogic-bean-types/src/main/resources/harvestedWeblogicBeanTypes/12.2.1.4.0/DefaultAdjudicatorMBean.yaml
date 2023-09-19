@@ -1,0 +1,46 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authorization.AdjudicatorMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean defines configuration attributes for the WebLogic       Adjudication
+  provider.</p> '
+name: weblogic.security.providers.authorization.DefaultAdjudicatorMBean
+properties:
+- defaultValue:
+    value:
+      value: WebLogic Adjudication Provider
+  descriptionHTML: '<p>A short description of the WebLogic Adjudication provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: DefaultAdjudicator
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authorization.DefaultAdjudicationProviderImpl
+  descriptionHTML: '<p>The name of this WebLogic Adjudication provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Requires all authorization providers to vote PERMIT in order
+    for         the adjudication provider to vote PERMIT. If the attribute is set
+    to         disabled, ABSTAIN votes are ignored.</p> '
+  name: RequireUnanimousPermit
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The version number of the WebLogic Adjudication provider.</p> '
+  name: Version
+  type: java.lang.String

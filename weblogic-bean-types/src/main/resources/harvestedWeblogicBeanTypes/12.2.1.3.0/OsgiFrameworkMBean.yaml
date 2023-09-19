@@ -1,0 +1,96 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'An MBean representing an OSGi framework. '
+name: weblogic.management.configuration.OsgiFrameworkMBean
+properties:
+- defaultValue:
+    value:
+      value: populate
+  descriptionHTML: 'Determines if some WebLogic helper bundles will be installed into
+    the framework <p> If this is set to "populate" then the bundles found in the WebLogic
+    installation directory under wlserver/server/osgi-lib will be installed into this
+    OSGi framework.  Futhermore a few extra packages will be added to the bootdelegation
+    classpath parameters in order to enable the bundles in the osgi-lib directory
+    if they are not already there.</p> <p> If this is set to "ignore" then the bundles
+    found in the WebLogic installation directory will not be installed into the framework.</p> '
+  legalValues:
+  - populate
+  - ignore
+  name: DeployInstallationBundles
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: org.apache.felix.framework.FrameworkFactory
+  descriptionHTML: 'The name of the frameworks implementation class for the org.osgi.framework.launch.FrameworkFactory
+    class. '
+  name: FactoryImplementationClass
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The properties to be used when initializing the framework. All
+    standard properties and all properties specific to the framework can be set. '
+  name: InitProperties
+  restartNeeded: true
+  type: java.util.Properties
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: 'The name of the org.osgi.framework.bootdelegation property.  Note
+    that this value, if set, will take precedence over anything specified in the init-properties. '
+  name: OrgOsgiFrameworkBootdelegation
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: 'The name of the org.osgi.framework.system.packages.extra property.  Note
+    that this value, if set, will take precedence over anything specified in the init-properties. '
+  name: OrgOsgiFrameworkSystemPackagesExtra
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The location of the OSGi implementation JAR file which contains
+    the org.osgi.framework.launch.FrameworkFactory implementation.  If this field
+    is not set then an appropriate default implementation that is shipped with the
+    product will be used.</p> <p> If this field is relative it must be relative to
+    the start directory of the server and the file must exist everywhere this framework
+    is deployed.  If this field is not relative then the given filename must exist
+    at the same location everywhere this framework is deployed.</p> '
+  name: OsgiImplementationLocation
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns true if global data sources should be added to the OSGi
+    service registry. '
+  name: RegisterGlobalDataSources
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns true if global work managers should be added to the OSGi
+    service registry. '
+  name: RegisterGlobalWorkManagers
+  restartNeeded: true
+  type: boolean
+  writable: true

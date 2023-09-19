@@ -1,0 +1,26 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.AuthConfigProviderMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.configuration.CustomAuthConfigProviderMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'get the classname for the custom authentication config provider '
+  name: ClassName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'get the properties used to initialize the auth config provider '
+  name: Properties
+  restartNeeded: true
+  type: java.util.Properties
+  writable: true

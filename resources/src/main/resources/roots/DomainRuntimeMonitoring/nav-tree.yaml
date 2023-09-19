@@ -107,13 +107,16 @@ contents:
 - label: Diagnostics
   type: group
   contents:
+  - child: DomainRuntime.AggregatedWLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes
+    label: Logs and Archives
   - child: DomainRuntime.AggregatedSNMPAgentRuntime
     label: SNMP Agent Runtimes
   - child: DomainRuntime.SNMPAgentRuntime
     label: Domain SNMP Agent Runtime
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFArchiveRuntimes
+    label: Archive Runtimes
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFInstrumentationRuntimes
-  - child: DomainRuntime.AggregatedWLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes
+    label: Instrumentation Runtimes
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFDebugPatchesRuntime.DebugPatchTasks
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFControlRuntime.SystemResourceControls
 - child: DomainRuntime.RecentSearches

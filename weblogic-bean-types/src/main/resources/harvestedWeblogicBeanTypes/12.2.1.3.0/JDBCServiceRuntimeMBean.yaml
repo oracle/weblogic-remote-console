@@ -1,0 +1,39 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for monitoring a WebLogic JDBC service. It
+  maps to a JDBCResource JMO.</p> '
+name: weblogic.management.runtime.JDBCServiceRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The health state of the JDBC subsystem.</p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'The list of JDBCDataSourceRuntimeMBeans created in this domain. '
+  name: JDBCDataSourceRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.JDBCDataSourceRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'The list of JDBCDriverRuntimeMBeans created in this domain. '
+  name: JDBCDriverRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.JDBCDriverRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'The list of JDBCMultiDataSourceRuntimeMBeans created in this domain. '
+  name: JDBCMultiDataSourceRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.JDBCMultiDataSourceRuntimeMBean

@@ -8,7 +8,6 @@ import javax.ws.rs.core.Response;
 
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
  
 /** Base resource for resources that manage a bean or a collection of beans. */
 public class BeanResource extends BaseResource {
@@ -27,55 +26,32 @@ public class BeanResource extends BaseResource {
   }
 
   protected void setSlicePagePath(String slice) {
-    setSlicePagePath(slice, "", "");
-  }
-
-  protected void setSlicePagePath(String slice, String actionForm, String action) {
     setPagePath(
       getInvocationContext().getPageRepo().getPageRepoDef().newSlicePagePath(
         getInvocationContext().getBeanTreePath().getTypeDef(),
         new Path(slice)
-      ),
-      actionForm,
-      action
+      )
     );
+
   }
 
   protected void setCreateFormPagePath() {
-    setCreateFormPagePath("", "");
-  }
-
-  protected void setCreateFormPagePath(String actionForm, String action) {
     setPagePath(
       getInvocationContext().getPageRepo().getPageRepoDef().newCreateFormPagePath(
         getInvocationContext().getBeanTreePath().getTypeDef()
-      ),
-      actionForm,
-      action
+      )
     );
   }
 
   protected void setTablePagePath() {
-    setTablePagePath("", "");
-  }
-
-  protected void setTablePagePath(String actionForm, String action) {
     setPagePath(
       getInvocationContext().getPageRepo().getPageRepoDef().newTablePagePath(
         getInvocationContext().getBeanTreePath().getTypeDef()
-      ),
-      actionForm,
-      action
+      )
     );
   }
 
-  private void setPagePath(PagePath pagePath, String actionForm, String action) {
-    if (INPUT_FORM.equals(actionForm)) {
-      if (StringUtils.isEmpty(action)) {
-        throw new AssertionError("Action must be specified for input form: " + pagePath);
-      }
-      pagePath = PagePath.newActionInputFormPagePath(pagePath, action);
-    }
+  private void setPagePath(PagePath pagePath) {
     getInvocationContext().setPagePath(pagePath);
   }
 
@@ -85,6 +61,10 @@ public class BeanResource extends BaseResource {
 
   protected Response invokeAction(String action, JsonObject requestBody) {
     return InvokeActionHelper.invokeAction(getInvocationContext(), action, requestBody);
+  }
+
+  protected Response getActionInputForm(String action, JsonObject requestBody) {
+    return InvokeActionHelper.getActionInputForm(getInvocationContext(), action, requestBody);
   }
 
   protected Response methodNotAllowed(JsonObject requestBody) {

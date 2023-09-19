@@ -1,0 +1,76 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Provides methods that transition servers from one state to another.
+  This class is instantiated only on the Administration Server, but you can use it
+  to transition the states of Managed Servers as well as Administration Servers.</p>  <p>You
+  cannot use it to start an Administration Server, and if you want to use it to start
+  Managed Servers, you must first set up a Node Manager on each Managed Server''s
+  host machine.</p>  <p>If you want to use the methods that transition a server into
+  the <code>ADMIN</code> state, you must first set up an administration channel for
+  that server.</p> '
+name: weblogic.management.runtime.ServerLifeCycleRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: LastKnownMachine
+  supported: false
+  type: weblogic.management.configuration.MachineMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Oracle Middleware installation directory. </p> '
+  name: MiddlewareHome
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Number of times the server has been restarted using the NodeManager
+    since creation. The first start does not count. The count is valid only if the
+    NodeManager is used to start and restart the server everytime. '
+  name: NodeManagerRestartCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets information about the progress of the boot of the managed
+    server. <p> The XML returned will conform to the schema found in the progress-tracker.xsd
+    found in the root of the weblogic.utils jar '
+  exclude: true
+  name: ProgressAsXml
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current state of the server.</p> '
+  name: State
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>An integer that identifies the current state of the server.
+    Values range from <code>0</code> to <code>8</code>.</p> '
+  exclude: true
+  name: StateVal
+  supported: false
+  type: int
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Get preexisting Server Lifecycle Tasks</p> '
+  name: Tasks
+  relationship: containment
+  type: weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The directory where the WebLogic Server instance (server) is
+    installed, without the trailing "/server".</p> '
+  name: WeblogicHome
+  type: java.lang.String
+roles:
+  allowed:
+  - Operator

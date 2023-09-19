@@ -1,0 +1,79 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ClassDeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Provides methods that configure startup classes. A startup class
+  is a Java program that is automatically loaded and executed when a WebLogic Server
+  instance is started or restarted.  By default, startup classes are loaded and executed
+  after all other server subsystems have initialized and after the server deploys
+  modules. For any startup class, you can override the default and specify that the
+  server loads and executes it and before it deploys JDBC connection pools and before
+  it deploys Web applications and EJBs. '
+name: weblogic.management.configuration.StartupClassMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether a failure in this startup class prevents
+    the targeted server(s) from starting.</p>  <p>If you specify that failure is <b>not</b>
+    fatal, if the startup class fails, the server continues its startup process.</p> '
+  name: FailureIsFatal
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the targeted servers load and run this startup
+    class after applications and EJBs are running.</p>  <p>If you enable this feature
+    for a startup class, a server loads and runs the startup class after the activate
+    phase. At this point, JMS and JDBC services are available. (Deployment for applications
+    and EJBs consists of three phases: prepare, admin and activate.)</p>  <p>Enable
+    this feature if the startup class needs to be invoked after applications are running
+    and ready to service client requests.</p>  <p>If you do not enable this feature,
+    LoadBeforeAppDeployments or LoadBeforeAppActivation, a server instance loads startup
+    classes when applications go to the admin state.</p> '
+  name: LoadAfterAppsRunning
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the targeted servers load and run this startup
+    class after activating JMS and JDBC services and before activating applications
+    and EJBs.</p>  <p>If you enable this feature for a startup class, a server loads
+    and runs the startup class before the activate phase. At this point, JMS and JDBC
+    services are available. (Deployment for applications and EJBs consists of three
+    phases: prepare, admin and activate.)</p>  <p>Enable this feature if the startup
+    class needs to be invoked after JDBC connection pools are available but before
+    the applications are activated and ready to service client requests.</p>  <p>If
+    you do not enable this feature, LoadBeforeAppDeployments or LoadAfterAppsRunning,
+    a server instance loads startup classes when applications go to the admin state.</p> '
+  name: LoadBeforeAppActivation
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the targeted servers load and run this startup
+    class before activating JMS and JDBC services and before starting deployment for
+    applications and EJBs.</p>  <p>If you enable this feature for a startup class,
+    a server loads and runs the startup class before the deployment prepare phase.
+    At this point, JMS and JDBC services are not yet available. (Deployment for applications
+    and EJBs consists of three phases: prepare, admin and activate.)</p>  <p>If you
+    do not enable this feature, LoadBeforeAppActivation or LoadAfterAppsRunning, a
+    server instance loads startup classes when applications go to the admin state.</p> '
+  name: LoadBeforeAppDeployments
+  restartNeeded: true
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

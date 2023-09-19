@@ -1,0 +1,81 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.configuration.CacheMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: AsyncListeners
+  relationship: containment
+  type: weblogic.management.configuration.CacheAsyncListenersMBean
+- defaultValue:
+    value:
+      value: LFU
+  descriptionHTML: 'The eviction policy to choose when the number of entries in cache
+    hits the maximum '
+  legalValues:
+  - LRU
+  - NRU
+  - FIFO
+  - LFU
+  name: EvictionPolicy
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: Expiration
+  relationship: containment
+  type: weblogic.management.configuration.CacheExpirationMBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: JNDIName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The configuration parameters for self-loading caches '
+  name: Loader
+  relationship: containment
+  type: weblogic.management.configuration.CacheLoaderMBean
+- defaultValue:
+    value:
+      value: 64
+  descriptionHTML: 'Maximum number of cache elements in memory after which eviction/paging
+    occurs. This value is defined as an Integer. '
+  name: MaxCacheUnits
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The configuraiton parameters for self-backing caches '
+  name: Store
+  relationship: containment
+  type: weblogic.management.configuration.CacheStoreMBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: Transactional
+  relationship: containment
+  type: weblogic.management.configuration.CacheTransactionMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Set the default work manager to use for all asynchronous caching
+    tasks. If none of the specific work managers are specified, this work manager
+    is used. This work manager may be overriden by other work managers configured
+    for specific tasks like store backup, listeners etc '
+  name: WorkManager
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

@@ -1,0 +1,33 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.ApplicationAdminModeTriggerBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: MaxStuckThreadTime
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  key: true
+  name: Id
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: StuckThreadCount
+  type: int
+  writable: true

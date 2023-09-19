@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -46,7 +46,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       const beanTree = dataProvider.getBeanTreeByPerspectiveId(viewParams.perspective.id);
       this.beanPathManager = new BeanPathManager(beanTree, this.beanPathHistoryCount);
       this.historyVisible = this.beanPathManager.getHistoryVisibility();
-      this.beanPathHistoryOptions = this.beanPathManager.getHistoryOptions();
+      this.beanPathHistoryOptions = ko.observable([]);
       this.breadcrumbs = {html: ko.observable({}), crumbs: ko.observableArray([])};
       this.breadcrumbsManager = new BreadcrumbsManager(beanTree, this.breadcrumbs.crumbs);
 
@@ -129,7 +129,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               viewModelPath: modelPath,
               params: params
             })
-              .then(this.wlsModuleConfig);
+              .then(this.wlsModuleConfig)
+              .catch(err => {
+                ViewModelUtils.failureResponseDefaultHandling(err);
+              });
+          }
+          else {
+            if (this.wlsModuleConfig().view.length === 0) {
+              // This logic says that if value is not "form" or
+              // "table", then assign an empty moduleConfig
+              // How can value not be a "form" or "table", if
+              // we're defining the router's module config?
+              this.wlsModuleConfig({ view: [], viewModel: null });
+            }
           }
         }.bind(this));
 
@@ -139,7 +151,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           const oldValue = PageDefinitionUtils.removeTrailingSlashes(self.path());
           if (CoreUtils.isNotUndefinedNorNull(newValue) && newValue !== null && newValue !== '') {
             if (newValue !== oldValue) {
-              if (self.beanPathManager.isHistoryOption(newValue)) clickedBreadCrumb(newValue);
+              const historyOption = this.beanPathManager.findHistoryEntry(newValue);
+              if (CoreUtils.isNotUndefinedNorNull(historyOption)) {
+                const fauxEvent =  {
+                  target: {
+                    attributes: {
+                      'data-perspective': {value: historyOption.perspective.id},
+                      'data-path': {value: historyOption.value},
+                      'data-notFoundMessage': {value: oj.Translations.getTranslatedString('wrc-pdj-crosslinks.messages.noNotFoundMessage.summary')}
+                    }
+                  }
+                };
+                this.breadcrumbMenuClickListener(fauxEvent);
+              }
             }
             self.selectedBeanPath(null);
           }
@@ -148,19 +172,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         this.moreMenuItemSubscription = this.moreMenuItem.subscribe(function (newValue) {
           switch (newValue) {
             case 'clear':
-              self.beanPathManager.resetHistory();
+              self.beanPathManager.resetHistoryEntries()
+                .then(result => {
+                  if (result.succeeded) {
+                    this.beanPathHistoryOptions([]);
+                    this.beanPathHistoryCount(0);
+                  }
+                });
               break;
           }
         }.bind(this));
 
         setBeanPathHistoryVisibility(self.beanPathManager.getHistoryVisibility());
 
-        const stateParams = Router.rootInstance.observableModuleConfig().params.ojRouter.parameters
+        const stateParams = Router.rootInstance.observableModuleConfig().params.ojRouter.parameters;
         // When using perspectives, you need to make sure
         // stateParams.path() doesn't return undefined, which
         // is possible because the navtree for the monitoring
         // perspective isn't "auto-loaded" when the app starts.
-        let stateParamsPath = stateParams.path();
+        const stateParamsPath = stateParams.path();
 
         if (typeof stateParamsPath !== 'undefined' && stateParamsPath !== 'form') {
           try {
@@ -176,6 +206,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           Logger.log(`domainConnectState=${domainConnectState}`);
           setBreadcrumbsVisibility((domainConnectState === CoreTypes.Domain.ConnectState.CONNECTED.name));
           setBeanPathHistoryVisibility(false);
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.dataProviderRemoved.add(dataProvider => {
+          self.beanPathManager.resetHistoryEntries(dataProvider)
+            .then(result => {
+              if (result.succeeded) {
+                this.beanPathHistoryOptions([]);
+                this.beanPathHistoryCount(0);
+              }
+            });
         });
 
         self.signalBindings.push(binding);
@@ -250,6 +292,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                       viewParams.signaling.beanTreeChanged.dispatch(dataProvider.getBeanTreeByPerspectiveId(perspectiveId));
                       viewParams.signaling.perspectiveSelected.dispatch(perspective);
                       viewParams.parentRouter.go(`/${perspectiveId}/${encodeURIComponent(path)}`);
+                      viewParams.signaling.galleryItemSelected.dispatch(perspectiveId);
                     })
                     .catch(response => {
                       if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
@@ -311,6 +354,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             const path = breadcrumbLabels.join('/');
             if (!path.startsWith('Dashboards/')) {
               self.beanPathManager.addBeanPath(reply.body.data.name, breadcrumbLabels);
+              self.beanPathHistoryOptions(self.beanPathManager.getHistoryEntries());
             }
             return reply;
           });
@@ -350,7 +394,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           .catch(response => {
             if (response.failureType === CoreTypes.FailureType.NOT_FOUND) {
               // goto the landing page
-              selectedLandingPage(self.i18n.messages.pageNotFound.replace('{0}', response.failureReason));
+              selectedLandingPage(response.failureReason);
             }
             else {
               ViewModelUtils.failureResponseDefaultHandling(response);

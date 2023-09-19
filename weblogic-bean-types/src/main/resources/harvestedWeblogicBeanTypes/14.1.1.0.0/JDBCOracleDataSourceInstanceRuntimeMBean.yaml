@@ -1,0 +1,83 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Runtime MBean for monitoring a JDBC GridLink Data Source instance. '
+name: weblogic.management.runtime.JDBCOracleDataSourceInstanceRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The number of connections currently in use by applications.
+    </p> '
+  name: ActiveConnectionsCurrentCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'The value from the latest load-balancing advisory <code>aff</code>
+    flag for a GridLink data source instance. '
+  name: AffEnabled
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The cumulative total number of database connections created
+    in this instance since the data source was deployed. </p> '
+  name: ConnectionsTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The current count of JDBC connections in the connection pool
+    in the data source for this instance. </p> '
+  name: CurrCapacity
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'The current weight of the instance. '
+  name: CurrentWeight
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Indicates whether the instance is enabled or disabled: <ul> <li>true
+    if the instance is enabled.</li> <li>false if the instance is disabled.</li> </ul> '
+  name: Enabled
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: 'The name of this instance. '
+  name: InstanceName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The number of database connections currently available (not
+    in use) in this data source for this instance. </p> '
+  name: NumAvailable
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The number of database connections that are currently unavailable
+    (in use or being tested by the system) in this instance. </p> '
+  name: NumUnavailable
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The cumulative, running count of requests for a connection
+    from this instance. </p> '
+  name: ReserveRequestCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'The signature that uniquely identifies the instance. '
+  name: Signature
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The current state of the instance within the data source.
+    </p> <p> Possible states are: </p> <ul> <li>Enabled - the instance is enabled
+    indicating that there are connections established</li> <li>Disabled - the instance
+    is disabled due to unavailability</li> </ul> '
+  name: State
+  type: java.lang.String

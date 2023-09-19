@@ -1,0 +1,18 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ClassDeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Provides methods for configuring a shutdown class. A shutdown class
+  is a Java program that is automatically loaded and executed when a WebLogic Server
+  instance is shut down gracefully. '
+name: weblogic.management.configuration.ShutdownClassMBean
+properties: [
+  ]
+roles:
+  allowed:
+  - Deployer

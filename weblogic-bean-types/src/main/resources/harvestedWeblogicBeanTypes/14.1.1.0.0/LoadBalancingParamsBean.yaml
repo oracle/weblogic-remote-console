@@ -1,0 +1,84 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The load-balancing parameters allow client to choose how they
+  wish to distribute the work to the configured servers.</p> '
+name: weblogic.j2ee.descriptor.wl.LoadBalancingParamsBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether non-anonymous producers created through a
+    connection factory are load balanced within a distributed destination on a per-call
+    basis.</p> <ul> <li>If enabled, the associated message producers are load balanced
+    on every <code>send()</code> or <code>publish() </code>.</li>  <li>If disabled,
+    the associated message producers are load balanced on the first <code>send()</code>
+    or <code> publish()</code>.</li> </ul> '
+  name: LoadBalancingEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: Per-Member
+  descriptionHTML: '<p>The <code>Producer Load Balancing Policy</code> restricts where
+    a JMS Message Producer can load balance its messages among members of a distributed
+    destination (DD).</p>  <p>The valid values are:</p> <ul> <li><code>Per-Member</code>
+    - The default value. All running members are candidates.</li> <li><code>Per-JVM</code>
+    - Only one member per JVM is a candidate.</li> </ul>  <p>Notes:</p>  <ul> <li>
+    Unit of Order and Unit of Work messages are not affected by this setting.</li>
+    <li> If every WebLogic Server JVM is running a single member of the DD, then <code>Per-JVM</code>
+    and <code>Per-Member</code> yield equivalent behavior.</li> <li> There can be
+    at most one <code>Per-JVM</code> candidate member of a particular DD per WebLogic
+    Server JVM.</li> <li>The <code>Per-JVM</code> load balance candidates will either
+    be (a) members of a DD hosted on a cluster targeted JMS Server or SAF Agent that
+    are running on their preferred server (for example, members that have not failed
+    over or migrated), OR (b) the lexicographically least member name on the same
+    JVM where the DD member is not hosted on a cluster targeted JMS Server or SAF
+    Agent. A member in (a) takes precedence over a member in (b). If two members satisfy
+    (a), then the lexicographically least member name is chosen.</li> <li> If the
+    DD is a <code>Replicated Distributed Topic</code> or if <code>Load Balance Enabled</code>
+    is set to <code>false</code>, then MessageProducers are ''pinned'' to a single
+    member and therefore only load balance on initial creation or after a failure.
+    If a MessageProducer is already pinned to a particular DD member on a particular
+    JVM, and the DD is not hosted on JMS Servers or SAF Agents that are targeted to
+    a cluster, and a new member of the DD starts on the same JVM, then the MessageProducer''s
+    future messages stay pinned to its original member regardless of whether the member
+    is still a <code>Per-JVM</code> load balance candidate.</li> <li> You can override
+    the <code>Producer Load Balancing Policy</code> on a custom Connection Factory
+    by specifying the system properties <code>weblogic.jms.ProducerLoadBalancingPolicy</code>
+    or <code>weblogic.jms.ProducerLoadBalancingPolicy.MODULENAME</code> on every WebLogic
+    Server in a cluster (the latter property takes precedence over the former). If
+    a Connection Factory is overridden by one of these system properties, then the
+    host WebLogic Server will log an Info message BEA-040538 with the name of the
+    Connection Factory, the system property, and the system property value once the
+    first MessageProducer uses the connection factory.</li> <li> For a similar setting
+    that controls the load balancing of messages forwarded Exactly-Once via a Store-and-Forward
+    Agent (SAF Agent), see the Exactly Once Load Balancing Policy attribute on a SAF
+    Imported Destinations bean.</li> </ul>  <p>This attribute is dynamic and can be
+    changed at any time. However, changing the value does not affect existing connections.
+    It only affects new connections made with this connection factory.</p> '
+  legalValues:
+  - Per-Member
+  - Per-JVM
+  name: ProducerLoadBalancingPolicy
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether a server instance that is load balancing
+    consumers or producers across multiple members destinations of a distributed destination,
+    will first attempt to load balance across any other physical destinations that
+    are also running on the same server instance. </p> '
+  name: ServerAffinityEnabled
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

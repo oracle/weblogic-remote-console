@@ -1,0 +1,26 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'A unique name that identifies all the well known addresses for a
+  Coherence cluster. '
+name: weblogic.coherence.descriptor.wl.CoherenceClusterWellKnownAddressesBean
+properties:
+- array: true
+  creators:
+  - weblogic.coherence.descriptor.wl.CoherenceClusterWellKnownAddressBean
+  defaultValue: {
+    }
+  descriptionHTML: 'An array of CoherenceWellKnownAddress beans, each of which represents
+    a well known address. '
+  name: CoherenceClusterWellKnownAddresses
+  relationship: containment
+  type: weblogic.coherence.descriptor.wl.CoherenceClusterWellKnownAddressBean
+roles:
+  allowed:
+  - Deployer

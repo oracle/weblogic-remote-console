@@ -1,0 +1,17 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.UserAttributeReaderMBean
+derivedTypes:
+- weblogic.security.providers.authentication.DefaultAuthenticatorMBean
+descriptionHTML: '<p>Provides a set of methods for creating, editing and removing
+  user attributes and values.An authentication provider MBean can optionally implement
+  this MBean. The WebLogic Server Administration Console detects when an authentication
+  provider implements this MBean and automatically provides a GUI for using these
+  methods.</p> '
+name: weblogic.management.security.authentication.UserAttributeEditorMBean
+properties: [
+  ]

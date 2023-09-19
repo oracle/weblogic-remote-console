@@ -1,0 +1,137 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>If a client does not specify certain parameters then the values
+  that those parameters will take can be controlled with a default delivery parameters
+  bean.</p> '
+name: weblogic.j2ee.descriptor.wl.DefaultDeliveryParamsBean
+properties:
+- defaultValue:
+    value:
+      value: 2147483647
+  descriptionHTML: '<p>The number of bytes for the serialized message body so any
+    message exceeds this limit will trigger message compression when the message is
+    sent or received by the JMS message producer or consumer.</p>  <p>The compression
+    will occur either:</p> <ul> <li> On the JMS message producer''s JVM if the JMS
+    message producer''s JVM is not collocated with the JMS provider''s JVM and the
+    message body size exceeds the threshold limit. </li> <li> On the JMS provider''s
+    JVM when the JMS message consumer''s JVM is not collocated with the JMS provider''s
+    JVM and the message body size exceeds the threshold limit. </li> </ul> '
+  name: DefaultCompressionThreshold
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: Persistent
+  descriptionHTML: '<p>The default delivery mode used for messages when a delivery
+    mode is not explicitly defined. </p>  <p>All messages with a DefaultDeliveryMode
+    of <code>null</code> that are produced on a connection created with this factory
+    will receive this value. Message producers can get the delivery mode explicitly
+    by calling the <code> javax.jms.MessageProducer.getDeliveryMode()</code> method.</p>  <p>This
+    attribute is dynamic. It can be changed at any time. However, changing the value
+    does not affect existing connections. It only affects new connections made with
+    this connection factory.</p> '
+  legalValues:
+  - Persistent
+  - Non-Persistent
+  name: DefaultDeliveryMode
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 4
+  descriptionHTML: '<p>The default priority used for messages when a priority is not
+    explicitly defined.</p>  <p>All messages with a DefaultPriority of -1 that are
+    produced on a connection created with this factory will receive this value. Message
+    producers can get the priority explicitly by calling the <code>javax.jms.MessageProducer.getPriority()</code>
+    method.</p>  <p>This attribute is dynamic. It can be changed at any time. However,
+    changing the value does not affect existing connections. It only affects new connections
+    made with this connection factory.</p> '
+  name: DefaultPriority
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The delay time, in milliseconds, before rolled back or recovered
+    messages are redelivered.</p>  <p>All messages consumed by a consumer created
+    with this factory that have a DefaultRedeliveryDelay of -1 will use this value.</p>  <p>Message
+    consumers can get the redelivery delay explicitly by calling the <code> weblogic.jms.extensions.WLSession.getRedliveryDelay()</code>
+    method. </p>  <p>This attribute is dynamic. It can be changed at any time. However,
+    changing the value does not affect existing connections. It only affects new connections
+    made with this connection factory.</p> '
+  name: DefaultRedeliveryDelay
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: '0'
+  descriptionHTML: '<p>The delay time, in milliseconds, between when a message is
+    produced and when it is made visible on its destination.</p>  <p>All messages
+    produced by a producer created with this factory that have a DefaultTimeToDeliver
+    of -1 will use this value. Message producers can get the Time-to-Deliver explicitly
+    by calling the <code> weblogic.jms.extensions.WLMessageProducer.getTimeToDeliver()</code>
+    method.</p>  <p>This attribute is dynamic. It can be changed at any time. However,
+    changing the value does not affect existing connections. It only affects new connections
+    made with this connection factory.</p> '
+  name: DefaultTimeToDeliver
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The maximum length of time, in milliseconds, that a message
+    exists. This value is used for messages when both the <code>time-to-live</code>
+    is not explicitly set by the sender application that is using this connection
+    factory and the <code>time-to-live</code> is not explicitly overridden by the
+    destination''s <code>TimeToLiveOverride</code> attribute . A value of 0 indicates
+    that the message has an infinite amount time to live. </p>  <p>Message producer
+    applications can set the <code>time-to-live</code> explicitly by calling the standard
+    JMS <code>javax.jms.MessageProducer.setTimeToLive(long)</code> method. Note that
+    programmatically setting <code>time-to-live</code> using <code>javax.jms.Message.setJMSExpiration()</code>
+    has no effect - the message setter is ignored by  the JMS send call as required
+    by the JMS specification. </p>  <p>This attribute is dynamic. It can be changed
+    at any time. However, changing the value does not affect existing connections.
+    It only affects new connections made with this connection factory.</p> '
+  name: DefaultTimeToLive
+  type: long
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The default Unit-of-Order name for producers that connect using
+    this connection factory. A Unit-of-Order allows for messages to be processed in
+    a certain order, even among multiple recipients.</p>  <p><code>System-generated</code>
+    indicates that WebLogic Server will automatically generate a Unit-of-Order name.
+    <code>User-Generated</code> indicates that the Unit-of-Order name will come from
+    the name specified name in the <code>Unit-of-Order Name</code> field. If <code>None</code>
+    is selected, no message ordering is enforced.</p> '
+  name: DefaultUnitOfOrder
+  nullable: true
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>The maximum length of time, in milliseconds, that a sender
+    will wait when there isn''t enough available space (no quota) on a destination
+    to accommodate the message being sent.</p>  <p>The default time is 10 milliseconds.
+    A value of 0 indicates that the sender does not want to wait for space. </p>  <p>This
+    attribute is dynamic. It can be changed at any time. However, changing the value
+    does not affect existing connections or their producers. It only affects new connections
+    made with this connection factory. Producers inherit the setting from the connection
+    factory used to create their session and connection. The value can then be overridden
+    at run time by setting the value on the producer. </p> '
+  name: SendTimeout
+  type: long
+  writable: true
+roles:
+  allowed:
+  - Deployer

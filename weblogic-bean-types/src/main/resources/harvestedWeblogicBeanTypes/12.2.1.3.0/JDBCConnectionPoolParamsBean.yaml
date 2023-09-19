@@ -1,0 +1,497 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Contains the connection pool parameters of a data source.</p>  <p>Configuration
+  parameters for a data source''s connection pool are specified using the connection
+  pool parameters bean.</p> '
+name: weblogic.j2ee.descriptor.wl.JDBCConnectionPoolParamsBean
+properties:
+- defaultValue:
+    value:
+      value: 1
+  deprecated: '10.3.6.0 '
+  descriptionHTML: '<p>The increment by which this JDBC connection pool''s capacity
+    is expanded. In WebLogic Server 10.3.1 and higher releases, the <code>capacityIncrement</code>
+    is no longer configurable and is set to a value of 1.</p>  <p>When there are no
+    more available physical connections to service requests, the connection pool will
+    create this number of additional physical database connections and add them to
+    the connection pool. The connection pool will ensure that it does not exceed the
+    maximum number of physical connections.</p> '
+  name: CapacityIncrement
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of seconds between attempts to establish connections
+    to the database.</p>  <p>If you do not set this value, data source creation fails
+    if the database is unavailable. If set and if the database is unavailable when
+    the data source is created, WebLogic Server will attempt to create connections
+    in the pool again after the number of seconds you specify, and will continue to
+    attempt to create the connections until it succeeds.</p>  <p>When set to <code>0</code>,
+    connection retry is disabled.</p> '
+  name: ConnectionCreationRetryFrequencySeconds
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p>The maximum number of connections that may be harvested when
+    the connection harvesting occurs. The range of valid values is 1 to MaxCapacity.</p> '
+  name: ConnectionHarvestMaxCount
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>Specifies the number of available connections (trigger value)
+    used to determine when connection harvesting occurs.</p> <ul><li>Harvesting occurs
+    when the number of available connections is below the trigger value for a connection
+    pool.</li> <li>The range of valid values is -1 to <code>MaxCapacity</code>.</li>
+    <li>Default value is <code>-1</code>.</li> <li>Setting the value to <code>-1</code>
+    disables connection harvesting.</li> </ul> '
+  name: ConnectionHarvestTriggerCount
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The class name of the connection labeling callback. This is
+    automatically passed to registerConnectionLabelingCallback when the datasource
+    is created. The class must implement <code>oracle.ucp.ConnectionLabelingCallback</code>.</p> '
+  name: ConnectionLabelingCallback
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>The number of seconds after which a call to reserve a connection
+    from the connection pool will timeout.</p> <p>When set to <code>0</code>, a call
+    will never timeout.</p> <p>When set to <code>-1</code>, a call will timeout immediately.</p> '
+  name: ConnectionReserveTimeoutSeconds
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 2
+  descriptionHTML: '<p>Specifies the number of reconnect failures allowed before WebLogic
+    Server disables a connection pool to minimize the delay in handling the connection
+    request caused by a database failure.  Zero means it is disabled.</p> '
+  name: CountOfRefreshFailuresTillDisable
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 2
+  descriptionHTML: '<p>Specifies the number of test failures allowed before WebLogic
+    Server closes all unused connections in a connection pool to minimize the delay
+    caused by further database testing.  Zero means it is disabled.</p> '
+  name: CountOfTestFailuresTillFlush
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables Set Client ID on connection for the data source. When
+    an application requests a database connection, WebLogic Server sets a light-weight
+    client ID on the database connection.</p>  <p>By default, it uses the credential
+    mapping to map WebLogic Server user IDs to database user IDs. However, if use-database-credentials
+    is set to true, then the credential mapping is not done and the ID is used directly
+    as a database user ID.</p>  <p>It is currently supported for IBM DB2 driver and
+    Oracle thin driver. Support for this feature will be dropped in a future Oracle
+    thin driver release. Oracle recommends using proxy authentication instead of this
+    feature.</p> '
+  name: CredentialMappingEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the absolute name of the application class used to
+    intercept method calls to the JDBC driver. The application specified must implement
+    the weblogic.jdbc.extensions.DriverInterceptor interface. </p>  <p>Weblogic Server
+    will invoke the preInvokeCallback(), postInvokeExceptionCallback(), and postInvokeCallback()
+    methods of the registered application before and after invoking any method inside
+    the JDBC driver. You can use this feature to profile JDBC driver usage and monitor:</p>  <ul>
+    <li>Methods being executed</li> <li>Any exceptions thrown</li> <li>Time spent
+    inside the driver executing methods</li> </ul> '
+  name: DriverInterceptor
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies a comma-separated list of error codes that are treated
+    as fatal errors. These errors include deployment errors that cause a server to
+    fail to boot and connection errors that prevent a connection from being put back
+    in the connection pool.</p>  <p>This optional attribute is used to define fatal
+    error codes, that when specified as the exception code within a <code>SQLException</code>
+    (retrieved by <code>sqlException.getErrorCode()</code>), indicate that a fatal
+    error has occurred and the connection is no longer usable. For Oracle databases
+    the following fatal error codes are predefined within WLS and do not need to be
+    placed in the configuration file: </p>  <ul><li>3113: "end-of-file on communication
+    channel" </li> <li>3114: "not connected to ORACLE" </li> <li>1033: "ORACLE initialization
+    or shutdown in progress" </li> <li>1034: "ORACLE not available" </li> <li>1089:
+    "immediate shutdown in progress - no operations are permitted"</li> <li>1090:
+    "shutdown in progress - connection is not permitted" </li> <li>17002: "I/O exception"
+    </li> </ul> '
+  name: FatalErrorCodes
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 2147483647
+  descriptionHTML: '<p>The maximum number of connection requests that can concurrently
+    block threads while waiting to reserve a connection from the data source''s connection
+    pool.</p> '
+  name: HighestNumWaiters
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables identity-based-connection-pooling for the data source.
+    When an application requests a database connection, WebLogic Server picks or creates
+    a physical connection with requested DBMS identity based on a map of WebLogic
+    user IDs and database IDs.</p>  <p>You must also specify the map of WebLogic Server
+    user IDs to database user IDs (credential mapping).</p> '
+  name: IdentityBasedConnectionPoolingEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Enables the data source to be shutdown even if connections
+    obtained from the pool are still in use.</p> '
+  name: IgnoreInUseConnectionsEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of inactive seconds on a reserved connection before
+    WebLogic Server reclaims the connection and releases it back into the connection
+    pool.</p>  <p>You can use the Inactive Connection Timeout feature to reclaim leaked
+    connections - connections that were not explicitly closed by the application.
+    Note that this feature is not intended to be used in place of properly closing
+    connections.</p>  <p>When set to <code>0</code>, the feature is disabled.</p> '
+  name: InactiveConnectionTimeoutSeconds
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>SQL statement to execute that will initialize newly created
+    physical database connections. Start the statement with SQL followed by a space.</p>  <p>If
+    the Init SQL value begins with <code>"SQL "</code>, then the rest of the string
+    following that leading token will be taken as a literal SQL statement that will
+    be used to initialize database connections. If the Init SQL value does not begin
+    with "SQL ", the value will be treated as the name of a table and the following
+    SQL statement will be used to initialize connections:</p>  <p><code>"select count(*)
+    from InitSQL"</code></p>  <p>The table <code>InitSQL</code> must exist and be
+    accessible to the database user for the connection. Most database servers optimize
+    this SQL to avoid a table scan, but it is still a good idea to set <code>InitSQL</code>
+    to the name of a table that is known to have few rows, or even no rows.</p> '
+  name: InitSql
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p>The number of physical connections to create when creating
+    the connection pool in the data source. If unable to create this number of connections,
+    creation of the data source will fail.</p> '
+  name: InitialCapacity
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>Specifies level of JDBC debugging for XA drivers, where larger
+    values in the range provide more debugging information. </p> '
+  name: JDBCXADebugLevel
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of seconds to delay before creating each physical
+    database connection. This delay supports database servers that cannot handle multiple
+    connection requests in rapid succession.</p>  <p>The delay takes place both during
+    initial data source creation and during the lifetime of the data source whenever
+    a physical database connection is created.</p> '
+  name: LoginDelaySeconds
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 15
+  descriptionHTML: '<p>The maximum number of physical connections that this connection
+    pool can contain.</p> '
+  name: MaxCapacity
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The minimum number of physical connections that this connection
+    pool can contain after it is initialized.</p> <ul> <li> Default: <a href="#InitialCapacity">InitialCapacity</a></li>
+    <li> Used only for connection pool shrinking calculations. </li> <li> For compatibility,
+    <code>InitialCapacity</code> is used if <code>MinCapacity</code> is not configured.</li>
+    <li> Once a data source has gone through a suspend/resume, the larger value of
+    either <code>MinCapacity</code> or <code>InitialCapacity</code> is used.</li>
+    </ul> '
+  name: MinCapacity
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables an option to improve performance by enabling execute
+    threads to keep a pooled database connection even after the application closes
+    the logical connection.</p>  <p>When enabled:</p> <ul> <li> WebLogic Server pins
+    a database connection from the connection pool to an execution thread the first
+    time an application uses the thread to reserve a connection. When the application
+    finishes using the connection and calls <code>connection.close()</code>, WebLogic
+    Server keeps the connection with the execute thread and does not return it to
+    the connection pool. When an application subsequently requests a connection using
+    the same execute thread, WebLogic Server provides the connection already reserved
+    by the thread.</li>  <li>There is no locking contention on the connection pool
+    that occurs when multiple threads attempt to reserve a connection at the same
+    time. There is no contention for threads that attempt to reserve the same connection
+    from a limited number of database connections.</li>  <li>If an application concurrently
+    reserves more than one connection from the connection pool using the same execute
+    thread, WebLogic Server creates additional database connections and pins them
+    to the thread.</li>  <li>The maximum capacity of the connection pool (maximum
+    number of database connections created in the connection pool) becomes the number
+    of execute threads used to request a connection multiplied by the number of concurrent
+    connections each thread reserves. This may exceed the <code>Maximum Capacity</code>
+    specified for the connection pool. You may need to consider this larger number
+    of connections in your system design and ensure that your database allows for
+    additional associated resources. If your system cannot handle the additional resource
+    requirements or if you see database resource errors after enabling <code>PinnedToThread</code>,
+    Oracle recommends not using <code>PinnedToThread</code>. See <a href="http://www.oracle.com/pls/topic/lookup?ctx=fmw122130&amp;id=JDBCA198"
+    rel="noopener noreferrer" target="_blank">Using Pinned-To-Thread Property to Increase
+    Performance</a>.</li> </ul> '
+  name: PinnedToThread
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of seconds that a JDBC connection needs to be held
+    by an application before triggering a connection leak diagnostic profiling record.</p>  <p>When
+    set to <code>0</code>, the timeout is disabled.  This attribute only applies when
+    the connection leak diagnostic profiling option is enabled.</p> '
+  name: ProfileConnectionLeakTimeoutSeconds
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The number of seconds between when WebLogic Server harvests
+    profile data.</p>  <p>When set to <code>0</code>, harvesting of data is disabled.</p> '
+  name: ProfileHarvestFrequencySeconds
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Specifies that type of profile data to be collected for the
+    JDBC subsystem.</p>  <p>You can specify combinations of the following profile
+    types:</p>  <ul> <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_CONN_USAGE
+    - Profile threads currently using connections from the pool of connections in
+    the data source. </li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_CONN_RESV_WAIT
+    - Profile threads currently waiting to reserve a connection from the data source.</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_CONN_LEAK
+    - Profile threads that have reserved a connection from the data source and the
+    connection leaked (was not properly returned to the pool of connections).</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_CONN_RESV_FAIL
+    - Profile threads that attempt to reserve a connection from the data source but
+    fail.</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_STMT_CACHE_ENTRY
+    - Profile prepared and callable statements added to the statement cache, and profile
+    the threads that originated the cached statements.</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_STMT_USAGE
+    - Profile threads currently executing SQL statements from the statement cache.</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_CONN_LAST_USAGE
+    - Profile the previous thread that last used the connection. This information
+    is useful when debugging problems with connections infected with pending transactions
+    that cause subsequent XA operations on the connections to fail.</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_CONN_MT_USAGE
+    - Profile threads that erroneously use a connection previously obtained by a different
+    thread.</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_CONN_UNWRAP_USAGE
+    - Profile threads that have obtained the JDBC delegate object by invoking unwrap
+    or weblogic.common.wrapper.Wrapper.getVendorObj.</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_CONN_LOCALTX_LEAK
+    - Profile threads that close JDBC connections that have an active local database
+    transaction.</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_NONE
+    - Disable profiling for the data source.</li>  <li>weblogic.jdbc.common.internal.JDBCConstants.PROFILE_TYPE_ALL
+    - Enable all profile types for the data source.</li>  </ul> '
+  name: ProfileType
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether a connection will be removed from the connection
+    pool after the application uses the underlying vendor connection object.</p>  <p>If
+    you disable removing infected connections, you must make sure that the database
+    connection is suitable for reuse by other applications.</p>  <p>When set to <code>true</code>
+    (the default), the physical connection is not returned to the connection pool
+    after the application closes the logical connection. Instead, the physical connection
+    is closed and recreated.</p>  <p>When set to <code>false</code>, when the application
+    closes the logical connection, the physical connection is returned to the connection
+    pool and can be reused by the application or by another application.</p> '
+  name: RemoveInfectedConnections
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>The number of seconds within a connection use that WebLogic
+    Server trusts that the connection is still viable and will skip the connection
+    test, either before delivering it to an application or during the periodic connection
+    testing process.</p>  <p>This option is an optimization that minimizes the performance
+    impact of connection testing, especially during heavy traffic.</p> '
+  name: SecondsToTrustAnIdlePoolConnection
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 900
+  descriptionHTML: '<p>The number of seconds to wait before shrinking a connection
+    pool that has incrementally increased to meet demand.</p>  <p>When set to <code>0</code>,
+    shrinking is disabled.</p> '
+  name: ShrinkFrequencySeconds
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>The number of prepared and callable statements stored in the
+    cache. (This may increase server performance.)</p>  <p>WebLogic Server can reuse
+    statements in the cache without reloading the statements, which can increase server
+    performance. Each connection in the connection pool has its own cache of statements.</p>  <p>Setting
+    the size of the statement cache to 0 turns off statement caching.</p> '
+  name: StatementCacheSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: LRU
+  descriptionHTML: '<p>The algorithm used for maintaining the prepared statements
+    stored in the statement cache.</p>  <p>Options are: </p> <ul> <li>LRU - when a
+    new prepared or callable statement is used, the least recently used statement
+    is replaced in the cache.</li> <li>FIXED - the first fixed number of prepared
+    and callable statements are cached.</li> </ul> '
+  legalValues:
+  - LRU
+  - FIXED
+  name: StatementCacheType
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>The time after which a statement currently being executed will
+    time out.</p>  <p>StatementTimeout relies on underlying JDBC driver support. WebLogic
+    Server passes the time specified to the JDBC driver using the <code>java.sql.Statement.setQueryTimeout()</code>
+    method. If your JDBC driver does not support this method, it may throw an exception
+    and the timeout value is ignored.</p>  <p>A value of <code>-1</code> disables
+    this feature.</p> <p>A value of <code>0</code> means that statements will not
+    time out.</p> '
+  name: StatementTimeout
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables WebLogic Server to test a connection before giving
+    it to a client. (Requires that you specify a Test Table Name.)</p>  <p>The test
+    adds a small delay in serving the client''s request for a connection from the
+    pool, but ensures that the client receives a viable connection.</p> '
+  name: TestConnectionsOnReserve
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 120
+  descriptionHTML: '<p>The number of seconds a WebLogic Server instance waits between
+    attempts when testing unused connections. (Requires that you specify a Test Table
+    Name.) Connections that fail the test are closed and reopened to re-establish
+    a valid physical connection. If the test fails again, the connection is closed.</p>  <p>In
+    the context of multi data sources, this attribute controls the frequency at which
+    WebLogic Server checks the health of data sources it had previously marked as
+    unhealthy.</p>  <p>When set to <code>0</code>, the feature is disabled.</p> '
+  name: TestFrequencySeconds
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the database table to use when testing physical
+    database connections. This name is required when you specify a Test Frequency
+    and enable Test Reserved Connections.</p>  <p>The default SQL code used to test
+    a connection is <code>select count(*) from TestTableName</code></p>  <p>Most database
+    servers optimize this SQL to avoid a table scan, but it is still a good idea to
+    set the Test Table Name to the name of a table that is known to have few rows,
+    or even no rows.</p>  <p>If the Test Table Name begins with <code>SQL</code>,
+    then the rest of the string following that leading token will be taken as a literal
+    SQL statement that will be used to test connections instead of the standard query.
+    For example: <code>SQL BEGIN; Null; END; </code></p>  <p>For an Oracle database,
+    you can reduce the overhead of connection testing by setting Test Table Name to
+    <code>SQL PINGDATABASE</code> which uses the <code>pingDatabase()</code> method
+    to test the Oracle connection. For any JDBC 4.0 database, it is possible to use
+    "SQL ISVALID" to use the <code>isValid()</code> method on the connection.</p> '
+  name: TestTableName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>By default, SQL objects for <code>CallableStatement</code>,
+    <code>PreparedStatement</code>, <code>ResultSet</code>, <code>Statement</code>,
+    and <code>DatabaseMetaData</code> are wrapped with a WebLogic wrapper. Wrapping
+    allows features like debugging and connection usage to be performed by the server.</p>  <p>When
+    <code>false</code>, wrapping is disabled. This improves performance, in some cases
+    significantly, and allows for the application to use the native driver objects
+    directly. A value of <code>false</code> also disables data type wrapping.</p> '
+  name: WrapJdbc
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>By default, data type objects for Array, Blob, Clob, NClob,
+    Ref, SQLXML, and Struct, plus ParameterMetaData and ResultSetMetaData objects
+    are wrapped with a WebLogic wrapper.  This allows for features like debugging
+    and connection usage to be done by the server.</p>  <p>The wrapping can be turned
+    off by setting this value to false. This improves performance, in some cases significantly,
+    and allows for the application to use the native driver objects directly.</p> '
+  name: WrapTypes
+  restartNeeded: true
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

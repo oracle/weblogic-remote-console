@@ -1,0 +1,410 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface provides access to the WTC local Tuxedo Domain configuration
+  attributes.  The methods defined herein are applicable for WTC configuration at
+  the WLS domain level. '
+name: weblogic.management.configuration.WTCLocalTuxDomMBean
+properties:
+- defaultValue:
+    value:
+      value: myLAP
+  descriptionHTML: '<p>The unique name used to identify this local Tuxedo access point.
+    This name should be unique for all local and remote Tuxedo access points defined
+    within a WTC Service. This allows you to define unique configurations having the
+    same Access Point ID.</p> '
+  name: AccessPoint
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: myLAPId
+  descriptionHTML: '<p>The connection principal name used to identify this local Tuxedo
+    access point when attempting to establish a session connection with remote Tuxedo
+    access points.</p>  <p><i>Note:</i> The AccessPointId must match the corresponding
+    DOMAINID in the *DM_REMOTE_DOMAINS section of your Tuxedo DMCONFIG file.</p> '
+  name: AccessPointId
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>The maximum number of seconds this local Tuxedo access point
+    allows for a blocking call.</p>  <p><b>Range of Values:</b> Between <code>0</code>
+    and a positive 32 bit integer.</p> '
+  name: BlockTime
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: 2147483647
+  descriptionHTML: '<p>The compression threshold this local Tuxedo access point uses
+    when sending data to a remote Tuxedo access point. Application buffers larger
+    than this size are compressed.</p>  <p><b>Range of Values:</b> Between <code>0</code>
+    and a positive 32-bit integer.</p> '
+  name: CmpLimit
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The principal name used to verify the identity of this domain
+    when establishing a connection to another domain.</p>  <p><i>Note:</i> This parameter
+    only applies to domains of type TDOMAIN that are running Oracle  Tuxedo 7.1 or
+    later software. If not specified, the connection principal name defaults to the
+    AccessPointID for this <code>domain.ConnPrincipalName</code>.</p>  <p><i>Note:</i>
+    ConnPrincipalName is not supported in this release.</p> '
+  name: ConnPrincipalName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ON_DEMAND
+  descriptionHTML: '<p>The conditions under which this local Tuxedo access point establishes
+    a session connection with a remote Tuxedo access point.</p>  <p>The connection
+    policies are:</p>  <ul> <li>ON_DEMAND: A connection is attempted only when requested
+    by either a client request to a remote service or an administrative connect command.</li>
+    <li>ON_STARTUP: A domain gateway attempts to establish a connection with its remote
+    Tuxedo access points at gateway server initialization time. Remote services (services
+    advertised in JNDI by the domain gateway for this local access point) are advertised
+    only if a connection is successfully established to that remote Tuxedo access
+    point. If there is no active connection to a remote Tuxedo access point, then
+    the remote services are suspended. By default, this connection policy retries
+    failed connections every 60 seconds. Use the MaxRetry and RetryInterval values
+    to specify application specific values.</li> <li>INCOMING_ONLY: A domain gateway
+    does not attempt an initial connection to remote Tuxedo access points at startup
+    and remote services are initially suspended. The domain gateway is available for
+    incoming connections from remote Tuxedo access points and remote services are
+    advertised when the domain gateway for this local Tuxedo access point receives
+    an incoming connection. Connection retry processing is not allowed.</li> </ul> '
+  legalValues:
+  - ON_DEMAND
+  - ON_STARTUP
+  - INCOMING_ONLY
+  name: ConnectionPolicy
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The path and file name of the identity keystore.</p>  <p>The
+    path name must either be absolute or relative to where the server was booted.
+    The identity key store file name is only used if KeystoreLocation is "Custom Stores".</p> '
+  name: IdentityKeyStoreFileName
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The custom identity keystore''s passphrase. If empty or null,
+    then the keystore will be opened without a passphrase.</p>  <p>This attribute
+    is only used if KeyStores is "Custom Stores".</p>  <p>When you get the value of
+    this attribute, WebLogic Server does the following:</p> <ol><li>Retrieves the
+    value of the <code>IdentityKeyStorePassPhraseEncrypted</code> attribute.</li>
+    <li>Decrypts the value and returns the unencrypted password as a String.</li>
+    </ol>  <p>When you set the value of this attribute, WebLogic Server does the following:</p>
+    <ol><li>Encrypts the value.</li> <li>Sets the value of the <code>CustomIdentityKeyStorePassPhraseEncrypted</code>
+    attribute to the encrypted value.</li> </ol> <p>Using this attribute (<code>CustomIdentityKeyStorePassPhrase</code>)
+    is a potential security risk because the String object (which contains the unencrypted
+    password) remains in the JVM''s memory until garbage collection removes it and
+    the memory is reallocated. Depending on how memory is allocated in the JVM, a
+    significant amount of time could pass before this unencrypted data is removed
+    from memory.</p>  <p>Instead of using this attribute, use <code>CustomIdentityKeyStorePassPhraseEncrypted</code>.</p> '
+  encrypted: true
+  name: IdentityKeyStorePassPhrase
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The identity keystore''s encrypted passphrase. If empty or
+    null, then the keystore will be opened without a passphrase.</p>  <p>This attribute
+    is only used if KeyStores is "Custom Stores".</p>  <p>To set this attribute, use
+    <code>weblogic.management.EncryptionHelper.encrypt()</code> to encrypt the value.
+    Then set this attribute to the output of the encrypt() method. </p>  <p>To compare
+    a password that a user enters with the encrypted value of this attribute, use
+    the same WebLogic Server instance that you used to set and encrypt this attribute
+    and use <code>weblogic.management.EncryptionHelper.encrypt()</code> to encrypt
+    the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: IdentityKeyStorePassPhraseEncrypted
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: 'No'
+  descriptionHTML: '<p>Specifies whether this local Tuxedo access point interoperates
+    with remote Tuxedo access points that are based upon Tuxedo release 6.5. If this
+    value is set to <code>Yes</code>, the local Tuxedo access point interoperates
+    with a Tuxedo 6.5 domain.</p> '
+  legalValues:
+  - 'Yes'
+  - 'No'
+  name: Interoperate
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Return value tells whether this local Tuxedo access point is
+    configured with Application Level Keep Alive, and it maximum idle time value before
+    wait timer start ticking.</p> '
+  name: KeepAlive
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Return value that tells whether this local Tuxedo access point
+    requires the acknowledgement of Application Level Keep Alive, and how long it
+    will wait without receiving acknowledgement before declare the connection is inaccessible.</p> '
+  name: KeepAliveWait
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: Custom Stores
+  descriptionHTML: '<p>Provides the configuration rule to be used for finding Local
+    Access Point''s identity key store and trust key store. In plain text, it contains
+    information on where the identity key store and trust key store are configured.  When
+    KeyStoreLocation is configured with <code>WLS Store</code>, WTC uses configuration
+    information from the WLS Key Stores configuration.  Otherwise, it uses the key
+    stores information configured in the Local Access Point.</p> '
+  legalValues:
+  - WLS Stores
+  - Custom Stores
+  name: KeyStoresLocation
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: '128'
+    value:
+      value: '128'
+  descriptionHTML: '<p>The maximum encryption key length (in bits) this local Tuxedo
+    access point uses when establishing a session connection. A value of <code>0</code>
+    indicates no encryption is used.</p>  <p style="font-weight: bold">Value Restrictions:</p>  <ul>
+    <li>The MaxEncryptBits value must be greater than or equal to the MinEncrypBits
+    value.</li> <li>A MaxEncryptBits of <code>40</code> can be used only with domains
+    running Tuxedo 7.1 or higher.</li> </ul> '
+  legalValues:
+  - '0'
+  - '40'
+  - '56'
+  - '128'
+  - '256'
+  name: MaxEncryptBits
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 9223372036854775807
+  descriptionHTML: '<p>The maximum number of times that this local Tuxedo access point
+    tries to establish a session connection to remote Tuxedo access points. Use this
+    value only when Connection Policy is set to <code>ON_STARTUP</code>.</p>  <p><b>Range
+    of Values:</b> Between <code>0</code> and a positive 64 bit integer.</p>  <p><i>Note:</i>
+    Use the minimum value to disable the retry mechanism. Use the maximum value to
+    try until a connection is established.</p> '
+  name: MaxRetries
+  type: long
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: '40'
+    value:
+      value: '0'
+  descriptionHTML: '<p>The minimum encryption key length (in bits) this local Tuxedo
+    access point uses when establishing a session connection. A value of <code>0</code>
+    indicates no encryption is used.</p>  <p style="font-weight: bold">Value Restrictions:</p>  <ul>
+    <li>The MinEncrypBits value must be less than or equal to the MaxEncrypBits value.</li>
+    <li>A MinEncrypBits value of <code>40</code> can be used only with domains running
+    Tuxedo 7.1 or higher.</li> </ul> '
+  legalValues:
+  - '0'
+  - '40'
+  - '56'
+  - '128'
+  - '256'
+  name: MinEncryptBits
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: //localhost:8901
+  descriptionHTML: '<p>The network address and port number of this local Tuxedo access
+    point.</p> Specify the address in one of the following formats: <ul> <li>TCP/IP
+    address in the format <code>//hostname:port_number</code> or <code>//#.#.#.#:port_number</code>.</li>
+    <li>SDP address in the format <code>sdp://hostname:port_number</code> or <code>sdp://#.#.#.#:port_number</code>.</li>
+    </ul>  <i>Notes:</i> <ul> <li>If the hostname is used, the access point finds
+    an address for hostname using the local name resolution facilities (usually DNS).
+    If dotted decimal format is used, each # should be a number from 0 to 255. This
+    dotted decimal number represents the IP address of the local machine. The port_number
+    is the TCP/SDP port number at which the access point listens for incoming requests.</li>  <li>If
+    SDP format address is specified, the transport protocol for this access point
+    is SDP instead of TCP. This feature is only available when WTC and Tuxedo domain
+    gateway are both deployed on Oracle Exalogic platform. Requires Tuxedo 11gR1PS2
+    and higher.</li> </ul> '
+  name: NWAddr
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The string alias used to store and retrieve the Local Tuxedo
+    access point''s private key in the keystore. This private key is associated with
+    the Local Tuxedo access point''s digital certificate.</p> '
+  name: PrivateKeyAlias
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The passphrase used to retrieve the server''s private key from
+    the keystore. This passphrase is assigned to the private key when it is generated.</p>  <p>When
+    you get the value of this attribute, WebLogic Server does the following:</p> <ol><li>Retrieves
+    the value of the <code>PrivateKeyPassPhraseEncrypted</code> attribute.</li> <li>Decrypts
+    the value and returns the unencrypted passphrase as a String.</li> </ol>  <p>When
+    you set the value of this attribute, WebLogic Server does the following:</p> <ol><li>Encrypts
+    the value.</li> <li>Sets the value of the <code>PrivateKeyPassPhraseEncrypted</code>
+    attribute to the encrypted value.</li> </ol>  <p>Using this attribute (<code>PrivateKeyPassPhrase</code>)
+    is a potential security risk because the String object (which contains the unencrypted
+    passphrase) remains in the JVM''s memory until garbage collection removes it and
+    the memory is reallocated. Depending on how memory is allocated in the JVM, a
+    significant amount of time could pass before this unencrypted data is removed
+    from memory.</p>  <p>Instead of using this attribute, use <code>getPrivateKeyPassPhraseEncrypted</code>.</p> '
+  encrypted: true
+  name: PrivateKeyPassPhrase
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The encrypted passphrase used to retrieve the Local Tuxedo
+    access point''s private key from the keystore. This passphrase is assigned to
+    the private key when it is generated.</p>  <p>To set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: PrivateKeyPassPhraseEncrypted
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>The number of seconds that this local Tuxedo access point waits
+    between automatic connection attempts to remote Tuxedo access points. Use this
+    value only when Connection Policy is set to <code>ON_STARTUP</code>.</p>  <p><b>Range
+    of Values:</b> Between 0 and a positive 32-bit integer.</p> '
+  name: RetryInterval
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: TLSv1.2
+  descriptionHTML: '<p>The protocol version of the SSL connection this local access
+    point uses when establishing a SSL connection. </p>  <p style="font-weight: bold">Value
+    Restrictions:</p>  <ul> <li> TLSv1.0 </li> <li> TLSv1.1 </li> <li> TLSv1.2 </li>
+    </ul> '
+  legalValues:
+  - TLSv1.0
+  - TLSv1.1
+  - TLSv1.2
+  name: SSLProtocolVersion
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: DM_PW
+    value:
+      value: NONE
+  descriptionHTML: '<p>The type of application security enforced.</p>  <p>The types
+    of security are:</p>  <ul> <li>NONE: No security is used.</li> <li>APP_PW: Password
+    security is enforced when a connection is established from a remote domain. The
+    application password is defined in the WTCResourcesMBean.</li> <li>DM_PW: Domain
+    password security is enforced when a connection is established from a remote domain.
+    The domain password is defined in the WTCPasswordsMBean.</li> </ul> '
+  legalValues:
+  - NONE
+  - APP_PW
+  - DM_PW
+  name: Security
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The path and file name of the trust keystore.</p>  <p>The path
+    name must either be absolute or relative to where the server was booted. This
+    file name is only used if KeyStores is "Custom Stores".</p> '
+  name: TrustKeyStoreFileName
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The trust keystore''s passphrase. If empty or null, then the
+    keystore will be opened without a passphrase.</p>  <p>This attribute is only used
+    if KeyStores is "Custom Stores".</p>  <p>When you get the value of this attribute,
+    WebLogic Server does the following:</p> <ol><li>Retrieves the value of the <code>TrustKeyStorePassPhraseEncrypted</code>
+    attribute.</li> <li>Decrypts the value and returns the unencrypted password as
+    a String.</li> </ol>  <p>When you set the value of this attribute, WebLogic Server
+    does the following:</p> <ol><li>Encrypts the value.</li> <li>Sets the value of
+    the <code>TrustKeyStorePassPhraseEncrypted</code> attribute to the encrypted value.</li>
+    </ol> <p>Using this attribute (<code>TrustKeyStorePassPhrase</code>) is a potential
+    security risk because the String object (which contains the unencrypted password)
+    remains in the JVM''s memory until garbage collection removes it and the memory
+    is reallocated. Depending on how memory is allocated in the JVM, a significant
+    amount of time could pass before this unencrypted data is removed from memory.</p>  <p>Instead
+    of using this attribute, use <code>TrustKeyStorePassPhraseEncrypted</code>.</p> '
+  encrypted: true
+  name: TrustKeyStorePassPhrase
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The trust keystore''s encrypted passphrase. If empty or null,
+    then the keystore will be opened without a passphrase.</p>  <p>This attribute
+    is only used if KeyStores is "Custom Stores".</p>  <p>To set this attribute, use
+    <code>weblogic.management.EncryptionHelper.encrypt()</code> to encrypt the value.
+    Then set this attribute to the output of the encrypt() method. </p>  <p>To compare
+    a password that a user enters with the encrypted value of this attribute, use
+    the same WebLogic Server instance that you used to set and encrypt this attribute
+    and use <code>weblogic.management.EncryptionHelper.encrypt()</code> to encrypt
+    the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: TrustKeyStorePassPhraseEncrypted
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: 'Off'
+  descriptionHTML: '<p>Specifies if the connection initiated or accepted by this Local
+    Tuxedo access point uses SSL on top of its transport layer. Values are:</p>  <ul><li>Off:
+    SSL not used.</li> <li>TwoWay: Mutual Authentication with SSL required.</li> <li>OneWay:
+    Server Authentication with SSL required.</li> </ul>  <p><i>Note:</i> If SDP transport
+    is configured for this access point, the configured value of this attribute is
+    ignored and <code>off</code> is used.</p> '
+  legalValues:
+  - 'Off'
+  - TwoWay
+  - OneWay
+  name: UseSSL
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

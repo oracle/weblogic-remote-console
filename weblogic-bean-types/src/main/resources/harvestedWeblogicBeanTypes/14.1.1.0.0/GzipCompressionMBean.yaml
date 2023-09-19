@@ -1,0 +1,43 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p> This MBean is used to specify domain-wide default values for
+  GZIP compression support. In general, these properties can be overridden for a specific
+  Web application (in the weblogic.xml file). </p> '
+name: weblogic.management.configuration.GzipCompressionMBean
+properties:
+- array: true
+  defaultValue:
+    value:
+      value:
+      - text/html
+      - text/xml
+      - text/plain
+  descriptionHTML: '<p> Returns the type of content to be included in compression.
+    </p> '
+  name: GzipCompressionContentType
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p> This global property determines whether or not the container
+    should provide GZIP compression. </p> '
+  name: GzipCompressionEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 2048
+  descriptionHTML: '<p> Returns the minimum content length to trigger GZIP compression.
+    This allows you to bypass small-sized resources where compression does not yield
+    a great return and uses unnecessary CPU. </p> '
+  name: GzipCompressionMinContentLength
+  type: long
+  writable: true

@@ -1,0 +1,42 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.accessor.runtime.ArchiveRuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.WLDFFileArchiveRuntimeMBean
+descriptionHTML: '<p>Use this interface to collect statistical information about file-based
+  WLDF archives.</p> '
+name: weblogic.diagnostics.accessor.runtime.FileArchiveRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of times incremental indexing cycles were executed
+    since the server was started.</p> '
+  name: IncrementalIndexCycleCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative time, in milliseconds, spent performing incremental
+    indexing since the server was started.</p> '
+  name: IncrementalIndexTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of times indexing cycles were executed since the
+    server was started.</p> '
+  name: IndexCycleCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative indexing time, in milliseconds, since the server
+    was started.</p> '
+  name: IndexTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of rotated log file fragments.</p> '
+  name: RotatedFilesCount
+  type: int

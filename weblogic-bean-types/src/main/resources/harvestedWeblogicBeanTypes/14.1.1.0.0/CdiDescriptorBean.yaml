@@ -1,0 +1,33 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.CdiDescriptorBean
+properties:
+- defaultValue:
+    value:
+      value: Enabled
+  descriptionHTML: '<p>Indicates the CDI policy.  CDI can be "Enabled" (the default)
+    or "Disabled". If CDI is disabled then no CDI processing will occur including
+    scanning of pojos and initialization of Weld and CDI will not be available to
+    the application via the CDI apis.  This was added in 12.2.1.1.0</p> '
+  name: Policy
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>This flag may be used to limit implicit Bean discovery</p> '
+  name: ImplicitBeanDiscoveryEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true

@@ -323,6 +323,12 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
         subType.setType(NAME_HANDLER.getFabricatedJavaType(type));
       }
     }
+    String defaultSubType = source.getDefaultSubType();
+    if (!StringUtils.isEmpty(defaultSubType)) {
+      if (NAME_HANDLER.isFabricatableType(defaultSubType)) {
+        source.setDefaultSubType(NAME_HANDLER.getFabricatedJavaType(defaultSubType));
+      }
+    }
     if (!foundBaseType) {
       // The base type isn't instantiable.  However, when there are currently
       // no instances of this type on any running server, we need to create an
@@ -394,6 +400,7 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     source.getDisplayedColumns().addAll(unaggSource.getProperties());
     source.getHiddenColumns().addAll(unaggSource.getAdvancedProperties());
     source.setGetTableRowsMethod("weblogic.remoteconsole.customizers.AggregatedMBeanCustomizer.getSliceTableRows");
+    source.setSupportsNavigation(true);
     TablePagePath unaggTablePath = PagePath.newTablePagePath(unaggPagePath.getPagesPath());
     TableDefSource unaggTableSource = getYamlReader().getTableDefSource(unaggTablePath);
     if (unaggTableSource != null) {

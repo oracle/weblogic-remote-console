@@ -40,7 +40,7 @@
                     <a href="#" tabindex="-1"
                        on-click="[[tabstripButtonClickHandler]]"
                     >
-                      <img data-bind="attr: {id: tab.data.id + '-tab', src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + tab.data.iconFile + '.png'}"/>
+                      <img data-bind="attr: {id: tab.data.id + '-tab', src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + tab.data.iconFile + '.png', alt: tab.data.label}"/>
                       <span :id="[[tab.data.id]]" data-bind="text: tab.data.label"></span>
                     </a>
                   </span>

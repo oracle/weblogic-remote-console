@@ -1,0 +1,27 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.ConnectionFactoryBean
+properties:
+- creators:
+  - weblogic.j2ee.descriptor.wl.ConnectionPropertiesBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ConnectionProperties
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.ConnectionPropertiesBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: FactoryName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

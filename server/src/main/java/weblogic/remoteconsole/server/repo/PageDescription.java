@@ -101,7 +101,14 @@ public class PageDescription {
     List<PagePropertyDef> sortedHiddenColumns = sortHiddenColumnDefs(tableDef.getHiddenColumnDefs());
     addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sortedHiddenColumns));
     addIfNotEmpty(builder, "actions", actionDefsToJson(tableDef.getActionDefs()));
-    builder.add("requiresRowSelection", requiresRowSelection(tableDef.getActionDefs()));
+    if (requiresRowSelection(tableDef.getActionDefs())) {
+      builder.add("requiresRowSelection", true);
+      builder.add("rowSelectionProperty", "identity");
+    } else {
+      builder.add("requiresRowSelection", false);
+      builder.add("rowSelectionProperty", "none");
+    }
+    builder.add("navigationProperty", "identity");
     return builder.build();
   }
 
@@ -124,7 +131,15 @@ public class PageDescription {
     List<PagePropertyDef> sortedHiddenColumns = sortHiddenColumnDefs(sliceTableDef.getHiddenColumnDefs());
     addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sortedHiddenColumns));
     addIfNotEmpty(builder, "actions", actionDefsToJson(sliceTableDef.getActionDefs()));
-    builder.add("requiresRowSelection", requiresRowSelection(sliceTableDef.getActionDefs()));
+    if (requiresRowSelection(sliceTableDef.getActionDefs())) {
+      builder.add("requiresRowSelection", true);
+      builder.add("rowSelectionProperty", "identifier");
+    } else {
+      builder.add("requiresRowSelection", false);
+      builder.add("rowSelectionProperty", "none");
+    }
+    String navigationProperty = sliceTableDef.isSupportsNavigation() ? "identity" : "none";
+    builder.add("navigationProperty", navigationProperty);
     builder.add(READ_ONLY, sliceTableDef.isReadOnly());
     return builder.build();
   }
@@ -298,6 +313,7 @@ public class PageDescription {
     addIfNotEmpty(builder, "detailedHelpHTML", paramDef.getDetailedHelpHTML());
     addIfTrue(builder, "required", paramDef.isRequired());
     addIfNotEmpty(builder, "presentation", pageFieldPresentationDefToJson(paramDef.getPresentationDef()));
+    addIfNotEmpty(builder, "legalValues", legalValueDefsToJson(paramDef.getLegalValueDefs()));
     return builder.build();
   }
 

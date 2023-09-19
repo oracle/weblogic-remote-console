@@ -1,0 +1,97 @@
+<!--
+ Copyright (c) 2023, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+  <oj-bind-if test="typeof providerInfo.project !== 'undefined'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.project.name.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[providerInfo.project.name()]]"></oj-bind-text></span>
+    </span>
+    <br/>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.state() === 'connected'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.provider.id.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.provider.id.value()]]"></oj-bind-text></span>
+    </span>
+    <br/>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'adminserver'">
+    <oj-bind-if test="typeof i18n.popups.info.domain.name.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.name.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.name.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="typeof i18n.popups.info.domain.url.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.url.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.url.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="typeof i18n.popups.info.domain.proxyOverride.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.proxyOverride.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.proxyOverride.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="typeof i18n.popups.info.domain.version.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.version.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.version.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="typeof i18n.popups.info.domain.username.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.username.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.username.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="i18n.popups.info.domain.sso.value() === true">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.sso.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.sso.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="typeof i18n.popups.info.domain.roles.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.roles.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.roles.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="typeof i18n.popups.info.domain.connectTimeout.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.connectTimeout.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.connectTimeout.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.readTimeout.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.readTimeout.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="i18n.popups.info.domain.insecure.value() === true">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.insecure.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.insecure.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'model'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.model.file.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.model.file.value()]]"></oj-bind-text></span>
+    </span>
+    <oj-bind-if test="typeof i18n.popups.info.model.props.value() !== 'undefined'">
+      <br/>
+      <span><b><oj-bind-text value="[[i18n.popups.info.model.props.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.model.props.value()]]"></oj-bind-text></span>
+      </span>
+    </oj-bind-if>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'modelComposite'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.composite.models.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.composite.models.value()]]"></oj-bind-text></span>
+    </span>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'properties'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.proplist.file.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.proplist.file.value()]]"></oj-bind-text></span>
+    </span>
+  </oj-bind-if>

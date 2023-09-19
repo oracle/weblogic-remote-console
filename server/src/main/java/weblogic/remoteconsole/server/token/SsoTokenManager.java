@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 
-import io.helidon.config.Config;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.providers.AdminServerDataProvider;
 
@@ -31,8 +30,6 @@ public class SsoTokenManager {
   public static final long DEFAULT_SSO_TIMER_SECONDS = 30L;
   public static final long DEFAULT_SSO_TIMEOUT_SECONDS = 300L;
 
-  private long ssoTimerMillis;
-  private long ssoTimeoutMillis;
   private SecureRandom nonceGenerator = null;
   private volatile Timer ssoTimer = null;
   private volatile ConcurrentHashMap<String, ProviderEntry> ssoTokenIdMap;
@@ -58,17 +55,22 @@ public class SsoTokenManager {
     return getFromRequestContext(resourceContext.getResource(ContainerRequestContext.class));
   }
 
+  private long getSSOTimerMillis() {
+    return ConsoleBackendRuntime.INSTANCE.getConfig()
+        .get("ssoTimerSeconds").asLong()
+        .orElse(DEFAULT_SSO_TIMER_SECONDS) * 1000L;
+  }
+
+  private long getSSOTimeoutMillis() {
+    return ConsoleBackendRuntime.INSTANCE.getConfig()
+        .get("ssoTimeoutSeconds").asLong()
+        .orElse(DEFAULT_SSO_TIMEOUT_SECONDS) * 1000L;
+  }
+
   /**
    * Create the SsoTokenManager instance but lazy initialize the nonce generator...
    */
-  public SsoTokenManager(Config config) {
-    // Config settings to handle timeouts for map entries plus defaults
-    ssoTimerMillis = (config
-        .get("ssoTimerSeconds").asLong()
-        .orElse(DEFAULT_SSO_TIMER_SECONDS)) * 1000L;
-    ssoTimeoutMillis = (config
-        .get("ssoTimeoutSeconds").asLong()
-        .orElse(DEFAULT_SSO_TIMEOUT_SECONDS)) * 1000L;
+  public SsoTokenManager() {
     ssoTokenIdMap = new ConcurrentHashMap<>();
   }
 
@@ -139,7 +141,7 @@ public class SsoTokenManager {
    * Create and add the ProviderEntry for the AdminServerDataProvider including the timeout...
    */
   private void addProviderEntry(String ssoid, AdminServerDataProvider provider) {
-    ssoTokenIdMap.put(ssoid, new ProviderEntry(provider, ssoTimeoutMillis));
+    ssoTokenIdMap.put(ssoid, new ProviderEntry(provider, getSSOTimeoutMillis()));
   }
 
   /**
@@ -164,8 +166,8 @@ public class SsoTokenManager {
       LOGGER.fine("Canceled SSO timer!");
     } else if (!ssoTokenIdMap.isEmpty() && (ssoTimer == null)) {
       ssoTimer = new Timer("SsoTokenManager", true);
-      ssoTimer.schedule(new SsoTokenTimer(), ssoTimerMillis, ssoTimerMillis);
-      LOGGER.fine("Started SSO timer with interval millis: " + ssoTimerMillis);
+      ssoTimer.schedule(new SsoTokenTimer(), getSSOTimerMillis(), getSSOTimerMillis());
+      LOGGER.fine("Started SSO timer with interval millis: " + getSSOTimerMillis());
     }
   }
 
@@ -209,7 +211,7 @@ public class SsoTokenManager {
 
   private class SsoTokenTimer extends TimerTask {
     public void run() {
-      LOGGER.fine("SsoTokenTimer executing with SSO timeout millis: " + ssoTimeoutMillis);
+      LOGGER.fine("SsoTokenTimer executing with SSO timeout millis: " + getSSOTimeoutMillis());
       Set<String> removes = new LinkedHashSet<>();
       long now = System.currentTimeMillis();
       ssoTokenIdMap.forEach((ssoid, entry) -> {

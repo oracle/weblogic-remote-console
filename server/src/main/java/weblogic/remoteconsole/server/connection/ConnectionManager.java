@@ -3,6 +3,9 @@
 
 package weblogic.remoteconsole.server.connection;
 
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
@@ -24,6 +27,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -33,7 +37,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import io.helidon.config.Config;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.HttpUrlConnectorProvider;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
@@ -44,6 +49,7 @@ import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
+import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.filter.ClientAuthFeature;
 import weblogic.remoteconsole.server.utils.ResponseHelper;
 import weblogic.remoteconsole.server.utils.WebLogicRestClient;
@@ -68,69 +74,65 @@ public class ConnectionManager {
   // Default connection timeouts - should match application.yaml
   public static final long DEFAULT_CONNECT_TIMEOUT_MILLIS = 10000L;
   public static final long DEFAULT_READ_TIMEOUT_MILLIS = 20000L;
-
-  // Current timeout settings in milliseconds
-  private long connectTimeout;
-  private long readTimeout;
-
-  // SameSite Cookie Settings
-  private boolean isSameSiteCookieEnabled = false;
-  private String valueSameSiteCookie = null;
+  private static HostnameVerifier defaultHNV = HttpsURLConnection.getDefaultHostnameVerifier();
 
   // Collection of connections
   private ConcurrentHashMap<String, Connection> connections =
     new ConcurrentHashMap<String, Connection>();
 
-  /** Create the Connection Manager */
-  public ConnectionManager(Config config) {
+  private static long getConnectTimeout() {
     // Setup connection timeouts
-    connectTimeout =
-      config
-        .get("connectTimeoutMillis")
-        .asLong()
-        .orElse(DEFAULT_CONNECT_TIMEOUT_MILLIS);
-    readTimeout =
-      config
-        .get("readTimeoutMillis")
-        .asLong()
-        .orElse(DEFAULT_READ_TIMEOUT_MILLIS);
-    // Check for SameSite Cookie attribute settings
-    isSameSiteCookieEnabled =
-      config
+    return ConsoleBackendRuntime.INSTANCE.getConfig()
+      .get("connectTimeoutMillis")
+      .asLong()
+      .orElse(DEFAULT_CONNECT_TIMEOUT_MILLIS);
+  }
+
+  private static long getReadTimeout() {
+    return ConsoleBackendRuntime.INSTANCE.getConfig()
+      .get("readTimeoutMillis")
+      .asLong()
+      .orElse(DEFAULT_READ_TIMEOUT_MILLIS);
+  }
+
+  public static boolean isSameSiteCookieEnabled() {
+    return ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("enableSameSiteCookieValue")
         .asBoolean()
         .orElse(false);
-    valueSameSiteCookie =
-      config
+  }
+
+  public static String getSameSiteCookieValue() {
+    if (!isSameSiteCookieEnabled()) {
+      return null;
+    }
+    String ret =
+      ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("valueSameSiteCookie")
         .asString()
         .orElse(null);
+    LOGGER.info("SameSite Cookie attribute is enabled using value: " + ret);
+    return ret;
+  }
 
-    if (isSameSiteCookieEnabled) {
-      LOGGER.info("SameSite Cookie attribute is enabled using value: " + valueSameSiteCookie);
-    }
-
+  private static void maybeDisableHostnameVerification() {
     // Check and disable HNV for the CBE with all connections
     boolean disableHostnameVerification =
-      config
+      ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("disableHostnameVerification")
         .asBoolean()
         .orElse(false);
-
     if (disableHostnameVerification) {
-      disableHNV();
       LOGGER.info("Hostname verification for SSL/TLS connections has been disabled!");
+      HttpsURLConnection.setDefaultHostnameVerifier(
+        new HostnameVerifier() {
+          public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
+            return true;
+          }
+        });
+    } else {
+      HttpsURLConnection.setDefaultHostnameVerifier(defaultHNV);
     }
-  }
-
-  /** Disable host name verification for all outbound connections */
-  private static void disableHNV() {
-    javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
-      new HostnameVerifier() {
-        public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
-          return true;
-        }
-      });
   }
 
   /** Setup the JAX-RS client with an SSLContext that allows connections without any certificates */
@@ -161,19 +163,36 @@ public class ConnectionManager {
     builder.sslContext(context);
   }
 
+  private static void setProxyOverride(ClientBuilder builder, String proxyString) throws Exception {
+    Proxy proxy;
+    if ((proxyString == null) || (proxyString.length() == 0) || proxyString.equalsIgnoreCase("direct")) {
+      proxy = Proxy.NO_PROXY;
+    } else {
+      if (!proxyString.contains("://")) {
+        throw new Exception("Bad proxy string format");
+      }
+      String protocol = proxyString.substring(0, proxyString.indexOf("://"));
+      String host = proxyString.substring(
+        proxyString.indexOf("://") + 3,
+        proxyString.lastIndexOf(":"));
+      String portString = proxyString.substring(proxyString.lastIndexOf(":") + 1);
+      int port = Integer.parseInt(portString);
+      if (protocol.equals("http")) {
+        proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
+      } else if (protocol.startsWith("socks")) {
+        proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
+      } else {
+        throw new Exception("Unrecognized protocol in proxy string");
+      }
+    }
+    ((ClientConfig) builder.getConfiguration())
+      .connectorProvider(new HttpUrlConnectorProvider()
+        .connectionFactory(url -> (HttpURLConnection) url.openConnection(proxy)));
+  }
+
   /** Get a UUID using a secure random number generator */
   private static String getUUID() {
     return UUID.randomUUID().toString();
-  }
-
-  /** Determine if the SameSite Cookie attribute is to be added to a new Cookie */
-  public boolean isSameSiteCookieEnabled() {
-    return isSameSiteCookieEnabled;
-  }
-
-  /** Obtain the value of the SameSite Cookie attribute when enabled */
-  public String getSameSiteCookieValue() {
-    return valueSameSiteCookie;
   }
 
   /** Create a new connection by the Connection Manager */
@@ -201,7 +220,9 @@ public class ConnectionManager {
         consoleExtensionVersion,
         capabilities,
         username,
-        client
+        client,
+        getConnectTimeout(),
+        getReadTimeout()
       );
     connections.put(id, result);
 
@@ -216,6 +237,7 @@ public class ConnectionManager {
    */
   public Connection makeConnection(String domainUrl, String username, String password) {
     Connection result = null;
+    maybeDisableHostnameVerification();
 
     // Try to make the connection and check to see if the response was successful
     ConnectionResponse response = tryConnection(domainUrl, username, password);
@@ -237,13 +259,19 @@ public class ConnectionManager {
    * @param insecure The flag to indicate an insecure connection without certificate checks
    * @return The connection response
    */
-  public ConnectionResponse tryConnection(String domainUrl, String auth, List<Locale> locales, boolean insecure) {
+  public ConnectionResponse tryConnection(
+    String domainUrl,
+    String auth,
+    List<Locale> locales,
+    boolean insecure,
+    String proxyOverride) {
 
+    maybeDisableHostnameVerification();
     // Setup the JAX-RS client for use with the connection using the suppplied authorization header
     ClientBuilder builder =
       ClientBuilder.newBuilder()
-        .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
-        .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
+        .connectTimeout(getConnectTimeout(), TimeUnit.MILLISECONDS)
+        .readTimeout(getReadTimeout(), TimeUnit.MILLISECONDS)
         .register(JacksonJsonProvider.class)
         .register(MultiPartFeature.class)
         .register(ClientAuthFeature.authorization(auth));
@@ -257,7 +285,13 @@ public class ConnectionManager {
         return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, null, "Unable to setup insecure connection");
       }
     }
-
+    if ((proxyOverride != null) && (proxyOverride.length() > 0)) {
+      try {
+        setProxyOverride(builder, proxyOverride);
+      } catch (Exception e) {
+        return newConnectionResponse(Status.BAD_REQUEST, null, "Unable to setup proxy");
+      }
+    }
     // Create the JAX-RS client
     Client client = builder.build();
 
@@ -296,8 +330,8 @@ public class ConnectionManager {
     // Create the JAX-RS client for use with the connection using the suppplied credentials
     Client client =
       ClientBuilder.newBuilder()
-        .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
-        .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
+        .connectTimeout(getConnectTimeout(), TimeUnit.MILLISECONDS)
+        .readTimeout(getReadTimeout(), TimeUnit.MILLISECONDS)
         .register(JacksonJsonProvider.class)
         .register(MultiPartFeature.class)
         .register(HttpAuthenticationFeature.basic(username, password))
@@ -567,6 +601,9 @@ public class ConnectionManager {
 
   // Probably should move this into its own class
   private JsonObject getCapabilityToBeanFeature() {
+    // Note: weblogic.remoteconsole.server.repo.weblogic.WDTCapabilities
+    // needs to list any config mbean based features that are in this
+    // list and supported by WDT:
     return
       Json.createObjectBuilder()
         .add(
@@ -584,6 +621,17 @@ public class ConnectionManager {
           Json.createObjectBuilder()
             .add("type", "weblogic.management.runtime.JTARuntimeMBean")
             .add("action", "currentTransactions")
+        )
+        .add(
+          // Just look for one of the JRF security providers.  If it's there, the others must be too.
+          "JRFSecurityProviders",
+          Json.createObjectBuilder()
+            .add("type", "oracle.security.wls.oam.providers.authenticator.OAMAuthenticatorMBean")
+        )
+        .add(
+          "AllowList",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.management.configuration.AllowListMBean")
         )
         .build();
   }

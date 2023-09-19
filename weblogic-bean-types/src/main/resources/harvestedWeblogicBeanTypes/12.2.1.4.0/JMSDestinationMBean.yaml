@@ -1,0 +1,107 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.JMSDestCommonMBean
+derivedTypes:
+- weblogic.management.configuration.JMSQueueMBean
+- weblogic.management.configuration.JMSTopicMBean
+descriptionHTML: 'This class represents a JMS destination, which identifies a queue
+  (Point-To-Point) or a topic (Pub/Sub) for a JMS server. '
+name: weblogic.management.configuration.JMSDestinationMBean
+properties:
+- defaultValue:
+    value:
+      value: default
+  deprecated: '9.0.0.0 Replaced by weblogic.management.configuration.JMSServerMBean.getMessageBufferSize() '
+  descriptionHTML: '<p>This parameter has been deprecated. Paging is always enabled.
+    The "MessageBufferSize" parameter on JMSServerMBean controls how much memory is
+    used before paging kicks in.</p> '
+  legalValues:
+  - default
+  - 'false'
+  - 'true'
+  name: BytesPagingEnabled
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JNDI name used to look up the destination within the JNDI
+    namespace. If not specified, the destination name is not advertised through the
+    JNDI namespace and cannot be looked up and used.</p>  <p><i>Note:</i> This attribute
+    is not dynamically configurable.</p> '
+  name: JNDIName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Indicates whether the JNDI name is replicated across the cluster.
+    If JNDINameReplicated is set to true, then the JNDI name for the destination (if
+    present) is replicated across the cluster. If JNDINameReplicated is set to false,
+    then the JNDI name for the destination (if present) is only visible from the server
+    of which this destination is a part.</p> '
+  name: JNDINameReplicated
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: default
+  deprecated: '9.0.0.0 Replaced by weblogic.management.configuration.JMSServerMBean.getMessageBufferSize() '
+  descriptionHTML: '<p>This parameter has been deprecated. Paging is always enabled.
+    The "MessageBufferSize" parameter on JMSServerMBean controls how much memory is
+    used before paging kicks in.</p> '
+  legalValues:
+  - default
+  - 'false'
+  - 'true'
+  name: MessagesPagingEnabled
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: default
+  descriptionHTML: '<p>Specifies whether the destination supports persistent messaging
+    by using the JMS store specified by the JMS server.</p>  <p>Supported values are:</p>  <ul>
+    <li><b>default</b> <p>- The destination uses the JMS store defined for the JMS
+    server, if one is defined, and supports persistent messaging. However, if a JMS
+    store is not defined for the JMS server, then persistent messages are automatically
+    downgraded to non-persistent.</p> </li>  <li><b>false</b> <p>- The destination
+    does not support persistent messaging.</p> </li>  <li><b>true</b> <p>- The destination
+    does support persistent messaging. However, if a JMS store is not defined for
+    the JMS server, then the configuration will fail and the JMS server will not boot.</p>
+    </li> </ul>  <p><i>Note:</i> This attribute is not dynamically configurable.</p> '
+  legalValues:
+  - default
+  - 'false'
+  - 'true'
+  name: StoreEnabled
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JMS template from which the destination is derived. If
+    a JMS template is specified, destination attributes that are set to their default
+    values will inherit their values from the JMS template at run time. However, if
+    this attribute is not defined, then the attributes for the destination must be
+    specified as part of the destination.</p>  <p><i>Note:</i> The Template attribute
+    setting per destination is static. The JMS template''s attributes, however, can
+    be modified dynamically.</p> '
+  name: Template
+  relationship: reference
+  restartNeeded: true
+  supported: false
+  type: weblogic.management.configuration.JMSTemplateMBean
+  writable: true
+roles:
+  allowed:
+  - Deployer

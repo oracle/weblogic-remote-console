@@ -1,0 +1,23 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.diagnostics.descriptor.WLDFHeapDumpActionBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Indicates whether or not to include the set of live objects
+    in the heap dump capture.</p> '
+  name: LiveSetOnly
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

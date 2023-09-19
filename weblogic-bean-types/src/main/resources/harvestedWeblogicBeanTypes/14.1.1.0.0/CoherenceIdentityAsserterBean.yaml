@@ -1,0 +1,36 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Parameters to define an instance of a Coherence com.tangosol.net.security.IdentityAsserter. '
+name: weblogic.coherence.descriptor.wl.CoherenceIdentityAsserterBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The class that implements com.tangosol.net.security.IdentityAsserter.
+    If className is empty, no IdentityAsserter will be configured. </p> '
+  name: ClassName
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.coherence.descriptor.wl.CoherenceInitParamBean
+  defaultValue: {
+    }
+  descriptionHTML: 'An array of CoherenceInitParam beans, each of which represents
+    an initialization parameter. '
+  name: CoherenceInitParams
+  relationship: containment
+  restartNeeded: true
+  type: weblogic.coherence.descriptor.wl.CoherenceInitParamBean
+  writable: true
+roles:
+  allowed:
+  - Deployer

@@ -1,0 +1,36 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Configuration to mark the server as failed when threads are stuck.
+  A failed server in turn can be configured to shutdown or go into admin state. '
+name: weblogic.management.configuration.ServerFailureTriggerMBean
+properties:
+- defaultValue:
+    value:
+      value: 600
+  descriptionHTML: '<p>The number of seconds that a thread must be continually working
+    before this server diagnoses the thread as being stuck.</p>  <p>For example, if
+    you set this to 600 seconds, WebLogic Server considers a thread to be "stuck"
+    after 600 seconds of continuous use.</p> '
+  name: MaxStuckThreadTime
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of stuck threads after which the server is transitioned
+    into FAILED state. There are options in OverloadProtectionMBean to suspend and
+    shutdown a FAILED server. By default, the server continues to run in FAILED state.</p>  <p>If
+    the StuckThreadCount value is set to zero then the server never transitions into
+    FAILED server irrespective of the number of stuck threads. </p> '
+  name: StuckThreadCount
+  restartNeeded: true
+  type: int
+  writable: true

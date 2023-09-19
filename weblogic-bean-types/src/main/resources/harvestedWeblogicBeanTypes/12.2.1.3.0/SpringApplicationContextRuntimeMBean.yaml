@@ -1,0 +1,102 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean represents instances of class org.springframework.context.support.AbstractApplicationContext
+  and org.springframework.beans.factory.support.AbstractBeanFactory There is a SpringApplicationContextRuntimeMBean
+  for each application context in a deployment. '
+name: weblogic.management.runtime.SpringApplicationContextRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This returns the average elapsed time in milliseconds required
+    for getBeanNamesForType()</p> '
+  name: AverageGetBeanNamesForTypeTime
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This returns the average elapsed time in milliseconds required
+    for getBean()</p> '
+  name: AverageGetBeanTime
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This returns the average elapsed time in milliseconds required
+    for getBeansOfType()</p> '
+  name: AverageGetBeansOfTypeTime
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This returns the average elapsed time in milliseconds required
+    to create prototype beans</p> '
+  name: AveragePrototypeBeanCreationTime
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This returns the average elapsed time in milliseconds required
+    to perform a refresh</p> '
+  name: AverageRefreshTime
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This returns the average elapsed time in milliseconds required
+    to create singleton beans</p> '
+  name: AverageSingletonBeanCreationTime
+  type: double
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The names of customer scopes that were registered.</p> '
+  name: CustomScopeNames
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Display name of the application context</p> '
+  name: DisplayName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of times getBean() was called</p> '
+  name: GetBeanCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of times getBeanNamesForType() was called</p> '
+  name: GetBeanNamesForTypeCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of times getBeansOfType() was called</p> '
+  name: GetBeansOfTypeCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the parent context</p> '
+  name: ParentContext
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of Prototype beans created.</p> '
+  name: PrototypeBeansCreatedCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of refreshes performed</p> '
+  name: RefreshCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of singleton beans created.</p> '
+  name: SingletonBeansCreatedCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the timestamp in milliseconds when this context was
+    first loaded</p> '
+  name: StartupDate
+  type: long

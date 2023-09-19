@@ -1,0 +1,98 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JTATransactionStatisticsRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface is used for accessing transaction runtime characteristics
+  within a WebLogic server. '
+name: weblogic.management.runtime.JTARuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of active transactions on the server.</p> '
+  name: ActiveTransactionsTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the JTA Passive Mode state as a string.  The state values
+    are (ACTIVE, PASSIVE, ACTIVATING, PASSIVATING) '
+  name: DBPassiveModeState
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The health state of the JTA subsystem. for state values.  </p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of <code>JTATransaction</code> objects. Each object
+    provides detailed information regarding an active transaction.</p> '
+  excludeFromRest: No default REST mapping for JTATransaction
+  name: JTATransactions
+  supported: false
+  type: weblogic.management.runtime.JTATransaction
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of <code>NonXAResourceRuntimeMBeans</code> that each
+    represents the statistics for a non-XA resource.</p> '
+  name: NonXAResourceRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.NonXAResourceRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the runtime MBeans for the Transaction Recovery Services
+    that were deployed on this server.</p> '
+  name: RecoveryRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.JTARecoveryRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of NonXA resource names that are registered with the
+    transaction manager.</p> '
+  name: RegisteredNonXAResourceNames
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of XA resource names that are registered with the
+    transaction manager.</p> '
+  name: RegisteredResourceNames
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the runtime MBean for the primary TLOG persistent store,
+    regardless of it is default store or JDBC store. </p> '
+  name: TransactionLogStoreRuntimeMBean
+  relationship: containment
+  type: weblogic.management.runtime.PersistentStoreRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of <code>TransactionNameRuntimeMBeans</code> that
+    represent statistics for all transactions in the server, categorized by transaction
+    name.</p> '
+  name: TransactionNameRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.TransactionNameRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of <code>TransactionResourceRuntimeMBeans</code> that
+    each represents the statistics for a transaction resource.</p> '
+  name: TransactionResourceRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.TransactionResourceRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the lifecycle state of the JTA Transaction Service as
+    a string '
+  name: TransactionServiceState
+  type: java.lang.String

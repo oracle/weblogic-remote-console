@@ -1,0 +1,14 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: ContextPath
+  label: Remote Console Helper Context Path
+- name: CookieName
+  label: Remote Console Helper Cookie Name
+- name: SessionTimeout
+  label: Remote Console Helper Session Timeout
+- name: ProtectedCookieEnabled
+  label: Remote Console Helper Protected Cookie Enabled
+- name: TokenTimeout
+  label: Remote Console Helper Token Timeout

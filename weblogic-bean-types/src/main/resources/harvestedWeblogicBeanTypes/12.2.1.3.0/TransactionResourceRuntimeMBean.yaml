@@ -1,0 +1,47 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JTAStatisticsRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface represents runtime statistics for a transactional
+  resource. '
+name: weblogic.management.runtime.TransactionResourceRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The health state of the Resource.</p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The resource name.</p> '
+  name: ResourceName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of transactions for which this resource has returned
+    a heuristic commit decision.</p> '
+  name: TransactionHeuristicCommitTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of transactions for which this resource has reported
+    a heuristic hazard decision.</p> '
+  name: TransactionHeuristicHazardTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of transactions for which this resource has reported
+    a heuristic mixed decision.</p> '
+  name: TransactionHeuristicMixedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of transactions for which this resource has returned
+    a heuristic rollback decision.</p> '
+  name: TransactionHeuristicRollbackTotalCount
+  type: long

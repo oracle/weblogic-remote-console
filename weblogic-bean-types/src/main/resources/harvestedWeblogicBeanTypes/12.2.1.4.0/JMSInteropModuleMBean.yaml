@@ -1,0 +1,29 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.JMSSystemResourceMBean
+- weblogic.management.configuration.DomainTargetedMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This bean defines a system-level JMS resource.  It links a separate
+  descriptor that specifies the definition.</p> '
+name: weblogic.management.configuration.JMSInteropModuleMBean
+properties:
+- array: true
+  defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>You must select a target on which an MBean will be deployed
+    from this list of the targets in the current domain on which this item can be
+    deployed. Targets must be either servers or clusters. The deployment will only
+    occur once if deployments overlap.</p> '
+  name: Targets
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.TargetMBean
+  writable: true
+roles:
+  allowed:
+  - Deployer

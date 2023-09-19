@@ -60,6 +60,12 @@ public class InvocationContext {
   // identifies an instance in a slice table
   private String identifier;
 
+  // identifies the rows in a slice table that were selected for this invocation
+  private List<String> identifiers;
+
+  // identifies the rows in a table that were selected for this invocation
+  private List<BeanTreePath> identities;
+
   // Lists the form/table properties that a GET operation should return.
   // If null, all of the form/table properties are returned.
   // If not, only properties that are on the form/table AND in
@@ -99,6 +105,8 @@ public class InvocationContext {
     this.localizer = toClone.localizer;
     this.beanTreePath = toClone.beanTreePath;
     this.identifier = toClone.identifier;
+    this.identifiers = toClone.identifiers;
+    this.identities = toClone.identities;
     this.properties = toClone.properties;
     this.reload = toClone.reload;
     this.uriInfo = toClone.uriInfo;
@@ -154,6 +162,22 @@ public class InvocationContext {
 
   public void setIdentifier(String identifier) {
     this.identifier = identifier;
+  }
+
+  public List<String> getIdentifiers() {
+    return identifiers;
+  }
+
+  public void setIdentifiers(List<String> identifiers) {
+    this.identifiers = identifiers;
+  }
+
+  public List<BeanTreePath> getIdentities() {
+    return identities;
+  }
+
+  public void setIdentities(List<BeanTreePath> identities) {
+    this.identities = identities;
   }
 
   public PagePath getPagePath() {

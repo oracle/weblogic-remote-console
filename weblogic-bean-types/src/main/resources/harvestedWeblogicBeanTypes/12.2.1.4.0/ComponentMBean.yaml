@@ -1,0 +1,50 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes:
+- weblogic.management.configuration.WebAppComponentMBean
+- weblogic.management.configuration.EJBComponentMBean
+- weblogic.management.configuration.JDBCPoolComponentMBean
+- weblogic.management.configuration.ConnectorComponentMBean
+descriptionHTML: 'A component is a specific type of deployment that is part of a J2EE
+  application (see ApplicationMBean). Typically it is a JAR, WAR, or RAR file that
+  contains application code.  Deploying an application is primarily the sum of its
+  component deployments. Components define the target servers for the application.
+  A target may be a server or cluster. Web Applications may also reference Virtual
+  hosts, which in turn define additional server/cluster targets. '
+name: weblogic.management.configuration.ComponentMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>List of servers and clusters where this module is currently
+    active. This attribute is valid only for modules deployed via the two phase protocol.
+    Modules deployed with the WLS 6.x deployment protocol do not maintain this attribute.</p> '
+  name: ActivatedTargets
+  relationship: reference
+  transient: true
+  type: weblogic.management.configuration.TargetMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The application this component is a part of. This is guaranteed
+    to never be null.</p> '
+  name: Application
+  relationship: reference
+  restartNeeded: true
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.ApplicationMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>A URI that points to the application module, usually on the
+    Administration Server.</p>  <p>URI can only be set if this is a standalone component;
+    the URI for an application is defined in the application''s deployment descriptor.</p>
+    * '
+  name: URI
+  type: java.lang.String
+  writable: true

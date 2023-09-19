@@ -1,0 +1,52 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.InterceptorMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface provides configuration for a script interceptor. '
+name: weblogic.management.configuration.ScriptInterceptorMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ApplicableClusterNames
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ScriptInterceptor
+  descriptionHTML: 'The HK2 name of the interceptor class. '
+  name: InterceptorTypeName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the configuration for the post-processor script which
+    will be invoked after executing the intercepted operation. Note that if the command
+    specified by the returned configuration is not set or empty, this interceptor
+    will not perform any action after execution of the intercepted operation.  If
+    the pre-processor script (if specified) failed, or the intercepted operation or
+    another interceptor causes an exception, the post-processor script (even if specified)
+    will not be executed.  If the post-processor script (if specified) returns a non-zero
+    status, the error handler script (if specified) will be executed and a PostProcessingException
+    will occur. '
+  name: PostProcessor
+  relationship: containment
+  type: weblogic.management.configuration.PostProcessorScriptMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the configuration for the pre-processor script which will
+    be invoked before executing the interceptor operation. Note that if the command
+    specified by the returned configuration is not set or empty, this interceptor
+    will not perform any action before execution of the intercepted operation.  If
+    the pre-processor script (if specified) returns a non-zero status, the error handler
+    script (if specified) will be executed and a PreProcessingException will occur. '
+  name: PreProcessor
+  relationship: containment
+  type: weblogic.management.configuration.PreProcessorScriptMBean

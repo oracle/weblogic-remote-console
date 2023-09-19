@@ -1,0 +1,37 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Information about all subsystems participating in the server boot
+  progress meter '
+name: weblogic.management.runtime.AggregateProgressMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the current aggregate state of all subsystem states. <ol>
+    <li>IN_PROGRESS - At least one subsystem has the state of IN_PROGRESS and none
+    are in FAILED state</li> <li>FINAL - All subsystems are in the state of FINAL</li>
+    <li>FAILED - If any subsystem is in the FAILED state</li> </ol> '
+  exclude: true
+  name: AggregateState
+  supported: false
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns the current progress of individual subsystems. If there
+    are no subsystems currently reporting progress, this will return a zero length
+    array (and will never return null) '
+  exclude: true
+  name: Progress
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.ProgressMBean
+roles:
+  allowed:
+  - Operator

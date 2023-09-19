@@ -1,0 +1,51 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Store-and-Forward (SAF) Login Context specifies the remote URL and
+  user credentials needed to log into and get authenticated and authorized in a remote
+  cluster or server. '
+name: weblogic.j2ee.descriptor.wl.SAFLoginContextBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the URL to connect to when using this SAF Login Context.</p>  <p>SAFImportedDestinations
+    are associated with a SAFRemoteContext that has a SAFLoginContext. This SAFLoginContext
+    defines the URL to connect to.</p> '
+  name: LoginURL
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The password for the username used to log into the remote URL.</p>  <p>When
+    Password is specified for a SAFLoginContext, then SAFPrincipalName is not specified.</p> '
+  encrypted: true
+  name: Password
+  nullable: true
+  transient: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The encrypted value of the password.</p> '
+  encrypted: true
+  name: PasswordEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name used to log into the remote URL.</p>  <p>When Username
+    is specified for a SAFLoginContext, then SAFPrincipalName is not specified.</p> '
+  name: Username
+  nullable: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

@@ -379,6 +379,10 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
         subType.setValue(value);
       }
     }
+    String defaultSubType = source.getDefaultSubType();
+    if (!StringUtils.isEmpty(defaultSubType)) {
+      source.setDefaultSubType(nameHandler.getFabricatedJavaType(defaultSubType));
+    }
   }
 
   @Override

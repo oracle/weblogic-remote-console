@@ -38,8 +38,8 @@ public class ConsoleBackendRuntime {
   // Singleton State Initialization
   private ConsoleBackendRuntime() {
     this.logger = Logger.getLogger(ConsoleBackendRuntime.class.getName());
-    this.connectionManager = new ConnectionManager(getConfig());
-    this.ssoTokenManager = new SsoTokenManager(getConfig());
+    this.connectionManager = new ConnectionManager();
+    this.ssoTokenManager = new SsoTokenManager();
   }
 
   /**
@@ -158,10 +158,10 @@ public class ConsoleBackendRuntime {
    * @return Helidon MPConfig object
    */
   public synchronized Config getConfig() {
-    if (this.config == null) {
-      this.config = loadConfig();
+    if (config == null) {
+      config = loadConfig();
     }
-    return this.config;
+    return config;
   }
 
   /** Current mode of how the CBE was started. */
@@ -210,6 +210,10 @@ public class ConsoleBackendRuntime {
     setProperty(WebLogicProperties.WEBLOGIC_USERNAME_PROPERTY, WebLogicProperties.getUsername());
     setProperty(WebLogicProperties.WEBLOGIC_PASSWORD_PROPERTY, WebLogicProperties.getPassword());
     setProperty(WebLogicProperties.WEBLOGIC_ADMIN_URL_PROPERTY, WebLogicProperties.getAdminUrl());
+  }
+
+  public void reloadConfig() {
+    this.config = loadConfig();
   }
 
   private Config loadConfig() {

@@ -1,0 +1,37 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.configuration.AuthModuleMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'get the classname for the authentication module '
+  name: ClassName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Server
+  descriptionHTML: 'get the module type - that is: Client or Server '
+  legalValues:
+  - Server
+  name: ModuleType
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'get the properties that are used to initialize the authentication
+    module '
+  name: Properties
+  restartNeeded: true
+  type: java.util.Properties
+  writable: true
