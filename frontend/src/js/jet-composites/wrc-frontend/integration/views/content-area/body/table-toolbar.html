@@ -94,7 +94,7 @@
 
         <div id="sync-toolbar-icon" class="oj-flex-item">
           <a on-click="[[syncClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.sync.tooltip}">
-            <img id="sync-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[autoSyncEnabled() ? 'sync-on-icon-blk_24x24' : 'sync-off-icon-blk_24x24' ]] + '.png'}" data-interval="0"/>
+            <img id="sync-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[autoSyncEnabled() ? 'sync-on-icon-blk_24x24' : 'sync-off-icon-blk_24x24' ]] + '.png', alt: i18n.icons.sync.tooltip}" data-interval="0"/>
           </a>
         </div>
 

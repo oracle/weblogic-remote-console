@@ -574,6 +574,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         field.setAttribute('resize-behavior', options['resize-behavior']);
         field.setAttribute('placeholder', options['placeholder']);
         field.setAttribute('readonly', options['readonly'] || false);
+        field.setAttribute('rows', options['rows'] || 4);
         return field;
       },
 

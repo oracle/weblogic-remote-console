@@ -1,0 +1,111 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface provides access to the WTC tBridge Redirect configuration
+  attributes. The methods defined herein are applicable for tBridge configuration
+  at the WLS domain level. '
+name: weblogic.management.configuration.WTCtBridgeRedirectMBean
+properties:
+- defaultValue:
+    value:
+      value: JmsQ2TuxQ
+  descriptionHTML: '<p>The direction of data flow. At least one redirection must be
+    specified or the Tuxedo queuing bridge will fail to start and an error will be
+    logged.</p>  <p>Each defined direction is handled by starting a new thread.</p>  <p
+    style="font-weight: bold">Redirection keywords:</p>  <ul> <li><code>JmsQ2TuxQ</code>  <p>-
+    From JMS to TUXEDO /Q</p> </li>  <li><code>TuxQ2JmsQ</code>  <p>- From TUXEDO
+    /Q to JMS</p> </li>  <li><code>JmsQ2TuxS</code>  <p>- From JMS to TUXEDO Service
+    reply to JMS</p> </li>  <li><code>JmsQ2JmsQ</code>  <p>- From JMS to JMS</p> </li>
+    </ul> '
+  legalValues:
+  - JmsQ2TuxQ
+  - TuxQ2JmsQ
+  - JmsQ2TuxS
+  - JmsQ2JmsQ
+  name: Direction
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the metadata file URL used to pass the call to
+    the XML-to-non-XML WebLogic XML Translator (WLXT).</p>  <p><i>Note:</i> Not supported
+    for this release.</p> '
+  name: MetaDataFile
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the JMS queue used specifically for synchronous
+    calls to a Tuxedo service. The response is returned to the JMS ReplyQ.</p> '
+  name: ReplyQ
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the local or remote access point where the source
+    is located.</p> '
+  name: SourceAccessPoint
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: mySource
+  descriptionHTML: '<p>The name of a source queue or service. Specifies a JMS queue
+    name, a Tuxedo queue name, or the name of a Tuxedo service.</p> '
+  name: SourceName
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the Qspace for a source location.</p> '
+  name: SourceQspace
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the local or remote access point where the target
+    is located.</p> '
+  name: TargetAccessPoint
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: myTarget
+  descriptionHTML: '<p>The name of the target queue or service. Specifies a JMS queue
+    name, a Tuxedo queue name, or the name of a Tuxedo service.</p> '
+  name: TargetName
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the Qspace for a target location.</p> '
+  name: TargetQspace
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 'NO'
+  descriptionHTML: '<p>The type of XML/FML translation.</p>  <p><code>NO</code> indicates
+    that no data translation is performed. <code>FLAT</code> indicates that the message
+    payload is transformed using the WebLogic Tuxedo Connector translator. <code>WLXT</code>
+    indicates that translation is performed by the XML-to-non-XML WebLogic XML Translator
+    (WLXT).</p>  <p><i>Note:</i> WLXT is not supported for this release.</p> '
+  legalValues:
+  - 'NO'
+  - FLAT
+  - WLXT
+  name: TranslateFML
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

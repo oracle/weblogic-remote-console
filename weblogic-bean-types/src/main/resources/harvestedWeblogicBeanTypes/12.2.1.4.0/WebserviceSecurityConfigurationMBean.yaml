@@ -1,0 +1,46 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.WebserviceSecurityTokenMBean
+- weblogic.management.configuration.WebserviceTokenHandlerMBean
+- weblogic.management.configuration.WebserviceCredentialProviderMBean
+descriptionHTML: '<p>Encapsulates information about a Web Service security configuration.</p>  <p>This
+  information includes the list of tokens, credential providers, token handlers, and
+  the timestamp.  After you have created a Web Service security configuration, you
+  can associate it to a Web Service.  </p> '
+name: weblogic.management.configuration.WebserviceSecurityConfigurationMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The fully qualified name of the class that implements a particular
+    credential provider or token handler.</p> '
+  name: ClassName
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.ConfigurationPropertyMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the list of properties that are associated with this
+    credential provider or token handler.</p> '
+  name: ConfigurationProperties
+  relationship: containment
+  type: weblogic.management.configuration.ConfigurationPropertyMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the type of token used for the particular credential
+    provider or token handler.</p>  <p>WebLogic Server supports, by default, three
+    types of tokens: X.509, UsernameToken, and SAML, as specified by the following
+    WS-Security specifications:</p> <ul> <li>Web Services Security: Username Token
+    Profile</li> <li>Web Services Security: X.509 Token Profile</li> <li>Web Services
+    Security: SAML Token Profile</li> </ul> <p>To specify one of these out-of-the-box
+    types, use these values respectively: "ut", "x509", or "saml". </p> '
+  name: TokenType
+  type: java.lang.String
+  writable: true

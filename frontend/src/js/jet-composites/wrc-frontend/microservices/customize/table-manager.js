@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -47,21 +47,22 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/message-displaying', 'wrc-f
      * Toggle the table customizer open or closed based on current state
      */
     function toggleCustomizer(event) {
-      // Ensure the customizer button is the target
-      if (event.currentTarget.id !== customizer.button.id) return;
+      const toggleState = {after: undefined};
 
       // Check the current state and adjust accordingly
-      const beforeState = event.currentTarget.attributes['data-state'].value;
-      const afterState = (beforeState === customizer.collapsed.state ? customizer.expanded.state : customizer.collapsed.state);
-      $(`#${customizer.button.id}`).attr('data-state', afterState);
-      $(`#${customizer.table.id}`).css({ display: (beforeState === customizer.collapsed.state ? 'inline-flex' : 'none') });
+      toggleState['before'] = event.currentTarget.attributes['data-state'].value;
+      toggleState['after'] = (toggleState.before === customizer.collapsed.state ? customizer.expanded.state : customizer.collapsed.state);
+      $(`#${customizer.button.id}`).attr('data-state', toggleState.after);
+      $(`#${customizer.table.id}`).css({ display: (toggleState.before === customizer.collapsed.state ? 'inline-flex' : 'none') });
       const span = document.getElementById(customizer.toggler.id);
-      if (beforeState === customizer.collapsed.state) {
+      if (toggleState.before === customizer.collapsed.state) {
         span.classList.replace(customizer.collapsed.id, customizer.expanded.id);
       }
       else {
         span.classList.replace(customizer.expanded.id, customizer.collapsed.id);
       }
+
+      return toggleState.after;
     }
 
     /**
@@ -175,6 +176,13 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/message-displaying', 'wrc-f
     }
 
     TableCustomizerManager.prototype = {
+      State: Object.freeze({
+        COLLAPSED: {name: 'collapsed'},
+        EXPANDED: {name: 'expanded'}
+      }),
+      stateFromName: function (name) {
+        return Object.values(this.Type).find(type => type.name === name);
+      },
       /**
        * Get the observable holding the backend table customizer url
        */
@@ -236,7 +244,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/message-displaying', 'wrc-f
        * Handle the customizer button event by opening or closing the table customizer.
        */
       toggleCustomizerState: function(event) {
-        toggleCustomizer(event);
+        return toggleCustomizer(event);
       },
 
       /**

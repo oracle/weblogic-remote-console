@@ -1,0 +1,29 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.diagnostics.descriptor.WLDFThreadDumpActionBean
+properties:
+- defaultValue:
+    value:
+      value: 3
+  descriptionHTML: '<p>The number of thread dumps to capture.</p> '
+  name: ThreadDumpCount
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>The delay, in seconds, to pause betweeen thread dump captures.</p> '
+  name: ThreadDumpDelaySeconds
+  type: int
+  writable: true
+roles:
+  allowed:
+  - Deployer

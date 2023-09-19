@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -41,6 +41,13 @@ public class WebLogicRestBeanRepoSearchBuilder implements BeanReaderRepoSearchBu
     this.invocationContext = invocationContext;
     this.includeIsSet = includeIsSet;
     for (String rootBeanName : getBeanRepo().getRootBeanNames()) {
+      BeanChildDef beanChildDef = getBeanRepo()
+          .getBeanRepoDef()
+          .getRootTypeDef()
+          .getChildDef(new Path(rootBeanName));
+      if (beanChildDef == null) {
+        continue;
+      }
       BeanTypeDef rootTypeDef =
         getBeanRepo()
           .getBeanRepoDef()
@@ -97,6 +104,9 @@ public class WebLogicRestBeanRepoSearchBuilder implements BeanReaderRepoSearchBu
     Map<String,JsonObject> searchResults = new HashMap<String,JsonObject>();
     for (String rootBeanName : getBeanRepo().getRootBeanNames()) {
       WebLogicRestSearchQueryBuilder queryBuilder = getRootBeanNameToQueryBuilderMap().get(rootBeanName);
+      if (queryBuilder == null) {
+        continue;
+      }
       JsonObjectBuilder builder = queryBuilder.getJsonObjectBuilder();
       if (builder != null) {
         // we've been asked to search this tree.  do it.

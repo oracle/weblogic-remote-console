@@ -1,0 +1,55 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.j2ee.descriptor.wl.DestinationKeyBean
+- weblogic.j2ee.descriptor.wl.ForeignJNDIObjectBean
+- weblogic.j2ee.descriptor.wl.QuotaBean
+- weblogic.j2ee.descriptor.wl.DistributedDestinationBean
+- weblogic.j2ee.descriptor.wl.TemplateBean
+- weblogic.j2ee.descriptor.wl.SAFDestinationBean
+- weblogic.j2ee.descriptor.wl.SAFErrorHandlingBean
+- weblogic.j2ee.descriptor.wl.SAFRemoteContextBean
+- weblogic.j2ee.descriptor.wl.TargetableBean
+- weblogic.j2ee.descriptor.wl.DistributedDestinationMemberBean
+descriptionHTML: 'All JMS beans that use a name as a primary key are NamedEntityBeans.  All
+  of the named entity beans in a module must have a unique name. '
+name: weblogic.j2ee.descriptor.wl.NamedEntityBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Return the unique identifier of this bean instance.</p> '
+  name: Id
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of this entity, represented in XML as an attribute.</p>  <p>
+    Many of the elements within the JMS module are named entities.  All of the named
+    entities encased by a type in the XML file must be unique.  This is the identifier
+    used to delineate a particular entity within the JMS module. </p>  <p> This attribute
+    cannot be modified externally from the module (for example, with a deployment
+    plan) because it may be used inside the module referentially. </p> '
+  key: true
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Optional information that you can include to describe this
+    named JMS descriptor bean.</p>  <p>JMS module saves this note in the JMS descriptor
+    file as XML PCDATA. All left angle brackets (&lt;) are converted to the XML entity
+    <code>&amp;lt;</code>. Carriage returns/line feeds are preserved.</p>  <dl> <dt>Note:</dt>  <dd>
+    <p>If you create or edit a note from the Administration Console, the Administration
+    Console does not preserve carriage returns/line feeds.</p> </dd> </dl> '
+  name: Notes
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

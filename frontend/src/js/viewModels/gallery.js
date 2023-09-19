@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -127,14 +127,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
         const dataProvider = DataProviderManager.getDataProviderById(beanTree.provider.id);
         if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
-          viewParams.signaling.beanTreeChanged.dispatch(beanTree);
+//MLW          viewParams.signaling.beanTreeChanged.dispatch(beanTree);
 
           Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, CoreUtils.isUndefinedOrNull(beanTree.readOnly) ? false : beanTree.readOnly);
           viewParams.signaling.readonlyChanged.dispatch(Runtime.isReadOnly());
 
-          // Tell root router to navigate to the landing
-          // page associated with the selected beanTree.
-          viewParams.parentRouter.go('/landing/' + value);
+          viewParams.signaling.galleryItemSelected.dispatch(value);
 
           // The Kiosk will more than likely just be in the
           // way going forward, so go ahead and collapse it.
@@ -150,7 +148,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       }
 
       function signalDataProviderChanged(dataProvider) {
-        viewParams.signaling.beanTreeChanged.dispatch({type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name}});
+        viewParams.signaling.beanTreeChanged.dispatch({type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name, type: dataProvider.type}});
       }
 
     }

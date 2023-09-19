@@ -1,0 +1,47 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p> <code>RestartLoopProtectionMBean</code> defines the configuration
+  to stop the partition from entering an endless restart loop. It is an optional configuration
+  and when enabled it is a resource manager wide configuration. </p> '
+name: weblogic.management.configuration.RestartLoopProtectionMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the value of max-restart-allowed. max-restart-allowed is
+    defined as the maximum number of RCM initiated partition restarts allowed in the
+    specified time interval(as specified by max-restart-allowed-interval), after which
+    the partition will be halted upon an RCM initiated request to restart the partition. '
+  name: MaxRestartAllowed
+  type: long
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the value of max-restart-allowed-interval. The max-restart-allowed-interval
+    is defined as a fixed-width, sliding-window time interval (in seconds) within
+    which the specified number (as specified by max-restart-allowed) of RCM initiated
+    partition restarts are permitted. A RCM initiated request to restart the partition
+    that exceeds the given max-restart-allowed number in the given max-restart-allowed-interval
+    will lead to the partition being halted than being restarted. '
+  name: MaxRestartAllowedInterval
+  type: long
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The restart delay. A restart delay introduces a delay before starting
+    the partition, as part of the RCM initiated restart action. '
+  name: RestartDelay
+  type: long
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Checks if restart loop protection is enabled. '
+  name: RestartLoopProtectionEnabled
+  type: boolean
+  writable: true

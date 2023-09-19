@@ -1,0 +1,103 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.security.providers.authentication.LDAPAuthenticatorMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean represents LDAP schema definitions for the Oracle
+  Unified Directory LDAP provider.</p> '
+name: weblogic.security.providers.authentication.OracleUnifiedDirectoryAuthenticatorMBean
+properties:
+- defaultValue:
+    value:
+      value: (&(uid=*)(objectclass=person))
+  descriptionHTML: 'No description provided. '
+  name: AllUsersFilter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Provider that performs LDAP authentication using Oracle Unified Directory
+  descriptionHTML: '<p>A short description of the Oracle Unified Directory LDAP Authentication
+    provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: cn
+  descriptionHTML: '<p>The attribute of the dynamic LDAP group object that specifies
+    the name of the group.</p> '
+  name: DynamicGroupNameAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: memberURL
+  descriptionHTML: '<p>The attribute of the dynamic LDAP group object that specifies
+    the URLs of the members of the dynamic group.</p> '
+  name: DynamicMemberURLAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: (|(&(cn=%g)(objectclass=groupofUniqueNames))(&(cn=%g)(objectclass=groupOfURLs)))
+  descriptionHTML: '<p>An LDAP search filter for finding a group given the name of
+    the group. If the attribute is not specified (that is, if the attribute is null
+    or empty), a default search filter is created based on the group schema.</p> '
+  name: GroupFromNameFilter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: (&(memberuid=%M)(objectclass=groupofuniquenames))
+  descriptionHTML: '<p>This field is used when the UseMemberuidForGroupSearch field
+    is checked.            This LDAP search filter describes how to search groups
+    for a user given the username.</p> '
+  name: GroupFromUserFilterForMemberuid
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: entryuuid
+  descriptionHTML: '<p>Specifies the name of the GUID attribute defined in the Oracle
+    Unified Directory LDAP server.           The default value is <code>nsuniqueid</code>.</p> '
+  name: GuidAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: uniquemember
+  descriptionHTML: '<p>The attribute of an LDAP static group object that specifies
+    the distinguished names (DNs) of the members of the group.</p> '
+  name: StaticMemberDNAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Boolean value that indicates whether to use memberuid attribute
+    of the group entry to lookup groups of a user instead             of using the
+    member or uniqueMember attributes to lookup groups. When this field is checked,              use
+    the GroupFromUserFilterForMemberuid field to define the group search filter</p> '
+  name: UseMemberuidForGroupSearch
+  restartNeeded: true
+  type: java.lang.Boolean
+  writable: true
+- defaultValue:
+    value:
+      value: cn
+  descriptionHTML: 'No description provided. '
+  name: UserNameAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

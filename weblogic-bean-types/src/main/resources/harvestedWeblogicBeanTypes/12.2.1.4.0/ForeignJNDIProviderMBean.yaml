@@ -1,0 +1,67 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class represents a JNDI provider that is outside the WebLogic
+  server. '
+name: weblogic.management.configuration.ForeignJNDIProviderMBean
+properties:
+- array: true
+  creators:
+  - weblogic.management.configuration.ForeignJNDILinkMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The foreign links.</p> '
+  name: ForeignJNDILinks
+  relationship: containment
+  type: weblogic.management.configuration.ForeignJNDILinkMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The initial context factory to use to connect. This class name
+    depends on the JNDI provider and the vendor you are using. The value corresponds
+    to the standard JNDI property, <code>java.naming.factory.initial</code>.</p> '
+  name: InitialContextFactory
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The remote server''s user password.</p> '
+  encrypted: true
+  name: Password
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The remote server''s encrypted user password.</p> '
+  encrypted: true
+  name: PasswordEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Any additional properties that must be set for the JNDI provider.
+    These properties will be passed directly to the constructor for the JNDI provider''s
+    <code>InitialContext</code> class.</p>  <p><b>Note:</b> This value must be filled
+    in using a <code>name=value&lt;return&gt;name=value</code> format.</p> '
+  name: Properties
+  type: java.util.Properties
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The foreign JNDI provider URL. This value corresponds to the
+    standard JNDI property, <code>java.naming.provider.url</code>.</p> '
+  name: ProviderURL
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The remote server''s user name.</p> '
+  name: User
+  type: java.lang.String
+  writable: true

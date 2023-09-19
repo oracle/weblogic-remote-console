@@ -1,0 +1,24 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Describes the state of a particular Web Service client (Port/Dispatch
+  instance that includes a ClientIdentityFeature).  </p> '
+name: weblogic.management.runtime.WseeClientRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the client ID for this client. '
+  name: ClientID
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the client port runtime MBean associated with this client. '
+  name: Port
+  relationship: containment
+  type: weblogic.management.runtime.WseeClientPortRuntimeMBean

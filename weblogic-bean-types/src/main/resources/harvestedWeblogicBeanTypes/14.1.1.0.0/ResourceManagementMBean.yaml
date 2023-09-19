@@ -1,0 +1,25 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean is used to create and edit resource management policy
+  configurations (Resource Managers) for the domain.  Partition-scoped resource managers
+  can be created under <code>PartitionMBean</code>. '
+name: weblogic.management.configuration.ResourceManagementMBean
+properties:
+- array: true
+  creators:
+  - weblogic.management.configuration.ResourceManagerMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Gets the list of configured resource managers in the Domain. '
+  excludeFromRest: ' '
+  name: ResourceManagers
+  relationship: containment
+  supported: false
+  type: weblogic.management.configuration.ResourceManagerMBean

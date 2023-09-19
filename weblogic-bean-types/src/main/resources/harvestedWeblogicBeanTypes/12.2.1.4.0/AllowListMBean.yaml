@@ -1,0 +1,45 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>TThis bean represents the allow list configuration used with
+  JEP 290 filtering for the Domain. The AllowListMBean is used to turn on/off AllowList
+  Recording, set the AllowList ViolationAction to be LOG, DENY or IGNORE and set the
+  poller time interval for the allowlist files. </p>  Copyright (c) 2021, Oracle and/or
+  its affiliates. '
+name: weblogic.management.configuration.AllowListMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns whether the domain will run with recording enabled
+    to record allowlists.</p> '
+  name: AllowListRecordingEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: ignore
+  descriptionHTML: '<p>Defines the AllowListViolationAction of all servers in a domain.
+    This attribute is used to determine the AllowListViolationAction the servers will
+    use.</p>  <p>The value must be LOG, DENY or IGNORE for the domain.</p> '
+  legalValues:
+  - log
+  - deny
+  - ignore
+  name: AllowListViolationAction
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>Returns the current polling interval for finding the serial
+    properties file in the filesystem.</p> '
+  name: SerialPropFilePollingInterval
+  type: int
+  writable: true

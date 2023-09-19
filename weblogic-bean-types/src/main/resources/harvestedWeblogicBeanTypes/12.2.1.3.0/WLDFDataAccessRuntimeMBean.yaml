@@ -1,0 +1,66 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.accessor.runtime.DataAccessRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Use this interface to access the specific type of diagnostic
+  data from an underlying log for which this instance is created.</p> '
+name: weblogic.management.runtime.WLDFDataAccessRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ColumnIndexMap
+  type: java.util.Map
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ColumnInfoMap
+  type: java.util.Map
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ColumnTypeMap
+  type: java.util.Map
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: Columns
+  type: weblogic.diagnostics.accessor.ColumnInfo
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: DataArchiveParameters
+  restartNeeded: true
+  type: java.util.Map
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: EarliestAvailableTimestamp
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: LatestAvailableTimestamp
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: LatestRecordId
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: TimestampAvailable
+  type: boolean
+roles:
+  allowed:
+  - Deployer
+  - Monitor
+  - Operator

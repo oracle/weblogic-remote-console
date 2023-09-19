@@ -1,0 +1,46 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.pk.CertPathValidatorMBean
+- weblogic.management.security.pk.CertPathBuilderMBean
+derivedTypes: [
+  ]
+descriptionHTML: "<p>The WebLogicCertPathProviderMBean is used to configure the \t\
+  \t\tWebLogic CertPath provider. This provider does Certicom-style \t\t\tcertificate\
+  \ validation.</p><p>Rather than have its own configuration parameters, it used the\
+  \ \t\t\tserver's trusted CA configuration as well as the server's \t\t\tweblogic.security.SSL.enforceConstraints\
+  \ command line switch.</p> \t\t\t<p> Since this provider does the same checking\
+  \ as the built-in SSL \t\t\tvalidation, and since SSL may be configured to run the\
+  \ validators, \t\t\tit prevents double work by looking for the special elements\
+  \ that \t\t\tSSL puts in the context to indicate that SSL has already done \t\t\t\
+  Certicom-style validation.</p> "
+name: weblogic.security.providers.pk.WebLogicCertPathProviderMBean
+properties:
+- defaultValue:
+    value:
+      value: WebLogic CertPath Provider
+  descriptionHTML: '<p>The WebLogic CertPath provider''s description.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: WebLogicCertPathProvider
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: weblogic.security.providers.pk.WebLogicCertPathProviderRuntimeImpl
+  descriptionHTML: '<p>The name of the Java class used to load the WebLogic CertPath
+    provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The WebLogic CertPath provider''s version.</p> '
+  name: Version
+  type: java.lang.String

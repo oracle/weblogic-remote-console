@@ -24,13 +24,11 @@ public class ReadOnlyBeanCollectionResource extends BeanResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(
-    @QueryParam("reload") @DefaultValue("false") boolean reload,
-    @QueryParam("actionForm") @DefaultValue("") String actionForm,
-    @QueryParam("action") @DefaultValue("") String action
+    @QueryParam("reload") @DefaultValue("false") boolean reload
   ) {
     getInvocationContext().setReload(reload);
-    setTablePagePath(actionForm, action);
-    return getTablePage();
+    setTablePagePath();
+    return getTable();
   }
 
   /**
@@ -41,28 +39,20 @@ public class ReadOnlyBeanCollectionResource extends BeanResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response post(
     @QueryParam("action") String action,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
     JsonObject requestBody
   ) {
     setTablePagePath();
     if (CUSTOMIZE_TABLE.equals(action)) {
       return customizeTable(requestBody);
     }
+    if (INPUT_FORM.equals(actionForm)) {
+      return getActionInputForm(action, requestBody);
+    }
     return invokeAction(action, requestBody);
   }
 
-  protected Response getTablePage() {
-    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
-      return getTableActionInputForm();
-    } else {
-      return getTable();
-    }
-  }
-
   protected Response getTable() {
-    return getPage();
-  }
-
-  protected Response getTableActionInputForm() {
     return getPage();
   }
 }

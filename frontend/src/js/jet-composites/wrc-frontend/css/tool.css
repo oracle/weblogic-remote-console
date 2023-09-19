@@ -6,10 +6,17 @@
    *        following custom CSS variables, at runtime.
    */
   --form-container-calc-max-width: 10px;
-  --form-container-calc-max-height: 360px;
-  --form-container-calc-min-width: 310px;
+  --form-container-calc-max-height: 365px;
+  --form-container-calc-min-width: 315px;
+  --table-container-calc-max-height: 365px;
+  --table-container-calc-max-width: 315px;
   --form-input-min-width: 16em;
   --form-input-min-switch-width: 7.25em;
+  --content-area-body-toolbars-calc-max-width: 495px;
+  --content-area-body-content-calc-max-width:  495px;
+  --beanpath-history-container-calc-min-width: 495px;
+  --beanpath-history-container-calc-display: none;
+  --textarea-resizable-both-calc-width: 315px;
   --overlayDialog-calc-min-width: 1135px;
 
   /*
@@ -26,7 +33,7 @@
   --detail-popup-background-color: #cae4ef;
   --breadcrumb-link-color: #0275d8;
   --breadcrumb-hover-color: #01447e;
-  --beanpath-background-color: #c3b2ab;
+  --beanpath-background-color: #faf9f8; /* #c3b2ab; */
 
   --scrollbar-thumb-color: #837670;
   --scrollbar-track-color: #faf8f7;
@@ -36,6 +43,8 @@
   --form-table-container-min-width: 310px;
   --instructions-calc-max-width: 335px;
   --instructions-max-height: 160px;
+
+  --table-cursor: pointer;
 
   --form-input-max-width: 15em;
   --form-input-integer-max-width: 120px;
@@ -66,8 +75,9 @@
   --width-hint-45em:  45em;  /* 720px; */
 
   --input-text-wide-width: 18rem;
-  --single-select-one-wide-width: 39.375em;   /* 630px; */
-  --single-select-one-md-width: 15.625em;     /* 250px; */
+  --single-select-one-wide-width: 39.375em;       /* 630px; */
+  --single-select-one-md-width: 15.625em;         /* 250px; */
+  --single-column-textarea-offset-width: 14.5rem; /* 232px */
 
   --form-layout-row-height: 2.4em;
   --form-section-title-background-color: #dfdcda; /* #ede7e4 #dfdcda; */
@@ -89,8 +99,7 @@
   --overlayDialog-actionInput-width: 620px; /* 38.75rem; */
   --overlayDialog-min-width: 1135px;        /* 70.938rem; */
 
-
-  --spacing-medium: 0.3125rem;
+  --spacing-medium: 0.325rem;
 
   --panel-resizer-width: 10px;
   --panel-resizer-height: 70px;
@@ -101,7 +110,8 @@
 
 ::-webkit-scrollbar {
   -webkit-appearance: none;
-  width: 0.4375rem;
+  width: 0.5rem;
+  height: 0.5rem;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -110,12 +120,20 @@
   box-shadow: 0 0 1px rgba(255, 255, 255, .3);
 }
 
+hr {
+  border: solid var(--oj-core-divider-color);
+  border-width: 1px 0 0;
+  margin: 0 0.313rem;
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
 /* ruleset for runtime-role="app" data attribute */
 [data-runtime-role="app"] {
   --runtime-role-display: inline-flex;
   --paging-position: fixed;
   --paging-bottom: 2rem;
-  --form-container-calc-max-height: 430px;
   --oj-form-layout-column-gutter: 1.5rem;
 }
 
@@ -124,7 +142,6 @@
   --runtime-role-display: none;
   --paging-position: unset;
   --paging-bottom: unset;
-  --form-container-calc-max-height: 421px;
   --oj-form-layout-column-gutter: .5rem;
 }
 
@@ -199,10 +216,6 @@ oj-menu[id$="Menu"] .oj-menu-dropdown .oj-menu-item > a {
   border-top-style: solid;
 }
 
-.toolbar-separator-vertical {
-  vertical-align: bottom;
-}
-
 .toolbar-icon {
   cursor: pointer;
   height: 1.5rem;
@@ -217,12 +230,13 @@ oj-menu[id$="Menu"] .oj-menu-dropdown .oj-menu-item > a {
 }
 
 .button-label {
-  font-size: 1em;    /* 12pt; */
+  font-size: 11pt;
+  vertical-align: super;
 }
 
 .button-icon {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 img.oj-button-icon.oj-start {
@@ -244,7 +258,13 @@ img.option-icon
 /* Style the breadcrumb list */
 ul.breadcrumb {
   list-style: none;
-  min-height: 1.5rem;
+  line-height: 1.5rem;
+}
+
+#moreMenuLauncher > img {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-top: 0.313rem;
 }
 
 /* Display list items side by side */
@@ -272,27 +292,56 @@ ul.breadcrumb li a:hover {
 }
 
 /* For weblogic.beanpath-history dropdown */
-div#beanpath-history-container {
-  min-width: 100%;
+#beanpath-history-container {
+  min-width: calc(100vw - var(--beanpath-history-container-calc-min-width));
+  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
   font-weight: 400;
-  padding: 0.3125rem 0.3125rem 0.3125rem 0;
+  padding: 0.3125rem 0.625rem 0.3125rem 0;
+  background-color: var(--beanpath-background-color);
   display: none;
 }
 
-div#beanpath-history {
+/* For combobox-one used in bean path history */
+oj-combobox-one[id="beanpath-history-entries"] > div.oj-text-field-container {
+  position: relative;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: rgba(22, 21, 19, .3);
+  border-width: 1px 1px 1px 1px;
+  border-radius: 0.25rem;
+  background-color: var(--beanpath-background-color);  /* set background color of combobox-one field */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  height: 1.75rem;  /* set height of comboxbox-one field */
+}
+
+/*
+For beanpath-history
+*/
+oj-combobox-one[id="beanpath-history-entries"] > div > div > div > input.oj-combobox-input {
+  background-color: var(--beanpath-background-color);
+  color: inherit;
+  font-weight: 400;
+  font-size: 0.92em;    /* 11pt; */
+  margin-bottom: 0.125rem;
+}
+
+#beanpath-history {
   min-width: 100%;
 }
 
-div#beanpath-history,
-div#beanpath-history-count {
+#beanpath-history,
+#beanpath-history-count {
   background-color: var(--beanpath-background-color);
 }
 
-div#beanpath-history-count {
+#beanpath-history-count {
   padding: 0 0.625rem 0 0.625rem;
 }
 
-div#beanpath-container {
+#beanpath-history-dropdown {
   width: 100%;    /* for the dropdown section of beanpath history */
 }
 
@@ -302,19 +351,34 @@ div#beanpath-container {
   margin: 0.3125rem 0.3125rem 0 0.3125rem;
 }
 
-div#ojChoiceId_beanpath {
+#ojChoiceId_beanpath-history-entries {
   background-color: var(--beanpath-background-color);
   overflow: hidden;
   height: 1.625rem;
 }
 
-div#oj-combobox-choice-beanpath.oj-combobox-choice {
+#oj-combobox-choice-beanpath-history-entries.oj-combobox-choice {
   border-style: none;
   background-color: var(--beanpath-background-color);
   color: inherit;
   font-weight: 400;
   padding-left: 0;
   height: 1.875rem;
+}
+
+ul[id="oj-listbox-results-beanpath-history-entries"].oj-listbox-results
+{
+  box-sizing: border-box;
+}
+
+ul[id="oj-listbox-results-beanpath-history-entries"].oj-listbox-results li {
+  list-style: none;
+  display: list-item;
+  background-image: none;
+  box-sizing: border-box;
+  min-height: 2rem;
+  padding: 2px;
+  margin-left: 10px;
 }
 
 #shoppingCartImage,
@@ -338,7 +402,8 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
   display: none;
 }
 
-#paging {
+#paging
+{
   height: 1.75rem;
   margin: 0.438rem 0 0 0.3125rem;
   position: var(--paging-position);
@@ -397,7 +462,7 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
 }
 
 .cfe-form-input-text,
-.cfe-form-readonly-text
+.cfe-form-readonly-text,
 .cfe-form-input-textarea,
 .cfe-form-input-password,
 .cfe-form-select-one
@@ -406,9 +471,16 @@ div#oj-combobox-choice-beanpath.oj-combobox-choice {
   font-size: 1em;    /* 12pt; */
 }
 
+#ThreadStackDump > div.oj-text-field-container,
+#DeploymentPlan > div.oj-text-field-container
+{
+  font-size: 0.92em;        /* 11pt; */
+  width: calc(var(--textarea-resizable-both-calc-width) - var(--single-column-textarea-offset-width));
+}
+
 .cfe-form-input-textarea > div.oj-text-field-container
 {
-  overflow: scroll;
+  overflow: auto;
 }
 
 div.cfe-form-select-one div.oj-text-field-container {
@@ -574,17 +646,21 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 }
 
 #table-form-container {
+/*
+//MLW
   overflow: auto;
-  display: none;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+*/
+  display: none;
 }
 
 .cfe-table-form-container {
 /*
 //MLW
   max-width: calc(100vw - var(--table-form-container-width-offset));
-*/
+  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
   margin: 0.3125rem 0.3125rem 0 0;
+*/
 }
 
 .cfe-overlay-container {
@@ -596,16 +672,25 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
   position: sticky;
 }
 
+#form-toolbar-container
+{
+/*
+  min-width: var(--form-container-fixed-min-width);
+*/
+  min-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+}
+
 #table-toolbar-container
 {
-  margin-bottom: 0.3125rem;
+  min-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
 }
 
 #form-toolbar-container,
 #table-toolbar-container
 {
-  max-width: calc(100vw - var(--table-form-container-width-offset));
-  height: 2.25rem;
+  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+  min-height: 2.25rem;
+  margin-top: 0.313rem;
 }
 
 #overlay-toolbar-container
@@ -632,26 +717,57 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
-.cfe-table-form-content {
+#form-container {
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.cfe-table-content,
+.cfe-form-content
+{
+  margin-top: 0.3125rem;
+}
+
+.cfe-table-content {
+  max-height: calc(100vh - var(--table-container-calc-max-height));
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.cfe-form-content {
+  max-height: calc(100vh - var(--form-container-calc-max-height));
   min-width: var(--form-container-fixed-min-width);
+  max-width: calc(100vw - var(--content-area-body-content-calc-max-width));
+}
+
+.cfe-table-form-content {
 /*
 //MLW
   max-width: calc(100vw - var(--form-container-calc-max-width));
-*/
+  min-width: var(--form-container-fixed-min-width);
   max-height: calc(100vh - var(--form-container-calc-max-height));
-  margin: 0;
+*/
+}
+
+oj-table[id="help-table"],
+oj-table[id="policy-conditions-table"]
+{
+  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+}
+
+oj-table[id="policy-conditions-table"],
+oj-table.wlstable {
+  max-height: calc(100vh - var(--table-container-calc-max-height));
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 oj-table.wlstable {
-  overflow: auto;
-  max-height: calc(100vh - var(--form-container-calc-max-height));
-  z-index: 1;
+  max-width: calc(100vw - var(--table-container-calc-max-width));
 }
 
 oj-table.wlstable tr:not(.oj-table-body-message-row) {
-  cursor: pointer;
+  cursor: var(--table-cursor);
 }
 
 #wlsform > div > div:nth-child(+n+0) {
@@ -721,33 +837,6 @@ img.cfe-button-icon {
 .restart-required-icon,
 .more-vertical-icon {
   height: 1.125rem;
-}
-
-/* For combobox-one used in bean path history */
-oj-combobox-one#beanpath > div.oj-text-field-container {
-  position: relative;
-  box-sizing: border-box;
-  border-style: solid;
-  border-color: rgba(22, 21, 19, .3);
-  border-width: 1px 1px 1px 1px;
-  border-radius: 0.25rem;
-  background-color: var(--beanpath-background-color);  /* set background color of combobox-one field */
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  overflow: hidden;
-  height: 1.75rem;  /* set height of comboxbox-one field */
-}
-
-/*
-For beanpath-history
-*/
-oj-combobox-one#beanpath > div > div > div > input.oj-combobox-input {
-  background-color: var(--beanpath-background-color);
-  color: inherit;
-  font-weight: 400;
-  font-size: 0.92em;    /* 11pt; */
-  margin-bottom: 0.125rem;
 }
 
 .cfe-detail-popup {
@@ -1025,6 +1114,10 @@ html:not([dir="rtl"]) .oj-formlayout-max-cols-2 .oj-formlayout-form-across > .oj
 /*
 For controlling the styling of oj-table column header
 */
+th[id="table:_hdrCol0"] {
+  text-align: center;
+}
+
 html:not([dir="rtl"]) oj-table[id="table"] .oj-table-column-header-cell,
 .oj-table-data-cell {
   font-size: 0.92em;      /* 11pt; */
@@ -1054,6 +1147,11 @@ oj-table[id="table"] .cfe-table-column-header-selector > input {
   margin: 0;
 }
 
+oj-table[id="table"] > div.oj-table-scroller
+{
+  height: calc(100vh - var(--table-container-calc-max-height));
+}
+
 oj-table[id="table"] > div.oj-table-scroller > table,
 oj-table[id="help-table"] > div.oj-table-scroller > table
 {
@@ -1064,6 +1162,41 @@ oj-table[id="table"] > div.oj-table-scroller > table > thead > tr  th,
 oj-table[id="help-table"] > div.oj-table-scroller > table > thead > tr  th {
   position: sticky;
   top: 0px;
+}
+
+table[id="help-table"]
+{
+  table-layout: fixed;
+}
+
+table[id="help-table"] > thead > tr > th[id="help-table:_hdrCol0"]
+{
+  font-weight: bold;
+  text-align: left;
+  min-width: 8em;
+  width: 8em;
+  white-space:normal;
+  padding:5px;
+}
+
+table[id="help-table"] > thead > tr > th[id="help-table:_hdrCol1"]
+{
+  font-weight: bold;
+  text-align: left;
+}
+
+#help-table\:2420395_0
+{
+  white-space: normal;
+  padding: 5px;
+  min-width: 8em;
+  width: 8em;
+}
+
+#help-table\:2420395_1
+{
+  white-space: normal;
+  padding: 5px;
 }
 
 .oj-formlayout-inline-label .oj-label-required-icon, .oj-formlayout-inline-label .oj-label-help-icon, .oj-formlayout-inline-label label, .oj-formlayout-inline-label .oj-label-help-icon-anchor {
@@ -1138,14 +1271,14 @@ cfe-flex-items-pad class was removed in 9.0.0, but we need it.
 The workaround is to create our own cfe-flex-items-pad class
 */
 .cfe-flex-items-pad > .oj-flex > .oj-flex-item,
-.oj-flex.cfe-flex-items-pad > .oj-flex-item
+.cfe-flex-items-pad > .oj-flex-item
 {
   padding-left: var(--spacing-medium);
   padding-right: var(--spacing-medium);
 }
 
 .cfe-flex-items-pad > .oj-flex > .oj-flex-item > .oj-flex,
-.oj-flex.cfe-flex-items-pad > .oj-flex-item > .oj-flex
+.cfe-flex-items-pad > .oj-flex-item > .oj-flex
 {
   margin-left: calc(0px - var(--spacing-medium));
   margin-right: calc(0px - var(--spacing-medium));

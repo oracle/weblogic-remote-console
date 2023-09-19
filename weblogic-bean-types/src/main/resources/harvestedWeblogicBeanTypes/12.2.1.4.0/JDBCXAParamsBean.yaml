@@ -1,0 +1,179 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Contains the XA-related parameters of a data source.  <p> Configuration
+  parameters for a data source''s XA-related behavior are specified using a XA parameters
+  bean. </p> '
+name: weblogic.j2ee.descriptor.wl.JDBCXAParamsBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables WebLogic Server to keep the logical JDBC connection
+    open for a global transaction when the physical XA connection is returned to the
+    connection pool. </p>  <p>Select this option if the XA driver used to create database
+    connections or the DBMS requires that a logical JDBC connection be kept open while
+    transaction processing continues (although the physical XA connection can be returned
+    to the connection pool).</p>  <p>Only applies to data sources that use an XA driver.</p>  <p>Use
+    this setting to work around specific problems with JDBC XA drivers.</p> '
+  name: KeepLogicalConnOpenOnRelease
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Enables WebLogic Server to associate the same XA database connection
+    from the connection pool with a global transaction until the transaction completes.</p>  <p>Only
+    applies to connection pools that use an XA driver.</p>  <p>Use this setting to
+    work around specific problems with JDBC XA drivers.</p> '
+  name: KeepXaConnTillTxComplete
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the XA driver requires a distributed transaction
+    context when closing various JDBC objects (result sets, statements, connections,
+    and so forth). Only applies to connection pools that use an XA driver.</p>  <p>When
+    enabled, SQL exceptions that are thrown while closing the JDBC objects without
+    a transaction context will be suppressed.</p>  <p>Use this setting to work around
+    specific problems with JDBC XA drivers.</p> '
+  name: NeedTxCtxOnClose
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies that a dedicated XA connection is used for commit
+    and rollback processing for a global transaction.</p>  <p>Only applies to data
+    sources that use an XA driver.</p>  <p>Use this setting to work around specific
+    problems with JDBC XA drivers.</p> '
+  name: NewXaConnForCommit
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies that the transaction manager calls recover on the
+    resource only once. Only applies to data sources that use an XA driver.</p>  <p>Use
+    this setting to work around specific problems with JDBC XA drivers.</p> '
+  name: RecoverOnlyOnce
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Enables JTA resource health monitoring for an XA data source.  When
+    enabled, if an XA resource fails to respond to an XA call within the period specified
+    in MaxXACallMillis, WebLogic Server  marks the data source as unhealthy and blocks
+    any further calls to the resource.</p>  <p> This property applies to XA data sources
+    only, and is ignored for data sources that use a non-XA driver.</p> '
+  name: ResourceHealthMonitoring
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  deprecated: '10.3.4.0 '
+  descriptionHTML: '<p>Enables WebLogic Server to call <code>rollback()</code> on
+    the connection before returning the connection to the connection pool.</p>  <p>Enabling
+    this attribute will have a performance impact as the rollback call requires communication
+    with the database server.</p>  This option is deprecated.  Its value is currently
+    ignored. '
+  name: RollbackLocalTxUponConnClose
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Specifies that <code>XAResource.end()</code> is called only
+    once for each pending <code>XAResource.start()</code>.</p>  <p>This option prevents
+    the XA driver from calling <code>XAResource.end(TMSUSPEND)</code> and <code>XAResource.end(TMSUCCESS)</code>
+    successively. Only applies to data sources that use an XA driver.</p>  <p>Use
+    this setting to work around specific problems with JDBC XA drivers.</p>  This
+    option is deprecated.  Its value is currently ignored. '
+  name: XaEndOnlyOnce
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: 'Determines the duration in seconds for which the transaction manager
+    will perform recover operations on the resource.  A value of zero indicates that
+    no retries will be performed. '
+  name: XaRetryDurationSeconds
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: 'The number of seconds between XA retry operations if XARetryDurationSeconds
+    is set to a positive value. '
+  name: XaRetryIntervalSeconds
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables WebLogic Server to set a transaction branch timeout
+    based on the value for XaTransactionTimeout.</p>  <p>When enabled, the WebLogic
+    Server Transaction Manager calls <code>XAResource.setTransactionTimeout()</code>
+    before calling <code>XAResource.start</code>, and passes either the XA Transaction
+    Timeout value or the global transaction timeout. </p>  <p>You may want to set
+    a transaction branch timeout if you have long-running transactions that exceed
+    the default timeout value on the XA resource.</p>  <p><b>Note:</b> To use this
+    feature, the resource manager (typically, the JDBC driver) must support the <code>javax.transaction.xa.XAResource.setTransactionTimeout()</code>
+    method. </p> '
+  name: XaSetTransactionTimeout
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of seconds to set as the transaction branch timeout.</p>  <p>If
+    set, this value is passed as the transaction timeout value in the <code>XAResource.setTransactionTimeout()</code>
+    call on the XA resource manager, typically the JDBC driver. </p>  <p>When this
+    value is set to <code>0</code>, the WebLogic Server Transaction Manager passes
+    the global WebLogic Server transaction timeout in seconds in the method.</p>  <p>If
+    set, this value should be greater than or equal to the global WebLogic Server
+    transaction timeout.</p>  <p><b>Note:</b> You must enable XaSetTransactionTimeout
+    to enable setting the transaction branch timeout.</p> '
+  name: XaTransactionTimeout
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+roles:
+  allowed:
+  - Deployer

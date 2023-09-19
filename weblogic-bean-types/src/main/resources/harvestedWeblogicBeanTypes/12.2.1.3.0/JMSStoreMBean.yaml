@@ -1,0 +1,25 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.JMSJDBCStoreMBean
+- weblogic.management.configuration.JMSFileStoreMBean
+descriptionHTML: 'This class represents a JMS persistent store, which is a physical
+  repository for storing persistent message data. It can be either a disk-based file
+  or a JDBC-accessible database. '
+name: weblogic.management.configuration.JMSStoreMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JMS server for this JMS store.</p>  <p>This also calls
+    the <tt>addStore()</tt> method for the JMS server.</p> '
+  name: JMSServer
+  relationship: reference
+  type: weblogic.management.configuration.JMSServerMBean
+roles:
+  allowed:
+  - Deployer

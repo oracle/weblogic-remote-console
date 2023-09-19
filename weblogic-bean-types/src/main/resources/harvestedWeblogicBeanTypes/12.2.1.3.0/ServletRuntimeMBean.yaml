@@ -1,0 +1,88 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Describes a servlet. '
+name: weblogic.management.runtime.ServletRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the context path for this servlet.</p> '
+  name: ContextPath
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the average amount of time all invocations of the
+    servlet have executed since created.</p> '
+  name: ExecutionTimeAverage
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the amount of time the single longest invocation of
+    the servlet has executed since created.</p> '
+  name: ExecutionTimeHigh
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the amount of time the single shortest invocation
+    of the servlet has executed since created. Note that for the CounterMonitor, the
+    difference option must be used.</p> '
+  name: ExecutionTimeLow
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the total amount of time all invocations of the servlet
+    have executed since created.</p> '
+  name: ExecutionTimeTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a total count of the times this servlet has been invoked.</p> '
+  name: InvocationTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the maximum capacity of this servlet for single thread
+    model servlets.</p> '
+  name: PoolMaxCapacity
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a total count of the number of times this servlet
+    has been reloaded.</p> '
+  name: ReloadTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the servlet class name</p> '
+  name: ServletClassName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the name of this instance of a servlet.</p> '
+  name: ServletName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the servlet path.</p> '
+  name: ServletPath
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the value of the URL for this servlet.</p> '
+  name: URL
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a description of the URL patterns for this servlet.</p> '
+  name: URLPatterns
+  type: java.lang.String
+roles:
+  allowed:
+  - Operator

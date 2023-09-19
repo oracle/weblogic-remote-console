@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.QueueBean
+- weblogic.j2ee.descriptor.wl.UniformDistributedDestinationBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>A uniform distributed queue is a distributed queue whose members
+  are configured as part of its configuration; since members share the same configuration,
+  they are uniform.  There is one member on each JMS Server that conforms to the targeting
+  criteria of the uniform distributed queue.  For example, if a uniform distributed
+  queue is targeted to a cluster, then one member will be created on each JMS server
+  in the cluster. Members are created and destroyed as the targeting is changed.</p> '
+name: weblogic.j2ee.descriptor.wl.UniformDistributedQueueBean
+properties: [
+  ]
+roles:
+  allowed:
+  - Deployer

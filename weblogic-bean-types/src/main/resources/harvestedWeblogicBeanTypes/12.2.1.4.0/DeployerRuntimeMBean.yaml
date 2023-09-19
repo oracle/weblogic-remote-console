@@ -1,0 +1,141 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean is the user API for initiating deployment requests
+  and exists only on an Administration Server. To access this MBean, use weblogic.management.deploy.DeployerRuntime.getDeployerRuntime().</p>  <p>The
+  deployment methods in this MBean provide access to the two-phase deployment protocol.
+  This protocol is only supported on WebLogic Server 7.x servers and later. If no
+  target servers in an activate request are known to be pre-release 7 servers, then
+  the two-phase protocol is used. Otherwise the deployment will use the WebLogic Server
+  6.x deployment protocol, even if some target servers are at release 7.</p>  <p>The
+  deployment process involves a number of state changes: start&lt;--&gt;staged&lt;--&gt;prepared&lt;--&gt;active.
+  The methods in this MBean provide the means for changing the state of an application,
+  as follows:</p>  <p>activate: places application in active state from any other
+  state</p>  <p>deactivate: places application in prepared state from active state</p>  <p>unprepare:
+  places application in staged state from active and prepared state</p>  <p>remove:
+  places application in start state from any other state</p>  <p>Activating An Application</p>  <p>The
+  basic process of deploying an application is shown in the following example:</p>  <p><code>
+  DeployerRuntimeMBean deployer = getDeployerRuntime(userName, password, adminURL);<br>
+  try {<br> DeploymentTaskRuntimeMBean task = deployer.activate(sourceFile,appName,taging,info,id);<br>
+  } catch (ManagementException me) {<br> System.out.println("Deployment failed: "+me.getMessage());<br>
+  } </code></p>  <p>In this example, <code>sourceFile</code> is the path to the application.
+  If the application is an EAR, then <code>sourceFile</code> would name the EAR archive
+  or the root directory if it is not archived. Similarly, if the application is not
+  an EAR, but a standalone module (web application or EJB), the <code>sourceFile</code>
+  argument would be the path to the module archive or directory.</p>  <p>The <code>sourceFile</code>
+  argument can be null, indicating that this is a redeployment and that the source
+  is unchanged from a previous deployment.</p>  <p>The <code>appName</code> argument
+  is the name to be given to the application. If this is a new deployment, an weblogic.management.configuration.ApplicationMBean
+  is created. For redeployments, an existing ApplicationMBean with <code>appName</code>
+  is used as the application''s configured state.</p>  <p>The <code>info</code> argument
+  is a weblogic.management.deploy.DeploymentData object which is used to qualify the
+  deployment in terms of targets of the deployment and an optional list of files which
+  are to be refreshed during a redeploy.</p>  <p>The staging argument is used to specify
+  whether the application is to be staged to the target servers. This argument may
+  be null (use weblogic.management.configuration.ServerMBean.getStagingMode), "stage",
+  or "nostage". Staging is the process of uploading the application file to the target
+  servers'' staging area, defined in weblogic.management.configuration.ServerMBean.getStagingDirectoryName.</p>  <p>The
+  <code>id</code> argument allows the caller to name the deployment task. Care should
+  be taken here as the tag must be unique. The recommendation is to generally use
+  null for this argument, allowing the system to generate a unique tag.</p>  <p>The
+  deployment process runs asynchronously to the invoker; it will initiate the task
+  then return the weblogic.management.runtime.DeploymentTaskRuntimeMBean object representing
+  the task to the client. This object may be used to track status of the task. If
+  the client wants to wait until the task completes then the following is a basic
+  method for doing this.</p>  <p><code> while (task.isRunning()) {<br> try {<br> Thread.sleep(oneSecond);<br>
+  } catch (InterruptedException ie) {}<br> } </code></p>  <p>Cancelling A Deployment</p>  <p>Note
+  that a task will not complete until all targets have either completed the deployment
+  or failed. If one of the targets is inactive, the task will remain active until
+  the server starts or the task is cancelled. Cancelling a deployment task is accomplished
+  as follows:</p>  <p><code> if (task.isRunning()) {<br> try {<br> task.cancel();<br>
+  } catch (Exception e) {}<br> } </code></p>  <p>Targeting Specific Servers</p>  <p>The
+  following examples show how to be more specific when targeting a deployment.</p>  <p><code>
+  DeploymentData info = new DeploymentData();<br> <br> // adds server1 as target for
+  all modules in app<br> <br> info.addTarget(server1,null); <br> String[] mods = {
+  "web-module","ejb" };<br> <br> // adds server2 as target for modules web-module
+  and ejb<br> <br> info.addTarget(server2,mods);<br> deployer.activate(sourceFile,
+  appName, info, null, null);<br> <br> // refreshes the hello.jsp file on all currently
+  targeted servers.<br> // The "jsps" directory is relative to the root of the application.<br>
+  <br> String[] files = { "jsps/hello.jsp" };<br> DeploymentData info = new DeploymentData(files);<br>
+  deployer.activate(null, appName, null, info, null);<br> </code></p>  <p>Deactivating
+  An Application</p>  <p>To deactivate an application is to suspend it. The application
+  files remain staged on the target servers and can be reactivated without restaging.
+  It should be noted that deactivating an application does not unload any of its classes.
+  To do so requires an <code>unprepare</code> operation (see below). The following
+  example show appName being deactivated, then subsequently reactivated on all configured
+  servers.</p>  <p><code> deployer.deactivate(appName, null, null);<br> . . .<br>
+  deployer.activate(null, appName, null, null, null);<br> </code></p>  <p>Unpreparing
+  An Application</p>  <p>To unprepare an application is to suspend and unload it.
+  The application files remain staged on the target servers and any relevant classes
+  are unloaded. If the application is to be reactivated with new class files, unprepare
+  is the correct approach, rather than deactivate. The following example shows appName
+  being unprepared, then subsequently reactivated on all configured servers.</p>  <p><code>
+  <code>deployer.unprepare(appName, null, null);<br> . . .<br> deployer.activate(sourceFile,
+  appName, null, null, null); </code></p>  <p>Removing An Application</p>  <p>Removing
+  an application involves deactivation, unstaging and possible removal of the application.
+  After removing an application from a Managed Server, it is deconfigured from that
+  server. If no servers remain targeted by the application, the entire configuration
+  of the application is removed. Removal does not touch the application source, but
+  will remove staged copies of the application.</p>  <p><code> // this completely
+  removes an application from the domain configuration<br> <br> deployer.remove(appName,
+  null, null); </code></p>  <p>Tracking Deployment Status</p>  <p>Once initiated,
+  a deployment task can be monitored via notifications or polling. Use of notifications
+  relies on JMX Notifications on the relevant ApplicationMBean and is accomplished
+  as follows:</p>  <p><code> package examples.deploy;<br> import java.io.Serializable;<br>
+  import javax.management.MBeanServer;<br> import javax.management.Notification;<br>
+  import javax.management.NotificationFilter;<br> import weblogic.management.DeploymentNotification;<br>
+  import weblogic.management.Helper;<br> import weblogic.management.MBeanHome;<br>
+  import weblogic.management.RemoteNotificationListener;<br> import weblogic.management.configuration.ApplicationMBean;<br>
+  import weblogic.management.deploy.DeploymentData;<br> import weblogic.management.deploy.DeployerRuntime;<br>
+  import weblogic.management.runtime.DeployerRuntimeMBean;<br> import weblogic.management.runtime.DeploymentTaskRuntimeMBean;<br>
+  <br> //This example activates an application and prints the resulting<br> // notifications
+  generated during the processing of the deployment.<br> // The args passed to this
+  program are:<br> // arg1: userid<br> // arg2: password<br> // arg3: admin URL<br>
+  // arg4: app name<br> // arg5: app source<br> // arg6: target server<br> <br> public
+  class Activater implements Serializable {<br> <br> private static String userid;<br>
+  private static String password;<br> private static String url;<br> private static
+  String name;<br> private static String source;<br> private static String server;<br>
+  <br> void deploy() {<br> try {<br> <br> // Get access to MBeanHome<br> <br> MBeanHome
+  home = Helper.getAdminMBeanHome(userid, password, url);<br> <br> // Get the deployer<br>
+  <br> DeployerRuntimeMBean deployer = DeployerRuntime.getDeployerRuntime(home);<br>
+  <br> // Build the DeploymentData object<br> <br> DeploymentData info = new DeploymentData();<br>
+  info.addTarget(server, null);<br> <br> // Create the deployment task. Last arg indicates
+  to just<br> // create the task, but not initiate it<br> <br> DeploymentTaskRuntimeMBean
+  task = deployer.activate(source,name,null,info,null,false);<br> <br> // Register
+  for notifications<br> <br> ApplicationMBean app = task.getDeploymentObject();<br>
+  MBeanServer mBeanServer = home.getMBeanServer();<br> mBeanServer.addNotificationListener(
+  app.getObjectName(),new DeployListener(),new DeployFilter(),null );<br> <br> //
+  Start the task<br> <br> task.start();<br> System.out.println(task.getDescription());<br>
+  <br> // wait until finished<br> <br> while (task.isRunning()) {<br> try {<br> Thread.sleep(1000);<br>
+  } catch (InterruptedException ie) {<br> System.out.println(task.getStatus());<br>
+  }<br> }<br> } catch (Exception e) {<br> System.out.println(e.getMessage());<br>
+  }<br> }<br> <br> public static void main(String[] argv) throws Exception {<br> if
+  (argv.length == 6) {<br> userid = argv[0];<br> password = argv[1];<br> url = argv[2];<br>
+  name = argv[3];<br> source = argv[4];<br> server = argv[5];<br> Activater activater
+  = new Activater();<br> activater.deploy();<br> System.exit(0);<br> }<br> }<br> <br>
+  // Inner classes for handling notifications<br> <br> class DeployListener implements
+  RemoteNotificationListener {<br> <br> public void handleNotification(Notification
+  notification,java.lang.Object handback)<br> {<br> System.out.println( notification.getMessage()
+  );<br> }<br> };<br> <br> // Inner class for filtering notifications<br> <br> class
+  DeployFilter implements NotificationFilter, Serializable {<br> <br> public boolean
+  isNotificationEnabled( Notification n )<br> {<br> return ( n instanceof DeploymentNotification
+  );<br> }<br> <br> }<br> } </code></p> '
+name: weblogic.management.runtime.DeployerRuntimeMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Return the deployment task runtime MBeans. '
+  name: DeploymentTaskRuntimes
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.DeploymentTaskRuntimeMBean
+roles:
+  allowed:
+  - Deployer

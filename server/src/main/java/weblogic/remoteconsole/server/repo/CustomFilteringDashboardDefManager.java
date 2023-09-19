@@ -436,6 +436,7 @@ public class CustomFilteringDashboardDefManager {
             "PropertyValue_" + baseFormFieldName
           );
         setValuesPropertyUsedIfDef(criteriaDef, valueDef);
+        valueDef.setLegalValueDefs(getValuesPropertyLegalValueDefs(sourcePropertyDef));
         propertyDefs.add(new CustomFilteringDashboardPropertyDef(sourcePropertyDef, criteriaDef, valueDef));
       } else {
         // The key property is covered by the last path segment.
@@ -445,9 +446,10 @@ public class CustomFilteringDashboardDefManager {
   }
 
   private static String getBaseTemplatePagePropertyDefName(PagePropertyDef pagePropertyDef) {
+    boolean isEnum = !pagePropertyDef.getLegalValueDefs().isEmpty();
     if (!pagePropertyDef.isArray()) {
       if (pagePropertyDef.isInt()) {
-        return "TemplateIntProperty";
+        return (isEnum) ? "TemplateIntEnumProperty" : "TemplateIntProperty";
       }
       if (pagePropertyDef.isLong()) {
         return "TemplateLongProperty";
@@ -465,7 +467,7 @@ public class CustomFilteringDashboardDefManager {
         return "TemplateDateAsLongProperty";
       }
       if (pagePropertyDef.isString() || pagePropertyDef.isHealthState()) {
-        return "TemplateStringProperty";
+        return (isEnum) ? "TemplateStringEnumProperty" : "TemplateStringProperty";
       }
     }
     return "TemplateGenericProperty";
@@ -498,6 +500,15 @@ public class CustomFilteringDashboardDefManager {
       }
     }
     valueDef.setUsedIfDef(usedIfDef);
+  }
+
+  private static List<LegalValueDef> getValuesPropertyLegalValueDefs(PagePropertyDef sourcePropertyDef) {
+    if (!sourcePropertyDef.isArray()) {
+      if (sourcePropertyDef.isInt() || sourcePropertyDef.isString() || sourcePropertyDef.isHealthState()) {
+        return sourcePropertyDef.getLegalValueDefs();
+      }
+    }
+    return List.of();
   }
 
   private static PageDef getUncustomizedCreateFormDef(InvocationContext ic, BeanTreePath btpTemplate) {

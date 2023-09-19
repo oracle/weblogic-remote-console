@@ -28,13 +28,11 @@ public class ReadOnlyOptionalSingletonBeanResource extends BeanResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(
     @QueryParam("slice") @DefaultValue("") String slice,
-    @QueryParam("reload") @DefaultValue("false") boolean reload,
-    @QueryParam("actionForm") @DefaultValue("") String actionForm,
-    @QueryParam("action") @DefaultValue("") String action
+    @QueryParam("reload") @DefaultValue("false") boolean reload
   ) {
     getInvocationContext().setReload(reload);
-    setSlicePagePath(slice, actionForm, action);
-    return getSlicePage();
+    setSlicePagePath(slice);
+    return getSlice();
   }
 
   /**
@@ -46,6 +44,7 @@ public class ReadOnlyOptionalSingletonBeanResource extends BeanResource {
   public Response post(
     @QueryParam("slice") @DefaultValue("") String slice,
     @QueryParam("action") String action,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
     @QueryParam("identifier") @DefaultValue("") String identifier,
     JsonObject requestBody
   ) {
@@ -54,22 +53,13 @@ public class ReadOnlyOptionalSingletonBeanResource extends BeanResource {
     if (CUSTOMIZE_TABLE.equals(action)) {
       return customizeTable(requestBody);
     }
+    if (INPUT_FORM.equals(actionForm)) {
+      return getActionInputForm(action, requestBody);
+    }
     return invokeAction(action, requestBody);
   }
 
-  protected Response getSlicePage() {
-    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
-      return getSliceActionInputForm();
-    } else {
-      return getSlice();
-    }
-  }
-
   protected Response getSlice() {
-    return getPage();
-  }
-
-  protected Response getSliceActionInputForm() {
     return getPage();
   }
 }

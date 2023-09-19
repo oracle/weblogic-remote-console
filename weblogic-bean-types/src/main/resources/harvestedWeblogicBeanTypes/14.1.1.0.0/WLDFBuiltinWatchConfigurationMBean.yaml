@@ -1,0 +1,55 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This bean defines a WLDF Builtin System Resource Watch Notification
+  configuration settings control. </p> '
+name: weblogic.management.configuration.WLDFBuiltinWatchConfigurationMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enable Builtin WLDF Watch to capture diagnostic image notification
+    when stuck thread is encountered.</p> '
+  name: StuckThreadDiagnosticImageNotificationEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 3
+  descriptionHTML: '<p>Signifies the number of successive thread dumps to capture
+    for specified stuck thread thread dump action whenever it executes. </p> '
+  name: StuckThreadThreadDumpActionCount
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>The delay, in seconds, to pause between thread dump captures.</p> '
+  name: StuckThreadThreadDumpActionDelaySeconds
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enable Builtin WLDF Watch to capture thread dumps action when
+    stuck thread is encountered.</p> '
+  name: StuckThreadThreadDumpActionEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enable Builtin WLDF Watch to capture thread dump when stuck
+    thread is encountered.</p> '
+  name: StuckThreadWatchEnabled
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

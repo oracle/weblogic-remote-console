@@ -56,6 +56,7 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
             dataProvider['url'] = item.url;
             dataProvider['username'] = item.username;
             dataProvider['password'] = item.password;
+            dataProvider['passwordEncrypted'] = item.passwordEncrypted;
             if (CoreUtils.isNotUndefinedNorNull(item.settings) && Object.keys(item.settings).length > 0) {
               dataProvider['settings'] = item.settings;
             }

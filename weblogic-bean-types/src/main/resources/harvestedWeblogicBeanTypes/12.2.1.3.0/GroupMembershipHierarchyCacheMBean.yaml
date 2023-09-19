@@ -1,0 +1,39 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.security.providers.authentication.LDAPAuthenticatorMBean
+- weblogic.security.providers.authentication.DefaultAuthenticatorMBean
+- weblogic.security.providers.authentication.DBMSAuthenticatorMBean
+descriptionHTML: 'Defines methods used to get/set the configuration attributes that
+  are required to support the Group Membership Hierarchy Cache. '
+name: weblogic.management.security.authentication.GroupMembershipHierarchyCacheMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Returns whether group membership hierarchies found during recursive
+    membership lookup will be cached. If true, each subtree found will be cached. '
+  name: EnableGroupMembershipLookupHierarchyCaching
+  type: java.lang.Boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: 'Returns the maximum number of seconds a group membership hierarchy
+    entry is valid in the LRU cache. '
+  name: GroupHierarchyCacheTTL
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: 100
+  descriptionHTML: 'Returns the maximum size of the LRU cache for holding group membership
+    hierarchies if caching is enabled. '
+  name: MaxGroupHierarchiesInCache
+  type: java.lang.Integer
+  writable: true

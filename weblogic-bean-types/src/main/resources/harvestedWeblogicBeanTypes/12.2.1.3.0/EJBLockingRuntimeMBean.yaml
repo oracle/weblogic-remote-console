@@ -1,0 +1,44 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface contains accessor methods for all lock manager runtime
+  information collected for an EJB. '
+name: weblogic.management.runtime.EJBLockingRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the number of beans currently locked.</p> '
+  name: LockEntriesCurrentCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the total number of attempts to obtain a lock on a
+    bean. This includes attempts to obtain a lock on a bean that is already locked
+    on behalf of the client.</p> '
+  name: LockManagerAccessCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the current number of Threads that have timed out
+    waiting for a lock on a bean.</p> '
+  name: TimeoutTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the current number of Threads that have waited for
+    a lock on a bean.</p> '
+  name: WaiterCurrentCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the total number of Threads that have waited for a
+    lock on a bean.</p>  <p>Returns the total number of Threads that have waited for
+    a lock on a bean.</p> '
+  name: WaiterTotalCount
+  type: long

@@ -1,9 +1,10 @@
-// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.utils;
 
 import java.net.ConnectException;
+import java.net.SocketException;
 import java.util.Map;
 import java.util.logging.Logger;
 import javax.json.JsonObject;
@@ -234,7 +235,7 @@ public class WebLogicRestClient {
     ProcessingException pe
   ) throws WebLogicRestClientException {
     Throwable t = pe.getCause();
-    if (t instanceof ConnectException) {
+    if (t instanceof ConnectException || t instanceof SocketException) {
       return ResponseHelper.createExceptionResponse(t, "Unable to connect to the WebLogic Domain.");
     } else {
       throw new WebLogicRestClientException(t);

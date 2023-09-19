@@ -1,0 +1,34 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.security.providers.authentication.DBMSAuthenticatorMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The MBean that represents configuration information for the Custom       DBMS
+  Authentication provider.</p> '
+name: weblogic.security.providers.authentication.CustomDBMSAuthenticatorMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the name of a class that implements the         <code>weblogic.security.providers.authentication.CustomDBMSAuthenticatorPlugin</code>         interface.
+    The class must exist in the CLASSPATH. Required. No default         value.</p> '
+  name: PluginClassName
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Defines configuration properties for the specified plug-in
+    class.         The property names are defined by the plug-in class. Optional.
+    No         default value.</p> '
+  name: PluginProperties
+  type: java.util.Properties
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authentication.DBMSPluggableRuntimeAuthenticationProviderImpl
+  descriptionHTML: '<p>The name of the Java class for the Custom DBMS Authentication         provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String

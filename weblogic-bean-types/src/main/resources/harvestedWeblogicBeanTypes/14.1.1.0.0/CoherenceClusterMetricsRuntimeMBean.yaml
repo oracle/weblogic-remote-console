@@ -1,0 +1,50 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>A CoherenceClusterRuntimeMetricsMBean gathers metrics from nodes
+  in the cluster according to the specified report group xml file, and then provides
+  a way to query for subsets of the group file by nodes and by table name, which refers
+  to individual file names within the report group file.</p> '
+name: weblogic.management.runtime.CoherenceClusterMetricsRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the CCSR associated with this Coherence Metrics Runtime
+    MBean if there is one.</p>  <p>The Coherence Metrics MBean can either be associated
+    with a CCSR or it can be outside of WLS domain and simply have a list of CoherenceManagementJMXAddresses.</p> '
+  name: CoherenceClusterSystemResource
+  relationship: reference
+  type: weblogic.management.configuration.CoherenceClusterSystemResourceMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the CoherenceManagementClusterMBean associated with this
+    Coherence Metrics Runtime MBean if there is one.</p> '
+  name: CoherenceManagementCluster
+  relationship: reference
+  type: weblogic.management.configuration.CoherenceManagementClusterMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Get the Management nodes names.</p> '
+  name: Instances
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the list of socket addresses for connecting to the NameService.
+    It can be used to lookup JMXServiceURL for the MBean Connector.</p> '
+  excludeFromRest: No default REST mapping for ListSocketAddress
+  name: NameServiceAddresses
+  supported: false
+  type: java.util.List
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The report group file representing the superset of metrics
+    this bean will gather</p> '
+  name: ReportGroupFile
+  type: java.lang.String

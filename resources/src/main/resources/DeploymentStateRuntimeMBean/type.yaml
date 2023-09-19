@@ -1,0 +1,20 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+disableMBeanJavadoc: true
+
+properties:
+- name: IntendedState
+  legalValues:
+  - value: "STATE_NEW"
+    label: "New"
+  - value: "STATE_PREPARED"
+    label: "Prepared"
+  - value: "STATE_ADMIN"
+    label: "Admin"
+  - value: "STATE_ACTIVE"
+    label: "Active"
+
+children:
+- name: Servers
+  label: "Per Server States"

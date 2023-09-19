@@ -41,6 +41,12 @@ public interface Connection {
   /** Obtain the JAX-RS Client for the Connection */
   public Client getClient();
 
+  /** The connect timeout value used at the time of the connection request */
+  public long getConnectTimeout();
+
+  /** The read timeout value used at the time of the connection request */
+  public long getReadTimeout();
+
   /** Close the client, object will be useless after this, but closing is
    * required by JaxRS.  Without closing the client, there there are leaks
    */

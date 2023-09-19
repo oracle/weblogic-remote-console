@@ -1,0 +1,31 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+    <p>This page displays basic information about this WebLogic Role Mapping
+    Provider. Although this Role Mapping provider is referred to as the
+    DefaultRoleMapper, the actual default Role Mapping provider in
+    newly-created security realms is the XACML Role Mapping provider.</p>
+    <p>Note that the WebLogic Role Mapping provider, also known as the
+    DefaultRoleMapper, is deprecated in WebLogic Server 14.1.1.0.0 and will be
+    removed in a future release.</p>
+
+properties:
+- name: Name
+- name: Description
+- name: Version
+- name: RoleDeploymentEnabled
+
+helpTopics:
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
+- label: "Configuring Authorization and Role Mapping Providers"
+  href: "secmg/atz_rm.html"
+  type: "edocs"
+- label: "Developing Security Providers for Oracle WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

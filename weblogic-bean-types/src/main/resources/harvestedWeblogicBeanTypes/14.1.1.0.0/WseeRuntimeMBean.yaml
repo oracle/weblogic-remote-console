@@ -1,0 +1,19 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.WseeBaseRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Encapsulates runtime information about a particular Web Service.
+  This interface is used only for JAX-RPC and ''legacy'' JAX-WS service consumers,
+  and is parented off the ApplicationRuntimeMBean. New clients using JAX-WS web services
+  should use WseeV2RuntimeMBean instead.</p>  <p>Note that the name of this MBean
+  is calculated and of the form:</p>  <p><code>&lt;app name&gt;#&lt;app version&gt;!&lt;service
+  name&gt;</code></p>  <p>Also, note that the serviceName attribute is the same as
+  the name attribute.</p> '
+name: weblogic.management.runtime.WseeRuntimeMBean
+properties: [
+  ]

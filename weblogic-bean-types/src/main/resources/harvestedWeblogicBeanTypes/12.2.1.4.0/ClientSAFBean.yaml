@@ -1,0 +1,78 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'The top of the JMS module bean tree. <p> JMS modules all have a
+  JMSBean as their root bean (a bean with no parent).  The schema namespace that corresponds
+  to this bean is "http://xmlns.oracle.com/weblogic/weblogic-jms" </p> '
+name: weblogic.j2ee.descriptor.wl.ClientSAFBean
+properties:
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.JMSConnectionFactoryBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Gets all connection factory beans found in the JMS module  <p>
+    Connection factories are used to create connections for JMS clients.  Connection
+    factories can configure properties of the connections returned to the JMS client.
+    </p> '
+  name: ConnectionFactories
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.JMSConnectionFactoryBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the configuration information about the default persistent
+    store.  Note that the name for this persistent store must always be "default-store."  All
+    of the other attributes may be configured. '
+  name: PersistentStore
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.DefaultPersistentStoreBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the configuration information for the default SAF agent.
+    The name of the default saf agent must always be "default-agent" And the store
+    must always be "default-store".  All other field may be configured here. '
+  name: SAFAgent
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.DefaultSAFAgentBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.SAFErrorHandlingBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Get an array of SAFErrorHandlingBean defined in this module <p>
+    SAFErrorHandlingBena defines what has to be done for messages that cannot be forwarded
+    by SAFAgents </P> '
+  name: SAFErrorHandlings
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.SAFErrorHandlingBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.SAFImportedDestinationsBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Gets all SAFImportedDestinationsBean found in the JMS module  <p>
+    SAFImportedDestinationsBean defines a set of SAFQueues and or SAFTopics imported
+    in the local cluster from the remote Cluster or server </p> '
+  name: SAFImportedDestinations
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.SAFImportedDestinationsBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.SAFRemoteContextBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Get an array of SAFRemoteContextBean for this JMS module <p> SAFRemoteContextBean
+    defines the parameters to be used by the JMS Imported Destinations (SAFQueue or
+    SAFTopic) to connect ot the remote Cluster. </p> '
+  name: SAFRemoteContexts
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.SAFRemoteContextBean
+roles:
+  allowed:
+  - Deployer

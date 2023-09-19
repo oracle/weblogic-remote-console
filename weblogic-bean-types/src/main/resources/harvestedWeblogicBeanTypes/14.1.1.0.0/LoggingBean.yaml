@@ -1,0 +1,135 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.LoggingBean
+properties:
+- defaultValue:
+    value:
+      value: 7
+  descriptionHTML: ' '
+  exclude: true
+  name: FileCount
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The date format pattern used for rendering dates in the Server
+    log file and stdout output. The DateFormatPattern string conforms to the specification
+    of the <code>java.text.SimpleDateFormat</code> class.</p> '
+  exclude: true
+  name: DateFormatPattern
+  nullable: true
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: bySize
+  descriptionHTML: ' '
+  exclude: true
+  legalValues:
+  - bySize
+  - byTime
+  - none
+  name: RotationType
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Gets the "logging-enabled" element '
+  exclude: true
+  name: LoggingEnabled
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: ' '
+  exclude: true
+  name: RotateLogOnStartup
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: ' '
+  exclude: true
+  name: NumberOfFilesLimited
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 24
+  descriptionHTML: ' '
+  exclude: true
+  name: FileTimeSpan
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 00:00
+  descriptionHTML: '<p>Determines the start time (hour and minute) for a time-based
+    rotation sequence.  <p>At the time that this value specifies, the server renames
+    the current log file. Thereafter, the server renames the log file at an interval
+    that you specify in File Time Span.</p>  <p>If the specified time has already
+    past, then the server starts its file rotation immediately.</p>  <p> Use the following
+    format: <code>H:mm</code>, where <ul><li><code>H</code> is Hour in day (0-23).
+    <li><code>mm</code> is the minute in hour </ul> <p> '
+  exclude: true
+  name: RotationTime
+  nullable: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: LogFileRotationDir
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: Id
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 500
+  descriptionHTML: ' '
+  exclude: true
+  name: FileSizeLimit
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "log-filename" element '
+  exclude: true
+  name: LogFilename
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true

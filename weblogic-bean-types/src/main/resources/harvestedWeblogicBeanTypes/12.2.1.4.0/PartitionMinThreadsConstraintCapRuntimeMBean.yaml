@@ -1,0 +1,25 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Monitoring information for PartitionMinThreadsConstraint '
+name: weblogic.management.runtime.PartitionMinThreadsConstraintCapRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of requests that are currently executing.</p> '
+  name: ExecutingRequests
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Sum of all configured minimum threads constraints in the partition.
+    This is the number of threads that is needed in order to satisfy all configured
+    minimum threads constraints in the partition if all of them have more than that
+    amount of concurrent work requests.</p> '
+  name: SumMinThreadsConstraints
+  type: int

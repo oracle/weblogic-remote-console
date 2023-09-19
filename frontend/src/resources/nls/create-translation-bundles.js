@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -140,9 +140,12 @@ function convertPropertiesFileToJSObject(text) {
     // Remove any '' array items
     keyValues = keyValues.filter(x => x !== '');
     // keyValues[0] contains the dotted property
-    // name, and keyValues[1] contains the property
-    // value.
-    const value = keyValues[1];
+    // name, and the rest of the keyValues, separated by '=' contains the
+    // property value.
+    var value = keyValues[1];
+    for (let i = 2; i < keyValues.length; i++) {
+      value += '=' + keyValues[i];
+    }
     // Create an array from the dotted property name
     const propNameParts = keyValues[0].split(".");
     if (typeof propNameParts === "undefined") {
@@ -181,8 +184,10 @@ function convertPropertiesFileToJSObject(text) {
   // the split, so the code works on both Windows and
   // non-Windows platforms
   const properties = text.split(/\r?\n/).filter(x => x !== '');
+  // Filter out property entries that begin with wrc-electron
+  const filtered = properties.filter(property => !property.startsWith('wrc-electron.'));
   // Loop through each property entry in the array
-  properties.forEach((property) => {
+  filtered.forEach((property) => {
     // Call function that converts the property entry
     // to a JS object
     const jsObject = convertPropertyToJSObject(property);

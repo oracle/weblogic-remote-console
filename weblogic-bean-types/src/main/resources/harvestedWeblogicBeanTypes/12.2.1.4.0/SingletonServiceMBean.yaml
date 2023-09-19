@@ -1,0 +1,56 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.SingletonServiceBaseMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'A service that will be automatically maintained as a Singleton in
+  a cluster. There will always be exactly one instance of it active at any given time. '
+name: weblogic.management.configuration.SingletonServiceMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Return a list of servers that are candidates to host the services
+    deployed to this migratable target. If the ConstrainedCandidateServer list is
+    empty, all servers in the cluster are returned. If the ConstrainedCandidateServer
+    is not empty those servers only will be returned. The user preferred server will
+    be the first element in the list returned.</p> '
+  name: AllCandidateServers
+  relationship: reference
+  transient: true
+  type: weblogic.management.configuration.ServerMBean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The fully qualified name of a class to load and run. The class
+    must be on the server''s classpath.</p>  <p>For example, <code>mycompany.mypackage.myclass</code></p> '
+  name: ClassName
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the cluster this singleton service is associated with.</p> '
+  name: Cluster
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.ClusterMBean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the (user restricted) list of servers that may host
+    the migratable target. The target will not be allowed to migrate to a server that
+    is not in the returned list of servers. This feature is used to e.g. configure
+    the two server that have access to a dual ported disk. All servers in this list
+    must be part of the cluster that is associated with the migratable target.</p> '
+  name: ConstrainedCandidateServers
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.ServerMBean
+  writable: true

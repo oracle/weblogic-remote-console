@@ -1,0 +1,187 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.PersistentStoreMBean
+- weblogic.management.configuration.GenericJDBCStoreMBean
+derivedTypes:
+- weblogic.management.configuration.TransactionLogJDBCStoreMBean
+descriptionHTML: 'Defines an instance of the persistent store that stores its persistent
+  records in a JDBC-accessible database. It may be used by JMS and by other subsystems. '
+name: weblogic.management.configuration.JDBCStoreMBean
+properties:
+- defaultValue:
+    value:
+      value: DEFAULT
+  descriptionHTML: '<p>Advanced use only: gets the connection caching policy for the
+    JDBC store.</p>  <p>The return values will be one of:</p> <ul> <li>JMSConstants.JDBCSTORE_CONNECTION_CACHING_POLICY_DEFAULT
+    (&quot;DEFAULT&quot;)</li> <li>JMSConstants.JDBCSTORE_CONNECTION_CACHING_POLICY_MINIMAL
+    (&quot;MINIMAL&quot;)</li> <li>JMSConstants.JDBCSTORE_CONNECTION_CACHING_POLICY_NONE
+    (&quot;NONE&quot;)</li> </ul>  <p>IMPORTANT: See the below for additional usage
+    information, particularly regarding NONE</p>  <p>DEFAULT</p> <p>The default mode
+    of operation for the JDBC store.  The JDBC store will open two connections to
+    the database and it will keep these connections open for the life of the store.
+    In addition, if the worker count for the store is two or more, then it will open
+    one connection for each of the workers and those connections will also stay open
+    for the life of the JDBC store.  If the worker count is 3 then the JDBC store
+    will use 5 database connections.  If the worker count is the default of 1 then
+    the JDBC store will use just 2 connections.The DEFAULT setting is the recommended
+    setting to be used when the database backing the JDBC store is not constrained
+    with respect to the number of open connections.</p>  <p>MINIMAL</p> <p>The JDBC
+    store will open one connection to the database and it will keep that connection
+    open for the life of the store. In addition, if the worker count for the store
+    is two or more, then it will open one connection for each of the workers and those
+    connections will also stay open for the life of the JDBC store. If the worker
+    count is 3 then the JDBC store will use 4 database connections. If the worker
+    count is the default of 1 then the JDBC store will use just 1 connection. The
+    MINIMAL setting may result in a slight reduction of through-put for low concurrency
+    messaging scenarios in comparison to DEFAULT.</p>  <p>NONE</p> <p>The NONE connection
+    caching policy is for ''advanced usage only''. The JDBC store will open one connection
+    to the database on an as-needed basis to perform I/O and it will release that
+    connection when the operation is complete. The NONE value is not compatible with
+    a configured worker count of 2 or more and will result in a configuration validation
+    exception. The NONE setting may result in a slight reduction of through-put for
+    low concurrency messaging scenarios in comparison to DEFAULT or MINIMAL.</p>  <p>NOTE:
+    It is strongly recommended that a JDBC store be configured with a dedicated data
+    source when the store is configured with the NONE connection caching policy.  A
+    store that shares a data source with other non-store components or applications
+    runs the risk of failing due to dead-locks.  Please note that a JDBC store will
+    require more than one connection when first started. As such, a data source should
+    be configured to grow and shrink so that the JDBC store can initialize.</p> '
+  legalValues:
+  - DEFAULT
+  - MINIMAL
+  - NONE
+  name: ConnectionCachingPolicy
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JDBC data source used by this JDBC store to access its
+    backing table.</p>  <p>The specified data source must use a non-XA JDBC driver
+    since connection pools for XA JDBC drivers are not supported.</p> '
+  name: DataSource
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.JDBCSystemResourceMBean
+  writable: true
+- defaultValue:
+    value:
+      value: 20
+  descriptionHTML: '<p>The maximum number of table rows that are deleted per database
+    call.</p>  <ul> <li> When possible, a JDBC store uses JDBC 3.0 batching to batch
+    concurrent client requests. </li>  <li> Both the maximum batch size for concurrent
+    inserts and for concurrent writes are configurable. </li>  <li> To disable JDBC
+    3.0 batching, set the maximum batch size to 1. </li>  <li> The maximum batch size
+    has no effect on the maximum number of concurrent client requests. </li> </ul> '
+  name: DeletesPerBatchMaximum
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 20
+  descriptionHTML: '<p>The maximum number of table rows that are deleted per database
+    call.</p>  <ul> <li> Applies only when a JDBC store does not use JDBC 3.0 batching
+    to batch concurrent client requests. </li>  <li> The maximum deletes per statement
+    has no effect on the maximum number of concurrent client requests. </li>  <li>
+    For some databases, the JDBC store may choose a lower value than the one configured.
+    </li> </ul> '
+  name: DeletesPerStatementMaximum
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 20
+  descriptionHTML: '<p>The maximum number of table rows that are inserted per database
+    call.</p>  <ul> <li> When possible, a JDBC store uses JDBC 3.0 batching to batch
+    concurrent client requests. </li>  <li> Both the maximum batch size for concurrent
+    inserts and for concurrent writes are configurable. </li>  <li> To disable JDBC
+    3.0 batching, set the maximum batch size to 1. </li>  <li> The maximum batch size
+    has no effect on the maximum number of concurrent client requests. </li> </ul> '
+  name: InsertsPerBatchMaximum
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Enables committing a batch of INSERT or DELETE operations with
+    the last operation of the transaction instead of issuing a separate commit call
+    to database server which saves a server round trip. This feature benefits applications
+    that have many transactions of a small number of operations or small messages.
+    This feature should be used only when configuring a JDBC store in Oracle Exalogic
+    environments. '
+  name: OraclePiggybackCommitEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 200
+  descriptionHTML: '<p>The length of time in milliseconds between reconnection attempts
+    during the reconnection retry period.</p>  <p>The reconnection interval applies
+    to JDBC connections regardless of the database that is used for the JDBC store.</p>  <p>The
+    default value is 200 milliseconds</p> '
+  name: ReconnectRetryIntervalMillis
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1000
+  descriptionHTML: '<p>Returns the length of time in milliseconds during which the
+    persistent store will attempt to re-establish a connection to the database.  Successive
+    reconnection attempts will be attempted after a fixed delay that is specified
+    by the reconnection retry interval.</p>  <p>The reconnection period applies to
+    JDBC connections regardless of the database that is used for the JDBC store.</p>  <p>The
+    default value is 1000</p> '
+  name: ReconnectRetryPeriodMillis
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 200000
+  descriptionHTML: '<p>Specifies the threshold, in bytes, when the JDBC store uses
+    3 steps (insert, select, populate) instead of 1 step (insert) to populate an Oracle
+    Blob data type. </p> <p>Applies only to Oracle databases where a Blob data type
+    is used instead of the default Long Raw data type for record data. </p> <p>The
+    default value is 200000.</p> '
+  name: ThreeStepThreshold
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p>The number of JDBC store worker threads to process the workerload.</p>
+    <ul> <li>A value of 1 indicates a single thread is used (the default).</li> <li>A
+    value greater than 1 indicates that multiple threads are used.</li> <li>For Oracle
+    databases, Oracle recommends users rebuild the primary key index into a reverse
+    index for the JDBC Store table when the worker count is greater than 1.</li> <li>For
+    non-Oracle databases, refer to the database provider''s documentation for help
+    with indexing.</li> </ul> '
+  name: WorkerCount
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>Specifies the batch size when the <code>Worker Count</code>
+    attribute is configured to a value greater than 1.</p> <p>Used to configure the
+    workload the JDBC store incrementally puts on each worker thread. The workload
+    consists of IO requests which are grouped and pushed to each JDBC worker thread
+    for processing. If the IO request is very large (for example 1M), then tune this
+    attribute to a smaller value.</p> '
+  name: WorkerPreferredBatchSize
+  restartNeeded: true
+  type: int
+  writable: true
+roles:
+  allowed:
+  - Deployer

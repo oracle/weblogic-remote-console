@@ -1,0 +1,84 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.ManagedScheduledExecutorServiceRuntimeMBean
+descriptionHTML: 'ManagedExecutorService Runtime information. It can be the information
+  of a partition level MES, an application level MES or a regular JSR236 MES. '
+name: weblogic.management.runtime.ManagedExecutorServiceRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Get the name of the application this ManagedExecutor is associated
+    with </p> '
+  name: ApplicationName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Total number of long running tasks which is successfully completed. '
+  name: CompletedLongRunningRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Total number of short running tasks which is successfully completed. '
+  name: CompletedShortRunningRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Total number of tasks which terminated abnormally by throwing
+    exception, including both long and short term tasks. '
+  name: FailedRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Get the name of the module this ManagedExecutor is associated
+    with </p> '
+  name: ModuleName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Get the name of the partition this ManagedExecutor is associated
+    with </p> '
+  excludeFromRest: ${excludeFromRest}
+  name: PartitionName
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Total number of long running tasks rejected by max-concurrent-long-running-requests '
+  name: RejectedLongRunningRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Total number of short running tasks rejected by workmanager overload
+    policy '
+  name: RejectedShortRunningRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Total number of long running tasks which is currently running. '
+  name: RunningLongRunningRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Total number of submitted short running tasks '
+  name: SubmitedShortRunningRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Total number of submitted long running tasks '
+  name: SubmittedLongRunningRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Runtime information on the associated WorkManager. '
+  name: WorkManager
+  relationship: containment
+  type: weblogic.management.runtime.WorkManagerRuntimeMBean
+roles:
+  allowed:
+  - Operator

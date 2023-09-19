@@ -197,7 +197,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.findElement(By.css(".oj-combobox-arrow")).click();
             console.log("Click toggle history input bar");
             await driver.sleep(900);
-            element = driver.findElement(By.id("beanpath|input"));
+            element = driver.findElement(By.xpath("//input[@id='beanpath-history-entries|input']"));
             if (element.isSelected()) {
                 await element.click();
                 console.log("Enter Domain | ServerTemplates");
@@ -396,7 +396,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.executeScript("window.scrollTo(0,0)");
             console.log("Click Add All Left button");
             await driver.sleep(900);
-            await driver.findElement(By.xpath("//oj-button[@id='remoteAll']")).click();
+            await driver.findElement(By.xpath("//oj-button[@id='removeAll']")).click();
             await driver.sleep(900);
             console.log("Click Cancel button");
             await driver.findElement(By.xpath("//oj-button[@id='cancel']")).click();

@@ -1,0 +1,47 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p> Configures an action that can execute an external command-line
+  process.  This action type can be used to execute custom scripts when a policy rule
+  is triggered. </p> <p> Note that any child process forked by an action of this type
+  will have all the rights and privileges of the WebLogic Server process that spawns
+  it.  Care must be taken that the target script is available and can be read/executed
+  by the system-level identity that owns the WebLogic Server process. </p> '
+name: weblogic.diagnostics.descriptor.WLDFScriptActionBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'A map of environment variables to set for the child process. '
+  name: Environment
+  type: java.util.Properties
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'An array of ordered command-line arguments to the target script. '
+  name: Parameters
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The full path to the script to execute. '
+  name: PathToScript
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The working directory for the child process.  If not set the working
+    directory will be the same as the WebLogic Server parent process. '
+  name: WorkingDirectory
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

@@ -37,17 +37,15 @@ public class CreatableBeanCollectionResource extends BeanResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response get(
     @QueryParam("view") @DefaultValue(VIEW_TABLE) String view,
-    @QueryParam("reload") @DefaultValue("false") boolean reload,
-    @QueryParam("actionForm") @DefaultValue("") String actionForm,
-    @QueryParam("action") @DefaultValue("") String action
+    @QueryParam("reload") @DefaultValue("false") boolean reload
   ) {
     getInvocationContext().setReload(reload);
     if (VIEW_TABLE.equals(view)) {
-      setTablePagePath(actionForm, action);
-      return getTablePage();
+      setTablePagePath();
+      return getTable();
     } else if (VIEW_CREATE_FORM.equals(view)) {
-      setCreateFormPagePath(actionForm, action);
-      return getCreateFormPage();
+      setCreateFormPagePath();
+      return getCreateForm();
     } else {
       throw
         new AssertionError(
@@ -65,29 +63,25 @@ public class CreatableBeanCollectionResource extends BeanResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response post(
     @QueryParam("action") @DefaultValue(CREATE) String action,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
     JsonObject requestBody
   ) {
-    if (CUSTOMIZE_TABLE.equals(action)) {
-      setTablePagePath();
-      return customizeTable(requestBody);
-    }
     if (CREATE.equals(action)) {
       setCreateFormPagePath();
       return createCollectionChild(requestBody);
+    }
+    setTablePagePath();
+    if (CUSTOMIZE_TABLE.equals(action)) {
+      return customizeTable(requestBody);
+    }
+    if (INPUT_FORM.equals(actionForm)) {
+      return getActionInputForm(action, requestBody);
     }
     return invokeAction(action, requestBody);
   }
 
   protected Response createCollectionChild(JsonObject requestBody) {
     return CreateHelper.create(getInvocationContext(), requestBody);
-  }
-
-  protected Response getCreateFormPage() {
-    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
-      return getCreateFormActionInputForm();
-    } else {
-      return getCreateForm();
-    }
   }
 
   protected Response getCreateForm() {
@@ -98,19 +92,7 @@ public class CreatableBeanCollectionResource extends BeanResource {
     return getPage();
   }
 
-  protected Response getTablePage() {
-    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
-      return getTableActionInputForm();
-    } else {
-      return getTable();
-    }
-  }
-
   protected Response getTable() {
-    return getPage();
-  }
-
-  protected Response getTableActionInputForm() {
     return getPage();
   }
 }

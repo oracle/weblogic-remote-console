@@ -1,0 +1,19 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.utils.ListerMBean
+derivedTypes:
+- weblogic.security.providers.utils.CertRegManagerMBean
+- weblogic.management.security.authentication.UserReaderMBean
+- weblogic.management.security.authentication.GroupReaderMBean
+- weblogic.security.providers.pk.GroupCertRegManagerMBean
+- com.bea.security.saml2.providers.SAML2PartnerRegistryMBean
+- weblogic.security.providers.saml.registry.SAMLPartnerRegistryMBean
+descriptionHTML: 'The NameListerMBean interface defines a method used to return lists
+  of names. '
+name: weblogic.management.utils.NameListerMBean
+properties: [
+  ]

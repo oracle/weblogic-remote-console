@@ -1,0 +1,54 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.RunawayThreadsMBean
+- weblogic.management.configuration.HeapRetainedMBean
+- weblogic.management.configuration.ThreadRunningMBean
+- weblogic.management.configuration.CpuUtilizationMBean
+- weblogic.management.configuration.FileOpenMBean
+descriptionHTML: '<p> This mbean is used to create Trigger (Usage limit) based policies
+  for a resource type. </p> <p> Trigger (Usage limit) based policies allows a system
+  administrator to establish usage limits, and define recourse actions that must be
+  executed when those usage limits are breached. </p> <p> A trigger is a static upper-limit
+  of usage of a resource. When the consumption of that resource crosses the specified
+  limit, the specified recourse action is performed. This policy type is best suited
+  for environments where the resource usage by Domain Partitions are predictable.
+  </p> <p> As an example, a system administrator may limit the "Bayland" Partition
+  to not use more than 100 open files, by setting a Trigger for 100 units of the "File
+  Open" resource type in the resource-manager for the "Bayland" Partition. </p> <p>
+  <b>Recourse Actions</b> </p> <p> The following recourse actions may be configured
+  when a resource''s trigger value is breached: </p> <ul> <li><b>notify</b>: A Notification
+  is provided to system administrators as an informational update of the trigger being
+  breached.</li> <li><b>slow</b>: Throttle (typically slow-down) the rate at which
+  the resource is consumed.</li> <li><b>fail</b>: Fail one or more resource consumption
+  requests, usually until usage is below the desired limit.</li> <li><b>shutdown</b>:
+  Attempts to stop resource consumption by initiating the shutdown sequence of the
+  Domain Partition while allowing cleanup.</li> </ul> <p> The following requirements
+  are validated during trigger creation: </p> <ol> <li>The set of recourse actions
+  listed above are not valid for all resource types. The resource type MBean''s class
+  document lists the subset of valid recourse actions that may be specified for that
+  resource type. The specified recouse action for a resource type must be within that
+  valid subset of recourse actions.</li> <li>Atmost one <i>shutdown</i> recourse action
+  may be specified for a resource type.</li> <li>Atmost one <i>slow</i> recourse action
+  may be specified for a resource type.</li> <li>Atmost one <i>fail</i> recourse action
+  may be specified for a resource type.</li> <li>A <i>slow</i> recourse action cannot
+  be specified for a resource type if a fair share policy is also defined for that
+  resource type.</li> </ol> <p> Trigger creation is failed if any of these requirements
+  fail. </p> '
+name: weblogic.management.configuration.RCMResourceMBean
+properties:
+- array: true
+  creators:
+  - weblogic.management.configuration.TriggerMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Gets the list of configured trigger based policies for the current
+    resource type. '
+  name: Triggers
+  relationship: containment
+  type: weblogic.management.configuration.TriggerMBean

@@ -59,3 +59,75 @@ actions:
     type: "java.lang.String"
     array: true
   - name: "deploymentOptions"
+    type: "java.util.Properties"
+
+- name: "redeploy_targets_applicationPath_plan_deploymentOptions"
+  remoteName: "redeploy"
+  type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+  roles:
+    allowed:
+    - Deployer
+  descriptionHTML: >
+    <p>Redeploy the application in the background for the targets specified
+    with the options specified.  This is an asynchronous operation that
+    returns immediately.  The returned DeploymentProgressObjectMBean
+    can be used to determine when the operation is completed.</p>
+  parameters:
+  - name: "targets"
+    type: "java.lang.String"
+    array: true
+  - name: "applicationPath"
+    type: "java.lang.String"
+  - name: "plan"
+    type: "java.lang.String"
+  - name: "deploymentOptions"
+    type: "java.util.Properties"
+
+- name: "update_targets_plan_deploymentOptions"
+  remoteName: "update"
+  type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+  roles:
+    allowed:
+    - Deployer
+  descriptionHTML: >
+     <p>Allows for updating an application configuration using an changed
+     deployment plan.</p>
+     <p>A configuration update is equivalent to replacing the application's
+     deployment plan. The deployment plan is redeployed in-place. A new
+     version of the application is not started, even if the new deployment
+     plan has a different version.</p>
+     <p>The update succeeds only if changes to the deployment plan do not
+     require the application to be restarted. Configuration changes in 
+     the new deployment plan must be limited to
+     tuning the application. Changes to resource bindings causes
+     the update to fail. Use redeploy()
+     to apply resource binding changes to a production application.</p>
+     <p>This method targets only root modules. Module level targeting is 
+     not supported.</p>
+  parameters:
+  - name: "targets"
+    type: "java.lang.String"
+    array: true
+  - name: "plan"
+    type: "java.lang.String"
+  - name: "deploymentOptions"
+    type: "java.util.Properties"
+
+- name: "createPlan"
+  type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+  roles:
+    allowed:
+    - Deployer
+  parameters:
+  - name: "PlanPath"
+    type: "java.lang.String"
+    descriptionHTML: >
+      <p>The path name, on the admin server's file system, of the deployment plan file to create.</p>
+
+properties:
+- name: "DeploymentPlan"
+  type: weblogic.management.runtime.DeploymentPlanRuntimeMBean
+  relationship: containment
+- name: "State"
+  type: weblogic.management.runtime.DeploymentStateRuntimeMBean
+  relationship: containment

@@ -1,0 +1,39 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.WLDFImageRuntimeMBean
+descriptionHTML: '<p>This interface controls diagnostic image creation, and provides
+  access to run-time information about past and current diagnostic image capture requests.</p> '
+name: weblogic.management.runtime.WLDFPartitionImageRuntimeMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns a list of captured images that are available on the
+    Server.</p> '
+  name: AvailableCapturedImages
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of all initiated image capture tasks.</p> '
+  name: ImageCaptureTasks
+  relationship: containment
+  type: weblogic.management.runtime.WLDFImageCreationTaskRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The default directory where the server stores captured diagnostic
+    images.</p> '
+  name: ImageDir
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The default timeout period, in minutes, that the server uses
+    to delay future diagnostic image-capture requests.</p> '
+  name: ImageTimeout
+  type: int

@@ -38,17 +38,33 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       return endpoint;
     }
 
+    function getActionInputFormRequest(rdjData, checkedRows, action, rowKeyName) {
+      const result = {
+        endpoint: getActionEndpoint(rdjData.actions, action)
+      };
+
+      let dataPayload = {}
+
+      if (checkedRows.size > 0) {
+        dataPayload['rows'] = getActionDataPayloadRows(rdjData, checkedRows, rowKeyName);
+      }
+
+      result['dataPayload'] = dataPayload;
+
+      return result;
+    }
+
     function getActionDataPayload(rdjData, options, checkedRows) {
       const actionDataPayload = {rows: {value: []}};
       if (checkedRows.size > 0) {
-        for (const rowKey of Array.from(checkedRows)) {
-          const index = rdjData.data.map(row => row.identity.value.resourceData).indexOf(rowKey);
+        for (const rowKeyValue of Array.from(checkedRows)) {
+          const index = rdjData.data.map(row => row.identity.value.resourceData).indexOf(rowKeyValue);
           if (index !== -1 && CoreUtils.isNotUndefinedNorNull(rdjData.data[index].identifier)) {
             const row = {value: rdjData.data[index].identifier.value};
             actionDataPayload.rows.value.push(row);
           }
           else {
-            const row = {value: {resourceData: rowKey}};
+            const row = {value: {resourceData: rowKeyValue}};
             actionDataPayload.rows.value.push(row);
           }
         }
@@ -56,13 +72,34 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
 
       return actionDataPayload;
     }
-    
+
+    function getActionDataPayloadRows(rdjData, checkedRows, rowKeyName) {
+      let rows = {value: []};
+      for (const rowKeyValue of Array.from(checkedRows)) {
+        if (rowKeyName === '_identity') {
+          const row = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
+          if (CoreUtils.isNotUndefinedNorNull(row)) {
+            rows.value.push(row.identity);
+          }
+        }
+        else if (rowKeyName === '_identifier') {
+          rows.value.push({value: rowKeyValue});
+        }
+      }
+      return rows;
+    }
+
     function getActionInputDataPayload(submitResults, checkedRows) {
       let actionInputDataPayload = {};
       if (checkedRows.size > 0) {
-        actionInputDataPayload['rows'] = {value: []};
-        for (const identifier of Array.from(checkedRows)) {
-          actionInputDataPayload.rows.value.push({value: identifier});
+        if (CoreUtils.isUndefinedOrNull(submitResults.rows)) {
+          actionInputDataPayload['rows'] = {value: []};
+          for (const identifier of Array.from(checkedRows)) {
+            actionInputDataPayload.rows.value.push({value: identifier});
+          }
+        }
+        else {
+          actionInputDataPayload['rows'] = submitResults.rows;
         }
         actionInputDataPayload['data'] = submitResults.data;
       }
@@ -119,6 +156,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       return menu;
     }
 
+    function isAggregatedRuntimeMBean(rdjData) {
+      let rtnval = false;
+      if (CoreUtils.isNotUndefinedNorNull(rdjData) &&
+        CoreUtils.isNotUndefinedNorNull(rdjData.data) &&
+        rdjData.data.length > 0
+      ) {
+        rtnval = CoreUtils.isNotUndefinedNorNull(rdjData.data[0].identifier) && CoreUtils.isNotUndefinedNorNull(rdjData.data[0].identity);
+      }
+      return rtnval;
+    }
+
     function hasActions(pdjData) {
       let rtnval = false;
       if (CoreUtils.isNotUndefinedNorNull(pdjData)) {
@@ -146,7 +194,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       }
       return rtnval;
     }
-    
+
+    function hasSliceFormActionInput(pdjData) {
+      let rtnval = false;
+      if (CoreUtils.isNotUndefinedNorNull(pdjData)) {
+        if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm)) {
+          rtnval = CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm.actions);
+        }
+      }
+      return rtnval;
+    }
+
     function getActionInputFormStyle(pdjData) {
       let actionInputFormStyle;
       if (CoreUtils.isNotUndefinedNorNull(pdjData) &&
@@ -169,7 +227,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         if (pdjActions[i].name === action) {
           actionInputFormLabels['label'] = pdjActions[i].label;
           actionInputFormLabels['title'] = pdjActions[i].helpLabel;
-          actionInputFormLabels['instructions'] = pdjActions[i].helpSummaryHTML;
           break;
         }
         else if (CoreUtils.isNotUndefinedNorNull(pdjActions[i].actions)) {
@@ -177,7 +234,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
           if (index !== -1) {
             actionInputFormLabels['label'] = pdjActions[i].label;
             actionInputFormLabels['title'] = pdjActions[i].actions[index].helpLabel;
-            actionInputFormLabels['instructions'] = pdjActions[i].actions[index].helpSummaryHTML;
             break;
           }
         }
@@ -187,22 +243,42 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
 
     function rowSelectionRequired(pdjData) {
       let rtnval = false;
-      if (hasActions(pdjData)) {
-        if (CoreUtils.isNotUndefinedNorNull(pdjData.table) &&
-          CoreUtils.isNotUndefinedNorNull(pdjData.table.actions)
-        ) {
-          rtnval = pdjData.table.requiresRowSelection;
-        }
-        else if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable) &&
-          CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable.actions)
-        ) {
-          rtnval = pdjData.sliceTable.requiresRowSelection;
-        }
-        else if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm) &&
-          CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm.actions)
-        ) {
-          rtnval = pdjData.sliceForm.requiresRowSelection;
-        }
+      if (CoreUtils.isNotUndefinedNorNull(pdjData.table)) {
+        rtnval = pdjData.table.requiresRowSelection;
+      }
+      else if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable)) {
+        rtnval = pdjData.sliceTable.requiresRowSelection;
+      }
+      else if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm)) {
+        rtnval = pdjData.sliceForm.requiresRowSelection;
+      }
+      return rtnval;
+    }
+
+    function getRowSelectionProperty(pdjData) {
+      let rtnval = 'none';
+      if (CoreUtils.isNotUndefinedNorNull(pdjData.table)) {
+        rtnval = pdjData.table.rowSelectionProperty;
+      }
+      else if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable)) {
+        rtnval = pdjData.sliceTable.rowSelectionProperty;
+      }
+      else if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm)) {
+        rtnval = pdjData.sliceForm.rowSelectionProperty;
+      }
+      return rtnval;
+    }
+
+    function getNavigationProperty(pdjData) {
+      let rtnval = 'none';
+      if (CoreUtils.isNotUndefinedNorNull(pdjData.table)) {
+        rtnval = pdjData.table.navigationProperty;
+      }
+      else if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable)) {
+        rtnval = pdjData.sliceTable.navigationProperty;
+      }
+      else if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm)) {
+        rtnval = pdjData.sliceForm.navigationProperty;
       }
       return rtnval;
     }
@@ -226,7 +302,11 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       }
       return pdjActions;
     }
-    
+
+    function getPDJInputFormInstructions(pdjData) {
+      return pdjData?.introductionHTML;
+    }
+
     function getParentActionsDisabledState(button) {
       let disabledState = button.disabled;
       const filtered = button.menus.filter(item => item.disabled);
@@ -288,69 +368,20 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       }
     }
 
-    function getActionData(options, endpoint, chosenItem) {
-      return DataOperations.actions.getActionData(endpoint.resourceData)
-        .then(reply => {
-          return {
-            succeeded: true,
-            data: reply.body.data,
-            messages: reply.body.messages
-          };
-        })
-        .catch(response => {
-          if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-            const reply = {
-              succeeded: false
-            };
-            if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
-              const message = response.body.messages[0].message;
-              if (message.indexOf('Read timed out') !== -1) {
-                reply['succeeded'] = true;
-                reply['data'] = {actionUrl: null};
-              }
-              else {
-                response.body.messages.unshift({
-                  severity: 'error',
-                  message: i18n.messages.action.actionNotPerformed.detail.replace('{0}', options.label).replace('{1}', )
-                });
-                reply['messages'] = response.body.messages;
-              }
-            }
-            else {
-              reply['data'] = {
-                severity: 'error',
-                summary: i18n.messages.action.unableToPerform.summary,
-                detail: i18n.messages.action.unableToPerform.detail.replace('{1}', PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace('{0}', response.transport.statusText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
-              };
-            }
-            return reply;
-          }
-          else {
-            let reasonText = i18n.labels.cannotDetermineExactCause.value;
-            if (CoreUtils.isError(response.reason)) {
-              reasonText = response.name;
-            } else if (CoreUtils.isError(response.failureReason)) {
-              reasonText = response.failureReason.name;
-            }
-            return {
-              succeeded: false,
-              data: {
-                severity: 'error',
-                summary: i18n.messages.action.unableToPerform.summary,
-                detail: i18n.messages.action.unableToPerform.detail.replace('{1}', PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace('{0}', reasonText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
-              }
-            };
-          }
-
-        });
-    }
-
-    function postActionData(actionLabel, endpoint, dataPayload, chosenItem, addActionNotPerformedMessage = true) {
+    /**
+     *
+     * @param {string} actionLabel
+     * @param {{resourceData: string}} endpoint
+     * @param {{rows?: {value: [{value: object|string}]}, data?: object}} dataPayload
+     * @param {boolean} [addActionNotPerformedMessage=true]
+     * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+     * @private
+     */
+    function postActionData(actionLabel, endpoint, dataPayload, addActionNotPerformedMessage = true) {
       return DataOperations.actions.postActionData(endpoint.resourceData, dataPayload)
         .then(reply => {
           return {
             succeeded: true,
-            data: reply.body.data,
             messages: reply.body.messages
           };
         })
@@ -363,7 +394,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
               const message = response.body.messages[0].message;
               if (message.indexOf('Read timed out') !== -1) {
                 reply['succeeded'] = true;
-                reply['data'] = {actionUrl: null};
               }
               else {
                 if (addActionNotPerformedMessage) {
@@ -376,13 +406,13 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
               }
             }
             else {
-              reply['data'] = {
+              reply['messages'] = [{
                 severity: 'error',
                 summary: i18n.messages.action.unableToPerform.summary,
-                detail: i18n.messages.action.unableToPerform.detail.replace('{1}', PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace('{0}', response.transport.statusText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
-              };
+                detail: i18n.messages.action.unableToPerform.detail.replace('{1}', actionLabel).replace('{0}', response.transport.statusText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
+              }];
             }
-            return reply;
+            return Promise.reject(reply);
           }
           else {
             let reasonText = i18n.labels.cannotDetermineExactCause.value;
@@ -391,14 +421,14 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
             } else if (CoreUtils.isError(response.failureReason)) {
               reasonText = response.failureReason.name;
             }
-            return {
+            return Promise.reject({
               succeeded: false,
-              data: {
+              messages: [{
                 severity: 'error',
                 summary: i18n.messages.action.unableToPerform.summary,
-                detail: i18n.messages.action.unableToPerform.detail.replace('{1}', PageDefinitionUtils.displayNameFromIdentity(chosenItem)).replace('{0}', reasonText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
-              }
-            };
+                detail: i18n.messages.action.unableToPerform.detail.replace('{1}', actionLabel).replace('{0}', response.transport.statusText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
+              }]
+            });
           }
 
         });
@@ -406,35 +436,46 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
     
     async function performDownloadAction(rdjData, declarativeActions, options) {
       function createDownloadActionReply(replies) {
-        const reply = {succeeded: true, messages: []};
+        const reply = {messages: []};
         for (const item of replies) {
           reply.messages = [...reply.messages, ...item.messages];
         }
+        reply['succeeded'] = (reply.messages.filter(message => message.severity === 'error').length === 0);
         return reply;
       }
 
       if (declarativeActions.checkedRows.size > 0) {
-        const chosenItem = undefined;
         const replies = [];
+        const rowKeyName = `_${declarativeActions.rowSelectionProperty}` ;
         const endpoint = getActionEndpoint(rdjData.actions, options.action);
-        for (const rowKey of Array.from(declarativeActions.checkedRows)) {
-          const actionDataPayload = {
-            rows: {value: [{
-              value: {resourceData: rowKey}
-            }]}
-          };
+        for (const rowKeyValue of Array.from(declarativeActions.checkedRows)) {
+          const actionDataPayload = {rows: {value: []}};
+          const row = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
+          if (rowKeyName === '_identity') {
+            actionDataPayload.rows.value.push({value: row.identity.value});
+          }
+          else if (rowKeyName === '_identifier') {
+            actionDataPayload.rows.value.push({value: row.identifier.value});
+          }
+
           try {
-            const reply = await postActionData(options.label, endpoint, actionDataPayload, chosenItem, false);
-            replies.push({succeeded: true, messages: reply.messages});
+            const reply = await postActionData(options.label, endpoint, actionDataPayload);
+            replies.push({messages: reply.messages});
           }
           catch (failure) {
-            replies.push({succeeded: false, messages: [{
-              severity: 'error',
-              message: failure
-            }]});
+            if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
+              replies.push({messages: failure.messages});
+            }
+            else {
+              replies.push({messages: [{
+                severity: 'error',
+                message: failure
+              }]});
+            }
           }
         }
-        return Promise.resolve(createDownloadActionReply(replies));
+        const actionReply = createDownloadActionReply(replies);
+        return Promise.resolve(actionReply);
       }
       else {
         return Promise.resolve({succeeded: true, messages: []});
@@ -442,74 +483,11 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
     }
 
     /**
-     * This function is part of temporary scaffolding for an actions polling implementation, which modal
-     * @param rdjData
-     * @param pdjAction
+     *
+     * @param {string} pdjAction
      * @returns {{action: string, interval: number, maxPolls: number, endWhenPairs?: [{name: string, value: any}]}}
      */
-    function getActionPollingObject(rdjData, pdjAction) {
-      function overrideActionPollingDefaultValues(navigation, actionPolling) {
-        if (navigation.indexOf('/CombinedServerRuntimes') !==-1) {
-          switch (actionPolling.action) {
-            case 'start':
-              actionPolling.interval = 10;
-              actionPolling.maxPolls = 5
-              break;
-            case 'shutdown':
-            case 'forceShutdown':
-              actionPolling.interval = 10;
-              actionPolling.maxPolls = 5
-              break;
-            case 'resume':
-              actionPolling.interval = 10;
-              actionPolling.maxPolls = 2
-              break;
-            case 'suspend':
-            case 'forceSuspend':
-              actionPolling.interval = 10;
-              actionPolling.maxPolls = 2
-              break;
-          }
-        }
-      }
-
-      function getActionPollingEndWhenPairs(navigation, actionPolling) {
-        const endWhenPairs = [];
-        if (navigation.indexOf('/JDBCDataSourceRuntimeMBeans') !==-1) {
-          switch (actionPolling.action) {
-            case 'start':
-            case 'resume':
-              endWhenPairs.push({name: 'State', value: 'Running'});
-              break;
-            case 'suspend':
-            case 'forceSuspend':
-              endWhenPairs.push({name: 'State', value: 'Suspended'});
-              break;
-            case 'shutdown':
-            case 'forceShutdown':
-              endWhenPairs.push({name: 'State', value: 'Shutdown'});
-              break;
-          }
-        }
-        else if (navigation.indexOf('/CombinedServerRuntimes') !==-1) {
-          switch (actionPolling.action) {
-            case 'start':
-            case 'resume':
-              endWhenPairs.push({name: 'State', value: 'RUNNING'});
-              break;
-            case 'suspend':
-            case 'forceSuspend':
-              endWhenPairs.push({name: 'State', value: 'ADMIN'});
-              break;
-            case 'shutdown':
-            case 'forceShutdown':
-              endWhenPairs.push({name: 'State', value: 'NOT_RUNNING'});
-              break;
-          }
-        }
-        return endWhenPairs;
-      }
-
+    function getActionPollingObject(pdjAction) {
       /**
        * Declare return variable and set the default values in it.
        * @type {{action: string, interval: number, maxPolls: number}}
@@ -521,11 +499,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         maxPolls: 0
       };
 
-      overrideActionPollingDefaultValues(rdjData.navigation, actionPolling);
-
-      const endWhenPairs = getActionPollingEndWhenPairs(rdjData.navigation, actionPolling);
-      if (endWhenPairs.length > 0) {
-        actionPolling['endWhenPairs'] = endWhenPairs;
+      if (CoreUtils.isNotUndefinedNorNull(pdjAction.polling)) {
+        actionPolling.interval = pdjAction.polling.reloadSeconds;
+        actionPolling.maxPolls = pdjAction.polling.maxAttempts;
       }
 
       return actionPolling;
@@ -557,59 +533,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         }
       }
       return actionPolling;
-    }
-
-    function updateActionPollingEndWhenPairs(rdjData, declarativeActions, actionPolling) {
-      function createEndWhenPairsMap(checkedRows, actionPolling) {
-        const addEndWhenPairSatisfiedProperty = (endWhenPairs) => {
-          for (const endWhenPair of endWhenPairs) {
-            endWhenPair['satisfied'] = false;
-          }
-        };
-
-        const endWhenPairsMap = {};
-
-        for (const rowKey of checkedRows) {
-          const clonedEndWhenPairs = [...actionPolling.endWhenPairs];
-          addEndWhenPairSatisfiedProperty(clonedEndWhenPairs);
-          endWhenPairsMap[rowKey] = clonedEndWhenPairs;
-        }
-        return endWhenPairsMap;
-      }
-
-      function processEndWhenPairsMap(endWhenPairsMap, data) {
-        const computeResult = (endWhenPairsMap) => {
-          const result = {satisfied: false};
-          const mapValues = Object.values(endWhenPairsMap);
-          const filtered = mapValues.filter(endWhenPairs => endWhenPairs.filter(endWhenPair => endWhenPair.satisfied === false).length === 0);
-          result.satisfied = (filtered.length > 0);
-          return result;
-        };
-
-        for (const rowKey of Object.keys(endWhenPairsMap)) {
-          const rowIndex = data.map(row => row.identity.value.resourceData).indexOf(rowKey);
-          if (rowIndex !== -1) {
-            for (let endPairIndex = 0; endPairIndex < endWhenPairsMap[rowKey].length; endPairIndex++) {
-              const columnName = endWhenPairsMap[rowKey][endPairIndex].name;
-              if (CoreUtils.isNotUndefinedNorNull(data[rowIndex][columnName])) {
-                const columnValue = data[rowIndex][columnName].value;
-                endWhenPairsMap[rowKey][endPairIndex].satisfied = (columnValue === endWhenPairsMap[rowKey][endPairIndex].value);
-              }
-            }
-          }
-        }
-
-        return computeResult(endWhenPairsMap);
-      }
-
-      return new Promise(function (resolve) {
-        const checkedRows = Array.from(declarativeActions.checkedRows);
-        if (CoreUtils.isUndefinedOrNull(declarativeActions.endWhenPairs)) {
-          declarativeActions['endWhenPairs'] = createEndWhenPairsMap(checkedRows, actionPolling);
-        }
-        const result = processEndWhenPairsMap(declarativeActions.endWhenPairs, rdjData.data);
-        resolve({satisfied: result.satisfied});
-      });
     }
 
     function updateSubmittedCheckedRows(declarativeActions, options) {
@@ -646,6 +569,18 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         return hasActionInputForm(rdjActions, action);
       },
 
+      hasSliceFormActionInput: (pdjData) => {
+        return hasSliceFormActionInput(pdjData);
+      },
+
+      getRowSelectionProperty: (pdjData) => {
+        return getRowSelectionProperty(pdjData);
+      },
+
+      getNavigationProperty: (pdjData) => {
+        return getNavigationProperty(pdjData);
+      },
+
       getActionInputFormStyle: (pdjData) => {
         return getActionInputFormStyle(pdjData);
       },
@@ -654,7 +589,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         const pdjActions = getPDJActions(pdjData);
         return getActionInputFormLabels(pdjActions, action);
       },
-      
+
       onCheckedRowsChanged: (declarativeActions, buttons) => {
         setActionsDisabledState(declarativeActions, buttons);
       },
@@ -670,6 +605,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
           const pdjActions = getPDJActions(pdjData);
           if (CoreUtils.isNotUndefinedNorNull(pdjActions)) {
             declarativeActions.rowSelectionRequired = rowSelectionRequired(pdjData);
+            declarativeActions['rowSelectionProperty'] = getRowSelectionProperty(pdjData);
+            declarativeActions['navigationProperty'] = getNavigationProperty(pdjData);
             declarativeActions.dataRowsCount = rdjData.data.length;
             declarativeActions.buttons = [];
             for (const pdjAction of pdjActions) {
@@ -689,7 +626,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
                   button['rows'] = 'blank';
                 }
                 if (CoreUtils.isNotUndefinedNorNull(pdjAction.polling)) {
-                  button['polling'] = getActionPollingObject(rdjData, pdjAction);
+                  button['polling'] = getActionPollingObject(pdjAction);
                 }
                 if (pdjAction.actions) {
                   button['menus'] = [];
@@ -701,7 +638,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
                       rows: menu.rows
                     };
                     if (CoreUtils.isNotUndefinedNorNull(menu.polling)) {
-                      menuItem['polling'] = getActionPollingObject(rdjData, menu);
+                      menuItem['polling'] = getActionPollingObject(menu);
                     }
                     button.menus.push(menuItem);
                   }
@@ -771,6 +708,15 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         return getActionEndpoint(rdjActions, action);
       },
 
+      getActionInputFormRequest:(rdjData, declarativeActions, action, rowKeyName) => {
+        delete declarativeActions.inputForm;
+        const result = getActionInputFormRequest(rdjData, declarativeActions.checkedRows, action, rowKeyName);
+        if (CoreUtils.isNotUndefinedNorNull(result.dataPayload.rows)) {
+          declarativeActions['inputForm'] = {rows: result.dataPayload.rows};
+        }
+        return result;
+      },
+
       getActionIconFile: (action) => {
         let iconFile = 'action-empty-icon-blk_24x24';
         const settingsActions = Runtime.getSettingsActions();
@@ -783,26 +729,20 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         return iconFile;
       },
 
-      updateActionPollingEndWhenPairs: (rdjData, declarativeActions, actionPolling) => {
-        return updateActionPollingEndWhenPairs(rdjData, declarativeActions, actionPolling);
-      },
-
       performActionOnCheckedRows: (rdjData, declarativeActions, options) => {
         if (options.isDownloadAction) {
           return performDownloadAction(rdjData, declarativeActions, options);
         }
         else {
-          const chosenItem= undefined;
           const dataPayload = getActionDataPayload(rdjData, options, declarativeActions.checkedRows);
           const endpoint = getActionEndpoint(rdjData.actions, options.action);
-          return postActionData(options.label, endpoint, dataPayload, chosenItem);
+          return postActionData(options.label, endpoint, dataPayload);
         }
       },
 
       submitActionInputForm: (submitResults, checkedRows, endpoint, options) => {
-        const chosenItem= undefined;
         const dataPayload = getActionInputDataPayload(submitResults, checkedRows);
-        return postActionData(options.label, endpoint, dataPayload, chosenItem);
+        return postActionData(options.label, endpoint, dataPayload);
       }
 
     };

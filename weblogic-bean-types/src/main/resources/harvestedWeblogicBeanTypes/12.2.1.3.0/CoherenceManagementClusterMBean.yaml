@@ -1,0 +1,74 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class is used to hold JMX information about a coherence cluster
+  in both the standalone case and WLS managed cluster case. '
+name: weblogic.management.configuration.CoherenceManagementClusterMBean
+properties:
+- array: true
+  creators:
+  - weblogic.management.configuration.CoherenceManagementAddressProviderMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns the list of Addresses associated with this configuration
+    MBean. '
+  name: CoherenceManagementAddressProviders
+  relationship: containment
+  type: weblogic.management.configuration.CoherenceManagementAddressProviderMBean
+- array: true
+  defaultValue:
+    value:
+      value: null
+  deprecated: '12.2.1.1.0 '
+  descriptionHTML: 'Get JMX connection encrypted password. Deprecated. Use getPasswordEncrypted. '
+  excludeFromRest: No default REST mapping for byte[]
+  name: EncryptedPassword
+  restartNeeded: true
+  supported: false
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Get JMX connection password '
+  encrypted: true
+  name: Password
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: 'Get JMX connection encrypted password '
+  encrypted: true
+  excludeFromRest: No default REST mapping for byte[]
+  name: PasswordEncrypted
+  restartNeeded: true
+  supported: false
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: em/metadata/reports/coherence/report-group.xml
+  descriptionHTML: 'Get the report group file representing the superset of metrics
+    this bean will gather. '
+  name: ReportGroupFile
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the JMX connection username '
+  name: Username
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

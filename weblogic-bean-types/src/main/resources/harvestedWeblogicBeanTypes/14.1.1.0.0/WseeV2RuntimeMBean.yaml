@@ -1,0 +1,25 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.WseeBaseRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Encapsulates runtime information about a particular Web Service.
+  The name attribute of this MBean will be the value of the webservice-description-name
+  element in webservices.xml</p> '
+name: weblogic.management.runtime.WseeV2RuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the context path of this web service.</p> <p>This
+    attribute corresponds to the initial part of the endpoint address in the WSDL
+    that describes the Web Service.  It is specified at development time in JAX-RPC
+    services using the contextPath attribute of the &#64;WLXXXTransport JWS annotation,
+    where XXX refers to the transport, such as HTTP, HTTPS, or JMS. For JAX-WS services
+    the context path is set either during compilation of the service, or by the module
+    (web or EJB) hosting the service.</p> '
+  name: ContextPath
+  type: java.lang.String

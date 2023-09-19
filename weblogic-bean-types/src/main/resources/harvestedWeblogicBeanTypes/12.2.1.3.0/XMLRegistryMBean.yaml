@@ -1,0 +1,204 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Configure the behavior of JAXP (Java API for XML Parsing) in
+  the server.</p>  <p>You configure this behavior by creating XML Registries that
+  specify the default DOM and Sax factory implementation class, transformer factory
+  implementation class, external entity resolution and caching.</p> '
+name: weblogic.management.configuration.XMLRegistryMBean
+properties:
+- defaultValue:
+    value:
+      value: weblogic.xml.jaxp.WebLogicDocumentBuilderFactory
+  descriptionHTML: '<p>The fully qualified name of the class that implements the <code>DocumentBuilderFactory</code>
+    interface.</p>  <p>The <code>javax.xml.parsers.DocumentBuilderFactory</code> factory
+    API enables applications deployed to WebLogic Server to obtain an XML parser that
+    produces DOM object trees from XML documents.</p>  <p>The built-in WebLogic Server
+    DOM factory implementation class is <code>com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl</code>.
+    This is the factory class applications deployed to WebLogic Server get by default
+    when they request a DOM parser.  You can change this default by updating this
+    value.</p>  <p>Return the class name of the default DocumentBuilderFactory</p> '
+  name: DocumentBuilderFactory
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Provides a list of EntitySpec registry entries.</p> '
+  name: EntitySpecRegistryEntries
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.XMLEntitySpecRegistryEntryMBean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether cached DTD/schema is invalidated when parsing error
+    is encountered.</p> '
+  name: HandleEntityInvalidation
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Provides a list of the set of ParserSelect registry entries.</p> '
+  name: ParserSelectRegistryEntries
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.XMLParserSelectRegistryEntryMBean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  deprecated: '7.0.0.0 replaced by weblogic.management.configuration.XMLRegistryMBean '
+  descriptionHTML: '<p>Provides a list of the set of pre-Silversword style registry
+    entries.</p> '
+  name: RegistryEntries
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.XMLRegistryEntryMBean
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.xml.jaxp.WebLogicSAXParserFactory
+  descriptionHTML: '<p>The fully qualified name of the class that implements the <code>SAXParserFactory</code>
+    interface.</p>  <p>The <code>javax.xml.parsers.SAXParserFactory</code> factory
+    API enables applications deployed to WebLogic Server to configure and obtain a
+    SAX-based XML parser to parse XML documents.</p>  <p>The built-in WebLogic Server
+    SAX factory implementation class is <code>com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl</code>.
+    This is the factory class applications deployed to WebLogic Server get by default
+    when they request a SAX parser.  You can change this default by updating this
+    value.</p>  <p>Return the class name of the default SAXParserFactory</p> '
+  name: SAXParserFactory
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.xml.jaxp.WebLogicSchemaFactory
+  descriptionHTML: '<p>The fully qualified name of the class that implements the <code>SchemaFactory</code>
+    interface.</p>  <p>The <code>javax.xml.validation.SchemaFactory</code> factory
+    API enables applications deployed to WebLogic Server to configure and obtain a
+    <code>Schema</code> object used to validate XML document using schema.</p>  <p>The
+    built-in WebLogic Server Schema factory implementation class is <code>com.sun.org.apache.xerces.internal.jaxp.validation.XMLSchemaFactory</code>.
+    This is the factory class applications deployed to WebLogic Server get by default
+    when they request a Schema object.  You can change this default by updating this
+    value.</p>   <p>Return the class name of the default SchemaFactory</p> '
+  name: SchemaFactory
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.xml.jaxp.WebLogicTransformerFactory
+  descriptionHTML: '<p>The fully qualified name of the class that implements the <code>TransformerFactory</code>
+    interface.</p>  <p>The <code>javax.xml.transform.TransformerFactory</code> factory
+    API enables applications deployed to WebLogic Server to configure and obtain a
+    <code>Transformer</code> object used to transform XML data into another format.</p>  <p>The
+    built-in WebLogic Server Transformer factory implementation class is <code>com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryIml</code>.
+    This is the factory class applications deployed to WebLogic Server get by default
+    when they request a Transformer object.  You can change this default by updating
+    this value.</p>   <p>Return the class name of the default TransformerFactory</p> '
+  name: TransformerFactory
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: cache-on-reference
+  descriptionHTML: '<p>Specifies when WebLogic Server should cache external entities
+    that it retrieves from the Web.</p>  <p>When WebLogic Server resolves an external
+    entity within an XML file and retrieves the entity from the Web, you can specify
+    that WebLogic Server cache this entity only when the entity is first referenced,
+    when WebLogic Server first starts up, or not at all.</p> '
+  legalValues:
+  - cache-on-reference
+  - cache-at-initialization
+  - cache-never
+  name: WhenToCache
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.XMLEntitySpecRegistryEntryMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a list of EntitySpec registry entries.</p> '
+  name: XMLEntitySpecRegistryEntries
+  relationship: containment
+  type: weblogic.management.configuration.XMLEntitySpecRegistryEntryMBean
+- defaultValue:
+    value:
+      value: weblogic.xml.jaxp.WebLogicXMLEventFactory
+  descriptionHTML: '<p>The fully qualified name of the class that implements the <code>XMLEventFactory</code>
+    interface.</p>  <p>The <code>javax.xml.stream.XMLEventFactory</code> factory API
+    enables applications deployed to WebLogic Server to configure and obtain a <code>XMLEvent</code>
+    object used to parse or build XML streams.</p>  <p>The built-in WebLogic Server
+    XMLEvent factory implementation class is <code>com.ctc.wstx.stax.WstxEventFactory</code>.
+    This is the factory class applications deployed to WebLogic Server get by default
+    when they request a XMLEvent object.  You can change this default by updating
+    this value.</p>   <p>Return the class name of the default XMLEventFactory</p> '
+  name: XMLEventFactory
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.xml.jaxp.WebLogicXMLInputFactory
+  descriptionHTML: '<p>The fully qualified name of the class that implements the <code>XMLInputFactory</code>
+    interface.</p>  <p>The <code>javax.xml.stream.XMLInputFactory</code> factory API
+    enables applications deployed to WebLogic Server to configure and obtain a <code>XMLEventReader/XMLStreamReader</code>
+    object used to read XML streams.</p>  <p>The built-in WebLogic Server XML Input
+    factory implementation class is <code>com.ctc.wstx.stax.WstxInputFactory</code>.
+    This is the factory class applications deployed to WebLogic Server get by default
+    when they request a XMLEventReader/XMLStreamReader object. You can change this
+    default by updating this value.</p>   <p>Return the class name of the default
+    XMLInputFactory</p> '
+  name: XMLInputFactory
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.xml.jaxp.WebLogicXMLOutputFactory
+  descriptionHTML: '<p>The fully qualified name of the class that implements the <code>XMLOutputFactory</code>
+    interface.</p>  <p>The <code>javax.xml.stream.XMLOutputFactory</code> factory
+    API enables applications deployed to WebLogic Server to configure and obtain a
+    <code>XMLEventWriter/XMLStreamWriter</code> object used to write XML streams.</p>  <p>The
+    built-in WebLogic Server XML Output factory implementation class is <code>com.ctc.wstx.stax.WstxOutputFactory</code>.
+    This is the factory class applications deployed to WebLogic Server get by default
+    when they request a XMLEventWriter/XMLStreamWriter object. You can change this
+    default by updating this value.</p>   <p>Return the class name of the default
+    XMLOutputFactory</p> '
+  name: XMLOutputFactory
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.XMLParserSelectRegistryEntryMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a list of the set of ParserSelect registry entries.</p> '
+  name: XMLParserSelectRegistryEntries
+  relationship: containment
+  type: weblogic.management.configuration.XMLParserSelectRegistryEntryMBean
+- defaultValue:
+    value:
+      value: weblogic.xml.jaxp.WebLogicXPathFactory
+  descriptionHTML: '<p>The fully qualified name of the class that implements the <code>XPathFactory</code>
+    interface.</p>  <p>The <code>javax.xml.xpath.XPathFactory</code> factory API enables
+    applications deployed to WebLogic Server to configure and obtain a <code>XPath</code>
+    object used to search XML elements.</p>  <p>The built-in WebLogic Server XPath
+    factory implementation class is <code>com.sun.org.apache.xpath.internal.jaxp.XPathFactoryImpl</code>.
+    This is the factory class applications deployed to WebLogic Server get by default
+    when they request a XPath object.  You can change this default by updating this
+    value.</p>   <p>Return the class name of the default XPathFactory</p> '
+  name: XpathFactory
+  type: java.lang.String
+  writable: true

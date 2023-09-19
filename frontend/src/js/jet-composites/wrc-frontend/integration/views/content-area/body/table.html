@@ -2,71 +2,75 @@
  Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 The Universal Permissive License (UPL), Version 1.0
 -->
+<oj-module config="[[overlayFormDialogModuleConfig]]"></oj-module>
 <oj-module config="[[tableToolbarModuleConfig]]"></oj-module>
 <oj-module config="[[tableCustomizerModuleConfig]]"></oj-module>
 
-<div id="intro" class="cfe-table-form-instructions">
-  <hr>
-  <oj-bind-dom config="[[introductionHTML]]"></oj-bind-dom>
-</div>
+<hr>
+<oj-bind-if test="[[showInstructions]]">
+  <div id="intro" class="cfe-table-form-instructions">
+    <oj-bind-dom config="[[introductionHTML]]"></oj-bind-dom>
+  </div>
+</oj-bind-if>
 
 <oj-module config="[[tableActionsStripModuleConfig]]"></oj-module>
 
-<div id="table-container" class="oj-flex-item cfe-table-form-content">
+<div id="table-container" class="oj-flex-item cfe-table-content">
   <oj-bind-if test="[[!showHelp()]]">
     <oj-table
-      id='table'
-      class='wlstable'
-      aria-label='Table'
-      data='[[rdjDataProvider]]'
-      scroll-policy='loadMoreOnScroll'
-      scroll-policy-options='{"fetchSize": 10000}'
-      columns='[[columnDataProvider]]'
-      display='grid'
-      selection-mode='{"row": "single"}'
-      selected.row='{{selectedRows}}'
-      on-selected-changed='[[selectedListener]]'
-      on-oj-sort='[[onSortListener]]'
-      columns-default='[[tableSortable]]'
-      class=".oj-table-data-cell-no-padding"
+        id='table'
+        class='wlstable'
+        aria-label='Table'
+        data='[[rdjDataProvider]]'
+        scroll-policy='loadMoreOnScroll'
+        scroll-policy-options='{"fetchSize": 10000}'
+        columns='[[columnDataProvider]]'
+        display='grid'
+        selection-mode='{"row": "single"}'
+        selected.row='{{selectedRows}}'
+        on-selected-changed='[[selectedListener]]'
+        on-oj-sort='[[onSortListener]]'
+        on-click='[[checkedAllRowsChanged]]'
+        columns-default='[[tableSortable]]'
+        class=".oj-table-data-cell-no-padding"
     >
-      <template slot="selectorCellTemplate" data-oj-as="cell">
+      <template slot="selectorCellTemplate">
         <oj-selector
-          slot="selector"
-          selected-keys="[[checkedRowsKeySet]]"
-          on-selected-keys-changed="[[checkedRowsChanged]]"
-          selection-mode="multiple"
-          :row-key="[[$current.data._id]]"
-          data-oj-clickthrough="disabled"
+            selected-keys="[[checkedRowsKeySet]]"
+            on-selected-keys-changed="[[checkedRowsChanged]]"
+            selection-mode="multiple"
+            row-key="[[$current.data._id]]"
+            data-oj-clickthrough="disabled"
         >
         </oj-selector>
       </template>
       <template slot="deleteCellTemplate">
         <oj-button
-          :id="[[$current.data._id]]"
-          :class="cfe-delete-row-button"
-          display="icons"
-          chroming="borderless"
-          on-click="{{ $current.data.listener }}"
+            :id="[[$current.data._id]]"
+            :class="cfe-delete-row-button"
+            display="icons"
+            chroming="borderless"
+            on-click="{{ $current.data.listener }}"
         >
           <span class="oj-ux-ico-trash"></span>
+          <oj-bind-text value="delete"></oj-bind-text>
         </oj-button>
       </template>
       <template slot="cellTemplate" data-oj-as="cell">
         <oj-bind-text value="[[cell.data.data]]"></oj-bind-text>
       </template>
       <oj-menu
-        slot="contextMenu"
-        on-oj-menu-action="[[onContextMenuAction]]"
-        on-oj-before-open="[[onContextMenuBeforeOpen]]"
-        aria-label="Copy to Clipboard Context Menu"
+          slot="contextMenu"
+          on-oj-menu-action="[[onContextMenuAction]]"
+          on-oj-before-open="[[onContextMenuBeforeOpen]]"
+          aria-label="Copy to Clipboard Context Menu"
       >
         <oj-option id="[[i18n.contextMenus.copyCellData.id]]" value="[[i18n.contextMenus.copyCellData.id]]">
-          <img class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.contextMenus.copyCellData.iconFile + '.png', alt: ' + i18n.contextMenus.copyCellData.label + '}" />
+          <img class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.contextMenus.copyCellData.iconFile + '.png', alt: i18n.contextMenus.copyCellData.label}" />
           <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.contextMenus.copyCellData.label]]"></oj-bind-text></span>
         </oj-option>
         <oj-option id="[[i18n.contextMenus.copyRowData.id]]" value="[[i18n.contextMenus.copyRowData.id]]">
-          <img class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.contextMenus.copyRowData.iconFile + '.png', alt: ' + i18n.contextMenus.copyRowData.label + '}" />
+          <img class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.contextMenus.copyRowData.iconFile + '.png', alt: i18n.contextMenus.copyRowData.label}" />
           <span class="cfe-more-menuitem"><oj-bind-text value="[[i18n.contextMenus.copyRowData.label]]"></oj-bind-text></span>
         </oj-option>
       </oj-menu>
@@ -77,18 +81,45 @@ The Universal Permissive License (UPL), Version 1.0
   </oj-bind-if>
 
   <oj-bind-if test="[[showHelp()]]">
-    <oj-table
-      id='help-table'
-      data='[[helpDataProvider]]'
-      scroll-policy='loadMoreOnScroll'
-      scroll-policy-options='{"fetchSize": 10}'
-      columns-default='{"sortable": "disabled", "resizable":"disabled"}'
-      columns='[[tableHelpColumns]]'
+    <table
+        id="help-table"
+        class="oj-table-element oj-component-initnode"
+        role="application"
+        tabindex="0"
+        aria-labelledby="help-table"
+        x-ms-format-detection="none"
     >
-      <template slot="domTemplate" data-oj-as="cell">
-        <oj-bind-dom config="[[cell.data]]"></oj-bind-dom>
-      </template>
-    </oj-table>
+      <colgroup class="oj-table-colgroup">
+        <col class="oj-table-col"></col>
+        <col class="oj-table-col"></col>
+      </colgroup>
+      <thead class="oj-table-header">
+      <tr class="oj-table-header-row">
+        <th class="oj-table-column-header-cell oj-table-header-cell-wrap-text" abbr="Name" :title="[[tableHelpColumns()[0].headerText]]" id="help-table:_hdrCol0">
+          <div class="oj-table-column-header">
+            <div class="oj-table-column-header-text" data-bind="text: [[tableHelpColumns()[0].headerText]]"></div>
+          </div>
+        </th>
+        <th class="oj-table-column-header-cell oj-table-header-cell-wrap-text" abbr="Description" :title="[[tableHelpColumns()[1].headerText]]" id="help-table:_hdrCol1">
+          <div class="oj-table-column-header">
+            <div class="oj-table-column-header-text" data-bind="text: [[tableHelpColumns()[1].headerText]]"></div>
+          </div>
+        </th>
+      </tr>
+      </thead>
+      <tbody class="oj-table-body">
+      <oj-bind-for-each data="[[helpDataProvider]]">
+        <template>
+          <tr class="oj-table-body-row">
+            <td class="oj-table-data-cell oj-form-control-inherit" id="help-table:2420395_0" data-bind="text: [[$current.data.Name]]"></td>
+            <td class="oj-table-data-cell oj-form-control-inherit" id="help-table:2420395_1">
+              <oj-bind-dom config="[[$current.data.Description]]"></oj-bind-dom>
+            </td>
+          </tr>
+        </template>
+      </oj-bind-for-each>
+      </tbody>
+    </table>
     <oj-bind-dom config="[[helpFooterDom]]"></oj-bind-dom>
   </oj-bind-if>
 </div>

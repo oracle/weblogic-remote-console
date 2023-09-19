@@ -1,0 +1,21 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean broadcasts JMX notifications for each log message
+  generated in the local WLS server. There is exactly one implementation of this MBean
+  in each WLS server. JMX listeners can register to this MBean and receive log notifications.
+  The type of the notification generated is <code>WebLogicLogNotification</code>.</p> '
+name: weblogic.management.runtime.LogBroadcasterRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of log messages that this WebLogic Server
+    instance has generated.</p> '
+  name: MessagesLogged
+  type: long

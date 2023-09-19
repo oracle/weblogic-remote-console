@@ -1,0 +1,53 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Topics with certain quality of service allowments can receive
+  a signifigant performance boost by using multicast to receive messages rather than
+  using a connection oriented protocol like TCP. These parameters can be configured
+  with the bean returned.</p> '
+name: weblogic.j2ee.descriptor.wl.MulticastParamsBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The IP address that this topic uses to transmit messages to
+    multicast consumers.</p> '
+  name: MulticastAddress
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The IP port that this topic uses to transmit messages to multicast
+    consumers. </p> '
+  name: MulticastPort
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The number of routers that a message traverses en route to
+    a consumer. A value of 1 limits the message to one subnet (which prevents it from
+    traversing any routers). </p> <p>This value is independent of the JMSExpirationTime
+    value. </p> '
+  name: MulticastTimeToLive
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Finds the template bean for this destination.</p> '
+  name: TemplateBean
+  relationship: reference
+  type: weblogic.j2ee.descriptor.wl.TemplateBean
+roles:
+  allowed:
+  - Deployer

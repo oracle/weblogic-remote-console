@@ -1,0 +1,167 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The MBean that defines the configuration properties for the embedded
+  LDAP server for the WebLogic domain.</p> '
+name: weblogic.management.configuration.EmbeddedLDAPMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Specifies whether the embedded LDAP server should allow anonymous
+    connections. '
+  name: AnonymousBindAllowed
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 7
+  descriptionHTML: '<p>The maximum number of backup copies that should be made for
+    the embedded LDAP server.</p>  <p>This value limits the number of zip files in
+    the ldap/backup directory.</p> '
+  name: BackupCopies
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 23
+  descriptionHTML: '<p>The hour at which the embedded LDAP server should be backed
+    up.</p>  <p>The Backup Hour value is used in conjunction with the Backup Minute
+    value to determine the time at which the embedded LDAP server data files are backed
+    up. At the specified time, WebLogic Server suspends writes to the embedded LDAP
+    server, backs up the data files into a zip files in the ldap/backup directory,
+    and then resumes writes.</p> '
+  name: BackupHour
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: '<p>The minute at which the embedded LDAP server should be backed
+    up.</p>  <p>The Backup Minute value is used in conjunction with the Back Up Hour
+    value to determine the time at which the embedded LDAP server data files are backed
+    up</p> '
+  name: BackupMinute
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether a cache is used with the embedded LDAP server.</p>  <p>This
+    cache is used when a managed server is reading or writing to the master embedded
+    LDAP server that is running on the Administration server.</p> '
+  name: CacheEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 32
+  descriptionHTML: '<p>The size of the cache (in kilobytes) that is used with the
+    embedded LDAP server.</p> '
+  name: CacheSize
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>The time-to-live of the cache (in seconds) that is used with
+    the embedded LDAP server.</p> '
+  name: CacheTTL
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The credential (usually a password) used to connect to the
+    embedded LDAP server.</p>  <p>If this credential has not been set, WebLogic Server
+    generates a password at startup, initializes the attribute, and saves the configuration
+    to the config.xml file. If you want to connect to the embedded LDAP server using
+    an external LDAP browser and the embedded LDAP administrator account (cn=Admin),
+    change this attribute from the generated value.</p> <p>As of 8.1 sp4, when you
+    get the value of this attribute, WebLogic Server does the following:</p> <ol><li>Retrieves
+    the value of the <code>CredentialEncrypted</code> attribute.</li> <li>Decrypts
+    the value and returns the unencrypted password as a String.</li> </ol>  <p>When
+    you set the value of this attribute, WebLogic Server does the following:</p> <ol><li>Encrypts
+    the value.</li> <li>Sets the value of the <code>CredentialEncrypted</code> attribute
+    to the encrypted value.</li> </ol> <p>Using the <code>Credential</code> attribute
+    is a potential security risk because the String object (which contains the unencrypted
+    password) remains in the JVM''s memory until garbage collection removes it and
+    the memory is reallocated. Depending on how memory is allocated in the JVM, a
+    significant amount of time could pass before this unencrypted data is removed
+    from memory.</p>  <p>Instead of using this attribute, use <code>CredentialEncrypted()</code>.</p> '
+  encrypted: true
+  name: Credential
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The credential (usually password) used to connect to the embedded
+    LDAP server.</p>  <p>If this credential has not been set, WebLogic Server generates
+    a password at startup, initializes the attribute, and saves the configuration
+    to the config.xml file. If you want to connect to the embedded LDAP server using
+    an external LDAP browser and the embedded LDAP administrator account (cn=Admin),
+    change this attribute from the generated value.</p> <p>To set this attribute,
+    use <code>weblogic.management.EncryptionHelper.encrypt()</code> to encrypt the
+    value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: CredentialEncrypted
+  restartNeeded: true
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Whether keep alive is enabled in the socket connection '
+  name: KeepAliveEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether a Managed Server should always connect to
+    the master LDAP server (contained in the Administration Server), instead of connecting
+    to the local replicated LDAP server (contained in the Managed Server).</p> '
+  name: MasterFirst
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether a Managed Server should refresh all replicated
+    data at boot time. (This is useful if you have made a large amount of changes
+    when the Managed Server was not active, and you want to download the entire replica
+    instead of having the Administration Server push each change to the Managed Server.)</p> '
+  name: RefreshReplicaAtStartup
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Specifies the maximum number of seconds to wait for results
+    from the embedded LDAP server before timing out. If this option is set to 0, there
+    is no maximum time limit.</p> '
+  name: Timeout
+  restartNeeded: true
+  type: int
+  writable: true

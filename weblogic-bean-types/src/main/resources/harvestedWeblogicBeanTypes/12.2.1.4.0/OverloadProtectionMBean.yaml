@@ -1,0 +1,76 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This Mbean has attributes concerning server overload protection. '
+name: weblogic.management.configuration.OverloadProtectionMBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Enable automatic forceshutdown of the server on failed state.
+    The server self-health monitoring detects fatal failures and mark the server as
+    failed. The server can be restarted using NodeManager or a HA agent. '
+  legalValues:
+  - no-action
+  - force-shutdown
+  - admin-state
+  name: FailureAction
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Percentage free memory after which the server overload condition
+    is cleared. WorkManagers stop performing overloadActions and start regular execution
+    once the overload condition is cleared. '
+  name: FreeMemoryPercentHighThreshold
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Percentage free memory below which the server is considered overloaded.
+    WorkManagers perform overloadAction once the server is marked as overloaded. '
+  name: FreeMemoryPercentLowThreshold
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Exit the server process when the kernel encounters a panic condition
+    like an unhandled OOME. An unhandled OOME could lead to inconsistent state and
+    a server restart is advisable if backed by node manager or a HA agent. '
+  legalValues:
+  - no-action
+  - system-exit
+  name: PanicAction
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- creators:
+  - weblogic.management.configuration.ServerFailureTriggerMBean
+  defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Configure a trigger that marks the server as failed when the condition
+    is met. A failed server in turn can be configured to shutdown or go into admin
+    state. '
+  name: ServerFailureTrigger
+  relationship: containment
+  type: weblogic.management.configuration.ServerFailureTriggerMBean
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Total number of requests that can be present in the server. This
+    includes requests that are enqueued and those under execution. <p> The server
+    performs a differentiated denial of service on reaching the shared capacity. A
+    request with higher priority will be accepted in place of a lower priority request
+    already in the queue. The lower priority request is kept waiting in the queue
+    till all high priority requests are executed. Further enqueues of the low priority
+    requests are rejected right away. </p> '
+  name: SharedCapacityForWorkManagers
+  restartNeeded: true
+  type: int
+  writable: true

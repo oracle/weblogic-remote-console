@@ -1,0 +1,239 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JMSMessageCursorRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for monitoring a WebLogic JMS server.</p> '
+name: weblogic.management.runtime.JMSServerRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of bytes stored on this JMS server.</p>  <p>This
+    number does not include the pending bytes.</p> '
+  name: BytesCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The peak number of bytes stored in the JMS server since the
+    last reset.</p> '
+  name: BytesHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the total number of bytes in all the messages that are
+    currently available to be paged out, but which have not yet been paged out. The
+    JMS server attempts to keep this number smaller than the "MessageBufferSize" parameter.</p> '
+  name: BytesPageableCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Return the total number of bytes that were read from the paging
+    directory since the JMS server was started. '
+  name: BytesPagedInTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the total number of bytes that were written to the paging
+    directory since the JMS server was started.</p> '
+  name: BytesPagedOutTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of bytes pending (unacknowledged or uncommitted)
+    stored on this JMS server.</p>  <p>Pending bytes are over and above the current
+    number of bytes.</p> '
+  name: BytesPendingCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of bytes received on this JMS server since the last
+    reset.</p> '
+  name: BytesReceivedCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The amount of time in the threshold condition since the last
+    reset.</p> '
+  name: BytesThresholdTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the current consumption paused state of the JMSServer
+    as boolean value.</p> '
+  name: ConsumptionPaused
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the current consumption paused state of the JMSServer
+    as string value.</p> '
+  name: ConsumptionPausedState
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of destinations on this JMS server.</p> '
+  name: Destinations
+  relationship: containment
+  type: weblogic.management.runtime.JMSDestinationRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of destinations for this JMS server.</p> '
+  name: DestinationsCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The peak number of destinations on this JMS server since the
+    last reset.</p> '
+  name: DestinationsHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of destinations instantiated on this JMS server
+    since the last reset.</p> '
+  name: DestinationsTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The health state of this JMS server.</p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the current insertion paused state of the JMSServer
+    as boolean value.</p> '
+  name: InsertionPaused
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the current insertion paused state of the JMSServer
+    as string value.</p> '
+  name: InsertionPausedState
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the log runtime instance for this JMSServerRuntime. '
+  name: LogRuntime
+  relationship: containment
+  type: weblogic.management.runtime.LogRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of messages stored on this JMS server. This
+    number does not include the pending messages.</p> '
+  name: MessagesCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The peak number of messages stored in the JMS server since
+    the last reset.</p> '
+  name: MessagesHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the number of messages that are currently available
+    for paging in this JMS server but have not yet been paged out. Note that due to
+    internal implementation details, this count may be zero even if "PageableByteCurrentCount"
+    is zero.</p> '
+  name: MessagesPageableCurrentCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the total number of messages that were read from the
+    paging directory since the JMS server was started.</p> '
+  name: MessagesPagedInTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the total number of messages that were written to the
+    paging directory since the JMS server was started.</p> '
+  name: MessagesPagedOutTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of messages pending (unacknowledged or uncommitted)
+    stored on this JMS server.</p>  <p>Pending messages are over and above the current
+    number of messages.</p> '
+  name: MessagesPendingCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of messages received on this destination since the
+    last reset.</p> '
+  name: MessagesReceivedCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The amount of time in the threshold condition since the last
+    reset.</p> '
+  name: MessagesThresholdTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'See <a href="PersistentStoreRuntimeMBean.html#getAllocatedIoBufferBytes">PersistentStoreRuntimeMBean.AllocatedIoBufferBytes</a> '
+  name: PagingAllocatedIoBufferBytes
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'See <a href="PersistentStoreRuntimeMBean.html#getAllocatedWindowBufferBytes">PersistentStoreRuntimeMBean.AllocatedWindowBufferBytes</a> '
+  name: PagingAllocatedWindowBufferBytes
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'See <a href="PersistentStoreRuntimeMBean.html#getPhysicalWriteCount">PersistentStoreRuntimeMBean.PhysicalWriteCount</a> '
+  name: PagingPhysicalWriteCount
+  type: long
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns an array of Xids representing transaction branches that
+    exist onthis JMS server in the pending state, i.e. branches that have been prepared
+    by the transaction manager but not yet committed or rolled back. '
+  name: PendingTransactions
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the current production paused state of the JMSServer
+    as boolean value.</p> '
+  name: ProductionPaused
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the current production paused state of the JMSServer
+    as string value.</p> '
+  name: ProductionPausedState
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The session pools running on this JMS server.</p> '
+  name: SessionPoolRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.JMSSessionPoolRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of session pools instantiated on this JMS
+    server.</p> '
+  name: SessionPoolsCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The peak number of session pools instantiated on this JMS server
+    since the last reset.</p> '
+  name: SessionPoolsHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of session pools instantiated on this JMS server
+    since the last reset.</p> '
+  name: SessionPoolsTotalCount
+  type: long
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns an array of Xids representing transaction branches
+    that exist on this JMS server in any state.</p> '
+  name: Transactions
+  type: java.lang.String

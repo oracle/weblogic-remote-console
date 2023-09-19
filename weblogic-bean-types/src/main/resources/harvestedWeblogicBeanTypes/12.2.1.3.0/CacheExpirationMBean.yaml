@@ -1,0 +1,28 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.configuration.CacheExpirationMBean
+properties:
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: 'The time after last access an entry becomes a target for eviction.
+    Idle time is measured in milliseconds. '
+  name: IdleTime
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: 'The time after creation an entry is removed from the cache. TTL
+    is measured in milliseconds '
+  name: TTL
+  type: long
+  writable: true

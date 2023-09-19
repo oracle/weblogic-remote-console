@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.json.Json;
 
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
@@ -18,7 +19,6 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
-import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.FormProperty;
@@ -27,6 +27,7 @@ import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.TableCell;
 import weblogic.remoteconsole.server.repo.TableRow;
 import weblogic.remoteconsole.server.repo.Value;
+import weblogic.remoteconsole.server.webapp.InvokeActionHelper;
 
 /** 
  * Custom code for processing slice tables that aggregate results across server runtime mbeans
@@ -43,24 +44,34 @@ public class AggregatedMBeanCustomizer {
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    BeanTreePath aggBTP = ic.getBeanTreePath();
-    BeanRepo beanRepo = aggBTP.getBeanRepo();
+    Response<Value> response = new Response<>();
 
-    // e.g. DomainRuntime.ServerRuntimes.*.Foo.Bar
-    Path unaggPath = NAME_HANDLER.getUnfabricatedBeanTreePath(aggBTP).getPath();
+    BeanTreePath aggBTP = ic.getBeanTreePath();
+    Path unaggPath = NAME_HANDLER.getUnaggregatedBeanTreePath(aggBTP).getPath();
     
-    // fill in the server name, i.e. DomainRuntime.ServerRuntimes.<ServerName>.Foo.Bar
+    // fill in the server name, i.e. DomainRuntime.CombinedServerRuntimes.<ServerName>.Foo.Bar
     unaggPath.getComponents().set(2, ic.getIdentifier());
 
-    // delegate the action to the unagg bean
+    // delegate the action to the unagg bean's collection
     InvocationContext unaggIc = new InvocationContext(ic);
-    unaggIc.setIdentity(BeanTreePath.create(beanRepo, unaggPath));
+    unaggIc.setIdentity(BeanTreePath.create(aggBTP.getBeanRepo(), unaggPath));
     unaggIc.setIdentifier(null);
-    // We could make a new page path for unaggPath and
-    // find its corresponding table page's action def.
-    // However, since the aggregated type makes copies of
-    // the unaggregated actions, the aggregated one works too.
-    return beanRepo.asBeanReaderRepo().invokeAction(unaggIc, pageActionDef, List.of());
+    unaggIc.setPagePath(
+      unaggIc.getPageRepo().getPageRepoDef().newTablePagePath(
+        unaggIc.getBeanTreePath().getTypeDef()
+      )
+    );
+    InvokeActionHelper helper =
+      new InvokeActionHelper(
+        unaggIc,
+        pageActionDef.getActionName(),
+        Json.createObjectBuilder().build()
+      );
+    Response<Void> actionResponse = helper.invokeAction();
+    if (!actionResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(actionResponse);
+    }
+    return response.copyMessages(actionResponse).setSuccess(null);
   }
 
   public static Response<List<TableRow>> getSliceTableRows(

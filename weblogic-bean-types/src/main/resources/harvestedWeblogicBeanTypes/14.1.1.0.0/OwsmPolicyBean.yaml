@@ -1,0 +1,47 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.OwsmPolicyBean
+properties:
+- defaultValue:
+    value:
+      value: enabled
+  descriptionHTML: ' '
+  name: Status
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: Category
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.PropertyNamevalueBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: SecurityConfigurationProperties
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.PropertyNamevalueBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  key: true
+  name: Uri
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

@@ -1,0 +1,109 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Contains the driver parameters of a data source.</p>  <p>Configuration
+  parameters for the JDBC Driver used by a data source are specified using a driver
+  parameters bean.</p> '
+name: weblogic.j2ee.descriptor.wl.JDBCDriverParamsBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The full package name of JDBC driver class used to create the
+    physical database connections in the connection pool in the data source.</p>  <p>For
+    example: <code>oracle.jdbc.OracleDriver</code></p>  <p>The driver must be the
+    name of a class that implements the <code>java.sql.Driver</code> interface. Check
+    the driver documentation to find the full pathname.</p>  <p>Note that the driver
+    class must be in the classpath of any server to which the data source is deployed.</p> '
+  name: DriverName
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The password attribute passed to the JDBC driver when creating
+    physical database connections.</p>  <p>The value is stored in an encrypted form
+    in the descriptor file and when displayed in an administration console.</p> '
+  encrypted: true
+  getRoles:
+    allowed:
+    - Deployer
+  name: Password
+  setRoles:
+    allowed:
+    - Deployer
+  transient: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The encrypted database password as set with <code>setPassword()</code>,
+    <code>setPasswordEncrypted(byte[] bytes)</code>, or as a key=value pair in the
+    list of JDBC driver properties.</p> '
+  encrypted: true
+  getRoles:
+    allowed:
+    - Deployer
+  name: PasswordEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The list of properties passed to the JDBC driver when creating
+    physical database connections.</p>  <p>To enable driver-level features, add the
+    driver property and its value to the Properties list. WebLogic Server sets driver-level
+    properties in the Properties list on the driver''s <code>ConnectionPoolDataSource</code>
+    object.</p>  <p><b>Note:</b> For Security reasons, when WebLogic Server is running
+    in Production mode, you cannot specify database passwords in this properties list.
+    Data source deployment will fail if a password is specified in the properties
+    list. To override this security check, use the command line argument <code>weblogic.management.allowClearTextPasswords</code>
+    when starting the server.</p> '
+  name: Properties
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.JDBCPropertiesBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The URL of the database to connect to. The format of the URL
+    varies by JDBC driver.</p>  <p>The URL is passed to the JDBC driver to create
+    the physical database connections.</p> '
+  name: Url
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the database credentials are to be obtained
+    from the credential mapper using the "user" property as the key. When true, the
+    credentials are obtained from the credential mapper. When false, the database
+    user name and password are obtained from the "user" property and Password element,
+    respectively.</p> '
+  name: UsePasswordIndirection
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies that WebLogic Server should use the XA interface
+    of the JDBC driver.</p>  <p>If the JDBC driver class used to create database connections
+    implements both XA and non-XA versions of a JDBC driver, you can set this attribute
+    to indicate that WebLogic Server should treat the JDBC driver as an XA driver
+    or as a non-XA driver.</p> '
+  name: UseXaDataSourceInterface
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

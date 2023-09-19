@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -12,6 +12,8 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
@@ -88,6 +90,34 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
   @Override
   public String getType() {
     return TYPE_NAME;
+  }
+
+  private static JsonObject makeHelpClause(
+    InvocationContext ic,
+    LocalizableString summary,
+    LocalizableString detail
+  ) {
+    JsonObjectBuilder ret = Json.createObjectBuilder();
+    ret.add("helpSummaryHTML", ic.getLocalizer().localizeString(summary));
+    ret.add("helpDetailHTML", ic.getLocalizer().localizeString(detail));
+    return ret.build();
+  }
+
+  public static JsonObject getHelp(InvocationContext ic) {
+    JsonObjectBuilder ret = Json.createObjectBuilder();
+    ret.add("name",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.DATA_PROVIDER_HELP_NAME_SUMMARY,
+        LocalizedConstants.DATA_PROVIDER_HELP_NAME_DETAIL
+    ));
+    ret.add("file",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.PROPERTY_LIST_PROVIDER_HELP_FILE_SUMMARY,
+        LocalizedConstants.PROPERTY_LIST_PROVIDER_HELP_FILE_DETAIL
+    ));
+    return ret.build();
   }
 
   @Override

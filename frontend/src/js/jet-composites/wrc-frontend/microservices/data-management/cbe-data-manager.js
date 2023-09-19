@@ -460,6 +460,51 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         });
       },
 
+      postAggregatedData: function (uri, dataPayload) {
+        return new Promise((resolve, reject) => {
+          let rdjUrl = uri;
+          if (!rdjUrl.startsWith(Runtime.getBackendUrl())) {
+            rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
+          }
+          postData.call(this, {url: rdjUrl}, dataPayload)
+            .then(reply => {
+              return {rdjUrl: rdjUrl, rdjData: reply.body.data};
+            })
+            .then(reply => {
+              const aggregatedData = new CbeDataStorage(uri);
+              aggregatedData.add('rawPath', uri);
+              aggregatedData.add('rdjUrl', reply.rdjUrl);
+              aggregatedData.add('rdjData', reply.rdjData);
+              aggregatedData.add('pdjUrl', Runtime.getBackendUrl()+reply.rdjData.pageDescription);
+              return aggregatedData;
+            })
+            .then(aggregatedData => {
+              return getData.call(this, {url: aggregatedData.get('pdjUrl')})
+                .then((reply) => {
+                  aggregatedData.add('pdjData', reply.body.data);
+                  reply.body['data'] = aggregatedData;
+                  reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
+                  resolve(reply);
+                });
+            })
+            .catch(response =>{
+              if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                response['failureReason'] = response.failureReason.stack;
+              }
+              else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                // Try to make FailureType more accurate, if
+                // it was a CBE_REST_API generated failure
+                if (response.transport.status === 404) {
+                  // Switch it to FailureType.NOT_FOUND
+                  response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
+                }
+              }
+              // Rethrow updated (or not updated) reject
+              reject(response);
+            });
+        });
+      },
+
       /**
        *
        * @param {string} uri
@@ -946,6 +991,11 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
         });
       },
 
+      pollDomainStatusData: function (dataProvider) {
+        const url = `${Runtime.getBaseUrl()}/${dataProvider.id}/domainStatus`;
+          return getData.call(this, {url: `${url}`});
+      },
+
       /**
        *
        * @param {string} ssoid
@@ -1123,6 +1173,17 @@ define(['jquery', 'wrc-frontend/core/adapters/http-adapter', 'wrc-frontend/core/
       useProviderData: function (dataProviderId, providerType) {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return getData.call(this, {url: `${url}/${providerType}/${dataProviderId}`});
+      },
+
+      /**
+       *
+       * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+       * @example:
+       * GET /api/providers/help
+       */
+      getProviderHelpData: function() {
+        const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
+        return getData.call(this, {url: `${url}/help`});
       },
 
       /**

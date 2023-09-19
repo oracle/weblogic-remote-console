@@ -1,0 +1,24 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'The top of the Coherence Application bean tree. '
+name: weblogic.coherence.app.descriptor.wl.WeblogicCohAppBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The library references defined for this Coherence application.
+    </p> '
+  name: LibraryRefs
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.LibraryRefBean
+roles:
+  allowed:
+  - Deployer

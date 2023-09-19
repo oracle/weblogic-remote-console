@@ -1,0 +1,80 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This interface contains accessor methods for all query cache
+  runtime information collected for an EJB. The cache miss counts need some explaining.
+  A query-cache miss can occur due to one of the following reasons:</p>  <ul> <li>The
+  query result was not found in the query-cache</li> <li>The query result has timed
+  out</li> <li>A bean which satisfies the query wasnot found in the entity cache</li>
+  <li>A query with relationship-caching turned on did not find the related-beans query
+  result</li> <li>A query which loads multiple EJBs could not load one or more of
+  them</li> </ul>  <p>To better aid tuning, there are separate counters provided for
+  each of the last four of the above causes. The fifth counter is a total cache miss
+  counter. This counter takes into account all five causes of a cache miss.</p> '
+name: weblogic.management.runtime.QueryCacheRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the number of accesses of the query cache
+    for this EJB.</p>  <p>Returns the number of accesses of the query cache for this
+    EJB.</p> '
+  name: CacheAccessCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the number of cache hits of the query cache
+    for this EJB.</p>  <p>Returns the number of cache hits of the query cache for
+    this EJB.</p> '
+  name: CacheHitCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the number of cache misses of the query
+    cache for this EJB because corresponding beans were not found in the entity cache.</p>  <p>Returns
+    the number of times a cache miss occurred for this EJB because corresponding beans
+    were not found in the entity cache.</p> '
+  name: CacheMissByBeanEvictionCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the number of cache misses of the query
+    cache for this EJB because a dependent query was not found in another EJB''s query
+    cache.</p>  <p>Returns the number of times a cache miss occurred for this EJB
+    because a dependent query was not found in another EJB''s query cache.</p> '
+  name: CacheMissByDependentQueryMissCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the number of cache misses of the query
+    cache for this EJB because a related query was not found in another EJB''s query
+    cache.</p>  <p>Returns the number of times a cache miss occurred for this EJB
+    because a related query was not found in another EJB''s query cache.</p> '
+  name: CacheMissByRelatedQueryMissCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the number of cache misses of the query
+    cache for this EJB due to query results timing out.</p>  <p>Returns the number
+    of cache misses due to query result timeout for this EJB.</p> '
+  name: CacheMissByTimeoutCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the total number of cache misses of the
+    query cache for this EJB.</p>  <p>Returns the total number of cache misses of
+    the query cache for this EJB.</p> '
+  name: TotalCacheMissCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the total number of query results for this
+    EJB currently in the query cache.</p>  <p>Returns the total number of query results
+    for this EJB currently in the EJB cache.</p> '
+  name: TotalCachedQueriesCount
+  type: int

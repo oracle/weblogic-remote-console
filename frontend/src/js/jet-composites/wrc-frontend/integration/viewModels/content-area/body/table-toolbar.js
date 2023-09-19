@@ -312,7 +312,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       this.helpPageClick = function (event) {
         const helpVisible = !self.showHelp();
         self.showHelp(helpVisible);
-        viewParams.onHelpPageToggled(helpVisible, self.showBeanPathHistory());
+        viewParams.onHelpPageToggled(helpVisible);
       };
 
       this.syncClick = function (event) {

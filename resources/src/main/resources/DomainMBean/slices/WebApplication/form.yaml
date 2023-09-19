@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -35,6 +35,14 @@ properties:
 - name: "WebAppContainer.GzipCompression.GzipCompressionEnabled"
 - name: "WebAppContainer.GzipCompression.GzipCompressionMinContentLength"
 - name: "WebAppContainer.GzipCompression.GzipCompressionContentType"
+- name: "WebAppContainer.SameSiteFilterCookieSettings"
+- name: "WebAppContainer.SameSiteFilterSecureChannelRequired"
+- name: "WebAppContainer.SameSiteFilterUserAgentRegEx"
+- name: "WebAppContainer.MaxSingleHeaderSize"
+- name: "WebAppContainer.MaxTotalHeadersSize"
+- name: "WebAppContainer.RejectMaliciousPathParameters"
+- name: "WebAppContainer.FormAuthXFrameOptionsHeaderValue"
+
 helpTopics:
 - label: "Developing JTA Applications for Oracle WebLogic Server "
   href: "wljta/index.html"

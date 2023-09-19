@@ -1,0 +1,30 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JaxRsUriRuntimeMBean
+- weblogic.management.runtime.JaxRsMonitoringInfoRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'The runtime MBean of a JAX-RS resource. EJB(Stateless and Singleton),
+  POJO are the two component types that are supported. <p/> Each JAX-RS resource has
+  a scope associated with that. Any object that is managed by a container (such as
+  EJB) will have application scope. All other resources by default will have request
+  scope. '
+name: weblogic.management.runtime.JaxRsResourceRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the class name of the resource. '
+  name: ClassName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Provides the type (e.g., POJO, EJB, CDI, etc.) of the resource. '
+  name: ResourceType
+  type: java.lang.String
+roles:
+  allowed:
+  - Operator

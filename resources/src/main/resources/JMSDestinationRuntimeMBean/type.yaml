@@ -10,3 +10,37 @@ subTypes:
   value: Queue
 - type: weblogic.management.runtime.JMSTopicRuntimeMBean
   value: Topic
+
+properties:
+# Note: don't list the legal values for State since it's a comma-separated list separate state strings.
+# i.e. it's really several separate state properties rolled into one.
+- name: DestinationType
+  legalValues:
+  - value: Queue
+  - value: Topic
+- name: ProductionPausedState
+  legalValues:
+  - value: "Production-Enabled"
+    label: "Production Enabled"
+  # Note: the mbean impl (BEDestinationImpl) doesn't return pausing
+  # even thought the constant exists:
+  #- value: "Production-Pausing"
+  #  label: "Production Pausing"
+  - value: "Production-Paused"
+    label: "Production Paused"
+- name: InsertionPausedState
+  legalValues:
+  - value: "Insertion-Enabled"
+    label: "Insertion Enabled"
+  - value: "Insertion-Pausing"
+    label: "Insertion Pausing"
+  - value: "Insertion-Paused"
+    label: "Insertion Paused"
+- name: ConsumptionPausedState
+  legalValues:
+  - value: "Consumption-Enabled"
+    label: "Consumption Enabled"
+  - value: "Consumption-Pausing"
+    label: "Consumption Pausing"
+  - value: "Consumption-Paused"
+    label: "Consumption Paused"

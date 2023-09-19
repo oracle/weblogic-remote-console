@@ -1,0 +1,63 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.coherence.descriptor.wl.CoherenceInitParamBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'A unique name that identifies this initialization parameter. '
+  key: true
+  name: Name
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: string
+  descriptionHTML: '<p> The parameter type. </p> '
+  legalValues:
+  - string
+  - java.lang.String
+  - boolean
+  - java.lang.Boolean
+  - int
+  - java.lang.Integer
+  - long
+  - java.lang.Long
+  - double
+  - java.lang.Double
+  - decimal
+  - java.math.BigDecimal
+  - file
+  - java.io.File
+  - date
+  - java.sql.Date
+  - time
+  - java.sql.Time
+  - datetime
+  - java.sql.Timestamp
+  name: ParamType
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p> The parameter value. </p> '
+  name: ParamValue
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

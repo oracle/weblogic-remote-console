@@ -1,0 +1,40 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.SystemResourceMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>A CustomResource is an untyped SystemResource for which creator
+  of the bean defines the name of the class that will be used when the resource is
+  deployed on the managed server.</p> '
+name: weblogic.management.configuration.CustomResourceMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: CustomResource
+  relationship: containment
+  transient: true
+  type: weblogic.descriptor.DescriptorBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the interface of the bean that is returned by the #getResource
+    method.</p> '
+  name: DescriptorBeanClass
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This is the name of the class that is used to manage the lifecycle
+    of the resource.  An instance of the ResourceClass is created and is passed the
+    DescriptorBean.  If this value is not set then the resource does not participate
+    in the deployment lifecycle and simply represent a distribution of configuration
+    information to be used by other subsystems.</p> '
+  name: ResourceClass
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

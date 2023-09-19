@@ -1,0 +1,85 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Defines a partition-specific JDBC data source attribute override
+  of a data source descriptor referenced by a partition resource group definition. '
+name: weblogic.management.configuration.JDBCSystemResourceOverrideMBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'The name of the data source. '
+  exclude: true
+  name: DataSourceName
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'Returns the initial pool capacity for the partition datasource.
+    The value -1 indicates that the attribute is not set. '
+  name: InitialCapacity
+  type: int
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.JDBCPropertyOverrideMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns the JDBC property overrides for the partition datasource '
+  name: JDBCPropertyOverrides
+  relationship: containment
+  type: weblogic.management.configuration.JDBCPropertyOverrideMBean
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'Returns the max pool capacity for the partition datasource. The
+    value -1 indicates that the attribute is not set. '
+  name: MaxCapacity
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'Returns the min pool capacity for the partition datasource. The
+    value -1 indicates that the attribute is not set. '
+  name: MinCapacity
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The password in clear text. '
+  encrypted: true
+  name: Password
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'The encrypted password. '
+  encrypted: true
+  name: PasswordEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The connection URL for the data source. '
+  name: URL
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The name of the user for the data source. '
+  name: User
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

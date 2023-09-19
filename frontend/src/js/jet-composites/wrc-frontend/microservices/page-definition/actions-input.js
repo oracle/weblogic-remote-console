@@ -17,14 +17,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
 
   //public:
     PageDefinitionActionsInput.prototype = {
-      getActionInputFormData: (endpoint) => {
-        return DataOperations.actions.getActionInputFormData(endpoint.resourceData);
+      getActionInputFormData: (endpoint, dataPayload) => {
+        return DataOperations.actions.sendActionInputFormPostRequest(endpoint, dataPayload);
       },
-      createOverlayFormDialogModuleConfig: (viewParams, actionInputFormData, actionInputFormConfig) => {
+      createOverlayFormDialogModuleConfig: (viewParams, actionInputFormData, actionInputFormConfig, childRouterName) => {
+        function createChildRouter(childRouterName, parentRouter) {
+          for (const state of parentRouter.states) {
+            const childRouter = parentRouter.getChildRouter(state.id);
+            if (CoreUtils.isNotUndefinedNorNull(childRouter)) childRouter.dispose();
+          }
+          return parentRouter.createChildRouter(childRouterName);
+        }
+
         PageDefinitionUtils.setPlacementRouterParameter(viewParams.parentRouter, 'detached');
-        let childRouter = viewParams.parentRouter.getChildRouter('form');
-        if (CoreUtils.isNotUndefinedNorNull(childRouter)) childRouter.dispose();
-        childRouter = viewParams.parentRouter.createChildRouter('form');
+        const childRouter = createChildRouter(childRouterName, viewParams.parentRouter);
         childRouter.data = {
           pageTitle: ko.observable(actionInputFormData.body.data.get('pageTitle')),
           rdjUrl: ko.observable(actionInputFormData.body.data.get('rdjUrl')),
@@ -46,10 +52,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
               title: actionInputFormConfig.title,
               instructions: actionInputFormConfig.instructions,
               submitIconFile: actionInputFormConfig.iconFile,
-              submitButtonLabel: oj.Translations.getTranslatedString('wrc-common.buttons.next.label'),
+              submitButtonLabel: oj.Translations.getTranslatedString('wrc-common.buttons.done.label'),
               formLayout: {
                 options: {
-                  labelWidthPcnt: '18%',
+                  labelWidthPcnt: '24%',
                   maxColumns: '1'
                 },
                 minWidth: parseInt(ViewModelUtils.getCustomCssProperty('overlayDialog-actionInput-width'), 10)

@@ -1,0 +1,24 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'A File T3 configuration entry '
+name: weblogic.management.configuration.FileT3MBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The path used to locate a WebLogic file (T3) service on a server
+    host.</p>  <p>For example, to map the file system name <code>users</code> to the
+    path on the server host <code>/usr/local/tmp</code>, create a file T3 service
+    named <code>users</code> and specify the path as <code>/usr/local/tmp</code>.</p> '
+  exclude: true
+  name: Path
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true

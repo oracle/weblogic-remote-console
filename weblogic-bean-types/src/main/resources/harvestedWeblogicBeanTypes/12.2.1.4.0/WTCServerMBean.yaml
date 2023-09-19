@@ -1,0 +1,191 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean defines a WTC Server. '
+name: weblogic.management.configuration.WTCServerMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: ' '
+  name: Exports
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WTCExportMBean
+- array: true
+  defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: ' '
+  name: Imports
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WTCImportMBean
+- array: true
+  defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: ' '
+  name: LocalTuxDoms
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WTCLocalTuxDomMBean
+- array: true
+  defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: ' '
+  name: Passwords
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WTCPasswordMBean
+- array: true
+  defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: ' '
+  name: RemoteTuxDoms
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WTCRemoteTuxDomMBean
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: '<p>Specifies global field table classes, view table classes, and
+    application passwords for domains. Defines your Resources when configured using
+    the Administration Console.</p> '
+  name: Resource
+  relationship: reference
+  restartNeeded: true
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WTCResourcesMBean
+  writable: true
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: ' '
+  name: Resources
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WTCResourcesMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.WTCExportMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides information on services exported by a local Tuxedo
+    access point. Defines your Exported Services when configured using the Administration
+    Console.</p> '
+  name: WTCExports
+  relationship: containment
+  type: weblogic.management.configuration.WTCExportMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.WTCImportMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides information on services imported and available on
+    remote domains. Defines your Imported Services when configured using the Administration
+    Console.</p> '
+  name: WTCImports
+  relationship: containment
+  type: weblogic.management.configuration.WTCImportMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.WTCLocalTuxDomMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The local Tuxedo domains defined for this WTC Server.</p> '
+  name: WTCLocalTuxDoms
+  relationship: containment
+  type: weblogic.management.configuration.WTCLocalTuxDomMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.WTCPasswordMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the configuration information for inter-domain authentication.
+    Defines your Passwords when configured using the Administration Console.</p> '
+  name: WTCPasswords
+  relationship: containment
+  type: weblogic.management.configuration.WTCPasswordMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.WTCRemoteTuxDomMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The remote Tuxedo domains defined for this WTC Server.</p> '
+  name: WTCRemoteTuxDoms
+  relationship: containment
+  type: weblogic.management.configuration.WTCRemoteTuxDomMBean
+- creators:
+  - weblogic.management.configuration.WTCResourcesMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies global field table classes, view table classes, and
+    application passwords for domains. Defines your Resources when configured using
+    the Administration Console.</p> '
+  name: WTCResources
+  relationship: containment
+  type: weblogic.management.configuration.WTCResourcesMBean
+- creators:
+  - weblogic.management.configuration.WTCtBridgeGlobalMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies global configuration information for the transfer
+    of messages between WebLogic Server and Tuxedo. Defines your Tuxedo Queuing Bridge
+    when configured using the Administration Console.</p> '
+  name: WTCtBridgeGlobal
+  relationship: containment
+  type: weblogic.management.configuration.WTCtBridgeGlobalMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.WTCtBridgeRedirectMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'gets all WTCtBridgeRedirect objects '
+  name: WTCtBridgeRedirects
+  relationship: containment
+  type: weblogic.management.configuration.WTCtBridgeRedirectMBean
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: '<p>Specifies global configuration information for the transfer
+    of messages between WebLogic Server and Tuxedo. Defines your Tuxedo Queuing Bridge
+    when configured using the Administration Console.</p> '
+  name: tBridgeGlobal
+  relationship: reference
+  restartNeeded: true
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WTCtBridgeGlobalMBean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Specifies the source, target, direction, and transport of messages
+    between WebLogic Server and Tuxedo. Defines your Tuxedo Queuing Bridge Redirects
+    when configured using the Administration Console.</p> '
+  name: tBridgeRedirects
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WTCtBridgeRedirectMBean
+roles:
+  allowed:
+  - Deployer

@@ -1,0 +1,59 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.JaxRsResourceMethodBaseRuntimeMBean
+- weblogic.management.runtime.JaxRsApplicationRuntimeMBean
+- weblogic.management.runtime.JaxRsResourceRuntimeMBean
+descriptionHTML: 'This interface is to be implemented by various JAX-RS objects that
+  are going provide runtime metrics The list of JAX-RS objects include 1. JAX-RS Application
+  2. JAX-RS Resource 3. JAX-RS Resource Method '
+name: weblogic.management.runtime.JaxRsMonitoringInfoRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the average execution time (in ms) per execution.
+    Returns 0 if it was never invoked.</p> '
+  name: ExecutionTimeAverage
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the highest time taken (in ms) by an execution. Returns
+    0 if it was never invoked.</p> '
+  name: ExecutionTimeHigh
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the lowest time taken (in ms) by an execution. Returns
+    0 if it was never invoked.</p> '
+  name: ExecutionTimeLow
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the total execution time (in ms) of all the requests.
+    Returns 0 if it was never invoked.</p> '
+  name: ExecutionTimeTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the total invocation count.</p> '
+  name: InvocationCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the last invocation time. Returns 0 if it was never
+    invoked.</p> '
+  name: LastInvocationTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The start time of this MBean.</p> '
+  name: StartTime
+  type: long
+roles:
+  allowed:
+  - Operator

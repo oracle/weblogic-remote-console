@@ -1,0 +1,37 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.SNMPJMXMonitorMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class describes the criteria for a String-based Monitor. A
+  notification is generated when this criteria is satisfied. '
+name: weblogic.management.configuration.SNMPStringMonitorMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Generates a notification if the value of the monitored attribute
+    and the value of String to Compare are different.</p> '
+  name: NotifyDiffer
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Generates a notification if the value of the monitored attribute
+    and the value of String to Compare are the same.</p> '
+  name: NotifyMatch
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The string against which the value of the monitored attribute
+    will be compared.</p>  <p>A notification is generated when the criteria specified
+    by Notify Match or Notify Differ is satisfied.</p> '
+  name: StringToCompare
+  type: java.lang.String
+  writable: true

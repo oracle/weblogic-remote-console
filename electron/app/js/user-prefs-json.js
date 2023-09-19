@@ -7,154 +7,155 @@
 
 'use strict';
 
+const { app } = require('electron');
+const OSUtils = require('./os-utils');
+const I18NUtils = require('./i18n-utils');
+const ElectronPreferences = require('electron-preferences');
+const SettingsEditor = require('./settings-editor');
+
 /**
  * See {@link https://stackabuse.com/javascripts-immediately-invoked-function-expressions/}
  * @type {{read, putAll, write, getDefaultValue}}
  */
 const UserPrefs = (() => {
-  const fs = require('fs');
-  const {log} = require('./console-logger');
-  const CoreUtils = require('./core-utils');
+  let preferences;
 
-  const _appPaths = {};
-  let _preferences = [
-    {
-      'sections': [
-        {
-          'key': 'logging',
-          'title': 'Logging',
-          'properties': [
-            {
-              'defaultValue': 'debug',
-              'label': 'Logging Level',
-              'legalValues': [
-                {'label': 'ERROR', 'value': 'error'},
-                {'label': 'WARNING', 'value': 'warning'},
-                {'label': 'INFO', 'value': 'info'},
-                {'label': 'DEBUG', 'value': 'debug'},
-                {'label': 'TRACE', 'value': 'trace'}
-              ],
-              'name': 'PropertyCriteria_LoggingLevel'
-            },
-            {
-              'label': '',
-              'name': 'PropertyValue_LoggingLevel',
-              'type': 'string',
-              'usedIf':
-                {'property': 'PropertyCriteria_LoggingLevel', 'values': ['error','warning','info','debug','trace']}
-            }
-          ]
-        },
-        {
-          'key': 'appExit',
-          'title': 'Application Exit',
-          'properties': [
-            {
-              'defaultValue': true,
-              'label': 'Detect Unsaved Changes',
-              'legalValues': [
-                {'label': 'Equals', 'value': 'equals'}
-              ],
-              'name': 'PropertyCriteria_DetectUnsavedChanges'
-            },
-            {
-              'label': '',
-              'name': 'PropertyValue_DetectUnsavedChanges',
-              'type': 'boolean',
-              'usedIf':
-                {'property': 'PropertyCriteria_DetectUnsavedChanges', 'values': ['equals']}
-            }
-          ]
-        },
-        {
-          'key': 'beforeUnload',
-          'title': 'Before Unload',
-          'properties': [
-            {
-              'defaultValue': true,
-              'label': 'Detect Unsaved Changes',
-              'legalValues': [
-                {'label': 'Equals', 'value': 'equals'}
-              ],
-              'name': 'PropertyCriteria_DetectUnsavedChanges'
-            },
-            {
-              'label': '',
-              'name': 'PropertyValue_DetectUnsavedChanges',
-              'type': 'boolean',
-              'usedIf':
-                {'property': 'PropertyCriteria_DetectUnsavedChanges', 'values': ['equals']}
-            }
-          ]
-        }
-      ]
-    }
-  ];
+  function osBasedHelp() {
+    if (OSUtils.isMacOS())
+      return I18NUtils.get('wrc-electron.menus.preferences.section.credential-storage.confirmation.apple.help');
+    if (OSUtils.isWinOS())
+      return I18NUtils.get('wrc-electron.menus.preferences.section.credential-storage.confirmation.windows.help');
+    return I18NUtils.get('wrc-electron.menus.preferences.section.credential-storage.confirmation.linux.help');
+  }
 
   // Define the methods exposed to the outside world,
   // along with useful JSDoc comments :-).
   return {
-    /**
-     *
-     * @param {string} key
-     * @param {string} name
-     * @returns {string|undefined}
-     */
-    getDefaultValue: (key, name) => {
-      let value;
-      const section = _preferences[0].sections.find(item => item.key === key);
-      if (section) {
-        const index = section.properties.map(property => property.name).indexOf(name);
-        if (index !== -1) {
-          const pref = section.properties[index];
-          value = pref.defaultValue;
-          log('debug', `pref=${JSON.stringify(pref)}`);
-        }
-      }
-      return value;
-    },
-    putAll: (preferences) => {
-      _preferences = preferences;
-    },
     getPath: (userDataPath) => { 
       return `${userDataPath}/user-prefs.json`;
     },
-    read: (userDataPath) => {
-      if (!userDataPath) userDataPath = _appPaths.userDataPath;
-      if (userDataPath) {
-        // Update _appPaths.userDataPath with value passed as
-        // function argument, regardless.
-        _appPaths.userDataPath = userDataPath;
-        // Construct full path to user-prefs.json file
-        const filepath = UserPrefs.getPath(userDataPath);
-        if (fs.existsSync(filepath)) {
-          try {
-            const data = JSON.parse(fs.readFileSync(filepath).toString());
-            _preferences = data.preferences;
-          }
-          catch(err) {
-            log('error', err);
-          }
-        }
+    get: (key) => {
+      if (!preferences) {
+        UserPrefs.init();
       }
+      return preferences.value(key);
     },
-    write: (userDataPath) => {
-      if (!userDataPath) userDataPath = _appPaths.userDataPath;
-      if (userDataPath) {
-        try {
-          // Update _appPaths.userDataPath with value passed as
-          // function argument, regardless.
-          _appPaths.userDataPath = userDataPath;
-          const filepath = `${userDataPath}/user-prefs.json`;
-          // Creates the file, if it doesn't already exists.
-          // The openstack.org convention is to use 4 spaces
-          // for indentation.
-          fs.writeFileSync(filepath, JSON.stringify({ preferences: _preferences }, null, 4));
-        }
-        catch(err) {
-          log('error', err);
-        }
-      }
+    show: () => {
+      // This is destroying the previous instance of user-prefs or
+      // perhaps the previous instance of settings-editor
+      SettingsEditor.destroy(preferences);
+      // We need to create a fresh one to re-initialize various
+      // objects for show()
+      UserPrefs.init();
+      preferences.show();
+    },
+    init: () => {
+      const preferencesTemplate = {
+        defaults: {
+          credentials: { storage: true },
+          unsaved: { appExit: true, unload: true }
+        },
+        dataStore: `${app.getPath('userData')}/user-prefs.json`,
+        browserWindowOverrides: {
+          title: `${I18NUtils.get('wrc-electron.menus.preferences.title')}`,
+          width: 900,
+          maxWidth: 1000,
+          height: 700,
+          maxHeight: 1000,
+          resizable: true
+        },
+        sections: [
+          /* Planned:
+          {
+            'id': 'logging',
+            'title': 'Logging',
+            'properties': [
+              {
+                'defaultValue': 'debug',
+                'label': 'Logging Level',
+                'legalValues': [
+                  {'label': 'ERROR', 'value': 'error'},
+                  {'label': 'WARNING', 'value': 'warning'},
+                  {'label': 'INFO', 'value': 'info'},
+                  {'label': 'DEBUG', 'value': 'debug'},
+                  {'label': 'TRACE', 'value': 'trace'}
+                ],
+                'name': 'PropertyCriteria_LoggingLevel'
+              },
+              {
+                'label': '',
+                'name': 'PropertyValue_LoggingLevel',
+                'type': 'string',
+                'usedIf':
+                  {'property': 'PropertyCriteria_LoggingLevel', 'values': ['error','warning','info','debug','trace']}
+              }
+            ]
+          },
+          */
+          {
+            id: 'credentials',
+            label: `${I18NUtils.get('wrc-electron.menus.preferences.section.credential-storage.label')}`,
+            form: {
+              groups: [
+                {
+                  fields: [
+                    {
+                      label: `${I18NUtils.get('wrc-electron.menus.preferences.section.credential-storage.confirmation.label')}`,
+                      help: `${osBasedHelp()}`,
+                      key: 'storage',
+                      type: 'radio',
+                      options: [
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: true},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: false}
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            id: 'unsaved-confirmation',
+            label: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.label')}`,
+            form: {
+              groups: [
+                {
+                  fields: [
+                    {
+                      label: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.appExit.label')}`,
+                      help: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.appExit.help')}`,
+                      key: 'appExit',
+                      type: 'radio',
+                      options: [
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: true},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: false}
+                      ]
+                    },
+                    {
+                      // The preference is currently used, but can occur in
+                      // various situations.  For now, we'll have the property
+                      // and use it in the code, but not show it or try to explain it.
+                      label: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.unload.label')}`,
+                      help: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.unload.help')}`,
+                      hideFunction: () => { return true; },
+                      key: 'unload',
+                      type: 'radio',
+                      options: [
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: true},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: false}
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      };
+      preferences = new ElectronPreferences(preferencesTemplate);
+    },
+    read: (userDataPath) => {
+      UserPrefs.init();
     }
   };
 

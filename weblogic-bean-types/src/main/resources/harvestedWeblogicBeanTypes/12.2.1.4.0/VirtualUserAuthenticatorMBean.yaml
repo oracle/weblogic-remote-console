@@ -1,0 +1,65 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.AuthenticatorMBean
+- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
+- weblogic.management.security.authentication.MultiIdentityDomainAuthenticatorMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The MBean that represents configuration attributes for the Virtual
+  User       Authentication provider. The Virtual User Authentication provider enables
+  Weblogic Server       to authenticate users based on Identity Assertion only. That
+  is, authenticated virtual users       are not found in the user store, and all principals
+  and credentials are derived from the given       token.       </p> '
+name: weblogic.security.providers.authentication.VirtualUserAuthenticatorMBean
+properties:
+- defaultValue:
+    value:
+      value: SUFFICIENT
+  descriptionHTML: '<p>The control flag determining how the login sequence uses the
+    Virtual User Authentication provider.</p> '
+  legalValues:
+  - REQUIRED
+  - REQUISITE
+  - SUFFICIENT
+  - OPTIONAL
+  name: ControlFlag
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: The Virtual User Authentication provider authenticates users based on
+        the identity assertion token only, independent of a user store.
+  descriptionHTML: '<p>A short description of the Virtual User Authentication provider.</p> '
+  name: Description
+  type: java.lang.String
+- array: true
+  defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Determines the Identity Domains this Virtual User Authentication           provider
+    supports, in addition to the IdentityDomain attribute.</p> '
+  name: IdentityDomains
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: VirtualUserAuthenticator
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authentication.VirtualUserAuthenticationProviderImpl
+  descriptionHTML: '<p>The name of the Java class used to load the Virtual User Authentication         provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The version number of the Virtual User Authentication provider.</p> '
+  name: Version
+  type: java.lang.String

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -8,3 +8,14 @@ properties:
 
 - name: DefaultUserNameMapperAttributeType
   useUnlocalizedLegalValuesAsLabels: true
+
+#- name: ActiveTypes
+#  legalValues:
+#  - value: AuthenticatedUser
+#  - value: weblogic-jwt-token
+#  - value: X.509
+#  - value: CSI.PrincipalName
+#  - value: CSI.ITTAnonymous
+#  - value: CSI.X509CertChain
+#  - value: CSI.DistinguishedName
+#  - value: wsse:PasswordDigest"

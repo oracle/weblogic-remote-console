@@ -1,0 +1,100 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Configuration MBean representing WorkManager parameters. A WorkManager
+  configuration can have a RequestClass(FairShare, ResponseTime, ContextBased), MinThreadsConstraint,
+  MaxThreadsConstraint, Capacity and ShutdownTrigger. All these are optional and need
+  to be configured as needed. An empty WorkManager without configuration gets its
+  own default fair share. The default fair share value is 50. '
+name: weblogic.management.configuration.WorkManagerMBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether this work manager should be scoped to an
+    application. By default, work managers are scoped to an application. Set this
+    value to false if the work manager is to be scoped to a domain</p> '
+  name: ApplicationScope
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of requests that can be queued or executing
+    before WebLogic Server begins rejecting requests.</p> '
+  name: Capacity
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.CapacityMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The mapping of Request Classes to security names and groups.</p> '
+  name: ContextRequestClass
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.ContextRequestClassMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the FairShareRequestClass for this WorkManager</p> '
+  name: FairShareRequestClass
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.FairShareRequestClassMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies whether this Work Manager ignores "stuck" threads.
+    Typically, stuck threads will cause the associated Work Manager to take some action:
+    either switching the application to Admin mode, shutting down the server, or shutting
+    down the Work Manager. If this flag is set, then no thread in this Work Manager
+    is ever considered stuck. </p> <p>If you do not explicitly specify IGNORE_STUCK_THREADS=TRUE,
+    the default behavior is that upon encountering stuck threads, the server will
+    take one of the aforementioned actions. </p> '
+  name: IgnoreStuckThreads
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The maximum number of concurrent threads that can be allocated
+    to execute requests.</p> '
+  name: MaxThreadsConstraint
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.MaxThreadsConstraintMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The minimum number of threads allocated to resolve deadlocks.</p> '
+  name: MinThreadsConstraint
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.MinThreadsConstraintMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The response time goal (in milliseconds).</p> '
+  name: ResponseTimeRequestClass
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.ResponseTimeRequestClassMBean
+  writable: true
+- creators:
+  - weblogic.management.configuration.WorkManagerShutdownTriggerMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Configure a shutdown trigger for this WorkManager. Specifies
+    the condition to be used to shutdown the WorkManager. The Server health monitoring
+    periodically checks to see if the conidtion is met and shuts down the work manager
+    if needed.</p> '
+  name: WorkManagerShutdownTrigger
+  relationship: containment
+  type: weblogic.management.configuration.WorkManagerShutdownTriggerMBean

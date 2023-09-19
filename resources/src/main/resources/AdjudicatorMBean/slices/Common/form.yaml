@@ -1,13 +1,8 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
-  <p>This page displays basic information about this WebLogic Adjudication Provider.</p>
-
-properties:
-- name: Name
-- name: Description
-- name: Version
+  <p>This realm currently does not have an Adjudication Provider configured.</p>
 
 helpTopics:
 - label: "Understanding Security for Oracle WebLogic Server"

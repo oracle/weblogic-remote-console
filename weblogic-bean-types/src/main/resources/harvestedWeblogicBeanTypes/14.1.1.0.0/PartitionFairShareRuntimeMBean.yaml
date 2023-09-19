@@ -1,0 +1,37 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Monitoring information for PartitionFairShare '
+name: weblogic.management.runtime.PartitionFairShareRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The configured fair share value.</p> '
+  name: ConfiguredFairShare
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current fair share value. This could be different from
+    the configured value as Resource Consumption Management could dynamically adjust
+    the actual fair share value based on configured RCM policies and actual thread
+    usage by the partition</p> '
+  name: FairShare
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The multiplier to be used to adjust the priority of requests
+    from the partition in the request queue.</p> '
+  name: PartitionAdjuster
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Total amount of thread use time in milliseconds used by the
+    partition during the past period.</p> '
+  name: ThreadUse
+  type: long

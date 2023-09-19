@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -160,10 +160,15 @@ properties:
   offlineName: RemoteAnonymousJndiEnabled
 
 - name: RemoteAnonymousRMIIIOPEnabled
+  label: Remote anonymous RMI access via IIOP
   offlineName: RemoteAnonymousRmiiiopEnabled
 
 - name: RemoteAnonymousRMIT3Enabled
+  label: Remote anonymous RMI access via T3
   offlineName: RemoteAnonymousRmit3Enabled
+
+- name: TwoWayTLSRequiredForAdminClients
+  label: Require 2 way TLS for Admin Clients
 
 children:
 - name: JASPIC

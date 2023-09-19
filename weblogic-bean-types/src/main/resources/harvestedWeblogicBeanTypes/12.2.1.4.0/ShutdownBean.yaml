@@ -1,0 +1,26 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.ShutdownBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ShutdownClass
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ShutdownUri
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

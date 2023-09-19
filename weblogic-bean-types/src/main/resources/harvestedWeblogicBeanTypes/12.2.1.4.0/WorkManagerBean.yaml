@@ -1,0 +1,153 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.WorkManagerBean
+properties:
+- creators:
+  - weblogic.j2ee.descriptor.wl.CapacityBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: Capacity
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.CapacityBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: CapacityName
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- creators:
+  - weblogic.j2ee.descriptor.wl.ContextRequestClassBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: ContextRequestClass
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.ContextRequestClassBean
+- creators:
+  - weblogic.j2ee.descriptor.wl.FairShareRequestClassBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: FairShareRequestClass
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.FairShareRequestClassBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: Id
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: IgnoreStuckThreads
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- creators:
+  - weblogic.j2ee.descriptor.wl.MaxThreadsConstraintBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: MaxThreadsConstraint
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.MaxThreadsConstraintBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: MaxThreadsConstraintName
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- creators:
+  - weblogic.j2ee.descriptor.wl.MinThreadsConstraintBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: MinThreadsConstraint
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.MinThreadsConstraintBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: MinThreadsConstraintName
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  key: true
+  name: Name
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: RequestClassName
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- creators:
+  - weblogic.j2ee.descriptor.wl.ResponseTimeRequestClassBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: ResponseTimeRequestClass
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.ResponseTimeRequestClassBean
+- creators:
+  - weblogic.j2ee.descriptor.wl.WorkManagerShutdownTriggerBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: WorkManagerShutdownTrigger
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.WorkManagerShutdownTriggerBean

@@ -1,0 +1,125 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.security.providers.authentication.LDAPAuthenticatorMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean specifies the LDAP schema definitions for the Oracle
+  Virtual Directory  Authentication provider.</p> '
+name: weblogic.security.providers.authentication.OracleVirtualDirectoryAuthenticatorMBean
+properties:
+- defaultValue:
+    value:
+      value: (&(cn=*)(|(objectclass=groupofUniqueNames)(objectclass=groupofurls)))
+  descriptionHTML: "<p>An LDAP search filter for finding all groups beneath the base\
+    \ group         distinguished name (DN). Note the following:</p>         <ul>\
+    \         <li>         The static group object class should be modified, as necessary,\
+    \ based on the settings for  \t  the <code>StaticGroupObjectClass</code> and <code>StaticMemberDNAttribute</code>\
+    \ attributes.<br clear=\"none\"> </br>         For example, if the setting for\
+    \ the <code>StaticGroupObjectClass</code> is set to <code>groupofnames</code>,\
+    \         the <code>objectclass</code> element in the search filter should be\
+    \ set to <code>groupofnames</code>.</li>         <li>         If the name attribute\
+    \ type of a static group object or dynamic group object is changed, this search\
+    \ filter must be         revised accordingly. For example, if the group name in\
+    \ the <code>StaticGroupNameAttribute</code> \t  attribute is changed from type\
+    \ <code>cn</code> to <code>uid</code>, this filter should also specify <code>(uid=*)</code>\
+    \ as the group name          type.</li>         <li>If the attribute is not specified\
+    \ (that is, if the attribute is         null or empty), a default search filter\
+    \ is created based on the Group         schema.</li>         </ul> "
+  name: AllGroupsFilter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: (&(cn=*)(objectclass=person))
+  descriptionHTML: "<p>An LDAP search filter for finding all users beneath the base\
+    \ user         distinguished name (DN). <b>Note:</b> If you change the user name\
+    \ attribute          to a type other than <code>cn</code>, you must         duplicate\
+    \ that change in the <code>UserFromNameFilter</code> and <code>UserNameAttribute</code>\
+    \ attributes.</p> \t<p>For example, to change the user name attribute to     \
+    \    <code>uid</code>, specify <code>(uid=*)</code> in the search filter.    \
+    \      If the attribute is not specified (that is, if the attribute is null or\
+    \         empty), a default search filter is created based on the user       \
+    \  schema.</p> "
+  name: AllUsersFilter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Provider that performs LDAP authentication using Oracle Virtual Directory
+  descriptionHTML: '<p>A short description of the Oracle Virtual Directory LDAP Authentication
+    provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: cn
+  descriptionHTML: "<p>The attribute of a dynamic LDAP group object that specifies\
+    \ the         name of the group. If the name attribute type of the dynamic LDAP\
+    \ group         object is changed -- for example, from <code>cn</code> to    \
+    \     <code>uid</code> -- this change must be duplicated in the <code>AllGroupsFilter</code>\
+    \ \t\tand <code>GroupFromNameFilter</code> attributes.</p> "
+  name: DynamicGroupNameAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: (|(&(cn=%g)(objectclass=groupofUniqueNames))(&(cn=%g)(objectclass=groupofurls)))
+  descriptionHTML: "<p>An LDAP search filter for finding a group given the name of\
+    \ the         group. Note the following:</p>         <ul>         <li>The static\
+    \ group object class should be modified, as necessary, based on the settings for\
+    \  \t  the <code>StaticGroupObjectClass</code> and <code>StaticMemberDNAttribute</code>\
+    \ attributes.<br clear=\"none\"> </br>         For example, if the setting for\
+    \ the <code>StaticGroupObjectClass</code> is set to <code>groupofnames</code>,\
+    \         the <code>objectclass</code> element in the search filter should be\
+    \ set to <code>groupofnames</code>.</li>         <li>         If the name attribute\
+    \ type of a static group object or dynamic          group object is changed, this\
+    \ filter must be revised accordingly.          For example, if the group name\
+    \ in the <code>DynamicGroupNameAttribute</code> \t  attribute is changed from\
+    \ type <code>cn</code> to         <code>uid</code>, this filter should also specify\
+    \ <code>(uid=*)</code> as the group name type.</li>         <li>If this attribute\
+    \ is not specified (that is, if the attribute is         null or empty), a default\
+    \ search filter is created based on the group         schema.</li>         </ul> "
+  name: GroupFromNameFilter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: orclguid
+  descriptionHTML: '<p>Specifies the name of the GUID attribute defined in the Oracle
+    Virtual Directory LDAP server.           The default value is <code>orclguid</code>.</p> '
+  name: GuidAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: (&(cn=%u)(objectclass=person))
+  descriptionHTML: "<p>An LDAP search filter for finding a user given the name of\
+    \ the         user. The user name attribute type specified in this filter must\
+    \ match the         one specified in the <code>AllUsersFilter</code> and <code>UserNameAttribute</code>\
+    \ attributes.</p>  \t    <p>For example, if the user name attribute is changed\
+    \ from type <code>cn</code> to <code>uid</code>,  \t\trevise <code>(cn=%u)</code>\
+    \ to <code>(uid=%u)</code>.</p>           <p>If the attribute (user name attribute\
+    \ and user object class) is         not specified (that is, if the attribute is\
+    \ null or empty), a default         search filter is created based on the user\
+    \ schema.</p> "
+  name: UserFromNameFilter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: cn
+  descriptionHTML: 'No description provided. '
+  name: UserNameAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

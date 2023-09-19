@@ -1,0 +1,20 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFBean
+derivedTypes:
+- weblogic.diagnostics.descriptor.WLDFEncryptedPropertyBean
+- weblogic.diagnostics.descriptor.WLDFConfigurationPropertiesBean
+- weblogic.diagnostics.descriptor.WLDFPropertyBean
+- weblogic.diagnostics.descriptor.WLDFArrayPropertyBean
+descriptionHTML: '<p> Parent interface of all child beans of WLDFConfigurationPropertiesBean.
+  </p> '
+name: weblogic.diagnostics.descriptor.WLDFConfigurationPropertyBean
+properties: [
+  ]
+roles:
+  allowed:
+  - Deployer

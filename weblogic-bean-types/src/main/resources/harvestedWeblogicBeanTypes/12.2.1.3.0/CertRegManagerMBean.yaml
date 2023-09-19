@@ -1,0 +1,59 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.ImportMBean
+- weblogic.management.utils.NameListerMBean
+- weblogic.management.security.ExportMBean
+- weblogic.management.security.ProviderMBean
+derivedTypes:
+- weblogic.security.providers.pk.CertificateRegistryMBean
+descriptionHTML: "<p>The CertRegManager is used manage a certificate registry that\
+  \ is \t\t\tstored in the embedded LDAP server. This is utility code that is \t\t\
+  \tshared by the CertificateRegistry and SAML.</p> "
+name: weblogic.security.providers.utils.CertRegManagerMBean
+properties:
+- defaultValue:
+    value:
+      value: CertRegManager
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - ''
+  descriptionHTML: "<p>A certificate registry always exports all the certificates\
+    \ in \t\t\t\tthe registry thus does not support export constraints.</p> "
+  name: SupportedExportConstraints
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - JKS KeyStore
+  descriptionHTML: "<p>A certificate registry exports trusted CAs to a JKS keystore.\
+    \ \t\t\t\tThe keystore must not already exist.</p> "
+  name: SupportedExportFormats
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - ''
+  descriptionHTML: "<p>A certificate registry always imports all the certificates\
+    \ in a \t\t\t\tkeystore (identities and trusted CAs) thus does not support export\
+    \ \t\t\t\tconstraints.</p> "
+  name: SupportedImportConstraints
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - JKS KeyStore
+  descriptionHTML: '<p>A certificate registry imports trusted CAs from a JKS keystore.</p> '
+  name: SupportedImportFormats
+  type: java.lang.String

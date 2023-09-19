@@ -1,0 +1,37 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.management.security.authentication.AnyIdentityDomainAuthenticatorMBean
+- weblogic.security.providers.xacml.authorization.XACMLAuthorizerMBean
+- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
+- weblogic.security.providers.saml.SAMLCredentialMapperV2MBean
+- weblogic.security.providers.xacml.authorization.XACMLRoleMapperMBean
+- weblogic.security.providers.audit.DefaultAuditorMBean
+- weblogic.security.providers.credentials.DefaultCredentialMapperMBean
+- weblogic.security.providers.credentials.PKICredentialMapperMBean
+- com.bea.security.saml2.providers.SAML2CredentialMapperMBean
+- weblogic.management.security.authentication.MultiIdentityDomainAuthenticatorMBean
+descriptionHTML: '<p>The MBean interface must be implemented by any role mapping,
+  authorization, credential mapping and audit providers MBean which should be aware
+  of identity domain.</p>  <p>Certain WebLogic Security SPI (SSPI) providers must
+  be identity-domain-aware to function correctly in a partitioned environment -- or,
+  more precisely, in an environment where identity domains are configured into the
+  system. For example, an authorization provider that doesn''t understand identity
+  domains cannot correctly distinguish between two users with the same name but different
+  identity domains, and therefore can''t make valid authorization decisions. When
+  identity domains are in use, then all providers MBeans of the following types must
+  be identity-domain-aware, and implement the interface:</p>  <ul> <li><code>Role
+  Mapping</code></li> <li><code>Authorization</code></li> <li><code>Credential Mapping</code></li>
+  <li><code>Audit</code></li> </ul>  <p>Along with implementing the marker interface,
+  identity-domain-aware providers must handle user and group principals properly when
+  they carry identity domain values, including accounting for identity domain when
+  testing for equality, and constructing map keys that account for identity domain.
+  Identity-domain-aware must also account for resource ownership properly.</p> '
+name: weblogic.management.security.IdentityDomainAwareProviderMBean
+properties: [
+  ]

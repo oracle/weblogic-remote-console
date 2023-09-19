@@ -1,0 +1,3769 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.KernelDebugMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p> Defines the debug attributes that are specific to WebLogic Server.
+  </p> <p> While all attributes will be supported in adherence with the standard WebLogic
+  Server deprecation policies, the resultant debug content is free to change in both
+  form and content across releases. </p> '
+name: weblogic.management.configuration.ServerDebugMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug Application Container deployment processing</p> '
+  name: ApplicationContainer
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: BugReportServiceWsdlUrl
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Gets the fastswap ClassChangeNotifier debug attribute of ServerDebugMBean</p> '
+  name: ClassChangeNotifier
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug ClassFinder processing</p> '
+  name: ClassFinder
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug ClassLoader processing</p> '
+  name: ClassLoader
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Detailed debug of ClassLoader processing</p> '
+  name: ClassLoaderVerbose
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug WebApp ClassLoader processing</p> '
+  name: ClassloaderWebApp
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug ClassPathServlet processing</p> '
+  name: ClasspathServlet
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugAbbrevs attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugAbbrevs
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the allow list recording used with JEP 290 filtering.</p> '
+  name: DebugAllowList
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p> Debug AppContainer''s scanning and processing of annotations</p> '
+  name: DebugAppAnnotations
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugAppClient attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugAppClient
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug Application Container processing</p> '
+  name: DebugAppContainer
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugAppContainerTools attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugAppContainerTools
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugAppTiming attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugAppTiming
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug async replication/persistence information.</p> '
+  name: DebugAsyncQueue
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugAttach attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugAttach
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugBackgroundDeployment attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugBackgroundDeployment
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugBatchConnector attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugBatchConnector
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the BeanTree Harvester delegate metric control process.</p> '
+  name: DebugBeanTreeHarvesterControl
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the BeanTree Harvester delegate metric collection process.</p> '
+  name: DebugBeanTreeHarvesterDataCollection
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the BeanTree Harvester delegate metric resolution process.</p> '
+  name: DebugBeanTreeHarvesterResolution
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug BeanTree Harvester delegate threading issues.</p> '
+  name: DebugBeanTreeHarvesterThreading
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: '<p>Debug the bootstrap servlet that runs on the Admin Server and
+    is invoked over HTTP by a booting managed server.</p> '
+  name: DebugBootstrapServlet
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debugs Buzz protocol.</p> '
+  name: DebugBuzzProtocol
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debugs Buzz protocol details.</p> '
+  name: DebugBuzzProtocolDetails
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debugs Buzz protocol http.</p> '
+  name: DebugBuzzProtocolHttp
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugCAT attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugCAT
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security PKI X.509 certificate revocation checking</p> '
+  name: DebugCertRevocCheck
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugChannel attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugChannel
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugClassLoadingConsistencyChecker attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugClassLoadingConsistencyChecker
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Contextual Trace Debugger for Class Loading</p> '
+  name: DebugClassLoadingContextualTrace
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Verbose Debugger for Class Loading</p> '
+  name: DebugClassLoadingVerbose
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Gets the DebugClassRedef attribute of ServerDebugMBean</p> '
+  name: DebugClassRedef
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Gets the fastswap DebugClassSize debug attribute of ServerDebugMBean</p> '
+  name: DebugClassSize
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug each GroupMessage that is sent or received by multicast.</p> '
+  name: DebugCluster
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug each Announcement, StateDump, and Attributes message
+    that is sent or received by multicast.</p> '
+  name: DebugClusterAnnouncements
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug for each fragment that is sent or received by multicast.</p> '
+  name: DebugClusterFragments
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug each cluster Heartbeat that is sent or received by multicast.</p> '
+  name: DebugClusterHeartbeats
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugCoherence attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugCoherence
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug concurrent general processing</p> '
+  name: DebugConcurrent
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug concurrent context processing</p> '
+  name: DebugConcurrentContext
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug concurrent MES processing</p> '
+  name: DebugConcurrentMES
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug concurrent MSES processing</p> '
+  name: DebugConcurrentMSES
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug concurrent MTF processing</p> '
+  name: DebugConcurrentMTF
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug concurrent transaction processing</p> '
+  name: DebugConcurrentTransaction
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug management configuration edit processing</p> '
+  name: DebugConfigurationEdit
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug management configuration runtime processing</p> '
+  name: DebugConfigurationRuntime
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug connector service action processing</p> '
+  name: DebugConnectorService
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug cluster consensus lease processing</p> '
+  name: DebugConsensusLeasing
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug Data replication service (DRS) API calls.</p> '
+  name: DebugDRSCalls
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug DRS Heartbeats.</p> '
+  name: DebugDRSHeartbeats
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug DRS Message traffic.</p> '
+  name: DebugDRSMessages
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug DRS Queueing traffic.</p> '
+  name: DebugDRSQueues
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug DRS State transitions.</p> '
+  name: DebugDRSStateTransitions
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug DRS Update status processing.</p> '
+  name: DebugDRSUpdateStatus
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugDataSourceInterceptor attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugDataSourceInterceptor
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugDebugPatches attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugDebugPatches
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugDefaultStoreVerbose attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugDefaultStoreVerbose
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug deploy command processing</p> '
+  name: DebugDeploy
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug deployment processing</p> '
+  name: DebugDeployment
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug deployment concise processing</p> '
+  name: DebugDeploymentConcise
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug deployment plan processing</p> '
+  name: DebugDeploymentPlan
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug deployment service processing</p> '
+  name: DebugDeploymentService
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug internal deployment service processing</p> '
+  name: DebugDeploymentServiceInternal
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug deployment service status update processing</p> '
+  name: DebugDeploymentServiceStatusUpdates
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug deployment service transport processing</p> '
+  name: DebugDeploymentServiceTransport
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug deployment service HTTP transport processing</p> '
+  name: DebugDeploymentServiceTransportHttp
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug descriptor framework processing</p> '
+  name: DebugDescriptor
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug the rmi maximum deserialization time limit with JEP 290
+    filtering.</p> '
+  name: DebugDeserializationTimeLimit
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic accessor processing</p> '
+  name: DebugDiagnosticAccessor
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic archive processing</p> '
+  name: DebugDiagnosticArchive
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic archive retirement processing</p> '
+  name: DebugDiagnosticArchiveRetirement
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic collection processing</p> '
+  name: DebugDiagnosticCollections
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic context processing</p> '
+  name: DebugDiagnosticContext
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug data gathering processing</p> '
+  name: DebugDiagnosticDataGathering
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic file archive processing</p> '
+  name: DebugDiagnosticFileArchive
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic image processing</p> '
+  name: DebugDiagnosticImage
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic instrumentation processing</p> '
+  name: DebugDiagnosticInstrumentation
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug instrumentation actions/monitors</p> '
+  name: DebugDiagnosticInstrumentationActions
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugDiagnosticInstrumentationClassInfo attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugDiagnosticInstrumentationClassInfo
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug instrumentation configuration processing</p> '
+  name: DebugDiagnosticInstrumentationConfig
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug instrumentation event records</p> '
+  name: DebugDiagnosticInstrumentationEvents
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugDiagnosticInstrumentationResult attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugDiagnosticInstrumentationResult
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug instrumentation weaving</p> '
+  name: DebugDiagnosticInstrumentationWeaving
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug instrumentation weaving for matches only</p> '
+  name: DebugDiagnosticInstrumentationWeavingMatches
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic jdbc archive processing</p> '
+  name: DebugDiagnosticJdbcArchive
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic lifecycle handler processing</p> '
+  name: DebugDiagnosticLifecycleHandlers
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugDiagnosticNotifications attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugDiagnosticNotifications
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic query processing</p> '
+  name: DebugDiagnosticQuery
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Debug the WLDF runtime control MBeans. '
+  name: DebugDiagnosticRuntimeControlDriver
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Debug the WLDF runtime control service. '
+  name: DebugDiagnosticRuntimeControlService
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic policy processing.</p> '
+  name: DebugDiagnosticWatch
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic policy events processing.</p> '
+  name: DebugDiagnosticWatchEvents
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic policy event processing details.</p> '
+  name: DebugDiagnosticWatchEventsDetails
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic wlstore archive processing</p> '
+  name: DebugDiagnosticWlstoreArchive
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the bean extensions ELResolver in the Diagnostics expressions
+    framework</p> '
+  name: DebugDiagnosticsBeanExtensionResolver
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the custom BeanInfo providers for the Diagnostics expressions
+    framework</p> '
+  name: DebugDiagnosticsBeanInfoProviders
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the ELContext in the Diagnostics expressions framework</p> '
+  name: DebugDiagnosticsELContext
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the DiagnosticsELResolver in the Diagnostics expressions
+    framework</p> '
+  name: DebugDiagnosticsELResolver
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the EL expression evaluators for the Diagnostics expressions
+    framework</p> '
+  name: DebugDiagnosticsExpressionEvaluators
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Diagnostics expressions framework function mapper</p> '
+  name: DebugDiagnosticsExpressionFunctionMapper
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Diagnostics expressions framework functions</p> '
+  name: DebugDiagnosticsExpressionFunctions
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug metrics collection for the Diagnostics expressions framework</p> '
+  name: DebugDiagnosticsExpressionMetrics
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug metrics polling for the Diagnostics expressions framework</p> '
+  name: DebugDiagnosticsExpressionPoller
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Diagnostics expressions poller extract() buffers</p> '
+  name: DebugDiagnosticsExpressionPollerBuffer
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic harvester processing</p> '
+  name: DebugDiagnosticsHarvester
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Detailed debug of diagnostic harvester processing</p> <p>This
+    should be used in conjunction with DebugDiagnosticsHarvester.</p> '
+  name: DebugDiagnosticsHarvesterData
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug MBean harvester processing.</p> <p>This should probably
+    be used in conjunction with DebugDiagnosticsHarvester.</p> '
+  name: DebugDiagnosticsHarvesterMBeanPlugin
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug tree bean harvester processing</p> '
+  name: DebugDiagnosticsHarvesterTreeBeanPlugin
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the MBean ELResolver in the Diagnostics expressions framework</p> '
+  name: DebugDiagnosticsMBeanELResolver
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug diagnostic module processing</p> '
+  name: DebugDiagnosticsModule
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugDiagnosticsNotifications attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugDiagnosticsNotifications
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the diagnostics policy script action.</p> '
+  name: DebugDiagnosticsScriptAction
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugDiagnosticsTimer attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugDiagnosticsTimer
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Diagnostics utils</p> '
+  name: DebugDiagnosticsUtils
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the value tracing ELResolver in the Diagnostics expressions
+    framework</p> '
+  name: DebugDiagnosticsValueTracingELResolver
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug Domain Log Handler processing</p> '
+  name: DebugDomainLogHandler
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugDomainUpgradeServerService attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugDomainUpgradeServerService
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Dynamic Service Migration processing</p> '
+  name: DebugDynamicSingletonServices
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB Caching</p> '
+  name: DebugEjbCaching
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB CMP deployment processing</p> '
+  name: DebugEjbCmpDeployment
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB CMP runtime processing</p> '
+  name: DebugEjbCmpRuntime
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB compilation</p> '
+  name: DebugEjbCompilation
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB deployment</p> '
+  name: DebugEjbDeployment
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB invocation processing</p> '
+  name: DebugEjbInvoke
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB locking</p> '
+  name: DebugEjbLocking
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB MDB Connection processing</p> '
+  name: DebugEjbMdbConnection
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB metadata processing</p> '
+  name: DebugEjbMetadata
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB pooling</p> '
+  name: DebugEjbPooling
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB Security</p> '
+  name: DebugEjbSecurity
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB Swapping</p> '
+  name: DebugEjbSwapping
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugEjbTimerStore attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugEjbTimerStore
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug EJB Timer processing</p> '
+  name: DebugEjbTimers
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the elastic actions framework</p> '
+  name: DebugElasticActions
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the elastic services framework</p> '
+  name: DebugElasticServices
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Embedded LDAP processing</p> '
+  name: DebugEmbeddedLDAP
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: 0
+    value:
+      value: 0
+  descriptionHTML: '<p>Debug Embedded LDAP processing (log level)</p> '
+  name: DebugEmbeddedLDAPLogLevel
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Embedded LDAP processing (output to console)</p> '
+  name: DebugEmbeddedLDAPLogToConsole
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Embedded LDAP Write All Overrides to Property Files</p> '
+  name: DebugEmbeddedLDAPWriteOverrideProps
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug Event Manager processing</p> '
+  name: DebugEventManager
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Diagnostics expressions framework extension bean
+    localizer</p> '
+  name: DebugExpressionBeanLocalizer
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Diagnostics expressions extensions manager</p> '
+  name: DebugExpressionExtensionsManager
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugExpressionPoller attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugExpressionPoller
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the file distribution servlet that runs on the Admin
+    Server and is invoked over HTTP by a booting managed server.</p> '
+  name: DebugFileDistributionServlet
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugFileOwnerFixer attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugFileOwnerFixer
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugHarvesterTypeInfoCache attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugHarvesterTypeInfoCache
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug WebApp Container HTTP processing.</p> '
+  name: DebugHttp
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug WebApp Container for supplimentary HTTP processing.</p> '
+  name: DebugHttpConcise
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug log manager in the webapp container.</p> '
+  name: DebugHttpLogging
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug Http Session management in the webapp container.</p> '
+  name: DebugHttpSessions
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugIIOPDetail attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugIIOPDetail
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug IIOP CosNaming processing</p> '
+  name: DebugIIOPNaming
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugIIOPRepalcer attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugIIOPRepalcer
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug IIOP tunnelling</p> '
+  name: DebugIIOPTunneling
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug interceptors processing</p> '
+  name: DebugInterceptors
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug Java EE management processing</p> '
+  name: DebugJ2EEManagement
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: 0
+    value:
+      value: 0
+  descriptionHTML: '<p>JAXP debugging option: Debug level</p> '
+  name: DebugJAXPDebugLevel
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: null
+    value:
+      value: null
+  descriptionHTML: '<p>JAXP debugging option: Debug name</p> '
+  name: DebugJAXPDebugName
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>JAXP debugging option: Debug IncludeClass</p> '
+  name: DebugJAXPIncludeClass
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>JAXP debugging option: Debug IncludeLocation</p> '
+  name: DebugJAXPIncludeLocation
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>JAXP debugging option: Debug IncludeName</p> '
+  name: DebugJAXPIncludeName
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>JAXP debugging option: Debug IncludeTime</p> '
+  name: DebugJAXPIncludeTime
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: null
+    value:
+      value: null
+  descriptionHTML: '<p>JAXP debugging option: Debug OutputStream</p> '
+  excludeFromRest: No default REST mapping for OutputStream
+  name: DebugJAXPOutputStream
+  restartNeeded: true
+  supported: false
+  transient: true
+  type: java.io.OutputStream
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>JAXP debugging option: Debug UseShortClass</p> '
+  name: DebugJAXPUseShortClass
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JDBC Connection setup/teardown processing</p> '
+  name: DebugJDBCConn
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Debug JDBC DriverLogging processing</p> '
+  name: DebugJDBCDriverLogging
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JDBC Internal processing</p> '
+  name: DebugJDBCInternal
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug ONS client </p> '
+  name: DebugJDBCONS
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Oracle RAC processing</p> '
+  name: DebugJDBCRAC
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JDBC RMI processing</p> '
+  name: DebugJDBCRMI
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug REPLAY client </p> '
+  name: DebugJDBCReplay
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JDBC SQL processing</p> '
+  name: DebugJDBCSQL
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Oracle UCP processing</p> '
+  name: DebugJDBCUCP
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Debug JMS AME processing</p> '
+  name: DebugJMSAME
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMSBackEnd processing</p> '
+  name: DebugJMSBackEnd
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMS boot operations</p> '
+  name: DebugJMSBoot
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMS CDS processing</p> '
+  name: DebugJMSCDS
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMSCommon processing</p> '
+  name: DebugJMSCommon
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMSConfig processing</p> '
+  name: DebugJMSConfig
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJMSCrossDomainSecurity attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMSCrossDomainSecurity
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMS Dispatcher processing</p> '
+  name: DebugJMSDispatcher
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMS Dispatcher Proxy</p> '
+  name: DebugJMSDispatcherProxy
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJMSDispatcherUtilsVerbose attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMSDispatcherUtilsVerbose
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJMSDispatcherVerbose attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMSDispatcherVerbose
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMS Distributed Topic processing</p> '
+  name: DebugJMSDistTopic
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJMSDotNetProxy attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMSDotNetProxy
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJMSDotNetT3Server attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMSDotNetT3Server
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJMSDotNetTransport attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMSDotNetTransport
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJMSDurSub attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMSDurSub
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Debug JMS durable subscriber operations</p> '
+  name: DebugJMSDurableSubscribers
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMSFrontEnd processing</p> '
+  name: DebugJMSFrontEnd
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Debug JMS JDBC store scavenge mode processing</p> '
+  name: DebugJMSJDBCScavengeOnFlush
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJMSJNDI attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMSJNDI
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Debug JMS Lock processing</p> '
+  name: DebugJMSLocking
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMS MessagePath processing</p> '
+  name: DebugJMSMessagePath
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMSModule deployment processing</p> '
+  name: DebugJMSModule
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Gets debugJMSOBS attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMSOBS
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMS Pause/Resume processing</p> '
+  name: DebugJMSPauseResume
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMS SAF processing</p> '
+  name: DebugJMSSAF
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Debug JMS Store operations</p> '
+  name: DebugJMSStore
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug DebugJMST3Server processing</p> '
+  name: DebugJMST3Server
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug the pooling and wrapping of JMS connections, sessions,
+    and other objects. This feature is enabled when a JMS connection factory, from
+    any vendor, is used inside an EJB or a servlet using the "resource-reference"
+    element in the deployment descriptor.</p> '
+  name: DebugJMSWrappers
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Debug JMS XA processing</p> '
+  name: DebugJMSXA
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug JMX processing</p> '
+  name: DebugJMX
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug JMX CompatibilityMBeanServer service processing</p> '
+  name: DebugJMXCompatibility
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJMXContext attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJMXContext
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug core JMX processing</p> '
+  name: DebugJMXCore
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug core JMX connection processing</p> '
+  name: DebugJMXCoreConcise
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug JMX domain service processing</p> '
+  name: DebugJMXDomain
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug JMX edit service processing</p> '
+  name: DebugJMXEdit
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug JMX runtime service processing</p> '
+  name: DebugJMXRuntime
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug basic naming service machinery.</p> '
+  name: DebugJNDI
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug JNDI state and object factories.</p> '
+  name: DebugJNDIFactories
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug naming service name resolution.</p> '
+  name: DebugJNDIResolution
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJPA attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJPA
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA 2PC processing</p> '
+  name: DebugJTA2PC
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugJTA2PCDetail attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugJTA2PCDetail
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed Debug of JTA 2PC processing</p> '
+  name: DebugJTA2PCStackTrace
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Debug JTA external API</p> '
+  name: DebugJTAAPI
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA CDI log processing</p> '
+  name: DebugJTACDI
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA imported transactions</p> '
+  name: DebugJTAGateway
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed debug of JTA imported transactions</p> '
+  name: DebugJTAGatewayStackTrace
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA Health Monitoring</p> '
+  name: DebugJTAHealth
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA JDBC processing</p> '
+  name: DebugJTAJDBC
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA Logging Last Resource </p> '
+  name: DebugJTALLR
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA ServerLifecycle</p> '
+  name: DebugJTALifecycle
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA TLOG Migration</p> '
+  name: DebugJTAMigration
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA naming</p> '
+  name: DebugJTANaming
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed debug of JTA naming</p> '
+  name: DebugJTANamingStackTrace
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA non-XA resources</p> '
+  name: DebugJTANonXA
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA transaction propagation</p> '
+  name: DebugJTAPropagate
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Debug JTA RMI processing</p> '
+  name: DebugJTARMI
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA Recovery processing</p> '
+  name: DebugJTARecovery
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Detailed debug of JTA Recovery processing</p> '
+  name: DebugJTARecoveryStackTrace
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA resource health</p> '
+  name: DebugJTAResourceHealth
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug JTA Resource name filter</p> '
+  name: DebugJTAResourceName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA transaction log processing</p> '
+  name: DebugJTATLOG
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Debug JTA Transaction name filter processing</p> '
+  name: DebugJTATransactionName
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JTA XA resources</p> '
+  name: DebugJTAXA
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed Debug of JTA XA processing</p> '
+  name: DebugJTAXAStackTrace
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA data cache</p> '
+  name: DebugJpaDataCache
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA post-compilation</p> '
+  name: DebugJpaEnhance
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA RDBMS JDBC interaction</p> '
+  name: DebugJpaJdbcJdbc
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA RDBMS schema manipulation</p> '
+  name: DebugJpaJdbcSchema
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA RDBMS SQL interaction</p> '
+  name: DebugJpaJdbcSql
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA management and monitoring</p> '
+  name: DebugJpaManage
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA MetaData processing</p> '
+  name: DebugJpaMetaData
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA profiling</p> '
+  name: DebugJpaProfile
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA Query processing</p> '
+  name: DebugJpaQuery
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA runtime diagnostics</p> '
+  name: DebugJpaRuntime
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JPA tools</p> '
+  name: DebugJpaTool
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugKodoWeblogic attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugKodoWeblogic
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug the cluster leader election messages.</p> '
+  name: DebugLeaderElection
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugLegacy attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugLegacy
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug application library processing</p> '
+  name: DebugLibraries
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Lifecycle Manager</p> '
+  name: DebugLifecycleManager
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug log configuration processing</p> '
+  name: DebugLoggingConfiguration
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugMBeanCIC attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugMBeanCIC
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugMBeanEventHandler attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugMBeanEventHandler
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugMBeanEventHandlerSummary attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugMBeanEventHandlerSummary
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugMBeanEventHandlerWork attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugMBeanEventHandlerWork
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the JMX Harvester delegate metric control process.</p> '
+  name: DebugMBeanHarvesterControl
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the JMX Harvester delegate metric collection process.</p> '
+  name: DebugMBeanHarvesterDataCollection
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the JMX Harvester delegate metric resolution process.</p> '
+  name: DebugMBeanHarvesterResolution
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug JMX Harvester delegate threading issues.</p> '
+  name: DebugMBeanHarvesterThreading
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugMBeanLocalization attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugMBeanLocalization
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Harvester MBean registration queue events</p> '
+  name: DebugMBeanTypeUtilQueue
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Harvester MBean registration prioritized events processing</p> '
+  name: DebugMBeanTypeUtilQueuePriority
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Harvester MBean registration processing</p> '
+  name: DebugMBeanTypeUtilityListener
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the Harvester MBean type utility</p> '
+  name: DebugMBeanTypingUtility
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugMailSessionDeployment attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugMailSessionDeployment
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugManagedBean attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugManagedBean
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Management Services Resources</p> '
+  name: DebugManagementServicesResource
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Dye mask criteria used to determine whether debug will be emitted
+    for a request. Specifies the names of the Dye flags that will be inspected at
+    runtime to determine whether debug needs to be emitted for a request.</p> '
+  name: DebugMaskCriterias
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: ' '
+  descriptionHTML: '<p>Not Used</p> '
+  exclude: true
+  name: DebugMessagingBridgeDumpToConsole
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: ' '
+  descriptionHTML: '<p>Not Used</p> '
+  exclude: true
+  name: DebugMessagingBridgeDumpToLog
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Messaging Bridge runtime processing</p> '
+  name: DebugMessagingBridgeRuntime
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed debug of Messaging Bridge runtime processing</p> '
+  name: DebugMessagingBridgeRuntimeVerbose
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Messaging Bridge start up processing</p> '
+  name: DebugMessagingBridgeStartup
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debugging for the messaging kernel. The messaging kernel is
+    low- level messaging code that is used by the JMS and store and forward subsystems.</p> '
+  name: DebugMessagingKernel
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debugging for the messaging kernel as the server is being rebooted.
+    This provides detailed information on every persistent message that is recovered.</p> '
+  name: DebugMessagingKernelBoot
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debugging for the messaging kernel ownable lock. This provides
+    detailed information on lock owners.</p> '
+  name: DebugMessagingOwnableLock
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugMigrationInfo attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugMigrationInfo
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugNIO attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugNIO
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug NodeManagerRuntime</p> '
+  name: DebugNodeManagerRuntime
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPageFlowMonitoring attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPageFlowMonitoring
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPartitionJMX attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPartitionJMX
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPartitionLifecycle attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPartitionLifecycle
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPartitionPortability attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPartitionPortability
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug PartitionResourceMetricsRuntimeMBean operations.</p> '
+  name: DebugPartitionResourceMetricsRuntime
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug management patching runtime processing</p> '
+  name: DebugPatchingRuntime
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug the Path Service</p> '
+  name: DebugPathSvc
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed debug for the Path Service</p> '
+  name: DebugPathSvcVerbose
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPersistentStoreManager attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPersistentStoreManager
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPubSubBayeux attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPubSubBayeux
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPubSubChannel attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPubSubChannel
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPubSubClient attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPubSubClient
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPubSubSecurity attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPubSubSecurity
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugPubSubServer attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugPubSubServer
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter XA general/top-level processing</p> '
+  name: DebugRA
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter class loading</p> '
+  name: DebugRAClassloader
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter connection event processing</p> '
+  name: DebugRAConnEvents
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter outbound connection operations (get,
+    close, associate, disassociate, ping)</p> '
+  name: DebugRAConnections
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter (un)deploy, security id settings</p> '
+  name: DebugRADeployment
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug ResourceAdapter Lifecycle processing</p> '
+  name: DebugRALifecycle
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter local tx outgoing message processing</p> '
+  name: DebugRALocalOut
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter descriptor parsing</p> '
+  name: DebugRAParsing
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Java EE Resource Adapter pool management (size management)
+    processing</p> '
+  name: DebugRAPoolVerbose
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter operations on a connection pool (proxy
+    testing)</p> '
+  name: DebugRAPooling
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug setup of resource ref processing (container and application
+    managed security set by calling application components)</p> '
+  name: DebugRASecurityCtx
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter Work submission and cancel processing</p> '
+  name: DebugRAWork
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter work event processing</p> '
+  name: DebugRAWorkEvents
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter XA incoming message processing</p> '
+  name: DebugRAXAin
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter XA outgoing message processing</p> '
+  name: DebugRAXAout
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Resource Adapter XA Work request processing</p> '
+  name: DebugRAXAwork
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug RCM</p> '
+  name: DebugRCM
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the diagnostics policy REST action.</p> '
+  name: DebugRESTNotifications
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugRMIDetailed attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugRMIDetailed
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug RMI request performance</p> '
+  exclude: true
+  name: DebugRMIRequestPerf
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug ReadyApp processing.</p> '
+  name: DebugReadyApp
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugRedefAttach attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugRedefAttach
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug cluster replication information.</p> '
+  name: DebugReplication
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug low-level cluster replication information.</p> '
+  name: DebugReplicationDetails
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug cluster replication size information.</p> '
+  name: DebugReplicationSize
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugRequestManager attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugRequestManager
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugResourceGroupMigration attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugResourceGroupMigration
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JAX-RS 1 / Jersey 1 Client integration</p> '
+  name: DebugRestJersey1Integration
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JAX-RS 2 / Jersey 2 integration</p> '
+  name: DebugRestJersey2Integration
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Gets debugRestartInPlace attribute of ServerDebugMBean</p> '
+  name: DebugRestartInPlace
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Messaging SAF Admin.</p> '
+  name: DebugSAFAdmin
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Debug Messaging SAF Lifecycle.</p> '
+  name: DebugSAFLifeCycle
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Messaging SAF Manager.</p> '
+  name: DebugSAFManager
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Debug Messaging SAF MessagePath.</p> '
+  name: DebugSAFMessagePath
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Messaging SAF ReceivingAgent.</p> '
+  name: DebugSAFReceivingAgent
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Messaging SAF SendingAgent.</p> '
+  name: DebugSAFSendingAgent
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Messaging SAF Store.</p> '
+  name: DebugSAFStore
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Messaging SAF Transport.</p> '
+  name: DebugSAFTransport
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed debug of Messaging SAF.</p> '
+  name: DebugSAFVerbose
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the SNMP agent framework.</p> '
+  name: DebugSNMPAgent
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The debug attribute to enable or disable the SNMP Agent Extension
+    Provider discovery and initialization. </p> '
+  name: DebugSNMPExtensionProvider
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugSNMPMib attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugSNMPMib
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the SNMP TCP protocol handler.</p> '
+  name: DebugSNMPProtocolTCP
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug the SNMP vendor toolkit implementation.</p> '
+  name: DebugSNMPToolkit
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Weblogic SCA Container </p> '
+  name: DebugScaContainer
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugScrubberStartService attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugScrubberStartService
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security service manager</p> '
+  exclude: true
+  name: DebugSecurity
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework Adjudication processing</p> '
+  name: DebugSecurityAdjudicator
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework Atn processing</p> '
+  name: DebugSecurityAtn
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework Atz processing</p> '
+  name: DebugSecurityAtz
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework Auditor processing</p> '
+  name: DebugSecurityAuditor
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework CertPath processing</p> '
+  name: DebugSecurityCertPath
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework Credential Mapper processing</p> '
+  name: DebugSecurityCredMap
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework Entitlements Engine processing</p> '
+  name: DebugSecurityEEngine
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework Encryption Service processing</p> '
+  name: DebugSecurityEncryptionService
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework JACC processing</p> '
+  name: DebugSecurityJACC
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework JACC nonPolicy processing</p> '
+  name: DebugSecurityJACCNonPolicy
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework JACC Policy processing</p> '
+  name: DebugSecurityJACCPolicy
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework KeyStore processing</p> '
+  name: DebugSecurityKeyStore
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Password Guessing</p> '
+  name: DebugSecurityPasswordPolicy
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework predicate processing</p> '
+  name: DebugSecurityPredicate
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Realm processing</p> '
+  name: DebugSecurityRealm
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework Role Mapping</p> '
+  name: DebugSecurityRoleMap
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework SAML2 Provider atn processing</p> '
+  name: DebugSecuritySAML2Atn
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework SAML2 Provider credential mapper processing</p> '
+  name: DebugSecuritySAML2CredMap
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework SAML2 library processing</p> '
+  name: DebugSecuritySAML2Lib
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework SAML2 SSO profile services</p> '
+  name: DebugSecuritySAML2Service
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework SAML Provider atn processing</p> '
+  name: DebugSecuritySAMLAtn
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework SAML Provider credential mapper processing</p> '
+  name: DebugSecuritySAMLCredMap
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework SAML library processing</p> '
+  name: DebugSecuritySAMLLib
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Framework SAML SSO profile services</p> '
+  name: DebugSecuritySAMLService
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security SSL and TLS processing</p> '
+  name: DebugSecuritySSL
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security SSL and TLS exception processing</p> '
+  name: DebugSecuritySSLEaten
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security Service</p> '
+  name: DebugSecurityService
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Security User Lockout processing</p> '
+  name: DebugSecurityUserLockout
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Server ServerLifeCycle processing</p> '
+  name: DebugServerLifeCycle
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug low-level Server Migration processing</p> '
+  name: DebugServerMigration
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugServerRuntime attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugServerRuntime
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugServerShutdownStatistics attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugServerShutdownStatistics
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugServerShutdownTimer attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugServerShutdownTimer
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p> If statistics about server start will be logged after the
+    running message.</p> '
+  name: DebugServerStartStatistics
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugServerStartupTimer attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugServerStartupTimer
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugSingletonServices attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugSingletonServices
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug management situational configuration processing</p> '
+  name: DebugSituationalConfig
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugSpringStatistics attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugSpringStatistics
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugStore attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugStore
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug the persistent store''s administration code. This will
+    produce debug events when instances of the store are created and deleted, and
+    when the server is booted.</p> '
+  name: DebugStoreAdmin
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugStoreCache attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugStoreCache
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug persistent store high-level logical operations, such
+    as read, write, delete, and update. Multiple logical operations may occur in a
+    single physical operation.</p> '
+  name: DebugStoreIOLogical
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug persistent store logical boot operations (lists all recovered
+    records).</p> '
+  name: DebugStoreIOLogicalBoot
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debugging for persistent store low-level physical operations
+    which typically directly correspond to file or JDBC operations. Multiple logical
+    operations may occur in a single physical operation.</p> '
+  name: DebugStoreIOPhysical
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed debug for persistent store low-level physical operations
+    which typically directly correspond to file or JDBC operations.</p> <p>This will
+    produce a great deal of debugging for every disk I/O performed by the store. Multiple
+    logical operations may occur in a single physical operation.</p> '
+  name: DebugStoreIOPhysicalVerbose
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugStoreRCM attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugStoreRCM
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugStoreRCMVerbose attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugStoreRCMVerbose
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Debug persistent store resource manager transaction activity,
+    includes tracing for the related operations of layered subsystems (such as JMS).</p> '
+  name: DebugStoreXA
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Detailed debug of persistent store resource manager transaction
+    activity, includes tracing for the related operations of layered subsystems (such
+    as JMS).</p> '
+  name: DebugStoreXAVerbose
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugStubGeneration attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugStubGeneration
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug HTTP tunneling connection open/close processing.</p> '
+  name: DebugTunnelingConnection
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug HTTP tunneling connection timed out processing.</p> '
+  name: DebugTunnelingConnectionTimeout
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug URL resolution for incoming http requests</p> '
+  name: DebugURLResolution
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugUnicastMessaging attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugUnicastMessaging
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugValidation attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugValidation
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugValidationClassLoading attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugValidationClassLoading
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug Verbose RCM</p> '
+  name: DebugVerboseRCM
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug low-level wan replication processing</p> '
+  name: DebugWANReplicationDetails
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug WTC configuration processing</p> '
+  name: DebugWTCConfig
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug WTC corba execution</p> '
+  name: DebugWTCCorbaEx
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug WTC gwt execution</p> '
+  name: DebugWTCGwtEx
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug WTC jatmi execution</p> '
+  name: DebugWTCJatmiEx
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug WTC XATMI Message processing</p> '
+  name: DebugWTCTDomPdu
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugWTCTdomPdu attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugWTCTdomPdu
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug WTC user data processing</p> '
+  name: DebugWTCUData
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>Debug WTC tBridge execution</p> '
+  name: DebugWTCtBridgeEx
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugWatchScalingActions attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugWatchScalingActions
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugWebAppDI attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugWebAppDI
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug identity assertion flow when identity assertion occurs
+    in the webapp container.</p> '
+  name: DebugWebAppIdentityAssertion
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug WebApp Module deployment callbacks</p> '
+  name: DebugWebAppModule
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug webapp security</p> '
+  name: DebugWebAppSecurity
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugWebSocket attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: DebugWebSocket
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: 0
+    value:
+      value: 0
+  descriptionHTML: '<p>XMLEntityCache debugging option: Debug level</p> '
+  name: DebugXMLEntityCacheDebugLevel
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: null
+    value:
+      value: null
+  descriptionHTML: '<p>XMLEntityCache debugging option: Debug name</p> '
+  name: DebugXMLEntityCacheDebugName
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>XMLEntityCache debugging option: Debug IncludeClass</p> '
+  name: DebugXMLEntityCacheIncludeClass
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>XMLEntityCache debugging option: Debug IncludeLocation</p> '
+  name: DebugXMLEntityCacheIncludeLocation
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>XMLEntityCache debugging option: Debug IncludeName</p> '
+  name: DebugXMLEntityCacheIncludeName
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>XMLEntityCache debugging option: Debug IncludeTime</p> '
+  name: DebugXMLEntityCacheIncludeTime
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: null
+    value:
+      value: null
+  descriptionHTML: '<p>XMLEntityCache debugging option: Debug OutputStream</p> '
+  excludeFromRest: No default REST mapping for OutputStream
+  name: DebugXMLEntityCacheOutputStream
+  restartNeeded: true
+  supported: false
+  transient: true
+  type: java.io.OutputStream
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>XMLEntityCache debugging option: Debug UseShortClass</p> '
+  name: DebugXMLEntityCacheUseShortClass
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: 0
+    value:
+      value: 0
+  descriptionHTML: '<p>XML Registry debugging option: Debug levels</p> '
+  name: DebugXMLRegistryDebugLevel
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: null
+    value:
+      value: null
+  descriptionHTML: '<p>XML Registry debugging option: Debug name</p> '
+  name: DebugXMLRegistryDebugName
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>XML Registry debugging option: Debug IncludeClass</p> '
+  name: DebugXMLRegistryIncludeClass
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>XML Registry debugging option: Debug IncludeLocation</p> '
+  name: DebugXMLRegistryIncludeLocation
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>XML Registry debugging option: Debug IncludeName</p> '
+  name: DebugXMLRegistryIncludeName
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: false
+  descriptionHTML: '<p>XML Registry debugging option: Debug IncludeTime</p> '
+  name: DebugXMLRegistryIncludeTime
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: null
+    value:
+      value: null
+  descriptionHTML: '<p>XML Registry debugging option: Debug OutputStream</p> '
+  excludeFromRest: No default REST mapping for OutputStream
+  name: DebugXMLRegistryOutputStream
+  restartNeeded: true
+  supported: false
+  transient: true
+  type: java.io.OutputStream
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>XML Registry debugging option: Debug UseShortClass</p> '
+  name: DebugXMLRegistryUseShortClass
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Gets the fastswap DefaultStore debug attribute of ServerDebugMBean</p> '
+  name: DefaultStore
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 'Off'
+  descriptionHTML: '<p>Specifies how context based debugging is enabled for the Server.
+    The default behavior in the <code>Off</code> mode is that debug output is emitted
+    for all requests. </p> <p> The DiagnosticContextDebugMode works in conjunction
+    with the DebugMaskCriterias specified in the <code>And</code> or <code>Or</code>
+    modes. For context based debugging the WLDF Instrumentation needs to be enabled
+    and DyeInjection monitor needs to be configured for the Server. </p> <p> When
+    the context debug mode is set to <code>And</code> mode, debug is emitted only
+    for the requests that have all the bits in the WLDF dye vector set for the flags
+    specified in the DebugMaskCriterias attribute. </p> <p> When the context debug
+    mode is set to <code>Or</code> mode, debug is emitted only for the requests that
+    have any one of the bits in the WLDF dye vector set for the flags specified in
+    the DebugMaskCriterias attribute. </p> '
+  legalValues:
+  - 'Off'
+  - And
+  - Or
+  name: DiagnosticContextDebugMode
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: ' '
+  exclude: true
+  name: ForceShutdownTimeoutNumOfThreadDump
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60000
+  descriptionHTML: ' '
+  exclude: true
+  name: ForceShutdownTimeoutThreadDumpInterval
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets glassFishWebAppParser attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: GlassFishWebAppParser
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: ' '
+  exclude: true
+  name: GracefulShutdownTimeoutNumOfThreadDump
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60000
+  descriptionHTML: ' '
+  exclude: true
+  name: GracefulShutdownTimeoutThreadDumpInterval
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug listenThread processing</p> '
+  name: ListenThreadDebug
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: ' '
+  exclude: true
+  name: MagicThreadDumpBackToSocket
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: ' '
+  exclude: true
+  name: MagicThreadDumpEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: debugMagicThreadDumpFile
+    value:
+      value: debugMagicThreadDumpFile
+  descriptionHTML: ' '
+  exclude: true
+  name: MagicThreadDumpFile
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: 127.0.0.1
+    value:
+      value: localhost
+  descriptionHTML: ' '
+  exclude: true
+  name: MagicThreadDumpHost
+  nullable: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug Master Deployer processing</p> '
+  name: MasterDeployer
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets oSGiForApps attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: OSGiForApps
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables or disables whether Partition Administrators can enable
+    Debug Logging for their respective Partitions.</p> '
+  name: PartitionDebugLoggingEnabled
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets partitionEvenInterceptor attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: PartitionEvenInterceptor
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets portablePartitionHelper attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: PortablePartitionHelper
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Gets the fastswap RedefiningClassLoader debug attribute of
+    ServerDebugMBean</p> '
+  name: RedefiningClassLoader
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets scriptExecutorCommand attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: ScriptExecutorCommand
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets securityEncryptionService attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: SecurityEncryptionService
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the server for this bean</p> '
+  name: Server
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.ServerMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug Slave Deployer processing</p> '
+  name: SlaveDeployer
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: ' '
+  exclude: true
+  name: StartupTimeoutNumOfThreadDump
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60000
+  descriptionHTML: ' '
+  exclude: true
+  name: StartupTimeoutThreadDumpInterval
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets t3HttpUpgradeHandler attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: T3HttpUpgradeHandler
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets warExtraction attribute of ServerDebugMBean</p> '
+  exclude: true
+  name: WarExtraction
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Debug WebModule processing</p> '
+  name: WebModule
+  restartNeeded: true
+  type: boolean
+  writable: true

@@ -1,0 +1,78 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.WLDFDataAccessRuntimeMBean
+descriptionHTML: '<p>Use this interface to access the specific type of diagnostic
+  data from an underlying log for which this instance is created.</p> '
+name: weblogic.diagnostics.accessor.runtime.DataAccessRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Diagnostic data is logically organized as tabular data. This
+    method returns a map of column names to their indices, which are represented as
+    Integer objects.</p> '
+  excludeFromRest: No default REST mapping for Map
+  name: ColumnIndexMap
+  supported: false
+  type: java.util.Map
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The diagnostic data is logically organized as tabular data.
+    This method returns a map of column names to the respective ColumnInfo Object.</p> '
+  exclude: true
+  name: ColumnInfoMap
+  supported: false
+  type: java.util.Map
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Diagnostic data is logically organized as tabular data. This
+    method returns a map of column names to their type names, which are fully qualified
+    class names for the primitive types Integer, Long, Float, Double, String, or an
+    Object.</p> '
+  excludeFromRest: No default REST mapping for Map
+  name: ColumnTypeMap
+  supported: false
+  type: java.util.Map
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Diagnostic data is logically organized as tabular data. This
+    method returns an array of ColumnInfo objects, each describing a column in the
+    diagnostic data log.</p> '
+  exclude: true
+  name: Columns
+  supported: false
+  type: weblogic.diagnostics.accessor.ColumnInfo
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The timestamp, in milliseconds, since Jan 1, 1970 AD, 00:00:00
+    GMT for the earliest record in the diagnostic data log.</p> '
+  name: EarliestAvailableTimestamp
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The timestamp, in milliseconds, since Jan 1, 1970 AD, 00:00:00
+    GMT for the newest record in the diagnostic data log.</p> '
+  name: LatestAvailableTimestamp
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The latest known record ID for the underlying archive.</p> '
+  name: LatestRecordId
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns true, if timestamp information is available with the
+    underlying archive.</p> '
+  name: TimestampAvailable
+  type: boolean
+roles:
+  allowed:
+  - Deployer
+  - Monitor
+  - Operator

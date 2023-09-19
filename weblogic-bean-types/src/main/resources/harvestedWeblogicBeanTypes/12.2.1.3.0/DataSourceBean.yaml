@@ -1,0 +1,182 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.DataSourceBean
+properties:
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: 'The data source implementation class. '
+  name: ClassName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: 'The name of the database connected to this data source. '
+  name: DatabaseName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: 'A description of this DataSource. '
+  name: Description
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Specifies a string which is used to identify this DataSource. '
+  key: true
+  name: Id
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'The number of physical connections to create when creating the
+    connection pool in the data source. If unable to create this number of connections,
+    creation of the data source will fail. '
+  name: InitialPoolSize
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: 'The transaction isolation level used for connections. '
+  legalValues:
+  - TRANSACTION_READ_UNCOMMITTED
+  - TRANSACTION_READ_COMMITTED
+  - TRANSACTION_REPEATABLE_READ
+  - TRANSACTION_SERIALIZABLE
+  name: IsolationLevel
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'The maximum amount of time, in seconds, that this data source
+    waits while attempting to connect to a database. '
+  name: LoginTimeout
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'The maximum amount of time, in seconds, a physical connection
+    can remain unused in the pool before the connection is closed. '
+  name: MaxIdleTime
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'The maximum number of physical connections that this connection
+    pool can contain. '
+  name: MaxPoolSize
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'The total number of statements that a connection pool keeps open. '
+  name: MaxStatements
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'The minimum number of physical connections that this connection
+    pool can contain. '
+  name: MinPoolSize
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The JNDI name of the data source. '
+  key: true
+  name: Name
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: 'The password to use for connection authentication with the database. '
+  name: Password
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'The port number a server uses to listen for requests. '
+  name: PortNumber
+  restartNeeded: true
+  type: int
+  writable: true
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.JavaEEPropertyBean
+  defaultValue:
+    value:
+      value: [
+        ]
+  descriptionHTML: 'Spcecifies a JDBC DataSource property. This may be a vendor-specific
+    property or a less commonly used DataSource property. '
+  name: Properties
+  relationship: containment
+  type: weblogic.j2ee.descriptor.JavaEEPropertyBean
+- defaultValue:
+    value:
+      value: localhost
+  descriptionHTML: 'The database server name. '
+  name: ServerName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'When enabled, connections participate in transactions. '
+  name: Transactional
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: 'The JDBC URL. If the <code>Url</code> property is specified along
+    with other standard <code>DataSource</code> properties such as <code>ServerName</code>,
+    <code>DatabaseName</code> and <code>PortNumber</code>, the more specific properties
+    take precedence and <code>Url</code> is ignored. '
+  name: Url
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: 'The user name to use for connection authentication with the database. '
+  name: User
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

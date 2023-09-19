@@ -1,0 +1,35 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.MigratableTargetMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'The target that is used internally to register the JTA recovery
+  manager to the Migration Manager. '
+name: weblogic.management.configuration.JTAMigratableTargetMBean
+properties:
+- defaultValue:
+    value:
+      value: manual
+  descriptionHTML: ' '
+  legalValues:
+  - manual
+  - failure-recovery
+  - shutdown-recovery
+  name: MigrationPolicy
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether continue to boot if cannot find the current owner of
+    TRS to do failback. This attribute is only meaningful for servers in cluster.
+    </p>  <p>If true: server will fail to boot under this situation.</p> <p>If false:
+    server will continue to boot without trying to do failback.</p> '
+  name: StrictOwnershipCheck
+  type: boolean
+  writable: true

@@ -1,0 +1,31 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes:
+- weblogic.management.configuration.ManagedThreadFactoryTemplateMBean
+- weblogic.management.configuration.ManagedThreadFactoryMBean
+descriptionHTML: 'Configuration MBean representing common parameters of partition
+  level ManagedThreadFactory and ManagedThreadFactory template. '
+name: weblogic.management.configuration.BaseThreadFactoryMBean
+properties:
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p> The maximum number of concurrent new threads that can be created
+    by this Managed Thread Factory (MTF). </p> '
+  name: MaxConcurrentNewThreads
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: '<p> An integer that specifies the daemon thread''s priority. If
+    a value is specified, all concurrent new threads created by this MTF are affected.
+    </p> '
+  name: Priority
+  type: int
+  writable: true

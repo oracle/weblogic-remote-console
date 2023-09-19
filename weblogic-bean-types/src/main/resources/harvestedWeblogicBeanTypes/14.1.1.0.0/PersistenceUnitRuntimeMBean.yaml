@@ -1,0 +1,18 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.KodoPersistenceUnitRuntimeMBean
+descriptionHTML: 'This class is used for monitoring JPA specific runtime stats.  Base
+  class for all runtime mbeans that provide status of running modules. '
+name: weblogic.management.runtime.PersistenceUnitRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: PersistenceUnitName
+  type: java.lang.String
