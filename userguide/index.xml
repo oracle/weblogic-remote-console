@@ -30,14 +30,14 @@ Dashboards are only available for Administration Server providers (in the Monito
     </item>
     
     <item>
-      <title>Customize connection settings</title>
+      <title>Customize settings</title>
       <link>https://oracle.github.io/weblogic-remote-console/userguide/advanced-settings/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/advanced-settings/</guid>
-      <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
- Edit Java system properties Java system properties  Some possible customizations:
- Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Configure a proxy server Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on Kubernetes Specify an alternative location for the JDK Establish an insecure connection to an Administration Server  Edit Java system properties You can create a file that modifies the WebLogic Remote Console according to your preferences.</description>
+      <description>You can customize the settings of the WebLogic Remote Console to fit your needs.
+ In the WebLogic Remote Console, go to File &amp;gt; Settings. (WebLogic Remote Console &amp;gt; Settings on macOS). Choose a section tab and make your changes as needed. Click Save to apply your changes.  Customizations include:
+ Networking  Connect to a WebLogic domain using SSL/TLS  Configure a proxy server Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain    Other Java System Properties  Set the SameSite cookie attribute if required for web browser support  Specify an alternative location for the JDK    Networking The Networking section manages connection related settings for the WebLogic Remote Console.</description>
     </item>
     
     <item>
@@ -49,7 +49,7 @@ Dashboards are only available for Administration Server providers (in the Monito
       <description>Upgrade to the latest WebLogic Remote Console and take advantage of the latest features in both the console and WebLogic Server.
 The WebLogic Remote Console extension is periodically updated. Check if there&amp;rsquo;s also a newer version of the extension available when you upgrade the WebLogic Remote Console.
 Delete and replace any previous versions of the extension. Keeping multiple versions of the extension installed can lead to unexpected behavior.
- If you use config.</description>
+   Open Help &amp;gt; Check for WebLogic Remote Console Updates.</description>
     </item>
     
     <item>
@@ -60,9 +60,9 @@ Delete and replace any previous versions of the extension. Keeping multiple vers
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/logging/</guid>
       <description>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.
 Front end To view the log file for issues related to the front end of the WebLogic Remote Console:
-Desktop application Open View &amp;gt; Toggle Developer Tools and select the Console tab.
-Browser application In the browser tab with WebLogic Remote Console, open the Developer Tools and select the Console tab.
-Back end To view the log file for issues related to the back end of the WebLogic Remote Console:</description>
+Open View &amp;gt; Toggle Developer Tools and select the Console tab.
+Back end To view the log file for issues related to the back end of the WebLogic Remote Console:
+Open the out.log file in a text editor.</description>
     </item>
     
     <item>

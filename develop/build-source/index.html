@@ -12,20 +12,20 @@
     <title>Build from source :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1695158062" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1695158062"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1688916311"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1688916311"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1695158062"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1695158062"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1688916311"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1695158062"></script>
 
     
   </div>
@@ -389,9 +389,9 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/userguide/advanced-settings/" title="Customize connection settings" class="dd-item ">
+      <li data-nav-id="/weblogic-remote-console/userguide/advanced-settings/" title="Customize settings" class="dd-item ">
         <a href="/weblogic-remote-console/userguide/advanced-settings/">
-        Customize connection settings
+        Customize settings
         
         </a>
     </li>
@@ -821,10 +821,35 @@
 </code></pre><h3 id="source">Build from source</h3>
 <ol>
 <li>Clone the repository at <a href="https://github.com/oracle/weblogic-remote-console">https://github.com/oracle/weblogic-remote-console</a>.</li>
-<li>In a command window, navigate to the home directory of the cloned repository.</li>
-<li>Run <code>mvn clean install</code>.</li>
+<li>Open a command window and navigate to the home directory of the cloned repository.</li>
+<li>Run <code>mvn clean install</code>. After the build finishes, confirm that <code>/installer/target/console.zip</code> was created.</li>
+<li>From the home directory of the repository, run the <code>build-electron.sh</code> script.</li>
 </ol>
-<p>When the build is successful, a <code>console.zip</code> file is created in the <code>console-backend/installer/target</code> directory. You can now install and run the Remote Console as described in <a href="/weblogic-remote-console/setup/">Install the WebLogic Remote Console</a>.</p>
+<p>The WebLogic Remote Console executable file is created under <code>/electron/dist/</code>.</p>
+<p>To install the WebLogic Remote Console, follow the instructions at <a href="/weblogic-remote-console/setup/#install">Get Started</a>.</p>
+
+<div class="expand">
+    <div class="expand-label" style="cursor: pointer;" onclick="$h = $(this);$h.next('div').slideToggle(100,function () {$h.children('i').attr('class',function () {return $h.next('div').is(':visible') ? 'fas fa-chevron-down' : 'fas fa-chevron-right';});});">
+        <i style="font-size:x-small;" class="fas fa-chevron-right"></i>
+        <span>
+        
+    	
+    	It&#39;s also possible, though not recommended, to use console.zip to run the WebLogic Remote Console as a browser application.
+    	
+    	</span>
+    </div>
+    <div class="expand-content" style="display: none;">
+        <div class="notices warning" ><p>The browser application has significant limitations in terms of both security and functionality. It should be used for development purposes <strong>only</strong>.</p>
+</div>
+<ol>
+<li>After running <code>mvn clean install</code>, extract the contents of <code>/installer/target/console.zip</code> to a new directory.</li>
+<li>Open a command window and navigate to the new directory.</li>
+<li>Run <code>java -jar console.jar</code>.</li>
+<li>Open a browser window and enter <code>http://localhost:8012</code> in the address bar.</li>
+</ol>
+
+    </div>
+</div>
 
 
 <footer class="footline">
@@ -1307,19 +1332,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1695158062"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1695158062"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1688916311"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1695158062"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

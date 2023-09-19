@@ -12,20 +12,20 @@
     <title>Administration Servers :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1688916311" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1688916311" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1695158062" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1695158062" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1695158062"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1688916311"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1688916311"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1695158062"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1695158062"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1688916311"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1695158062"></script>
 
     
   </div>
@@ -389,9 +389,9 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/userguide/advanced-settings/" title="Customize connection settings" class="dd-item ">
+      <li data-nav-id="/weblogic-remote-console/userguide/advanced-settings/" title="Customize settings" class="dd-item ">
         <a href="/weblogic-remote-console/userguide/advanced-settings/">
-        Customize connection settings
+        Customize settings
         
         </a>
     </li>
@@ -828,19 +828,43 @@
 <!-- You can even choose to add the same Administration Server multiple times, as long as it's either in a different project or has a different user account associated. -->
 <h2 id="connect-to-a-weblogic-administration-server">Connect to a WebLogic Administration Server</h2>
 <ol>
-<li>Start the WebLogic Administration Server.</li>
-<li>Expand the Kiosk and beside the project name, click ⋮. Select <strong>Add Admin Server Connection Provider</strong>.</li>
-<li>Enter a name for the Administration Server connection. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.</li>
-<li>Enter a username and password for a user account with editing privileges in the selected Administration Server.
-As with the Administration Console, your management capabilities will be limited depending on the level of access granted to your user account. See <a href="/weblogic-remote-console/userguide/role-access/">Understand access discrepancies</a> for more information. You can choose to have multiple connections to the same Administration Server with different users.</li>
-<li>Enter the URL for the Administration Server.</li>
-<li>Click <strong>OK</strong> to connect the WebLogic Remote Console to the WebLogic Administration Server.</li>
+<li>
+<p>Start the WebLogic Administration Server.</p>
+</li>
+<li>
+<p>Expand the Kiosk and beside the project name, click ⋮. Select <strong>Add Admin Server Connection Provider</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the Administration Server connection. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.</p>
+</li>
+<li>
+<p>Enter a username and password for a user account with editing privileges in the selected Administration Server.
+As with the Administration Console, your management capabilities will be limited depending on the level of access granted to your user account. See <a href="/weblogic-remote-console/userguide/role-access/">Understand access discrepancies</a> for more information. You can choose to have multiple connections to the same Administration Server with different users.</p>
+</li>
+<li>
+<p>Enter the URL for the Administration Server.</p>
+<p><strong>Note</strong>: Make sure that the <code>management/*</code> endpoint of your administration server is accessible by the WebLogic Remote Console. If your administration server&rsquo;s endpoints are behind a load balancer or otherwise externally unavailable, you will need to expose that endpoint manually.</p>
+</li>
+<li>
+<p><strong>Optional</strong>:</p>
+<ul>
+<li>If you want to force WebLogic Remote Console to connect to an Administration Server regardless of warnings about expired, untrusted, or missing certificates, enable the <strong>Insecure Connection</strong> checkbox. We <em>strongly</em> recommend that you only enable this setting for development or demonstration environments.</li>
+<li>If you want to facilitate communication between a WebLogic Server domain that resides in a different network and the WebLogic Remote Console, enter a proxy server address in the <strong>Proxy Override</strong> field. You can also <a href="/weblogic-remote-console/userguide/advanced-settings/#proxy">set a proxy address globally</a> that applies to all administration server connections.</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>OK</strong> to connect the WebLogic Remote Console to the WebLogic Administration Server.</p>
+</li>
 </ol>
 <p>The WebLogic Remote Console is now connected to a WebLogic Administration Server. You can make changes to the domain as desired.</p>
+
+<div class="notices tip" ><p>You can use the WebLogic Remote Console to manage a WebLogic Server domain running on Kubernetes. For details about how to set up access to WebLogic Server domains running on Kubernetes, see <a href="https://oracle.github.io/weblogic-kubernetes-operator/managing-domains/accessing-the-domain/remote-admin-console/">Use the Remote Console</a> in the <em>WebLogic Kubernetes Operator User Guide</em>.</p>
+</div>
+
 <h2 id="changes_adminserver">Edit a WebLogic Administration Server</h2>
 <p>Editing a domain in the WebLogic Remote Console is similar in process to the Administration Console. When you start editing a domain, a configuration lock is created that blocks other users from making simultaneous changes. Once you&rsquo;re satisfied with your changes, you can activate these changes and perpetuate them to the Administration and Management Servers.</p>
 
-<div class="notices note" ><p>Certain areas and actions in the WebLogic Remote Console are hidden from non-administrations. For example, users with the Operator role cannot see the Edit Tree at all. For more information on what each user role can (or cannot) access, see <a href="/weblogic-remote-console/userguide/role-access/">Understand Access Discrepancies</a>.</p>
+<div class="notices note" ><p>Certain areas and actions in the WebLogic Remote Console are hidden from non-administrators. For example, users with the Operator role cannot see the Edit Tree at all. For more information on what each user role can (or cannot) access, see <a href="/weblogic-remote-console/userguide/role-access/">Understand Access Discrepancies</a>.</p>
 </div>
 
 <ol>
@@ -861,7 +885,7 @@ As with the Administration Console, your management capabilities will be limited
 
 <h3 id="shopping_cart">Shopping cart</h3>
 <p>The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely.</p>
-<p>If you installed the console extension, <code>console-rest-ext-5.0.war</code>, you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager. If you need to undo a change, you must discard all shopping cart contents or manually revert the change in the Edit Tree perspective.</p>
+<p>If you installed the console extension, <code>console-rest-ext-6.0.war</code>, you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager. If you need to undo a change, you must discard all shopping cart contents or manually revert the change in the Edit Tree perspective.</p>
 <p>The configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock in the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the WebLogic Remote Console and you will not be blocked from making changes with the other tools.</p>
 
 <div class="notices note" ><p>We recommend against making changes using multiple tools because when one of the sessions activates their changes, it releases the lock and the other session will not be able to save or activate their changes.</p>
@@ -1437,19 +1461,19 @@ As with the Administration Console, your management capabilities will be limited
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1695158062"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1688916311"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1688916311"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1695158062"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1695158062"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1688916311"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1695158062"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

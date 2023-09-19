@@ -25,7 +25,7 @@ Can I connect the WebLogic Remote Console to domains running in WebLogic on Orac
       <guid>https://oracle.github.io/weblogic-remote-console/reference/known_issues/</guid>
       <description>This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.
 Limitations In the current release of WebLogic Remote Console, you are unable to:
- Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.  Minimum web browser viewport size Issue The font sizes in the WebLogic Remote Console are governed by the Oracle JET Redwood style. They are larger than the ones used in the WebLogic Server Administration Console, and the entry fields are a bit larger in height and width.</description>
+ Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.  Limited MBean property support The WebLogic Remote Console includes the vast majority of the MBean properties that the WebLogic Server Administration Console supports. However, because of limitations in the WebLogic REST API, some are missing, including some that are deprecated.</description>
     </item>
     
     <item>
