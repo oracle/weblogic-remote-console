@@ -1,0 +1,97 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.TargetableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Connection factories are used to create connections for JMS clients.  Connection
+  factories can configure properties of the connections returned to the JMS client. '
+name: weblogic.j2ee.descriptor.wl.JMSConnectionFactoryBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'The client parameters for this connection factory.  <p> Several
+    parameters that govern JMS server behavior with regard to a client are configured
+    using a client parameters bean. For example, the client Id when using a  connection
+    factory. </p> '
+  name: ClientParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.ClientParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: 'The default delivery parameters for this connection factory.  <p>
+    If a client does not specify certain parameters then the values that those parameters
+    will take can be controlled with a default delivery parameters bean. </p> '
+  name: DefaultDeliveryParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.DefaultDeliveryParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: 'The flow control parameters for this connection factory.  <p>
+    Many clients producing messages can cause the server to fall behind in processing
+    messages.  The flow control parameters can help by slowing down production of
+    messages.  Using flow control can help the overall throughput of the system. </p> '
+  name: FlowControlParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.FlowControlParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The global JNDI name used to look up a connection factory within
+    a clustered JNDI namespace.</p>  <p>In a clustered environment, this name is propagated
+    to the entire cluster. If you want the JNDI name to be bound only on the local
+    server, and not propagated to the rest of the cluster, then use the <code>Local
+    JNDI Name</code> setting.</p>  <p>If not specified, then the connection factory
+    is not bound into a clustered JNDI namespace.</p> '
+  name: JNDIName
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The load balancing parameters for this connection factory.  <p>
+    Multiple clients may use this connection factory.  The load balancing parameters
+    allow those client to choose how they wish to distribute the work to the configured
+    servers. </p> '
+  name: LoadBalancingParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.LoadBalancingParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The local JNDI name used to look up the connection factory
+    within the JNDI namespace of the server where the connection factory is targeted.
+    In a clustered environment, this name is bound only on the local server instance
+    and is not propagated to the rest of the cluster.</p>  <p>If not specified, then
+    the connection factory is not bound into the local JNDI namespace.</p> '
+  name: LocalJNDIName
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  key: true
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The security parameters for this connection factory.  <p> Some
+    clients may wish to customize the security information associated with them.  They
+    can use the security parameters bean to do so. </p> '
+  name: SecurityParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.SecurityParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: 'The transactional parameters for this connection factory.  <p>
+    The transaction parameters bean controls how transactions are handled from clients
+    who connect using this factory. </p> '
+  name: TransactionParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.TransactionParamsBean
+roles:
+  allowed:
+  - Deployer

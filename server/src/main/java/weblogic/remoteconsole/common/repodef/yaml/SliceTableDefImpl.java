@@ -21,6 +21,7 @@ public class SliceTableDefImpl extends PageDefImpl implements SliceTableDef {
   private List<PagePropertyDefImpl> hiddenColumnDefImpls;
   private List<PagePropertyDef> hiddenColumnDefs;
   private String getTableRowsMethod;
+  private boolean supportsNavigation;
 
   public SliceTableDefImpl(PageRepoDefImpl pageRepoDefImpl, PagePath pagePath, SliceTableDefSource source) {
     super(
@@ -34,6 +35,7 @@ public class SliceTableDefImpl extends PageDefImpl implements SliceTableDef {
     this.displayedColumnDefs = Collections.unmodifiableList(getDisplayedColumnDefImpls());
     this.hiddenColumnDefs = Collections.unmodifiableList(getHiddenColumnDefImpls());
     this.getTableRowsMethod = source.getGetTableRowsMethod();
+    this.supportsNavigation = source.isSupportsNavigation();
     finishPropertyBasedInitialization();
   }
 
@@ -94,5 +96,10 @@ public class SliceTableDefImpl extends PageDefImpl implements SliceTableDef {
   @Override
   public String getGetTableRowsMethod() {
     return getTableRowsMethod;
+  }
+
+  @Override
+  public boolean isSupportsNavigation() {
+    return supportsNavigation;
   }
 }

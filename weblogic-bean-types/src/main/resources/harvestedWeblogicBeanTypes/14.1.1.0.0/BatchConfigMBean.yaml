@@ -1,0 +1,20 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class represents the configuration for Batch Runtime.</p> '
+name: weblogic.management.configuration.BatchConfigMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The schema name where the JobRepository tables have been created.
+    Note that if the JobRepository data source is shared by applications, then this
+    schema name must be the same name that the application expects.</p> '
+  name: SchemaName
+  type: java.lang.String
+  writable: true

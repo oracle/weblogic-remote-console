@@ -7,6 +7,12 @@ displayedColumns:
 - name: "Progress"
 - name: "StartTime"
 - name: "EndTime"
+
+actions:
+  - name: "purgeCompletedDeploymentProgressObjects"
+    label: "Purge"
+    rows: none
+
 hiddenColumns:
 - name: "Completed"
 - name: "State"

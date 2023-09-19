@@ -1,10 +1,15 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 ordered: true
 subTypeDiscriminatorProperty: Type
+defaultSubType: weblogic.management.security.authentication.UnknownCredentialMapperMBean
 subTypes:
 - type: weblogic.security.providers.credentials.DefaultCredentialMapperMBean
   value: weblogic.security.providers.credentials.DefaultCredentialMapper
+- type: oracle.security.wls.oam.providers.credentials.OAMCredentialMapperMBean
+  value: oracle.security.wls.oam.providers.credentials.OAMCredentialMapper
+  requiredCapabilities:
+  - JRFSecurityProviders
 - type: weblogic.security.providers.credentials.PKICredentialMapperMBean
   value: weblogic.security.providers.credentials.PKICredentialMapper
 - type: weblogic.security.providers.saml.SAMLCredentialMapperV2MBean
@@ -16,6 +21,10 @@ properties:
   legalValues:
   - value: weblogic.security.providers.credentials.DefaultCredentialMapper
     label: Default Credential Mapper
+  - value: oracle.security.wls.oam.providers.credentials.OAMCredentialMapper
+    label: Oracle Access Manager Credential Mapper
+    requiredCapabilities:
+    - JRFSecurityProviders
   - value: weblogic.security.providers.credentials.PKICredentialMapper
     label: PKI Credential Mapper
   - value: weblogic.security.providers.saml.SAMLCredentialMapperV2

@@ -44,6 +44,12 @@ define(['wrc-frontend/core/utils'],
           CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm.properties) &&
           pdjData.sliceForm.properties.length > 0
         );
+      },
+      isReadOnlySliceForm: (pdjData) => {
+        return (CoreUtils.isNotUndefinedNorNull(pdjData) &&
+          CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm) &&
+          pdjData.sliceForm.readOnly
+        );
       }
     };
   }

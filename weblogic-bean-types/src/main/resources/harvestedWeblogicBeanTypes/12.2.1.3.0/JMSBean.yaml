@@ -1,0 +1,223 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'The top of the JMS module bean tree. <p> JMS modules all have a
+  JMSBean as their root bean (a bean with no parent).  The schema namespace that corresponds
+  to this bean is "http://xmlns.oracle.com/weblogic/weblogic-jms" </p> '
+name: weblogic.j2ee.descriptor.wl.JMSBean
+properties:
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.JMSConnectionFactoryBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines a set of connection configuration parameters that
+    are used to create connections for JMS clients.</p> <p> Connection factories can
+    configure properties of the connections returned to the JMS client, and also provide
+    configurable options for default delivery, transaction, and message flow control
+    parameters. </p> '
+  name: ConnectionFactories
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.JMSConnectionFactoryBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.DestinationKeyBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines a unique sort order that destinations can apply to
+    arriving messages.</p> <p> By default messages are sorted in FIFO (first-in, first-out)
+    order, which sorts ascending based on each message''s unique JMSMessageID. However,
+    you can configure destination key to use a different sorting scheme for a destination,
+    such as LIFO (last-in, first-out).</p> '
+  name: DestinationKeys
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.DestinationKeyBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.DistributedQueueBean
+  defaultValue: {
+    }
+  deprecated: '10.3.4.0, since Weighted Distributed Destination has been deprecated
+    and replaced by Uniform Distributed Destination '
+  descriptionHTML: '<p> Defines a set of queues that are distributed on multiple JMS
+    servers, but which are accessible as a single, logical queue to JMS clients.</p>
+    <p> Distributed queues can help with message load balancing and distribution,
+    and have many of the same properties as standalone queues.</p> '
+  name: DistributedQueues
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.DistributedQueueBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.DistributedTopicBean
+  defaultValue: {
+    }
+  deprecated: '10.3.4.0, since Weighted Distributed Destination has been deprecated
+    and replaced by Uniform Distributed Destination '
+  descriptionHTML: 'Defines a set of topics that are distributed on multiple JMS servers,
+    but which are accessible as a single, logical topic to JMS clients.</p> <p> Distributed
+    topics can help with load balancing and distribution, and have many of the same
+    properties as standalone topics.</p> '
+  name: DistributedTopics
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.DistributedTopicBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.ForeignServerBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines foreign messaging providers or remote WebLogic Server
+    instances that are not part of the current domain.</p> <p> This is useful when
+    integrating with another vendor''s JMS product, or when referencing remote instances
+    of WebLogic Server in another cluster or domain in the local WebLogic JNDI tree.</p> '
+  name: ForeignServers
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.ForeignServerBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Optional information that you can include to describe this
+    JMS module.</p>  <p>JMS module saves this note in the JMS descriptor file as XML
+    PCDATA. All left angle brackets (&lt;) are converted to the XML entity <code>&amp;lt;</code>.
+    Carriage returns/line feeds are preserved.</p>  <dl> <dt>Note:</dt>  <dd> <p>If
+    you create or edit a note from the Administration Console, the Administration
+    Console does not preserve carriage returns/line feeds.</p> </dd> </dl> '
+  name: Notes
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.QueueBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines a point-to-point destination type, which are used
+    for asynchronous peer communications. A message delivered to a queue is distributed
+    to only one consumer.</p> <p> Several aspects of a queue''s behavior can be configured,
+    including thresholds, logging, delivery overrides, and delivery failure options.</p> '
+  name: Queues
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.QueueBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.QuotaBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Controls the allotment of system resources available to destinations.</p>
+    <p> For example, the number of bytes a destination is allowed to store can be
+    configured with a Quota resource. </p> '
+  name: Quotas
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.QuotaBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.SAFErrorHandlingBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines the action to take when the SAF service fails to forward
+    messages to remote destinations. </p> <p> Configuration options include an Error
+    Handling Policy (Redirect, Log, Discard, or Always-Forward), a Log Format, and
+    sending Retry parameters.</p> '
+  name: SAFErrorHandlings
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.SAFErrorHandlingBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.SAFImportedDestinationsBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines a collection of imported store-and-forward (SAF) destinations.
+    A SAF destination is a representation of a queue or topic in a remote server instance
+    or cluster that is imported into the local cluster or server instance, so that
+    the local server instance or cluster can send messages to the remote server instance
+    or cluster.</p> <p> All JMS destinations are automatically exported by default,
+    unless the Export SAF Destination parameter on a destination is explicitly disabled.
+    Each collection of SAF imported destinations is associated with a remote SAF context
+    resource, and, optionally, a SAF error handling resource.</p> '
+  name: SAFImportedDestinations
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.SAFImportedDestinationsBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.SAFRemoteContextBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines the URL of the remote server instance or cluster where
+    a JMS destination is exported from. It also contains the security credentials
+    to be authenticated and authorized in the remote cluster or server.</p> '
+  name: SAFRemoteContexts
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.SAFRemoteContextBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.TemplateBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines a set of default configuration settings for multiple
+    destinations.</p> <p> If a destination specifies a template and does not explicitly
+    set the value of a parameter, then that parameter will take its value from the
+    specified template. </p> '
+  name: Templates
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.TemplateBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.TopicBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines a publish/subscribe destination type, which are used
+    for asynchronous peer communications. A message delivered to a topic is distributed
+    to all topic consumers.</p> <p> Several aspects of a topic''s behavior can be
+    configured, including thresholds, logging, delivery overrides, delivery failure,
+    and multicasting parameters. </p> '
+  name: Topics
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.TopicBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.UniformDistributedQueueBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines a uniformly configured distributed queue, whose members
+    have a consistent configuration of all distributed queue parameters, particularly
+    in regards to weighting, security, persistence, paging, and quotas. These uniform
+    distributed queue members are created on JMS servers based on the targeting of
+    the uniform distributed queue.</p> <p> Uniform distributed queues can help with
+    message load balancing and distribution, and have many of the same properties
+    as standalone queues, including thresholds, logging, delivery overrides, and delivery
+    failure parameters.</p> '
+  name: UniformDistributedQueues
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.UniformDistributedQueueBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.UniformDistributedTopicBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Defines a uniformly configured distributed topic, whose members
+    have a consistent configuration of all uniform distributed queue parameters, particularly
+    in regards to weighting, security, persistence, paging, and quotas. These uniform
+    distributed topic members are created on JMS servers based on the targeting of
+    the uniform distributed topic.</p> <p> Uniform distributed topics can help with
+    message load balancing and distribution, and have many of the same properties
+    as standalone topics, including thresholds, logging, delivery overrides, and delivery
+    failure parameters.</p> '
+  name: UniformDistributedTopics
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.UniformDistributedTopicBean
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: 'The version of this file. '
+  name: Version
+  restartNeeded: true
+  type: int
+  writable: true
+roles:
+  allowed:
+  - Deployer

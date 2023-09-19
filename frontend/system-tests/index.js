@@ -24,3 +24,4 @@ require('./tests/nonAdminUser_test');
 require('./tests/ucdAsProvider_test');
 require('./tests/cndWDTProvider_test');
 require('./tests/anaASAndWDTProviders_test');
+require('./tests/configurationView_test');

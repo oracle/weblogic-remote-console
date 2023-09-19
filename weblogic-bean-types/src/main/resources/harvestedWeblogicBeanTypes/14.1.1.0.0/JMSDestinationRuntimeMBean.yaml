@@ -1,0 +1,172 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JMSMessageManagementRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for monitoring a WebLogic JMS destination
+  (topic or queue).</p> '
+name: weblogic.management.runtime.JMSDestinationRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of bytes stored in the destination. This
+    does not include the pending bytes.</p> '
+  name: BytesCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The peak number of bytes stored in the destination since the
+    last reset.</p> '
+  name: BytesHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of pending bytes stored in the destination.</p>  <p>Pending
+    bytes are over and above the current number of bytes.</p> '
+  name: BytesPendingCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of bytes received in this destination since the
+    last reset.</p> '
+  name: BytesReceivedCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The amount of time in the threshold condition since the last
+    reset.</p> '
+  name: BytesThresholdTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of consumers accessing this destination.</p> '
+  name: ConsumersCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The peak number of consumers accessing this destination since
+    the last reset.</p> '
+  name: ConsumersHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of consumers accessing this destination since
+    the last reset.</p> '
+  name: ConsumersTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates the consumption Pause state of the destination.</p> '
+  name: ConsumptionPaused
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current consumption pause state of the destination.</p> '
+  name: ConsumptionPausedState
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Returns information about this destination in JMX open data
+    representation.</p> '
+  excludeFromRest: No default REST mapping for CompositeData
+  name: DestinationInfo
+  supported: false
+  type: javax.management.openmbean.CompositeData
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The destination type, either <code>weblogic.management.configuration.JMSConstants.DESTINATION_TYPE_QUEUE</code>
+    or <code>weblogic.management.configuration.JMSConstants.DESTINATION_TYPE_TOPIC</code>
+    depending upon whether the destination is a queue or topic.</p> '
+  name: DestinationType
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of durable subscriber run-time MBeans for this destination.</p> '
+  name: DurableSubscribers
+  relationship: containment
+  type: weblogic.management.runtime.JMSDurableSubscriberRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates the InsertionPause state of the destination.</p> '
+  name: InsertionPaused
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current insertion pause state of the destination.</p> '
+  name: InsertionPausedState
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of durable subscriber run-time MBeans for this destination.</p> '
+  exclude: true
+  name: JMSDurableSubscriberRuntimes
+  relationship: reference
+  supported: false
+  type: weblogic.management.runtime.JMSDurableSubscriberRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of messages in the destination. This does
+    not include the pending messages.</p> '
+  name: MessagesCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The peak number of messages in the destination since the last
+    reset.</p> '
+  name: MessagesHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of pending messages in the destination.</p>  <p>Pending
+    messages are over and above the current number of messages. A pending message
+    is one that has either been sent in a transaction and not committed, or that has
+    been received and not committed or acknowledged.</p> '
+  name: MessagesPendingCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of messages received in this destination since the
+    last reset.</p> '
+  name: MessagesReceivedCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The amount of time in the threshold condition since the last
+    reset.</p> '
+  name: MessagesThresholdTime
+  type: long
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 Replaced by weblogic.management.runtime.JMSDestinationRuntimeMBean.isProductionPaused '
+  descriptionHTML: '<p>Indicates whether or not the destination is paused at the current
+    time.</p> '
+  name: Paused
+  supported: false
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates the ProductionPause state of the destination.</p> '
+  name: ProductionPaused
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current production pause state of the destination.</p> '
+  name: ProductionPausedState
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The operational state of the destination as a String.</p> '
+  name: State
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The effective messages limit on topic subscriptions (not applicable
+    to queues). A ''-1'' indicates that no limit is configured or active.</p> '
+  name: SubscriptionMessagesLimit
+  type: long

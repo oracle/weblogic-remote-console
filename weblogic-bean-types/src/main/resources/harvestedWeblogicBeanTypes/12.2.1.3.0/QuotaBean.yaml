@@ -1,0 +1,101 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.NamedEntityBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Quota beans control the allotment of system resources available
+  to destinations. For example, the number of bytes a destination is allowed to store
+  can be configured with a QuotaBean.</p> '
+name: weblogic.j2ee.descriptor.wl.QuotaBean
+properties:
+- defaultValue:
+    value:
+      value: 9223372036854775807
+  descriptionHTML: '<p>The total number of bytes that can be stored in a destination
+    that uses this quota.</p>  <p>A value of zero means that no messages can be placed
+    on a destination without exceeding the quota. A value of -1 prevents WebLogic
+    Server from imposing a limit.</p>  <p>Because excessive bytes volume can cause
+    memory saturation, Oracle recommends that the maximum corresponds to the amount
+    of system memory that is available after accounting for the rest of your application
+    load.</p>  <p>No consideration is given to messages that are pending; that is,
+    messages that are in-flight, delayed, or otherwise inhibited from delivery still
+    count against the message and/or bytes quota.</p>.  <p>This attribute is dynamic
+    and can be changed at any time. If the quota is lowered and the quota object is
+    now over quota, then subsequent requests for quota will be denied until quota
+    is available. If the quota is raised, then this may allow the quota object to
+    satisfy existing requests for quota.</p>  <p><b>Note:</b> If a JMS template is
+    used for distributed destination members, then this maximum applies only to those
+    specific members and not the distributed destination set as a whole.</p> '
+  name: BytesMaximum
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: 9223372036854775807
+  descriptionHTML: '<p>The total number of messages that can be stored in a destination
+    that uses this quota.</p>  <p>A value of zero means that no messages can be placed
+    on a destination without exceeding the quota. A value of -1 prevents WebLogic
+    Server from imposing a limit.</p>  <p>Because excessive bytes volume can cause
+    memory saturation, Oracle recommends that the maximum corresponds to the amount
+    of system memory that is available after accounting for the rest of your application
+    load.</p>  <p>No consideration is given to messages that are pending; that is,
+    messages that are in-flight, delayed, or otherwise inhibited from delivery still
+    count against the message and/or bytes quota.</p>.  <p>This attribute is dynamic
+    and can be changed at any time. If the quota is lowered and the quota object is
+    now over quota, then subsequent requests for quota will be denied until quota
+    is available. If the quota is raised, then this may allow the quota object to
+    satisfy existing requests for quota.</p>  <p><b>Note:</b> If a JMS template is
+    used for distributed destination members, then this maximum applies only to those
+    specific members and not the distributed destination set as a whole.</p> '
+  name: MessagesMaximum
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: FIFO
+  descriptionHTML: '<p>For destinations that use this quota, this policy determines
+    whether to deliver smaller messages before larger ones when a destination has
+    exceeded its message quota.</p>  <p><code>FIFO</code> (first-in, first-out) indicates
+    that requests for quota are submitted in the order they are received. If a given
+    request for quota cannot be satisfied, and the client requesting the quota is
+    willing to wait, then that request will block all other requests for quota until
+    the request is satisfied or times out. This prevents smaller messages from being
+    delivered when larger requests are already waiting for space.</p>  <p><code>Preemptive</code>
+    indicates that subsequent requests can preempt previously unsatisfied requests.
+    That is, if there is sufficient quota for the current request, then that space
+    is used even if there are other requests waiting for quota. When quota is limited,
+    the Preemptive policy can result in the starvation of larger requests.</p> '
+  legalValues:
+  - FIFO
+  - Preemptive
+  name: Policy
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Indicates whether this quota is shared by multiple destinations
+    that refer to it.</p>  <p>If <code>Shared</code> is enabled (the default), all
+    destinations referring to the quota object compete for  resources the resources
+    defined by that object. If one destination consumes a large number of messages
+    or bytes, then this will prevent other destinations from obtaining quota.</p>  <p>If
+    <code>Shared</code> is disabled, the quota object behaves as a template. Each
+    destination referring to the quota object gets its own internal instance of the
+    object for tracking quota.</p>  <p>Destinations within the same JMS module may
+    share quotas in any way they want. However, quota sharing only takes place for
+    destinations within the same JMS server. In other words, if destinations <i>X</i>
+    and <i>Y</i> both share the same quota <i>Q</i>, and the quota <i>Q</i> has <code>Shared</code>
+    enabled, then <i>X</i> and <i>Y</i> will only share quota if both are deployed
+    to the same JMS server.</p> '
+  name: Shared
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

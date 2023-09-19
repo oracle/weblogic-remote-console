@@ -1,0 +1,45 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: 'This is configuration used by the webservice atomic transactiona
+  subsystem on the server-side (transactional participant) and the client-side (transactional
+  initiator). '
+name: weblogic.j2ee.descriptor.wl.WSATConfigBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'A boolean flag that specifies whether WS-AT is enabled. Defaults
+    to true. '
+  name: Enabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: DEFAULT
+  descriptionHTML: 'Version of WS-AT that is supported. Valid values include: WSAT10,
+    WSAT11, WSAT12, or DEFAULT. Defaults to DEFAULT, which specifies WSAT1.0 support
+    on the client side, and WSAT10, WSAT11, and WSAT12 support on the server side. '
+  name: Version
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SUPPORTS
+  descriptionHTML: 'Transaction flow type supported. Valid values include: MANDATORY,
+    SUPPORTS, or NEVER. Defaults to SUPPORTS. '
+  name: FlowType
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

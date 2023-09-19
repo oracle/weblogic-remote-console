@@ -1,0 +1,32 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.EjbBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: StartMdbsWithApplication
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.ApplicationEntityCacheBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: EntityCaches
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.ApplicationEntityCacheBean

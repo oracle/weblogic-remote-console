@@ -1,0 +1,29 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This mbean is used to configure a Trigger (Usage limit) based policy
+  for a resource type. '
+name: weblogic.management.configuration.TriggerMBean
+properties:
+- defaultValue:
+    value:
+      value: notify
+  descriptionHTML: 'Gets the configured recourse action that needs to be taken when
+    the usage of resource crosses the value specified in getValue(). '
+  name: Action
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 9223372036854775807
+  descriptionHTML: 'Gets the upper-limit value of the resource assigned to the Trigger
+    configuration. '
+  name: Value
+  type: long
+  writable: true

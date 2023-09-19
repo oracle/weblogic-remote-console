@@ -1,0 +1,112 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.LogFileMBean
+derivedTypes:
+- weblogic.management.configuration.LogMBean
+descriptionHTML: '<p>Configures the basic configuration for the logging system.</p> '
+name: weblogic.management.configuration.CommonLogMBean
+properties:
+- defaultValue:
+    value:
+      value: Trace
+  descriptionHTML: '<p>The minimum severity of log messages going to the server log
+    file. By default all messages go to the log file.</p> '
+  legalValues:
+  - Trace
+  - Debug
+  - Info
+  - Notice
+  - Warning
+  name: LogFileSeverity
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Info
+  descriptionHTML: '<p>The minimum severity of log messages going to all log destinations.</p> '
+  legalValues:
+  - Trace
+  - Debug
+  - Info
+  - Notice
+  - Warning
+  name: LoggerSeverity
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The configuration of the different logger severities keyed
+    by name. The values are one of the predefined Severity strings namely Emergency,
+    Alert, Critical, Error, Warning, Notice, Info, Debug, Trace.</p> '
+  name: LoggerSeverityProperties
+  type: java.util.Properties
+  writable: true
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: '<p>Determines the no of stacktrace frames to display on standard
+    out. All frames are displayed in the log file. * -1 means all frames are displayed.</p> '
+  exclude: true
+  name: StacktraceDepth
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: standard
+  descriptionHTML: '<p>The output format to use when logging to the console.</p> '
+  legalValues:
+  - standard
+  - noid
+  name: StdoutFormat
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether to dump stack traces to the console when
+    included in logged message.</p> '
+  name: StdoutLogStack
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: Notice
+  descriptionHTML: '<p>The minimum severity of log messages going to the standard
+    out. Messages with a lower severity than the specified value will not be published
+    to standard out.</p> '
+  legalValues:
+  - Trace
+  - Debug
+  - Info
+  - Warning
+  - Error
+  - Notice
+  - Critical
+  - Alert
+  - Emergency
+  - 'Off'
+  name: StdoutSeverity
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: '<p>Defines the maximum depth of truncated stack frame after the
+    trigger condition already met.</p> '
+  name: TriggerTruncationStackFrameDepthAfterTrigger
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 500
+  descriptionHTML: '<p>Returns the depth of stack frame that will trigger the truncation
+    of stack frame for the remaining cascaded causes.</p> '
+  name: TriggerTruncationStackFrameTriggerDepth
+  type: int
+  writable: true

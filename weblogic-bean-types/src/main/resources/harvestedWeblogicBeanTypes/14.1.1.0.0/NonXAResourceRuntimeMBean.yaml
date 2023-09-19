@@ -1,0 +1,17 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JTAStatisticsRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This represents runtime statistical information about a NonXAResource '
+name: weblogic.management.runtime.NonXAResourceRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the resource name.</p> '
+  name: NonXAResourceName
+  type: java.lang.String

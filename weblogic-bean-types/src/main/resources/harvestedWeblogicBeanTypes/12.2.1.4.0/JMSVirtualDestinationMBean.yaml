@@ -1,0 +1,23 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes:
+- weblogic.management.configuration.JMSDistributedDestinationMBean
+descriptionHTML: 'This class represents a virtual destination. In 7.0 JMS has distributed
+  destination, which is a form of the virtual destination. '
+name: weblogic.management.configuration.JMSVirtualDestinationMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JNDI name used to look up a virtual destination within
+    the JNDI namespace. Applications can use the JNDI name to look up the virtual
+    destination. If not specified, then the destination is not bound into the JNDI
+    namespace.</p> '
+  name: JNDIName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

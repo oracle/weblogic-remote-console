@@ -1,0 +1,21 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ServerTemplateMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class represents a individual WebLogic Server. A WebLogic
+  Server is a Java process that is a container for Java EE applications.</p> '
+name: weblogic.management.configuration.ServerMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'The template used to configure this server. '
+  name: ServerTemplate
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.ServerTemplateMBean
+  writable: true

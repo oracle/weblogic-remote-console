@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Runtime services for the console.</p> '
+name: weblogic.management.runtime.ConsoleRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Is the console enabled? '
+  name: Enabled
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the URL for the console''s home page '
+  name: HomePageURL
+  type: java.lang.String

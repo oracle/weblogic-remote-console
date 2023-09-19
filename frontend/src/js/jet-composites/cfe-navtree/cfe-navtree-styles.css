@@ -1,13 +1,17 @@
-/*! Copyright (c) 2020, 2022, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2023, Oracle and/or its affiliates. All rights reserved. */
 
 :root {
 	--navtree-background-color: #c3b2ab;
 	--navtree-label-color: #161513;
 	--navtree-min-width: 200px;
 	--navtree-max-width: 490px;
+	--navtree-offset-max-height: 70px;		/* 4.375rem; */
+	--navtree-calc-max-height: 70px;		/* 4.375rem; */
 
 	--oj-dialog-title-font-size: 1.5rem;
 	--oj-navigation-list-item-max-width: 15rem;
+	--cfe-navlist-item-selected-bg-color-hover: rgba(0,0,0,.1);
+	--cfe-navlist-item-selected-bg-color-active: rgba(0,0,0,.22);
 }
 
 cfe-navtree:not(.oj-complete){
@@ -16,27 +20,25 @@ cfe-navtree:not(.oj-complete){
 
 /* ruleset for runtime-role="app" data attribute */
 [data-runtime-role="app"] {
-	--navtree-calc-min-height: 4.375rem;		/* 70px; */
-	--navtree-calc-max-height: 4.375rem;		/* 70px; */
+	--navtree-offset-max-height: 70px;
 }
 
 /* ruleset for runtime-role="tool" data attribute */
 [data-runtime-role="tool"] {
-	--navtree-calc-min-height: 9.688rem;		/* 155px; */
-	--navtree-calc-max-height: 9.688rem;		/* 155px; */
+	--navtree-offset-max-height: 155px;
 }
 
 #navtree-container {
 	padding-top: 0.3125rem;
 	display: none;
 	background-color: var(--navtree-background-color);
-	height: calc(100vh - var(--panel-resizer-height));
-	max-height: calc(100vh - var(--panel-resizer-height));
-/*
-	min-height: calc(100vh - var(--navtree-calc-min-height));
+	height: calc(100vh - var(--navtree-calc-max-height));
 	max-height: calc(100vh - var(--navtree-calc-max-height));
-	max-width: var(--navtree-max-width);
-*/
+	/*
+        min-height: calc(100vh - var(--navtree-calc-min-height));
+        max-height: calc(100vh - var(--navtree-calc-max-height));
+        max-width: var(--navtree-max-width);
+    */
 	overflow: auto;
 	scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color1);
 }
@@ -66,8 +68,8 @@ oj-navigation-list[id="nav"] li.oj-navigationlist-focused-element.oj-navigationl
 
 oj-navigation-list[id="nav"].oj-navigationlist-vertical {
 	--oj-navigation-list-item-padding: 0.875rem;	/* 14px; */
-	--oj-navigation-list-item-bg-color-hover: var(--oj-core-bg-color-hover);
-	--oj-navigation-list-item-bg-color-selected: var(--oj-core-bg-color-active);
+	--oj-navigation-list-item-bg-color-hover: var(--cfe-navlist-item-selected-bg-color-hover);
+	--oj-navigation-list-item-bg-color-selected: var(--cfe-navlist-item-selected-bg-color-active);
 	--oj-navigation-list-icon-margin: 0;
 	--oj-navigation-list-icon-to-text-padding: 0.375rem;
 	--oj-navigation-list-item-min-height: 1.75rem;

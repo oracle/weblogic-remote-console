@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -195,8 +195,8 @@ public abstract class PageDefWalker {
     if (typeDef.isHomogeneous()) {
       return;
     }
-    for (String discriminator : typeDef.getSubTypeDiscriminatorLegalValues()) {
-      walkTypeDef(typeDef.getSubTypeDef(discriminator));
+    for (BeanTypeDef subTypeDef : typeDef.getSubTypeDefs()) {
+      walkTypeDef(subTypeDef);
     }
   }
 

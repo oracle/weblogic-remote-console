@@ -1,0 +1,45 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: 'An XML config-propertyType(@http://www.bea.com/ns/weblogic/90).
+  This is a complex type. '
+name: weblogic.j2ee.descriptor.wl.ConfigPropertyBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "name" element '
+  exclude: true
+  key: true
+  name: Name
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "value" element. Note that the fact this is marked dynamic
+    doesn''t guarantee that the container or the RA can absorb the change without
+    restarting.  If not, the change should be vetoed. '
+  exclude: true
+  name: Value
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "id" attribute '
+  exclude: true
+  name: Id
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

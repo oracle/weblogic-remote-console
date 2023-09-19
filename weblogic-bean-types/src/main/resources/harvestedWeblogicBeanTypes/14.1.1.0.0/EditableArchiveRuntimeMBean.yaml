@@ -1,0 +1,49 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.accessor.runtime.ArchiveRuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.WLDFEditableArchiveRuntimeMBean
+- weblogic.diagnostics.accessor.runtime.WlstoreArchiveRuntimeMBean
+- weblogic.diagnostics.accessor.runtime.DbstoreArchiveRuntimeMBean
+descriptionHTML: '<p>Use this interface to collect statistical information about the
+  editable archives maintained by WLDF, such as JDBC based and weblogic.store based
+  WLDF archives</p> '
+name: weblogic.diagnostics.accessor.runtime.EditableArchiveRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of data retirement cycles since server start.</p> '
+  name: DataRetirementCycles
+  type: int
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns array of data retirement tasks that have been created
+    since last purgeDataRetirementTasks operation.</p> '
+  name: DataRetirementTasks
+  relationship: containment
+  type: weblogic.diagnostics.accessor.runtime.DataRetirementTaskRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Total elapsed time for data retirement for this archive.</p> '
+  name: DataRetirementTotalTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Start time for the last data retirement cycle for this archive.</p> '
+  name: LastDataRetirementStartTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Elapsed time for last data retirement cycle for this archive.</p> '
+  name: LastDataRetirementTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of records retired since server start.</p> '
+  name: RetiredRecordCount
+  type: long

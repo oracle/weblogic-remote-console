@@ -4,6 +4,8 @@
 instanceName: ServerRuntime
 disableMBeanJavadoc: true
 
+createResourceMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.createResource
+
 subTypeDiscriminatorProperty: Type
 subTypes:
 - type: weblogic.management.runtime.RunningServerRuntimeMBean

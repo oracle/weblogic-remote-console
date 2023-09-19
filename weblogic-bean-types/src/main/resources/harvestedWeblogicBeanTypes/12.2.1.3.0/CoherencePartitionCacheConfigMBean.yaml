@@ -1,0 +1,46 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The CoherencePartitionCacheConfigMBean is used to define which
+  Coherence caches are shared/not-shared in an MT environment as well as specific
+  cache properties that apply to deployments underneath a partition.</p>  <p>Note:
+  the Name attribute is inherited from ConfigurationMBean and is a key only.</p> '
+name: weblogic.management.configuration.CoherencePartitionCacheConfigMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'The name of the GAR application that this setting should apply
+    to. '
+  name: ApplicationName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The name of the cache that the settings should apply to. '
+  name: CacheName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.CoherencePartitionCachePropertyMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Return an array of all the Coherence Partition Cache Properties '
+  name: CoherencePartitionCacheProperties
+  relationship: containment
+  type: weblogic.management.configuration.CoherencePartitionCachePropertyMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Specifies whether you want this cache to be shared. '
+  name: Shared
+  restartNeeded: true
+  type: boolean
+  writable: true

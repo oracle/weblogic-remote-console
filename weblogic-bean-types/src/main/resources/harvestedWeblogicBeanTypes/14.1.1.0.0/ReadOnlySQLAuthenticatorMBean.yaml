@@ -1,0 +1,113 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.UserReaderMBean
+- weblogic.security.providers.authentication.DBMSAuthenticatorMBean
+- weblogic.management.security.authentication.GroupReaderMBean
+derivedTypes:
+- weblogic.security.providers.authentication.SQLAuthenticatorMBean
+descriptionHTML: '<p>This MBean contains configuration information for the Read-Only
+  SQL       Authentication provider.</p> '
+name: weblogic.security.providers.authentication.ReadOnlySQLAuthenticatorMBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Indicates whether user and group descriptions are supported
+    by the         database used by the authentication provider.</p> '
+  name: DescriptionsSupported
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authentication.DBMSSQLReadOnlyAuthenticationProviderImpl
+  descriptionHTML: '<p>The name of the Java class for the Read-Only DBMS Authentication         Provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: SELECT G_DESCRIPTION FROM GROUPS WHERE G_NAME = ?
+  descriptionHTML: '<p>The SQL statement used to retrieve the description of a group.
+    Only         valid if Descriptions Supported is enabled. The SQL statement requires         a
+    single parameter for the group name and must return a resultSet         containing
+    at most a single record containing the group         description.</p> '
+  name: SQLGetGroupDescription
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SELECT U_DESCRIPTION FROM USERS WHERE U_NAME = ?
+  descriptionHTML: '<p>The SQL statement used to retrieve the description of a specific         user.
+    Only valid if Descriptions Supported is enabled. The SQL         statement requires
+    a single parameter for the username and must return         a resultSet containing
+    at most a single record containing the user         description.</p> '
+  name: SQLGetUserDescription
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SELECT U_PASSWORD FROM USERS WHERE U_NAME = ?
+  descriptionHTML: '<p>The SQL statement used to look up a user''s password. The SQL         statement
+    requires a single parameter for the username and must return         a resultSet
+    containing at most a single record containing the         password.</p> '
+  name: SQLGetUsersPassword
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SELECT G_NAME FROM GROUPS WHERE G_NAME = ?
+  descriptionHTML: '<p>The SQL statement used to look up a group. The SQL statement         requires
+    a single parameter for the group name and must return a         resultSet containing
+    at most a single record containing the group</p> '
+  name: SQLGroupExists
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SELECT G_MEMBER FROM GROUPMEMBERS WHERE G_NAME = ? AND G_MEMBER = ?
+  descriptionHTML: '<p>The SQL statement used to look up members of a group. The SQL         statement
+    requires two parameters: a group name and a member or group         name. It must
+    return a resultSet containing the group names that         matched</p> '
+  name: SQLIsMember
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SELECT G_NAME FROM GROUPS WHERE G_NAME LIKE ?
+  descriptionHTML: '<p>The SQL statement used to retrieve group names that match a         wildcard
+    The SQL statement requires a single parameter for the         wildcarded group
+    name and return a resultSet containing matching group         names</p> '
+  name: SQLListGroups
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SELECT G_NAME FROM GROUPMEMBERS WHERE G_MEMBER = ?
+  descriptionHTML: '<p>The SQL statement used to look up the groups a user or group
+    is a         member of. The SQL statement requires a single parameter for the         username
+    or group name and returns a resultSet containing the names of         the groups
+    that matched.</p> '
+  name: SQLListMemberGroups
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SELECT U_NAME FROM USERS WHERE U_NAME LIKE ?
+  descriptionHTML: '<p>The SQL statement used to retrieve users that match a particular         wildcard
+    search The SQL statement requires a single parameter for the         wildcarded
+    usernames and returns a resultSet containing matching         usernames</p> '
+  name: SQLListUsers
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SELECT U_NAME FROM USERS WHERE U_NAME = ?
+  descriptionHTML: '<p>The SQL statement used to look up a user. The SQL statement         requires
+    a single parameter for the username and must return a         resultSet containing
+    at most a single record containing the user.</p> '
+  name: SQLUserExists
+  type: java.lang.String
+  writable: true

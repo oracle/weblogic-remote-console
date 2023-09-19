@@ -56,6 +56,15 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
       }
     }
 
+    function clearDomainStatusTimer(dataProvider) {
+      if (CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus) &&
+          CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus)
+      ) {
+        clearInterval(dataProvider.domainStatus.timerId);
+        delete dataProvider.domainStatus.timerId;
+      }
+    }
+
     return {
       // FortifyIssueSuppression(73D8764C3FE4B3A7E67ABBE65E55FFA5) Password Management: Password in Comment
       // Not a password, just an argument
@@ -922,8 +931,57 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
        */
       cancelDataProviderSsoTimer: function (dataProvider) {
         clearRunningTimer(dataProvider, true);
-      }
+      },
+      /**
+       *
+       * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+       */
+      getDataProviderHelp: function () {
+        const result = {succeeded: false};
+        return DataOperations.providers.help()
+          .then(reply => {
+            result.succeeded = true;
+            result['data'] = reply.body.data;
+            return Promise.resolve(result);
+          })
+          .catch(response => {
+            result['failure'] = response;
+            return Promise.reject(result);
+          });
+      },
 
+      startDataProviderStatusPolling: function (dataProvider, onTimerElapsedCallback) {
+        // Start the timer with the specified timeout
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider) &&
+          CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus) &&
+          CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus.refreshSeconds)
+        ) {
+          // Clear the timer
+          clearDomainStatusTimer(dataProvider);
+
+          // Guard against wrong data type being assigned
+          // to dataProvider.domainStatus.refreshSeconds
+          if (typeof dataProvider.domainStatus.refreshSeconds !== 'number') {
+            dataProvider.domainStatus.refreshSeconds = 0;
+          }
+
+          // Compute delay milliseconds for timer
+          const triggerInterval = (dataProvider.domainStatus.refreshSeconds * 1000);
+
+          if (triggerInterval > 0) {
+            onTimerElapsedCallback(dataProvider);
+            dataProvider.domainStatus['timerId'] = setInterval(onTimerElapsedCallback, triggerInterval, dataProvider);
+          }
+        }
+      },
+
+      cancelDomainStatusTimer: function (dataProvider) {
+        clearDomainStatusTimer(dataProvider);
+      },
+
+      pollDomainStatus: function (dataProvider) {
+        return DataOperations.providers.domainStatus(dataProvider);
+      }
     };
   }
 );

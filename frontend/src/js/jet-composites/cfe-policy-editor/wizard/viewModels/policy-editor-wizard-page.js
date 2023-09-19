@@ -295,7 +295,7 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojarraydataprovider', 'wrc-frontend/co
               viewParams.clearFailureMessage();
             }
             else {
-              delete filteredArgumentValues[index];
+              filteredArgumentValues.splice(index, 1);
               viewParams.displayFailureMessage(viewParams.i18n.messages.argumentValueHasWrongFormat.summary.replace('{0}', gmtOffsetArgument.displayName));
             }
           }

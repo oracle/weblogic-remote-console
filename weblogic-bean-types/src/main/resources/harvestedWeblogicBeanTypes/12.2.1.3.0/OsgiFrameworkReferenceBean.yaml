@@ -1,0 +1,66 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.OsgiFrameworkReferenceBean
+properties:
+- defaultValue:
+    value:
+      value: osgi-lib
+  descriptionHTML: ' '
+  exclude: true
+  name: BundlesDirectory
+  nullable: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: ApplicationBundleSymbolicName
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: Name
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The version(s) which the attached bundle must match.  If this
+    attribute is set then the bundleSymbolicName must also be set.  The format of
+    the string is a version range, where the inclusive element of the range is denoted
+    by ''['' or '']''.  The exclusive element of the range is denoted by ''('' or
+    '')''.  A range is denoted by two versions, separated by a comma.  * may be used
+    as the upper range, to indicate infinite upper range.  If the version is not a
+    comma separated item then it must be a single version that is the only version
+    that should match. <p> Examples include: <p> [1.0,2.0) : This would indicate any
+    bundle between version 1 inclusive and 2 exclusive <p> 2.3.7.beta-1 : This would
+    indicate an exact bundle version to attach to <p> (3.7,*) : This would indicate
+    a lower version higher than 3.7 and no upper version limit <p> The versions themselves
+    must conform to the OSGi standard for ranges, implying that the first three elements
+    of the version must be numbers, while the last element of the version can be any
+    string at all. '
+  exclude: true
+  name: ApplicationBundleVersion
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

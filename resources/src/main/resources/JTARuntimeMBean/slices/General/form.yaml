@@ -22,3 +22,5 @@ properties:
 - name: "TransactionRolledBackTimeoutTotalCount"
 - name: "TransactionTwoPhaseCommittedTotalCount"
 - name: "ActiveTransactionsTotalCount"
+- name: "DBPassiveModeState"
+- name: "TransactionServiceState"

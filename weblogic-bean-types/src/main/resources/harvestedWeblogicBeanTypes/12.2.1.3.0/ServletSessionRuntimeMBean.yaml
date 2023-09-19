@@ -1,0 +1,37 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class is used for monitoring a WebLogic servlet session within
+  a WebLogic server. '
+name: weblogic.management.runtime.ServletSessionRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: '<p>Provides a copy (as a string) of an attribute specified by
+    the user, such as user-name, associated with this session.</p>  <p>Gets a Stringified
+    copy of an attribute specified by the user (like user-name) associated with this
+    session. Where should this attribute be specified? In ServletDeploymentRuntimeMBean?</p> '
+  name: MainAttribute
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: '<p> Returns the timeout (seconds) for the session </p> '
+  name: MaxInactiveInterval
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: '<p>Provides a record of the last time this session was accessed.</p> '
+  name: TimeLastAccessed
+  supported: false
+  type: long

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -14,11 +14,14 @@ properties:
 # deprecated - name: "AnonymousAdminLookupEnabled"
 - name: "SecurityConfiguration.ExcludedDomainNames"
 advancedProperties:
+- name: "SecurityConfiguration.RemoteAnonymousRMIIIOPEnabled"
+- name: "SecurityConfiguration.RemoteAnonymousRMIT3Enabled"
 - name: "SecurityConfiguration.Credential"
 - name: "SecurityConfiguration.NodeManagerUsername"
 - name: "SecurityConfiguration.NodeManagerPassword"
 - name: "SecurityConfiguration.WebAppFilesCaseInsensitive"
 - name: "SecurityConfiguration.EnforceStrictURLPattern"
+- name: "SecurityConfiguration.TwoWayTLSRequiredForAdminClients"
 - name: "SecurityConfiguration.DowngradeUntrustedPrincipals"
 - name: "SecurityConfiguration.PrincipalEqualsCaseInsensitive"
 - name: "SecurityConfiguration.PrincipalEqualsCompareDnAndGuid"
@@ -26,12 +29,6 @@ advancedProperties:
 - name: "SecurityConfiguration.ClearTextCredentialAccessEnabled"
 - name: "SecurityConfiguration.UseKSSForDemo"
 - name: "SecurityConfiguration.SecureMode.SecureModeEnabled"
-- name: "SecurityConfiguration.SecureMode.RestrictiveJMXPolicies"
-- name: "SecurityConfiguration.SecureMode.WarnOnInsecureSSL"
-- name: "SecurityConfiguration.SecureMode.WarnOnInsecureFileSystem"
-- name: "SecurityConfiguration.SecureMode.WarnOnAuditing"
-- name: "SecurityConfiguration.SecureMode.WarnOnInsecureApplications"
-- name: "SecurityConfiguration.SecureMode.WarnOnJavaSecurityManager"
 
 helpTopics:
 - label: "Administering Security for Oracle WebLogic Server"

@@ -1,0 +1,158 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Controls the configuration of the RESTful Management Services
+  interfaces to WebLogic Server.</p> '
+name: weblogic.management.configuration.RestfulManagementServicesMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Determines if credentials are allowed for CORS requests.</p>  <p>When
+    the value is false, the response will not include the corresponding CORS HTTP
+    header.</p> '
+  name: CORSAllowedCredentials
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: '*'
+  descriptionHTML: '<p>Determines the value of allowed HTTP headers for CORS requests.</p>  <p>The
+    allowed headers value is a string that contains a comma separated list of HTTP
+    header names. The default setting allows all headers.</p>  <p>When the value is
+    empty or not specified, the response will not include the corresponding CORS HTTP
+    header.</p> '
+  name: CORSAllowedHeaders
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '*'
+  descriptionHTML: '<p>Determines the value of allowed HTTP methods for CORS requests.</p>  <p>The
+    allowed methods value is a string that contains a comma separated list of HTTP
+    method names. The default setting allows all methods.</p>  <p>When the value is
+    empty or not specified, the response will not include the corresponding CORS HTTP
+    header.</p> '
+  name: CORSAllowedMethods
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Determines the list of allowed origins for CORS requests. When
+    the list is empty or not specified and CORS support is enabled then all origins
+    are accepted. When specified the HTTP Origin header must match exactly one of
+    the values configured as allowed.</p>  <p>CORS origin values include protocol
+    and domain name, they may also contain port numbers. Multiple variants of the
+    allowed origin may need to be specified based on the origin used by the browser.</p> '
+  name: CORSAllowedOrigins
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables the support of CORS (Cross-Origin Resource Sharing)
+    processing in the RESTful Management Services Web application.</p> '
+  name: CORSEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Determines the value of exposed HTTP headers for CORS requests.</p>  <p>The
+    exposed headers value is a string that contains a comma separated list of HTTP
+    header names. The default setting does not specify any specific headers.</p>  <p>When
+    the value is empty or not specified, the response will not include the corresponding
+    CORS HTTP header.</p> '
+  name: CORSExposedHeaders
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Determines the number of seconds for a browser cache of CORS
+    preflight requests.</p>  <p>The max age value is a string that contains a numeric
+    value with the number of seconds used for the browser cache. The default setting
+    does not specify any value.</p>  <p>When the value is empty or not specified,
+    the response will not include the corresponding CORS HTTP header.</p> '
+  name: CORSMaxAge
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 30000
+  descriptionHTML: '<p>Determines the connection timeout, in milliseconds, when the
+    Management Services Web application propagates an idempotent REST request from
+    the admin server to a managed server.</p> <p> If DelegatedRequestConnectTimeouttMillis
+    is zero, then the default underlying JAXRS client api connection timeout will
+    be used.</p> '
+  name: DelegatedRequestConnectTimeoutMillis
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Determines how long the Management Services Web application
+    will wait, in milliseconds, when it propagates an idempotent REST request from
+    the admin server to a managed server.  If zero, then it will try to propagate
+    the request once. If greater than zero, then it will retry the request until it
+    finishes or until it detects that the time limit has been exceeded.</p>. <p>A
+    request can override this value by specifying the requestMaxWaitMillis query parameter.</p> '
+  name: DelegatedRequestMaxWaitMillis
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 25
+  descriptionHTML: '<p>Specifies the minimum number of threads that should be dedicated
+    to the Management Services Web application when interacting with managed servers
+    in parallel for improved responsiveness in large domains.</p> '
+  name: DelegatedRequestMinThreads
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10000
+  descriptionHTML: '<p>Determines the read timeout, in milliseconds, when the Management
+    Services Web application propagates an idempotent REST request from the admin
+    server to a managed server.</p> <p> If DelegatedRequestReadTimeoutMillis is zero,
+    then the default underlying JAXRS client api read timeout will be used.</p> '
+  name: DelegatedRequestReadTimeoutMillis
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Enables the monitoring of this WebLogic Server domain through
+    the RESTful Management Services Web application.</p> '
+  name: Enabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 180000
+  descriptionHTML: '<p>Determines how long the Management Services Web application
+    will wait, in milliseconds, when it fans out an idempotent REST request from the
+    admin server to all the managed servers.  If zero, then it will choose an appropriate
+    timeout. </p>. <p>A request can override this value by specifying the requestMaxWaitMillis
+    query parameter.</p> '
+  name: FannedOutRequestMaxWaitMillis
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specifies whether the REST resource features for administering
+    WebLogic Server as a Java Service within a cloud environment should be enabled
+    in this domain.</p> '
+  name: JavaServiceResourcesEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true

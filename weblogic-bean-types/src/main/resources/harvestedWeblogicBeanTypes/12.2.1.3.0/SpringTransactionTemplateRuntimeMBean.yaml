@@ -1,0 +1,39 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean represents statistics gathered for org.springframework.transaction.support.TransactionTemplate '
+name: weblogic.management.runtime.SpringTransactionTemplateRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The display name of the Application Context that this bean
+    is from</p> '
+  name: ApplicationContextDisplayName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This returns the average elapsed time in milliseconds required
+    to execute</p> '
+  name: AverageExecuteTime
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Name of the Spring bean.</p> '
+  name: BeanId
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This returns the number of time execute was called</p> '
+  name: ExecuteCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of executes that failed</p> '
+  name: ExecuteFailedCount
+  type: long

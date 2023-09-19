@@ -1,0 +1,75 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.TargetMBean
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes:
+- weblogic.management.configuration.AdminVirtualTargetMBean
+descriptionHTML: 'This bean represents a target for a resource group in a partition.
+  It defines access point to resources, i.e. hostname, port, partition uri path. Moreover,
+  it provide configurations for each protocol, for example, http, t3, ssl, iiop etc. '
+name: weblogic.management.configuration.VirtualTargetMBean
+properties:
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Get the explicit port for this virtual target.</p> '
+  name: ExplicitPort
+  type: int
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Host names, separated by line breaks, for which this virtual
+    target will serve requests.</p> '
+  name: HostNames
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: PartitionChannel
+  descriptionHTML: '<p>The channel name to be used as a reference for creating a partition
+    specific channel.</p> '
+  excludeFromRest: ' '
+  name: PartitionChannel
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The port offset for this virtual target. If set to the minimum
+    value, the port offset is not set.</p> '
+  name: PortOffset
+  type: int
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>You must select a target from this list of the targets in the
+    current domain. Targets must be either servers or clusters. The deployment will
+    only occur once if the targets overlap. For example, if a deployment is deployed
+    both on a cluster C and on a server S that is a member of that cluster, the deployment
+    will be deployed on server S only once.</p> '
+  name: Targets
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.TargetMBean
+  writable: true
+- defaultValue:
+    value:
+      value: /
+  descriptionHTML: '<p>The URI prefix for this virtual target.</p> '
+  name: UriPrefix
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The web server representing the virtual web server for this
+    virtual target.</p> '
+  name: WebServer
+  relationship: containment
+  type: weblogic.management.configuration.WebServerMBean

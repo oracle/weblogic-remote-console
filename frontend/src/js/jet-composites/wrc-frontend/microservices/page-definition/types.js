@@ -255,7 +255,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
               legalValue.value = NULL_VALUE;
             }
             if (legalValue.value === propertyValue) {
-              retval = legalValue.label;
+              retval = (CoreUtils.isNotUndefinedNorNull(legalValue.label) ? legalValue.label : legalValue.value);
               break;
             }
           }
@@ -490,7 +490,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         }
 
         // No data value, simply return the display value
-        if (value === null) {
+        if (value === null && CoreUtils.isUndefinedOrNull(this.pdjTypes[propertyName].legalValues)) {
           return displayValue;
         }
 
@@ -526,6 +526,12 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             if ((displayValue !== null) && this.isArray(propertyName)) {
               // For a string array, get a display value for a text area
               result = PageDefinitionUtils.getArrayOfStringDisplayValue(value, '\n');
+            } else {
+              if (this.pdjTypes[propertyName].legalValues !== undefined){
+                if (value === null || value === '') {
+                  result = NULL_VALUE;
+                }
+              }
             }
             break;
           case 'int':
@@ -569,7 +575,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         }
 
         // No data value, simply return the display value
-        if (value === null) {
+        if (value === null && CoreUtils.isUndefinedOrNull(this.pdjTypes[propertyName].legalValues)) {
           return displayValue;
         }
 
@@ -599,6 +605,12 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             if ((displayValue !== null) && this.isArray(propertyName)) {
               // For a string array, get a display value for a text area
               result = PageDefinitionUtils.getArrayOfStringDisplayValue(value, '\n');
+            }  else {
+              if (this.pdjTypes[propertyName].legalValues !== undefined){
+                if (value === null || value === '') {
+                  result = NULL_VALUE;
+                }
+              }
             }
             break;
           case 'int':

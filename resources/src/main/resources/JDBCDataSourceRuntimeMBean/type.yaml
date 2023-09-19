@@ -13,6 +13,16 @@ subTypes:
 - type: weblogic.management.runtime.JDBCDataSourceRuntimeMBean
   value: JDBCDataSourceRuntime
 
+properties:
+- name: State
+  legalValues:
+  - value: Running
+  - value: Suspended
+  - value: Shutdown
+  - value: Unhealthy
+  - value: Overloaded
+  - value: Unknown
+
 # Note - the WLS console hides the actions of UCP data sources.
 # Also, it calls DataSourceRuntimeMBean.isOperationAllowed to
 # find out whether the data source currently supports the action.
@@ -29,47 +39,20 @@ subTypes:
 actions:
 - name: "start"
   label: "Start"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
 - name: "resume"
   label: "Resume"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
 - name: "suspend"
   label: "Suspend gracefully"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
 - name: "forceSuspend"
   label: "Force suspend"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
 - name: "shutdown"
   label: "Shutdown"
   helpLabel: "Shutdown gracefully"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
 - name: "forceShutdown"
   label: "Force shutdown"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
 - name: "shrink"
   label: "Shrink"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
 - name: "reset"
   label: "Reset"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
 - name: "clearStatementCache"
   label: "Clear cache"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10

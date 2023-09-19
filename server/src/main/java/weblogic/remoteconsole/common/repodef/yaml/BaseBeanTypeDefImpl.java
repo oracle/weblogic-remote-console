@@ -35,6 +35,7 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
   private List<BeanActionDefImpl> actionDefImpls;
   private List<BeanActionDef> actionDefs;
   private List<BaseBeanTypeDefImpl> subTypeDefImpls;
+  private List<BeanTypeDef> subTypeDefs;
 
   BaseBeanTypeDefImpl(BeanRepoDefImpl beanRepoDefImpl, String typeName) {
     this.beanRepoDefImpl = beanRepoDefImpl;
@@ -365,6 +366,8 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
 
   abstract List<BaseBeanTypeDefImpl> getInheritedTypeDefImpls();
 
+  abstract BaseBeanTypeDefImpl getDefaultSubTypeDefImpl();
+
   abstract BaseBeanTypeDefImpl getSubTypeDefImpl(String subTypeDiscriminator);
 
   @Override
@@ -374,15 +377,34 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
 
   abstract BeanPropertyDefImpl getSubTypeDiscriminatorPropertyDefImpl();
 
-  private synchronized List<BaseBeanTypeDefImpl> getSubTypeDefImpls() {
-    if (subTypeDefImpls != null) {
-      return subTypeDefImpls;
-    }
-    subTypeDefImpls = new ArrayList<>();
-    for (String disc : getSubTypeDiscriminatorLegalValues()) {
-      subTypeDefImpls.add(getSubTypeDefImpl(disc));
+  private List<BaseBeanTypeDefImpl> getSubTypeDefImpls() {
+    if (subTypeDefImpls == null) {
+      initializeSubTypeDefs();
     }
     return subTypeDefImpls;
+  }
+
+  @Override
+  public List<BeanTypeDef> getSubTypeDefs() {
+    if (subTypeDefImpls == null) {
+      initializeSubTypeDefs();
+    }
+    return subTypeDefs;
+  }
+
+  private synchronized void initializeSubTypeDefs() {
+    subTypeDefImpls = new ArrayList<>();
+    subTypeDefs = new ArrayList<>();
+    for (String disc : getSubTypeDiscriminatorLegalValues()) {
+      BaseBeanTypeDefImpl subTypeDefImpl = getSubTypeDefImpl(disc);
+      subTypeDefImpls.add(subTypeDefImpl);
+      subTypeDefs.add(subTypeDefImpl);
+    }
+    BaseBeanTypeDefImpl dflt = getDefaultSubTypeDefImpl();
+    if (dflt != null) {
+      subTypeDefImpls.add(dflt);
+      subTypeDefs.add(dflt);
+    }
   }
 
   @Override

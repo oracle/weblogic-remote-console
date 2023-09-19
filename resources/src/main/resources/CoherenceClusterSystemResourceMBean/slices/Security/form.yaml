@@ -7,7 +7,12 @@ introductionHTML: >
   </p>
 
 properties:
-  - name: "CoherenceClusterResource.CoherenceClusterParams.SecurityFrameworkEnabled"
+- name: "CoherenceClusterResource.CoherenceClusterParams.SecurityFrameworkEnabled"
+- name: "CoherenceClusterResource.CoherenceClusterParams.GlobalSocketProvider"
+- name: "CoherenceClusterResource.CoherenceClusterParams.SecuredProduction"
+- name: "CoherenceClusterResource.CoherenceClusterParams.CoherenceKeystoreParams.CoherenceClientAuth"
+- name: "CoherenceClusterResource.CoherenceClusterParams.CoherenceKeystoreParams.CoherenceIdentityAlias"
+- name: "CoherenceClusterResource.CoherenceClusterParams.CoherenceKeystoreParams.CoherencePrivateKeyPassPhrase"
 
 helpTopics:
 - label: "Configuring and Managing Coherence Clusters "

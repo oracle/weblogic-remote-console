@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -14,11 +14,12 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
-import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.repo.weblogic.WDTCapabilities;
 import weblogic.remoteconsole.server.repo.weblogic.WDTCompositePageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WDTModelBuilder;
 import weblogic.remoteconsole.server.repo.weblogic.WDTModelSchema;
@@ -85,6 +86,34 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
     return TYPE_NAME;
   }
 
+  private static JsonObject makeHelpClause(
+    InvocationContext ic,
+    LocalizableString summary,
+    LocalizableString detail
+  ) {
+    JsonObjectBuilder ret = Json.createObjectBuilder();
+    ret.add("helpSummaryHTML", ic.getLocalizer().localizeString(summary));
+    ret.add("helpDetailHTML", ic.getLocalizer().localizeString(detail));
+    return ret.build();
+  }
+
+  public static JsonObject getHelp(InvocationContext ic) {
+    JsonObjectBuilder ret = Json.createObjectBuilder();
+    ret.add("name",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.DATA_PROVIDER_HELP_NAME_SUMMARY,
+        LocalizedConstants.DATA_PROVIDER_HELP_NAME_DETAIL
+    ));
+    ret.add("file",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.WDT_COMPOSITE_PROVIDER_HELP_MODELS_SUMMARY,
+        LocalizedConstants.WDT_COMPOSITE_PROVIDER_HELP_MODELS_DETAIL
+    ));
+    return ret.build();
+  }
+
   @Override
   public String getName() {
     return name;
@@ -129,8 +158,8 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
     viewRoot.setPageRepo(
       new WDTCompositePageRepo(
         WebLogicMBeansVersions.getVersion(
-          WebLogicVersions.getCurrentVersion(),
-          WebLogicMBeansVersion.NO_CAPABILITIES
+          WebLogicVersions.getLatestVersion(),
+          WDTCapabilities.CAPABILITIES
         ),
         models,
         ic

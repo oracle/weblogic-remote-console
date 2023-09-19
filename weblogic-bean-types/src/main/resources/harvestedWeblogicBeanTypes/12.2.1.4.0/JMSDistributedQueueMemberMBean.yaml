@@ -1,0 +1,26 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.JMSDistributedDestinationMemberMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class represents a JMS distributed queue member, which represents
+  a physical JMS queue as a member of a single distributed set of queues that can
+  be served by multiple WebLogic Server instances within a cluster. '
+name: weblogic.management.configuration.JMSDistributedQueueMemberMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The physical JMS queue that is associated with this member
+    of the distributed queue set.</p> '
+  name: JMSQueue
+  relationship: reference
+  supported: false
+  type: weblogic.management.configuration.JMSQueueMBean
+  writable: true
+roles:
+  allowed:
+  - Deployer

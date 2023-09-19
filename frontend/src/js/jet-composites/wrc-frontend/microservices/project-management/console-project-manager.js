@@ -24,6 +24,7 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
             dataProvider = DataProviderManager.createAdminServerConnection({id: item.id, name: item.name, type: item.type, beanTrees: item.beanTrees || []  });
             if (CoreUtils.isNotUndefinedNorNull(item.url)) dataProvider.putValue('url', item.url);
             if (CoreUtils.isNotUndefinedNorNull(item.username)) dataProvider.putValue('username', item.username);
+            if (CoreUtils.isNotUndefinedNorNull(item.passwordEncrypted)) dataProvider.putValue('passwordEncrypted', item.passwordEncrypted);
             if (CoreUtils.isNotUndefinedNorNull(item.settings)) {
               // Copy all the settings
               dataProvider.putValue('settings', item.settings);

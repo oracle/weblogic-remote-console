@@ -1,0 +1,180 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Contains the properties used to control how dynamic servers are
+  created. These properties allow you to control if listens ports are calculated,
+  how servers are assigned to machines, and the number of dynamic servers to create.</p> '
+name: weblogic.management.configuration.DynamicServersMBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Specifies whether listen ports are calculated. '
+  name: CalculatedListenPorts
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'The CalculatedMachineNames attribute controls how server instances
+    in a dynamic cluster are assigned to a machine. If the attribute is not set, then
+    the dynamic servers will not be assigned to a machine. If the attribute is set,
+    then the MachineNameMatchExpression attribute is used to select the set of machines
+    to use for the dynamic servers. '
+  name: CalculatedMachineNames
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 900
+  descriptionHTML: 'Get the cool-off period (in seconds) used by the Elasticity Framework
+    while performing scale up or scale down operations. If a scale up or scale down
+    operation was performed, subsequent requests for scale up or down operations will
+    be ignored by the Elasticity Framework during this period. '
+  name: DynamicClusterCooloffPeriodSeconds
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: 'Get the timeout period (in seconds) used by the Elasticity Framework
+    while gracefully shutting down a server. If the server does not shut down before
+    the specified timeout period, the server will be forcibly shut down. With a negative
+    time value, no timeout will be applied. '
+  name: DynamicClusterShutdownTimeoutSeconds
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the current size of the dynamic cluster (the number of dynamic
+    server instances allowed to be created). The specified number of server instances
+    are dynamically added to the configuration at runtime and associated ServerLifeCycleRuntimeMBeans
+    are created. '
+  name: DynamicClusterSize
+  type: int
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Return an array of all the dynamic server names '
+  name: DynamicServerNames
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Indicates if the Elasticity Framework should ignore inflight HTTP
+    sessions while shutting down servers. '
+  name: IgnoreSessionsDuringShutdown
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the machine tag expression to use when selecting machine names.  If
+    the MachineMatchType is "name", each value will either match a machine name exactly
+    or, if specified with a trailing ''*'' suffix, will match multiple machine names.
+    If the MachineMatchType is "tag", the values will match all of the machines that
+    have all of the tag values. '
+  name: MachineMatchExpression
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: name
+  descriptionHTML: 'Get the machine tag expression to use when selecting machine names.  If
+    the MachineMatchType is "name", each value will either match a machine name exactly
+    or, if specified with a trailing ''*'' suffix, will match multiple machine names.
+    If the MachineMatchType is "tag", the values will match all of the machines that
+    have all of the tag values. '
+  legalValues:
+  - name
+  - tag
+  name: MachineMatchType
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The expression is used when determining machines to use for server
+    assignments. If null, then all machines in the domain are used. If a expression
+    is provided, then only the machines in the domain that match the expression will
+    be used when assigning machine names to dynamic servers.  The expression is a
+    comma separated set of values that specify the machines to match. Each value will
+    either match a machine name exactly or if specified with a trailing ''*'' suffix,
+    the value will match multiple machine names. '
+  name: MachineNameMatchExpression
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 8
+  descriptionHTML: 'Get the upper bound on the DynamicClusterSize that the Elasticity
+    Framework is allowed to assign to DynamicClusterSize. '
+  name: MaxDynamicClusterSize
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 Use getDynamicClusterSize() '
+  descriptionHTML: 'The maximum number of server instances allowed to be created.
+    This value should be set to the number of servers expected to be in the cluster.
+    The specified number of servers are dynamically added to the configuration at
+    runtime and associated ServerLifeCycleRuntimeMBeans are created. '
+  name: MaximumDynamicServerCount
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: 'Get the minimum number of running server instances that the Elasticity
+    Framework will attempt to keep in the dynamic cluster. '
+  name: MinDynamicClusterSize
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'The server name prefix is used to specify the naming convention
+    when creating server names. When the server name prefix is defined, server names
+    are calculated with the specified prefix followed by the index starting with the
+    value specified by getServerNameStartingIndex(). '
+  name: ServerNamePrefix
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: 'Get the starting index to use in server names.  Server names are
+    calculated with the prefix specified in getServerNamePrefix() followed by an index
+    starting with the value specified in this attribute. '
+  name: ServerNameStartingIndex
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The server template used to create dynamic servers. '
+  name: ServerTemplate
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.ServerTemplateMBean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Indicates if the Elasticity Framework should wait for all (persisted
+    and non-persisted) HTTP sessions during inflight work handling while shutting
+    down servers. '
+  name: WaitForAllSessionsDuringShutdown
+  type: boolean
+  writable: true

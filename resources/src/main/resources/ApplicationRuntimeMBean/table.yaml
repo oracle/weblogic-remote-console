@@ -1,16 +1,10 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-introductionHTML: '<p>An application represents a Java EE enterprise application packaged in an  EAR file
-  or EAR exploded directory.  The EAR file or directory contains a set of components such as WAR, EJB,
-  and RAR connector components, each of which can be deployed on one or more targets.  A target is a server
-  or a cluster.  Modules in the application can have one of the following states:</p>
-  <ul>
-    <li>UNPREPARED - Indicates that none of the modules in this application are currently prepared or active.</li>
-    <li>PREPARED -  Indicates that at least one module in this application is prepared, but none are active.</li>
-    <li>ACTIVATED - Indicates that at least one module in this application is currently active.</li>
-  </ul>
-  <p>ApplicationRuntimeMBean encapsulates runtime information about a  deployed enterprise application.</p>'
+introductionHTML: >
+  <p>This page, and its child pages, display runtime information about the deployed enterprise applications.</p>
+  <p>Note: Use 'App Deployment Runtimes', instead of this page, to start and stop an application,
+  see its intended and current state and to manage its deployment plan.</p>
 
 displayedColumns:
 - name: "Name"

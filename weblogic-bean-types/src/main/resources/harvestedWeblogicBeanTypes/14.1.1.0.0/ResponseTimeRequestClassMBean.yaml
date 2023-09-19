@@ -1,0 +1,32 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean defines the response time goal for this request class.  <p>
+  Response time goals can be used to differentiate request classes. We do not try
+  to meet a response time goal for an individual request. Rather we compute a tolerable
+  waiting time for a request class by subtracting the observed average thread use
+  time. Then we schedule requests so that the average wait for each request class
+  is in proportion to their tolerable waiting time. For example, consider we only
+  have two request classes, A and B, with response time goals 2000ms and 5000ms, respectively,
+  where the time an individual request uses a thread is much smaller. During a period
+  in which both request classes are sufficiently requested, say, zero think time and
+  more clients than threads, we schedule to keep the average response time in the
+  ratio 2:5 so that it is a common fraction or multiple of the stated goal. </p> '
+name: weblogic.management.configuration.ResponseTimeRequestClassMBean
+properties:
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p> A response time goal in milliseconds. </p> <p> You can either
+    define a response time goal or keep the -1 default value, which acts as a placeholder
+    for the response time goal. By doing so, you have not defined the response time
+    goal at run time but can define one later. </p> '
+  name: GoalMs
+  type: int
+  writable: true

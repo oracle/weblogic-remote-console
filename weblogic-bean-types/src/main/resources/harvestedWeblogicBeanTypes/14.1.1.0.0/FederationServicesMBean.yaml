@@ -1,0 +1,254 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean represents configuration for SAML 1.1-based Federation
+  Services, including the intersite transfer service, assertion consumer service,
+  and assertion retrieval service. '
+name: weblogic.management.configuration.FederationServicesMBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the Assertion Consumer Service requires SSL.</p> '
+  name: ACSRequiresSSL
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the Assertion Retrieval Service requires
+    SSL.</p> '
+  name: ARSRequiresSSL
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the Assertion Retrieval Service requires
+    two-way SSL authentication.</p> '
+  name: ARSRequiresTwoWaySSL
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'List of hosts to compare against the host in the SAML SP target
+    redirect URL. When the list is empty, the target redirect URL will not be checked. '
+  name: AllowedTargetHosts
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - /samlacs/acs
+  descriptionHTML: '<p>The Assertion Consumer URIs.</p> '
+  name: AssertionConsumerURIs
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - /samlars/ars
+  descriptionHTML: '<p>One or more URIs on which to listen for incoming assertion
+    retrieval requests.</p>  <p>For artifact profile, the destination site receives
+    a SAML artifact that represents a source site (why we need the source site ID
+    values) and an assertion ID. The destination site sends a request containing the
+    artifact to the source site''s assertion retrieval URL, and the source site responds
+    with the corresponding assertion. You may configure multiple URIs here, although
+    typically one will be sufficient. The URI includes the application context, followed
+    by the resource context. For example:</p>  <p><code> /my_application/saml/ars</code></p>  <p>which
+    would be accessible from the outside as <code>https://my.example.com/my_application/saml/ars</code></p> '
+  name: AssertionRetrievalURIs
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The class that provides persistent storage for assertions,
+    if you use an Assertion Store class other than the default class.</p> '
+  name: AssertionStoreClassName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Properties passed to Assertion Store class initStore() method.</p>
+    <p>This may be useful if you have implemented a custom Assertion Store class.</p> '
+  name: AssertionStoreProperties
+  restartNeeded: true
+  type: java.util.Properties
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the Destination Site is enabled.</p> '
+  name: DestinationSiteEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the Intersite Transfer Service requires SSL.</p> '
+  name: ITSRequiresSSL
+  type: boolean
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - /samlits_ba/its
+      - /samlits_ba/its/post
+      - /samlits_ba/its/artifact
+      - /samlits_cc/its
+      - /samlits_cc/its/post
+      - /samlits_cc/its/artifact
+  descriptionHTML: '<p>The Intersite Transfer URIs.</p> '
+  name: IntersiteTransferURIs
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the POST one-use check is enabled.</p> '
+  name: POSTOneUseCheckEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the POST recipient check is enabled. When
+    true, the recipient of the SAML Response must match the URL in the HTTP Request.</p> '
+  name: POSTRecipientCheckEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The alias used to store and retrieve the Destination Site''s
+    SSL client identity in the keystore.</p> '
+  name: SSLClientIdentityAlias
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The passphrase used to retrieve the Destination Site''s SSL
+    client identity from the keystore.</p> '
+  encrypted: true
+  name: SSLClientIdentityPassPhrase
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The encrypted passphrase used to retrieve the Destination Site''s
+    SSL client identity from the keystore.</p>  <p>To set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: SSLClientIdentityPassPhraseEncrypted
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The alias used to store and retrieve the Source Site''s signing
+    key in the keystore. This key is used to sign POST profile responses.</p> '
+  name: SigningKeyAlias
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The passphrase used to retrieve the Source Site''s signing
+    key from the keystore.</p> '
+  encrypted: true
+  name: SigningKeyPassPhrase
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The encrypted passphrase used to retrieve the Source Site''s
+    signing key from the keystore.</p>  <p>To set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: SigningKeyPassPhraseEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Source Site ID base64-encoded.</p> <p>This read-only value
+    is a Base64 representation of a 20-byte binary value that is calculated from the
+    <code>SourceSiteURL</code>. If you want to configure ARTIFACT profile with another
+    site, you will need to give a <code>SourceId</code> value to the other site. This
+    value is automatically updated when the <code>SourceSiteURL</code> changes.</p> '
+  name: SourceIdBase64
+  transient: true
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Source Site ID in hexadecimal.</p> <p>This read-only value
+    is a hexadecimal representation of a 20-byte binary value that is calculated from
+    the <code>SourceSiteURL</code>. If you want to configure ARTIFACT profile with
+    another site, you will need to give a <code>SourceId</code> value to the other
+    site. This value is automatically updated when the <code>SourceSiteURL</code>
+    changes.</p> '
+  name: SourceIdHex
+  transient: true
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Indicates whether the Source Site is enabled.</p> '
+  name: SourceSiteEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The URL for the Source Site.</p> '
+  name: SourceSiteURL
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The class used as the persistent store for the Used Assertion
+    Cache. When no class is specified, the default Used Assertion Cache implementation
+    is used.</p> '
+  name: UsedAssertionCacheClassName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Properties to be passed to the Used Assertion Cache class.</p> '
+  name: UsedAssertionCacheProperties
+  restartNeeded: true
+  type: java.util.Properties
+  writable: true

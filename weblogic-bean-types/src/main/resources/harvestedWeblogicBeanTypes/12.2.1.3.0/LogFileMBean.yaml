@@ -1,0 +1,154 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.CommonLogMBean
+- weblogic.management.configuration.DataSourceLogFileMBean
+- weblogic.management.configuration.JMSSAFMessageLogFileMBean
+- weblogic.management.configuration.JMSMessageLogFileMBean
+- weblogic.management.configuration.WebServerLogMBean
+descriptionHTML: 'Configures the location, file-rotation criteria, and number of files
+  that a WebLogic Server uses to store log messages. The methods in this class configure
+  both server and domain log files. '
+name: weblogic.management.configuration.LogFileMBean
+properties:
+- defaultValue:
+    value:
+      value: 8
+  descriptionHTML: 'Gets the underlying log buffer size in kilobytes '
+  name: BufferSizeKB
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The date format pattern used for rendering dates in the  log.
+    The DateFormatPattern string conforms to the specification of the <code>java.text.SimpleDateFormat</code>
+    class.</p> '
+  name: DateFormatPattern
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    productionModeValue:
+      value: 100
+    value:
+      value: 7
+  descriptionHTML: '<p>The maximum number of log files that the server creates when
+    it rotates the log. This number does not include the file that the server uses
+    to store current messages. (Requires that you enable Number of Files Limited.)</p> '
+  name: FileCount
+  type: int
+  writable: true
+- defaultValue:
+    productionModeValue:
+      value: 5000
+    value:
+      value: 500
+  descriptionHTML: 'The size (1 - 2097150 kilobytes) that triggers the server to move
+    log messages to a separate file. The default is 500 kilobytes. After the log file
+    reaches the specified minimum size, the next time the server checks the file size,
+    it will rename the current log file as <code><i>SERVER_NAME</i>.log<i>nnnnn</i></code>
+    and create a new one to store subsequent messages. (Requires that you specify
+    a file rotation type of <code>Size</code>.) '
+  name: FileMinSize
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The name of the file that stores current log messages. Usually
+    it is a computed value based on the name of the parent of this MBean. For example,
+    for a server log, it is <code><i>SERVER_NAME</i>.log</code>.</p> <p> However,
+    if the name of the parent cannot be obtained, the file name is <code>weblogic.log</code>.
+    If you specify a relative pathname, it is interpreted as relative to the server''s
+    root directory.</p>  <p>To include a time and date stamp in the file name when
+    the log file is rotated, add <code>java.text.SimpleDateFormat</code> variables
+    to the file name. Surround each variable with percentage (<code>%</code>) characters.</p>  <p>For
+    example, if the file name is defined to be <code>myserver_%yyyy%_%MM%_%dd%_%hh%_%mm%.log</code>,
+    the log file will be named <code>myserver_yyyy_mm_dd_hh_mm.log</code>.</p>  <p>When
+    the log file is rotated, the rotated file name contains the date stamp. For example,
+    if the log file is rotated for the first time on 2 April, 2003 at 10:05 AM, the
+    log file that contains the old messages will be named <code>myserver_2003_04_02_10_05.log00001</code>.</p>  <p>If
+    you do not include a time and date stamp, the rotated log files are numbered in
+    order of creation. For example, <code>myserver.log00007</code>.</p> '
+  name: FileName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 24
+  descriptionHTML: '<p>The interval (in hours) at which the server saves old log messages
+    to another file. (Requires that you specify a file rotation type of <code>TIME</code>.)</p> '
+  name: FileTimeSpan
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The directory where the rotated log files will be stored. By
+    default the rotated files are stored in the same directory where the log file
+    is stored.</p> '
+  name: LogFileRotationDir
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    productionModeValue:
+      value: true
+    value:
+      value: true
+  descriptionHTML: '<p>Indicates whether to limit the number of log files that this
+    server instance creates to store old messages. (Requires that you specify a file
+    rotation type of <code>SIZE</code> or <code>TIME</code>.)</p>  <p>After the server
+    reaches this limit, it deletes the oldest log file and creates a new log file
+    with the latest suffix.</p>  <p>If you do not enable this option, the server creates
+    new files indefinitely and you must clean up these files as you require.</p> '
+  name: NumberOfFilesLimited
+  type: boolean
+  writable: true
+- defaultValue:
+    productionModeValue:
+      value: false
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether a server rotates its log file during its
+    startup cycle. The default value in production mode is false.</p> '
+  name: RotateLogOnStartup
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 00:00
+  descriptionHTML: '<p>Determines the start time (hour and minute) for a time-based
+    rotation sequence.</p>  <p>At the time that this value specifies, the server renames
+    the current log file. Thereafter, the server renames the log file at an interval
+    that you specify in File Time Span.</p>  <p>Note that WebLogic Server sets a threshold
+    size limit of 500 MB before it forces a hard rotation to prevent excessive log
+    file growth.</p>  <p>Use the following format: <code>H:mm</code>, where</p> <ul>
+    <li><code>H</code> is Hour in day (0-23)</li> <li><code>mm</code> is the minute
+    in hour</li> </ul> '
+  name: RotationTime
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: bySize
+  descriptionHTML: '<p>Criteria for moving old log messages to a separate file.</p>
+    <ul> <li><code>NONE</code> Messages accumulate in a single file. You must erase
+    the contents of the file when the size is too large. Note that WebLogic Server
+    sets a threshold size limit of 500 MB before it forces a hard rotation to prevent
+    excessive log file growth.</li>  <li><code>SIZE</code> When the log file reaches
+    the size that you specify in <code>FileMinSize</code>, the server renames the
+    file as <code><i>SERVER_NAME</i>.log<i>nnnnn</i></code>.</li>  <li><code>TIME</code>
+    At each time interval that you specify in <code>TimeSpan</code>, the server renames
+    the file as <code><i>SERVER_NAME</i>.log<i>nnnnn</i></code>.</li> </ul>  <p>After
+    the server renames a file, subsequent messages accumulate in a new file with the
+    name that you specified as the log file name.</p> '
+  legalValues:
+  - bySize
+  - byTime
+  - none
+  name: RotationType
+  type: java.lang.String
+  writable: true

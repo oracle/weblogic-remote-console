@@ -286,16 +286,18 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     beanFilter.setPropertyName(sourcePropertyDef.getFormFieldName());
     if (!sourcePropertyDef.isArray()) {
       completed = true;
+      boolean isEnum = !sourcePropertyDef.getLegalValueDefs().isEmpty();
       if (sourcePropertyDef.isString() || sourcePropertyDef.isHealthState()) {
-        completeStringPropertyFilter(beanFilter, criteria, value);
+        completeStringPropertyFilter(isEnum, beanFilter, criteria, value);
+      } else if (sourcePropertyDef.isInt()) {
+        completeNumberPropertyFilter(isEnum, beanFilter, criteria, value);
       } else if (
-        sourcePropertyDef.isInt()
-          || sourcePropertyDef.isLong()
+        sourcePropertyDef.isLong()
           || sourcePropertyDef.isDouble()
           || sourcePropertyDef.isDate()
           || sourcePropertyDef.isDateAsLong()
       ) {
-        completeNumberPropertyFilter(beanFilter, criteria, value);
+        completeNumberPropertyFilter(false, beanFilter, criteria, value);
       } else if (sourcePropertyDef.isBoolean()) {
         completeBooleanPropertyFilter(beanFilter, criteria, value);
       } else {
@@ -308,14 +310,19 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     return beanFilter;
   }
 
-  private static void completeStringPropertyFilter(SearchBeanFilter beanFilter, String criteria, Value value) {
+  private static void completeStringPropertyFilter(
+    boolean isEnum,
+    SearchBeanFilter beanFilter,
+    String criteria,
+    Value value
+  ) {
     SearchValueFilter valueFilter = new SearchValueFilter();
     if (CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
       valueFilter.setEquals(value);
     } else if (CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
       valueFilter.setEquals(value);
       beanFilter.setMatches(false);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
       valueFilter.setContains(value.asString().getValue());
     } else {
       throw new AssertionError("Unsupported string property criteria:" + criteria);
@@ -323,20 +330,25 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     beanFilter.setValueFilter(valueFilter);
   }
 
-  private static void completeNumberPropertyFilter(SearchBeanFilter beanFilter, String criteria, Value value) {
+  private static void completeNumberPropertyFilter(
+    boolean isEnum,
+    SearchBeanFilter beanFilter,
+    String criteria,
+    Value value
+  ) {
     SearchValueFilter valueFilter = new SearchValueFilter();
     if (CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
       valueFilter.setEquals(value);
     } else if (CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
       valueFilter.setEquals(value);
       beanFilter.setMatches(false);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN.equals(criteria)) {
       valueFilter.setLessThan(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS.equals(criteria)) {
       valueFilter.setLessThanOrEquals(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN.equals(criteria)) {
       valueFilter.setGreaterThan(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS.equals(criteria)) {
       valueFilter.setGreaterThanOrEquals(value);
     } else {
       throw new AssertionError("Unsupported number property criteria:" + criteria);

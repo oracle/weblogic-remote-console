@@ -1,0 +1,27 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.runtime.EditSessionConfigurationManagerMBean
+properties:
+- array: true
+  creators:
+  - weblogic.management.runtime.EditSessionConfigurationRuntimeMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns a list of edit session configuration runtime MBeans.
+    These MBeans contain information about the edit session configurations in this
+    domain.</p> If running in a partition, then only partition specific configuration
+    will be returned. '
+  name: EditSessionConfigurations
+  relationship: containment
+  type: weblogic.management.runtime.EditSessionConfigurationRuntimeMBean
+roles:
+  allowed:
+  - Deployer

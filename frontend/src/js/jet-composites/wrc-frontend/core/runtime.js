@@ -37,11 +37,13 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				properties['console-frontend.logging.defaultLevel'] = config['settings']['logging']['defaultLevel'];
 				properties['console-backend.pollingMillis'] = config['console-backend']['pollingMillis'];
 				properties['console-backend.retryAttempts'] = config['console-backend']['retryAttempts'];
+				properties['console-backend.docs'] = config['console-backend']['docs'];
 				properties['settings.autoSync.minimumSecs'] = config['settings']['autoSync']['minimumSecs'];
 				properties['settings.autoDownloadTimer.minimumSecs'] = config['settings']['autoDownloadTimer']['minimumSecs'];
 				properties['settings.sso.maxPollCount'] = config['settings']['sso']['maxPollCount'];
 				properties['settings.sso.domainLoginUri'] = config['settings']['sso']['domainLoginUri'];
 				properties['settings.actions'] = config['settings']['actions'];
+				properties['settings.polling'] = config['settings']['polling'];
 				properties['settings.projectManagement.location'] = config['settings']['projectManagement']['location'];
 				properties['settings.projectManagement.startup.task'] = config['settings']['projectManagement']['startup']['task'];
 				properties['settings.projectManagement.startup.project'] = config['settings']['projectManagement']['startup']['project'];
@@ -98,11 +100,13 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				CFE_STARTUP_PROJECT: {name: 'settings.projectManagement.startup.project'},
 				CFE_STARTUP_TASK: {name: 'settings.projectManagement.startup.task'},
 				CFE_ACTIONS: {name: 'settings.actions'},
+				CFE_POLLING: {name: 'settings.polling'},
 				CBE_PROVIDER_ID: {name: 'console-backend.providerId'},
 				CBE_NAME: {name: 'console-backend.name'},
 				CBE_VERSION: {name: 'console-backend.version'},
 				CBE_WLS_VERSION_ONLINE: {name: 'weblogic.version.online'},
 				CBE_WLS_USERNAME: {name: 'console-backend.weblogic.username'},
+				CBE_INTERNAL_DOCS_URL: {name: 'console-backend.docs'},
 				CBE_DOMAIN_URL: {name: 'console-backend.domain.url'},
 				CBE_DOMAIN: {name: 'console-backend.domain'},
 				CBE_DOMAIN_CONNECT_STATE: {name: 'console-backend.domainConnectState'},
@@ -141,6 +145,10 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				return properties['settings.actions'];
 			},
 
+			getActionPollings: () => {
+				return properties['settings.polling'];
+			},
+
 			getPollingMillis: function () {
 				return parseInt(this.getProperty(this.PropertyName.CBE_POLLING_MILLIS));
 			},
@@ -163,6 +171,10 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 
 			getDomainConnectState: function () {
 				return this.getProperty(this.PropertyName.CBE_DOMAIN_CONNECT_STATE);
+			},
+
+			getDocsURL: function () {
+				return properties['console-backend.docs'];
 			},
 
 			getLoggingLevel: function () {

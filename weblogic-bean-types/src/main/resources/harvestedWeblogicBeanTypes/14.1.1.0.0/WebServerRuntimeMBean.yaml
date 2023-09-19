@@ -1,0 +1,31 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Describes a Web Server (HTTP Server) '
+name: weblogic.management.runtime.WebServerRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether it is the default WebServer or a VirtualHost</p> '
+  name: DefaultWebServer
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the log runtime associated with http access log</p> '
+  name: LogRuntime
+  relationship: containment
+  type: weblogic.management.runtime.LogRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the name of the WebServer.</p> '
+  name: WebServerName
+  type: java.lang.String
+roles:
+  allowed:
+  - Operator

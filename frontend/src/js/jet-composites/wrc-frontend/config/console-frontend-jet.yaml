@@ -1,11 +1,12 @@
 name: WebLogic Remote Console
-version: '2.4.5'
+version: '2.4.6'
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
   version: '1.0'
   baseUrl: 'http://localhost:8012'
   pollingMillis: 60000
   retryAttempts: 5
+  docs: 'https://oracle.github.io/weblogic-remote-console/'
   services:
     - id: configuration
       path: /configuration
@@ -96,6 +97,18 @@ settings:
       iconFile: action-export-3d-icon-blk_24x24
     - id: importMessages
       iconFile: action-import-3d-icon-blk_24x24
+    - id: edit
+      iconFile: action-edit-icon-blk_24x24
+    - id: redeploy
+      iconFile: action-redeploy-icon-blk_24x24
+    - id: update
+      iconFile: action-update-icon-blk_24x24
+    - id: createPlan
+      iconFile: action-create-icon-blk_24x24
+    - id: refreshCache
+      iconFile: action-refresh-icon-blk_24x24
+    - id: purgeCompletedDeploymentProgressObjects
+      iconFile: delete-icon-blk_24x24
   projectManagement:
     startup:
       task: choose

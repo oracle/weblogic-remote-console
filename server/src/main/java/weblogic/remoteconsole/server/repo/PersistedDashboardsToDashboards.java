@@ -184,7 +184,8 @@ class PersistedDashboardsToDashboards {
     }
     PagePropertyDef sourceDef = propertyDef.getSourcePropertyDef();
     if (sourceDef.isString() || sourceDef.isHealthState()) {
-      return computeStringProperty(propertyDef, filter);
+      boolean isEnum = !sourceDef.getLegalValueDefs().isEmpty();
+      return computeStringProperty(isEnum, propertyDef, filter);
     }
     if (sourceDef.isInt()) {
       return computeIntProperty(propertyDef, filter);
@@ -210,6 +211,7 @@ class PersistedDashboardsToDashboards {
   // Compute an in-memory string property of a custom filtering dashboard by
   // starting with its default unfiltered one then overlaying its persisted filter.
   private static CustomFilteringDashboardProperty computeStringProperty(
+    boolean isEnum,
     CustomFilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
@@ -224,14 +226,20 @@ class PersistedDashboardsToDashboards {
         criteria = CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS;
       }
     }
-    if (criteria == null) {
-      value = filter.getContains();
-      if (value != null) {
-        criteria = CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS;
+    if (isEnum) {
+      if (criteria == null) {
+        throw new AssertionError(getPropertyPath(propertyDef) + " must specify == or !=");
       }
-    }
-    if (criteria == null) {
-      throw new AssertionError(getPropertyPath(propertyDef) + " must specify ==, != or contains");
+    } else {
+      if (criteria == null) {
+        value = filter.getContains();
+        if (value != null) {
+          criteria = CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS;
+        }
+      }
+      if (criteria == null) {
+        throw new AssertionError(getPropertyPath(propertyDef) + " must specify ==, != or contains");
+      }
     }
     return
       new CustomFilteringDashboardProperty(
@@ -247,7 +255,8 @@ class PersistedDashboardsToDashboards {
     CustomFilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
-    String criteria = getNumberPropertyCriteria(propertyDef, filter);
+    boolean isEnum = !propertyDef.getSourcePropertyDef().getLegalValueDefs().isEmpty();
+    String criteria = getNumberPropertyCriteria(isEnum, propertyDef, filter);
     Object value = getNumberPropertyValue(propertyDef, filter);
     try {
       return
@@ -352,8 +361,17 @@ class PersistedDashboardsToDashboards {
     }
   }
 
+  // Get the in-memory criteria for a persisted non-enum number property filter
+  private static String getNumberPropertyCriteria(
+    CustomFilteringDashboardPropertyDef propertyDef,
+    PersistedPropertyFilter filter
+  ) {
+    return getNumberPropertyCriteria(false, propertyDef, filter);
+  }
+
   // Get the in-memory criteria for a persisted number property filter
   private static String getNumberPropertyCriteria(
+    boolean isEnum,
     CustomFilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
@@ -363,19 +381,23 @@ class PersistedDashboardsToDashboards {
     if (filter.getNotEquals() != null) {
       return CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS;
     }
-    if (filter.getLessThan() != null) {
-      return CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN;
+    if (isEnum) {
+      throw new AssertionError(getPropertyPath(propertyDef) + " must specify == or !=");
+    } else {
+      if (filter.getLessThan() != null) {
+        return CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN;
+      }
+      if (filter.getLessThanOrEquals() != null) {
+        return CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS;
+      }
+      if (filter.getGreaterThan() != null) {
+        return CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN;
+      }
+      if (filter.getGreaterThanOrEquals() != null) {
+        return CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS;
+      }
+      throw new AssertionError(getPropertyPath(propertyDef) + " must specify ==, !=, <, <=, > or >=");
     }
-    if (filter.getLessThanOrEquals() != null) {
-      return CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS;
-    }
-    if (filter.getGreaterThan() != null) {
-      return CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN;
-    }
-    if (filter.getGreaterThanOrEquals() != null) {
-      return CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS;
-    }
-    throw new AssertionError(getPropertyPath(propertyDef) + " must specify ==, !=, <, <=, > or >=");
   }
 
   // Get the in-memory value for a persisted number property filter

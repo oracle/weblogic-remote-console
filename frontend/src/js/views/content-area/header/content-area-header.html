@@ -1,26 +1,31 @@
 <!--
- Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 
 <div id="content-area-header-container" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
   <!-- row 1 -->
   <div class="oj-flex-item">
-    <span id="content-area-header-title" data-bind="text: [[headerTitle.label() + headerTitle.info()]]"></span>
-  </div>
+    <span id="content-area-header-title-label" data-bind="text: [[headerTitle.label()]]"></span>
+    <oj-bind-if test="[[headerTitle.description() !== '']]">
+<!--        DO NOT REMOVE
 
-  <!-- row 2 -->
-  <div id="content-area-header-toolbars" class="oj-flex-item">
-    <div id="content-area-header-toolbar" class="oj-flex oj-sm-flex-items-initial">
-      <!-- column 1, left-aligned -->
-      <div class="oj-flex-item oj-sm-padding-2x-horizontal">
-        <oj-module config="[[contentAreaHeaderButtonsToolbarModuleConfig]]"></oj-module>
-      </div>
-    </div>
-  </div>
+            Part of proving buttons-toolbar.js can successfully use
+            code shared with dataprovider.js.
+
+            <a id="data-provider-get-info" href="#" on-click="[[dataProviderInfoIconClickHandler]]">
+              <i :class="[[headerTitle.classList()]]"></i>
+              <span id="content-area-header-title-description" data-bind="text: [[headerTitle.description()]]"></span>
+            </a>
+-->
+            <span id="content-area-header-title-description" data-bind="text: [[headerTitle.description()]]"></span>
+          </oj-bind-if>
+        </div>
+        <!-- row 2 -->
+  <oj-module config="[[contentAreaHeaderButtonsToolbarModuleConfig]]"></oj-module>
 </div>
 
-<div id="message-container" class="oj-flex-item">
+<div id="message-container" class="oj-fl24ex-item">
   <oj-messages
     messages="[[messagesDataProvider]]"
     position="[[messagePosition]]"
@@ -37,3 +42,7 @@
     </template>
   </oj-messages>
 </div>
+
+<oj-popup :id="headerTitleInfoPopup">
+  <oj-module config="[[dataProviderInfoPopupModuleConfig]]"></oj-module>
+</oj-popup>

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -12,11 +12,13 @@ properties:
 - name: "DataSourceForAutomaticMigration"
 - name: "AutoMigrationTableName"
 - name: "AutoMigrationTableCreationDDLFile"
+- name: "AutoMigrationTableCreationPolicy"
 - name: "MemberDeathDetectorEnabled"
 - name: "DatabaseLessLeasingBasis.MemberDiscoveryTimeout"
 # excluded - name: "LeaderHeartbeatPeriod"
 - name: "AdditionalAutoMigrationAttempts"
 - name: "MillisToSleepBetweenAutoMigrationAttempts"
+- name: "RebalanceDelayPeriods"
 helpTopics:
 - label: "Developing JTA Applications for Oracle WebLogic Server "
   href: "wljta/index.html"

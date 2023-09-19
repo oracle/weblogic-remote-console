@@ -3,12 +3,15 @@
 
 introductionHTML: >
   <p>This page displays the list of Java EE applications and standalone application modules installed to this domain.</p>
-  <p>You can start and stop applications and modules from the domain using the controls on this page. Select the control, then in the next window, select the applications on which you want to perform the operation.</p>
+  <p>Use it to start and stop an application, view the application's intended and current state, and to manage the application's deployment plan.</p>
+  <p>Note: Use 'Application Runtimes', instead of this page, to view the applications' runtime information.</p>
 
 displayedColumns:
 - name: "Name"
+- name: "State.IntendedState"
 - name: "ApplicationName"
 - name: "ApplicationVersion"
+- name: "DeploymentPlan.PlanPath"
 
 actions:
 - name: "startActions"
@@ -27,3 +30,15 @@ actions:
     label: "Force stop now"
   - name: "stopToAdminMode"
     label: "Servicing non-administration requests"
+- name: "redeploy"
+- name: "update"
+- name: "createPlan"
+  rows: "one"
+
+helpTopics:
+- label: "Developing Applications for Oracle WebLogic Server"
+  href: "wlprg/index.html"
+  type: "edocs"
+- label: "Deploying Applications to Oracle WebLogic Server"
+  href: "depgd/index.html"
+  type: "edocs"

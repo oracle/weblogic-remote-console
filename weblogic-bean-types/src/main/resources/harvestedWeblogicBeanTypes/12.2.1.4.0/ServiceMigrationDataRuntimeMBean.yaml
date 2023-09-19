@@ -1,0 +1,58 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Runtime information about one past or ongoing migration. '
+name: weblogic.management.runtime.ServiceMigrationDataRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Name of the cluster '
+  name: ClusterName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Name of the server that acted as the coordinator for this migration. '
+  name: CoordinatorName
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Get all the destinations attempted for migration. '
+  name: DestinationsAttempted
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Where this object was migrated from '
+  name: MigratedFrom
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Where this object was migrated to '
+  name: MigratedTo
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'End time of migration '
+  name: MigrationEndTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Start time of migration '
+  name: MigrationStartTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Name of the object migrated '
+  name: ServerName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Status of the migration (SUCCESSFUL, IN_PROGRESS, or FAILED) '
+  name: Status
+  type: int

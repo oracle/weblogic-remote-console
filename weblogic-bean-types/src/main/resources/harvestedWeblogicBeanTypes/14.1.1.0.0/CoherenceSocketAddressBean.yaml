@@ -1,0 +1,41 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'A socket address for the Coherence Address Provider '
+name: weblogic.coherence.descriptor.wl.CoherenceSocketAddressBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The IP address. </p> '
+  name: Address
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'A unique name that identifies this Address Socket of an Address
+    Provider. '
+  key: true
+  name: Name
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The listen port. </p> '
+  name: Port
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+roles:
+  allowed:
+  - Deployer

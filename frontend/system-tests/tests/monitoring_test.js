@@ -208,7 +208,7 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
         file = "monitoringNavTreeServerMetricsAdminDiagnosticsMenu.png";
         try {
             await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Diagnostics",
-                "WLDF Archive Runtimes","JMSMessageLog/AdminJMSServer");
+                "Archive Runtimes","JMSMessageLog/AdminJMSServer");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -307,6 +307,130 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
                 console.log("TEST FAIL ");
             }
             await driver.sleep(2400);
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+    // Download AdminServer Diagnostic Data Access Runtimes DomainLog.json file
+    // Test if user is able to download DomainLog.json from Monitoring -> Environment ->
+    // Servers -> AdminServer -> Data Access Runtimes page.
+    //
+    it('10. Test Category: GAT/Risk1\n \t Test Scenario: Download Monitoring -> Environment -> Servers ' +
+        '-> AdminServer -> Logs and Archives -> DomainLog.json file', async function () {
+        file = "DownloadAdminServerDomainLogJsonFile.json"
+        try {
+            await admin.goToNavTreeLevelFourLink(driver,"monitoring","Environment",
+                "Servers","AdminServer","Diagnostics");
+            await driver.sleep(2400);
+            console.log("Click to expand Data Access Runtimes node");
+            await driver.findElement(By.xpath("//span[text()='Logs and Archives']")).click();
+            await driver.sleep(1200);
+            console.log("Click to select 2nd log file (DomainLog) to download");
+            await driver.findElement(By.xpath("(//input[@type='checkbox'])[7]")).click();
+            await driver.sleep(1200);
+            console.log("Click to download DomainLog file");
+            await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
+            await driver.sleep(1200);
+            console.log("Select file type as Json");
+            await driver.findElement(By.xpath("//span[contains(.,'As json')]")).click();
+            await driver.sleep(1200);
+            console.log("Click to close file download location dialog");
+            element = driver.findElement(By.css(".oj-fwk-icon-cross"));
+            if (element.isEnabled()) {
+                await element.click();
+                console.log("Successfully download and close 'DomainLog.json' file");
+                console.log("TEST PASS ");
+                await driver.sleep(1200);
+            }
+            else {
+                console.log("Fail to download and close 'DomainLog.json' file");
+                console.log("TEST FAIL ");
+            }
+            await driver.sleep(1200);
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+
+    // Download DataSourceLog.txt file from Monitoring -> Diagnostics -> WLDF Data Access Runtimes ->
+    // DataSourceLog -> AdminServer page
+    //
+    it('11. Test Category: GAT/Risk1\n \t Test Scenario: Download DataSourceLog.txt file from Monitoring -> ' +
+        'Logs and Archives -> DataSourceLog -> AdminServer page', async function () {
+        file = "DownloadDataSourceLogTxtFile.json"
+        try {
+            await admin.goToNavTreeLevelThreeLink(driver,"monitoring","Diagnostics",
+                "Logs and Archives","DataSourceLog");
+            await driver.sleep(2400);
+
+            console.log("Click to select AdminServer DataAccessRuntime DataSourceLog file");
+            await driver.findElement(By.xpath("//oj-selector[@id='table_table_selector_0']")).click();
+            await driver.sleep(1200);
+            console.log("Click to download DomainLog file");
+            await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
+            await driver.sleep(1200);
+            console.log("Select file type as Text");
+            await driver.findElement(By.xpath("//span[contains(.,'As text')]")).click();
+            await driver.sleep(1200);
+            console.log("Click to close file download location dialog");
+            element = driver.findElement(By.css(".oj-fwk-icon-cross"));
+            if (element.isEnabled()) {
+                await element.click();
+                console.log("Successfully download and close 'DataSourceLog.txt' file");
+                console.log("TEST PASS ");
+                await driver.sleep(1200);
+            }
+            else {
+                console.log("Fail to download and close 'DataSourceLog.txt' file");
+                console.log("TEST FAIL ");
+            }
+            await driver.sleep(1200);
+        } catch (e) {
+            await admin.takeScreenshot(driver, file);
+            console.log(e.toString() + " TEST FAIL");
+        }
+    })
+
+    // Download AdminServer Diagnostic Logs and Archives EventsDataArchive.txt file
+    // Test if user is able to download EventsDataArchive.txt from Monitoring -> Environment ->
+    // Servers -> AdminServer ->Logs and Archives page
+    //
+    it('12. Test Category: GAT/Risk1\n \t Test Scenario: Download Monitoring -> Environment -> Servers ' +
+        '-> AdminServer -> Logs and Archives -> EventsDataArchive.txt file', async function () {
+        file = "DownloadEventsDataArchiveTxtFile.json"
+        try {
+            await admin.goToNavTreeLevelFiveLink(driver,"monitoring","Environment",
+                "Servers","AdminServer","Diagnostics","Logs and Archives");
+            await driver.sleep(2400);
+            //console.log("Click to expand Logs and Archives node");
+            //await driver.findElement(By.xpath("//span[text()='Logs and Archives]")).click();
+            //await driver.sleep(1200);
+            console.log("Click to select 3rd log file (EventsDataArchive) to download");
+            await driver.findElement(By.xpath("(//input[@type='checkbox'])[9]")).click();
+            await driver.sleep(1200);
+            console.log("Click to download DomainLog file");
+            await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
+            await driver.sleep(1200);
+            console.log("Select file type as text");
+            await driver.findElement(By.xpath("//span[contains(.,'As text')]")).click();
+            await driver.sleep(1200);
+            console.log("Click to close file download location dialog");
+            element = driver.findElement(By.css(".oj-fwk-icon-cross"));
+            if (element.isEnabled()) {
+                await element.click();
+                console.log("Successfully download and close 'EventsDataArchive.txt' file");
+                console.log("TEST PASS ");
+                await driver.sleep(1200);
+            }
+            else {
+                console.log("Fail to download and close 'EventsDataArchive.txt' file");
+                console.log("TEST FAIL ");
+            }
+            await driver.sleep(1200);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
             console.log(e.toString() + " TEST FAIL");

@@ -1,0 +1,21 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This RuntimeMBean exposes information about all active timers present
+  in the WebLogic timer implementation. '
+name: weblogic.management.runtime.TimerRuntimeMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Runtime information about all timers '
+  excludeFromRest: No default REST mapping for Timer
+  name: Timers
+  supported: false
+  type: weblogic.management.runtime.Timer

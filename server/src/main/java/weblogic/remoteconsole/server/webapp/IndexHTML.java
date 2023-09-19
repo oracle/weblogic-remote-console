@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -51,7 +51,7 @@ public class IndexHTML {
         }
       }
       if (!selectedLang.equals("en")) {
-        resource = resource.replace("<html lang=\"en\">", "<html lang=\"" + selectedLang + "\">");
+        resource = resource.replace("<html lang=\"en-US\">", "<html lang=\"" + selectedLang + "\">");
       }
       // cache it
       resources.put(selectedLang,resource);

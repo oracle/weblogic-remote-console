@@ -1,0 +1,35 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean is used to specify domain-wide defaults for the CDI
+  container</p> '
+name: weblogic.management.configuration.CdiContainerMBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>This flag may be used to limit implicit Bean discovery</p> '
+  name: ImplicitBeanDiscoveryEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: Enabled
+  descriptionHTML: '<p>Indicates the CDI policy.  CDI can be "Enabled" (the default)
+    or "Disabled". If CDI is disabled then no CDI processing will occur including
+    scanning of pojos and initialization of Weld and CDI will not be available to
+    the application via the CDI apis.  </p> '
+  legalValues:
+  - Enabled
+  - Disabled
+  name: Policy
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

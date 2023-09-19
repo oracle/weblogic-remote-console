@@ -139,12 +139,8 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
             this.putValue('connectivity', responsePayload.connectivity || CoreTypes.Console.RuntimeMode.DETACHED.name);
             this.putStatus('domainVersion',responsePayload.domainVersion || '');
             this.putStatus('domainName', responsePayload.domainName || '');
-            if (CoreUtils.isNotUndefinedNorNull(responsePayload.links)){
-              this.putValue('linkLabel', responsePayload.links[0].label);
-              this.putValue('linkResourceData', responsePayload.links[0].resourceData);
-            }else {
-              this.putValue('linkLabel', '');
-              this.putValue('linkResourceData', '');
+            if (CoreUtils.isNotUndefinedNorNull(responsePayload.domainStatus)){
+              this.putValue('domainStatus', responsePayload.domainStatus);
             }
             if (CoreUtils.isNotUndefinedNorNull(responsePayload.roles)) this.putStatus('userRoles', responsePayload.roles.join(','));
             if (this['state'] === CoreTypes.Domain.ConnectState.CONNECTED.name) this.putValue('activationDatetime', new Date());
@@ -283,7 +279,7 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
               name: root.name,
               type: nameSwitch(root.name)
             };
-            beanTree['provider'] = {id: this.id, name: this.name};
+            beanTree['provider'] = {id: this.id, name: this.name, type: this.type};
             if (CoreUtils.isNotUndefinedNorNull(root.download)) beanTree['download'] = root.download;
             if (CoreUtils.isNotUndefinedNorNull(root.navtree)) beanTree['navtree'] = root.navtree;
             if (CoreUtils.isNotUndefinedNorNull(root.changeManager)) beanTree['changeManager'] = root.changeManager;

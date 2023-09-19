@@ -1,0 +1,41 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'The top of the Coherence Application bean tree. '
+name: weblogic.coherence.app.descriptor.wl.CoherenceApplicationBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Coherence ApplicationLifecycleEventListener parameters
+    that have been defined for this CoherenceApplicationBean. </p> '
+  name: ApplicationLifecycleListener
+  relationship: containment
+  type: weblogic.coherence.app.descriptor.wl.ApplicationLifecycleListenerBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Coherence Cache Configuration parameters that have been
+    defined for this CoherenceApplicationBean. </p> '
+  name: CacheConfigurationRef
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Coherence ApplicationLifecycleEventListener parameters
+    that have been defined for this CoherenceApplicationBean. </p> '
+  name: ConfigurableCacheFactoryConfig
+  relationship: containment
+  type: weblogic.coherence.app.descriptor.wl.ConfigurableCacheFactoryConfigBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Coherence pof Configuration parameters that have been defined
+    for this CoherenceApplicationBean. </p> '
+  name: PofConfigurationRef
+  type: java.lang.String
+roles:
+  allowed:
+  - Deployer

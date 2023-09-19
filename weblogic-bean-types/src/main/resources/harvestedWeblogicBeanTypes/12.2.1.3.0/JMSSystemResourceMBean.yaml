@@ -1,0 +1,43 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.SystemResourceMBean
+derivedTypes:
+- weblogic.management.configuration.JMSInteropModuleMBean
+descriptionHTML: 'This bean defines a system-level JMS resource.  It links a separate
+  descriptor that specifies the definition. '
+name: weblogic.management.configuration.JMSSystemResourceMBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The name of the file that contains the module configuration.
+    By default the file resides in the DOMAIN_DIR/config/jms directory.</p> <p>The
+    module file derives its name from the bean name using the following pattern:</p>
+    <p> &lt;beanName&gt;.xml </p> <p>Note that this is a read-only property that can
+    only be set when the bean is created.</p> '
+  name: DescriptorFileName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: JMSResource
+  relationship: containment
+  transient: true
+  type: weblogic.j2ee.descriptor.wl.JMSBean
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The user-specified name of this MBean instance.</p>  <p>This
+    name is included as one of the key properties in the MBean''s <code>javax.management.ObjectName</code>:</p>  <p><code>Name=<i>user-specified-name</i></code></p> '
+  key: true
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer
+  - Deployer

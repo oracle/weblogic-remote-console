@@ -1,0 +1,20 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.management.security.authorization.PredicateEditorMBean
+descriptionHTML: 'This MBean reads data about predicates and their arguments.  This
+  is a type-safe interface for a WebLogic Server MBean, which you can import into
+  your client classes and access through <code>weblogic.management.MBeanHome</code>.
+  As of 9.0, the <code>MBeanHome</code> interface and all type-safe interfaces for
+  WebLogic Server MBeans are deprecated. Instead, client classes that interact with
+  WebLogic Server MBeans should use standard JMX design patterns in which clients
+  use the <code>javax.management.MBeanServerConnection</code> interface to discover
+  MBeans, attributes, and attribute types at runtime. '
+name: weblogic.management.security.authorization.PredicateReaderMBean
+properties: [
+  ]

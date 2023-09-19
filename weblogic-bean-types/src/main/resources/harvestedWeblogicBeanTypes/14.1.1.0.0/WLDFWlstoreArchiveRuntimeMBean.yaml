@@ -1,0 +1,44 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.WLDFEditableArchiveRuntimeMBean
+- weblogic.diagnostics.accessor.runtime.WlstoreArchiveRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Use this interface to retrieve statistical information associated
+  with WLDF archives that use WebLogic Store for data storage.</p> '
+name: weblogic.management.runtime.WLDFWlstoreArchiveRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: DeletionCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: DeletionTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: IndexPageCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: InsertionCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: InsertionTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: RecordCount
+  type: long

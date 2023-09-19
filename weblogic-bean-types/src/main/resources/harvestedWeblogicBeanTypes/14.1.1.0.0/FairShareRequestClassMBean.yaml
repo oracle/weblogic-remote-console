@@ -1,0 +1,30 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This mbean defines the fair share value to use for this request
+  class. One of the components of work managers is a request class that indicates
+  the proportional of the total server thread use time this request class gets. The
+  default fair share value is 50. <p> Fair shares are reflected in scheduling logic
+  such that as long as multiple fair shares compete, the average number of threads
+  used by each is in proportion to their fair share. For example, consider we only
+  have two fair shares, A and B, having a fair share of 80 and 20, respectively. During
+  a period in which both fair shares are sufficiently requested, say, zero think time
+  and more clients than threads, the probability that a thread will work on behalf
+  of A or B will tend toward 80% or 20%, respectively. The scheduling logic ensures
+  this even when A tends to use a thread for much longer than B. </p> <p> Fair share
+  values can range from 1 to 1000. The default fair share value is 50. </p> '
+name: weblogic.management.configuration.FairShareRequestClassMBean
+properties:
+- defaultValue:
+    value:
+      value: 50
+  descriptionHTML: 'Fair share value '
+  name: FairShare
+  type: int
+  writable: true

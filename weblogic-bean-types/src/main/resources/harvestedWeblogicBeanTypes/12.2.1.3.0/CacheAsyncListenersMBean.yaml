@@ -1,0 +1,26 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.configuration.CacheAsyncListenersMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Specify if listeners must be fired asynchronously '
+  name: Enabled
+  type: boolean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'The work manager to be used for firing event listeners asynchronously '
+  name: WorkManager
+  nullable: true
+  type: java.lang.String
+  writable: true

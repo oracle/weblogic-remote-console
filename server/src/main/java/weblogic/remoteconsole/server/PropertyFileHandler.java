@@ -22,6 +22,7 @@ import javax.json.JsonReader;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
+import static java.util.logging.Level.FINEST;
 import static java.util.logging.Level.WARNING;
 
 public final class PropertyFileHandler implements Runnable {
@@ -50,6 +51,9 @@ public final class PropertyFileHandler implements Runnable {
   }
 
   private void parseAndSetProxy(String string) throws IOException {
+    if (string.equalsIgnoreCase("direct")) {
+      return;
+    }
     // Would love to use URL parsing, but "socks" is not recognized
     if (!string.contains("://") || (string.lastIndexOf(":") == string.indexOf(":"))) {
       System.err.println("The proxy entry, \"" + string + "\" is not valid");
@@ -120,6 +124,10 @@ public final class PropertyFileHandler implements Runnable {
       jsReader.close();
       reader.close();
     }
+    // FortifyIssueSuppression Log Forging
+    // This source comes from a trusted configuration file
+    Logger.getLogger(PropertyFileHandler.class.getName()).log(FINEST,
+      "System properties are now: " + java.util.Arrays.asList(System.getProperties()));
   }
 
   @Override
@@ -129,12 +137,27 @@ public final class PropertyFileHandler implements Runnable {
       // FortifyIssueSuppression Path Manipulation
       // The property file location is determined by our own software
       Path path = Paths.get(propertyFile.getParent());
+      // FortifyIssueSuppression Log Forging
+      // The path is our own location
+      Logger.getLogger(PropertyFileHandler.class.getName()).log(FINEST,
+        "Setting up watch on: " + path);
       path.register(watchService, ENTRY_MODIFY, ENTRY_CREATE, ENTRY_DELETE);
       while (true) {
         WatchKey key = watchService.take();
         for (WatchEvent<?> event : key.pollEvents()) {
           if (event.context().toString().equals(propertyFile.getName())) {
-            readPropertyFile();
+            Logger.getLogger(PropertyFileHandler.class.getName()).log(FINEST,
+              "File changed: " + event.context().toString());
+            int i = 0;
+            try {
+              readPropertyFile();
+              ConsoleBackendRuntime.INSTANCE.reloadConfig();
+            } catch (Exception e) {
+              if (++i == 3) {
+                throw e;
+              }
+              Thread.sleep(100);
+            }
             break;
           }
         }

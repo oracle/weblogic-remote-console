@@ -1,0 +1,61 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.MessageDestinationDescriptorBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Maps to a resource within a JMS module defined in ejb-jar.xml
+    to an actual JMS Module Reference in WebLogic Server. '
+  name: DestinationResourceLink
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Specifies the URL to be used by the InitialContext. '
+  name: ProviderUrl
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Specifies the JNDI name used to associate a message-driven bean
+    with an actual JMS Queue or Topic deployed in the WebLogic Server JNDI tree. '
+  name: DestinationJNDIName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Specifies the name of a message destination reference. This is
+    the reference that the EJB provider places within the ejb-jar.xml deployment file. '
+  key: true
+  name: MessageDestinationName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.jndi.WLInitialContextFactory
+  descriptionHTML: 'Specifies the initial context factory used by the JMS provider
+    to create initial context. '
+  name: InitialContextFactory
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The bean Id. '
+  name: Id
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

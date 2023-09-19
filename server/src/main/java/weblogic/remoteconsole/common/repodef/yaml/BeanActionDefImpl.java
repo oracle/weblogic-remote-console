@@ -23,7 +23,7 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 /**
  * yaml-based implemetation of the BeanActionDef interface
  */
-class BeanActionDefImpl extends BeanValueDefImpl implements BeanActionDef {
+public class BeanActionDefImpl extends BeanValueDefImpl implements BeanActionDef {
 
   private BaseBeanTypeDefImpl typeDefImpl;
   private Path parentPath;

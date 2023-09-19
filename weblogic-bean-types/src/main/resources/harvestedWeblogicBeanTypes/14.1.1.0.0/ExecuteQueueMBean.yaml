@@ -1,0 +1,82 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This bean is used to configure an execute queue and its associated
+  thread pool. '
+name: weblogic.management.configuration.ExecuteQueueMBean
+properties:
+- defaultValue:
+    value:
+      value: 65536
+  descriptionHTML: '<p>The maximum number of simultaneous requests that this server
+    can hold in the queue.</p> '
+  name: QueueLength
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 90
+  descriptionHTML: '<p>The percentage of the Queue Length size that can be reached
+    before this server indicates an overflow condition for the queue. If the overflow
+    condition is reached and the current thread count has not reached the ThreadsMaximum
+    value, then ThreadsIncrease number of threads are added.</p> '
+  name: QueueLengthThresholdPercent
+  type: int
+  writable: true
+- defaultValue:
+    productionModeValue:
+      value: 25
+    value:
+      value: 15
+  descriptionHTML: '<p>The number of threads assigned to this queue.</p> '
+  name: ThreadCount
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Specifies the number of threads to increase the queue length
+    when the queue length theshold is reached. This threshold is determined by the
+    QueueLengthThresholdPercent value.</p>  <p>The following consideration applies
+    to the dynamic nature of ThreadsMaximum and ThreadsIncrease attributes. If any
+    of these attributes change during runtime, the changed value comes into effect
+    when the next request is submitted to the execute queue and the scheduler decides
+    to increase threads depending on the queue threshold conditions.</p> '
+  name: ThreadsIncrease
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 400
+  descriptionHTML: '<p>The maximum number of threads that this queue is allowed to
+    have; this value prevents WebLogic Server from creating an overly high thread
+    count in the queue in response to continual overflow conditions.</p>  <p>A note
+    about dynamic nature of ThreadsMaximum and ThreadsIncrease attributes. If any
+    of these attributes change during runtime, the changed value comes into effect
+    when the next request is submitted to the execute queue and the scheduler decides
+    to increase threads depending on the queue threshold conditions. Imagine a scenario
+    where the queue capacity has already reached the max threshold and the current
+    thread count is already equal to ThreadsMaximum value. If more work is coming
+    into the queue and the administrator wishes to increase the ThreadsMaximum a little
+    to add a few more threads, he/she can do so by changing these attributes dynamically.
+    Please note that the changed value is evaluated when the next request is submitted.</p> '
+  name: ThreadsMaximum
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: '<p>The minimum number of threads that WebLogic Server will maintain
+    in the queue.</p> '
+  name: ThreadsMinimum
+  restartNeeded: true
+  type: int
+  writable: true

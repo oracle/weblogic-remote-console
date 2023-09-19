@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.KernelDebugMBean
+descriptionHTML: 'The parent interface for the kernel and server debug mbeans. '
+name: weblogic.management.configuration.DebugMBean
+properties:
+- array: true
+  creators:
+  - weblogic.management.configuration.DebugScopeMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Gets the configured DebugScopes for this debug bean. The debug
+    scopes contain the enabled state for a scope '
+  name: DebugScopes
+  relationship: containment
+  type: weblogic.management.configuration.DebugScopeMBean

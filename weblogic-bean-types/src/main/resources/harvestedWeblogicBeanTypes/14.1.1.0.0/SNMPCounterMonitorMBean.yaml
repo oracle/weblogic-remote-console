@@ -1,0 +1,50 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.SNMPJMXMonitorMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class describes the criteria for a Counter-based Monitor. A
+  notification will be generated when this criteria is satisfied. '
+name: weblogic.management.configuration.SNMPCounterMonitorMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>A value to be subtracted from the threshold value when the
+    threshold value is crossed.</p>  <p>If Modulus is 0, a notification is generated
+    each time the agent polls the monitored attribute and its value still exceeds
+    or equals the threshold value.</p>  <p>If Modulus is larger than 0, the value
+    of the modulus is subtracted from the threshold each time the threshold is crossed.</p> '
+  name: Modulus
+  type: long
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>A value to be added to the threshold value each time the observed
+    value equals or exceeds the threshold.</p> '
+  name: Offset
+  type: long
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies a value that triggers the Counter Monitor to generate
+    a notification.</p>  <p>The monitor generates a notification the first time the
+    observed value transitions from below the threshold to at or above the threshold.
+    While the observed value remains at or above the threshold, the Counter Monitor
+    does not generate additional notifications. If the observed value falls below
+    the threshold and then later equals or exceeds the threshold, the SNMP Counter
+    Monitor will generate a notification every time the threshold is crossed.</p>  <p>You
+    can specify an offset value to cause this threshold value to increase each time
+    the observed value equals or exceeds the threshold. The first time the observed
+    value equals or exceeds the new threshold value, this monitor generates a notification
+    and adds the offset value to the new threshold value.</p>  <p>For example, if
+    you set Threshold to 1000 and Offset to 2000, when the observed attribute equals
+    or exceeds 1000, the Counter Monitor sends a notification and increases the threshold
+    to 3000. When the observed attribute equals or exceeds 3000, the Counter Monitor
+    sends a notification and increases the threshold again to 5000.</p> '
+  name: Threshold
+  type: long
+  writable: true

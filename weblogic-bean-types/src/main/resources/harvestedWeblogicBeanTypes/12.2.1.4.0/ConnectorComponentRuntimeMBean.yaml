@@ -1,0 +1,203 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.ComponentRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Generates notifications about the deployment state of resource
+  adapters. (Each resource adapter is represented by an instance of weblogic.management.configuration.ConnectorComponentMBean.)</p>  <p>In
+  2-phase deployment, if a resource adapter''s state is <code>PREPARED</code> then
+  it has achieved the first phase of deployment (everything is set up and all that
+  remains is to enable a reference to the adapter). When the resource adapter is in
+  an <code>ACTIVATED</code> state, it has achieved the second phase of deployment,
+  in which applications can obtain a reference to the adapter.</p>  <p>A server instance
+  creates an instance of this interface when it creates an instance of <code>weblogic.management.configuration.ConnectorComponentMBean</code>.</p> '
+name: weblogic.management.runtime.ConnectorComponentRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return true if this version is the active version. Returns
+    true if this resource adapter is not versioned.</p> '
+  name: ActiveVersion
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the active version Id.</p> '
+  name: ActiveVersionId
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '9.1.0.0 Acquire this by looking up the AppDeploymentMBean with the
+    same name as the parent ApplicationRuntime '
+  descriptionHTML: '<p> Gets the AppDeploymentMBean for the Connector Component </p> '
+  name: AppDeploymentMBean
+  supported: false
+  type: weblogic.management.configuration.AppDeploymentMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the name of the connector component.</p> '
+  name: ComponentName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the xml string representing the RA configuration. The
+    xml corresponding to the latest schema is returned. The current supported version
+    is "1.0"</p> '
+  name: Configuration
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the latest configuration version.</p> '
+  name: ConfigurationVersion
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Gets a subset of the resource adapter descriptor information.
+    </p> '
+  name: ConfiguredProperties
+  type: java.util.Properties
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of connection pools.</p> '
+  name: ConnectionPoolCount
+  type: int
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of <code>ConnectorConnectionPoolRuntimeMBeans</code>,
+    each of which represents the runtime data for a connection pool in the resource
+    adapter.</p> '
+  name: ConnectionPools
+  relationship: containment
+  type: weblogic.management.runtime.ConnectorConnectionPoolRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: '9.1.0.0 The connector component mbean was already deprecated. '
+  descriptionHTML: '<p>Gets the ConnectorComponentMBean for the Connector Component.</p> '
+  name: ConnectorComponentMBean
+  supported: false
+  type: weblogic.management.configuration.ConnectorComponentMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the connector service runtime.</p> '
+  name: ConnectorServiceRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ConnectorServiceRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Runtime information for adapter''s work manager that beyond
+    WebLogic''s standard work manager. It provides addisional runtime information
+    specific to Connector and not contained by WebLogic work manager.</p> '
+  name: ConnectorWorkManagerRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ConnectorWorkManagerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the Description for the resource adapter.</p> '
+  name: Description
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Get the Descriptions for the resource adapter.</p> '
+  name: Descriptions
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the EISResourceId for the component.</p> '
+  name: EISResourceId
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the EIS type.</p> '
+  name: EISType
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The HealthState mbean for the application. </p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of runtime information for all inbound connections
+    for the resource adapter.</p> '
+  name: InboundConnections
+  relationship: containment
+  type: weblogic.management.runtime.ConnectorInboundRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of inbound connections for the resource adapter.</p> '
+  name: InboundConnectionsCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the Jndi name of the resource adapter.</p> '
+  name: JndiName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the linkref.</p> '
+  name: Linkref
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the latest schema for RA configuration.</p> '
+  name: Schema
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the spec version.</p> '
+  name: SpecVersion
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the state of the resource adapter.</p> '
+  name: State
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: Stats
+  supported: false
+  type: javax.management.j2ee.statistics.Stats
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the suspended state information of the resource adapter.</p>  <p>If
+    getState() returns SUSPENDED then getSuspendedState() returns an integer describing
+    which functions of the resource adapter are suspended: one or more of INBOUND,
+    OUTBOUND or WORK (or ALL) or 0 for nothing suspended</p> '
+  name: SuspendedState
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the vendor name.</p> '
+  name: VendorName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the version.</p> '
+  name: Version
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the version Id.</p> '
+  name: VersionId
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Check if the resource adapter is versioned. Returns true if
+    it is.</p> '
+  name: Versioned
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Runtime information for WebLogic''s work manager that serves
+    the adapter. It provides general runtime information by WebLogic work manager.</p> '
+  name: WorkManagerRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WorkManagerRuntimeMBean

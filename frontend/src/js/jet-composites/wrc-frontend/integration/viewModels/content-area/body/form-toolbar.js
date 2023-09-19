@@ -510,7 +510,7 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
         const helpVisible = !self.showHelp();
         self.showHelp(helpVisible);
         toggleToolbarButtonsVisibility(helpVisible);
-        viewParams.onHelpPageToggled(helpVisible, self.showBeanPathHistory());
+        viewParams.onHelpPageToggled(helpVisible);
       };
 
       this.syncClick = function (event) {
@@ -658,7 +658,7 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
           // clear treenav selection
           viewParams.signaling.navtreeSelectionCleared.dispatch();
           self.changeManager(ChangeManager.getMostRecent());
-          viewParams.onSave('update');
+          viewParams.onSaveButtonClicked('update');
         }
       );
 

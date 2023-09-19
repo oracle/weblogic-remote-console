@@ -1,0 +1,44 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'A unique name that identifies a well known address of a Coherence
+  cluster member. Other members can use this address to enroll into the cluster. '
+name: weblogic.coherence.descriptor.wl.CoherenceClusterWellKnownAddressBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The IP address. </p> '
+  name: ListenAddress
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 Well known address does not need port any more '
+  descriptionHTML: '<p>The listen port. </p> '
+  name: ListenPort
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'A unique name that identifies this well known address of a Coherence
+    cluster member. '
+  key: true
+  name: Name
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

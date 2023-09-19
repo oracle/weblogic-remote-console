@@ -1,10 +1,19 @@
-# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 ordered: true
+defaultSubType: weblogic.management.security.authentication.UnknownAuthenticationProviderMBean
 subTypeDiscriminatorProperty: Type
 subTypes:
 - type: weblogic.security.providers.authentication.ActiveDirectoryAuthenticatorMBean
   value: weblogic.security.providers.authentication.ActiveDirectoryAuthenticator
+- type: oracle.security.agent.access.filter.CloudSecurityAgentAsserterMBean
+  value: oracle.security.agent.access.filter.CloudSecurityAgentAsserter
+  requiredCapabilities:
+  - JRFSecurityProviders
+- type: oracle.security.jps.wls.providers.authentication.idm.CrossTenantAuthenticatorMBean
+  value: oracle.security.jps.wls.providers.authentication.idm.CrossTenantAuthenticator
+  requiredCapabilities:
+  - JRFSecurityProviders
 - type: weblogic.security.providers.authentication.CustomDBMSAuthenticatorMBean
   value: weblogic.security.providers.authentication.CustomDBMSAuthenticator
 - type: weblogic.security.providers.authentication.DefaultAuthenticatorMBean
@@ -21,6 +30,14 @@ subTypes:
   value: weblogic.security.providers.authentication.NegotiateIdentityAsserter
 - type: weblogic.security.providers.authentication.NovellAuthenticatorMBean
   value: weblogic.security.providers.authentication.NovellAuthenticator
+- type: oracle.security.wls.oam.providers.authenticator.OAMAuthenticatorMBean
+  value: oracle.security.wls.oam.providers.authenticator.OAMAuthenticator
+  requiredCapabilities:
+  - JRFSecurityProviders
+- type: oracle.security.wls.oam.providers.asserter.OAMIdentityAsserterMBean
+  value: oracle.security.wls.oam.providers.asserter.OAMIdentityAsserter
+  requiredCapabilities:
+  - JRFSecurityProviders
 - type: weblogic.security.providers.authentication.OpenLDAPAuthenticatorMBean
   value: weblogic.security.providers.authentication.OpenLDAPAuthenticator
 - type: weblogic.security.providers.authentication.OracleIdentityCloudIntegratorMBean
@@ -41,6 +58,10 @@ subTypes:
   value: com.bea.security.saml2.providers.SAML2IdentityAsserter
 - type: weblogic.security.providers.authentication.SQLAuthenticatorMBean
   value: weblogic.security.providers.authentication.SQLAuthenticator
+- type: oracle.security.jps.wls.providers.trust.TrustServiceIdentityAsserterMBean
+  value: oracle.security.jps.wls.providers.trust.TrustServiceIdentityAsserter
+  requiredCapabilities:
+  - JRFSecurityProviders
 - type: weblogic.security.providers.authentication.VirtualUserAuthenticatorMBean
   value: weblogic.security.providers.authentication.VirtualUserAuthenticator
 properties:
@@ -48,6 +69,14 @@ properties:
   legalValues:
   - value: weblogic.security.providers.authentication.ActiveDirectoryAuthenticator
     label: Active Directory Authenticator
+  - value: oracle.security.agent.access.filter.CloudSecurityAgentAsserter
+    label: Cloud Security Agent Identity Asserter
+    requiredCapabilities:
+    - JRFSecurityProviders
+  - value: oracle.security.jps.wls.providers.authentication.idm.CrossTenantAuthenticator
+    label: Oracle Cross Tenant Authenticator
+    requiredCapabilities:
+    - JRFSecurityProviders
   - value: weblogic.security.providers.authentication.CustomDBMSAuthenticator
     label: Custom DBMS Authenticator
   - value: weblogic.security.providers.authentication.DefaultAuthenticator
@@ -64,6 +93,14 @@ properties:
     label: Negotiate Identity Asserter
   - value: weblogic.security.providers.authentication.NovellAuthenticator
     label: Novell Authenticator
+  - value: oracle.security.wls.oam.providers.authenticator.OAMAuthenticator
+    label: Oracle Access Manager Authenticator
+    requiredCapabilities:
+    - JRFSecurityProviders
+  - value: oracle.security.wls.oam.providers.asserter.OAMIdentityAsserter
+    label: Oracle Access Manager Identity Asserter
+    requiredCapabilities:
+    - JRFSecurityProviders
   - value: weblogic.security.providers.authentication.OpenLDAPAuthenticator
     label: Open LDAP Authenticator
   - value: weblogic.security.providers.authentication.OracleIdentityCloudIntegrator
@@ -84,5 +121,9 @@ properties:
     label: SAML2 Identity Asserter
   - value: weblogic.security.providers.authentication.SQLAuthenticator
     label: SQL Authenticator
+  - value: oracle.security.jps.wls.providers.trust.TrustServiceIdentityAsserter
+    label: Trust Service Identity Asserter
+    requiredCapabilities:
+    - JRFSecurityProviders
   - value: weblogic.security.providers.authentication.VirtualUserAuthenticator
     label: Virtual User Authenticator

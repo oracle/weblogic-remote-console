@@ -1,0 +1,14 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.RCMResourceMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This mbean is used to configure Number of Thread Resource for
+  Resource Consumption Management.</p> '
+name: weblogic.management.configuration.ThreadRunningMBean
+properties: [
+  ]

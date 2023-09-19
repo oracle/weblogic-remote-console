@@ -1,0 +1,44 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.WLDFDataRetirementByAgeMBean
+descriptionHTML: '<p>This MBean specifies how data retirement for a WLDF archive will
+  be performed. This base interface is extended by the interfaces which define specific
+  retirement policies, eg. WLDFDataRetirementByAgeMBean </p> '
+name: weblogic.management.configuration.WLDFDataRetirementMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Name of the archive for which data retirement is configured</p> '
+  name: ArchiveName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Enable data retirement</p> '
+  name: Enabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 24
+  descriptionHTML: '<p>This attribute specifies the period in hours at which the data
+    retirement task will be periodically performed for the archive during the day
+    after it is first executed. The value of this attribute must be positive </p> '
+  name: RetirementPeriod
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>This attribute specifies the hour of day at which the data
+    retirement task will first run during the day.</p> '
+  name: RetirementTime
+  type: int
+  writable: true

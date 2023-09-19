@@ -1,0 +1,31 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.security.providers.audit.DefaultAuditorMBean
+descriptionHTML: 'Provides a set of attributes for ContextHandler support. An Auditor
+  provider MBean can optionally implement this MBean. The WebLogic Server Administration
+  Console detects when an Auditor provider implements this MBean and automatically
+  provides a tab for using these attributes. '
+name: weblogic.management.security.audit.ContextHandlerMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns the ContextHandler entries that the Audit provider is
+    currently configured to process. '
+  name: ActiveContextHandlerEntries
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns the list of all ContextHandler entries supported by the
+    auditor. '
+  name: SupportedContextHandlerEntries
+  transient: true
+  type: java.lang.String

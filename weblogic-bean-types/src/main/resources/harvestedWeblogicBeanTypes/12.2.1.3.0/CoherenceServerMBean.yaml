@@ -1,0 +1,60 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ManagedExternalServerMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class represents a Coherence stand-alone server.</p> '
+name: weblogic.management.configuration.CoherenceServerMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'The system-level Coherence cluster resource associated with this
+    server. '
+  name: CoherenceClusterSystemResource
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.CoherenceClusterSystemResourceMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Returns the CoherenceServerStartMBean that can be used to
+    start up this server remotely. </p> '
+  name: CoherenceServerStart
+  relationship: containment
+  type: weblogic.management.configuration.CoherenceServerStartMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The IP address for the cluster unicast listener.</p> <p>This
+    attribute may be used to override the value of the referenced Coherence cluster.</p> '
+  name: UnicastListenAddress
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The port for the cluster unicast listener.</p> '
+  name: UnicastListenPort
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  deprecated: '12.2.1.0.0 Use getUnicastPortAutoAdjustAttempts '
+  descriptionHTML: '<p> Specifies whether the unicast port will be automatically incremented
+    if the port cannot be bound because it is already in use. </p> '
+  name: UnicastPortAutoAdjust
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 65535
+  descriptionHTML: '<p> Gets the upper bound of the unicast port. A positive value
+    indicates the unicast port is automatically incremented if the specified port
+    cannot be bound because it is already in use. </p> '
+  name: UnicastPortAutoAdjustAttempts
+  type: int
+  writable: true

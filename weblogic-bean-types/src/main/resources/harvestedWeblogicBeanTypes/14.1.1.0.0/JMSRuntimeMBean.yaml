@@ -1,0 +1,76 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class is used for monitoring a WebLogic JMS service. '
+name: weblogic.management.runtime.JMSRuntimeMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The connections to this WebLogic server.</p> '
+  name: Connections
+  relationship: containment
+  type: weblogic.management.runtime.JMSConnectionRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of connections to WebLogic Server server.</p> '
+  name: ConnectionsCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The highest number of connections to this WebLogic Server since
+    the last reset.</p> '
+  name: ConnectionsHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of connections made to this WebLogic Server
+    since the last reset.</p> '
+  name: ConnectionsTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The health state of this JMS service.</p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The JMS pooled connections to this WebLogic server.</p> '
+  exclude: true
+  name: JMSPooledConnections
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.JMSPooledConnectionRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The JMS servers that are currently deployed on this WebLogic
+    Server instance.</p> '
+  name: JMSServers
+  relationship: containment
+  type: weblogic.management.runtime.JMSServerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of JMS servers that are deployed on this
+    WebLogic Server instance.</p> '
+  name: JMSServersCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The highest number of JMS servers that were deployed on this
+    WebLogic Server instance since this server was started.</p> '
+  name: JMSServersHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of JMS servers that were deployed on this
+    WebLogic Server instance since this server was started.</p> '
+  name: JMSServersTotalCount
+  type: long

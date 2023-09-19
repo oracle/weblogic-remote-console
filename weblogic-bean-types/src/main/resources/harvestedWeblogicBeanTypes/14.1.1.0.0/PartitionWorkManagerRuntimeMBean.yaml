@@ -1,0 +1,59 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Monitoring information for PartitionWorkManager '
+name: weblogic.management.runtime.PartitionWorkManagerRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The PartitionFairShareRuntimeMBean for this partition.</p> '
+  excludeFromRest: Copyright (c) 2014,2015, Oracle and/or its affiliates. All rights
+    reserved.
+  name: FairShareRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.PartitionFairShareRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MaxThreadsConstraintRuntimeMBean for this partition.</p> '
+  name: MaxThreadsConstraintRuntime
+  relationship: containment
+  type: weblogic.management.runtime.MaxThreadsConstraintRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The PartitionMinThreadsConstraintRuntimeMBean for this partition.</p> '
+  excludeFromRest: Copyright (c) 2014,2015, Oracle and/or its affiliates. All rights
+    reserved.
+  name: MinThreadsConstraintCapRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.PartitionMinThreadsConstraintCapRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of requests rejected due to configured Shared Capacity
+    for work managers have been reached.</p> '
+  name: OverloadRejectedRequestsCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of pending user requests in the priority queue.
+    The priority queue contains requests from internal subsystems and users. This
+    is just the count of all user requests.</p> '
+  name: PendingUserRequestCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Maximum amount of requests that can be accepted in the priority
+    queue. Note that a request with higher priority will be accepted in place of a
+    lower priority request already in the queue even after the threshold is reached.
+    The lower priority request is kept waiting in the queue till all high priority
+    requests are executed. Also note that further enqueues of the low priority requests
+    are rejected right away. </p> '
+  name: SharedCapacityForWorkManagers
+  type: int

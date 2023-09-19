@@ -11,58 +11,82 @@ Copyright (c) 2020, 2023, Oracle and/or its affiliates.
       memory, and be able to use them with a <canvas> element to set the image
       for the connectivity indicator.
     -->
-    <img id="online-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.online.iconFile + '.png', title: i18n.header.icons.connectivity.online.tooltip, alt: i18n.header.icons.connectivity.online.tooltip}"/>
-    <img id="offline-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.offline.iconFile + '.png', title: i18n.header.icons.connectivity.offline.tooltip, alt: i18n.header.icons.connectivity.offline.tooltip}"/>
-    <img id="detached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.detached.iconFile + '.png', title: i18n.header.icons.connectivity.detached.tooltip, alt: i18n.header.icons.connectivity.detached.tooltip}"/>
-    <img id="unattached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.unattached.iconFile + '.png', title: i18n.header.icons.connectivity.unattached.tooltip, alt: i18n.header.icons.connectivity.unattached.tooltip}"/>
-    <img id="insecure-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.insecure.iconFile + '.png', title: i18n.header.icons.connectivity.insecure.text, alt: i18n.header.icons.connectivity.insecure.text}"/>
+    <img id="online-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.online.iconFile + '.png', title: i18n.icons.connectivity.online.tooltip, alt: i18n.icons.connectivity.online.tooltip}"/>
+    <img id="offline-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.offline.iconFile + '.png', title: i18n.icons.connectivity.offline.tooltip, alt: i18n.icons.connectivity.offline.tooltip}"/>
+    <img id="detached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.detached.iconFile + '.png', title: i18n.icons.connectivity.detached.tooltip, alt: i18n.icons.connectivity.detached.tooltip}"/>
+    <img id="unattached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.unattached.iconFile + '.png', title: i18n.icons.connectivity.unattached.tooltip, alt: i18n.icons.connectivity.unattached.tooltip}"/>
   </div>
 
-  <div class="oj-flex-bar">
-    <div id="navtreeToggle" class="oj-flex-bar-start">
-
+  <div class="oj-flex oj-sm-flex-items-initial">
+    <div id="navtreeToggle" class="oj-flex-item">
       <oj-module config="[[navtreeTogglerModuleConfig]]">
       </oj-module>
     </div>
 
-    <div id="header-title" class="oj-sm-align-self-flex-start">
-      <img id="wrc-app-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.wrcApp.iconFile + '.png', alt: i18n.header.app.name}"/>
+    <div id="header-title" class="oj-flex-item">
+      <img id="wrc-app-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.wrcApp.iconFile + '.png', alt: i18n.app.name}"/>
       <a href="/">
         <span id="app-name" :class="[[appInfoTitleClass]]">
           <oj-bind-text value="[[appName]]"></oj-bind-text>
           <span id="app-version" :class="[[appInfoTitleClass]]">
-            <oj-bind-text value="[[i18n.header.app.version.value]]"></oj-bind-text>
+            <oj-bind-text value="[[i18n.app.version.value]]"></oj-bind-text>
           </span>
         </span>
       </a>
     </div>
 
-    <div id="header-simple-search">
-      <oj-module config="[[simpleSearchModuleConfig]]">
-      </oj-module>
+    <div id="header-simple-search" class="oj-flex-item">
+      <oj-module config="[[simpleSearchModuleConfig]]"></oj-module>
     </div>
 
-    <div id="header-warning">
-      <a on-click="[[securityWarningLinkClick]]">
-        <span id="link-label" class="branding-area-security-warning">
-          <oj-bind-text value="[[linkLabel]]"></oj-bind-text>
-        </span>
-      </a>
-    </div>
+    <div id="branding-area-header-iconbar" class="oj-flex-item oj-helper-margin-start-auto">
+      <oj-bind-if test="[[i18n.icons.messageCenter.visible]]">
+        <a id="messageCenter" on-click="[[brandingAreaIconbarClickListener]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.messageCenter.tooltip}">
+          <span class="cfe-branding-area-header-iconbar-icon">
+            <oj-bind-if test="[[alerts.count() > 0]]">
+              <span class="cfe-icon-overlay" data-bind="text: [[alerts.count()]]"></span>
+            </oj-bind-if>
+            <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.messageCenter.iconFile + '.png', alt: i18n.icons.messageCenter.tooltip}"/>
+          </span>
+        </a>
+      </oj-bind-if>
 
-    <div id="domain-connect-info" class="oj-flex-bar-end">
-      <div id="wrc-insecure-state" class="branding-area-insecure-connection" style="display: none;">
-        <img id="wrc-insecure-icon" class="branding-area-insecure-icon"
-          data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.header.icons.connectivity.insecure.iconFile + '.png',
-                            title: i18n.header.icons.connectivity.insecure.title, alt: i18n.header.icons.connectivity.insecure.text}" />
-        <span id="wrc-insecure-text" class="branding-area-insecure-text">
-          <oj-bind-text value="[[i18n.header.icons.connectivity.insecure.text]]"></oj-bind-text>
-        </span>
-      </div>
-      <canvas id="console-state-bar" width="12" height="24" data-bind="attr: {title: i18n.header.icons.connectivity.unattached.tooltip}"></canvas>
 
+      <oj-bind-if test="[[i18n.icons.help.visible]]">
+        <a id="help" on-click="[[brandingAreaIconbarClickListener]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.help.tooltip}">
+          <span class="cfe-branding-area-header-iconbar-icon">
+            <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.help.iconFile + '.png', alt: i18n.icons.help.tooltip}"/>
+          </span>
+        </a>
+      </oj-bind-if>
+
+      <oj-bind-if test="[[i18n.icons.connectivity.insecure.visible]]">
+        <span>
+          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.separator.iconFile + '.png', alt: i18n.icons.separator.tooltip}"/>
+        </span>
+
+        <span class="cfe-branding-area-header-iconbar-icon">
+          <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.insecure.iconFile + '.png', alt: i18n.icons.connectivity.insecure.tooltip, title: i18n.icons.connectivity.insecure.tooltip}"/>
+          <!--
+            This image is an indicator, not a clickable icon or
+            button with an image, so it shouldn't have a label.
+            It has a tooltip for users that are curious about
+            it's meaning. The tooltip is also used as the image's
+            alt attribute, as required for screen readers.
+
+          <span class="cfe-insecure-indicator-label">
+            <oj-bind-text value="[[i18n.labels.connectivity.insecure]]"></oj-bind-text>
+          </span>
+          -->
+        </span>
+      </oj-bind-if>
+      <!-- Keep connectivity indicator icon hidden because no one likes it and the meaning is too confusing :-)
+          <canvas id="console-state-bar" width="12" height="24" data-bind="attr: {title: i18n.icons.connectivity.unattached.tooltip}"></canvas>
+      -->
       <oj-module config="[[domainConnectionModuleConfig]]"></oj-module>
     </div>
+
   </div>
 
 </div>
+<oj-module config="[[messageLineModuleConfig]]"></oj-module>

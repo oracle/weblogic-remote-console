@@ -1,0 +1,100 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'DatabaseLessLeasingBasisMBean defines attributes related to the
+  functioning of singleton services and server migration without the use of a HA database. '
+name: weblogic.management.configuration.DatabaseLessLeasingBasisMBean
+properties:
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: 'The timeout to wait and retry getting the server state when the
+    NodeManager is unreachable. We try once more after waiting for the fence timeout
+    period to make sure that the machine is really unavailable as opposed to heavy
+    disk swapping. '
+  exclude: true
+  name: FenceTimeout
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: 'Gets the LeaderHeartbeatPeriod value. The cluster leader heartbeats
+    a special leader heartbeat every period seconds to publish group view version
+    and other cluster information. Members look at this heartbeat and perform any
+    sync up operations if required. '
+  exclude: true
+  name: LeaderHeartbeatPeriod
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 30
+  descriptionHTML: 'Gets the MemberDiscoveryTimeout value. This value defines the
+    amount of time a server waits during or after startup to discover members that
+    belong to the same cluster. This information is used to join or form a new cluster. '
+  name: MemberDiscoveryTimeout
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 5000
+  descriptionHTML: 'Gets the message delivery timeout value. This is the amount of
+    time a server waits to get a response from the remote peer before taking recovery
+    actions. '
+  exclude: true
+  name: MessageDeliveryTimeout
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 180000
+  descriptionHTML: '<p> NodeManager timeout. Amount of time to wait for a response
+    from NodeManager. NodeManager is used to get server state and decide if a server
+    is really dead. Note that the server automatically calculates a timeout value
+    and this mbean attribute is used as a upper bound. </p> <p> The NodeManager timeout
+    is dependent on the type of the NodeManager used. For SSH nodemanager, the timeout
+    is on the larger side due to the nature of the SSH connection establishment. The
+    default timeout value might appear very large for some installations. Please set
+    the timeout to a value that is representative of SSH performance in your environment.
+    </p> <p> Note that if the NodeManager does not respond back within the timeout
+    period, the machine is considered ''dead''. One retry attempt is provided by the
+    server if the NodeManager timesout. On timeout, the server will wait for a FenceTimeout
+    period and retry connecting to the NodeManager. If that call times out as well,
+    the machine is deemed unavailable and taken out of the cluster view. </p> <p>
+    A value of 0 means that the timeout will not be applied at all. </p> '
+  exclude: true
+  name: NodeManagerTimeoutMillis
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the cluster leader needs to periodically
+    check if it is still in the right network partition using NodeManager state query.
+    By default the cluster leader or the seniormost member ensures that it is in the
+    right partition by periodically checking with all NodeManagers. This is used to
+    cover a case where the cluster leader was elected with most of the servers shutdown
+    but subsequently there is a network partition with the leader in the minority
+    partition. This is just done on the cluster leader instance and not on other instances.</p> '
+  exclude: true
+  name: PeriodicSRMCheckEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true

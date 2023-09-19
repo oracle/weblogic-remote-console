@@ -191,6 +191,9 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
     addResourceDefinition(paramDef.getLabel());
     addResourceDefinition(paramDef.getHelpSummaryHTML());
     addResourceDefinition(paramDef.getDetailedHelpHTML());
+    for (LegalValueDef legalValueDef : paramDef.getLegalValueDefs()) {
+      addResourceDefinition(legalValueDef.getLabel());
+    }
   }
 
   private void processPageActionDefs(List<PageActionDef> actionDefs) {

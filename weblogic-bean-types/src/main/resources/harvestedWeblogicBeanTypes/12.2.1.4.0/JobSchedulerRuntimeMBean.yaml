@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'RuntimeMBean that provides information about jobs scheduled with
+  the Job Scheduler. '
+name: weblogic.management.runtime.JobSchedulerRuntimeMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns an array of JobRuntime''s for all the jobs executed atleast
+    once in this server. Each server maintains history about jobs that it has executed
+    in the past and makes it available through this method. '
+  name: ExecutedJobs
+  relationship: containment
+  type: weblogic.management.runtime.JobRuntimeMBean

@@ -1,0 +1,44 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.TaskRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.runtime.ScalingTaskRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ClusterName
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ScaledInstanceNames
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ScalingType
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: SelectedInstanceMetadata
+  type: java.util.Properties
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: SelectedInstanceNames
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: Success
+  type: boolean

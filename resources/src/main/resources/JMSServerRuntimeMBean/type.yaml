@@ -1,11 +1,35 @@
 # Copyright (c) 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: ProductionPausedState
+  legalValues:
+  - value: "Production-Enabled"
+    label: "Production Enabled"
+  - value: "Production-Pausing"
+    label: "Production Pausing"
+  - value: "Production-Paused"
+    label: "Production Paused"
+- name: InsertionPausedState
+  legalValues:
+  - value: "Insertion-Enabled"
+    label: "Insertion Enabled"
+  - value: "Insertion-Pausing"
+    label: "Insertion Pausing"
+  - value: "Insertion-Paused"
+    label: "Insertion Paused"
+- name: ConsumptionPausedState
+  legalValues:
+  - value: "Consumption-Enabled"
+    label: "Consumption Enabled"
+  - value: "Consumption-Pausing"
+    label: "Consumption Pausing"
+  - value: "Consumption-Paused"
+    label: "Consumption Paused"
+
 actions:
 - name: forceCommitSelectedTransactions
   label: "Force Commit"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
   actionMethod: weblogic.remoteconsole.customizers.JMSServerRuntimeMBeanCustomizer.forceCommitSelectedTransactions
   mbeanOperation:
     operation: forceCommit
@@ -18,9 +42,6 @@ actions:
      <p>Causes the work associated with the selected transaction branches to be committed.</p>
 - name: forceRollbackSelectedTransactions
   label: "Force Rollback"
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
   actionMethod: weblogic.remoteconsole.customizers.JMSServerRuntimeMBeanCustomizer.forceRollbackSelectedTransactions
   mbeanOperation:
     operation: forceRollback

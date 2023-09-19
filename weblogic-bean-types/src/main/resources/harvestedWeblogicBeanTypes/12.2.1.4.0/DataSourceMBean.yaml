@@ -1,0 +1,45 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This bean represents a DataSource within a Weblogic Server instance. '
+name: weblogic.management.configuration.DataSourceMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'The log settings for a DataSource. '
+  name: DataSourceLogFile
+  relationship: containment
+  type: weblogic.management.configuration.DataSourceLogFileMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'The JNDI name of a system resource data source used to override
+    the default datasource. '
+  name: DefaultDatasource
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Compatibility
+  descriptionHTML: 'The security protocol used by an RMI client to access a data source.
+    Values are: <ul> <li>Secure: All incoming JDBC calls require administrator authentication.
+    All other subjects, including anonymous, are rejected. Requires a configured SSL
+    listen port.</li> <li>Compatibility: Use an unsecure channel with the application''s
+    subject and no check for inbound administrator authentication when using RMI to
+    access a data source. This setting reflects the legacy implementation behavior
+    for RMI access to a data source and is a potential security vulnerability as it
+    provides a client uncontrolled access to a database.</li> <li>The default value
+    is Compatibility.</li> </ul> '
+  name: RmiJDBCSecurity
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

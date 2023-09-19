@@ -1,0 +1,21 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.RCMResourceMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p> A <code>FileOpenMBean</code> represents a resource consumption
+  management policy for the "File Open" resource type. </p> <p> The "File open" resource
+  type governs the number of open files. This includes files that have been opened
+  through <code>java.io</code> ( <code>FileInputStream, FileOutputStream, RandomAccessFile</code>
+  etc) and <code>java.nio</code> (NIO file channels) APIs. </p> <p> Trigger (Usage
+  limits) based policies can be defined for a "File Open" resource type through this
+  MBean. </p> <p> The valid set of recourse action types for the "File Open" resource
+  type are: </p> <ul> <li>notify</li> <li>slow</li> <li>shutdown</li> <li>fail</li>
+  </ul> '
+name: weblogic.management.configuration.FileOpenMBean
+properties: [
+  ]

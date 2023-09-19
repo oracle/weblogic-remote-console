@@ -1,0 +1,64 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p> The <code>TriggerRuntimeMBean</code> holds runtime state (for
+  the current Server instance) for a Trigger that has been configured in the Resource
+  Consumption Management policy of the current Domain Partition. </p> <p> The WebLogic
+  Resource Consumption Management feature automatically initiates the configured recourse
+  action of a Trigger when the Trigger''s configured usage limits are exceeded by
+  a Domain Partition. When a usage limit is exceeded, and the configured recourse
+  action has been successfully executed, the Trigger is <i>Activated</i>. </p> <p>
+  When the current resource usage by the Domain Partition falls below the Trigger''s
+  configured usage limit, the feature automatically withdraws the recourse action
+  where possible. When the current usage is below the configured usage limit, and
+  the configured recourse action has been successfully withdrawn, the Trigger is said
+  to be <i>not Activated</i>. </p> <p> The MBean captures the following states for
+  a Trigger when the current resource consumption usage by the Domain Partition exceeds
+  or goes below the configured usage limit for the Domain Partition: </p> <ul> <li>Whether
+  the Trigger is <i>Activated</i> (usage has exceeded the limit and the recourse action
+  was successfully executed) or not</li> <li>The time when the last recourse action
+  was executed successfully for the Trigger</li> <li>Whether a recourse action has
+  been initiated in response to the resource usage by the Domain Partition exceeding
+  the configured usage limits</li> </ul> '
+name: weblogic.management.runtime.TriggerRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Indicates if the Trigger is <i>Activated</i>. '
+  name: Activated
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: 'Indicates if a recourse action has been initiated for this Trigger
+    as a result of the current resource usage by a Domain Partition exceeding its
+    usage limit. A new <code>RecourseActionEventVBean</code> is added to the array
+    returned by getRecourseActionEventsHistory(). <p> The kind of recourse action
+    initiated (for example, a new recourse action or a withdrawal of an existing recourse
+    action) can be determined through RecourseActionEventVBean.isActive(). </p> '
+  name: Initiated
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: 'The <code>Date</code> when the last recourse action was successfully
+    executed for the current Trigger. '
+  name: LastTimeExecuted
+  type: java.util.Date
+- defaultValue: {
+    }
+  descriptionHTML: 'The name of the Trigger, as configured in the Resource Consumption
+    Management policy of the Domain Partition. '
+  name: Name
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'A list of recourse action events that have been initiated and
+    executed. '
+  name: RecourseActionEventsHistory
+  type: weblogic.management.runtime.RecourseActionEventVBean

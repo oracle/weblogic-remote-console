@@ -9,6 +9,9 @@
 
 const fs = require('fs');
 const { execFile } = require('child_process');
+const I18NUtils = require('./i18n-utils');
+const UserPrefs = require('./user-prefs-json');
+const SettingsEditor = require('./settings-editor');
 var supportsAutoUpgrades = false;
 var findString = '';
 
@@ -70,57 +73,57 @@ const WindowManagement = (() => {
         // Provide an id field, so we can use Array.find() to
         // locate the "File" menu within appMenuTemplate.
         id: 'file',
-        label: '&File',
+        label: `&${I18NUtils.get('wrc-electron.menus.file.label')}`,
         role: 'fileMenu',
         // Specify empty array for submenu, because the menu items
         // are created in populateFileMenu(appMenuTemplate).
         submenu: []
       },
       {
-        label: '&Edit',
+        label: `&${I18NUtils.get('wrc-electron.menus.edit.label')}`,
         role: 'editMenu',
         submenu: [
           {
-            label: 'Undo',
+            label: `${I18NUtils.get('wrc-electron.menus.edit.undo.label')}`,
             accelerator: 'CommandOrControl+Z',
             role: 'undo'
           },
           {
-            label: 'Redo',
+            label: `${I18NUtils.get('wrc-electron.menus.edit.redo.label')}`,
             accelerator: 'Shift+CommandOrControl+Z',
-            role: 'undo'
+            role: 'redo'
           },
           {
             type: 'separator'
           },
           {
-            label: 'Cut',
+            label: `${I18NUtils.get('wrc-electron.menus.edit.cut.label')}`,
             accelerator: 'CommandOrControl+X',
             role: 'cut'
           },
           {
-            label: 'Copy',
+            label: `${I18NUtils.get('wrc-electron.menus.edit.copy.label')}`,
             accelerator: 'CommandOrControl+C',
             role: 'copy'
           },
           {
-            label: 'Paste',
+            label: `${I18NUtils.get('wrc-electron.menus.edit.paste.label')}`,
             accelerator: 'CommandOrControl+V',
             role: 'paste'
           },
           {
-            label: 'Select All',
+            label: `${I18NUtils.get('wrc-electron.menus.edit.select-all.label')}`,
             accelerator: 'CommandOrControl+A',
             role: 'selectall'
           },
           {
-            label: 'Find',
+            label: `${I18NUtils.get('wrc-electron.menus.edit.find.label')}`,
             accelerator: 'CommandOrControl+F',
             click(item) {
               prompt({
-                title: 'Find in Page',
+                title: `${I18NUtils.get('wrc-electron.menus.edit.find.prompt.title')}`,
                 label: '',
-                buttonLabels: { ok: 'Find' },
+                buttonLabels: { ok: `${I18NUtils.get('wrc-electron.menus.edit.find.prompt.button')}` },
                 value: `${findString}`,
                 resizable: true,
                 alwaysOnTop: true
@@ -138,7 +141,7 @@ const WindowManagement = (() => {
             }
           },
           {
-            label: 'Find Next',
+            label: `${I18NUtils.get('wrc-electron.menus.edit.find-next.label')}`,
             accelerator: 'CommandOrControl+G',
             click(item) {
               _window.webContents.findInPage(findString, { findNext: true });
@@ -148,7 +151,7 @@ const WindowManagement = (() => {
       },
       {
         id: 'view',
-        label: 'View',
+        label: `${I18NUtils.get('wrc-electron.menus.view.label')}`,
         submenu: [
           { id: 'reload', role: 'reload' },
           // The 'forceReload' menu item causes Electron to create
@@ -165,7 +168,7 @@ const WindowManagement = (() => {
         // Provide an id field, so we can use Array.find() to
         // locate the "Help" menu within appMenuTemplate.
         id: 'help',
-        label: '&Help',
+        label: `&${I18NUtils.get('wrc-electron.menus.help.label')}`,
         role: 'help',
         // Specify empty array for submenu, because the menu items
         // are created in populateHelpMenu(appMenuTemplate).
@@ -197,7 +200,7 @@ const WindowManagement = (() => {
       fileMenu.submenu.push({
         id: 'newWindow',
         accelerator: 'CommandOrControl+N',
-        label: 'New Window',
+        label: `${I18NUtils.get('wrc-electron.menus.file.newWindow.value')}`,
         click(item) {
           const runme = (process.env.APPIMAGE && fs.existsSync(process.env.APPIMAGE)) ?
             process.env.APPIMAGE :
@@ -213,11 +216,11 @@ const WindowManagement = (() => {
     function createNewProjectSubmenu() {
       fileMenu.submenu.push({
         id: 'newProject',
-        label: 'New Project',
+        label: `${I18NUtils.get('wrc-electron.menus.file.newProject.value')}`,
         click(item) {
           prompt({
-            title: 'New Project',
-            label: 'Name',
+            title: `${I18NUtils.get('wrc-electron.prompt.file.newProject.title')}`,
+            label: `${I18NUtils.get('wrc-electron.prompt.file.newProject.label')}`,
             inputAttrs: { required: true },
             resizable: true,
             alwaysOnTop: true
@@ -232,7 +235,11 @@ const WindowManagement = (() => {
               else {
                 switch(results.resultReason) {
                   case ProjectManager.ResultReason.ALREADY_EXISTS:
-                    showPopupMessage({title: 'Project Already Exist', severity: 'warning', details: `A project named "${name}" already exists!`});
+                    showPopupMessage({
+                      title: `${I18NUtils.get('wrc-electron.prompt.file.newProject.already-exists-error.title')}`,
+                      severity: 'warning',
+                      details: `${I18NUtils.get('wrc-electron.prompt.file.newProject.already-exists-error.detail', name)}`
+                    });
                     break;
                   case ProjectManager.ResultReason.CANNOT_BE_NULL:
                     break;
@@ -274,7 +281,7 @@ const WindowManagement = (() => {
 
         fileMenu.submenu.push({
           id: 'switchToProject',
-          label: 'Switch to project',
+          label: `${I18NUtils.get('wrc-electron.menus.file.switchToProject.value')}`,
           submenu: subsubmenu
         });
       }
@@ -316,7 +323,7 @@ const WindowManagement = (() => {
 
       fileMenu.submenu.push({
         id: 'deleteProject',
-        label: 'Delete Project',
+        label: `${I18NUtils.get('wrc-electron.menus.file.deleteProject.value')}`,
         submenu: fileSubmenu
       });
     }
@@ -328,12 +335,20 @@ const WindowManagement = (() => {
     function createNameProjectSubmenu() {
       const attr = {};
       if (current_project.name === '(unnamed)') {
-        attr['label'] = 'Name Project...';
-        attr['prompt'] = {title: 'Name Project', label: 'Name', value: null};
+        attr['label'] = I18NUtils.get('wrc-electron.menus.file.nameProject.value');
+        attr['prompt'] = {
+          title: `${I18NUtils.get('wrc-electron.prompt.file.nameProject.title')}`,
+          label: `${I18NUtils.get('wrc-electron.prompt.file.nameProject.label')}`,
+          value: null
+        };
       }
       else {
-        attr['label'] = `Rename "${current_project.name}"...`;
-        attr['prompt'] = {title: `Rename "${current_project.name}"`, label: 'New name', value: current_project.name};
+        attr['label'] = I18NUtils.get('wrc-electron.menus.file.renameProject.value', current_project.name);
+        attr['prompt'] = {
+          title: `${I18NUtils.get('wrc-electron.prompt.file.renameProject.title', current_project.name)}`,
+          label: `${I18NUtils.get('wrc-electron.prompt.file.renameProject.label')}`,
+          value: current_project.name
+        };
       }
 
       fileMenu.submenu.push({
@@ -433,24 +448,29 @@ const WindowManagement = (() => {
       helpMenu.submenu.push(
         {
           id: 'checkForUpdates',
-          label: `Check for ${_params.productName} Updates`,
+          label: `${I18NUtils.get('wrc-electron.menus.help.checkForUpdates.value', _params.productName)}`,
           click() {
             AutoUpdateUtils.checkForUpdates()
               .then(result => {
-                newVersion = result.version;
+                if (result.versionInfo?.version)
+                  newVersion = result.versionInfo.version;
                 if (newVersion === _params.version) {
                   showOnLatestVersionMessageBox(
-                    'You Are Up To Date',
-                    `Current version is ${newVersion}`,
-                    ['Ok']
+                    `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.alreadyOnCurrent.title')}`,
+                    `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.alreadyOnCurrent.message', newVersion)}`,
+                    [`${I18NUtils.get('wrc-common.buttons.ok.label')}`]
                   );
                 }
                 else {
                   if (supportsAutoUpgrades) {
                     showNewerVersionAvailableMessageBox(
-                      'Newer Version Available!',
-                      `Go to ${new URL(downloadURL).host} to view update or download and install it?`,
-                      ['Go to site', 'Download and install it', 'Cancel']
+                      `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.title')}`,
+                      `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.message', new URL(downloadURL).host, AutoUpdateUtils.getVersion())}`,
+                      [
+                        `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.button.gotosite.value')}`,
+                        `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.button.download-and-install.value', AutoUpdateUtils.getVersion())}`,
+                        `${I18NUtils.get('wrc-common.buttons.cancel.label')}`
+                      ]
                     )
                     .then((choice) => {
                       if (choice.response === 0)
@@ -461,9 +481,12 @@ const WindowManagement = (() => {
                   }
                   else {
                     showNewerVersionAvailableMessageBox(
-                      'Newer Version Available!',
-                      `Go to ${new URL(downloadURL).host} to view update?`,
-                      ['Go to site', 'Cancel']
+                      `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.title')}`,
+                      `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.message', new URL(downloadURL).host), AutoUpdateUtils.getVersion()}`,
+                      [
+                        `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.button.gotosite.value')}`,
+                        `${I18NUtils.get('wrc-common.buttons.cancel.label')}`
+                      ]
                     )
                     .then((choice) => {
                       if (choice.response === 0)
@@ -474,9 +497,9 @@ const WindowManagement = (() => {
               })
               .catch(err => {
                 showConnectionIssueMessageBox(
-                  'Connection Issue',
-                  'Could not reach update site',
-                  ['Ok']
+                  `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.connectionIssue.title')}`,
+                  `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.connectionIssue.message')}`
+                  [`${I18NUtils.get('wrc-common.buttons.ok.label')}`]
                 );
               });
           }
@@ -489,7 +512,7 @@ const WindowManagement = (() => {
     // auto-upgrade is supported or not.
     const helpSubmenu = [
       {
-        label: `Visit ${_params.productName} Github Project`,
+        label: `${I18NUtils.get('wrc-electron.menus.help.visit.value', _params.productName)}`,
         click() {
           shell.openExternal('https://github.com/oracle/weblogic-remote-console').then();
         }
@@ -512,7 +535,7 @@ const WindowManagement = (() => {
       return;
     const submenu = [
       {
-        label: `Go to ${new URL(downloadURL).host} to get version ${newVersion}`,
+        label: `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.message', new URL(downloadURL).host, newVersion)}`,
         click() {
           shell.openExternal(downloadURL).then();
         }
@@ -520,7 +543,7 @@ const WindowManagement = (() => {
     ];
     if (supportsAutoUpgrades) {
       submenu.push({
-            label: `Update to version ${newVersion}`,
+            label: `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.button.download-and-install.value', newVersion)}`,
             click() {
               AutoUpdateUtils.doUpdate(_window);
             }
@@ -529,56 +552,10 @@ const WindowManagement = (() => {
     }
     appMenuTemplate.push(
       {
-        label: 'Updates Available - Click here',
+        label: `${I18NUtils.get('wrc-electron.menus.updates.value')}`,
         submenu: submenu
       }
     );
-  }
-
-  function doProxySettings(label) {
-    if (!label)
-      label = 'Enter proxy setting (e.g. http://proxy.example.com:80)';
-    let current = '';
-    let path = ConfigJSON.getPath();
-    let data = {};
-    if (fs.existsSync(path)) {
-      try {
-        data = JSON.parse(fs.readFileSync(path).toString());
-        if (data["proxy"])
-          current = data["proxy"];
-      }
-      catch(err) {
-        log('error', err);
-      }
-    }
-    prompt({
-      title: 'Modify Proxy Settings',
-      width: 450,
-      label: `${label}`,
-      buttonLabels: { ok: 'Set' },
-      value: `${current}`,
-      resizable: true,
-      alwaysOnTop: true
-    }).then(string => {
-      if (string != null) {
-        let good = true;
-        if (string != '') {
-          try {
-            new URL(string);
-          } catch (err) {
-            good = false;
-            doProxySettings(`"${string}" is not a valid URL. Enter a URL`);
-          }
-        }
-        if (good && (current != string)) {
-          if (string == '')
-            delete data.proxy;
-          else
-            data["proxy"] = string;
-          fs.writeFileSync(path, JSON.stringify(data, null, 4));
-        }
-      }
-    });
   }
 
   /**
@@ -601,7 +578,7 @@ const WindowManagement = (() => {
         submenu: [
           {
             id: 'about',
-            label: `About ${_params.productName}`,
+            label: `${I18NUtils.get('wrc-electron.menus.app.about.value', _params.productName)}`,
             role: 'about',
             click() {
               app.showAboutPanel();
@@ -611,8 +588,27 @@ const WindowManagement = (() => {
             type: 'separator'
           },
           {
+            id: 'settings',
+            label: `${I18NUtils.get('wrc-electron.menus.file.settings.value')}`,
+            click() {
+              SettingsEditor.show(_window);
+            }
+          },
+          {
+            id: 'preferences',
+	    // The Mac doesn't like "Preferences" so we change it to
+	    // "Application Preferences" just for Mac
+            label: `${I18NUtils.get('wrc-electron.menus.file.preferences.mac.value')}`,
+            click() {
+              UserPrefs.show();
+            }
+          },
+          {
+            type: 'separator'
+          },
+          {
             id: 'services',
-            label: 'Services',
+            label: `${I18NUtils.get('wrc-electron.menus.app.services.value')}`,
             role: 'services',
           },
           {
@@ -620,19 +616,19 @@ const WindowManagement = (() => {
           },
           {
             id: 'hide',
-            label: `Hide ${_params.productName}`,
+            label: `${I18NUtils.get('wrc-electron.menus.app.hide.value', _params.productName)}`,
             accelerator: 'Command+H',
             role: 'hide'
           },
           {
             id: 'hideOthers',
-            label: 'Hide Others',
+            label: `${I18NUtils.get('wrc-electron.menus.app.hide-others.value')}`,
             accelerator: 'Command+Alt+H',
             role: 'hideothers'
           },
           {
             id: 'showAll',
-            label: 'Show All',
+            label: `${I18NUtils.get('wrc-electron.menus.app.show-all.value')}`,
             role: 'unhide'
           },
           {
@@ -640,20 +636,12 @@ const WindowManagement = (() => {
           },
           {
             id: 'exit',
-            label: `Quit ${_params.productName}`,
+            label: `${I18NUtils.get('wrc-electron.menus.app.quit.value', _params.productName)}`,
             accelerator: 'Command+Q',
             click() { app.quit(); }
           }
         ]
       });
-      fileMenu.submenu.push(
-        {
-          label: 'Modify Proxy Settings',
-          click() {
-            doProxySettings();
-          }
-        }
-      );
     }
     else {
       fileMenu.submenu.push(
@@ -661,16 +649,17 @@ const WindowManagement = (() => {
           type: 'separator'
         },
         {
-          id: 'preferences',
-          label: 'Preferences',
+          id: 'settings',
+          label: `${I18NUtils.get('wrc-electron.menus.file.settings.value')}`,
           click() {
-            app.showAboutPanel();
+            SettingsEditor.show(_window);
           }
         },
         {
-          label: 'Modify Proxy Settings',
+          id: 'preferences',
+          label: `${I18NUtils.get('wrc-electron.menus.file.preferences.value')}`,
           click() {
-            doProxySettings();
+            UserPrefs.show();
           }
         },
         {
@@ -678,7 +667,7 @@ const WindowManagement = (() => {
         },
         {
           id: 'exit',
-          label: `Quit ${_params.productName}`,
+          label: `${I18NUtils.get('wrc-electron.menus.app.quit.value', _params.productName)}`,
           accelerator: 'Alt+X',
           click() { app.quit(); }
         }
@@ -691,7 +680,7 @@ const WindowManagement = (() => {
         { type: 'separator' },
         {
           id: 'about',
-          label: `About ${_params.productName}`,
+          label: `${I18NUtils.get('wrc-electron.menus.app.about.value', _params.productName)}`,
           accelerator: 'Alt+A',
           click() {
             app.showAboutPanel();
@@ -709,7 +698,7 @@ const WindowManagement = (() => {
   function showPopupMessage(message) {
     dialog.showMessageBox(_window, {
       title: message.title,
-      buttons: ['Dismiss'],
+      buttons: [`${I18NUtils.get('wrc-electron.common.dismiss')}`],
       type: message.severity,
       message: message.details,
     }).then();

@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -20,7 +21,6 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
-import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.connection.Connection;
 import weblogic.remoteconsole.server.connection.ConnectionManager;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -43,10 +43,6 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   public static final String TYPE_NAME = "AdminServerConnection";
   private static final ConnectionManager CONNECTION_MANAGER =
     ConsoleBackendRuntime.INSTANCE.getConnectionManager();
-  private static final long CONNECT_TIMEOUT =
-    ConsoleBackendRuntimeConfig.getConnectionTimeout();
-  private static final long READ_TIMEOUT =
-    ConsoleBackendRuntimeConfig.getReadTimeout();
   private static final Logger LOGGER =
     Logger.getLogger(AdminServerDataProviderImpl.class.getName());
 
@@ -58,6 +54,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private long ssoTokenExpires;
   private boolean isDisabledHostnameVerification = false;
   private boolean isInsecureConnection = false;
+  private String proxyOverride = null;
   private WebLogicMBeansVersion mbeansVersion;
   private String connectionWarning;
   private String lastMessage;
@@ -121,6 +118,64 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     return TYPE_NAME;
   }
 
+  private static JsonObject makeHelpClause(
+    InvocationContext ic,
+    LocalizableString summary,
+    LocalizableString detail
+  ) {
+    JsonObjectBuilder ret = Json.createObjectBuilder();
+    ret.add("helpSummaryHTML", ic.getLocalizer().localizeString(summary));
+    ret.add("helpDetailHTML", ic.getLocalizer().localizeString(detail));
+    return ret.build();
+  }
+
+  public static JsonObject getHelp(InvocationContext ic) {
+    JsonObjectBuilder ret = Json.createObjectBuilder();
+    ret.add("name",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.DATA_PROVIDER_HELP_NAME_SUMMARY,
+        LocalizedConstants.DATA_PROVIDER_HELP_NAME_DETAIL
+    ));
+    ret.add("url",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.ADMIN_SERVER_HELP_URL_SUMMARY,
+        LocalizedConstants.ADMIN_SERVER_HELP_URL_DETAIL
+    ));
+    ret.add("settings.proxyOverride",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.ADMIN_SERVER_HELP_PROXY_SUMMARY,
+        LocalizedConstants.ADMIN_SERVER_HELP_PROXY_DETAIL
+    ));
+    ret.add("username",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_SUMMARY,
+        LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_DETAIL
+    ));
+    ret.add("password",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.ADMIN_SERVER_HELP_PASSWORD_SUMMARY,
+        LocalizedConstants.ADMIN_SERVER_HELP_PASSWORD_DETAIL
+    ));
+    ret.add("settings.insecure",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_SUMMARY,
+        LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_DETAIL
+    ));
+    ret.add("settings.sso",
+      makeHelpClause(
+        ic,
+        LocalizedConstants.ADMIN_SERVER_HELP_SSO_SUMMARY,
+        LocalizedConstants.ADMIN_SERVER_HELP_SSO_DETAIL
+    ));
+    return ret.build();
+  }
+
   @Override
   public String getURL() {
     return url;
@@ -157,12 +212,20 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
 
   @Override
   public long getConnectTimeout() {
-    return CONNECT_TIMEOUT;
+    Connection connection = CONNECTION_MANAGER.getConnection(connectionId);
+    if (connection != null) {
+      return connection.getConnectTimeout();
+    }
+    return -1;
   }
 
   @Override
   public long getReadTimeout() {
-    return READ_TIMEOUT;
+    Connection connection = CONNECTION_MANAGER.getConnection(connectionId);
+    if (connection != null) {
+      return connection.getReadTimeout();
+    }
+    return -1;
   }
 
   @Override
@@ -178,6 +241,17 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   @Override
   public boolean isInsecureConnection() {
     return isInsecureConnection;
+  }
+
+
+  @Override
+  public void setProxyOverride(String value) {
+    proxyOverride = value;
+  }
+
+  @Override
+  public String getProxyOverride() {
+    return proxyOverride;
   }
 
   @Override
@@ -215,7 +289,13 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         throw new FailedRequestException(Response.Status.UNAUTHORIZED.getStatusCode(), getTokenUnavailable(ic));
       }
       ConnectionManager.ConnectionResponse result =
-        CONNECTION_MANAGER.tryConnection(url, authorizationHeader, ic.getLocales(), isInsecureConnection);
+        CONNECTION_MANAGER.tryConnection(
+          url,
+          authorizationHeader,
+          ic.getLocales(),
+          isInsecureConnection,
+          proxyOverride
+        );
       if (result.isSuccess()) {
         isLastConnectionAttemptSuccessful = true;
         isAnyConnectionAttemptSuccessful = true;
@@ -284,10 +364,11 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     ret.add("name", getName());
     ret.add(ProviderResource.PROVIDER_TYPE, getType());
     ret.add(ProviderResource.DOMAIN_URL, getURL());
-    ret.add("connectTimeout", getConnectTimeout());
-    ret.add("readTimeout", getReadTimeout());
     if (isInsecureConnection()) {
       ret.add("insecure", true);
+    }
+    if (proxyOverride != null) {
+      ret.add("proxyOverride", proxyOverride);
     }
     if (getSsoTokenId() != null) {
       ret.add("sso", true);
@@ -302,6 +383,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     if (isLastConnectionAttemptSuccessful()) {
       ret.add("state", "connected");
       connection = CONNECTION_MANAGER.getConnection(connectionId);
+      ret.add("connectTimeout", getConnectTimeout());
+      ret.add("readTimeout", getReadTimeout());
       ret.add("domainVersion", connection.getWebLogicVersion().getDomainVersion());
       ret.add("domainName", connection.getDomainName());
       JsonArrayBuilder capabilities = Json.createArrayBuilder();
@@ -318,9 +401,9 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         ret.add("messages", createMessages(lastMessage));
       }
     }
+    addStatusToJSON(ret);
     addRootsToJSON(ret, connection, ic);
     addRolesToJSON(ret);
-    addLinksToJSON(ret, connection, ic);
     return ret.build();
   }
 
@@ -346,58 +429,162 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     jsonBuilder.add("roles", builder);
   }
 
-  private void addLinksToJSON(JsonObjectBuilder jsonBuilder, Connection connection, InvocationContext ic) {
-    LocalizableString label = getSecurityValidationWarningsLabel(connection);
-    if (label == null) {
-      return; // the domain doesn't support security validation warnings
-    }
-    String resourceData =
-      "/" + UriUtils.API_URI
-      + "/" + StringUtils.urlEncode(getName())
-      + "/" + Root.DOMAIN_RUNTIME_NAME
-      + "/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings";
-    jsonBuilder.add(
-      "links",
-      Json.createArrayBuilder().add(
-        Json.createObjectBuilder()
-          .add("label", ic.getLocalizer().localizeString(label))
-          .add("resourceData", resourceData)
-      )
-    );
+  private void addStatusToJSON(JsonObjectBuilder jsonBuilder) {
+    JsonObjectBuilder statusBuilder = Json.createObjectBuilder();
+    String resourceData = "/" + UriUtils.API_URI + "/" + StringUtils.urlEncode(getName()) + "/domainStatus";
+    statusBuilder.add("resourceData", resourceData);
+    statusBuilder.add("refreshSeconds", 15);
+    jsonBuilder.add("domainStatus", statusBuilder);
   }
 
-  private LocalizableString getSecurityValidationWarningsLabel(Connection connection) {
-    WebLogicRestRequest request =
-      WebLogicRestRequest.builder()
-        .connection(connection)
-        .path("/domainRuntime/domainSecurityRuntime/hasSecurityValidationWarnings")
-        .build();
-    JsonObject postData = Json.createObjectBuilder().build();
-    try (Response response = WebLogicRestClient.post(request, postData)) {
-      if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-        boolean hasWarnings = ResponseHelper.getEntityAsJson(response).getBoolean("return");
-        return 
-          hasWarnings
-            ? LocalizedConstants.SECURITY_VALIDATION_WARNINGS_WARNING_LINK_LABEL
-            : LocalizedConstants.SECURITY_VALIDATION_WARNINGS_INFO_LINK_LABEL;
-      } else if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
-        // The domain doesn't support security validation warnings.
-        return null;
-      } else {
-        LOGGER.finest(
-          "hasSecurityValidationWarnings failed:"
-          + " " + response.getStatus()
-          + " " + ResponseHelper.getEntityAsString(response)
-        );
-      }
-    } catch (Exception exc) {
-      LOGGER.log(Level.FINEST, "hasSecurityValidationWarnings failed: " + exc.toString(), exc);
-    }
-    return null; // Something went wrong.
+  @Override
+  public JsonObject getStatus(InvocationContext ic) {
+    Connection connection =
+      isLastConnectionAttemptSuccessful() ? CONNECTION_MANAGER.getConnection(connectionId) : null;
+    return (new DomainStatusGetter(connection, ic)).getDomainStatus();
   }
 
   @Override
   public boolean isValidPath(String path) {
     return true;
+  }
+
+  private class DomainStatusGetter {
+    private JsonObjectBuilder builder = Json.createObjectBuilder();
+    private Connection connection;
+    private InvocationContext ic;
+    private boolean connectFailed;
+    private LocalizableString messageLabel;
+    private String severity;
+    private LocalizableString linkLabel;
+    private String linkPath;
+
+    private DomainStatusGetter(Connection connection, InvocationContext ic) {
+      this.connection = connection;
+      this.ic = ic;
+    }
+
+    private JsonObject getDomainStatus() {
+      getNeedServerRestart();
+      getSecurityWarnings();
+      if (connectFailed) {
+        messageLabel = LocalizedConstants.CANT_CONNECT_TO_ADMIN_SERVER;
+        linkLabel = null;
+        severity = "warning";
+      }
+      if (messageLabel != null) {
+        builder.add("messageHTML", ic.getLocalizer().localizeString(messageLabel));
+        builder.add("severity", severity);
+        if (linkLabel != null) {
+          String linkResourceData = "/" + UriUtils.API_URI + "/" + StringUtils.urlEncode(getName()) + "/" + linkPath;
+          builder.add(
+            "link",
+            Json.createObjectBuilder()
+              .add("label", ic.getLocalizer().localizeString(linkLabel))
+              .add("resourceData", linkResourceData)
+          );
+        }
+      }
+      return builder.build();
+    }
+
+    private void getNeedServerRestart() {
+      if (connectFailed || messageLabel != null) {
+        return;
+      }
+      WebLogicRestRequest request =
+        WebLogicRestRequest.builder()
+          .connection(connection)
+          .path("/domainRuntime/serverRuntimes")
+          .queryParam("links", "none")
+          .queryParam("fields", "restartRequired")
+          .build();
+      try (Response response = WebLogicRestClient.get(request)) {
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+          boolean needRestart = false;
+          JsonArray items = ResponseHelper.getEntityAsJson(response).getJsonArray("items");
+          for (int i = 0; !needRestart && i < items.size(); i++) {
+            boolean serverNeedsRestart = items.getJsonObject(i).getBoolean("restartRequired");
+            if (serverNeedsRestart) {
+              needRestart = true;
+            }
+          }
+          if (needRestart) {
+            messageLabel = LocalizedConstants.NEED_SERVER_RESTART_LABEL;
+            severity = "warning";
+            linkLabel = LocalizedConstants.SERVER_RESTART_LINK_LABEL;
+            linkPath =  Root.DOMAIN_RUNTIME_NAME + "/data/DomainRuntime/CombinedServerRuntimes";
+          }
+          return;
+        } else {
+          LOGGER.finest(
+            "getNeedServerRestart failed:"
+            + " " + response.getStatus()
+            + " " + ResponseHelper.getEntityAsString(response)
+          );
+        }
+      } catch (Exception exc) {
+        LOGGER.log(Level.FINEST, "getNeedServerRestart failed: " + exc.toString(), exc);
+      }
+      // Note: computing whether any servers need to be restarted causes the
+      // admin server to send a REST request to each managed server.
+      // Sometimes this takes a long time (e.g. if the communication between
+      // the admin and managed servers is very slow or problematic) which causes
+      // the CBE's request to the admin server to time out.
+      // That is, the remote console can communicate fine with the admin server
+      // but not necessarily the managed servers.
+      //
+      // We've already checked that the remote console can talk to the admin server
+      // when we requested the security warnings.  So, if we get a problem here,
+      // it's pretty likely that it's a problem with the admin server talking
+      // to managed servers.
+      //
+      // This means that the edit and domain config trees in the remote console work
+      // fine but the monitoring tree is slow and times out.
+      //
+      // Just swallow this problem (v.s. saying that the remote console can't talk to
+      // the admin server at all).
+      connectFailed = false;
+    }
+
+    private void getSecurityWarnings() {
+      if (connectFailed || messageLabel != null) {
+        return;
+      }
+      WebLogicRestRequest request =
+        WebLogicRestRequest.builder()
+          .connection(connection)
+          .path("/domainRuntime/domainSecurityRuntime/hasSecurityValidationWarnings")
+          .build();
+      JsonObject requestBody = Json.createObjectBuilder().build();
+      try (Response response = WebLogicRestClient.post(request, requestBody)) {
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+          linkLabel = LocalizedConstants.SECURITY_VALIDATION_WARNINGS_LINK_LABEL;
+          linkPath = Root.DOMAIN_RUNTIME_NAME + "/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings";
+          boolean hasWarnings = ResponseHelper.getEntityAsJson(response).getBoolean("return");
+          messageLabel =
+            hasWarnings
+              ? LocalizedConstants.HAVE_SECURITY_VALIDATION_WARNINGS_LABEL
+              : LocalizedConstants.NO_SECURITY_VALIDATION_WARNINGS_LABEL;
+          severity = hasWarnings ? "error" : "info";
+          return;
+        } else if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+          // The domain doesn't support security validation warnings.
+          return;
+        } else if (response.getStatus() == Response.Status.FORBIDDEN.getStatusCode()) {
+          // This user doesn't have permission to view the security validation warnings.
+          return;
+        } else {
+          LOGGER.finest(
+            "getSecurityWarnings failed:"
+            + " " + response.getStatus()
+            + " " + ResponseHelper.getEntityAsString(response)
+          );
+        }
+      } catch (Exception exc) {
+        LOGGER.log(Level.FINEST, "getSecurityWarnings failed: " + exc.toString(), exc);
+      }
+      connectFailed = true;
+    }
   }
 }

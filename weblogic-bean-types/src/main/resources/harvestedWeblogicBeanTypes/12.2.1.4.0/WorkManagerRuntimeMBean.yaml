@@ -1,0 +1,91 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'WorkManager Runtime information. '
+name: weblogic.management.runtime.WorkManagerRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the name of the application this WorkManager is associated
+    with</p> '
+  name: ApplicationName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the Capacity value associated with this WorkManager.</p> '
+  name: CapacityRuntime
+  relationship: containment
+  type: weblogic.management.runtime.CapacityRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of daemon requests that have been processed</p> '
+  name: CompletedDaemonRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of requests that have been processed, including
+    daemon requests.</p> '
+  name: CompletedRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the HealthState mbean for the work manager. </p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Runtime information on MaxThreadsConstraint associated with
+    this WorkManager</p> '
+  name: MaxThreadsConstraintRuntime
+  relationship: containment
+  type: weblogic.management.runtime.MaxThreadsConstraintRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Runtime information on MinThreadsConstraint associated with
+    this WorkManager</p> '
+  name: MinThreadsConstraintRuntime
+  relationship: containment
+  type: weblogic.management.runtime.MinThreadsConstraintRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the name of the module this WorkManager is associated with</p> '
+  name: ModuleName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the name of the partition that the work manager is
+    associated with.</p> '
+  name: PartitionName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of daemon requests in progress.</p> '
+  name: PendingDaemonRequests
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of waiting requests in the queue, including daemon
+    requests.</p> '
+  name: PendingRequests
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Runtime information on RequestClass associated with this WorkManager</p> '
+  name: RequestClassRuntime
+  relationship: containment
+  type: weblogic.management.runtime.RequestClassRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of threads that are considered to be stuck on the
+    basis of any stuck thread constraints.</p> '
+  name: StuckThreadCount
+  type: int
+roles:
+  allowed:
+  - Operator

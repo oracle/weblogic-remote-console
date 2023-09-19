@@ -1,0 +1,26 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.EJBRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface contains accessor methods for all EJB runtime information
+  collected for a Stateful Session Bean. '
+name: weblogic.management.runtime.StatefulEJBRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the runtime information about the cache for this EJB.</p> '
+  name: CacheRuntime
+  relationship: containment
+  type: weblogic.management.runtime.EJBCacheRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the runtime information about the lock manager for
+    this EJB.</p> '
+  name: LockingRuntime
+  relationship: containment
+  type: weblogic.management.runtime.EJBLockingRuntimeMBean

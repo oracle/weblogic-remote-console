@@ -80,32 +80,34 @@ define([
       let resolveBusyState;
 
       this.busyContext.whenReady(10000)
-      .then(() => {
-        resolveBusyState = this.addBusyState({ description: '#nav fetching data' });
+        .then(() => {
+          resolveBusyState = this.addBusyState({ description: '#nav fetching data' });
 
-        $('#navtree-container').css({ display: 'inline-flex' });
-        this.navtreeManager
-          .refreshTreeModel()
-          .then(() => {
-            this.navtreeManager.updateTreeView();
-            const keys = Array.from(self.expanded().values());
-            keys.sort((e1, e2) => {
-              e1.split('/').length - e2.split('/').length;
-            });
-            if (keys.length > 0) {
-              keys.forEach((key) => {
-                expandClickedNode.call(self, key);
+          $('#navtree-container').css({ display: 'inline-flex' });
+          setMaxHeightCSSCustomVariable('--navtree-calc-max-height');
+
+          this.navtreeManager
+            .refreshTreeModel()
+            .then(() => {
+              this.navtreeManager.updateTreeView();
+              const keys = Array.from(self.expanded().values());
+              keys.sort((e1, e2) => {
+                e1.split('/').length - e2.split('/').length;
               });
-              self.selectedItem(null);
-            }
-          })
-          .catch((response) => {
-            ViewModelUtils.failureResponseDefaultHandling(response);
-          })
-          .finally(() => {
-            if (resolveBusyState) resolveBusyState();
-          });
-      });
+              if (keys.length > 0) {
+                keys.forEach((key) => {
+                  expandClickedNode.call(self, key);
+                });
+                self.selectedItem(null);
+              }
+            })
+            .catch((response) => {
+              ViewModelUtils.failureResponseDefaultHandling(response);
+            })
+            .finally(() => {
+              if (resolveBusyState) resolveBusyState();
+            });
+        });
 
       let binding = signaling.navtreeUpdated.add((treeaction) => {
         if (CoreUtils.isUndefinedOrNull(treeaction)) {
@@ -206,6 +208,12 @@ define([
           this.expanded.clear();
           this.selectedItem(null);
 
+          // Need to adjust the value assigned to the
+          // '--navtree-calc-max-height' CSS custom
+          // variable, to account for messageLine
+          // being visible or not.
+          setMaxHeightCSSCustomVariable('--navtree-calc-max-height');
+
           let resolveBusyState;
           this.busyContext.whenReady(10000)
             .then(() => {
@@ -217,17 +225,17 @@ define([
               this.datasource(this.navtreeManager.getDataProvider());
 
               this.navtreeManager
-              .refreshTreeModel()
-              .then(() => {
-                this.navtreeManager.updateTreeView();
-              })
-              .catch((response) => {
-                ViewModelUtils.failureResponseDefaultHandling(response);
-              })
-              .finally(() => {
-                if (resolveBusyState) resolveBusyState();
-              });
-          });
+                .refreshTreeModel()
+                .then(() => {
+                  this.navtreeManager.updateTreeView();
+                })
+                .catch((response) => {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                })
+                .finally(() => {
+                  if (resolveBusyState) resolveBusyState();
+                });
+            });
         }
       });
 
@@ -245,24 +253,24 @@ define([
           let resolveBusyState;
           // refresh the subtree
           this.busyContext.whenReady(10000)
-          .then(() => {
-            resolveBusyState = self.addBusyState({ description: '#nav fetching data' });
-            try {
-              this.navtreeManager = new NavtreeManager(this.beanTree);
-              this.datasource(self.navtreeManager.getDataProvider());
+            .then(() => {
+              resolveBusyState = self.addBusyState({ description: '#nav fetching data' });
+              try {
+                this.navtreeManager = new NavtreeManager(this.beanTree);
+                this.datasource(self.navtreeManager.getDataProvider());
 
-              // clear the expanded set, unset selected item
-              this.expanded.clear();
-              this.selectedItem(null);
+                // clear the expanded set, unset selected item
+                this.expanded.clear();
+                this.selectedItem(null);
 
-              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
-                router.go('home');
+                if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+                  router.go('home');
+                }
               }
-            }
-            finally {
-              if (resolveBusyState) resolveBusyState();
-            }
-          });
+              finally {
+                if (resolveBusyState) resolveBusyState();
+              }
+            });
         }
       });
 
@@ -375,6 +383,14 @@ define([
         }
       }
     };
+
+    function setMaxHeightCSSCustomVariable(cssDOMSelector) {
+      const messageLine =  document.getElementById('message-line-container');
+      let maxHeightVariable = (messageLine !== null ? messageLine.offsetHeight : 0);
+      const offsetMaxHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navtree-offset-max-height'), 10);
+      maxHeightVariable += offsetMaxHeight;
+      document.documentElement.style.setProperty(cssDOMSelector, `${maxHeightVariable}px`);
+    }
 
     function resizeNavTreeContainer() {
       // Resize navtree container to navtree.maxWidth (400px), if

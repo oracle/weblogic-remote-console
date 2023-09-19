@@ -52,4 +52,7 @@ public interface PageFieldDef extends BeanFieldDef {
   // Whether this field is just for the page (true)
   // or whether it's stored in the bean repo too (false)
   public boolean isPageLevelField();
+
+  // Get the legal value defs for this property.
+  public List<LegalValueDef> getLegalValueDefs();
 }

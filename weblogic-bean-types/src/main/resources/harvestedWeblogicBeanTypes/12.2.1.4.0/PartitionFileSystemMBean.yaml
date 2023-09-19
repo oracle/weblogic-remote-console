@@ -1,0 +1,34 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.PartitionUserFileSystemMBean
+descriptionHTML: 'Defines the partition file system configuration. '
+name: weblogic.management.configuration.PartitionFileSystemMBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Specifies whether the file system should be created on-demand
+    when the partition is first started. '
+  name: CreateOnDemand
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Specifies whether the file system should be preserved when the
+    partition is deleted. '
+  name: Preserved
+  type: boolean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'The full path to the root of this file subsystem of the partition. '
+  name: Root
+  type: java.lang.String
+  writable: true
