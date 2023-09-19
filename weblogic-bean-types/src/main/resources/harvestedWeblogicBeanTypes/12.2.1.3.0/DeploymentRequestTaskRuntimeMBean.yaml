@@ -1,0 +1,25 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.TaskRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'A DeploymentRequestTaskRuntimeMBean provides a container for tasks
+  that collaborate on a DeploymentService request. These are typically a task tracking
+  the application of a configuration change and one or more tasks that involve deployment
+  [application or system resource] actions. This interface provides an overall status
+  of the deployment request progress. Details such as the completion of the task are
+  however dependent on the completion of the subtasks. DeploymentService requests
+  are handled in 2 phases. The first phase - the ''prepare'' phase, involves the validation
+  of the request on each target server. Any failure encountered in this validation
+  results in the failure of the overall request. If all targets validate the request
+  properly, the request is considered to be successful and the admin server triggers
+  the 2nd phase - the ''commit . Note that the ''commit'' is triggered at the point
+  when the admin server has already determined the request to be successful even though
+  it has not yet completed. '
+name: weblogic.management.runtime.DeploymentRequestTaskRuntimeMBean
+properties: [
+  ]

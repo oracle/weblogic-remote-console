@@ -1,0 +1,53 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.EJBRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface contains accessor methods for all EJB run-time information
+  collected for a Singleton session bean. '
+name: weblogic.management.runtime.SingletonEJBRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the count of read lock requests that have timed out
+    since deployment; -1 will be returned if bean-managed concurrency is in use.</p> '
+  name: ReadLockTimeoutTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the total count of read locks requested since deployment;
+    -1 will be returned if bean-managed concurrency is in use.</p> '
+  name: ReadLockTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides run-time information about any Timers created for
+    the Singleton session bean.</p> '
+  name: TimerRuntime
+  relationship: containment
+  type: weblogic.management.runtime.EJBTimerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the total count of threads waiting for the lock; -1
+    will be returned if bean-managed concurrency is in use.</p> '
+  name: WaiterCurrentCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the count of write lock requests that have timed out
+    since deployment; -1 will be returned if bean-managed concurrency is in use.</p> '
+  name: WriteLockTimeoutTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the total count of write locks requested since deployment;
+    -1 will be returned if bean-managed concurrency is in use.</p> '
+  name: WriteLockTotalCount
+  type: long
+roles:
+  allowed:
+  - Operator

@@ -1,0 +1,195 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.audit.AuditorMBean
+- weblogic.management.security.audit.ContextHandlerMBean
+- weblogic.management.security.IdentityDomainAwareProviderMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean represents configuration information for the WebLogic       Auditing
+  provider.</p> '
+name: weblogic.security.providers.audit.DefaultAuditorMBean
+properties:
+- defaultValue:
+    value:
+      value: '#### Audit Record Begin'
+  descriptionHTML: '<p>The marker that indicates the beginning of the audit         record.</p> '
+  name: BeginMarker
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: WebLogic Auditing Provider
+  descriptionHTML: '<p>A short description of the WebLogic Auditing provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: 'Audit Record End ####'
+  descriptionHTML: '<p>The marker that indicates the end of the audit         record.</p> '
+  name: EndMarker
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>If the Severity value is set to Custom, causes the Auditing
+    provider to generate          audit records for events with a severity level of
+    ERROR.</p> '
+  name: ErrorAuditSeverityEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>If the Severity value is set to Custom, causes the Auditing
+    provider to generate          audit records for events with a severity level of
+    FAILURE.</p> '
+  name: FailureAuditSeverityEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: ' <'
+  descriptionHTML: '<p>The prefix character that indicates the beginning of a field
+    in the         audit record.</p> '
+  name: FieldPrefix
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '> '
+  descriptionHTML: '<p>The suffix character that indicates the end of a field in the
+    audit         record</p> '
+  name: FieldSuffix
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>If the Severity value is set to Custom, causes the Auditing
+    provider to generate          audit records for events with a severity level of
+    INFORMATION.</p> '
+  name: InformationAuditSeverityEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: DefaultAuditor
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: 'No description provided. '
+  name: OutputMedium
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.security.providers.audit.DefaultAuditProviderImpl
+  descriptionHTML: '<p>The Java class used to load the WebLogic Auditing provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: 1440
+  descriptionHTML: '<p>Specifies how many minutes to wait before creating a new         DefaultAuditRecorder.log
+    file. At the specified time, the audit file         is closed and a new one is
+    created.</p> '
+  name: RotationMinutes
+  type: int
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: CUSTOM
+    value:
+      value: ERROR
+  descriptionHTML: '<p>The severity level at which auditing is initiated. </p><p>Severity
+    levels are ranked in this order:</p>         <ol>           <li>INFORMATION</li>           <li>WARNING</li>           <li>ERROR</li>           <li>SUCCESS</li>           <li>FAILURE</li>         </ol>         <p>If
+    you select a given severity level, all events of that level or         more will
+    be audited. For example, if you set the severity to ERROR,         then all FAILURE,
+    SUCCESS, and ERROR events will be audited, but         WARNING and INFORMATION
+    events will not. You can instead set the         severity to CUSTOM and then enable
+    the specific severity level events         you want to audit.</p> '
+  legalValues:
+  - INFORMATION
+  - WARNING
+  - ERROR
+  - SUCCESS
+  - FAILURE
+  - CUSTOM
+  name: Severity
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>If the Severity value is set to Custom, causes the Auditing
+    provider to generate          audit records for events with a severity level of
+    SUCCESS.</p> '
+  name: SuccessAuditSeverityEnabled
+  type: boolean
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - com.bea.contextelement.servlet.HttpServletRequest
+      - com.bea.contextelement.servlet.HttpServletResponse
+      - com.bea.contextelement.wli.Message
+      - com.bea.contextelement.channel.Port
+      - com.bea.contextelement.channel.PublicPort
+      - com.bea.contextelement.channel.RemotePort
+      - com.bea.contextelement.channel.Protocol
+      - com.bea.contextelement.channel.Address
+      - com.bea.contextelement.channel.PublicAddress
+      - com.bea.contextelement.channel.RemoteAddress
+      - com.bea.contextelement.channel.ChannelName
+      - com.bea.contextelement.channel.Secure
+      - com.bea.contextelement.ejb20.Parameter
+      - com.bea.contextelement.wsee.SOAPMessage
+      - com.bea.contextelement.entitlement.EAuxiliaryID
+      - com.bea.contextelement.security.ChainPrevailidatedBySSL
+      - com.bea.contextelement.xml.SecurityToken
+      - com.bea.contextelement.xml.SecurityTokenAssertion
+      - com.bea.contextelement.webservice.Integrity
+      - com.bea.contextelement.saml.SSLClientCertificateChain
+      - com.bea.contextelement.saml.MessageSignerCertificate
+      - com.bea.contextelement.saml.subject.ConfirmationMethod
+      - com.bea.contextelement.saml.subject.dom.KeyInfo
+      - com.bea.contextelement.jmx.ObjectName
+      - com.bea.contextelement.jmx.ShortName
+      - com.bea.contextelement.jmx.Parameters
+      - com.bea.contextelement.jmx.Signature
+      - com.bea.contextelement.jmx.AuditProtectedArgInfo
+      - com.bea.contextelement.jmx.OldAttributeValue
+  descriptionHTML: '<p>List of all ContextHandler entries supported by the audit         provider.</p> '
+  name: SupportedContextHandlerEntries
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The version number of the WebLogic Auditing provider.</p> '
+  name: Version
+  type: java.lang.String
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>If the Severity value is set to Custom, causes the Auditing
+    provider to generate          audit records for events with a severity level of
+    WARNING.</p> '
+  name: WarningAuditSeverityEnabled
+  type: boolean
+  writable: true

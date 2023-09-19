@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -40,3 +40,15 @@ properties:
 - name: WSATIssuedTokenEnabled
   offlineName: WsatIssuedTokenEnabled
   label: Web Service Transactions Issued Token Enabled
+
+- name: UsePublicAddressesForRemoteDomains
+  label: Remote domains for which public addresses should be used
+  offlineName: UsePublicAddressesForRemoteDomain
+  helpSummaryHTML: >
+    <p>Enter a domain name for each line. Sets the remote domains for which public addresses
+    should be used if the servers in the domains are configured to use network channels for
+    internal JTA communication.</p>
+
+- name: UseNonSecureAddressesForDomains
+  label: Domains for which non-secure protocols should be used
+  offlineName: UseNonSecureAddressesForDomain

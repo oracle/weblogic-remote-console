@@ -1,0 +1,111 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class represents Coherence Operational Configuration for
+  a WLS Server that is part of a Coherence Cluster.</p> '
+name: weblogic.management.configuration.CoherenceMemberConfigMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether Federated Cache Storage is enabled for the
+    Coherence Web cluster member </p> '
+  name: CoherenceWebFederatedStorageEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether Local Storage is enabled for the Coherence
+    Web cluster member </p> '
+  name: CoherenceWebLocalStorageEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether or not this member will contribute storage
+    to the Coherence cluster i.e. maintain partitions. This attribute is used only
+    when the WebLogic Server is not part of a WLS Cluster.</p> '
+  name: LocalStorageEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  deprecated: '12.2.1.0.0 All Coherence Members can become management nodes; this
+    has been done for high-availability '
+  descriptionHTML: '<p>Specifies whether or not this server can act as a Coherence
+    Management node.</p> '
+  name: ManagementProxy
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the location within a geographic site where this
+    member is hosted.</p> '
+  name: RackName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies a name used to logically group similar members.</p> '
+  name: RoleName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the name of the geographic site where this member
+    is hosted.</p> '
+  name: SiteName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The IP address for the Coherence unicast listener.</p> '
+  name: UnicastListenAddress
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The port for the Coherence unicast listener. A value of 0 indicates
+    that the unicast listen port value will be assigned automatically to an ephemeral
+    port.</p> '
+  name: UnicastListenPort
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 Use getUnicastPortAutoAdjustAttempts '
+  descriptionHTML: '<p> Specifies whether the unicast port will be automatically incremented
+    if the port cannot be bound because it is already in use. </p> '
+  name: UnicastPortAutoAdjust
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Get the upper bound of the unicast port. A positive value
+    indicates the unicast port is automatically incremented if the specified port
+    cannot be bound because it is already in use. </p> '
+  name: UnicastPortAutoAdjustAttempts
+  restartNeeded: true
+  type: int
+  writable: true

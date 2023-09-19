@@ -1,0 +1,184 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Execution statistics such as min/max/avg time and request count/rate. '
+name: weblogic.management.runtime.JaxRsExecutionStatisticsRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request processing time in milliseconds in the last
+    15m. '
+  name: AvgTimeLast15m
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request processing time in milliseconds in the last
+    5m. '
+  name: AvgTimeLast15s
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request processing time in milliseconds in the last
+    1h. '
+  name: AvgTimeLast1h
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request processing time in milliseconds in the last
+    1m. '
+  name: AvgTimeLast1m
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request processing time in milliseconds in the last
+    1s. '
+  name: AvgTimeLast1s
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request processing time in milliseconds for the whole
+    lifetime of an application. '
+  name: AvgTimeTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get maximum request processing time in milliseconds in the last
+    15m. '
+  name: MaxTimeLast15m
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get maximum request processing time in milliseconds in the last
+    5m. '
+  name: MaxTimeLast15s
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get maximum request processing time in milliseconds in the last
+    1h. '
+  name: MaxTimeLast1h
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get maximum request processing time in milliseconds in the last
+    1m. '
+  name: MaxTimeLast1m
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get maximum request processing time in milliseconds in the last
+    1s. '
+  name: MaxTimeLast1s
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get maximum request processing time in milliseconds for the whole
+    lifetime of an application. '
+  name: MaxTimeTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get minimum request processing time in milliseconds in the last
+    15m. '
+  name: MinTimeLast15m
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get minimum request processing time in milliseconds in the last
+    5m. '
+  name: MinTimeLast15s
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get minimum request processing time in milliseconds in the last
+    1h. '
+  name: MinTimeLast1h
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get minimum request processing time in milliseconds in the last
+    1m. '
+  name: MinTimeLast1m
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get minimum request processing time in milliseconds in the last
+    1s. '
+  name: MinTimeLast1s
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get minimum request processing time in milliseconds for the whole
+    lifetime of an application. '
+  name: MinTimeTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get request count in the last 15m. '
+  name: RequestCountLast15m
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get request count in the last 5m. '
+  name: RequestCountLast15s
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get request count in the last 1h. '
+  name: RequestCountLast1h
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get request count in the last 1m. '
+  name: RequestCountLast1m
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get request count in the last 1s. '
+  name: RequestCountLast1s
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get request count for the whole lifetime of an application. '
+  name: RequestCountTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request rate per second in the last 15m. '
+  name: RequestRateLast15m
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request rate per second in the last 5m. '
+  name: RequestRateLast15s
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request rate per second in the last 1h. '
+  name: RequestRateLast1h
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request rate per second in the last 1m. '
+  name: RequestRateLast1m
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request rate per second in the last 1s. '
+  name: RequestRateLast1s
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: 'Get average request rate per second for the whole lifetime of
+    an application. '
+  name: RequestRateTotal
+  type: double
+roles:
+  allowed:
+  - Operator

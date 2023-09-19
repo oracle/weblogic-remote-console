@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="form-toolbar-container" class="oj-flex">
@@ -108,11 +108,11 @@
     </oj-bind-if>
 
     <!-- Customize button is visible on form toolbar when a slice table is rendered -->
-      <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed">
-        <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png', alt: i18n.buttons.customize.label}"/>
-        <span class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
-        <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
-      </a>
+    <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed">
+      <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png', alt: i18n.buttons.customize.label}"/>
+      <span class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
+      <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
+    </a>
 
     <oj-bind-if test="[[i18n.buttons.dashboard.visible()]]">
       <oj-button id="[[i18n.buttons.dashboard.id]]" on-oj-action="[[dashboardAction]]" chroming="borderless"
@@ -208,13 +208,13 @@
           <oj-bind-if test="[[!readonly()]]">
             <oj-option :id="[[i18n.menus.shoppingcart.discard.id]]" value="[[i18n.menus.shoppingcart.discard.id]]"
               disabled="[[!changeManager().hasChanges]]">
-              <img id="discard-changes" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[i18n.menus.shoppingcart.discard.iconFile]] + '.png'}" />
+              <img id="discard-changes" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[i18n.menus.shoppingcart.discard.iconFile]] + '.png', alt:i18n.menus.shoppingcart.discard.label}" />
               <span><oj-bind-text value="[[i18n.menus.shoppingcart.discard.label]]"></oj-bind-text></span>
             </oj-option>
           </oj-bind-if>
           <oj-bind-if test="[[!readonly()]]">
             <oj-option :id="[[i18n.menus.shoppingcart.commit.id]]" value="[[i18n.menus.shoppingcart.commit.id]]" disabled="[[!changeManager().hasChanges]]">
-              <img id="commit-changes" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[i18n.menus.shoppingcart.commit.iconFile]] + '.png'}" />
+              <img id="commit-changes" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[i18n.menus.shoppingcart.commit.iconFile]] + '.png', alt: i18n.menus.shoppingcart.commit.label}" />
               <span><oj-bind-text value="[[i18n.menus.shoppingcart.commit.label]]"></oj-bind-text></span>
             </oj-option>
           </oj-bind-if>

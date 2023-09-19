@@ -3,8 +3,6 @@
 
 package weblogic.remoteconsole.common.repodef;
 
-import java.util.List;
-
 /**
  * This interface describes a property on a form or table page.
  * 
@@ -15,9 +13,6 @@ public interface PagePropertyDef extends PageFieldDef, BeanPropertyDef {
 
   // Get the corresponding page def
   public PageDef getPageDef();
-
-  // Get the legal value defs for this property.
-  public List<LegalValueDef> getLegalValueDefs();
 
   // When this property should displayed to the user.
   // If null, then it should always be displayed.

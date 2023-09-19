@@ -1,0 +1,62 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.security.providers.authentication.LDAPAuthenticatorMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean represents the LDAP schema definitions for the Novell
+  NDS LDAP provider.</p> '
+name: weblogic.security.providers.authentication.NovellAuthenticatorMBean
+properties:
+- defaultValue:
+    value:
+      value: (&(cn=%g)(objectclass=groupofnames))
+  descriptionHTML: '<p>An LDAP search filter for finding a group given the name of
+    the group. If the attribute is not specified (that is, if the attribute is null
+    or empty), a default search filter is created based on the group schema.</p> '
+  name: GroupFromNameFilter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: guid
+  descriptionHTML: '<p>Specifies the name of the GUID attribute defined in the Novell
+    Directory Services LDAP server.           The default value is <code>guid</code>.</p> '
+  name: GuidAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: (&(uniquemember=%M)(objectclass=groupofnames))
+  descriptionHTML: '<p>An LDAP search filter that, given the distinguished name (DN)
+    of a member of a group, returns the DNs of the static LDAP broups that contain
+    that member. If the attribute is not specified (that is, if the attribute is null
+    or empty), a default search filter is created based on the group schema.</p> '
+  name: StaticGroupDNsfromMemberDNFilter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: (&(cn=%u)(objectclass=person))
+  descriptionHTML: '<p>An LDAP search filter for finding a user given the name of
+    the user. If the attribute is not specified (that is, if the attribute is null
+    or empty), a default search filter is created based on the user schema.</p> '
+  name: UserFromNameFilter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: cn
+  descriptionHTML: '<p>The attribute of an LDAP user object that specifies the name
+    of the user.</p> '
+  name: UserNameAttribute
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

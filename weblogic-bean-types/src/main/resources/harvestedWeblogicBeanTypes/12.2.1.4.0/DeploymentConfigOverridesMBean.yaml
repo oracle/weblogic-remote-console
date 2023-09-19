@@ -1,0 +1,42 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Specifies the domain-level attributes related to deployment-config-overrides.xml '
+name: weblogic.management.configuration.DeploymentConfigOverridesMBean
+properties:
+- defaultValue:
+    value:
+      value: config/
+  descriptionHTML: '<p>Specifies the path to directory that contains deployment-config-overrides.xml.
+    If the path is relative, it is resolved relative to domain directory </p> '
+  exclude: true
+  name: Dir
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 2147483647
+  descriptionHTML: '<p>Specifies the maximum number of the applications that can be
+    retired concurrently in one hot patching cycle</p> '
+  exclude: true
+  name: MaxOldAppVersions
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 900
+  descriptionHTML: '<p>Specifies the poll interval for deployment config overrides
+    file. The value is in seconds</p> '
+  exclude: true
+  name: PollInterval
+  supported: false
+  type: int
+  writable: true

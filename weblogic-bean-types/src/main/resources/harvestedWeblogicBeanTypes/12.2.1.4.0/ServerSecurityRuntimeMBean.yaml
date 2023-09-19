@@ -1,0 +1,48 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for monitoring WebLogic Security Info.</p> '
+name: weblogic.management.runtime.ServerSecurityRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Returns the realm runtime mbean for the default realm from
+    when this server was booted. </p> '
+  name: DefaultRealmRuntime
+  relationship: containment
+  type: weblogic.management.runtime.RealmRuntimeMBean
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Indicates whether JACC (Java Authorization Contract for Containers)
+    was enabled on the commandline for the jvm hosting this server</p> '
+  name: JACCEnabled
+  type: boolean
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The user-specified name of this MBean instance.</p>  <p>This
+    name is included as one of the key properties in the MBean''s <code>javax.management.ObjectName</code>:</p>  <p><code>Name=<i>user-specified-name</i></code></p> '
+  key: true
+  name: Name
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: RealmRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.RealmRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns a list of potential security validation warnings for
+    this domain. The returned list is similar to the warnings displayed during server
+    startup when secure mode validation is performed.</p> '
+  name: SecurityValidationWarnings
+  type: weblogic.management.runtime.SecurityValidationWarningVBean

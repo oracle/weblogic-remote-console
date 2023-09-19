@@ -1,0 +1,47 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.WebServerMBean
+- weblogic.management.configuration.TargetMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This bean represents the configuration of virtual web server
+  within a WebLogic Server instance. Note that a server may define multiple web servers
+  to support virtual hosts.</p>  <p>This MBean represents a virtual host.</p> '
+name: weblogic.management.configuration.VirtualHostMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The dedicated server channel name (NetworkAccessPoint) for
+    which this virtual host will serve http request. If the NetworkAccessPoint for
+    a given http request doesn''t match any virtual host''s NetworkAccessPoint, incoming
+    HOST header will be matched with the VirtualHostNames in order to resolve the
+    right virtual host. </p> '
+  name: NetworkAccessPoint
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: 'Get uri path for partition.  Note: this is temporary, virtual
+    host will be replaced by VirtualTargetMBean '
+  exclude: true
+  name: UriPath
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of host names, separated by line breaks, for which
+    this virtual host will serve requests.</p> '
+  name: VirtualHostNames
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

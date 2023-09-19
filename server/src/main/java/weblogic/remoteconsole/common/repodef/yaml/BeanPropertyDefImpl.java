@@ -291,6 +291,9 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
     if (isDateAsLong()) {
       return UnknownValue.INSTANCE;
     }
+    if (defaultValue == null) {
+      return UnknownValue.INSTANCE;
+    }
     return defaultValue;
   }
 

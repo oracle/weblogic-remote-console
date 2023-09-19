@@ -1,0 +1,24 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.WseeAggregatableBaseOperationRuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.WseeOperationRuntimeMBean
+- weblogic.management.runtime.WseeClientOperationRuntimeMBean
+descriptionHTML: '<p>Describes the state of a particular Web Service operation, such
+  as deployment state and runtime statistics about the execution of the operation.</p>
+  <p>This MBean can describe the operation on a web service client or service. Request
+  statistics relate to outgoing requests on a client or incoming requests on a service.
+  Response statistics relate to an incoming response on a client or an outgoing response
+  on a service.</p> <p>Time values are reported in milliseconds.</p> '
+name: weblogic.management.runtime.WseeBaseOperationRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Name of the operation for which runtime information is being
+    provided.</p> '
+  name: OperationName
+  type: java.lang.String

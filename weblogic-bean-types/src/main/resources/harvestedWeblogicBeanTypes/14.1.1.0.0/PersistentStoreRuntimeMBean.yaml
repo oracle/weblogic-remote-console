@@ -1,0 +1,73 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for monitoring a Persistent Store.</p> '
+name: weblogic.management.runtime.PersistentStoreRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The amount of off-heap (native) memory, in bytes, reserved
+    for file store use.</p>  <p>When applicable, this is a multiple of the file store
+    configurable attribute <code>IOBufferSize</code>. Applies to synchronous write
+    policies <code>Direct-Write</code> and <code>Cache-Flush policies</code>.</p> '
+  name: AllocatedIoBufferBytes
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The amount of off-heap (native) memory, in bytes, reserved
+    for file store window buffer use.</p>  <p>Applies to synchronous write policies
+    <code>Direct-Write-With-Cache</code> and <code>Disabled</code> but only when the
+    native <code>wlfileio</code> library is loaded. See file store configurable attribute
+    <code>MaxWindowBufferSize</code> for more information</p> '
+  name: AllocatedWindowBufferBytes
+  type: long
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The connections contained in the store.</p> '
+  name: Connections
+  relationship: containment
+  type: weblogic.management.runtime.PersistentStoreConnectionRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of create requests issued by this store.</p> '
+  name: CreateCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of delete requests issued by this store.</p> '
+  name: DeleteCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Implement the HealthFeedback interface by returning the health
+    state of this store.</p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of objects contained in the store.</p> '
+  name: ObjectCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of times the store flushed its data to durable storage.</p> '
+  name: PhysicalWriteCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of read requests issued by this store, including requests
+    that occur during store initialization.</p> '
+  name: ReadCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of update requests issued by this store.</p> '
+  name: UpdateCount
+  type: long

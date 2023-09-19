@@ -1,0 +1,61 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'RuntimeMBean that provides information about a particular job. '
+name: weblogic.management.runtime.JobRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the description of the submitted <code>commonj.timers.TimerListener</code>.
+    Returns <code>commonj.timers.TimerListener#toString</code>. '
+  name: Description
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'The unique ID corresponding to this job '
+  name: ID
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the most recent execution time of this job in the local
+    server. Note that multiple executions of the same job are load-balanced across
+    the cluster and this time indicates when the job was last executed locally. '
+  name: LastLocalExecutionTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the number of times this job was executed locally. Job
+    executions are load-balanced across the cluster. This count specifies the number
+    of executions of the job in the local server. '
+  name: LocalExecutionCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the specified periodicity of this job '
+  name: Period
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the state of the task. A Job is either in running state
+    or in cancelled state '
+  name: State
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns when the job will be executed next '
+  name: Timeout
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the commonj.timers.TimerListener associated with this job.
+    This call involves a database roundtrip and should be used too frequently. '
+  excludeFromRest: No default REST mapping for Serializable
+  name: TimerListener
+  supported: false
+  type: java.io.Serializable

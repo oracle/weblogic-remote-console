@@ -285,32 +285,43 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
     //Test case UC-009A on the wiki page below:
     //   https://confluence.oraclecorp.com/confluence/pages/viewpage.action?pageId=4763969598
     //
-    it.only('6. Test Category: GAT/Risk1\n \t Test Scenario: UC-009A: ', async function () {
+    it('6. Test Category: GAT/Risk1\n \t Test Scenario: UC-009A: ', async function () {
         file = "UC-009A.png";
         try {
             //Go to AdminServer
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Servers",
                 "AdminServer");
+            await driver.sleep(3600);
             console.log("Change Listen Address to localhost");
             element = driver.findElement(By.xpath("//oj-input-text[@id='ListenAddress']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.wait(until.elementIsVisible(element),500);
+            await element.click();
             await element.sendKeys("localhost");
             await driver.sleep(3600);
             console.log("Click Visibility toggle-history-toolbar-icon");
             element = await driver.findElement(
-                By.xpath("//*[@id='toggle-history-toolbar-icon']/a")).click();
+                By.xpath("//*[@id='toggle-history-toolbar-icon']/a"));
+            await driver.wait(until.elementIsVisible(element),500);
+            await element.click();
             await driver.sleep(7200);
             console.log("Click to expand choices in History Tool");
             element = await driver.findElement(
-                By.xpath("//*[@id='oj-combobox-choice-beanpath']/span[2]/a")).click();
+                By.xpath("//*[@id='oj-combobox-choice-beanpath-history-entries']/span[2]/a"));
+            await driver.wait(until.elementIsVisible(element),500);
+            await element.click();
             await driver.sleep(7200);
             console.log("Select Server in the toggle-history-toolbar list box");
             element = await driver.findElement(
-                By.xpath("//div[@class='oj-listbox-result-label' and text()='Servers']")).click();
+                By.xpath("//div[@class='oj-listbox-result-label' and text()='Servers']"));
+            await driver.wait(until.elementIsVisible(element),500);
+            await element.click();
             await driver.sleep(7200);
             console.log("Click Yes button at Unsaved Changes Detected Dialog.");
             element = await driver.findElement(
-                By.xpath("//oj-button[@id='dlgYesBtn']/button/div/span")).click();
+                By.xpath("//oj-button[@id='dlgYesBtn']/button/div/span"));
+            await driver.wait(until.elementIsVisible(element),500);
+            await element.click();
             await driver.sleep(7200);
             console.log("Click at AdminServer");
             element = driver.findElement(By.xpath("//span[contains(.,'AdminServer')]"));
@@ -354,6 +365,10 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             console.log("Click Yes button at Unsaved Changes Detected Dialog.");
             element = await driver.findElement(
                 By.xpath("//oj-button[@id='dlgYesBtn']/button/div/span")).click();
+            //FIXME - CLick Home link twice
+            await driver.sleep(2400);
+            console.log("Click at Home Image Icon link Again");
+            element = await driver.findElement(By.xpath("//*[@id='home']/button/div/span[1]/img")).click();
             await driver.sleep(600);
             console.log("Click at Edit Tree Image");
             element = await driver.findElement(By.xpath("//span[contains(.,'Edit Tree')]")).click();
@@ -542,7 +557,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             const prjFile = process.env.OLDPWD + path.sep + projFile;
             await admin.importProject(driver,prjFile);
             await driver.sleep(4800);
-            await admin.selectDomainConnection(driver,"1411LocalDomain");
+            await admin.selectDomainConnection(driver,"1412LocalDomain");
             await driver.sleep(600);
             await driver.findElement(By.id("password-field|input")).click();
             await driver.findElement(By.id("password-field|input")).sendKeys("welcome1");
@@ -611,7 +626,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             const prjFile = process.env.OLDPWD + path.sep + projFile;
             await admin.importProject(driver,prjFile);
             await driver.sleep(4800);
-            await admin.selectDomainConnection(driver,"1411LocalDomain");
+            await admin.selectDomainConnection(driver,"1412LocalDomain");
             await driver.sleep(600);
             await driver.findElement(By.id("password-field|input")).click();
             await driver.findElement(By.id("password-field|input")).sendKeys("welcome1");

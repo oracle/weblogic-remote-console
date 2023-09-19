@@ -1,0 +1,81 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.IdentityAsserterMBean
+- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
+- weblogic.management.security.authentication.ServletAuthenticationFilterMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The MBean that represents configuration atrributes for the WebLogic                   Negotiate
+  Identity Assertion provider.                   The WebLogic Negotiate Identity Assertion
+  provider supports identity assertion                   using HTTP authentication
+  tokens from the SPNEGO protocol. The                   provider supports the identity
+  assertion using the Kerberos tokens                   contained within the SPNEGO
+  token..</p> '
+name: weblogic.security.providers.authentication.NegotiateIdentityAsserterMBean
+properties:
+- array: true
+  defaultValue:
+    value:
+      value:
+      - WWW-Authenticate.Negotiate
+      - Authorization.Negotiate
+  descriptionHTML: '<p>The token types that are currently active.</p> '
+  name: ActiveTypes
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>The WebLogic Negotiate Identity Asserter defines this setting.</p> '
+  name: Base64DecodingRequired
+  type: boolean
+- defaultValue:
+    value:
+      value: WebLogic Negotiate Identity Assertion provider
+  descriptionHTML: '<p>A short description of the WebLogic Negotiate Identity Assertion
+    provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Indicates whether the Negotiate Identity Asserter and filter
+    should negotiate when a webapp is configured for FORM auth.</p> '
+  name: FormBasedNegotiationEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: NegotiateIdentityAsserter
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authentication.NegotiateIdentityAsserterProviderImpl
+  descriptionHTML: '<p>The name of the Java class used to load the WebLogic Negotiate
+    Identity Assertion provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - WWW-Authenticate.Negotiate
+      - Authorization.Negotiate
+  descriptionHTML: '<p>The token types supported by the WebLogic Negotiate Identity
+    Assertion provider.</p> '
+  name: SupportedTypes
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The version number of the WebLogic Negotiate Identity Assertion
+    provider.</p> '
+  name: Version
+  type: java.lang.String

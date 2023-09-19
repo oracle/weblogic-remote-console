@@ -49,3 +49,16 @@ properties:
     label: Suspending
   - value: UNKNOWN
     label: Unknown
+- name: WeblogicVersion
+  # This really should just be "xxl", but that's a WIP
+  multiLineString: true
+  presentation:
+    width: xxl
+- name: WeblogicHome
+  multiLineString: true
+  presentation:
+    width: xxl
+- name: MiddlewareHome
+  multiLineString: true
+  presentation:
+    width: xxl

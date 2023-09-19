@@ -1,0 +1,203 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+- weblogic.management.WebLogicMBean
+derivedTypes:
+- weblogic.management.configuration.ForeignJNDILinkOverrideMBean
+- weblogic.management.configuration.WebserviceSecurityConfigurationMBean
+- weblogic.management.configuration.CacheLoaderMBean
+- weblogic.management.configuration.TLSMBean
+- weblogic.management.configuration.WTCPasswordMBean
+- weblogic.management.configuration.WebServiceLogicalStoreMBean
+- weblogic.management.configuration.CertRevocCaMBean
+- weblogic.management.configuration.ForeignJNDIObjectMBean
+- weblogic.management.configuration.PartitionPropertyMBean
+- weblogic.management.configuration.WebserviceTimestampMBean
+- weblogic.management.configuration.CoherenceTierMBean
+- weblogic.management.configuration.JMXMBean
+- weblogic.management.configuration.XMLEntitySpecRegistryEntryMBean
+- weblogic.management.configuration.ForeignServerOverrideMBean
+- weblogic.management.configuration.XMLParserSelectRegistryEntryMBean
+- weblogic.management.configuration.JMSDestCommonMBean
+- weblogic.management.configuration.JTAPartitionMBean
+- weblogic.management.configuration.WebServiceBufferingQueueMBean
+- weblogic.management.configuration.PartitionWorkManagerMBean
+- weblogic.management.configuration.ConfigurationPropertiesMBean
+- weblogic.management.configuration.CdiContainerMBean
+- weblogic.management.configuration.JMSConnectionConsumerMBean
+- weblogic.management.configuration.WTCtBridgeRedirectMBean
+- weblogic.management.configuration.AuthConfigProviderMBean
+- weblogic.management.configuration.ForeignDestinationOverrideMBean
+- weblogic.management.configuration.ResourceManagementMBean
+- weblogic.management.configuration.XMLRegistryEntryMBean
+- weblogic.management.configuration.TriggerMBean
+- weblogic.management.configuration.GzipCompressionMBean
+- weblogic.management.configuration.WSReliableDeliveryPolicyMBean
+- weblogic.management.configuration.CertRevocMBean
+- weblogic.management.configuration.TargetMBean
+- weblogic.management.configuration.AdminMBean
+- weblogic.management.configuration.StuckThreadActionMBean
+- weblogic.management.configuration.ApplicationMBean
+- weblogic.management.configuration.BatchConfigMBean
+- weblogic.management.configuration.NetworkAccessPointMBean
+- weblogic.management.configuration.JPAMBean
+- weblogic.management.configuration.PartitionLogMBean
+- weblogic.management.configuration.CacheTransactionMBean
+- weblogic.management.configuration.InterceptorsMBean
+- weblogic.management.configuration.JASPICMBean
+- weblogic.management.configuration.WebserviceTestpageMBean
+- weblogic.management.configuration.ManagedExternalServerMBean
+- weblogic.management.configuration.CoherenceManagementAddressProviderMBean
+- weblogic.management.configuration.DeploymentMBean
+- weblogic.management.configuration.PartitionConfiguratorMBean
+- weblogic.management.configuration.DebugPatchesMBean
+- weblogic.management.configuration.DomainTargetedMBean
+- weblogic.management.configuration.WTCtBridgeGlobalMBean
+- weblogic.management.configuration.ConfigurationPropertyMBean
+- weblogic.management.configuration.JMSStoreMBean
+- weblogic.management.configuration.RCMResourceMBean
+- weblogic.management.configuration.RestartLoopProtectionMBean
+- weblogic.management.configuration.KernelMBean
+- weblogic.management.configuration.FairShareConstraintMBean
+- weblogic.management.configuration.ExecuteQueueMBean
+- weblogic.management.configuration.GenericFileStoreMBean
+- weblogic.management.configuration.CacheAsyncListenersMBean
+- weblogic.management.configuration.LogFilterMBean
+- weblogic.management.configuration.AdminConsoleMBean
+- weblogic.management.configuration.ScriptMBean
+- weblogic.management.configuration.SingletonServiceBaseMBean
+- weblogic.management.configuration.TargetInfoMBean
+- weblogic.management.configuration.WTCImportMBean
+- weblogic.management.configuration.SystemComponentConfigurationMBean
+- weblogic.management.configuration.WebserviceSecurityMBean
+- weblogic.management.configuration.SelfTuningMBean
+- weblogic.management.configuration.WTCExportMBean
+- weblogic.management.configuration.SecurityConfigurationMBean
+- weblogic.management.configuration.SSLMBean
+- weblogic.management.configuration.JDBCPropertyOverrideMBean
+- weblogic.management.configuration.CoherenceManagementClusterMBean
+- weblogic.management.configuration.WLDFDataRetirementMBean
+- weblogic.management.configuration.WebServicePhysicalStoreMBean
+- weblogic.management.configuration.AllowListMBean
+- weblogic.management.configuration.CoherencePartitionCacheConfigMBean
+- weblogic.management.configuration.LifecycleManagerEndPointMBean
+- weblogic.management.configuration.CoherenceMemberConfigMBean
+- weblogic.management.configuration.WebServiceMBean
+- weblogic.management.configuration.WorkManagerShutdownTriggerMBean
+- weblogic.management.configuration.ResourceManagerMBean
+- weblogic.management.configuration.IIOPMBean
+- weblogic.management.configuration.BridgeDestinationCommonMBean
+- weblogic.management.configuration.ResourceGroupTemplateMBean
+- weblogic.management.configuration.SCAContainerMBean
+- weblogic.management.configuration.JTAMBean
+- weblogic.management.configuration.SNMPTrapSourceMBean
+- weblogic.management.configuration.DataSourcePartitionMBean
+- weblogic.management.configuration.WLDFServerDiagnosticMBean
+- weblogic.management.configuration.SingleSignOnServicesMBean
+- weblogic.management.configuration.WebServiceResiliencyMBean
+- weblogic.management.configuration.FederationServicesMBean
+- weblogic.management.configuration.InterceptorMBean
+- weblogic.management.configuration.DatabaseLessLeasingBasisMBean
+- weblogic.management.configuration.JMSSystemResourceOverrideMBean
+- weblogic.management.configuration.NodeManagerMBean
+- weblogic.management.configuration.DeploymentConfigurationMBean
+- weblogic.management.configuration.ForeignJNDIProviderOverrideMBean
+- weblogic.management.configuration.WTCResourcesMBean
+- weblogic.management.configuration.PartitionFileSystemMBean
+- weblogic.management.configuration.SecureModeMBean
+- weblogic.management.configuration.WTCRemoteTuxDomMBean
+- weblogic.management.configuration.JMSDestinationKeyMBean
+- weblogic.management.configuration.SNMPTrapDestinationMBean
+- weblogic.management.configuration.DebugScopeMBean
+- weblogic.management.configuration.ServerStartMBean
+- weblogic.management.configuration.DeploymentConfigOverridesMBean
+- weblogic.management.configuration.WTCLocalTuxDomMBean
+- weblogic.management.configuration.LifecycleManagerConfigMBean
+- weblogic.management.configuration.WebAppContainerMBean
+- weblogic.management.configuration.OptionalFeatureDeploymentMBean
+- weblogic.management.configuration.XMLRegistryMBean
+- weblogic.management.configuration.WebServicePersistenceMBean
+- weblogic.management.configuration.ForeignJNDILinkMBean
+- weblogic.management.configuration.JMSSessionPoolMBean
+- weblogic.management.configuration.COMMBean
+- weblogic.management.configuration.CacheExpirationMBean
+- weblogic.management.configuration.LogFileMBean
+- weblogic.management.configuration.SNMPAgentMBean
+- weblogic.management.configuration.OverloadProtectionMBean
+- weblogic.management.configuration.ConfigurationExtensionMBean
+- weblogic.management.configuration.MailSessionOverrideMBean
+- weblogic.management.configuration.EJBContainerMBean
+- weblogic.management.configuration.WebServiceReliabilityMBean
+- weblogic.management.configuration.DynamicServersMBean
+- weblogic.management.configuration.MachineMBean
+- weblogic.management.configuration.WebServiceBufferingMBean
+- weblogic.management.configuration.EmbeddedLDAPMBean
+- weblogic.management.configuration.CoherencePartitionCachePropertyMBean
+- weblogic.management.configuration.AuthModuleMBean
+- weblogic.management.configuration.RCMResourceFairShareMBean
+- weblogic.management.configuration.RestfulManagementServicesMBean
+- weblogic.management.configuration.SNMPProxyMBean
+- weblogic.management.configuration.ParameterMBean
+- weblogic.management.configuration.JDBCSystemResourceOverrideMBean
+- weblogic.management.configuration.ManagedExternalServerStartMBean
+- weblogic.management.configuration.JMSDistributedDestinationMemberMBean
+- weblogic.management.configuration.CacheStoreMBean
+- weblogic.management.configuration.AdminServerMBean
+- weblogic.management.configuration.DeploymentValidationPluginMBean
+- weblogic.management.configuration.ServerFailureTriggerMBean
+- weblogic.management.configuration.OptionalFeatureMBean
+- weblogic.management.configuration.DebugMBean
+- weblogic.management.configuration.XMLEntityCacheMBean
+- weblogic.management.configuration.GenericJDBCStoreMBean
+descriptionHTML: '<p>The tagging interface for configuration MBeans.</p> '
+name: weblogic.management.configuration.ConfigurationMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Return whether the MBean was created dynamically or is persisted
+    to config.xml</p> '
+  name: DynamicallyCreated
+  transient: true
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the unique id of this MBean instance</p> '
+  name: Id
+  type: long
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The user-specified name of this MBean instance.</p>  <p>This
+    name is included as one of the key properties in the MBean''s <code>javax.management.ObjectName</code>:</p>  <p><code>Name=<i>user-specified-name</i></code></p> '
+  key: true
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Optional information that you can include to describe this
+    configuration.</p>  <p>WebLogic Server saves this note in the domain''s configuration
+    file (<code>config.xml</code>) as XML PCDATA. All left angle brackets (&lt;) are
+    converted to the XML entity <code>&amp;lt;</code>. Carriage returns/line feeds
+    are preserved.</p>  <p>Note: If you create or edit a note from the Administration
+    Console, the Administration Console does not preserve carriage returns/line feeds.</p> '
+  name: Notes
+  setRoles:
+    allowed:
+    - Deployer
+    - Operator
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Return all tags on this Configuration MBean</p> '
+  name: Tags
+  type: java.lang.String
+  writable: true

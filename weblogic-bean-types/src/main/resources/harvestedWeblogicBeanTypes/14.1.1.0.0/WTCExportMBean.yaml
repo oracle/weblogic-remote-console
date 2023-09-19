@@ -1,0 +1,66 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface provides access to the WTC export configuration attributes.  The
+  methods defined herein are applicable for WTC configuration at the WLS domain level. '
+name: weblogic.management.configuration.WTCExportMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The complete name of the EJB home interface to use when invoking
+    a service.</p>  <p>If not specified, the default interface used is <code>tuxedo.services.<i>servicename</i>Home</code>.
+    For example: If the service being invoked is TOUPPER and EJBName attribute is
+    not specified, the home interface looked up in JNDI would be <code>tuxedo.services.TOUPPERHome</code>.</p> '
+  name: EJBName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: myLAP
+  descriptionHTML: '<p>The name of the local access point that exports this service.</p> '
+  name: LocalAccessPoint
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The remote name of this service. </p>  <p>If this value is
+    not specified, the ResourceName value is used.</p> '
+  name: RemoteName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: myExport
+  descriptionHTML: '<p>The name used to identify an exported service.</p>  <p>The
+    combination of ResourceName and LocalAccessPoint must be unique within defined
+    Exports. This allows you to define unique configurations having the same ResourceName.</p> '
+  name: ResourceName
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: TargetClass
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: TargetJar
+  supported: false
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

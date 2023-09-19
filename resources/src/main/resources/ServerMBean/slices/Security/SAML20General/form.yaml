@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -28,6 +28,7 @@ properties:
 - name: "SingleSignOnServices.ArtifactTimeout"
 - name: "SingleSignOnServices.SSOSigningKeyAlias"
 - name: "SingleSignOnServices.SSOSigningKeyPassPhrase"
+- name: "SingleSignOnServices.AllowedTargetHosts"
 helpTopics:
 - label: "Configuring Concurrent Managed Objects "
   href: "cnfgd/concurrent-utils.html"

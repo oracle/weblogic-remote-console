@@ -50,6 +50,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
           'ataglance': {cachedState: {}}
         }
       };
+      this.wizard = {usedIf: {}};
     }
 
     function getNthChildrenIndex(name) {
@@ -341,6 +342,40 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       },
       setTabstripTabCachedState: function (tabId, value) {
         this.tabstrip.tab[tabId] = {cachedState: value};
+      },
+      removeWizardUsedIfData: function (key) {
+        if (typeof key !== 'undefined' && key !== null) {
+          delete this.wizard.usedIf[key];
+        }
+      },
+      removeAllWizardUsedIfData: function () {
+        this.wizard.usedIf = {};
+      },
+      upsertWizardUsedIfData: function (key, fieldName, fieldValue) {
+        if ((typeof key !== 'undefined' && key !== null) &&
+            (typeof fieldName !== 'undefined' && fieldName !== null)
+        ) {
+          let entry = this.wizard.usedIf[key];
+          if (typeof entry === 'undefined') {
+            this.wizard.usedIf[key] = [];
+            entry = this.wizard.usedIf[key];
+          }
+          const index = entry.map(item => item.property).indexOf(fieldName);
+          if (index !== -1) {
+            entry[index].value = fieldValue;
+          }
+          else {
+            entry.push({property: fieldName, value: fieldValue});
+          }
+        }
+      },
+      getWizardUsedIfData: function (key) {
+        let data = [];
+        if (typeof key !== 'undefined' && key !== null) {
+          const entry = this.wizard.usedIf[key];
+          if (typeof entry !== 'undefined') data = entry;
+        }
+        return data;
       }
     };
 

@@ -12,6 +12,7 @@ do_docker_pull() {
 }
 
 set -e
+set -x
 doit_docker() {
   mkdir -p $tmp
   cat > $tmp/script <<!
@@ -20,7 +21,7 @@ $NPM_PREP_COMMANDS
 export DOWNLOAD_JAVA_URL=$DOWNLOAD_JAVA_URL
 export DOWNLOAD_NODE_URL=$DOWNLOAD_NODE_URL
 set -e
-if [ "$1" = internal ] && ! type zip > /dev/null 2>&1
+if ! type zip > /dev/null 2>&1
 then
   # Assume it is Debian linux, which is what the electron builder image is
   apt -qq update -qq
@@ -45,11 +46,28 @@ chmod -R 777 /root
 rm -rf /build.in/electron/dist
 cp -rp electron/dist /build.in/electron
 !
-  ELECTRON_BUILDER_IMAGE=${ELECTRON_BUILDER_IMAGE:-electronuserland/builder:12}
+  ELECTRON_BUILDER_IMAGE=${ELECTRON_BUILDER_IMAGE:-electronuserland/builder:18}
+  if [ -n "$CONSOLE_DOCKER_MOUNT_DIRS" ]
+  then
+    declare -a EXTRA
+    while :
+    do
+      i="${CONSOLE_DOCKER_MOUNT_DIRS%%,*}"
+      EXTRA[${#EXTRA}]=--mount
+      EXTRA[${#EXTRA}]="type=bind,source=$i,destination=$i,ro"
+      if [ "$i" = "$CONSOLE_DOCKER_MOUNT_DIRS" ]
+      then
+        break
+      fi
+      CONSOLE_DOCKER_MOUNT_DIRS="${CONSOLE_DOCKER_MOUNT_DIRS#*,}"
+    done
+  fi
   do_docker_pull $ELECTRON_BUILDER_IMAGE
   chmod a+x $tmp/script
   docker run \
+    --rm \
     --network=host \
+    "${EXTRA[@]}" \
     --name electron-build.$$ \
     --mount type=bind,source="$PWD",destination=/build.in \
     --mount type=bind,source="$tmp/script",destination=/tmp/script,ro \
@@ -66,8 +84,16 @@ copyout() {
 # Main
 if [ ! -f runnable/console.jar ]
 then
-  echo "Must build first before running $0" >&2
-  exit 1
+  if [ ! -f installer/target/console.zip ]
+  then
+    echo "Must build first before running $0" >&2
+    exit 1
+  fi
+  mkdir -p runnable
+  rm -rf runnable/*
+  unzip -q -d runnable installer/target/console.zip
+  mv runnable/console/* runnable
+  rm -rf runnable/console
 fi
 case "$(uname -a)" in
 *indow*|*Msys*)
@@ -105,6 +131,9 @@ fi
 
 set -e
 
+# For linux, we build various different installers/executables and we use the
+# electron builder docker image to do so, rather than requiring one to install
+# the software to build rpms, debian packages, etc.
 if [ -z "$ALREADY_IN_DOCKER" ]
 then
   case "$os" in
@@ -160,29 +189,20 @@ jlink --output "$extra"/customjre --no-header-files --no-man-pages --compress=2 
 
 mkdir -p "$extra"/backend
 cp -rp ../runnable/* "$extra"/backend
-if [ "$1" = internal ]
+# We allow the building of multiple variants on the image via a custom script.
+# For example, if one wants to build a special version for the Memphis office,
+# you can create electron/custom/memphis and invoke "build-electron.sh memphis".
+if [ -f "custom/$1" -a -x "custom/$1" ]
 then
+  command="custom/$1"
   shift
 
-  # Make sure the updater knows the version by its internal build name
-  sed /\"version\":/s/\",/-internal-$(date +%y%m%d)\",/ package.json > "$extra"/package.json
-
-  # Make sure the header shows the version by its internal build name
-  mkdir -p frontend/js/jet-composites/wrc-frontend/1.0.0/config
-  unzip -q -p "$extra"/backend/console.jar frontend/js/jet-composites/wrc-frontend/1.0.0/config/console-frontend-jet.yaml |
-    sed -e /^version:/s/\'\$/-internal-$(date +%y%m%d)\'/ \
-      > frontend/js/jet-composites/wrc-frontend/1.0.0/config/console-frontend-jet.yaml
-  zip -q "$extra"/backend/console.jar frontend/js/jet-composites/wrc-frontend/1.0.0/config/console-frontend-jet.yaml
-  rm -rf frontend
-  # Point to the internal feed
-  cp -p internal-feed-url.json "$extra/feed-url.json"
+  "$command" "$extra"
 else
-  if [ "$1" = external ]
-  then
-    shift
-  fi
   cp -p package.json "$extra"
 fi
+
+./gen-messages "$extra"/resources/nls ../frontend/src/resources/nls/frontend*.properties
 
 npm run dist "$@"
 
@@ -200,23 +220,29 @@ darwin)
   done
 esac
 
-if set | grep -q CODESIGNBUREAU
+# Different organizations have different ways of implementing signing.  Therefore,
+# we allow for one to plug in custom signing scripts.
+if [ -x custom/sign ]
 then
+  custom/sign
+else
   case "$os" in
   darwin)
-    for mac_dir in dist/mac*
-    do
-      mac_suffix=${mac_dir#dist/mac}
-      ./signMac $mac_dir/"WebLogic Remote Console.app" signed/mac${mac_suffix}/"WebLogic Remote Console.app"
-      # Regenerate using the signed version
-      "$(npm bin)/electron-builder" -p never --pd="signed/mac${mac_suffix}/WebLogic Remote Console.app"
-    done
+    if [ -x custom/signMac ]
+    then
+      custom/signMac
+    fi
     ;;
   windows)
-    rm -rf "$tmp"/*
-    mkdir -p "$tmp"
-    mv dist/*.exe "$tmp"
-    java -jar CSS-Client.jar sign -user weblogic_remote_console_grp -global_uid lfeigen -signed_location "dist" -sign_method microsoft -file_to_sign "$tmp"/*.exe
-    chmod +x dist/*.exe
+    if [ -x custom/signWindows ]
+    then
+      custom/signWindows
+    fi
+    ;;
+  linux)
+    if [ -x custom/signLinux ]
+    then
+      custom/signLinux
+    fi
   esac
 fi

@@ -13,8 +13,6 @@ actions:
     - name: "selector"
       multiLineString: true
     - name: "file"
-      presentation:
-        width: "lg"
       required: true
     - name: "timeout"
 
@@ -28,8 +26,6 @@ actions:
     parameters:
     - name: "file"
       required: true
-      presentation:
-        width: "lg"
     - name: "timeout"
   definition:
     type: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
@@ -54,8 +50,6 @@ actions:
     parameters:
     - name: "file"
       required: true
-      presentation:
-        width: "lg"
     - name: "applyOverrides"
 
 - name: "moveMessages"

@@ -1,0 +1,108 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.CoherenceServerStartMBean
+- weblogic.management.configuration.SystemComponentStartMBean
+descriptionHTML: 'This bean is used to configure the attributes necessary to start
+  up a server on a remote machine. '
+name: weblogic.management.configuration.ManagedExternalServerStartMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The arguments to use when starting this server.</p>  <p>These
+    are the first arguments appended immediately after <code>java</code> portion of
+    the startup command. For example, you can set Java heap memory or specify any
+    <code>weblogic.nodemanager.server.provider.WeblogicCacheServer</code> option.</p>  <p>Separate
+    arguments with a space.</p> '
+  name: Arguments
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  deprecated: '12.1.3.0 replaced by #getMWHome '
+  descriptionHTML: '<p>The BEA home directory (path on the machine running Node Manager)
+    to use when starting this server.</p>  <p>Specify the directory on the Node Manager
+    machine under which all of Oracle''s BEA products were installed. For example,
+    <code>c:&#92Oracle&#92Middleware&#92</code>.</p> '
+  name: BeaHome
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the boot properties to be used for a server</p> '
+  exclude: true
+  name: BootProperties
+  supported: false
+  transient: true
+  type: java.util.Properties
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The classpath (path on the machine running Node Manager) to
+    use when starting this server.</p>  <p>If you need to add user classes to the
+    classpath, in addition you will need to add the following: <code>FEATURES_HOME/weblogic.server.modules.coherence.server_10.3.4.0.jar:COHERENCE_HOME/lib/coherence.jar</code></p>  <p>where
+    <code>FEATURES_HOME</code> is the features directory (typically <code>$MW_HOME/modules/features</code>)
+    and <code>COHERENCE_HOME</code> the coherence directory (typically <code>$MW_HOME/coherence_3.6</code>)
+    on the Node Manager machine. If you do not specify a classpath the above will
+    be used automatically. </p>  <p>The operating system determines which character
+    separates path elements. On Windows, use a semicolon (;). On UNIX a colon (:).</p> '
+  name: ClassPath
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Java home directory (path on the machine running Node Manager)
+    to use when starting this server.</p>  <p>Specify the parent directory of the
+    JDK''s <code>bin</code> directory. For example, <code>c:&#92;bea&#92;jdk141</code>.</p> '
+  name: JavaHome
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Java Vendor value to use when starting this server. </p>
+    <p> If the server is part of a cluster and configured for automatic migration
+    across possibly different platforms with different vendors providing the JDKs,
+    then, both JavaVendor and JavaHome should be set in the generated configuration
+    file instead.</p> '
+  name: JavaVendor
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MWHome directory (path on the machine running Node Manager)
+    to use when starting this server.</p>  <p>Specify the directory on the Node Manager
+    machine under which all of Oracle''s MW products were installed. For example,
+    <code>c:&#92;Oracle&#92;Middleware&#92;</code>.</p> '
+  name: MWHome
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The user-specified name of this MBean instance.</p>  <p>This
+    name is included as one of the key properties in the MBean''s <code>javax.management.ObjectName</code>:</p>  <p><code>Name=<i>user-specified-name</i></code></p> '
+  key: true
+  name: Name
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The directory that this server uses as its root directory.
+    This directory must be on the computer that hosts the Node Manager. If you do
+    not specify a Root Directory value, the domain directory is used by default. </p> '
+  name: RootDirectory
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the boot properties to be used for a server</p> '
+  exclude: true
+  name: StartupProperties
+  supported: false
+  transient: true
+  type: java.util.Properties

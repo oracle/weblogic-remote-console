@@ -1,0 +1,87 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'RequestClassRuntimeMBean presents runtime information about RequestClasses.
+  A request class represents a class of work. Work using the same request class shares
+  the same priority. '
+name: weblogic.management.runtime.RequestClassRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Total number of completions since server start '
+  name: CompletedCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Undocumented attribute that exposes a value used in determining
+    priority '
+  exclude: true
+  name: DeltaFirst
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Undocumented attribute that exposes a value used in determining
+    priority '
+  exclude: true
+  name: DeltaRepeat
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Undocumented attribute that exposes a value used in determining
+    priority. This attribute is applicable only for ResponseTimeRequestClass. -1 is
+    returned for FairShareRequestClasses. '
+  exclude: true
+  name: Interval
+  supported: false
+  type: double
+- defaultValue: {
+    }
+  descriptionHTML: 'Undocumented attribute that exposes a value used in determining
+    priority '
+  exclude: true
+  name: MyLast
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Number of requests waiting for a thread to become available. '
+  name: PendingRequestCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the type of RequestClass. Either <code>FAIR_SHARE</code>
+    or <code>RESPONSE_TIME</code> or <code>CONTEXT</code> '
+  name: RequestClassType
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Undocumented attribute that exposes a value used in determining
+    priority '
+  exclude: true
+  name: ThreadUseSquares
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Total amount of thread use time in millisec''s used by the request
+    class since server start. '
+  name: TotalThreadUse
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Current priority of the request class. The priority is relative
+    to other request class priorities. The priority is calculated dynamically frequently
+    and can change. '
+  name: VirtualTimeIncrement
+  type: long
+roles:
+  allowed:
+  - Operator

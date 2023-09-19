@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -395,6 +395,62 @@ define(['wrc-frontend/core/utils'],
       return (CoreUtils.isNotUndefinedNorNull(throwable) && CoreUtils.isNotUndefinedNorNull(throwable.message) ? throwable.message : throwable);
     }
 
+    function calculateContentHeight( ta, scanAmount ) {
+      const origHeight = ta.style.height;
+      const scrollHeight = ta.scrollHeight;
+      const overflow = ta.style.overflow;
+
+      let height = ta.offsetHeight;
+
+      // only bother if the ta is bigger than content
+      if ( height >= scrollHeight ) {
+        // check that our browser supports changing
+        // dimension calculations mid-way through a
+        // function call...
+        ta.style.height = (height + scanAmount) + 'px';
+        // because the scrollbar can cause calculation
+        // problems
+        ta.style.overflow = 'hidden';
+        // by checking that scrollHeight has updated
+        if ( scrollHeight < ta.scrollHeight ) {
+          // now try and scan the ta's height downwards
+          // until scrollHeight becomes larger than height
+          while (ta.offsetHeight >= ta.scrollHeight) {
+            ta.style.height = (height -= scanAmount) + 'px';
+          }
+          // be more specific to get the exact height
+          while (ta.offsetHeight < ta.scrollHeight) {
+            ta.style.height = (height++) + 'px';
+          }
+          // reset the ta back to its original height
+          ta.style.height = origHeight;
+          // put the overflow back
+          ta.style.overflow = overflow;
+
+          return height;
+        }
+      }
+      else {
+        return scrollHeight;
+      }
+    }
+
+    function calculateTextAreaHeight(ta) {
+      const taLineHeight = parseInt(ta.lineHeight, 10);
+      // Get the scroll height of the textarea
+      const taHeight = calculateContentHeight(ta, taLineHeight);
+      // calculate the number of lines
+      return Math.ceil(taHeight / taLineHeight);
+    }
+
+    function getLineBreaksCount(value) {
+      let lineBreaksCount = -1;
+      if (typeof value !== 'undefined' && value !== null) {
+        lineBreaksCount = (value.match(/\n/g)||[]).length;
+      }
+      return lineBreaksCount;
+    }
+
     return {
       getSliceFromPDJUrl: getSliceFromPDJUrl,
       parseQueryString: parseQueryString,
@@ -421,7 +477,9 @@ define(['wrc-frontend/core/utils'],
       getPlacementRouterParameter: getPlacementRouterParameter,
       setPlacementRouterParameter: setPlacementRouterParameter,
       isReadOnlySlice: isReadOnlySlice,
-      getThrowableMessage: getThrowableMessage
+      getThrowableMessage: getThrowableMessage,
+      calculateTextAreaHeight: calculateTextAreaHeight,
+      getLineBreaksCount: getLineBreaksCount
     };
   }
 );

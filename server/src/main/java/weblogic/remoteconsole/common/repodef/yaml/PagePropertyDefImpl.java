@@ -37,6 +37,13 @@ class PagePropertyDefImpl implements PagePropertyDef {
 
   private static final Logger LOGGER = Logger.getLogger(PagePropertyDefImpl.class.getName());
 
+  private static final String HEALTH_STATE_OK = "ok";
+  private static final String HEALTH_STATE_WARN = "warn";
+  private static final String HEALTH_STATE_CRITICAL = "critical";
+  private static final String HEALTH_STATE_FAILED = "failed";
+  private static final String HEALTH_STATE_OVERLOADED = "overloaded";
+  private static final String HEALTH_STATE_UNKNOWN = "unknown";
+
   private PageDefImpl pageDefImpl;
   private BeanPropertyDefImpl beanPropertyDefImpl;
   BeanPropertyDefCustomizerSource pageLevelCustomizerSource;
@@ -45,7 +52,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
   private LocalizableString label;
   private PagePropertyExternalHelpDefImpl externalHelpDefImpl;
   private PagePropertyPresentationDefImpl presentationDefImpl;
-  private List<LegalValueDefImpl> legalValueDefImpls = new ArrayList<>();
+  private List<PagePropertyLegalValueDefImpl> legalValueDefImpls = new ArrayList<>();
   private List<LegalValueDef> legalValueDefs;
   private PagePropertyUsedIfDefImpl usedIfDefImpl;
 
@@ -139,7 +146,7 @@ class PagePropertyDefImpl implements PagePropertyDef {
     return presentationDefImpl;
   }
 
-  List<LegalValueDefImpl> getLegalValueDefImpls() {
+  List<PagePropertyLegalValueDefImpl> getLegalValueDefImpls() {
     return legalValueDefImpls;
   }
 
@@ -232,19 +239,33 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   private void initializeLegalValueDefs() {
-    mergeLegalValueDefImpls(
-      createSourceLevelLegalValueDefImpls(),
-      createCustomizerSourceLevelLegalValueDefImpls()
-    );
+
+    if (isHealthState()) {
+      // Bake in health state (v.s. adding it to every yaml that has a property of that type)
+      getLegalValueDefImpls().add(new HealthStateLegalValueDefImpl(this, "ok"));
+      getLegalValueDefImpls().add(new HealthStateLegalValueDefImpl(this, "warn"));
+      getLegalValueDefImpls().add(new HealthStateLegalValueDefImpl(this, "critical"));
+      getLegalValueDefImpls().add(new HealthStateLegalValueDefImpl(this, "failed"));
+      getLegalValueDefImpls().add(new HealthStateLegalValueDefImpl(this, "overloaded"));
+      getLegalValueDefImpls().add(new HealthStateLegalValueDefImpl(this, "unknown"));
+    } else {
+      mergePagePropertyLegalValueDefImpls(
+        createSourceLevelPagePropertyLegalValueDefImpls(),
+        createCustomizerSourceLevelPagePropertyLegalValueDefImpls()
+      );
+    }
     legalValueDefs = Collections.unmodifiableList(getLegalValueDefImpls());
   }
 
-  private void mergeLegalValueDefImpls(List<LegalValueDefImpl> sourceVals, List<LegalValueDefImpl> customizerVals) {
+  private void mergePagePropertyLegalValueDefImpls(
+    List<PagePropertyLegalValueDefImpl> sourceVals,
+    List<PagePropertyLegalValueDefImpl> customizerVals
+  ) {
     if (sourceVals.isEmpty()) {
       getLegalValueDefImpls().addAll(customizerVals);
     } else {
-      for (LegalValueDefImpl sourceVal : sourceVals) {
-        LegalValueDefImpl customizerVal = findLegalValueDefImpl(sourceVal, customizerVals);
+      for (PagePropertyLegalValueDefImpl sourceVal : sourceVals) {
+        PagePropertyLegalValueDefImpl customizerVal = findPagePropertyLegalValueDefImpl(sourceVal, customizerVals);
         if (customizerVal != null) {
           if (customizerVal.isOmit()) {
             // The customizer wants to remove this value from the list of legal values.
@@ -256,8 +277,8 @@ class PagePropertyDefImpl implements PagePropertyDef {
           getLegalValueDefImpls().add(sourceVal);
         }
       }
-      for (LegalValueDefImpl customizerVal : customizerVals) {
-        if (findLegalValueDefImpl(customizerVal, sourceVals) == null) {
+      for (PagePropertyLegalValueDefImpl customizerVal : customizerVals) {
+        if (findPagePropertyLegalValueDefImpl(customizerVal, sourceVals) == null) {
           // The bean doesn't support this legal value
           // That's OK - just omit it.
           // For example, a newer version of WLS added the legal value
@@ -274,30 +295,42 @@ class PagePropertyDefImpl implements PagePropertyDef {
     }
   }
 
-  private List<LegalValueDefImpl> createSourceLevelLegalValueDefImpls() {
-    List<LegalValueDefImpl> rtn = new ArrayList<>();
+  private List<PagePropertyLegalValueDefImpl> createSourceLevelPagePropertyLegalValueDefImpls() {
+    List<PagePropertyLegalValueDefImpl> rtn = new ArrayList<>();
     for (Object legalValue : beanPropertyDefImpl.getSource().getLegalValues()) {
       if (beanPropertyDefImpl.getCustomizerSource().isUseUnlocalizedLegalValuesAsLabels()) {
         // set the english label to null so that the legal value doesn't get localized
-        rtn.add(new LegalValueDefImpl(this, legalValue, null));
+        rtn.add(new NormalLegalValueDefImpl(this, legalValue, null));
       } else {
         // don't set the english label so that the value gets used as the engligh label
-        rtn.add(new LegalValueDefImpl(this, legalValue));
+        rtn.add(new NormalLegalValueDefImpl(this, legalValue));
       }
     }
     return rtn;
   }
 
-  private List<LegalValueDefImpl> createCustomizerSourceLevelLegalValueDefImpls() {
-    List<LegalValueDefImpl> rtn = new ArrayList<>();
+  private List<PagePropertyLegalValueDefImpl> createCustomizerSourceLevelPagePropertyLegalValueDefImpls() {
+    List<PagePropertyLegalValueDefImpl> rtn = new ArrayList<>();
     for (LegalValueDefCustomizerSource src : beanPropertyDefImpl.getCustomizerSource().getLegalValues()) {
-      rtn.add(new LegalValueDefImpl(this, src.getValue(), src.getLabel(), src.isOmit()));
+      boolean supported =
+        beanPropertyDefImpl
+          .getTypeDefImpl()
+          .getBeanRepoDefImpl()
+          .supportsCapabilities(
+            src.getRequiredCapabilities()
+          );
+      if (supported) {
+        rtn.add(new NormalLegalValueDefImpl(this, src.getValue(), src.getLabel(), src.isOmit()));
+      }
     }
     return rtn;
   }
 
-  private LegalValueDefImpl findLegalValueDefImpl(LegalValueDefImpl want, List<LegalValueDefImpl> vals) {
-    for (LegalValueDefImpl have : vals) {
+  private PagePropertyLegalValueDefImpl findPagePropertyLegalValueDefImpl(
+    PagePropertyLegalValueDefImpl want,
+    List<PagePropertyLegalValueDefImpl> vals
+  ) {
+    for (PagePropertyLegalValueDefImpl have : vals) {
       if (StringUtils.nonNull(want.getValueAsString()).equals(StringUtils.nonNull(have.getValueAsString()))) {
         return have;
       }
@@ -363,7 +396,8 @@ class PagePropertyDefImpl implements PagePropertyDef {
       // e.g. ServerMBean's ListenPort property on the Server General page.
     }
 
-    if (propertyDefImpl.getTypeDefImpl().isDisableMBeanJavadoc()) {
+    if (propertyDefImpl.getCustomizerSource().isDisableMBeanJavadoc()
+         || propertyDefImpl.getTypeDefImpl().isDisableMBeanJavadoc()) {
       // This property's mbean type doesn't have external mbean javadoc available for it.
       return null;
     }

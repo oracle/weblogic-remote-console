@@ -9,12 +9,12 @@
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout'],
   function (oj, ko, HtmlUtils, MessageDisplaying, DeclarativeActionsManager, ViewModelUtils, CoreUtils, Logger) {
-    
+
     function ActionsStrip(viewParams) {
       const self = this;
-      
+
       this.perspective = viewParams.perspective;
-      
+
       this.i18n = {
         icons: {
           'sync': { iconFile: 'sync-off-icon-blk_24x24',
@@ -31,18 +31,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           }
         }
       };
-      
+
       this.actionButtons = {html: ko.observable({}), buttons: []};
-      
+      this.showActionsStrip = ko.observable(true);
+
       this.renderActionsStrip = function (visibility = true) {
         if (visibility) {
           const declarativeActions = viewParams.getDeclarativeActions();
           const results = DeclarativeActionsManager.createActionsButtons(declarativeActions);
-          self.actionButtons.html({view: HtmlUtils.stringToNodeArray(results.html.innerHTML), data: self});
-          self.actionButtons.buttons = results.buttons;
+          this.actionButtons.html({view: HtmlUtils.stringToNodeArray(results.html.innerHTML), data: this});
+          this.actionButtons.buttons = results.buttons;
           visibility = declarativeActions.buttons.length > 0;
         }
-        $('.cfe-actions-strip-container').css({visibility: (visibility ? 'visible' : 'hidden')});
+        this.showActionsStrip(visibility);
       }.bind(this);
 
       this.handleActionButtonClickedReply = function (reply, options) {
@@ -51,19 +52,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
             CoreUtils.isNotUndefinedNorNull(options.isDownloadAction) &&
             options.isDownloadAction
           ) {
-            if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
-              MessageDisplaying.displayMessagesAsHTML(
-                reply.messages,
-                oj.Translations.getTranslatedString('wrc-table-toolbar.prompts.download.value'),
-                'confirmation',
-                60000
-              );
+            if (reply.succeeded) {
+              if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
+                MessageDisplaying.displayMessagesAsHTML(
+                  reply.messages,
+                  oj.Translations.getTranslatedString('wrc-table-toolbar.prompts.download.value'),
+                  'confirmation',
+                  60000
+                );
+              }
+            }
+            else {
+              MessageDisplaying.displayResponseMessages(reply.messages);
             }
           }
           else {
             if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
               MessageDisplaying.displayResponseMessages(reply.messages);
 /*
+//MLW
               if (reply.messages.length === 0) {
                 MessageDisplaying.displayMessage({
                   severity: 'confirmation',
@@ -71,7 +78,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
                 }, 2500);
               }
               else {
-                MessageDisplaying.displayResponseMessages(reply.messages);
+                 MessageDisplaying.displayResponseMessages(reply.messages);
               }
  */
             }
@@ -81,11 +88,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           }
 
           if (reply.succeeded) {
-            const declarativeActions = viewParams.getDeclarativeActions();
-            DeclarativeActionsManager.onCheckedRowsSubmitted(declarativeActions, options);
-
-            const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(declarativeActions, options.action);
-            viewParams.onSyncClicked(actionPolling.interval);
+            viewParams.onActionInputFormCompleted(reply, options);
           }
         }
 
@@ -109,7 +112,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           const actionInputFormLabels = DeclarativeActionsManager.getActionInputFormLabels(pdjData, options.action);
           options['label'] = actionInputFormLabels.label;
           options['title'] = actionInputFormLabels.title;
-          options['instructions'] = actionInputFormLabels.instructions;
           viewParams.onActionInputButtonClicked(rdjData, options);
         }
         else {
@@ -126,24 +128,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
                   actionPolling['pollCount'] = 0;
                   viewParams.onActionPollingStarted(actionPolling);
                 }
+                viewParams.onCheckedRowsRefreshed();
               }
             })
-            .catch(response => {
-              ViewModelUtils.failureResponseDefaultHandling(response);
+            .catch(failure => {
+              if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
+                MessageDisplaying.displayResponseMessages(failure.messages);
+              }
+              else {
+                ViewModelUtils.failureResponseDefaultHandling(failure);
+              }
             })
             .finally(() => {
               ViewModelUtils.setPreloaderVisibility(false);
-              viewParams.onCheckedRowsRefreshed();
             });
         }
       };
-      
+
       this.launchActionMenu = function (event) {
         event.preventDefault();
         const menuId = event.target.id.replace('Launcher', '');
         document.getElementById(menuId).open(event);
       };
-      
+
       this.actionMenuClickListener = function (event) {
         event.preventDefault();
         const fauxEvent = {
@@ -155,9 +162,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         };
         self.actionButtonClicked(fauxEvent);
       };
-      
+
     }
-    
+
     return ActionsStrip;
   }
 );

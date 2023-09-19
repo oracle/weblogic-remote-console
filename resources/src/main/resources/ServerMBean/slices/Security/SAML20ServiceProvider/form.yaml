@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -7,6 +7,10 @@ introductionHTML: >
 
 properties:
 - name: "SingleSignOnServices.ServiceProviderEnabled"
+- name: "SingleSignOnServices.ServiceProviderSingleLogoutEnabled"
+- name: "SingleSignOnServices.AssertionSubjectSessionTimeoutCheckEnabled"
+- name: "SingleSignOnServices.ServiceProviderSingleLogoutBinding"
+- name: "SingleSignOnServices.ServiceProviderSingleLogoutRedirectURIs"
 - name: "SingleSignOnServices.SignAuthnRequests"
 - name: "SingleSignOnServices.ForceAuthn"
 - name: "SingleSignOnServices.Passive"
@@ -21,6 +25,7 @@ properties:
 - name: "SingleSignOnServices.AssertionEncryptionDecryptionKeyPassPhrase"
 - name: "SingleSignOnServices.AssertionEncryptionDecryptionKeyAlias"
 - name: "SingleSignOnServices.MetadataEncryptionAlgorithms"
+- name: "SingleSignOnServices.AllowedTargetHosts"
 helpTopics:
 - label: "Using Security Assertion Markup Language (SAML) Tokens For Identity "
   href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"

@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2022, Oracle and/or its affiliates.
+ Copyright (c) 2022, 2023 Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div
@@ -19,6 +19,7 @@
           selected="{{selectedLeftItems}}"
           scroll-policy="loadAll"
           class="oj-listview-item-padding-off"
+          aria-label="Available Columns"
         >
           <template slot="itemTemplate" data-oj-as="item">
             <div class="oj-listview-item-layout">
@@ -27,6 +28,7 @@
                 selected-keys="{{selectedLeftItems}}"
                 selection-mode="multiple"
                 row-key="[[item.data.name]]"
+                aria-label="selectedLeftItems"
                 :id="[['unselected_checkboxset' + item.data.name]]">
               </oj-selector>
               <oj-bind-text value="{{item.data.label}}"></oj-bind-text>
@@ -51,6 +53,7 @@
           on-click="[[addRightButtonClick]]"
         >
           <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-caret-e"></span>
+          <oj-bind-text value="addToRight" ></oj-bind-text>
         </oj-button>
       </div>
       <div>
@@ -61,6 +64,7 @@
           on-click="[[addAllButtonClick]]"
         >
           <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-caret02end-e"></span>
+          <oj-bind-text value="addAllRight" ></oj-bind-text>
         </oj-button>
       </div>
       <div>
@@ -72,16 +76,18 @@
           on-click="[[removeRightButtonClick]]"
         >
           <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-caret-w"></span>
+          <oj-bind-text value="removeRight" ></oj-bind-text>
         </oj-button>
       </div>
       <div>
         <oj-button
-          id="remoteAll"
+          id="removeAll"
           display="icons"
           chroming="outlined"
           on-click="[[removeAllButtonClick]]"
         >
           <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-caret02end-w"></span>
+          <oj-bind-text value="removeAll" ></oj-bind-text>
         </oj-button>
       </div>
     </div>
@@ -97,6 +103,7 @@
           selection-mode="multiple"
           scroll-policy="loadAll"
           class="oj-listview-item-padding-off"
+          aria-label="Selected Columns"
         >
           <template slot="itemTemplate" data-oj-as="item">
             <div class="oj-listview-item-layout">
@@ -105,6 +112,7 @@
                 selected-keys="{{selectedRightItems}}"
                 selection-mode="multiple"
                 row-key="[[item.data.name]]"
+                aria-label="selectedRightItems"
                 :id="[['selected_checkboxset' + item.data.name]]">
               </oj-selector>
               <oj-bind-text value="{{item.data.label}}"></oj-bind-text>

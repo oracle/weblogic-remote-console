@@ -1,0 +1,21 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The CoherencePartitionCachePropertyMBean is used to define specific
+  properties, name and value that apply to a CoherenceMTCacheConfigMBean.</p>  <p>Note:
+  the Name attribute is inherited from ConfigurationMBean.</p> '
+name: weblogic.management.configuration.CoherencePartitionCachePropertyMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the value of the parameter '
+  name: Value
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

@@ -1,0 +1,28 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.ReplicationRuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.MANAsyncReplicationRuntimeMBean
+descriptionHTML: 'RuntimeMBean for MAN Replication '
+name: weblogic.management.runtime.MANReplicationRuntimeMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ActiveServersInRemoteCluster
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Answer if the remote cluster is reachable or not. '
+  name: RemoteClusterReachable
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Answer the name of the secondary server </p> '
+  name: SecondaryServerName
+  type: java.lang.String

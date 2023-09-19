@@ -1,0 +1,180 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.coherence.descriptor.wl.CoherenceClusterParamsBean
+properties:
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The cluster listen port used by Coherence; Coherence cluster
+    members use this port to discover and join, or create the cluster. If unspecified,
+    the Coherence cluster multicast listen port will be used.</p> '
+  name: ClusterListenPort
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specifies a clustering mode of either Unicast or Multicast.
+    If multicast is undesirable or unavailable in an environment, or when an environment
+    is not properly configured to support multicast, then setting up the Well Known
+    Addresses (WKA) feature is required. All cluster multicast communication is disabled
+    if WKA is enabled.</p> '
+  legalValues:
+  - multicast
+  - unicast
+  name: ClusteringMode
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.coherence.descriptor.wl.CoherenceCacheBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of CoherenceCache beans, each of which represents
+    a Coherence cache.</p> '
+  name: CoherenceCaches
+  relationship: containment
+  type: weblogic.coherence.descriptor.wl.CoherenceCacheBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The CoherenceClusterWellKnownAddressMBeans that have been defined
+    for this CoherenceClusterBean. </p> '
+  name: CoherenceClusterWellKnownAddresses
+  relationship: containment
+  type: weblogic.coherence.descriptor.wl.CoherenceClusterWellKnownAddressesBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the Coherence IdentityAsserter.</p> '
+  name: CoherenceIdentityAsserter
+  relationship: containment
+  type: weblogic.coherence.descriptor.wl.CoherenceIdentityAsserterBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the Keystore params for the Coherence Identity.</p> '
+  name: CoherenceKeystoreParams
+  relationship: containment
+  type: weblogic.coherence.descriptor.wl.CoherenceKeystoreParamsBean
+- array: true
+  creators:
+  - weblogic.coherence.descriptor.wl.CoherenceServiceBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of CoherenceService beans, each of which represents
+    a Coherence Service.</p> '
+  name: CoherenceServices
+  relationship: containment
+  type: weblogic.coherence.descriptor.wl.CoherenceServiceBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Check if use WebLogic SSL configuration as global socket provider.</p> '
+  name: GlobalSocketProvider
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The IP address for the cluster multicast listener.</p> '
+  name: MulticastListenAddress
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 33387
+  deprecated: '12.2.1.0.0 Use getClusterListenPort. '
+  descriptionHTML: '<p>The port for the cluster multicast listener.</p> '
+  name: MulticastListenPort
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Check if security framework is enabled</p> '
+  name: SecurityFrameworkEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 4
+  descriptionHTML: '<p>Sets the time-to-live (TTL) setting for the multicast message.
+    The TTL setting designates how far multicast UDP/IP packets can travel on a network.
+    The TTL is expressed in terms of how many hops a packet survives; each network
+    interface, router, and managed switch is considered one hop. The TTL value should
+    be set to the lowest integer value that works. Setting the value too high can
+    use unnecessary bandwidth on other LAN segments and can even cause the operating
+    system or network devices to disable multicast traffic.</p> <p>Typically, setting
+    the TTL value to 1 works on a simple switched backbone. A value of 2 or more may
+    be required on an advanced backbone with intelligent switching. A value of 0 is
+    used for single server clusters that are used for development and testing.</p> '
+  name: TimeToLive
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: tmb
+  descriptionHTML: '<p>Specify the underlying transport protocol to use for cluster
+    communication.</p> <p>The transport type can be one of the following:</p> <ul>
+    <li>TMB: UDP + TMB (default)</li> <li>TCP: TCP + TMB</li> <li>UDP: UDP + datagram</li>
+    <li>SSL: SSL over TCP + TMBS</li> <li>SSLUDP: SSL over TCP + SSL over datagram</li>
+    <li>SDMB: UDP + SDMB</li> <li>IMB: UDP + IMB</li> </ul>  <p>Where: "TMB: UDP +
+    TMB" means for transport type TMB, cluster service communication uses UDP; reliable
+    point-to-point data service communication uses TMB. The default is TMB.</p>  <p>The
+    SDMB and IMB are only applicable to Exalogic environment.</p> '
+  legalValues:
+  - tmb
+  - tcp
+  - udp
+  - ssl
+  - ssludp
+  - sdmb
+  - imb
+  name: Transport
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  deprecated: '12.2.1.0.0 Use getClusterListenPort '
+  descriptionHTML: '<p>The port for the cluster unicast listener.</p> '
+  name: UnicastListenPort
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p> Specifies whether the unicast port will be automatically incremented
+    if the port cannot be bound because it is already in use. </p> '
+  name: UnicastPortAutoAdjust
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

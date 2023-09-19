@@ -9,3 +9,4 @@ introductionHTML: >
 
 customizePageDefMethod: weblogic.remoteconsole.customizers.CustomFilteringDashboardMBeanCustomizer.customizeViewSliceDef
 customizePageMethod: weblogic.remoteconsole.customizers.CustomFilteringDashboardMBeanCustomizer.customizeViewSlice
+supportsNavigation: true

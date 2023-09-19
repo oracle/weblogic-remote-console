@@ -1,0 +1,48 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.WebServiceRequestBufferingQueueMBean
+- weblogic.management.configuration.WebServiceResponseBufferingQueueMBean
+descriptionHTML: '<p>Represents buffering queue configuration for web services (either
+  for requests or responses).</p> '
+name: weblogic.management.configuration.WebServiceBufferingQueueMBean
+properties:
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: 'The JNDI name of the connection factory to use when buffering
+    messages onto this queue. Defaults to the ''default'' JMS connection factory. '
+  name: ConnectionFactoryJndiName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'A boolean flag indicating whether buffering is enabled (request
+    buffering if this is the request queue, or response buffering if this is the response
+    queue). Defaults to false. '
+  name: Enabled
+  type: java.lang.Boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the name of this buffering queue. This name is the JNDI name
+    of the queue to be used for buffering. '
+  name: Name
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'A boolean flag indicating whether transactions should be used
+    when buffering a message onto or consuming a message off of this queue. Defaults
+    to false. '
+  name: TransactionEnabled
+  type: java.lang.Boolean
+  writable: true

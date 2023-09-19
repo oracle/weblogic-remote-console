@@ -1,0 +1,57 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.MachineMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This bean represents a machine that is running the UNIX operating
+  system. It extends MachineMBean with properties specific to the UNIX platform.</p> '
+name: weblogic.management.configuration.UnixMachineMBean
+properties:
+- defaultValue:
+    value:
+      value: nobody
+  descriptionHTML: '<p>The UNIX group ID (GID) that a server running on this machine
+    will run under after it has carried out all privileged startup actions. Otherwise,
+    the server will continue to run under the group under which it was started.(Requires
+    that you enable Post-Bind GID.)</p> '
+  name: PostBindGID
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether a server running on this machine binds to
+    a UNIX Group ID (GID) after it has carried out all privileged startup actions.</p> '
+  name: PostBindGIDEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: nobody
+  descriptionHTML: '<p>The UNIX user ID (UID) that a server running on this machine
+    will run under after it has carried out all privileged startup actions. Otherwise,
+    the server will continue to run under the account under which it was started.(Requires
+    that you enable Post-Bind UID.)</p> '
+  name: PostBindUID
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether a server running on this machine binds to
+    a UNIX User ID (UID) after it has carried out all privileged startup actions.</p> '
+  name: PostBindUIDEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true

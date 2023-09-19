@@ -1,0 +1,146 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.security.providers.authentication.LDAPAuthenticatorMBean
+- weblogic.security.providers.authentication.LDAPX509IdentityAsserterMBean
+descriptionHTML: 'The LDAPServerMBean interface defines methods used to get/set the
+  configuration attributes that are required to communicate with an external LDAP
+  server. '
+name: weblogic.management.utils.LDAPServerMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Returns whether to anonymously bind when following referrals within
+    the LDAP directory. If set to false, then the current Principal and Credential
+    will be used. '
+  name: BindAnonymouslyOnReferrals
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether to cache LDAP requests with the LDAP server. '
+  name: CacheEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 32
+  descriptionHTML: 'Returns the size of the cache in K. '
+  name: CacheSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: 'Returns the time-to-live (TTL) of the cache in seconds. '
+  name: CacheTTL
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: 'Returns the maximum number of seconds to wait for the LDAP connection
+    to be established. '
+  name: ConnectTimeout
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 6
+  descriptionHTML: 'The LDAP connection pool size. Default is 6. '
+  name: ConnectionPoolSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: 'Specifies the number of times to attempt to connect to the LDAP
+    server if the initial connection failed. '
+  name: ConnectionRetryLimit
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the credential (generally a password) used to authenticate
+    the LDAP user that is defined in the Principal attribute. '
+  encrypted: true
+  name: Credential
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: 'Returns the credential (generally a password) used to authenticate
+    the LDAP user that is defined in the Principal attribute. '
+  encrypted: true
+  name: CredentialEncrypted
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether referrals will automatically be followed within
+    the LDAP Directory. If set to false, then a Referral exception will be thrown
+    when referrals are encountered during LDAP requests. '
+  name: FollowReferrals
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: localhost
+  descriptionHTML: 'Returns the host name or IP address of the LDAP server. '
+  name: Host
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Returns the number of seconds to delay when making concurrent
+    attempts to connect to multiple servers.</p>  <p>If set to 0, connection attempts
+    are serialized. An attempt is made to connect to the first server in the list.
+    The next entry in the list is tried only if the attempt to connect to the current
+    host fails. This might cause your application to block for unacceptably long time
+    if a host is down. If set to greater than 0, another connection setup thread is
+    started after this number of delay seconds has passed.</p> '
+  name: ParallelConnectDelay
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 389
+  descriptionHTML: 'Returns the port number on which the LDAP server is listening. '
+  name: Port
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the Distinguished Name (DN) of the LDAP user that is used
+    by WebLogic Server to connect to the LDAP server. '
+  name: Principal
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: 'Returns the maximum number of milliseconds to wait for results
+    before timing out. If set to 0, there is no maximum time limit. '
+  name: ResultsTimeLimit
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Returns whether SSL will be used to connect to the LDAP server. '
+  name: SSLEnabled
+  type: boolean
+  writable: true

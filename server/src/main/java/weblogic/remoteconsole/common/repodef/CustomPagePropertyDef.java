@@ -49,6 +49,7 @@ public class CustomPagePropertyDef implements PagePropertyDef {
     setExternalHelpDef(toClone.getExternalHelpDef());
     setPageLevelProperty(toClone.isPageLevelField());
     setDontReturnIfHiddenColumn(toClone.isDontReturnIfHiddenColumn());
+    setMultiLineString(toClone.isMultiLineString());
   }
 
   @Override

@@ -1,0 +1,49 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.JMSDestCommonMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class represents a JMS template, which provides an efficient
+  means of defining multiple destinations (queues and topics) with similar attribute
+  settings. '
+name: weblogic.management.configuration.JMSTemplateMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  deprecated: '9.0.0.0 Replaced by weblogic.management.configuration.JMSServerMBean.getMessageBufferSize() '
+  descriptionHTML: '<p>This parameter has been deprecated. Paging is always enabled.
+    The "MessageBufferSize" parameter on JMSServerMBean controls how much memory is
+    used before paging kicks in.</p> '
+  name: BytesPagingEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns a read-only array of the destinations for the JMS template.</p> '
+  name: Destinations
+  relationship: reference
+  supported: false
+  type: weblogic.management.configuration.JMSDestinationMBean
+- defaultValue:
+    value:
+      value: false
+  deprecated: '9.0.0.0 Replaced by weblogic.management.configuration.JMSServerMBean.getMessageBufferSize() '
+  descriptionHTML: '<p>This parameter has been deprecated. Paging is always enabled.
+    The "MessageBufferSize" parameter on JMSServerMBean controls how much memory is
+    used before paging kicks in.</p> '
+  name: MessagesPagingEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

@@ -1,0 +1,188 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.j2ee.descriptor.wl.PoolParamsBean
+descriptionHTML: 'An XML connection-pool-paramsType(@http://www.bea.com/ns/weblogic/90).
+  This is a complex type. '
+name: weblogic.j2ee.descriptor.wl.ConnectionPoolParamsBean
+properties:
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p>The number of connections created when new connections are
+    added to the connection pool.</p>  <p>When there are no more available physical
+    connections to satisfy connection requests, WebLogic Server creates this number
+    of additional physical connections and adds them to the connection pool. </p> '
+  exclude: true
+  name: CapacityIncrement
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of seconds between attempts to establish connections
+    to the database.</p>  <p>If you do not set this value, connection pool creation
+    fails if the database is unavailable. If set and if the database is unavailable
+    when the connection pool is created, WebLogic Server will attempt to create connections
+    in the pool again after the number of seconds you specify, and will continue to
+    attempt to create the connections until it succeeds.</p>  <p>When set to <code>0</code>,
+    connection retry is disabled.</p> '
+  exclude: true
+  name: ConnectionCreationRetryFrequencySeconds
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>The number of seconds after which a call to reserve a connection
+    from the connection pool will timeout. <p>When set to <code>0</code>, a call will
+    never timeout.</p> <p>When set to <code>-1</code>, a call will timeout immediately.</p> '
+  exclude: true
+  name: ConnectionReserveTimeoutSeconds
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The maximum number of connections in the connection pool that
+    can be made unavailable to applications for testing or while being refreshed.</p>  <p>Note
+    that when the database is unavailable, this specified value could be exceeded
+    due to factors outside the control of the connection pool.</p>  <p>When set to
+    <code>0</code>, this feature is disabled.</p> '
+  exclude: true
+  name: HighestNumUnavailable
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 2147483647
+  descriptionHTML: '<p>The maximum number of connection requests that can concurrently
+    block threads while waiting to reserve a connection from the connection pool.</p> '
+  exclude: true
+  name: HighestNumWaiters
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Enables the connection pool to be shutdown even if connections
+    from the pool are still in use.</p> '
+  exclude: true
+  name: IgnoreInUseConnectionsEnabled
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p>The number of physical connections to create when creating
+    the connection pool. </p>  <p>If unable to create this number of connections,
+    creation of this connection pool will fail.</p>  <p>This is also the minimum number
+    of physical connections the connection pool will keep available.</p> '
+  exclude: true
+  name: InitialCapacity
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 15
+  descriptionHTML: '<p>The maximum number of physical connections that this connection
+    pool can contain.</p> '
+  exclude: true
+  name: MaxCapacity
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: ' '
+  exclude: true
+  name: ProfileHarvestFrequencySeconds
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 900
+  descriptionHTML: '<p>The number of seconds to wait before shrinking a connection
+    pool that has incrementally increased to meet demand. (You must also enable connection
+    pool shrinking.)</p> '
+  exclude: true
+  name: ShrinkFrequencySeconds
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Enables the connection pool to shrink back to its initial capacity
+    or to the current number of connections in use, whichever is greater, if the connection
+    pool detects that connections created during increased traffic are not being used.</p> '
+  exclude: true
+  name: ShrinkingEnabled
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>WebLogic Server to test a connection after creating it but
+    before adding it to the list of connections available in the pool. (Requires that
+    you specify a Test Table Name.)</p>  <p>The test adds a small delay in creating
+    the connection, but ensures that the client receives a working connection.</p> '
+  exclude: true
+  name: TestConnectionsOnCreate
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables WebLogic Server to test a connection before returning
+    it to the connection pool. (Requires that you specify a Test Table Name.)</p>  <p>If
+    all connections in the pool are already in use and a client is waiting for a connection,
+    the client''s wait will be slightly longer while the connection is tested.</p> '
+  exclude: true
+  name: TestConnectionsOnRelease
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables WebLogic Server to test a connection before giving
+    it to a client. (Requires that you specify a Test Table Name.)</p>  <p>The test
+    adds a small delay in serving the client''s request for a connection from the
+    pool, but ensures that the client receives a viable connection.</p>  <p>This test
+    is required for connection pools used in a multi data source that use the <code>failover</code>
+    algorithm.</p> '
+  exclude: true
+  name: TestConnectionsOnReserve
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of seconds between when WebLogic Server tests unused
+    connections. (Requires that you specify a Test Table Name.) Connections that fail
+    the test are closed and reopened to re-establish a valid physical connection.
+    If the test fails again, the connection is closed.</p>  <p>When set to <code>0</code>,
+    periodic testing is disabled.</p> '
+  exclude: true
+  name: TestFrequencySeconds
+  supported: false
+  type: int
+  writable: true

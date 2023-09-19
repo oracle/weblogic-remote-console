@@ -20,12 +20,12 @@ release.properties
 .flattened-pom.xml
 CBE*.out
 console-0.9-*
+weblogic-bean-info-harvester/harvested.jar
 # Ignore Mac DS_Store files
 **/.DS_Store
 runnable
 runnable/*
 frontend/coverage/**
-weblogic-bean-types/src/*
 frontend/node_modules
 frontend/staged-themes
 frontend/web
@@ -55,6 +55,7 @@ owasp-output/**
 frontend/seleniumTest.log
 everypage-oracle-tests/
 build-tools/download-bin
+tmp
 
 electron/dist/**
 electron/extraFiles/**

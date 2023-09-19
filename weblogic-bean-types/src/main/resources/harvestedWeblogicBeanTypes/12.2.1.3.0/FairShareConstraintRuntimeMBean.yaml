@@ -1,0 +1,38 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.runtime.FairShareConstraintRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns true if trigger was successfully executed.</p> '
+  name: Activated
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns true if trigger execution has begun.</p> '
+  name: Initiated
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return last trigger execution date and time.</p> '
+  name: LastTimeExecuted
+  type: java.util.Date
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return name of the Resource.</p> '
+  name: Name
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Return details of trigger execution in the past.</p> '
+  name: RecourseActionEventsHistory
+  type: weblogic.management.runtime.RecourseActionEventVBean

@@ -1,7 +1,9 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
+
+import java.util.List;
 
 /**
  * This POJO mirrors the yaml source file format for customizing information about
@@ -11,6 +13,7 @@ public class LegalValueDefCustomizerSource {
   private ScalarValue value = new ScalarValue();
   private StringValue label = new StringValue();
   private BooleanValue omit = new BooleanValue();
+  private ListValue<String> requiredCapabilities = new ListValue<>();
 
   // The legal value to be customized.
   // It's type must match the property's type.
@@ -45,5 +48,14 @@ public class LegalValueDefCustomizerSource {
 
   public void setOmit(boolean val) {
     omit.setValue(val);
+  }
+
+  // The bean repo capabilities that are required for this legal value to be present
+  public List<String> getRequiredCapabilities() {
+    return requiredCapabilities.getValue();
+  }
+  
+  public void setRequiredCapabilities(List<String> val) {
+    requiredCapabilities.setValue(val);
   }
 }

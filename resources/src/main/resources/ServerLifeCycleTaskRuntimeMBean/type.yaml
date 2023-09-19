@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 subTypeDiscriminatorProperty: Type
 subTypes:
@@ -8,3 +8,23 @@ subTypes:
   value: CoherenceServerLifeCycleTaskRuntime
 - type: weblogic.management.runtime.SystemComponentLifeCycleTaskRuntimeMBean
   value: SystemComponentLifeCycleTaskRuntime
+
+properties:
+- name: Operation
+  legalValues:
+  - value: "start"
+    label: "Start"
+  - value: "startInStandby"
+    label: "Start In Standby"
+  - value: "startInAdmin"
+    label: "Start In Admin"
+  - value: "resume"
+    label: "Resume"
+  - value: "shutdown"
+    label: "Shutdown"
+  - value: "forceShutdown"
+    label: "Force Shutdown"
+  - value: "suspendWithTimeout"
+    label: "Suspend With Timeout"
+  - value: "forceSuspend"
+    label: "Force Suspend"

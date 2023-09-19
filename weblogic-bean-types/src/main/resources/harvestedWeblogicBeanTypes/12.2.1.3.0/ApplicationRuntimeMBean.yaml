@@ -1,0 +1,256 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>An application represents a Java EE enterprise application packaged
+  in an EAR file or EAR exploded directory. The EAR file or directory contains a set
+  of components such as WAR, EJB, and RAR connector components, each of which can
+  be deployed on one or more targets. A target is a server or a cluster. Modules in
+  the application can have one of the following states:</p>  <ul> <li>UNPREPARED -
+  Indicates that none of the  modules in this application are currently prepared or
+  active.</li> <li>PREPARED -  Indicates that none of the  modules in this application
+  are currently prepared or active.</li> <li>ACTIVATED - Indicates that at least one
+  module in this application is currently active.</li> </ul>  <p>ApplicationRuntimeMBean
+  encapsulates runtime information about a deployed enterprise application.</p> '
+name: weblogic.management.runtime.ApplicationRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies whether this application version is the currently
+    active version.</p>  <p>An application can be the only version currently deployed,
+    or it can have more than one version currently deployed, using the side-by-side
+    deployment feature. If more than one version is deployed, only one version can
+    be active. This attribute specifies the state the current application version
+    is in.</p>  <p>An application can be in an INACTIVE state, which means that it
+    has not been activated yet, or that there is more than one version of the application
+    deployed (using side-by-side deployment) and this version is retiring.</p>  <p>An
+    application can be in ACTIVE_ADMIN state, which means that it is the currently
+    active version for administrative channel requests.</p>  <p>An application can
+    be in ACTIVE state, which means that it is the currently active version for normal
+    (non-administrative) channel requests.</p> '
+  name: ActiveVersionState
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the application.</p> '
+  name: ApplicationName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The application''s version identifier.</p>  <p>This is particularly
+    useful, when using the side-by-side deployment feature, to differentiate between
+    two different versions of the same application that are deployed at the same time.
+    </p> '
+  name: ApplicationVersion
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get statistics for system-level class loading.</p> '
+  name: ClassLoaderRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ClassLoaderRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>If the class FastSwap feature is enabled for the application,
+    returns the runtime MBean to monitor and control the class FastSwap within the
+    application. </p> '
+  name: ClassRedefinitionRuntime
+  relationship: containment
+  type: com.bea.wls.redef.runtime.ClassRedefinitionRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the Coherence Cluster related runtime MBean. </p> '
+  name: CoherenceClusterRuntime
+  relationship: containment
+  type: weblogic.management.runtime.CoherenceClusterRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of component runtime instances for each Java
+    EE component (such as an EJB or a web application) that is contained in this enterprise
+    application. </p> '
+  name: ComponentRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.ComponentRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns true if the application deployment unit is an EAR file.
+    It returns false for WAR, JAR, RAR, etc. deployments. </p> '
+  exclude: true
+  name: EAR
+  supported: false
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The HealthState MBean for the application. </p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The health state for the application. </p> '
+  excludeFromRest: No default REST mapping for CompositeData
+  name: HealthStateJMX
+  supported: false
+  type: javax.management.openmbean.CompositeData
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether this application is an internal application.
+    Such applications are not displayed in the console or persisted in the config.xml.
+    </p> '
+  name: Internal
+  type: boolean
+- array: true
+  defaultValue: {
+    }
+  deprecated: 'As of 11.1.2.0, use getPersistenceUnitRuntimes instead '
+  descriptionHTML: '<p>Provides an array of KodoPersistenceUnitRuntimeMBean objects
+    for this EJB module. </p> '
+  name: KodoPersistenceUnitRuntimes
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.KodoPersistenceUnitRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of library runtime instances for each Java
+    EE library that is contained in this enterprise application. </p> '
+  name: LibraryRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.LibraryRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of managed executor service runtime instances
+    for each application-scoped managed executor service that is associated with this
+    enterprise application. </p> '
+  name: ManagedExecutorServiceRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.ManagedExecutorServiceRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of managed scheduled executor service runtime
+    instances for each application-scoped managed scheduled executor service that
+    is associated with this enterprise application. </p> '
+  name: ManagedScheduledExecutorServiceRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.ManagedScheduledExecutorServiceRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of managed thread factory runtime instances
+    for each application-scoped managed thread factory that is associated with this
+    enterprise application. </p> '
+  name: ManagedThreadFactoryRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.ManagedThreadFactoryRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Get the runtime MBeans for all MaxThreadsConstraints defined
+    at the application level.</p> '
+  name: MaxThreadsConstraintRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.MaxThreadsConstraintRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Get the runtime MBeans for all MinThreadsConstraints defined
+    at the application level.</p> '
+  name: MinThreadsConstraintRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.MinThreadsConstraintRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of optional package runtime instances for
+    each Java EE optional package that is contained in this enterprise application.
+    </p> '
+  name: OptionalPackageRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.LibraryRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The overall health of the application including that of some
+    of the components that report health. Currently, only connector modules report
+    health status and are the only ones considered in the overall health state of
+    the application.</p> '
+  name: OverallHealthState
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The overall health of the application including that of some
+    of the components that report health. Currently, only connector modules report
+    health status and are the only ones considered in the overall health state of
+    the application.</p> '
+  excludeFromRest: No default REST mapping for CompositeData
+  name: OverallHealthStateJMX
+  supported: false
+  type: javax.management.openmbean.CompositeData
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The application''s partition.</p>  <p>Returns the partition
+    to which this application is deployed. </p> '
+  name: PartitionName
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides an array of PersistenceUnitRuntimeMBean objects for
+    this EAR module. </p> '
+  name: PersistenceUnitRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.PersistenceUnitRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns a list of QueryCacheRuntimeMBeans configured for this
+    application. </p> '
+  name: QueryCacheRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.QueryCacheRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Get the runtime MBeans for all request classes defined at the
+    application level.</p> '
+  name: RequestClassRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.RequestClassRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of work manager runtime instances for each
+    application-scoped work manager that is associated with this enterprise application.
+    </p> '
+  name: WorkManagerRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.WorkManagerRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  deprecated: 'Use getWseeV2Runtimes from the web app or EJB component instead '
+  descriptionHTML: '<p>Returns the list of Web Service runtime instances that are
+    contained in this enterprise application. </p> '
+  name: WseeRuntimes
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.WseeRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of Web Service runtime instances that are
+    contained at the application scope of this enterprise application. This can happen
+    when javax.xml.ws.Endpoint.publish() is called from within an application lifecycle
+    listener. </p> '
+  name: WseeV2Runtimes
+  relationship: containment
+  type: weblogic.management.runtime.WseeV2RuntimeMBean
+roles:
+  allowed:
+  - Operator

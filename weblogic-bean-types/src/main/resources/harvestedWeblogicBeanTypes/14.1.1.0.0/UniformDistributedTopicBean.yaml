@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.UniformDistributedDestinationBean
+- weblogic.j2ee.descriptor.wl.TopicBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>A uniform distributed topic is a distributed topic whose members
+  are configured as part of its configuration; since members share the same configuration,
+  they are uniform.  There is one member on each JMS Server that conforms to the targeting
+  criteria of the uniform distributed topic.  For example, if a uniform distributed
+  topic is targeted to a cluster, then one member will be created on each JMS server
+  in the cluster.  Members are created and destroyed as the targeting is changed.</p> '
+name: weblogic.j2ee.descriptor.wl.UniformDistributedTopicBean
+properties: [
+  ]
+roles:
+  allowed:
+  - Deployer

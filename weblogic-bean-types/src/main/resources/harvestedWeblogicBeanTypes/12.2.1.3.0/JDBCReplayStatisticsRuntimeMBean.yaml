@@ -1,0 +1,85 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.ComponentRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class is used to get replay statics for an Oracle replay datasource
+  aggregated across all connections in the pool. '
+name: weblogic.management.runtime.JDBCReplayStatisticsRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Obtains the number of replays that failed.</p>  <p>When replay
+    fails, it rethrows the original SQLRecoverableException to the application, with
+    the reason for the failure chained to that original exception. Application can
+    call <code>getNextException</code> to retrieve the reason.</p> '
+  name: FailedReplayCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the number of times that replay is disabled.  When replay
+    is disabled in the middle of a request, the remaining calls in that request are
+    no longer protected by AC. In case an outage strikes one of those remaining calls,
+    no replay will be attempted, and application simply gets an SQLRecoverableException. '
+  name: ReplayDisablingCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the number of replays that succeeded. Successful replays
+    mask the outages from applications. '
+  name: SuccessfulReplayCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the total number of JDBC calls executed so far. '
+  name: TotalCalls
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the number of JDBC calls affected by outages. This includes
+    both local calls and calls that involve roundtrip(s) to the database server. '
+  name: TotalCallsAffectedByOutages
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the number of JDBC calls affected by outages in the middle
+    of replay. Outages may be cascaded and strike a call multiple times when replay
+    is ongoing. AC automatically reattempts replay when this happens, unless it reaches
+    the maximum retry limit. '
+  name: TotalCallsAffectedByOutagesDuringReplay
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the number of JDBC calls that triggered replay. Not all
+    the calls affected by an outage trigger replay, because replay can be disabled
+    for some requests. '
+  name: TotalCallsTriggeringReplay
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the total number of completed requests so far. '
+  name: TotalCompletedRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the total number of JDBC calls executed so far that are
+    protected by AC. '
+  name: TotalProtectedCalls
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the number of replay attempts.  AC automatically reattempts
+    when replay fails, so this number may exceed the number of JDBC calls that triggered
+    replay. '
+  name: TotalReplayAttempts
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Obtains the total number of successfully submitted requests so
+    far. '
+  name: TotalRequests
+  type: long

@@ -1,0 +1,23 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Control panel for all optional features, e.g. WSAT, ASYNC_RESPONSE
+  etc. The mbean is designed to be managed by domain and to extend for partition if
+  needed in future. </p> '
+name: weblogic.management.configuration.OptionalFeatureDeploymentMBean
+properties:
+- array: true
+  creators:
+  - weblogic.management.configuration.OptionalFeatureMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>get all OptionalFeatureMBean in the current OptionalFeatureDeploymentMBean.</p> '
+  name: OptionalFeatures
+  relationship: containment
+  type: weblogic.management.configuration.OptionalFeatureMBean

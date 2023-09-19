@@ -9,13 +9,7 @@ package weblogic.remoteconsole.common.utils;
  */
 public class WebLogicVersion {
 
-  // Whether this instance is the latest shipped wls version,
-  // i.e. the one that WDT uses.
-  private boolean currentVersion;
-
-  // Whether this instance is the latest wls version,
-  // i.e. the one that the hand coded yaml files were
-  // written to match.
+  // Whether this instance is the latest wls version.
   private boolean latestVersion;
 
   // The version returned by DomainMBean.getDomainVersion():
@@ -33,14 +27,12 @@ public class WebLogicVersion {
 
   WebLogicVersion(
     boolean latestVersion,
-    boolean currentVersion,
     String domainVersion,
     String fmwVersion,
     String docsUrl,
     String mbeanJavadocDirectory
   ) {
     this.latestVersion = latestVersion;
-    this.currentVersion = currentVersion;
     this.domainVersion = domainVersion;
     this.fmwVersion = fmwVersion;
     this.docsUrl = docsUrl;
@@ -49,10 +41,6 @@ public class WebLogicVersion {
 
   public boolean isLatestVersion() {
     return this.latestVersion;
-  }
-
-  public boolean isCurrentVersion() {
-    return this.currentVersion;
   }
 
   public String getDomainVersion() {

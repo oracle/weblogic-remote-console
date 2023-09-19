@@ -28,5 +28,16 @@ subTypes:
 properties:
 - name: TaskStatus
   label: Status
+  # Don't list legal values since the status seems more open ended
 - name: TaskError
   label: Error
+- name: Progress
+  legalValues:
+  - value: success
+    label: Success
+  - value: failed
+    label: Failed
+  - value: processing
+    label: Processing
+  - value: pending
+    label: Pending

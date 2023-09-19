@@ -1,0 +1,104 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean represents the statistics for a single action of a PageFlow '
+name: weblogic.management.runtime.PageFlowActionRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  deprecated: '<p>Returns the name of the Action being described.</p> '
+  descriptionHTML: ' '
+  name: ActionName
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: ExceptionCount
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: HandledExceptionCount
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: HandledExceptionDispatchTimeAverage
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: HandledExceptionDispatchTimeHigh
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: HandledExceptionDispatchTimeLow
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: HandledExceptionDispatchTimeTotal
+  supported: false
+  type: long
+- array: true
+  defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: LastExceptions
+  supported: false
+  type: weblogic.management.runtime.PageFlowError
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: SuccessCount
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: SuccessDispatchTimeAverage
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: SuccessDispatchTimeHigh
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: SuccessDispatchTimeLow
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: SuccessDispatchTimeTotal
+  supported: false
+  type: long

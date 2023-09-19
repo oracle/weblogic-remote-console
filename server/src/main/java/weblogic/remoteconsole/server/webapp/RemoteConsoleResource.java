@@ -10,6 +10,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
+import weblogic.remoteconsole.server.providers.AdminServerDataProvider;
 import weblogic.remoteconsole.server.providers.Root;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 
@@ -31,6 +32,7 @@ public class RemoteConsoleResource extends BaseResource {
   public static final String PROVIDER_MANAGEMENT_PATH = "providers";
   public static final String ABOUT_PATH = "about";
   public static final String SSO_TOKEN_PATH = "token";
+  public static final String DOMAIN_STATUS_PATH = "domainStatus";
 
   @Context ResourceContext resourceContext;
   @Context HttpHeaders headers;
@@ -39,6 +41,19 @@ public class RemoteConsoleResource extends BaseResource {
   @Path(ABOUT_PATH)
   public AboutResource getAboutResourceNew() {
     return new AboutResource();
+  }
+
+  @Path(DOMAIN_STATUS_PATH)
+  public DomainStatusResource getStatusResource() {
+    if (!(getInvocationContext().getProvider() instanceof AdminServerDataProvider)) {
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "The provider "
+          + getInvocationContext().getProvider().getName()
+          + " is not an AdminServerDataProvider"
+      );
+    }
+    return copyContext(new DomainStatusResource());
   }
 
   @Path(PROVIDER_MANAGEMENT_PATH)

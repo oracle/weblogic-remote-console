@@ -1,0 +1,42 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean provides deployment operations for an application.
+  Currently only start and stop are supported. In the future, this MBean may be enhanced
+  with operations to support deployment applications to the domain as well as extended
+  WLS deployment features such as production redeployment and partial deployment of
+  modules in an enterprise application.</p> '
+name: weblogic.management.runtime.AppDeploymentRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The application''s name.</p> '
+  name: ApplicationName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The application''s version identifier.</p> '
+  name: ApplicationVersion
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of modules for the application. These modules can
+    be used in module level targeting.</p> '
+  name: Modules
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the partition the application is in.</p> '
+  name: PartitionName
+  type: java.lang.String
+roles:
+  allowed:
+  - Deployer
+  - Operator

@@ -26,6 +26,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   private Value<ActionInputFormDefSource> inputForm = new Value<>(null);
   private ListValue<BeanActionParamDefCustomizerSource> parameters = new ListValue<>();
   private Value<BeanActionPollingDefSource> polling = new Value<>(null);
+  private BooleanValue disableMBeanJavadoc = new BooleanValue();
 
   public void merge(BeanActionDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
@@ -37,6 +38,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
     mbeanOperation.merge(from.mbeanOperation, fromContainedBeanPath);
     inputForm.merge(from.inputForm, fromContainedBeanPath);
     polling.merge(from.polling, fromContainedBeanPath);
+    disableMBeanJavadoc.merge(from.disableMBeanJavadoc, fromContainedBeanPath);
     mergeHelp(from, fromContainedBeanPath);
     mergeParameters(from, fromContainedBeanPath);
   }
@@ -218,6 +220,16 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
 
   public void setPolling(BeanActionPollingDefSource value) {
     polling.setValue(value);
+  }
+
+  // Used to turn off this action's javadoc link.
+  // Used for actions that are in the REST api but not in the mbean api.
+  public boolean isDisableMBeanJavadoc() {
+    return disableMBeanJavadoc.getValue();
+  }
+
+  public void setDisableMBeanJavadoc(boolean value) {
+    disableMBeanJavadoc.setValue(value);
   }
 
   public String toString() {

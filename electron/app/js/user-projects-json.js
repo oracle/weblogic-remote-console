@@ -7,6 +7,8 @@
 
 'use strict';
 
+const { safeStorage } = require('electron');
+
 /**
  *
  * See {@link https://stackabuse.com/javascripts-immediately-invoked-function-expressions/}
@@ -19,6 +21,18 @@ const UserProjects = (() => {
 
   const _appPaths = {};
   let _projects = [];
+
+  function encryptPasswords(projects) {
+    if (safeStorage.isEncryptionAvailable()) {
+      for (const proj of projects) {
+        for (const prov of proj.dataProviders) {
+          if (prov.password) {
+            prov.passwordEncrypted = safeStorage.encryptString(prov.password).toString('base64');
+          }
+        }
+      }
+    }
+  }
 
   /**
    * Returns a copy of the ``projects`` module-scoped variable, where the ``dataProvider`` objects do not contain fields specified in ``providerKeyExclusions``.
@@ -82,6 +96,7 @@ const UserProjects = (() => {
         if (providers[i].url) filteredProvider.url = providers[i].url;
         if (providers[i].username) filteredProvider.username = providers[i].username;
         if (providers[i].password) filteredProvider.password = providers[i].password;
+        if (providers[i].passwordEncrypted) filteredProvider.passwordEncrypted = providers[i].passwordEncrypted;
         if (providers[i].settings) filteredProvider.settings = providers[i].settings;
 
         // Filter out properties associated with model
@@ -237,6 +252,7 @@ const UserProjects = (() => {
       }
     },
     write: (userDataPath) => {
+      encryptPasswords(_projects);
       if (!userDataPath) userDataPath = _appPaths.userDataPath;
       if (userDataPath) {
         try {

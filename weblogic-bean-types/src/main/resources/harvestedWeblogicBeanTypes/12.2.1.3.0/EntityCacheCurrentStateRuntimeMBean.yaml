@@ -1,0 +1,25 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.EntityCacheRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for monitoring the size and usage of an XML
+  Cache.</p> '
+name: weblogic.management.runtime.EntityCacheCurrentStateRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the current size of the entity disk cache.</p>  <p>Returns
+    the current size of the entity disk cache.</p> '
+  name: DiskUsage
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the current size of the entity memory cache.</p>  <p>Returns
+    current size of the entity memory cache.</p> '
+  name: MemoryUsage
+  type: long

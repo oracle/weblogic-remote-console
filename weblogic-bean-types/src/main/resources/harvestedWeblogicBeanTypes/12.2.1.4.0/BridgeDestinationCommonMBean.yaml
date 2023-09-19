@@ -1,0 +1,91 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.JMSBridgeDestinationMBean
+- weblogic.management.configuration.BridgeDestinationMBean
+descriptionHTML: '<p>This MBean represents a bridge destination for a messaging bridge
+  instance. Each messaging bridge instance consists of the following destination types:</p>  <ul>
+  <li> <p>Source: The message producing destination. A bridge instance consumes messages
+  from the source destination.</p> </li>  <li> <p>Target: The destination where a
+  bridge instance forwards messages produced by the source destination.</p> </li>
+  </ul> '
+name: weblogic.management.configuration.BridgeDestinationCommonMBean
+properties:
+- defaultValue:
+    value:
+      value: eis.jms.WLSConnectionFactoryJNDIXA
+  descriptionHTML: '<p>The JNDI name of the adapter used to communicate with the specified
+    destination.</p>  <p>This name is specified in the adapter''s deployment descriptor
+    file and is used by the WebLogic Server Connector container to bind the adapter
+    in WebLogic Server JNDI.</p> '
+  name: AdapterJNDIName
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: null
+  deprecated: '- no longer support interoperability with WLS 5.1 '
+  descriptionHTML: '<p>The <tt>CLASSPATH</tt> of the bridge destination.</p>  <ul>
+    <li> <p>Used mainly to connect to WebLogic Server 6.0 or earlier.</p> </li>  <li>
+    <p>When connecting to a destination that is running on WebLogic Server 6.0 or
+    earlier, the bridge destination must supply a <tt>CLASSPATH</tt> that indicates
+    the locations of the classes for the earlier WebLogic Server implementation.</p>
+    </li>  </ul> '
+  name: Classpath
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The optional user name the adapter uses to access the bridge
+    destination.</p>  <p>All operations on the specified destination are done using
+    this user name and the corresponding password. Therefore, the User Name/Password
+    for the source and target destinations must have permission to the access the
+    underlying destinations in order for the messaging bridge to work.</p> '
+  name: UserName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The user password that the adapter uses to access the bridge
+    destination.</p>  <p>As of 8.1 sp4, when you get the value of this attribute,
+    WebLogic Server does the following:</p> <ol><li>Retrieves the value of the <code>UserPasswordEncrypted</code>
+    attribute.</li> <li>Decrypts the value and returns the unencrypted password as
+    a String.</li> </ol>  <p>When you set the value of this attribute, WebLogic Server
+    does the following:</p> <ol><li>Encrypts the value.</li> <li>Sets the value of
+    the <code>UserPasswordEncrypted</code> attribute to the encrypted value.</li>
+    </ol> <p>Using this attribute (<code>UserPassword</code>) is a potential security
+    risk because the String object (which contains the unencrypted password) remains
+    in the JVM''s memory until garbage collection removes it and the memory is reallocated.
+    Depending on how memory is allocated in the JVM, a significant amount of time
+    could pass before this unencrypted data is removed from memory.</p>  <p>Instead
+    of using this attribute, use <code>UserPasswordEncrypted</code>.</p> '
+  encrypted: true
+  name: UserPassword
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The encrypted user password that the adapter uses to access
+    the bridge destination.</p>  <p>To set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: UserPasswordEncrypted
+  restartNeeded: true
+  type: byte
+  writable: true

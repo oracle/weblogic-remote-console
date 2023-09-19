@@ -1,0 +1,75 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This is an entry in the XML registry. An XML registry entry is configuration
+  information associated with a particular XML document type. The document type is
+  identified by one or more of the following:  1) a public ID (e.g, "-//Sun Microsystems,
+  Inc.//DTD Enterprise JavaBeans 2.0//EN" 2) a system ID (e.g, "http://java.sun.com/j2ee/dtds/ejb-jar_2_0.dtd")
+  3) a document root tag name (e.g., "ejb-jar")  In Version 6.0 this configuration
+  information is used by the WebLogic JAXP implementation to choose the appropriate
+  parser factories and parsers and to set up SAX EntityResolvers. '
+name: weblogic.management.configuration.XMLRegistryEntryMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the class name of the DocumentBuilderFactory that
+    is associated with the registry entry.</p> '
+  name: DocumentBuilderFactory
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the path name to a local copy of an external entity
+    (e.g., a DTD) that is associated with this registry entry.</p>  <p>Return the
+    path name to a local copy of an external entity (e.g., a DTD) that is associated
+    with this registry entry. This pathname is relative to one of the XML registry
+    directories of the installation.</p> '
+  name: EntityPath
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the class name of any custom XML parser that is associated
+    with the registry entry.</p>  <p>Return class name of any custom XML parser that
+    is associated with the registry entry.</p> '
+  name: ParserClassName
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the public id of the document type represented by
+    this registry entry.</p>  <p>Get the public id of the document type represented
+    by this registry entry.</p> '
+  name: PublicId
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the tag name of the document root element of the document
+    type represented by this registry entry.</p>  <p>Get the tag name of the document
+    root element of the document type represented by this registry entry.</p> '
+  name: RootElementTag
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the class name of the SAXParserFactory that is associated
+    with the registry entry.</p>  <p>Return the class name of the SAXParserFactory
+    that is associated with the registry entry.</p> '
+  name: SAXParserFactory
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the system id of the document type represented by
+    this registry entry.</p>  <p>Get the system id of the document type represented
+    by this registry entry.</p> '
+  name: SystemId
+  type: java.lang.String
+  writable: true

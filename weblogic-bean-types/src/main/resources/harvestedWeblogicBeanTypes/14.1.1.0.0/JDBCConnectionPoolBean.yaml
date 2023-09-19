@@ -1,0 +1,57 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: 'Defines a JDBC connection pool from a domain configuration that
+  was migrated from a previous release. '
+name: weblogic.j2ee.descriptor.wl.JDBCConnectionPoolBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JNDI path to where the data source is bound.</p> '
+  key: true
+  name: DataSourceJNDIName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The access control list (ACL) used to control access to this
+    connection pool.</p>  <p>Permissions available to this ACL are:</p>  <ul> <li><code>Reserve</code>  <p>Allows
+    users to get logical connections from this connection pool.</p> </li>  <li><code>Admin</code>  <p>Allows
+    all other operations on this connection pool, including: reset, shrink, shutdown,
+    disable, and enable.</p> </li> </ul>  <p>Lack of an ACL allows any user open access
+    (provided that the user passes other WLS security controls).</p> '
+  name: AclName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- creators:
+  - weblogic.j2ee.descriptor.wl.ApplicationPoolParamsBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: PoolParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.ApplicationPoolParamsBean
+- creators:
+  - weblogic.j2ee.descriptor.wl.DriverParamsBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: DriverParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.DriverParamsBean
+- creators:
+  - weblogic.j2ee.descriptor.wl.ConnectionFactoryBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ConnectionFactory
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.ConnectionFactoryBean

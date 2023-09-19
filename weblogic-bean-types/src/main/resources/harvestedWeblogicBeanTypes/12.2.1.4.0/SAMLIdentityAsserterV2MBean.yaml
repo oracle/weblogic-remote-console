@@ -1,0 +1,80 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.IdentityAsserterMBean
+- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
+- weblogic.security.providers.saml.registry.SAMLAssertingPartyRegistryMBean
+- weblogic.management.security.authentication.ServletAuthenticationFilterMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean represents configuration information for the SAML
+  Identity       Assertion V2 provider.</p> '
+name: weblogic.security.providers.saml.SAMLIdentityAsserterV2MBean
+properties:
+- array: true
+  defaultValue:
+    value:
+      value:
+      - SAML.Assertion
+      - SAML.Assertion64
+      - SAML.Assertion.DOM
+  descriptionHTML: '<p>The token types active for this SAML Identity Assertion V2         provider.</p> '
+  name: ActiveTypes
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Base64 decoding is not required for the WebLogic SAML Identity         Assertion
+    V2 provider.</p> '
+  name: Base64DecodingRequired
+  type: boolean
+- defaultValue:
+    value:
+      value: WebLogic SAML Identity Assertion Provider. Supports Security Assertion
+        Markup Language v1.1.
+  descriptionHTML: '<p>A short description of this SAML Identity Assertion V2         provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: '<p>The minimum number of parsers to maintain in the parser pool.</p> '
+  name: MinimumParserPoolSize
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>The name of the Java class that maps SAML Assertion name         information
+    to local Subjects. When no mapper is supplied the default         mapper implementation
+    is used.</p> '
+  name: NameMapperClassName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.security.providers.saml.SAMLIdentityAsserterV2ProviderImpl
+  descriptionHTML: '<p>The name of the Java class used to load the SAML Identity Assertion         V2
+    provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - SAML.Assertion
+      - SAML.Assertion64
+      - SAML.Assertion.DOM
+  descriptionHTML: '<p>The token types supported by this SAML Identity Assertion V2         provider.</p> '
+  name: SupportedTypes
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: '2.0'
+  descriptionHTML: '<p>The version number of this SAML Identity Assertion V2 provider.</p> '
+  name: Version
+  type: java.lang.String

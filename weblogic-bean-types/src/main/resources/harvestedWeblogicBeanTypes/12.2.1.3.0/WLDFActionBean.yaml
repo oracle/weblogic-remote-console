@@ -1,0 +1,76 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>WLDF action configuration bean.  This is a configuration point
+  for action extensions developed outside of WebLogic.</p>  <p>A WLDF action extension
+  is an action that is managed by, but not owned by, to WLDF.  It must have a "type"
+  associated with it, which must be provided to the WLDFWatchNotificationBean.createAction(String,
+  String) method when an instance of this object is created.  An instance of a WLDFActionBean
+  defines a single instance configuration of an action extension, which can be referenced
+  from WLDFWatchBean instances like any other action/notification type.</p>  <p>It
+  acts as a container of an action properties, each property being a name/value pair.  An
+  action can have simple properties of intrinsic Java types (String, int, float, etc),
+  encrypted properties, Map properties, and array properties.</p>  <p><code>Map</code>
+  and array properties can not contain nested collections or complex objects; that
+  is, the leaf values of those objects must be simple values represented as String
+  values.</p>  <p>WLDF will map these properties to the proper configuration points
+  on the target action instance.  Each action type will have different configuration
+  points, so consult the documentation for those actions to see what the valid configuration
+  properties are for that action type.</p> '
+name: weblogic.diagnostics.descriptor.WLDFActionBean
+properties:
+- array: true
+  creators:
+  - weblogic.diagnostics.descriptor.WLDFArrayPropertyBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns all the array properties of the action configuration.</p> '
+  name: ArrayProperties
+  relationship: containment
+  type: weblogic.diagnostics.descriptor.WLDFArrayPropertyBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of all WLDFConfigurationPropertyBean objects
+    that are associated with this container object.</p> '
+  name: ConfigurationProperties
+  relationship: containment
+  type: weblogic.diagnostics.descriptor.WLDFConfigurationPropertyBean
+- array: true
+  creators:
+  - weblogic.diagnostics.descriptor.WLDFEncryptedPropertyBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns all the encrypted properties. '
+  name: EncryptedProperties
+  relationship: containment
+  type: weblogic.diagnostics.descriptor.WLDFEncryptedPropertyBean
+- array: true
+  creators:
+  - weblogic.diagnostics.descriptor.WLDFConfigurationPropertiesBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the map properties of the action configuration.</p> '
+  name: MapProperties
+  relationship: containment
+  type: weblogic.diagnostics.descriptor.WLDFConfigurationPropertiesBean
+- array: true
+  creators:
+  - weblogic.diagnostics.descriptor.WLDFPropertyBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns all of the simple properties for this configured action. '
+  name: Properties
+  relationship: containment
+  type: weblogic.diagnostics.descriptor.WLDFPropertyBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Defines the action type.</p> '
+  name: Type
+  type: java.lang.String

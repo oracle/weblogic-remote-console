@@ -1,0 +1,23 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface provides access to the JTAPartition configuration
+  attributes.  The methods defined herein are applicable for JTA configuration at
+  the partition level. '
+name: weblogic.management.configuration.JTAPartitionMBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specifies the maximum amount of time, in seconds, an active
+    transaction is allowed to be in the first phase of a two-phase commit transaction.
+    If the specified amount of time expires, the transaction is automatically rolled
+    back.</p> '
+  name: TimeoutSeconds
+  type: int
+  writable: true

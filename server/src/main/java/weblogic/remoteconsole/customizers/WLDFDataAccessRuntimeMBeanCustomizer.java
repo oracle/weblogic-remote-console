@@ -73,7 +73,7 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
   private static Response<Value> downloadLog(InvocationContext ic, String outputFormat) {
     Response<Value> response = new Response<Value>();
     String dirName = getDirectoryName();
-    String fileName = getFileName(ic);
+    String fileName = getFileName(ic) + (outputFormat.endsWith("json") ? ".json" : ".text");
     try {
       File file = getOutputLogFile(dirName, fileName);
       new Thread(() -> {

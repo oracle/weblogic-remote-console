@@ -1,0 +1,35 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationExtensionMBean
+- weblogic.management.configuration.BasicDeploymentMBean
+derivedTypes:
+- weblogic.management.configuration.CustomResourceMBean
+- weblogic.management.configuration.JMSSystemResourceMBean
+- weblogic.management.configuration.CoherenceClusterSystemResourceMBean
+- weblogic.management.configuration.WLDFSystemResourceMBean
+- weblogic.management.configuration.JDBCSystemResourceMBean
+descriptionHTML: '<p>A system resource is a resource whose definition is part of the
+  system configuration rather than an application. The descriptor for the resource
+  is linked through config.xml but resides in a separate descriptor file. The beans
+  representing this descriptor are exposed through JMX</p> '
+name: weblogic.management.configuration.SystemResourceMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the Descriptor for the system resource. This should
+    be overridden by the derived system resources.</p> '
+  name: Resource
+  relationship: reference
+  transient: true
+  type: weblogic.descriptor.DescriptorBean
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: ' '
+  name: SourcePath
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

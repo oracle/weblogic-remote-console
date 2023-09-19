@@ -1,0 +1,23 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page displays basic information about this Authorization Provider.</p>
+
+properties:
+- name: Name
+- name: Description
+- name: Version
+helpTopics:
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring Security Providers"
+  href: "secmg/providers.html"
+  type: "edocs"
+- label: "Configuring an Authorization Provider"
+  href: "secmg/atz_rm.html#SECMG134"
+  type: "edocs"
+- label: "Developing Security Providers for Oracle WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

@@ -1,0 +1,112 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'These parameters control what should happen to messages when failures
+  occur. They allow the adminstrator to control error destinations, logging and other
+  actions that might be taken when a message can not be delivered or when other failures
+  are detected '
+name: weblogic.j2ee.descriptor.wl.DeliveryFailureParamsBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The name of the target error destination for messages that
+    have expired or reached their redelivery limit. If no error destination is configured,
+    then such messages are simply dropped. If a message has expired or reached its
+    redelivery limit, and the Expiration Policy is set to Redirect, then the message
+    is moved to the specified Error Destination.</p>  <p>For standalone destinations,
+    an error destination must be another standalone destination that is targeted to
+    the same JMS server as the destinations for which the error destination is defined.
+    For uniform distributed destinations (UDDs), the error destination must be another
+    UDD that shares the same subdeployment (i.e., targets) as the current UDD.</p>  <p>This
+    attribute is dynamically configurable, but only incoming messages are impacted;
+    stored messages are not impacted.</p> '
+  name: ErrorDestination
+  relationship: reference
+  type: weblogic.j2ee.descriptor.wl.DestinationBean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The policy that defines what information about the message
+    is logged when the Expiration Policy is set to Log. The valid logging policy values
+    are:</p> <ul> <li> <b>%header%</b> - All JMS header fields are logged.</li> <li>
+    <b>%properties%</b> - All user-defined properties are logged.</li> <li> <b>JMSDeliveryTime</b>
+    - This WebLogic JMS-specific extended header field is logged.</li> <li> <b>JMSRedeliveryLimit</b>
+    - This WebLogic JMS-specific extended header field is logged.</li> <li> <b><i>foo</i>
+    </b> - Any valid JMS header field or user-defined property is logged.</li> </ul>  <p>When
+    specifying multiple values, enter them as a comma-separated list. The <code>%header%</code>
+    and <code>%properties% </code> values are <i>not</i> case sensitive. For example,
+    you could use <code>"%header%,%properties%"</code> for all the JMS header fields
+    and user properties. However, the enumeration of individual JMS header fields
+    and user-defined properties are case sensitive. To enumerate only individual JMS
+    header fields you could use <code>"%header, name, address, city, state, zip"</code>.</p>  <p><b>Note:</b>
+    The <code>JMSMessageID</code> field is always logged and cannot be turned off.
+    Therefore, if the Expiration Logging Policy is not defined (i.e., null) or is
+    defined as an empty string, then the output to the log file contains only the
+    <code>JMSMessageID</code> of the message. </p> '
+  name: ExpirationLoggingPolicy
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The message Expiration Policy to use when an expired message
+    is encountered on a destination. The valid expiration policies are:</p>  <p><b>None</b>
+    - Same as the Discard policy; expired messages are simply removed from the destination.</p>  <p><b>Discard</b>
+    - Removes expired messages from the messaging system. The removal is not logged
+    and the message is not redirected to another location. If no value is defined
+    for a given destination (i.e., None), then expired messages are discarded.</p>  <p><b>Log</b>
+    - Removes expired messages from the system and writes an entry to the server log
+    file indicating that the messages have been removed from the system. The actual
+    information that is logged is defined by the Expiration Logging Policy.</p>  <p><b>Redirect</b>
+    - Moves expired messages from their current location to the Error Destination
+    defined for the destination. The message retains its body, and all of its properties.
+    The message also retains all of its header fields, but with the following exceptions:</p>
+    <ul> <li> The destination for the message becomes the error destination.</li>
+    <li> All property overrides associated with the error destination are applied
+    to the redirected message.</li> <li> If there is no Time-To-Live Override value
+    for the error destination, then the message receives a new Expiration Time of
+    zero (indicating that it will not expire again).</li> </ul>  <p>It is illegal
+    to use the Redirect policy when there is no valid error destination defined for
+    the destination. Similarly, it is illegal to remove the error destination for
+    a destination that is using the Redirect policy.</p>  <b>Note:</b> The Maximum
+    Message quota is only enforced for sending new messages. It is ignored when moving
+    messages because of the Redirect policy. '
+  legalValues:
+  - Discard
+  - Log
+  - Redirect
+  name: ExpirationPolicy
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The number of redelivery tries a message can have before it
+    is moved to the error destination. This setting overrides any redelivery limit
+    set by the message sender. If the redelivery limit is configured, but no error
+    destination is configured, then persistent and non-persistent messages are simply
+    dropped (deleted) when they reach their redelivery limit.</p>  <p>The default
+    value (-1) specifies that the destination will not override the message sender''s
+    redelivery limit setting. </p>  <p><b>Note:</b> WebLogic Server supports the JMSXDeliveryCount
+    message property, which specifies the number of message delivery attempts, where
+    the first attempt is 1, the next attempt is 2, and so on. WebLogic Server makes
+    a best effort to persist the delivery count, so that the delivery count does not
+    reset back to 1 after a server reboot.</p>  <p>This attribute is dynamically configurable,
+    but only incoming messages are impacted; previously sent messages continue to
+    use their original redelivery limit.</p> '
+  name: RedeliveryLimit
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'This is used to find the template bean for this destination '
+  name: TemplateBean
+  relationship: reference
+  type: weblogic.j2ee.descriptor.wl.TemplateBean
+roles:
+  allowed:
+  - Deployer

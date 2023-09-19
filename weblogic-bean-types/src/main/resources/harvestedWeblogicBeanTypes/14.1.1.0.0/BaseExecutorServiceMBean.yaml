@@ -1,0 +1,41 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes:
+- weblogic.management.configuration.ManagedExecutorServiceMBean
+- weblogic.management.configuration.ManagedScheduledExecutorServiceTemplateMBean
+- weblogic.management.configuration.ManagedScheduledExecutorServiceMBean
+- weblogic.management.configuration.ManagedExecutorServiceTemplateMBean
+descriptionHTML: 'Configuration MBean representing common parameters of partition
+  level ManagedExecutorService, partition level ManagedScheduledExecutorService, ManagedExecutorService
+  template and ManagedScheduledExecutorService template. '
+name: weblogic.management.configuration.BaseExecutorServiceMBean
+properties:
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p> The name of the Work Manager to use for this Concurrent Managed
+    Ojbect (CMO). If a Work Manager is not specified, the default one is used. </p> '
+  name: DispatchPolicy
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: '<p> An integer that specifies the long-running daemon thread''s
+    priority. If a value is specified, all long-running threads are affected. </p> '
+  name: LongRunningPriority
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p> The maximum number of running long-running tasks submitted
+    to this CMO. </p> '
+  name: MaxConcurrentLongRunningRequests
+  type: int
+  writable: true

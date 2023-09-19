@@ -1,0 +1,32 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.WLDFWatchManagerRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Provides access to policy and action statistical data for the
+  current instance of this server.</p> <p>Note: As of WebLogic Server 12.2.1, the
+  terms <i>watch</i> and <i>notification</i> are replaced by <i>policy</i> and <i>action</i>,
+  respectively. However, the definition of these terms has not changed.</p> '
+name: weblogic.management.runtime.WLDFWatchNotificationRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: '<p>The WLDFWatchJMXNotificationRuntimeMBean instance that sends
+    JMX actions when a configured policy evaluates to true.</p> '
+  name: WLDFWatchJMXNotificationRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.WLDFWatchJMXNotificationRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Returns the MBean that serves as the source for all generated
+    JMX actions from policies. This replaces the deprecated getWLDFWatchJMXNotificationRuntime()
+    action source. </p> '
+  name: WLDFWatchJMXNotificationSource
+  relationship: containment
+  type: weblogic.management.runtime.WLDFWatchNotificationSourceRuntimeMBean

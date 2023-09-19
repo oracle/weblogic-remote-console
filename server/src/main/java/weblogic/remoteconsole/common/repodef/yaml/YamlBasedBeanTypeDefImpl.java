@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.common.repodef.schema.BeanActionDefCustomizerSource;
+import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanChildDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
@@ -50,11 +52,29 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
 
   // The derived classes must call this after they've finished creating the properties and children:
   protected void initializeContainedDefsAndImpls() {
+    removeUnsupportedPropertyDefImpls();
     initializeContainedDefsAndImpls(
       getPropertyNameToPropertyDefImplMap().values(),
       new ArrayList<>(getChildNameToChildDefImplMap().values()),
       getActionNameToActionDefImplMap().values()
     );
+  }
+
+  private void removeUnsupportedPropertyDefImpls() {
+    // Remove properties of child beans that don't exist.
+    // For example, if the child requires a capability that the domain doesn't support.
+    ArrayList<String> unsupportedPropertyNames = new ArrayList<>();
+    for (Map.Entry<String,BeanPropertyDefImpl> e : propertyNameToPropertyDefImplMap.entrySet()) {
+      Path parentPath = e.getValue().getParentPath();
+      if (!parentPath.isEmpty()) {
+        if (!hasChildDef(parentPath)) {
+          unsupportedPropertyNames.add(e.getKey());
+        }
+      }
+    }
+    for (String propertyName : unsupportedPropertyNames) {
+      propertyNameToPropertyDefImplMap.remove(propertyName);
+    }
   }
 
   protected BeanPropertyDefImpl createBeanPropertyDefImpl(
@@ -75,6 +95,14 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
       return null;
     }
     return new BeanChildDefImpl(this, parentPath, source, customizerSource);
+  }
+
+  protected BeanActionDefImpl createBeanActionDefImpl(
+    Path parentPath,
+    BeanActionDefSource source,
+    BeanActionDefCustomizerSource customizerSource
+  ) {
+    return new BeanActionDefImpl(this, parentPath, source, customizerSource);
   }
 
   @Override
@@ -154,6 +182,10 @@ abstract class YamlBasedBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   }
 
   protected void addActionDefImpl(BeanActionDefImpl actionDefImpl) {
+    if (actionDefImpl == null) {
+      // This repo doesn't support this action
+      return;
+    }
     Path actionPath = actionDefImpl.getActionPath();
     if (!hasActionDef(actionPath)) {
       getActionNameToActionDefImplMap().put(pathKey(actionPath), actionDefImpl);

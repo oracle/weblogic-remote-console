@@ -1,0 +1,246 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'An application represents a Java EE application contained in an
+  EAR file or EAR directory. The EAR file contains a set of components such as WAR,
+  EJB, and RAR connector components, each of which can be deployed on one or more
+  targets. A target is a server or a cluster.  If the application is provided as a
+  standalone module, then this MBean is a synthetic wrapper application only. '
+name: weblogic.management.configuration.ApplicationMBean
+properties:
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>A path on the file system for the application descriptor for
+    this application. If null, the usual location within the ear is used (META-INF/application.xml);</p> '
+  name: AltDescriptorPath
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>A path on the file system for the WLS-specific application
+    descriptor for this application. If null, the usual location within the EAR file
+    is used (META-INF/weblogic-application.xml);</p> '
+  name: AltWLSDescriptorPath
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The Java EE modules (components) that make up this application.</p> '
+  name: Components
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.ComponentMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.ConnectorComponentMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the Connector components that make up this application.
+    Components represent the Java EE modules associated with this application.<p> '
+  name: ConnectorComponents
+  relationship: containment
+  supported: false
+  type: weblogic.management.configuration.ConnectorComponentMBean
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>The deployed attribute is no longer supported as of version
+    9.x It remains here to support parsing of existing configuration files in which
+    this value was stored</p> '
+  exclude: true
+  name: Deployed
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 3600000
+  deprecated: '9.0.0.0 Replaced by weblogic.deploy.api.spi.DeploymentOptions.getClusterDeploymentTimeout() '
+  descriptionHTML: '<p>Milliseconds granted for a cluster deployment task on this
+    application. If any deployment tasks remain active for longer, the task will be
+    cancelled.</p>  <p>The larger the application, the larger the timeout value should
+    be, as the gating factor is associated with download time and processing time
+    required to load the application files.</p>  <p>A server instance checks for timed
+    out deployments about once a minute.</p>  <p>Only cluster deployments can be timed
+    out.</p> '
+  name: DeploymentTimeout
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: UNKNOWN
+  descriptionHTML: '<p>Specifies the category of this application. This attribute
+    will be derived if not specified in the configuration.</p> '
+  legalValues:
+  - EAR
+  - EXPLODED EAR
+  - COMPONENT
+  - EXPLODED COMPONENT
+  - UNKNOWN
+  name: DeploymentType
+  transient: true
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.EJBComponentMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns the EJB components that make up this application.
+    Components represent the Java EE modules associated with this application. <p> '
+  name: EJBComponents
+  relationship: containment
+  supported: false
+  type: weblogic.management.configuration.EJBComponentMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The fully qualified source path of an application on an Administration
+    Server.</p> '
+  name: FullPath
+  transient: true
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Indicates whether this application is an internal application.
+    Such applications are not displayed in the console. For OAM internal use only.</p> '
+  name: InternalApp
+  transient: true
+  type: boolean
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Returns the internal type of the application. (EAR, COMPONENT,
+    EXPLODED_EAR, EXPLODED_COMPONENT) This is needed because j2ee.Component needs
+    to be able to determine how the application is packaged in order to correctly
+    deploy it on the managed server.</p> '
+  exclude: true
+  name: InternalType
+  supported: false
+  transient: true
+  type: int
+- array: true
+  creators:
+  - weblogic.management.configuration.JDBCPoolComponentMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the JDBCPool components (JDBC modules) included in
+    this application. </p> '
+  exclude: true
+  name: JDBCPoolComponents
+  relationship: containment
+  supported: false
+  type: weblogic.management.configuration.JDBCPoolComponentMBean
+- defaultValue:
+    value:
+      value: 100
+  descriptionHTML: '<p>A numerical value that indicates when this module or application
+    is deployed, relative to other deployable modules and applications. Modules with
+    lower Load Order values are deployed before those with higher values. (Requires
+    that you enable the two-phase deployment protocol.)</p> '
+  name: LoadOrder
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The URI, located on the Administration Server, of the original
+    source files for this application.</p>  <p>Relative paths are based on the root
+    of the Administration Server installation directory. It is highly recommended
+    that you use absolute paths to minimize possible issues when upgrading the server.</p>  <p>If
+    the application is not being staged (StagingMode==nostage) then the path must
+    be valid on the target server.</p>  <p>The path to an Enterprise application (EAR)
+    is the location of the EAR file or the root of the EAR if it is unarchived, e.g.,
+    Path="myapps/app.ear" is valid. If the application is a standalone module, then
+    the path is the parent directory of the module. For example, if the module is
+    located at myapps/webapp/webapp.war, the Path="myapps/webapp" is correct, whereas
+    Path="myapps/webapp/webapp.war" is incorrect.</p> '
+  name: Path
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>List of servers on which this application is known to be staged.
+    This makes no distinction regarding the version or state of the staged files,
+    just that they are staged. The array returned contains the names of the target
+    servers. This list should not include cluster names.</p> '
+  name: StagedTargets
+  type: java.lang.String
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The mode that specifies whether an application''s files are
+    copied from a source on the Administration Server to the Managed Server''s staging
+    area during application preparation. Staging mode for an application can only
+    be set the first time the application is deployed. Once staging mode for an application
+    is set, it cannot be changed while the application is configured in the domain.
+    The only way to change staging mode is to undeploy then redeploy the application.</p>  <p>Staging
+    involves distributing the application files from the Administration Server to
+    the targeted Managed Servers staging directory. This attribute is used to override
+    the Managed Server''s StagingMode attribute.</p> '
+  legalValues:
+  - null
+  - nostage
+  - stage
+  - external_stage
+  name: StagingMode
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The directory that a Managed Server uses to prepare and activate
+    an application.</p>  <p>The directory path is relative to the Managed Server''s
+    Staging Path. It is derived from the Path attribute, and depends on whether the
+    application is being staged. If the Path attribute for application, myapp, is
+    foo.ear, the staging path is set to myapp/foo.ear. If the path is C:/myapp.ear,
+    the staging path is myapp/myapp.ear. If the application is not being staged (StagingMode==nostage),
+    then the staging path is the same as the Path attribute. If this application is
+    not being staged, the staging path is equivalent to the source path (Path attribute).</p> '
+  name: StagingPath
+  transient: true
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: true
+  deprecated: 'Always returns true '
+  descriptionHTML: '<p>Specifies whether this application is deployed using the two-phase
+    deployment protocol.</p> '
+  name: TwoPhase
+  supported: false
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The WebApp components (Java EE modules) that make up this application.</p> '
+  exclude: true
+  name: WebAppComponents
+  relationship: containment
+  supported: false
+  type: weblogic.management.configuration.WebAppComponentMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.WebServiceComponentMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the WebService components that make up this application.
+    Components represent the Java EE modules associated with this application. <p> '
+  name: WebServiceComponents
+  relationship: containment
+  supported: false
+  type: weblogic.management.configuration.WebServiceComponentMBean
+roles:
+  allowed:
+  - Deployer

@@ -2,7 +2,7 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "2.4.5",
+  "version": "2.4.6",
   "main": "app/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,8 +28,8 @@
       "app/js/file-utils.js",
       "app/js/i18n-utils.js",
       "app/js/ipcRendererPreload.js",
-      "app/js/keytar-utils.js",
       "app/js/os-utils.js",
+      "app/js/settings-editor.js",
       "app/js/project-management.js",
       "app/js/user-prefs-json.js",
       "app/js/user-projects-json.js",
@@ -55,9 +55,15 @@
     },
     "linux": {
       "target": [
-        { "target": "rpm" },
-        { "target": "deb" },
-        { "target": "appimage" },
+        {
+          "target": "rpm"
+        },
+        {
+          "target": "deb"
+        },
+        {
+          "target": "appimage"
+        },
         {
           "target": "zip"
         }
@@ -90,14 +96,15 @@
   "copyright": "Copyright (c) 2021, 2023, Oracle and/or its affiliates.",
   "dependencies": {
     "chokidar": "^3.5.3",
+    "electron-preferences": "^2.8.2",
     "electron-prompt": "^1.6.2",
     "electron-updater": "^5.3.0",
     "fs-extra": "^8.1.0",
-    "keytar": "^7.9.0"
+    "properties-reader": "^2.2.0"
   },
   "devDependencies": {
-    "electron": "^25.0.0",
-    "electron-builder": "^24.4.0",
+    "electron": "^25.8.1",
+    "electron-builder": "^24.6.4",
     "eslint": "^8.33.0"
   }
 }

@@ -1,0 +1,17 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JaxRsResourceMethodBaseRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'The runtime MBean for a JAX-RS sub-resource locator. A sub-resource
+  locator is a resource method that is with out a HTTP designator '
+name: weblogic.management.runtime.JaxRsSubResourceLocatorRuntimeMBean
+properties: [
+  ]
+roles:
+  allowed:
+  - Operator

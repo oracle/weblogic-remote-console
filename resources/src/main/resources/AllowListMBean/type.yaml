@@ -1,0 +1,32 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+- name: AllowListViolationAction
+  label: Violation Action
+  helpSummaryHTML: >
+    <p>Specifies how the WebLogic Server domain use allowlists or blocklists.
+    This setting applies to all servers in the domain.</p>
+  helpDetailsHTML: >
+    <ul>
+      <li><b>ignore</b> specifies that WebLogic Server will ignore the allowlist and use the blocklists.
+      If any class found during deserialization is present in the blocklist, the class is blocked
+      from being deserialized.</li>
+      <li><b>deny</b> specifies that WebLogic Server will block everything except the
+      classes specified in the allowlist, and log a message when a class is blocked.</li>
+      <li><b>log</b> specifies that WebLogic Server will log a message if a violation
+      occurs but allow the class, unless it is listed in the blocklist.</li>
+    </ul>
+
+- name: AllowListRecordingEnabled
+  label: Recording Enabled
+  helpSummaryHTML: >
+    <p>Specifies whether recording is enabled or disabled.</p>
+  helpDetailsHTML: >
+    <p>When recording is enabled, all classes are allowed during deserialization
+
+- name: SerialPropFilePollingInterval
+  label: Serial Profile Polling Interval
+  helpHTML: >
+    <p>Specifies the frequency, in seconds, at which the directory containing the
+    allowlist configuration file is polled.</p>

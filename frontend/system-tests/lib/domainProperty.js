@@ -152,12 +152,12 @@ module.exports = function (driver, file) {
             await admin.enableCheckBox(driver,idName='SecurityConfiguration_ClearTextCredentialAccessEnabled');
             //await admin.enableCheckBox(driver,idName='UseKSSForDemo');
             //await admin.enableCheckBox(driver,idName='SecureModeEnabled');
-            await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_RestrictiveJMXPolicies');
-            await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_WarnOnInsecureSSL');
-            await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_WarnOnInsecureFileSystem');
-            await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_WarnOnAuditing');
-            await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_WarnOnInsecureApplications');
-            await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_WarnOnJavaSecurityManager');
+            await admin.disableCheckBox(driver,idName='SecurityConfiguration_PrincipalEqualsCaseInsensitive');
+            await admin.disableCheckBox(driver,idName='SecurityConfiguration_PrincipalEqualsCompareDnAndGuid');
+            await admin.disableCheckBox(driver,idName='SecurityConfiguration_CompatibilityConnectionFiltersEnabled');
+            await admin.disableCheckBox(driver,idName='SecurityConfiguration_ClearTextCredentialAccessEnabled');
+            await admin.disableCheckBox(driver,idName='SecurityConfiguration_UseKSSForDemo');
+            await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_SecureModeEnabled');
             /*
             //await admin.selectDropDownValue(driver,idName='DefaultRealm_selected',selectValue=DefaultRealmDB,'N');
             await admin.setFieldValue(driver,idName='AdministrativeIdentityDomain|input',newValue=AdministrativeIdentityDomainTF);
@@ -188,7 +188,7 @@ module.exports = function (driver, file) {
         modifyDomainSecurityFilterTab: async function (driver,ConnectionLoggerEnabledDB,ConnectionFilterTF,ConnectionFilterRuleTF)
         {
             //1(No left/right arrow), 3(Security), 5(Embedded LPAD)
-            await admin.goToSecondTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,3);
+            await admin.goToSecondTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,5);
             await driver.sleep(300);
             await admin.enableCheckBox(driver, idName='SecurityConfiguration_ConnectionLoggerEnabled');
             await admin.setFieldValue(driver,idName='SecurityConfiguration_ConnectionFilter|input',newValue=ConnectionFilterTF);
@@ -205,7 +205,7 @@ module.exports = function (driver, file) {
                                                              AnonymousBindAllowedCB)
         {
             //1 is for no right/left arrow and 3(Security), 5(Embedded LPAD)
-            await admin.goToSecondTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,5);
+            await admin.goToSecondTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,7);
             await driver.sleep(300);
             await admin.setFieldValue(driver,"EmbeddedLDAP_Credential|input",EmbeddedLDAPCredentialTF);
             await admin.setFieldValue(driver,"EmbeddedLDAP_BackupHour|input",BackupHourTF);
@@ -229,7 +229,7 @@ module.exports = function (driver, file) {
                                                                MethodOrderDB,FailOnUnknownRevocStatusCB)
         {
             //1 is for no right/left arrow and 3(Security), 7(SSL Certificate Revocation Checking)
-            await admin.goToSecondTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,7);
+            await admin.goToSecondTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,9);
             await driver.sleep(300);
             await admin.enableOjSwitchCheckBox(driver,idName='SecurityConfiguration_CertRevoc_CheckingEnabled','3');
             //await admin.selectDropDownValue(driver,idName="MethodOrder",MethodOrderDB);
@@ -246,7 +246,7 @@ module.exports = function (driver, file) {
         modifyDomainSecuritySSLOCSPTab: async function (driver,OcspNonceEnabledCB,OcspResponseCacheEnabledCB)
         {
             //1 is for no right/left arrow and 3(Security), 7(SSL), 3(OCSP)
-            await admin.goToThirdTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,7,3);
+            await admin.goToThirdTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,9,3);
             await driver.sleep(300);
             await admin.enableCheckBox(driver,'show-advanced-fields');
             await admin.enableCheckBox(driver,OcspNonceEnabledCB);
@@ -261,7 +261,7 @@ module.exports = function (driver, file) {
         modifyDomainSecuritySSLCRLTab: async function (driver,CrlDpEnabledCB,CrlCacheRefreshTF,CrlDpDownloadTimeoutTF)
         {
             //1 is for no right/left arrow and 3(Security), 7(SSL), 5(CRL)
-            await admin.goToThirdTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,7,5);
+            await admin.goToThirdTab(driver,"Edit Tree","EnvironmentChevron","Domain",1,3,9,5);
             await driver.sleep(300);
             await admin.enableCheckBox(driver,'show-advanced-fields');
             await admin.enableCheckBox(driver,CrlDpEnabledCB);

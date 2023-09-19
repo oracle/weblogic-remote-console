@@ -1,0 +1,24 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.WebAppComponentMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Provides the interface used to configure a Web service that is
+  deployed on a WebLogic Server instance.</p>  <p>A Web service is a special kind
+  of Java EE Web Application that contains an additional deployment descriptor, web-services.xml,
+  that describes the Web service. Because a Web service is packaged as a Java EE Web
+  application, its component MBean is the same as that of a Web application, and thus
+  simply extends the WebAppComponentMBean interface, adding no new methods.</p>  <p>WebLogic
+  Server instantiates this interface only when you deploy a Web service.</p>  <p>This
+  interface can configure Web services that are deployed as WAR files or exploded
+  directories.</p> '
+name: weblogic.management.configuration.WebServiceComponentMBean
+properties: [
+  ]
+roles:
+  allowed:
+  - Deployer

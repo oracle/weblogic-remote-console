@@ -3,14 +3,19 @@
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
+import weblogic.remoteconsole.common.repodef.LegalValueDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.PageActionParamDef;
 import weblogic.remoteconsole.common.repodef.PageFieldPresentationDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefSource;
+import weblogic.remoteconsole.common.repodef.schema.LegalValueDefCustomizerSource;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 
@@ -19,12 +24,16 @@ import weblogic.remoteconsole.common.utils.StringUtils;
  */
 class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActionParamDef {
 
+  private static final Logger LOGGER = Logger.getLogger(PageActionParamDefImpl.class.getName());
+
   private ActionInputFormDefImpl inputFormDefImpl;
   private BeanActionParamDefCustomizerSource pageLevelCustomizerSource;
   private LocalizableString helpSummaryHTML;
   private LocalizableString detailedHelpHTML;
   private LocalizableString label;
   private PageActionParamPresentationDefImpl presentationDefImpl;
+  private List<PageActionParamLegalValueDefImpl> legalValueDefImpls = new ArrayList<>();
+  private List<LegalValueDef> legalValueDefs;
 
   static PageActionParamDefImpl create(
     ActionInputFormDefImpl inputFormDefImpl,
@@ -74,6 +83,7 @@ class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActio
     initializeLabel();
     initializeHelp();
     initializePresentationDef();
+    initializeLegalValueDefs();
   }
 
   ActionInputFormDefImpl getInputFormDefImpl() {
@@ -169,13 +179,116 @@ class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActio
       new PageActionParamPresentationDefImpl(this, getCustomizerSource().getPresentation());
   }
 
+  private void initializeLegalValueDefs() {
+    mergePageActionParamLegalValueDefImpls(
+      createSourceLevelPageActionParamLegalValueDefImpls(),
+      createCustomizerSourceLevelPageActionParamLegalValueDefImpls()
+    );
+    legalValueDefs = Collections.unmodifiableList(getLegalValueDefImpls());
+  }
+
+  private void mergePageActionParamLegalValueDefImpls(
+    List<PageActionParamLegalValueDefImpl> sourceVals,
+    List<PageActionParamLegalValueDefImpl> customizerVals
+  ) {
+    if (sourceVals.isEmpty()) {
+      getLegalValueDefImpls().addAll(customizerVals);
+    } else {
+      for (PageActionParamLegalValueDefImpl sourceVal : sourceVals) {
+        PageActionParamLegalValueDefImpl customizerVal =
+          findPageActionParamLegalValueDefImpl(sourceVal, customizerVals);
+        if (customizerVal != null) {
+          if (customizerVal.isOmit()) {
+            // The customizer wants to remove this value from the list of legal values.
+            // Skip it.
+          } else {
+            getLegalValueDefImpls().add(customizerVal);
+          }
+        } else {
+          getLegalValueDefImpls().add(sourceVal);
+        }
+      }
+      for (PageActionParamLegalValueDefImpl customizerVal : customizerVals) {
+        if (findPageActionParamLegalValueDefImpl(customizerVal, sourceVals) == null) {
+          // The bean doesn't support this legal value
+          // That's OK - just omit it.
+          // For example, a newer version of WLS added the legal value
+          // and we're using yamls from an older version of WLS that doesn't
+          // have it.
+          LOGGER.finest(
+            "Missing legal value"
+            + " "
+            + getInputFormDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
+            + " " + this
+            + " " + customizerVal.getValueAsString()
+          );
+        }
+      }
+    }
+  }
+
+  private List<PageActionParamLegalValueDefImpl> createSourceLevelPageActionParamLegalValueDefImpls() {
+    List<PageActionParamLegalValueDefImpl> rtn = new ArrayList<>();
+    for (Object legalValue : getSource().getLegalValues()) {
+      if (getCustomizerSource().isUseUnlocalizedLegalValuesAsLabels()) {
+        // set the english label to null so that the legal value doesn't get localized
+        rtn.add(new PageActionParamLegalValueDefImpl(this, legalValue, null));
+      } else {
+        // don't set the english label so that the value gets used as the engligh label
+        rtn.add(new PageActionParamLegalValueDefImpl(this, legalValue));
+      }
+    }
+    return rtn;
+  }
+
+  private List<PageActionParamLegalValueDefImpl> createCustomizerSourceLevelPageActionParamLegalValueDefImpls() {
+    List<PageActionParamLegalValueDefImpl> rtn = new ArrayList<>();
+    for (LegalValueDefCustomizerSource src : getCustomizerSource().getLegalValues()) {
+      boolean supported =
+        getActionDefImpl()
+          .getTypeDefImpl()
+          .getBeanRepoDefImpl()
+          .supportsCapabilities(src.getRequiredCapabilities()
+        );
+      if (supported) {
+        rtn.add(new PageActionParamLegalValueDefImpl(this, src.getValue(), src.getLabel(), src.isOmit()));
+      }
+    }
+    return rtn;
+  }
+
+  private PageActionParamLegalValueDefImpl findPageActionParamLegalValueDefImpl(
+    PageActionParamLegalValueDefImpl want,
+    List<PageActionParamLegalValueDefImpl> vals
+  ) {
+    for (PageActionParamLegalValueDefImpl have : vals) {
+      if (StringUtils.nonNull(want.getValueAsString()).equals(StringUtils.nonNull(have.getValueAsString()))) {
+        return have;
+      }
+    }
+    return null;
+  }
+
   String getInlineFieldHelpLocalizationKey() {
     return getLocalizationKey("inlineFieldHelp");
+  }
+
+  String getLegalValueLocalizationKey(String legalValue) {
+    return getLocalizationKey("legalValues." + legalValue);
   }
 
   @Override
   String getLocalizationKey(String key) {
     return getInputFormDefImpl().getLocalizationKey("params." + getParamName() + "." + key);
+  }
+
+  List<PageActionParamLegalValueDefImpl> getLegalValueDefImpls() {
+    return legalValueDefImpls;
+  }
+
+  @Override
+  public List<LegalValueDef> getLegalValueDefs() {
+    return legalValueDefs;
   }
 
   @Override

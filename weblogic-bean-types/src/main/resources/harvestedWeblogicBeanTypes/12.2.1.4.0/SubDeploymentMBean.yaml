@@ -1,0 +1,60 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.TargetInfoMBean
+derivedTypes:
+- weblogic.management.configuration.SingletonServiceAppScopedMBean
+descriptionHTML: 'This bean represents an individually targetable entity within a
+  deployment package, which is deployable on WLS. This includes : <p> Modules in an
+  EAR </p> <p> JMS resources within a app scoped JMS module in an EAR </p> '
+name: weblogic.management.configuration.SubDeploymentMBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Unique identifier for this bean instance. It is used by the application
+    container to match the module in the application package to the targeting information
+    in the configuration.  <p>For modules within an EAR, the name should be the URI
+    of the module as defined in the META-INF/application.xml deployment descriptor.
+    There is an exception to this for web applications. See below.</p> <p>For web
+    modules in an EAR, the name should always equal the context root of that webapp,
+    because the URI is not always unique</p> '
+  key: true
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The subdeployment groups within this JMS module. Subdeployments
+    enable you to deploy some resources in a JMS module to a JMS server and other
+    JMS resources to a server instance or cluster.</p>  <p>Standalone queues or topics
+    can only be targeted to a single JMS server. Whereas, connection factories, uniform
+    distributed destinations (UDDs), and foreign servers can be targeted to one or
+    more JMS servers, one or more server instances, or to a cluster. Therefore, standalone
+    queues or topics cannot be associated with a subdeployment if other members of
+    the subdeployment are targeted to multiple JMS servers. However, UDDs can be associated
+    with such subdeployments since the purpose of UDDs is to distribute its members
+    to multiple JMS servers in a domain.</p> '
+  name: SubDeployments
+  relationship: containment
+  type: weblogic.management.configuration.SubDeploymentMBean
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Only relevant for deployments in resource group templates.
+    Sub-deployments cannot have arbitrary targets if they are part of a deployment
+    from resource group template. The sub-deployments, in such cases, may only be
+    targeted to the virtual host of referring partition or stay untargeted. This flag,
+    when specified with true, indicates that the sub-deployment must not be deployed
+    in the referring partition</p> '
+  name: Untargeted
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

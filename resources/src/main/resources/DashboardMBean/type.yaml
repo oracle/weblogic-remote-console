@@ -36,7 +36,7 @@ properties:
     label: "Greater Than"
   - value: "greaterThanOrEquals"
     label: "Greater Than or Equals"
-- name: TemplateLongPropertyCriteria
+- name: TemplateIntEnumPropertyCriteria
   legalValues:
   - value: "unfiltered"
     label: "Any"
@@ -44,15 +44,7 @@ properties:
     label: "Equals"
   - value: "notEquals"
     label: "Not Equals"
-  - value: "lessThan"
-    label: "Less Than"
-  - value: "lessThanOrEquals"
-    label: "Less Than or Equals"
-  - value: "greaterThan"
-    label: "Greater Than"
-  - value: "greaterThanOrEquals"
-    label: "Greater Than or Equals"
-- name: TemplateDoublePropertyCriteria
+- name: TemplateLongPropertyCriteria
   legalValues:
   - value: "unfiltered"
     label: "Any"
@@ -139,6 +131,14 @@ properties:
     label: "Not Equals"
   - value: "contains"
     label: "Contains"
+- name: TemplateStringEnumPropertyCriteria
+  legalValues:
+  - value: "unfiltered"
+    label: "Any"
+  - value: "equals"
+    label: "Equals"
+  - value: "notEquals"
+    label: "Not Equals"
 - name: TemplateGenericPropertyCriteria
   legalValues:
   - value: "unfiltered"

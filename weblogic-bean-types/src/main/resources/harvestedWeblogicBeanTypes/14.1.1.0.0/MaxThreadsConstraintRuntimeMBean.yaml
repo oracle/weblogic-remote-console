@@ -1,0 +1,36 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Runtime information for MaxThreadsConstraint '
+name: weblogic.management.runtime.MaxThreadsConstraintRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The configured count, or maximum concurrency value.</p> '
+  name: ConfiguredCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current maximum concurrency value. This could be different
+    from the configured value as Resource Consumption Management could dynamically
+    reduce the allowed maximum concurrency value based on configured RCM policies
+    and actual thread usage by the partition</p> '
+  name: Count
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of requests that are denied a thread for execution because
+    the constraint is exceeded.</p> '
+  name: DeferredRequests
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of requests that are currently executing.</p> '
+  name: ExecutingRequests
+  type: int

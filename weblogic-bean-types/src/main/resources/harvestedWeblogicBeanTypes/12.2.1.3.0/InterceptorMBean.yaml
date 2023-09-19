@@ -1,0 +1,63 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.ScriptInterceptorMBean
+- weblogic.management.configuration.DatasourceInterceptorMBean
+descriptionHTML: ' '
+name: weblogic.management.configuration.InterceptorMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The set of interceptor names this interceptor depends on. The
+    specified interceptors will appear before this interceptor in the invocation chain.</p> '
+  name: DependsOn
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the operation / method that needs to intercepted
+    by this interceptor''s method. If the return value is null or "*" then all operations
+    are intercepted by this interceptor.</p> '
+  name: InterceptedOperationNames
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The key associated with the intercepted target. This is the
+    value that would have been specified in the @InterceptedTargetKey annotation.
+    If this is null then this Interceptor is ignored.</p> '
+  name: InterceptedTargetKey
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The HK2 name of the interceptor class.</p> '
+  name: InterceptorTypeName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 1073741823
+  descriptionHTML: '<p>The priority of this intercepted method in the interceptor
+    chain. An interceptor with a higher priority will be executed earlier than an
+    interceptor with a lower priority.</p> <p>Note:  1073741823 is actually Integer.MAX_VALUE
+    / 2 as defined in InterceptorPriorities.</p> '
+  name: Priority
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p> A set of &lt;name, value&gt; pairs that needs to be passed
+    to the interceptor.</p> '
+  name: Properties
+  restartNeeded: true
+  type: java.util.Properties
+  writable: true

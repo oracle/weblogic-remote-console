@@ -1,0 +1,71 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.runtime.RolloutServiceRuntimeMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Lists all currently running workflows. Workflows are active elements
+    which can be finished in separated threads. Returned list is just snapshot of
+    current state and it means that workflow can be finished before you process result. '
+  excludeFromRest: No default REST mapping for List<WorkflowTaskRuntimeMBean>
+  getRoles:
+    allowed:
+    - admin
+  name: ActiveWorkflows
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.WorkflowTaskRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Lists all workflows. '
+  getRoles:
+    allowed:
+    - admin
+  name: AllWorkflows
+  relationship: containment
+  type: weblogic.management.runtime.WorkflowTaskRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Lists all completed workflows. '
+  excludeFromRest: No default REST mapping for List<WorkflowTaskRuntimeMBean>
+  getRoles:
+    allowed:
+    - admin
+  name: CompleteWorkflows
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.WorkflowTaskRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Lists all currently not running workflows - stopped and complete.
+    Workflows are active elements which can be finished in separated threads. Returned
+    list is just snapshot of current state and it means that workflow can be finished
+    before you process result. '
+  getRoles:
+    allowed:
+    - admin
+  name: InactiveWorkflows
+  relationship: containment
+  type: weblogic.management.runtime.WorkflowTaskRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Lists all completed workflows. '
+  getRoles:
+    allowed:
+    - admin
+  name: StoppedWorkflows
+  relationship: containment
+  type: weblogic.management.runtime.WorkflowTaskRuntimeMBean

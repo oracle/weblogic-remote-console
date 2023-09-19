@@ -18,6 +18,7 @@ public class CustomSliceTableDef implements SliceTableDef {
   private List<PagePropertyDef> allPropertyDefs = new ArrayList<>();
   private List<PageActionDef> actionDefs = new ArrayList<>();
   private String getTableRowsMethod;
+  private boolean supportsNavigation;
 
   public CustomSliceTableDef() {
   }
@@ -171,6 +172,20 @@ public class CustomSliceTableDef implements SliceTableDef {
 
   public CustomSliceTableDef customizePageMethod(String val) {
     setCustomizePageMethod(val);
+    return this;
+  }
+
+  @Override
+  public boolean isSupportsNavigation() {
+    return supportsNavigation;
+  }
+
+  public void setSupportsNavigation(boolean val) {
+    supportsNavigation = val;
+  }
+
+  public CustomSliceTableDef supportsNavigation(boolean val) {
+    setSupportsNavigation(val);
     return this;
   }
 }

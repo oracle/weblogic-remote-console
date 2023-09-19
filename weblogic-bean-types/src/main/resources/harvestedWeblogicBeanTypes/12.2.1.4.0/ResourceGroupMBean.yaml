@@ -1,0 +1,62 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ResourceGroupTemplateMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'A resource group is a named collection of deployable resources.
+  Typically the resources in a given resource group are related in some way, for example
+  in that they make up a single application suite. '
+name: weblogic.management.configuration.ResourceGroupMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Does this resource group contain administrative applications
+    and resources? If true, then this is considered an administrative resource group
+    and will be handled differently by the partition lifecycle. Specifically, an administrative
+    resource group will be left running when a partition is shut down (it will be
+    shut down only when the partition is halted).</p>  <p>Note that this Boolean is
+    independent of the targeting of the resource group and works independently of
+    the <code>autoTargetAdminServer</code> Boolean.</p> '
+  name: Administrative
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Should this resource group always be targeted to the Administration
+    Server? If true, then this resource group will be targeted to the domain''s Administration
+    Server using the partition''s administrative virtual target (AdminVT) in addition
+    to any targets explicitly set on the resource group. Functionally, this is similar
+    to getting the partition''s administrative virtual target and explicitly adding
+    it to the list of resource group targets. '
+  name: AutoTargetAdminServer
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The resource group template referenced by this resource group. '
+  name: ResourceGroupTemplate
+  relationship: reference
+  type: weblogic.management.configuration.ResourceGroupTemplateMBean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'A list of all the targets. '
+  name: Targets
+  relationship: reference
+  type: weblogic.management.configuration.TargetMBean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Checks whether this resource group uses the default target from
+    the partition that contains the resource group. '
+  name: UseDefaultTarget
+  type: boolean
+  writable: true

@@ -39,17 +39,15 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
   public Response get(
     @QueryParam("view") @DefaultValue(VIEW_SLICE) String view,
     @QueryParam("slice") @DefaultValue("") String slice,
-    @QueryParam("reload") @DefaultValue("false") boolean reload,
-    @QueryParam("actionForm") @DefaultValue("") String actionForm,
-    @QueryParam("action") @DefaultValue("") String action
+    @QueryParam("reload") @DefaultValue("false") boolean reload
   ) {
     getInvocationContext().setReload(reload);
     if (VIEW_SLICE.equals(view)) {
-      setSlicePagePath(slice, actionForm, action);
-      return getSlicePage();
+      setSlicePagePath(slice);
+      return getSlice();
     } else if (VIEW_CREATE_FORM.equals(view)) {
-      setCreateFormPagePath(actionForm, action);
-      return getCreateFormPage();
+      setCreateFormPagePath();
+      return getCreateForm();
     } else {
       throw
         new AssertionError(
@@ -68,23 +66,26 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
   public Response post(
     @QueryParam("slice") @DefaultValue("") String slice,
     @QueryParam("action") @DefaultValue(UPDATE) String action,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
     @QueryParam("identifier") @DefaultValue("") String identifier,
     JsonObject requestBody
   ) {
     getInvocationContext().setIdentifier(identifier);
-    if (CUSTOMIZE_TABLE.equals(action)) {
-      setSlicePagePath(slice);
-      return customizeTable(requestBody);      
-    }
-    if (UPDATE.equals(action)) {
-      setSlicePagePath(slice);
-      return updateSliceForm(requestBody);
-    } else if (CREATE.equals(action)) {
+    if (CREATE.equals(action)) {
       setCreateFormPagePath();
       return createOptionalSingleton(requestBody);
-    } else {
-      return invokeAction(action, requestBody);
     }
+    setSlicePagePath(slice);
+    if (CUSTOMIZE_TABLE.equals(action)) {
+      return customizeTable(requestBody);      
+    }
+    if (INPUT_FORM.equals(actionForm)) {
+      return getActionInputForm(action, requestBody);
+    }
+    if (UPDATE.equals(action)) {
+      return updateSliceForm(requestBody);
+    }
+    return invokeAction(action, requestBody);
   }
 
   /**
@@ -96,35 +97,11 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
     return deleteOptionalSingleton();
   }
 
-  protected Response getSlicePage() {
-    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
-      return getSliceActionInputForm();
-    } else {
-      return getSlice();
-    }
-  }
-
   protected Response getSlice() {
     return getPage();
   }
 
-  protected Response getSliceActionInputForm() {
-    return getPage();
-  }
-
-  protected Response getCreateFormPage() {
-    if (getInvocationContext().getPagePath().isActionInputFormPagePath()) {
-      return getCreateFormActionInputForm();
-    } else {
-      return getCreateForm();
-    }
-  }
-
   protected Response getCreateForm() {
-    return getPage();
-  }
-
-  protected Response getCreateFormActionInputForm() {
     return getPage();
   }
 

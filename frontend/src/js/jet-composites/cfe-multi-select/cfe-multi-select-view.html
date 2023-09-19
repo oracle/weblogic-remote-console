@@ -1,5 +1,5 @@
 <!--
-  Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+  Copyright (c) 2020, 2021, 2023 Oracle and/or its affiliates.
   The Universal Permissive License (UPL), Version 1.0
 
 -->
@@ -24,6 +24,7 @@
            disabled="[[checkedAvailableItemsIsEmpty() || readonly()]]"
           on-click='[[addToChosenButtonClick]]'>
           <span slot='startIcon' class="oj-fwk-icon oj-fwk-icon-caret-e"></span>
+          <oj-bind-text value="addToChosen"></oj-bind-text>
         </oj-button>
       </div>
       <div>
@@ -31,6 +32,7 @@
           disabled="[[availableArrayDataProvider.isEmpty() === 'yes' || readonly()]]"
            on-click='[[addAllToChosenButtonClick]]'>
           <span slot='startIcon' class="oj-fwk-icon oj-fwk-icon-caret02end-e"></span>
+          <oj-bind-text value="addAllToChosen"></oj-bind-text>
         </oj-button>
       </div>
       <div>
@@ -38,6 +40,7 @@
            disabled="[[checkedChosenItemsIsEmpty() || readonly()]]"
           on-click='[[addToAvailableButtonClick]]'>
           <span slot='startIcon' class="oj-fwk-icon oj-fwk-icon-caret-w"></span>
+          <oj-bind-text value="addToAvailable" ></oj-bind-text>
         </oj-button>
       </div>
       <div>
@@ -45,6 +48,7 @@
           disabled="[[chosenArrayDataProvider.isEmpty() === 'yes' || readonly()]]"
            on-click='[[addAllToAvailableButtonClick]]'>
           <span slot='startIcon' class="oj-fwk-icon oj-fwk-icon-caret02end-w"></span>
+          <oj-bind-text value="addAllToAvailable" ></oj-bind-text>
         </oj-button>
       </div>
     </div>

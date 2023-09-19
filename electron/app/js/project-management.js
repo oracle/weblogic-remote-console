@@ -21,15 +21,6 @@ const ProjectManagement = (() => {
   // persisted in the user-projects.json file
   const UserProjects = require('./user-projects-json');
   const CoreUtils = require('./core-utils');
-  let keytar;
-  try {
-    keytar = require('./keytar-utils');
-    if (!keytar.getKeyTar())
-      keytar = null;
-  } catch(err) {
-    keytar = null;
-  }
-
   let _projects;
   let _current_project;
   let timerId = 0;
@@ -315,8 +306,6 @@ const ProjectManagement = (() => {
       const existing_project = UserProjects.get(_current_project.name);
       if (CoreUtils.isNotUndefinedNorNull(existing_project)) {
         _current_project.dataProviders = UserProjects.getFilteredProviders(_current_project.dataProviders);
-        if (keytar)
-          keytar.upsertKeytarEntries(_current_project);
       }
       UserProjects.upsert(_current_project);
       ProjectManagement.setCurrentProject(_current_project);
@@ -348,11 +337,6 @@ const ProjectManagement = (() => {
         }
 
         changed_project.dataProviders = UserProjects.getFilteredProviders(entry.dataProviders);
-
-        // Create (or update) the keytar account for any
-        // AS data provider, in changed_project.
-        if (keytar)
-          keytar.upsertKeytarEntries(changed_project);
 
         return changed_project;
       }

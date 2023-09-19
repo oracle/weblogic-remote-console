@@ -1,0 +1,139 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.SystemResourceMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This bean defines a system-level Coherence cluster resource. It
+  links to a separate descriptor that specifies the definition. '
+name: weblogic.management.configuration.CoherenceClusterSystemResourceMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of hostnames of the managed servers belonging to this
+    Coherence cluster.</p> '
+  name: ClusterHosts
+  transient: true
+  type: java.lang.String
+- array: true
+  creators:
+  - weblogic.management.configuration.CoherenceCacheConfigMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>An array of CacheConfigBeans, each of which represents a cache
+    configuration.</p> '
+  name: CoherenceCacheConfigs
+  relationship: containment
+  type: weblogic.management.configuration.CoherenceCacheConfigMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Coherence cluster resource descriptor.</p> '
+  name: CoherenceClusterResource
+  relationship: containment
+  transient: true
+  type: weblogic.coherence.descriptor.wl.WeblogicCoherenceBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The external custom Coherence cluster configuration file.
+    </p> '
+  name: CustomClusterConfigurationFileName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The time when the custom configuration file used by the cluster
+    was last updated</p> '
+  name: CustomConfigFileLastUpdatedTime
+  type: long
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The name of the file that contains the module configuration.
+    By default the file resides in the <code>DOMAIN_DIR/config/coherence/<i>bean_name</i></code>
+    directory.</p>  <p>The module file derives its name from the bean name using the
+    following pattern:</p>  <p>&lt;beanName&gt;.xml</p> <p>Note that this is a read-only
+    property that can only be set when the bean is created.</p> '
+  name: DescriptorFileName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Coherence Cluster Listen Port of the remote participant.
+    </p> '
+  name: FederationRemoteClusterListenPort
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Coherence Cluster Name of the remote participant cluster.
+    </p> '
+  name: FederationRemoteClusterName
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of remote participant hosts, who will be added as
+    participants in the federation topology. </p> '
+  name: FederationRemoteParticipantHosts
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The federation topology. </p> '
+  name: FederationTopology
+  type: java.lang.String
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The user-specified name of this MBean instance.</p>  <p>This
+    name is included as one of the key properties in the MBean''s <code>javax.management.ObjectName</code>:</p>  <p><code>Name=<i>user-specified-name</i></code></p> '
+  key: true
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The active directory for the default persistence environment.
+    If no value is specified, the directory which will be used is the coherence/active
+    sub-directory under Domain Home directory. </p> '
+  name: PersistenceActiveDirectory
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The default persistence mode. </p> '
+  name: PersistenceDefaultMode
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The snapshot directory for the default persistence environment.
+    If no value is specified, the directory which will be used is coherence/snapshots
+    sub-directory under Domain Home directory. </p> '
+  name: PersistenceSnapshotDirectory
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The trash directory for the default persistence environment.
+    If no value is specified, the directory which will be used is coherence/trash
+    sub-directory under Domain Home directory. </p> '
+  name: PersistenceTrashDirectory
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: em/metadata/reports/coherence/report-group.xml
+  descriptionHTML: '<p>Get the report group file representing the superset of runtime
+    metrics to be collected for this cluster.</p> '
+  name: ReportGroupFile
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Specifies whether you are using a custom external Coherence
+    cluster configuration file.</p> '
+  name: UsingCustomClusterConfigurationFile
+  restartNeeded: true
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

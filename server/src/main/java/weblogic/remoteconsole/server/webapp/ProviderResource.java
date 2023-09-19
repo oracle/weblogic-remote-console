@@ -15,6 +15,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.json.JsonString;
 import javax.json.JsonValue;
 import javax.ws.rs.Consumes;
@@ -66,12 +67,14 @@ public class ProviderResource extends BaseResource {
   public static final String PROVIDER_NAME = "name";
   public static final String PROVIDER_SETTINGS = "settings";
   public static final String PROVIDER_INSECURE = "insecure";
+  public static final String PROXY_OVERRIDE = "proxyOverride";
   public static final String PROVIDER_SSO = "sso";
   public static final String TEST_ACTION = "test";
   @Context HttpHeaders headers;
 
   static {
     reservedNames.add(RemoteConsoleResource.ABOUT_PATH);
+    reservedNames.add(RemoteConsoleResource.DOMAIN_STATUS_PATH);
     reservedNames.add(RemoteConsoleResource.SSO_TOKEN_PATH);
     reservedNames.add("providers");
     reservedNames.add(AdminServerDataProviderImpl.TYPE_NAME);
@@ -143,6 +146,16 @@ public class ProviderResource extends BaseResource {
     if (provider.getType().equals(AdminServerDataProviderImpl.TYPE_NAME)) {
       pm.removeSsoToken(provider.getName());
     }
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/help")
+  public JsonObject getAllHelp(@Context ResourceContext resourceContext) {
+    JsonObjectBuilder ret = Json.createObjectBuilder();
+    InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
+    ret.add("data", ProviderManager.getAllHelp(ic));
+    return ret.build();
   }
 
   @GET
@@ -469,6 +482,11 @@ public class ProviderResource extends BaseResource {
     JsonValue insecure = bag.get(PROVIDER_INSECURE);
     if ((insecure != null) && (insecure != JsonValue.NULL) && bag.getBoolean(PROVIDER_INSECURE)) {
       provider.setInsecureConnection(true);
+    }
+
+    JsonValue proxyOverride = bag.get(PROXY_OVERRIDE);
+    if ((proxyOverride != null) && (proxyOverride != JsonValue.NULL)) {
+      provider.setProxyOverride(bag.getString(PROXY_OVERRIDE));
     }
   }
 

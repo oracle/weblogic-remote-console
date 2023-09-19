@@ -1,9 +1,14 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
 - name: Enabled
   label: Enable RESTful Management Services
+  helpHTML: >
+    <p>Enables managing this WebLogic Server domain through
+    the RESTful Management Services Web application.</p>
+    <p>Note: The WebLogic Remote Console will not be able to
+    manage this domain if these services are disabled.</p>
 
 - name: CORSAllowedCredentials
   offlineName: CorsAllowedCredentials

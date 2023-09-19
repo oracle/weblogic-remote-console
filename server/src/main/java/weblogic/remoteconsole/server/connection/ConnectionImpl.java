@@ -18,6 +18,8 @@ public class ConnectionImpl implements Connection {
   private String consoleExtensionVersion;
   private Set<String> capabilities;
   private String username;
+  private long connectTimeout;
+  private long readTimeout;
   private Client client;
 
   /** Package level contructor for use by the ConnectionManager */
@@ -29,7 +31,9 @@ public class ConnectionImpl implements Connection {
     String consoleExtensionVersion,
     Set<String> capabilities,
     String username,
-    Client client
+    Client client,
+    long connectTimeout,
+    long readTimeout
   ) {
     this.id = id;
     this.domainUrl = domainUrl;
@@ -39,6 +43,8 @@ public class ConnectionImpl implements Connection {
     this.capabilities = capabilities;
     this.username = username;
     this.client = client;
+    this.connectTimeout = connectTimeout;
+    this.readTimeout = readTimeout;
   }
 
   @Override
@@ -79,6 +85,16 @@ public class ConnectionImpl implements Connection {
   @Override
   public Client getClient() {
     return client;
+  }
+
+  @Override
+  public long getConnectTimeout() {
+    return connectTimeout;
+  }
+
+  @Override
+  public long getReadTimeout() {
+    return readTimeout;
   }
 
   @Override

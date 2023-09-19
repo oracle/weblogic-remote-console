@@ -1,14 +1,15 @@
 /**
  * @license
- * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/pages', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger'],
-  function (oj, ko, HtmlUtils, Preferences, Runtime, MessageDisplaying, DataOperations, PageDataTypes, PageDefinitionUsedIfs, PageDefinitionPages, PageDefinitionUtils, ViewModelUtils, CbeTypes, CbeUtils, CoreUtils, CoreTypes, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/pages', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger'],
+  function (oj, ko, HtmlUtils, Preferences, Runtime, PerspectiveMemoryManager, MessageDisplaying, DataOperations, PageDataTypes, PageDefinitionUsedIfs, PageDefinitionPages, PageDefinitionUtils, ViewModelUtils, CbeTypes, CbeUtils, CoreUtils, CoreTypes, Logger) {
+
     /**
      *
      * @param viewParams
@@ -36,6 +37,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       // remaining instance-scope variables.
       this.viewParams = viewParams;
       this.viewParams.onRerender = rerenderCallback;
+      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(viewParams.perspective.id);
       this.beanTree = viewParams.beanTree;
       this.pageDefinitionPages = undefined;
       // Initialize instance-scope variable used as the
@@ -61,6 +63,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           this.pageDefinitionPages = new PageDefinitionPages(sections[0].properties, this.backingData.mode);
         }
       }
+      this.perspectiveMemory.removeAllWizardUsedIfData.call(this.perspectiveMemory);
     }
 
     function getBackingDataProperty(fieldName) {
@@ -273,6 +276,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       return result;
     }
 
+    function cacheRemovedUsedIfDataValue(fieldName, removed) {
+      for (const entry of removed) {
+        this.perspectiveMemory.upsertWizardUsedIfData.call(this.perspectiveMemory, fieldName, entry.name, entry.value);
+      }
+    }
+
+    function applyCachedRemovedUsedIfDataValues() {
+      for (const [key, tdvrdu] of Object.entries(this.backingData.attributes)) {
+        if (tdvrdu.type === 'conditional' && typeof tdvrdu.usedIf !== 'undefined') {
+          const cached = this.perspectiveMemory.getWizardUsedIfData.call(this.perspectiveMemory, key);
+          if (cached.length > 0) {
+            for (const entry of cached) {
+              this.rdjData.data[entry.property] = {set: true, value: entry.value};
+            }
+          }
+        }
+      }
+    }
+
     function setBackingDataAttributeValue(fieldName, fieldValue) {
       if (typeof this.backingData.attributes[fieldName] !== 'undefined' && this.backingData.attributes[fieldName].type === 'conditional') {
         // We're on an attribute with a "conditional" type, so
@@ -292,6 +314,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           // in this.backingData to facilitate allowing it, here.
           this.pageDefinitionPages.resetBackingDataFlowsAllowed();
           this.backingData.removed = result.removed;
+          cacheRemovedUsedIfDataValue.call(this, fieldName, result.removed);
         }
         // Invoke callback function associated with re-rendering,
         // passing in the pdjData, rdjData, flow direction and
@@ -586,6 +609,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         return {succeeded: pageState.succeeded, canBack: this.getCanBack(), canNext: this.getCanNext(), canFinish: this.getCanFinish()};
       },
 
+      clearCachedRemovedUsedIfDataValues: function () {
+        this.perspectiveMemory.removeAllWizardUsedIfData.call(this.perspectiveMemory);
+      },
+
       /**
        * Returns object used to create payload for HTTP POST to CBE
        * @param {[object]} properties Array of property objects for the create form.
@@ -594,6 +621,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
        * This will be null if not WDT.
        */
       getDataPayload: function (properties, fieldValues, fieldValuesFrom, scrubData) {
+        function processRemovedBackingData(backingData, name) {
+          if (typeof backingData.removed !== 'undefined') {
+            const replacer = this.getBackingDataAttributeReplacer(name);
+            if (typeof replacer !== 'undefined') {
+              // Found a replacer, so see if this.backingData.removed has
+              // an entry for it. This will only find something if the
+              // removed array item, happens to have a name that is
+              // currently in the properties we're looping through to
+              // create the new dataPayload. This is unlikely, but you
+              // never know with the usedIf stuff TM creates.
+              const entry = backingData.removed.find(entry => entry.name.endsWith(replacer));
+              if (typeof entry !== 'undefined') {
+                // Found a removed array item, so update the backing
+                // data value from it.
+                backingData.attributes[name].value = entry.value;
+              }
+            }
+          }
+        }
+
         if (this.isWizard()) {
           this.backingData.hasMultiFormData = false;
 
@@ -631,16 +678,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               this.backingData.hasMultiFormData = (property.type === 'fileContents');
             }
 
-            if (typeof this.backingData.removed !== 'undefined') {
-              // Get the value from removed
-              const replacer = this.getBackingDataAttributeReplacer(name);
-              if (typeof replacer !== 'undefined') {
-                const entry = this.backingData.removed.find(entry => entry.name.endsWith(replacer));
-                if (typeof entry !== 'undefined') {
-                  this.backingData.attributes[name].value = entry.value;
-                }
-              }
-            }
+            processRemovedBackingData.call(this, this.backingData, name);
 
             if (typeof this.backingData.attributes[name] !== 'undefined') {
               if (typeof this.backingData.attributes[name].value !== 'undefined') {
@@ -699,6 +737,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
         // Remove extraneous fields from results.data and return
         if (scrubData) dataPayload = this.scrubDataPayload(dataPayload);
+
+        applyCachedRemovedUsedIfDataValues.call(this);
 
         return {properties: properties, data: dataPayload};
       },

@@ -1,0 +1,41 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.TargetInfoMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Information that represents a Coherence cache configuration. '
+name: weblogic.management.configuration.CoherenceCacheConfigMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Return the cache configuration file being used by this CoherenceCacheConfigMBean. '
+  name: CacheConfigurationFile
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The JNDI name this resource will be bound to. '
+  name: JNDIName
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Unique identifier for this bean instance. '
+  key: true
+  name: Name
+  nullable: true
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

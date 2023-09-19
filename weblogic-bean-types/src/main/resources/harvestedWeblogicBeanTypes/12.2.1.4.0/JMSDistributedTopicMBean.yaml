@@ -1,0 +1,38 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.JMSDistributedDestinationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class represents a JMS distributed topic, which is comprised
+  of multiple physical JMS topics as members of a single distributed set of topics
+  that can be served by multiple WebLogic Server instances within a cluster. '
+name: weblogic.management.configuration.JMSDistributedTopicMBean
+properties:
+- array: true
+  creators:
+  - weblogic.management.configuration.JMSDistributedTopicMemberMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Get all the Members '
+  name: JMSDistributedTopicMembers
+  obsolete: 9.0.0.0
+  relationship: containment
+  supported: false
+  type: weblogic.management.configuration.JMSDistributedTopicMemberMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The members for this distributed topic.</p> '
+  name: Members
+  obsolete: 9.0.0.0
+  relationship: reference
+  supported: false
+  type: weblogic.management.configuration.JMSDistributedTopicMemberMBean
+  writable: true
+roles:
+  allowed:
+  - Deployer

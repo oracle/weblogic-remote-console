@@ -1,0 +1,38 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class is used for monitoring a Persistent Store Connection. '
+name: weblogic.management.runtime.PersistentStoreConnectionRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of create requests issued by this connection.</p> '
+  name: CreateCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of delete requests issued by this connection.</p> '
+  name: DeleteCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of objects contained in the connection.</p> '
+  name: ObjectCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of read requests issued by this connection, including
+    requests that occur during store initialization.</p> '
+  name: ReadCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of update requests issued by this connection.</p> '
+  name: UpdateCount
+  type: long

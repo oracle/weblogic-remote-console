@@ -120,20 +120,32 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
+  BaseBeanTypeDefImpl getDefaultSubTypeDefImpl() {
+    String dflt = getCustomizerSource().getDefaultSubType();
+    if (!StringUtils.isEmpty(dflt)) {
+      return getBeanRepoDefImpl().getTypeDefImpl(StringUtils.getLeafClassName(dflt));
+    }
+    return null;
+  }
+
+  @Override
   BaseBeanTypeDefImpl getSubTypeDefImpl(String subTypeDiscriminator) {
     if (isHomogeneous()) {
       return null;
     }
     if (getSubTypeDiscriminatorToSubTypeDefImplMap().containsKey(subTypeDiscriminator)) {
       return getSubTypeDiscriminatorToSubTypeDefImplMap().get(subTypeDiscriminator);
-    } else {
-      throw new AssertionError(
-        "Invalid subtype discriminator:"
-        + " " + subTypeDiscriminator
-        + " " + getTypeName()
-        + " " + getSubTypeDiscriminatorLegalValues()
-      );
     }
+    BaseBeanTypeDefImpl dflt = getDefaultSubTypeDefImpl();
+    if (dflt != null) {
+      return dflt;
+    }
+    throw new AssertionError(
+      "Invalid subtype discriminator:"
+      + " " + subTypeDiscriminator
+      + " " + getTypeName()
+      + " " + getSubTypeDiscriminatorLegalValues()
+    );
   }
 
   private void findKeyAndIdentityPropertyDefImpls() {
@@ -326,7 +338,7 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     BeanActionDefSource src = actionDefSources.getSource();
     BeanActionDefCustomizerSource customizerSrc = actionDefSources.getCustomizerSource();
     customizerSrc.setName(src.getName());
-    addActionDefImpl(new BeanActionDefImpl(this, parentPath, src, customizerSrc));
+    addActionDefImpl(createBeanActionDefImpl(parentPath, src, customizerSrc));
   }
 
   private Map<String,BaseBeanTypeDefImpl> getSubTypeDiscriminatorToSubTypeDefImplMap() {
@@ -345,11 +357,15 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     Map<String,BaseBeanTypeDefImpl> subTypesMap = new HashMap<>();
     // Add the immediate sub types
     for (SubTypeDefSource subTypeDefSource : getCustomizerSource().getSubTypes()) {
-      addImmediateSubType(subTypesMap, subTypeDefSource);
+      if (getBeanRepoDefImpl().supportsCapabilities(subTypeDefSource.getRequiredCapabilities())) {
+        addImmediateSubType(subTypesMap, subTypeDefSource);
+      }
     }
     // Add the immediate sub types' sub types
     for (SubTypeDefSource subTypeDefSource : getCustomizerSource().getSubTypes()) {
-      addImmediateSubTypeSubTypes(subTypesMap, subTypeDefSource);
+      if (getBeanRepoDefImpl().supportsCapabilities(subTypeDefSource.getRequiredCapabilities())) {
+        addImmediateSubTypeSubTypes(subTypesMap, subTypeDefSource);
+      }
     }
     if (!subTypesMap.isEmpty() && getHeterogeneousTypeSubTypeDiscriminatorPropertyDefImpl() == null) {
       throw configurationError(
