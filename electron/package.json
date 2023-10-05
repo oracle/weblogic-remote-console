@@ -103,7 +103,7 @@
     "properties-reader": "^2.2.0"
   },
   "devDependencies": {
-    "electron": "^25.8.1",
+    "electron": "^25.8.4",
     "electron-builder": "^24.6.4",
     "eslint": "^8.33.0"
   }
