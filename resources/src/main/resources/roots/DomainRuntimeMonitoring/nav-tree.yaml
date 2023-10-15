@@ -51,9 +51,13 @@ contents:
   type: group
   contents:
   - child: DomainRuntime.AggregatedApplicationRuntimes
+    label: Application Runtime Data
   - child: DomainRuntime.DeploymentManager.AppDeploymentRuntimes
+    label: Application Management
   - child: DomainRuntime.AggregatedLibraryRuntimes
+    label: Library Runtime Data
   - child: DomainRuntime.DeploymentManager.LibDeploymentRuntimes
+    label: Library Management
   - child: DomainRuntime.DeploymentManager.DeploymentProgressObjects
   - child: DomainRuntime.AggregatedWebServerRuntimes
   - label: Web Services
@@ -107,13 +111,16 @@ contents:
 - label: Diagnostics
   type: group
   contents:
+  - child: DomainRuntime.AggregatedWLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes
+    label: Logs and Archives
   - child: DomainRuntime.AggregatedSNMPAgentRuntime
     label: SNMP Agent Runtimes
   - child: DomainRuntime.SNMPAgentRuntime
     label: Domain SNMP Agent Runtime
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFArchiveRuntimes
+    label: Archive Runtimes
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFInstrumentationRuntimes
-  - child: DomainRuntime.AggregatedWLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes
+    label: Instrumentation Runtimes
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFDebugPatchesRuntime.DebugPatchTasks
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFControlRuntime.SystemResourceControls
 - child: DomainRuntime.RecentSearches

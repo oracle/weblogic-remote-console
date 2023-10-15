@@ -27,7 +27,7 @@ publishDir = "docs"
   disableInlineCopyToClipBoard = true
 
   # console rest extension version
-  console_rest_ext = "console-rest-ext-5.0.war"
+  console_rest_ext = "console-rest-ext-6.0.war"
 
 [markup.goldmark.renderer]
 unsafe= true

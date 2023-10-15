@@ -306,7 +306,8 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
       // The property lives directly on the bean for the page
     }
 
-    if (actionDefImpl.getTypeDefImpl().isDisableMBeanJavadoc()) {
+    if (actionDefImpl.getCustomizerSource().isDisableMBeanJavadoc()
+          || actionDefImpl.getTypeDefImpl().isDisableMBeanJavadoc()) {
       // This property's mbean type doesn't have external mbean javadoc available for it.
       return null;
     }

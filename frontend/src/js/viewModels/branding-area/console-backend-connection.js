@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -30,8 +30,8 @@ define(['ojs/ojcore', 'knockout', './console-backend-connection-verifier', 'wrc-
           }
           else {
             if (self.domainsConnectState === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
-              // Load dataproviders ViewModel module
-              viewParams.onDataProvidersEmpty('domain-connection', 'dataproviders');
+              // Load provider-management ViewModel module
+              viewParams.onDataProvidersEmpty('domain-connection', 'provider-management');
             }
           }
           // Set runtime property for CBE_DOMAIN_CONNECT_STATE to "disconnected"
@@ -56,8 +56,8 @@ define(['ojs/ojcore', 'knockout', './console-backend-connection-verifier', 'wrc-
       Context.getPageContext().getBusyContext().whenReady()
         .then(function () {
           Runtime.setProperty(Runtime.PropertyName.CFE_MODE, CoreTypes.Console.RuntimeMode.UNATTACHED.name);
-          // Load dataproviders ViewModel module
-          viewParams.onDataProvidersEmpty('domain-connection', 'dataproviders');
+          // Load provider-management ViewModel module
+          viewParams.onDataProvidersEmpty('domain-connection', 'provider-management');
         });
 
     }

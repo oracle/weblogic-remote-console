@@ -3,11 +3,17 @@
 
 package weblogic.remoteconsole.server.providers;
 
+import javax.json.JsonObject;
+
+import weblogic.remoteconsole.server.repo.InvocationContext;
+
 /**
  * The Provider interface for connections to the admin server
 */
 public interface AdminServerDataProvider extends ConnectionOrientedProvider {
   public String getURL();
+
+  public String getURLOrigin();
 
   public boolean isSsoTokenAvailable();
 
@@ -28,4 +34,10 @@ public interface AdminServerDataProvider extends ConnectionOrientedProvider {
   public void setInsecureConnection(boolean value);
 
   public boolean isInsecureConnection();
+
+  public void setProxyOverride(String value);
+
+  public String getProxyOverride();
+
+  public JsonObject getStatus(InvocationContext ic);
 }

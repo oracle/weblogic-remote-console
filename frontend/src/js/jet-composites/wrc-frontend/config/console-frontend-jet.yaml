@@ -1,11 +1,12 @@
 name: WebLogic Remote Console
-version: '2.4.5'
+version: '2.4.7'
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
   version: '1.0'
   baseUrl: 'http://localhost:8012'
   pollingMillis: 60000
   retryAttempts: 5
+  docs: 'https://oracle.github.io/weblogic-remote-console/'
   services:
     - id: configuration
       path: /configuration
@@ -40,13 +41,7 @@ console-backend:
       path: /providers
     - id: token
       path: /token
-settings:
-  logging:
-    defaultLevel: ERROR
-  autoSync:
-    minimumSecs: 30
-  autoDownloadTimer:
-    minimumSecs: 1
+preferences:
   themes:
     dark:
       - '#413e3c'
@@ -54,6 +49,44 @@ settings:
     light:
       - '#dcd6d1'
       - '#b6a29a'
+  shoppingcart:
+    location: 'content-area-body'
+  recentPages:
+    location: 'content-area-body'
+  providerManagement:
+    location: kiosk
+    newModel:
+      domain:
+        fileContents: |
+          domainInfo:
+            AdminUserName: '@@PROP:ADMIN_USERNAME@@'
+            AdminPassword: '@@PROP:ADMIN_PASSWORD@@'
+          topology:
+            Server:
+              AdminServer:
+      sparse:
+        fileContents: |
+          domainInfo:
+  startup:
+    task:
+      default: choose
+      #      project:
+      #        name: "(Unnamed Project)"
+      #        isDefault: true
+      #        dataProviders:
+      #          - name: Default AdminServer Connection
+      #            type: adminserver
+      #            username: weblogic
+      #            url: "http://localhost:7001"
+      # Legal values are: 'use-dialog', 'use-cards'
+      chooser: 'use-dialog'
+settings:
+  logging:
+    defaultLevel: ERROR
+  autoSync:
+    minimumSecs: 30
+  autoDownloadTimer:
+    minimumSecs: 1
   sso:
     maxPollCount: 1800
     domainLoginUri: ''
@@ -96,26 +129,15 @@ settings:
       iconFile: action-export-3d-icon-blk_24x24
     - id: importMessages
       iconFile: action-import-3d-icon-blk_24x24
-  projectManagement:
-    startup:
-      task: choose
-    #      project:
-    #        name: "(Unnamed Project)"
-    #        isDefault: true
-    #        dataProviders:
-    #          - name: Default AdminServer Connection
-    #            type: adminserver
-    #            username: weblogic
-    #            url: "http://localhost:7001"
-    newModel:
-      domain:
-        fileContents: |
-          domainInfo:
-            AdminUserName: '@@PROP:ADMIN_USERNAME@@'
-            AdminPassword: '@@PROP:ADMIN_PASSWORD@@'
-          topology:
-            Server:
-              AdminServer:
-      sparse:
-        fileContents: |
-          domainInfo:
+    - id: edit
+      iconFile: action-edit-icon-blk_24x24
+    - id: redeploy
+      iconFile: action-redeploy-icon-blk_24x24
+    - id: update
+      iconFile: action-upload-icon-blk_24x24
+    - id: createPlan
+      iconFile: action-create-icon-blk_24x24
+    - id: refreshCache
+      iconFile: action-refresh-icon-blk_24x24
+    - id: purgeCompletedDeploymentProgressObjects
+      iconFile: delete-icon-blk_24x24

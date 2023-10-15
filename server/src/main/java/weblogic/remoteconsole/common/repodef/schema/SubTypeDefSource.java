@@ -1,7 +1,9 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
+
+import java.util.List;
 
 /**
  * This POJO mirrors the yaml source file format for information about
@@ -11,6 +13,7 @@ package weblogic.remoteconsole.common.repodef.schema;
 public class SubTypeDefSource {
   private StringValue value = new StringValue();
   private StringValue type = new StringValue();
+  private ListValue<String> requiredCapabilities = new ListValue<>();
 
   // The value of the subTypeDiscrimintorProperty on the bean instance that
   // indicates that the instance is of this sub type.
@@ -29,5 +32,14 @@ public class SubTypeDefSource {
 
   public void setType(String val) {
     type.setValue(val);
+  }
+
+  // The bean repo capabilities that are required for this sub type to be present
+  public List<String> getRequiredCapabilities() {
+    return requiredCapabilities.getValue();
+  }
+  
+  public void setRequiredCapabilities(List<String> val) {
+    requiredCapabilities.setValue(val);
   }
 }

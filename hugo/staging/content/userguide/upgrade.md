@@ -14,8 +14,6 @@ The WebLogic Remote Console *extension* is periodically updated. Check if there'
 Delete and replace any previous versions of the extension. Keeping multiple versions of the extension installed can lead to unexpected behavior.
 {{% /notice %}}
 
-If you use `config.json` to customize settings of the WebLogic Remote Console, consider backing up `config.json` in a separate location to easily restore it following the upgrade.
-
 1. Open **Help** > **Check for WebLogic Remote Console Updates**.
 1. Select **Download and install it** to download the update immediately. The update runs in the background so you can continue working in the WebLogic Remote Console with no interruption. The next time the console is launched, the updates will apply. 
 

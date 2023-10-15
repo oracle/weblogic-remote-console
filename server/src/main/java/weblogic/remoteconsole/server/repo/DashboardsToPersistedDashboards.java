@@ -112,10 +112,11 @@ class DashboardsToPersistedDashboards {
     PersistedPropertyFilter persisted =
       new PersistedPropertyFilter();
     PagePropertyDef sourceDef = property.getPropertyDef().getSourcePropertyDef();
+    boolean isEnum = !sourceDef.getLegalValueDefs().isEmpty();
     if (sourceDef.isString() || sourceDef.isHealthState()) {
-      persisted = stringPropertyToPersistedData(criteria, value.asString().getValue(), persisted);
+      persisted = stringPropertyToPersistedData(isEnum, criteria, value.asString().getValue(), persisted);
     } else if (sourceDef.isInt()) {
-      persisted = numberPropertyToPersistedData(criteria, value.asInt().getValue(), persisted);
+      persisted = numberPropertyToPersistedData(isEnum, criteria, value.asInt().getValue(), persisted);
     } else if (sourceDef.isLong()) {
       persisted = numberPropertyToPersistedData(criteria, value.asLong().getValue(), persisted);
     } else if (sourceDef.isDouble()) {
@@ -150,6 +151,7 @@ class DashboardsToPersistedDashboards {
 
   // Convert an in-memory custom filtering dashboard string property to its persistent form.
   private static PersistedPropertyFilter stringPropertyToPersistedData(
+    boolean isEnum,
     String criteria,
     String value,
     PersistedPropertyFilter persisted
@@ -158,7 +160,7 @@ class DashboardsToPersistedDashboards {
       persisted.setEquals(value);
     } else if (CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
       persisted.setNotEquals(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
       persisted.setContains(value);
     } else {
       return null;
@@ -166,8 +168,18 @@ class DashboardsToPersistedDashboards {
     return persisted;
   }
 
+  // Convert an in-memory custom filtering dashboard non-enum number (int/long/double) property to its persistent form.
+  private static PersistedPropertyFilter numberPropertyToPersistedData(
+    String criteria,
+    Object value,
+    PersistedPropertyFilter persisted
+  ) {
+    return numberPropertyToPersistedData(false, criteria, value, persisted);
+  }
+
   // Convert an in-memory custom filtering dashboard number (int/long/double) property to its persistent form.
   private static PersistedPropertyFilter numberPropertyToPersistedData(
+    boolean isEnum,
     String criteria,
     Object value,
     PersistedPropertyFilter persisted
@@ -176,13 +188,13 @@ class DashboardsToPersistedDashboards {
       persisted.setEquals(value);
     } else if (CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
       persisted.setNotEquals(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN.equals(criteria)) {
       persisted.setLessThan(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS.equals(criteria)) {
       persisted.setLessThanOrEquals(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN.equals(criteria)) {
       persisted.setGreaterThan(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS.equals(criteria)) {
+    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS.equals(criteria)) {
       persisted.setGreaterThanOrEquals(value);
     } else {
       return null;

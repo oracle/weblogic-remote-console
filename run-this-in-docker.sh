@@ -3,6 +3,10 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 do_docker_pull() {
+  if [ -n "$CONSOLE_DONT_PULL" ]
+  then
+    return
+  fi
   for i in 1 2 3
   do
     if docker pull $1
@@ -26,7 +30,7 @@ cleanup() {
 set -e
 case "$1" in
 builder|runner)
-  IMAGE=${CONSOLE_BUILD_IMAGE:-wls-docker-dev-local.dockerhub-phx.oci.oraclecorp.com/remote-console-build:2.4.2}
+  IMAGE=${CONSOLE_BUILD_IMAGE:-wls-docker-dev-local.dockerhub-phx.oci.oraclecorp.com/remote-console-build:2.4.6plus}
   ;;
 weblogic)
   IMAGE=${CONSOLE_WEBLOGIC_IMAGE:-container-registry.oracle.com/middleware/weblogic:14.1.1.0}
@@ -53,6 +57,7 @@ set -e
 set -x
 umask 000
 $PREP_COMMANDS
+export DOWNLOAD_REST_EXTENSION_URL_DIR=$DOWNLOAD_REST_EXTENSION_URL_DIR
 export DOWNLOAD_JAVA_URL=$DOWNLOAD_JAVA_URL
 export DOWNLOAD_NODE_URL=$DOWNLOAD_NODE_URL
 export NPM_PREP_COMMANDS="$NPM_PREP_COMMANDS"
@@ -72,7 +77,7 @@ cd /build
 $*
 !
 chmod 777 $tmp
-trap "cleanup" EXIT
+# trap "cleanup" EXIT
 
 {
   echo "<settings>"

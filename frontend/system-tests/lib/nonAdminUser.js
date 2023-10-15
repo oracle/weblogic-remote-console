@@ -97,7 +97,7 @@ module.exports = function (driver, file) {
             await driver.findElement(By.id("SecurityUsersUserConfigGroupsPortletuserGeneralFormgroupsAdd")).click()
             await driver.sleep(1200);
             console.log("Click Save button");
-            await driver.findElement(By.xpath("(//button[@name=\'Save\'])[2]")).click();
+            await driver.findElement(By.xpath("(//button[@name='Save'])[2]")).click();
             await driver.sleep(4800);
         },
 
@@ -113,17 +113,21 @@ module.exports = function (driver, file) {
 
         goToServerPage: async function (driver) {
             console.log("Click Home Image link");
-            await driver.sleep(1200);
-            await driver.findElement(By.xpath("//span[@class='cfe-toolbar-button-label' and text()='Home']")).click();
+            await driver.sleep(2400);
+            await driver.findElement(By.xpath("//span[starts-with(@id,'home')]")).click();
+            await driver.sleep(2400);
+            //FIXME
+            console.log("Click Home Image link again");
+            await driver.findElement(By.xpath("//span[starts-with(@id,'home')]")).click();
+            await driver.sleep(2400);
             console.log("Click Config View Tree");
-            //await driver.findElement(By.xpath("//div[@id=\'view\']/img")).click();
-            await driver.findElement(By.xpath("//div[@id='view-site-panel-card']/img")).click();
-            await driver.sleep(1200);
+            await driver.findElement(By.xpath("//div[@id='view-site-panel-card']")).click();
+            await driver.sleep(2400);
             console.log("Click Environment Navtree link");
-            await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
-            await driver.sleep(1200);
+            await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
+            await driver.sleep(2400);
             console.log("Click Servers Navtree link");
-            await driver.findElement(By.xpath("//span[contains(.,\'Servers\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Servers')]")).click();
             await driver.sleep(1200);
         },
 
@@ -131,7 +135,6 @@ module.exports = function (driver, file) {
             console.log("Click Home Image link");
             await driver.sleep(1200);
             await driver.findElement(By.xpath("//span[@class='cfe-toolbar-button-label' and text()='Home']")).click();
-            //await driver.findElement(By.xpath("//span[@id=\'home_oj50|text\']/span")).click();
             console.log("Click Config View Tree");
             await driver.findElement(By.xpath("//img[@alt=\'"+landingImageName+"\']")).click();
             await driver.sleep(1200);
@@ -164,9 +167,9 @@ module.exports = function (driver, file) {
                     await driver.findElement(By.xpath("//oj-menu-button/button/div/span[2]")).click();
                     await driver.sleep(1200);
                     console.log("Select Status Monitoring Tree");
-                    await driver.findElement(By.xpath("//span[contains(.,\'Runtime Data - Monitoring Tree\')]")).click();
+                    await driver.findElement(By.xpath("//span[contains(.,'Runtime Data - Monitoring Tree')]")).click();
                     await driver.sleep(1200);
-                    driver.findElements(By.xpath("//img[@alt=\'start\']")).then((elements) => {
+                    driver.findElements(By.xpath("//img[@alt='start']")).then((elements) => {
                         if (elements.length > 0) {
                             console.log("Test FAIL");
                             throw new Error("User: "+ userName+ " must not see SSL restart server button - Validation FAIL");

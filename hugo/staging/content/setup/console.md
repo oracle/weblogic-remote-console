@@ -13,11 +13,11 @@ While the WebLogic Remote Console shares many features with the Administration C
 
 ## Basic layout
 
-![WebLogic Remote Console](/weblogic-remote-console/images/wrc-console.png)
+<!-- ![WebLogic Remote Console](/weblogic-remote-console/images/wrc-console.png) -->
 
 The WebLogic Remote Console presents a simple user interface that varies slightly across different providers. Broadly, it's arranged into the following areas:
 
-* **Kiosk** - manage the details of your current [project]({{< relref "userguide/projects" >}}), its [providers]({{< relref "userguide/providers" >}}) and their connection details. You can also import and export project files here. On Administration Server providers, the Kiosk also includes the Shopping Cart which contains the Change Manager, as well as any changes you’ve made to the domain configuration. You can commit (or discard) changes directly from the Shopping Cart. 
+* **Providers drawer** - manage the details of your current [project]({{< relref "userguide/projects" >}}), its [providers]({{< relref "userguide/providers" >}}) and their connection details. You can also import and export project files here. 
     
     If you have the console extension, `{{<console_rest_ext>}}`, installed, you can see the specific pending changes for your domain.
 
@@ -34,7 +34,7 @@ You can see the connection status of the current provider in the upper right cor
 * WDT model files, WDT composite models, and property lists are always **Yellow** (offline).
 {{% /notice %}}
 
-The WebLogic Remote Console automatically detects and matches the language of your operating system. In the browser-based application however, this setting is overridden by the language settings of your browser.
+The WebLogic Remote Console automatically detects and matches the language of your operating system.
 
 ## Perspectives {id="perspectives"}
 
@@ -85,6 +85,14 @@ In the WebLogic Remote Console, you can travel through the structure of a WebLog
 * **Breadcrumbs** - review the hierarchical path of your current page and jump back or across to a related page in a different perspective. For example, from Domain/Servers in the Edit Tree, you can jump to Environment/Servers in the Monitoring Tree from the breadcrumb trail.
 
 * **Search** - enter a search term in the bar and see all the beans that match your search term. You can find previous searches in the Recent Searches node at the bottom of the Navigation Tree. Searches and search history are only performed within a perspective and provider.
+
+## Modify console preferences
+
+You can change the behavior of the WebLogic Remote Console to suit your needs.
+
+1. In the WebLogic Remote Console, go to **File** > **Preferences**. (**WebLogic Remote Console** > **Application Preferences** on macOS).
+1. Choose a section tab and make your changes as needed.
+1. Close the **Preferences** dialog box to apply your changes.
 
 ## Tool bar icons {id="toolbar_icons"}
 
@@ -155,7 +163,7 @@ These files are located in the following directories:
 | File name | Purpose |
 |---|---|
 |`auto-prefs.json`| Describes the user interface of the WebLogic Remote Console, including its dimensions, projects and providers. |
-|`config.json`| Describes the connection settings for the WebLogic Remote Console. You will need to create this file manually. See [Customize connection settings]({{< relref "userguide/advanced-settings" >}}) for more information. |
+|`config.json`| Describes settings for the WebLogic Remote Console. We do not recommend modifying this file; use the Settings dialog box to edit settings instead. See [Customize settings]({{< relref "userguide/advanced-settings" >}}) for more information. |
 |`dashboards.json`| Records the details of existing dashboards. See [Generate dashboards]({{< relref "userguide/dashboards" >}}) for more information. |
 |`out.log`| Collects log entries for the current session of the WebLogic Remote Console. At the start of each session, log entries from the previous session are moved to a new file marked by date: `out-yyyy-mm-dd`. See [Check log files]({{< relref "userguide/logging" >}}) for more information. |
 |`recent-searches.json`| Lists the search terms for any searches that you've executed. See [Search]({{< relref "setup/console#nav_dom" >}}) for more information. |

@@ -56,6 +56,15 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
       }
     }
 
+    function clearDomainStatusTimer(dataProvider) {
+      if (CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus) &&
+          CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus.timerId)
+      ) {
+        clearInterval(dataProvider.domainStatus.timerId);
+        delete dataProvider.domainStatus.timerId;
+      }
+    }
+
     return {
       // FortifyIssueSuppression(73D8764C3FE4B3A7E67ABBE65E55FFA5) Password Management: Password in Comment
       // Not a password, just an argument
@@ -115,16 +124,44 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
        * @returns {Promise<{body: {data?: *, messages: [*]}} |{failureType: string, failureReason: *}>}
        */
       activateAdminServerConnection: async function(dataProvider) {
+        function isDeactivated(dataProvider) {
+          // Initialize value of return variable based on whether
+          // dataProvider parameter is undefined or null
+          let rtnval = (CoreUtils.isUndefinedOrNull(dataProvider));
+          if (!rtnval) {
+            // dataProvider wasn't undefined or null. so set value of
+            // return variable based on whether the dataProvider is
+            // missing a connectivity property, or the value of the
+            // lastConnectionAttemptSuccessful property is false. The
+            // former will be the case when the CFE side creates the
+            // dataProvider, which is a process that includes the CFE
+            // generating and assigning a value to id property of the
+            // dataProvider. This means you cannot use the presence
+            // or absence of id property to determine if a dataProvider
+            // has been deactivated, because there will always be an
+            // id...even in the case where the CBE session hasn't been
+            // established yet, much less deactivated.
+            rtnval = (CoreUtils.isUndefinedOrNull(dataProvider.connectivity) || !dataProvider.lastConnectionAttemptSuccessful);
+          }
+          return rtnval;
+        }
+
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
-          const isDeactivatedDataProvider = CoreUtils.isUndefinedOrNull(this.getDataProviderById(dataProvider.id));
-          if (isDeactivatedDataProvider) {
+          // Cancel domain status timer that is still polling for
+          // the existing dataProvider.id.
+          this.cancelDomainStatusTimer(dataProvider);
+          if (!isDeactivated(dataProvider)) {
             // Add entry back into the dataproviders map
             dataProvider = this.createAdminServerConnection(this.getEntryFromDataProvider(dataProvider));
           }
           const reply = await DomainConnectionManager.createConnection(dataProvider);
-          if (isDeactivatedDataProvider) {
+          if (reply.transport.status === 200) {
+            // Connection was successfully created, so update the
+            // id and name properties in the reply, to the ones
+            // from the dataProvider parameter.
             reply.body.data.id = dataProvider.id;
             reply.body.data.name = dataProvider.name;
+            // Populate dataProvider from updated reply.body.data
             dataProvider.populateFromResponse(reply.body.data);
           }
           return Promise.resolve(reply);
@@ -922,8 +959,57 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
        */
       cancelDataProviderSsoTimer: function (dataProvider) {
         clearRunningTimer(dataProvider, true);
-      }
+      },
+      /**
+       *
+       * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+       */
+      getDataProviderHelp: function () {
+        const result = {succeeded: false};
+        return DataOperations.providers.help()
+          .then(reply => {
+            result.succeeded = true;
+            result['data'] = reply.body.data;
+            return Promise.resolve(result);
+          })
+          .catch(response => {
+            result['failure'] = response;
+            return Promise.reject(result);
+          });
+      },
 
+      startDataProviderStatusPolling: function (dataProvider, onTimerElapsedCallback) {
+        // Start the timer with the specified timeout
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider) &&
+          CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus) &&
+          CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus.refreshSeconds)
+        ) {
+          // Clear the timer
+          clearDomainStatusTimer(dataProvider);
+
+          // Guard against wrong data type being assigned
+          // to dataProvider.domainStatus.refreshSeconds
+          if (typeof dataProvider.domainStatus.refreshSeconds !== 'number') {
+            dataProvider.domainStatus.refreshSeconds = 0;
+          }
+
+          // Compute delay milliseconds for timer
+          const triggerInterval = (dataProvider.domainStatus.refreshSeconds * 1000);
+
+          if (triggerInterval > 0) {
+            onTimerElapsedCallback(dataProvider);
+            dataProvider.domainStatus['timerId'] = setInterval(onTimerElapsedCallback, triggerInterval, dataProvider);
+          }
+        }
+      },
+
+      cancelDomainStatusTimer: function (dataProvider) {
+        clearDomainStatusTimer(dataProvider);
+      },
+
+      pollDomainStatus: function (dataProvider) {
+        return DataOperations.providers.domainStatus(dataProvider);
+      }
     };
   }
 );

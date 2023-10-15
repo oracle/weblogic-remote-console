@@ -1,4 +1,4 @@
-# Copyright 2020, 2021, Oracle and/or its affiliates.
+# Copyright 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Use this page to define the common configuration of this Oracle Identity Cloud Integrator Provider.</p>
@@ -9,6 +9,7 @@ properties:
 - name: Version
 - name: ControlFlag
 - name: ActiveTypes
+- name: SupportedTypes
 - name: Base64DecodingRequired
 helpTopics:
 - label: "Configuring the WebLogic Authentication Provider"

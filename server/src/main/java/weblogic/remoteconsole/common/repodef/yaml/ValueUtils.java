@@ -1,10 +1,11 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BooleanValue;
@@ -56,6 +57,10 @@ class ValueUtils {
         values.add(createValue(obj));
       }
       return new ArrayValue(values);
+    }
+    if (object instanceof Map && ((Map)object).isEmpty()) {
+      // Probably an empty java.util.Properties e.g, CrossTenantAuthenticatorMBean.IdentityStoreProperties
+      return null; // Can't map the default value - skip it
     }
     throw new AssertionError("Unsupported type: " + object.getClass() + " " + object);
   }

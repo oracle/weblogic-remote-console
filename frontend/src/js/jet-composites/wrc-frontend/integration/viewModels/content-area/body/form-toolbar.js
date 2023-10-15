@@ -138,15 +138,17 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
       this.sliceReadOnly = ko.observable();
 
       this.connected = function () {
+        function setIsReadOnlyRuntimeProperty(pdjData) {
+          const isReadOnly = !pdjData.createForm && (pdjData.sliceForm?.readOnly === true || pdjData.sliceTable !== undefined);
+          self.sliceReadOnly(isReadOnly);
+          Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !['configuration','modeling','properties','security'].includes(self.perspective.id));
+          self.readonly(Runtime.isReadOnly());
+        }
+
         const pdjData = viewParams.parentRouter.data.pdjData();
 
+        setIsReadOnlyRuntimeProperty(pdjData);
         const renderToolbarButtonsEventType = (!pdjData.createForm) ? 'sync' : 'create';
-
-        const isReadOnly = !pdjData.createForm && (pdjData.sliceForm?.readOnly === true || pdjData.sliceTable !== undefined);
-        self.sliceReadOnly(isReadOnly);
-
-        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !['configuration','modeling','properties','security'].includes(self.perspective.id));
-        self.readonly(Runtime.isReadOnly());
 
         const label = (ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write');
         self.i18n.buttons.write.label(oj.Translations.getTranslatedString(`wrc-common.buttons.${label}.label`));
@@ -176,7 +178,7 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
         binding = viewParams.signaling.nonwritableChanged.add((newRO) => {
           self.sliceReadOnly(newRO);
           if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name &&
-              self.perspective.id !== 'modeling'
+            self.perspective.id !== 'modeling'
           ) {
             self.i18n.buttons.save.visible(!newRO);
           }
@@ -196,20 +198,33 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager) => {
-          changeManager.supportsChanges = self.changeManager().supportsChanges;
-          if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
-            ChangeManager.putMostRecent(changeManager);
-            self.changeManager(changeManager);
-            if (eventType === 'discard') viewParams.onShoppingCartDiscarded(self.toolbarButton);
-            if (eventType === 'commit') viewParams.onShoppingCartCommitted(self.toolbarButton);
+          //we want to get the latest info from ChangeManager so that everything is in sync when we first
+          //bring up the form.
+          if (eventType === 'sync') {
+            ChangeManager.getData()
+            .then(data => {
+              changeManager.supportsChanges = data.changeManager.supportsChanges;
+              changeManager.isLockOwner = data.changeManager.isLockOwner;
+              changeManager.hasChanges = data.changeManager.hasChanges;
+              ChangeManager.putMostRecent(changeManager);
+              self.changeManager(changeManager);
+            });
+          }  else {
+            changeManager.supportsChanges = self.changeManager().supportsChanges;
+            if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
+              ChangeManager.putMostRecent(changeManager);
+              self.changeManager(changeManager);
+              if (eventType === 'discard') viewParams.onShoppingCartDiscarded(self.toolbarButton);
+              if (eventType === 'commit') viewParams.onShoppingCartCommitted(self.toolbarButton);
+            }
+
+            if (source === 'shoppingcart') {
+              viewParams.signaling.ancillaryContentItemCleared.dispatch(source);
+            }
           }
         });
 
         self.signalBindings.push(binding);
-
-        // The Kiosk will more than likely just be in the
-        // way from here on out, so go ahead and hide it.
-        viewParams.signaling.ancillaryContentAreaToggled.dispatch('form-toolbar', false);
 
         // The establishment of this subscription will happen
         // BEFORE the Promise for ChangeManager.getLockState()
@@ -253,42 +268,33 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
       };
 
       this.shoppingCartMenuClickListener = function (event) {
-        if (event.target.value === 'view') {
-          viewParams.signaling.tabStripTabSelected.dispatch('form-toolbar', ChangeManager.Entity.SHOPPING_CART.name, true);
+        const value = event.target.value;
+        if (value === 'view') {
+          viewParams.signaling.ancillaryContentItemSelected.dispatch('form-toolbar', ChangeManager.Entity.SHOPPING_CART.name);
         }
         else {
-          switch (event.target.value){
+          switch (value){
             case 'commit':
-              viewParams.onUnsavedChangesDecision()
-                .then(function (proceed) {
-                  if (proceed) {
-                    ViewModelUtils.setPreloaderVisibility(true);
-                    ChangeManager.commitChanges()
-                      .then((changeManager) => {
-                        self.changeManager(changeManager);
-                        viewParams.signaling.tabStripTabSelected.dispatch('form-toolbar', ChangeManager.Entity.SHOPPING_CART.name, false);
-                        // clear treenav selection
-                        viewParams.signaling.navtreeSelectionCleared.dispatch();
-                        viewParams.onShoppingCartCommitted(self.toolbarButton);
-                      })
-                      .catch(response => {
-                        ViewModelUtils.failureResponseDefaultHandling(response);
-                      })
-                      .finally(() => {
-                        ViewModelUtils.setPreloaderVisibility(false);
-                      });
-                  }
-                }.bind(viewParams));
+              ViewModelUtils.setPreloaderVisibility(true);
+              ChangeManager.commitChanges()
+                .then(value => {
+                  self.changeManager(value);
+                  viewParams.signaling.ancillaryContentItemCleared.dispatch('shoppingcart-launcher');
+                })
+                .catch(response => {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                })
+                .finally(() => {
+                  ViewModelUtils.setPreloaderVisibility(false);
+                });
               break;
             case 'discard':
               ViewModelUtils.setPreloaderVisibility(true);
               ChangeManager.discardChanges()
                 .then((changeManager) => {
                   self.changeManager(changeManager);
-                  viewParams.signaling.tabStripTabSelected.dispatch('form-toolbar', ChangeManager.Entity.SHOPPING_CART.name, false);
-                  // clear treenav selection
-                  viewParams.signaling.navtreeSelectionCleared.dispatch();
-                  viewParams.onShoppingCartDiscarded(self.toolbarButton);
+                  viewParams.signaling.ancillaryContentItemCleared.dispatch('shoppingcart-launcher');
+                  viewParams.onShoppingCartDiscarded();
                 })
                 .catch(response => {
                   ViewModelUtils.failureResponseDefaultHandling(response);
@@ -452,8 +458,7 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
       function showBlankForm(){
         const ele = document.getElementById('cfe-form');
         if (ele !== null) ele.style.display = 'none';
-        const eleTabs = document.getElementById('cfe-form-tabstrip-container');
-        if (eleTabs !== null) eleTabs.style.display = 'none';
+        viewParams.onBlankFormDisplayed();
       }
 
       function allowTabStrip(){
@@ -510,7 +515,7 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
         const helpVisible = !self.showHelp();
         self.showHelp(helpVisible);
         toggleToolbarButtonsVisibility(helpVisible);
-        viewParams.onHelpPageToggled(helpVisible, self.showBeanPathHistory());
+        viewParams.onHelpPageToggled(helpVisible);
       };
 
       this.syncClick = function (event) {
@@ -603,8 +608,6 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
           toggleToolbarIconsVisibility(true);
           self.i18n.buttons.dashboard.visible(true);
           self.sliceReadOnly(false);
-          const eleTabs = document.getElementById('cfe-form-tabstrip-container');
-          if (eleTabs !== null) eleTabs.style.display = 'inline-flex';
         }
       };
 
@@ -643,14 +646,12 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
           const withHistoryVisible = viewParams.onBeanPathHistoryToggled(false);
           self.showBeanPathHistory(withHistoryVisible);
         }
-        const eleTabs = document.getElementById('cfe-form-tabstrip-container');
-        if (eleTabs !== null) eleTabs.style.display = 'none';
         showDashboardToolbarButtons('create');
         self.i18n.buttons.dashboard.visible(false);
         self.sliceReadOnly(false);
         viewParams.onDashboardButtonClicked(event);
       };
-      
+
       this.onSave = ko.observable(
         function (event) {
           // event.target.id;
@@ -658,7 +659,7 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
           // clear treenav selection
           viewParams.signaling.navtreeSelectionCleared.dispatch();
           self.changeManager(ChangeManager.getMostRecent());
-          viewParams.onSave('update');
+          viewParams.onSaveButtonClicked('update');
         }
       );
 

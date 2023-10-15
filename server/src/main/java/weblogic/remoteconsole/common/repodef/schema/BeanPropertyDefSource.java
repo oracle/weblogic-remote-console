@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -23,7 +23,6 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   private BooleanValue encrypted = new BooleanValue();
   private BooleanValue sensitive = new BooleanValue();
   private BooleanValue transientVar = new BooleanValue();
-  private ListValue<Object> legalValues = new ListValue<>();
   private ListValue<String> creators = new ListValue<>();
   private StringValue relationship = new StringValue();
   private StringValue deprecated = new StringValue();
@@ -132,21 +131,6 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
 
   public void setTransient(boolean val) {
     transientVar.setValue(val);
-  }
-
-  // The list of legal values for this property.
-  // The values must match the property's type.
-  public List<Object> getLegalValues() {
-    return legalValues.getValue();
-  }
-
-  public void setLegalValues(List<Object> val) {
-    ScalarUtils.validateScalars(val);
-    legalValues.setValue(val);
-  }
-
-  public void addLegalValue(Object val) {
-    legalValues.add(val);
   }
 
   // WLS specific - only used to determine if this child bean is create-able

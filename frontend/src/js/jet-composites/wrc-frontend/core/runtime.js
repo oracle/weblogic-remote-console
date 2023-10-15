@@ -25,7 +25,8 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 		properties['console-backend.domain'] = '';
 		properties['console-backend.domainConnectState'] = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
 		properties['console-backend.weblogic.username'] = '';
-		properties['settings.themes'] = 'dark';
+		properties['preferences.themes'] = 'dark';
+		properties['preferences.startup.task.chooser'] = 'use-dialog';
 
 		YamlParser.parse(ConfigFileContents)
 			.then(data => {
@@ -37,16 +38,21 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				properties['console-frontend.logging.defaultLevel'] = config['settings']['logging']['defaultLevel'];
 				properties['console-backend.pollingMillis'] = config['console-backend']['pollingMillis'];
 				properties['console-backend.retryAttempts'] = config['console-backend']['retryAttempts'];
+				properties['console-backend.docs'] = config['console-backend']['docs'];
 				properties['settings.autoSync.minimumSecs'] = config['settings']['autoSync']['minimumSecs'];
 				properties['settings.autoDownloadTimer.minimumSecs'] = config['settings']['autoDownloadTimer']['minimumSecs'];
 				properties['settings.sso.maxPollCount'] = config['settings']['sso']['maxPollCount'];
 				properties['settings.sso.domainLoginUri'] = config['settings']['sso']['domainLoginUri'];
 				properties['settings.actions'] = config['settings']['actions'];
-				properties['settings.projectManagement.location'] = config['settings']['projectManagement']['location'];
-				properties['settings.projectManagement.startup.task'] = config['settings']['projectManagement']['startup']['task'];
-				properties['settings.projectManagement.startup.project'] = config['settings']['projectManagement']['startup']['project'];
-				properties['settings.projectManagement.newModel.domain.fileContents'] = config['settings']['projectManagement']['newModel']['domain']['fileContents'];
-				properties['settings.projectManagement.newModel.sparse.fileContents'] = config['settings']['projectManagement']['newModel']['sparse']['fileContents'];
+				properties['settings.polling'] = config['settings']['polling'];
+				properties['preferences.providerManagement.location'] = config['preferences']['providerManagement']['location'];
+				properties['preferences.providerManagement.newModel.domain.fileContents'] = config['preferences']['providerManagement']['newModel']['domain']['fileContents'];
+				properties['preferences.providerManagement.newModel.sparse.fileContents'] = config['preferences']['providerManagement']['newModel']['sparse']['fileContents'];
+				properties['preferences.startup.task.default'] = config['preferences']['startup']['task']['default'];
+				properties['preferences.startup.task.chooser'] = config['preferences']['startup']['task']['chooser'];
+				properties['preferences.startup.project'] = config['preferences']['startup']['project'];
+				properties['preferences.shoppingcart.location'] = config['preferences']['shoppingcart']['location'];
+				properties['preferences.recentPages.location'] = config['preferences']['recentPages']['location'];
 			})
 			.catch(err => {
 				Logger.error(err);
@@ -92,17 +98,22 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				CFE_AUTO_DOWNLOAD_TIMER_SECS: {name: 'settings.autoDownloadTimer.minimumSecs'},
 				CFE_SSO_MAX_POLL_COUNT: {name: 'settings.sso.maxPollCount'},
 				CFE_SSO_DOMAIN_LOGIN_URI: {name: 'settings.sso.domainLoginUri'},
-				CFE_PROJECT_MANAGEMENT_LOCATION: {name: 'settings.projectManagement.location'},
+				CFE_PROJECT_MANAGEMENT_LOCATION: {name: 'preferences.providerManagement.location'},
 				CFE_IS_READONLY: {name: 'console-frontend.isReadOnly'},
-				CFE_CURRENT_THEME: {name: 'settings.themes'},
-				CFE_STARTUP_PROJECT: {name: 'settings.projectManagement.startup.project'},
-				CFE_STARTUP_TASK: {name: 'settings.projectManagement.startup.task'},
+				CFE_CURRENT_THEME: {name: 'preferences.themes'},
+				CFE_STARTUP_PROJECT: {name: 'preferences.startup.project'},
+				CFE_STARTUP_TASK: {name: 'preferences.startup.task.default'},
+				CFE_STARTUP_TASK_CHOOSER: {name: 'preferences.startup.task.chooser'},
+				CFE_SHOPPING_CART_LOCATION: {name: 'preferences.shoppingcart.location'},
+				CFE_RECENT_PAGES_LOCATION: {name: 'preferences.recentPages.location'},
 				CFE_ACTIONS: {name: 'settings.actions'},
+				CFE_POLLING: {name: 'settings.polling'},
 				CBE_PROVIDER_ID: {name: 'console-backend.providerId'},
 				CBE_NAME: {name: 'console-backend.name'},
 				CBE_VERSION: {name: 'console-backend.version'},
 				CBE_WLS_VERSION_ONLINE: {name: 'weblogic.version.online'},
 				CBE_WLS_USERNAME: {name: 'console-backend.weblogic.username'},
+				CBE_INTERNAL_DOCS_URL: {name: 'console-backend.docs'},
 				CBE_DOMAIN_URL: {name: 'console-backend.domain.url'},
 				CBE_DOMAIN: {name: 'console-backend.domain'},
 				CBE_DOMAIN_CONNECT_STATE: {name: 'console-backend.domainConnectState'},
@@ -130,15 +141,35 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 			},
 
 			getStartupProject: () => {
-				return properties['settings.projectManagement.startup.project'];
+				return properties['preferences.startup.project'];
 			},
 
 			getStartupTask: () => {
-				return properties['settings.projectManagement.startup.task'];
+				return properties['preferences.startup.task.default'];
+			},
+
+			getStartupTaskChooser: () => {
+				return properties['preferences.startup.task.chooser'];
+			},
+
+			getShoppingCartLocation: () => {
+				return properties['preferences.shoppingcart.location'];
+			},
+
+			getRecentPagesLocation: () => {
+				return properties['preferences.recentPages.location'];
+			},
+
+			getPreferenceThemes: () => {
+				return properties['preferences.themes'];
 			},
 
 			getSettingsActions: () => {
 				return properties['settings.actions'];
+			},
+
+			getActionPollings: () => {
+				return properties['settings.polling'];
 			},
 
 			getPollingMillis: function () {
@@ -161,8 +192,20 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				return this.getProperty(this.PropertyName.CFE_PROJECT_MANAGEMENT_LOCATION);
 			},
 
+			getWDTModelDomainTemplate: function () {
+				return properties['preferences.providerManagement.newModel.domain.fileContents'];
+			},
+
+			getWDTModelSparseTemplate: function () {
+				return properties['preferences.providerManagement.newModel.sparse.fileContents'];
+			},
+
 			getDomainConnectState: function () {
 				return this.getProperty(this.PropertyName.CBE_DOMAIN_CONNECT_STATE);
+			},
+
+			getDocsURL: function () {
+				return properties['console-backend.docs'];
 			},
 
 			getLoggingLevel: function () {

@@ -221,6 +221,12 @@ public class CustomFilteringDashboardConfigManager {
 
   private static Value getDefaultPropertyValue(CustomFilteringDashboardPropertyDef propertyDef) {
     PagePropertyDef pagePropertyDef = propertyDef.getSourcePropertyDef();
+    if (!pagePropertyDef.getLegalValueDefs().isEmpty()) {
+      if (pagePropertyDef.isInt() || pagePropertyDef.isString() || pagePropertyDef.isHealthState()) {
+        // Return the 1st legal value
+        return pagePropertyDef.getLegalValueDefs().get(0).getValue();
+      }
+    }
     if (pagePropertyDef.isInt()) {
       return new IntValue(0);
     }

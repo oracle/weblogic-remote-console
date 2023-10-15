@@ -17,7 +17,7 @@ const readline = require('readline');
 const { spawn } = require('child_process');
 const { execFile } = require('child_process');
 
-const { app, ipcMain, shell, dialog } = require('electron');
+const { app, ipcMain, shell, dialog, safeStorage } = require('electron');
 
 const logger = require('./js/console-logger');
 
@@ -44,22 +44,24 @@ const Watcher = require('./js/watcher');
 // and menu for app
 const AppWindow = require('./js/window-management');
 
-// Declare functions from module that wraps keytar usage
-const {getKeyTar} = require('./js/keytar-utils');
-
 const instDir = path.dirname(app.getPath('exe'));
 const { homepage, productName, version, copyright } = require(`${instDir}/package.json`);
 
 let feedURL;
 
-if (process.env.CONSOLE_FEED_URL)
+// The documentation says to not use setFeedURL(), though it seems to work.
+// We'll only use it for testing.
+if (process.env.CONSOLE_FEED_URL) {
   feedURL = process.env.CONSOLE_FEED_URL;
-else if (fs.existsSync(`${instDir}/feed-url.json`))
-  feedURL = require(`${instDir}/feed-url.json`).feedURL;
-
-if (feedURL) {
   const { setFeedURL } = require('./js/auto-update-utils');
   setFeedURL(feedURL);
+}
+else {
+  // electron-builder puts a URL in itself, but it is not available to us
+  // unless we do this trick.  We need it for prompting the user, so we'll
+  // use the builder data to do it.
+  if (fs.existsSync(`${instDir}/electron-builder-custom.json`))
+    feedURL = require(`${instDir}/electron-builder-custom.json`)?.publish?.url;
 }
 
 
@@ -108,8 +110,6 @@ let lines = [];
   };
   logger.initializeLog(options);
 
-  UserPrefs.read(userDataPath);
-  
   options = {
     appPaths: {
       userData: userDataPath,
@@ -279,6 +279,13 @@ function start_another_me(event = null) {
 
 app.whenReady()
   .then(() => {
+    I18NUtils.initialize(`${instDir}/resources`, app.getLocale());
+    if (!I18NUtils.get('wrc-electron.labels.app.appName.value')) {
+      logger.log('error', 'Cannot load internationalization utilities');
+      process.exit();
+      process.kill(process.pid, 9);
+    }
+
     logger.setOptions({ isHeadlessMode: app.commandLine.hasSwitch('headless')});
     processCmdLineOptions();
 
@@ -318,7 +325,7 @@ app.whenReady()
       };
 
       window = AppWindow.initialize(
-        'Initializing...',
+        I18NUtils.get('wrc-electron.messages.initializing'),
         params,
         path.dirname(app.getPath('exe')),
         app.getPath('userData')
@@ -336,9 +343,9 @@ app.whenReady()
   .catch(err => {
     logger.log('error', `err=${err}`);
     AppWindow.showFailureStartingMessageBox(
-      'Failure starting remote console',
+      I18NUtils.get('wrc-electron.messages.failure-messagebox.title'),
       `${err}`,
-      ['Exit']
+      [I18NUtils.get('wrc-electron.messages.failure-messagebox.button')]
     );
     process.exit();
     process.kill(process.pid, 9);
@@ -346,7 +353,6 @@ app.whenReady()
 
 
 ipcMain.handle('translated-strings-sending', async (event, arg) => {
-  I18NUtils.putAll(arg);
 });
 
 /**
@@ -447,13 +453,7 @@ ipcMain.handle('preference-reading', async (event, arg) => {
   // here, because the async keyword before the
   // "(event, ...args)" in the method signature,
   // does that implicitly.
-  const defaultValue = UserPrefs.getDefaultValue(arg.section, arg.name);
-  if (defaultValue) {
-    return defaultValue;
-  }
-  else {
-    return false;
-  }
+  return UserPrefs.get(arg);
 });
 
 ipcMain.handle('file-choosing', async (event, dialogParams) => {
@@ -475,6 +475,10 @@ ipcMain.handle('file-choosing', async (event, dialogParams) => {
       };
       return Promise.reject(response);
     });
+});
+
+ipcMain.handle('external-url-opening', async (event, arg) => {
+  AppWindow.openExternalURL(arg);
 });
 
 ipcMain.handle('complete-login', async (event, arg) => {
@@ -552,81 +556,36 @@ ipcMain.handle('project-changing', async (event, arg) => {
  * const options = {project: {name: self.project.name}, provider: {name: dataProvider.name, username: dataProvider.username}};
  * window.electron_api.ipc.invoke('credentials-requesting', options);
  */
-ipcMain.handle('credentials-requesting', async (event, arg) => {
-  return new Promise(function (resolve, reject) {
-    function isValidProvider(project, provider) {
-      const provider1 = project.dataProviders.find(item => item.name === provider.name && item.username === provider.username);
-      return (typeof provider1 !== 'undefined');
+ipcMain.handle('credentials-requesting', (event, arg) => {
+  const reply = {succeeded: false};
+  if (!UserPrefs.get('credentials.storage') || !safeStorage.isEncryptionAvailable()) {
+    reply['failure'] = {
+      failureType: 'PASSWORD_STORAGE_NOT_SUPPORTED',
+      failureReason: 'Either password storage is disabled or is not supported on this platform'
     }
+    return reply;
+  }
 
-    const reply = {succeeded: false};
+  const current_project = ProjectManagement.getCurrentProject();
+  const provider = current_project.dataProviders.find(item => item.name === arg.provider.name);
 
-    let keytar;
-    try {
-      keytar = getKeyTar();
-      if (typeof keytar !== 'undefined') {
-        const project = ProjectManagement.getProject(arg.project.name);
-        if (typeof project !== 'undefined') {
-          if (isValidProvider(project, arg.provider)) {
-            const account = `${project.name}-${arg.provider.name}-${arg.provider.username}`;
-            keytar.getPassword('weblogic-remote-console', account)
-              .then(secret => {
-                if (secret !== null) {
-                  reply.succeeded = true;
-                  reply['secret'] = secret;
-                }
-                else {
-                  reply['failure'] = {
-                    failureType: 'NO_MATCHING_KEYTAR_ACCOUNT',
-                    failureReason: `Unable to retrieve secret for '${account}' keytar account`
-                  };
-                }
-                resolve(reply);
-              });
-          }
-          else {
-            reply['failure'] = {
-              failureType: 'INVALID_PROVIDER',
-              failureReason: `Provider named '${arg.provider.name}' is not associated with the specified project: '${arg.project.name}'`
-            };
-            resolve(reply);
-          }
-        }
-        else {
-          reply['failure'] = {
-            failureType: 'INVALID_PROJECT',
-            failureReason: `Unable to find a project named '${arg.project.name}'`
-          };
-          resolve(reply);
-        }
-      }
-      else {
-        reply['failure'] = {
-          failureType: 'KEYTAR_NOT_LOADABLE',
-          failureReason: 'keytar is not installed or loadable, so skipping code that securely retrieves stored credentials.'
-        };
-        resolve(reply);
-      }
-    }
-    catch(err) {
-      if (keytar) {
-          const response = {
-          transport: {statusText: err.code},
-          failureType: 'UNEXPECTED',
-          failureReason: err.stack
-        };
-        reject(response);
-      }
-      else {
-        reply['failure'] = {
-          failureType: 'NO_MATCHING_KEYTAR_ACCOUNT',
-          failureReason: 'Unable to retrieve secrets'
-        };
-        resolve(reply);
-      }
-    }
-  });
-
+  if (!provider) {
+    reply['failure'] = {
+      failureType: 'INVALID_PROVIDER',
+      failureReason: `Provider named '${arg.provider.name}' is not associated with the specified project: '${arg.project.name}'`
+    };
+    return reply;
+  }
+  if (!provider.passwordEncrypted) {
+    reply['failure'] = {
+      failureType: 'NO_STORED_PASSWORD',
+      failureReason: `There is no password stored for this provider`
+    };
+    return reply;
+  }
+  reply.succeeded = true;
+  reply['secret'] = safeStorage.decryptString(Buffer.from(provider.passwordEncrypted, 'base64'));
+  return reply;
 });
 
 ipcMain.handle('window-app-quiting', async (event, arg) => {

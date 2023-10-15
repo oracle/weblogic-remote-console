@@ -15,7 +15,7 @@ Yes, you can. First, make sure that the domain's administration server is public
 
 Yes, you can connect to other cloud providers. You'll need to make sure the domain's administration server is publicly accessible to allow a connection between the WebLogic Remote Console and the cloud provider. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.
 
-Visit your cloud providers' documentation for more specific instructions on how to expose the endpoint of the WebLogic Server.
+Visit your cloud providers' documentation for more specific instructions on how to expose the `management/*` endpoint of the WebLogic Server.
 
 #### Can I connect the WebLogic Remote Console to domains using the WebLogic Kubernetes Operator?
 

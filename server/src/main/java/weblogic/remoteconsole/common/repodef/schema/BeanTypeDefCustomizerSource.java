@@ -17,6 +17,7 @@ public class BeanTypeDefCustomizerSource {
   private ListValue<BeanChildDefCustomizerSource> children = new ListValue<>();
   private ListValue<BeanActionDefCustomizerSource> actions = new ListValue<>();
   private ListValue<SubTypeDefSource> subTypes = new ListValue<>();
+  private StringValue defaultSubType = new StringValue();
   private StringValue subTypeDiscriminatorProperty = new StringValue();
   private StringValue deleteMethod = new StringValue();
   private StringValue createResourceMethod = new StringValue();
@@ -81,6 +82,18 @@ public class BeanTypeDefCustomizerSource {
 
   public void addSubTypes(SubTypeDefSource value) {
     subTypes.add(value);
+  }
+
+  // The type to use if the sub type discriminator
+  // isn't one of the ones from getSubTypes().
+  // If null or empty, the CBE will throw an AssertionError
+  // if it receives an unknown dfiscriminator.
+  public String getDefaultSubType() {
+    return defaultSubType.getValue();
+  }
+
+  public void setDefaultSubType(String value) {
+    defaultSubType.setValue(value);
   }
 
   // The name of the property on this type that can be used to

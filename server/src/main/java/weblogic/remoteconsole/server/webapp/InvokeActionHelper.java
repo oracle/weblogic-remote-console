@@ -16,6 +16,7 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.repo.Page;
 import weblogic.remoteconsole.server.repo.Response;
 
 /**
@@ -28,7 +29,7 @@ public class InvokeActionHelper {
   private PageActionDef pageActionDef;
   private List<FormProperty> formProperties;
 
-  protected InvokeActionHelper(InvocationContext ic, String action, JsonObject requestBody) {
+  public InvokeActionHelper(InvocationContext ic, String action, JsonObject requestBody) {
     this.ic = ic;
     this.action = action;
     this.requestBody = requestBody;
@@ -54,11 +55,15 @@ public class InvokeActionHelper {
     return formProperties;
   }
 
-  public static javax.ws.rs.core.Response invokeAction(InvocationContext ic, String action, JsonObject requestBody) {
+  public static javax.ws.rs.core.Response invokeAction(
+    InvocationContext ic,
+    String action,
+    JsonObject requestBody
+  ) {
     return VoidResponseMapper.toResponse(ic, new InvokeActionHelper(ic, action, requestBody).invokeAction());
   }
 
-  protected Response<Void> invokeAction() {
+  public Response<Void> invokeAction() {
     Response<Void> response = new Response<>();
     // Make sure the bean exists
     {
@@ -89,6 +94,10 @@ public class InvokeActionHelper {
       formProperties = r.getResults();
     }
     // Invoke the action
+    if ("none".equals(getPageActionDef().getRows())) {
+      // Invoke the action against the bean
+      return invokeBeanAction(getInvocationContext());
+    }
     if (getInvocationContext().getBeanTreePath().isCollection()) {
       return invokeTableRowsAction();
     } else if (getPageActionDef().getPageDef().isSliceTableDef()) {
@@ -98,15 +107,19 @@ public class InvokeActionHelper {
     }
   }
 
-  private Response<Void> invokeTableRowsAction() {
+  protected Response<Void> invokeTableRowsAction() {
     Response<Void> response = new Response<>();
     Response<List<BeanTreePath>> rbResponse =
       TableActionRequestBodyMapper.fromRequestBody(getInvocationContext(), getRequestBody());
     if (!rbResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(rbResponse);
     }
+    return invokeTableRowsAction(rbResponse.getResults());
+  }
+
+  protected Response<Void> invokeTableRowsAction(List<BeanTreePath> rowBTPs) {
     List<Response<Void>> rowResponses = new ArrayList<>();
-    for (BeanTreePath rowBTP : rbResponse.getResults()) {
+    for (BeanTreePath rowBTP : rowBTPs) {
       InvocationContext rowIC = new InvocationContext(getInvocationContext());
       rowIC.setIdentity(rowBTP);
       rowResponses.add(invokeBeanAction(rowIC));
@@ -121,10 +134,7 @@ public class InvokeActionHelper {
     if (!rbResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(rbResponse);
     }
-    if ("none".equals(getPageActionDef().getRows())) {
-      // Invoke the action against the bean
-      return invokeBeanAction(getInvocationContext());
-    }
+
     List<Response<Void>> rowResponses = new ArrayList<>();
     for (String rowIdentifier : rbResponse.getResults()) {
       InvocationContext rowIC = new InvocationContext(getInvocationContext());
@@ -165,6 +175,90 @@ public class InvokeActionHelper {
 
   protected Response<Void> invokeBeanAction(InvocationContext ic) {
     return ic.getPageRepo().asPageReaderRepo().invokeAction(ic, getPageActionDef(), getFormProperties());
+  }
+
+  public static javax.ws.rs.core.Response getActionInputForm(
+    InvocationContext ic,
+    String action,
+    JsonObject requestBody
+  ) {
+    return
+      GetPageResponseMapper.toResponse(
+        getActionInputFormIC(ic, action),
+        new InvokeActionHelper(ic, action, requestBody).getActionInputForm());
+  }
+
+  protected Response<Page> getActionInputForm() {
+    Response<Page> response = new Response<>();
+    // Make sure the bean exists
+    {
+      Response<Void> r =
+        getInvocationContext().getPageRepo().asPageReaderRepo().verifyExists(
+          getInvocationContext(),
+          getInvocationContext().getBeanTreePath()
+        );
+      if (!r.isSuccess()) {
+        return response.copyUnsuccessfulResponse(r);
+      }
+    }
+    // Note: might need to handle heterogeneous types (for slice table actions)
+    // Make sure the bean supports the action
+    {
+      Response<PageActionDef> r = findPageActionDef();
+      if (!r.isSuccess()) {
+        return response.copyUnsuccessfulResponse(r);
+      }
+      pageActionDef = r.getResults();
+    }
+    // Get the action input form
+    if ("none".equals(getPageActionDef().getRows())) {
+      return getActionInputFormFromIC();
+    } else if (getInvocationContext().getBeanTreePath().isCollection()) {
+      return getTableRowsActionInputForm();
+    } else if (getPageActionDef().getPageDef().isSliceTableDef()) {
+      return getSliceTableRowsActionInputForm();
+    } else {
+      return getBeanActionInputForm();
+    }
+  }
+
+  private Response<Page> getTableRowsActionInputForm() {
+    Response<Page> response = new Response<>();
+    Response<List<BeanTreePath>> rbResponse =
+      TableActionRequestBodyMapper.fromRequestBody(getInvocationContext(), getRequestBody());
+    if (!rbResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(rbResponse);
+    }
+    getInvocationContext().setIdentities(rbResponse.getResults());
+    return getActionInputFormFromIC();
+  }
+
+  protected Response<Page> getSliceTableRowsActionInputForm() {
+    Response<Page> response = new Response<>();
+    Response<List<String>> rbResponse =
+      SliceTableActionRequestBodyMapper.fromRequestBody(getInvocationContext(), getRequestBody());
+    if (!rbResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(rbResponse);
+    }
+    getInvocationContext().setIdentifiers(rbResponse.getResults());
+    return getActionInputFormFromIC();
+  }
+
+  protected Response<Page> getBeanActionInputForm() {
+    return getActionInputFormFromIC();
+  }
+
+  protected Response<Page> getActionInputFormFromIC() {
+    InvocationContext ic = getActionInputFormIC(getInvocationContext(), getAction());
+    return ic.getPageRepo().asPageReaderRepo().getPage(ic);
+  }
+
+  private static InvocationContext getActionInputFormIC(InvocationContext ic, String action) {
+    InvocationContext inputFormIC = new InvocationContext(ic);
+    inputFormIC.setPagePath(
+      PagePath.newActionInputFormPagePath(ic.getPagePath(), action)
+    );
+    return inputFormIC;
   }
 
   private Response<PageActionDef> findPageActionDef() {

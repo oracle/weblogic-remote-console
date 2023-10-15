@@ -34,6 +34,37 @@ public class LocalizedConstants {
       "Invalid listener (must be host:port): {0}"
     );
 
+  // Indicates that while we were able to connect to the server,
+  // the url has a bad path (as in, path/management is not the REST API)
+  public static final LocalizableString BAD_PATH_GOOD_CONNECTION =
+    addConstant(
+      "badPathOnGoodConnection",
+      "There is a server at this address, but the end point doesn't seem to be correct."
+    );
+
+  // Indicates that while we were able to connect to the server,
+  // the url has a bad path and that path ends in /console.
+  public static final LocalizableString TAKE_OFF_THE_SLASH_MANAGEMENT =
+    addConstant(
+      "takeOffSlashManagement",
+      "most likely the /management part is not needed in the URL"
+    );
+
+  // Indicates that while we were able to connect to the server,
+  // the url has a bad path and that path ends in /console.
+  public static final LocalizableString TAKE_OFF_THE_SLASH_CONSOLE =
+    addConstant(
+      "takeOffSlashConsole",
+      "most likely the /console part is not needed in the URL"
+    );
+
+  // Indicates that the user is trying to connect to a non-admin port
+  public static final LocalizableString USE_ADMIN_PORT =
+    addConstant(
+      "useAdminPort",
+      "most likely the port should be set to the domain's administration port (which defaults to 9002)"
+    );
+
   // Indicates that a WLS domain version isn't one that the remote console supports.
   public static final LocalizableString UNSUPPORTED_DOMAIN_VERSION =
     addConstant(
@@ -179,16 +210,34 @@ public class LocalizedConstants {
       "Invalid WDT model.  It must contain at least one of the following top-level folders: {0}"
     );
 
-  public static final LocalizableString SECURITY_VALIDATION_WARNINGS_WARNING_LINK_LABEL =
+  public static final LocalizableString NO_SECURITY_VALIDATION_WARNINGS_LABEL =
     addConstant(
-      "securityValidationWarningsWarningLinkLabel",
-      "Security warnings detected. Click here to view the report and recommended remedies."
+      "noSecurityValidationWarningsLabel",
+      "No security warnings."
     );
 
-  public static final LocalizableString SECURITY_VALIDATION_WARNINGS_INFO_LINK_LABEL =
+  public static final LocalizableString HAVE_SECURITY_VALIDATION_WARNINGS_LABEL =
     addConstant(
-      "securityValidationWarningsInfoLinkLabel",
-      "View Security Warnings Report"
+      "haveSecurityValidationWarningsLabel",
+      "Security warnings detected."
+    );
+
+  public static final LocalizableString SECURITY_VALIDATION_WARNINGS_LINK_LABEL =
+    addConstant(
+      "securityValidationWarningsLinkLabel",
+      "View/Refresh Report"
+    );
+
+  public static final LocalizableString NEED_SERVER_RESTART_LABEL =
+    addConstant(
+      "needServerRestartLabel",
+      "One or more servers need to be restarted."
+    );
+
+  public static final LocalizableString SERVER_RESTART_LINK_LABEL =
+    addConstant(
+      "serverRestartLinkLabel",
+      "View Servers"
     );
 
   public static final LocalizableString PROPERTY_LIST_PROPERTIES =
@@ -406,6 +455,210 @@ public class LocalizedConstants {
     addConstant(
       "ssoTokenUnavailable",
       "Unable to connect, token is unavailable."
+    );
+
+  public static final LocalizableString HEALTH_STATE_OK =
+    addConstant(
+      "healthStateOkay",
+      "Okay"
+    );
+
+  public static final LocalizableString HEALTH_STATE_WARN =
+    addConstant(
+      "healthStateWarn",
+      "Warn"
+    );
+
+  public static final LocalizableString HEALTH_STATE_CRITICAL =
+    addConstant(
+      "healthStateCritical",
+      "Critical"
+    );
+
+  public static final LocalizableString HEALTH_STATE_FAILED =
+    addConstant(
+      "healthStateFailed",
+      "Failed"
+    );
+
+  public static final LocalizableString HEALTH_STATE_OVERLOADED =
+    addConstant(
+      "healthStateOverloaded",
+      "Overloaded"
+    );
+
+  public static final LocalizableString HEALTH_STATE_UNKNOWN =
+    addConstant(
+      "healthStateUnknown",
+      "Unknown"
+    );
+
+  public static final LocalizableString VARIABLE_ASSIGNMENT_INTRO =
+    addConstant(
+      "variableAssignmentIntro",
+      ""
+      + "<ul>"
+      +   "<li>Module : {0}</li>"
+      +   "<li>Descriptor : {1}</li>"
+      +   "<li>xpath : {2}</li>"
+      +   "<li>Variable : {3}</li>"
+      + "</ul>"
+    );
+
+  public static final LocalizableString APPLICATION_HAS_PLAN =
+    addConstant(
+      "applicationHasPlan",
+      "The application ''{0}'' already has a deployment plan: ''{1}''"
+    );
+
+  public static final LocalizableString DATA_PROVIDER_HELP_NAME_SUMMARY =
+    addConstant(
+      "dataProviderHelpNameSummary",
+      "The name of the provider"
+    );
+
+  public static final LocalizableString DATA_PROVIDER_HELP_NAME_DETAIL =
+    addConstant(
+      "dataProviderHelpNameDetail",
+      "A provider name should be unique within a project.  "
+      + "It is not a functional field, but is used by the user to identify the connection"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_URL_SUMMARY =
+    addConstant(
+      "adminServerHelpURLSummary",
+      "The URL of the Administration Server being targeted"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_URL_DETAIL =
+    addConstant(
+      "adminServerHelpURLDetail",
+      "The URL of the Administration Server being targeted. "
+      + "Note that the context path is not part of this URL, as in https://adminserver.example.com:7002). "
+      + "The end point that is being reached is https://adminserver.example.com:7002/management, "
+      + "but the path part is automatically added by the Remote Console software"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_PROXY_SUMMARY =
+    addConstant(
+      "adminServerHelpProxySummary",
+      "Allows the setting of a proxy server for this particular provider to use while connecting"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_PROXY_DETAIL =
+    addConstant(
+      "adminServerHelpProxyDetail",
+      "Allows the setting of a proxy server for this particular provider to use while connecting. "
+      + "It is termed an 'override' because it takes precedence over any global settings for proxying. "
+      + "The format of the entry is either 'DIRECT' to not use a proxy at all or a URL "
+      + "(i.e. protocol://host:port - with no path), following the traditional standard for specifying a proxy server. "
+      + "The protocol portion can be http, https, socks, socks4 or socks5."
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_USERNAME_SUMMARY =
+    addConstant(
+      "adminServerHelpUserNameSummary",
+      "The user id portion of the credential needed to log in to the Admin Server"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_USERNAME_DETAIL =
+    addConstant(
+      "adminServerHelpUserNameDetail",
+      "The user id portion of the credential needed to log in to the Admin Server. "
+      + "Note that this assumes a 'BASIC AUTH' authentication scheme. "
+      + "The 'Single Sign-On' option allows one to use a different authentication mechanism."
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_PASSWORD_SUMMARY =
+    addConstant(
+      "adminServerHelpPasswordSummary",
+      "The password portion of the credential needed to log in to the Admin Server"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_PASSWORD_DETAIL =
+    addConstant(
+      "adminServerHelpPasswordDetail",
+      "The password portion of the credential needed to log in to the Admin Server. "
+      + "Note that this assumes a 'BASIC AUTH' authentication scheme. "
+      + "The 'Single Sign-On' option allows one to use a different authentication mechanism."
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_INSECURE_SUMMARY =
+    addConstant(
+      "adminServerHelpInsecureSummary",
+      "Turn off certificate checking for this provider's connection"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_INSECURE_DETAIL =
+    addConstant(
+      "adminServerHelpInsecureDetail",
+      "You can allow WebLogic Remote Console to connect to an Administration Server regardless of warnings "
+      + "about expired, untrusted, or missing certificates. "
+      + "We *strongly* recommend that you only enable this setting for development or demonstration environments."
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_SSO_SUMMARY =
+    addConstant(
+      "adminServerHelpSSOSummary",
+      "Use an alternate authentication mechanism"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_SSO_DETAIL =
+    addConstant(
+      "adminServerHelpSSODetail",
+      "Use the browser to perform an alternate authentication, "
+      + "usually with a Single Sign-On mechanism, "
+      + "and then obtain a token for access to the WebLogic Domain."
+    );
+
+  public static final LocalizableString WDT_PROVIDER_HELP_FILE_SUMMARY =
+    addConstant(
+      "wdtProviderHelpFileSummary",
+      "The path to a WebLogic Deploy Tooling model file"
+    );
+
+  public static final LocalizableString WDT_PROVIDER_HELP_FILE_DETAIL =
+    addConstant(
+      "wdtProviderHelpFileDetail",
+      "The path to a WebLogic Deploy Tooling model file"
+    );
+
+
+  public static final LocalizableString PROPERTY_LIST_PROVIDER_HELP_FILE_SUMMARY =
+    addConstant(
+      "propertyListProviderHelpFileSummary",
+      "The path to a property file"
+    );
+
+  public static final LocalizableString PROPERTY_LIST_PROVIDER_HELP_FILE_DETAIL =
+    addConstant(
+      "propertyListProviderHelpFileDetail",
+      "The path to a property file, as described in java.util.Properties"
+    );
+
+  public static final LocalizableString WDT_COMPOSITE_PROVIDER_HELP_MODELS_SUMMARY =
+    addConstant(
+      "wdtCompositeProviderHelpModelsSummary",
+      "A list of WebLogic Deploy Tooling model providers"
+    );
+
+  public static final LocalizableString WDT_COMPOSITE_PROVIDER_HELP_MODELS_DETAIL =
+    addConstant(
+      "wdtCompositeProviderHelpModelsDetail",
+      "A list of WebLogic Deploy Tooling model providers. "
+      + "These models will be combined to form a single model and assessed as such"
+    );
+
+  public static final LocalizableString CANT_CONNECT_TO_ADMIN_SERVER =
+    addConstant(
+      "cantConnectToDomain",
+      "Unable to connect to the WebLogic domain's administration server."
+    );
+
+  public static final LocalizableString CANT_SHUTDOWN_ADMIN_SERVER_AND_MANAGED_SERVERS =
+    addConstant(
+      "cantShutdownAdminServerAndManagedServers",
+      "Shut down the managed servers then shut down the administration server."
     );
 
   // Returns all of the constants (used when the resource bundles are generated at build time)

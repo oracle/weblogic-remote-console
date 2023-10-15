@@ -5,34 +5,61 @@ define({
         "appName": "WebLogic Remote Console"
       },
       "icons": {
+        "connectivity": {
+          "detached": {
+            "tooltip": "Detached"
+          },
+          "offline": {
+            "tooltip": "Offline"
+          },
+          "online": {
+            "tooltip": "Online"
+          },
+          "unattached": {
+            "tooltip": "Unattached"
+          }
+        },
         "navtree": {
           "toggler": {
             "tooltip": "Toggle Navigation Tree visibility"
           }
         },
-        "connectivity": {
-          "online": {
-            "tooltip": "Online"
-          },
-          "offline": {
-            "tooltip": "Offline"
-          },
-          "detached": {
-            "tooltip": "Detached"
-          },
-          "unattached": {
-            "tooltip": "Unattached"
-          },
-          "insecure": {
-            "text": "Not secure"
-          }
+        "messageCenter": {
+          "tooltip": "Open Message Center"
+        },
+        "help": {
+          "tooltip": "Open WebLogic Remote Console Internal Documentation"
         }
       }
     },
     "wrc-footer": {
       "text": {
-        "copyrightLegal": "Copyright © 2020, 2023, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
+        "copyrightLegal": "Copyright (c) 2020, 2023, Oracle and/or its affiliates.<br/>Oracle (r), Java, MySQL, and NetSuite are registered trademarks of Oracle and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
         "builtWith": "Built with Oracle JET"
+      }
+    },
+    "wrc-connectivity": {
+      "labels": {
+        "insecure": {
+          "value": "Not secure"
+        }
+      },
+      "icons": {
+        "online": {
+          "tooltip": "Online"
+        },
+        "offline": {
+          "tooltip": "Offline"
+        },
+        "detached": {
+          "tooltip": "Detached"
+        },
+        "unattached": {
+          "tooltip": "Unattached"
+        },
+        "insecure": {
+          "tooltip": "Admin Server Connection Not Secure"
+        }
       }
     },
     "wrc-data-providers": {
@@ -60,6 +87,9 @@ define({
           },
           "url": {
             "value": "URL"
+          },
+          "proxyOverride": {
+            "value": "Proxy Override"
           },
           "username": {
             "value": "Username"
@@ -119,6 +149,11 @@ define({
       },
       "popups": {
         "info": {
+          "project": {
+            "name": {
+              "label": "Project Name:"
+            }
+          },
           "provider": {
             "id": {
               "label": "Provider Id:"
@@ -130,6 +165,9 @@ define({
             },
             "url": {
               "label": "Domain URL:"
+            },
+            "proxyOverride": {
+              "label": "Proxy Override:"
             },
             "version": {
               "label": "Domain Version:"
@@ -432,7 +470,7 @@ define({
           "label": "Single Sign-On"
         },
         "insecure": {
-          "label": "Insecure Connection"
+          "label": "Make Insecure Connection"
         }
       }
     },
@@ -488,9 +526,6 @@ define({
         "buttons": {
           "home": {
             "label": "Home"
-          },
-          "preferences": {
-            "label": "Preferences"
           }
         }
       }
@@ -505,7 +540,10 @@ define({
             "label": "At-A-Glance"
           },
           "projectmanagement": {
-            "label": "Provider Management"
+            "label": "Providers"
+          },
+          "tips": {
+            "label": "Tips"
           }
         }
       },
@@ -520,29 +558,15 @@ define({
         "history": {
           "tooltip": "History"
         },
-        "separator" : {
+        "separator": {
           "tooltip": "Separator"
         }
       },
       "menus": {
         "history": {
           "clear": {
-            "value": "Clear History",
-            "label": "Clear History"
-          }
-        }
-      }
-    },
-    "wrc-monitoring": {
-      "icons": {
-        "history": {
-          "tooltip": "History"
-        }
-      },
-      "menus": {
-        "history": {
-          "clear": {
-            "value": "Clear History"
+            "value": "Clear History Entries",
+            "label": "Clear History Entries"
           }
         }
       }
@@ -568,7 +592,10 @@ define({
       "tabstrip": {
         "tabs": {
           "gallery": {
-            "label": "Gallery"
+            "label": "Trees"
+          },
+          "startup-tasks": {
+            "label": "Tasks"
           }
         }
       }
@@ -602,6 +629,38 @@ define({
         "properties": {
           "label": "Property List Editor",
           "description": "<p>View or modify a set of properties from a property list file.</p>"
+        }
+      }
+    },
+    "wrc-startup-tasks": {
+      "cards": {
+        "addAdminServer": {
+          "label": "Add Admin Server Connection Provider",
+          "description": "This task creates a project resource that allows you to connect to an Admin Server"
+        },
+        "addWdtModel": {
+          "label": "Add WDT Model File Provider",
+          "description": "This task creates a project resource that allows you to manage a WDT Model file, existing on your local filesystem"
+        },
+        "addWdtComposite": {
+          "label": "Add WDT Composite Model File Provider",
+          "description": "This task creates a project resource that allows you to manage WDT Model file fragments, existing on your local filesystem"
+        },
+        "addPropertyList": {
+          "label": "Add Property List Provider",
+          "description": "This task creates a project resource that allows you to manage a .properties files stored on your local filesystem"
+        },
+        "createWdtModel": {
+          "label": "Create Provider for New WDT Model File",
+          "description": "This task creates a project resource that is a new WDT Model file, stored on your local filesystem"
+        },
+        "createPropertyList": {
+          "label": "Create Provider for New Property List",
+          "description": "This task creates a project resource that is a new .properties file, stored on your local filesystem"
+        },
+        "importProject": {
+          "label": "Import Project",
+          "description": "This task loads a previously exported project containing providers immediately ready for you to use or modify"
         }
       }
     },
@@ -821,7 +880,8 @@ define({
       "messages": {
         "savedTo": {
           "shoppingcart": "Changes were added to cart!",
-          "generic": "Changes were saved!"
+          "generic": "Changes were saved!",
+          "notSaved": "Nothing saved because no changes were detected."
         },
         "action": {
           "notAllowed": {
@@ -857,8 +917,12 @@ define({
         }
       },
       "tabs": {
-        "attributes" : {label: "Attributes"},
-        "actions" : {label: "Actions"}
+        "attributes": {
+          "label": "Attributes"
+        },
+        "actions": {
+          "label": "Actions"
+        }
       }
     },
     "wrc-create-form": {
@@ -872,56 +936,112 @@ define({
     "wrc-policy-management": {
       "menus": {
         "action": {
-          "addCondition": { "label": "Add Condition" },
-          "combine": { "label": "Combine" },
-          "uncombine": { "label": "Uncombine" },
-          "moveup": { "label": "Move Up" },
-          "movedown": { "label": "Move Down" },
-          "remove": { "label": "Remove" },
-          "negate": { "label": "Negate" },
-          "reset": { "label": "Reset" }
-        }
-      },
-      "messages": {
-        "requiredFieldsMissing": {detail: "One or more of the required fields contain no data!"},
-        "argumentValueHasWrongFormat": {summary: "The '{0}' field contains incorrectly formatted data!"},
-        "conditionHasNoArgValues": {summary: "The selected condition has no argument values to edit!"},
-        "conditionAlreadyExists": {summary: "This security policy already has a condition built using the selected predicate, or one with matching argument values!"}
-      },
-      "buttonMenus": {
-        "action": {
           "addCondition": {
-            "above": {"label": "Add Above Checked Condition..."},
-            "below": {"label": "Add Below Checked Condition..."}
+            "label": "Add Condition"
+          },
+          "combine": {
+            "label": "Combine"
+          },
+          "uncombine": {
+            "label": "Uncombine"
+          },
+          "moveup": {
+            "label": "Move Up"
+          },
+          "movedown": {
+            "label": "Move Down"
+          },
+          "remove": {
+            "label": "Remove"
+          },
+          "negate": {
+            "label": "Negate"
+          },
+          "reset": {
+            "label": "Reset"
           }
         }
       },
       "contextMenus": {
         "action": {
           "addCondition": {
-            "at": {"label": "Add New First Condition..."},
-            "above": {"label": "Add Condition Above Row Clicked..."},
-            "below": {"label": "Add Condition Below Row Clicked..."}
+            "at": {
+              "label": "Add New First Condition..."
+            },
+            "above": {
+              "label": "Add Condition Above Row Clicked..."
+            },
+            "below": {
+              "label": "Add Condition Below Row Clicked..."
+            }
           }
         }
       },
+      "buttonMenus": {
+        "action": {
+          "addCondition": {
+            "above": {
+              "label": "Add Above Checked Condition..."
+            },
+            "below": {
+              "label": "Add Below Checked Condition..."
+            }
+          }
+        }
+      },
+      "messages": {
+        "requiredFieldsMissing": {
+          "detail": "One or more of the required fields contain no data!"
+        },
+        "argumentValueHasWrongFormat": {
+          "summary": "The '{0}' field contains incorrectly formatted data!"
+        },
+        "conditionHasNoArgValues": {
+          "summary": "The selected condition has no argument values to edit!"
+        },
+        "conditionAlreadyExists": {
+          "summary": "This security policy already has a condition built using the selected predicate, or one with matching argument values!"
+        }
+      },
       "instructions": {
-        "policyEditor": {"value": "<p>To specify the location of the new condition, put a check next to the relative condition then click the <b>+Add Condition</b> button.</p>"}
+        "policyEditor": {
+          "value": "<p>To specify the location of the new condition, put a check next to the relative condition then click the <b>+Add Condition</b> button.</p>"
+        }
       }
     },
     "wrc-policy-editor": {
       "labels": {
-        "monthDay": {"value": "Range: -31 to 31"},
-        "dateTime": {"value": "Format: y-MM-dd HH:mm:ss [HH:mm:ss] (e.g. 2006-04-25 00:00:00)"},
-        "time": {"value": "Format: HH:mm:ss (e.g. 14:22:47)"},
-        "gmtOffset": {"value": "Format: GMT+|-h:mm (e.g. GMT-5:00)"},
-        "weekDay": {"value": "e.g. Sunday, Monday, Tuesday, ..."},
-        "or": {"value": "or"},
-        "not": {"value": "NOT"},
-        "combination": {"value": "Combination"},
+        "monthDay": {
+          "value": "Range: -31 to 31"
+        },
+        "dateTime": {
+          "value": "Format: y-MM-dd HH:mm:ss [HH:mm:ss] (e.g. 2006-04-25 00:00:00)"
+        },
+        "time": {
+          "value": "Format: HH:mm:ss (e.g. 14:22:47)"
+        },
+        "gmtOffset": {
+          "value": "Format: GMT+|-h:mm (e.g. GMT-5:00)"
+        },
+        "weekDay": {
+          "value": "e.g. Sunday, Monday, Tuesday, ..."
+        },
+        "or": {
+          "value": "or"
+        },
+        "not": {
+          "value": "NOT"
+        },
+        "combination": {
+          "value": "Combination"
+        },
         "nodata": {
-          "Policy": {"value": "Use <b>+ Add Condition</b> button to add a policy condition."},
-          "DefaultPolicy": {"value": "No default security policy conditions defined."}
+          "Policy": {
+            "value": "Use <b>+ Add Condition</b> button to add a policy condition."
+          },
+          "DefaultPolicy": {
+            "value": "No default security policy conditions defined."
+          }
         }
       },
       "tables": {
@@ -978,6 +1098,9 @@ define({
     },
     "wrc-common": {
       "buttons": {
+        "action": {
+          "label": "Action"
+        },
         "apply": {
           "label": "Apply"
         },
@@ -989,6 +1112,9 @@ define({
         },
         "cancel": {
           "label": "Cancel"
+        },
+        "restart": {
+          "label": "Restart"
         },
         "yes": {
           "label": "Yes"
@@ -1020,9 +1146,6 @@ define({
         "savenow": {
           "label": "Save Now"
         },
-        "action": {
-          "label": "Action"
-        },
         "next": {
           "label": "Next"
         },
@@ -1031,6 +1154,12 @@ define({
         },
         "finish": {
           "label": "Finish"
+        },
+        "done": {
+          "label": "Done"
+        },
+        "close": {
+          "label": "Close"
         }
       },
       "tooltips": {
@@ -1073,11 +1202,26 @@ define({
         "remove": {
           "value": "Remove"
         },
-        "noData" : {
+        "noData": {
           "value": "No Data"
         },
-        "preloader" : {
+        "preloader": {
           "value": "Preloader"
+        },
+        "checkAll": {
+          "value": "Check All"
+        },
+        "checkNone": {
+          "value": "Uncheck All"
+        },
+        "checkSome": {
+          "value": "Clear Checked"
+        },
+        "close": {
+          "value": "Close"
+        },
+        "recentPages": {
+          "value": "Toggle visibility of history"
         }
       },
       "menu": {
@@ -1113,20 +1257,24 @@ define({
         "incorrectFileContent": {
           "detail": "'{0}' contains JSON, but it is not a JSON representation of a {1}!"
         },
-        "copiedToClipboard" : {
+        "copiedToClipboard": {
           "detail": "Data was copied to clipboard!"
         },
-        "emptyCellData" : {
+        "emptyCellData": {
           "detail": "Data not copied to clipboard because selected cell was empty!"
         },
-        "emptyRowData" : {
+        "emptyRowData": {
           "detail": "Data not copied to clipboard because selected row was empty!"
         }
       },
       "contextMenus": {
         "copyData": {
-          "cell": {"label": "Copy Cell to Clipboard"},
-          "row": {"label": "Copy Row to Clipboard"}
+          "cell": {
+            "label": "Copy Cell to Clipboard"
+          },
+          "row": {
+            "label": "Copy Row to Clipboard"
+          }
         }
       }
     },
@@ -1214,10 +1362,10 @@ define({
         "action": {
           "unableToPerform": {
             "summary": "Message",
-            "detail": "Console backend call generated a '{0}' response when attempting to perform specified action on '{1}'."
+            "detail": "Console backend call generated a '{0}' response when attempting to perform '{1}' action"
           },
           "actionNotPerformed": {
-            "detail": "Unable to perform '{0}' action on one or more of the checked items."
+            "detail": "Unable to perform '{0}' action on one or more of the checked items"
           },
           "actionSucceeded": {
             "summary": "The '{0}' action was successfully performed!"
@@ -1352,22 +1500,22 @@ define({
           "detail": "Attempt Failed: "
         },
         "badRequest": {
-          "detail": "Unable to process the submitted file or request "
+          "detail": "Unable to process the submitted file or request"
         },
         "invalidCredentials": {
-          "detail": "WebLogic Domain credentials are not valid "
+          "detail": "WebLogic Domain credentials are not valid"
         },
         "invalidUrl": {
-          "detail": "WebLogic Domain URL is not reachable "
+          "detail": "WebLogic Domain URL is not reachable"
         },
         "notInRole": {
           "detail": "Attempt Failed: The user is not an Admin, Deployer, Operator or Monitor"
         },
         "notSupported": {
-          "detail": "WebLogic Domain is not supported "
+          "detail": "WebLogic Domain is not supported"
         },
         "unexpectedStatus": {
-          "detail": "Unexpected result (status: {0}) "
+          "detail": "Unexpected result (status: {0})"
         },
         "cbeRestApi": {
           "requestUnsuccessful": {
@@ -1423,7 +1571,35 @@ define({
         }
       }
     },
+    "wrc-message-line": {
+      "menus": {
+        "more": {
+          "clear": {
+            "label": "Clear Message"
+          },
+          "suppress": {
+            "info": {
+              "label": "Suppress Info Messages"
+            },
+            "warning": {
+              "label": "Suppress Warning Messages"
+            }
+          }
+        }
+      }
+    },
     "wrc-electron": {
+      "common": {
+        "save": "Save",
+        "dismiss": "Dismiss"
+      },
+      "messages": {
+        "initializing": "Initializing...",
+        "failure-messagebox": {
+          "title": "Failure starting remote console",
+          "button": "Exit"
+        }
+      },
       "labels": {
         "app": {
           "appName": {
@@ -1445,11 +1621,24 @@ define({
           "hide": {
             "value": "Hide {0}"
           },
+          "hide-others": {
+            "value": "Hide Others"
+          },
+          "show-all": {
+            "value": "Show All"
+          },
           "quit": {
             "value": "Quit {0}"
+          },
+          "preferences": {
+            "value": "Preferences"
           }
         },
         "file": {
+          "label": "File",
+          "newWindow": {
+            "value": "New Window"
+          },
           "newProject": {
             "value": "New Project"
           },
@@ -1464,42 +1653,171 @@ define({
           },
           "renameProject": {
             "value": "Rename \"{0}\"..."
+          },
+          "settings": {
+            "value": "Settings"
+          },
+          "preferences": {
+            "value": "Preferences",
+            "mac": {
+              "value": "Application Preferences"
+            }
           }
         },
+        "edit": {
+          "label": "Edit",
+          "undo": {
+            "label": "Undo"
+          },
+          "redo": {
+            "label": "Redo"
+          },
+          "cut": {
+            "label": "Cut"
+          },
+          "copy": {
+            "label": "Copy"
+          },
+          "paste": {
+            "label": "Paste"
+          },
+          "select-all": {
+            "label": "Select All"
+          },
+          "find": {
+            "label": "Find",
+            "prompt": {
+              "title": "Find in Page",
+              "button": "Find"
+            }
+          },
+          "find-next": {
+            "label": "Find"
+          }
+        },
+        "view": {
+          "label": "View"
+        },
         "help": {
+          "label": "Help",
           "checkForUpdates": {
             "value": "Check for \"{0}\" Updates..."
           },
           "visit": {
             "value": "Visit {0} Github Project"
           }
+        },
+        "updates": {
+          "value": "Updates Available - Click here",
+          "downloadFailed": {
+            "title": "Download failed",
+            "message": "Error from downloader: {0}"
+          }
+        },
+        "settings": {
+          "title": "Settings",
+          "section": {
+            "networking": {
+              "label": "Networking"
+            },
+            "other-list": {
+              "label": "Other Java System Properties"
+            }
+          },
+          "other-list": {
+            "label": "Add Property",
+            "add": {
+              "label": "Enter property in this format: key=value"
+            },
+            "help": "Java system properties are case-sensitive."
+          },
+          "trust-store": {
+            "path": {
+              "label": "Trust Store Path",
+              "button": {
+                "label": "Choose a Trust Store file"
+              }
+            },
+            "type": {
+              "help": "Common types include JKS, PKCS12, Windows-ROOT, KeyChainStore. See javax.net.ssl.trustStoreType documentation for more types.",
+              "label": "Trust Store Type"
+            },
+            "key": {
+              "label": "Trust Store Key"
+            }
+          },
+          "proxy": {
+            "help": "Enter the host and port of the proxy server.",
+            "label": "Proxy Address",
+            "error": {
+              "title": "Invalid proxy address",
+              "details": "Enter URL in this format: protocol://host:port, where protocol must be one of: socks (which is socks5), socks4, socks5, http, https."
+            }
+          },
+          "connect-timeout": {
+            "label": "Administration Server Connection Timeout",
+            "help": "Specify how long (in milliseconds) to wait for a connection to succeed."
+          },
+          "read-timeout": {
+            "label": "Administration Server Read Timeout",
+            "help": "Specify how long (in milliseconds) to wait for the server to respond to a request."
+          },
+          "disable-host-name-verification": {
+            "label": "Disable host name verification?",
+            "help": "Disabling host name verification increases your vulnerability to man-in-the-middle attacks."
+          }
+        },
+        "preferences": {
+          "no": "No",
+          "yes": "Yes",
+          "title": "Preferences",
+          "section": {
+            "unsaved-confirmation": {
+              "label": "Confirmation Alerts",
+              "appExit": {
+                "label": "Always prompt to save any unsaved changes before closing the application?",
+                "help": "Unsaved changes are discarded when the application closes."
+              },
+              "unload": {
+                "label": "Before Unload",
+                "help": "You are exiting a blah blah, but there are unsaved changes, exit anyway?"
+              }
+            },
+            "credential-storage": {
+              "label": "Credential Storage",
+              "confirmation": {
+                "label": "Store encrypted credentials for your projects?",
+                "apple": {
+                  "help": "The Apple Keychain Store and Chrome Safe Storage enable the safety of this storage."
+                },
+                "linux": {
+                  "help": "The Linux Desktop keyring and Chrome Safe Storage enable the safety of this storage."
+                },
+                "windows": {
+                  "help": "The Windows cryptography API and Chrome Safe Storage enable the safety of this storage."
+                }
+              }
+            }
+          }
         }
       },
       "prompt": {
         "file": {
           "newProject": {
-            "title": {
-              "value": "New Project"
-            },
-            "label": {
-              "value": "Name"
+            "title": "New Project",
+            "label": "Name",
+            "already-exists-error": {
+              "title": "Project Already Exists",
+              "detail": "A project named \"{0}\" already exists!"
             }
           },
           "nameProject": {
-            "title": {
-              "value": "Name Project"
-            },
-            "label": {
-              "value": "Name"
-            }
+            "title": "Name Project",
+            "label": "Name"
           },
           "renameProject": {
-            "title": {
-              "value": "Rename \"{0}\""
-            },
-            "label": {
-              "value": "New name"
-            }
+            "title": "Rename \"{0}\"",
+            "label": "New name"
           }
         }
       },
@@ -1507,28 +1825,30 @@ define({
         "help": {
           "checkForUpdates": {
             "alreadyOnCurrent": {
-              "title": {
-                "value": "You Are Up To Date"
+              "title": "You Are Up To Date",
+              "message": "Current version is {0}"
+            },
+            "updateDownloaded": {
+              "message": "Update downloaded and will be installed upon exit"
+            },
+            "restartNow": {
+              "message": "Restart now with {0}?"
+            },
+            "button": {
+              "gotosite": {
+                "value": "Go to site"
               },
-              "message": {
-                "value": "Current version is {0}"
+              "download-and-install": {
+                "value": "Download and install version {0}"
               }
             },
             "newVersionAvailable": {
-              "title": {
-                "value": "Newer Version Available!"
-              },
-              "message": {
-                "value": "Go to https://github.com/oracle/weblogic-remote-console/releases to get version {0}"
-              }
+              "title": "Newer Version Available!",
+              "message": "Go to {0} to get version {1}"
             },
             "connectionIssue": {
-              "title": {
-                "value": "Connection Issue"
-              },
-              "message": {
-                "value": "Could not reach update site"
-              }
+              "title": "Connection Issue",
+              "message": "Could not reach update site"
             }
           }
         }

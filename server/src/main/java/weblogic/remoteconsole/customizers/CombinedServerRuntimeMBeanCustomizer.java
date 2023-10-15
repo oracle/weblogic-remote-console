@@ -20,6 +20,7 @@ import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
+import weblogic.remoteconsole.server.webapp.BaseResource;
 
 /** 
  * Custom code for processing the CombinedServerRuntimeMBean 
@@ -27,6 +28,15 @@ import weblogic.remoteconsole.server.repo.Value;
 public class CombinedServerRuntimeMBeanCustomizer {
 
   private CombinedServerRuntimeMBeanCustomizer() {
+  }
+
+  // Customize the collection's JAXRS resource
+  public static BaseResource createResource(InvocationContext ic) {
+    if (ic.getBeanTreePath().isCollection()) {
+      return new CombinedServerRuntimeMBeanCollectionResource();
+    } else {
+      return null;
+    }
   }
 
   public static Response<Value> start(

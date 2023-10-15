@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -20,7 +20,7 @@ public class WebLogicEditTreeBeanRepoDef extends WebLogicBeanRepoDef {
 
   @Override
   protected String[] getRootChildNames() {
-    return new String[] { "DomainMBean" };
+    return new String[] { "DomainMBean", "DomainRuntimeMBean" };
   }
 
   public WebLogicEditTreeBeanRepoDef(WebLogicMBeansVersion mbeansVersion) {

@@ -25,8 +25,23 @@ You can verify you've installed the correct versions of the listed software by r
 ```
 
 ### Build from source {id="source"}
-1. Clone the repository at [https://github.com/oracle/weblogic-remote-console](https://github.com/oracle/weblogic-remote-console).
-1. In a command window, navigate to the home directory of the cloned repository.
-1. Run `mvn clean install`.
 
-When the build is successful, a `console.zip` file is created in the `console-backend/installer/target` directory. You can now install and run the Remote Console as described in [Install the WebLogic Remote Console]({{< relref "setup" >}}).
+1. Clone the repository at [https://github.com/oracle/weblogic-remote-console](https://github.com/oracle/weblogic-remote-console).
+1. Open a command window and navigate to the home directory of the cloned repository.
+1. Run `mvn clean install`. After the build finishes, confirm that `/installer/target/console.zip` was created.
+1. From the home directory of the repository, run the `build-electron.sh` script.
+
+The WebLogic Remote Console executable file is created under `/electron/dist/`.
+
+To install the WebLogic Remote Console, follow the instructions at [Get Started]({{< relref "setup/_index.md#install" >}}).
+
+{{%expand "It's also possible, though not recommended, to use console.zip to run the WebLogic Remote Console as a browser application."%}}
+{{% notice warning %}}
+The browser application has significant limitations in terms of both security and functionality. It should be used for development purposes **only**.
+{{% /notice %}}
+1. After running `mvn clean install`, extract the contents of `/installer/target/console.zip` to a new directory. 
+1. Open a command window and navigate to the new directory. 
+1. Run `java -jar console.jar`. 
+1. Open a browser window and enter `http://localhost:8012` in the address bar.
+
+{{% /expand%}}

@@ -3,6 +3,9 @@
 
 package weblogic.remoteconsole.server.connection;
 
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
@@ -24,6 +27,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -33,7 +37,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import io.helidon.config.Config;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.HttpUrlConnectorProvider;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
@@ -44,6 +49,7 @@ import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
+import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.filter.ClientAuthFeature;
 import weblogic.remoteconsole.server.utils.ResponseHelper;
 import weblogic.remoteconsole.server.utils.WebLogicRestClient;
@@ -55,7 +61,7 @@ public class ConnectionManager {
 
   // String constants for handling WebLogic REST response mapping
   private static final String NAME = "name";
-  private static final String DOMAINVER = "domainVersion";
+  private static final String WEBLOGIC_VERSION = "weblogicVersion";
   private static final String RETURN = "return";
   private static final String CONSOLE_BACKEND = "consoleBackend";
   private static final String CONSOLE_EXTENSION_VERSION = "version";
@@ -68,69 +74,65 @@ public class ConnectionManager {
   // Default connection timeouts - should match application.yaml
   public static final long DEFAULT_CONNECT_TIMEOUT_MILLIS = 10000L;
   public static final long DEFAULT_READ_TIMEOUT_MILLIS = 20000L;
-
-  // Current timeout settings in milliseconds
-  private long connectTimeout;
-  private long readTimeout;
-
-  // SameSite Cookie Settings
-  private boolean isSameSiteCookieEnabled = false;
-  private String valueSameSiteCookie = null;
+  private static HostnameVerifier defaultHNV = HttpsURLConnection.getDefaultHostnameVerifier();
 
   // Collection of connections
   private ConcurrentHashMap<String, Connection> connections =
     new ConcurrentHashMap<String, Connection>();
 
-  /** Create the Connection Manager */
-  public ConnectionManager(Config config) {
+  private static long getConnectTimeout() {
     // Setup connection timeouts
-    connectTimeout =
-      config
-        .get("connectTimeoutMillis")
-        .asLong()
-        .orElse(DEFAULT_CONNECT_TIMEOUT_MILLIS);
-    readTimeout =
-      config
-        .get("readTimeoutMillis")
-        .asLong()
-        .orElse(DEFAULT_READ_TIMEOUT_MILLIS);
-    // Check for SameSite Cookie attribute settings
-    isSameSiteCookieEnabled =
-      config
+    return ConsoleBackendRuntime.INSTANCE.getConfig()
+      .get("connectTimeoutMillis")
+      .asLong()
+      .orElse(DEFAULT_CONNECT_TIMEOUT_MILLIS);
+  }
+
+  private static long getReadTimeout() {
+    return ConsoleBackendRuntime.INSTANCE.getConfig()
+      .get("readTimeoutMillis")
+      .asLong()
+      .orElse(DEFAULT_READ_TIMEOUT_MILLIS);
+  }
+
+  public static boolean isSameSiteCookieEnabled() {
+    return ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("enableSameSiteCookieValue")
         .asBoolean()
         .orElse(false);
-    valueSameSiteCookie =
-      config
+  }
+
+  public static String getSameSiteCookieValue() {
+    if (!isSameSiteCookieEnabled()) {
+      return null;
+    }
+    String ret =
+      ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("valueSameSiteCookie")
         .asString()
         .orElse(null);
+    LOGGER.info("SameSite Cookie attribute is enabled using value: " + ret);
+    return ret;
+  }
 
-    if (isSameSiteCookieEnabled) {
-      LOGGER.info("SameSite Cookie attribute is enabled using value: " + valueSameSiteCookie);
-    }
-
+  private static void maybeDisableHostnameVerification() {
     // Check and disable HNV for the CBE with all connections
     boolean disableHostnameVerification =
-      config
+      ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("disableHostnameVerification")
         .asBoolean()
         .orElse(false);
-
     if (disableHostnameVerification) {
-      disableHNV();
       LOGGER.info("Hostname verification for SSL/TLS connections has been disabled!");
+      HttpsURLConnection.setDefaultHostnameVerifier(
+        new HostnameVerifier() {
+          public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
+            return true;
+          }
+        });
+    } else {
+      HttpsURLConnection.setDefaultHostnameVerifier(defaultHNV);
     }
-  }
-
-  /** Disable host name verification for all outbound connections */
-  private static void disableHNV() {
-    javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
-      new HostnameVerifier() {
-        public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
-          return true;
-        }
-      });
   }
 
   /** Setup the JAX-RS client with an SSLContext that allows connections without any certificates */
@@ -161,19 +163,36 @@ public class ConnectionManager {
     builder.sslContext(context);
   }
 
+  private static void setProxyOverride(ClientBuilder builder, String proxyString) throws Exception {
+    Proxy proxy;
+    if ((proxyString == null) || (proxyString.length() == 0) || proxyString.equalsIgnoreCase("direct")) {
+      proxy = Proxy.NO_PROXY;
+    } else {
+      if (!proxyString.contains("://")) {
+        throw new Exception("Bad proxy string format");
+      }
+      String protocol = proxyString.substring(0, proxyString.indexOf("://"));
+      String host = proxyString.substring(
+        proxyString.indexOf("://") + 3,
+        proxyString.lastIndexOf(":"));
+      String portString = proxyString.substring(proxyString.lastIndexOf(":") + 1);
+      int port = Integer.parseInt(portString);
+      if (protocol.equals("http")) {
+        proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
+      } else if (protocol.startsWith("socks")) {
+        proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
+      } else {
+        throw new Exception("Unrecognized protocol in proxy string");
+      }
+    }
+    ((ClientConfig) builder.getConfiguration())
+      .connectorProvider(new HttpUrlConnectorProvider()
+        .connectionFactory(url -> (HttpURLConnection) url.openConnection(proxy)));
+  }
+
   /** Get a UUID using a secure random number generator */
   private static String getUUID() {
     return UUID.randomUUID().toString();
-  }
-
-  /** Determine if the SameSite Cookie attribute is to be added to a new Cookie */
-  public boolean isSameSiteCookieEnabled() {
-    return isSameSiteCookieEnabled;
-  }
-
-  /** Obtain the value of the SameSite Cookie attribute when enabled */
-  public String getSameSiteCookieValue() {
-    return valueSameSiteCookie;
   }
 
   /** Create a new connection by the Connection Manager */
@@ -201,7 +220,9 @@ public class ConnectionManager {
         consoleExtensionVersion,
         capabilities,
         username,
-        client
+        client,
+        getConnectTimeout(),
+        getReadTimeout()
       );
     connections.put(id, result);
 
@@ -216,6 +237,7 @@ public class ConnectionManager {
    */
   public Connection makeConnection(String domainUrl, String username, String password) {
     Connection result = null;
+    maybeDisableHostnameVerification();
 
     // Try to make the connection and check to see if the response was successful
     ConnectionResponse response = tryConnection(domainUrl, username, password);
@@ -237,13 +259,19 @@ public class ConnectionManager {
    * @param insecure The flag to indicate an insecure connection without certificate checks
    * @return The connection response
    */
-  public ConnectionResponse tryConnection(String domainUrl, String auth, List<Locale> locales, boolean insecure) {
+  public ConnectionResponse tryConnection(
+    String domainUrl,
+    String auth,
+    List<Locale> locales,
+    boolean insecure,
+    String proxyOverride) {
 
+    maybeDisableHostnameVerification();
     // Setup the JAX-RS client for use with the connection using the suppplied authorization header
     ClientBuilder builder =
       ClientBuilder.newBuilder()
-        .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
-        .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
+        .connectTimeout(getConnectTimeout(), TimeUnit.MILLISECONDS)
+        .readTimeout(getReadTimeout(), TimeUnit.MILLISECONDS)
         .register(JacksonJsonProvider.class)
         .register(MultiPartFeature.class)
         .register(ClientAuthFeature.authorization(auth));
@@ -257,7 +285,13 @@ public class ConnectionManager {
         return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, null, "Unable to setup insecure connection");
       }
     }
-
+    if ((proxyOverride != null) && (proxyOverride.length() > 0)) {
+      try {
+        setProxyOverride(builder, proxyOverride);
+      } catch (Exception e) {
+        return newConnectionResponse(Status.BAD_REQUEST, null, "Unable to setup proxy");
+      }
+    }
     // Create the JAX-RS client
     Client client = builder.build();
 
@@ -296,8 +330,8 @@ public class ConnectionManager {
     // Create the JAX-RS client for use with the connection using the suppplied credentials
     Client client =
       ClientBuilder.newBuilder()
-        .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
-        .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
+        .connectTimeout(getConnectTimeout(), TimeUnit.MILLISECONDS)
+        .readTimeout(getReadTimeout(), TimeUnit.MILLISECONDS)
         .register(JacksonJsonProvider.class)
         .register(MultiPartFeature.class)
         .register(HttpAuthenticationFeature.basic(username, password))
@@ -436,21 +470,51 @@ public class ConnectionManager {
    */
   private ConnectionResponse connect(String domainUrl, String username, Client client, List<Locale> locales) {
 
-    // Try to get WebLogic version from RESTful Management endpoint
-    // It returns a failure response if there was one
-    ConnectionResponse response = doConnect(domainUrl, client);
-    if (response.getEntity() == null) {
-      return response;
+    // Try to connect to the admin server's domainConfig endpoint to get the domain's name
+    // and info about the console rest extension
+    ConnectionResponse domainConfigResponse =
+      doConnectAndReportProblems(domainUrl, client, "domainConfig", getDomainConfigQuery());
+    JsonObject domainConfigEntity = domainConfigResponse.getEntity();
+    if (domainConfigEntity == null) {
+      // Couldn't connect - return the problem.
+      return domainConfigResponse;
+    }
+  
+    // Retrieve the domain's name and info about console rest extension from the response body.
+    String domainName = domainConfigEntity.getString(NAME, null);
+    if (domainName == null) {
+      LOGGER.info("Unexpected response from WebLogic Domain: No name found!");
+      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Missing name");
+    }
+    String consoleExtensionVersion = getConsoleExtensionVersion(domainConfigEntity);
+    Set<String> capabilities = getCapabilities(domainUrl, client, domainConfigEntity);
+    if (consoleExtensionVersion != null) {
+      LOGGER.info(
+        "The domain has version '" + consoleExtensionVersion + "' of the WebLogic Remote Console Extension installed."
+      );
+    } else {
+      LOGGER.info("The domain does not have the WebLogic Remote Console Extension installed.");
+    }
+  
+    // Try to connect to the admin server's serverRuntime endpoint to get the domain's weblogicVersion
+    ConnectionResponse serverRuntimeResponse =
+      doConnectAndReportProblems(domainUrl, client, "serverRuntime", getServerRuntimeQuery());
+    JsonObject serverRuntimeEntity = serverRuntimeResponse.getEntity();
+    if (serverRuntimeEntity == null) {
+      // Couldn't connect - return the problem.
+      return serverRuntimeResponse;
     }
 
-    JsonObject entity = response.getEntity();
-
-    // Check response data for the required connection information
-    String domainVersion = entity.getString(DOMAINVER, null);
-    String domainName = entity.getString(NAME, null);
-    if ((domainVersion == null) || (domainName == null)) {
-      LOGGER.info("Unexpected response from WebLogic Domain: No name or version information found!");
-      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Missing version");
+    // Retrieve the weblogicVersion from the response body.
+    String wlsVersion = serverRuntimeEntity.getString(WEBLOGIC_VERSION, null);
+    if (wlsVersion == null) {
+      LOGGER.info("Unexpected response from WebLogic Domain: No weblogicVersion found!");
+      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Missing weblogicVersion");
+    }
+    String domainVersion = computeDomainVersion(wlsVersion);
+    if (domainVersion == null) {
+      LOGGER.info("Unexpected response from WebLogic Domain: cannot parse weblogicVersion: " + wlsVersion);
+      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Cannot parse weblogicVersion");
     }
 
     // Check that the WebLogic domain's version is one the console supports
@@ -465,16 +529,6 @@ public class ConnectionManager {
     }
 
     WebLogicVersion weblogicVersion = WebLogicVersions.getVersion(domainVersion);
-
-    String consoleExtensionVersion = getConsoleExtensionVersion(entity);
-    Set<String> capabilities = getCapabilities(domainUrl, client, entity);
-    if (consoleExtensionVersion != null) {
-      LOGGER.info(
-        "The domain has version '" + consoleExtensionVersion + "' of the WebLogic Remote Console Extension installed."
-      );
-    } else {
-      LOGGER.info("The domain does not have the WebLogic Remote Console Extension installed.");
-    }
 
     // FortifyIssueSuppression Log Forging
     // domainVersion is from a trusted source - WebLogic - and is,
@@ -503,6 +557,29 @@ public class ConnectionManager {
           client
         )
       );
+  }
+
+  private String computeDomainVersion(String weblogicVersion) {
+    // e.g. "WebLogic Server 14.1.1.0.0  Thu Mar 26 03:15:09 GMT 2020 2000885" -> "14.1.1.0.0"
+    String prefix = "WebLogic Server ";
+    int idx1 = weblogicVersion.indexOf(prefix);
+    if (idx1 != -1) {
+      // Look for
+      // - "...WebLogic Server blah ..."
+      // - "...WebLogic Server blah\n..."
+      // - "...WebLogic Server blah"
+      // then assume blah is the weblogic version number
+      int start = idx1 + prefix.length();
+      int idx2 = weblogicVersion.indexOf(" ", start);
+      if (idx2 == -1) {
+        idx2 = weblogicVersion.indexOf("\n", start);
+      }
+      if (idx2 == -1) {
+        idx2 = weblogicVersion.length();
+      }
+      return weblogicVersion.substring(start, idx2);
+    }
+    return null; // unparsable weblogicVersion
   }
 
   private JsonObject getConsoleBackend(JsonObject entity) {
@@ -567,6 +644,9 @@ public class ConnectionManager {
 
   // Probably should move this into its own class
   private JsonObject getCapabilityToBeanFeature() {
+    // Note: weblogic.remoteconsole.server.repo.weblogic.WDTCapabilities
+    // needs to list any config mbean based features that are in this
+    // list and supported by WDT:
     return
       Json.createObjectBuilder()
         .add(
@@ -584,6 +664,17 @@ public class ConnectionManager {
           Json.createObjectBuilder()
             .add("type", "weblogic.management.runtime.JTARuntimeMBean")
             .add("action", "currentTransactions")
+        )
+        .add(
+          // Just look for one of the JRF security providers.  If it's there, the others must be too.
+          "JRFSecurityProviders",
+          Json.createObjectBuilder()
+            .add("type", "oracle.security.wls.oam.providers.authenticator.OAMAuthenticatorMBean")
+        )
+        .add(
+          "AllowList",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.management.configuration.AllowListMBean")
         )
         .build();
   }
@@ -626,17 +717,17 @@ public class ConnectionManager {
    * @return The connection Response and the results populated with the values returned from WebLogic
    *     REST call
    */
-  private ConnectionResponse doConnect(String domainUrl, Client client) {
+  private ConnectionResponse doConnect(String domainUrl, Client client, String tree, JsonObject query) {
     // Build request that will check the credentials and the connection...
     WebLogicRestRequest webLogicRestRequest =
       WebLogicRestRequest.builder()
-        .path("/domainConfig/search")
+        .path("/" + tree + "/search")
         .serverUrl(domainUrl)
         .client(client)
         .build();
 
     // Attempt to connect to the WebLogic Domain URL...
-    try (Response response = WebLogicRestClient.post(webLogicRestRequest, getDomainFieldsQuery())) {
+    try (Response response = WebLogicRestClient.post(webLogicRestRequest, query)) {
       // FortifyIssueSuppression Log Forging
       // This response is from a trusted source - WebLogic - and is,
       // therefore, not a forging risk
@@ -648,7 +739,42 @@ public class ConnectionManager {
       if (respStatus == Status.INTERNAL_SERVER_ERROR) {
         return newConnectionResponse(Status.NOT_FOUND, client, "Not able to connect");
       } else if (respStatus != Status.OK) {
-        return newConnectionResponse(respStatus, client, response.getStatusInfo().getReasonPhrase());
+        String defaultMessage = response.getStatusInfo().getReasonPhrase();
+        String message = defaultMessage;
+        JsonObject entity = (JsonObject) response.getEntity();
+        if (entity != null) {
+          try {
+            message = entity.getJsonArray("messages").getJsonObject(0).getString("message");
+            // Chop off the part up to and including "Exception: "
+            // This probably works in all other languages since the exception name
+            // is an English object name.  If not, the message is still good, but a little
+            // uglier.
+            if (message.contains("Exception: ")) {
+              message = message.substring(message.indexOf("Exception: ") + "Exception: ".length());
+            }
+            // See if the user is trying to connect to the wrong port, e.g. the admin port is
+            // enabled and the user is trying to connect via the normal SSL port.
+            //
+            // WLS always returns a 403 with a non-localized message that says:
+            //   Console/Management requests or requests with &lt;require-admin-traffic&gt;
+            //   specified to &#39;true&#39; can only be made through an administration channel
+            if (message.contains("require-admin-traffic") && respStatus == Status.FORBIDDEN) {
+              // Switch from a 403 to a 404 and replace the message with a friendlier one
+              respStatus = Status.NOT_FOUND;
+              message = LocalizedConstants.USE_ADMIN_PORT.getEnglishText();
+            } else {
+              // Servers can give long html responses (e.g. WebLogic does so for
+              // failed auth).  If it looks like that, just go back to the default
+              // message.
+              if ((message.length() > 80) || message.toLowerCase().contains("</html")) {
+                message = defaultMessage;
+              }
+            }
+          } catch (Exception ignore) {
+            // Deliberately blank, message will be default if there's an exception
+          }
+        }
+        return newConnectionResponse(respStatus, client, message);
       }
 
       // Populate the results from the JSON response which are found only when the invoke was
@@ -670,17 +796,60 @@ public class ConnectionManager {
     }
   }
 
+  private ConnectionResponse doConnectAndReportProblems(
+    String domainUrl,
+    Client client,
+    String tree,
+    JsonObject query
+  ) {
+    ConnectionResponse response = doConnect(domainUrl, client, tree, query);
+    if (response.getEntity() == null) {
+      // FortifyIssueSuppression Log Forging
+      // domainUrl comes from the user.  getStatus and getStatusCode() are
+      // well-known values.  There is no forging risk.
+      LOGGER.finest("Entity is null on connection attempt to "
+        + domainUrl
+        + ", status is "
+        + response.getStatus()
+        + "(" + response.getStatus().getStatusCode() + ")"
+      );
+      if (domainUrl.endsWith("/console")) {
+        return newConnectionResponse(Status.NOT_FOUND, client,
+          LocalizedConstants.TAKE_OFF_THE_SLASH_CONSOLE.getEnglishText());
+      }
+      if (domainUrl.endsWith("/management")) {
+        return newConnectionResponse(Status.NOT_FOUND, client,
+          LocalizedConstants.TAKE_OFF_THE_SLASH_MANAGEMENT.getEnglishText());
+      }
+      if (Status.OK.getStatusCode() == response.getStatus().getStatusCode()) {
+        return newConnectionResponse(Status.NOT_FOUND, client,
+          LocalizedConstants.BAD_PATH_GOOD_CONNECTION.getEnglishText());
+      }
+    }
+    return response;
+  }
+
   /**
    * Creates the WebLogic REST domainConfig query for returning the domain
-   * info needed to determine the domain's name and version.
+   * info needed to determine the domain's name and console rest extension info.
    */
-  private JsonObject getDomainFieldsQuery() {
+  private JsonObject getDomainConfigQuery() {
     BeanQueryBuilder builder = new BeanQueryBuilder();
     builder.addField(NAME);
-    builder.addField(DOMAINVER);
     BeanQueryBuilder consoleBackendBuilder = builder.getChild(CONSOLE_BACKEND);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_VERSION);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_CAPABILITIES);
+    JsonObject query = builder.toJson().build();
+    return query;
+  }
+
+  /**
+   * Creates the WebLogic REST serverRuntime query for returning the info needed
+   * to determine the domain's version.
+   */
+  private JsonObject getServerRuntimeQuery() {
+    BeanQueryBuilder builder = new BeanQueryBuilder();
+    builder.addField(WEBLOGIC_VERSION);
     JsonObject query = builder.toJson().build();
     return query;
   }

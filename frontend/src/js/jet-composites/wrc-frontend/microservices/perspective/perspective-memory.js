@@ -17,7 +17,15 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       this.perspective = PerspectiveManager.getById(perspectiveId);
       this.beanPathHistory = {
         items: [],
-        visibility: false
+        visibility: false,
+        navigator: {
+          visibility: false,
+          position: 0,
+          icons: {
+            previous: {state: 'disabled'},
+            next: {state: 'disabled'}
+          }
+        }
       };
       this.breadcrumbs = {
         items: [],
@@ -46,10 +54,12 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       this.tabstrip = {
         tab: {
           'shoppingcart': {cachedState: {}},
-          'dataproviders': {cachedState: {}},
+          'provider-management': {cachedState: {}},
+          'tips': {cachedState: {}},
           'ataglance': {cachedState: {}}
         }
       };
+      this.wizard = {usedIf: {}};
     }
 
     function getNthChildrenIndex(name) {
@@ -341,6 +351,40 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       },
       setTabstripTabCachedState: function (tabId, value) {
         this.tabstrip.tab[tabId] = {cachedState: value};
+      },
+      removeWizardUsedIfData: function (key) {
+        if (typeof key !== 'undefined' && key !== null) {
+          delete this.wizard.usedIf[key];
+        }
+      },
+      removeAllWizardUsedIfData: function () {
+        this.wizard.usedIf = {};
+      },
+      upsertWizardUsedIfData: function (key, fieldName, fieldValue) {
+        if ((typeof key !== 'undefined' && key !== null) &&
+            (typeof fieldName !== 'undefined' && fieldName !== null)
+        ) {
+          let entry = this.wizard.usedIf[key];
+          if (typeof entry === 'undefined') {
+            this.wizard.usedIf[key] = [];
+            entry = this.wizard.usedIf[key];
+          }
+          const index = entry.map(item => item.property).indexOf(fieldName);
+          if (index !== -1) {
+            entry[index].value = fieldValue;
+          }
+          else {
+            entry.push({property: fieldName, value: fieldValue});
+          }
+        }
+      },
+      getWizardUsedIfData: function (key) {
+        let data = [];
+        if (typeof key !== 'undefined' && key !== null) {
+          const entry = this.wizard.usedIf[key];
+          if (typeof entry !== 'undefined') data = entry;
+        }
+        return data;
       }
     };
 

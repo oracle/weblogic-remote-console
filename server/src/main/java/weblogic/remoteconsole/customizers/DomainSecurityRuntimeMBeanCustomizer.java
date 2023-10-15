@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -17,7 +17,6 @@ import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
-import weblogic.remoteconsole.server.repo.BeanActionArg;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
@@ -49,10 +48,6 @@ public class DomainSecurityRuntimeMBeanCustomizer {
     BeanReaderRepoSearchResults searchResults
   ) {
     Response<List<TableRow>> response = new Response<>();
-    Response<Void> refreshResponse = refreshSecurityWarnings(ic);
-    if (!refreshResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(refreshResponse);
-    }
     Response<JsonArray> warningsResponse = getSecurityWarnings(ic);
     if (!warningsResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(warningsResponse);
@@ -62,26 +57,6 @@ public class DomainSecurityRuntimeMBeanCustomizer {
       return response.copyUnsuccessfulResponse(serversResponse);
     }
     response.setSuccess(processWarnings(warningsResponse.getResults(), serversResponse.getResults()));
-    return response;
-  }
-
-  private static Response<Void> refreshSecurityWarnings(InvocationContext ic) {
-    Response<Void> response = new Response<>();
-    Path action = new Path("refreshCache");
-    BeanTypeDef typeDef = ic.getBeanTreePath().getTypeDef();
-    if (typeDef.hasActionDef(action)) {
-      Response<Value> invokeResponse =
-        ic.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(
-          ic,
-          typeDef.getActionDef(action),
-          new ArrayList<BeanActionArg>() // no args
-        );
-      if (!invokeResponse.isSuccess()) {
-        return response.copyUnsuccessfulResponse(invokeResponse);
-      }
-    } else {
-      // Skip refreshing the warnings since the user's role doesn't allow it.
-    }
     return response;
   }
 

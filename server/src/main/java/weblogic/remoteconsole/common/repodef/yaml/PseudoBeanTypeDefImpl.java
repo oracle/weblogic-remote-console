@@ -107,8 +107,7 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     // Currently pseudo types can't trim down the base type's actions, so copy them all.
     for (BeanActionDefImpl actionDefImpl : getBaseTypeDefImpl().getActionNameToActionDefImplMap().values()) {
       addActionDefImpl(
-        new BeanActionDefImpl(
-          this,
+        createBeanActionDefImpl(
           actionDefImpl.getParentPath(),
           actionDefImpl.getSource(),
           actionDefImpl.getCustomizerSource()
@@ -183,6 +182,12 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   @Override
   public List<String> getSubTypeDiscriminatorLegalValues() {
     return getBaseTypeDefImpl().getSubTypeDiscriminatorLegalValues();
+  }
+
+
+  @Override
+  BaseBeanTypeDefImpl getDefaultSubTypeDefImpl() {
+    return getBaseTypeDefImpl().getDefaultSubTypeDefImpl();
   }
 
   @Override

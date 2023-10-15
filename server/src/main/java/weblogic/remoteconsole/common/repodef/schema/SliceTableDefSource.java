@@ -16,6 +16,7 @@ public class SliceTableDefSource extends PageDefSource {
   private ListValue<BeanPropertyDefCustomizerSource> displayedColumns = new ListValue<>();
   private ListValue<BeanPropertyDefCustomizerSource> hiddenColumns = new ListValue<>();
   private StringValue getTableRowsMethod = new StringValue();
+  private BooleanValue supportsNavigation = new BooleanValue();
 
   // The columns to initially display in the table.
   public List<BeanPropertyDefCustomizerSource> getDisplayedColumns() {
@@ -59,5 +60,15 @@ public class SliceTableDefSource extends PageDefSource {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
       getTableRowsMethod.setValue(value);
     }
+  }
+
+  // Whether this slice table's rows can be used to navigate to other beans
+  // (via an per-row 'identity' provider in the RDJ)
+  public boolean isSupportsNavigation() {
+    return supportsNavigation.getValue();
+  }
+
+  public void setSupportsNavigation(boolean value) {
+    supportsNavigation.setValue(value);
   }
 }

@@ -28,6 +28,8 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   private StringValue getMethod = new StringValue();
   private StringValue optionsMethod = new StringValue();
   private Value<BeanFieldPresentationDefSource> presentation = new Value<>(new BeanFieldPresentationDefSource());
+  private BooleanValue useUnlocalizedLegalValuesAsLabels = new BooleanValue();
+  private ListValue<LegalValueDefCustomizerSource> legalValues = new ListValue<>();
 
   public void merge(BeanFieldDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
@@ -40,6 +42,8 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
     getMethod.merge(from.getMethod, fromContainedBeanPath);
     optionsMethod.merge(from.optionsMethod, fromContainedBeanPath);
     presentation.merge(from.presentation, fromContainedBeanPath);
+    useUnlocalizedLegalValuesAsLabels.merge(from.useUnlocalizedLegalValuesAsLabels, fromContainedBeanPath);
+    legalValues.merge(from.legalValues, fromContainedBeanPath);
     mergeHelp(from, fromContainedBeanPath);
   }
 
@@ -224,6 +228,29 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
 
   public void setPresentation(BeanFieldPresentationDefSource value) {
     presentation.setValue(value);
+  }
+
+  // Whether to use the unlocalized value of each legal value as its label.
+  public boolean isUseUnlocalizedLegalValuesAsLabels() {
+    return useUnlocalizedLegalValuesAsLabels.getValue();
+  }
+
+  public void setUseUnlocalizedLegalValuesAsLabels(boolean value) {
+    useUnlocalizedLegalValuesAsLabels.setValue(value);
+  }
+
+  // Custom labels to display for this property's legal values.
+  // The property must be a string, boolean, long, or integer.
+  public List<LegalValueDefCustomizerSource> getLegalValues() {
+    return legalValues.getValue();
+  }
+
+  public void setLegalValues(List<LegalValueDefCustomizerSource> value) {
+    legalValues.setValue(value);
+  }
+
+  public void addLegalValue(LegalValueDefCustomizerSource value) {
+    legalValues.add(value);
   }
 
   public String toString() {

@@ -68,6 +68,18 @@ public class LocalizedConsoleRestExtensionConstants {
       "invalidPredicateArgumentValue",
       "Predicate: ''{0}'', Argument: ''{1}'', Error : ''{3}''"
     );
+
+    // {0} is the application name
+    addConstant(
+      "applicationHasPlan",
+      "The application ''{0}'' already has a deployment plan."
+    );
+
+    // {0} is the plan path
+    addConstant(
+      "planPathNotXml",
+      "The plan path ''{0}'' must end in ''.xml''."
+    );
   }
 
   // Find the LocalizableString for a key.

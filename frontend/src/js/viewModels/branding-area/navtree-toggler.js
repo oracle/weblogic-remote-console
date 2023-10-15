@@ -6,8 +6,8 @@
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils'],
-  function (oj, ko, Preferences, Runtime, CoreUtils) {
+define(['ojs/ojcore', 'knockout', '../../app-resizer', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils'],
+  function (oj, ko, AppResizer, Preferences, Runtime, CoreUtils) {
     function NavTreeToggler(viewParams){
       const self = this;
 
@@ -33,18 +33,12 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/preferences/prefer
         });
 
         let binding = viewParams.signaling.perspectiveSelected.add((newPerspective) => {
-          // Show navtree
-          self.navtreeVisible(true);
+          if (!self.navtreeDisabled()) {
+            // Show navtree
+            self.navtreeVisible(true);
+          }
           // Enable the toggle navtree visibility icon.
           self.navtreeDisabled(false);
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.ancillaryContentAreaToggled.add((source, visible) => {
-          // Set visibility of navtree based on a negation of
-          // the visible parameter.
-          setNavTreeVisibility(!visible, source);
         });
 
         self.signalBindings.push(binding);
@@ -52,13 +46,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/preferences/prefer
         binding = viewParams.signaling.navtreeLoaded.add((newPerspective) => {
           // Enable the toggle navtree visibility icon,
           self.navtreeDisabled(false);
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.dataProviderSectionToggled.add((visible) => {
-          // Only hide navtree if visible === true
-          if (visible) setNavTreeVisibility(false);
         });
 
         self.signalBindings.push(binding);
@@ -101,6 +88,14 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/preferences/prefer
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.beanTreeSelected.add((beanTree) => {
+          if (beanTree.type === 'home') {
+            setNavTreeVisibility(false);
+            setNavTreeDisabledState(true);
+          }
+        });
+
+        self.signalBindings.push(binding);
       };
 
       this.disconnected = function () {
@@ -130,6 +125,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/preferences/prefer
         setNavTreeVisibility(!self.navtreeVisible());
       };
 
+
       function setNavTreeDisabledState(state) {
         self.navtreeDisabled(state);
         // Set navtreeVisible observable to false, if it's
@@ -137,19 +133,41 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/preferences/prefer
         if (self.navtreeVisible()) self.navtreeVisible(!state);
       }
 
-      function signalPerspectiveSelected(visible) {
-        let ele = document.getElementById('navtree-container');
-        if (ele !== null) {
+      function getNavTreeWidthAttribute() {
+        const ele = document.getElementById('navtree-toggler-icon');
+        return (ele !== null ? ele.attributes['data-navtree-width'].value : '0');
+      }
+
+      function setNavTreeWidthAttribute(value) {
+        // Only update the 'data-navtree-width' attribute if
+        // value is greater than 0
+        if (value > 0) {
+          if (value > AppResizer.prototype.NAVTREE_MIN_WIDTH && value < AppResizer.prototype.NAVTREE_MAX_WIDTH) {
+            value = AppResizer.prototype.NAVTREE_MAX_WIDTH;
+          }
+
+          const ele = document.getElementById('navtree-toggler-icon');
+          if (ele !== null) ele.setAttribute('data-navtree-width', `${value}`);
+        }
+      }
+
+      function toggleNavTree(visible) {
+        const container = document.getElementById('navtree-container');
+        if (container !== null) {
+          setNavTreeWidthAttribute(container.offsetWidth);
           if (visible) {
-            ele.style.display = 'inline-flex';
-            signalNavTreeResized(visible, ele.offsetLeft, ele.offsetWidth);
+            container.style.display = 'inline-flex';
+            signalNavTreeResized(visible, container.offsetLeft, ~~getNavTreeWidthAttribute());
           }
           else {
-            signalNavTreeResized(visible, ele.offsetLeft, ele.offsetWidth);
-            ele.style.display = 'none';
+            container.style.display = 'none';
+            signalNavTreeResized(visible, container.offsetLeft, container.offsetWidth);
           }
-          setNavTreeVisibility(visible);
         }
+      }
+
+      function signalPerspectiveSelected(visible) {
+        toggleNavTree(visible);
       }
 
       function signalNavTreeResized(visible, offsetLeft, offsetWidth){

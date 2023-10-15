@@ -8,3 +8,4 @@ slices:
 - name: JNDI
   requiredCapabilities:
   - JNDI
+- name: PatchList

@@ -27,4 +27,8 @@ public interface SliceTableDef extends PageDef {
   public default boolean isReadOnly() {
     return true;
   }
+
+  // Whether this slice table's rows can be used to navigate to other beans
+  // (via an per-row 'identity' provider in the RDJ)
+  public boolean isSupportsNavigation();
 }

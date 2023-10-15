@@ -7,8 +7,8 @@
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'ojs/ojkeyset', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './table-sorter', 'wrc-frontend/microservices/perspective/perspective-memory-manager', './unsaved-changes-dialog', './set-sync-interval-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/types', './help-form', './wdt-form', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojcheckboxset', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader'],
-  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, keySet, ojkeyset_1, Controller, DataOperations, MessageDisplaying, TableSorter, PerspectiveMemoryManager, UnsavedChangesDialog, SetSyncIntervalDialog, ContentAreaContainerResizer, PageDataTypes, HelpForm, WdtForm, TableCustomizerManager, DeclarativeActionsManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './table-sorter', 'wrc-frontend/microservices/perspective/perspective-memory-manager', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-input-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/types', './help-form', './wdt-form', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojcheckboxset', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader'],
+  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, ojkeyset_1, Controller, DataOperations, MessageDisplaying, TableSorter, PerspectiveMemoryManager, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, ContentAreaContainerResizer, PageDataTypes, HelpForm, WdtForm, TableCustomizerManager, DeclarativeActionsManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function TableViewModel(viewParams) {
       // Declare reference to instance of the ViewModel
       // that JET creates/manages the lifecycle of. This
@@ -32,6 +32,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             disabled: false,
             visible: ko.observable(false),
             label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
+          }
+        },
+        icons: {
+          all: {
+            iconFile: 'select-all-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.checkAll.value')
+          },
+          none: {
+            iconFile: 'select-none-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.checkNone.value')
+          },
+          some: {
+            iconFile: 'select-some-icon-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.checkSome.value')
           }
         },
         contextMenus: {
@@ -86,8 +100,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       this.perspective = viewParams.perspective;
 
-      this.introductionHTML = ko.observable();
-
       this.tableToolbarModuleConfig = ModuleElementUtils.createConfig({
         viewPath: `${Controller.getModulePathPrefix()}views/content-area/body/table-toolbar.html`,
         viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/body/table-toolbar`,
@@ -102,7 +114,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           onConnected: setFormContainerMaxHeight,
           onLandingPageSelected: selectLandingPage,
           onBeanPathHistoryToggled: toggleBeanPathHistory,
-          onInstructionsToggled: toggleInstructions,
           onHelpPageToggled: toggleHelpPage,
           onShoppingCartViewed: viewShoppingCart,
           onShoppingCartDiscarded: discardShoppingCart,
@@ -112,7 +123,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           onDashboardButtonClicked: createDashboard
         }
       });
-      
+
       this.tableActionsStripModuleConfig = ModuleElementUtils.createConfig({
         viewPath: `${Controller.getModulePathPrefix()}views/content-area/body/table-actions-strip.html`,
         viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/body/table-actions-strip`,
@@ -124,10 +135,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           onSyncClicked: setSyncInterval,
           onActionPollingStarted: startActionPolling,
           onActionButtonClicked: handleActionButtonClicked,
+          onActionInputButtonClicked: handleActionInputButtonClicked,
+          onActionInputFormCompleted: handleActionInputFormCompleted,
           onCheckedRowsRefreshed: refreshCheckedRowsKeySet
         }
       });
-      
+
+      this.overlayFormDialogModuleConfig = ko.observable({view: [], viewModel: null});
+
       this.columnDataProvider = ko.observable();
       this.tableCustomizerManager = new TableCustomizerManager(viewParams.parentRouter.data.rdjData().tableCustomizer);
 
@@ -178,26 +193,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       });
 
       this.rdjDataProvider = ko.observable();
-      this.selectedRows = new keySet.ObservableKeySet();
+      this.selectedRows = new ojkeyset_1.ObservableKeySet();
       this.rowsPerPage = ko.observable(10000);
 
-      this.readonly = ko.observable(Runtime.isReadOnly());
       this.nonwritable = ko.observable(false);
+      this.readonly = ko.observable(Runtime.isReadOnly());
+      this.introductionHTML = ko.observable();
 
-      this.actionsDialog = {formLayout: { html: ko.observable({}) }};
+      this.showInstructions = ko.observable(true);
 
       this.showHelp = ko.observable(false);
-      this.showInstructions = ko.observable(true);
       this.helpDataSource = ko.observableArray([]);
-      this.helpDataProvider = new ArrayDataProvider(this.helpDataSource);
+      this.helpDataProvider = new ArrayDataProvider(this.helpDataSource, { keyAttributes: 'Name' });
       this.helpFooterDom = ko.observable({});
       this.tableHelpColumns = ko.observableArray([]);
 
-      this.tableActions = {visible: ko.observable(false), formLayout: { html: ko.observable({}) }};
-
-      this.checkedAllRows = ko.observableArray([]);
+      this.actionsDialog = {formLayout: { html: ko.observable({}) }};
       this.declarativeActions = {rowSelectionRequired: false, buttons: [], checkedRows: new Set(), dataRowsCount: 0};
-      this.checkedRowsKeySet = ko.observable(new ojkeyset_1.KeySetImpl());
+      this.checkedRowsKeySet = new ojkeyset_1.ObservableKeySet();
 
       this.availableItems = [];
       this.chosenItems = [];
@@ -206,8 +219,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(viewParams.perspective.id);
       this.contentAreaContainerResizer = new ContentAreaContainerResizer(viewParams.perspective);
+      this.subscriptions = [];
       this.signalBindings = [];
-      this.pageDefinitionActions = undefined;
       this.confirmed = ko.observable(function (event) { });
       this.confirmationMessage = ko.observable('');
 
@@ -215,6 +228,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.tableSortable = ko.observable({});
 
       self.connected = function () {
+        cancelSyncTimer();
+        renderPage();
+        this.subscriptions.push(viewParams.parentRouter.data.rdjData.subscribe(renderPage.bind(self)));
+
+        if (isWdtTable()) {
+          self.wdtForm = new WdtForm(viewParams);
+        }
+
         self.signalBindings.push(viewParams.signaling.nonwritableChanged.add((newRO) => {
           self.nonwritable(newRO);
         }));
@@ -224,27 +245,39 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           renderPage();
         }));
 
-        renderPage();
-        this.subscription = viewParams.parentRouter.data.rdjData.subscribe(renderPage.bind(self));
-        cancelSyncTimer();
+        self.signalBindings.push(viewParams.signaling.resizeObserverTriggered.add( (resizerData) => {
+          setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+        }));
 
-        if (isWdtTable()) {
-          self.wdtForm = new WdtForm(viewParams);
-        }
+        Context.getPageContext().getBusyContext().whenReady()
+          .then(() => {
+            const pdjData = viewParams.parentRouter.data.pdjData();
+            const navigationProperty = DeclarativeActionsManager.getNavigationProperty(pdjData);
+            ViewModelUtils.setTableCursor(navigationProperty);
+            setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+          });
 /*
 //MLW
         Context.getPageContext().getBusyContext().whenReady()
           .then(() => {
-            addCheckedAllRowsSelector();
+            addCheckedAllRowsSelector(viewParams.parentRouter.data.pdjData());
           });
- */
+*/
       };
 
       self.disconnected = function () {
-        if (CoreUtils.isNotUndefinedNorNull(self.subscription)) {
-          self.subscription.dispose();
-        }
         cancelSyncTimer();
+
+        self.subscriptions.forEach((item) => {
+          if (item.name) {
+            item.subscription.dispose();
+          }
+          else {
+            item.dispose();
+          }
+        });
+
+        self.subscriptions = [];
 
         self.signalBindings.forEach(function (binding) {
           binding.detach();
@@ -256,11 +289,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.canExit = function () {
         return Promise.resolve(true);
       };
-
-      function hasTableActions() {
-        self.tableActions.visible(true);
-        return self.tableActions.visible();
-      }
 
       function isWdtTable() {
         // The same form is used for WDT model and Property List for uniform content file handling
@@ -326,14 +354,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
           const refreshInterval = (syncInterval * 1000);
 
-          if (CoreUtils.isUndefinedOrNull(actionPolling.endWhenPairs)) {
+          if (actionPolling.interval === 0) {
             reloadRdjData();
             self.syncTimerId = setInterval(reloadRdjData, refreshInterval);
           }
           else {
-            satisfyActionEndWhenPairs(actionPolling);
+            performActionPolling(actionPolling);
             if (CoreUtils.isNotUndefinedNorNull(actionPolling.pollCount)) {
-              self.syncTimerId = setInterval(satisfyActionEndWhenPairs.bind(self, actionPolling), refreshInterval);
+              self.syncTimerId = setInterval(performActionPolling.bind(self, actionPolling), refreshInterval);
             }
           }
         }
@@ -352,14 +380,75 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function cancelAutoSync() {
         cancelSyncTimer();
         self.tableToolbarModuleConfig
-            .then(moduleConfig => {
-              moduleConfig.viewModel.cancelAutoSync();
-            });
+          .then(moduleConfig => {
+            moduleConfig.viewModel.cancelAutoSync();
+          });
       }
-      
+
       async function isAutoSyncRunning() {
         const moduleConfig = await self.tableToolbarModuleConfig;
         return moduleConfig.viewModel.autoSyncEnabled();
+      }
+
+      function terminateActionPolling(actionPolling) {
+        delete actionPolling.pollCount;
+        actionPolling.interval = 0;
+        actionPolling.maxPolls = 0;
+        startActionPolling(actionPolling);
+        cancelAutoSync();
+      }
+
+      function onActionPollingIntervalCompleted() {
+        const treeaction = {
+          isEdit: false,
+          path: decodeURIComponent(viewParams.parentRouter.data.rawPath())
+        };
+
+        // fix the navtree
+        viewParams.signaling.navtreeUpdated.dispatch(treeaction);
+      }
+
+      function performActionPolling(actionPolling) {
+        // See if value assigned to actionPolling.pollCount
+        // has exceeded actionPolling.maxPolls.
+        if (CoreUtils.isNotUndefinedNorNull(actionPolling.pollCount) &&
+          (actionPolling.pollCount > actionPolling.maxPolls)
+        ) {
+          // It has, so terminate action polling.
+          terminateActionPolling(actionPolling);
+        }
+
+        // See if actionPolling JS object has a pollCount
+        // property. It won't if terminateActionPolling()
+        // has been called.
+        if (CoreUtils.isNotUndefinedNorNull(actionPolling.pollCount)) {
+          reloadRdjData()
+            .then(reply => {
+              if (reply.succeeded) {
+                actionPolling.pollCount += 1;
+                onActionPollingIntervalCompleted()
+              }
+              else {
+                // The call to reloadRdjData() returned a reply
+                // JS object that had false assigned to the
+                // succeeded property, so increment pollCount.
+                actionPolling.pollCount += 1;
+              }
+            });
+        }
+      }
+
+      function handleActionInputButtonClicked(rdjData, actionInputFormConfig) {
+        ActionsInputDialog.handleActionInputButtonClicked(self, viewParams, rdjData, actionInputFormConfig, 'table', submitActionInputForm, '_identity');
+      }
+
+      function handleActionInputFormCompleted(reply, options) {
+        if (reply.succeeded) {
+          const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(self.declarativeActions, options.action);
+          DeclarativeActionsManager.onCheckedRowsSubmitted(self.declarativeActions, options);
+          actionPolling['pollCount'] = 0;
+          startActionPolling(actionPolling);
+        }
       }
 
       /**
@@ -385,77 +474,40 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           });
       }
 
-      function terminateActionPolling(actionPolling) {
-        delete actionPolling.pollCount;
-        delete self.declarativeActions.endWhenPairs;
-        startActionPolling(actionPolling);
-        cancelAutoSync();
-      }
-
-      /**
-       *
-       * @param {{action?: string, interval: number, maxPolls: number, pollCount?: number, endWhenPairs?: [{name: string, value: any}]}} actionPolling
-       * @private
-       */
-      function satisfyActionEndWhenPairs(actionPolling) {
-        // See if value assigned to actionPolling.pollCount
-        // has exceeded actionPolling.maxPolls.
-        if (CoreUtils.isNotUndefinedNorNull(actionPolling.pollCount) &&
-            (actionPolling.pollCount > actionPolling.maxPolls)
-        ) {
-          // It has, so terminate action polling.
-          terminateActionPolling(actionPolling);
-        }
-
-        // See if the action has endWhen pairs.
-        if (CoreUtils.isUndefinedOrNull(actionPolling.endWhenPairs)) {
-          // It doesn't, so terminate action polling.
-          terminateActionPolling(actionPolling);
-        }
-
-        // See if actionPolling JS object has a pollCount
-        // property. It won't if terminateAutoSync() has
-        // been called.
-        if (CoreUtils.isNotUndefinedNorNull(actionPolling.pollCount)) {
-          // The actionPolling JS object has a pollCount
-          // property, so call reloadRdjData() to get
-          // latest RDJ from the CBE.
-          reloadRdjData()
-            .then(reply => {
-              if (reply.succeeded) {
-                // Get latest RDJ from the router data, because
-                // it needs to be passed as an argument.
-                const rdjData = viewParams.parentRouter.data.rdjData();
-                // Call updateActionPollingEndWhenPairs() with
-                // the latest RDJ, so it can see if all the
-                // action's endWhen pairs have been satisfied.
-                DeclarativeActionsManager.updateActionPollingEndWhenPairs(rdjData, self.declarativeActions, actionPolling)
-                  .then(reply => {
-                    if (reply.satisfied) {
-                      // All the action's endWhen pairs have been
-                      // satisfied, so terminate action polling.
-                      terminateActionPolling(actionPolling);
-                    }
-                    else {
-                      // There are still endWhen pairs that haven't been
-                      // satisfied, so increment pollCount.
-                      actionPolling.pollCount += 1;
-                    }
-                  });
-              }
-              else {
-                // The call to reloadRdjData() returned a reply
-                // JS object that had false assigned to the
-                // succeeded property, so increment pollCount.
-                actionPolling.pollCount += 1;
-              }
-            });
-        }
-      }
-
       function handleActionButtonClicked(options) {
         const rdjData = viewParams.parentRouter.data.rdjData();
         return DeclarativeActionsManager.performActionOnCheckedRows(rdjData, self.declarativeActions, options);
+      }
+
+      function submitActionInputForm(rdjData, submitResults, options) {
+        ViewModelUtils.setPreloaderVisibility(true);
+
+        if (CoreUtils.isNotUndefinedNorNull(self.declarativeActions.inputForm)) {
+          if (self.declarativeActions.inputForm.rows.value.length > 0) {
+            submitResults['rows'] = self.declarativeActions.inputForm.rows;
+          }
+        }
+
+        refreshCheckedRowsKeySet();
+
+        DeclarativeActionsManager.submitActionInputForm(submitResults, self.declarativeActions.checkedRows, rdjData.invoker, options)
+          .then(reply => {
+            self.tableActionsStripModuleConfig
+              .then(moduleConfig => {
+                moduleConfig.viewModel.handleActionButtonClickedReply(reply, options);
+              });
+          })
+          .catch(failure => {
+            if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
+              MessageDisplaying.displayResponseMessages(failure.messages);
+            }
+            else {
+              ViewModelUtils.failureResponseDefaultHandling(failure);
+            }
+          })
+          .finally(() => {
+            ViewModelUtils.setPreloaderVisibility(false);
+          });
       }
 
       function refreshCheckedRowsKeySet() {
@@ -480,28 +532,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           });
       }
 
-      this.chosenItemsChanged = function (event) {
-        let values = [];
-        if (event.detail.value.length > 0) {
-          const fieldName = event.currentTarget.id;
-          const fieldValue = event.detail.value;
-          for (let i = 0; i < fieldValue.length; i++) {
-            values.push(JSON.parse(fieldValue[i].value));
-          }
-        }
-        self.chosenItems = [...values];
-        self.i18n.actionsDialog.buttons.ok.disabled(values.length === 0);
-      };
-
       function toggleCustomizer(event) {
-        self.tableCustomizerManager.toggleCustomizerState(event);
+        const toggleState = self.tableCustomizerManager.toggleCustomizerState(event);
+        if (CoreUtils.isNotUndefinedNorNull(toggleState)) {
+          const visible = (toggleState === 'collapsed');
+          self.tableActionsStripModuleConfig
+            .then(moduleConfig => {
+              moduleConfig.viewModel.renderActionsStrip(visible);
+              toggleInstructions(visible);
+            });
+        }
       }
 
       function setFormContainerMaxHeight(withHistoryVisible){
         const options = {withHistoryVisible: withHistoryVisible, withHelpVisible: self.showHelp()};
-        const offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#table-container', options);
-        Logger.log(`max-height=calc(100vh - ${offsetMaxHeight}px)`);
-        document.documentElement.style.setProperty('--form-container-calc-max-height', `${offsetMaxHeight}px`);
+        const offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#table-container', 'table-container-resizer-offset-max-height', options);
+        document.documentElement.style.setProperty('--table-container-calc-max-height', `${offsetMaxHeight}px`);
       }
 
       function toggleBeanPathHistory (withHistoryVisible) {
@@ -511,24 +557,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         return viewParams.onBeanPathHistoryToggled();
       }
 
-      function toggleInstructions (withInstructionsVisible, withHistoryVisible) {
-        const ele = document.getElementById('intro');
-        ele.style.display = (withInstructionsVisible ? 'inline-block' : 'none');
-        self.showInstructions(withInstructionsVisible);
-        setFormContainerMaxHeight(withHistoryVisible);
+      function toggleInstructions(visible) {
+        self.showInstructions(visible);
+        setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+        viewParams.signaling.resizeObserveeNudged.dispatch('table');
       }
 
-      function toggleHelpPage(withHelpVisible, withHistoryVisible) {
+      function toggleHelpPage(withHelpVisible) {
         self.tableActionsStripModuleConfig
           .then(moduleConfig => {
             moduleConfig.viewModel.renderActionsStrip(!withHelpVisible);
             self.showHelp(withHelpVisible);
-            setFormContainerMaxHeight(withHistoryVisible);
-            
-            // Ensure table customizer is closed whenever clicking on the help
+            toggleInstructions(!withHelpVisible);
             self.tableCustomizerManager.closeCustomizerState();
-            
-            if (!withHelpVisible) renderPage();
+
+            if (!withHelpVisible) {
+              renderPage();
+            }
           });
       }
 
@@ -646,20 +691,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       };
 
       this.selectedListener = function (event) {
-        let id = null;
+        let keyValue = null;
 
         if (event.type === 'selectedChanged') {
-          if (this.selectedRows() != null && this.selectedRows().values().size > 0) {
-            this.selectedRows().values().forEach((key) => {id = key;});
+          if (this.selectedRows() !== null && this.selectedRows().values().size > 0) {
+            this.selectedRows().values().forEach((key) => {keyValue = key;});
           }
 
-          // fix the navtree
-          viewParams.signaling.navtreeSelectionCleared.dispatch();
-
-          const path = id;
-          if (path !== null) {
-            Router.rootInstance.go('/' + self.perspective.id + '/' + encodeURIComponent(path));
-            viewParams.signaling.formSliceSelected.dispatch({path: path});
+          if (keyValue !== null) {
+            viewParams.signaling.navtreeSelectionCleared.dispatch();
+            Router.rootInstance.go(`/${this.perspective.id}/${encodeURIComponent(keyValue)}`)
+              .then(hasChanged => {
+                if (hasChanged) viewParams.signaling.formSliceSelected.dispatch({path: keyValue});
+              });
           }
         }
       }.bind(this);
@@ -860,26 +904,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
           })
           .finally(() => {
-            // Announce that tabstrip item for "Shopping Cart Viewer"
-            // has been unselected
-            viewParams.signaling.tabStripTabSelected.dispatch(
-              'table',
-              'shoppingcart',
-              false
-            );
+            viewParams.signaling.ancillaryContentItemCleared.dispatch('table');
           });
       }.bind(this);
 
-      function addCheckedAllRowsSelector() {
-        const container = document.getElementById('table:_hdrCol0');
-        if (container !== null) {
-          const checkboxset = document.createElement('oj-checkboxset');
-          checkboxset.setAttribute('value', '[[checkedAllRows]]');
-          checkboxset.setAttribute('on-value-changed', '[[checkedAllRowsChanged]]');
-          const option = document.createElement('oj-option');
-          option.setAttribute('value', 'checked');
-          checkboxset.append(option);
-          container.replaceChild(checkboxset, container.firstElementChild);
+      function addCheckedAllRowsSelector(pdjData) {
+        const table = document.getElementById('table');
+
+        if (table !== null) {
+          if (DeclarativeActionsManager.isRowSelectionRequired(pdjData)) {
+            table.setAttribute('data-selector-state', 'none');
+            setCheckedAllRowsSelectorState('none', self.i18n.icons.all.tooltip);
+          }
         }
       }
 
@@ -970,17 +1006,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
 
         if (event.detail.previousValue.keys.keys.size > 0 &&
-            event.detail.value.keys.keys.size === 0
+          event.detail.value.keys.keys.size === 0
         ) {
           removeUncheckedRow(event.currentTarget.rowKey);
         }
         if (event.detail.value.keys.keys.size > 0 &&
-            event.detail.previousValue.keys.keys.size === 0
+          event.detail.previousValue.keys.keys.size === 0
         ) {
           addCheckedRow(event.currentTarget.rowKey);
         }
         if (event.detail.previousValue.keys.keys.size > 0 &&
-            event.detail.value.keys.keys.size > 0
+          event.detail.value.keys.keys.size > 0
         ) {
           if (event.detail.previousValue.keys.keys.has(event.currentTarget.rowKey)) {
             removeUncheckedRow(event.currentTarget.rowKey);
@@ -1004,8 +1040,88 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       };
 
       this.checkedAllRowsChanged = function (event) {
-        console.info('[TABLE] checkedAllRowsChanged was called.');
-      }.bind(this);
+      };
+
+      this.checkedAllRowsChanged1 = function (event) {
+        function checkedAllRowsClickHandler(currentTarget, selectorStateValue) {
+          switch (selectorStateValue) {
+            case 'none':
+              setCheckedAllRowsSelectorState('all', self.i18n.icons.none.tooltip)
+              currentTarget.setAttribute('data-selector-state', 'all');
+              break;
+            case 'all':
+            case 'some':
+              setCheckedAllRowsSelectorState('none', self.i18n.icons.all.tooltip)
+              currentTarget.setAttribute('data-selector-state', 'none');
+              break;
+          }
+        }
+
+        function checkedRowsClickHandler(currentTarget, selectorStateValue) {
+          switch (selectorStateValue) {
+            case 'some':
+              setCheckedAllRowsSelectorState('none', self.i18n.icons.all.tooltip)
+              currentTarget.setAttribute('data-selector-state', 'none');
+              break;
+            case 'all':
+            case 'none':
+              setCheckedAllRowsSelectorState('some', self.i18n.icons.some.tooltip)
+              currentTarget.setAttribute('data-selector-state', 'some');
+              break;
+          }
+        }
+
+        function addAllCheckedRow(checkedRows, data, fieldName) {
+          for (let index = 0; index < data.length; index++) {
+            const rowKey = data[index][fieldName];
+            if (CoreUtils.isNotUndefinedNorNull(rowKey)) {
+              checkedRows.add(rowKey);
+            }
+          }
+        }
+
+        function removeAllCheckedRow(checkedRows) {
+          checkedRows.clear();
+        }
+
+        const selectorState = event.currentTarget.attributes['data-selector-state'];
+
+        if (CoreUtils.isNotUndefinedNorNull(selectorState)) {
+          if (CoreUtils.isUndefinedOrNull(event.currentTarget.currentRow)) {
+            checkedAllRowsClickHandler(event.currentTarget, selectorState.value);
+/*
+//MLW
+          if (selectorState.value === 'none') {
+            removeAllCheckedRow(self.declarativeActions.checkedRows);
+          }
+          else if (selectorState.value === 'all') {
+            removeAllCheckedRow(self.declarativeActions.checkedRows);
+            addAllCheckedRow(self.declarativeActions.checkedRows, event.currentTarget.data.data, '_id');
+            refreshCheckedRowsKeySet();
+          }
+*/
+          }
+          else {
+            checkedRowsClickHandler(event.currentTarget, self.declarativeActions.checkedRows.size > 0 ? 'none' : 'some');
+          }
+        }
+      };
+
+      function setCheckedAllRowsSelectorState(selectorState, tooltip) {
+        const container = document.getElementById('table:_hdrCol0');
+        if (container !== null) {
+          const img = document.createElement('img');
+          img.setAttribute('src', `js/jet-composites/wrc-frontend/1.0.0/images/${self.i18n.icons[selectorState].iconFile}.png`);
+          img.setAttribute('title', tooltip);
+          img.setAttribute('alt', tooltip);
+          if (container.lastElementChild.localName === 'img') {
+            container.replaceChild(img, container.lastElementChild);
+          }
+          else {
+            container.append(img);
+          }
+        }
+      }
 
       function getDefaultVisibleAndHiddenColumns() {
         const pdjData = viewParams.parentRouter.data.pdjData();
@@ -1018,12 +1134,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // determine what columns to show/hide based on pdj and customizer
         self.resetCustomizations(true);
         self.tableCustomizerModuleConfig
-        .then((moduleConfig) => {
-          if (moduleConfig) {
-            const selectedColumns = viewParams.parentRouter.data.rdjData().displayedColumns;
-            moduleConfig.viewModel.setupCustomization(selectedColumns);
-          }
-        });
+          .then((moduleConfig) => {
+            if (moduleConfig) {
+              const selectedColumns = viewParams.parentRouter.data.rdjData().displayedColumns;
+              moduleConfig.viewModel.setupCustomization(selectedColumns);
+            }
+          });
       }
 
       function renderPage() {
@@ -1069,7 +1185,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
         self.introductionHTML({ view: HtmlUtils.stringToNodeArray(bindHtml), data: self });
-        
+
         DeclarativeActionsManager.populateDeclarativeActions(rdjData, pdjData, self.declarativeActions);
 
         self.actionsDialog.formLayout.html({ view: HtmlUtils.stringToNodeArray('<p>'), data: self });

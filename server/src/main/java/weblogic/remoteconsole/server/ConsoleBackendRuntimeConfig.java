@@ -1,18 +1,16 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server;
 
-import io.helidon.config.Config;
 
 public class ConsoleBackendRuntimeConfig {
-  private static Config config = ConsoleBackendRuntime.INSTANCE.getConfig();
   private static final long DEFAULT_CONNECT_TIMEOUT_MILLIS = 10000L;
   private static final long DEFAULT_READ_TIMEOUT_MILLIS = 20000L;
 
   public static long getConnectionTimeout() {
     return
-      config
+      ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("connectTimeoutMillis")
         .asLong()
         .orElse(DEFAULT_CONNECT_TIMEOUT_MILLIS);
@@ -20,7 +18,7 @@ public class ConsoleBackendRuntimeConfig {
 
   public static long getReadTimeout() {
     return
-      config
+      ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("readTimeoutMillis")
         .asLong()
         .orElse(DEFAULT_READ_TIMEOUT_MILLIS);
@@ -28,7 +26,7 @@ public class ConsoleBackendRuntimeConfig {
 
   public static boolean isSameSiteCookieEnabled() {
     return
-      config
+      ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("enableSameSiteCookieValue")
         .asBoolean()
         .orElse(false);
@@ -36,7 +34,7 @@ public class ConsoleBackendRuntimeConfig {
 
   public static String getSameSiteCookieValue() {
     return
-      config
+      ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("valueSameSiteCookie")
         .asString()
         .orElse(null);
@@ -44,7 +42,7 @@ public class ConsoleBackendRuntimeConfig {
 
   public static boolean isHostnameVerificationDisabled() {
     return
-      config
+      ConsoleBackendRuntime.INSTANCE.getConfig()
         .get("disableHostnameVerification")
         .asBoolean()
         .orElse(false);

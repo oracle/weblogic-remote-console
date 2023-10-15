@@ -23,14 +23,8 @@ public class WebLogicVersions {
   // It's sorted, oldest to newest
   private static Map<Long, WebLogicVersion> versionNumberToVersion = new TreeMap<>();
 
-  // Records the latest version (i.e. during the build, we check that all of the pages
-  // in the latest version refer to properties that exist, v.s. for earlier versions,
-  // the property might be missing)
+  // Records the latest version
   private static WebLogicVersion latestVersion = null;
-
-  // Records the current version (i.e. the latest shipped WLS version that we support)
-  // (e.g. WDT uses this version)
-  private static WebLogicVersion currentVersion = null;
 
   // Initialize the versions.
   // Must be newest to oldest.
@@ -49,8 +43,7 @@ public class WebLogicVersions {
       "14.1.1.0.0",
       "wls14110",
       "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0",
-      "wlmbr/mbeans",
-      true // this is the latest shipped WLS version we support (i.e. the current version)
+      "wlmbr/mbeans"
     );
 
     // No 12.2.1.6.0 specific docs yet:
@@ -93,16 +86,6 @@ public class WebLogicVersions {
     String docsUrl,
     String mbeanJavadocDirectory
   ) {
-    addVersion(domainVersion, fmwVersion, docsUrl, mbeanJavadocDirectory, false);
-  }
-
-  private static void addVersion(
-    String domainVersion,
-    String fmwVersion,
-    String docsUrl,
-    String mbeanJavadocDirectory,
-    boolean isCurrentVersion
-  ) {
     String resourceName = "harvestedWeblogicBeanTypes/" + domainVersion + "/DomainMBean.yaml";
     if (Thread.currentThread().getContextClassLoader().getResource(resourceName) == null) {
       // There are no harvested yamls for this release in this RC build.
@@ -113,7 +96,6 @@ public class WebLogicVersions {
     WebLogicVersion version =
       new WebLogicVersion(
         isLatestVersion,
-        isCurrentVersion,
         domainVersion,
         fmwVersion,
         docsUrl,
@@ -124,18 +106,9 @@ public class WebLogicVersions {
     if (isLatestVersion) {
       latestVersion = version;
     }
-    if (isCurrentVersion) {
-      currentVersion = version;
-    }
   }
 
-  // Get the current (i.e. latest shipped) weblogic version.
-  public static WebLogicVersion getCurrentVersion() {
-    return currentVersion;
-  }
-
-  // Get the current (i.e. latest) weblogic version.
-  // All of the properties on all the pages must exist for this version.
+  // Get the latest weblogic version.
   public static WebLogicVersion getLatestVersion() {
     return latestVersion;
   }

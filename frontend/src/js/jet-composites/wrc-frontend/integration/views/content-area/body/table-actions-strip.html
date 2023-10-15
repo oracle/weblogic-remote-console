@@ -2,6 +2,8 @@
  Copyright (c) 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
-<div id="table-actions-strip-container" class="cfe-actions-strip-container">
-  <oj-bind-dom config="[[actionButtons.html]]"></oj-bind-dom>
-</div>
+<oj-bind-if test="[[showActionsStrip]]">
+  <div id="table-actions-strip-container" class="cfe-actions-strip-container">
+    <oj-bind-dom config="[[actionButtons.html]]"></oj-bind-dom>
+  </div>
+</oj-bind-if>

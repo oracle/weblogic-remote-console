@@ -108,7 +108,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
         let binding = viewParams.signaling.navtreeToggled.add((source, expanded) => {
           if (expanded) {
-            clearBuiltInsSelection();
+//MLW            clearBuiltInsSelection();
           }
         });
 
@@ -121,6 +121,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.galleryItemSelected.add((value) => {
+          self.builtInsSelectedItem(value);
+        });
+
+        self.signalBindings.push(binding);
+
         binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
           self.canExitCallback = undefined;
           self.builtInsSelectedItem(null);
@@ -129,7 +135,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
             Runtime.getDomainConnectState(),
             dataProvider
           );
-          viewParams.signaling.beanTreeChanged.dispatch({type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name}});
+//MLW          viewParams.signaling.beanTreeChanged.dispatch({name: 'home', type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name, type: dataProvider.typr}});
         });
 
         self.signalBindings.push(binding);
@@ -181,9 +187,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
       }.bind(this);
 
       this.disconnected = function() {
-        const navstripContainer = document.getElementById('navstrip-container');
-        if (navstripContainer !== null) navstripContainer.removeEventListener('click', onNavigationListItemClick);
-
         // Detach all signal "add" bindings
         self.signalBindings.forEach(binding => { binding.detach(); });
 
@@ -222,7 +225,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
           return false;
         }
 
-        const beanTree = getSelectedBeanTree(event.target.currentItem);
+        const beanTree = getSelectedBeanTree(event.detail.value);
         if (CoreUtils.isUndefinedOrNull(beanTree)) {
           event.preventDefault();
           return false;
@@ -238,34 +241,38 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
               Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, CoreUtils.isUndefinedOrNull(beanTree.readOnly) ? false : beanTree.readOnly);
               viewParams.signaling.readonlyChanged.dispatch(Runtime.isReadOnly());
 
-              const newPerspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
-              if (CoreUtils.isNotUndefinedNorNull(newPerspective)) {
-                // Signal that a new perspective was selected
-                // from the builtIns navstrip
-                viewParams.signaling.perspectiveSelected.dispatch(newPerspective);
-                viewParams.signaling.perspectiveChanged.dispatch(newPerspective);
-
-                switch (viewParams.parentRouter.stateId()) {
-                  case 'landing':
-                    viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId(newPerspective.id);
-                  // Don't break, just fall through to case for "home" stateId
-                  case 'home':
-                    viewParams.parentRouter.go('landing/' + newPerspective.id);
-                    break;
-                  default:
-                    if (viewParams.parentRouter.stateId() !== newPerspective.id) {
-                      // Go to landing page for newPerspective.id
-                      viewParams.parentRouter.go('landing/' + newPerspective.id);
-                    }
-                    break;
-                }
-              }
+              builtInsSelected(beanTree);
             }
           })
           .catch(failure => {
             ViewModelUtils.failureResponseDefaultHandling(failure);
           });
       };
+
+      function builtInsSelected(beanTree) {
+        const newPerspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
+        if (CoreUtils.isNotUndefinedNorNull(newPerspective)) {
+          // Signal that a new perspective was selected
+          // from the builtIns navstrip
+          viewParams.signaling.perspectiveSelected.dispatch(newPerspective);
+          viewParams.signaling.perspectiveChanged.dispatch(newPerspective);
+
+          switch (viewParams.parentRouter.stateId()) {
+            case 'landing':
+              viewParams.parentRouter.observableModuleConfig().params.ojRouter.parameters.perspectiveId(newPerspective.id);
+            // Don't break, just fall through to case for "home" stateId
+            case 'home':
+              viewParams.parentRouter.go(`landing/${newPerspective.id}`);
+              break;
+            default:
+              if (viewParams.parentRouter.stateId() !== newPerspective.id) {
+                // Go to landing page for newPerspective.id
+                viewParams.parentRouter.go(`landing/${newPerspective.id}`);
+              }
+              break;
+          }
+        }
+      }
 
       function clearNavStripIcons() {
         builtIns.valueWillMutate();
@@ -290,21 +297,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
         return beanTree;
       }
 
-      function onNavigationListItemClick(event) {
-        const connectState = Runtime.getDomainConnectState();
-        if (connectState === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
-          event.preventDefault();
-          return false;
-        }
-
-        event = {
-          detail: {value: event.target.parentNode.id},
-          target: {currentItem: event.target.parentNode.id}
-        };
-
-        self.builtInsSelectedItemChanged(event);
-      }
-
       function clearBuiltInsSelection(){
         self.builtInsSelectedItem(null);
       }
@@ -312,7 +304,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
       function setThemePreference(theme) {
         let ele = document.getElementById('navstrip-header');
         if (ele !== null) {
-          ele.style.backgroundColor = Runtime.getConfig()['settings']['themes'][theme][1];
+          ele.style.backgroundColor = Runtime.getConfig()['preferences']['themes'][theme][1];
           switch(theme){
             case 'light':
               ele.style.color = 'black';

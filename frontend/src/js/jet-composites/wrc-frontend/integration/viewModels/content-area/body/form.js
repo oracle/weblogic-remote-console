@@ -7,8 +7,8 @@
 
  'use strict';
 
- define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'ojs/ojkeyset', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/common', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/options-sources', 'wrc-frontend/microservices/page-definition/actions-input', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs','wrc-frontend/microservices/page-definition/utils', './create-form', './wdt-form', './help-form', './policy-form', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/microservices/policy-management/policy-manager', 'wrc-frontend/integration/router-data', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'cfe-property-list-editor/loader', 'cfe-policy-editor/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset', 'ojs/ojradioset'],
-     function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, keySet, ojkeyset_1, Controller, DataOperations, MessageDisplaying, ChangeManager, NavtreeManager, PerspectiveMemoryManager, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsDialog, ContentAreaContainerResizer, PageDefinitionCommon, PageDataTypes, PageDefinitionFields, PageDefinitionOptionsSources, PageDefinitionActionsInput, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, CreateForm, WdtForm, HelpForm, PolicyForm, TableCustomizerManager, DeclarativeActionsManager, PolicyManager, RouterData, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'ojs/ojkeyset', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-input-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/common', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/options-sources', 'wrc-frontend/microservices/page-definition/actions-input', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs','wrc-frontend/microservices/page-definition/utils', './create-form', './wdt-form', './help-form', './policy-form', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/microservices/policy-management/policy-manager', 'wrc-frontend/integration/router-data', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'cfe-property-list-editor/loader', 'cfe-policy-editor/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset', 'ojs/ojradioset'],
+     function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, keySet, ojkeyset_1, Controller, DataOperations, MessageDisplaying, ChangeManager, NavtreeManager, PerspectiveMemoryManager, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, ContentAreaContainerResizer, PageDefinitionCommon, PageDataTypes, PageDefinitionFields, PageDefinitionOptionsSources, PageDefinitionActionsInput, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, CreateForm, WdtForm, HelpForm, PolicyForm, TableCustomizerManager, DeclarativeActionsManager, PolicyManager, RouterData, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
        function FormViewModel(viewParams) {
 
          const self = this;
@@ -29,7 +29,8 @@
            messages: {
              savedTo: {
                shoppingcart: oj.Translations.getTranslatedString('wrc-form.messages.savedTo.shoppingcart'),
-               generic: oj.Translations.getTranslatedString('wrc-form.messages.savedTo.generic')
+               generic: oj.Translations.getTranslatedString('wrc-form.messages.savedTo.generic'),
+               notSaved: oj.Translations.getTranslatedString('wrc-form.messages.savedTo.notSaved')
              },
              action: {
                notAllowed: {
@@ -150,11 +151,12 @@
  
          this.readonly = ko.observable(Runtime.isReadOnly());
          this.introductionHTML = ko.observable();
- 
-         this.showHelp = ko.observable(false);
+
          this.showInstructions = ko.observable(true);
+
+         this.showHelp = ko.observable(false);
          this.helpDataSource = ko.observableArray([]);
-         this.helpDataProvider = new ArrayDataProvider(this.helpDataSource);
+         this.helpDataProvider = new ArrayDataProvider(this.helpDataSource, { keyAttributes: 'Name' });
          this.helpFooterDom = ko.observable({});
          this.tableHelpColumns = ko.observableArray([]);
  
@@ -194,10 +196,12 @@
              finishedAction: finishWizardForm,
              createFormMode: getCreateFormMode,
              onSave: saveBean,
+             onSaveButtonClicked: saveButtonClicked,
              onUpdateContentFile: updateContentFile,
              onLandingPageSelected: selectLandingPage,
              onBeanPathHistoryToggled: toggleBeanPathHistory,
              onInstructionsToggled: toggleInstructions,
+             onBlankFormDisplayed: displayBlankForm,
              onHelpPageToggled: toggleHelpPage,
              onShoppingCartViewed: viewShoppingCart,
              onShoppingCartDiscarded: discardShoppingCart,
@@ -222,7 +226,7 @@
              onAutoSave: autoSaveForm
            }
          });
-         
+
          this.formActionsStripModuleConfig = ModuleElementUtils.createConfig({
            viewPath: `${Controller.getModulePathPrefix()}views/content-area/body/form-actions-strip.html`,
            viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/body/form-actions-strip`,
@@ -235,6 +239,7 @@
              onActionPollingStarted: startActionPolling,
              onActionButtonClicked: handleActionButtonClicked,
              onActionInputButtonClicked: handleActionInputButtonClicked,
+             onActionInputFormCompleted: handleActionInputFormCompleted,
              onCheckedRowsRefreshed: refreshCheckedRowsKeySet
            }
          });
@@ -291,8 +296,19 @@
          });
  
          function toggleCustomizer(event) {
-           self.tableCustomizerManager.toggleCustomizerState(event);
-           setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+           const toggleState = self.tableCustomizerManager.toggleCustomizerState(event);
+           if (CoreUtils.isNotUndefinedNorNull(toggleState)) {
+             const visible = (toggleState === 'collapsed');
+             self.formTabStripModuleConfig
+               .then(moduleConfig => {
+                 moduleConfig.viewModel.setTabStripVisibility(visible);
+                 self.formActionsStripModuleConfig
+                   .then(moduleConfig => {
+                     moduleConfig.viewModel.renderActionsStrip(visible);
+                     toggleInstructions(visible);
+                   });
+               });
+           }
          }
  
          function adjustSliceTableCustomizer(showCustomizer) {
@@ -305,21 +321,21 @@
  
            // Ensure the customizer state is setup once the module is available
            self.tableCustomizerModuleConfig
-               .then((moduleConfig) => {
-                 if (moduleConfig) {
-                   // Setup the customizer to display the slice table columns
-                   if (showCustomizer) {
-                     const selectedColumns = viewParams.parentRouter.data.rdjData().displayedColumns;
-                     moduleConfig.viewModel.setupCustomization(selectedColumns);
-                   }
- 
-                   // Adjust the toolbar button based on table customization state
-                   self.tableCustomizerManager.adjustCustomizerButtonState(showCustomizer);
- 
-                   // Ensure the customizer is not available when no slice table
-                   if (!showCustomizer) self.tableCustomizerManager.closeCustomizerState();
+             .then((moduleConfig) => {
+               if (moduleConfig) {
+                 // Setup the customizer to display the slice table columns
+                 if (showCustomizer) {
+                   const selectedColumns = viewParams.parentRouter.data.rdjData().displayedColumns;
+                   moduleConfig.viewModel.setupCustomization(selectedColumns);
                  }
-               });
+
+                 // Adjust the toolbar button based on table customization state
+                 self.tableCustomizerManager.adjustCustomizerButtonState(showCustomizer);
+
+                 // Ensure the customizer is not available when no slice table
+                 if (!showCustomizer) self.tableCustomizerManager.closeCustomizerState();
+               }
+             });
          }
  
          function getDefaultVisibleAndHiddenColumns() {
@@ -333,16 +349,16 @@
            if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
              document.title = viewParams.parentRouter.data.pageTitle();
            }
- 
+
            // Disable the customizer button until determining if there is a slice table
            self.tableCustomizerManager.adjustCustomizerButtonState(false);
- 
+
            createCreateForm();
- 
+
            if (isPolicyExpressionSliceLayout()) {
              createPolicyForm();
            }
- 
+
            if (isWdtForm()) {
              self.wdtForm = new WdtForm(viewParams);
              if (!isWizardForm()) {
@@ -351,84 +367,88 @@
                }
              }
            }
- 
-           renderPage(true);
- 
-           const rdjSub = viewParams.parentRouter.data.rdjData.subscribe(renderPage.bind(this));
-           self.subscriptions.push(rdjSub);
+
            cancelSyncTimer();
- 
+           renderPage(true);
+           self.subscriptions.push(viewParams.parentRouter.data.rdjData.subscribe(renderPage.bind(this)));
+
            let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
              self.readonly(newRO);
              renderPage(true);
            });
- 
+
            self.signalBindings.push(binding);
- 
+
            binding = viewParams.signaling.appQuitTriggered.add(() => {
              if (ViewModelUtils.isElectronApiAvailable()) {
-               window.electron_api.ipc.invoke('preference-reading', {section: 'appExit', name: 'PropertyCriteria_DetectUnsavedChanges'})
-                   .then(value => {
-                     value = value || false;
-                     ViewModelUtils.blurActiveElement();
-                     if (value && self.isDirty()) {
-                       if (isWdtForm()) {
-                         sendWindowAppQuit(false, 5);
-                       }
-                       else {
-                         decideUnsavedChangesAppExitAction()
-                             .then(reply => {
-                               switch(reply.exitButton) {
-                                 case 'yes': {
-                                   onStartWindowQuit()
-                                       .then(result => {
-                                         sendWindowAppQuit(result.isNotQuitable, result.waitMilliseconds);
-                                       });
-                                 }
-                                   break;
-                                 case 'no':
-                                   sendWindowAppQuit(false, 5);
-                                   break;
-                                 case 'cancel':
-                                   sendWindowAppQuit(true, 5);
-                                   break;
-                               }
-                             });
-                       }
-                     }
-                     else {
+               window.electron_api.ipc.invoke('preference-reading', 'unsaved-confirmation.appExit')
+                 .then(value => {
+                   value = value || false;
+                   ViewModelUtils.blurActiveElement();
+                   if (value && self.isDirty()) {
+                     if (isWdtForm()) {
                        sendWindowAppQuit(false, 5);
                      }
-                   })
-                   .catch(response => {
+                     else {
+                       decideUnsavedChangesAppExitAction()
+                         .then(reply => {
+                           switch(reply.exitButton) {
+                             case 'yes': {
+                               onStartWindowQuit()
+                                 .then(result => {
+                                   sendWindowAppQuit(result.isNotQuitable, result.waitMilliseconds);
+                                 });
+                             }
+                               break;
+                             case 'no':
+                               sendWindowAppQuit(false, 5);
+                               break;
+                             case 'cancel':
+                               sendWindowAppQuit(true, 5);
+                               break;
+                           }
+                         });
+                     }
+                   }
+                   else {
                      sendWindowAppQuit(false, 5);
-                   });
+                   }
+                 })
+                 .catch(response => {
+                   sendWindowAppQuit(false, 5);
+                 });
              }
            });
- 
+
            self.signalBindings.push(binding);
- 
+
            binding = viewParams.signaling.autoDownloadRequested.add(() => {
              updateContentFile('autoDownload').then(reply => {});
            });
- 
+
            self.signalBindings.push(binding);
- 
+
            binding = viewParams.signaling.modelConsoleSizeChanged.add( (newOffsetHeight) => {
              self.modelConsole.expanded = (newOffsetHeight > 23);
              self.modelConsole.offsetHeight = newOffsetHeight;
              setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
            });
- 
+
            self.signalBindings.push(binding);
- 
+
+           binding = viewParams.signaling.resizeObserverTriggered.add( (resizerData) => {
+             setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+           });
+
+           self.signalBindings.push(binding);
+
            binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
              const eventType = (ViewModelUtils.isElectronApiAvailable() ? 'autoSave' : (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name ? 'autoDownload' : 'exit'));
              exitForm(eventType).then(result => {});
            });
- 
+
            self.signalBindings.push(binding);
- 
+
            // Handle signal that sso token has expired
            binding = viewParams.signaling.ssoTokenExpired.add((dataProvider) => {
              if ((Runtime.getDataProviderId() === dataProvider.id) && self.isDirty()) {
@@ -438,14 +458,17 @@
                clearFormChanges();
              }
            }, undefined, 1);
- 
+
            self.signalBindings.push(binding);
- 
+
          }.bind(this);
  
          this.disconnected = function () {
            cancelSyncTimer();
- 
+
+           self.declarativeActions.checkedRows.clear();
+           refreshCheckedRowsKeySet();
+
            self.signalBindings.forEach((binding) => {
              binding.detach();
            });
@@ -532,44 +555,32 @@
          };
  
          function handleActionInputButtonClicked(rdjData, actionInputFormConfig) {
-           const actionsInput = new PageDefinitionActionsInput();
-           const endpoint = DeclarativeActionsManager.getActionEndpoint(rdjData.actions, actionInputFormConfig.action);
- 
-           actionsInput.getActionInputFormData(endpoint)
-             .then(reply => {
-               const pdjData = reply.body.data.get('pdjData');
-               const rdjData = reply.body.data.get('rdjData');
-               DeclarativeActionsManager.updatePDJTypesActionInputProperties(pdjData);
-               const actionInputFormStyle = DeclarativeActionsManager.getActionInputFormStyle(pdjData);
-               if (CoreUtils.isNotUndefinedNorNull(actionInputFormStyle)) {
-                 if (actionInputFormStyle === DeclarativeActionsManager.ActionInputFormStyle.ACTION_POPUP.name) {
-                   actionInputFormConfig['path'] = endpoint.resourceData;
-                   actionInputFormConfig['breadcrumbs'] = actionInputFormConfig.path;
-                   actionInputFormConfig['submitCallback'] = submitActionInputForm;
-                   actionInputFormConfig['iconFile'] = 'continue-icon-blk_24x24';
-                   actionsInput.createOverlayFormDialogModuleConfig(viewParams, reply, actionInputFormConfig)
-                     .then(moduleConfig => {
-                       self.overlayFormDialogModuleConfig(moduleConfig);
-                     });
-                 }
-                 else if (actionInputFormStyle === DeclarativeActionsManager.ActionInputFormStyle.CONFIRM_DIALOG.name) {
-                   self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-actions-strip.dialogs.cannotBeUndone.title'));
-                   self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-actions-strip.dialogs.cannotBeUndone.prompt', '{0}').replace('{0}', actionInputFormConfig.title));
-                   self.i18n.buttons.cancel.visible(false);
-                   ActionsDialog.showConfirmDialogStyleActionsInput(self.i18n)
-                     .then(reply => {
-                       if (CoreUtils.isNotUndefinedNorNull(reply) &&
-                         CoreUtils.isNotUndefinedNorNull(reply.exitButton) &&
-                         reply.exitButton === 'yes'
-                       ) {
-                         submitActionInputForm(rdjData, {data: {}}, actionInputFormConfig);
-                       }
-                     });
-                 }
-               }
-             });
+           ActionsInputDialog.handleActionInputButtonClicked(self, viewParams, rdjData, actionInputFormConfig, 'form', submitActionInputForm, getRowKey());
          }
 
+         function handleActionInputFormCompleted(reply, options) {
+           if (reply.succeeded) {
+             const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(self.declarativeActions, options.action);
+             const pdjData = viewParams.parentRouter.data.pdjData();
+             if (!DeclarativeActionsManager.hasSliceFormActionInput(pdjData)) {
+               DeclarativeActionsManager.onCheckedRowsSubmitted(self.declarativeActions, options);
+             }
+
+             if (actionPolling.interval > 0) {
+               actionPolling['pollCount'] = 0;
+               startActionPolling(actionPolling);
+             }
+             else {
+               setSyncInterval(actionPolling.interval);
+             }
+           }
+         }
+
+         /**
+          *
+          * @param {{action?: string, interval: number, maxPolls: number, pollCount?: number, endWhenPairs?: [{name: string, value: any}]}} actionPolling
+          * @private
+          */
          function startActionPolling(actionPolling) {
            self.formToolbarModuleConfig
              .then(moduleConfig => {
@@ -590,17 +601,23 @@
 
          function terminateActionPolling(actionPolling) {
            delete actionPolling.pollCount;
-           delete self.declarativeActions.endWhenPairs;
+           actionPolling.interval = 0;
+           actionPolling.maxPolls = 0;
            startActionPolling(actionPolling);
            cancelAutoSync();
          }
 
-         /**
-          *
-          * @param {{action?: string, interval: number, maxPolls: number, pollCount?: number, endWhenPairs?: [{name: string, value: any}]}} actionPolling
-          * @private
-          */
-         function satisfyActionEndWhenPairs(actionPolling) {
+         function onActionPollingIntervalCompleted() {
+           const treeaction = {
+             isEdit: false,
+             path: decodeURIComponent(viewParams.parentRouter.data.rawPath())
+           };
+
+           // fix the navtree
+           viewParams.signaling.navtreeUpdated.dispatch(treeaction);
+         }
+
+         function performActionPolling(actionPolling) {
            // See if value assigned to actionPolling.pollCount
            // has exceeded actionPolling.maxPolls.
            if (CoreUtils.isNotUndefinedNorNull(actionPolling.pollCount) &&
@@ -610,35 +627,13 @@
              terminateActionPolling(actionPolling);
            }
 
-           // See if the action has endWhen pairs.
-           if (CoreUtils.isUndefinedOrNull(actionPolling.endWhenPairs)) {
-             // It doesn't, so terminate action polling.
-             terminateActionPolling(actionPolling);
-           }
-
            // See if actionPolling JS object has a pollCount
-           // property. It won't if terminateAutoSync() has
-           // been called.
+           // property. It won't if terminateActionPolling()
+           // has been called.
            if (CoreUtils.isNotUndefinedNorNull(actionPolling.pollCount)) {
-             // Get latest RDJ from the router data, because
-             // it needs to be passed as an argument.
-             const rdjData = viewParams.parentRouter.data.rdjData();
-             // Call updateActionPollingEndWhenPairs() with
-             // the latest RDJ, so it can see if all the
-             // action's endWhen pairs have been satisfied.
-             DeclarativeActionsManager.updateActionPollingEndWhenPairs(rdjData, self.declarativeActions, actionPolling)
-               .then(reply => {
-                 if (reply.satisfied) {
-                   // All the action's endWhen pairs have been
-                   // satisfied, so terminate action polling.
-                   terminateActionPolling(actionPolling);
-                 }
-                 else {
-                   // There are still endWhen pairs that haven't been
-                   // satisfied, so increment pollCount.
-                   actionPolling.pollCount += 1;
-                 }
-               });
+             reloadRdjData();
+             actionPolling.pollCount += 1;
+             onActionPollingIntervalCompleted()
            }
          }
 
@@ -646,18 +641,18 @@
            const rdjData = viewParams.parentRouter.data.rdjData();
            return DeclarativeActionsManager.performActionOnCheckedRows(rdjData, self.declarativeActions, options);
          }
- 
+
+         function getRowKey() {
+           let rowKey = '_identity';
+           const table= document.getElementById('table');
+           if (table !== null && CoreUtils.isNotUndefinedNorNull(table.attributes['data-row-key'])) {
+             rowKey = table.attributes['data-row-key'].value;
+           }
+           return rowKey;
+         }
+
          function submitActionInputForm(rdjData, submitResults, options) {
            function reloadCheckedRowsKeySet(checkedRows, rdjData) {
-             function getRowKey() {
-               let rowKey = '_identity';
-               const table= document.getElementById('table');
-               if (table !== null && CoreUtils.isNotUndefinedNorNull(table.attributes['data-row-key'])) {
-                 rowKey = table.attributes['data-row-key'].value;
-               }
-               return rowKey;
-             }
-
              function getKeyValue(row, rowKey) {
                let keyValue;
                switch (rowKey) {
@@ -689,6 +684,12 @@
 
            ViewModelUtils.setPreloaderVisibility(true);
 
+           if (CoreUtils.isNotUndefinedNorNull(self.declarativeActions.inputForm)) {
+             if (self.declarativeActions.inputForm.rows.value.length > 0) {
+               submitResults['rows'] = self.declarativeActions.inputForm.rows;
+             }
+           }
+
            reloadCheckedRowsKeySet(self.declarativeActions.checkedRows, self.rdjData);
 
            DeclarativeActionsManager.submitActionInputForm(submitResults, self.declarativeActions.checkedRows, rdjData.invoker, options)
@@ -698,8 +699,13 @@
                    moduleConfig.viewModel.handleActionButtonClickedReply(reply, options);
                  });
              })
-             .catch(response => {
-               ViewModelUtils.failureResponseDefaultHandling(response);
+             .catch(failure => {
+               if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
+                 MessageDisplaying.displayResponseMessages(failure.messages);
+               }
+               else {
+                 ViewModelUtils.failureResponseDefaultHandling(failure);
+               }
              })
              .finally(() => {
                ViewModelUtils.setPreloaderVisibility(false);
@@ -725,15 +731,52 @@
          }
 
          function createDashboard(event) {
+           function getContentPageSliceData(pdjData) {
+             return new Promise(function (resolve) {
+               let slices = [];
+
+               if (RouterData.hasSliceFormSlices(pdjData)) {
+                 slices = pdjData.sliceForm.slices;
+               }
+               else if (RouterData.hasSliceTableSlices(pdjData)) {
+                 slices = pdjData.sliceTable.slices;
+               }
+  
+               self.formTabStripModuleConfig
+                 .then(moduleConfig => {
+                   moduleConfig.viewModel.setTabStripVisibility(false);
+                   if (slices.length > 0) {
+                     resolve({slices: slices, currentSlice: moduleConfig.viewModel.getCurrentSlice()});
+                   }
+                   else {
+                     resolve({slices: slices, currentSlice: null});
+                   }
+                 });
+               
+             });
+           }
+
            const createFormUrl = viewParams.parentRouter.data.rdjData().dashboardCreateForm.resourceData;
+
            DataOperations.mbean.new(createFormUrl)
              .then(reply => {
-               viewParams.parentRouter.data.pdjUrl(reply.body.data.get('pdjUrl'));
-               viewParams.parentRouter.data.pdjData(reply.body.data.get('pdjData'));
-               viewParams.parentRouter.data.rdjUrl(reply.body.data.get('rdjUrl'));
-               viewParams.parentRouter.data.rdjData(reply.body.data.get('rdjData'));
-               createCreateForm();
-               viewParams.parentRouter.go('form');
+               const pdjData = viewParams.parentRouter.data.pdjData();
+               getContentPageSliceData(pdjData)
+                 .then(data => {
+                   self.perspectiveMemory.contentPage['rdjUrl'] = viewParams.parentRouter.data.rdjUrl();
+                   if (data.currentSlice !== null) {
+                     self.perspectiveMemory.contentPage['lastVisitedSlice'] = data.currentSlice;
+                   }
+
+                   viewParams.parentRouter.data.pdjUrl(reply.body.data.get('pdjUrl'));
+                   viewParams.parentRouter.data.pdjData(reply.body.data.get('pdjData'));
+                   viewParams.parentRouter.data.rdjUrl(reply.body.data.get('rdjUrl'));
+                   viewParams.parentRouter.data.rdjData(reply.body.data.get('rdjData'));
+
+                   createCreateForm();
+
+                   viewParams.parentRouter.go('form');
+                 })
              })
              .catch(response => {
                ViewModelUtils.failureResponseDefaultHandling(response);
@@ -791,14 +834,14 @@
  
            if (self.isDirty()) {
              if (ViewModelUtils.isElectronApiAvailable()) {
-               window.electron_api.ipc.invoke('preference-reading', {section: 'beforeUnload', name: 'PropertyCriteria_DetectUnsavedChanges'})
+               window.electron_api.ipc.invoke('preference-reading', 'unsaved-confirmation.unload')
                  .then(value => {
                    value = value || false;
                    if (value) {
                      onStartWindowQuit()
-                         .then(result => {
-                           delete event['returnValue'];
-                         });
+                       .then(result => {
+                         delete event['returnValue'];
+                       });
                    }
                    return handleEvent(event);
                  });
@@ -1147,7 +1190,7 @@
                viewParams.perspective
            ).handleHelpIconClicked(event);
          };
- 
+
          this.chosenItemsChanged = function (event) {
            const fieldName = event.currentTarget.id;
            const fieldValue = event.detail.value;
@@ -1196,6 +1239,80 @@
          };
 
          this.checkedRowsChanged = (event) => {
+           function addCheckedRow(rowKey) {
+             if (!self.declarativeActions.checkedRows.has(rowKey)) {
+               self.declarativeActions.checkedRows.add(rowKey);
+             }
+           }
+
+           function addAllCheckedRow(data, fieldName) {
+             for (let index = 0; index < data.length; index++) {
+               const rowKey = data[index][fieldName];
+               if (CoreUtils.isNotUndefinedNorNull(rowKey)) {
+                 self.declarativeActions.checkedRows.add(rowKey);
+               }
+             }
+           }
+
+           function excludeUncheckedRows(excludedKeys, data, fieldName) {
+             for (let index = 0; index < data.length; index++) {
+               const rowKey = data[index][fieldName];
+               if (CoreUtils.isNotUndefinedNorNull(rowKey) && !excludedKeys.includes(rowKey)) {
+                 self.declarativeActions.checkedRows.add(rowKey);
+               }
+             }
+           }
+
+           function getRowKey(index, fieldName) {
+             return event.currentTarget.data.data[index][fieldName];
+           }
+
+           function getRowKeys(event, fieldName) {
+             let rowKeys = [];
+             if (CoreUtils.isNotUndefinedNorNull(self.selectedRows().row.keys.keys)) {
+               for (const rowIndex of Array.from(self.selectedRows().row.keys.keys)) {
+                 const row = event.currentTarget.data.data[rowIndex];
+                 if (CoreUtils.isNotUndefinedNorNull(row)) {
+                   rowKeys.push(row[fieldName]);
+                 }
+               }
+             }
+             return rowKeys;
+           }
+
+           self.declarativeActions.checkedRows.clear();
+
+           if (CoreUtils.isNotUndefinedNorNull(self.declarativeActions.rowSelectionProperty)) {
+              const fieldName = `_${self.declarativeActions.rowSelectionProperty}`;
+             if (event.detail.value.row.isAddAll()) {
+               const excludedKeys = [];
+               const iterator = event.detail.value.row.deletedValues();
+               iterator.forEach((key) => {
+                 const rowKey = getRowKey(key, fieldName);
+                 excludedKeys.push(rowKey);
+               });
+               if (excludedKeys.length > 0) {
+                 excludeUncheckedRows(excludedKeys, event.currentTarget.data.data, fieldName);
+               }
+               else {
+                 addAllCheckedRow(event.currentTarget.data.data, fieldName);
+               }
+             }
+             else {
+               const row = event.detail.value.row;
+               if (row.values().size > 0) {
+                 row.values().forEach(function (key) {
+                   const rowKey = getRowKey(key, fieldName);
+                   addCheckedRow(rowKey);
+                 });
+               }
+             }
+           }
+
+           refreshActionsDisabledStates();
+         };
+
+         this.checkedRowsChanged2 = (event) => {
            function removeUncheckedRow(rowKey) {
              if (self.declarativeActions.checkedRows.has(rowKey)) {
                self.declarativeActions.checkedRows.delete(rowKey);
@@ -1213,6 +1330,24 @@
                const rowKey = data[index][fieldName];
                if (CoreUtils.isNotUndefinedNorNull(rowKey)) {
                  self.declarativeActions.checkedRows.add(rowKey);
+               }
+             }
+           }
+
+           function handleUnselectAll(event, fieldName) {
+             const rowKey = getRowKey(event, fieldName);
+
+             if (CoreUtils.isNotUndefinedNorNull(rowKey)) {
+               const rowIndex = event.currentTarget.currentRow.rowIndex;
+               if (event.detail.value.row.keys.keys.size === 1) {
+                 self.declarativeActions.checkedRows.clear();
+                 addCheckedRow(rowKey);
+               }
+               else if (event.detail.previousValue.row.keys.keys.has(rowIndex)) {
+                 removeUncheckedRow(rowKey);
+               }
+               else if (event.detail.value.row.keys.keys.has(rowIndex)) {
+                 addCheckedRow(rowKey);
                }
              }
            }
@@ -1280,7 +1415,7 @@
              }
            }
            else if (event.detail.previousValue.row.keys.all) {
-             self.declarativeActions.checkedRows.clear();
+             handleUnselectAll(event, fieldName);
            }
            else {
              if (event.detail.previousValue.row.keys.keys.size > 0 &&
@@ -1298,21 +1433,7 @@
              if (event.detail.previousValue.row.keys.keys.size > 0 &&
                  event.detail.value.row.keys.keys.size > 0
              ) {
-               const rowKey = getRowKey(event, fieldName);
-
-               if (CoreUtils.isNotUndefinedNorNull(rowKey)) {
-                 const rowIndex = event.currentTarget.currentRow.rowIndex;
-                 if (event.detail.value.row.keys.keys.size === 1) {
-                   self.declarativeActions.checkedRows.clear();
-                   addCheckedRow(rowKey);
-                 }
-                 else if (event.detail.previousValue.row.keys.keys.has(rowIndex)) {
-                   removeUncheckedRow(rowKey);
-                 }
-                 else if (event.detail.value.row.keys.keys.has(rowIndex)) {
-                   addCheckedRow(rowKey);
-                 }
-               }
+               handleUnselectAll(event, fieldName);
              }
            }
 
@@ -1491,10 +1612,10 @@
  
          function resetAutoSyncToolbarIconsState() {
            self.formToolbarModuleConfig
-               .then((moduleConfig) => {
-                 const state = (viewParams.perspective.id === 'monitoring');
-                 moduleConfig.viewModel.resetIconsVisibleState(state);
-               });
+             .then((moduleConfig) => {
+               const state = (viewParams.perspective.id === 'monitoring');
+               moduleConfig.viewModel.resetIconsVisibleState(state);
+             });
          }
  
          function isShoppingCartVisible() {
@@ -1572,7 +1693,16 @@
            const rdjData = viewParams.parentRouter?.data?.rdjData();
            return rdjData?.navigation.startsWith('Dashboards');
          }
- 
+
+         function isReadOnlyFormLayout() {
+           let rtnval = true;
+           if (RouterData.hasPDJData(viewParams.parentRouter)) {
+             const pdjData = viewParams.parentRouter.data.pdjData();
+             rtnval = RouterData.isReadOnlySliceForm(pdjData);
+           }
+           return rtnval;
+         }
+
          function isPolicyExpressionSliceLayout() {
            let rtnval = false;
            if (RouterData.hasPDJData(viewParams.parentRouter)) {
@@ -1695,10 +1825,6 @@
           * @returns {Promise<boolean>}
           */
          this.canExit = function (eventType, options) {
-           // Send signal that will collapse the Kiosk, if
-           // it is expanded.
-           viewParams.signaling.ancillaryContentAreaToggled.dispatch('form', false);
- 
            return new Promise(function (resolve) {
              self.formTabStripModuleConfig
                  .then((moduleConfig) => {
@@ -1809,7 +1935,7 @@
                          severity: 'info',
                          summary: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.summary'),
                          detail: oj.Translations.getTranslatedString('wrc-form.messages.action.notAllowed.detail')
-                       }, 1500);
+                       }, 3000);
                        resolve(false);
                      }
                      else if (self.isDirty()) {
@@ -2085,19 +2211,19 @@
  
          function resetSaveButtonDisabledState(state) {
            self.formToolbarModuleConfig
-               .then((moduleConfig) => {
-                 moduleConfig.viewModel.resetButtonsDisabledState([
-                   {id: 'save', disabled: state.disabled}
-                 ]);
-               });
+             .then((moduleConfig) => {
+               moduleConfig.viewModel.resetButtonsDisabledState([
+                 {id: 'save', disabled: state.disabled}
+               ]);
+             });
          }
  
          function captureSyncInterval(currentValue) {
            return SetSyncIntervalDialog.showSetSyncIntervalDialog(currentValue, self.i18n)
-               .then(result => {
-                 setSyncInterval(parseInt(result.interval));
-                 return Promise.resolve(result);
-               });
+             .then(result => {
+               setSyncInterval(parseInt(result.interval));
+               return Promise.resolve(result);
+             });
          }
  
          function setSyncInterval(syncInterval) {
@@ -2117,14 +2243,14 @@
 
                const refreshInterval = (syncInterval * 1000);
 
-               if (CoreUtils.isUndefinedOrNull(actionPolling.endWhenPairs)) {
+               if (actionPolling.interval === 0) {
                  reloadRdjData();
                  self.syncTimerId = setInterval(reloadRdjData, refreshInterval);
                }
                else {
-                 satisfyActionEndWhenPairs(actionPolling);
+                 performActionPolling(actionPolling);
                  if (CoreUtils.isNotUndefinedNorNull(actionPolling.pollCount)) {
-                   self.syncTimerId = setInterval(satisfyActionEndWhenPairs.bind(self, actionPolling), refreshInterval);
+                   self.syncTimerId = setInterval(performActionPolling.bind(self, actionPolling), refreshInterval);
                  }
                }
              }
@@ -2144,9 +2270,9 @@
          function cancelAutoSync() {
            cancelSyncTimer();
            self.formToolbarModuleConfig
-               .then(moduleConfig => {
-                 moduleConfig.viewModel.cancelAutoSync();
-               });
+             .then(moduleConfig => {
+               moduleConfig.viewModel.cancelAutoSync();
+             });
          }
          
          async function isAutoSyncRunning() {
@@ -2194,15 +2320,15 @@
              reloadRdjData();
  
              self.formToolbarModuleConfig
-                 .then((moduleConfig) => {
-                   if (toolbarButton === '' || toolbarButton === 'save') {
-                     moduleConfig.viewModel.renderToolbarButtons('sync');
-                   }
-                   else {
-                     const hasNonReadOnlyFields = (toolbarButton === 'new');
-                     moduleConfig.viewModel.renderToolbarButtons('commit', hasNonReadOnlyFields);
-                   }
-                 });
+               .then((moduleConfig) => {
+                 if (toolbarButton === '' || toolbarButton === 'save') {
+                   moduleConfig.viewModel.renderToolbarButtons('sync');
+                 }
+                 else {
+                   const hasNonReadOnlyFields = (toolbarButton === 'new');
+                   moduleConfig.viewModel.renderToolbarButtons('commit', hasNonReadOnlyFields);
+                 }
+               });
            }
          }
 
@@ -2248,50 +2374,68 @@
          function setFormContainerMaxHeight(withHistoryVisible) {
            let offsetMaxHeight;
            const options = {withHistoryVisible: withHistoryVisible, withHelpVisible: self.showHelp()};
-           offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#form-container', options);
+           const offsetHeightCSSVariable = (RouterData.hasSliceTable(self.pdjData) ? 'table-container-resizer-offset-max-height' : 'form-container-resizer-offset-max-height');
+           offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#form-container', offsetHeightCSSVariable, options);
            if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
              offsetMaxHeight += (self.modelConsole.expanded ? self.modelConsole.offsetHeight : 23);
            }
-           Logger.log(`[FORM] max-height=calc(100vh - ${offsetMaxHeight}px)`);
-           const ele = document.querySelector('.cfe-table-form-content');
-           if (ele !== null) ele.style['max-height'] = `calc(100vh - ${offsetMaxHeight}px)`;
+           document.documentElement.style.setProperty('--table-container-calc-max-height', `${offsetMaxHeight}px`);
            document.documentElement.style.setProperty('--form-container-calc-max-height', `${offsetMaxHeight}px`);
          }
  
+         function displayBlankForm() {
+           self.formTabStripModuleConfig
+             .then(moduleConfig => {
+               moduleConfig.viewModel.setTabStripVisibility(false);
+             });
+         }
+
          function toggleBeanPathHistory(withHistoryVisible) {
            setFormContainerMaxHeight(withHistoryVisible);
+           if (!withHistoryVisible) {
+             viewParams.signaling.resizeObserveeNudged.dispatch('form');
+           }
            return viewParams.onBeanPathHistoryToggled();
          }
  
-         function toggleInstructions(withInstructionsVisible, withHistoryVisible) {
-           const ele = document.getElementById('intro');
-           if (ele !== null) ele.style.display = (withInstructionsVisible ? 'inline-block' : 'none');
-           self.showInstructions(withInstructionsVisible);
-           setFormContainerMaxHeight(withHistoryVisible);
+         function toggleInstructions(visible) {
+           self.showInstructions(visible);
+           if (self.showInstructions()) {
+             setFormContainerMaxHeight(!visible, self.perspectiveMemory.beanPathHistory.visibility);
+             viewParams.signaling.resizeObserveeNudged.dispatch('form');
+           }
+           else {
+             setFormContainerMaxHeight(visible, self.perspectiveMemory.beanPathHistory.visibility);
+           }
          }
- 
-         function toggleHelpPage(withHelpVisible, withHistoryVisible) {
+
+         function toggleHelpPage(withHelpVisible) {
+           function rerenderFormLayout() {
+             const pdjData = viewParams.parentRouter.data.pdjData();
+             const rdjData = viewParams.parentRouter.data.rdjData();
+
+             self.loadRdjDoNotClearDirty = true;
+
+             renderFormLayout(pdjData, rdjData);
+           }
+
+           self.formTabStripModuleConfig
+             .then(moduleConfig => {
+               moduleConfig.viewModel.setTabStripVisibility(false);
+             });
+
            self.formActionsStripModuleConfig
              .then(moduleConfig => {
                moduleConfig.viewModel.renderActionsStrip(!withHelpVisible);
+               self.showHelp(withHelpVisible);
+               toggleInstructions(!withHelpVisible);
+               self.tableCustomizerManager.closeCustomizerState();
+
                if (withHelpVisible) {
-                 self.showHelp(withHelpVisible);
-                 setFormContainerMaxHeight(withHistoryVisible);
-                 self.tableCustomizerManager.closeCustomizerState();
-                 
                  stashDirtyFields();
-                 return Promise.resolve(true);
                }
                else {
-                 self.showHelp(withHelpVisible);
-                 setFormContainerMaxHeight(withHistoryVisible);
-                 self.tableCustomizerManager.closeCustomizerState();
-                 
-                 const pdjData = viewParams.parentRouter.data.pdjData();
-                 const rdjData = viewParams.parentRouter.data.rdjData();
-                 self.loadRdjDoNotClearDirty = true;
-                 renderFormLayout(pdjData, rdjData);
-                 return Promise.resolve(true);
+                 rerenderFormLayout();
                }
              });
          }
@@ -2335,75 +2479,95 @@
              editPage = `/${viewParams.perspective.id}/${path}`;
            }
            viewParams.parentRouter.go(editPage)
-               .then((hasChanged) => {
-                 if (isCreateForm) {
-                   // When loading the create form signal that nonwritable is false
-                   // so that the toolbar shows the button that handles the create form
-                   viewParams.signaling.nonwritableChanged.dispatch(false);
+             .then((hasChanged) => {
+               if (isCreateForm) {
+                 // When loading the create form signal that nonwritable is false
+                 // so that the toolbar shows the button that handles the create form
+                 viewParams.signaling.nonwritableChanged.dispatch(false);
+               }
+               // Reset the toolbar buttons, so the
+               // "Update Changes" button becomes visible.
+               resetToolbarButtons();
+               // When not loading the create form update the state
+               // of shopping cart or the toolbar for WDT model
+               if (!isCreateForm) {
+                 if (!isWdtForm()) {
+                   updateShoppingCart('sync');
                  }
-                 // Reset the toolbar buttons, so the
-                 // "Update Changes" button becomes visible.
-                 resetToolbarButtons();
-                 // When not loading the create form update the state
-                 // of shopping cart or the toolbar for WDT model
-                 if (!isCreateForm) {
-                   if (!isWdtForm()) {
-                     updateShoppingCart('sync');
-                   }
-                   else {
-                     self.formToolbarModuleConfig
-                         .then((moduleConfig) => {
-                           moduleConfig.viewModel.renderToolbarButtons('sync');
-                         });
-                   }
+                 else {
+                   self.formToolbarModuleConfig
+                     .then((moduleConfig) => {
+                       moduleConfig.viewModel.renderToolbarButtons('sync');
+                     });
                  }
-               });
+               }
+             });
          }
  
          function deleteBean(resourceData) {
            self.createForm = new CreateForm(viewParams);
            self.createForm.deleteBean(resourceData)
-               .then(reply => {
-                 self.formToolbarModuleConfig
-                     .then((moduleConfig) => {
-                       const changeManager = moduleConfig.viewModel.changeManager();
-                       moduleConfig.viewModel.changeManager({
-                         isLockOwner: true,
-                         hasChanges: changeManager.hasChanges,
-                         supportsChanges: changeManager.supportsChanges
-                       });
-                       moduleConfig.viewModel.renderToolbarButtons('delete');
-                     });
-                 return reply;
-               })
-               .then(reply => {
-                 if (reply.body.messages > 0) {
-                   MessageDisplaying.displayResponseMessages(reply.body.messages);
-                 }
-                 else if (isWdtForm()) {
-                   const eventType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'autoSave' : 'autoDownload');
-                   submitContentFileChanges(eventType);
-                 }
-               })
-               .catch(response => {
-                 return ViewModelUtils.failureResponseDefaultHandling(response);
-               })
-               .finally(() => {
-                 self.formToolbarModuleConfig
-                     .then((moduleConfig) => {
-                       const changeManager = moduleConfig.viewModel.changeManager();
-                       moduleConfig.viewModel.changeManager({
-                         isLockOwner: true,
-                         hasChanges: changeManager.hasChanges,
-                         supportsChanges: changeManager.supportsChanges
-                       });
-                       moduleConfig.viewModel.renderToolbarButtons('delete');
-                     });
-                 viewParams.signaling.tabStripTabSelected.dispatch('form', 'shoppingcart', false);
-               });
+             .then(reply => {
+               self.formToolbarModuleConfig
+                 .then((moduleConfig) => {
+                   const changeManager = moduleConfig.viewModel.changeManager();
+                   moduleConfig.viewModel.changeManager({
+                     isLockOwner: true,
+                     hasChanges: changeManager.hasChanges,
+                     supportsChanges: changeManager.supportsChanges
+                   });
+                   moduleConfig.viewModel.renderToolbarButtons('delete');
+                 });
+               return reply;
+             })
+             .then(reply => {
+               if (reply.body.messages > 0) {
+                 MessageDisplaying.displayResponseMessages(reply.body.messages);
+               }
+               else if (isWdtForm()) {
+                 const eventType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'autoSave' : 'autoDownload');
+                 submitContentFileChanges(eventType);
+               }
+             })
+             .catch(response => {
+               return ViewModelUtils.failureResponseDefaultHandling(response);
+             })
+             .finally(() => {
+               self.formToolbarModuleConfig
+                 .then((moduleConfig) => {
+                   const changeManager = moduleConfig.viewModel.changeManager();
+                   moduleConfig.viewModel.changeManager({
+                     isLockOwner: true,
+                     hasChanges: changeManager.hasChanges,
+                     supportsChanges: changeManager.supportsChanges
+                   });
+                   moduleConfig.viewModel.renderToolbarButtons('delete');
+                 });
+               viewParams.signaling.tabStripTabSelected.dispatch('form', 'shoppingcart', false);
+             });
          }
  
          function cancelBean(eventType) {
+           function selectLastVisited(contentPage) {
+             const onTimeout = (moduleConfigPromise) => {
+               moduleConfigPromise
+                 .then(moduleConfig => {
+                   moduleConfig.viewModel.selectLastVisitedSlice(
+                     contentPage.lastVisitedSlice,
+                     contentPage.rdjUrl
+                   );
+                   viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
+                 });
+             };
+
+             // The timeout value must be high enough to cover how
+             // long it takes code in form-tabstrip to retrieve the
+             // RDJ associated with the rdjUrl variable. 50 seems to
+             // be the smallest value it can be, and have the previous
+             // slice appear reliably.
+             setTimeout(onTimeout.bind(undefined, self.formTabStripModuleConfig), 50);
+           }
+
            // We need to use rawPath instead of rdjUrl here, because
            // that always contains the URL the cancel needs to go back
            // to. This is true regardless of whether we were in a wizard
@@ -2417,14 +2581,16 @@
              rdjUrl = `${Runtime.getBackendUrl()}${rdjUrl}`;
            }
            viewParams.onCreateCancelled(rdjUrl);
+           if (isWizardForm()) {
+             self.createForm.clearCachedRemovedUsedIfDataValues();
+           }
            // Need to set self.createForm to undefined, so the table
            // customizer manager logic inside the setTimeout, works
            // correctly when clicking the "Cancel" button in all the
            // different "New Dashboard" scenarios.
            self.createForm = undefined;
            clearFormChanges();
-           notifyUnsavedChanges(false);
-           viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
+           selectLastVisited(self.perspectiveMemory.contentPage);
          }
  
          function clearFormChanges() {
@@ -2435,7 +2601,39 @@
            self.debugFlagsEnabled(PageDefinitionFields.resetDebugFlagsEnabled(self.debugFlagItems()));
            self.multiSelectControls = {};
          }
- 
+
+         function saveButtonClicked(eventType){
+           if(self.isDirty()){
+             saveBean(eventType);
+           }
+           else{
+             const rdjData = viewParams.parentRouter.data.rdjData();
+             const dataPayload = '';
+             const isDashboardSliceLayout = rdjData.navigation.startsWith('Dashboards');
+             const hasEmptyDataPayload = (CoreUtils.isUndefinedOrNull(dataPayload) || (Object.keys(dataPayload).length === 0));
+
+             let messageText;
+
+             if (hasEmptyDataPayload && ['configuration'].includes(viewParams.perspective.id) ||
+                 isDashboardSliceLayout || isPolicyExpressionSliceLayout() ||
+                 isPolicyAdvancedSliceWritableField(dataPayload)
+             ) {
+               messageText = self.i18n.messages.savedTo.notSaved;
+             }
+
+             if(CoreUtils.isNotUndefinedNorNull(messageText)){
+               let message = {
+                 severity: 'info',
+                 message: messageText
+               };
+               MessageDisplaying.displayMessage({
+                 severity: message.severity,
+                 summary: message.message
+               }, 2500);
+             }
+           }
+         }
+
          function saveBean(eventType) {
            let dataAction = '';
            let isEdit = isEditing();
@@ -2618,12 +2816,12 @@
          function resetToolbarButtons() {
            if (['configuration', 'modeling','security', 'properties'].indexOf(viewParams.perspective.id) !== -1) {
              self.formToolbarModuleConfig
-                 .then((moduleConfig) => {
-                   moduleConfig.viewModel.resetButtonsDisabledState([
-                     {id: 'save', disabled: false}
-                   ]);
-                   moduleConfig.viewModel.renderToolbarButtons('create');
-                 });
+               .then((moduleConfig) => {
+                 moduleConfig.viewModel.resetButtonsDisabledState([
+                   {id: 'save', disabled: false}
+                 ]);
+                 moduleConfig.viewModel.renderToolbarButtons('create');
+               });
            }
          }
  
@@ -2732,37 +2930,48 @@
            if (isEdit) {
              if (RouterData.hasRDJData(viewParams.parentRouter)) {
                const rdjData = viewParams.parentRouter.data.rdjData();
-               const isDashboardFormLayout = rdjData.navigation.startsWith('Dashboards');
-               if (isDashboardFormLayout || ['configuration', 'modeling', 'security', 'properties'].indexOf(viewParams.perspective.id) !== -1) {
-                 if (CoreUtils.isNotUndefinedNorNull(self.wdtForm)) {
-                   submitContentFileChanges(eventType);
-                 }
-                 else {
-                   let messageText;
-                   if (isDashboardFormLayout ||
-                       isPolicyExpressionSliceLayout() ||
-                       isPolicyAdvancedSliceWritableField(dataPayload)
-                   ) {
-                     messageText = self.i18n.messages.savedTo.generic;
+               const isDashboardSliceLayout = rdjData.navigation.startsWith('Dashboards');
+               const isReadWriteSliceLayout = !isReadOnlyFormLayout();
+               const hasEmptyDataPayload = (CoreUtils.isUndefinedOrNull(dataPayload) || (Object.keys(dataPayload).length === 0));
+
+               let messageText;
+
+               if (!hasEmptyDataPayload && ['configuration'].includes(viewParams.perspective.id)) {
+                 messageText = self.i18n.messages.savedTo.shoppingcart;
+               }
+               else if (isDashboardSliceLayout || isPolicyExpressionSliceLayout() ||
+                 isPolicyAdvancedSliceWritableField(dataPayload)
+               ) {
+                 messageText = self.i18n.messages.savedTo.generic;
+               }
+               else if (!hasEmptyDataPayload && isReadWriteSliceLayout) {
+                 messageText = self.i18n.messages.savedTo.generic;
+               }
+
+               if (CoreUtils.isNotUndefinedNorNull(messageText) && messageText !== '') {
+                let message = {
+                   severity: 'confirmation',
+                   message: messageText
+                 };
+                 MessageDisplaying.displayMessage({
+                   severity: message.severity,
+                   summary: message.message
+                 }, 2500);
+               }
+
+               if (!hasEmptyDataPayload) {
+                 if (isDashboardSliceLayout || isReadWriteSliceLayout ||
+                   ['configuration', 'modeling', 'security', 'properties'].indexOf(viewParams.perspective.id) !== -1
+                 ) {
+                   if (CoreUtils.isNotUndefinedNorNull(self.wdtForm)) {
+                     submitContentFileChanges(eventType);
                    }
-                   else if (['configuration', 'monitoring'].includes(viewParams.perspective.id)) {
-                     messageText = self.i18n.messages.savedTo.shoppingcart;
-                   }
-                   if (CoreUtils.isNotUndefinedNorNull(messageText) && messageText !== '') {
-                     const message = {
-                       severity: 'confirmation',
-                       message: messageText
-                     };
-                     MessageDisplaying.displayMessage({
-                       severity: message.severity,
-                       summary: message.message
-                     }, 2500);
-                   }
-                   if (!isDashboardFormLayout) {
+
+                   if (!isDashboardSliceLayout && (viewParams.perspective.id === 'configuration')) {
                      updateShoppingCart(eventType);
                    }
                  }
- 
+
                  // Reload the page data to pickup the saved changes!
                  // Skip reload for property list due to a reordering
                  if (['properties'].indexOf(viewParams.perspective.id) === -1) {
@@ -2776,6 +2985,10 @@
            else {
              if (isWdtForm()) submitContentFileChanges(eventType);
  
+             if (isWizardForm()) {
+               self.createForm.clearCachedRemovedUsedIfDataValues();
+             }
+
              // clear treenav selection
              viewParams.signaling.navtreeSelectionCleared.dispatch();
  
@@ -2783,9 +2996,9 @@
              if (identity === viewParams.parentRouter.data.rdjUrl()) {
                // Obtain the bean and then goto the page for the bean
                DataOperations.mbean.get(identity)
-                   .then((result) => {
-                     gotoBean(result, false);
-                   });
+                 .then((result) => {
+                   gotoBean(result, false);
+                 });
                return;
              }
  
@@ -2793,18 +3006,18 @@
              const editPage = '/' + viewParams.perspective.id + '/' + path;
  
              Router.rootInstance.go(editPage)
-                 .then((hasChanged) => {
-                   self.formToolbarModuleConfig
-                       .then((moduleConfig) => {
-                         const changeManager = moduleConfig.viewModel.changeManager();
-                         moduleConfig.viewModel.changeManager({
-                           isLockOwner: changeManager.isLockOwner,
-                           hasChanges: changeManager.hasChanges,
-                           supportsChanges: changeManager.supportsChanges,
-                         });
-                         moduleConfig.viewModel.renderToolbarButtons(eventType);
-                       });
-                 });
+               .then((hasChanged) => {
+                 self.formToolbarModuleConfig
+                   .then((moduleConfig) => {
+                     const changeManager = moduleConfig.viewModel.changeManager();
+                     moduleConfig.viewModel.changeManager({
+                       isLockOwner: changeManager.isLockOwner,
+                       hasChanges: changeManager.hasChanges,
+                       supportsChanges: changeManager.supportsChanges,
+                     });
+                     moduleConfig.viewModel.renderToolbarButtons(eventType);
+                   });
+               });
            }
          }
  
@@ -2982,38 +3195,46 @@
            // the create form as the slice.
            sliceName = (sliceName !== 'createForm' ? sliceName : '');
            Logger.log(`[FORM] sliceName=${sliceName}, self.sliceName=${self.sliceName}`);
- 
-           const url = (isEdit ? `${viewParams.parentRouter.data.rdjUrl()}?slice=${sliceName}` : `${viewParams.parentRouter.data.rdjUrl()}?view=createForm`);
- 
-           DataOperations.mbean.reload(url)
-               .then(reply => {
-                 const rdjData = reply.body.data;
-                 Logger.log(`[FORM] reload url; reply.body.data=${JSON.stringify(rdjData)}`);
-                 // Preserve changes that occurred AFTER a save was
-                 // done, so they will be available after the data
-                 // is refreshed from the reload.
-                 const dataPayload = getDirtyFieldsPayload();
-                 viewParams.parentRouter.data.rdjData(rdjData);
-                 if (CoreUtils.isUndefinedOrNull(rdjData) || CoreUtils.isUndefinedOrNull(rdjData.data)) {
-                   // reload rdjData did not get any data
-                   signalGotoLandingPage('No RDJ data!');
-                 }
-                 resetPageRedoHistory();
-                 cacheDataPayload(dataPayload);
-                 restoreDirtyFieldsValues();
-                 self.formToolbarModuleConfig
-                     .then((moduleConfig) => {
-                       moduleConfig.viewModel.renderToolbarButtons('sync');
-                     });
-               })
-               .catch(response => {
-                 if (response.failureType === CoreTypes.FailureType.NOT_FOUND) {
-                   signalGotoLandingPage('Form reload unable to find page data, goto landing page.');
-                 }
-                 else {
-                   MessageDisplaying.displayResponseMessages(response.body.messages);
-                 }
-               });
+
+           let rdjUrl = viewParams.parentRouter.data.rdjUrl();
+           if (isEdit) {
+             if (rdjUrl.indexOf(`slice=${sliceName}`) === -1 && sliceName !== '') {
+               rdjUrl = `${rdjUrl}?slice=${sliceName}`;
+             }
+           }
+           else {
+             rdjUrl = `${rdjUrl}?view=createForm`;
+           }
+
+           DataOperations.mbean.reload(rdjUrl)
+             .then(reply => {
+               const rdjData = reply.body.data;
+               Logger.log(`[FORM] reload url; reply.body.data=${JSON.stringify(rdjData)}`);
+               // Preserve changes that occurred AFTER a save was
+               // done, so they will be available after the data
+               // is refreshed from the reload.
+               const dataPayload = getDirtyFieldsPayload();
+               viewParams.parentRouter.data.rdjData(rdjData);
+               if (CoreUtils.isUndefinedOrNull(rdjData) || CoreUtils.isUndefinedOrNull(rdjData.data)) {
+                 // reload rdjData did not get any data
+                 signalGotoLandingPage('No RDJ data!');
+               }
+               resetPageRedoHistory();
+               cacheDataPayload(dataPayload);
+               restoreDirtyFieldsValues();
+               self.formToolbarModuleConfig
+                 .then((moduleConfig) => {
+                   moduleConfig.viewModel.renderToolbarButtons('sync');
+                 });
+             })
+             .catch(response => {
+               if (response.failureType === CoreTypes.FailureType.NOT_FOUND) {
+                 signalGotoLandingPage('Form reload unable to find page data, goto landing page.');
+               }
+               else {
+                 MessageDisplaying.displayResponseMessages(response.body.messages);
+               }
+             });
  
          }
  
@@ -3169,7 +3390,16 @@
                }
              }
            }
- 
+
+           function setTableCursor(pdjData) {
+             const isSliceTable = self.isSliceTable(pdjData);
+             let navigationProperty = 'none';
+             if (isSliceTable){
+               navigationProperty = DeclarativeActionsManager.getNavigationProperty(pdjData);
+               ViewModelUtils.setTableCursor(navigationProperty);
+             }
+           }
+
            let div;
  
            if (isWizardForm()) {
@@ -3201,12 +3431,18 @@
 
                  restoreUnsetFieldsApplyHighlighting();
                  renderSpecialHandlingFields();
- 
+
                  setDashboardCriteriaValueLabelWidth();
- 
+                 setTableCursor(pdjData);
+                 setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+                 restoreDirtyFieldsValues();
+                 self.loadRdjDoNotClearDirty = false;
+
+                 setDataFormType(pdjData);
+  
                  const ele = document.querySelector('.cfe-buttonset');
                  if (ele !== null) ele.style.display = 'none';
- 
+
                  if (isPolicyExpressionSliceLayout()) {
                    if (CoreUtils.isNotUndefinedNorNull(self.policyForm)) {
                      const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
@@ -3230,9 +3466,6 @@
                    }
                  }
  
-                 setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
-                 restoreDirtyFieldsValues();
-                 self.loadRdjDoNotClearDirty = false;
                });
            };
  
@@ -3243,6 +3476,13 @@
            // DON'T PUT ANY CODE IN THIS FUNCTION AFTER THIS POINT !!!
          }
  
+         function setDataFormType(pdjData) {
+           const ele = document.getElementById('form-container');
+           if (ele !== null) {
+             ele.setAttribute('data-form-type', (RouterData.hasSliceTable(pdjData) ? 'sliceTable' : 'sliceForm'));
+           }
+         }
+
          function renderActionsStrip(visibility) {
            self.formActionsStripModuleConfig
              .then(moduleConfig => {
@@ -3251,16 +3491,6 @@
          }
  
          function renderSpecialHandlingFields() {
-           function onMouseUp(event) {
-             const parentNode = event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-             const initHeight = parseInt(event.target.attributes['data-init-height'].value, 10);
-             const calcOffsetHeight = (event.target.offsetHeight - initHeight);
-             Logger.log(`calcOffsetHeight=${calcOffsetHeight}`);
-             parentNode.style.height = `${(initHeight + calcOffsetHeight) - 10}px`;
-             const name = CoreUtils.getSubstring(event.target.id, '|');
-             self.perspectiveMemory.setNthChildMinHeight.call(self.perspectiveMemory, name, parentNode.style.height);
-           }
- 
            let ele;
            self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).forEach((nthChild) => {
              ele = document.querySelector('#wlsform > div > div:nth-child(' + nthChild.row + ') > div:nth-child(' + nthChild.col + ')');
@@ -3273,7 +3503,7 @@
              }
            });
  
-           const results = setFocusFormElement();
+           const results = setFocusFormElement(true);
  
            if (results.formElement) {
              results.formElement.addEventListener('blur', onBlurFormLayout, true);
@@ -3290,15 +3520,17 @@
            }
          }
  
-         function setFocusFormElement() {
+         function setFocusFormElement(selectOnly = false) {
            let nodeList;
            const formElement = document.getElementById('wlsform');
            if (formElement !== null) {
              nodeList = formElement.querySelectorAll('oj-text-area.oj-textarea, oj-select-single.oj-text-field, oj-input-text.oj-text-field, oj-combobox-one.oj-text-field');
-             if (nodeList !== null) {
-               const arr = Array.from(nodeList);
-               const index = arr.map(node => node.readonly).indexOf(false);
-               if (index !== -1) arr[index].focus();
+             if (!selectOnly) {
+               if (nodeList !== null) {
+                 const arr = Array.from(nodeList);
+                 const index = arr.map(node => node.readonly).indexOf(false);
+                 if (index !== -1) arr[index].focus();
+               }
              }
            }
            return {formElement: formElement, nodeList: nodeList};
@@ -3518,8 +3750,7 @@
          function createPolicyFormLayout(options, pdjData, rdjData) {
            const div = document.createElement('div');
            div.setAttribute('id', 'cfe-form');
-           div.style.display = 'block';
- 
+
            if (CoreUtils.isNotUndefinedNorNull(self.policyForm)) {
              const pdjTypes = new PageDataTypes(pdjData.sliceForm.properties, viewParams.perspective.id);
              const results = self.policyForm.createPolicyFormLayout(
@@ -3541,8 +3772,7 @@
          function renderWizardForm(rdjData) {
            const div = document.createElement('div');
            div.setAttribute('id', 'cfe-form');
-           div.style.display = 'block';
- 
+
            //wizard form always use single column. If this is changed, the param calling populateFormLayout will need to change.
            const formLayout = PageDefinitionFormLayouts.createWizardFormLayout({labelWidthPcnt: '32%', maxColumns: '1'});
            div.append(formLayout);
@@ -3599,8 +3829,7 @@
          function renderForm(pdjData, rdjData) {
            const div = document.createElement('div');
            div.setAttribute('id', 'cfe-form');
-           div.style.display = 'block';
- 
+
            const includeAdvancedFields = (self.showAdvancedFields().length !== 0);
            const properties = getSliceProperties(pdjData, includeAdvancedFields);
  
@@ -3700,12 +3929,16 @@
            }
            else {
              if (isSingleColumn) {
-               formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({
+               const options = {
                  labelWidthPcnt: '32%',
                  maxColumns: '1'
-               });
+               };
+               if (properties.filter(property => ['ThreadStackDump','DeploymentPlan'].includes(property.name)).length > 0) {
+                 options.labelWidthPcnt = '18%';
+               }
+               formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout(options);
                div.append(formLayout);
-               document.documentElement.style.setProperty('--form-input-min-width', '32em');
+//MLW               document.documentElement.style.setProperty('--form-input-min-width', '32em');
              }
              else {
                formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({labelWidthPcnt: '45%', maxColumns: '2'});
@@ -4045,6 +4278,13 @@
                  'placeholder': pdjTypes.getInLineHelpPresentation(name),
                  'readonly': pdjTypes.isReadOnly(name) || isReadOnly
                };
+               if (pdjTypes.isMultiLineStringType(name) && isSingleColumn) {
+                 options['resize-behavior'] = 'both';
+                 const lineBreaksCount = PageDefinitionUtils.getLineBreaksCount(dataValues[name].value);
+                 if (lineBreaksCount !== -1) {
+                   options['rows'] = (lineBreaksCount > 20 ? 20 : lineBreaksCount);
+                 }
+               }
                field = PageDefinitionFields.createTextArea(options);
                field.setAttribute('title', value);
                let nthChild = self.perspectiveMemory.getNthChildrenItem.call(self.perspectiveMemory, name);
@@ -4116,6 +4356,12 @@
                if (viewParams.perspective.id === 'modeling' && name === 'Upload') {
                  Logger.log('[FORM] Suppressing creation of "Upload" label!');
                }
+               else if (viewParams.perspective.id === 'modeling' && name === 'NonNullStagingMode') {
+                 Logger.log('[FORM] Suppressing creation of "NonNullStagingMode" label!');
+               }
+               else if (viewParams.perspective.id === 'modeling' && name === 'AdminMode') {
+                 Logger.log('[FORM] Suppressing creation of "AdminMode" label!');
+               }
                else if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && name.indexOf('Verify') !== -1) {
                  Logger.log('[FORM] Suppressing creation of "VerifyXXX" field labels!');
                }
@@ -4184,7 +4430,7 @@
  
                if (isWizardForm()) {
                  if (self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`]() === '') {
-                   self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`](dataValues[name].value);
+                     self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`](dataValues[name].value);
                  }
                }
  
@@ -4313,6 +4559,12 @@
              }
  
              if (viewParams.perspective.id === 'modeling' && name === 'Upload') {
+               Logger.log('[FORM] Suppressing display of "Upload" field!');
+             }
+             else if (viewParams.perspective.id === 'modeling' && name === 'NonNullStagingMode') {
+               Logger.log('[FORM] Suppressing display of "Upload" field!');
+             }
+             else if (viewParams.perspective.id === 'modeling' && name === 'AdminMode') {
                Logger.log('[FORM] Suppressing display of "Upload" field!');
              }
              else if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name &&
@@ -4449,11 +4701,11 @@
 
            self['sliceTableClickListener'] = (event) => {
              if (CoreUtils.isNotUndefinedNorNull(event.target.cellIndex)) {
-               const rowKey = event.currentTarget.attributes['data-row-key'].value;
+               const rowKeyName = event.currentTarget.attributes['data-row-key'].value;
 
-               if (rowKey === '_identity') {
+               if (rowKeyName === '_identity') {
                  event.stopImmediatePropagation();
-                 const keyValue = event.currentTarget.data.data[event.currentTarget.currentRow.rowIndex][rowKey];
+                 const keyValue = event.currentTarget.data.data[event.currentTarget.currentRow.rowIndex][rowKeyName];
                  if (CoreUtils.isNotUndefinedNorNull(keyValue)) {
                    viewParams.signaling.navtreeSelectionCleared.dispatch();
                    Router.rootInstance.go(`/${viewParams.perspective.id}/${encodeURIComponent(keyValue)}`);
@@ -4553,7 +4805,7 @@
            // tabs, in the WKT-UI.
            self.perspectiveMemory.upsertAddToArchiveSwitchValue.call(self.perspectiveMemory, key, fieldName, value);
          }
- 
+
          function addArchiveEntry(result, fieldName, initialValue) {
            const dataProvider = self.wdtForm.getDataProvider();
            if (CoreUtils.isUndefinedOrNull(dataProvider['modelArchiveEntries'])) {
@@ -4901,21 +5153,7 @@
                    const changeManager = moduleConfig.viewModel.changeManager();
                    ChangeManager.getData()
                        .then(data => {
-                         let flag = true;
-                         if( data.changeManager.supportsChanges) {
-                           let content = data.data[ChangeManager.Section.ADDITIONS.name];
-                           if (content.length <= 0) {
-                             content = data.data[ChangeManager.Section.MODIFICATIONS.name];
-                             if (content.length <= 0) {
-                               content = data.data[ChangeManager.Section.REMOVALS.name];
-                               if (content.length <= 0) {
-                                 flag = false;
-                               }
-                             }
-                           }
-                         }else{
-                           flag = data.changeManager.hasChanges;
-                         }
+                         let flag = data.changeManager.hasChanges;
                          moduleConfig.viewModel.changeManager({
                            isLockOwner: (flag),
                            hasChanges: (flag),

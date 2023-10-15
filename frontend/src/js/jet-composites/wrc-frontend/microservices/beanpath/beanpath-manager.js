@@ -1,37 +1,43 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function (ko, ArrayDataProvider, PerspectiveMemoryManager, PageDefinitionUtils, CoreUtils, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
+  function ( oj, ko, ArrayDataProvider, PerspectiveMemoryManager, PageDefinitionUtils, CoreUtils, Logger) {
 
     function BeanPathManager(beanTree, countObservable){
-      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(beanTree.type);
-      this.beanPathHistory = ko.observableArray(getInitialBeanPathItems.call(this, beanTree));
-      this.beanPathHistoryOptions = new ArrayDataProvider(this.beanPathHistory, { keyAttributes: 'value' });
+      this.beanTree = beanTree;
       this.beanPathHistoryCount = countObservable;
+      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(beanTree.type, beanTree.provider.id);
+      this.beanPathHistory = ko.observableArray(getInitialBeanPathItems.call(this, beanTree));
+      this.beanPathHistoryOptions = getBeanPathHistoryOptions(this.beanPathHistory);
     }
 
     function getInitialBeanPathItems(beanTree) {
-      const items = this.perspectiveMemory.history();
-      if (items.length > 0) {
+      let initialBeanPathItems = [];
+
+      const perspectivesBeanPathHistory = PerspectiveMemoryManager.getProviderPerspectivesBeanPathHistory(beanTree.provider.id);
+      if (Object.keys(perspectivesBeanPathHistory).length > 0) {
+        initialBeanPathItems = Array.prototype.concat(...Object.values(perspectivesBeanPathHistory));
+      }
+
+      if (initialBeanPathItems.length > 0) {
         let pathParts = [];
         // The provider id in the value will be different, so
         // we need to update that using data in beanTree.
-        for (const i in items) {
-          pathParts = items[i].value.split('/').filter(e => e);
+        for (const i in initialBeanPathItems) {
+          pathParts = initialBeanPathItems[i].value.split('/').filter(e => e);
           if (pathParts[1] !== beanTree.provider.id) {
             pathParts[1] = beanTree.provider.id;
-            items[i].value = `/${pathParts.join('/')}`;
+            initialBeanPathItems[i].value = `/${pathParts.join('/')}`;
           }
         }
-        this.perspectiveMemory.setHistory(items);
       }
-      return items;
+      return initialBeanPathItems;
     }
 
     function isValidBeanPathHistoryPath(path) {
@@ -47,7 +53,19 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
       return pathParam;
     }
 
-  //public:
+    function getBeanTreeTypeLabel(beanTreeType) {
+      return oj.Translations.getTranslatedString(`wrc-content-area-header.title.${beanTreeType}`);
+    }
+
+    function getBeanPathHistoryOptions(beanPathHistory) {
+      return new ArrayDataProvider(beanPathHistory, { keyAttributes: 'value' });
+    }
+
+    function updateBeanPathHistoryCount(count) {
+      this.beanPathHistoryCount(count);
+    }
+
+    //public:
     BeanPathManager.prototype = {
       /**
        * @param {string} pathParam
@@ -67,14 +85,28 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
         if (CoreUtils.isNotUndefinedNorNull(result)) {
           result.label = breadcrumbsLabel;
         }
-        else if (isValidBeanPathHistoryPath(actualPathParam) && actualPathParam !== '/') {
-          // Only add Path if it's not already in beanPathHistory
-          this.beanPathHistory.push({
-            value: actualPathParam,
-            label: breadcrumbsLabel
-          });
+
+        if (isValidBeanPathHistoryPath(actualPathParam) && actualPathParam !== '/') {
+          const historyOption = this.beanPathHistory().find(item => item.value === pathParam);
+          if (CoreUtils.isUndefinedOrNull(historyOption)) {
+            // Add path to beanPathHistory
+            const newEntry = {
+              value: actualPathParam,
+              label: `${breadcrumbsLabel}`,
+              perspective: {id: this.perspectiveMemory.perspective.id}
+            };
+            this.beanPathHistory.valueWillMutate();
+            this.beanPathHistory.push(newEntry);
+            this.beanPathHistory.valueHasMutated();
+            PerspectiveMemoryManager.addProviderPerspectiveBeanPathHistory(
+              this.beanTree.provider.id,
+              this.perspectiveMemory.perspective.id,
+              this.beanPathHistory()
+            );
+            getBeanPathHistoryOptions(this.beanPathHistory);
+          }
         }
-        this.beanPathHistoryCount(this.beanPathHistory().length);
+        updateBeanPathHistoryCount.call(this, this.beanPathHistory().length);
       },
 
       /**
@@ -88,21 +120,43 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
         const filteredBeanPaths = this.beanPathHistory().filter(beanpath => beanpath.value !== pathParam);
 
         this.beanPathHistory(filteredBeanPaths);
-        this.beanPathHistoryCount(this.beanPathHistory().length);
-        this.perspectiveMemory.setHistory(this.beanPathHistory());
+        updateBeanPathHistoryCount.call(this, this.beanPathHistory().length);
+
+        PerspectiveMemoryManager.setProviderPerspectiveBeanPathHistory(
+          this.beanTree.provider.id,
+          this.perspectiveMemory.perspective.id,
+          this.beanPathHistory()
+        );
       },
 
-      isHistoryOption: function (value) {
-        const option = this.beanPathHistory().find(item => item.value === value);
+      findHistoryEntry: function(value) {
+        return  this.beanPathHistory().find(item => item.value === value);
+      },
+
+      isHistoryEntry: function (value) {
+        const option = this.getHistoryOption(value);
         return (CoreUtils.isNotUndefinedNorNull(option));
       },
 
-      resetHistory: function () {
-        this.beanPathHistory.valueWillMutate();
-        this.beanPathHistory.removeAll();
-        this.beanPathHistory.valueHasMutated();
-        this.beanPathHistoryCount(this.beanPathHistory().length);
-        this.perspectiveMemory.setHistory(this.beanPathHistory());
+      resetHistoryEntries: function (dataProvider) {
+        const self = this;
+        return new Promise(function (resolve) {
+          const options = {
+            provider: {
+              id: (CoreUtils.isNotUndefinedNorNull(dataProvider) ? dataProvider.id : self.beanTree.provider.id)
+            },
+            connectivity: (CoreUtils.isNotUndefinedNorNull(dataProvider) ? dataProvider.connectivity : 'DETACHED')
+          };
+
+          PerspectiveMemoryManager.clearProviderPerspectivesBeanPathHistory(options);
+          self.beanPathHistory.valueWillMutate();
+          self.beanPathHistory.removeAll();
+          self.beanPathHistory.valueHasMutated();
+
+          updateBeanPathHistoryCount.call(self, self.beanPathHistory().length);
+
+          resolve({succeeded: true});
+        });
       },
 
       getBreadcrumbsPath: function (pathParam) {
@@ -114,22 +168,51 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
         return (CoreUtils.isNotUndefinedNorNull(option) ? option.label : pathParam);
       },
 
-      getHistoryOptions: function () {
-        return this.beanPathHistoryOptions;
+      getHistoryEntries: function () {
+        const historyOptions = [];
+        const perspectivesBeanPathHistory = PerspectiveMemoryManager.getProviderPerspectivesBeanPathHistory(this.beanTree.provider.id);
+        if (Object.keys(perspectivesBeanPathHistory).length > 0) {
+          const currentBeanPathItems = Array.prototype.concat(...Object.values(perspectivesBeanPathHistory));
+          this.beanPathHistoryOptions = getBeanPathHistoryOptions(currentBeanPathItems);
+
+          for (let [key, value] of Object.entries(perspectivesBeanPathHistory)) {
+            const historyOption = {
+              value: key,
+              label: getBeanTreeTypeLabel(key),
+              children: []
+            };
+            for (const item of value) {
+              historyOption.children.push({
+                label: item.label,
+                value: item.value,
+                perspective: {id: key}
+              });
+            }
+            historyOptions.push(historyOption);
+          }
+
+        }
+        return historyOptions;
       },
 
-      saveHistoryOptions: function (folderName) {
+      getNavigatorPosition: function () {
+        return PerspectiveMemoryManager.getProviderPerspectivesNavigatorPosition(this.beanTree.provider.id);
       },
-
-      loadHistoryOptions: function (folderName) {
+  
+      getNavigatorVisibility: function () {
+        return PerspectiveMemoryManager.getProviderPerspectivesNavigatorVisibility(this.beanTree.provider.id);
       },
-
+  
+      setHistoryNavigatorVisibility: function (visible) {
+        this.perspectiveMemory.setBreadcrumbsVisibility(visible);
+      },
+  
       getHistoryVisibility: function () {
-        return this.perspectiveMemory.historyVisibility();
+        return PerspectiveMemoryManager.getProviderPerspectivesHistoryVisibility(this.beanTree.provider.id);
       },
 
       setHistoryVisibility: function (visible) {
-        this.perspectiveMemory.setHistoryVisibility(visible);
+        PerspectiveMemoryManager.setProviderPerspectivesHistoryVisibility(this.beanTree.provider.id, visible);
       }
 
     };

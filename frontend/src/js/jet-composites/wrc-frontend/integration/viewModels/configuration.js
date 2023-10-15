@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022,2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -46,9 +46,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       const beanTree = dataProvider.getBeanTreeByPerspectiveId(viewParams.perspective.id);
       this.beanPathManager = new BeanPathManager(beanTree, this.beanPathHistoryCount);
       this.historyVisible = this.beanPathManager.getHistoryVisibility();
-      this.beanPathHistoryOptions = this.beanPathManager.getHistoryOptions();
+      this.beanPathHistoryOptions = ko.observable([]);
       this.breadcrumbs = {html: ko.observable({}), crumbs: ko.observableArray([])};
-      this.breadcrumbsManager = new BreadcrumbsManager(beanTree, this.breadcrumbs.crumbs);
+      const navigatorVisible = this.beanPathManager.getNavigatorVisibility();
+      this.breadcrumbsManager = new BreadcrumbsManager(beanTree, this.breadcrumbs.crumbs, {navigator: {visibility: navigatorVisible}});
 
       this.launchMoreMenu = function (event) {
         event.preventDefault();
@@ -147,9 +148,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         this.selectedBeanPathSubscription = this.selectedBeanPath.subscribe(function (newValue) {
           const oldValue = PageDefinitionUtils.removeTrailingSlashes(self.path());
-          if (typeof newValue !== 'undefined' && newValue !== null && newValue !== '') {
+          if (CoreUtils.isNotUndefinedNorNull(newValue) && newValue !== '') {
             if (newValue !== oldValue) {
-              if (self.beanPathManager.isHistoryOption(newValue)) clickedBreadCrumb(newValue);
+              const historyOption = this.beanPathManager.findHistoryEntry(newValue);
+              if (CoreUtils.isNotUndefinedNorNull(historyOption)) {
+                const fauxEvent =  {
+                  target: {
+                    attributes: {
+                      'data-perspective': {value: historyOption.perspective.id},
+                      'data-path': {value: historyOption.value},
+                      'data-notFoundMessage': {value: oj.Translations.getTranslatedString('wrc-pdj-crosslinks.messages.noNotFoundMessage.summary')}
+                    }
+                  }
+                };
+                this.breadcrumbMenuClickListener(fauxEvent);
+              }
             }
             self.selectedBeanPath(null);
           }
@@ -158,7 +171,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         this.moreMenuItemSubscription = this.moreMenuItem.subscribe(function (newValue) {
           switch (newValue) {
             case 'clear':
-              self.beanPathManager.resetHistory();
+              self.beanPathManager.resetHistoryEntries()
+                .then(result => {
+                  if (result.succeeded) {
+                    this.beanPathHistoryOptions([]);
+                    this.beanPathHistoryCount(0);
+                  }
+                });
               break;
           }
         }.bind(this));
@@ -190,14 +209,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager, pathParam) => {
-          if (eventType === 'delete') self.beanPathManager.removeBeanPath(pathParam);
+        binding = viewParams.signaling.dataProviderRemoved.add(dataProvider => {
+          self.beanPathManager.resetHistoryEntries(dataProvider)
+            .then(result => {
+              if (result.succeeded) {
+                this.beanPathHistoryOptions([]);
+                this.beanPathHistoryCount(0);
+              }
+            });
         });
 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
           self.canExitCallback = exitFormCallback;
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager, pathParam) => {
+          if (eventType === 'delete') self.beanPathManager.removeBeanPath(pathParam);
         });
 
         self.signalBindings.push(binding);
@@ -228,17 +259,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function clickedBreadCrumb(path) {
-        // Minimize Kiosk and navtree, if it is floating
-        viewParams.signaling.ancillaryContentAreaToggled.dispatch('breadcrumb', false);
         // clear treenav selection
         viewParams.signaling.navtreeSelectionCleared.dispatch();
         path = PageDefinitionUtils.removeTrailingSlashes(path);
         ViewModelUtils.goToRouterPath(self.router, `/${viewParams.beanTree.type}/${encodeURIComponent(path)}`, self.canExitCallback);
       }
 
+      this.historyNavigatorClick = function (event) {
+        console.log(`[CONFIGURATION] historyNavigatorClick - id=${event.currentTarget.id}`);
+      };
+
       this.breadcrumbClick = function (event) {
         clickedBreadCrumb(event.target.id);
-      }.bind(this);
+      };
 
       this.breadcrumbMenuClickListener = function (event) {
         const perspectiveId = event.target.attributes['data-perspective'].value;
@@ -261,6 +294,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                       viewParams.signaling.beanTreeChanged.dispatch(dataProvider.getBeanTreeByPerspectiveId(perspectiveId));
                       viewParams.signaling.perspectiveSelected.dispatch(perspective);
                       viewParams.parentRouter.go(`/${perspectiveId}/${encodeURIComponent(path)}`);
+                      viewParams.signaling.galleryItemSelected.dispatch(perspectiveId);
                     })
                     .catch(response => {
                       if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
@@ -334,6 +368,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
             // Add bean path to beanPath history
             self.beanPathManager.addBeanPath(reply.body.data.name, breadcrumbLabels);
+            self.beanPathHistoryOptions(self.beanPathManager.getHistoryEntries());
             return reply;
           });
       }

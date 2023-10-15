@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -29,6 +29,7 @@ properties:
   - name: "JDBCResource.JDBCConnectionPoolParams.ConnectionHarvestTriggerCount"
   - name: "JDBCResource.JDBCConnectionPoolParams.CountOfRefreshFailuresTillDisable"
   - name: "JDBCResource.JDBCConnectionPoolParams.CountOfTestFailuresTillFlush"
+  - name: "JDBCResource.JDBCConnectionPoolParams.InvokeBeginEndRequest"
 helpTopics:
   - label: "Configuring WebLogic JDBC Resources "
     href: "jdbca/config.html"

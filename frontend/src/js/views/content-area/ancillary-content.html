@@ -1,62 +1,28 @@
 <!--
- Copyright (c) 2020, 2021,2022, 2023, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
  -->
-<oj-bind-if test="[[ancillaryContentAreaToggleVisible()]]">
+<div id="ancillary-content-item-container" class="oj-flex-item" data-selected-item="none">
+  <oj-module config="[[tabModuleConfig]]"></oj-module>
+<!--
+    For when we switch from moduleConfig to JET composites
 
-  <div id="slideup-popup" class="non-modal-slideup oj-sm-align-self-flex-end">
-    <div id="slideup-container" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
-      <!-- row 1 -->
-      <div class="oj-flex-item">
-        <a
-          href="#" tabindex="-1"
-          on-click="[[ancillaryContentAreaToggleClick]]"
-        >
-          <div id="slideup-header" data-state="collapsed" class="oj-flex-bar">
-            <div id="slideup-title">
-              <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.changecenter.iconFile + '.png', alt: i18n.icons.changecenter.tooltip}"/>
-              <span data-bind="text: i18n.icons.changecenter.tooltip"></span>
-            </div>
-            <div id="slideup-toggle">
-              <oj-bind-if test="[[!ancillaryContentAreaVisible()]]">
-                <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.expand.iconFile + '.png', 'title': i18n.icons.expand.tooltip, alt: i18n.icons.expand.tooltip}"/>
-              </oj-bind-if>
-              <oj-bind-if test="[[ancillaryContentAreaVisible()]]">
-                <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.collapse.iconFile + '.png', 'title': i18n.icons.collapse.tooltip, alt: i18n.icons.collapse.tooltip}"/>
-              </oj-bind-if>
-            </div>
-          </div>
-        </a>
-      </div>
+    <cfe-provider-management
+      title="Provider Management"
+      iconFile="project-management-blk_24x24"
+      tooltip="Manage Current Project and Data Providers"
+      visible="false"
+      disabled="false"
+    >
+    </cfe-provider-management>
 
-      <!-- row 2 -->
-      <div class="oj-flex-item">
-        <div id="ancillary-content-area" class="oj-flex-bar">
-          <div class="oj-flex-bar-end site-sideways-tabstrip">
-            <oj-bind-for-each data="[[i18n.tabstrip.tabs]]" as="tab">
-              <template>
-                <oj-bind-if test="[[tab.data.visible()]]">
-                  <span>
-                    <a href="#" tabindex="-1"
-                       on-click="[[tabstripButtonClickHandler]]"
-                    >
-                      <img data-bind="attr: {id: tab.data.id + '-tab', src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + tab.data.iconFile + '.png'}"/>
-                      <span :id="[[tab.data.id]]" data-bind="text: tab.data.label"></span>
-                    </a>
-                  </span>
-                </oj-bind-if>
-              </template>
-            </oj-bind-for-each>
-          </div>
-
-          <div id="tab-module-ancillary-content" class="oj-flex-bar-end">
-            <oj-module config="[[tabModuleConfig]]"></oj-module>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-</oj-bind-if>
-
+    <cfe-shopping-cart-details
+      title="Shopping Cart Details"
+      iconFile="oj-ux-ico-cart-full"
+      tooltip="View Shopping Cart Details"
+      visible="true"
+      disabled="false"
+    >
+    </cfe-provider-management>
+-->
+</div>

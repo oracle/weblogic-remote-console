@@ -1,10 +1,12 @@
 <!--
-Copyright (c) 2021, 2022, 2023, Oracle and/or its affiliates.
+Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <a
+  id="navtree-toggler-icon"
   href="#" tabindex="-1"
   on-click="[[navtreeToggleClick]]"
+  data-navtree-width="0"
 >
   <oj-bind-if test="[[navtreeDisabled()]]">
     <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/navigation-icon-toggle-greyed_24x24.png', alt: i18n.icons.navtree.toggler.tooltip}"/>

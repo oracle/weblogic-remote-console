@@ -1,15 +1,18 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.repodef.schema.BeanActionDefCustomizerSource;
+import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanChildDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PseudoBeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.yaml.BaseBeanTypeDefImpl;
+import weblogic.remoteconsole.common.repodef.yaml.BeanActionDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.BeanChildDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.BeanPropertyDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.BeanRepoDefImpl;
@@ -73,6 +76,18 @@ public class WDTBeanRepoDef extends WebLogicBeanRepoDef {
       BeanChildDefCustomizerSource customizerSource
     ) {
       return new WDTBeanChildDefImpl(this, parentPath, source, customizerSource);
+    }
+
+    @Override
+    protected BeanActionDefImpl createBeanActionDefImpl(
+      Path parentPath,
+      BeanActionDefSource source,
+      BeanActionDefCustomizerSource customizerSource
+    ) {
+      // WDT doesn't support actions
+      // e.g. AppDeploymentMBean redeploy, update
+      // e.g. LibraryMBean redeploy
+      return null;
     }
 
     @Override

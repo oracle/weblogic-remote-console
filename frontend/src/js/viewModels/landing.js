@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -65,6 +65,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         self.signalBindings.push(binding);
 
         switchPerspective(self.perspective.id);
+        setMaxHeightCSSCustomVariable('--landing-page-panel-subtree-calc-max-height');
       }.bind(this);
 
       this.disconnected = function () {
@@ -74,54 +75,56 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
       }.bind(this);
 
       function loadPerspectiveGroups() {
-        ViewModelUtils.setPreloaderVisibility(true);
-        const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(
-          self.perspective.id
-        );
-        getRootContents(beanTree)
-          .then((rootContents) => {
-            return expandGroups(beanTree, rootContents);
-          })
-          .then((rootContents) => {
-            self.treeModel = rootContents;
-            // Determine if there is a single non-expandable root and thus
-            // display a single group item which points to the resource data
-            if ((rootContents.contents.length === 1) &&
+        if (CoreUtils.isNotUndefinedNorNull(self.dataProvider)) {
+          ViewModelUtils.setPreloaderVisibility(true);
+          const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(
+            self.perspective.id
+          );
+          getRootContents(beanTree)
+            .then((rootContents) => {
+              return expandGroups(beanTree, rootContents);
+            })
+            .then((rootContents) => {
+              self.treeModel = rootContents;
+              // Determine if there is a single non-expandable root and thus
+              // display a single group item which points to the resource data
+              if ((rootContents.contents.length === 1) &&
                 (rootContents.contents[0].expandable === false) &&
                 CoreUtils.isNotUndefinedNorNull(rootContents.contents[0].resourceData)) {
-              self.perspectiveGroups([{
-                  name: rootContents.contents[0].name,
-                  label: rootContents.contents[0].resourceData.label,
-                  path: rootContents.contents[0].resourceData.resourceData
-                }]
-              );
-            }
-            else if (rootContents.contents.length > 0) {
-              self.perspectiveGroups(
-                convertRootContentsToGroups(rootContents.contents)
-              );
-            }
+                self.perspectiveGroups([{
+                    name: rootContents.contents[0].name,
+                    label: rootContents.contents[0].resourceData.label,
+                    path: rootContents.contents[0].resourceData.resourceData
+                  }]
+                );
+              }
+              else if (rootContents.contents.length > 0) {
+                self.perspectiveGroups(
+                  convertRootContentsToGroups(rootContents.contents)
+                );
+              }
 
-            const expandableName = self.perspectiveMemory.expandableName.call(
-              self.perspectiveMemory
-            );
-            if (expandableName !== null) {
-              const fauxEvent = {
-                currentTarget: {
-                  children: [{ id: expandableName, attributes: [] }],
-                },
-              };
-              self.landingPanelClickHandler(fauxEvent);
-            } else {
-              setPagePanelSubtreeVisibility(false);
-            }
-          })
-          .catch(response => {
-            ViewModelUtils.failureResponseDefaultHandling(response);
-          })
-          .finally(() => {
-            ViewModelUtils.setPreloaderVisibility(false);
-          });
+              const expandableName = self.perspectiveMemory.expandableName.call(
+                self.perspectiveMemory
+              );
+              if (expandableName !== null) {
+                const fauxEvent = {
+                  currentTarget: {
+                    children: [{ id: expandableName, attributes: [] }],
+                  },
+                };
+                self.landingPanelClickHandler(fauxEvent);
+              } else {
+                setPagePanelSubtreeVisibility(false);
+              }
+            })
+            .catch(response => {
+              ViewModelUtils.failureResponseDefaultHandling(response);
+            })
+            .finally(() => {
+              ViewModelUtils.setPreloaderVisibility(false);
+            });
+        }
       }
 
       function convertRootContentsToGroups(pathModels) {
@@ -149,6 +152,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
 
       function setPagePanelSubtreeVisibility(visible) {
         $('#landing-page-panel-subtree').css({'display': (visible ? 'block' : 'none')});
+      }
+
+      function setMaxHeightCSSCustomVariable(cssDOMSelector) {
+        const messageLine =  document.getElementById('message-line-container');
+        let maxHeightVariable = (messageLine !== null ? messageLine.offsetHeight : 0);
+        const offsetMaxHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--landing-page-panel-subtree-max-height'), 10);
+        maxHeightVariable += offsetMaxHeight;
+        document.documentElement.style.setProperty(cssDOMSelector, `${maxHeightVariable}px`);
       }
 
       function toggleSubtreePageVisibility(subtreeName){
@@ -311,7 +322,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
                 return {
                   type: item.type,
                   path: item.resourceData.resourceData,
-                  label: item.resourceData.label,
+//MLW                  label: item.resourceData.label,
+                  label: item.label,
                   descriptionHTML: {view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`)}
                 };
               })
@@ -361,7 +373,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         Logger.log(`[LANDING] data-path=${resourceData}, perspective-group=${self.perspectiveGroup().name}`);
 
         // expand the navtree nodes
-        viewParams.parentRouter.go('/' + self.perspective.id + '/' + encodeURIComponent(resourceData));
+        viewParams.parentRouter.go(`/${self.perspective.id}/${encodeURIComponent(resourceData)}`);
       };
 
       /**
@@ -369,9 +381,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
        * @param event
        */
       this.landingPanelClickHandler = function(event) {
-        // The Kiosk will more than likely just be in the
-        // way from here on out, so go ahead and hide it.
-        viewParams.signaling.ancillaryContentAreaToggled.dispatch('landing', false);
         // The id attribute with the perspectiveId assigned
         // to it, is on the first child element of the
         // click event's current target. The click event's

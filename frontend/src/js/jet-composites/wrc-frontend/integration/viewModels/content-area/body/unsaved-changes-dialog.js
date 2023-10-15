@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -12,6 +12,9 @@ define(['knockout'],
 
     function showAbandonUnsavedChangesConfirmDialog(i18n) {
       const confirmDialog = document.getElementById('confirmDialog');
+      confirmDialog.setAttribute('dialog-title', i18n.dialog.title());
+      const span = document.getElementById('confirmDialogPrompt');
+      span.innerHTML = i18n.dialog.prompt();
       return new Promise(function (resolve) {
         const okBtn = document.getElementById('dlgYesBtn');
         const cancelBtn = document.getElementById('dlgNoBtn');
@@ -301,7 +304,7 @@ define(['knockout'],
     return {
       showConfirmDialog: (name, i18n) => {
         switch (name) {
-          case 'AbandonUnsavedChanges':
+           case 'AbandonUnsavedChanges':
             return showAbandonUnsavedChangesConfirmDialog(i18n);
           case 'UnsavedChangesDetected':
             return showUnsavedChangesDetectedConfirmDialog(i18n);

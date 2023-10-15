@@ -92,16 +92,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
             await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span/img")).click();
             await driver.sleep(4800);
 
-            console.log("Click expand Kiosk menu...");
-            await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click()
-            await driver.sleep(4800);
-            await driver.findElement(By.xpath("//div/ul/li[3]/a/span[2]")).click();
+            console.log("Click Home Image");
+            await driver.findElement(By.xpath("//span[starts-with(@id, 'home')]")).click();
             await driver.sleep(4800);
             console.log("Click WDT Model Tree");
             await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
-            await driver.sleep(4800);
-            console.log("Click Landing Page Image");
-            await driver.findElement(By.xpath("//*[@id=\"landing-page-icon\"]")).click();
             await driver.sleep(4800);
             console.log("Click Services Landing Page");
             element = await driver.findElement(By.id("Services"));
@@ -115,7 +110,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
             await driver.sleep(2400);
             console.log("Click JMSServer New button");
             await driver.findElement(
-                By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img")).click();
+                By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
             await driver.sleep(2400);
             console.log("Enter testJMSServer-1 name");
             await driver.findElement(By.xpath("//input[@id='Name|input']")).click();
@@ -147,31 +142,32 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
                 await admin.selectTree(driver,"baseDomainModel", baseDomModelFile);
                 await driver.sleep(4800);
-                console.log("Click To expand Kiosk");
-                await driver.findElement(By.xpath("//img[@title='Expand']")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+
                 await driver.sleep(4800);
                 await admin.selectTree(driver,"wdtTemplateModel", wdtTempModelFile);
                 await driver.sleep(4800);
-                console.log("Click Kiosk");
-                await driver.findElement(By.xpath("//div[@id=\'slideup-toggle\']/img")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(4800);
                 console.log("Select wdtCompositeModelOfBaseAndTemplateModels");
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//span[contains(.,\'wdtCompositeModelOfBaseAndTemplateModels\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'wdtCompositeModelOfBaseAndTemplateModels')]")).click();
                 console.log("Click WDT Composite Model Tree");
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//img[@alt=\'WDT Composite Model\']")).click();
+                await driver.findElement(By.xpath("//img[@alt='WDT Composite Model']")).click();
 
                 console.log("Click Landing Page");
-                await driver.findElement(By.xpath("//section[@id=\'landing-page-cards\']/div/oj-conveyor-belt/div[4]/div/div[3]/a")).click();
+                await driver.findElement(By.xpath("//section[@id='landing-page-cards']/div/oj-conveyor-belt/div[4]/div/div[3]/a")).click();
                 console.log("Click Navtree Environment");
-                await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
                 await driver.sleep(2400);
                 console.log("Click Navtree Server");
-                await driver.findElement(By.xpath("//span[contains(.,\'Servers\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Servers')]")).click();
                 await driver.sleep(4800);
                 console.log("Click testServer-2");
-                await driver.findElement(By.xpath("//td[contains(.,\'testServer-2\')]")).click();
-
+                await driver.findElement(By.xpath("//td[contains(.,'testServer-2')]")).click();
                 console.log("TEST PASS ");
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
@@ -194,10 +190,10 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await admin.importProject(driver,prjFile);
                 await driver.sleep(800);
                 console.log("Click More Action...");
-                await driver.findElement(By.xpath("//img[@id=\'project-more-icon\']")).click();
+                await driver.findElement(By.xpath("//img[@id='project-more-icon']")).click();
                 await driver.sleep(800);
                 console.log("Click Sort by Provider Type");
-                await driver.findElement(By.xpath("//span[contains(.,\'Sort by Provider Type\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Sort by Provider Type')]")).click();
                 await driver.sleep(800);
                 await admin.exportProviderAsProject(driver, expProjName,expProjFileNamePath);
                 console.log("TEST PASS ");
@@ -223,7 +219,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await admin.selectTree(driver,"testPropertyListProvider");
                 await driver.sleep(600);
                 console.log("Click Property List Editor Image");
-                await driver.findElement(By.xpath("//img[@alt=\'Property List Editor\']")).click();
+                await driver.findElement(By.xpath("//img[@alt='Property List Editor']")).click();
                 await driver.sleep(600);
                 console.log("Click Property Image");
                 await driver.findElement(By.id("Properties")).click();
@@ -244,10 +240,10 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                     console.log("Changed Not Download dialog doesn't come up");
                 }
                 console.log("Click default new-property-1");
-                await driver.findElement(By.xpath("//td[contains(.,\'new-property-1\')]")).click();
+                await driver.findElement(By.xpath("//td[contains(.,'new-property-1')]")).click();
                 {
                     console.log("Double click default new-property-1");
-                    const element = await driver.findElement(By.xpath("//td[contains(.,\'new-property-1\')]"))
+                    const element = await driver.findElement(By.xpath("//td[contains(.,'new-property-1')]"))
                     await driver.actions({ bridge: true}).doubleClick(element).perform()
                 }
                 await driver.sleep(600);
@@ -276,10 +272,10 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                     console.log("Changed Not Download dialog doesn't come up");
                 }
                 console.log("Click default new-property-1");
-                await driver.findElement(By.xpath("//td[contains(.,\'new-property-1\')]")).click();
+                await driver.findElement(By.xpath("//td[contains(.,'new-property-1')]")).click();
                 {
                     console.log("Double click default new-property-1");
-                    const element = await driver.findElement(By.xpath("//td[contains(.,\'new-property-1\')]"))
+                    const element = await driver.findElement(By.xpath("//td[contains(.,'new-property-1')]"))
                     await driver.actions({ bridge: true}).doubleClick(element).perform()
                 }
                 await driver.sleep(600);
@@ -308,10 +304,10 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                     console.log("Changed Not Download dialog doesn't come up");
                 }
                 console.log("Click default new-property-1");
-                await driver.findElement(By.xpath("//td[contains(.,\'new-property-1\')]")).click();
+                await driver.findElement(By.xpath("//td[contains(.,'new-property-1')]")).click();
                 {
                     console.log("Double click default new-property-1");
-                    const element = await driver.findElement(By.xpath("//td[contains(.,\'new-property-1\')]"))
+                    const element = await driver.findElement(By.xpath("//td[contains(.,'new-property-1')]"))
                     await driver.actions({ bridge: true}).doubleClick(element).perform()
                 }
                 await driver.sleep(600);
@@ -325,7 +321,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//td[2]/oj-input-text/div/div/input")).sendKeys(password);
                 await driver.sleep(1200);
                 console.log("Click Save Now \(Electron\), or Download File \(Web page\) button");
-                await driver.findElement(By.xpath("//*[@id=\'[[i18n.buttons.write.id]]\']/button/div/span[1]/img")).click();
+                await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.write.id]]']/button/div/span[1]/img")).click();
                 await driver.sleep(600);
                 console.log("TEST PASS ");
             } catch (e) {
@@ -350,16 +346,16 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await admin.selectTree(driver,"baseDomainPropList", baseDomainPropertyFile);
                 await driver.sleep(600);
                 console.log("Click Property List Editor Image");
-                await driver.findElement(By.xpath("//img[@alt=\'Property List Editor\']")).click();
+                await driver.findElement(By.xpath("//img[@alt='Property List Editor']")).click();
                 await driver.sleep(600);
                 console.log("Click Property Image");
                 await driver.findElement(By.id("Properties")).click();
                 await driver.sleep(600);
                 console.log("Click AdminPassword property text box");
-                await driver.findElement(By.xpath("//td[contains(.,\'AdminPassword\')]")).click();
+                await driver.findElement(By.xpath("//td[contains(.,'AdminPassword')]")).click();
                 {
                     console.log("Double click AdminPassword property field");
-                    const element = await driver.findElement(By.xpath("//td[contains(.,\'AdminPassword\')]"))
+                    const element = await driver.findElement(By.xpath("//td[contains(.,'AdminPassword')]"))
                     await driver.actions({ bridge: true}).doubleClick(element).perform()
                 }
                 await driver.sleep(600);
@@ -367,9 +363,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//td[2]/oj-input-text/div/div/input")).sendKeys(password);
                 await driver.sleep(1200);
                 console.log("Click Save Now \(Electron\), or Download File \(Web page\) button");
-                await driver.findElement(By.xpath("//*[@id=\'[[i18n.buttons.write.id]]\']/button/div/span[1]/img")).click();
+                await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.write.id]]']/button/div/span[1]/img")).click();
                 await driver.sleep(600);
-
                 console.log("TEST PASS ");
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
@@ -392,172 +387,172 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
 
                 await admin.importProject(driver,prjFile);
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//span[contains(.,\'baseDomainPropList\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
                 await driver.sleep(4800);
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//*[@id=\'model-form-layout\']/div/div[4]/div/div[2]/div/a")).click();
-                await driver.sleep(4800);
-                await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
                 console.log("Select to enter base_domain file path " + baseDomainPropertyFile);
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
-                await driver.sleep(4800);
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
 
-                await driver.findElement(By.xpath("//*[@id=\'slideup-toggle\']/img")).click();
-                await driver.findElement(By.xpath("//span[contains(.,\'baseDomainModel\')]")).click();
                 await driver.sleep(4800);
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
+                await driver.sleep(9600);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
                     "oj-searchselect-filter-model-proplist-selection-field|input","baseDomainPropList");
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
                 console.log("Select to enter base_domain file path " + baseDomModelFile);
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
 
                console.log("Click WDT Model Tree");
                await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
                await driver.sleep(2400);
                console.log("Click Navtree Environment");
-               await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+               await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
                await driver.sleep(2400);
                console.log("Click Domain");
-               await driver.findElement(By.xpath("//span[contains(.,\'Domain\')]")).click();
+               await driver.findElement(By.xpath("//span[contains(.,'Domain')]")).click();
                await driver.sleep(4800)
                console.log("Click Show Advanced Fields");
-               await driver.findElement(By.xpath("//input[@id=\'show-advanced-fields|cb\']")).click();
+               element = driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']"));
+               driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+               await driver.sleep(4800);
+               await element.click();
                await driver.sleep(4800);
 
                console.log("Click Domain Name WDT Setting option");
-               await driver.findElement(By.xpath("//*[@id=\"wdtOptions_Name\"]/img")).click();
+               await driver.findElement(By.xpath("//*[@id='wdtOptions_Name']/img")).click();
                await driver.sleep(2400);
                console.log("Clear Domain Edit text field");
-               await driver.findElement(By.xpath("//input[@id=\'text_Name|input\']")).clear();
+               await driver.findElement(By.xpath("//input[@id='text_Name|input']")).clear();
                await driver.sleep(2400);
                console.log("Enter domain name = base_domain at Edit Domain text dialog");
                await driver.findElement(By.id("text_Name|input")).sendKeys("base_domain");
                await driver.sleep(2400);
                console.log("Click Ok button");
-               await driver.findElement(By.xpath("//oj-button[1]/button/div/span/span")).click();
+               await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
                await driver.sleep(2400);
                console.log("Click Administration Port Enable switch");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'AdministrationPortEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='AdministrationPortEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click Production Mode Enable switch");
-               await driver.findElement(By.xpath("//oj-switch[@id=\"ProductionModeEnabled\"]/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='ProductionModeEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
 
                console.log("Click Administration Port WDT Setting option");
-               await driver.findElement(By.xpath("//*[@id=\"wdtOptions_AdministrationPort\"]/img")).click();
+               await driver.findElement(By.xpath("//*[@id='wdtOptions_AdministrationPort']/img")).click();
                await driver.sleep(2400);
                console.log("Click Domain Edit text field");
-               await driver.findElement(By.xpath("//*[@id=\"text_AdministrationPort|input\"]")).click();
+               await driver.findElement(By.xpath("//*[@id='text_AdministrationPort|input']")).click();
                await driver.sleep(2400);
                console.log("Enter AdminPort Token Key");
-               await driver.findElement(By.xpath("//*[@id=\"radio_AdministrationPort\"]/div[1]/span[2]/label/span")).click();
-               await driver.findElement(By.xpath("//*[@id=\"text_AdministrationPort|input\"]")).sendKeys("@@PROP:ADMINPORT@@");
+               await driver.findElement(By.xpath("//*[@id='radio_AdministrationPort']/div[1]/span[2]/label/span")).click();
+               await driver.findElement(By.xpath("//*[@id='text_AdministrationPort|input']")).sendKeys("@@PROP:ADMINPORT@@");
                await driver.sleep(2400);
                console.log("Click Ok button");
-               await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+               await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
                await driver.sleep(2400);
                console.log("Click Exalogic Optimizations Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'ExalogicOptimizationsEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='ExalogicOptimizationsEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click Cluster Constraints Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'ClusterConstraintsEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='ClusterConstraintsEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click Internal Apps DeployOnDemand Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'InternalAppsDeployOnDemandEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='InternalAppsDeployOnDemandEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click Console Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'ConsoleEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='ConsoleEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click Console ContextPath WDT Setting option");
-               await driver.findElement(By.xpath("//*[@id=\"wdtOptions_ConsoleContextPath\"]/img")).click();
+               await driver.findElement(By.xpath("//*[@id='wdtOptions_ConsoleContextPath']/img")).click();
                await driver.sleep(2400);
                console.log("Click Console ContextPath Model Radio button");
-               await driver.findElement(By.xpath("//oj-radioset[@id=\'radio_ConsoleContextPath\']/div/span[2]/span/input")).click();
+               await driver.findElement(By.xpath("//oj-radioset[@id='radio_ConsoleContextPath']/div/span[2]/span/input")).click();
                await driver.sleep(2400);
                console.log("Enter Console Context Path Token Key");
-               await driver.findElement(By.xpath("//input[@id=\'text_ConsoleContextPath|input\']")).click();
+               await driver.findElement(By.xpath("//input[@id='text_ConsoleContextPath|input']")).click();
                await driver.sleep(600);
-               await driver.findElement(By.xpath("//input[@id=\'text_ConsoleContextPath|input\']")).clear();
-               await driver.findElement(By.xpath("//*[@id=\"text_ConsoleContextPath|input\"]")).sendKeys("@@PROP:CONTEXT_PATH@@");
+               await driver.findElement(By.xpath("//input[@id='text_ConsoleContextPath|input']")).clear();
+               await driver.findElement(By.xpath("//*[@id='text_ConsoleContextPath|input']")).sendKeys("@@PROP:CONTEXT_PATH@@");
                await driver.sleep(2400);
                console.log("Click Ok button");
-               await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+               await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
                await driver.sleep(2400);
-
                console.log("Click AdminConsole Protected Cookie Enabled switch");
-               await driver.findElement(By.xpath("//oj-switch[@id=\"AdminConsole_ProtectedCookieEnabled\"]/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='AdminConsole_ProtectedCookieEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click wdtOptions Configuration AuditType Setting option");
-               await driver.findElement(By.xpath("//*[@id=\"wdtOptions_ConfigurationAuditType\"]/img")).click();
+               await driver.findElement(By.xpath("//*[@id='wdtOptions_ConfigurationAuditType']/img")).click();
                await driver.sleep(4800);
                await admin.selectDropDownList(driver,"select_ConfigurationAuditType",
                     "oj-searchselect-filter-select_ConfigurationAuditType|input","logaudit");
                await driver.sleep(4800);
-
                console.log("Click Config Backup Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'ConfigBackupEnabled\']/div[1]/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='ConfigBackupEnabled']/div[1]/div")).click();
                await driver.sleep(2400);
                console.log("Click JMX_Compatibility MBeanServer Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'JMX_CompatibilityMBeanServerEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='JMX_CompatibilityMBeanServerEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click LogFormat Compatibility Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'LogFormatCompatibilityEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='LogFormatCompatibilityEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click JMX_Platform MBeanServer Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'JMX_PlatformMBeanServerEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='JMX_PlatformMBeanServerEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click Diagnostic Context Compatibility Mode Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'DiagnosticContextCompatibilityModeEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='DiagnosticContextCompatibilityModeEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click Enable EECompliant Classloading For EmbeddedAdapters switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'EnableEECompliantClassloadingForEmbeddedAdapters\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='EnableEECompliantClassloadingForEmbeddedAdapters']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click CdiContainer ImplicitBean Discovery Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id=\'CdiContainer_ImplicitBeanDiscoveryEnabled\']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//oj-switch[@id='CdiContainer_ImplicitBeanDiscoveryEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click SiteName text edit area");
                await driver.sleep(600);
-               await driver.findElement(By.xpath("//input[@id=\'SiteName|input\']")).click();
+               await driver.findElement(By.xpath("//input[@id='SiteName|input']")).click();
                await driver.sleep(600);
-               await driver.findElement(By.xpath("//input[@id=\'SiteName|input\']")).sendKeys("localhost");
+               await driver.findElement(By.xpath("//input[@id='SiteName|input']")).sendKeys("localhost");
                await driver.sleep(600);
-
                console.log("Click wdtOptions JMX_Invocation Timeout Seconds switch option");
-               await driver.findElement(By.xpath("//a[@id=\'wdtOptions_JMX_InvocationTimeoutSeconds\']/img")).click();
+               await driver.findElement(By.xpath("//a[@id='wdtOptions_JMX_InvocationTimeoutSeconds']/img")).click();
                await driver.sleep(600);
                console.log("Click Create Model Token Variable option");
-               await driver.findElement(By.xpath("//oj-radioset[@id=\'radio_JMX_InvocationTimeoutSeconds\']/div/span[4]/span/input")).click();
+               await driver.findElement(By.xpath("//oj-radioset[@id='radio_JMX_InvocationTimeoutSeconds']/div/span[4]/span/input")).click();
                await driver.sleep(600);
                console.log("Click Variable Name option");
-               await driver.findElement(By.xpath("//oj-label[@id=\'textarea_JMX_InvocationTimeoutSeconds-labelled-by\']")).click();
+               await driver.findElement(By.xpath("//oj-label[@id='textarea_JMX_InvocationTimeoutSeconds-labelled-by']")).click();
                await driver.sleep(600);
                console.log("Enter Invocation Timeout Variable Name = INVOCATION_TIMEOUT");
-               await driver.findElement(By.xpath("//oj-input-text[@id=\'textarea_JMX_InvocationTimeoutSeconds\']/div/div/input")).sendKeys("INVOCATION_TIMEOUT");
+               await driver.findElement(By.xpath("//oj-input-text[@id='textarea_JMX_InvocationTimeoutSeconds']/div/div/input")).sendKeys("INVOCATION_TIMEOUT");
                await driver.sleep(1200);
                {
                    console.log("Double click at Invocation Timeout Variable Value");
-                   const element = await driver.findElement(By.xpath("(//oj-input-text[@id=\'textarea_JMX_InvocationTimeoutSeconds\']/div/div/input)[2]"))
+                   const element = await driver.findElement(By.xpath("(//oj-input-text[@id='textarea_JMX_InvocationTimeoutSeconds']/div/div/input)[2]"))
                    await driver.actions({ bridge: true}).doubleClick(element).perform()
                }
                await driver.sleep(1200);
                 console.log("Enter Invocation Timeout Variable Value = 30");
-                await driver.findElement(By.xpath("(//oj-input-text[@id=\'textarea_JMX_InvocationTimeoutSeconds\']/div/div/input)[2]")).sendKeys("30");
+                await driver.findElement(By.xpath("(//oj-input-text[@id='textarea_JMX_InvocationTimeoutSeconds']/div/div/input)[2]")).sendKeys("30");
                 await driver.sleep(1200);
                 console.log("Click OK button to save Invocation Timeout Variable");
-                await driver.findElement(By.xpath("//oj-button[@id=\'dlgOkBtn22\']/button/div/span")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
+                //await driver.findElement(By.xpath("//oj-button[@id='dlgOkBtn22']/button/div/span")).click();
 
                 console.log("Click Download (Save) File");
-                driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.write.id]]\']/button/div/span")).click();
+                driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.write.id]]']/button/div/span")).click();
                 await driver.sleep(4800);
                 console.log("TEST PASS ");
             } catch (e) {
@@ -583,54 +578,58 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
 
                 await admin.importProject(driver,prjFile);
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//span[contains(.,\'baseDomainPropList\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
                 await driver.sleep(4800);
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//*[@id=\'model-form-layout\']/div/div[4]/div/div[2]/div/a")).click();
+                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[4]/div/div[2]/div/a")).click();
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
                 console.log("Select to enter base_domain file path " + baseDomainPropertyFile);
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
-
-                await driver.findElement(By.xpath("//*[@id=\'slideup-toggle\']/img")).click();
-                await driver.findElement(By.xpath("//span[contains(.,\'baseDomainModel\')]")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(2400);
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(4800);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
                     "oj-searchselect-filter-model-proplist-selection-field|input","baseDomainPropList");
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
                 console.log("Select to enter base_domain file path " + baseDomModelFile);
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
 
                 console.log("Click WDT Model Tree");
                 await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
                 await driver.sleep(2800);
                 console.log("Click Navtree Environment");
-                await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
                 await driver.sleep(2800);
                 console.log("Click Domain");
-                await driver.findElement(By.xpath("//span[contains(.,\'Domain\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Domain')]")).click();
                 await driver.sleep(4800)
 
                 console.log("Click Security Tab");
                 await driver.findElement(By.xpath("//div/ul/li[3]/a/span")).click();
                 await driver.sleep(2400);
                 console.log("Click Show Advanced Fields");
-                await driver.findElement(By.xpath("//input[@id=\'show-advanced-fields|cb\']")).click();
-                await driver.sleep(2800);
+                element = driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await driver.sleep(4800);
+                await element.click();
+                await driver.sleep(2400);
 
                 console.log("Click More Action at Default Realm");
-                await driver.findElement(By.xpath("//img[@title=\'More Actions\']")).click();
+                await driver.findElement(By.xpath("//img[@title='More Actions']")).click();
                 await driver.sleep(2800);
                 console.log("Click Create New Realm");
                 await driver.findElement(By.xpath("//oj-option[2]/a/span")).click();
@@ -654,17 +653,18 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"SecurityConfiguration_ClearTextCredentialAccessEnabled",3);
                 await driver.sleep(2400);
-                await admin.enableCheckBox(driver,"SecurityConfiguration_SecureMode_RestrictiveJMXPolicies",3);
+                await admin.enableCheckBox(driver,"SecurityConfiguration_UseKSSForDemo",3);
                 await driver.sleep(2400);
-                await admin.enableCheckBox(driver,"SecurityConfiguration_SecureMode_WarnOnAuditing",3);
+                await admin.enableCheckBox(driver,"SecurityConfiguration_SecureMode_SecureModeEnabled",3);
                 await driver.sleep(2400);
-                await admin.enableCheckBox(driver,"SecurityConfiguration_SecureMode_WarnOnInsecureApplications",3);
+                await admin.enableCheckBox(driver,"SecurityConfiguration_ClearTextCredentialAccessEnabled",3);
                 await driver.sleep(2400);
-                await admin.enableCheckBox(driver,"SecurityConfiguration_SecureMode_WarnOnJavaSecurityManager",3);
+                await admin.enableCheckBox(driver,"SecurityConfiguration_CompatibilityConnectionFiltersEnabled",3);
                 await driver.sleep(2400);
-
+                await admin.enableCheckBox(driver,"SecurityConfiguration_PrincipalEqualsCompareDnAndGuid",3);
+                await driver.sleep(2400);
                 console.log("Click Download (Save) File");
-                driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.write.id]]\']/button/div/span")).click();
+                driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.write.id]]']/button/div/span")).click();
                 await driver.sleep(4800);
                 console.log("TEST PASS ");
             } catch (e) {
@@ -689,80 +689,75 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
 
                 await admin.importProject(driver,prjFile);
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//span[contains(.,\'baseDomainPropList\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
                 await driver.sleep(4800);
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//*[@id=\'model-form-layout\']/div/div[4]/div/div[2]/div/a")).click();
+                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[4]/div/div[2]/div/a")).click();
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
                 console.log("Select to enter base_domain file path " + baseDomainPropertyFile);
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
-
-                await driver.findElement(By.xpath("//*[@id=\'slideup-toggle\']/img")).click();
-                await driver.findElement(By.xpath("//span[contains(.,\'baseDomainModel\')]")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(2400);
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(4800);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
                     "oj-searchselect-filter-model-proplist-selection-field|input","baseDomainPropList");
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
                 console.log("Select to enter base_domain file path " + baseDomModelFile);
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
 
                 console.log("Click WDT Model Tree");
                 await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
-                //await driver.findElement(By.xpath("//img[@alt=\'WDT Model\']")).click();
                 await driver.sleep(2800);
                 console.log("Click Navtree Environment");
-                await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
                 await driver.sleep(2800);
                 console.log("Click Domain");
-                await driver.findElement(By.xpath("//span[contains(.,\'Domain\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Domain')]")).click();
                 await driver.sleep(4800);
 
-                console.log("Click Security Filter Tab");
+                console.log("Click Security Tab");
                 await driver.findElement(By.xpath("//div/ul/li[3]/a/span")).click();
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//div[2]/oj-conveyor-belt/div[4]/div/oj-tab-bar/div/div/ul/li[3]/a/span")).click();
+                console.log("Click Filter Tab");
+                await driver.findElement(By.xpath("//span[text()='Filter']")).click();
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"SecurityConfiguration_ConnectionLoggerEnabled",3);
                 await driver.sleep(2400);
 
                 console.log("Click SecurityConfiguration_ConnectionFilter Field");
-                await driver.findElement(By.xpath(" //*[@id=\"SecurityConfiguration_ConnectionFilter|input\"]")).click();
+                await driver.findElement(By.xpath(" //*[@id='SecurityConfiguration_ConnectionFilter|input']")).click();
                 await driver.sleep(2800);
-                await driver.findElement(By.xpath(" //*[@id=\"SecurityConfiguration_ConnectionFilter|input\"]")).sendKeys("test1,test2,test3");
+		        console.log("Enter SecurityConfiguration_ConnectionFilter Field value = test1,test2,test3");
+                await driver.findElement(By.xpath(" //*[@id='SecurityConfiguration_ConnectionFilter|input']")).sendKeys("test1,test2,test3");
                 await driver.sleep(2800);
-
                 console.log("Click Security EmbeddedLDAP Tab");
-                await driver.findElement(By.xpath("//div[2]/oj-conveyor-belt/div[4]/div/oj-tab-bar/div/div/ul/li[5]/a/span")).click();
-                //await driver.sleep(2800);
-                //console.log("Click Yes button");
-                //await driver.findElement(By.xpath("//oj-button[@id=\'dlgYesBtn\']/button/div")).click();
+		        await driver.findElement(By.xpath("//span[text()='Embedded LDAP']")).click();
                 await driver.sleep(2400);
                 console.log("Enter EmbeddedLDAP = Welcome1");
                 await driver.findElement(By.id("EmbeddedLDAP_Credential|input")).sendKeys("Welcome1");
                 await driver.sleep(2800);
                 console.log("Click Security SSL Certificate Revocation Checking Tab");
-                await driver.findElement(By.xpath("//div[2]/oj-conveyor-belt/div[4]/div/oj-tab-bar/div/div/ul/li[7]/a/span")).click();
-                //await driver.sleep(2800);
-                //console.log("Click Yes button");
-                //await driver.findElement(By.xpath("//oj-button[@id=\'dlgYesBtn\']/button/div")).click();
+		        await driver.findElement(By.xpath("//span[text()='SSL Certificate Revocation Checking']")).click();
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"SecurityConfiguration_CertRevoc_CheckingEnabled",3);
                 await driver.sleep(2400);
 
                 console.log("Click Download (Save) File");
-                driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.write.id]]\']/button/div/span")).click();
+                driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.write.id]]']/button/div/span")).click();
                 await driver.sleep(4800);
                 console.log("TEST PASS ");
             } catch (e) {
@@ -786,41 +781,44 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
 
                 await admin.importProject(driver,prjFile);
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//span[contains(.,\'baseDomainPropList\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
                 await driver.sleep(4800);
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//*[@id=\'model-form-layout\']/div/div[4]/div/div[2]/div/a")).click();
+                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[4]/div/div[2]/div/a")).click();
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
                 console.log("Select to enter base_domain file path " + baseDomainPropertyFile);
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//*[@id=\'slideup-toggle\']/img")).click();
-                await driver.findElement(By.xpath("//span[contains(.,\'baseDomainModel\')]")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(4800);
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(4800);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
                     "oj-searchselect-filter-model-proplist-selection-field|input","baseDomainPropList");
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//img[@title=\'Choose File\']")).click();
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
                 console.log("Select to enter base_domain file path " + baseDomModelFile);
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
+                //await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
                 await driver.sleep(4800);
                 console.log("Click WDT Model Tree");
                 await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
                 await driver.sleep(2800);
                 console.log("Click Navtree Environment");
-                await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
                 await driver.sleep(2800);
                 console.log("Click Domain");
-                await driver.findElement(By.xpath("//span[contains(.,\'Domain\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'Domain')]")).click();
                 await driver.sleep(4800);
 
                 console.log("Click Domain Concurrency Tab");
@@ -842,9 +840,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(2800);
                 console.log("Click Domain Web Application Tab");
                 await driver.findElement(By.xpath("//div/ul/li[7]/a/span")).click();
-                //await driver.sleep(2400);
-                //console.log("Click Yes button");
-                //await driver.findElement(By.xpath("//span[contains(.,\'Yes\')]")).click();
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"WebAppContainer_ReloginEnabled",3);
                 await driver.sleep(2400);
@@ -893,10 +888,121 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("WebAppContainer_GzipCompression_GzipCompressionContentType|input"))
                     .sendKeys("text/html text/xml text/plain text/txt");
                 await driver.sleep(2800);
-
                 console.log("Click Download (Save) File");
-                driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.write.id]]\']/button/div/span")).click();
+                driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.write.id]]']/button/div/span")).click();
                 await driver.sleep(4800);
+                console.log("TEST PASS ");
+            } catch (e) {
+                await admin.takeScreenshot(driver, file);
+                console.log(e.toString() + " TEST FAIL");
+            }
+        })
+
+    //Test Unresolved References (machine, serverTemplate, cluster) for a server
+    it('10. Test Category: GAT/Risk1\n \t Test Scenario: Test (testMachine-1, exiting testCluster-1 ' +
+        'and testServerTemplate-1) unresolved references for testServer-1',
+        async function () {
+            file = "UnresolvedReferencesForServer.png";
+            try {
+                const path = require('path');
+                const projFile = "frontend/system-tests/lib/wdtDomainProject.json";
+                const baseDomainModelFile = "frontend/system-tests/lib/baseDomainModelFile.yml";
+                const baseDomainPropertyList = "frontend/system-tests/lib/baseDomainPropList.prop";
+                const prjFile = process.env.OLDPWD + path.sep + projFile;
+                const baseDomModelFile = process.env.OLDPWD + path.sep + baseDomainModelFile;
+                const baseDomainPropertyFile = process.env.OLDPWD + path.sep + baseDomainPropertyList;
+
+                await admin.importProject(driver,prjFile);
+                await driver.sleep(4800);
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
+                await driver.sleep(4800);
+                console.log("Click Choose File...");
+                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[4]/div/div[2]/div/a")).click();
+                await driver.sleep(4800);
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
+                await driver.sleep(1400);
+                console.log("Select to enter base_domain file path " + baseDomainPropertyFile);
+                await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
+                await driver.sleep(1400);
+                console.log("Click OK button");
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
+                await driver.sleep(4800);
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(4800);
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
+                await driver.sleep(4800);
+                await admin.selectDropDownList(driver,"model-proplist-selection-field",
+                    "oj-searchselect-filter-model-proplist-selection-field|input","baseDomainPropList");
+                console.log("Click Choose File...");
+                await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
+                await driver.sleep(1400);
+                console.log("Select to enter base_domain file path " + baseDomModelFile);
+                await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
+                await driver.sleep(1400);
+                console.log("Click OK button");
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
+                //await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.sleep(4800);
+                console.log("Click WDT Model Tree");
+                await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
+                await driver.sleep(2800);
+                console.log("Click Environment");
+                await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
+                await driver.sleep(2800);
+                console.log("Click Servers");
+                await driver.findElement(By.xpath("//span[contains(.,'Servers')]")).click();
+                await driver.sleep(2400);
+                console.log("Select testServer-1");
+                await driver.findElement(By.xpath("//span[contains(.,'testServer-1')]")).click();
+                await driver.sleep(4800);
+                console.log("Click WDT option at Cluster");
+                await driver.findElement(By.xpath("//*[@id='wdtOptions_Cluster']/img")).click();
+                await driver.sleep(2400);
+                console.log("Select Cluster Unresolved Reference Radio button");
+                await driver.findElement(By.xpath("//input[@type='radio'] [@value='fromUnresolvedReference']")).click();
+                await driver.sleep(2400);
+                console.log("Enter testCluster-1 as Unresolved Reference");
+                await driver.findElement(By.xpath("//input[@id='text_Cluster|input']")).sendKeys("testCluster-1");
+                await driver.sleep(2400);
+                console.log("Click Ok button at Cluster Unresolved Reference page");
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
+                await driver.sleep(2400);
+                console.log("Click WDT option at Machine");
+                await driver.findElement(By.xpath("//*[@id='wdtOptions_Machine']/img")).click();
+                await driver.sleep(2400);
+                console.log("Select Machine Unresolved Reference Radio button");
+                await driver.findElement(By.xpath("//input[@type='radio'] [@value='fromUnresolvedReference']")).click();
+                await driver.sleep(2400);
+                console.log("Enter testMachine-1 as Unresolved Reference");
+                await driver.findElement(By.xpath("//input[@id='text_Machine|input']")).sendKeys("testMachine-1");
+                await driver.sleep(2400);
+                console.log("Click Ok button at Machine Unresolved Reference page");
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
+                await driver.sleep(2400);
+                console.log("Click Show Advanced Fields");
+                element = driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await driver.sleep(4800);
+                await element.click();
+                await driver.sleep(2400);
+                console.log("Click WDT option at ServerTemplate");
+                element = await driver.findElement(By.xpath("//*[@id='wdtOptions_ServerTemplate']/img"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                element.click();
+                await driver.sleep(2400);
+                console.log("Select ServerTemplate Unresolved Reference Radio button");
+                await driver.findElement(By.xpath("//input[@type='radio'] [@value='fromUnresolvedReference']")).click();
+                await driver.sleep(2400);
+                console.log("Enter testServerTemplate-1 as Unresolved Reference");
+                await driver.findElement(By.xpath("//input[@id='text_ServerTemplate|input']")).sendKeys("testServerTemplate-1");
+                await driver.sleep(2400);
+                console.log("Click Ok button at ServerTemplate Unresolved Reference page");
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
+                await driver.sleep(2400);
+                console.log("Click Download File button at Server page");
+                await driver.findElement(By.xpath("//span[text()='Download File']")).click();
+                await driver.sleep(2400);
                 console.log("TEST PASS ");
             } catch (e) {
                 await admin.takeScreenshot(driver, file);

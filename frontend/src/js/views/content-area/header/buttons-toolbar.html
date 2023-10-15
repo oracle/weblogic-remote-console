@@ -1,29 +1,60 @@
 <!--
- Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 
-<oj-bind-if test="[[i18n.toolbar.buttons.home.visible]]">
-  <oj-button
-    :id="[[i18n.toolbar.buttons.home.id]]"
-    on-oj-action="[[contentAreaHeaderButtonClickHandler]]"
-    chroming="borderless"
-    disabled="[[i18n.toolbar.buttons.home.disabled()]]"
-  >
-    <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.home.image + '.png', alt: i18n.toolbar.buttons.home.label}" />
-    <span class="cfe-toolbar-button-label" data-bind="text: [[i18n.toolbar.buttons.home.label]]"></span>
-  </oj-button>
-</oj-bind-if>
+<div id="content-area-header-toolbars" class="oj-flex oj-sm-flex-items-initial">
+  <div id="content-area-header-toolbar" class="oj-flex-item">
+    <oj-bind-if test="[[i18n.toolbar.buttons.home.visible]]">
+      <oj-button
+        :id="[[i18n.toolbar.buttons.home.id]]"
+        on-oj-action="[[contentAreaHeaderButtonClickHandler]]"
+        chroming="borderless"
+        disabled="[[i18n.toolbar.buttons.home.disabled()]]"
+      >
+        <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.home.image + '.png', alt: i18n.toolbar.buttons.home.label}" />
+        <span class="cfe-toolbar-button-label" data-bind="text: [[i18n.toolbar.buttons.home.label]]"></span>
+      </oj-button>
+    </oj-bind-if>
 
-<oj-bind-if test="[[i18n.toolbar.buttons.preferences.visible]]">
-  <oj-button
-    :id="[[i18n.toolbar.buttons.preferences.id]]"
-    on-oj-action="[[contentAreaHeaderButtonClickHandler]]"
-    chroming="borderless"
-    disabled="[[i18n.toolbar.buttons.preferences.disabled()]]"
-  >
-    <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.buttons.preferences.image + '.png', alt: i18n.toolbar.buttons.preferences.label}" />
-    <span class="cfe-toolbar-button-label" data-bind="text: [[i18n.toolbar.buttons.preferences.label]]"></span>
-  </oj-button>
-</oj-bind-if>
+  </div>
 
+  <div id="content-area-header-iconbar" class="oj-flex-item oj-helper-margin-start-auto">
+    <oj-bind-if test="[[i18n.toolbar.icons.recent.visible]]">
+      <a id="recent-pages-iconbar-icon" class="cfe-content-area-header-iconbar-icon"
+         href="#" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="collapsed">
+      <span>
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.recent.iconFile() + '.png', alt: i18n.toolbar.icons.recent.label, title: i18n.toolbar.icons.recent.label}"/>
+      </span>
+      </a>
+    </oj-bind-if>
+
+    <oj-bind-if test="[[i18n.toolbar.icons.providermanagement.visible]]">
+      <a id="provider-management-iconbar-icon" class="cfe-content-area-header-iconbar-icon"
+       href="#" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="closed">
+      <span>
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.providermanagement.iconFile + '.png', alt: i18n.toolbar.icons.providermanagement.label, title: i18n.toolbar.icons.providermanagement.label}"/>
+      </span>
+      </a>
+    </oj-bind-if>
+
+    <oj-bind-if test="[[i18n.toolbar.icons.ataglance.visible]]">
+      <a id="ataglance-iconbar-icon" class="cfe-content-area-header-iconbar-icon"
+         href="#" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="closed">
+      <span>
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.ataglance.iconFile + '.png', alt: i18n.toolbar.icons.ataglance.label, title: i18n.toolbar.icons.ataglance.label}"/>
+      </span>
+      </a>
+    </oj-bind-if>
+
+    <oj-bind-if test="[[i18n.toolbar.icons.tips.visible]]">
+      <a id="tips-iconbar-icon" class="cfe-content-area-header-iconbar-icon"
+       href="#" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="closed">
+      <span>
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.tips.iconFile + '.png', alt: i18n.toolbar.icons.tips.label, title: i18n.toolbar.icons.tips.label}"/>
+      </span>
+      </a>
+    </oj-bind-if>
+  </div>
+
+</div>
