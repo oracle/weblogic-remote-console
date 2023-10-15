@@ -33,26 +33,12 @@ define(['ojs/ojcore', 'knockout', '../../app-resizer', 'wrc-frontend/microservic
         });
 
         let binding = viewParams.signaling.perspectiveSelected.add((newPerspective) => {
-          // Show navtree
-          self.navtreeVisible(true);
+          if (!self.navtreeDisabled()) {
+            // Show navtree
+            self.navtreeVisible(true);
+          }
           // Enable the toggle navtree visibility icon.
           self.navtreeDisabled(false);
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.ancillaryContentAreaToggled.add((source, visible) => {
-          if (source === 'form-toolbar') {
-            // This means the user entered a criteria into
-            // the simple search input, so we need to
-            // enable the toggle navtree visibility icon
-            setNavTreeDisabledState(false);
-          }
-          else {
-            // Set visibility of navtree based on a negation of
-            // the visible parameter.
-            setNavTreeVisibility(!visible, source);
-          }
         });
 
         self.signalBindings.push(binding);
@@ -60,13 +46,6 @@ define(['ojs/ojcore', 'knockout', '../../app-resizer', 'wrc-frontend/microservic
         binding = viewParams.signaling.navtreeLoaded.add((newPerspective) => {
           // Enable the toggle navtree visibility icon,
           self.navtreeDisabled(false);
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.dataProviderSectionToggled.add((visible) => {
-          // Only hide navtree if visible === true
-          if (visible) setNavTreeVisibility(false);
         });
 
         self.signalBindings.push(binding);

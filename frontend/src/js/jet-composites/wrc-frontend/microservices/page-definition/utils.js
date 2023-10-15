@@ -14,12 +14,16 @@ define(['wrc-frontend/core/utils'],
       queryString.split('&').forEach(function (item) { var s = item.split('='), k = s[0], v = s[1] && decodeURIComponent(s[1]); (qd[k] = qd[k] || []).push(v) });
       return qd;
     }
-
-    function getSliceFromPDJUrl(pdjUrl) {
-      const qd = parseQueryString(pdjUrl);
-      return qd['view'][0];
+  
+    function getURLParams(url) {
+      return new URLSearchParams(url.substring(url.indexOf('?')));
     }
-
+  
+    function getSliceFromUrl(pdjUrl) {
+      const urlParams = getURLParams(pdjUrl);
+      return urlParams.get('view');
+    }
+  
     function pathSegmentsFromIdentity(id) {
       let pathSegments = [];
 
@@ -451,9 +455,17 @@ define(['wrc-frontend/core/utils'],
       return lineBreaksCount;
     }
 
+    function removeElementsByClass(className, rootElement = document){
+      const elements = rootElement.getElementsByClassName(className);
+      while (elements.length > 0) {
+        elements[0].parentNode.removeChild(elements[0]);
+      }
+    }
+
     return {
-      getSliceFromPDJUrl: getSliceFromPDJUrl,
+      getSliceFromUrl: getSliceFromUrl,
       parseQueryString: parseQueryString,
+      getURLParams: getURLParams,
       getFirstHTMLParagraph: getFirstHTMLParagraph,
       removeTrailingSlashes: removeTrailingSlashes,
       displayNameFromIdentity: displayNameFromIdentity,
@@ -479,7 +491,8 @@ define(['wrc-frontend/core/utils'],
       isReadOnlySlice: isReadOnlySlice,
       getThrowableMessage: getThrowableMessage,
       calculateTextAreaHeight: calculateTextAreaHeight,
-      getLineBreaksCount: getLineBreaksCount
+      getLineBreaksCount: getLineBreaksCount,
+      removeElementsByClass: removeElementsByClass
     };
   }
 );

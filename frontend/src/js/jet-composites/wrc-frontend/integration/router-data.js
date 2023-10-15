@@ -22,6 +22,16 @@ define(['wrc-frontend/core/utils'],
           CoreUtils.isNotUndefinedNorNull(router.data.rdjData())
         );
       },
+      hasSliceForm: (pdjData) => {
+        return (CoreUtils.isNotUndefinedNorNull(pdjData) &&
+          CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm)
+        );
+      },
+      hasSliceTable: (pdjData) => {
+        return (CoreUtils.isNotUndefinedNorNull(pdjData) &&
+          CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable)
+        );
+      },
       hasSliceFormSlices: (pdjData) => {
         return (CoreUtils.isNotUndefinedNorNull(pdjData) &&
           CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm) &&

@@ -17,7 +17,15 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       this.perspective = PerspectiveManager.getById(perspectiveId);
       this.beanPathHistory = {
         items: [],
-        visibility: false
+        visibility: false,
+        navigator: {
+          visibility: false,
+          position: 0,
+          icons: {
+            previous: {state: 'disabled'},
+            next: {state: 'disabled'}
+          }
+        }
       };
       this.breadcrumbs = {
         items: [],
@@ -46,7 +54,8 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       this.tabstrip = {
         tab: {
           'shoppingcart': {cachedState: {}},
-          'dataproviders': {cachedState: {}},
+          'provider-management': {cachedState: {}},
+          'tips': {cachedState: {}},
           'ataglance': {cachedState: {}}
         }
       };

@@ -149,6 +149,10 @@ function setLoggingLevel(level) {
   _loggingLevel = level;
 }
 
+function getLoggingLevel() {
+  return _loggingLevel;
+}
+
 function setOptions(options) {
   if (options) {
     if (options.loggingLevel) _loggingLevel = options.loggingLevel;
@@ -191,5 +195,6 @@ module.exports = {
   log,
   getLogLevels,
   setLoggingLevel,
+  getLoggingLevel,
   setOptions
 };

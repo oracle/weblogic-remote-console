@@ -304,7 +304,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
       function setThemePreference(theme) {
         let ele = document.getElementById('navstrip-header');
         if (ele !== null) {
-          ele.style.backgroundColor = Runtime.getConfig()['settings']['themes'][theme][1];
+          ele.style.backgroundColor = Runtime.getConfig()['preferences']['themes'][theme][1];
           switch(theme){
             case 'light':
               ele.style.color = 'black';

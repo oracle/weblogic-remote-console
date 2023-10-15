@@ -18,28 +18,32 @@
  */
 define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils' , 'wrc-frontend/core/cfe-errors', 'wrc-frontend/core/cbe-types'],
   function (oj, CbeDataManager, Runtime, CoreTypes, CoreUtils, CfeErrors, CbeTypes) {
-    function getConnectionErrorMessage(status) {
+    function getConnectionErrorMessage(response) {
       let msg = oj.Translations.getTranslatedString('wrc-data-operations.messages.connectFailed.detail');
-      // Create message to display for connection error
-      switch (status) {
-        case 400:
-          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.badRequest.detail');
-          break;
-        case 401:
-          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.invalidCredentials.detail');
-          break;
-        case 403:
-          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.notInRole.detail');
-          break;
-        case 404:
-          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.invalidUrl.detail');
-          break;
-        case 501:
-          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.notSupported.detail');
-          break;
-        default:
-          msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.unexpectedStatus.detail', '{0}').replace('{0}', status);
-          break;
+      if (response?.body?.data?.messages[0]?.message)
+        msg = msg + response.body.data.messages[0].message;
+      else {
+        // Create message to display for connection error
+        switch (response.transport.status) {
+          case 400:
+            msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.badRequest.detail');
+            break;
+          case 401:
+            msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.invalidCredentials.detail');
+            break;
+          case 403:
+            msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.notInRole.detail');
+            break;
+          case 404:
+            msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.invalidUrl.detail');
+            break;
+          case 501:
+            msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.notSupported.detail');
+            break;
+          default:
+            msg = msg + oj.Translations.getTranslatedString('wrc-data-operations.messages.unexpectedStatus.detail', '{0}').replace('{0}', response.transport.status);
+            break;
+        }
       }
       return msg;
     }
@@ -56,7 +60,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         }
       }
       else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-        response['failureReason'] = getConnectionErrorMessage.call(this, response.transport.status);
+        response['failureReason'] = getConnectionErrorMessage.call(this, response);
       }
       return response;
     }
@@ -107,7 +111,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
           response['failureReason'] = messages.backendNotReachable.detail;
         }
         else {
-          response['failureReason'] = getConnectionErrorMessage.call(this, response.transport.status);
+          response['failureReason'] = getConnectionErrorMessage.call(this, response);
         }
       }
       return response;
@@ -424,7 +428,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
                       }
                     }
                     else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                      response['failureReason'] = getConnectionErrorMessage.call(this, response.transport.status);
+                      response['failureReason'] = getConnectionErrorMessage.call(this, response);
                     }
                     reject(response);
                   });
@@ -446,7 +450,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
 
               if (CoreUtils.isNotUndefinedNorNull(response.failureType)) {
                 if (response.transport.status === 400) response.transport.status = 401;
-                response['failureReason'] = getConnectionErrorMessage.call(this, response.transport.status);
+                response['failureReason'] = getConnectionErrorMessage.call(this, response);
                 response.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.DETACHED.name;
               }
               return response;

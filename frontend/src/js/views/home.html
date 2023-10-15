@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2020, 2021, 2022, 2023, Oracle Corporation and/or its affiliates.
+Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="home-page-container">
@@ -7,8 +7,8 @@ Copyright (c) 2020, 2021, 2022, 2023, Oracle Corporation and/or its affiliates.
     <div class="oj-flex-bar-middle site-sideways-tabstrip">
       <oj-bind-for-each data="[[i18n.tabstrip.tabs]]" as="tab">
         <template>
-          <oj-bind-if test="[[tab.data.visible]]">
-            <span>
+          <oj-bind-if test="[[tab.data.visible()]]">
+            <span class="cfe-site-sideways-tab-icon">
               <a href="#" tabindex="-1"
                  on-click="[[tabstripButtonClickHandler]]"
               >

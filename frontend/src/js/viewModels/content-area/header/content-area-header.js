@@ -11,12 +11,35 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
     function ContentAreaHeaderTemplate(viewParams){
       const self = this;
 
-      this.headerTitle = {
-        label: ko.observable(''),
-        description: ko.observable(''),
-        classList: ko.observable('cfe-provider-icon')
+      this.i18n = {
+        'icons': {
+          'info': {
+            iconFile: 'data-providers-info-icon-brn_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-data-providers.icons.info.tooltip')
+          },
+          'edit': {
+            iconFile: 'data-providers-manage-icon-brn_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-data-providers.icons.edit.tooltip')
+          },
+          'deactivate': {
+            iconFile: 'data-providers-deactivate-icon-brn_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-data-providers.icons.deactivate.tooltip')
+          },
+          'delete': {
+            iconFile: 'data-providers-delete-icon-brn_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-data-providers.icons.delete.tooltip')
+          }
+        }
       };
 
+      this.headerTitle = {
+        visible: ko.observable(false),
+        label: ko.observable(''),
+        description: ko.observable(''),
+        classList: ko.observable('cfe-provider-icon'),
+        provider: ko.observable({type: 'adminserver', id: 'cahid'})
+      };
+  
       // System messages
       this.messages = ko.observableArray([]);
       this.messagesDataProvider = new ArrayDataProvider(this.messages);
@@ -62,19 +85,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.backendConnectionLost.add(() => {
-          setContentAreaHeaderBranding({label: '', description: ''});
+          setContentAreaHeaderBranding(createTitleEmpty());
         });
 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderRemoved.add((removedDataProvider) => {
           if (removedDataProvider.id === Runtime.getDataProviderId()) {
-            const title = {
-              label: '',
-              description: '',
-              classList: 'cfe-provider-icon'
-            };
-            setContentAreaHeaderBranding(title);
+            setContentAreaHeaderBranding(createTitleEmpty());
           }
         });
 
@@ -82,7 +100,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
 
         binding = viewParams.signaling.dataProviderLoadFailed.add((dataProvider) => {
           if (dataProvider.id === Runtime.getDataProviderId()) {
-            setContentAreaHeaderBranding({label: '', description: ''});
+            setContentAreaHeaderBranding(createTitleEmpty());
           }
         });
 
@@ -106,50 +124,64 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
         }
       });
 
-      this.dataProviderInfoPopupModuleConfig = ModuleElementUtils.createConfig({
-        name: 'content-area/dataproviders-popup',
-        params: {}
-      });
-
-      this.dataProviderInfoIconClickHandler = function (event) {
-        self.dataProviderInfoPopupModuleConfig
-          .then(moduleConfig => {
-            const dataProvider = DataProviderManager.getDataProviderById(self.headerTitle.provider.id);
-            moduleConfig.viewModel.showInfoPopup('headerTitleInfoPopup', dataProvider, '#data-provider-get-info');
-          });
+      this.dataProviderIconClickHandler = function (event) {
+        self.headerTitle.visible(true);
+        openDataProviderActionsPopup('headerTitleProviderActionsPopup', '#data-provider-get-info');
+        viewParams.signaling.ancillaryContentItemCleared.dispatch('content-area-header');
       };
 
-      function toolbarButtonClicked(options) {
-        switch(options.id) {
+      this.connectionsModelsIconBarClickListener= function(event) {
+        closeDataProviderActionsPopup('headerTitleProviderActionsPopup');
+        const action = event.currentTarget.attributes['data-item-action'].value;
+        event.currentTarget.setAttribute('data-item-id', self.headerTitle.provider().id);
+        if (action === 'info') {
+          event.currentTarget.setAttribute('data-launcher-selector', '#data-provider-get-info');
+        }
+        viewParams.signaling.dataProviderActionClicked.dispatch('content-area-header', event);
+      };
+
+      function toolbarButtonClicked(changedState) {
+        switch(changedState.id) {
           case 'home': {
               viewParams.parentRouter.go('home');
 
               const beanTree = {
-                name: options.id,
-                type: options.id,
+                name: changedState.id,
+                type: changedState.id,
                 label: oj.Translations.getTranslatedString('wrc-content-area-header.title.home')
               };
 
-              let title = {
-                label: beanTree.label,
-                description: ''
-              };
-
-              if (CoreUtils.isNotUndefinedNorNull(self.headerTitle.provider)) {
-                beanTree['provider'] = self.headerTitle.provider;
+              if (CoreUtils.isNotUndefinedNorNull(self.headerTitle.provider().id !== 'cahid')) {
+                beanTree['provider'] = self.headerTitle.provider();
                 viewParams.signaling.beanTreeSelected.dispatch(beanTree);
                 viewParams.signaling.galleryItemSelected.dispatch(null);
+                viewParams.signaling.ancillaryContentItemCleared.dispatch('content-area-header');
               }
 
-              title = createTitle(beanTree);
+              const title = createTitle(beanTree);
               setContentAreaHeaderBranding(title);
             }
             break;
         }
       }
 
-      function toolbarButtonToggled(options) {
-        console.log(`[CONTENT-AREA-HEADER] toolbarButtonToggled - options=${JSON.stringify(options)}`);
+      function openDataProviderActionsPopup(popupElementId, launcherSelector) {
+        const popup = closeDataProviderActionsPopup(popupElementId);
+        if (popup !== null) {
+          popup.open(launcherSelector);
+        }
+      }
+  
+      function closeDataProviderActionsPopup(popupElementId) {
+        const popup = document.getElementById(popupElementId);
+        if (popup !== null) {
+          if (popup.isOpen()) popup.close();
+        }
+        return popup;
+      }
+
+      function toolbarButtonToggled(changedState) {
+        console.log(`[CONTENT-AREA-HEADER] toolbarButtonToggled - changedState=${JSON.stringify(changedState)}`);
       }
 
       function createTitle(beanTree) {
@@ -162,20 +194,40 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
           title['provider'] = {
             type: beanTree.provider.type,
             id: beanTree.provider.id,
-            name: beanTree.provider.name
+            name: beanTree.provider.name,
+            state: 'connected'
           };
           title['description'] = `${title.provider.name} )`;
           title.classList = ViewModelUtils.getCustomCssProperty(`data-provider-${beanTree.provider.type}-classList`).replaceAll('\'', '');
         }
+        else {
+          title['description'] = '';
+          title['provider'] = {
+            type: 'adminserver',
+            id: 'cahid'
+          };
+        }
 
         return title;
+      }
+
+      function createTitleEmpty() {
+        return {
+          label: '',
+          description: '',
+          classList: 'cfe-provider-icon',
+          provider: {
+            type: 'adminserver',
+            id: 'cahid'
+          }
+        };
       }
 
       function setContentAreaHeaderBranding(title) {
         self.headerTitle.label(title.label);
         self.headerTitle.description(title.description);
         self.headerTitle.classList(title.classList);
-        self.headerTitle['provider'] = title.provider;
+        self.headerTitle.provider(title.provider);
 
         document.title = `${Runtime.getName()}  ${(title.label.length > 0 ? '-' : '')}${title.label}`;
       }
@@ -184,4 +236,4 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojmodule-eleme
 
     return ContentAreaHeaderTemplate;
   }
-);    
+);

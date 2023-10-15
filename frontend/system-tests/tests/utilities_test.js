@@ -42,58 +42,50 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     //  Assign TestCluster-1 to AdminServer
     //
     //Test Case:
-    // Validate Addition and Modification items in Shopping Cart (Server, ServerTemplate and Cluster) Objects
-    it('1. Test Category: GAT/Risk1\n \t Test Scenario: Validate Addition and Modification items in Shopping Cart for (Server, ServerTemplate and Cluster) ' +
+    // Validate Addition and Modification items in Shopping Cart of (Server, ServerTemplate and Cluster) Objects
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: Validate Addition and Modification items in Shopping Cart of (Server, ServerTemplate and Cluster) ' +
         'Objects', async function() {
         file = "TestShoppingCart-1.png";
         try {
             await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Edit Tree","EnvironmentChevron",
                 "Clusters",1);
             await admin.saveToShoppingCart(driver);
-            await driver.sleep(240000);
+            await driver.sleep(1200);
             await admin.createMBeanObjectFromLandingPage(driver,"TestServer-1","Edit Tree","EnvironmentChevron",
                 "Servers",1);
-            await driver.sleep(2400);
+            await driver.sleep(1200);
             await admin.saveToShoppingCart(driver);
             await admin.createMBeanObjectFromLandingPage(driver,"TestServerTemplate-1","Edit Tree","EnvironmentChevron",
                 "Server Templates",1);
-            await driver.sleep(2400);
+            await driver.sleep(1200);
             await admin.saveToShoppingCart(driver);
-            await driver.sleep(2400);
+            await driver.sleep(1200);
             await admin.viewChanges(driver);
-            await driver.sleep(2400);
+            await driver.sleep(1200);
             console.log("Click Additions header text pool link");
             await driver.sleep(2400);
-            //await driver.findElement(By.xpath("//span[@id='oj-collapsible-additions-header']/a")).click();
-            await driver.findElement(By.xpath("//span[@id='additions-count']")).click();
-            await driver.sleep(2400);
-            await driver.sleep(2400);
-            console.log("Click Domain/Server Templates/TestServerTemplate-1 link");
-            await driver.findElement(By.linkText("/Domain/Server Templates/TestServerTemplate-1")).click();
-            await driver.sleep(2400);
-
+            console.log("Click Domain/Server Templates/TestServerTemplate-1 link, 3rd row in the Addition section");
+            await driver.findElement(By.xpath("//table[@id='additions-table']/tr[3]/td/a")).click();
+            await driver.sleep(1200);
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers");
-            await driver.sleep(3600);
+            await driver.sleep(2400);
             console.log("Click TestServer-1");
-            await driver.findElement(By.xpath("//td[contains(.,\'TestServer-1\')]")).click();
-            await driver.sleep(3600);
+            await driver.findElement(By.xpath("//td[contains(.,'TestServer-1')]")).click();
+            await driver.sleep(2400);
             console.log("Click Cluster");
             await driver.findElement(By.id("Cluster")).click();
-            await driver.sleep(3600);
+            await driver.sleep(2400);
             console.log("Click TestCluster-1");
-            await driver.findElement(By.xpath("//span[contains(.,\'TestCluster-1\')]")).click();
-            await driver.sleep(3600);
+            await driver.findElement(By.xpath("//span[contains(.,'TestCluster-1')]")).click();
+            await driver.sleep(2400);
             await admin.saveToShoppingCart(driver);
             await driver.sleep(2400);
             await admin.viewChanges(driver);
-            console.log("Click Additions header text pool link");
-            //  await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-additions-header\']/a")).click();
-            await driver.findElement(By.xpath("//span[@id='additions-count']")).click();
-
-            console.log("Click Domain/Servers/TestServer-1 link");
-            await driver.findElement(By.linkText("/Domain/Servers/TestServer-1")).click();
+            console.log("Click Domain/Servers/TestServer-1 link - 4th row in the Addition section");
+            await driver.findElement(By.xpath("//table[@id='additions-table']/tr[4]/td/a")).click();
             await driver.sleep(2400);
-            await admin.discardChanges(driver);
+            console.log("Click Discard Changes Icon Image");
+            await driver.findElement(By.xpath("//img[@id='discard-tab-button']")).click();
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -120,35 +112,21 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Clusters",0);
             await driver.sleep(1200);
             await admin.deleteMBeanFromLandingPage(driver,"Clusters","TestCluster-1",3);
+            await driver.sleep(1200);
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Servers","TestServer-1",5);
             await driver.sleep(900);
             await admin.viewChanges(driver);
-
-            console.log("Click Removal header text pool link");
-            // await driver.findElement(By.xpath("//span[@id=\'oj-collapsible-removals-header\']/a")).click();
-            await driver.findElement(By.xpath("//span[@id='additions-count']")).click();
             await driver.sleep(900);
+            console.log("Verify if TestCluster-1 and TestServer-1 objects appear in Removals section");
             if (await driver.findElement(
-                By.xpath("//div[@id=\'shoppingcart-tab-container-toolbar\']/div/div/a["+object_count+"]/img")));
+                By.xpath("//div[@id='shoppingcart-tab-container-toolbar']/div/div/a["+object_count+"]/img")));
             console.log("Found " +object_count+ " objects (TestCluster-1 and TestServer-1) in Shopping Cart Removal menu");
             await driver.sleep(900);
-            console.log("Click Toggle icon to collapse Shopping Cart menu section");
-            await driver.findElement(By.xpath("//div[@id=\'slideup-toggle\']/img")).click();
-            await driver.sleep(900);
-
             console.log("Click commit changes in shopping cart to validate removal of TestCluster-1 and TestServer-1 objects");
-            element = driver.findElement(By.id("shoppingCartImage"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            if (element.isEnabled()) {
-                await element.click();
-            }
-            await driver.sleep(900);
-            await driver.findElement(By.xpath("//a[@id=\'shoppingCartMenuLauncher\']/img")).click();
-            await driver.sleep(300);
-            await driver.findElement(By.xpath("//span[contains(.,\'Commit Changes\')]")).click();
-            await driver.sleep(900)
+            console.log("Click Commit Changes Icon Image");
+            await driver.findElement(By.xpath("//img[@id='commit-tab-button']")).click();
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -192,7 +170,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.findElement(By.css(".oj-combobox-arrow")).click();
             await driver.sleep(900);
             console.log("Click Server Templates | TestServerTemplate-2 Link");
-            await driver.findElement(By.id("oj-listbox-result-label-6")).click();
+            await driver.findElement(By.xpath("//*[text()='Server Templates | TestServerTemplate-2']")).click();
             console.log("Click Drop down button menu");
             await driver.findElement(By.css(".oj-combobox-arrow")).click();
             console.log("Click toggle history input bar");
@@ -229,7 +207,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await admin.goToLandingPanelSubTreeCard(driver,"Monitoring Tree","EnvironmentChevron",
                 "Servers");
             console.log("Click AdminServer");
-            await driver.findElement(By.xpath("//td[contains(.,\'AdminServer\')]")).click();
+            await driver.findElement(By.xpath("//td[contains(.,'AdminServer')]")).click();
             await driver.sleep(3600);
             console.log("Click Set Auto-reload Interval Icon");
             await driver.sleep(3600);
@@ -246,7 +224,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
                 await element.sendKeys(reloadValue);
                 await driver.sleep(900);
                 console.log("Click OK button at Reload Interval Dialog");
-                await driver.findElement(By.xpath("//span[contains(.,\'OK\')]")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
             }
             await driver.sleep(2400);
             console.log("Click Stop Reload Interval Icon");
@@ -307,7 +285,6 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.sleep(600);
             console.log("Click Reset Button");
             await driver.findElement(By.xpath("//oj-button[1]/button/div/span/span")).click();
-
             console.log("Click Middle Container");
             await driver.findElement(By.xpath("//div[@id='middle-container']")).click();
             await driver.sleep(600);
@@ -485,7 +462,6 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.findElement(
                 By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span[1]/img")).click();
             await driver.sleep(2400);
-
             console.log("Click Navtree Cluster");
             await driver.findElement(By.xpath("//span[contains(.,'Clusters')]")).click()
             await driver.sleep(2400);
@@ -513,18 +489,12 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.sleep(2400);
             console.log("Click Create button");
             await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span/img")).click();
-            await driver.sleep(4800);
-
-            console.log("Click expand Kiosk menu...");
-            await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click()
-            await driver.sleep(4800);
-            await driver.findElement(By.xpath("//div/ul/li[3]/a/span[2]")).click();
+            await driver.sleep(2400);
+            console.log("Click Home Image");
+            await driver.findElement(By.xpath("//span[starts-with(@id, 'home')]")).click();
             await driver.sleep(4800);
             console.log("Click WDT Model Tree");
             await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
-            await driver.sleep(4800);
-            console.log("Click Landing Page Image");
-            await driver.findElement(By.xpath("//*[@id='landing-page-icon']")).click();
             await driver.sleep(4800);
             console.log("Click Services Landing Page");
             element = await driver.findElement(By.id("Services"));
