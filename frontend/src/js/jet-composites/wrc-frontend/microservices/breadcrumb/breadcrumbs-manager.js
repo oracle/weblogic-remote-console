@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -9,10 +9,50 @@
 define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function (ko, ArrayDataProvider, PerspectiveMemoryManager, NavtreeManager, PageDefinitionUtils, CoreUtils, Logger) {
 
-    function BreadcrumbsManager(beanTree, breadcrumbsObservableArray){
+    function BreadcrumbsManager(beanTree, breadcrumbsObservableArray, options = {}){
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(beanTree.type);
       this.navtreeManager = new NavtreeManager(beanTree);
       this.breadcrumbs = breadcrumbsObservableArray;
+      this.navigatorVisible = (options?.navigator?.visibility ? options.navigator.visibility: false);
+    }
+
+    function createBreadcrumbNavigator() {
+      const imageData = [
+        {
+          id: 'beanpath-history-previous',
+          iconFile: 'beanpath-history-previous-gry_24x24',
+          tooltip: 'Back',
+          className: 'beanpath-history-navigator-icon',
+          onClick: 'historyNavigatorClick'
+        },
+        {
+          id: 'beanpath-history-next',
+          iconFile: 'beanpath-history-next-blk_24x24',
+          tooltip: 'Next',
+          className: 'beanpath-history-navigator-icon',
+          onClick: 'historyNavigatorClick'
+        }
+      ];
+      const li = document.createElement('li');
+      for (const data of imageData) {
+        const image = document.createElement('img');
+        image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + data.iconFile + '.png');
+        image.setAttribute('title', data.tooltip);
+
+        const anchor = document.createElement('a');
+        anchor.setAttribute('id', data.id);
+        anchor.setAttribute('href', '#');
+        anchor.setAttribute('tabindex', '-1');
+        anchor.setAttribute('on-click', `[[${data.onClick}]]`);
+
+        const span = document.createElement('span');
+        span.className = data.className;
+
+        span.append(image);
+        anchor.append(span);
+        li.append(anchor);
+      }
+      return li;
     }
 
     function createBreadcrumbMenu(button, linksData) {
@@ -84,8 +124,13 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
         const div = document.createElement('div');
         div.setAttribute('id', 'breadcrumbs-container');
         const ul = document.createElement('ul');
-        ul.className = 'breadcrumb';
+        if (this.navigatorVisible) {
+          // Create bean path history navigator
+          const navigator = createBreadcrumbNavigator();
+          ul.append(navigator);
+        }
         this.breadcrumbs().forEach((item, index) => {
+          item.name = 'breadcrumb';
           crumb = document.createElement('li');
           if (index === this.breadcrumbs().length-1) {
             if (CoreUtils.isNotUndefinedNorNull(linksData) && linksData.length > 0) {
@@ -111,12 +156,10 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
           ul.append(crumb);
         });
         if (CoreUtils.isNotUndefinedNorNull(menu)) {
-          ul.style.margin = '0 0 0 10px';
-          ul.style.padding = '0 0 2px 0';
+          ul.className = 'breadcrumb-crosslink';
         }
         else {
-          ul.style.margin = '5px 0 0 10px';
-          ul.style.padding = '2px 0 5px 0';
+          ul.className = 'breadcrumb-link';
         }
         div.append(ul);
         return div;
@@ -129,7 +172,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
       setBreadcrumbsVisibility: function (visible) {
         this.perspectiveMemory.setBreadcrumbsVisibility(visible);
       }
-
+  
     };
 
     // Return BreadcrumbsManager constructor function

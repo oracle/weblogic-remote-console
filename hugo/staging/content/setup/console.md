@@ -13,11 +13,11 @@ While the WebLogic Remote Console shares many features with the Administration C
 
 ## Basic layout
 
-![WebLogic Remote Console](/weblogic-remote-console/images/wrc-console.png)
+<!-- ![WebLogic Remote Console](/weblogic-remote-console/images/wrc-console.png) -->
 
 The WebLogic Remote Console presents a simple user interface that varies slightly across different providers. Broadly, it's arranged into the following areas:
 
-* **Kiosk** - manage the details of your current [project]({{< relref "userguide/projects" >}}), its [providers]({{< relref "userguide/providers" >}}) and their connection details. You can also import and export project files here. On Administration Server providers, the Kiosk also includes the Shopping Cart which contains the Change Manager, as well as any changes you’ve made to the domain configuration. You can commit (or discard) changes directly from the Shopping Cart. 
+* **Providers drawer** - manage the details of your current [project]({{< relref "userguide/projects" >}}), its [providers]({{< relref "userguide/providers" >}}) and their connection details. You can also import and export project files here. 
     
     If you have the console extension, `{{<console_rest_ext>}}`, installed, you can see the specific pending changes for your domain.
 

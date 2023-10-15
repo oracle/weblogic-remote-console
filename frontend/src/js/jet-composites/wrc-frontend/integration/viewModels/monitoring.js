@@ -48,6 +48,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.historyVisible = this.beanPathManager.getHistoryVisibility();
       this.beanPathHistoryOptions = ko.observable([]);
       this.breadcrumbs = {html: ko.observable({}), crumbs: ko.observableArray([])};
+      const navigatorVisible = this.beanPathManager.getNavigatorVisibility();
       this.breadcrumbsManager = new BreadcrumbsManager(beanTree, this.breadcrumbs.crumbs);
 
       this.launchMoreMenu = function (event) {
@@ -228,7 +229,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         self.signalBindings.push(binding);
 
-      }.bind(this);
+      };
 
       this.disconnected = function () {
         let dispose = function (obj) {
@@ -251,20 +252,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // signal "add" bindings, so it can be GC'd by
         // the JS engine.
         self.signalBindings = [];
-      }.bind(this);
+      };
 
       function cancelCreateAction(rawPath) {
         renderPage(rawPath);
       }
 
       function clickedBreadCrumb(path) {
-        // Minimize Kiosk and navtree, if it is floating
-        viewParams.signaling.ancillaryContentAreaToggled.dispatch('breadcrumb', false);
         // clear treenav selection
         viewParams.signaling.navtreeSelectionCleared.dispatch();
         path = PageDefinitionUtils.removeTrailingSlashes(path);
         ViewModelUtils.goToRouterPath( self.router, `/${viewParams.beanTree.type}/${encodeURIComponent(path)}`, self.canExitCallback);
       }
+
+      this.historyNavigatorClick = function (event) {
+        console.log(`[MONITORING] historyNavigatorClick - id=${event.currentTarget.id}`);
+      };
 
       // Breadcrumb navigation
       this.breadcrumbClick = function (event) {

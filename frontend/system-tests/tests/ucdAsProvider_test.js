@@ -358,37 +358,33 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             element = driver.findElement(By.xpath("//*[@id='MaxConcurrentNewThreads|input']"));
             await element.clear();
             await element.sendKeys("100");
-            await driver.sleep(600);
+            await driver.sleep(1200);
             console.log("Click at Home Image Icon link");
-            element = await driver.findElement(By.xpath("//*[@id='home']/button/div/span[1]/img")).click();
-            await driver.sleep(600);
+            element = await driver.findElement(By.xpath("//span[starts-with(@id, 'home_oj57')]")).click();
+            await driver.sleep(1200);
             console.log("Click Yes button at Unsaved Changes Detected Dialog.");
             element = await driver.findElement(
                 By.xpath("//oj-button[@id='dlgYesBtn']/button/div/span")).click();
-            //FIXME - CLick Home link twice
             await driver.sleep(2400);
-            console.log("Click at Home Image Icon link Again");
-            element = await driver.findElement(By.xpath("//*[@id='home']/button/div/span[1]/img")).click();
-            await driver.sleep(600);
             console.log("Click at Edit Tree Image");
-            element = await driver.findElement(By.xpath("//span[contains(.,'Edit Tree')]")).click();
-            await driver.sleep(1200);
+            element = await driver.findElement(By.xpath("//*[@id='gallery-container']/div/div[1]/a/span")).click();
+            await driver.sleep(6400);
             console.log("Click at Domain Link");
-            element = await driver.findElement(By.xpath("//a[contains(.,'Domain')]")).click();
-            await driver.sleep(1200);
+            element = await driver.findElement(By.xpath("//span[text()='Domain']")).click();
+            await driver.sleep(4800);
             console.log("Click at Domain Concurrency tab");
             element = await driver.findElement(
                 By.xpath("//span[@class='oj-tabbar-item-label' and text()='Concurrency']")).click();
             await driver.sleep(600);
             //Verify if Max Concurrency New Threads == 100
             element = driver.findElement(By.xpath("//*[@id='MaxConcurrentNewThreads|input']"));
-            console.log("Verify if Max Concurrency New Threads == 100")
+            console.log("Verify if Max Concurrency New Threads is still 50")
             if (await element.getAttribute("value") == '100') {
                 console.log("Max Concurrency New Threads == 100")
                 console.log("TEST FAIL ");
             }
             else {
-                console.log("Max Concurrency New Threads != 100");
+                console.log("Max Concurrency New Threads = 50");
                 console.log("TEST PASS ");
             }
         } catch (e) {
@@ -552,62 +548,37 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
     it('11. Test Category: GAT/Risk1\n \t Test Scenario: UC-016A: ', async function () {
         file = "UC-016A.png";
         try {
-            const projFile = "frontend/system-tests/lib/wdtDomainProject.json";
-            const path = require('path');
-            const prjFile = process.env.OLDPWD + path.sep + projFile;
-            await admin.importProject(driver,prjFile);
-            await driver.sleep(4800);
-            await admin.selectDomainConnection(driver,"1412LocalDomain");
-            await driver.sleep(600);
-            await driver.findElement(By.id("password-field|input")).click();
-            await driver.findElement(By.id("password-field|input")).sendKeys("welcome1");
-            await driver.sleep(600);
-            await driver.findElement(By.xpath("//span[@class='button-label' and text()='OK']")).click();
-
             //Go to Domain Concurrency Tab(5)
-            await driver.sleep(600);
-            console.log("Click at Edit Tree Image");
-            element = await driver.findElement(By.xpath("//span[contains(.,'Edit Tree')]")).click();
-            await driver.sleep(600);
-            console.log("Click at Environment link");
-            await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
-            await driver.sleep(1200);
-            console.log("Click at Domain Link");
-            element = await driver.findElement(By.xpath("//a[contains(.,'Domain')]")).click();
-            await driver.sleep(1200);
-            console.log("Click at Domain Concurrency tab");
-            element = await driver.findElement(
-                By.xpath("//span[@class='oj-tabbar-item-label' and text()='Concurrency']")).click();
+            await admin.goToFirstTab(driver, "Edit Tree", "EnvironmentChevron",
+                "Domain", 1, 5);
             await driver.sleep(600);
             console.log("Enter Max Concurrency New Threads = 100");
             element = driver.findElement(By.xpath("//*[@id='MaxConcurrentNewThreads|input']"));
             await element.clear();
             await element.sendKeys("100");
             await driver.sleep(600);
-            console.log("Click slideup-toggle expand Kiosk menu...");
-            await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click();
+
+            console.log("Click Provider Management Image link");
+            await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
             await driver.sleep(4800);
-            console.log("Click baseDomainModel");
-            await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
-            await driver.sleep(600);
             console.log("Click Yes button at Unsaved Changes Detected Dialog.");
             element = await driver.findElement(
                 By.xpath("//oj-button[@id='dlgYesBtn']/button/div/span")).click();
             await driver.sleep(600);
-            console.log("Click Cancel button at Edit WDT Model File Provider Dialog.");
+            console.log("Click Close Management Providers menu (x)");
             element = await driver.findElement(
-                By.xpath("//*[@id='dlgCancelBtn12']/button/div")).click();
-            await driver.sleep(600);
-            //Verify if Max Concurrency New Threads == 50
+                By.xpath("//*[@id='provider-management-dialog']/div[1]/div/div/div/div[1]/div[2]/a")).click();
+            await driver.sleep(2400);
+            //Verify if Max Concurrency New Threads == 100
             element = driver.findElement(By.xpath("//*[@id='MaxConcurrentNewThreads|input']"));
-            console.log("Verify if Max Concurrency New Threads == 50")
-            if (await element.getAttribute("value") == '50') {
-                console.log("Max Concurrency New Threads == 50")
-                console.log("TEST FAIL ");
+            console.log("Verify if Max Concurrency New Threads == 100")
+            if (await element.getAttribute("value") == '100') {
+                console.log("Max Concurrency New Threads == 100")
+                console.log("TEST PASS ");
             }
             else {
-                console.log("Max Concurrency New Threads != 50");
-                console.log("TEST PASS ");
+                console.log("Max Concurrency New Threads 50");
+                console.log("TEST FAIL ");
             }
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -615,7 +586,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
         }
     })
 
-    //BUG: FIXME: Test case UC-017A on the wiki page below:
+    //
     //   https://confluence.oraclecorp.com/confluence/pages/viewpage.action?pageId=4763969598
     //
     it('12. Test Category: GAT/Risk1\n \t Test Scenario: UC-017A: ', async function () {
@@ -631,8 +602,8 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             await driver.findElement(By.id("password-field|input")).click();
             await driver.findElement(By.id("password-field|input")).sendKeys("welcome1");
             await driver.sleep(600);
-            await driver.findElement(By.xpath("//span[@class='button-label' and text()='OK']")).click();
-            //Go to Domain Concurrency Tab(5)
+            console.log("Click Ok button");
+            await driver.findElement(By.xpath("//oj-button[starts-with(@id,'dlgOkBtn11')]")).click();
             await driver.sleep(600);
             console.log("Click at Edit Tree Image");
             element = await driver.findElement(By.xpath("//span[contains(.,'Edit Tree')]")).click();
@@ -651,7 +622,30 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             element = driver.findElement(By.xpath("//*[@id='MaxConcurrentNewThreads|input']"));
             await element.clear();
             await element.sendKeys("100");
-            ////////////////////// Add senarios HERE
+            await driver.sleep(1200);
+            console.log("Click at 1412LocalDomain Provider Image");
+            element = driver.findElement(By.xpath("//span[@id='content-area-header-title-description']")).click();
+            await driver.sleep(1200);
+            console.log("Click to deactivate 1412LocalDomain Provider ");
+            element = driver.findElement(By.xpath("//a[@data-item-action='deactivate']")).click();
+            await driver.sleep(1200);
+            console.log("Click Yes button at Unsaved Changes Detected Dialog.");
+            element = await driver.findElement(
+                By.xpath("//oj-button[@id='dlgYesBtn']/button/div/span")).click();
+            await driver.sleep(1200);
+            await admin.goToFirstTab(driver, "Edit Tree", "EnvironmentChevron",
+                "Domain", 1, 5);
+            //Verify if Max Concurrency New Threads == 100
+            element = driver.findElement(By.xpath("//*[@id='MaxConcurrentNewThreads|input']"));
+            console.log("Verify if Max Concurrency New Threads == 50")
+            if (await element.getAttribute("value") == '50') {
+                console.log("Max Concurrency New Threads == 50")
+                console.log("TEST PASS ");
+            }
+            else {
+                console.log("Max Concurrency New Threads 100");
+                console.log("TEST FAIL ");
+            }
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -736,17 +730,16 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
 
     //Test case UC-022A on the wiki page below:
     //   https://confluence.oraclecorp.com/confluence/pages/viewpage.action?pageId=4763969598
+    // Action Not Allow dialog comes up
     //
     it('14. Test Category: GAT/Risk1\n \t Test Scenario: UC-022A: ', async function () {
         file = "UC-022A.png";
         try {
             await admin.createMBeanObjectFromLandingPage(driver,"TestMachine-UC022A","Edit Tree","EnvironmentChevron",
                 "Machines",1);
-            console.log("Click slideup-toggle expand Kiosk menu...");
-            await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click();
-            await driver.sleep(600);
-            await admin.addDomainConnection(driver);
-            await driver.sleep(6000);
+            console.log("Click Provider Management Image link");
+            await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+            await driver.sleep(9600);
             console.log("Click Cancel button since ActionNotAllowed dialog appears");
             await driver.findElement(By.xpath("//span[@class='button-label' and text()='Cancel']")).click();
             await driver.sleep(600);

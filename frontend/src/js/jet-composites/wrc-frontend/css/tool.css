@@ -27,7 +27,8 @@
   --table-form-container-width-offset: 30rem;   /* 480px; */
   --form-container-fixed-min-width: 1060px;
 
-  --container-resizer-offset-max-height: 72; /* 80; */
+  --table-container-resizer-offset-max-height: 62;
+  --form-container-resizer-offset-max-height: 42;
   --model-console-header-height: 23px;
 
   --detail-popup-background-color: #cae4ef;
@@ -255,48 +256,91 @@ img.option-icon
   font-size: 0.92em;    /* 11pt; */
 }
 
-/* Style the breadcrumb list */
-ul.breadcrumb {
-  list-style: none;
-  line-height: 1.5rem;
-}
-
 #moreMenuLauncher > img {
   height: 1.2rem;
   width: 1.2rem;
   margin-top: 0.313rem;
 }
 
-/* Display list items side by side */
-ul.breadcrumb li {
-  font-size: 0.92em;      /* 11pt; */
-  display: inline;
+div[id="breadcrumbs-container"]
+{
+  height: 36px;
 }
 
-/* Add a slash symbol (/) before/behind each list item */
-ul.breadcrumb li+li:before {
-  padding: 0.125rem;
-  content: "/\00a0";
+div[id="breadcrumbs-container"] > ul
+{
+  text-decoration: none;
+}
+
+/* Style the breadcrumb list */
+ul.breadcrumb-crosslink,
+ul.breadcrumb-link
+{
+  list-style: none;
+  line-height: 1.5rem;
+  padding-left: 0.375rem;
+}
+
+/* Display list items side by side */
+ul.breadcrumb-crosslink li,
+ul.breadcrumb-link li {
+  font-size: 0.92em;      /* 11pt; */
+  display: inline-block;
+}
+
+#beanpath-history-previous > span,
+#beanpath-history-next > span
+{
+  display: inline-flex;
+  vertical-align: middle;
 }
 
 /* Add a color to all links inside the list */
-ul.breadcrumb li a {
+ul.breadcrumb-crosslink li a,
+ul.breadcrumb-link li a
+{
   color: var(--breadcrumb-link-color);
   text-decoration: none;
 }
 
 /* Add a color on mouse-over */
-ul.breadcrumb li a:hover {
+ul.breadcrumb-crosslink li a:hover,
+ul.breadcrumb-link  li a:hover
+{
   color: var(--breadcrumb-hover-color);
-  text-decoration: underline;
+  text-decoration: none;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb-crosslink li+li::before,
+ul.breadcrumb-link li+li::before
+{
+  padding: 0.125rem;
+  content: "/\00a0";
+}
+
+/*
+For controlling the styling of oj-button used with most of our clickable icons
+*/
+div[id="breadcrumbs-container"] .oj-button,
+div[id="breadcrumbs-container"] .oj-button-nocomp
+{
+  font-size: .92em;       /* 11pt; */
+  vertical-align: inherit;
+}
+
+div[id="breadcrumbs-container"] oj-menu-button > button > div
+{
+  display: inline-block;
+  line-height: 1rem;
 }
 
 /* For weblogic.beanpath-history dropdown */
 #beanpath-history-container {
   min-width: calc(100vw - var(--beanpath-history-container-calc-min-width));
-  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+  max-width: fit-content;
   font-weight: 400;
-  padding: 0.3125rem 0.625rem 0.3125rem 0;
+  padding: 0.3125rem 0.625rem 0.3125rem 0.3125rem;
   background-color: var(--beanpath-background-color);
   display: none;
 }
@@ -689,8 +733,6 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 #table-toolbar-container
 {
   max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
-  min-height: 2.25rem;
-  margin-top: 0.313rem;
 }
 
 #overlay-toolbar-container
@@ -709,7 +751,7 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 {
   min-height: 1.875rem;
   max-height: var(--instructions-max-height); /* Show vertical scrollbar, if height > 76px */
-  max-width: calc(100vw - var(--instructions-calc-max-width));
+  max-width: fit-content;
   overflow-wrap: break-word;  /* Wraps really long instructions */
   font-size: 0.92em;    /* 11pt; */
   margin: 0.625rem 0 0.625rem 0.625rem;
@@ -734,9 +776,15 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
-.cfe-form-content {
-  max-height: calc(100vh - var(--form-container-calc-max-height));
+[class="cfe-form-content"][data-form-type="sliceForm"],
+[class="cfe-form-content"][data-form-type="sliceTable"]
+{
   min-width: var(--form-container-fixed-min-width);
+}
+
+[class="cfe-form-content"][data-form-type="sliceForm"]
+{
+  max-height: calc(100vh - var(--form-container-calc-max-height));
   max-width: calc(100vw - var(--content-area-body-content-calc-max-width));
 }
 
@@ -988,18 +1036,6 @@ For controlling the padding used in pagination control beneath tables.
   padding: 0;
   vertical-align: middle;
   white-space: nowrap;
-}
-
-/*
-For controlling the styling of oj-button used with most of our clickable icons
-*/
-div[id="breadcrumbs-container"] .oj-button,
-div[id="breadcrumbs-container"] .oj-button-nocomp
-{
-  margin: 0.3125rem 0 0 0;
-  font-size: 1.0em;       /* 12pt; */
-  display: inline-flex;
-  vertical-align: baseline;
 }
 
 html:not([dir="rtl"]) .oj-conveyorbelt-overflow-indicator.oj-start {

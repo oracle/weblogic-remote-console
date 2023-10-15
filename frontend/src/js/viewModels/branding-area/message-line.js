@@ -6,8 +6,8 @@
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'ojs/ojmenu', 'ojs/ojoption', 'ojs/ojmenuselectmany'],
-  function(oj, ko, Runtime, CoreUtils) {
+define(['ojs/ojcore', 'knockout', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'ojs/ojmenu', 'ojs/ojoption', 'ojs/ojmenuselectmany'],
+  function(oj, ko, ViewModelUtils, Runtime, CoreUtils) {
 
     function MessageLineTemplate(viewParams){
       const self = this;
@@ -75,7 +75,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
             // data from the GET response, instead of the
             // "demo" messages. Don't comment out the
             // setHeaderMessageLine(data) line, though!
-//MLW            data = getMockupMessageLine(5);
+//MLW            data = getMockupMessageLine(0);
             setHeaderMessageLine(data);
           }
           else {
@@ -104,14 +104,17 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
           // The Math.random is used to come up with an array index into mockup message lines, used for demo and CSS styling purposes.
           return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-
+/*
+        href: 'https://oracle.github.io/weblogic-remote-console/reference/troubleshoot/'
+              resourceData: `/api/${Runtime.getDataProviderId()}/domainRuntime/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings`
+*/
         const messageLines = [
           {
-            messageHTML: 'No security warnings detected.',
+            messageHTML: 'Click the "Troubleshooting Docs" button to get more details on the issue that just occurred',
             severity: 'info',
             link: {
-              label: 'View/Refresh Report',
-              resourceData: `/api/${Runtime.getDataProviderId()}/domainRuntime/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings`
+              label: 'Troubleshooting Docs',
+              href: 'https://oracle.github.io/weblogic-remote-console/reference/troubleshoot'
             }
           },
           {},
@@ -160,6 +163,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
         if (CoreUtils.isNotUndefinedNorNull(self.messageLine.link.resourceData)) {
           viewParams.parentRouter.go(`/monitoring/${encodeURIComponent(self.messageLine.link.resourceData)}`);
         }
+        else if (CoreUtils.isNotUndefinedNorNull(self.messageLine.link.href)) {
+          openHRefIfPresent(self.messageLine.link.href);
+        }
       };
 
       this.launchMoreMenu = function (event) {
@@ -179,6 +185,15 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
         }
       };
 
+      function openHRefIfPresent(url) {
+        if (ViewModelUtils.isElectronApiAvailable()) {
+          window.electron_api.ipc.invoke('external-url-opening', url);
+        }
+        else {
+          window.open(url, '_blank', 'noopener noreferrer');
+        }
+      }
+
       function setHeaderMessageLine(obj) {
         if (CoreUtils.isNotUndefinedNorNull(obj.messageHTML)) {
           self.messageLine.message(obj.messageHTML);
@@ -193,6 +208,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
         if (CoreUtils.isNotUndefinedNorNull(obj.link)) {
           self.messageLine.link.label(obj.link.label);
           if (CoreUtils.isNotUndefinedNorNull(obj.link.resourceData)) self.messageLine.link['resourceData'] = obj.link.resourceData;
+          if (CoreUtils.isNotUndefinedNorNull(obj.link.href)) self.messageLine.link['href'] = obj.link.href;
         }
         else {
           self.messageLine.link.label('');
@@ -207,6 +223,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/cor
         self.messageLine.message('');
         self.messageLine.link.label('');
         delete self.messageLine.link.resourceData;
+        delete self.messageLine.link.href;
       }
     }
 

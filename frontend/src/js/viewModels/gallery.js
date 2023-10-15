@@ -133,10 +133,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           viewParams.signaling.readonlyChanged.dispatch(Runtime.isReadOnly());
 
           viewParams.signaling.galleryItemSelected.dispatch(value);
-
-          // The Kiosk will more than likely just be in the
-          // way going forward, so go ahead and collapse it.
-          viewParams.signaling.ancillaryContentAreaToggled.dispatch('gallery', false);
         }
       };
 

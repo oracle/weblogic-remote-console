@@ -212,6 +212,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
             }
           });
 
+          Controller.getSignal('tabStripTabSelected').add((source, tabId, options) => {
+            if (tabId === 'startup-tasks' && options.chooser === 'use-cards') {
+              setTableFormContainerVisibility(true);
+            }
+          });
+
         };
 
         const registerModeChangedSignal = () => {
@@ -245,7 +251,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
               mdQuery: mdQuery,
               signaling: Controller.getSignaling(),
               onResized: resizeTriggered,
-              onDataProvidersEmpty: selectAncillaryContentAreaTab
+              onDataProvidersEmpty: selectAncillaryContentItem
             }
           });
         });
@@ -301,8 +307,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
             name: 'content-area/ancillary-content',
             params: {
               parentRouter: self.router,
-              signaling: Controller.getSignaling(),
-              onAncillaryContentAreaToggled: toggleAncillaryContentArea
+              signaling: Controller.getSignaling()
             }
           });
         });
@@ -313,12 +318,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         Controller.getSignal('themeChanged').dispatch(theme);
       }
 
-      function toggleAncillaryContentArea(visible) {
-        Controller.getSignal('ancillaryContentAreaToggled').dispatch('appController', visible);
-      }
-
-      function selectAncillaryContentAreaTab(source, tabId) {
-        Controller.getSignal('tabStripTabSelected').dispatch(source, tabId, true);
+      function selectAncillaryContentItem(source, tabId) {
+        if (tabId === 'provider-management') {
+          self.router.go('home');
+        }
+        Controller.getSignal('ancillaryContentItemSelected').dispatch(source, tabId);
       }
 
       function resizeTriggered(source, newOffsetLeft, newOffsetWidth) {

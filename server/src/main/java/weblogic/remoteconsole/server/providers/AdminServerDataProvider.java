@@ -13,6 +13,8 @@ import weblogic.remoteconsole.server.repo.InvocationContext;
 public interface AdminServerDataProvider extends ConnectionOrientedProvider {
   public String getURL();
 
+  public String getURLOrigin();
+
   public boolean isSsoTokenAvailable();
 
   public long getSsoTokenExpires();
