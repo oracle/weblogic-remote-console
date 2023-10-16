@@ -125,9 +125,9 @@ public class SsoTokenManager {
     if ((origin != null) && !origin.isBlank()) {
       String allowed = ssoTokenIdMap.searchValues(1, (entry) -> {
         // Check origin against provider domain url
-        String domainUrl = entry.getProvider().getURL();
-        if (origin.equalsIgnoreCase(domainUrl)) {
-          return domainUrl;
+        String domainOrigin = entry.getProvider().getURLOrigin();
+        if (origin.equalsIgnoreCase(domainOrigin)) {
+          return domainOrigin;
         }
         return null;
       });

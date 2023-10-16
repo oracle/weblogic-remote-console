@@ -1,158 +1,202 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/ataglance/ataglance-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojmodule-element', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
-  function(oj, ko, ModuleElementUtils, PerspectiveMemoryManager, Runtime, ChangeManager, AtAGlanceManager, ViewModelUtils, CoreTypes, CoreUtils) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/ataglance/ataglance-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojmodule-element', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
+  function(oj, ko, ModuleElementUtils, PerspectiveMemoryManager, Runtime, AtAGlanceManager, ViewModelUtils, CoreTypes, CoreUtils) {
     function ContentAreaAncillaryContent(viewParams){
       const self = this;
 
-      this.i18n = {
-        tabstrip: {
-          tabs: [
-            {id: 'shoppingcart', iconFile: 'shopping-cart-empty-tabstrip_24x24', disabled: false, visible: ko.observable(false), isDefault: false,
-              label: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.shoppingcart.label')
-            },
-            {id: 'dataproviders', iconFile: 'project-management-tabstrip-icon_24x24', disabled: false, visible: ko.observable(true), isDefault: true,
-              label: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.projectmanagement.label')
-            },
-            {id: 'ataglance', iconFile: 'ataglance-tabstrip-icon_24x24', disabled: true, visible: ko.observable(false), isDefault: false,
-              label: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.ataglance.label')
-            }
-          ]
-        },
-        icons: {
-          'ataglance': { iconFile: 'ataglance-tabstrip-icon_24x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.ataglance.label')
-          },
-          'shoppingcart': { iconFile: 'shopping-cart-empty-tabstrip_24x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.shoppingcart.label')
-          },
-          'projectmanagement': { iconFile: 'project-management-tabstrip-icon_24x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.projectmanagement.label')
-          },
-          'changecenter': { iconFile: 'change-center-icon-blk_24x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-ancillary-content.icons.kiosk.tooltip')
-          },
-          'expand': { iconFile: 'slideup-expand-blk_24x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.expand.value')
-          },
-          'collapse': { iconFile: 'slideup-collapse-blk_24x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.collapse.value')
-          }
-        }
-      };
-
-      this.ancillaryContentAreaVisible = ko.observable(false);
-      this.ancillaryContentAreaToggleVisible = ko.observable(true);
+      /** @type {Readonly<{RECENT: {name: string}, PROVIDER_MANAGEMENT: {name: string}, SHOPPING_CART: {name: string}, AT_A_GLANCE: {name: string}, TIPS: {name: string}}>} */
+      const Tabs = Object.freeze({
+        SHOPPING_CART: {name: 'shoppingcart'},
+        AT_A_GLANCE: {name: 'ataglance'},
+        PROVIDER_MANAGEMENT: {name: 'provider-management'},
+        TIPS: {name: 'tips'}
+      });
+      const tabFromName = (name) => {return Object.values(Tabs).find(tab => tab.name === name); }
 
       this.tabModuleConfig = ko.observable({ view: [], viewModel: null });
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory('ancillary');
+      this.selectedItem = {id: ko.observable(''), state: 'closed', source: null};
 
-      this.beanTreeName = 'none';
       // Declare module-scoped variable for storing
       // bindings to "add" signal handlers.
       this.signalBindings = [];
+      this.subscriptions = [];
 
       this.connected = function() {
-        this.ancillaryContentAreaVisible.subscribe((newValue) => {
-          toggleAncillaryContentArea(newValue);
-        });
+        // Reset data-elected-item attribute
+        setDataSelectedItem('none');
+
+        let subscription = this.selectedItem.id.subscribe(function (newValue){
+          const itemId = getDataSelectedItem();
+
+          if (CoreUtils.isNotUndefinedNorNull(itemId) && newValue !== itemId) {
+            const viewPath = `views/content-area/ancillary/${newValue}.html`;
+            const modelPath = `viewModels/content-area/ancillary/${newValue}`;
+            ModuleElementUtils.createConfig({
+              viewPath: viewPath,
+              viewModelPath: modelPath,
+              params: {
+                parentRouter: viewParams.parentRouter,
+                signaling: viewParams.signaling,
+                cachedState: this.perspectiveMemory.tabstrip.tab[newValue].cachedState,
+                canExitCallback: this.canExitCallback,
+                onCachedStateChanged: changeTabModuleTabCachedState,
+                onClose: closeAncillaryContentItem
+                }
+              })
+                .then(moduleConfig => {
+                  // Assign fulfilled promise to tabModuleConfig
+                  // knockout observable.
+                  this.tabModuleConfig(moduleConfig);
+
+/*
+//MLW
+                  const onTimeout = (newValue, moduleConfig, tabstrip) => {
+                    if (CoreUtils.isNotUndefinedNorNull(tabstrip.tab[newValue]) &&
+                      CoreUtils.isNotUndefinedNorNull(tabstrip.tab[newValue].cachedState) &&
+                      (Object.keys(tabstrip.tab[newValue].cachedState).length > 0)
+                    ) {
+                      moduleConfig.viewModel.setCachedState(tabstrip.tab[newValue].cachedState);
+                    }
+                    setDataSelectedItem(newValue);
+                    openAncillaryContentItem();
+                  };
+*/
+
+                  const onTimeout = (newValue, source) => {
+                    setDataSelectedItem(newValue);
+                    openAncillaryContentItem();
+                  };
+
+                  // Call setTimeout passing in the callback function and the
+                  // timeout milliseconds. Here, we use the bind() method to
+                  // pass parameters to the callback.
+//MLW                  setTimeout(onTimeout.bind(undefined, newValue, moduleConfig, self.perspectiveMemory.tabstrip), 5);
+                  setTimeout(onTimeout.bind(undefined, newValue, this.selectedItem.source), 5);
+                  // DON'T PUT ANY CODE IN THIS FUNCTION AFTER THIS POINT !!!
+                });
+          }
+
+        }.bind(this));
+        this.subscriptions.push(subscription);
 
         // Be sure to create a binding for any signaling add in
         // this module. In fact, the code for the add needs to
         // be moved here physically.
 
-        let binding = viewParams.signaling.ancillaryContentAreaToggled.add((source, visible) => {
-          const currentlyVisible = self.ancillaryContentAreaToggleVisible();
-          if (currentlyVisible !== visible) setAncillaryContentAreaVisibility(visible);
+        let binding = viewParams.signaling.ancillaryContentItemSelected.add((source, itemId) => {
+          const tab = tabFromName(itemId);
+
+          if (CoreUtils.isNotUndefinedNorNull(tab)) {
+            if (source === 'perform-login') {
+              // When login action is the source, update the list of dataproviders as well as
+              // handling the tabstrip visibility. Note that use of dataProviderSelected will
+              // have additional effects on the console and is signaled when login completes.
+              setAncillaryContentItemCachedState(self.tabModuleConfig(), tab.name);
+            }
+
+            if (self.selectedItem.id() === '') {
+              // Means this the first ancillary content item being accessed.
+              // Set the selectedItem.source to source, in case the change
+              // event needs it.
+              self.selectedItem.source = source;
+              // Set the selectedItem.id() observable, which will trigger a
+              // change event.
+              self.selectedItem.id(tab.name);
+            }
+            else if (self.selectedItem.id() !== tab.name) {
+              // Means another ancillary content item was accessed earlier,
+              // and it wasn't tab.name. First update the cached state for
+              // the earlier accessed item.
+              setAncillaryContentItemCachedState(self.tabModuleConfig(), self.selectedItem.id());
+              // Then dispatch an ancillaryContentItemToggled(self.selectedItem.id(), "closed")
+              // signal.
+              closeAncillaryContentItem();
+              // Then load tas.name into moduleConfig using the
+              // change subscription on the id observable.
+              self.selectedItem.id(tab.name);
+            }
+            else if (self.selectedItem.state === 'opened') {
+              // Means tab.name is the same as selectedItem.id(),
+              // and thw state equals "opened". This means we're
+              // "toggling" the ancillary content item to the
+              // "closed" state, but not changing the moduleConfig.
+              setAncillaryContentItemCachedState(self.tabModuleConfig(), self.selectedItem.id());
+              // Then dispatch an ancillaryContentItemToggled(self.selectedItem.id(), "closed")
+              // signal.
+              closeAncillaryContentItem();
+            }
+            else {
+              // Means this is not the first ancillary content item
+              // being accessed, and tab.name is the same one already
+              // loaded in a moduleConfig, and the state is either
+              // "closed" or "hidden".
+              openAncillaryContentItem();
+            }
+          }
+
         });
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.tabStripTabSelected.add((source, tabId, visibility) => {
-          if (source === 'perform-login') {
-            // When login action is the source, update the list of dataproviders as well as
-            // handling the tabstrip visibility. Note that use of dataProviderSelected will
-            // have additional effects on the console and is signaled when login completes.
-            setTabModuleConfig(tabId, self.perspectiveMemory.tabstrip.tab[tabId].cachedState);
-          }
-          showTabStripContent(tabId, visibility);
+        binding = viewParams.signaling.ancillaryContentItemCleared.add((source) => {
+          closeAncillaryContentItem();
         });
 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.navtreeToggled.add((source, visible) => {
-          if (visible) setAncillaryContentAreaVisibility(!visible);
+          if (visible) closeAncillaryContentItem();
         });
 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.navtreeSelectionChanged.add((source, node) => {
-          const currentlyVisible = self.ancillaryContentAreaToggleVisible();
-          if (currentlyVisible) setAncillaryContentAreaVisibility(false, false);
+          closeAncillaryContentItem();
         });
 
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.dataProviderSelected.add((dataProvider) => {
           self.canExitCallback = undefined;
-          const shoppingCartVisible = (self.beanTreeName === 'edit' && (dataProvider.type === 'adminserver'));
-          const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === 'shoppingcart');
-          tabNode.visible(shoppingCartVisible);
-
-          setTabModuleConfig('dataproviders', self.perspectiveMemory.tabstrip.tab['dataproviders'].cachedState);
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
-          const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === 'shoppingcart');
-          tabNode.visible(false);
-//MLW          showTabStripContent('shoppingcart', false, false);
+          closeAncillaryContentItem();
         });
 
         self.signalBindings.push(binding);
 /*
-///MLW
-        binding = viewParams.signaling.dataProviderRemoved.add((dataProvider) => {
-          showTabStripContent('shoppingcart', false, false);
-          showTabStripContent('dataproviders', true, true);
+//MLW
+        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
+          closeAncillaryContentItem();
         });
 
         self.signalBindings.push(binding);
 */
-        binding = viewParams.signaling.beanTreeChanged.add(newBeanTree => {
-          if (newBeanTree.type !== 'home') {
-            self.beanTreeName = newBeanTree.name;
-            const shoppingCartVisible = (newBeanTree.name === 'edit' && (newBeanTree.type !== 'modeling'));
-            const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === 'shoppingcart');
-            tabNode.visible(shoppingCartVisible);
-            showTabStripContent('shoppingcart', shoppingCartVisible, false);
-          }
-        });
-
-        self.signalBindings.push(binding);
-
         binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
           self.canExitCallback = exitFormCallback;
         });
 
         self.signalBindings.push(binding);
 
-        computeAncillaryContentAreaToggleVisible()
-          .then((visible) => {
-            self.ancillaryContentAreaToggleVisible(visible);
-          });
-      };
+      }.bind(this);
 
       this.disconnected = function () {
-        // Dispose of change subscriptions on knockout observables.
-        self.ancillaryContentAreaVisible.dispose();
+        self.subscriptions.forEach((item) => {
+          if (item.name) {
+            item.subscription.dispose();
+          }
+          else {
+            item.dispose();
+          }
+        });
+
+        self.subscriptions = [];
 
         // Detach all signal "add" bindings
         self.signalBindings.forEach(binding => { binding.detach(); });
@@ -161,183 +205,54 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
         // signal "add" bindings, so it can be GC'd by
         // the JS engine.
         self.signalBindings = [];
+
       }.bind(this);
 
-      /**
-       * Called when user clicks icon or label of sideways tabstrip item
-       * @param event
-       */
-      this.tabstripButtonClickHandler = function(event) {
-        let id;
-        if (event.target.localName === 'img') {
-          id = event.target.nextElementSibling.id;
-        }
-        else if (event.target.id && event.target.id.length !== 0) {
-          id = event.target.id;
-        }
-        else {
-          return;
-        }
-
-        const changingTabModule = setTabModuleTabCachedState(id);
-        if (changingTabModule) {
-          setTabModuleConfig(id, self.perspectiveMemory.tabstrip.tab[id].cachedState);
-        }
-      };
-
-      function setTabModuleTabCachedState(tabId) {
-        let changingTabModule = true;
-        const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === tabId);
-        if (self.tabModuleConfig().viewModel !== null) {
-          const isSameTabNode = (self.tabModuleConfig().viewModel.tabNode && self.tabModuleConfig().viewModel.tabNode === tabNode.id);
-          changingTabModule = (!tabNode.disabled && !isSameTabNode);
-          changedTabModuleTabCachedState(self.tabModuleConfig().viewModel.tabNode, self.tabModuleConfig().viewModel.getCachedState());
-        }
-        return changingTabModule
+      function openAncillaryContentItem() {
+        self.selectedItem.state = 'opened';
+        viewParams.signaling.ancillaryContentItemToggled.dispatch('ancillary-content', {id: self.selectedItem.id(), state: self.selectedItem.state});
       }
 
-      function setTabModuleConfig(value, cachedState) {
-        var viewPath = 'views/content-area/' + (value === 'dataproviders' ? '' : 'ancillary/') + value + '.html';
-        var modelPath = 'viewModels/content-area/' + (value === 'dataproviders' ? '' : 'ancillary/') + value;
-        ModuleElementUtils.createConfig({
-          viewPath: viewPath,
-          viewModelPath: modelPath,
-          params: {
-            parentRouter: viewParams.parentRouter,
-            signaling: viewParams.signaling,
-            cachedState: cachedState,
-            canExitCallback: self.canExitCallback,
-            onCachedStateChanged: changedTabModuleTabCachedState,
-            onTabStripContentChanged: changedTabStripContent,
-            onTabStripContentVisible: setAncillaryContentAreaVisibility,
-            onTabStripContentHidden: getSlideUpVisibility
-          }
-        })
-        .then( function(moduleConfig) {
-          self.tabModuleConfig(moduleConfig);
-        });
-      }
-
-      function changedTabModuleTabCachedState(tabId, cachedState) {
-        const index = self.i18n.tabstrip.tabs.map(tab => tab.id).indexOf(tabId);
-        if (index !== -1) {
-          self.perspectiveMemory.tabstrip.tab[self.i18n.tabstrip.tabs[index].id] = {cachedState: cachedState};
+      function closeAncillaryContentItem() {
+        if (self.selectedItem.id() !== '') {
+          self.selectedItem.state = 'closed';
+          viewParams.signaling.ancillaryContentItemToggled.dispatch('ancillary-content', {id: self.selectedItem.id(), state: self.selectedItem.state});
         }
       }
 
-      function getDefaultTabNode(){
-        let tabNode = self.i18n.tabstrip.tabs.find(item => item.isDefault);
-        if (tabNode.disabled) {
-          tabNode['isDefault'] = false;
-          tabNode = self.i18n.tabstrip.tabs.find(item => !item.disabled);
-          if (CoreUtils.isNotUndefinedNorNull(tabNode)) tabNode['isDefault'] = true;
+      function getDataSelectedItem() {
+        let itemId;
+        const div = document.querySelector('[data-selected-item]');
+        if (div !== null) {
+          itemId = div.getAttribute('data-selected-item');
         }
-        return tabNode;
+        return itemId;
       }
 
-      function getSlideUpVisibility() {
-        let visible = self.ancillaryContentAreaToggleVisible();
-        const ele = document.getElementById('slideup-header');
-        if (ele !== null) {
-          const toggleState = ele.getAttribute('data-state');
-          visible = (toggleState === 'collapsed');
-        }
-        return visible;
-      }
-
-      function showAncillaryAreaSlideUp() {
-        if (self.ancillaryContentAreaToggleVisible()) {
-          const slideupHeader = document.getElementById('slideup-header');
-          if (slideupHeader !== null) {
-            let toggleState = slideupHeader.getAttribute('data-state');
-            if (!self.ancillaryContentAreaVisible()) toggleState = 'expanded';
-            const slideupPopup = document.getElementById('slideup-popup');
-            switch (toggleState) {
-              case 'collapsed': {
-                  slideupHeader.setAttribute('data-state', 'expanded');
-                  const offsetTop = parseInt(ViewModelUtils.getCustomCssProperty('slideup-popup-offset-top'), 10);
-                  slideupPopup.style.minHeight = `calc(100vh - ${offsetTop}px`;
-                  break;
-                }
-              case 'expanded': {
-                  slideupHeader.setAttribute('data-state', 'collapsed');
-                  slideupPopup.style.minHeight = 'unset';
-                  break;
-                }
-            }
-          }
+      function setDataSelectedItem(newValue) {
+        const div = document.querySelector('[data-selected-item]');
+        if (div !== null) {
+          div.setAttribute('data-selected-item', newValue);
         }
       }
 
-      this.ancillaryContentAreaToggleClick = function(event) {
-        setAncillaryContentAreaVisibility(!self.ancillaryContentAreaVisible());
-      };
-
-      function setAncillaryContentAreaVisibility(stateFlag, autoPopup=true){
-        self.ancillaryContentAreaVisible(stateFlag && autoPopup);
-        showAncillaryAreaSlideUp();
+      function clearDataSelectedItem() {
+        const dataSelectedItem = getDataSelectedItem();
       }
 
-      function toggleAncillaryContentArea(visible){
-        const ele = document.getElementById('ancillary-content-area');
-        if (ele !== null) ele.style.display = (visible ? 'inline-flex' : 'none');
+      function setAncillaryContentItemCachedState(moduleConfig, itemId) {
+        if (moduleConfig.viewModel !== null &&
+          CoreUtils.isNotUndefinedNorNull(moduleConfig.viewModel.tabNode) &&
+          CoreUtils.isNotUndefinedNorNull(moduleConfig.viewModel.getCachedState)
+        ) {
+          changeTabModuleTabCachedState(itemId, moduleConfig.viewModel.getCachedState());
+        }
       }
 
-      this.ancillaryContentAreaCloseClick = function(event) {
-        const ele = document.getElementById('ancillary-content-area');
-        if (ele !== null) ele.style.display = 'none';
-      };
-
-      function changedTabStripContent(tabId, visibility){
-        showTabStripContent(tabId, visibility);
-      }
-
-      /**
-       *
-       * @param {string} tabId
-       * @param {boolean} visibility
-       * @private
-       */
-      function showTabStripContent(tabId, visibility, autoPopup=true){
-        computeAncillaryContentAreaToggleVisible()
-          .then((visible) => {
-            self.ancillaryContentAreaToggleVisible(visible);
-            const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === tabId);
-            if (!tabNode.disabled && visibility && autoPopup) {
-              setTabModuleTabCachedState(tabNode.id);
-              setTabModuleConfig(tabNode.id, self.perspectiveMemory.tabstrip.tab[tabNode.id].cachedState);
-            }
-            else if (tabNode.id === 'shoppingcart' && !visibility) {
-              setTabModuleTabCachedState('dataproviders');
-              setTabModuleConfig('dataproviders', self.perspectiveMemory.tabstrip.tab['dataproviders'].cachedState);
-            }
-            setAncillaryContentAreaVisibility(visibility, autoPopup);
-          })
-          .catch(response => {
-            ViewModelUtils.failureResponseDefaultHandling(response);
-          });
-      }
-
-      function computeAncillaryContentAreaToggleVisible() {
-        return new Promise((resolve) => {
-          function hasVisiblityEnabledTabs() {
-            const tabNodes = self.i18n.tabstrip.tabs.filter(item => item.visible());
-            return (tabNodes.length > 0);
-          }
-
-          ChangeManager.getLockState(self.beanTreeName)
-            .then((data) => {
-              const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === ChangeManager.Entity.SHOPPING_CART.name);
-              tabNode.visible((data.changeManager.isLockOwner && data.changeManager.hasChanges));
-              return hasVisiblityEnabledTabs();
-            })
-            .then(visible => {
-              resolve(visible);
-            })
-            .catch(response => {
-              resolve(hasVisiblityEnabledTabs());
-            });
-        });
+      function changeTabModuleTabCachedState(itemId, cachedState) {
+        if (CoreUtils.isNotUndefinedNorNull(self.perspectiveMemory.tabstrip.tab[itemId])) {
+          self.perspectiveMemory.tabstrip.tab[itemId] = {cachedState: cachedState};
+        }
       }
 
     }

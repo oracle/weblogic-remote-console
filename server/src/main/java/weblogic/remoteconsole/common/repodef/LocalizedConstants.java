@@ -34,6 +34,37 @@ public class LocalizedConstants {
       "Invalid listener (must be host:port): {0}"
     );
 
+  // Indicates that while we were able to connect to the server,
+  // the url has a bad path (as in, path/management is not the REST API)
+  public static final LocalizableString BAD_PATH_GOOD_CONNECTION =
+    addConstant(
+      "badPathOnGoodConnection",
+      "There is a server at this address, but the end point doesn't seem to be correct."
+    );
+
+  // Indicates that while we were able to connect to the server,
+  // the url has a bad path and that path ends in /console.
+  public static final LocalizableString TAKE_OFF_THE_SLASH_MANAGEMENT =
+    addConstant(
+      "takeOffSlashManagement",
+      "most likely the /management part is not needed in the URL"
+    );
+
+  // Indicates that while we were able to connect to the server,
+  // the url has a bad path and that path ends in /console.
+  public static final LocalizableString TAKE_OFF_THE_SLASH_CONSOLE =
+    addConstant(
+      "takeOffSlashConsole",
+      "most likely the /console part is not needed in the URL"
+    );
+
+  // Indicates that the user is trying to connect to a non-admin port
+  public static final LocalizableString USE_ADMIN_PORT =
+    addConstant(
+      "useAdminPort",
+      "most likely the port should be set to the domain's administration port (which defaults to 9002)"
+    );
+
   // Indicates that a WLS domain version isn't one that the remote console supports.
   public static final LocalizableString UNSUPPORTED_DOMAIN_VERSION =
     addConstant(
@@ -534,22 +565,22 @@ public class LocalizedConstants {
     addConstant(
       "adminServerHelpUserNameDetail",
       "The user id portion of the credential needed to log in to the Admin Server. "
-      + "Note that this assumes a 'Basic Auth' authentication scheme. "
-      + "The 'SSO' option allows one to use a different mechanism."
+      + "Note that this assumes a 'BASIC AUTH' authentication scheme. "
+      + "The 'Single Sign-On' option allows one to use a different authentication mechanism."
     );
 
   public static final LocalizableString ADMIN_SERVER_HELP_PASSWORD_SUMMARY =
     addConstant(
       "adminServerHelpPasswordSummary",
-      "The user id portion of the credential needed to log in to the Admin Server"
+      "The password portion of the credential needed to log in to the Admin Server"
     );
 
   public static final LocalizableString ADMIN_SERVER_HELP_PASSWORD_DETAIL =
     addConstant(
       "adminServerHelpPasswordDetail",
-      "The passowrd portion of the credential needed to log in to the Admin Server. "
-      + "Note that this assumes a 'Basic Auth' authentication scheme. "
-      + "The 'SSO' option allows one to use a different mechanism."
+      "The password portion of the credential needed to log in to the Admin Server. "
+      + "Note that this assumes a 'BASIC AUTH' authentication scheme. "
+      + "The 'Single Sign-On' option allows one to use a different authentication mechanism."
     );
 
   public static final LocalizableString ADMIN_SERVER_HELP_INSECURE_SUMMARY =
@@ -575,7 +606,9 @@ public class LocalizedConstants {
   public static final LocalizableString ADMIN_SERVER_HELP_SSO_DETAIL =
     addConstant(
       "adminServerHelpSSODetail",
-      "Use an alternate authentication mechanism"
+      "Use the browser to perform an alternate authentication, "
+      + "usually with a Single Sign-On mechanism, "
+      + "and then obtain a token for access to the WebLogic Domain."
     );
 
   public static final LocalizableString WDT_PROVIDER_HELP_FILE_SUMMARY =

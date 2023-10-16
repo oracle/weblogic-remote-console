@@ -546,7 +546,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function setFormContainerMaxHeight(withHistoryVisible){
         const options = {withHistoryVisible: withHistoryVisible, withHelpVisible: self.showHelp()};
-        const offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#table-container', options);
+        const offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#table-container', 'table-container-resizer-offset-max-height', options);
         document.documentElement.style.setProperty('--table-container-calc-max-height', `${offsetMaxHeight}px`);
       }
 
@@ -559,7 +559,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function toggleInstructions(visible) {
         self.showInstructions(visible);
-        setFormContainerMaxHeight(!visible, self.perspectiveMemory.beanPathHistory.visibility);
+        setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
         viewParams.signaling.resizeObserveeNudged.dispatch('table');
       }
 
@@ -904,13 +904,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
           })
           .finally(() => {
-            // Announce that tabstrip item for "Shopping Cart Viewer"
-            // has been unselected
-            viewParams.signaling.tabStripTabSelected.dispatch(
-              'table',
-              'shoppingcart',
-              false
-            );
+            viewParams.signaling.ancillaryContentItemCleared.dispatch('table');
           });
       }.bind(this);
 

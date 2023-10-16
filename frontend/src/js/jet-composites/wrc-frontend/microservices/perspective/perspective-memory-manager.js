@@ -147,6 +147,52 @@ define(['wrc-frontend/microservices/perspective/perspective-manager', 'wrc-front
             perspectiveMemories[options.provider.id][perspectiveId].beanPathHistory.items = [];
           }
         }
+      },
+      getProviderPerspectivesNavigatorPosition: (providerId) => {
+        let position = 0;
+        if (typeof perspectiveMemories[providerId] !== 'undefined') {
+          position = perspectiveMemories[providerId].navigator.position;
+        }
+        return position;
+      },
+      setProviderPerspectivesNavigatorPosition: (providerId, position) => {
+        if (typeof perspectiveMemories[providerId] !== 'undefined') {
+          const perspectiveIds = Object.keys(perspectiveMemories[providerId]);
+          for (const perspectiveId of perspectiveIds) {
+            perspectiveMemories[providerId][perspectiveId].beanPathHistory.navigator.position = position;
+          }
+        }
+      },
+      getProviderPerspectivesNavigatorIconStates: (providerId) => {
+        let iconStates = {previous: 'disabled', next: 'disabled'};
+        if (typeof perspectiveMemories[providerId] !== 'undefined') {
+          iconStates = perspectiveMemories[providerId].navigator.icons;
+        }
+        return iconStates;
+      },
+      setProviderPerspectivesNavigatorIconState: (providerId, iconId, state) => {
+        if (typeof perspectiveMemories[providerId] !== 'undefined') {
+          const perspectiveIds = Object.keys(perspectiveMemories[providerId]);
+          for (const perspectiveId of perspectiveIds) {
+            perspectiveMemories[providerId][perspectiveId].beanPathHistory.navigator.icons[iconId].state = state;
+          }
+        }
+      },
+      getProviderPerspectivesNavigatorVisibility: (providerId) => {
+        let visible = false;
+        if (typeof perspectiveMemories[providerId] !== 'undefined') {
+          const filtered = Object.values(perspectiveMemories[providerId]).filter(perspectiveMemory => perspectiveMemory.beanPathHistory.navigator.visibility);
+          visible = (filtered.length > 0);
+        }
+        return visible;
+      },
+      setProviderPerspectivesNavigatorVisibility: (providerId, visible) => {
+        if (typeof perspectiveMemories[providerId] !== 'undefined') {
+          const perspectiveIds = Object.keys(perspectiveMemories[providerId]);
+          for (const perspectiveId of perspectiveIds) {
+            perspectiveMemories[providerId][perspectiveId].beanPathHistory.navigator.visibility = visible;
+          }
+        }
       }
 
     };

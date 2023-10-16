@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -46,6 +46,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
               label: oj.Translations.getTranslatedString('wrc-shoppingcart.icons.commit.tooltip')
             }
           ])
+        },
+        'icons': {
+          'ancillary': {
+            'contentItem': {
+              id: 'shoppingcart',
+              iconFile: 'shopping-cart-non-empty-blk_24x24',
+              tooltip: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.shoppingcart.label')
+            }
+          },
+          'close': {
+            iconFile: 'dialog-close-blk_24x24',
+            tooltip: oj.Translations.getTranslatedString('wrc-common.buttons.close.label')
+          }
+        },
+        'titles': {
+          'ancillary': {
+            'contentItem': {value: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.shoppingcart.label')}
+          }
         }
       };
 
@@ -75,8 +93,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
 
         const readonly = Runtime.isReadOnly();
         setTabStripTabsVisibility(!readonly);
-
-        checkLockOwner();
       };
 
       this.disconnected = function () {
@@ -86,18 +102,35 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         self.signalBindings = [];
       };
 
+      this.onOjFocus = function () {
+        const dialog = document.getElementById(`${self.tabNode}-dialog`);
+        dialog.onkeyup = (event) => {
+          if (event.key === 'Escape'){
+            viewParams.onClose(self.tabNode);
+          }
+        };
+        loadChangeManagerSections();
+      };
+
+      this.closeIconClickHandler = function(event) {
+        viewParams.onClose(self.tabNode);
+      };
+
+      this.getCachedState = () => {
+        Logger.log('[SHOPPINGCART] getCachedState.');
+        return {};
+      };
+
       function setTabStripTabsVisibility(visible) {
         self.i18n.tabstrip.tabs().forEach(item =>{
           item.visible(visible)})
       }
 
-      this.getCachedState = () => {
-        Logger.log('[SHOPPINGCART] getCachedState() was called.');
-        return {};
-      };
-
       function checkLockOwner(){
-        if (ChangeManager.getMostRecent().isLockOwner) loadChangeManagerSections();
+        const changeManager = ChangeManager.getMostRecent();
+        if (changeManager.isLockOwner) {
+          loadChangeManagerSections();
+        }
       }
 
       function loadChangeManagerSections(){
@@ -148,6 +181,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
             if (ele !== null) ele.innerHTML = section.label + ' (' + section.count() + ')';
 
             updateChangeManagerSection(data.changeManager);
+            expandChangeManagerSections();
           })
           .catch( error => {
             ViewModelUtils.failureResponseDefaultHandling(error);
@@ -198,10 +232,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
             ChangeManager.commitChanges()
               .then((changeManager) => {
                 viewParams.signaling.shoppingCartModified.dispatch(ChangeManager.Entity.SHOPPING_CART.name, 'commit', changeManager);
-                viewParams.onTabStripContentChanged(ChangeManager.Entity.SHOPPING_CART.name, false);
               })
               .finally(() => {
                 ViewModelUtils.setPreloaderVisibility(false);
+                viewParams.onClose(self.tabNode);
               });
             break;
           case 'discard-tab-button':
@@ -209,10 +243,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
             ChangeManager.discardChanges()
               .then((changeManager) => {
                 viewParams.signaling.shoppingCartModified.dispatch(ChangeManager.Entity.SHOPPING_CART.name, 'discard', changeManager);
-                viewParams.onTabStripContentChanged(ChangeManager.Entity.SHOPPING_CART.name, false);
               })
               .finally(() => {
                 ViewModelUtils.setPreloaderVisibility(false);
+                viewParams.onClose(self.tabNode);
               });
             break;
         }
@@ -223,7 +257,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         if (CoreUtils.isUndefinedOrNull(path)) return;
 
         ViewModelUtils.goToRouterPath(viewParams.parentRouter, `/configuration/${encodeURIComponent(path)}`, self.canExitCallback);
-        viewParams.onTabStripContentVisible(false);
+//MLW        viewParams.onTabStripContentVisible(false);
       }.bind(this);
 
       this.parentIdentityKeyClickHandler = function(event) {
@@ -253,14 +287,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         }
       }.bind(this);
 
+      function expandChangeManagerSections() {
+        const nodeList = document.querySelectorAll('oj-accordion[id="shoppingcart-tab"] > oj-collapsible');
+        if (nodeList !== null) {
+          const arr = Array.from(nodeList);
+          arr.forEach((node) => {
+            expandChangeManagerSection(node.id);
+            node.expanded = true;
+          });
+        }
+      }
+
       function expandChangeManagerSection(id){
         const section = self.changeManagerSections().find(item => item.id === id);
-        if (section.count() === 0) {
-          // Return true as the function's return value, so
-          // expand event will be vetoed
-          return true;
-        }
-
+        //regardless of the count, we need to rebuild the dom, otherwise, the
+        //obsoleted changes will still be there when user expand each section.
         let bindDom;
 
         switch(section.id){
@@ -325,9 +366,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         function getValueLabelsArray(value) {
           const labelsArray = [];
           for (const i in value) {
-            labelsArray.push(value[i].value.label);
+            const itemValue = value[i].value;
+            const itemDisplay = CoreUtils.isNotUndefinedNorNull(itemValue.label) ? itemValue.label : itemValue;
+            labelsArray.push(itemDisplay);
           }
           return JSON.stringify(labelsArray);
+        }
+
+        function getValueLabel(value) {
+          var itemDisplay = value;
+          if (typeof value === 'object') {
+            itemDisplay = CoreUtils.isNotUndefinedNorNull(value.label) ? value.label : JSON.stringify(value);
+          }
+          return itemDisplay;
         }
 
         let bindHtml = '<p/>';
@@ -363,17 +414,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
             let innerHtml = '';
 
             entry.properties.forEach((property) => {
+              innerHtml += '&nbsp;&nbsp;&nbsp;&nbsp;';
+              innerHtml += property.label;
+              innerHtml += ':<br/>';
+
               const ovalue = property.oldValue.value;
               if (CoreUtils.isNotUndefinedNorNull(ovalue)) {
-                innerHtml += '&nbsp;&nbsp;&nbsp;&nbsp;';
-                innerHtml += property.label;
-                innerHtml += ':<br/>';
                 innerHtml += '\toldValue=';
                 if (Array.isArray(ovalue)) {
                   innerHtml += getValueLabelsArray(ovalue) + '\n';
                 }
                 else if (ovalue != null){
-                  innerHtml += (typeof ovalue === 'object' ? JSON.stringify(ovalue) : ovalue) + '\n';
+                  innerHtml += getValueLabel(ovalue) + '\n';
                 }
               }
 
@@ -384,7 +436,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
                   innerHtml += getValueLabelsArray(nvalue) + '\n';
                 }
                 else if (nvalue != null){
-                  innerHtml += (typeof nvalue === 'object' ? JSON.stringify(nvalue) : nvalue) + '\n';
+                  innerHtml += getValueLabel(nvalue) + '\n';
                 }
               }
               else {

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -227,6 +227,20 @@ public class WebLogicRestSearchResultsFixer {
 
       this.unfixedBean = unfixedBean;
       this.fixedBeanBuilder = Json.createObjectBuilder(getUnfixedBean());
+
+      if (!unfixedBean.containsKey(PROP_TYPE)) {
+        // There's an intermittent NPE at 248 when viewing the servers table,
+        // probably related to when the admin server can't contact a managed
+        // server and sends back partial JSON it.
+        // This temporary debugging statement should help us figure out the root problem:
+        LOGGER.warning(
+          "Temporary debugging statement - missing type for"
+          + " beanTypeDef=" + beanTypeDef
+          + " isCollection=" + isCollection
+          + " propRestName=" + propRestName
+          + " unfixedBean=" + unfixedBean
+        );
+      }
 
       // Get this bean's name & type from the WLS REST response.
       // They should always be present since the corresponding

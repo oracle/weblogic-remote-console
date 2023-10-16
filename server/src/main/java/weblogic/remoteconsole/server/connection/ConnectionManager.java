@@ -61,7 +61,7 @@ public class ConnectionManager {
 
   // String constants for handling WebLogic REST response mapping
   private static final String NAME = "name";
-  private static final String DOMAINVER = "domainVersion";
+  private static final String WEBLOGIC_VERSION = "weblogicVersion";
   private static final String RETURN = "return";
   private static final String CONSOLE_BACKEND = "consoleBackend";
   private static final String CONSOLE_EXTENSION_VERSION = "version";
@@ -470,21 +470,51 @@ public class ConnectionManager {
    */
   private ConnectionResponse connect(String domainUrl, String username, Client client, List<Locale> locales) {
 
-    // Try to get WebLogic version from RESTful Management endpoint
-    // It returns a failure response if there was one
-    ConnectionResponse response = doConnect(domainUrl, client);
-    if (response.getEntity() == null) {
-      return response;
+    // Try to connect to the admin server's domainConfig endpoint to get the domain's name
+    // and info about the console rest extension
+    ConnectionResponse domainConfigResponse =
+      doConnectAndReportProblems(domainUrl, client, "domainConfig", getDomainConfigQuery());
+    JsonObject domainConfigEntity = domainConfigResponse.getEntity();
+    if (domainConfigEntity == null) {
+      // Couldn't connect - return the problem.
+      return domainConfigResponse;
+    }
+  
+    // Retrieve the domain's name and info about console rest extension from the response body.
+    String domainName = domainConfigEntity.getString(NAME, null);
+    if (domainName == null) {
+      LOGGER.info("Unexpected response from WebLogic Domain: No name found!");
+      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Missing name");
+    }
+    String consoleExtensionVersion = getConsoleExtensionVersion(domainConfigEntity);
+    Set<String> capabilities = getCapabilities(domainUrl, client, domainConfigEntity);
+    if (consoleExtensionVersion != null) {
+      LOGGER.info(
+        "The domain has version '" + consoleExtensionVersion + "' of the WebLogic Remote Console Extension installed."
+      );
+    } else {
+      LOGGER.info("The domain does not have the WebLogic Remote Console Extension installed.");
+    }
+  
+    // Try to connect to the admin server's serverRuntime endpoint to get the domain's weblogicVersion
+    ConnectionResponse serverRuntimeResponse =
+      doConnectAndReportProblems(domainUrl, client, "serverRuntime", getServerRuntimeQuery());
+    JsonObject serverRuntimeEntity = serverRuntimeResponse.getEntity();
+    if (serverRuntimeEntity == null) {
+      // Couldn't connect - return the problem.
+      return serverRuntimeResponse;
     }
 
-    JsonObject entity = response.getEntity();
-
-    // Check response data for the required connection information
-    String domainVersion = entity.getString(DOMAINVER, null);
-    String domainName = entity.getString(NAME, null);
-    if ((domainVersion == null) || (domainName == null)) {
-      LOGGER.info("Unexpected response from WebLogic Domain: No name or version information found!");
-      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Missing version");
+    // Retrieve the weblogicVersion from the response body.
+    String wlsVersion = serverRuntimeEntity.getString(WEBLOGIC_VERSION, null);
+    if (wlsVersion == null) {
+      LOGGER.info("Unexpected response from WebLogic Domain: No weblogicVersion found!");
+      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Missing weblogicVersion");
+    }
+    String domainVersion = computeDomainVersion(wlsVersion);
+    if (domainVersion == null) {
+      LOGGER.info("Unexpected response from WebLogic Domain: cannot parse weblogicVersion: " + wlsVersion);
+      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Cannot parse weblogicVersion");
     }
 
     // Check that the WebLogic domain's version is one the console supports
@@ -499,16 +529,6 @@ public class ConnectionManager {
     }
 
     WebLogicVersion weblogicVersion = WebLogicVersions.getVersion(domainVersion);
-
-    String consoleExtensionVersion = getConsoleExtensionVersion(entity);
-    Set<String> capabilities = getCapabilities(domainUrl, client, entity);
-    if (consoleExtensionVersion != null) {
-      LOGGER.info(
-        "The domain has version '" + consoleExtensionVersion + "' of the WebLogic Remote Console Extension installed."
-      );
-    } else {
-      LOGGER.info("The domain does not have the WebLogic Remote Console Extension installed.");
-    }
 
     // FortifyIssueSuppression Log Forging
     // domainVersion is from a trusted source - WebLogic - and is,
@@ -537,6 +557,29 @@ public class ConnectionManager {
           client
         )
       );
+  }
+
+  private String computeDomainVersion(String weblogicVersion) {
+    // e.g. "WebLogic Server 14.1.1.0.0  Thu Mar 26 03:15:09 GMT 2020 2000885" -> "14.1.1.0.0"
+    String prefix = "WebLogic Server ";
+    int idx1 = weblogicVersion.indexOf(prefix);
+    if (idx1 != -1) {
+      // Look for
+      // - "...WebLogic Server blah ..."
+      // - "...WebLogic Server blah\n..."
+      // - "...WebLogic Server blah"
+      // then assume blah is the weblogic version number
+      int start = idx1 + prefix.length();
+      int idx2 = weblogicVersion.indexOf(" ", start);
+      if (idx2 == -1) {
+        idx2 = weblogicVersion.indexOf("\n", start);
+      }
+      if (idx2 == -1) {
+        idx2 = weblogicVersion.length();
+      }
+      return weblogicVersion.substring(start, idx2);
+    }
+    return null; // unparsable weblogicVersion
   }
 
   private JsonObject getConsoleBackend(JsonObject entity) {
@@ -674,17 +717,17 @@ public class ConnectionManager {
    * @return The connection Response and the results populated with the values returned from WebLogic
    *     REST call
    */
-  private ConnectionResponse doConnect(String domainUrl, Client client) {
+  private ConnectionResponse doConnect(String domainUrl, Client client, String tree, JsonObject query) {
     // Build request that will check the credentials and the connection...
     WebLogicRestRequest webLogicRestRequest =
       WebLogicRestRequest.builder()
-        .path("/domainConfig/search")
+        .path("/" + tree + "/search")
         .serverUrl(domainUrl)
         .client(client)
         .build();
 
     // Attempt to connect to the WebLogic Domain URL...
-    try (Response response = WebLogicRestClient.post(webLogicRestRequest, getDomainFieldsQuery())) {
+    try (Response response = WebLogicRestClient.post(webLogicRestRequest, query)) {
       // FortifyIssueSuppression Log Forging
       // This response is from a trusted source - WebLogic - and is,
       // therefore, not a forging risk
@@ -696,7 +739,42 @@ public class ConnectionManager {
       if (respStatus == Status.INTERNAL_SERVER_ERROR) {
         return newConnectionResponse(Status.NOT_FOUND, client, "Not able to connect");
       } else if (respStatus != Status.OK) {
-        return newConnectionResponse(respStatus, client, response.getStatusInfo().getReasonPhrase());
+        String defaultMessage = response.getStatusInfo().getReasonPhrase();
+        String message = defaultMessage;
+        JsonObject entity = (JsonObject) response.getEntity();
+        if (entity != null) {
+          try {
+            message = entity.getJsonArray("messages").getJsonObject(0).getString("message");
+            // Chop off the part up to and including "Exception: "
+            // This probably works in all other languages since the exception name
+            // is an English object name.  If not, the message is still good, but a little
+            // uglier.
+            if (message.contains("Exception: ")) {
+              message = message.substring(message.indexOf("Exception: ") + "Exception: ".length());
+            }
+            // See if the user is trying to connect to the wrong port, e.g. the admin port is
+            // enabled and the user is trying to connect via the normal SSL port.
+            //
+            // WLS always returns a 403 with a non-localized message that says:
+            //   Console/Management requests or requests with &lt;require-admin-traffic&gt;
+            //   specified to &#39;true&#39; can only be made through an administration channel
+            if (message.contains("require-admin-traffic") && respStatus == Status.FORBIDDEN) {
+              // Switch from a 403 to a 404 and replace the message with a friendlier one
+              respStatus = Status.NOT_FOUND;
+              message = LocalizedConstants.USE_ADMIN_PORT.getEnglishText();
+            } else {
+              // Servers can give long html responses (e.g. WebLogic does so for
+              // failed auth).  If it looks like that, just go back to the default
+              // message.
+              if ((message.length() > 80) || message.toLowerCase().contains("</html")) {
+                message = defaultMessage;
+              }
+            }
+          } catch (Exception ignore) {
+            // Deliberately blank, message will be default if there's an exception
+          }
+        }
+        return newConnectionResponse(respStatus, client, message);
       }
 
       // Populate the results from the JSON response which are found only when the invoke was
@@ -718,17 +796,60 @@ public class ConnectionManager {
     }
   }
 
+  private ConnectionResponse doConnectAndReportProblems(
+    String domainUrl,
+    Client client,
+    String tree,
+    JsonObject query
+  ) {
+    ConnectionResponse response = doConnect(domainUrl, client, tree, query);
+    if (response.getEntity() == null) {
+      // FortifyIssueSuppression Log Forging
+      // domainUrl comes from the user.  getStatus and getStatusCode() are
+      // well-known values.  There is no forging risk.
+      LOGGER.finest("Entity is null on connection attempt to "
+        + domainUrl
+        + ", status is "
+        + response.getStatus()
+        + "(" + response.getStatus().getStatusCode() + ")"
+      );
+      if (domainUrl.endsWith("/console")) {
+        return newConnectionResponse(Status.NOT_FOUND, client,
+          LocalizedConstants.TAKE_OFF_THE_SLASH_CONSOLE.getEnglishText());
+      }
+      if (domainUrl.endsWith("/management")) {
+        return newConnectionResponse(Status.NOT_FOUND, client,
+          LocalizedConstants.TAKE_OFF_THE_SLASH_MANAGEMENT.getEnglishText());
+      }
+      if (Status.OK.getStatusCode() == response.getStatus().getStatusCode()) {
+        return newConnectionResponse(Status.NOT_FOUND, client,
+          LocalizedConstants.BAD_PATH_GOOD_CONNECTION.getEnglishText());
+      }
+    }
+    return response;
+  }
+
   /**
    * Creates the WebLogic REST domainConfig query for returning the domain
-   * info needed to determine the domain's name and version.
+   * info needed to determine the domain's name and console rest extension info.
    */
-  private JsonObject getDomainFieldsQuery() {
+  private JsonObject getDomainConfigQuery() {
     BeanQueryBuilder builder = new BeanQueryBuilder();
     builder.addField(NAME);
-    builder.addField(DOMAINVER);
     BeanQueryBuilder consoleBackendBuilder = builder.getChild(CONSOLE_BACKEND);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_VERSION);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_CAPABILITIES);
+    JsonObject query = builder.toJson().build();
+    return query;
+  }
+
+  /**
+   * Creates the WebLogic REST serverRuntime query for returning the info needed
+   * to determine the domain's version.
+   */
+  private JsonObject getServerRuntimeQuery() {
+    BeanQueryBuilder builder = new BeanQueryBuilder();
+    builder.addField(WEBLOGIC_VERSION);
     JsonObject query = builder.toJson().build();
     return query;
   }

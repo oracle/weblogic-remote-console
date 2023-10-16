@@ -3,7 +3,7 @@
 
 introductionHTML: >
   <p>This page, and its child pages, display runtime information about the deployed enterprise applications.</p>
-  <p>Note: Use 'App Deployment Runtimes', instead of this page, to start and stop an application,
+  <p>Note: Use 'Application Management', instead of this page, to start and stop an application,
   see its intended and current state and to manage its deployment plan.</p>
 
 displayedColumns:

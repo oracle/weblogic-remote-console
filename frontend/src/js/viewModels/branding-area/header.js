@@ -6,8 +6,8 @@
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojcontext', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule', 'wrc-frontend/integration/viewModels/utils'],
-  function(oj, ko, ModuleElementUtils, Context, Runtime, Preferences, CoreTypes, CoreUtils, ViewModelUtils) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule'],
+  function(oj, ko, ModuleElementUtils, ViewModelUtils, Preferences, Runtime, CoreTypes, CoreUtils) {
     function HeaderTemplate(viewParams){
       const self = this;
 
@@ -26,7 +26,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojcontext',
           messageCenter: {id: 'messageCenter', iconFile: 'notifications-icon-blk_24x24', visible: ko.observable(false),
             tooltip: oj.Translations.getTranslatedString('wrc-header.icons.messageCenter.tooltip')
           },
-          help: {id: 'help', iconFile: 'toggle-help-on-blk_24x24', visible: ko.observable(false),
+          help: {id: 'help', iconFile: 'toggle-help-on-blk_24x24', visible: ko.observable(true),
             tooltip: oj.Translations.getTranslatedString('wrc-header.icons.help.tooltip')
           },
           separator: {iconFile: 'separator-vertical_6x24',
@@ -164,13 +164,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojcontext',
       };
 
       function goToDocs() {
-        window.open(Runtime.getDocsURL(), '_blank', 'noopener noreferrer');
+        if (ViewModelUtils.isElectronApiAvailable()) {
+          window.electron_api.ipc.invoke('external-url-opening', Runtime.getDocsURL())
+        }
+        else {
+          window.open(Runtime.getDocsURL(), '_blank', 'noopener noreferrer');
+        }
       }
 
       function setThemePreference(theme) {
         let ele = document.querySelector('header');
         if (ele !== null) {
-          ele.style.backgroundColor = Runtime.getConfig()['settings']['themes'][theme][0];
+          ele.style.backgroundColor = Runtime.getConfig()['preferences']['themes'][theme][0];
           switch(theme){
             case 'light':
               ele.style.color = 'black';

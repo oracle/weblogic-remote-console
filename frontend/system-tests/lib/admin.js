@@ -252,7 +252,8 @@ module.exports = function (driver, file) {
             await driver.sleep(2400);
             console.log("Click OK button");
             //await driver.findElement(By.xpath("//span[@id=''dlgOkBtn12_oj38|text']")).click();
-            await driver.findElement(By.xpath("//oj-button[starts-with(@id,'dlgOkBtn')]")).click();
+            //await driver.findElement(By.xpath("//oj-button[starts-with(@id,'dlgOkBtn')]")).click();
+            await driver.findElement(By.xpath("//oj-button[starts-with(@id,'dlgOkBtn12')]")).click();
             await driver.sleep(2400);
         },
 
@@ -1083,13 +1084,13 @@ module.exports = function (driver, file) {
             console.log("Select " +searchItem+ " from " +idName+ " in " +idSearchList+ " list.");
             element = await driver.findElement(By.id(idName));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})",element);
-            await driver.sleep(300);
+            await driver.sleep(8400);
             await element.click();
-            await driver.sleep(300);
+            await driver.sleep(1200);
             element = await driver.findElement(By.id(idSearchList));
-            await driver.sleep(300);
+            await driver.sleep(1200);
             await element.sendKeys(Key.DOWN);
-            await driver.sleep(900);
+            await driver.sleep(3600);
             //Clear current element in the oj-search-select-list
             var i;
             for (i = 0; i < 60; i++) {
@@ -1098,7 +1099,7 @@ module.exports = function (driver, file) {
             }
             await element.sendKeys(Key.CLEAR);
             await element.sendKeys(searchItem);
-            await driver.sleep(900);
+            await driver.sleep(3600);
             await element.sendKeys(Key.DOWN);
             await element.sendKeys(Key.ENTER);
             await element.sendKeys(Key.TAB);

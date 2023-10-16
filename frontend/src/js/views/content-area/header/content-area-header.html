@@ -8,24 +8,17 @@
   <div class="oj-flex-item">
     <span id="content-area-header-title-label" data-bind="text: [[headerTitle.label()]]"></span>
     <oj-bind-if test="[[headerTitle.description() !== '']]">
-<!--        DO NOT REMOVE
-
-            Part of proving buttons-toolbar.js can successfully use
-            code shared with dataprovider.js.
-
-            <a id="data-provider-get-info" href="#" on-click="[[dataProviderInfoIconClickHandler]]">
-              <i :class="[[headerTitle.classList()]]"></i>
-              <span id="content-area-header-title-description" data-bind="text: [[headerTitle.description()]]"></span>
-            </a>
--->
-            <span id="content-area-header-title-description" data-bind="text: [[headerTitle.description()]]"></span>
-          </oj-bind-if>
-        </div>
-        <!-- row 2 -->
+      <a id="data-provider-get-info" href="#" on-click="[[dataProviderIconClickHandler]]">
+        <i :class="[[headerTitle.classList()]]"></i>
+        <span id="content-area-header-title-description" data-bind="text: [[headerTitle.description()]]"></span>
+      </a>
+    </oj-bind-if>
+  </div>
+  <!-- row 2 -->
   <oj-module config="[[contentAreaHeaderButtonsToolbarModuleConfig]]"></oj-module>
 </div>
 
-<div id="message-container" class="oj-fl24ex-item">
+<div id="message-container" class="oj-flex-item">
   <oj-messages
     messages="[[messagesDataProvider]]"
     position="[[messagePosition]]"
@@ -43,6 +36,23 @@
   </oj-messages>
 </div>
 
-<oj-popup :id="headerTitleInfoPopup">
-  <oj-module config="[[dataProviderInfoPopupModuleConfig]]"></oj-module>
+<oj-popup id="headerTitleProviderActionsPopup">
+  <oj-bind-if test="[[headerTitle.visible]]">
+    <span :id="[[headerTitle.provider().id + '-iconbar']]" class="cfe-project-provider-iconbar oj-navigationlist-item-end">
+      <a href="#" index="-1" data-item-action="info" :data-item-type="[[headerTitle.provider().type]]" :data-item-id="[[headerTitle.provider().id]]" on-click="[[connectionsModelsIconBarClickListener]]">
+        <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.info.iconFile + '.png', 'title': i18n.icons.info.tooltip, alt: i18n.icons.info.tooltip}" />
+      </a>
+      <a href="#" index="-1" data-item-action="edit" :data-item-type="[[headerTitle.provider().type]]" :data-item-id="[[headerTitle.provider().id]]" on-click="[[connectionsModelsIconBarClickListener]]">
+        <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.edit.iconFile + '.png', 'title': i18n.icons.edit.tooltip, alt: i18n.icons.edit.tooltip}" />
+      </a>
+      <oj-bind-if test="[[headerTitle.provider().state === 'connected']]">
+        <a href="#" index="-1" data-item-action="deactivate" :data-item-type="[[headerTitle.provider().type]]" :data-item-id="[[headerTitle.provider().id]]" on-click="[[connectionsModelsIconBarClickListener]]">
+          <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.deactivate.iconFile + '.png', 'title': i18n.icons.deactivate.tooltip, alt: i18n.icons.deactivate.tooltip}" />
+        </a>
+      </oj-bind-if>
+      <a href="#" index="-1" data-item-action="delete" :data-item-type="[[headerTitle.provider().type]]" :data-item-id="[[headerTitle.provider().id]]" on-click="[[connectionsModelsIconBarClickListener]]">
+        <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.delete.iconFile + '.png', 'title': i18n.icons.delete.tooltip, alt: i18n.icons.delete.tooltip}" />
+      </a>
+    </span>
+  </oj-bind-if>
 </oj-popup>
