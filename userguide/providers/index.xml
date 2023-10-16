@@ -15,7 +15,7 @@
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/property-list/</guid>
       <description>Property lists are an editable set of key-value pairs.
 You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.
-Create a new property list  Expand the Kiosk and beside the project name, click ⋮.</description>
+Create a new property list  Open the Providers drawer and beside the project name, click ⋮.</description>
     </item>
     
     <item>
@@ -37,7 +37,7 @@ The WebLogic Remote Console assumes WDT model files are in YAML format. If you u
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/wdt-composite/</guid>
       <description>WDT composite models are read-only representations of multiple, merged WDT model files.
 Create a WDT composite model   Create or upload two or more WDT model files to the WebLogic Remote Console.
-  Expand the Kiosk and beside the project name, click ⋮. Select Add WDT Composite Model File Provider.
+  Open the Providers drawer and beside the project name, click ⋮. Select Add WDT Composite Model File Provider.
   Enter a name for the WDT Composite Model. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.</description>
     </item>
     

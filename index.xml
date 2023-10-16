@@ -46,8 +46,8 @@ Can I connect the WebLogic Remote Console to domains running in WebLogic on Orac
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/projects/</guid>
       <description>A project is a group of providers connections to WebLogic Administration Servers, WebLogic Deploy Tooling (WDT) models, WDT composite models, or property lists.
 Create a project   Open File &amp;gt; New Project.
-  Enter a name for the project and click OK. The new project will appear in the Kiosk. Next, you&amp;rsquo;ll add a provider to the project.
-  Expand the Kiosk and beside the project name, click ⋮.</description>
+  Enter a name for the project and click OK. The new project will appear in the Providers drawer. Next, you can add a provider to the project.
+  Open the Providers drawer and beside the project name, click ⋮.</description>
     </item>
     
     <item>
@@ -102,7 +102,7 @@ Dashboards are only available for Administration Server providers (in the Monito
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/property-list/</guid>
       <description>Property lists are an editable set of key-value pairs.
 You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.
-Create a new property list  Expand the Kiosk and beside the project name, click ⋮.</description>
+Create a new property list  Open the Providers drawer and beside the project name, click ⋮.</description>
     </item>
     
     <item>
@@ -216,7 +216,7 @@ Open the out.log file in a text editor.</description>
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/wdt-composite/</guid>
       <description>WDT composite models are read-only representations of multiple, merged WDT model files.
 Create a WDT composite model   Create or upload two or more WDT model files to the WebLogic Remote Console.
-  Expand the Kiosk and beside the project name, click ⋮. Select Add WDT Composite Model File Provider.
+  Open the Providers drawer and beside the project name, click ⋮. Select Add WDT Composite Model File Provider.
   Enter a name for the WDT Composite Model. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.</description>
     </item>
     

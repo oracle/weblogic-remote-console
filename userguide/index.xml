@@ -15,8 +15,8 @@
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/projects/</guid>
       <description>A project is a group of providers connections to WebLogic Administration Servers, WebLogic Deploy Tooling (WDT) models, WDT composite models, or property lists.
 Create a project   Open File &amp;gt; New Project.
-  Enter a name for the project and click OK. The new project will appear in the Kiosk. Next, you&amp;rsquo;ll add a provider to the project.
-  Expand the Kiosk and beside the project name, click ⋮.</description>
+  Enter a name for the project and click OK. The new project will appear in the Providers drawer. Next, you can add a provider to the project.
+  Open the Providers drawer and beside the project name, click ⋮.</description>
     </item>
     
     <item>
