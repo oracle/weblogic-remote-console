@@ -39,6 +39,7 @@ contextBridge.exposeInMainWorld(
       },
       invoke: async (channel, arg) => {
         const validChannels = [
+          'external-url-opening',
           'translated-strings-sending',
           'complete-login',
           'perform-login',

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -43,7 +43,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/core/runtime'
       function setFooter(theme) {
         let ele = document.querySelector('footer');
         if (ele !== null) {
-          ele.style.backgroundColor = Runtime.getConfig().settings.themes[theme][0];
+          ele.style.backgroundColor = Runtime.getConfig().preferences.themes[theme][0];
           switch (theme) {
             case 'light':
               ele.style.color = 'black';

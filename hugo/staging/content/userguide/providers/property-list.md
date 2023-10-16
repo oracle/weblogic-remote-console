@@ -12,7 +12,7 @@ You can add property lists to WDT model files as WDT variables, which streamline
 
 ## Create a new property list
 
-1. Expand the Kiosk and beside the project name, click &#x022EE;. Select **Create Provider for New Property List**.
+1. Open the Providers drawer and beside the project name, click &#x022EE;. Select **Create Provider for New Property List**.
 1. Enter a name for the property list provider. This is the name that will appear in the Project list of providers so you can identify which provider you're working on.
 1. Enter a name for the property list file in the **Property List Filename** field. Include .properties or .props at the end of the file name.
 1. Click ![Upload file](/weblogic-remote-console/images/icons/choose-directory-icon-blk_24x24.png) and browse to the directory where you want to save the new property list file.
@@ -24,7 +24,7 @@ If you've already created a property list file, you can upload it to WebLogic Re
 
 Property lists are generally `.properties`  or `.props` files though the WebLogic Remote Console supports other text file formats. In any case, each key-value pair must be on a new line and names and values must be separated by `=`, `:`, or spaces. For example, `key=value` / `key:value` / `key value`. See [Properties (JDK 17)](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Properties.html#load(java.io.Reader)) for more information on Java property list formatting.
 
-1. Expand the Kiosk and beside the project name, click &#x022EE;. Select **Add Property List Provider**.
+1. Open the Providers drawer and beside the project name, click &#x022EE;. Select **Add Property List Provider**.
 1. Enter a name for the property list provider. This is the name that will appear in the Project list of providers so you can identify which provider you're working on.
 1. Click ![Upload file](/weblogic-remote-console/images/icons/choose-file-icon-blk_24x24.png) and browse to the property list file.
 1. Click **OK** to upload the file.
@@ -33,7 +33,7 @@ Property lists are generally `.properties`  or `.props` files though the WebLogi
 
 If the property list you edit is connected to a WDT model file as a [WDT variable]({{< relref "userguide/providers/wdt-model#wdt_variables" >}}), any changes you make to a property *name* will not be reflected in the WDT model file. The WDT model file assumes you've added an entirely new property and the former WDT variable becomes a standalone WDT model token that's not associated with the property list.
 
-1. Expand the Kiosk and select the property list you want to edit.
+1. Open the Providers drawer and select the property list you want to edit.
 1. Click **Property List Editor** and then the **Properties** node.
 1. Click the + in the table header row to add a new row to the table.
 1. Enter a new property name and property value.
@@ -48,4 +48,4 @@ This will only remove the property list from the WebLogic Remote Console. The fi
 
 If you delete a property list that's connected to a WDT model file, the WDT model file will remain unchanged but all WDT variables are converted to standalone WDT model tokens.
 
-1. Expand the Kiosk and beside the property list you want to delete, click the ![Settings icon](/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png) icon.
+1. Open the Providers drawer and beside the property list you want to delete, click the ![Settings icon](/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png) icon.

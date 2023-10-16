@@ -8,6 +8,7 @@
 'use strict';
 
 const fs = require('fs');
+const OSUtils = require('./os-utils');
 const { execFile } = require('child_process');
 const I18NUtils = require('./i18n-utils');
 const UserPrefs = require('./user-prefs-json');
@@ -21,10 +22,10 @@ var findString = '';
  */
 const WindowManagement = (() => {
   const path = require('path');
-
+  
   const {app, BrowserWindow, Menu, dialog, shell} = require('electron');
   const prompt = require('electron-prompt');
-
+  
   const ConfigJSON = require('./config-json');
   const ProjectManager = require('./project-management');
   const AutoUpdateUtils = require('./auto-update-utils');
@@ -33,12 +34,12 @@ const WindowManagement = (() => {
   // Declare variable for IIFE class used to manage data
   // persisted in the auto-prefs.json file
   const AutoPrefs = require('./auto-prefs-json');
-
+  
   let _window;
   let _params;
   let newVersion;
   let downloadURL = 'https://github.com/oracle/weblogic-remote-console/releases';
-
+  
   /**
    * Creates a new instance of the ``BrowserWindow`` class, using the specified parameter values.
    * @param {string} title
@@ -61,13 +62,13 @@ const WindowManagement = (() => {
       }
     });
   }
-
+  
   /**
    *
    * @private
    */
   function generateAppMenu() {
-
+    
     let appMenuTemplate = [
       {
         // Provide an id field, so we can use Array.find() to
@@ -153,15 +154,33 @@ const WindowManagement = (() => {
         id: 'view',
         label: `${I18NUtils.get('wrc-electron.menus.view.label')}`,
         submenu: [
-          { id: 'reload', role: 'reload' },
+          {
+            label: `${I18NUtils.get('wrc-electron.menus.view.reload.label')}`,
+            id: 'reload',
+            role: 'reload'
+          },
           // The 'forceReload' menu item causes Electron to create
           // a new Browser Window, so DON'T INCLUDE IT!!
           { type: 'separator' },
-          { role: 'resetZoom' },
-          { role: 'zoomIn' },
-          { role: 'zoomOut' },
-          { type: 'separator' },
-          { role: 'togglefullscreen' }
+          {
+            label: `${I18NUtils.get('wrc-electron.menus.view.resetZoom.label')}`,
+            role: 'resetZoom'
+          },
+          {
+            label: `${I18NUtils.get('wrc-electron.menus.view.zoomIn.label')}`,
+            role: 'zoomIn'
+          },
+          {
+            label: `${I18NUtils.get('wrc-electron.menus.view.zoomOut.label')}`,
+            role: 'zoomOut'
+          },
+          {
+            type: 'separator'
+          },
+          {
+            label: `${I18NUtils.get('wrc-electron.menus.view.togglefullscreen.label')}`,
+            role: 'togglefullscreen'
+          }
         ]
       },
       {
@@ -175,17 +194,17 @@ const WindowManagement = (() => {
         submenu: []
       }
     ];
-
+    
     populateFileMenu(appMenuTemplate);
     populateHelpMenu(appMenuTemplate);
     maybeAddUpdateMenu(appMenuTemplate);
     layoutAppMenu(appMenuTemplate);
-
+    
     // Sets menu as the application menu on macOS. On Windows
     // and Linux, the menu will be set as each window's top menu.
     Menu.setApplicationMenu((Menu.buildFromTemplate(appMenuTemplate)));
   }
-
+  
   /**
    * Populate the empty ``submenu`` field of the ``File`` menu.
    * @param {[Menu]} appMenuTemplate
@@ -252,7 +271,7 @@ const WindowManagement = (() => {
         }
       });
     }
-
+    
     /**
      * A closure that populates the empty submenu field of the "Switch to project" submenu item, under the "File" menu
      * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures}
@@ -278,16 +297,16 @@ const WindowManagement = (() => {
             }
           });
         }
-
+        
         fileMenu.submenu.push({
           id: 'switchToProject',
           label: `${I18NUtils.get('wrc-electron.menus.file.switchToProject.value')}`,
           submenu: subsubmenu
         });
       }
-
+      
     }
-
+    
     /**
      * A closure that populates the empty submenu field of the "Delete Project" submenu item, under the "File" menu
      * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures}
@@ -296,13 +315,13 @@ const WindowManagement = (() => {
       const deletable_projects = ProjectManager.getDeletableProjects();
       const fileSubmenu = [];
       let label;
-
+      
       for (let i = 0; i < deletable_projects.length; i++) {
         if (deletable_projects[i].current)
           label = `${deletable_projects[i].name} (current)`;
         else
           label = `${deletable_projects[i].name}`;
-
+        
         fileSubmenu.push({
           label: label,
           id: i,
@@ -320,14 +339,14 @@ const WindowManagement = (() => {
           }
         });
       }
-
+      
       fileMenu.submenu.push({
         id: 'deleteProject',
         label: `${I18NUtils.get('wrc-electron.menus.file.deleteProject.value')}`,
         submenu: fileSubmenu
       });
     }
-
+    
     /**
      * A closure that creates the "Name/Rename Project" submenu item, under the "File" menu
      * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures}
@@ -350,7 +369,7 @@ const WindowManagement = (() => {
           value: current_project.name
         };
       }
-
+      
       fileMenu.submenu.push({
         id: 'nameProject',
         label: attr.label,
@@ -387,19 +406,19 @@ const WindowManagement = (() => {
         }
       });
     }
-
+    
     // Get 'File' menu from application menu
     const fileMenu = appMenuTemplate.find(item => item.id === 'file');
     // Declare function-scoped reference to the current project
     let current_project = ProjectManager.getCurrentProject();
-
+    
     createNewWindowSubmenu();
     createNewProjectSubmenu();
     populateSwitchToProjectSubmenu();
     populateDeleteProjectSubmenu();
     createNameProjectSubmenu();
   }
-
+  
   /**
    * Populate the empty ``submenu`` field of the ``Help`` menu
    * @param {[Menu]} appMenuTemplate
@@ -416,7 +435,7 @@ const WindowManagement = (() => {
         }
       );
     }
-
+    
     function showOnLatestVersionMessageBox(title, message, buttons){
       dialog.showMessageBox(_window,
         {
@@ -427,7 +446,7 @@ const WindowManagement = (() => {
         }
       );
     }
-
+    
     function showConnectionIssueMessageBox(title, message, buttons){
       dialog.showMessageBox(_window,
         {
@@ -438,13 +457,13 @@ const WindowManagement = (() => {
         }
       );
     }
-
+    
     const helpMenu = appMenuTemplate.find(item => item.id === 'help');
-
+    
     // Add "Check for Updates" menu item only if it is supported and
     // we haven't already determined that there is a new version.
     if (_params.supportsUpgradeCheck &&
-        (!newVersion || (newVersion === _params.version))) {
+      (!newVersion || (newVersion === _params.version))) {
       helpMenu.submenu.push(
         {
           id: 'checkForUpdates',
@@ -472,26 +491,26 @@ const WindowManagement = (() => {
                         `${I18NUtils.get('wrc-common.buttons.cancel.label')}`
                       ]
                     )
-                    .then((choice) => {
-                      if (choice.response === 0)
-                        shell.openExternal(downloadURL).then();
-                      else if (choice.response === 1)
-                        AutoUpdateUtils.doUpdate(_window);
-                    });
+                      .then((choice) => {
+                        if (choice.response === 0)
+                          shell.openExternal(downloadURL).then();
+                        else if (choice.response === 1)
+                          AutoUpdateUtils.doUpdate(_window);
+                      });
                   }
                   else {
                     showNewerVersionAvailableMessageBox(
                       `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.title')}`,
-                      `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.message', new URL(downloadURL).host), AutoUpdateUtils.getVersion()}`,
+                      `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.message', new URL(downloadURL).host, AutoUpdateUtils.getVersion())}`,
                       [
                         `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.button.gotosite.value')}`,
                         `${I18NUtils.get('wrc-common.buttons.cancel.label')}`
                       ]
                     )
-                    .then((choice) => {
-                      if (choice.response === 0)
-                        shell.openExternal(downloadURL).then();
-                    });
+                      .then((choice) => {
+                        if (choice.response === 0)
+                          shell.openExternal(downloadURL).then();
+                      });
                   }
                 }
               })
@@ -499,14 +518,14 @@ const WindowManagement = (() => {
                 showConnectionIssueMessageBox(
                   `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.connectionIssue.title')}`,
                   `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.connectionIssue.message')}`
-                  [`${I18NUtils.get('wrc-common.buttons.ok.label')}`]
+                    [`${I18NUtils.get('wrc-common.buttons.ok.label')}`]
                 );
               });
           }
         }
       );
     }
-
+    
     // Create additional submenu items for helpMenu,
     // which need to be there regardless of whether
     // auto-upgrade is supported or not.
@@ -518,13 +537,16 @@ const WindowManagement = (() => {
         }
       },
       { type: 'separator' },
-      { role: 'toggleDevTools' }
+      {
+        label: `${I18NUtils.get('wrc-electron.menus.help.toggleDevTools.label')}`,
+        role: 'toggleDevTools'
+      }
     ];
-
+    
     // Concatenate additional submenu items to helpMenu.
     helpMenu.submenu = [].concat(helpMenu.submenu, helpSubmenu);
   }
-
+  
   /**
    * Populate the update section if there is an update to be had
    * @param {[Menu]} appMenuTemplate
@@ -541,14 +563,15 @@ const WindowManagement = (() => {
         }
       }
     ];
+    // For now, the Mac auto-update isn't working, so just don't offer it
     if (supportsAutoUpgrades) {
       submenu.push({
-            label: `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.button.download-and-install.value', newVersion)}`,
-            click() {
-              AutoUpdateUtils.doUpdate(_window);
-            }
+          label: `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.button.download-and-install.value', newVersion)}`,
+          click() {
+            AutoUpdateUtils.doUpdate(_window);
           }
-        );
+        }
+      );
     }
     appMenuTemplate.push(
       {
@@ -557,7 +580,7 @@ const WindowManagement = (() => {
       }
     );
   }
-
+  
   /**
    * Layout the "WebLogic Remote Console" menu
    * <p>The menu placement needs to be done in a way that adheres to where users expect to find things, on the OS platform the app is running on.</p>
@@ -567,7 +590,7 @@ const WindowManagement = (() => {
   function layoutAppMenu(appMenuTemplate) {
     const fileMenu = appMenuTemplate.find(item => item.id === 'file');
     const helpMenu = appMenuTemplate.find(item => item.id === 'help');
-
+    
     if (OSUtils.isMacOS()) {
       // Add the menu items for the appMenu menu
       // to appMenuTemplate
@@ -596,8 +619,8 @@ const WindowManagement = (() => {
           },
           {
             id: 'preferences',
-	    // The Mac doesn't like "Preferences" so we change it to
-	    // "Application Preferences" just for Mac
+            // The Mac doesn't like "Preferences" so we change it to
+            // "Application Preferences" just for Mac
             label: `${I18NUtils.get('wrc-electron.menus.file.preferences.mac.value')}`,
             click() {
               UserPrefs.show();
@@ -672,7 +695,7 @@ const WindowManagement = (() => {
           click() { app.quit(); }
         }
       );
-
+      
       // Use custom About dialog for non-MacOS platforms.
       // Built-in About menu not supported for Linux (in current version).
       // Built-in About menu for Windows lacks build version, has title and modal issues.
@@ -689,7 +712,7 @@ const WindowManagement = (() => {
       );
     }
   }
-
+  
   /**
    *
    * @param {{title: string, severity: string, details: string}} message
@@ -703,7 +726,7 @@ const WindowManagement = (() => {
       message: message.details,
     }).then();
   }
-
+  
   return {
     /**
      * @param {string} title
@@ -729,22 +752,22 @@ const WindowManagement = (() => {
           }
         });
       }
-
+      
       AutoPrefs.read(userDataPath);
       AutoPrefs.set({
         version: params.version,
         location: (
           (process.env.APPIMAGE && fs.existsSync(process.env.APPIMAGE)) ?
-          process.env.APPIMAGE :
-          exePath
+            process.env.APPIMAGE :
+            exePath
         )
       });
-
+      
       _params = params;
-
+      
       if (params.feedURL)
         downloadURL = params.feedURL;
-
+      
       if (_params.supportsUpgradeCheck) {
         AutoUpdateUtils.checkForUpdates()
           .then(result => {
@@ -753,20 +776,20 @@ const WindowManagement = (() => {
               if (_window)
                 generateAppMenu()
             }
-        });
+          });
       }
       supportsAutoUpgrades = _params.supportsAutoUpgrades;
-
+      
       _window = createBrowserWindow(title, AutoPrefs.get('width'), AutoPrefs.get('height'));
       _window.webContents.session.clearCache();
-
+      
       _window.on('resize', () => {
         AutoPrefs.set({width: _window.getSize()[0], height: _window.getSize()[1]});
         AutoPrefs.write();
       });
-
+      
       setOnWindowCloseListener();
-
+      
       return _window;
     },
     load: (cbeUrl) => {
@@ -834,7 +857,7 @@ const WindowManagement = (() => {
         version: _params.version,
         website: _params.homepage
       });
-
+      
       generateAppMenu();
     },
     showJavaProcessErrorMessageBox: (title, message, buttons) => {
@@ -886,9 +909,14 @@ const WindowManagement = (() => {
         if (_window.isMinimized()) _window.restore();
         _window.focus();
       }
+    },
+    openExternalURL: (url) => {
+      // open url in a browser and prevent default
+      shell.openExternal(url);
+      return { action: 'deny' };
     }
   };
-
+  
 })();
 
 module.exports = WindowManagement;

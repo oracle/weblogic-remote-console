@@ -37,7 +37,7 @@ The WebLogic Remote Console desktop application is based on the [Electron](https
 The WebLogic Remote Console supports providers that connect to WebLogic Server Administration Servers and providers that edit WebLogic Deploy Tooling (WDT) model files and property lists.
 
 1. Open the WebLogic Remote Console.
-1. Add a provider from the Startup Tasks dialog box. Or, if it doesn't appear, expand the Kiosk and click &#x022EE;. The following providers are available:
+1. Add a provider from the Startup Tasks dialog box. Or, if it doesn't appear, open the **Providers** drawer and click &#x022EE;. The following providers are available:
     * Add Admin Server Connection Provider (the Administration Server must be running)
     * Add WDT Model File Provider
     * Add WDT Composite Model File Provider
@@ -49,7 +49,7 @@ The WebLogic Remote Console supports providers that connect to WebLogic Server A
 
     You can organize providers into Projects that persist when you close and reopen the application. See [Projects]({{< relref "projects" >}}) for more information.
 1. Add more providers to the project. Click &#x022EE; beside the project name and select a provider type.
-1. Select a provider from the Kiosk.
+1. Select a provider from the **Providers** drawer.
 1. Start reviewing or editing the domain configuration.
 
 ## Next steps {id="next_steps"}

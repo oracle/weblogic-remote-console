@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2023 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -35,10 +35,11 @@ define(['wrc-frontend/microservices/perspective/perspective-memory-manager', 'wr
        * Returns the actual number of pixels to use, for ``max-height`` of the form or table container.
        * <p>This is a calculation based on the information in the options parameter, as well as height calculations that take into consideration that the container is in a Flexbox layout.</p>
        * @param {string} containerDOMSelector
+       * @param {string} offsetHeightCSSVariable
        * @param {{withHistoryVisible: boolean, withHelpVisible: boolean}} options
        * @returns {Number}
        */
-      getOffsetMaxHeight: function(containerDOMSelector, options) {
+      getOffsetMaxHeight: function(containerDOMSelector, offsetHeightCSSVariable, options) {
         const getOffsetTop = element => {
           let offsetTop = 0;
           while(element) {
@@ -60,7 +61,7 @@ define(['wrc-frontend/microservices/perspective/perspective-memory-manager', 'wr
         // Set initial value of return variable to the
         // height of the fixed footer (70px), plus it's
         // margin-top (5px), plus it's margin-bottom (5px).
-        let offsetValue = parseInt(ViewModelUtils.getCustomCssProperty('container-resizer-offset-max-height'), 10);
+        let offsetValue = parseInt(ViewModelUtils.getCustomCssProperty(offsetHeightCSSVariable), 10);
 
         if (wasHistoryVisible && !options.withHistoryVisible) {
           offsetValue -= (wasHelpVisible && options.withHelpVisible ? 40 : 30);

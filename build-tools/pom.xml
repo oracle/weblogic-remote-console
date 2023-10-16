@@ -6,7 +6,7 @@
 
   <groupId>com.oracle.weblogic.console-backend</groupId>
   <artifactId>build-tools</artifactId>
-  <version>2.4.6</version>
+  <version>2.4.7</version>
   <name>Build Tools</name>
 
   <properties>

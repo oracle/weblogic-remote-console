@@ -3,6 +3,8 @@
 
 package weblogic.remoteconsole.server.providers;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -49,6 +51,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private String connectionId;
   private String name;
   private String url;
+  private String urlOrigin = null;
   private String ssoTokenId;
   private String authorizationHeader;
   private long ssoTokenExpires;
@@ -182,6 +185,19 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   @Override
+  public synchronized String getURLOrigin() {
+    if (urlOrigin == null) {
+      try {
+        URL origin = new URL(url);
+        urlOrigin = new URI(origin.getProtocol(), origin.getAuthority(), null, null, null).toString();
+      } catch (Exception e) {
+        urlOrigin = url;
+      }
+    }
+    return urlOrigin;
+  }
+
+  @Override
   public boolean isSsoTokenAvailable() {
     return (ssoTokenId != null) && (authorizationHeader != null);
   }
@@ -202,8 +218,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   @Override
-  public boolean setSsoToken(String token, String domainUrl, long expires) {
-    if (url.equalsIgnoreCase(domainUrl)) {
+  public boolean setSsoToken(String token, String domain, long expires) {
+    if (getURLOrigin().equalsIgnoreCase(domain)) {
       authorizationHeader = (token != null) ? ("Bearer " + token) : null;
       ssoTokenExpires = (expires > 0) ? expires : 0L;
     }

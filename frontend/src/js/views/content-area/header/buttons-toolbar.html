@@ -20,34 +20,38 @@
   </div>
 
   <div id="content-area-header-iconbar" class="oj-flex-item oj-helper-margin-start-auto">
-    <oj-bind-if test="[[i18n.toolbar.icons.shoppingcart.visible]]">
-      <a id="shoppingcart-iconbar-icon" href="#" tabindex="-1" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="collapsed">
-      <span class="cfe-content-area-header-iconbar-icon">
-        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.shoppingcart.iconFile() + '.png', alt: i18n.toolbar.icons.shoppingcart.label, title: i18n.toolbar.icons.shoppingcart.label}"/>
+    <oj-bind-if test="[[i18n.toolbar.icons.recent.visible]]">
+      <a id="recent-pages-iconbar-icon" class="cfe-content-area-header-iconbar-icon"
+         href="#" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="collapsed">
+      <span>
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.recent.iconFile() + '.png', alt: i18n.toolbar.icons.recent.label, title: i18n.toolbar.icons.recent.label}"/>
       </span>
       </a>
     </oj-bind-if>
 
-    <oj-bind-if test="[[i18n.toolbar.icons.projectmanagement.visible]]">
-      <a id="projectmanagement-iconbar-icon" href="#" tabindex="-1" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="collapsed">
-      <span class="cfe-content-area-header-iconbar-icon">
-        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.projectmanagement.iconFile() + '.png', alt: i18n.toolbar.icons.projectmanagement.label, title: i18n.toolbar.icons.projectmanagement.label}"/>
+    <oj-bind-if test="[[i18n.toolbar.icons.providermanagement.visible]]">
+      <a id="provider-management-iconbar-icon" class="cfe-content-area-header-iconbar-icon"
+       href="#" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="closed">
+      <span>
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.providermanagement.iconFile + '.png', alt: i18n.toolbar.icons.providermanagement.label, title: i18n.toolbar.icons.providermanagement.label}"/>
+      </span>
+      </a>
+    </oj-bind-if>
+
+    <oj-bind-if test="[[i18n.toolbar.icons.ataglance.visible]]">
+      <a id="ataglance-iconbar-icon" class="cfe-content-area-header-iconbar-icon"
+         href="#" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="closed">
+      <span>
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.ataglance.iconFile + '.png', alt: i18n.toolbar.icons.ataglance.label, title: i18n.toolbar.icons.ataglance.label}"/>
       </span>
       </a>
     </oj-bind-if>
 
     <oj-bind-if test="[[i18n.toolbar.icons.tips.visible]]">
-      <a id="tips-iconbar-icon" href="#" tabindex="-1" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="collapsed">
-      <span class="cfe-content-area-header-iconbar-icon">
-        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.tips.iconFile() + '.png', alt: i18n.toolbar.icons.tips.label, title: i18n.toolbar.icons.tips.label}"/>
-      </span>
-      </a>
-    </oj-bind-if>
-
-    <oj-bind-if test="[[i18n.toolbar.icons.recent.visible]]">
-      <a id="recent-iconbar-icon" href="#" tabindex="-1" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="collapsed">
-      <span class="cfe-content-area-header-iconbar-icon">
-        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.recent.iconFile() + '.png', alt: i18n.toolbar.icons.recent.label, title: i18n.toolbar.icons.recent.label}"/>
+      <a id="tips-iconbar-icon" class="cfe-content-area-header-iconbar-icon"
+       href="#" on-click="[[contentAreaHeaderIconClickHandler]]" data-state="closed">
+      <span>
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.toolbar.icons.tips.iconFile + '.png', alt: i18n.toolbar.icons.tips.label, title: i18n.toolbar.icons.tips.label}"/>
       </span>
       </a>
     </oj-bind-if>

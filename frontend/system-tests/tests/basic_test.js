@@ -44,16 +44,16 @@ describe.only('Test Suite: basic_test: Add WLS Domain Connection/WDT Model file 
             await admin.goToHomePageUrl(driver,"","Cancel");
             await driver.sleep(4800);
             console.log("Click Configuration View Tree Image");
-            await driver.findElement(By.xpath("//*[@id=\'view\']/img")).click();
+            await driver.findElement(By.xpath("//*[@id='view']/img")).click();
             console.log("Click Navtree Environment");
             await driver.sleep(2400);
-            await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
             console.log("Click Navtree Server");
             await driver.sleep(2400);
-            await driver.findElement(By.xpath("//span[contains(.,\'Servers\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Servers')]")).click();
             console.log("Click Navtree AdminServer");
             await driver.sleep(4800);
-            await driver.findElement(By.xpath("//span[contains(.,\'AdminServer\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'AdminServer')]")).click();
 
             console.log("TEST PASS ");
         } catch (e) {
@@ -75,17 +75,17 @@ describe.only('Test Suite: basic_test: Add WLS Domain Connection/WDT Model file 
             await driver.sleep(2400);
 
             console.log("Click WDT Model Tree");
-            await driver.findElement(By.xpath("//*[@id=\"modeling\"]/img")).click();
+            await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
             await driver.sleep(2400);
             console.log("Click Navtree Environment");
             await driver.sleep(2400);
-            await driver.findElement(By.xpath("//span[contains(.,\'Environment\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
             console.log("Click Navtree Server");
             await driver.sleep(2400);
-            await driver.findElement(By.xpath("//span[contains(.,\'Servers\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Servers')]")).click();
             console.log("Click Navtree AdminServer");
             await driver.sleep(4800);
-            await driver.findElement(By.xpath("//span[contains(.,\'AdminServer\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'AdminServer')]")).click();
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

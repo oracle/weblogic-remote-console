@@ -16,7 +16,7 @@ The WebLogic Remote Console assumes WDT model files are in YAML format. If you u
 
 ## Create a new WDT model file
 
-1. Expand the Kiosk and beside the project name, click &#x022EE;. Select **Create Provider for New WDT Model File**.
+1. Open the Providers drawer and beside the project name, click &#x022EE;. Select **Create Provider for New WDT Model File**.
 1. Enter a name for the WDT model file provider. This is the name that will appear in the Project list of providers so you can identify which provider you're working on.
 1. Enter a name for the WDT model file in the **WDT Model Filename** field. Include .yaml or .json at the end of the file name.
 1. Click ![Upload file](/weblogic-remote-console/images/icons/choose-directory-icon-blk_24x24.png) and browse to the directory where you want to save the new WDT model file.
@@ -27,7 +27,7 @@ The WebLogic Remote Console assumes WDT model files are in YAML format. If you u
 ## Upload an existing WDT model file
 If you've already created a WDT model file, you can upload it to WebLogic Remote Console where you can continue to edit it.
 
-1. Expand the Kiosk and beside the project name, click &#x022EE;. Select **Add WDT Model File Provider**.
+1. Open the Providers drawer and beside the project name, click &#x022EE;. Select **Add WDT Model File Provider**.
 1. Enter a name for the model in the **Model Name** field. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.
 1. Click ![Upload file](/weblogic-remote-console/images/icons/choose-file-icon-blk_24x24.png) and browse to the WDT model file (a YAML or JSON file).
 1. **Optional**: Choose a property list provider from the **WDT Variables** dropdown list. If you add WDT variables to your WDT model file, you can update the variables in your WDT model file from a single location - the property list provider. If you don't have a property list provider yet, you can edit the WDT model file settings later to add or change the associated WDT variables. See [WDT Model Tokens](#model_tokens) for more information.
@@ -35,7 +35,7 @@ If you've already created a WDT model file, you can upload it to WebLogic Remote
 
 ## Edit a WDT model file {id="changes_wdt"}
 
-1. Expand the Kiosk and select the WDT model file you want to edit.
+1. Open the Providers drawer and select the WDT model file you want to edit.
 1. Click **WDT Model Tree** and make your changes to the domain configuration. Make sure to click ![WDT Model Edit](/weblogic-remote-console/images/icons/wdt-options-icon-blk_24x24.png) if you want to enter a [model token](#model_tokens).
 |Option | Description |
 |---|---|
@@ -72,7 +72,7 @@ This will only remove the WDT model file from the WebLogic Remote Console. It wi
 
 This will not delete any associated property list providers.
 
-1. Expand the Kiosk and beside the WDT model file, click the ![Settings icon](/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png) icon.
+1. Open the Providers drawer and beside the WDT model file, click the ![Settings icon](/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png) icon.
 
 ## Build a WebLogic Server domain
 

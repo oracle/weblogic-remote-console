@@ -92,16 +92,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
             await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span/img")).click();
             await driver.sleep(4800);
 
-            console.log("Click expand Kiosk menu...");
-            await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click()
-            await driver.sleep(4800);
-            await driver.findElement(By.xpath("//div/ul/li[3]/a/span[2]")).click();
+            console.log("Click Home Image");
+            await driver.findElement(By.xpath("//span[starts-with(@id, 'home')]")).click();
             await driver.sleep(4800);
             console.log("Click WDT Model Tree");
             await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
-            await driver.sleep(4800);
-            console.log("Click Landing Page Image");
-            await driver.findElement(By.xpath("//*[@id=\"landing-page-icon\"]")).click();
             await driver.sleep(4800);
             console.log("Click Services Landing Page");
             element = await driver.findElement(By.id("Services"));
@@ -147,13 +142,15 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
                 await admin.selectTree(driver,"baseDomainModel", baseDomModelFile);
                 await driver.sleep(4800);
-                console.log("Click To expand Kiosk");
-                await driver.findElement(By.xpath("//img[@title='Expand']")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+
                 await driver.sleep(4800);
                 await admin.selectTree(driver,"wdtTemplateModel", wdtTempModelFile);
                 await driver.sleep(4800);
-                console.log("Click Kiosk");
-                await driver.findElement(By.xpath("//div[@id='slideup-toggle']/img")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(4800);
                 console.log("Select wdtCompositeModelOfBaseAndTemplateModels");
                 await driver.sleep(4800);
                 await driver.findElement(By.xpath("//span[contains(.,'wdtCompositeModelOfBaseAndTemplateModels')]")).click();
@@ -171,7 +168,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
                 console.log("Click testServer-2");
                 await driver.findElement(By.xpath("//td[contains(.,'testServer-2')]")).click();
-
                 console.log("TEST PASS ");
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
@@ -369,7 +365,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Click Save Now \(Electron\), or Download File \(Web page\) button");
                 await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.write.id]]']/button/div/span[1]/img")).click();
                 await driver.sleep(600);
-
                 console.log("TEST PASS ");
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
@@ -395,20 +390,19 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
                 await driver.sleep(4800);
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[4]/div/div[2]/div/a")).click();
-                await driver.sleep(4800);
                 await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
                 console.log("Select to enter base_domain file path " + baseDomainPropertyFile);
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
-                await driver.sleep(4800);
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
 
-                await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click();
-                await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(4800);
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
+                await driver.sleep(9600);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
                     "oj-searchselect-filter-model-proplist-selection-field|input","baseDomainPropList");
                 console.log("Click Choose File...");
@@ -418,7 +412,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
 
                console.log("Click WDT Model Tree");
@@ -431,7 +425,10 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                await driver.findElement(By.xpath("//span[contains(.,'Domain')]")).click();
                await driver.sleep(4800)
                console.log("Click Show Advanced Fields");
-               await driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']")).click();
+               element = driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']"));
+               driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+               await driver.sleep(4800);
+               await element.click();
                await driver.sleep(4800);
 
                console.log("Click Domain Name WDT Setting option");
@@ -444,7 +441,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                await driver.findElement(By.id("text_Name|input")).sendKeys("base_domain");
                await driver.sleep(2400);
                console.log("Click Ok button");
-               await driver.findElement(By.xpath("//oj-button[1]/button/div/span/span")).click();
+               await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
                await driver.sleep(2400);
                console.log("Click Administration Port Enable switch");
                await driver.findElement(By.xpath("//oj-switch[@id='AdministrationPortEnabled']/div[1]/div/div")).click();
@@ -491,9 +488,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                await driver.findElement(By.xpath("//*[@id='text_ConsoleContextPath|input']")).sendKeys("@@PROP:CONTEXT_PATH@@");
                await driver.sleep(2400);
                console.log("Click Ok button");
-               await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+               await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
                await driver.sleep(2400);
-
                console.log("Click AdminConsole Protected Cookie Enabled switch");
                await driver.findElement(By.xpath("//oj-switch[@id='AdminConsole_ProtectedCookieEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
@@ -503,7 +499,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                await admin.selectDropDownList(driver,"select_ConfigurationAuditType",
                     "oj-searchselect-filter-select_ConfigurationAuditType|input","logaudit");
                await driver.sleep(4800);
-
                console.log("Click Config Backup Enabled switch option");
                await driver.findElement(By.xpath("//oj-switch[@id='ConfigBackupEnabled']/div[1]/div")).click();
                await driver.sleep(2400);
@@ -531,7 +526,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                await driver.sleep(600);
                await driver.findElement(By.xpath("//input[@id='SiteName|input']")).sendKeys("localhost");
                await driver.sleep(600);
-
                console.log("Click wdtOptions JMX_Invocation Timeout Seconds switch option");
                await driver.findElement(By.xpath("//a[@id='wdtOptions_JMX_InvocationTimeoutSeconds']/img")).click();
                await driver.sleep(600);
@@ -554,7 +548,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("(//oj-input-text[@id='textarea_JMX_InvocationTimeoutSeconds']/div/div/input)[2]")).sendKeys("30");
                 await driver.sleep(1200);
                 console.log("Click OK button to save Invocation Timeout Variable");
-                await driver.findElement(By.xpath("//oj-button[@id='dlgOkBtn22']/button/div/span")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
+                //await driver.findElement(By.xpath("//oj-button[@id='dlgOkBtn22']/button/div/span")).click();
 
                 console.log("Click Download (Save) File");
                 driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.write.id]]']/button/div/span")).click();
@@ -594,10 +589,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
-
-                await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(2400);
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(4800);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
@@ -609,7 +605,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
 
                 console.log("Click WDT Model Tree");
@@ -626,8 +622,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//div/ul/li[3]/a/span")).click();
                 await driver.sleep(2400);
                 console.log("Click Show Advanced Fields");
-                await driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']")).click();
-                await driver.sleep(2800);
+                element = driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await driver.sleep(4800);
+                await element.click();
+                await driver.sleep(2400);
 
                 console.log("Click More Action at Default Realm");
                 await driver.findElement(By.xpath("//img[@title='More Actions']")).click();
@@ -701,10 +700,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
-
-                await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(2400);
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(4800);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
@@ -716,7 +716,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
 
                 console.log("Click WDT Model Tree");
@@ -741,17 +741,17 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Click SecurityConfiguration_ConnectionFilter Field");
                 await driver.findElement(By.xpath(" //*[@id='SecurityConfiguration_ConnectionFilter|input']")).click();
                 await driver.sleep(2800);
-		console.log("Enter SecurityConfiguration_ConnectionFilter Field value = test1,test2,test3");
+		        console.log("Enter SecurityConfiguration_ConnectionFilter Field value = test1,test2,test3");
                 await driver.findElement(By.xpath(" //*[@id='SecurityConfiguration_ConnectionFilter|input']")).sendKeys("test1,test2,test3");
                 await driver.sleep(2800);
                 console.log("Click Security EmbeddedLDAP Tab");
-		await driver.findElement(By.xpath("//span[text()='Embedded LDAP']")).click();
+		        await driver.findElement(By.xpath("//span[text()='Embedded LDAP']")).click();
                 await driver.sleep(2400);
                 console.log("Enter EmbeddedLDAP = Welcome1");
                 await driver.findElement(By.id("EmbeddedLDAP_Credential|input")).sendKeys("Welcome1");
                 await driver.sleep(2800);
                 console.log("Click Security SSL Certificate Revocation Checking Tab");
-		await driver.findElement(By.xpath("//span[text()='SSL Certificate Revocation Checking']")).click();
+		        await driver.findElement(By.xpath("//span[text()='SSL Certificate Revocation Checking']")).click();
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"SecurityConfiguration_CertRevoc_CheckingEnabled",3);
                 await driver.sleep(2400);
@@ -792,9 +792,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(4800);
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(4800);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
@@ -806,7 +808,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
+                //await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
                 await driver.sleep(4800);
                 console.log("Click WDT Model Tree");
                 await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
@@ -837,9 +840,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(2800);
                 console.log("Click Domain Web Application Tab");
                 await driver.findElement(By.xpath("//div/ul/li[7]/a/span")).click();
-                //await driver.sleep(2400);
-                //console.log("Click Yes button");
-                //await driver.findElement(By.xpath("//span[contains(.,\'Yes\')]")).click();
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"WebAppContainer_ReloginEnabled",3);
                 await driver.sleep(2400);
@@ -925,9 +925,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomainPropertyFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
-                await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click();
+                console.log("Click Provider Management Image link");
+                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(4800);
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(4800);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
@@ -939,7 +941,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.id("file-chooser")).sendKeys(baseDomModelFile);
                 await driver.sleep(1400);
                 console.log("Click OK button");
-                await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
+                //await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
                 await driver.sleep(4800);
                 console.log("Click WDT Model Tree");
                 await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
@@ -977,8 +980,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Click Ok button at Machine Unresolved Reference page");
                 await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
                 await driver.sleep(2400);
-                console.log("Click Show Advanced Field Option");
-                await driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']")).click();
+                console.log("Click Show Advanced Fields");
+                element = driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await driver.sleep(4800);
+                await element.click();
                 await driver.sleep(2400);
                 console.log("Click WDT option at ServerTemplate");
                 element = await driver.findElement(By.xpath("//*[@id='wdtOptions_ServerTemplate']/img"));

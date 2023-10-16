@@ -322,7 +322,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
                 return {
                   type: item.type,
                   path: item.resourceData.resourceData,
-                  label: item.resourceData.label,
+//MLW                  label: item.resourceData.label,
+                  label: item.label,
                   descriptionHTML: {view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`)}
                 };
               })
@@ -372,7 +373,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         Logger.log(`[LANDING] data-path=${resourceData}, perspective-group=${self.perspectiveGroup().name}`);
 
         // expand the navtree nodes
-        viewParams.parentRouter.go('/' + self.perspective.id + '/' + encodeURIComponent(resourceData));
+        viewParams.parentRouter.go(`/${self.perspective.id}/${encodeURIComponent(resourceData)}`);
       };
 
       /**
@@ -380,9 +381,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
        * @param event
        */
       this.landingPanelClickHandler = function(event) {
-        // The Kiosk will more than likely just be in the
-        // way from here on out, so go ahead and hide it.
-        viewParams.signaling.ancillaryContentAreaToggled.dispatch('landing', false);
         // The id attribute with the perspectiveId assigned
         // to it, is on the first child element of the
         // click event's current target. The click event's

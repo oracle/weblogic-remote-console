@@ -133,9 +133,9 @@
             },
             {
               "type":"AppDeploymentRuntime",
-              "typeLabel":"App Deployment Runtime",
+              "typeLabel":"Application Management",
               "property":"AppDeploymentRuntimes",
-              "propertyLabel":"App Deployment Runtimes"
+              "propertyLabel":"Application Management"
             }
           ]
         }
@@ -169,9 +169,9 @@
             },
             {
               "type":"LibDeploymentRuntime",
-              "typeLabel":"Lib Deployment Runtime",
+              "typeLabel":"Library Management",
               "property":"LibDeploymentRuntimes",
-              "propertyLabel":"Lib Deployment Runtimes"
+              "propertyLabel":"Library Management"
             }
           ]
         }

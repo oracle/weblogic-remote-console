@@ -14,7 +14,7 @@ Dashboards are only available for Administration Server providers (in the Monito
 
 Filters in dashboards are the criteria that you use to curate your results. Each filter consists of a name or property from the domain, a value, and an operator.
 
-WebLogic Remote Console limits which filters are available to a dashboard depending on where you are in the WebLogic Remote Console. For example, if you create a dashboard from the *Environment/Servers* node, the property filters are based on the properties in the columns of the Servers table, whereas the property filters in the *Deployments/Application Runtimes* node are based on the properties in the columns of the Application Runtime table.
+WebLogic Remote Console limits which filters are available to a dashboard depending on where you are in the WebLogic Remote Console. For example, if you create a dashboard from the *Environment/Servers* node, the property filters are based on the properties in the columns of the Servers table, whereas the property filters in the *Deployments/Application Runtime Data* node are based on the properties in the columns of the Application Runtime table.
 
 Values may be in text, numeric or Boolean form depending on the name or property. You cannot add a text value into a numeric filter. Boolean values are displayed as toggles. Set the toggle to On for True, Off for False.
 

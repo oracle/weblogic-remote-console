@@ -1,8 +1,8 @@
 //
 // Monitoring -> Runtime Menu Elements Test Suite:
 //    Domain Runtime, Server Runtimes, Migration Data Runtimes, Node Manager Runtimes
-//    SystemComponentLifeCycleRuntimes, App Deployment Runtimes, Deployment Progress Objects
-//    Lib Deployment Runtimes, Edit Session Configurations, Scaling Tasks, Active Workflows
+//    SystemComponentLifeCycleRuntimes, Application Management, Deployment Progress Objects
+//    Library Management, Edit Session Configurations, Scaling Tasks, Active Workflows
 //    All Workflows, Complete Workflows, Inactive Workflows, Stopped Workflows, SNMP Agent Runtime
 //
 //

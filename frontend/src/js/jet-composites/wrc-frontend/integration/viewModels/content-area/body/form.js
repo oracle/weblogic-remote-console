@@ -201,6 +201,7 @@
              onLandingPageSelected: selectLandingPage,
              onBeanPathHistoryToggled: toggleBeanPathHistory,
              onInstructionsToggled: toggleInstructions,
+             onBlankFormDisplayed: displayBlankForm,
              onHelpPageToggled: toggleHelpPage,
              onShoppingCartViewed: viewShoppingCart,
              onShoppingCartDiscarded: discardShoppingCart,
@@ -225,7 +226,7 @@
              onAutoSave: autoSaveForm
            }
          });
-         
+
          this.formActionsStripModuleConfig = ModuleElementUtils.createConfig({
            viewPath: `${Controller.getModulePathPrefix()}views/content-area/body/form-actions-strip.html`,
            viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/body/form-actions-strip`,
@@ -300,7 +301,7 @@
              const visible = (toggleState === 'collapsed');
              self.formTabStripModuleConfig
                .then(moduleConfig => {
-                 moduleConfig.viewModel.renderTabStrip(visible);
+                 moduleConfig.viewModel.setTabStripVisibility(visible);
                  self.formActionsStripModuleConfig
                    .then(moduleConfig => {
                      moduleConfig.viewModel.renderActionsStrip(visible);
@@ -730,15 +731,52 @@
          }
 
          function createDashboard(event) {
+           function getContentPageSliceData(pdjData) {
+             return new Promise(function (resolve) {
+               let slices = [];
+
+               if (RouterData.hasSliceFormSlices(pdjData)) {
+                 slices = pdjData.sliceForm.slices;
+               }
+               else if (RouterData.hasSliceTableSlices(pdjData)) {
+                 slices = pdjData.sliceTable.slices;
+               }
+  
+               self.formTabStripModuleConfig
+                 .then(moduleConfig => {
+                   moduleConfig.viewModel.setTabStripVisibility(false);
+                   if (slices.length > 0) {
+                     resolve({slices: slices, currentSlice: moduleConfig.viewModel.getCurrentSlice()});
+                   }
+                   else {
+                     resolve({slices: slices, currentSlice: null});
+                   }
+                 });
+               
+             });
+           }
+
            const createFormUrl = viewParams.parentRouter.data.rdjData().dashboardCreateForm.resourceData;
+
            DataOperations.mbean.new(createFormUrl)
              .then(reply => {
-               viewParams.parentRouter.data.pdjUrl(reply.body.data.get('pdjUrl'));
-               viewParams.parentRouter.data.pdjData(reply.body.data.get('pdjData'));
-               viewParams.parentRouter.data.rdjUrl(reply.body.data.get('rdjUrl'));
-               viewParams.parentRouter.data.rdjData(reply.body.data.get('rdjData'));
-               createCreateForm();
-               viewParams.parentRouter.go('form');
+               const pdjData = viewParams.parentRouter.data.pdjData();
+               getContentPageSliceData(pdjData)
+                 .then(data => {
+                   self.perspectiveMemory.contentPage['rdjUrl'] = viewParams.parentRouter.data.rdjUrl();
+                   if (data.currentSlice !== null) {
+                     self.perspectiveMemory.contentPage['lastVisitedSlice'] = data.currentSlice;
+                   }
+
+                   viewParams.parentRouter.data.pdjUrl(reply.body.data.get('pdjUrl'));
+                   viewParams.parentRouter.data.pdjData(reply.body.data.get('pdjData'));
+                   viewParams.parentRouter.data.rdjUrl(reply.body.data.get('rdjUrl'));
+                   viewParams.parentRouter.data.rdjData(reply.body.data.get('rdjData'));
+
+                   createCreateForm();
+
+                   viewParams.parentRouter.go('form');
+                 })
              })
              .catch(response => {
                ViewModelUtils.failureResponseDefaultHandling(response);
@@ -1574,10 +1612,10 @@
  
          function resetAutoSyncToolbarIconsState() {
            self.formToolbarModuleConfig
-               .then((moduleConfig) => {
-                 const state = (viewParams.perspective.id === 'monitoring');
-                 moduleConfig.viewModel.resetIconsVisibleState(state);
-               });
+             .then((moduleConfig) => {
+               const state = (viewParams.perspective.id === 'monitoring');
+               moduleConfig.viewModel.resetIconsVisibleState(state);
+             });
          }
  
          function isShoppingCartVisible() {
@@ -1787,10 +1825,6 @@
           * @returns {Promise<boolean>}
           */
          this.canExit = function (eventType, options) {
-           // Send signal that will collapse the Kiosk, if
-           // it is expanded.
-           viewParams.signaling.ancillaryContentAreaToggled.dispatch('form', false);
- 
            return new Promise(function (resolve) {
              self.formTabStripModuleConfig
                  .then((moduleConfig) => {
@@ -2177,19 +2211,19 @@
  
          function resetSaveButtonDisabledState(state) {
            self.formToolbarModuleConfig
-               .then((moduleConfig) => {
-                 moduleConfig.viewModel.resetButtonsDisabledState([
-                   {id: 'save', disabled: state.disabled}
-                 ]);
-               });
+             .then((moduleConfig) => {
+               moduleConfig.viewModel.resetButtonsDisabledState([
+                 {id: 'save', disabled: state.disabled}
+               ]);
+             });
          }
  
          function captureSyncInterval(currentValue) {
            return SetSyncIntervalDialog.showSetSyncIntervalDialog(currentValue, self.i18n)
-               .then(result => {
-                 setSyncInterval(parseInt(result.interval));
-                 return Promise.resolve(result);
-               });
+             .then(result => {
+               setSyncInterval(parseInt(result.interval));
+               return Promise.resolve(result);
+             });
          }
  
          function setSyncInterval(syncInterval) {
@@ -2236,9 +2270,9 @@
          function cancelAutoSync() {
            cancelSyncTimer();
            self.formToolbarModuleConfig
-               .then(moduleConfig => {
-                 moduleConfig.viewModel.cancelAutoSync();
-               });
+             .then(moduleConfig => {
+               moduleConfig.viewModel.cancelAutoSync();
+             });
          }
          
          async function isAutoSyncRunning() {
@@ -2340,7 +2374,8 @@
          function setFormContainerMaxHeight(withHistoryVisible) {
            let offsetMaxHeight;
            const options = {withHistoryVisible: withHistoryVisible, withHelpVisible: self.showHelp()};
-           offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#form-container', options);
+           const offsetHeightCSSVariable = (RouterData.hasSliceTable(self.pdjData) ? 'table-container-resizer-offset-max-height' : 'form-container-resizer-offset-max-height');
+           offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#form-container', offsetHeightCSSVariable, options);
            if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
              offsetMaxHeight += (self.modelConsole.expanded ? self.modelConsole.offsetHeight : 23);
            }
@@ -2348,6 +2383,13 @@
            document.documentElement.style.setProperty('--form-container-calc-max-height', `${offsetMaxHeight}px`);
          }
  
+         function displayBlankForm() {
+           self.formTabStripModuleConfig
+             .then(moduleConfig => {
+               moduleConfig.viewModel.setTabStripVisibility(false);
+             });
+         }
+
          function toggleBeanPathHistory(withHistoryVisible) {
            setFormContainerMaxHeight(withHistoryVisible);
            if (!withHistoryVisible) {
@@ -2376,6 +2418,11 @@
 
              renderFormLayout(pdjData, rdjData);
            }
+
+           self.formTabStripModuleConfig
+             .then(moduleConfig => {
+               moduleConfig.viewModel.setTabStripVisibility(false);
+             });
 
            self.formActionsStripModuleConfig
              .then(moduleConfig => {
@@ -2432,75 +2479,95 @@
              editPage = `/${viewParams.perspective.id}/${path}`;
            }
            viewParams.parentRouter.go(editPage)
-               .then((hasChanged) => {
-                 if (isCreateForm) {
-                   // When loading the create form signal that nonwritable is false
-                   // so that the toolbar shows the button that handles the create form
-                   viewParams.signaling.nonwritableChanged.dispatch(false);
+             .then((hasChanged) => {
+               if (isCreateForm) {
+                 // When loading the create form signal that nonwritable is false
+                 // so that the toolbar shows the button that handles the create form
+                 viewParams.signaling.nonwritableChanged.dispatch(false);
+               }
+               // Reset the toolbar buttons, so the
+               // "Update Changes" button becomes visible.
+               resetToolbarButtons();
+               // When not loading the create form update the state
+               // of shopping cart or the toolbar for WDT model
+               if (!isCreateForm) {
+                 if (!isWdtForm()) {
+                   updateShoppingCart('sync');
                  }
-                 // Reset the toolbar buttons, so the
-                 // "Update Changes" button becomes visible.
-                 resetToolbarButtons();
-                 // When not loading the create form update the state
-                 // of shopping cart or the toolbar for WDT model
-                 if (!isCreateForm) {
-                   if (!isWdtForm()) {
-                     updateShoppingCart('sync');
-                   }
-                   else {
-                     self.formToolbarModuleConfig
-                         .then((moduleConfig) => {
-                           moduleConfig.viewModel.renderToolbarButtons('sync');
-                         });
-                   }
+                 else {
+                   self.formToolbarModuleConfig
+                     .then((moduleConfig) => {
+                       moduleConfig.viewModel.renderToolbarButtons('sync');
+                     });
                  }
-               });
+               }
+             });
          }
  
          function deleteBean(resourceData) {
            self.createForm = new CreateForm(viewParams);
            self.createForm.deleteBean(resourceData)
-               .then(reply => {
-                 self.formToolbarModuleConfig
-                     .then((moduleConfig) => {
-                       const changeManager = moduleConfig.viewModel.changeManager();
-                       moduleConfig.viewModel.changeManager({
-                         isLockOwner: true,
-                         hasChanges: changeManager.hasChanges,
-                         supportsChanges: changeManager.supportsChanges
-                       });
-                       moduleConfig.viewModel.renderToolbarButtons('delete');
-                     });
-                 return reply;
-               })
-               .then(reply => {
-                 if (reply.body.messages > 0) {
-                   MessageDisplaying.displayResponseMessages(reply.body.messages);
-                 }
-                 else if (isWdtForm()) {
-                   const eventType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'autoSave' : 'autoDownload');
-                   submitContentFileChanges(eventType);
-                 }
-               })
-               .catch(response => {
-                 return ViewModelUtils.failureResponseDefaultHandling(response);
-               })
-               .finally(() => {
-                 self.formToolbarModuleConfig
-                     .then((moduleConfig) => {
-                       const changeManager = moduleConfig.viewModel.changeManager();
-                       moduleConfig.viewModel.changeManager({
-                         isLockOwner: true,
-                         hasChanges: changeManager.hasChanges,
-                         supportsChanges: changeManager.supportsChanges
-                       });
-                       moduleConfig.viewModel.renderToolbarButtons('delete');
-                     });
-                 viewParams.signaling.tabStripTabSelected.dispatch('form', 'shoppingcart', false);
-               });
+             .then(reply => {
+               self.formToolbarModuleConfig
+                 .then((moduleConfig) => {
+                   const changeManager = moduleConfig.viewModel.changeManager();
+                   moduleConfig.viewModel.changeManager({
+                     isLockOwner: true,
+                     hasChanges: changeManager.hasChanges,
+                     supportsChanges: changeManager.supportsChanges
+                   });
+                   moduleConfig.viewModel.renderToolbarButtons('delete');
+                 });
+               return reply;
+             })
+             .then(reply => {
+               if (reply.body.messages > 0) {
+                 MessageDisplaying.displayResponseMessages(reply.body.messages);
+               }
+               else if (isWdtForm()) {
+                 const eventType = (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name ? 'autoSave' : 'autoDownload');
+                 submitContentFileChanges(eventType);
+               }
+             })
+             .catch(response => {
+               return ViewModelUtils.failureResponseDefaultHandling(response);
+             })
+             .finally(() => {
+               self.formToolbarModuleConfig
+                 .then((moduleConfig) => {
+                   const changeManager = moduleConfig.viewModel.changeManager();
+                   moduleConfig.viewModel.changeManager({
+                     isLockOwner: true,
+                     hasChanges: changeManager.hasChanges,
+                     supportsChanges: changeManager.supportsChanges
+                   });
+                   moduleConfig.viewModel.renderToolbarButtons('delete');
+                 });
+               viewParams.signaling.tabStripTabSelected.dispatch('form', 'shoppingcart', false);
+             });
          }
  
          function cancelBean(eventType) {
+           function selectLastVisited(contentPage) {
+             const onTimeout = (moduleConfigPromise) => {
+               moduleConfigPromise
+                 .then(moduleConfig => {
+                   moduleConfig.viewModel.selectLastVisitedSlice(
+                     contentPage.lastVisitedSlice,
+                     contentPage.rdjUrl
+                   );
+                   viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
+                 });
+             };
+
+             // The timeout value must be high enough to cover how
+             // long it takes code in form-tabstrip to retrieve the
+             // RDJ associated with the rdjUrl variable. 50 seems to
+             // be the smallest value it can be, and have the previous
+             // slice appear reliably.
+             setTimeout(onTimeout.bind(undefined, self.formTabStripModuleConfig), 50);
+           }
+
            // We need to use rawPath instead of rdjUrl here, because
            // that always contains the URL the cancel needs to go back
            // to. This is true regardless of whether we were in a wizard
@@ -2523,8 +2590,7 @@
            // different "New Dashboard" scenarios.
            self.createForm = undefined;
            clearFormChanges();
-           notifyUnsavedChanges(false);
-           viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
+           selectLastVisited(self.perspectiveMemory.contentPage);
          }
  
          function clearFormChanges() {
@@ -2750,12 +2816,12 @@
          function resetToolbarButtons() {
            if (['configuration', 'modeling','security', 'properties'].indexOf(viewParams.perspective.id) !== -1) {
              self.formToolbarModuleConfig
-                 .then((moduleConfig) => {
-                   moduleConfig.viewModel.resetButtonsDisabledState([
-                     {id: 'save', disabled: false}
-                   ]);
-                   moduleConfig.viewModel.renderToolbarButtons('create');
-                 });
+               .then((moduleConfig) => {
+                 moduleConfig.viewModel.resetButtonsDisabledState([
+                   {id: 'save', disabled: false}
+                 ]);
+                 moduleConfig.viewModel.renderToolbarButtons('create');
+               });
            }
          }
  
@@ -3372,9 +3438,11 @@
                  restoreDirtyFieldsValues();
                  self.loadRdjDoNotClearDirty = false;
 
+                 setDataFormType(pdjData);
+  
                  const ele = document.querySelector('.cfe-buttonset');
                  if (ele !== null) ele.style.display = 'none';
- 
+
                  if (isPolicyExpressionSliceLayout()) {
                    if (CoreUtils.isNotUndefinedNorNull(self.policyForm)) {
                      const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
@@ -3408,6 +3476,13 @@
            // DON'T PUT ANY CODE IN THIS FUNCTION AFTER THIS POINT !!!
          }
  
+         function setDataFormType(pdjData) {
+           const ele = document.getElementById('form-container');
+           if (ele !== null) {
+             ele.setAttribute('data-form-type', (RouterData.hasSliceTable(pdjData) ? 'sliceTable' : 'sliceForm'));
+           }
+         }
+
          function renderActionsStrip(visibility) {
            self.formActionsStripModuleConfig
              .then(moduleConfig => {
@@ -5078,21 +5153,7 @@
                    const changeManager = moduleConfig.viewModel.changeManager();
                    ChangeManager.getData()
                        .then(data => {
-                         let flag = true;
-                         if( data.changeManager.supportsChanges) {
-                           let content = data.data[ChangeManager.Section.ADDITIONS.name];
-                           if (content.length <= 0) {
-                             content = data.data[ChangeManager.Section.MODIFICATIONS.name];
-                             if (content.length <= 0) {
-                               content = data.data[ChangeManager.Section.REMOVALS.name];
-                               if (content.length <= 0) {
-                                 flag = false;
-                               }
-                             }
-                           }
-                         }else{
-                           flag = data.changeManager.hasChanges;
-                         }
+                         let flag = data.changeManager.hasChanges;
                          moduleConfig.viewModel.changeManager({
                            isLockOwner: (flag),
                            hasChanges: (flag),

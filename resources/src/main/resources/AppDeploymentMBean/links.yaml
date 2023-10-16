@@ -1,19 +1,19 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
-- label: Status
-  root: DomainRuntimeMonitoring
-  resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes
-- label: Runtime Data
+- label: Application Runtime Data
   root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedApplicationRuntimes
+- label: Application Management
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes
 
 instanceLinks:
-- label: Status
-  root: DomainRuntimeMonitoring
-  resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<AppDeployment>
 - label: Runtime Data
   root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedApplicationRuntimes/<AppDeployment>
   notFoundMessage: This application was not found on any of the currently running servers.
+- label: Status
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<AppDeployment>

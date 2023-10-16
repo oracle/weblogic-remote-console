@@ -195,6 +195,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
         return historyOptions;
       },
 
+      getNavigatorPosition: function () {
+        return PerspectiveMemoryManager.getProviderPerspectivesNavigatorPosition(this.beanTree.provider.id);
+      },
+  
+      getNavigatorVisibility: function () {
+        return PerspectiveMemoryManager.getProviderPerspectivesNavigatorVisibility(this.beanTree.provider.id);
+      },
+  
+      setHistoryNavigatorVisibility: function (visible) {
+        this.perspectiveMemory.setBreadcrumbsVisibility(visible);
+      },
+  
       getHistoryVisibility: function () {
         return PerspectiveMemoryManager.getProviderPerspectivesHistoryVisibility(this.beanTree.provider.id);
       },

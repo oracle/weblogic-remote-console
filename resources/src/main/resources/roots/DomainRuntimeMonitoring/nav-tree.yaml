@@ -51,9 +51,13 @@ contents:
   type: group
   contents:
   - child: DomainRuntime.AggregatedApplicationRuntimes
+    label: Application Runtime Data
   - child: DomainRuntime.DeploymentManager.AppDeploymentRuntimes
+    label: Application Management
   - child: DomainRuntime.AggregatedLibraryRuntimes
+    label: Library Runtime Data
   - child: DomainRuntime.DeploymentManager.LibDeploymentRuntimes
+    label: Library Management
   - child: DomainRuntime.DeploymentManager.DeploymentProgressObjects
   - child: DomainRuntime.AggregatedWebServerRuntimes
   - label: Web Services

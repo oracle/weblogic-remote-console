@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright 2021, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
 do_docker_pull() {
   for i in 1 2 3
   do
@@ -43,6 +46,7 @@ export ALREADY_IN_DOCKER=true
 mkdir -p /root/.npm
 chmod -R 777 /root
 ./build-electron.sh $*
+chmod -R a+rw electron/dist
 rm -rf /build.in/electron/dist
 cp -rp electron/dist /build.in/electron
 !
@@ -189,22 +193,38 @@ jlink --output "$extra"/customjre --no-header-files --no-man-pages --compress=2 
 
 mkdir -p "$extra"/backend
 cp -rp ../runnable/* "$extra"/backend
+
+buildtype=$1
 # We allow the building of multiple variants on the image via a custom script.
 # For example, if one wants to build a special version for the Memphis office,
 # you can create electron/custom/memphis and invoke "build-electron.sh memphis".
-if [ -f "custom/$1" -a -x "custom/$1" ]
+cp -p package.json "$extra"
+if [ -f "custom/$buildtype" -a -x "custom/$buildtype" ]
 then
-  command="custom/$1"
+  rm -f electron-builder-custom.json
+  command="custom/$buildtype"
   shift
-
   "$command" "$extra"
-else
-  cp -p package.json "$extra"
+  if [ -f electron-builder-custom.json ]
+  then
+    trap 'rm -f "$PWD/electron-builder-custom.json"' 0
+    set -- "$@" -c electron-builder-custom.json
+  fi
 fi
 
 ./gen-messages "$extra"/resources/nls ../frontend/src/resources/nls/frontend*.properties
 
-npm run dist "$@"
+if [ "$os" = darwin ] && uname -a | grep -q arm64
+then
+  set -- --arm64 "$@"
+fi
+
+while [ "$1" = -- ]
+do
+  shift
+done
+
+"$(npm bin)/electron-builder" -p never "$@"
 
 case "$os" in
 darwin)
@@ -245,4 +265,16 @@ else
       custom/signLinux
     fi
   esac
+fi
+
+# Restating from above, we allow the building of multiple variants on the image via a custom script.
+# For example, if one wants to build a special version for the Memphis office,
+# you can create electron/custom/memphis and invoke "build-electron.sh memphis".
+#
+# You can create electron/custom/memphis-post to post-process the build as well.
+cp -p package.json "$extra"
+if [ -f "custom/$buildtype-post" -a -x "custom/$buildtype-post" ]
+then
+  command="custom/$buildtype-post"
+  "$command"
 fi

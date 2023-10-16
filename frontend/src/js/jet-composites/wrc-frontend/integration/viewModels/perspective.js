@@ -48,6 +48,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.historyVisible = this.beanPathManager.getHistoryVisibility();
       this.beanPathHistoryOptions = ko.observable([]);
       this.breadcrumbs = {html: ko.observable({}), crumbs: ko.observableArray([])};
+      const navigatorVisible = this.beanPathManager.getNavigatorVisibility();
       this.breadcrumbsManager = new BreadcrumbsManager(beanTree, this.breadcrumbs.crumbs);
 
       this.launchMoreMenu = function (event) {
@@ -269,17 +270,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function clickedBreadCrumb(path) {
-        // Minimize Kiosk and navtree, if it is floating
-        viewParams.signaling.ancillaryContentAreaToggled.dispatch('breadcrumb', false);
         // clear treenav selection
         viewParams.signaling.navtreeSelectionCleared.dispatch();
         viewParams.identity = path;
         ViewModelUtils.goToRouterPath( self.router, `/${viewParams.beanTree.type}/${encodeURIComponent(path)}`, self.canExitCallback);
       }
 
+      this.historyNavigatorClick = function (event) {
+        console.log(`[PERSPECTIVE] historyNavigatorClick - id=${event.currentTarget.id}`);
+      };
+
       this.breadcrumbClick = function (event) {
         clickedBreadCrumb(event.target.id);
-      }.bind(this);
+      };
 
       this.breadcrumbMenuClickListener = function (event) {
         const perspectiveId = event.target.attributes['data-perspective'].value;

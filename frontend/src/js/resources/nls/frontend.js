@@ -526,9 +526,6 @@ define({
         "buttons": {
           "home": {
             "label": "Home"
-          },
-          "recent": {
-            "label": "Recent Pages"
           }
         }
       }
@@ -543,7 +540,7 @@ define({
             "label": "At-A-Glance"
           },
           "projectmanagement": {
-            "label": "Provider Management"
+            "label": "Providers"
           },
           "tips": {
             "label": "Tips"
@@ -595,7 +592,10 @@ define({
       "tabstrip": {
         "tabs": {
           "gallery": {
-            "label": "Home"
+            "label": "Trees"
+          },
+          "startup-tasks": {
+            "label": "Tasks"
           }
         }
       }
@@ -629,6 +629,38 @@ define({
         "properties": {
           "label": "Property List Editor",
           "description": "<p>View or modify a set of properties from a property list file.</p>"
+        }
+      }
+    },
+    "wrc-startup-tasks": {
+      "cards": {
+        "addAdminServer": {
+          "label": "Add Admin Server Connection Provider",
+          "description": "This task creates a project resource that allows you to connect to an Admin Server"
+        },
+        "addWdtModel": {
+          "label": "Add WDT Model File Provider",
+          "description": "This task creates a project resource that allows you to manage a WDT Model file, existing on your local filesystem"
+        },
+        "addWdtComposite": {
+          "label": "Add WDT Composite Model File Provider",
+          "description": "This task creates a project resource that allows you to manage WDT Model file fragments, existing on your local filesystem"
+        },
+        "addPropertyList": {
+          "label": "Add Property List Provider",
+          "description": "This task creates a project resource that allows you to manage a .properties files stored on your local filesystem"
+        },
+        "createWdtModel": {
+          "label": "Create Provider for New WDT Model File",
+          "description": "This task creates a project resource that is a new WDT Model file, stored on your local filesystem"
+        },
+        "createPropertyList": {
+          "label": "Create Provider for New Property List",
+          "description": "This task creates a project resource that is a new .properties file, stored on your local filesystem"
+        },
+        "importProject": {
+          "label": "Import Project",
+          "description": "This task loads a previously exported project containing providers immediately ready for you to use or modify"
         }
       }
     },
@@ -1125,6 +1157,9 @@ define({
         },
         "done": {
           "label": "Done"
+        },
+        "close": {
+          "label": "Close"
         }
       },
       "tooltips": {
@@ -1184,6 +1219,9 @@ define({
         },
         "close": {
           "value": "Close"
+        },
+        "recentPages": {
+          "value": "Toggle visibility of history"
         }
       },
       "menu": {

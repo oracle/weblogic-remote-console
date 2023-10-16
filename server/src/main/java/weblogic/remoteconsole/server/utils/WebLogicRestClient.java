@@ -8,6 +8,7 @@ import java.net.SocketException;
 import java.util.Map;
 import java.util.logging.Logger;
 import javax.json.JsonObject;
+import javax.net.ssl.SSLException;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -231,14 +232,36 @@ public class WebLogicRestClient {
     return calculatedTargetUri;
   }
 
+  // Recursively look for an exception that we understand.
+  // If we understand the exception, make a good message
+  // for it.
+  // Otherwise, just give a generic "exception" message
   public static Response handleProcessingException(
-    ProcessingException pe
+    Throwable t
   ) throws WebLogicRestClientException {
-    Throwable t = pe.getCause();
-    if (t instanceof ConnectException || t instanceof SocketException) {
-      return ResponseHelper.createExceptionResponse(t, "Unable to connect to the WebLogic Domain.");
-    } else {
-      throw new WebLogicRestClientException(t);
+    Throwable cause = t.getCause();
+    if (cause instanceof SSLException) {
+      // Bad Request is kind of the wrong term for this, since it
+      // is us (the client) that is saying the server is "bad", rather
+      // than the server saying the client is bad but this is a limitation of
+      // being, logically, a "proxy".  We are a server and need to respond as a
+      // server, but we are also a client.  Luckily, the message will explain
+      // better.
+      return ResponseHelper.createExceptionResponse(
+        Response.Status.BAD_REQUEST, cause, cause.getMessage());
     }
+    if (cause instanceof ConnectException) {
+      return ResponseHelper.createExceptionResponse(
+        Response.Status.NOT_FOUND, cause, cause.getMessage());
+    }
+    if (cause instanceof SocketException) {
+      // Something seems to have gone wrong - shouldn't happen
+      return ResponseHelper.createExceptionResponse(
+        Response.Status.INTERNAL_SERVER_ERROR, cause, cause.getMessage());
+    }
+    if (cause != null) {
+      return handleProcessingException(cause);
+    }
+    throw new WebLogicRestClientException(t);
   }
 }

@@ -1769,6 +1769,9 @@ Copyright (c) 2014 The cheeriojs contributors
 ee-first
 Copyright (c) 2014 Jonathan Ong me@jongleberry.com
 
+electron-log
+Copyright (c) 2016 Alexey Prokhorov
+
 electron-preferences
 Copyright 2019 Tim Ambler <tkambler@gmail.com>
 

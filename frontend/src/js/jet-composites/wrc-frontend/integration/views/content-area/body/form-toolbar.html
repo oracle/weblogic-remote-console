@@ -9,9 +9,9 @@
       <div id="form-toolbar-save-button" class="oj-flex-bar-start">
         <oj-bind-if test="[[sliceReadOnly()===false && i18n.buttons.save.visible()]]">
           <oj-button id="[[i18n.buttons.save.id]]" on-oj-action="[[onSave]]" chroming="borderless"
-           disabled="[[i18n.buttons.save.disabled]]">
+                     disabled="[[i18n.buttons.save.disabled]]">
             <img class="button-icon" slot="startIcon"
-             data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.save.iconFile() + '.png', alt: i18n.buttons.save.label()}" />
+                 data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.save.iconFile() + '.png', alt: i18n.buttons.save.label()}" />
             <span class="button-label">
               <oj-bind-text value="[[i18n.buttons.save.label()]]"></oj-bind-text>
             </span>
@@ -19,9 +19,9 @@
         </oj-bind-if>
         <oj-bind-if test="[[i18n.buttons.write.visible()]]">
           <oj-button id="[[i18n.buttons.write.id]]" on-oj-action="[[onUpdateContentFile]]" chroming="borderless"
-           disabled="[[i18n.buttons.write.disabled]]">
+                     disabled="[[i18n.buttons.write.disabled]]">
             <img class="button-icon" slot="startIcon"
-             data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.write.iconFile + '.png', alt: i18n.buttons.write.label}" />
+                 data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.write.iconFile + '.png', alt: i18n.buttons.write.label}" />
             <span class="button-label">
               <oj-bind-text value="[[i18n.buttons.write.label]]"></oj-bind-text>
             </span>
@@ -29,9 +29,9 @@
         </oj-bind-if>
         <oj-bind-if test="[[i18n.buttons.cancel.visible()]]">
           <oj-button id="[[i18n.buttons.cancel.id]]" on-oj-action="[[cancelAction]]" chroming="borderless"
-             disabled="[[i18n.buttons.cancel.disabled]]">
+                     disabled="[[i18n.buttons.cancel.disabled]]">
             <img class="button-icon" slot="startIcon"
-             data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.cancel.iconFile + '.png', alt: i18n.buttons.cancel.label}" />
+                 data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.cancel.iconFile + '.png', alt: i18n.buttons.cancel.label}" />
             <span class="button-label">
               <oj-bind-text value="[[i18n.buttons.cancel.label]]"></oj-bind-text>
             </span>
@@ -43,19 +43,19 @@
     <oj-bind-if test="[[isWizardForm()]]">
       <oj-bind-if test="[[createFormMode() === 'PAGING']]">
         <oj-button id="[[i18n.buttons.back.id]]" on-oj-action="[[backAction]]" chroming="borderless"
-          disabled="[[i18n.buttons.back.disabled]]">
+                   disabled="[[i18n.buttons.back.disabled]]">
           <img class="button-icon" slot="startIcon"
-            data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.back.iconFile + '.png', alt: i18n.buttons.back.label}" />
+               data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.back.iconFile + '.png', alt: i18n.buttons.back.label}" />
           <span class="button-label">
             <oj-bind-text value="[[i18n.buttons.back.label]]"></oj-bind-text>
           </span>
         </oj-button>
 
         <oj-button
-          id="[[i18n.buttons.next.id]]"
-          on-oj-action="[[nextAction]]"
-          chroming="borderless"
-          disabled="[[i18n.buttons.next.disabled]]"
+            id="[[i18n.buttons.next.id]]"
+            on-oj-action="[[nextAction]]"
+            chroming="borderless"
+            disabled="[[i18n.buttons.next.disabled]]"
         >
           <img class="button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.next.iconFile + '.png', alt: i18n.buttons.next.label}"/>
           <span class="button-label" ><oj-bind-text value="[[i18n.buttons.next.label]]"></oj-bind-text></span>
@@ -63,18 +63,18 @@
       </oj-bind-if>
 
       <oj-button id="[[i18n.buttons.finish.id]]" on-oj-action="[[finishAction]]" chroming="borderless"
-        disabled="[[i18n.buttons.finish.disabled]]">
+                 disabled="[[i18n.buttons.finish.disabled]]">
         <img class="button-icon" slot="startIcon"
-          data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.finish.iconFile + '.png', alt: i18n.buttons.finish.label}" />
+             data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.finish.iconFile + '.png', alt: i18n.buttons.finish.label}" />
         <span class="button-label">
           <oj-bind-text value="[[i18n.buttons.finish.label]]"></oj-bind-text>
         </span>
       </oj-button>
 
       <oj-button id="[[i18n.buttons.cancel.id]]" on-oj-action="[[cancelAction]]" chroming="borderless"
-       disabled="[[i18n.buttons.cancel.disabled]]">
+                 disabled="[[i18n.buttons.cancel.disabled]]">
         <img class="button-icon" slot="startIcon"
-         data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.cancel.iconFile + '.png', alt: i18n.buttons.cancel.label}" />
+             data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.cancel.iconFile + '.png', alt: i18n.buttons.cancel.label}" />
         <span class="button-label">
           <oj-bind-text value="[[i18n.buttons.cancel.label]]"></oj-bind-text>
         </span>
@@ -85,9 +85,9 @@
 
       <div id="form-toolbar-delete-button" class="oj-flex-bar-middle">
         <oj-button id="[[i18n.i18n.buttons.delete.id]]" on-oj-action="[[deleteAction]]" chroming="borderless"
-          disabled="[[i18n.buttons.delete.disabled]]">
+                   disabled="[[i18n.buttons.delete.disabled]]">
           <img class="button-icon" slot="startIcon"
-            data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.delete.iconFile + '.png', alt: i18n.buttons.delete.label}" />
+               data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.delete.iconFile + '.png', alt: i18n.buttons.delete.label}" />
           <span class="button-label">
             <oj-bind-text value="[[i18n.buttons.delete.label]]"></oj-bind-text>
           </span>
@@ -97,9 +97,9 @@
     <oj-bind-if test="[[!readonly()]]">
       <div id="form-toolbar-new-button" class="oj-flex-bar-start">
         <oj-button id="[[i18n.buttons.new.id]]" on-oj-action="[[newAction]]" chroming="borderless"
-          disabled="[[i18n.buttons.new.disabled]]">
+                   disabled="[[i18n.buttons.new.disabled]]">
           <img class="button-icon" slot="startIcon"
-            data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.new.iconFile + '.png', alt: i18n.buttons.new.label}" />
+               data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.new.iconFile + '.png', alt: i18n.buttons.new.label}" />
           <span class="button-label">
             <oj-bind-text value="[[i18n.buttons.new.label]]"></oj-bind-text>
           </span>
@@ -116,9 +116,9 @@
 
     <oj-bind-if test="[[i18n.buttons.dashboard.visible()]]">
       <oj-button id="[[i18n.buttons.dashboard.id]]" on-oj-action="[[dashboardAction]]" chroming="borderless"
-         disabled="[[i18n.buttons.dashboard.disabled]]">
+                 disabled="[[i18n.buttons.dashboard.disabled]]">
         <img class="button-icon" slot="startIcon"
-         data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.dashboard.iconFile + '.png', alt: i18n.buttons.dashboard.label}" />
+             data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.dashboard.iconFile + '.png', alt: i18n.buttons.dashboard.label}" />
         <span class="button-label">
           <oj-bind-text value="[[i18n.buttons.dashboard.label]]"></oj-bind-text>
         </span>
@@ -160,8 +160,8 @@
         <div id="sync-toolbar-icon" class="oj-flex-item">
           <a on-click="[[syncClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.sync.tooltip}">
             <img id="sync-icon"
-             data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[autoSyncEnabled() ? 'sync-on-icon-blk_24x24' : 'sync-off-icon-blk_24x24' ]] + '.png', alt: i18n.icons.sync.tooltip}"
-             data-interval="0" />
+                 data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[autoSyncEnabled() ? 'bouncing-icon-blk_24x38' : 'sync-off-icon-blk_24x38' ]] + '.png', alt: i18n.icons.sync.tooltip}"
+                 data-interval="0" />
           </a>
         </div>
 
@@ -189,13 +189,13 @@
         </oj-bind-if>
 
         <oj-menu
-          id="shoppingCartMenu"
-          aria-labelledby="shoppingCartMenuLauncher"
-          on-oj-action="[[shoppingCartMenuClickListener]]"
-          open-options.launcher="shoppingCartMenuLauncher"
+            id="shoppingCartMenu"
+            aria-labelledby="shoppingCartMenuLauncher"
+            on-oj-action="[[shoppingCartMenuClickListener]]"
+            open-options.launcher="shoppingCartMenuLauncher"
         >
           <oj-bind-if
-            test="[[changeManager().isLockOwner && changeManager().hasChanges && changeManager().supportsChanges]]">
+              test="[[changeManager().isLockOwner && changeManager().hasChanges && changeManager().supportsChanges]]">
             <oj-option :id="[[i18n.menus.shoppingcart.view.id]]" value="[[i18n.menus.shoppingcart.view.id]]">
               <span>
                 <oj-bind-text value="[[i18n.menus.shoppingcart.view.label]]"></oj-bind-text>
@@ -207,7 +207,7 @@
           </oj-bind-if>
           <oj-bind-if test="[[!readonly()]]">
             <oj-option :id="[[i18n.menus.shoppingcart.discard.id]]" value="[[i18n.menus.shoppingcart.discard.id]]"
-              disabled="[[!changeManager().hasChanges]]">
+                       disabled="[[!changeManager().hasChanges]]">
               <img id="discard-changes" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[i18n.menus.shoppingcart.discard.iconFile]] + '.png', alt:i18n.menus.shoppingcart.discard.label}" />
               <span><oj-bind-text value="[[i18n.menus.shoppingcart.discard.label]]"></oj-bind-text></span>
             </oj-option>

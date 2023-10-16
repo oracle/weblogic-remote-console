@@ -58,7 +58,7 @@ Because you can also use Java system properties to configure proxy server settin
 
 #### Configure individual proxy server settings
 
-1. Open the Kiosk.
+1. Open the Providers drawer.
 1. Beside the Administration Server provider where you want to configure a proxy server, click the ![Settings icon](/weblogic-remote-console/images/icons/data-providers-info-icon-brn_24x24.png) Settings icon.
 1. In the **Proxy Override** field, enter the address of the proxy server, including both the host name and port.
 

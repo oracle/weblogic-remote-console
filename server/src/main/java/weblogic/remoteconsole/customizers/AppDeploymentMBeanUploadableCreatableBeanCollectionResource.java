@@ -59,8 +59,13 @@ public class AppDeploymentMBeanUploadableCreatableBeanCollectionResource extends
           ic,
           new ConfigurationTransactionHelper.ConfigurationEditor() {
             @Override
-            public Response editConfiguration() {
-              return createAppDeployment(ic, formProperties);
+            public Response<Void> editConfiguration() {
+              Response<Void> response = new Response<>();
+              Response<Value> createResponse = createAppDeployment(ic, formProperties);
+              if (!createResponse.isSuccess()) {
+                return response.copyUnsuccessfulResponse(createResponse);
+              }
+              return response.setSuccess(null);
             }
           }
       );
@@ -76,7 +81,7 @@ public class AppDeploymentMBeanUploadableCreatableBeanCollectionResource extends
       String applicationPath = getStringFromFormProperties("SourcePath", formProperties, true);
       String plan = getStringFromFormProperties("PlanPath", formProperties, false);
       Properties deploymentOptions = getPropertiesFromFormProperties(formProperties);
-      List<Value> targetList = new ArrayList();
+      List<Value> targetList = new ArrayList<>();
       FormProperty fp = findOptionalFormProperties("Targets", formProperties);
       if (fp != null) {
         ArrayValue targetsArrayValue = (ArrayValue) fp.getValue().asSettable().getValue();

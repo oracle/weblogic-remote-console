@@ -116,23 +116,25 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       this.readonly = ko.observable();
 
       this.connected = function () {
-        const rdjData = viewParams.parentRouter.data.rdjData();
+        function setIsReadOnlyRuntimeProperty() {
+          const rdjData = viewParams.parentRouter.data.rdjData();
+          const isNonCreatableCollection = rdjData.self.kind === 'nonCreatableCollection';
+          Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, isNonCreatableCollection || !['configuration','modeling','properties','security'].includes(viewParams.perspective.id));
+          self.readonly(Runtime.isReadOnly());
+        }
 
-        const isNonCreatableCollection = rdjData.self.kind === 'nonCreatableCollection';
+        setIsReadOnlyRuntimeProperty();
 
-        Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, isNonCreatableCollection || !['configuration','modeling','properties','security'].includes(self.perspective.id));
-        self.readonly(Runtime.isReadOnly());
+        const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write'}.label`);
+        self.i18n.buttons.write.label(label);
+        self.i18n.buttons.write.visible(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && ['modeling','properties'].includes(self.perspective.id));
+        self.i18n.buttons.new.visible(['configuration','modeling','security','properties'].includes(self.perspective.id));
 
         let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
           self.readonly(newRO);
           self.i18n.menus.shoppingcart.discard.visible(!newRO);
           self.i18n.menus.shoppingcart.commit.visible(!newRO);
         });
-
-        const label = oj.Translations.getTranslatedString(`wrc-common.buttons.${ViewModelUtils.isElectronApiAvailable() ? 'savenow' : 'write'}.label`);
-        self.i18n.buttons.write.label(label);
-        self.i18n.buttons.write.visible(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && ['modeling','properties'].includes(self.perspective.id));
-        self.i18n.buttons.new.visible(['configuration','modeling','security','properties'].includes(self.perspective.id));
 
         self.signalBindings.push(binding);
 
@@ -158,6 +160,18 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
                 ViewModelUtils.failureResponseDefaultHandling(response);
               });
             return;
+          } else
+          //we want to get the latest info from ChangeManager so that everything is in sync when we first
+          //bring up the form.
+          if (eventType === 'sync') {
+            ChangeManager.getData()
+            .then(data => {
+              changeManager.supportsChanges = data.changeManager.supportsChanges;
+              changeManager.isLockOwner = data.changeManager.isLockOwner;
+              changeManager.hasChanges = data.changeManager.hasChanges;
+              ChangeManager.putMostRecent(changeManager);
+              self.changeManager(changeManager);
+            });
           }
 
           // Handle the event based on the supplied changeManager
@@ -216,17 +230,18 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       };
 
       this.shoppingCartMenuClickListener = function (event) {
-        if (event.target.value === 'view') {
-          viewParams.signaling.tabStripTabSelected.dispatch('table-toolbar', ChangeManager.Entity.SHOPPING_CART.name, true);
+        const value = event.target.value;
+        if (value === 'view') {
+          viewParams.signaling.ancillaryContentItemSelected.dispatch('table-toolbar', ChangeManager.Entity.SHOPPING_CART.name);
         }
         else {
-          switch (event.target.value){
+          switch (value){
             case 'commit':
               ViewModelUtils.setPreloaderVisibility(true);
               ChangeManager.commitChanges()
-                .then((changeManager) => {
-                  self.changeManager(changeManager);
-                  viewParams.signaling.tabStripTabSelected.dispatch('table-toolbar', ChangeManager.Entity.SHOPPING_CART.name, false);
+                .then(value => {
+                  self.changeManager(value);
+                  viewParams.signaling.ancillaryContentItemCleared.dispatch('shoppingcart-launcher');
                 })
                 .catch(response => {
                   ViewModelUtils.failureResponseDefaultHandling(response);
@@ -240,7 +255,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
               ChangeManager.discardChanges()
                 .then((changeManager) => {
                   self.changeManager(changeManager);
-                  viewParams.signaling.tabStripTabSelected.dispatch('table-toolbar', ChangeManager.Entity.SHOPPING_CART.name, false);
+                  viewParams.signaling.ancillaryContentItemCleared.dispatch('shoppingcart-launcher');
                   viewParams.onShoppingCartDiscarded();
                 })
                 .catch(response => {

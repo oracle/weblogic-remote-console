@@ -108,19 +108,24 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
         file = "monitoringNavTreeServerMetricsAdminDeploymentMenu.png";
         try {
             await admin.goToNavTreeLevelFiveLink(driver,"monitoring","Deployments",
-                "Application Runtimes","MyAdminJmsModule","Component Runtimes","MyAdminJmsModule");
-            await admin.goToNavTreeLevelFiveLink(driver,"monitoring", "Deployments",
-                "Application Runtimes","MyAdminJmsModule","Managed Executor Service Runtimes","DefaultManagedExecutorService");
+                "Application Runtime Data","medrec","Component Runtimes","AdminServer_/medrec");
+            await admin.goToNavTreeLevelSevenLink(driver,"monitoring", "Deployments",
+                "Application Runtime Data","physician","Component Runtimes",
+                "AdminServer_/medrec/physician","Servlets","Faces Servlet");
             await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Deployments",
-                "App Deployment Runtimes", "jms-local-adp");
+                "Application Management", "jms-local-adp");
             await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Deployments",
-                "Library Runtimes", "pwdgen");
+                "Library Runtime Data", "pwdgen");
+            await admin.goToNavTreeLevelFiveLink(driver, "monitoring", "Deployments",
+                "Library Management", "pwdgen","Per Server States","AdminServer");
             await driver.sleep(600);
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Deployments",
+                "Library Management", "pwdgen");
             console.log("Click pwdgen pop down menu");
-            await driver.findElement(By.css(".oj-end")).click();
+            await driver.findElement(By.xpath("//*[@id='breadcrumbs-container']/ul/li[2]/oj-menu-button")).click();
             await driver.sleep(600);
             console.log("Select Library Configuration - Edit Tree");
-            await driver.findElement(By.xpath("//oj-option[@id=\'Library Configuration - Edit Tree\']/a")).click();
+            await driver.findElement(By.xpath("//oj-option[@id='Library Configuration - Edit Tree']/a")).click();
             await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
                 "Deployments", "Web Services", "Wsee Wsrm Runtime");
             await admin.goToNavTreeLevelSevenLink(driver, "monitoring", "Deployments",

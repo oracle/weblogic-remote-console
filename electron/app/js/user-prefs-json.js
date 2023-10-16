@@ -127,22 +127,22 @@ const UserPrefs = (() => {
                       key: 'appExit',
                       type: 'radio',
                       options: [
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: true},
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: false}
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: true },
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: false }
                       ]
                     },
                     {
                       // The preference is currently used, but can occur in
                       // various situations.  For now, we'll have the property
                       // and use it in the code, but not show it or try to explain it.
-                      label: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.unload.label')}`,
-                      help: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.unload.help')}`,
+                      label: 'This is disabled for now',
+                      help: 'This is disabled for now',
                       hideFunction: () => { return true; },
                       key: 'unload',
                       type: 'radio',
                       options: [
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: true},
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: false}
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: false},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: true}
                       ]
                     }
                   ]

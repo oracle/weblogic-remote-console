@@ -25,8 +25,9 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
 
     const registerAppResizerSignalAddListeners = () => {
       Controller.getSignal('resizeObserverTriggered').add(resizerData => {
-        console.log(`[APP-RESIZER] resizerData=${JSON.stringify(resizerData)}`);
-        let maxWidthVariable = resizerData['globalBody'].width - resizerData['right_panel'].width;
+        Logger.log(`[APP-RESIZER] resizerData=${JSON.stringify(resizerData)}`);
+        let maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
+        document.documentElement.style.setProperty('--landing-page-panel-subtree-calc-min-width', `${maxWidthVariable}px`);
         maxWidthVariable = (NAVTREE_MIN_WIDTH + NAVSTRIP_WIDTH + PANEL_RESIZER_WIDTH + LEFT_PANEL_MAX_WIDTH_MARGIN);
         document.documentElement.style.setProperty('--landing-page-panel-subtree-calc-max-width', `${maxWidthVariable}px`);
         document.documentElement.style.setProperty('--landing-page-conveyor-calc-max-width', `${maxWidthVariable}px`);
@@ -37,7 +38,7 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
         maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
         document.documentElement.style.setProperty('--instructions-calc-max-width', `${maxWidthVariable}px`);
         document.documentElement.style.setProperty('--content-area-body-content-calc-max-width', `${maxWidthVariable}px`);
-        maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + RIGHT_PANEL_MIN_WIDTH_MARGIN);
+        maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
         document.documentElement.style.setProperty('--table-container-calc-max-width', `${maxWidthVariable}px`);
         maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH);
         document.documentElement.style.setProperty('--beanpath-history-container-calc-min-width', `${maxWidthVariable}px`);
@@ -116,7 +117,7 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
 
     function resizeContentAreaElements(source, newOffsetLeft, newOffsetWidth) {
       const viewPortValues = getBrowserViewPortValues();
-      Logger.info(`[APP-RESIZER] window.width=${viewPortValues.width}, window.height=${viewPortValues.height}`);
+      Logger.log(`[APP-RESIZER] window.width=${viewPortValues.width}, window.height=${viewPortValues.height}`);
       if (newOffsetWidth !== viewPortValues.width) resizeDomainsToolbarRight(source, newOffsetLeft, newOffsetWidth);
       resizeContentAreaBodyContainer(source);
     }
@@ -220,7 +221,7 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
           }
         }
         else {
-          Logger.info('[APP-RESIZER] newOffsetWidth=0');
+          Logger.log('[APP-RESIZER] newOffsetWidth=0');
         }
 
         resizeContentAreaElements(source, newOffsetLeft, newOffsetWidth);

@@ -49,14 +49,19 @@ const { homepage, productName, version, copyright } = require(`${instDir}/packag
 
 let feedURL;
 
-if (process.env.CONSOLE_FEED_URL)
+// The documentation says to not use setFeedURL(), though it seems to work.
+// We'll only use it for testing.
+if (process.env.CONSOLE_FEED_URL) {
   feedURL = process.env.CONSOLE_FEED_URL;
-else if (fs.existsSync(`${instDir}/feed-url.json`))
-  feedURL = require(`${instDir}/feed-url.json`).feedURL;
-
-if (feedURL) {
   const { setFeedURL } = require('./js/auto-update-utils');
   setFeedURL(feedURL);
+}
+else {
+  // electron-builder puts a URL in itself, but it is not available to us
+  // unless we do this trick.  We need it for prompting the user, so we'll
+  // use the builder data to do it.
+  if (fs.existsSync(`${instDir}/electron-builder-custom.json`))
+    feedURL = require(`${instDir}/electron-builder-custom.json`)?.publish?.url;
 }
 
 
@@ -470,6 +475,10 @@ ipcMain.handle('file-choosing', async (event, dialogParams) => {
       };
       return Promise.reject(response);
     });
+});
+
+ipcMain.handle('external-url-opening', async (event, arg) => {
+  AppWindow.openExternalURL(arg);
 });
 
 ipcMain.handle('complete-login', async (event, arg) => {

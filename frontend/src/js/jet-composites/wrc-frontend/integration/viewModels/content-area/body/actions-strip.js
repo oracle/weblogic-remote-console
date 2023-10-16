@@ -69,18 +69,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           else {
             if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
               MessageDisplaying.displayResponseMessages(reply.messages);
-/*
-//MLW
-              if (reply.messages.length === 0) {
-                MessageDisplaying.displayMessage({
-                  severity: 'confirmation',
-                  summary: oj.Translations.getTranslatedString('wrc-pdj-actions.messages.action.actionSucceeded.summary', options.label)
-                }, 2500);
-              }
-              else {
-                 MessageDisplaying.displayResponseMessages(reply.messages);
-              }
- */
             }
             else {
               MessageDisplaying.displayMessage(reply.data, 5000);
@@ -101,7 +89,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         };
         options['isDownloadAction'] = (['downloadLogAsJson', 'downloadLogAsPlainText'].includes(options.action));
 
-        viewParams.signaling.tabStripTabSelected.dispatch('actions-strip', 'shoppingcart', false);
+        viewParams.signaling.ancillaryContentItemCleared.dispatch('actions-strip');
 
         const pdjData = viewParams.parentRouter.data.pdjData();
         const rdjData = viewParams.parentRouter.data.rdjData();

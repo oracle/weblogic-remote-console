@@ -11,6 +11,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/integration/viewModels/utils', '
     function ContentAreaHeaderButtonsToolbar(viewParams) {
       const self = this;
 
+      const ITEM_SELECTED_BACKGROUND_COLOR = ViewModelUtils.getCustomCssProperty('ancillary-content-item-title-bkgd-color');
+
       this.i18n = {
         toolbar: {
           buttons: {
@@ -20,19 +22,21 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/integration/viewModels/utils', '
             }
           },
           icons: {
-            tips: {id: 'tips', iconFile: ko.observable('tips-icon-blk_24x24'), disabled: ko.observable(false), visible: ko.observable(false),
-              label: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.tips.label')
+            'recent': {
+              id: 'recent-pages', iconFile: ko.observable('toggle-beanpath-history-on-blk_24x24'), disabled: ko.observable(false), visible: ko.observable(false),
+              label: oj.Translations.getTranslatedString('wrc-common.tooltips.recentPages.value')
             },
-            projectmanagement: {id: 'projectmanagement', iconFile: ko.observable('project-management-blk_24x24'), disabled: ko.observable(false), visible: ko.observable(false),
+            'providermanagement': {
+              id: 'provider-management', iconFile: 'project-management-blk_24x24', disabled: ko.observable(false), visible: ko.observable(true),
               label: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.projectmanagement.label')
             },
-            shoppingcart: {
-              id: 'shoppingcart', iconFile: ko.observable('shopping-cart-non-empty-blk_24x24'), disabled: ko.observable(false), visible: ko.observable(false),
-              label: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.shoppingcart.label')
+            tips: {
+              id: 'tips', iconFile: 'tips-icon-blk_24x24', disabled: ko.observable(false), visible: ko.observable(false),
+              label: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.tips.label')
             },
-            recent: {
-              id: 'recent', iconFile: ko.observable('toggle-beanpath-history-on-blk_24x24'), disabled: ko.observable(false), visible: ko.observable(false),
-              label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.recent.label')
+            ataglance: {
+              id: 'ataglance', iconFile: 'ataglance-tabstrip-icon_24x24', disabled: ko.observable(true), visible: ko.observable(false),
+              label: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.ataglance.label')
             }
           }
         }
@@ -80,6 +84,31 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/integration/viewModels/utils', '
 
         this.signalBindings.push(binding);
 
+        binding = viewParams.signaling.ancillaryContentItemToggled.add((source, changedState) => {
+          function handleIconItemChangedState(changedState) {
+            const dialog = document.getElementById(`${changedState.id}-dialog`);
+
+            if (dialog !== null) {
+              setToolbarButtonToggleState(changedState);
+
+              switch (changedState.state) {
+                case 'opened':
+                  removeDialogHeaderTitleNode(dialog);
+                  setDialogPosition(dialog);
+                  dialog.open(`#${changedState.id}-iconbar-icon`);
+                  break;
+                case 'closed':
+                  dialog.close();
+                  break;
+              }
+            }
+          }
+
+          handleIconItemChangedState(changedState);
+        });
+
+        self.signalBindings.push(binding);
+
       }.bind(this);
 
       this.disconnected = function () {
@@ -99,13 +128,20 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/integration/viewModels/utils', '
        */
       this.contentAreaHeaderButtonClickHandler = (event) => {
         switch(event.currentTarget.id) {
-          case 'home': {
-            if (!self.i18n.toolbar.buttons.home.disabled()) {
-              viewParams.onToolbarButtonClicked({id: 'home'});
-              // Go to "Home" page
-              viewParams.parentRouter.go('home');
-            }
-          }
+          case 'home':
+            ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)
+              .then(reply => {
+                if (reply) {
+                  if (!self.i18n.toolbar.buttons.home.disabled()) {
+                    viewParams.onToolbarButtonClicked({id: 'home'});
+                    // Go to "Home" page
+                    viewParams.parentRouter.go('home');
+                  }
+                }
+              })
+              .catch(failure => {
+                ViewModelUtils.failureResponseDefaultHandling(failure);
+              });
             break;
           default:
             break;
@@ -113,22 +149,34 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/integration/viewModels/utils', '
       };
 
       this.contentAreaHeaderIconClickHandler = (event) => {
-        const options = {id: event.currentTarget.id};
-        switch(options.id) {
+        const iconId = event.currentTarget.id;
+        switch (iconId) {
+          case 'recent-pages-iconbar-icon':
+          case 'provider-management-iconbar-icon':
           case 'tips-iconbar-icon':
-          case 'recent-iconbar-icon':
-          case 'projectmanagement-iconbar-icon':
-          case 'shoppingcart-iconbar-icon':
+          case 'ataglance-iconbar-icon':
             ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)
               .then(reply => {
                 if (reply) {
-                  if (options.id === 'recent-iconbar-icon') {
-                    const toggleState = toggleToolbarButtonState(options.id);
-                    if (CoreUtils.isNotUndefinedNorNull(toggleState)) {
-                      options['data-state'] = toggleState;
-                      const iconId = options.id.replace('-iconbar-icon', '');
-                      self.i18n.toolbar.icons[iconId].iconFile(toggleState === 'expanded' ? 'toggle-beanpath-history-off-blk_24x24' : 'toggle-beanpath-history-on-blk_24x24');
-                      viewParams.onToolbarButtonToggled(options);
+                  // Remove suffix from linkId used to ensure it
+                  // is unique within the DOM.
+                  const changedState = {id: iconId.replace('-iconbar-icon', '')};
+                  // Get the toggled (not current) state for the
+                  // iconbar icon.
+                  const toggleState = getToolbarButtonToggleState(changedState.id);
+                  // Only do something if toggleState.value is not undefined
+                  if (CoreUtils.isNotUndefinedNorNull(toggleState.value)) {
+                    // Update changedState with toggled state
+                    changedState['state'] = toggleState.value;
+                    // Need different handling if iconbar id is recent-pages
+                    if (changedState.id === 'recent-pages') {
+                      // Swap the iconFile to indicated the new
+                      self.i18n.toolbar.icons.recent.iconFile(toggleState.value === 'visible' ? 'toggle-beanpath-history-off-blk_24x24' : 'toggle-beanpath-history-on-blk_24x24');
+                      setToolbarButtonToggleState(changedState);
+                      viewParams.onToolbarButtonToggled(changedState);
+                    }
+                    else {
+                      viewParams.signaling.ancillaryContentItemSelected.dispatch('buttons-toolbar', changedState.id);
                     }
                   }
                 }
@@ -142,6 +190,23 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/integration/viewModels/utils', '
         }
       };
 
+      function removeDialogHeaderTitleNode(dialog) {
+        const nodeList = document.querySelectorAll(`#${dialog.id} > div.oj-dialog-container > div.oj-dialog-header`);
+        if (nodeList !== null) {
+          let arr = Array.from(nodeList);
+          for (let i in arr.reverse()) {
+            nodeList[i].remove();
+          }
+        }
+      }
+
+      function setDialogPosition(dialog) {
+        dialog.setProperty('position.of', '#provider-management-iconbar-icon');
+        dialog.setProperty('position.at.horizontal', 'right');
+        dialog.setProperty('position.at.vertical', 'bottom');
+        dialog.setProperty('position.my.vertical', 'top');
+      }
+
       function setToolbarButtonDisabledState(buttonId, state) {
         self.i18n.toolbar.buttons[buttonId].disabled(state);
       }
@@ -154,15 +219,30 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/integration/viewModels/utils', '
         self.i18n.toolbar.icons[buttonId].visible(visible);
       }
 
-      function toggleToolbarButtonState(id) {
-        let toggleState;
-        const ele = document.getElementById(id);
-        if (ele !== null) {
-          toggleState = ele.getAttribute('data-state');
-          toggleState = (toggleState === 'collapsed' ? 'expanded' : 'collapsed');
-          ele.setAttribute('data-state', toggleState);
+      function getToolbarButtonToggleState(iconId) {
+        const toggleState = {previousValue: undefined, value: undefined};
+        const link = document.getElementById(`${iconId}-iconbar-icon`);
+        if (link !== null) {
+          toggleState.previousValue = link.getAttribute('data-state');
+          if (iconId === 'recent-pages') {
+            toggleState.value = (toggleState.previousValue === 'collapsed' ? 'expanded' : 'collapsed');
+          }
+          else {
+            toggleState.value = (toggleState.previousValue === 'closed' ? 'opened' : 'closed');
+          }
         }
         return toggleState;
+      }
+
+      function setToolbarButtonToggleState(changedState) {
+        const link = document.getElementById(`${changedState.id}-iconbar-icon`);
+        if (link !== null) {
+          const toggleState = {value: link.getAttribute('data-state')};
+          if (toggleState.value !== changedState.state) {
+            link.setAttribute('data-state', changedState.state);
+            link.style['background-color'] = (toggleState.value === 'closed' ? ITEM_SELECTED_BACKGROUND_COLOR : 'unset');
+          }
+        }
       }
 
     }

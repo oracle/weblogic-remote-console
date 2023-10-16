@@ -73,13 +73,13 @@
           <img id="toggle-history" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showBeanPathHistory() ? 'toggle-beanpath-history-on-blk_24x24' : 'toggle-beanpath-history-off-blk_24x24']] + '.png', alt: i18n.icons.history.tooltip}"/>
         </a>
       </div>
-<!--
-      <div id="toggle-instructions-toolbar-icon" class="oj-flex-item">
-        <a on-click="[[toggleInstructionsClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.instructions.tooltip}">
-          <img id="toggle-instructions" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showInstructions() ? 'toggle-instructions-on-blk_24x24' : 'toggle-instructions-off-blk_24x24']] + '.png', alt: i18n.icons.instructions.tooltip}"/>
-        </a>
-      </div>
--->
+      <!--
+            <div id="toggle-instructions-toolbar-icon" class="oj-flex-item">
+              <a on-click="[[toggleInstructionsClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.instructions.tooltip}">
+                <img id="toggle-instructions" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showInstructions() ? 'toggle-instructions-on-blk_24x24' : 'toggle-instructions-off-blk_24x24']] + '.png', alt: i18n.icons.instructions.tooltip}"/>
+              </a>
+            </div>
+      -->
       <div id="page-help-toolbar-icon" class="oj-flex-item">
         <a on-click="[[helpPageClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.help.tooltip}">
           <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png', alt: i18n.icons.help.tooltip}"/>
@@ -94,7 +94,7 @@
 
         <div id="sync-toolbar-icon" class="oj-flex-item">
           <a on-click="[[syncClick]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.sync.tooltip}">
-            <img id="sync-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[autoSyncEnabled() ? 'sync-on-icon-blk_24x24' : 'sync-off-icon-blk_24x24' ]] + '.png', alt: i18n.icons.sync.tooltip}" data-interval="0"/>
+            <img id="sync-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[autoSyncEnabled() ? 'bouncing-icon-blk_24x38' : 'sync-off-icon-blk_24x38' ]] + '.png', alt: i18n.icons.sync.tooltip}" data-interval="0"/>
           </a>
         </div>
 
@@ -122,10 +122,10 @@
         </oj-bind-if>
 
         <oj-menu
-          id="shoppingCartMenu"
-          aria-labelledby="shoppingCartMenuLauncher"
-          on-oj-action="[[shoppingCartMenuClickListener]]"
-          open-options.launcher="shoppingCartMenuLauncher"
+            id="shoppingCartMenu"
+            aria-labelledby="shoppingCartMenuLauncher"
+            on-oj-action="[[shoppingCartMenuClickListener]]"
+            open-options.launcher="shoppingCartMenuLauncher"
         >
           <oj-bind-if test="[[changeManager().isLockOwner && changeManager().hasChanges && changeManager().supportsChanges]]">
             <oj-option :id="[[i18n.menus.shoppingcart.view.id]]" value="[[i18n.menus.shoppingcart.view.id]]">
