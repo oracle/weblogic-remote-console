@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
@@ -51,6 +53,8 @@ import weblogic.remoteconsole.server.webapp.WebAppUtils;
 @Provider
 @PreMatching
 public class SessionFilter implements ContainerRequestFilter {
+  @Context
+  private HttpServletRequest requestServletContext;
   private static boolean inputOutputTrace =
     (System.getenv("BACKEND_FRONTEND_INPUT_OUTPUT_TRACE") != null);
   private static final Logger LOGGER = Logger.getLogger(SessionFilter.class.getName());
@@ -78,6 +82,8 @@ public class SessionFilter implements ContainerRequestFilter {
         + requestContext.getCookies()
         + " headers="
         + requestContext.getHeaders()
+        + " and UserPrincipal of "
+        + requestContext.getSecurityContext().getUserPrincipal()
       );
     }
 
@@ -94,40 +100,52 @@ public class SessionFilter implements ContainerRequestFilter {
       return;
     }
 
-    // Look for the session id and setup the request context property
-    Cookie sessionId = requestContext.getCookies().get(WebAppUtils.CONSOLE_BACKEND_COOKIE);
-    if (sessionId == null) {
-      String header = requestContext.getHeaderString("X-Session-Token");
-      if (header != null) {
-        sessionId = new Cookie("whocares", header);
-      }
-    }
-    Frontend frontend;
-    if (sessionId == null) {
-      // Create frontend instance
-      LOGGER.fine("Creating a new frontend");
-      frontend = FrontendManager.create();
-      WebAppUtils.storeCookieInContext(requestContext, frontend);
-    } else {
-      frontend = FrontendManager.find(sessionId.getValue());
+    Frontend frontend = null;
+    if (requestServletContext != null) {
+      String frontendId = requestServletContext.getSession().getId();
+      frontend = FrontendManager.find(frontendId);
       if (frontend == null) {
+        frontend = FrontendManager.create(frontendId);
+      }
+    } else {
+      // Look for the session id and setup the request context property
+      Cookie sessionId = requestContext.getCookies().get(WebAppUtils.CONSOLE_BACKEND_COOKIE);
+      if (sessionId == null) {
+        String header = requestContext.getHeaderString("X-Session-Token");
+        if (header != null) {
+          sessionId = new Cookie("whocares", header);
+        }
+      }
+      if (sessionId == null) {
+        // Create frontend instance
+        LOGGER.fine("Creating a new frontend");
         frontend = FrontendManager.create();
         WebAppUtils.storeCookieInContext(requestContext, frontend);
-        requestContext.abortWith(
-          WebAppUtils.addCookieFromRequestContext(
-          requestContext,
-          Response.status(Status.FORBIDDEN)
-        ).build());
-        LOGGER.fine("Aborted Console Backend request due to bad session!");
-        return;
+      } else {
+        frontend = FrontendManager.find(sessionId.getValue());
+        if (frontend == null) {
+          frontend = FrontendManager.create();
+          WebAppUtils.storeCookieInContext(requestContext, frontend);
+          requestContext.abortWith(
+            WebAppUtils.addCookieFromRequestContext(
+            requestContext,
+            Response.status(Status.FORBIDDEN)
+          ).build());
+          LOGGER.fine("Aborted Console Backend request due to bad session!");
+          return;
+        }
       }
     }
     frontend.storeInRequestContext(requestContext);
     frontend.setLastRequestTime();
     InvocationContext ic = new InvocationContext();
+    ic.setFrontend(frontend);
     WebAppUtils.storeInvocationContextInRequestContext(requestContext, ic);
     ic.setLocales(requestContext.getAcceptableLanguages());
     ic.setUriInfo(requestContext.getUriInfo());
+    if (requestContext.getSecurityContext().getUserPrincipal() != null) {
+      ic.setUser(requestContext.getSecurityContext().getUserPrincipal().getName());
+    }
     if (isProviderBasedPath(requestContext)) {
       setupConnectionAndRewriteURL(requestContext, frontend, ic);
     }
@@ -176,7 +194,8 @@ public class SessionFilter implements ContainerRequestFilter {
       return;
     }
     StringBuilder newPath = new StringBuilder();
-    newPath.append("/" + UriUtils.API_URI);
+    newPath.append(requestContext.getUriInfo().getBaseUri().getPath());
+    newPath.append(UriUtils.API_URI);
     for (PathSegment seg : segs.subList(2, segs.size())) {
       newPath.append("/");
       newPath.append(seg.getPath());

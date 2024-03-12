@@ -1,0 +1,36 @@
+<!--
+Copyright (c) 2024, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+
+<oj-bind-if test="[[i18n.icons.theme.visible()]]">
+  <a
+    href="#"
+    id="themeMenuLauncher"
+    class="cfe-branding-area-header-menu-icon"
+    on-click="[[launchThemeMenu]]"
+  >
+    <span :class="[[i18n.icons.theme.iconFile]]" :title="[[i18n.icons.theme.tooltip]]"></span>
+  </a>
+  <oj-menu
+    id="themeMenu"
+    role="menu"
+    aria-labelledby="themeMenuLauncher"
+    on-oj-menu-action="[[themeMenuAction]]"
+    open-options.launcher="themeMenuLauncher"
+    open-options.initial-focus="firstItem"
+  >
+    <oj-menu-select-many value="[[themeSelectedItem]]">
+      <oj-option id="light-theme" value="light">
+        <span class="cfe-more-menuitem">
+          <oj-bind-text value="[[i18n.menus.theme.light.label]]"></oj-bind-text>
+        </span>
+      </oj-option>
+      <oj-option id="dark-theme" value="dark">
+        <span class="cfe-more-menuitem">
+          <oj-bind-text value="[[i18n.menus.theme.dark.label]]"></oj-bind-text>
+        </span>
+      </oj-option>
+    </oj-menu-select-many>
+  </oj-menu>
+</oj-bind-if>

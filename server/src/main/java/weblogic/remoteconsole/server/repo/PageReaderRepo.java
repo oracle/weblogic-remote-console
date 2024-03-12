@@ -20,20 +20,12 @@ import weblogic.remoteconsole.common.utils.StringUtils;
  * This class manages reading a bean tree's pages (invoking actions too)
  */
 public abstract class PageReaderRepo extends PageRepo {
-
-  private SimpleSearchManager simpleSearchManager = new SimpleSearchManager();
-  private DashboardManager dashboardManager = null;
-  private TableCustomizationsManager tableCustomizationsManager = new TableCustomizationsManager();
-  
   private static final Logger LOGGER = Logger.getLogger(PageReaderRepo.class.getName());
 
   private static final Type CUSTOMIZE_PAGE_RETURN_TYPE = (new TypeReference<Response<Void>>() {}).getType();
 
   protected PageReaderRepo(PageRepoDef pageRepoDef, BeanRepo beanRepo) {
     super(pageRepoDef, beanRepo);
-    if (pageRepoDef.isSupportsDashboards()) {
-      dashboardManager = new DashboardManager();
-    }
   }
 
   // Get the definition of the page referred to by the invocation context.
@@ -167,15 +159,36 @@ public abstract class PageReaderRepo extends PageRepo {
     return (new ActionInvoker(ic, pageActionDef, formProperties)).invokeAction();
   }
 
-  public SimpleSearchManager getSimpleSearchManager() {
-    return simpleSearchManager;
+  public synchronized SimpleSearchManager getSimpleSearchManager(InvocationContext ic) {
+    SimpleSearchManager ret;
+    ret = (SimpleSearchManager) ic.getSessionData("SimpleSearchManager", this);
+    if (ret == null) {
+      ret = new SimpleSearchManager();
+      ic.storeSessionData("SimpleSearchManager", this, ret);
+    }
+    return ret;
   }
 
-  public DashboardManager getDashboardManager() {
-    return dashboardManager;
+  public DashboardManager getDashboardManager(InvocationContext ic) {
+    if (!getPageRepoDef().isSupportsDashboards()) {
+      return null;
+    }
+    DashboardManager ret;
+    ret = (DashboardManager) ic.getSessionData("DashboardManager", this);
+    if (ret == null) {
+      ret = new DashboardManager();
+      ic.storeSessionData("DashboardManager", this, ret);
+    }
+    return ret;
   }
 
-  public TableCustomizationsManager getTableCustomizationsManager() {
-    return tableCustomizationsManager;
+  public TableCustomizationsManager getTableCustomizationsManager(InvocationContext ic) {
+    TableCustomizationsManager ret;
+    ret = (TableCustomizationsManager) ic.getSessionData("TableCustomizationsManager", this);
+    if (ret == null) {
+      ret = new TableCustomizationsManager();
+      ic.storeSessionData("TableCustomizationsManager", this, ret);
+    }
+    return ret;
   }
 }

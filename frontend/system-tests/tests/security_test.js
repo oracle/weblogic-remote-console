@@ -176,7 +176,8 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
             }
             await driver.sleep(1200);
             console.log("Select Role1 policy checkbox");
-            await driver.findElement(By.xpath("//input[@type='checkbox']")).click();
+            await driver.findElement(
+                By.xpath("//input[@type='checkbox' and @class='oj-selectorbox']")).click();
             console.log("Select negate button");
             await driver.sleep(800);
             await driver.findElement(By.xpath("//oj-button[@id='negate']/button/div/span[2]")).click();
@@ -218,15 +219,15 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
                     await driver.findElement(By.xpath("//li[3]")).click();
                     await driver.sleep(800);
                     console.log("Enter Role Argument Name = user1");
-                    await driver.findElement(By.xpath("//*[@id='User Argument Name|input']")).sendKeys("user1");
-                    console.log("Click Ok button");
-                    element = driver.findElement(By.xpath("//*[@id='dlgOkBtn23']/button"));
+                    element = driver.findElement(By.xpath("//input[@id='User Argument Name|input']"));
+                    await element.click();
+                    await element.sendKeys("user1");
                     await driver.sleep(800);
-                    driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                    console.log("Enter <RETURN> key");
+                    await element.sendKeys(Key.ENTER);
                     await driver.sleep(800);
-                    if (element.isEnabled()) {
-                        await element.click();
-                    }
+                    console.log("Click OK button");
+                    await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn23')]")).click();
                     await driver.sleep(1200);
                     console.log("Click Save button");
                     element = driver.findElement(By.xpath("//*[@id='[[i18n.buttons.save.id]]']"));
@@ -236,7 +237,8 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
                     }
                     await driver.sleep(1200);
                     console.log("Select user1 policy checkbox");
-                    await driver.findElement(By.xpath("//input[@type='checkbox']")).click();
+                    await driver.findElement(
+                        By.xpath("//input[@type='checkbox' and @class='oj-selectorbox']")).click();
                     await driver.sleep(1200);
                     console.log("Click Add Policy Condition");
                     element = driver.findElement(By.xpath("//*[@id='addConditionLauncher']/img"));
@@ -258,7 +260,7 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
                     await driver.findElement(By.xpath("//*[@id='Group Argument Name|input']")).sendKeys("group1");
                     console.log("Click Cancel button");
                     element = driver.findElement(By.xpath("//*[@id='dlgOkBtn23']/button"));
-                    await driver.sleep(800);
+                    await driver.sleep(8800);
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     await driver.sleep(800);
                     if (element.isEnabled()) {
@@ -295,7 +297,7 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
                     await driver.findElement(By.xpath("//*[@id='Role Argument Name|input']")).sendKeys("role1");
                     console.log("Click Ok button");
                     element = driver.findElement(By.xpath("//*[@id='dlgOkBtn23']/button"));
-                    await driver.sleep(800);
+                    await driver.sleep(8800);
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     await driver.sleep(800);
                     if (element.isEnabled()) {
@@ -370,7 +372,8 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
             }
             await driver.sleep(800);
             console.log("Select group policy checkbox");
-            await driver.findElement(By.xpath("//input[@type='checkbox']")).click();
+            await driver.findElement(
+                By.xpath("//input[@type='checkbox' and @class='oj-selectorbox']")).click();
             await driver.sleep(800);
             console.log("Click Add Policy Condition");
             element = driver.findElement(By.xpath("//a[@id='addConditionLauncher']/span"));
@@ -469,7 +472,8 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
             }
             await driver.sleep(2400);
             console.log("Select policy checkbox");
-            await driver.findElement(By.xpath("//input[@type='checkbox']")).click();
+            await driver.findElement(
+                By.xpath("//input[@type='checkbox' and @class='oj-selectorbox']")).click();
             console.log("Select remove button");
             await driver.sleep(800);
             await driver.findElement(By.xpath("//oj-button[@id='remove']/button/div/span[2]")).click()
@@ -516,7 +520,7 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
             element = driver.findElement(By.xpath("//*[@id='dlgOkBtn23']/button"));
             await driver.sleep(800);
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await driver.sleep(800);
+            await driver.sleep(8800);
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -600,9 +604,10 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
             }
             await driver.sleep(2400);
             console.log("Select policy checkbox");
-            await driver.findElement(By.xpath("//input[@type='checkbox']")).click();
+            await driver.findElement(
+                By.xpath("//input[@type='checkbox' and @class='oj-selectorbox']")).click();
             console.log("Select remove button");
-            await driver.sleep(800);
+            await driver.sleep(8800);
             await driver.findElement(By.xpath("//oj-button[@id='remove']/button/div/span[2]")).click()
             await driver.sleep(1200);
             console.log("Click Save button");
@@ -640,8 +645,6 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
             console.log("Click Predicate Policy List");
             await driver.findElement(By.xpath("//oj-input-text[@id='oj-searchselect-filter-predicate']/div/span/a")).click();
             await driver.sleep(800);
-
-
             console.log("Select Context element's value equals a numeric constant, 28th element in the list");
             await driver.findElement(By.xpath("//*[@id='oj-searchselect-filter-predicate|input']"))
                 .sendKeys("Context element's value is less than a numeric constant");
@@ -664,7 +667,8 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
             }
             await driver.sleep(2400);
             console.log("Select policy checkbox");
-            await driver.findElement(By.xpath("//input[@type='checkbox']")).click();
+            await driver.findElement(
+                By.xpath("//input[@type='checkbox' and @class='oj-selectorbox']")).click();
             console.log("Select remove button");
             await driver.sleep(800);
             await driver.findElement(By.xpath("//oj-button[@id='remove']/button/div/span[2]")).click()

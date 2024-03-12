@@ -1,10 +1,11 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
-  <p>This page, and its child pages, display runtime information about the deployed enterprise applications.</p>
-  <p>Note: Use 'Application Management', instead of this page, to start and stop an application,
-  see its intended and current state and to manage its deployment plan.</p>
+  <p>This page, and its child pages, display runtime information about the deployed
+  enterprise applications.</p>
+  <p>Note: To start/stop an application, see its current and intended state, or to manage its deployment plan, 
+  use the 'Application Management' page instead.</p>
 
 displayedColumns:
 - name: "Name"

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -72,8 +72,8 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
 
   private static Response<Value> downloadLog(InvocationContext ic, String outputFormat) {
     Response<Value> response = new Response<Value>();
-    String dirName = getDirectoryName();
-    String fileName = getFileName(ic) + (outputFormat.endsWith("json") ? ".json" : ".text");
+    String dirName = getDirectoryName(ic);
+    String fileName = getFileName(ic) + (outputFormat.endsWith("json") ? ".json" : ".txt");
     try {
       File file = getOutputLogFile(dirName, fileName);
       new Thread(() -> {
@@ -122,8 +122,8 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
         + "_" + sdf1.format(timestamp);
   }
 
-  private static String getDirectoryName() {
-    String persistenceDirectoryPath = PersistenceManager.getPersistenceFilePath();
+  private static String getDirectoryName(InvocationContext ic) {
+    String persistenceDirectoryPath = PersistenceManager.getPersistenceFilePath(ic);
     String dirName = (persistenceDirectoryPath == null)
         ? System.getProperty("java.io.tmpdir") : persistenceDirectoryPath + "/downloads";
     return dirName;
@@ -137,7 +137,7 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     return new File(dirName, fileName);
   }
 
-  private static Path getRestActionPath(BeanTreePath beanPath, String actionName) {
+  private static Path getRestActionPath(InvocationContext ic, BeanTreePath beanPath, String actionName) {
     //we have to hard code the root.
     Path restActionPath = new Path("domainRuntime");
     // add in the rest of the bean tree path,
@@ -145,6 +145,13 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     restActionPath.addPath(WebLogicRestBeanRepo.getTreeRelativeRestPath(beanPath));
     // Add the name of the action:
     restActionPath.addComponent(actionName);
+    // Shortcut domainRuntime/serverRuntimes/<adminserver>/... to serverRuntime/...
+    List<String> components = restActionPath.getComponents();
+    if (ic.getConnection().getAdminServerName().equals(components.get(2))) {
+      Path shortcut = new Path("serverRuntime");
+      shortcut.addComponents(components.subList(3, components.size()));
+      return shortcut;
+    }
     return restActionPath;
   }
 
@@ -163,7 +170,7 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
         .add("limit", Json.createValue(RECORD_LIMIT))
         .add("fromId", Json.createValue(fromId))
         .build();
-    Path restActionPath = getRestActionPath(realPath, "search");
+    Path restActionPath = getRestActionPath(ic, realPath, "search");
 
     try {
       // FortifyIssueSuppression Unreleased Resource: Streams

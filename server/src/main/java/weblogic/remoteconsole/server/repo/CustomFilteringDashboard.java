@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -9,35 +9,30 @@ import java.util.List;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 
 /**
- * POJO that holds information about a custom filtering dashboard:
- * - its config (i.e. the filtering rules for selecting matching beans)
- * - its results (i.e. the beans matching the filters and the results' age)
+ * POJO that holds information about a custom filtering dashboard
  */
-public class CustomFilteringDashboard extends Dashboard {
-  private CustomFilteringDashboardConfig config;
-  private List<SearchBeanResults> results;
-  private Date resultsDate;
-  private Date expirationDate;
+public class CustomFilteringDashboard extends FilteringDashboard {
 
-  CustomFilteringDashboard(CustomFilteringDashboardConfig config) {
-    this(config, null, null, null);
+  CustomFilteringDashboard(FilteringDashboardConfig config) {
+    super(config);
   }
 
-  CustomFilteringDashboard(
-    CustomFilteringDashboardConfig config,
+  private CustomFilteringDashboard(
+    FilteringDashboardConfig config,
     List<SearchBeanResults> results,
     Date resultsDate,
     Date expirationDate
   ) {
-    this.config = config;
-    this.results = results;
-    this.resultsDate = resultsDate;
-    this.expirationDate = expirationDate;
+    super(config, results, resultsDate, expirationDate);
   }
 
   @Override
-  public String getName() {
-    return config.getName();
+  public FilteringDashboard clone(
+    List<SearchBeanResults> results,
+    Date resultsDate,
+    Date expirationDate
+  ) {
+    return new CustomFilteringDashboard(getConfig(), results, resultsDate, expirationDate);
   }
 
   @Override
@@ -50,28 +45,8 @@ public class CustomFilteringDashboard extends Dashboard {
     return ic.getLocalizer().localizeString(LocalizedConstants.CUSTOM_FILTERING_DASHBOARD_TYPE_LABEL);
   }
 
-  public CustomFilteringDashboardConfig getConfig() {
-    return config;
-  }
-  
-  public List<SearchBeanResults> getResults() {
-    return results;
-  }
-
-  public Date getResultsDate() {
-    return resultsDate;
-  }
-
-  public Date getExpirationDate() {
-    return expirationDate;
-  }
-
-  public boolean isCurrent() {
-    if (results == null) {
-      // we don't have any results yet
-      return false;
-    }
-    Date now = new Date(System.currentTimeMillis());
-    return now.before(expirationDate);
+  @Override
+  public boolean isBuiltin() {
+    return false;
   }
 }

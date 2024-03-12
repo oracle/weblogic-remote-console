@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<deployment-plan xmlns="http://xmlns.oracle.com/weblogic/deployment-plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/deployment-plan http://xmlns.oracle.com/weblogic/deployment-plan/1.0/deployment-plan.xsd" global-variables="false">
+  <application-name>jms-local-adp.rar</application-name>
+  <variable-definition>
+    <variable>
+      <name>WLDFHarvester_null_Enabled_1708411536515110</name>
+      <value>test123</value>
+    </variable>
+  </variable-definition>
+  <module-override>
+    <module-name>jms-local-adp.rar</module-name>
+    <module-type>rar</module-type>
+    <module-descriptor external="false">
+      <root-element>weblogic-connector</root-element>
+      <uri>META-INF/weblogic-ra.xml</uri>
+    </module-descriptor>
+    <module-descriptor external="false">
+      <root-element>connector</root-element>
+      <uri>META-INF/ra.xml</uri>
+    </module-descriptor>
+    <module-descriptor external="true">
+      <root-element>wldf-resource</root-element>
+      <uri>META-INF/weblogic-diagnostics.xml</uri>
+      <variable-assignment>
+        <name>WLDFHarvester_null_Enabled_1708411536515110</name>
+        <xpath>/wldf-resource/harvester/enabled</xpath>
+      </variable-assignment>
+    </module-descriptor>
+  </module-override>
+  <config-root>/Users/davinguy/Oracle/newConsole/domains/141200/WLSLoad33_jdk21/domain.run/./config/deployments/jms-local-adp.rar/plan</config-root>
+</deployment-plan>

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -8,10 +8,12 @@
 'use strict';
 
 define([
+  'ojs/ojcore',
   'knockout',
   'ojs/ojcontext',
   'ojs/ojknockout-keyset',
-  'wrc-frontend/integration/controller',
+  'cfe-navtree/navtree-toolbar',
+  'wrc-frontend/common/controller',
   'wrc-frontend/microservices/navtree/navtree-manager',
   'wrc-frontend/microservices/perspective/perspective-manager',
   'wrc-frontend/microservices/perspective/perspective-memory-manager',
@@ -22,10 +24,14 @@ define([
   'ojs/ojknockout',
   'ojs/ojnavigationlist',
   'ojs/ojdialog',
+  'ojs/ojmenu',
+  'ojs/ojmenuselectmany'
 ], function (
+  oj,
   ko,
   Context,
   keySet,
+  NavtreeToolbar,
   Controller,
   NavtreeManager,
   PerspectiveManager,
@@ -39,14 +45,34 @@ define([
     const self = this;
 
     const signaling = Controller.getSignaling();
-
+  
+    this.i18n = {
+      icons: {
+        'more': {
+          iconFile: 'more-vertical-blk-24x24',
+          tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.more.value')
+        },
+      },
+      menus: {
+        navtree: {
+          'collapseAll': {id: 'collapse-all', iconFile: 'navtree-collapse-all-blk_24x24', visible: ko.observable(true), disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-navtree-toolbar.menu.collapseAll.value')
+          },
+          'useTreeMenusAsRootNodes': {id: 'use-tree-menus-as-root-nodes', visible: ko.observable(false), disabled: false,
+            label: oj.Translations.getTranslatedString('wrc-navtree-toolbar.menu.useTreeMenusAsRootNodes.value')
+          }
+        }
+      }
+    };
+  
     let router = Controller.getRootRouter();
 
     this.perspective = ko.observable(context.properties.perspective);
     this.beanTree = context.properties.beanTree;
 
     this.condensedNodes = {};
-
+    this.menuSelectOneSelectedItem = ko.observable(['off']);
+  
     this.selectedItem = ko.observable();
     // Must be set before getExpandedSet() call is made
     this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(
@@ -304,7 +330,28 @@ define([
 
       self.signalBindings = [];
     }.bind(this);
+  
+    this.launchMoreMenu = function (event) {
+      NavtreeToolbar.launchMoreMenu(event);
+    }.bind(this);
 
+    this.moreMenuClickListener = function (event) {
+      NavtreeToolbar.moreMenuClickListener(event, this);
+    }.bind(this);
+    
+    this.menuSelectOneMenuAction = function (event) {
+      NavtreeToolbar.menuSelectOneMenuAction(event, this);
+    }.bind(this);
+
+    this.onKeyUp = (event) => {
+      if (event.key === 'ArrowLeft' && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+        const ele = document.querySelector('#navstrip');
+        if (ele !== null) {
+          $(ele).focus();
+        }
+      }
+    };
+  
     this.itemSelectable = function (context) {
       // selectable is true by default
       // DON'T USE optional chaining, here!! It's not supported
@@ -327,6 +374,8 @@ define([
         // ahead and remove it.
         delete self.beanTree['signal'];
       }
+  
+      self.perspectiveMemory.navtree['lastFocusNode'] = document.activeElement;
 
       expandClickedNode.call(self, event.detail.key);
     };
@@ -340,22 +389,26 @@ define([
       self.perspectiveMemory.navtree.keySet = self.expanded;
 
       resizeNavTreeContainer();
+
+      setFocusVerticalGripper();
     };
 
     /**
-     * <p>When self.selectedItem node matches event.detail.key and it's already open expanded, then only collapse it if the list item has the class for the expand icon ('oj-navigationlist-expand-icon').</p>
-     * <p>In other words, clicking the icons (expand or collapse) always performs the event, but clicking the label only performs the event if the list iten has the icon for the opposite event.</p>
-     *
+     * Supress collapse event when an already expanded node in the tree is selected. Without doing this, the selected node would
+     * collapse before expanding again (due to onSelect dispatching a signal) 
+     * 
      * @param {CustomEvent} event
      */
     this.beforeCollapse = function (event) {
       if (self.selectedItem() === event.detail.key) {
-        // when something node is already open and it is selected, don't close it...
-        // ... except if they click on the expanded icon (as opposed to clicking on the label)
-        let cl = (event.detail.originalEvent.path ? event.detail.originalEvent.path[0].className : '');
+        // Ensure the element that was clicked on (srcElement) contains the expand-icon before collapsing...
+        if (CoreUtils.isNotUndefinedNorNull(event.detail.originalEvent)) {
+          const cl = (event.detail.originalEvent.srcElement ? event.detail.originalEvent.srcElement.className : '');
 
-        if (!cl.includes('oj-navigationlist-expand-icon'))
-          event.preventDefault();
+          if (!cl.includes('oj-navigationlist-expand-icon')) {
+            event.preventDefault();
+          }
+        }
       }
     };
 
@@ -364,6 +417,7 @@ define([
     this.onSelect = function (event) {
       const nodeId = event.detail.value;
       if (nodeId !== null && nodeId !== '') {
+        signaling.ancillaryContentItemCleared.dispatch('navtree');
         const node = self.navtreeManager.getNodeById(nodeId);
         if (CoreUtils.isNotUndefinedNorNull(node)) {
           const resourceData = node.resourceData.resourceData;
@@ -378,11 +432,30 @@ define([
             }
             const path = encodeURIComponent(resourceData);
             ViewModelUtils.goToRouterPath(router, `/${self.beanTree.type}/${path}`, self.canExitCallback);
-            signaling.navtreeSelectionChanged.dispatch('navtree', node);
+            signaling.navtreeSelectionChanged.dispatch('navtree', node, self.beanTree);
           }
         }
       }
     };
+
+    function setFocusSelectedNode(node) {
+      if (node !== null) {
+        const li = node.querySelector('li.oj-expanded .oj-selected');
+        if (li !== null) {
+          li.focus();
+        }
+      }
+    }
+
+    this.hiddenAccessKeyClickHandler = (event) => {
+      const node = document.querySelector('#nav');
+      setFocusSelectedNode(node);
+    };
+
+    function setFocusVerticalGripper(cssSelector = '.vertical-gripper') {
+      const ele = document.querySelector(cssSelector);
+      if (ele !== null) $(ele).focus();
+    }
 
     function setMaxHeightCSSCustomVariable(cssDOMSelector) {
       const messageLine =  document.getElementById('message-line-container');
@@ -421,12 +494,16 @@ define([
 
     function expandClickedNode(nodeId) {
       let resolve;
-      this.busyContext.whenReady(10000).then(() => {
-        resolve = this.addBusyState({ description: '#nav fetching data' });
-        self.navtreeManager.expandNode(nodeId).finally(() => {
-          if (resolve) resolve();
-        });
-      });
+      this.busyContext.whenReady(10000)
+        .then(() => {
+          resolve = this.addBusyState({ description: '#nav fetching data' });
+          self.navtreeManager.expandNode(nodeId)
+            .catch(error => {})
+            .finally(() => {
+              if (resolve) resolve();
+            });
+        })
+        .catch(response => {});
     }
 
     function getExpandedSet() {

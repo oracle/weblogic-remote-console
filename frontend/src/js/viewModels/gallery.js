@@ -1,18 +1,42 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojknockout', 'ojs/ojbinddom'],
-  function (oj, ko, HtmlUtils, PerspectiveManager, DataProviderManager, Runtime, CoreTypes, CoreUtils) {
+define([
+    'ojs/ojcore',
+    'knockout',
+    'ojs/ojhtmlutils',
+    'wrc-frontend/common/keyup-focuser',
+    'ojs/ojcontext',
+    'wrc-frontend/microservices/perspective/perspective-manager',
+    'wrc-frontend/microservices/provider-management/data-provider-manager',
+    'wrc-frontend/core/runtime',
+    'wrc-frontend/core/types',
+    'wrc-frontend/core/utils',
+    'ojs/ojknockout',
+    'ojs/ojbinddom'
+  ],
+  function (
+    oj,
+    ko,
+    HtmlUtils,
+    KeyUpFocuser,
+    Context,
+    PerspectiveManager,
+    DataProviderManager,
+    Runtime,
+    CoreTypes,
+    CoreUtils
+  ) {
     function GalleryTabTemplate(viewParams) {
       const self = this;
-
+      
       this.galleryItems = ko.observableArray();
-
+      
       function loadGalleryItems(dataProvider) {
         let dataArray = [];
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
@@ -23,14 +47,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
             dataArray = dataProvider.beanTrees;
           }
+          else {
+            dataArray = self.galleryItems();
+          }
         }
-
+        
         // dataArray will be empty if:
         //
         //  1. There is no default project, or
         //  2. No dataProvider parameter was passed into this function, or
         //  3. The default project did not have any data providers
-
+        
         if (dataArray.length > 0) {
           dataArray.forEach((beanTree) => {
             const perspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
@@ -38,24 +65,32 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
             beanTree['content'] = { view: HtmlUtils.stringToNodeArray(oj.Translations.getTranslatedString(`wrc-gallery.cards.${beanTree.type}.description`))};
           });
         }
-
+        
         return dataArray;
       }
-
+      
       this.signalBindings = [];
-
+      
       this.connected = function () {
         // Be sure to create a binding for any signaling add in
         // this module. In fact, the code for the add needs to
         // be moved here physically.
-
+        
         let binding = viewParams.signaling.dataProviderSelected.add(dataProvider => {
           self.galleryItems(loadGalleryItems(dataProvider));
           signalDataProviderChanged(dataProvider);
+          Context.getPageContext().getBusyContext().whenReady()
+            .then(() => {
+              let rule = KeyUpFocuser.getLastExecutedRule('.gallery-panel-card');
+              if (rule.focusIndexValue !== -1) {
+                rule = KeyUpFocuser.setFocusItems('.gallery-panel-card', {focusItems: self.galleryItems().map(({type}) => type)});
+                $('.gallery-panel-card')[rule.focusIndexValue].focus();
+              }
+            });
         });
-
+        
         self.signalBindings.push(binding);
-
+        
         binding = viewParams.signaling.dataProviderRemoved.add(removedDataProvider => {
           const beanTree = self.galleryItems().find(item => item.provider.id === removedDataProvider.id);
           if (CoreUtils.isNotUndefinedNorNull(beanTree)) {
@@ -65,27 +100,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
             self.galleryItems.valueWillMutate();
             self.galleryItems.removeAll();
             self.galleryItems.valueHasMutated();
+
+            viewParams.signaling.appMenuChangeRequested.dispatch('gallery', 'disableMenu', true, {menuId: 'goMenu', menuItemId: 'shoppingCartDrawer'});
           }
           else {
             self.galleryItems(loadGalleryItems());
           }
         });
-
+        
         self.signalBindings.push(binding);
-
+        
         self.galleryItems(loadGalleryItems());
       }.bind(this);
-
+      
       this.disconnected = function () {
         // Detach all signal "add" bindings
         self.signalBindings.forEach(binding => { binding.detach(); });
-
+        
         // Reinitialize module-scoped array for storing
         // signal "add" bindings, so it can be GC'd by
         // the JS engine.
         self.signalBindings = [];
       }.bind(this);
-
+      
       /**
        * Returns the NLS translated string for the tooltip of a navstrip item.
        * <p>It allows us to do two main things:
@@ -99,9 +136,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
       this.getTooltip = function(id) {
         return oj.Translations.getTranslatedString(`wrc-gallery.cards.${id}.label`);
       };
-
+      
       /**
-       * Called when user clicks icon or label of sideways tabstrip item
+       * Called when user clicks a card
        * @param event
        */
       this.galleryPanelClickHandler = function(event) {
@@ -117,8 +154,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           return;
         }
 
-        // Strip '-site-panel-card' suffix from value
-        value = value.replace('-site-panel-card', '');
+        // Strip '-gallery-panel-card' suffix from value
+        value = value.replace('-gallery-panel-card', '');
 
         const beanTree = getSelectedBeanTree(value);
         if (CoreUtils.isUndefinedOrNull(beanTree)) {
@@ -127,14 +164,59 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
         const dataProvider = DataProviderManager.getDataProviderById(beanTree.provider.id);
         if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
-//MLW          viewParams.signaling.beanTreeChanged.dispatch(beanTree);
-
+          viewParams.signaling.beanTreeChanged.dispatch(beanTree);
           Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, CoreUtils.isUndefinedOrNull(beanTree.readOnly) ? false : beanTree.readOnly);
           viewParams.signaling.readonlyChanged.dispatch(Runtime.isReadOnly());
 
+          viewParams.signaling.ancillaryContentItemCleared.dispatch('gallery');
           viewParams.signaling.galleryItemSelected.dispatch(value);
+          viewParams.signaling.appMenuChangeRequested.dispatch('gallery', 'disableMenu', beanTree.type !== 'configuration', {menuId: 'goMenu', menuItemId: 'shoppingCartDrawer'});
+
+          const focusIndexValue = self.galleryItems().map(item => item.type).indexOf(beanTree.type);
+          KeyUpFocuser.setLastExecutedRule('.gallery-panel-card', {focusIndexValue: focusIndexValue});
         }
       };
+
+      this.registerKeyUpFocuser = (id) => {
+        let result = KeyUpFocuser.getKeyUpCallback(id);
+
+        if (!result.alreadyRegistered) {
+          const options = {
+            focusItems: self.galleryItems().map(({type}) => type)
+          };
+
+          result = KeyUpFocuser.register(
+            id,
+            {
+              Tab: {key: 'Tab', action: 'navigate', callback: onKeyUpFocuserNavigateKeyEvent},
+              ArrowUp: {key: 'ArrowUp', selector: '#home', isArray: false},
+              Escape: {key: 'Escape', selector: '#home', isArray: false},
+              ArrowRight: {key: 'ArrowRight', action: 'navigate'},
+              ArrowLeft: {key: 'ArrowLeft', action: 'navigate'}
+            },
+            options
+          );
+        }
+        
+        return result.keyUpCallback;
+      };
+      
+      function onKeyUpFocuserNavigateKeyEvent(event, focusRule) {
+        const parseableId = document.activeElement.firstElementChild.id;
+        if (CoreUtils.isNotUndefinedNorNull(parseableId)) {
+          const parts = parseableId.split('-').filter((e) => {return e});
+          if (parts.length > 1) {
+            const focusItems = self.galleryItems().map(({type}) => type);
+            if (focusItems.length > 0) {
+              const index = focusItems.indexOf(parts[0]);
+              if (index !== -1) {
+                const keyUpFocuserId = `.${parts.slice(1).join('-')}`;
+                KeyUpFocuser.setLastExecutedRule(keyUpFocuserId, {key: event.key, focusIndexValue: index});
+              }
+            }
+          }
+        }
+      }
 
       function getSelectedBeanTree(beanTreeType) {
         let beanTree;
@@ -142,13 +224,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         if (index !== -1) beanTree = self.galleryItems()[index];
         return beanTree;
       }
-
+      
       function signalDataProviderChanged(dataProvider) {
         viewParams.signaling.beanTreeChanged.dispatch({type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name, type: dataProvider.type}});
       }
-
+      
     }
-
+    
     return GalleryTabTemplate;
   }
 );

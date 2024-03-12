@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="home-page-container">
@@ -9,9 +9,7 @@ Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
         <template>
           <oj-bind-if test="[[tab.data.visible()]]">
             <span class="cfe-site-sideways-tab-icon">
-              <a href="#" tabindex="-1"
-                 on-click="[[tabstripButtonClickHandler]]"
-              >
+              <a href="#" tabindex="-1" on-click="[[tabstripButtonClickHandler]]">
                 <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + tab.data.iconFile + '.png', alt: tab.data.label}"/>
                 <span :id="[[tab.data.id]]" data-bind="text: tab.data.label"></span>
               </a>

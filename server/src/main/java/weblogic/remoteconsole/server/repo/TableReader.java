@@ -118,7 +118,8 @@ public class TableReader extends PageReader {
   }
 
   private TableCustomizationsManager getTableCustomizationsManager() {
-    return getInvocationContext().getPageRepo().asPageReaderRepo().getTableCustomizationsManager();
+    InvocationContext ic = getInvocationContext();
+    return ic.getPageRepo().asPageReaderRepo().getTableCustomizationsManager(ic);
   }
 
   private Response<TableRow> createTableRow(

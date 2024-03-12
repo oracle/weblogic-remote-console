@@ -40,5 +40,7 @@ properties:
 sections:
 - properties:
   - name: "Name"
+- properties:
+  - name: "Description"
 - title: "Name Filters"
 - title: "Property Filters"

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Use this page to configure general features of this server such as default network communications.</p>
@@ -12,6 +12,7 @@ properties:
 - name: "ListenPort"
 - name: "SSL.Enabled"
 - name: "SSL.ListenPort"
+- name: "AdministrationPort"
 - name: "ClientCertProxyEnabled"
 - name: "JavaCompiler"
 - name: "ServerTemplate"
@@ -27,7 +28,6 @@ advancedProperties:
 - name: "ExtraRmicOptions"
 - name: "ExtraEjbcOptions"
 - name: "ExternalDNSName"
-- name: "AdministrationPort"
 - name: "StartupMode"
 - name: "JDBCLLRTableName"
 - name: "DataSource.RmiJDBCSecurity"

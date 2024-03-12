@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.HttpHeaders;
@@ -33,6 +35,9 @@ import weblogic.remoteconsole.server.providers.Root;
 public class InvocationContext {
   /** The property name for the Console Backend session id in the ContainerRequestContext */
   public static final String CONSOLE_BACKEND_SESSION_ID = "wls.console.backend.session";
+
+  // A Frontend is, basically, a session
+  private Frontend frontend;
 
   // the connection to a weblogic domain
   // null if not connected to a domain
@@ -79,7 +84,14 @@ public class InvocationContext {
   // The info about the URI that the caller invoked this request on
   private UriInfo uriInfo;
 
+  // The user making this request or null if unauthenticated
+  private String user;
+
   private PagePath pagePath;
+
+  // Allows code for a request to cache data for the request, passing it around via the ic
+  // and its clones.
+  private Map<String,Object> cache = new ConcurrentHashMap<>();
 
   public InvocationContext() {
     // Use the default language until we find out what the client wants.
@@ -111,6 +123,9 @@ public class InvocationContext {
     this.reload = toClone.reload;
     this.uriInfo = toClone.uriInfo;
     this.pagePath = toClone.pagePath;
+    this.user = toClone.user;
+    this.frontend = toClone.frontend;
+    this.cache = toClone.cache;
   }
 
   public InvocationContext(InvocationContext toClone, BeanTreePath beanTreePath) {
@@ -235,10 +250,12 @@ public class InvocationContext {
     );
   }
 
+  // Note that this does not necessarily include API_URI
   public void setUriInfo(UriInfo uriInfo) {
     this.uriInfo = uriInfo;
   }
 
+  // Note that this does not necessarily include API_URI
   public UriInfo getUriInfo() {
     return uriInfo;
   }
@@ -269,20 +286,7 @@ public class InvocationContext {
   }
 
   private static String getConnectionId(ResourceContext resourceContext) {
-    if (ConsoleBackendRuntime.INSTANCE.getMode() == ConsoleBackendRuntime.Mode.CREDENTIALS) {
-      return getCredentialsModeConnectionId();
-    } else {
-      return getStandaloneModeConnectionId(resourceContext);
-    }
-  }
-
-  private static String getCredentialsModeConnectionId() {
-    if (ConsoleBackendRuntime.INSTANCE.getState() == ConsoleBackendRuntime.State.DISCONNECTED) {
-      // there is no connection
-      return null;
-    } else {
-      return ConsoleBackendRuntime.INSTANCE.getConnection().getId();
-    }
+    return getStandaloneModeConnectionId(resourceContext);
   }
 
   private static String getStandaloneModeConnectionId(ResourceContext resourceContext) {
@@ -320,6 +324,42 @@ public class InvocationContext {
 
   public List<Locale> getLocales() {
     return locales;
+  }
+
+  public void setUser(String user) {
+    this.user = user;
+  }
+
+  public String getUser() {
+    return user;
+  }
+
+  public Object getSessionData(
+    String key,
+    Object referenceObject
+  ) {
+    if (frontend == null) {
+      return null;
+    }
+    return frontend.getData(key, referenceObject);
+  }
+
+  public void storeSessionData(
+    String key,
+    Object referenceObject,
+    Object data
+  ) {
+    if (frontend != null) {
+      frontend.storeData(key, referenceObject, data);
+    }
+  }
+
+  public void setFrontend(Frontend frontend) {
+    this.frontend = frontend;
+  }
+
+  public Map getCache() {
+    return cache;
   }
 
   @Override

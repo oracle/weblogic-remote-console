@@ -1,0 +1,49 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: importTransportLayerClientCert
+
+introductionHTML: >
+  <p>This page manages this partner's transport layer client certificate,
+  which is used to secure the transport that is used for submitting artifact requests to,
+  and receiving artifact responses from, the partner's Artifact Resolution Service.</p>
+  <p>This certificate is not included in the metadata file, so you need to coordinate
+  with your partner to obtain this certificate so that it may be imported.</p>
+
+presentation:
+  singleColumn: true
+
+properties:
+- name: TransportLayerClientCertIssuedTo
+- name: TransportLayerClientCertIssuedBy
+- name: TransportLayerClientCertValidFrom
+- name: TransportLayerClientCertValidUntil
+- name: TransportLayerClientCertSubjectAlternativeNames
+
+advancedProperties:
+- name: TransportLayerClientCertVersion
+- name: TransportLayerClientCertSerialNumber
+- name: TransportLayerClientCertSignatureAlgorithm
+- name: TransportLayerClientCertExtendedKeyUsage
+- name: TransportLayerClientCertBasicConstraints
+- name: TransportLayerClientCertThumbprintAlgorithm
+- name: TransportLayerClientCertThumbprint
+- name: TransportLayerClientCertPublicKey
+
+helpTopics:
+- label: "Configuring Keystores"
+  href: "secmg/identity_trust.html"
+  type: "edocs"
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html"
+  type: "edocs"
+- label: "Viewing Partner Site, Certificate, and Service Endpoint Information"
+  href: "secmg/saml20.html#SECMG313"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: "edocs"

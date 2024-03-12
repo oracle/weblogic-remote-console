@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: "Create a new user in this WebLogic Authentication provider."
@@ -6,6 +6,7 @@ introductionHTML: "Create a new user in this WebLogic Authentication provider."
 properties:
   - name: Name
   - name: Description
+    required: true
   - name: Password
     required: true
 

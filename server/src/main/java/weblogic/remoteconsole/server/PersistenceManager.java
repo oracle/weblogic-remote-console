@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server;
@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.server.repo.InvocationContext;
 
 /**
  * This class manages the console backend's persisted data.
@@ -43,7 +43,7 @@ public class PersistenceManager<T> {
 
   private static final Logger LOGGER = Logger.getLogger(PersistenceManager.class.getName());
 
-  private static File persistenceDirectory;
+  private static PersistenceConfigurator persistenceConfigurator;
   private static ObjectMapper mapper;
 
   private Class<T> clazz;
@@ -62,22 +62,13 @@ public class PersistenceManager<T> {
    * persistenceDirectoryPath is null and the PersistenceManager
    * only stores the data in-memory.
    */
-  public static void initialize(String persistenceDirectoryPath) {
-    if (persistenceDirectoryPath == null) {
+  public static void initialize(PersistenceConfigurator configurator) {
+    PersistenceManager.persistenceConfigurator = configurator;
+    if (configurator == null) {
       LOGGER.finest("Persistence not supported.");
       return;
     }
     mapper = new ObjectMapper().enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
-    // FortifyIssueSuppression Path Manipulation
-    // This is a from a command-line argument.  It's fine.
-    persistenceDirectory = new File(persistenceDirectoryPath);
-    // FortifyIssueSuppression Log Forging
-    // The string is scrubbed by cleanStringForLogging
-    // The string is not user input but fortify thinks it is
-    LOGGER.finest(
-      "Persisting to "
-      + StringUtils.cleanStringForLogging(persistenceDirectory.getAbsolutePath())
-    );
   }
 
   /**
@@ -98,24 +89,24 @@ public class PersistenceManager<T> {
    * 
    * If there is no data for this feature, the returned state's data will be null.
    */
-  public State get() {
+  public State get(InvocationContext ic) {
     LOGGER.finest("get " + key);
-    if (!isCurrent()) {
-      state = new State(readPersistedData());
+    if (!isCurrent(ic)) {
+      state = new State(readPersistedData(ic));
     }
     return state;
   }
 
-  private boolean isCurrent() {
+  private boolean isCurrent(InvocationContext ic) {
     if (state == null) {
       // we haven't tried to read in the file for this key yet
       return false;
     }
-    if (!supportsPersistence()) {
+    if (!supportsPersistence(ic)) {
       // any data we already have in memory is current
       return true;
     }
-    File file = getPersistenceFile();
+    File file = getPersistenceFile(ic);
     if (file.exists()) {
       if (file.lastModified() > state.getTimeStamp()) {
         // the file is newer than what we have in memory
@@ -135,11 +126,11 @@ public class PersistenceManager<T> {
     }
   }
 
-  private T readPersistedData() {
-    if (!supportsPersistence()) {
+  private T readPersistedData(InvocationContext ic) {
+    if (!supportsPersistence(ic)) {
       return null;
     }
-    File file = getPersistenceFile();
+    File file = getPersistenceFile(ic);
     if (!file.exists()) {
       return null;
     }
@@ -158,8 +149,8 @@ public class PersistenceManager<T> {
   /**
    * Used for reporting problems in the data in this feature's persistent file.
    */
-  public void reportBadFormat(String problem) {
-    LOGGER.severe("Bad format " + getPersistenceFile().getAbsolutePath() + " : " + problem);
+  public void reportBadFormat(InvocationContext ic, String problem) {
+    LOGGER.severe("Bad format " + getPersistenceFile(ic).getAbsolutePath() + " : " + problem);
   }
 
   /**
@@ -175,18 +166,18 @@ public class PersistenceManager<T> {
    * will be written to <key>.protected in the persistence directory.
    * If it is null, then <key>.json will be removed.
    */
-  public void set(T data) {
+  public void set(InvocationContext ic, T data) {
     LOGGER.finest("set " + key);
     state = new State(data);
-    writePersistentData(data);
+    writePersistentData(ic, data);
   }
 
-  private void writePersistentData(T data) {
-    if (!supportsPersistence()) {
+  private void writePersistentData(InvocationContext ic, T data) {
+    if (!supportsPersistence(ic)) {
       return;
     }
-    persistenceDirectory.mkdirs();
-    File file = getPersistenceFile();
+    persistenceConfigurator.getDirectory(ic).mkdirs();
+    File file = getPersistenceFile(ic);
     if (data == null) {
       if (file.exists()) {
         try {
@@ -212,16 +203,22 @@ public class PersistenceManager<T> {
     }
   }
 
-  private static boolean supportsPersistence() {
-    return persistenceDirectory != null;
+  private static boolean supportsPersistence(InvocationContext ic) {
+    return (persistenceConfigurator != null)
+      && (persistenceConfigurator.getDirectory(ic) != null);
   }
 
-  private File getPersistenceFile() {
-    return new File(persistenceDirectory, key + ".json");
+  public static boolean shouldIPersistProjects(InvocationContext ic) {
+    return (persistenceConfigurator != null)
+      && persistenceConfigurator.shouldIPersistProjects(ic);
   }
 
-  public static String getPersistenceFilePath() {
-    return (persistenceDirectory == null) ? null : persistenceDirectory.getPath();
+  private File getPersistenceFile(InvocationContext ic) {
+    return new File(persistenceConfigurator.getDirectory(ic), key + ".json");
+  }
+
+  public static String getPersistenceFilePath(InvocationContext ic) {
+    return supportsPersistence(ic) ? persistenceConfigurator.getDirectory(ic).getPath() : null;
   }
 
   /**
@@ -251,5 +248,15 @@ public class PersistenceManager<T> {
     public String toString() {
       return "State<timeStamp=" + timeStamp + ", data=" + data + ">";
     }
+  }
+
+  public static interface PersistenceConfigurator {
+    // This may return null if persistence is supported in this instance in
+    // general, but not for this InvocationContext.  This occurs, for example,
+    // in the case of the Hosted version when persistence is only supported for
+    // logged-in users
+    public File getDirectory(InvocationContext ic);
+
+    public boolean shouldIPersistProjects(InvocationContext ic);
   }
 }

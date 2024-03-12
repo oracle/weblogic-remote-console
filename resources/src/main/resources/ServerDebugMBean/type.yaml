@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -12,6 +12,9 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: ClassloaderWebApp
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAllowList
   useUnlocalizedNameAsLabel: true
 
 - name: DebugAppAnnotations
@@ -361,6 +364,9 @@ properties:
 - name: DebugFileDistributionServlet
   useUnlocalizedNameAsLabel: true
 
+- name: DebugHealthScore
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugHttp
   useUnlocalizedNameAsLabel: true
 
@@ -435,6 +441,10 @@ properties:
   offlineName: DebugJmscds
   useUnlocalizedNameAsLabel: true
 
+- name: DebugJMSCICHelper
+  offlineName: DebugJmscicHelper
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugJMSCommon
   useUnlocalizedNameAsLabel: true
 
@@ -449,8 +459,16 @@ properties:
 - name: DebugJMSDispatcher
   useUnlocalizedNameAsLabel: true
 
+- name: DebugJMSDispatcherLifecycle
+  offlineName: DebugJmsDispatcherLifecycle
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugJMSDispatcherProxy
   offlineName: DebugJmsDispatcherProxy
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugJMSDispatcherRMI
+  offlineName: DebugJmsDispatcherRmi
   useUnlocalizedNameAsLabel: true
 
 # excluded
@@ -496,6 +514,10 @@ properties:
 # deprecated
 # - name: DebugJMSJDBCScavengeOnFlush
 #   useUnlocalizedNameAsLabel: true
+
+- name: DebugJMSInvocableVerbose
+  offlineName: DebugJmsInvocableVerbose
+  useUnlocalizedNameAsLabel: true
 
 # excluded
 - name: DebugJMSJNDI
@@ -993,6 +1015,9 @@ properties:
 #   useUnlocalizedNameAsLabel: true
 
 - name: DebugStoreAdmin
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugStoreConnectionCaching
   useUnlocalizedNameAsLabel: true
 
 # excluded

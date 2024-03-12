@@ -4,26 +4,269 @@ define({
       "appName": "WebLogic 원격 콘솔"
     },
     "icons": {
-      "connectivity": {
-        "online": {
-          "tooltip": "온라인"
+      "navtree": {
+        "toggler": {
+          "tooltip": "탐색 트리 표시 토글"
+        }
+      },
+      "theme": {
+        "tooltip": "Switch theme"
+      },
+      "whatsNew": {
+        "tooltip": "What's New!"
+      },
+      "howDoI": {
+        "tooltip": "Open \"How Do I ...?\" Tasks"
+      },
+      "tips": {
+        "tooltip": "Toggle User Tips visibility"
+      },
+      "help": {
+        "tooltip": "WebLogic 원격 콘솔 내부 문서 열기"
+      },
+      "profile": {
+        "tooltip": "Profile"
+      }
+    },
+    "menus": {
+      "messageCenter": {
+        "value": "메시지 센터 열기"
+      },
+      "theme": {
+        "light": {
+          "value": "Light"
         },
-        "offline": {
-          "tooltip": "오프라인"
-        },
-        "detached": {
-          "tooltip": "분리됨"
-        },
-        "unattached": {
-          "tooltip": "연결되지 않음"
+        "dark": {
+          "value": "Dark"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright © 2020, 2022, Oracle and/or its affiliates.<br/>Oracle은 Oracle Corporation 및/또는 그 자회사의 등록상표입니다. 기타 명칭들은 각 소속 회사의 상표일 수 있습니다.<br/>",
+      "copyrightLegal": "Copyright (c) 2020, 2024, Oracle and/or its affiliates.<br/>Oracle (r)과 Java, MySQL 및 NetSuite는 Oracle Corporation 및/또는 그 자회사의 등록상표입니다. 기타 명칭들은 각 소속 회사의 상표일 수 있습니다.<br/>",
       "builtWith": "Oracle JET로 구축됨"
+    }
+  },
+  "wrc-connectivity": {
+    "labels": {
+      "insecure": {
+        "value": "안전하지 않음"
+      }
+    },
+    "icons": {
+      "insecure": {
+        "tooltip": "관리 서버 접속이 안전하지 않음"
+      }
+    }
+  },
+  "wrc-app-profile": {
+    "icons": {
+      "profile": {
+        "popup": {
+          "launcher": {
+            "tooltip": "Show Profiles List"
+          }
+        },
+        "dialog": {
+          "launcher": {
+            "tooltip": "프로파일 관리"
+          },
+          "editor": {
+            "tooltip": "Profile Editor",
+            "toolbar": {
+              "save": {
+                "tooltip": "프로파일 저장"
+              },
+              "activate": {
+                "tooltip": "Active Profile"
+              },
+              "add": {
+                "tooltip": "프로파일 추가"
+              },
+              "remove": {
+                "tooltip": "프로파일 삭제"
+              }
+            }
+          }
+        },
+        "image": {
+          "tooltip": "Profile",
+          "capture": {
+            "tooltip": "Add or change image"
+          }
+        }
+      }
+    },
+    "tabstrip": {
+      "tabs": {
+        "general": {
+          "value": "일반"
+        },
+        "settings": {
+          "value": "설정"
+        },
+        "preferences": {
+          "value": "환경설정"
+        },
+        "properties": {
+          "value": "속성"
+        }
+      }
+    },
+    "dialog": {
+      "changeImage": {
+        "value": "이미지 변경"
+      },
+      "clearImage": {
+        "value": "Clear Image"
+      },
+      "profile": {
+        "default": {
+          "value": "기본 프로파일"
+        },
+        "toggler": {
+          "editor": {
+            "show": {
+              "value": "Show Profile Editor"
+            },
+            "hide": {
+              "value": "Hide Profile Editor"
+            }
+          }
+        }
+      }
+    },
+    "popup": {
+      "profile": {
+        "manager": {
+          "open": {
+            "value": "Open Profile Manager"
+          },
+          "signout": {
+            "value": "사인아웃"
+          }
+        }
+      }
+    },
+    "labels": {
+      "profile": {
+        "fields": {
+          "id": {
+            "value": "프로파일 ID"
+          },
+          "organization": {
+            "value": "Organization"
+          },
+          "name": {
+            "value": "이름"
+          },
+          "email": {
+            "value": "Email"
+          },
+          "role": {
+            "default": {
+              "value": "Use as Default Profile"
+            }
+          },
+          "settings": {
+            "useCredentialStorage": {
+              "value": "프로젝트를 위해 암호화된 인증서 저장?"
+            },
+            "disableHNV": {
+              "value": "호스트 이름 확인 사용 안함?"
+            },
+            "proxyAddress": {
+              "value": "프록시 주소"
+            },
+            "trustStoreType": {
+              "value": "보안 저장소 유형"
+            },
+            "trustStorePath": {
+              "value": "보안 저장소 경로"
+            },
+            "trustStoreKey": {
+              "value": "보안 저장소 키"
+            },
+            "connectionTimeout": {
+              "value": "관리 서버 접속 시간 초과"
+            },
+            "readTimeout": {
+              "value": "관리 서버 읽기 시간 초과"
+            }
+          },
+          "preferences": {
+            "theme": {
+              "value": "Theme"
+            },
+            "startupTaskChooserType": {
+              "value": "Startup Task Chooser Type"
+            },
+            "useMenusAsRootNodes": {
+              "value": "Use Tree Menus as the root level of Tree Navigators?"
+            },
+            "onQuit": {
+              "value": "Allow unsaved changes to prevent exiting application?"
+            },
+            "onDelete": {
+              "value": "Confirm all deletions?"
+            },
+            "onActionNotAllowed": {
+              "value": "Use \"Action Not Allowed\" popup to prevent data loss?"
+            },
+            "onUnsavedChangesDetected": {
+              "value": "Use \"Unsaved Changes Detected\" popup to prevent data loss?"
+            },
+            "onChangesNotDownloaded": {
+              "value": "Use \"Changes Not Download\" popup to prevent data loss?"
+            }
+          },
+          "properties": {
+            "javaSystemProperties": {
+              "value": "Java System Properties"
+            }
+          }
+        },
+        "legalValues": {
+          "themeOptions": {
+            "light": {
+              "value": "Light"
+            },
+            "dark": {
+              "value": "Dark"
+            }
+          },
+          "taskChooserTypeOptions": {
+            "useDialog": {
+              "value": "Use Dialog"
+            },
+            "useCards": {
+              "value": "Use Cards"
+            }
+          },
+          "trustStoreTypeOptions": {
+            "jks": {
+              "value": "JKS"
+            },
+            "pkcs12": {
+              "value": "PKCS12"
+            },
+            "windowsRoot": {
+              "value": "Windows ROOT"
+            },
+            "keyChainStore": {
+              "value": "Key Chain Store"
+            }
+          }
+        },
+        "messages": {
+          "save": {
+            "succeeded": {
+              "summary": "Profile \"{0}\" was saved successfully!"
+            }
+          }
+        }
+      }
     }
   },
   "wrc-data-providers": {
@@ -35,7 +278,7 @@ define({
         "tooltip": "관리"
       },
       "deactivate": {
-        "tooltip": "Deactivate"
+        "tooltip": "비활성화"
       },
       "delete": {
         "tooltip": "제거"
@@ -51,6 +294,9 @@ define({
         },
         "url": {
           "value": "URL"
+        },
+        "proxyOverride": {
+          "value": "프록시 무효화"
         },
         "username": {
           "value": "사용자 이름"
@@ -110,6 +356,11 @@ define({
     },
     "popups": {
       "info": {
+        "project": {
+          "name": {
+            "label": "프로젝트 이름:"
+          }
+        },
         "provider": {
           "id": {
             "label": "제공자 ID:"
@@ -122,11 +373,17 @@ define({
           "url": {
             "label": "도메인 URL:"
           },
+          "proxyOverride": {
+            "label": "프록시 무효화:"
+          },
           "version": {
             "label": "도메인 버전:"
           },
           "username": {
             "label": "사용자 이름:"
+          },
+          "sso": {
+            "label": "SSO:"
           },
           "roles": {
             "label": "롤:"
@@ -136,6 +393,9 @@ define({
           },
           "readTimeout": {
             "label": "읽기 시간 초과:"
+          },
+          "insecure": {
+            "label": "비보안:"
           },
           "anyAttempt": {
             "label": "시도된 접속:"
@@ -278,6 +538,9 @@ define({
         "startup": {
           "value": "어떤 시작 태스크를 수행하고 싶습니까?"
         }
+      },
+      "project-busy": {
+        "value": "프로젝트의 일부를 변경하기 전에 저장되지 않은 변경사항을 저장하거나 중단하십시오."
       }
     },
     "titles": {
@@ -331,6 +594,9 @@ define({
         "task": {
           "value": "시작 태스크"
         }
+      },
+      "project-busy": {
+        "value": "프로젝트 사용 중"
       }
     },
     "messages": {
@@ -382,6 +648,11 @@ define({
           "detail": "WDT 조합을 선택하려면 먼저 WDT 조합에 사용된 모든 WDT 모델을 선택하십시오."
         }
       },
+      "sso": {
+        "secureContextRequired": {
+          "detail": "The URL must specify the HTTPS protocol or use localhost"
+        }
+      },
       "correctiveAction": {
         "filePathNotFound": {
           "detail": "<p>파일 이름 필드에서 경로를 편집하고 [확인] 단추를 누릅니다. 또는 업로드 아이콘을 누르고 다른 파일을 선택하십시오.</p>"
@@ -400,12 +671,20 @@ define({
     },
     "prompts": {
       "info": {
-        "fileNotSet": "설정되지 않음"
+        "fileNotSet": {
+          "value": "설정되지 않음"
+        }
       }
     },
     "checkboxes": {
       "useSparseTemplate": {
         "label": "희소 템플리트 사용"
+      },
+      "usesso": {
+        "label": "Use Web Authentication"
+      },
+      "insecure": {
+        "label": "비보안 접속하기"
       }
     }
   },
@@ -421,7 +700,7 @@ define({
         "tooltip": "모니터링 트리"
       },
       "security": {
-        "tooltip": "Security Data Tree"
+        "tooltip": "보안 데이터 트리"
       },
       "modeling": {
         "tooltip": "WDT 모델"
@@ -434,13 +713,25 @@ define({
       }
     }
   },
+  "wrc-navigation": {
+    "navstrip": {
+      "ariaLabel": {
+        "value": "탐색 스트립"
+      }
+    },
+    "navtree": {
+      "ariaLabel": {
+        "value": "탐색 트리"
+      }
+    }
+  },
   "wrc-content-area-header": {
     "title": {
       "home": "홈",
       "configuration": "트리 편집",
       "view": "구성 뷰 트리",
       "monitoring": "모니터링 트리",
-      "security": "Security Data Tree",
+      "security": "보안 데이터 트리",
       "modeling": "WDT 모델",
       "composite": "WDT 조합 모델",
       "properties": "속성 목록"
@@ -449,9 +740,6 @@ define({
       "buttons": {
         "home": {
           "label": "홈"
-        },
-        "preferences": {
-          "label": "환경설정"
         }
       }
     }
@@ -466,13 +754,107 @@ define({
           "label": "간략히 보기"
         },
         "projectmanagement": {
-          "label": "제공자 관리"
+          "label": "Providers"
+        },
+        "tips": {
+          "label": "사용자 참고 사항"
+        },
+        "dashboards": {
+          "label": "대시보드"
         }
       }
     },
-    "icons": {
-      "kiosk": {
-        "tooltip": "키오스크"
+    "popups": {
+      "tips": {
+        "title": "Filter Tips",
+        "checkboxes": {
+          "hideall": "Hide All Tips",
+          "productivity": "Show Productivity Tips",
+          "personalization": "Show Personalization Tips",
+          "whereis": "Show Where Is... Tips",
+          "accessibility": "Show Accessibility Tips",
+          "connectivity": "Show Connectivity Tips",
+          "security": "Show Security Tips",
+          "other": "Show Other Tips"
+        }
+      }
+    },
+    "tips": {
+      "labels": {
+        "hideall": {
+          "value": "모두 숨기기"
+        },
+        "productivity": {
+          "value": "Productivity"
+        },
+        "personalization": {
+          "value": "Personalization"
+        },
+        "whereis": {
+          "value": "Where Is ..."
+        },
+        "accessibility": {
+          "value": "Accessibility"
+        },
+        "connectivity": {
+          "value": "Connectivity"
+        },
+        "security": {
+          "value": "보안"
+        },
+        "other": {
+          "value": "Other"
+        }
+      },
+      "cards": {
+        "tip0": {
+          "title": "Think \"Search\" Before You Click!",
+          "descriptionHTML": "<p>Finding what you want in one of the provider's Trees, can involve a lot of clicking and scrolling. The <b><i>Search</i></b> field (located at the top of the app), lets you avoid having to do that!</p><p>Even better, clicking on an item in the generated search results, auto-expands the provider Tree to show you where the item is.</p>"
+        },
+        "tip1": {
+          "title": "\"Dashboards\" Are a User's Best Friend",
+          "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you''re on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+        },
+        "tip2": {
+          "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
+          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+        },
+        "tip3": {
+          "title": "Using the Keyboard With Tables and Actions",
+          "descriptionHTML": "<p></p>"
+        },
+        "tip4": {
+          "title": "Where is the \"Customize this table\" Link?",
+          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+        },
+        "tip5": {
+          "title": "Where is the \"Change Center\" Portlet?",
+          "descriptionHTML": "<p>The \"Change Center\" porlet has been replaced with the <i>Shopping Cart Drawer</i>, which has launcher icon in the iconbar when the \"Configuration Tree\" is selected.</p>"
+        },
+        "tip6": {
+          "title": "Where is the \"How Do I\" Portlet?",
+          "descriptionHTML": "<p></p>"
+        },
+        "tip7": {
+          "title": "Other Tip #1",
+          "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip8": {
+          "title": "Trouble Creating an Admin Server Provider?",
+          "descriptionHTML": "<p>The <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Reference -> Troubleshooting</a> section in the WebLogic Remote Console documentation, covers how to resolve connectivity issues caused by environment and network settings.</p><p>If trying those don't lead to a resolution, please post a message to the <b>@weblogic-remote-console</b> slack channel. Screenshots often provide context that aids in issue diagnosis, so include them in the post when possible.</p>"
+        },
+        "tip9": {
+          "title": "Connectivity Tip #2",
+          "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip10": {
+          "title": "Security Tip #1",
+          "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip11": {
+          "title": "Think \"Shortcut Keys\" Before You Press Tab!",
+          "descriptionHTML": "<p>\"Shortcut\" (or accelerator) keys allow you to move the focus directly to an area, instead of sighing while repeatedly pressing the <b>Tab</b> and <b>Shift+Tab</b> keys!</p><p>Here's 5 to try out:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Opens the <i>Providers Drawer</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the <i>Provider Tree</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a table, more precisely the first column header.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the gripper of the Tree width-resizer. Afterwards, use the <code><b>RightArrow</b></code> and <code><b>LeftArrow</b></code> keys to increase or decrease the width of the Tree.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a breadcrumb that is a <i>cross-link</i> (if present), or the first clickable breadcrumb label.</li></ul><p>Check out the documentation to see a complete list of the shortcut keys!</p>"
+        }
       }
     }
   },
@@ -480,26 +862,16 @@ define({
     "icons": {
       "history": {
         "tooltip": "내역"
+      },
+      "separator": {
+        "tooltip": "구분 기호"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "내역 지우기"
-        }
-      }
-    }
-  },
-  "wrc-monitoring": {
-    "icons": {
-      "history": {
-        "tooltip": "내역"
-      }
-    },
-    "menus": {
-      "history": {
-        "clear": {
-          "value": "내역 지우기"
+          "value": "내역 항목 지우기",
+          "label": "내역 항목 지우기"
         }
       }
     }
@@ -525,7 +897,10 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "갤러리"
+          "label": "트리"
+        },
+        "startup-tasks": {
+          "label": "Startup Tasks"
         }
       }
     }
@@ -534,19 +909,19 @@ define({
     "cards": {
       "configuration": {
         "label": "트리 편집",
-        "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
+        "description": "<p>현재 사용 중인 WebLogic 도메인의 구성을 유지합니다.</p>"
       },
       "view": {
         "label": "구성 뷰 트리",
-        "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
+        "description": "<p>현재 사용 중인 WebLogic 도메인의 읽기 전용 구성을 검사합니다.</p>"
       },
       "monitoring": {
         "label": "모니터링 트리",
-        "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+        "description": "<p>현재 사용 중인 WebLogic 도메인의 선택된 리소스에 대한 런타임 MBean 정보를 확인합니다.</p>"
       },
       "security": {
-        "label": "Security Data Tree",
-        "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
+        "label": "보안 데이터 트리",
+        "description": "<p>현재 사용 중인 WebLogic 도메인의 보안 관련 정보(예: 사용자, 그룹, 롤, 정책, 인증서 등)를 관리합니다.</p>"
       },
       "modeling": {
         "label": "WDT 모델 트리",
@@ -559,6 +934,38 @@ define({
       "properties": {
         "label": "속성 목록 편집기",
         "description": "<p>속성 목록 파일에서 속성 집합을 보거나 수정합니다.</p>"
+      }
+    }
+  },
+  "wrc-startup-tasks": {
+    "cards": {
+      "addAdminServer": {
+        "label": "관리 서버 접속 제공자 추가",
+        "description": "This task creates a project resource that allows you to connect to an Admin Server"
+      },
+      "addWdtModel": {
+        "label": "WDT 모델 파일 제공자 추가",
+        "description": "This task creates a project resource that allows you to manage a WDT Model file, existing on your local filesystem"
+      },
+      "addWdtComposite": {
+        "label": "WDT 조합 모델 파일 제공자 추가",
+        "description": "This task creates a project resource that allows you to manage WDT Model file fragments, existing on your local filesystem"
+      },
+      "addPropertyList": {
+        "label": "속성 목록 제공자 추가",
+        "description": "This task creates a project resource that allows you to manage a .properties file stored on your local filesystem"
+      },
+      "createWdtModel": {
+        "label": "새 WDT 모델 파일용 제공자 생성",
+        "description": "This task creates a project resource that is a new WDT Model file, stored on your local filesystem"
+      },
+      "createPropertyList": {
+        "label": "새 속성 목록에 대한 제공자 생성",
+        "description": "This task creates a project resource that is a new .properties file, stored on your local filesystem"
+      },
+      "importProject": {
+        "label": "프로젝트 임포트",
+        "description": "This task loads a previously exported project containing providers immediately ready for you to use or modify"
       }
     }
   },
@@ -654,24 +1061,9 @@ define({
         }
       }
     },
-    "labels": {
-      "start": {
-        "value": "시작"
-      },
-      "resume": {
-        "value": "재개"
-      },
-      "suspend": {
-        "value": "일시 중지"
-      },
-      "shutdown": {
-        "value": "종료"
-      },
-      "restartSSL": {
-        "value": "SSL 재시작"
-      },
-      "stop": {
-        "value": "정지"
+    "prompts": {
+      "download": {
+        "value": "다운로드한 로그 파일 위치:"
       }
     }
   },
@@ -686,7 +1078,7 @@ define({
         "value": "총 행: {0}"
       },
       "reloadHidden": {
-        "value": "Reload the table to view the current {0} values"
+        "value": "현재 {0} 값을 보려면 테이블을 다시 로드합니다."
       }
     }
   },
@@ -730,6 +1122,9 @@ define({
       },
       "customize": {
         "label": "테이블 사용자정의"
+      },
+      "dashboard": {
+        "label": "새 대시보드"
       }
     },
     "icons": {
@@ -789,8 +1184,15 @@ define({
     },
     "messages": {
       "savedTo": {
-        "shoppingcart": "Changes were added to cart!",
-        "customView": "Changes were saved!"
+        "shoppingcart": "변경사항이 카트에 추가되었습니다!",
+        "generic": "변경사항이 저장되었습니다!",
+        "notSaved": "변경사항이 감지되지 않아서 저장된 것이 없습니다."
+      },
+      "action": {
+        "notAllowed": {
+          "summary": "허용되지 않는 작업",
+          "detail": "생성 작업 중에 요청된 동작을 수행할 수 없습니다. 생성 작업을 취소하려면 [취소] 단추를 누르십시오."
+        }
       }
     },
     "icons": {
@@ -813,6 +1215,19 @@ define({
           }
         }
       }
+    },
+    "labels": {
+      "relatedTopics": {
+        "value": "<b>관련 항목:</b>"
+      }
+    },
+    "tabs": {
+      "attributes": {
+        "label": "속성"
+      },
+      "actions": {
+        "label": "작업"
+      }
     }
   },
   "wrc-create-form": {
@@ -823,8 +1238,174 @@ define({
       }
     }
   },
+  "wrc-policy-management": {
+    "menus": {
+      "action": {
+        "addCondition": {
+          "label": "조건 추가"
+        },
+        "combine": {
+          "label": "결합"
+        },
+        "uncombine": {
+          "label": "결합 취소"
+        },
+        "moveup": {
+          "label": "위로 이동"
+        },
+        "movedown": {
+          "label": "아래로 이동"
+        },
+        "remove": {
+          "label": "제거"
+        },
+        "negate": {
+          "label": "부정"
+        },
+        "reset": {
+          "label": "재설정"
+        }
+      }
+    },
+    "contextMenus": {
+      "action": {
+        "addCondition": {
+          "at": {
+            "label": "새 첫번째 조건 추가..."
+          },
+          "above": {
+            "label": "누른 행 위에 조건 추가..."
+          },
+          "below": {
+            "label": "누른 행 아래에 조건 추가..."
+          }
+        }
+      }
+    },
+    "buttonMenus": {
+      "action": {
+        "addCondition": {
+          "above": {
+            "label": "위의 선택한 조건 추가..."
+          },
+          "below": {
+            "label": "아래의 선택한 조건 추가..."
+          }
+        }
+      }
+    },
+    "messages": {
+      "requiredFieldsMissing": {
+        "detail": "하나 이상의 필수 필드에 데이터가 없습니다!"
+      },
+      "argumentValueHasWrongFormat": {
+        "summary": "''{0}'' 필드에 형식이 잘못 지정된 데이터가 포함되어 있습니다!"
+      },
+      "conditionHasNoArgValues": {
+        "summary": "선택한 조건에 편집할 인수값이 없습니다!"
+      },
+      "conditionAlreadyExists": {
+        "summary": "이 보안 정책에는 선택된 술어를 사용하여 작성된 조건 또는 일치하는 인수 값이 있는 조건이 이미 있습니다!"
+      }
+    },
+    "instructions": {
+      "policyEditor": {
+        "value": "<p>새 조건의 위치를 지정하려면 상대 조건 옆에 선택 표시를 한 후 <b>+조건 추가</b> 단추를 누릅니다.</p>"
+      }
+    }
+  },
+  "wrc-policy-editor": {
+    "labels": {
+      "monthDay": {
+        "value": "범위: -31 ~ 31"
+      },
+      "dateTime": {
+        "value": "형식: y-MM-dd HH:mm:ss [HH:mm:ss] (예: 2006-04-25 00:00:00)"
+      },
+      "time": {
+        "value": "형식: HH:mm:ss (예: 14:22:47)"
+      },
+      "gmtOffset": {
+        "value": "형식: GMT+|-h:mm (예: GMT-5:00)"
+      },
+      "weekDay": {
+        "value": "예: 일요일, 월요일, 화요일..."
+      },
+      "or": {
+        "value": "or"
+      },
+      "not": {
+        "value": "NOT"
+      },
+      "combination": {
+        "value": "조합"
+      },
+      "nodata": {
+        "Policy": {
+          "value": "<b>+ 조건 추가</b> 단추를 사용하여 정책 조건을 추가합니다."
+        },
+        "DefaultPolicy": {
+          "value": "정의된 기본 보안 정책 조건이 없습니다."
+        }
+      }
+    },
+    "tables": {
+      "policyConditions": {
+        "columns": {
+          "header": {
+            "combination": "조합",
+            "operator": "연산자",
+            "expression": "조건 문구"
+          }
+        },
+        "dropdowns": {
+          "operator": {
+            "or": "Or",
+            "and": "And"
+          }
+        }
+      }
+    },
+    "wizard": {
+      "title": "정책 관리",
+      "pages": {
+        "choosePredicate": {
+          "header": {
+            "title": "술어 선택",
+            "instructions": "드롭다운 목록에서 새 조건의 술어를 선택합니다."
+          },
+          "body": {
+            "labels": {
+              "predicateList": "술어 목록"
+            },
+            "help": {
+              "predicateList": "보안 정책 조건을 구성하는 데 사용할 수 있는 술어 목록."
+            }
+          }
+        },
+        "manageArgumentValues": {
+          "header": {
+            "title": "그룹 술어",
+            "instructions": "<i></i> 필드에 입력을 시작하여 인수값을 추가하거나 기존 항목을 검색합니다. 입력한 값을 목록에 추가하려면 Enter를 누릅니다. 기존 인수값을 편집하려면 누른 후 팝업 입력 필드를 사용하여 수정합니다."
+          },
+          "body": {
+            "labels": {
+              "conditionPhrase": "조건 문구",
+              "negate": "부정 조건"
+            },
+            "help": {
+              "negate": "반대 의미를 갖도록 조건을 변환합니다(예: \"같음\"은 \"같지 않음\"이 되고 \"속함\"은 \"속하지 않음\"이 됨)."
+            }
+          }
+        }
+      }
+    }
+  },
   "wrc-common": {
     "buttons": {
+      "action": {
+        "label": "작업"
+      },
       "apply": {
         "label": "적용"
       },
@@ -836,6 +1417,9 @@ define({
       },
       "cancel": {
         "label": "취소"
+      },
+      "restart": {
+        "label": "재시작"
       },
       "yes": {
         "label": "예"
@@ -866,6 +1450,21 @@ define({
       },
       "savenow": {
         "label": "지금 저장"
+      },
+      "next": {
+        "label": "다음"
+      },
+      "previous": {
+        "label": "이전"
+      },
+      "finish": {
+        "label": "완료"
+      },
+      "done": {
+        "label": "완료"
+      },
+      "close": {
+        "label": "닫기"
       }
     },
     "tooltips": {
@@ -890,6 +1489,9 @@ define({
       "reset": {
         "value": "재설정"
       },
+      "filter": {
+        "value": "필터"
+      },
       "submit": {
         "value": "변경사항 제출"
       },
@@ -901,6 +1503,33 @@ define({
       },
       "reload": {
         "value": "파일 다시 로드"
+      },
+      "delete": {
+        "value": "삭제"
+      },
+      "remove": {
+        "value": "제거"
+      },
+      "noData": {
+        "value": "데이터 없음"
+      },
+      "preloader": {
+        "value": "사전 로더"
+      },
+      "checkAll": {
+        "value": "모두 선택"
+      },
+      "checkNone": {
+        "value": "모두 선택 해제"
+      },
+      "checkSome": {
+        "value": "선택항목 지우기"
+      },
+      "close": {
+        "value": "닫기"
+      },
+      "recentPages": {
+        "value": "내역 표시 토글"
       }
     },
     "menu": {
@@ -926,6 +1555,51 @@ define({
       "search": {
         "value": "검색"
       }
+    },
+    "title": {
+      "incorrectFileContent": {
+        "value": "부정확한 콘텐츠가 감지됨"
+      }
+    },
+    "messages": {
+      "incorrectFileContent": {
+        "detail": "''{0}''에 JSON이 포함되어 있지만 {1}의 JSON 표현이 아닙니다!"
+      },
+      "dataCopiedToClipboard": {
+        "summary": "데이터가 클립보드로 복사되었습니다!"
+      },
+      "tableCopiedToClipboard": {
+        "summary": "Table was successfully copied to the clipboard!"
+      },
+      "emptyCellData": {
+        "detail": "선택한 셀이 비어 있어서 데이터가 클립보드로 복사되지 않았습니다!"
+      },
+      "emptyRowData": {
+        "detail": "선택한 행이 비어 있어서 데이터가 클립보드로 복사되지 않았습니다!"
+      },
+      "browserPermissionDenied": {
+        "summary": "Browser Permission Denied",
+        "detail": "You need to enable writing to the clipboard from JavaScript, in order to perform this operation. Also, the Clipboard API is only supported for pages served over HTTPS."
+      }
+    },
+    "contextMenus": {
+      "copyData": {
+        "cell": {
+          "label": "클립보드로 셀 복사"
+        },
+        "row": {
+          "label": "클립보드로 행 복사"
+        },
+        "tableAsText": {
+          "label": "Copy Table to Clipboard (Text)"
+        },
+        "tableAsJSON": {
+          "label": "Copy Table to Clipboard (JSON)"
+        },
+        "tableAsYAML": {
+          "label": "Copy Table to Clipboard (YAML)"
+        }
+      }
     }
   },
   "wrc-wdt-form": {
@@ -948,7 +1622,7 @@ define({
     },
     "wdtOptionsDialog": {
       "title": "편집: {0}",
-      "default": "기본값. (설정 해제)",
+      "default": "값 설정 해제",
       "instructions": "선택 가능한 항목 목록에 추가할 토큰을 입력합니다.",
       "enterValue": "값 입력",
       "selectValue": "값 선택",
@@ -962,7 +1636,7 @@ define({
       "enterVariable": "변수 입력",
       "variableName": "변수 이름(필수)",
       "variableValue": "변수 값",
-      "multiSelectUnset": "\"기본값. (사용 가능한 항목 목록에서 선택)\""
+      "multiSelectUnset": "사용 가능한 항목 목록에서 값 선택"
     }
   },
   "wrc-unsaved-changes": {
@@ -980,18 +1654,18 @@ define({
           "value": "저장되지 않은 변경사항이 모두 손실됩니다. 계속하겠습니까?"
         },
         "areYouSure": {
-          "value": "변경사항을 저장하지 않고 종료하겠습니까?"
+          "value": "변경사항을 저장하지 않고 {0}하겠습니까?"
         },
         "saveBeforeExiting": {
-          "value": "Do you want to save changes before exiting?"
+          "value": "종료하기 전에 변경사항을 저장하겠습니까?"
         },
         "needDownloading": {
-          "value": "Your changes have not been download to the file, yet.<br/><br/>Download them before continuing?"
+          "value": "''{0}''에 대한 변경사항이 파일에 다운로드되지 않았습니다.<br/><br/>계속하기 전에 다운로드하겠습니까?"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "새 ''{0}'' 인스턴스가 WDT 모델에 아직 추가되지 않았습니다.<br/><br/>계속하기 전에 추가하겠습니까?"
+          "value": "새 ''{0}'' 인스턴스가 WDT 모델에 추가되지 않았습니다.<br/><br/>계속하기 전에 추가하겠습니까?"
         }
       }
     }
@@ -1012,13 +1686,27 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "메시지",
-          "detail": "''{1}''에서 지정된 작업을 수행하려고 시도할 때 콘솔 백엔드 호출이 ''{0}'' 응답을 생성했습니다."
+          "detail": "''{1}'' 작업을 수행하려고 시도할 때 콘솔 백엔드 호출이 ''{0}'' 응답을 생성했습니다."
+        },
+        "actionNotPerformed": {
+          "detail": "선택된 항목 중 하나 이상에 대해 ''{0}'' 작업을 수행할 수 없습니다"
+        },
+        "actionSucceeded": {
+          "summary": "''{0}'' 작업이 성공적으로 수행되었습니다!"
         }
       }
     },
     "labels": {
       "cannotDetermineExactCause": {
         "value": "정확한 원인을 확인할 수 없습니다. 힌트를 얻으려면 JavaScript 콘솔을 확인하십시오."
+      }
+    }
+  },
+  "wrc-actions-strip": {
+    "dialogs": {
+      "cannotBeUndone": {
+        "title": "작업 확인",
+        "prompt": "''{0}'' 작업은 실행취소할 수 없습니다!<br/><br/>계속하겠습니까?"
       }
     }
   },
@@ -1136,22 +1824,22 @@ define({
         "detail": "시도 실패: "
       },
       "badRequest": {
-        "detail": "제출된 파일 또는 요청을 처리할 수 없습니다. "
+        "detail": "제출된 파일 또는 요청을 처리할 수 없습니다."
       },
       "invalidCredentials": {
-        "detail": "WebLogic 도메인 인증서가 부적합합니다. "
+        "detail": "WebLogic 도메인 인증서가 부적합합니다."
       },
       "invalidUrl": {
-        "detail": "WebLogic 도메인 URL에 연결할 수 없습니다. "
+        "detail": "WebLogic 도메인 URL에 연결할 수 없습니다."
       },
       "notInRole": {
         "detail": "시도 실패: 사용자가 관리자, 배치자, 운영자 또는 감독자가 아닙니다."
       },
       "notSupported": {
-        "detail": "WebLogic 도메인은 지원되지 않습니다. "
+        "detail": "WebLogic 도메인은 지원되지 않습니다."
       },
       "unexpectedStatus": {
-        "detail": "예상치 않은 결과(상태: {0}) "
+        "detail": "예상치 않은 결과(상태: {0})"
       },
       "cbeRestApi": {
         "requestUnsuccessful": {
@@ -1200,6 +1888,55 @@ define({
       "connectionRefused": {
         "summary": "접속 문제",
         "details": "제공자로부터 데이터를 전송 및 수신하는 데 문제가 있습니다! 액세스 가능한지 확인하고 다시 시도하십시오."
+      },
+      "pathNotFound": {
+        "summary": "경로를 찾을 수 없음",
+        "details": "''{0}''은(는) 로컬 파일 시스템에서 액세스 가능한 파일 또는 디렉토리가 아닙니다."
+      }
+    }
+  },
+  "wrc-message-line": {
+    "menus": {
+      "more": {
+        "clear": {
+          "label": "메시지 지우기"
+        },
+        "suppress": {
+          "info": {
+            "label": "정보 메시지 표시 안함"
+          },
+          "warning": {
+            "label": "경고 메시지 표시 안함"
+          }
+        }
+      }
+    }
+  },
+  "wrc-alerts": {
+    "menus": {
+      "alerts": {
+        "error": {
+          "value": "You have {0} high-priority error {1}"
+        },
+        "warning": {
+          "value": "You have {0} high-priority warning {1}"
+        },
+        "info": {
+          "value": "You have {0} high-priority information {1}"
+        },
+        "view": {
+          "value": "경보 보기"
+        }
+      }
+    },
+    "labels": {
+      "alerts": {
+        "singular": {
+          "value": "alert"
+        },
+        "plural": {
+          "value": "alerts"
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 alternateSliceSources:
 - ServerMBean/slices
@@ -16,8 +16,11 @@ slices:
   - name: Keystores
   - name: SSL
   - name: SAML20General
+    label: "SAML 2.0 General"
   - name: SAML20IdentityProvider
+    label: "SAML 2.0 Identity Provider"
   - name: SAML20ServiceProvider
+    label: "SAML 2.0 Service Provider"
 - name: Migration
 - name: WebServices
   slices:

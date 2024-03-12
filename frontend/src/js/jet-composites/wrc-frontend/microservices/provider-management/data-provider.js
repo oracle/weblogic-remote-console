@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -132,11 +132,15 @@ define(['wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/co
             this.putStatus('insecure', responsePayload.insecure || false);
             this.putStatus('sso', responsePayload.sso || false);
             this.putStatus('ssoid', responsePayload.ssoid || '');
+            if (CoreUtils.isNotUndefinedNorNull(responsePayload.ssologin)) {
+              this.putStatus('ssologin', responsePayload.ssologin);
+            }
             this.putValue('mode', responsePayload.mode);
             this.putValue('anyConnectionAttemptSuccessful', responsePayload.anyConnectionAttemptSuccessful || false);
             this.putValue('lastConnectionAttemptSuccessful', responsePayload.lastConnectionAttemptSuccessful || false);
             this.putValue('state', responsePayload.state || CoreTypes.Domain.ConnectState.DISCONNECTED.name);
             this.putValue('connectivity', responsePayload.connectivity || CoreTypes.Console.RuntimeMode.DETACHED.name);
+            this.putStatus('consoleExtensionVersion', responsePayload.consoleExtensionVersion || '');
             this.putStatus('domainVersion',responsePayload.domainVersion || '');
             this.putStatus('domainName', responsePayload.domainName || '');
             if (CoreUtils.isNotUndefinedNorNull(responsePayload.domainStatus)){

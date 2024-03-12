@@ -1,14 +1,57 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'wrc-frontend/integration/controller', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/provider-management/data-provider', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/parsers/yaml', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'wrc-frontend/integration/panel_resizer', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmessages', 'ojs/ojmodule', 'ojs/ojbinddom'],
-  function (oj, ko, ArrayDataProvider, HtmlUtils, Controller, PerspectiveManager, PerspectiveMemoryManager, DataProviderManager, DataProvider, MessageDisplaying, YamlParser, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojarraydataprovider',
+  'ojs/ojhtmlutils',
+  'wrc-frontend/common/controller',
+  'wrc-frontend/microservices/perspective/perspective-manager',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/microservices/provider-management/data-provider-manager',
+  'wrc-frontend/microservices/provider-management/data-provider',
+  'wrc-frontend/apis/message-displaying',
+  'wrc-frontend/core/parsers/yaml',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/utils',
+  'wrc-frontend/core/types',
+  'wrc-frontend/core/runtime',
+  'ojs/ojcontext',
+  'ojs/ojlogger',
+  'ojs/ojknockout',
+  'ojs/ojmodule-element',
+  'ojs/ojmessages',
+  'ojs/ojmodule',
+  'ojs/ojbinddom',
+  'wrc-frontend/common/panel_resizer',
+  'css!wrc-frontend/css/tool.css'
+],
+  function (
+    oj,
+    ko,
+    ArrayDataProvider,
+    HtmlUtils,
+    Controller,
+    PerspectiveManager,
+    PerspectiveMemoryManager,
+    DataProviderManager,
+    DataProvider,
+    MessageDisplaying,
+    YamlParser,
+    ViewModelUtils,
+    CoreUtils,
+    CoreTypes,
+    Runtime,
+    Context,
+    Logger
+  ) {
 
     function WdtModelDesignerComposite(context) {
       const self = this;
@@ -82,6 +125,38 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       this.signalBindings = [];
 
       this.connected = function (context) {
+        /**
+         *
+         * @param {string} selector
+         * @param {number} [delta = 200]
+         * @returns {HTMLElement}
+         * @private
+         */
+        function registerModelConsoleResizeObserver(selector, delta = 200) {
+          const modelConsole = document.querySelector(selector);
+          if (modelConsole !== null) {
+            let rtime;
+            let timeout = false;
+            const onResizeEnd = () => {
+              if (new Date() - rtime < delta) {
+                setTimeout(onResizeEnd, delta);
+              }
+              else {
+                timeout = false;
+                setContentAreaBodyCSSVariables(modelConsole);
+              }
+            };
+            new ResizeObserver(() => {
+              rtime = new Date();
+              if (!timeout) {
+                timeout = true;
+                setTimeout(onResizeEnd, delta);
+              }
+            }).observe(modelConsole);
+          }
+          return modelConsole;
+        }
+
         this.setBusyContext();
 
         this.busyContext.whenReady()
@@ -105,46 +180,49 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
               // to do that, because the runtime role drives logic used in the
               // module that make up the wrc-frontend JET Pack.
               Runtime.setProperty(Runtime.PropertyName.CFE_ROLE, container.getAttribute('data-runtime-role'));
-              container.setAttribute('offsetHeight', container.parentElement.offsetHeight);
               $('#navtree-container').css({
                 'display': 'inline-flex',
-                'width': self.perspectiveMemory.navtree.width
+                'width': self.perspectiveMemory.navtree.width,
+                'max-width': ViewModelUtils.getCustomCssProperty('navtree-max-width')
               });
               $('#table-form-container').css({
                 'display': 'inline-flex'
               });
+
+              const modelConsole = registerModelConsoleResizeObserver('#wkt-container > div.wkt-right-pane > oj-collapsible', 200);
+              if (modelConsole !== null) {
+                setContentAreaBodyCSSVariables(modelConsole);
+              }
             }
 
-            self.modelConsole = document.querySelector('div.wkt-right-pane > oj-collapsible');
-            new ResizeObserver(() => {
-              if (self.modelConsole) {
-                signaling.modelConsoleSizeChanged.dispatch(self.modelConsole.offsetHeight);
-              }
-            }).observe(self.modelConsole);
-
-            ViewModelUtils.setCustomCssProperty('paging-bottom', '5rem');
             resolve();
           });
 
-        let binding = signaling.popupMessageSent.add((message, autoTimeout) => {
-          if (CoreUtils.isNotUndefinedNorNull(message.blocking)) {
-            this.popupMessage.category(message.category);
-            this.popupMessage.summary(message.summary);
-            this.popupMessage.detail(message.detail);
-            const popup = document.getElementById('wdt-model-designer-popup');
-            popup.open('#wdt-model-designer-container');
+        let binding = signaling.popupMessageSent.add((message, autoTimeout, cancelAffordance = 'autoTimeout') => {
+          if (!message) {
+            self.messages.removeAll();
           }
           else {
-            this.messages([]);
-            if (CoreUtils.isNotUndefinedNorNull(message.severity) && ['confirmation', 'info'].includes(message.severity)) {
-              message.autoTimeout = autoTimeout || 1500;
-              const value = parseInt(message.autoTimeout);
-              if (isNaN(value) || message.autoTimeout < 1000 || message.autoTimeout > 60000) {
-                message.autoTimeout = 1500;
+            if (CoreUtils.isNotUndefinedNorNull(message.severity) && ['confirmation', 'info'].includes(message.severity) ) {
+              if (cancelAffordance !== 'userDismissed') {
+                message.autoTimeout = autoTimeout || 1500;
+                const value = parseInt(message.autoTimeout);
+                if (isNaN(value) || message.autoTimeout < 1000 || message.autoTimeout > 60000) {
+                  message.autoTimeout = 1500;
+                }
               }
             }
-            this.messages.push(message);
+            self.messages.push(message);
           }
+        });
+
+        this.signalBindings.push(binding);
+
+        binding = signaling.resizeObserveeNudged.add((source) => {
+          window.requestAnimationFrame((timestamp) => {
+            const modelConsole = document.querySelector('#wkt-container > div.wkt-right-pane > oj-collapsible');
+            if (modelConsole !== null) setContentAreaBodyCSSVariables(modelConsole);
+          });
         });
 
         this.signalBindings.push(binding);
@@ -323,9 +401,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       };
 
       this.resize = () => {
-        $('#wdt-model-designer-container').css({
-          'height': `${context.element.offsetHeight}px`
-        });
         $('#navtree-container').css({
           'height': `${context.element.offsetHeight}px`,
           'max-height': `${context.element.offsetHeight}px`,
@@ -334,12 +409,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         $('#wdt-model-designer-content').css({
           'height': `${context.element.offsetHeight}px`,
           'max-height': `${context.element.offsetHeight}px`,
-          'width': '100%'
+          'width': 'fit-content'
         });
         $('#content-area-container').css({
           'height': `${context.element.offsetHeight}px`,
           'max-height': `${context.element.offsetHeight}px`
         });
+
+        setContentAreaContainerCSSVariables(context.element);
       };
 
       /**
@@ -404,8 +481,38 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         popup.close();
       };
 
-      async function getModelProperties(dataProvider, injectDomainInfoProps=true) {
-        const reply = {body: {data: (injectDomainInfoProps ? dataProvider.modelProperties : undefined )}};
+      function setContentAreaBodyCSSVariables(modelConsole) {
+        const PADDING_BOTTOM = 10;
+
+        const offsetHeight = modelConsole.offsetHeight + Math.round($('footer').outerHeight());
+        document.documentElement.style.setProperty('--total-rows-bottom', `${offsetHeight}px`);
+        document.documentElement.style.setProperty('--form-container-resizer-offset-max-height', `${offsetHeight + PADDING_BOTTOM}px`);
+        document.documentElement.style.setProperty('--table-container-resizer-offset-max-height', `${offsetHeight + PADDING_BOTTOM}px`);
+
+        // Signaling uses an asynchronous, "fire-and-forget" messaging
+        // paradigm, so be mindful of what code you put beneath it.
+        signaling.modelConsoleSizeChanged.dispatch(offsetHeight);
+      }
+
+      function setContentAreaContainerCSSVariables(container) {
+        const PANEL_RESIZER_WIDTH = 10;
+        const PADDING_LEFT = 10;
+
+        const navigationAreaWidth = Math.round($('#navlistcontainer').outerWidth()) + Math.round($('#navtree-container').outerWidth()) + PANEL_RESIZER_WIDTH;
+        const maxWidthVariable = (container.offsetParent ? container.offsetParent.offsetWidth : 0) - navigationAreaWidth;
+        document.documentElement.style.setProperty('--wdt-model-designer-content-offset-width', `${maxWidthVariable}px`);
+
+        document.documentElement.style.setProperty('--instructions-calc-max-width', `${navigationAreaWidth}px`);
+        document.documentElement.style.setProperty('--content-area-body-toolbars-calc-max-width', `${navigationAreaWidth + PADDING_LEFT}px`);
+        document.documentElement.style.setProperty('--content-area-body-content-calc-max-width', `${navigationAreaWidth + PADDING_LEFT}px`);
+        document.documentElement.style.setProperty('--table-container-calc-max-width', `${navigationAreaWidth + PADDING_LEFT}px`);
+
+        document.documentElement.style.setProperty('--help-table-calc-min-width', `${navigationAreaWidth}px`);
+        document.documentElement.style.setProperty('--beanpath-history-container-calc-min-width', `${navigationAreaWidth}px`);
+      }
+
+      async function getModelProperties(dataProvider, injectDomainInfoProps = true) {
+        const reply = { body: { data: (injectDomainInfoProps ? dataProvider.modelProperties : undefined) } };
         if (reply.body.data) {
           // dataProvider.modelProperties wasn't undefined or nullt
           if (reply.body.data.length === 0 && dataProvider.hadEmptyModelContents) {

@@ -155,8 +155,8 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
-  public boolean isSupportsCustomFilteringDashboards() {
-    return getBaseTypeDefImpl().isSupportsCustomFilteringDashboards();
+  public boolean isSupportsFilteringDashboards() {
+    return getBaseTypeDefImpl().isSupportsFilteringDashboards();
   }
 
   @Override

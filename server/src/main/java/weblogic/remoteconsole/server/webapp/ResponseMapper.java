@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -19,7 +19,9 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.BeanTreePathSegment;
+import weblogic.remoteconsole.server.repo.DownloadValue;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.repo.LabelValue;
 import weblogic.remoteconsole.server.repo.PropertiesValue;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SecretValue;
@@ -97,8 +99,15 @@ public abstract class ResponseMapper<T> {
   }
 
   private void addMessages() {
-    if (getResponse().getMessages().isEmpty()) {
-      return;
+    Response<T> response = getResponse();
+    if (response.getMessages().isEmpty()) {
+      if (response.isUserBadRequest()) {
+        response.addFailureMessage(
+          getInvocationContext().getLocalizer().localizeString(LocalizedConstants.REFER_TO_LOGS)
+        );
+      } else {
+        return;
+      }
     }
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (Message pageMessage : getResponse().getMessages()) {
@@ -212,6 +221,12 @@ public abstract class ResponseMapper<T> {
       // The CBE just passes them straight through as json values:
       return value.asEntitleNetExpression().getValue();
     }
+    if (value.isDownload()) {
+      return downloadToJson(value.asDownload());
+    }
+    if (value.isLabel()) {
+      return labelToJson(value.asLabel());
+    }
     throw new AssertionError("Unsupported value: " + value.getClass());
   }
 
@@ -298,6 +313,22 @@ public abstract class ResponseMapper<T> {
         .add("label", label)
         .add("resourceData", getBackendRelativeUri(beanTreePath, queryParams))
         .build();
+  }
+
+  protected JsonValue downloadToJson(DownloadValue download) {
+    String anchor =
+      "<a"
+      + " href=\"" + UriUtils.getBackendRelativeUri(getInvocationContext(), download.getPath()) + "\""
+      + " download=\"" + download.getFileName() + "\""
+      + " type=\"" + download.getMediaType() + "\""
+      + " target=\"_blank\""
+      + ">"
+      + "</a>";
+    return Json.createObjectBuilder().add("label", download.getLabel()).add("href", anchor).build();
+  }
+
+  protected JsonValue labelToJson(LabelValue label) {
+    return Json.createObjectBuilder().add("label", label.getLabel()).build();
   }
 
   private String getBeanTreePathLabel(BeanTreePath beanTreePath) {

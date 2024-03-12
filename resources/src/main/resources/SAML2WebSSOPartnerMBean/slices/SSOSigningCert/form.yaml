@@ -1,0 +1,43 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+    <p>This page displays this partner's single sign-on signing certificate,
+    which is included in the metadata file received from the partner.</p>
+
+presentation:
+  singleColumn: true
+
+properties:
+- name: SSOSigningCertIssuedTo
+- name: SSOSigningCertIssuedBy
+- name: SSOSigningCertValidFrom
+- name: SSOSigningCertValidUntil
+- name: SSOSigningCertSubjectAlternativeNames
+
+advancedProperties:
+- name: SSOSigningCertVersion
+- name: SSOSigningCertSerialNumber
+- name: SSOSigningCertSignatureAlgorithm
+- name: SSOSigningCertExtendedKeyUsage
+- name: SSOSigningCertBasicConstraints
+- name: SSOSigningCertThumbprintAlgorithm
+- name: SSOSigningCertThumbprint
+- name: SSOSigningCertPublicKey
+
+helpTopics:
+- label: "Configuring Keystores"
+  href: "secmg/identity_trust.html"
+  type: "edocs"
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html"
+  type: "edocs"
+- label: "Viewing Partner Site, Certificate, and Service Endpoint Information"
+  href: "secmg/saml20.html#SECMG313"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: "edocs"

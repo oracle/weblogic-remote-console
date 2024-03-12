@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -30,7 +30,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
       }
     };
 
-    var _popupMessageSentSignal;
+    let _popupMessageSentSignal;
+    let _failureTypeCache = {};
 
     /**
      *
@@ -87,11 +88,43 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
        */
       displayMessage: function(message, autoCloseInterval) {
         if (typeof message.severity === 'undefined') message['severity'] = 'confirmation';
+        getPopupMessageSentSignal().dispatch(null);
         if (autoCloseInterval && ['confirmation', 'info'].includes(message.severity) ) {
           getPopupMessageSentSignal().dispatch(message, autoCloseInterval || 1500);
         }
         else {
           getPopupMessageSentSignal().dispatch(message);
+        }
+      },
+  
+      /**
+       * Displays `message` if `failureType` is not in the failure type cache.
+       * <p>A very simple algorithm is used to manage items in the failure type cache. If <code>failureType</code> is in the cache, then the milliseconds for when the item was added to the cache is subtracted from Date.now(). If the difference is greater than <code>retainForInterval</code>, then <code>message</code> is displayed.</p>
+       * @param {string} failureType
+       * @param {{severity: string, summary: string, [detail]: string}} message - The message object to display
+       * @param {number} [retainForInterval=60000]
+       */
+      displayCachedFailureMessage: function (failureType, message, retainForInterval = 60000) {
+        function cacheFailureTypeMessage(failureType, message) {
+          message.timestamp = new Date();
+          _failureTypeCache[failureType] = message;
+        }
+
+        function displayMessage(message) {
+          getPopupMessageSentSignal().dispatch(null);
+          getPopupMessageSentSignal().dispatch(message, retainForInterval);
+        }
+
+        if (typeof _failureTypeCache[failureType] !== 'undefined') {
+          const autoPurgeInterval = (Date.now() - retainForInterval);
+          if (autoPurgeInterval > Date.parse(_failureTypeCache[failureType].timestamp)) {
+            cacheFailureTypeMessage(failureType, message);
+            displayMessage(message);
+          }
+        }
+        else {
+          cacheFailureTypeMessage(failureType, message);
+          displayMessage(message);
         }
       },
 

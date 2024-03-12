@@ -1,0 +1,16 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.saml2.SAML2WebSSOIdPPartnerMBean
+baseTypes:
+- weblogic.security.providers.saml2.SAML2IdPPartnerMBean
+- weblogic.security.providers.saml2.SAML2WebSSOPartnerMBean
+
+properties:
+- name: WantAuthnRequestsSigned
+  type: boolean
+- name: RedirectURIs
+  type: java.lang.String
+  array: true
+  writable: true
+# TBD SingleSignOnService, Endpoint[]

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -16,8 +16,18 @@
  * @typedef {{uid: string, parentUid: string, isLastSibling: boolean, isLastCondition: boolean, operator: 'none'|'and'|'or'|undefined, joiner: 'none'|'and'|'or'|undefined, expression: string, options: {negated: boolean, combined: boolean, deleted: boolean, insertion?: Insertion},children?:[PolicyCondition],predicate: {name: string, arguments:[Argument],descriptionHTML: string,displayName: string}}} PolicyCondition
  * @type {PolicyCondition}
  */
-define(['knockout', './controller', 'wrc-frontend/microservices/policy-management/condition-phraser', 'wrc-frontend/core/utils'],
-  function (ko, Controller, ConditionPhraser, CoreUtils) {
+define([
+  'knockout',
+  './controller',
+  'wrc-frontend/microservices/policy-management/condition-phraser',
+  'wrc-frontend/core/utils'
+],
+  function (
+    ko,
+    Controller,
+    ConditionPhraser,
+    CoreUtils
+  ) {
 
     /**
      * Returns a new "empty" `PolicyCondition`

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage all the server debug flags.
@@ -128,6 +128,7 @@ properties:
 - name: ServerDebug.DebugExpressionBeanLocalizer
 - name: ServerDebug.DebugExpressionExtensionsManager
 - name: ServerDebug.DebugFileDistributionServlet
+- name: ServerDebug.DebugHealthScore
 - name: ServerDebug.DebugHttp
 - name: ServerDebug.DebugHttpConcise
 - name: ServerDebug.DebugHttpLogging
@@ -157,11 +158,14 @@ properties:
 - name: ServerDebug.DebugJMSBackEnd
 - name: ServerDebug.DebugJMSBoot
 - name: ServerDebug.DebugJMSCDS
+- name: ServerDebug.DebugJMSCICHelper
 - name: ServerDebug.DebugJMSCommon
 - name: ServerDebug.DebugJMSConfig
 # excluded - name: ServerDebug.DebugJMSCrossDomainSecurity
 - name: ServerDebug.DebugJMSDispatcher
+- name: ServerDebug.DebugJMSDispatcherLifecycle
 - name: ServerDebug.DebugJMSDispatcherProxy
+- name: ServerDebug.DebugJMSDispatcherRMI
 # excluded - name: ServerDebug.DebugJMSDispatcherUtilsVerbose
 # excluded - name: ServerDebug.DebugJMSDispatcherVerbose
 - name: ServerDebug.DebugJMSDistTopic
@@ -171,6 +175,7 @@ properties:
 # excluded - name: ServerDebug.DebugJMSDurSub
 # deprecated - name: ServerDebug.DebugJMSDurableSubscribers
 - name: ServerDebug.DebugJMSFrontEnd
+- name: ServerDebug.DebugJMSInvocableVerbose
 # deprecated - name: ServerDebug.DebugJMSJDBCScavengeOnFlush
 # excluded - name: ServerDebug.DebugJMSJNDI
 # deprecated - name: ServerDebug.DebugJMSLocking
@@ -326,6 +331,7 @@ properties:
 # excluded - name: ServerDebug.DebugStore
 - name: ServerDebug.DebugStoreAdmin
 # excluded - name: ServerDebug.DebugStoreCache
+- name: ServerDebug.DebugStoreConnectionCaching
 - name: ServerDebug.DebugStoreIOLogical
 - name: ServerDebug.DebugStoreIOLogicalBoot
 - name: ServerDebug.DebugStoreIOPhysical

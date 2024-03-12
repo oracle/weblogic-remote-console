@@ -5,7 +5,16 @@
 
 set -e
 
-CHECKSTYLE_JAR="target/checkstyle.jar"
+case "$0" in
+*/*)
+  BTDIR="${0%/*}"
+  ;;
+*)
+  BTDIR="./build-tools"
+esac
+
+CHECKSTYLE_JAR="${CHECKSTYLE_JAR:-${BTDIR}/download-bin/checkstyle.jar}"
+
 DOWNLOAD_CHECKSTYLE_URL=${DOWNLOAD_CHECKSTYLE_URL:-https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.11.0/checkstyle-10.11.0-all.jar}
 if ! unzip -v "$CHECKSTYLE_JAR" > /dev/null 2>&1
 then
@@ -17,16 +26,13 @@ then
   fi
 fi
 
+if [ "$1" = --download ]
+then
+  exit 0
+fi
+
 tmp="/tmp/checkstyle.out"
 rm -f "$tmp"
-
-case "$0" in
-*/*)
-  BTDIR="${0%/*}"
-  ;;
-*)
-  BTDIR="./build-tools"
-esac
 
 if ! java -Dorg.checkstyle.google.suppressionfilter.config="$BTDIR"/src/main/resources/checkstyle/suppressions.xml -jar "$CHECKSTYLE_JAR" -c="$BTDIR"/src/main/resources/checkstyle/customized_google_checks.xml $(find * -name '*.java') > $tmp 2>&1 || grep -q WARN "$tmp"
 then

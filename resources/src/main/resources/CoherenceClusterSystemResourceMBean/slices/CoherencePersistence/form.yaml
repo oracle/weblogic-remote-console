@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -9,6 +9,9 @@ properties:
 - name: "CoherenceClusterResource.CoherencePersistenceParams.ActiveDirectory"
 - name: "CoherenceClusterResource.CoherencePersistenceParams.SnapshotDirectory"
 - name: "CoherenceClusterResource.CoherencePersistenceParams.TrashDirectory"
+- name: "CoherenceClusterResource.CoherencePersistenceParams.BackupDirectory"
+- name: "CoherenceClusterResource.CoherencePersistenceParams.EventsDirectory"
+
 helpTopics:
 - label: "Configuring and Managing Coherence Clusters "
   href: "clust/coherence.html"

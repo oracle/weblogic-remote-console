@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import weblogic.remoteconsole.server.repo.BeanEditorRepo;
+import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
+import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.BaseResource;
 
@@ -21,10 +23,13 @@ public class ServerMBeanCustomizer {
   private ServerMBeanCustomizer() {
   }
 
-  // Customize the ServerMBean collection's JAXRS resource
+  // Customize the writable ServerMBean JAXRS resources
   public static BaseResource createResource(InvocationContext ic) {
-    if (ic.getBeanTreePath().isCollection() && ic.getBeanTreePath().isCreatable()) {
+    BeanTreePath btp = ic.getBeanTreePath();
+    if (btp.isCreatable() && btp.isCollection()) {
       return new ServerMBeanCreatableBeanCollectionResource();
+    } else if (btp.isDeletable() && btp.isCollectionChild()) {
+      return new ServerMBeanDeletableCollectionChildBeanResource();
     } else {
       return null;
     }
@@ -68,5 +73,21 @@ public class ServerMBeanCustomizer {
 
     // Now we can delete the server.
     return beanEditorRepo.deleteBean(ic, ic.getBeanTreePath());
+  }
+
+  public static Response<SettableValue> getHostnameVerifierType(
+    @Source(
+      property = "SSL.HostnameVerifier"
+    ) SettableValue hostnameVerifier
+  ) {
+    return HostnameVerifierCustomizer.getHostnameVerifierType(hostnameVerifier);
+  }
+
+  public static Response<SettableValue> getCustomHostnameVerifier(
+    @Source(
+      property = "SSL.HostnameVerifier"
+    ) SettableValue hostnameVerifier
+  ) {
+    return HostnameVerifierCustomizer.getCustomHostnameVerifier(hostnameVerifier);
   }
 }

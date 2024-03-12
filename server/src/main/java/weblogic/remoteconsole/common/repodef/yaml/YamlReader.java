@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -6,6 +6,7 @@ package weblogic.remoteconsole.common.repodef.yaml;
 import java.util.List;
 
 import weblogic.remoteconsole.common.YamlUtils;
+import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.PagePath;
@@ -32,7 +33,7 @@ public abstract class YamlReader {
 
   protected abstract List<String> getTypesYamlDirectories();
 
-  public BeanTypeDefSource getBeanTypeDefSource(String type) {
+  public BeanTypeDefSource getBeanTypeDefSource(BeanRepoDef repoDef, String type) {
     for (String dir : getTypesYamlDirectories()) {
       String path = type + ".yaml";
       if (StringUtils.notEmpty(dir)) {
@@ -46,7 +47,7 @@ public abstract class YamlReader {
     return null;
   }
 
-  public PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(String type) {
+  public PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(BeanRepoDef repoDef, String type) {
     return
       YamlUtils.read(
         getTypeCustomizationsYamlDirectory(type) + "/pseudo-type.yaml",

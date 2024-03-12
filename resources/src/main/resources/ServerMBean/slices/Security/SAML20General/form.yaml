@@ -1,8 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
   <p>Use this page to configure the general SAML 2.0 per server properties.</p>
+  <p>Note: Use the "SAML 2.0" tab in the Monitoring tree to export this server's SAML 2.0 metadata to a file.</p>
 
 properties:
 - name: "SingleSignOnServices.ReplicatedCacheEnabled"

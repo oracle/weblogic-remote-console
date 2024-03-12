@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -67,12 +67,12 @@ public interface PageRepoDef {
   }
 
   public default boolean isSupportsDashboards() {
-    // By default, dashboards are supported only if custom filtering dashboards are supported.
+    // By default, dashboards are supported only if filtering dashboards are supported.
     // This may change when support for other kinds of dashboards is added.
-    return isSupportsCustomFilteringDashboards();
+    return isSupportsFilteringDashboards();
   }
 
-  public default boolean isSupportsCustomFilteringDashboards() {
+  public default boolean isSupportsFilteringDashboards() {
     // By default custom filtering dashboards are not supported.
     // i.e. only the monitoring tree supports custom filtering dashboards,
     // the config trees don't.

@@ -29,11 +29,13 @@ class DashboardsToPersistedDashboards {
     PersistedDashboards persisted = new PersistedDashboards();
     Map<String,PersistedDashboard> persistedDashboards = new HashMap<>();
     for (Dashboard dashboard : dashboards.getDashboards().values()) {
-      if (dashboard.isCustomFilteringDashboard()) {
-        CustomFilteringDashboardConfig config = dashboard.asCustomFilteringDashboard().getConfig();
-        persistedDashboards.put(config.getName(), customFilteringDashboardConfigtoPersistedData(config));
-      } else {
-        throw new AssertionError("Unsupported dashboard: " + dashboard.getName() + " " + dashboard.getClass());
+      if (!dashboard.isBuiltin()) {
+        if (dashboard.isFilteringDashboard()) {
+          FilteringDashboardConfig config = dashboard.asFilteringDashboard().getConfig();
+          persistedDashboards.put(config.getName(), customFilteringDashboardConfigtoPersistedData(config));
+        } else {
+          throw new AssertionError("Unsupported dashboard: " + dashboard.getName() + " " + dashboard.getClass());
+        }
       }
     }
     persistedDashboards.putAll(dashboards.getUnsupportedDashboards());
@@ -43,13 +45,15 @@ class DashboardsToPersistedDashboards {
 
   // Convert an in-memory custom custom filtering dashboard's config to its persistent form
   private static PersistedDashboard customFilteringDashboardConfigtoPersistedData(
-    CustomFilteringDashboardConfig config
+    FilteringDashboardConfig config
   ) {
-    PersistedCustomFilteringDashboard persisted = new PersistedCustomFilteringDashboard();
+    PersistedFilteringDashboard persisted = new PersistedFilteringDashboard();
+    persisted.setDescription(config.getDescription());
+    persisted.setDefaultColumns(config.getDefaultColumns());
     Map<String,PersistedBeanKeyFilter> beanKeyFilters = new HashMap<>();
     Map<String,PersistedPropertyFilter> propertyFilters = new HashMap<>();
     Path beanTreePathTemplate = new Path();
-    for (CustomFilteringDashboardPathSegment pathSegment : config.getPath()) {
+    for (FilteringDashboardPathSegment pathSegment : config.getPath()) {
       BeanTreePathSegment btpSegment = pathSegment.getSegmentDef().getSegmentTemplate();
       beanTreePathTemplate.addPath(btpSegment.getChildDef().getChildPath());
       PersistedBeanKeyFilter filter = pathSegmentToPersistedData(pathSegment);
@@ -57,7 +61,7 @@ class DashboardsToPersistedDashboards {
         beanKeyFilters.put(btpSegment.getChildDef().getChildTypeDef().getInstanceName(), filter);
       }
     }
-    for (CustomFilteringDashboardProperty property : config.getProperties()) {
+    for (FilteringDashboardProperty property : config.getProperties()) {
       PersistedPropertyFilter filter = propertyToPersistedData(property);
       if (filter != null) {
         propertyFilters.put(
@@ -79,10 +83,10 @@ class DashboardsToPersistedDashboards {
 
   // Convert an in-memory custom filtering dashboard path segment to its persistent form.
   private static PersistedBeanKeyFilter pathSegmentToPersistedData(
-    CustomFilteringDashboardPathSegment pathSegment
+    FilteringDashboardPathSegment pathSegment
   ) {
     String criteria = pathSegment.getCriteria();
-    if (CustomFilteringDashboardPathSegmentDef.CRITERIA_UNFILTERED.equals(criteria)) {
+    if (FilteringDashboardPathSegmentDef.CRITERIA_UNFILTERED.equals(criteria)) {
       return null; // we only persist filtered path segments
     }
     BeanChildDef childDef = pathSegment.getSegmentDef().getSegmentTemplate().getChildDef();
@@ -92,9 +96,9 @@ class DashboardsToPersistedDashboards {
     PersistedBeanKeyFilter persisted =
       new PersistedBeanKeyFilter();
     String val = pathSegment.getValue();
-    if (CustomFilteringDashboardPathSegmentDef.CRITERIA_EQUALS.equals(criteria)) {
+    if (FilteringDashboardPathSegmentDef.CRITERIA_EQUALS.equals(criteria)) {
       persisted.setEquals(val);
-    } else if (CustomFilteringDashboardPathSegmentDef.CRITERIA_CONTAINS.equals(criteria)) {
+    } else if (FilteringDashboardPathSegmentDef.CRITERIA_CONTAINS.equals(criteria)) {
       persisted.setContains(val);
     } else {
       throw new AssertionError("Unsupported criteria " + childDef + " " + criteria);
@@ -103,10 +107,10 @@ class DashboardsToPersistedDashboards {
   }
 
   // Convert an in-memory custom filtering dashboard property to its persistent form.
-  private static PersistedPropertyFilter propertyToPersistedData(CustomFilteringDashboardProperty property) {
+  private static PersistedPropertyFilter propertyToPersistedData(FilteringDashboardProperty property) {
     String criteria = property.getCriteria();
     Value value = property.getValue();
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_UNFILTERED.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_UNFILTERED.equals(criteria)) {
       return null; // we only persist filtered properties
     }
     PersistedPropertyFilter persisted =
@@ -156,11 +160,11 @@ class DashboardsToPersistedDashboards {
     String value,
     PersistedPropertyFilter persisted
   ) {
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
       persisted.setEquals(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
+    } else if (FilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
       persisted.setNotEquals(value);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
       persisted.setContains(value);
     } else {
       return null;
@@ -184,17 +188,17 @@ class DashboardsToPersistedDashboards {
     Object value,
     PersistedPropertyFilter persisted
   ) {
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
       persisted.setEquals(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
+    } else if (FilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
       persisted.setNotEquals(value);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_LESS_THAN.equals(criteria)) {
       persisted.setLessThan(value);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS.equals(criteria)) {
       persisted.setLessThanOrEquals(value);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_GREATER_THAN.equals(criteria)) {
       persisted.setGreaterThan(value);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS.equals(criteria)) {
       persisted.setGreaterThanOrEquals(value);
     } else {
       return null;
@@ -208,7 +212,7 @@ class DashboardsToPersistedDashboards {
     Object value,
     PersistedPropertyFilter persisted
   ) {
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
       persisted.setEquals(value);
     } else {
       return null;
@@ -222,7 +226,7 @@ class DashboardsToPersistedDashboards {
     String value,
     PersistedPropertyFilter persisted
   ) {
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
       persisted.setEquals(value);
     } else {
       return null;

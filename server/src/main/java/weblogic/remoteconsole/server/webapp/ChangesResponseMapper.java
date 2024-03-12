@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -113,7 +113,7 @@ public class ChangesResponseMapper extends ResponseMapper<Changes> {
       }
       // Add this property to it.
       Path pageRelativePropertyPath =
-        pagePropertyPrefix.childPath(modification.getPropertyDef().getPropertyPath());
+        pagePropertyPrefix.childPath(modification.getPath());
       // Figure out what label to display for this property
       String propertyLabel = getPropertyLabel(pagePath, pageRelativePropertyPath);
       // Record the property

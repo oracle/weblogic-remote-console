@@ -1,11 +1,17 @@
-// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import weblogic.remoteconsole.common.repodef.CustomTableDef;
+import weblogic.remoteconsole.common.repodef.PageDef;
+import weblogic.remoteconsole.common.repodef.TableDef;
+import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRestEditPageRepoDef;
+import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.StringValue;
@@ -53,6 +59,10 @@ public class ProviderMBeanCustomizer {
     providerClassNameToType.put(
       "weblogic.security.providers.authentication.NegotiateIdentityAsserterProviderImpl",
       "weblogic.security.providers.authentication.NegotiateIdentityAsserter"
+    );
+    providerClassNameToType.put(
+      "weblogic.security.providers.authentication.OIDCIdentityAsserterProviderImpl",
+      "weblogic.security.providers.authentication.OIDCIdentityAsserter"
     );
     providerClassNameToType.put(
       "weblogic.security.providers.authentication.IDCSIntegratorProviderImpl",
@@ -178,9 +188,6 @@ public class ProviderMBeanCustomizer {
     );
   }
 
-  private ProviderMBeanCustomizer() {
-  }
-
   public static Response<SettableValue> getType(
     @Source(property = "Type") SettableValue type,
     @Source(property = "ProviderClassName") SettableValue providerClassName
@@ -207,5 +214,21 @@ public class ProviderMBeanCustomizer {
     }
     response.setSuccess(new SettableValue(new StringValue(value), false));
     return response;
+  }
+
+  // Remove the moveDown and moveUp actions from the providers table if
+  // we're not in the edit tree
+  public static Response<PageDef> customizeTableDef(InvocationContext ic, PageDef uncustomizedPageDef) {
+    Response<PageDef> response = new Response<>();
+    if (ic.getPagePath().getPagesPath().getPageRepoDef() instanceof WebLogicRestEditPageRepoDef) {
+      return response.setSuccess(uncustomizedPageDef);
+    } else {
+      // remove the actions (e.g. moveDown and moveUp) since only the edit tree supports them
+      TableDef uncustomizedTableDef = uncustomizedPageDef.asTableDef();
+      return response.setSuccess(new CustomTableDef(uncustomizedTableDef).actionDefs(List.of()));
+    }
+  }
+
+  private ProviderMBeanCustomizer() {
   }
 }

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -28,7 +28,9 @@ advancedProperties:
 - name: "SecurityConfiguration.CompatibilityConnectionFiltersEnabled"
 - name: "SecurityConfiguration.ClearTextCredentialAccessEnabled"
 - name: "SecurityConfiguration.UseKSSForDemo"
-- name: "SecurityConfiguration.SecureMode.SecureModeEnabled"
+- name: "SecurityConfiguration.EnforceValidBasicAuthCredentials"
+- name: "SecurityConfiguration.CrossDomainSecurityCacheEnabled"
+- name: "SecurityConfiguration.CrossDomainSecurityCacheTTL"
 
 helpTopics:
 - label: "Administering Security for Oracle WebLogic Server"

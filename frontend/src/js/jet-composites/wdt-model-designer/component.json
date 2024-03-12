@@ -6,6 +6,7 @@
   "description": "GUI for managing model files used with the WebLogic Server Deploy Tooling (WDT) product.",
   "dependencies": {
     "wrc-frontend-apis": "^1.0.0",
+    "wrc-frontend-common": "^1.0.0",
     "wrc-frontend-core": "^1.0.0",
     "wrc-frontend-css": "^1.0.0",
     "wrc-frontend-integration": "^1.0.0",

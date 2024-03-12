@@ -1,17 +1,63 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojhtmlutils', 'wrc-frontend/integration/controller', './app-resizer', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'wrc-frontend/integration/panel_resizer', 'ojs/ojarraydataprovider', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmessages', 'ojs/ojbinddom', 'cfe-navtree/loader'],
-  function (oj, ko, ModuleElementUtils, Router, ResponsiveUtils, ResponsiveKnockoutUtils, HtmlUtils, Controller, AppResizer, Runtime, Context, DataProviderManager, PerspectiveManager, PerspectiveMemoryManager, Preferences, ViewModelUtils, CoreUtils, CoreTypes, Logger) {
+define([
+    'ojs/ojcore',
+    'knockout',
+    'ojs/ojmodule-element-utils',
+    'ojs/ojrouter',
+    'ojs/ojresponsiveutils',
+    'ojs/ojresponsiveknockoututils',
+    'ojs/ojhtmlutils',
+    'wrc-frontend/common/controller',
+    './app-resizer',
+    'wrc-frontend/core/runtime',
+    'ojs/ojcontext',
+    'wrc-frontend/microservices/app-profile/app-profile-manager',
+    'wrc-frontend/microservices/provider-management/data-provider-manager',
+    'wrc-frontend/microservices/perspective/perspective-manager',
+    'wrc-frontend/microservices/perspective/perspective-memory-manager',
+    'wrc-frontend/integration/viewModels/utils',
+    'wrc-frontend/core/utils',
+    'wrc-frontend/core/types',
+    'ojs/ojlogger',
+    'wrc-frontend/common/panel_resizer',
+    'ojs/ojarraydataprovider',
+    'ojs/ojknockout',
+    'ojs/ojmodule-element',
+    'ojs/ojmessages',
+    'ojs/ojbinddom',
+    'cfe-navtree/loader'
+  ],
+  function (
+    oj,
+    ko,
+    ModuleElementUtils,
+    Router,
+    ResponsiveUtils,
+    ResponsiveKnockoutUtils,
+    HtmlUtils,
+    Controller,
+    AppResizer,
+    Runtime,
+    Context,
+    AppProfileManager,
+    DataProviderManager,
+    PerspectiveManager,
+    PerspectiveMemoryManager,
+    ViewModelUtils,
+    CoreUtils,
+    CoreTypes,
+    Logger
+  ) {
     function ControllerViewModel() {
       const self = this;
-      const appName = oj.Translations.getTranslatedString('wrc-electron.labels.app.appName.value');
-
+      
       this.i18n = {
         buttons: {
           yes: {
@@ -49,21 +95,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
           }
         }
       };
-
+      
       // Media queries for responsive layouts
       const smQuery = ResponsiveUtils.getFrameworkQuery(ResponsiveUtils.FRAMEWORK_QUERY_KEY.SM_ONLY);
       this.smScreen = ResponsiveKnockoutUtils.createMediaQueryObservable(smQuery);
       const mdQuery = ResponsiveUtils.getFrameworkQuery(ResponsiveUtils.FRAMEWORK_QUERY_KEY.MD_UP);
       this.mdScreen = ResponsiveKnockoutUtils.createMediaQueryObservable(mdQuery);
-
+      
       this.appResizer = new AppResizer('#globalBody');
-
+      
       this.beanTree = ko.observable();
       this.navtree = {html: ko.observable({})};
-
+      
       const router = Controller.getRootRouter();
       this.router = router;
-
+      
       // Support for bookmarking calls for objects in router
       // configuration to have a 'title' field, or else web
       // browser tabs will begin with "undefined -".
@@ -78,7 +124,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         'composite/{path}': { label: 'Composite', value: 'composite', title: Runtime.getName() },
         'properties/{path}': { label: 'Properties', value: 'properties', title: Runtime.getName() }
       });
-
+      
       function onStartUp() {
         function initializeStartupRuntimeVariables(){
           Runtime.setProperty(Runtime.PropertyName.CFE_NAME, oj.Translations.getTranslatedString('wrc-header.text.appName'));
@@ -89,7 +135,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
             Runtime.setProperty(Runtime.PropertyName.CFE_ROLE, ele.getAttribute('data-runtime-role'));
           }
         }
-
+        
         function registerGlobalBodyOnClickHandler() {
           const div = document.getElementById('globalBody');
           if (div !== null) {
@@ -102,7 +148,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
             };
           }
         }
-
+        
         const registerAppControllerElectronIPCs = () => {
           if (ViewModelUtils.isElectronApiAvailable()) {
             window.electron_api.ipc.receive('start-app-quit', async () => {
@@ -116,12 +162,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
             });
           }
         };
-
+        
         const registerAppControllerSignalAddListeners = () => {
           Controller.getSignal('navtreeResized').add((source, newOffsetLeft, newOffsetWidth) => {
             self.appResizer.resizeTriggered(source, newOffsetLeft, newOffsetWidth);
           });
-
+          
           Controller.getSignal('navtreeLoaded').add((perspective) => {
             // Get active (e.g. current) current perspective from PerspectiveManager
             let active = PerspectiveManager.current();
@@ -141,10 +187,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
               Logger.info(`[APPCONTROLLER] previous current: ${active.id}, new current: ${perspective.id}`);
               active = PerspectiveManager.activate(perspective.id);
             }
-
+            
             Logger.info(`[APPCONTROLLER] new current: ${active.id}`);
           });
-
+          
           Controller.getSignal('perspectiveSelected').add((newPerspective) => {
             const dataProvider = DataProviderManager.getLastActivatedDataProvider();
             if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
@@ -161,7 +207,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
               else {
                 active = newPerspective;
               }
-
+              
               const composite = document.getElementById('wrcNavtree');
               if (composite !== null) {
                 const perspective = composite.perspective;
@@ -178,7 +224,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
               }
             }
           });
-
+          
           Controller.getSignal('modeChanged').add((newMode) => {
             const div = document.getElementById('table-form-container');
             if (div !== null) {
@@ -193,54 +239,54 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
                   div.style.display = 'none';
                   break;
               }
-              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) router.go('home');
+//MLW              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) router.go('home');
             }
           });
-
+          
           Controller.getSignal('beanTreeSelected').add((beanTree) => {
             const dataProvider = DataProviderManager.getLastActivatedDataProvider();
             setTableFormContainerVisibility(CoreUtils.isNotUndefinedNorNull(dataProvider));
           });
-
+          
           Controller.getSignal('projectSwitched').add((fromProject) => {
             setTableFormContainerVisibility(false);
           });
-
+          
           Controller.getSignal('dataProviderLoadFailed').add((dataProvider) => {
             if (dataProvider.id === Runtime.getDataProviderId()) {
               setTableFormContainerVisibility(false);
             }
           });
-
+          
           Controller.getSignal('tabStripTabSelected').add((source, tabId, options) => {
             if (tabId === 'startup-tasks' && options.chooser === 'use-cards') {
               setTableFormContainerVisibility(true);
             }
           });
-
+          
         };
-
+        
         const registerModeChangedSignal = () => {
           // Pass the mode changed signal so that memory can be cleared
           PerspectiveMemoryManager.setModeChangedSignal(Controller.getSignal('modeChanged'));
         };
-
+        
         registerAppControllerElectronIPCs();
         registerAppControllerSignalAddListeners();
         registerModeChangedSignal();
         registerGlobalBodyOnClickHandler();
-
+        
         initializeStartupRuntimeVariables();
       }
       onStartUp.call(this);
-
+      
       this.loadModule = function () {
         self.moduleConfig = ko.pureComputed(function () {
           const name = self.router.moduleConfig.name();
           return Controller.loadModule(name);
         });
       };
-
+      
       this.loadHeaderTemplate = function () {
         self.headerModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
@@ -251,13 +297,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
               mdQuery: mdQuery,
               signaling: Controller.getSignaling(),
               onResized: resizeTriggered,
-              onDataProvidersEmpty: selectAncillaryContentItem
+              onDataProvidersEmpty: selectAncillaryContentItem,
+              onAppProfileActivated: activateAppProfile
             }
           });
         });
       };
       this.loadHeaderTemplate();
-
+      
       this.loadNavStripTemplate = function () {
         self.navStripModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
@@ -272,7 +319,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         });
       };
       this.loadNavStripTemplate();
-
+      
       this.loadFooterTemplate = function () {
         self.footerModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
@@ -287,11 +334,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         });
       };
       this.loadFooterTemplate();
-
+      
       this.loadContentAreaHeaderTemplate = function () {
         self.contentAreaHeaderModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
-            name: 'content-area/header/content-area-header',
+            name: 'content-area/header-content',
             params: {
               parentRouter: self.router,
               signaling: Controller.getSignaling()
@@ -300,7 +347,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         });
       };
       this.loadContentAreaHeaderTemplate();
-
+      
       this.loadAncillaryContentAreaTemplate = function () {
         self.ancillaryContentAreaModuleConfig = ko.pureComputed(function () {
           return ModuleElementUtils.createConfig({
@@ -313,48 +360,60 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojrouter', 
         });
       };
       this.loadAncillaryContentAreaTemplate();
-
-      function setThemePreference(theme) {
-        Controller.getSignal('themeChanged').dispatch(theme);
-      }
-
+      
       function selectAncillaryContentItem(source, tabId) {
+        const options = {stealthEnabled: false};
         if (tabId === 'provider-management') {
-          self.router.go('home');
+          AppProfileManager.getCurrentAppProfile()
+            .then(reply => {
+              options.stealthEnabled = reply.body.data.settings.startupTaskChooserType === 'use-cards' && source === 'domain-connection';
+            })
+            .finally(() => {
+              self.router.go('home');
+            });
+          
         }
-        Controller.getSignal('ancillaryContentItemSelected').dispatch(source, tabId);
+        Controller.getSignal('ancillaryContentItemSelected').dispatch(source, tabId, options);
       }
-
+      
       function resizeTriggered(source, newOffsetLeft, newOffsetWidth) {
         self.appResizer.resizeTriggered(source, newOffsetLeft, newOffsetWidth);
       }
-
+      
       function createNavtree(beanTree) {
         self.beanTree(beanTree);
         const outerHTML = Controller.createNavtreeHTML();
         self.navtree.html({ view: HtmlUtils.stringToNodeArray(outerHTML), data: self });
       }
-
+      
       function setTableFormContainerVisibility(visible) {
         const div = document.getElementById('table-form-container');
         if (div !== null) {
           div.style.display = (visible ? 'inline-flex' : 'none');
         }
       }
+      
+      function activateAppProfile(source, tabId, options) {
+        Controller.getSignal('tabStripTabSelected').dispatch(tabId, 'startup-tasks', options);
+        setTableFormContainerVisibility(true);
+        Controller.getSignal('ancillaryContentItemSelected').dispatch(source, tabId, options);
 
+//MLW        self.router.go('home');
+      }
+      
       Context.getPageContext().getBusyContext().whenReady()
         .then(function () {
           document.cookie = 'expires=Thu, 01 Jan 1970 00:00:00 UTC; Path=/api;';
-          setThemePreference(Preferences.general.themePreference());
-          if (document.getElementById('spa-resizer') !== null) {
-            $('#spa-resizer').split({limit: 10});
+          const div = document.getElementById('spa-resizer');
+          if (div !== null) {
+            $('#spa-resizer').split({limit: 10, position: AppResizer.prototype.SPA_RESIZER_POSITION, accesskey: '\\', nudgeable: true, nudgeBy: 20, nudgeMinWidth: AppResizer.prototype.NAVTREE_MIN_WIDTH, nudgeMaxWidth: AppResizer.prototype.NAVTREE_MAX_WIDTH, focusRule: {key: 'Escape', selector: '#home'}});
           }
         })
         .catch((err) => {
           Logger.error(err);
         });
     }
-
+    
     return new ControllerViewModel();
   }
 );

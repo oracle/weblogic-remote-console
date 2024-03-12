@@ -1,12 +1,17 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.PageDef;
@@ -19,8 +24,14 @@ import weblogic.remoteconsole.server.PersistenceManager;
  */
 public class DashboardManager extends PersistableFeature<PersistedDashboards> {
 
-  private static final PersistenceManager<PersistedDashboards> PERSISTENCE_MANAGER =
+  private static final Logger LOGGER = Logger.getLogger(DashboardManager.class.getName());
+
+  private static final String BUILTIN_DASHBOARDS_PATH = "builtin-dashboards.json";
+
+  private PersistenceManager<PersistedDashboards> persistenceManager =
     new PersistenceManager<>(PersistedDashboards.class, "dashboards");
+
+  private PersistedDashboards persistedBuiltinDashboards = createPersistedBuiltinDashboards();
 
   private Dashboards dashboards = new Dashboards();
 
@@ -37,12 +48,18 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
 
   @Override
   protected PersistenceManager<PersistedDashboards> getPersistenceManager() {
-    return PERSISTENCE_MANAGER;
+    return persistenceManager;
   }
 
   @Override
-  protected void fromPersistedData(InvocationContext ic, PersistedDashboards persistedData) {
-    dashboards = PersistedDashboardsToDashboards.fromPersistedData(ic, dashboards, persistedData);
+  protected void fromPersistedData(InvocationContext ic, PersistedDashboards persistedCustomDashboards) {
+    dashboards =
+      PersistedDashboardsToDashboards.fromPersistedData(
+        ic,
+        dashboards,
+        persistedBuiltinDashboards,
+        persistedCustomDashboards
+      );
   }
 
   @Override
@@ -53,7 +70,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
   // Create a custom filtering dashboard
   public synchronized Response<String> createCustomFilteringDashboard(
     InvocationContext ic,
-    CustomFilteringDashboardConfig config
+    FilteringDashboardConfig config
   ) {
     refresh(ic);
     Response<String> response = new Response<>();
@@ -71,7 +88,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
 
     // Add the search to the list of recent searches but don't actually do it yet.
     // That will happen later when getSearchResults is called.
-    CustomFilteringDashboard dashboard = new CustomFilteringDashboard(config);
+    FilteringDashboard dashboard = new CustomFilteringDashboard(config);
     dashboards.getDashboards().put(dashboardName, dashboard);
     update(ic);
     return response.setSuccess(dashboardName);
@@ -85,11 +102,20 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     if (dashboard == null) {
       return response.setNotFound();
     }
-    if (dashboard.isCustomFilteringDashboard()) {
+    if (dashboard.isBuiltin()) {
+      response.addFailureMessage(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.CANNOT_DELETE_BUILTIN_DASHBOARD,
+          dashboardName
+        )
+      );
+      return response.setUserBadRequest();
+    }
+    if (dashboard.isFilteringDashboard()) {
       dashboards.getDashboards().remove(dashboardName);
       update(ic);
-      TableCustomizationsManager tcManager = ic.getPageRepo().asPageReaderRepo().getTableCustomizationsManager();
-      tcManager.deleteTableCustomizations(ic, tcManager.getCustomFilteringDashboardTableId(ic));
+      TableCustomizationsManager tcManager = ic.getPageRepo().asPageReaderRepo().getTableCustomizationsManager(ic);
+      tcManager.deleteTableCustomizations(ic, tcManager.getFilteringDashboardTableId(ic, dashboard.isBuiltin()));
       return response.setSuccess(null);
     } else {
       // Add support for other kinds of dashboards here
@@ -101,7 +127,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
   // Update the filtering rules for an existing custom filtering dashboard
   public synchronized Response<Void> updateCustomFilteringDashboard(
     InvocationContext ic,
-    CustomFilteringDashboardConfig config
+    FilteringDashboardConfig config
   ) {
     refresh(ic);
     Response<Void> response = new Response<>();
@@ -109,6 +135,15 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     Dashboard dashboard = dashboards.getDashboards().get(dashboardName);
     if (dashboard == null) {
       return response.setNotFound();
+    }
+    if (dashboard.isBuiltin()) {
+      response.addFailureMessage(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.CANNOT_MODIFY_BUILTIN_DASHBOARD,
+          dashboardName
+        )
+      );
+      return response.setUserBadRequest();
     }
     Dashboard updatedDashboard = new CustomFilteringDashboard(config);
     dashboards.getDashboards().put(dashboardName, updatedDashboard);
@@ -132,28 +167,41 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
   public synchronized Response<Dashboard> getDashboard(InvocationContext ic, String dashboardName) {
     refresh(ic);
     Response<Dashboard> response = new Response<>();
-    Dashboard dashboard = dashboards.getDashboards().get(dashboardName);
+    Dashboard dashboard = getDashboardOrNull(ic, dashboardName);
     if (dashboard == null) {
       return response.setNotFound();
     }
     return response.setSuccess(dashboard);
   }
 
-  // Get the results of a custom filtering dashboard (i.e. the set of matching mbeans).
+  // Find a dashboard given an ic whose bean tree path references the dashboard.
+  // Returns null if the dashboard doesn't exist.
+  public Dashboard getDashboardOrNull(InvocationContext ic) {
+    return getDashboardOrNull(ic, ic.getBeanTreePath().getLastSegment().getKey());
+  }
+
+  // Find a dashboard given its name.
+  // Returns null if the dashboard doesn't exist.
+  public synchronized Dashboard getDashboardOrNull(InvocationContext ic, String dashboardName) {
+    refresh(ic);
+    return dashboards.getDashboards().get(dashboardName);
+  }
+
+  // Get the results of a filtering dashboard (i.e. the set of matching mbeans).
   // If there's cached results that haven't expired, it will return them.
   // Otherwise it will perform the search, cache the results, and return them.
-  public synchronized Response<CustomFilteringDashboard> getCustomFilteringDashboardSearchResults(
+  public synchronized Response<FilteringDashboard> getFilteringDashboardSearchResults(
     InvocationContext ic,
     PageDef pageDef,
     String dashboardName
   ) {
     refresh(ic);
-    Response<CustomFilteringDashboard> response = new Response<>();
+    Response<FilteringDashboard> response = new Response<>();
     Dashboard db = dashboards.getDashboards().get(dashboardName);
     if (db == null) {
       return response.setNotFound();
     }
-    CustomFilteringDashboard dashboard = db.asCustomFilteringDashboard();
+    FilteringDashboard dashboard = db.asFilteringDashboard();
     if (!ic.isReload() && dashboard.isCurrent()) {
       // Reuse the cached search results
       return response.setSuccess(dashboard);
@@ -165,9 +213,8 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
       return response.copyUnsuccessfulResponse(searchResponse);
     }
     long endTime = System.currentTimeMillis();
-    CustomFilteringDashboard newDashboard =
-      new CustomFilteringDashboard(
-        dashboard.getConfig(),
+    FilteringDashboard newDashboard =
+      dashboard.clone(
         searchResponse.getResults(),
         new Date(endTime), // results date
         getExpirationDate(startTime, endTime)
@@ -179,7 +226,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
   private Response<List<SearchBeanResults>> doSearch(
     InvocationContext ic,
     PageDef pageDef,
-    CustomFilteringDashboardConfig config
+    FilteringDashboardConfig config
   ) {
     Response<List<SearchBeanResults>> response = new Response<>();
     SearchCriteria genericCriteria = createSearchCriteria(ic, pageDef, config);
@@ -199,19 +246,19 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
   private static SearchCriteria createSearchCriteria(
     InvocationContext ic,
     PageDef pageDef,
-    CustomFilteringDashboardConfig config
+    FilteringDashboardConfig config
   ) {
     SearchCriteria criteria = new SearchCriteria();
     List<SearchBeanFilter> filters = new ArrayList<>();
     List<SearchProperty> searchProperties = new ArrayList<>();
     filters.add(createPathFilter(config));
-    TableCustomizationsManager tcManager = ic.getPageRepo().asPageReaderRepo().getTableCustomizationsManager();
+    TableCustomizationsManager tcManager = ic.getPageRepo().asPageReaderRepo().getTableCustomizationsManager(ic);
     TableCustomizations customizations = tcManager.getTableCustomizations(ic, pageDef);
     List<String> displayedColumns =
-      customizations != null
+      customizations != null && !customizations.getDisplayedColumns().isEmpty()
       ? customizations.getDisplayedColumns()
       : tcManager.getDefaultDisplayedColumns(pageDef);
-    for (CustomFilteringDashboardProperty property :  config.getProperties()) {
+    for (FilteringDashboardProperty property :  config.getProperties()) {
       addProperty(property, displayedColumns, filters, searchProperties);
     }
     criteria.setFilters(filters);
@@ -219,9 +266,9 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     return criteria;
   }
 
-  private static SearchBeanFilter createPathFilter(CustomFilteringDashboardConfig config) {
+  private static SearchBeanFilter createPathFilter(FilteringDashboardConfig config) {
     List<SearchPathSegmentFilter> segmentFilters = new ArrayList<>();
-    for (CustomFilteringDashboardPathSegment segment : config.getPath()) {
+    for (FilteringDashboardPathSegment segment : config.getPath()) {
       BeanChildDef childDef = segment.getSegmentDef().getSegmentTemplate().getChildDef();
       {
         // Add a segment for the child, e.g. DomainRuntime or CombinedServerRuntimes
@@ -235,11 +282,11 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
         // e.g. any server, exactly Server1, or any server whose name contains FA
         String criteria = segment.getCriteria();
         SearchPathSegmentFilter segmentFilter = new SearchPathSegmentFilter();
-        if (CustomFilteringDashboardPathSegmentDef.CRITERIA_EQUALS.equals(criteria)) {
+        if (FilteringDashboardPathSegmentDef.CRITERIA_EQUALS.equals(criteria)) {
           segmentFilter.setEquals(segment.getValue());
-        } else if (CustomFilteringDashboardPathSegmentDef.CRITERIA_CONTAINS.equals(criteria)) {
+        } else if (FilteringDashboardPathSegmentDef.CRITERIA_CONTAINS.equals(criteria)) {
           segmentFilter.setContains(segment.getValue());
-        } else if (CustomFilteringDashboardPathSegmentDef.CRITERIA_UNFILTERED.equals(criteria)) {
+        } else if (FilteringDashboardPathSegmentDef.CRITERIA_UNFILTERED.equals(criteria)) {
           segmentFilter.setAnyValue(true);
         } else {
           throw new AssertionError("Unsupported path segment criteria: " + criteria);
@@ -254,7 +301,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
   }
 
   private static void addProperty(
-    CustomFilteringDashboardProperty property,
+    FilteringDashboardProperty property,
     List<String> displayedColumns,
     List<SearchBeanFilter> beanFilters,
     List<SearchProperty> searchProperties
@@ -267,7 +314,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
       return;
     }
     String criteria = property.getCriteria();
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_UNFILTERED.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_UNFILTERED.equals(criteria)) {
       SearchProperty searchProperty = new SearchProperty();
       searchProperty.setPropertyName(propertyName);
       searchProperties.add(searchProperty);
@@ -276,7 +323,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     }
   }
 
-  private static SearchBeanFilter createPropertyFilter(CustomFilteringDashboardProperty property) {
+  private static SearchBeanFilter createPropertyFilter(FilteringDashboardProperty property) {
     PagePropertyDef sourcePropertyDef = property.getPropertyDef().getSourcePropertyDef();
     SearchBeanFilter beanFilter = new SearchBeanFilter();
     String criteria = property.getCriteria();
@@ -317,12 +364,12 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     Value value
   ) {
     SearchValueFilter valueFilter = new SearchValueFilter();
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
       valueFilter.setEquals(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
+    } else if (FilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
       valueFilter.setEquals(value);
       beanFilter.setMatches(false);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
       valueFilter.setContains(value.asString().getValue());
     } else {
       throw new AssertionError("Unsupported string property criteria:" + criteria);
@@ -337,18 +384,18 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
     Value value
   ) {
     SearchValueFilter valueFilter = new SearchValueFilter();
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
       valueFilter.setEquals(value);
-    } else if (CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
+    } else if (FilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS.equals(criteria)) {
       valueFilter.setEquals(value);
       beanFilter.setMatches(false);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_LESS_THAN.equals(criteria)) {
       valueFilter.setLessThan(value);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS.equals(criteria)) {
       valueFilter.setLessThanOrEquals(value);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_GREATER_THAN.equals(criteria)) {
       valueFilter.setGreaterThan(value);
-    } else if (!isEnum && CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS.equals(criteria)) {
+    } else if (!isEnum && FilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS.equals(criteria)) {
       valueFilter.setGreaterThanOrEquals(value);
     } else {
       throw new AssertionError("Unsupported number property criteria:" + criteria);
@@ -358,7 +405,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
 
   private static void completeBooleanPropertyFilter(SearchBeanFilter beanFilter, String criteria, Value value) {
     SearchValueFilter valueFilter = new SearchValueFilter();
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_EQUALS.equals(criteria)) {
       valueFilter.setEquals(value);
     } else {
       throw new AssertionError("Unsupported boolean property criteria:" + criteria);
@@ -368,7 +415,7 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
 
   private static void completeGenericPropertyFilter(SearchBeanFilter beanFilter, String criteria, Value value) {
     SearchValueFilter valueFilter = new SearchValueFilter();
-    if (CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
+    if (FilteringDashboardPropertyDef.CRITERIA_CONTAINS.equals(criteria)) {
       valueFilter.setContains(value.asString().getValue());
     } else {
       throw new AssertionError("Unsupported generic property criteria:" + criteria);
@@ -384,5 +431,31 @@ public class DashboardManager extends PersistableFeature<PersistedDashboards> {
       long expirationTime = endTime + (SEARCH_TIME_TO_EXPIRATION_TIME  * searchTime);
       return new Date(expirationTime);
     }
+  }
+
+  public static PersistedDashboards createPersistedBuiltinDashboards() {
+    InputStream is =
+      Thread.currentThread().getContextClassLoader().getResourceAsStream(BUILTIN_DASHBOARDS_PATH);
+    if (is != null) {
+      try {
+        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
+        try {
+          return mapper.readValue(is, PersistedDashboards.class);
+        } catch (Throwable t) {
+          LOGGER.severe(
+            "Problem reading"
+            + " " + BUILTIN_DASHBOARDS_PATH
+            + " : " + t.getMessage()
+          );
+        }
+      } finally {
+        try {
+          is.close();
+        } catch (Exception e) {
+          LOGGER.log(Level.WARNING, "Problem closing stream for " +  BUILTIN_DASHBOARDS_PATH, e);
+        }
+      }
+    }
+    return null;
   }
 }

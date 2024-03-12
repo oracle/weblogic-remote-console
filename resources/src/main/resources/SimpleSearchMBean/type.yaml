@@ -1,5 +1,16 @@
-# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: "clearSearches"
+  label: "Clear Searches"
+  actionMethod: weblogic.remoteconsole.customizers.SimpleSearchMBeanCustomizer.clearSearches
+  inputForm:
+    introductionHTML: "<p>Clear the search history.</p>"
+  definition:
+    type: "void"
+    descriptionHTML: "<p>Clear the search history.</p>"
+
 properties:
 - name: Name
   label: "Search Criteria" # the search's name is the same as the search criteria the user entered.
@@ -8,7 +19,8 @@ properties:
   writable: never
 - name: NumberOfMatches
   writable: never
+
 ordered: true
 getCollectionMethod: weblogic.remoteconsole.customizers.SimpleSearchMBeanCustomizer.getCollection
 disableMBeanJavadoc: true
-supportsCustomFilteringDashboards: false
+supportsFilteringDashboards: false

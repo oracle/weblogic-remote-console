@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -6,8 +6,8 @@ package weblogic.remoteconsole.server.webapp;
 import java.util.List;
 import javax.json.JsonObject;
 
-import weblogic.remoteconsole.server.repo.CustomFilteringDashboardConfig;
-import weblogic.remoteconsole.server.repo.CustomFilteringDashboardConfigManager;
+import weblogic.remoteconsole.server.repo.FilteringDashboardConfig;
+import weblogic.remoteconsole.server.repo.FilteringDashboardConfigManager;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
@@ -52,15 +52,15 @@ public class CustomFilteringDashboardUpdateHelper {
       return response.copyUnsuccessfulResponse(unmarshalResponse);
     }
     // Convert it to a new config
-    Response<CustomFilteringDashboardConfig> configResponse =
-      CustomFilteringDashboardConfigManager.updateConfig(ic, unmarshalResponse.getResults());
+    Response<FilteringDashboardConfig> configResponse =
+      FilteringDashboardConfigManager.updateConfig(ic, unmarshalResponse.getResults());
     if (!configResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(configResponse);
     }
     // Update the dashboard to use the new config
     return
       ic
-      .getPageRepo().asPageReaderRepo().getDashboardManager()
+      .getPageRepo().asPageReaderRepo().getDashboardManager(ic)
       .updateCustomFilteringDashboard(ic, configResponse.getResults());
   }
 }

@@ -1,16 +1,23 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
-  function (Logger, PageDefinitionUtils, CoreUtils) {
-
-    //This is also defined in fields.js
-    const NULL_VALUE = Object.freeze('___NULL___');
+define([
+  'ojs/ojhtmlutils',
+  'ojs/ojlogger',
+  './utils' ,
+  'wrc-frontend/core/utils'
+],
+  function (
+    HtmlUtils,
+    Logger,
+    PageDefinitionUtils,
+    CoreUtils
+  ) {
 
     /**
      * PageDataTypes Constructor
@@ -84,23 +91,30 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         let result = helpDetailed;
         let externalHelp = this.getExternalHelp(propertyName);
         if (externalHelp != null) {
-          let label = externalHelp.label;
-          let link = label;
-          let javadocHref = externalHelp.href;
-          if (javadocHref !== undefined) {
-            link = '<a target=_blank rel=noopener href=' + javadocHref + '>' + label + '</a>';
+          let link = externalHelp.label;
+          if (typeof externalHelp.href !== 'undefined') {
+            link = `<a href="#" on-click="[[handleHelpTopicLinkClicked]]" data-external-help-link="${externalHelp.href}">${externalHelp.label}</a>`;
           }
           result = `${helpDetailed}<p>${externalHelp.introLabel}<br><code>${link}</code></p>`;
         }
         return result;
       },
-
-      /** Return the type value for the property */
+  
+    /** Return the type value for the property */
       getType: function(propertyName) {
         let retval = 'string';
         if (this.pdjTypes[propertyName].type !== undefined)
           retval = this.pdjTypes[propertyName].type;
         return retval;
+      },
+  
+      extractNodeAttributes: function(nodes) {
+        const attributes = {};
+        if (nodes[0].getAttribute('href')) attributes['href'] = nodes[0].getAttribute('href');
+        if (nodes[0].getAttribute('download')) attributes['download'] = nodes[0].getAttribute('download');
+        if (nodes[0].getAttribute('target')) attributes['target'] = nodes[0].getAttribute('target');
+        if (nodes[0].getAttribute('type')) attributes['type'] = nodes[0].getAttribute('type');
+        return attributes;
       },
 
       /** Check if the property is an array type */
@@ -246,13 +260,13 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         let retval = propertyValue;
         if (this.hasLegalValues(propertyName)) {
           if (propertyValue === null){
-            propertyValue = NULL_VALUE;
+            propertyValue = CoreUtils.NULL_VALUE;
           }
           let values = this.getLegalValues(propertyName);
           for (let i in values) {
             let legalValue = values[i];
             if (legalValue.value === null){
-              legalValue.value = NULL_VALUE;
+              legalValue.value = CoreUtils.NULL_VALUE;
             }
             if (legalValue.value === propertyValue) {
               retval = (CoreUtils.isNotUndefinedNorNull(legalValue.label) ? legalValue.label : legalValue.value);
@@ -291,6 +305,16 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
       /** Check if the property is a multi-line string */
       isMultiLineStringType: function(propertyName) {
         return (this.getType(propertyName) === 'multiLineString');
+      },
+
+      /** Check if the property is an href JS object */
+      isHrefType: function(propertyName) {
+        return (this.getType(propertyName) === 'href');
+      },
+
+      /** Check if the property is an string containing HTML elements */
+      isHtmlType: function(propertyName) {
+        return (this.getType(propertyName) === 'html');
       },
 
       /** Check if the property is one of the number types */
@@ -385,7 +409,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             break;
 
           default:
-            if (readValue === NULL_VALUE){
+            if (readValue === CoreUtils.NULL_VALUE){
               result = null;
             }
             else
@@ -461,7 +485,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             break;
 
           default:
-            if (readValue === NULL_VALUE){
+            if (readValue === CoreUtils.NULL_VALUE){
               result = null;
             }
             else
@@ -511,6 +535,20 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           case 'throwable':
             result = PageDefinitionUtils.getThrowableMessage(value);
             break;
+          case 'href':
+            if (value.href) {
+              if (value.href.endsWith('</a>')) {
+                const attributes = this.extractNodeAttributes(HtmlUtils.stringToNodeArray(value.href));
+                result = (attributes.download ? attributes.download : value.label);
+              }
+              else {
+                result = value.label;
+              }
+            }
+            else {
+              result = value.label;
+            }
+            break;
           case 'properties':
             if (displayValue === null) {
               // When there is no display value then return the actual value
@@ -529,7 +567,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             } else {
               if (this.pdjTypes[propertyName].legalValues !== undefined){
                 if (value === null || value === '') {
-                  result = NULL_VALUE;
+                  result = CoreUtils.NULL_VALUE;
                 }
               }
             }
@@ -547,7 +585,17 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
         }
         return result;
       },
-
+  
+      getMaskIconState : function(propertyName, rdjDataObject) {
+        let rtnval = 'visible';
+        if (CoreUtils.isNotUndefinedNorNull(rdjDataObject?.value) &&
+          typeof rdjDataObject.value === 'string' &&
+          rdjDataObject.value.trim() !== ''
+        ) {
+          rtnval = (rdjDataObject.value.startsWith('***') ? 'hidden' : 'visible');
+        }
+        return rtnval;
+      },
       getObservableValue_WDT : function(propertyName, rdjDataObject, displayValue, alternateDataObject) {
         let result, value;
         let rdjObject = rdjDataObject;
@@ -608,7 +656,7 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
             }  else {
               if (this.pdjTypes[propertyName].legalValues !== undefined){
                 if (value === null || value === '') {
-                  result = NULL_VALUE;
+                  result = CoreUtils.NULL_VALUE;
                 }
               }
             }
@@ -731,6 +779,12 @@ define(['ojs/ojlogger', './utils' , 'wrc-frontend/core/utils'],
           }
           else if (this.isThrowableType(propertyName)) {
             displayValue = PageDefinitionUtils.getThrowableMessage(value);
+          }
+          else if (this.isHrefType(propertyName)) {
+            displayValue = value.label;
+          }
+          else if (this.isHtmlType(propertyName)) {
+            displayValue = value.label;
           }
           else {
             // The value is NOT an array

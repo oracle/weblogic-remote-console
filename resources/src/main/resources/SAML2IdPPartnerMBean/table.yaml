@@ -1,0 +1,30 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to manage the SAML 2.0 Identity Provider Partners for
+  this SAML 2.0 Identity Asserter.</p>
+
+displayedColumns:
+- name: "Name"
+- name: "Type"
+- name: "Enabled"
+- name: "Description"
+# TBD - more columns?
+
+helpTopics:
+- label: "Configuring a SAML 2.0 Identity Assertion Provider"
+  href: "secmg/ia_atn.html#SECMG223"
+  type: "edocs"
+- label: "Configuring Keystores"
+  href: "secmg/identity_trust.html"
+  type: "edocs"
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: "edocs"
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html#SECMG279"
+  type: "edocs"
+- label: "Using Security Assertion Markup Language (SAML) Tokens For Identity"
+  href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"
+  type: "generic"

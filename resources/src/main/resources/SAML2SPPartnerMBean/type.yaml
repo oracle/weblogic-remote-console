@@ -1,0 +1,164 @@
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+editable: true
+disableMBeanJavadoc: true
+instanceName: Service Provider Partner
+
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.security.providers.saml2.SAML2WSSSPPartnerMBean
+  value: WSSSPPartner
+- type: weblogic.security.providers.saml2.SAML2WebSSOSPPartnerMBean
+  value: WebSSOSPPartner
+
+properties:
+- name: Type
+  required: true
+  writable: createOnly
+  legalValues:
+  - value: WSSSPPartner
+    label: "Web Service Service Provider Partner"
+  - value: WebSSOSPPartner
+    label: "Web Single Sign-On Service Provider Partner"
+- name: AudienceURIs
+  label: "Audience URIs"
+  helpSummaryHTML: >
+    One or more partner lookup strings, and optionally one or more SAML Audience URIs.</p>
+  helpDetailsHTML: >
+    <p>In the WebLogic Server implementation of SAML 2.0, the Audience URI
+    attribute is overloaded to perform two related but separate functions:</p>
+    <ul>
+      <li>Specify one or more Audience URIs that must be included in
+      assertions generated for this Service Provider partner.</li>
+      <li>Specify one or more partner lookup strings, which specify the
+      endpoint URL that is used to discover the Service Provider partner
+      for which an assertion is to be generated.</li>
+    </ul>
+    <p>A value specified for this attribute must have the following syntax:</p>
+    <code>[target:<i>char</i>:]&lt;<i>endpoint-url</i>&gt;</code>
+    <p>In the preceding syntax, <code>target:<i>char</i>:</code>is a
+    prefix that is used to designate the partner lookup string, where
+    <i>char</i> represents one of three special characters: a hyphen, plus
+    sign, or asterisk (<code>-</code>, +, or <code>*</code>). This prefix
+    determines how partner lookup is performed, as follows:</p>
+    <ul>
+      <li><code>target:-:&lt;<i>endpoint-url</i>&gt;</code> specifies that
+      partner lookup is conducted for an exact match of the URL,
+      <code>&lt;<i>endpoint-url</i>&gt;</code>. For example,
+      <code>target:-:http://www.avitek.com:7001/myserver/myservicecontext/myservice-endpoint</code>
+      specifies the endpoint that can be matched to this Service Provider,
+      for which an assertion should be generated. This form of partner
+      lookup string designates that the endpoint URL is not to be included
+      as an Audience URI to be contained in that assertion.</li>
+      <li><code>target:+:&lt;<i>endpoint-url</i>&gt;</code> specifies that
+      partner lookup is conducted for an exact match of the URL,
+      <code>&lt;<i>endpoint-url</i>&gt;</code>, and that the endpoint URL
+      is also to be added as an Audience URI in the assertion generated
+      for this Service Provider partner.</li>
+      <li><code>target:*:&lt;<i>endpoint-url</i>&gt;</code> specifies that
+      partner lookup is conducted for an initial-string pattern match of
+      the URL, <code>&lt;<i>endpoint-url</i>&gt;</code>. For example,
+      <code>target:*:http://www.avitek.com:7001/myserver</code> specifies
+      that any endpoint URL beginning with
+      <code>http://www.avitek.com:7001/myserver</code> can be matched to
+      this Service Provider, such as
+      <code>http://www.avitek.com:7001/myserver/contextA/endpoint</code>A
+      and
+      <code><code>http://www.avitek.com:7001/myserver/contextB/endpoint</code>B</code>.
+      If more than one Service Provider partner is discovered that is a
+      match for the initial string, the partner with the longest initial
+      string match is selected.</li>
+    </ul>
+    <p><b>Note:</b> Configuring one or more partner lookup strings for a
+    Service Provider partner is required in order for that partner to be
+    discovered at run time. If this partner cannot be discovered, no
+    assertions for this partner can be generated.</p>
+    <p>If you configure an endpoint URL without using the target lookup
+    prefix, it will be handled as a conventional Audience URI that must be
+    contained in assertions generated for this Service Provider partner.
+    (This also enables backwards-compatibility with existing Audience URIs
+    configured for this partner.)</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.Partner</code> interface.</p>
+- name: ServiceProviderNameMapperClassname
+  label: "Service Provider Name Mapper Class Name"
+  helpSummaryHTML: >
+    <p>The name of the Java class that overrides the default SAML 2.0
+    credential mapper name mapper class with which this server is configured.</p>
+  helpDetailsHTML: >
+    <p>The Service Provider name mapper class specified here is a custom implementation of the
+    <code>com.bea.security.saml2.providers.SAML2CredentialNameMapper</code>
+    interface and is specified here to be used for this Service Provider partner.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.SPPartner</code> interface.</p>
+- name: TimeToLive
+  helpSummaryHTML: >
+    <p>The time to live value, in seconds, for the SAML 2.0 assertions
+    generated for this Service Provider partner.</p>
+  helpDetailsHTML: >
+    <p>This value overrides the default setting for the SAML 2.0 Credential Mapping provider.</p>
+    <p>Operations on this parameter are available in the
+    <code>com.bea.security.saml2.providers.registry.SPPartner</code> interface.</p>
+
+- name: TimeToLiveOffset
+  helpSummaryHTML: >
+    <p>The time to live offset value, in seconds, for the SAML 2.0
+    assertions generated for this Service Provider partner.</p>
+  helpDetailsHTML: >
+    <p>This value overrides the default setting for the SAML 2.0
+    Credential Mapping provider. You can specify this value to allow the
+    SAML 2.0 Credential Mapping provider to compensate for clock
+    differences between the Identity Provider and Service Provider sites.
+    The value is a positive or negative integer representing seconds.</p>
+    <p>Normally, an assertion is valid from the NotBefore time, which
+    defaults to (roughly) the time the assertion was generated, until the
+    NotOnOrAfter time, which is calculated as (NotBefore + TimeToLive).
+    However, the Identity Provider site and Service Provider site may have
+    minor differences in their clock settings. The Time To Live offset
+    value is a positive or negative integer indicating how many seconds
+    before or after "now" the assertion's NotBefore should be set to. If
+    you set a value for the Assertion Time To Live Offset, then the
+    assertion lifetime is still calculated as (NotBefore + TimeToLive),
+    but the NotBefore value is set to (now + Assertion Time To Live
+    Offset). So, an assertion might have a two minute (120 second)
+    lifetime that starts thirty seconds ago, or starts one minute from
+    now. This allows the SAML 2.0 Credential Mapping provider to
+    compensate for clock differences between the Identity Provider and
+    Service Provider sites.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.SPPartner</code> interface.</p>
+- name: GenerateAttributes
+  helpSummaryHTML: >
+    <p>Specifies whether the SAML 2.0 Credential Mapping provider includes
+    group information in the assertions generated for this Service Provider partner.</p>
+  helpDetailsHTML: >
+    <p>The optional group information is specified via the
+    <code>&lt;Attribute&gt;</code> element, which is subsequently used by
+    the Service Provider's SAML 2.0 Identity Assertion provider to
+    determine the groups into which the mapped user belongs.</p>
+    <p>Operations on this parameter are available in the
+    <code>com.bea.security.saml2.providers.registry.SPPartner</code> interface.</p>
+- name: IncludeOneTimeUseCondition
+  helpSummaryHTML: >
+    <p>Specifies whether assertions generated for this Service Provider partner may be used only once.</p>
+  helpDetailsHTML: >
+    <p>If specified, this attribute determines that the assertion must be
+    disposed of immediately after use and is not available for reuse.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.SPPartner</code> interface.</p>
+- name: KeyinfoIncluded
+  label: "Key Info Included"
+  helpSummaryHTML: >
+    <p>Specifies whether this server's signing certificate is included in
+    assertions generated for this Service Provider partner.</p>
+  helpDetailsHTML: >
+    <p>Note that WebLogic Server's SAML 2.0 implementation uses only the
+    certificates that are referenced in the partner registry, not
+    certificates contained in assertions.</p>
+      <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.SPPartner</code> interface.</p>
+- name: WantAssertionsSigned
+  label: "Only Accept Signed Assertions"
+  helpSummaryHTML: >
+    <p>Specifies whether the Service Provider partner is configured to
+    receive only assertions that have been signed.</p>
+  helpDetailsHTML: >
+    <p>If <code>true</code>, assertions generated for this partner are signed.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.SPPartner</code> interface.</p>
+

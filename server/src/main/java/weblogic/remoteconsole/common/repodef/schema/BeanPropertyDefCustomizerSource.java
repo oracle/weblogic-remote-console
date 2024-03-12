@@ -1,7 +1,9 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
+
+import java.util.List;
 
 import weblogic.remoteconsole.common.utils.Path;
 
@@ -28,6 +30,7 @@ public class BeanPropertyDefCustomizerSource extends BeanFieldDefCustomizerSourc
   private BooleanValue supportsModelTokens = new BooleanValue(true);
   private BooleanValue dontReturnIfHiddenColumn = new BooleanValue();
   private BooleanValue disableMBeanJavadoc = new BooleanValue();
+  private ListValue<String> requiredCapabilities = new ListValue<>();
 
   public void merge(BeanPropertyDefCustomizerSource from, Path fromContainedBeanPath) {
     super.merge(from, fromContainedBeanPath);
@@ -40,6 +43,7 @@ public class BeanPropertyDefCustomizerSource extends BeanFieldDefCustomizerSourc
     supportsModelTokens.merge(from.supportsModelTokens, fromContainedBeanPath);
     dontReturnIfHiddenColumn.merge(from.dontReturnIfHiddenColumn, fromContainedBeanPath);
     disableMBeanJavadoc.merge(from.disableMBeanJavadoc, fromContainedBeanPath);
+    requiredCapabilities.merge(from.requiredCapabilities, fromContainedBeanPath);
     mergeUsedIf(from, fromContainedBeanPath);
   }
 
@@ -153,5 +157,14 @@ public class BeanPropertyDefCustomizerSource extends BeanFieldDefCustomizerSourc
 
   public void setDisableMBeanJavadoc(boolean value) {
     disableMBeanJavadoc.setValue(value);
+  }
+
+  // The bean repo capabilities that are required for property to be present
+  public List<String> getRequiredCapabilities() {
+    return requiredCapabilities.getValue();
+  }
+
+  public void setRequiredCapabilities(List<String> val) {
+    requiredCapabilities.setValue(val);
   }
 }

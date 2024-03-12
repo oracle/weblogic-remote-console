@@ -41,9 +41,16 @@ if [ ! -r $DISTDIR/customjre ]
 then
   ln -s "$JAVA_HOME" $DISTDIR/customjre
 fi
-if [ ! -r $DISTDIR/backend ]
+
+rm -rf $DISTDIR/backend
+mkdir -p $DISTDIR/backend
+ln -s "${PWD%/*}/runnable"/libs $DISTDIR/backend
+cp -f "${PWD%/*}/runnable"/console.jar $DISTDIR/backend
+
+if [ "$1" = internal ]
 then
-  ln -s "${PWD%/*}/runnable" $DISTDIR/backend
+  custom/internal "$DISTDIR"
+  rm -f electron-builder-custom.json
 fi
 cp -f "$PWD"/package.json "$DISTDIR"
 npm start -- "$@"

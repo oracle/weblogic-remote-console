@@ -1,13 +1,42 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/core/utils/keyset-utils', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/ataglance/ataglance-manager', 'wrc-frontend/integration/viewModels/utils', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander', 'ojs/ojgauge'],
-  function(oj, ko, ArrayDataProvider, HtmlUtils, keySet, keySetUtils, MessageDisplaying, Runtime, AtAGlanceManager, ViewModelUtils, Logger){
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojarraydataprovider',
+  'ojs/ojhtmlutils',
+  'ojs/ojknockout-keyset',
+  'wrc-frontend/core/utils/keyset-utils',
+  'wrc-frontend/apis/message-displaying',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/microservices/ataglance/ataglance-manager',
+  'wrc-frontend/integration/viewModels/utils',
+  'ojs/ojlogger',
+  'ojs/ojaccordion',
+  'ojs/ojtable',
+  'ojs/ojbinddom',
+  'ojs/ojrowexpander',
+  'ojs/ojgauge'
+],
+  function(
+    oj,
+    ko,
+    ArrayDataProvider,
+    HtmlUtils,
+    keySet,
+    keySetUtils,
+    MessageDisplaying,
+    Runtime,
+    AtAGlanceManager,
+    ViewModelUtils,
+    Logger
+  ){
     function AtAGlanceTabTemplate(viewParams) {
       const self = this;
 

@@ -1,0 +1,16 @@
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+editable: true
+disableMBeanJavadoc: true
+instanceName: Web Single Sign-On Service Provider Partner
+
+properties:
+- name: WantAuthnRequestsSigned
+  label: "Only Accept Signed Authentication Requests"
+  helpSummaryHTML: >
+    <p>Specifies whether the local Identity Provider services are
+    configured to accept only signed authentication requests.</p>
+  helpDetailsHTML: >
+    <p>If <code>true</code>, unsigned authentication requests from this Service Provider partner are rejected.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.WebSSOSPPartner</code> interface.</p>

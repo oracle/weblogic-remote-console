@@ -1,0 +1,58 @@
+# Copyright 2023, 2024, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+schema:
+  categories:
+    - id: hideall
+      label: Hide All
+    - id: productivity
+      label: Productivity
+    - id: personalization
+      label: Personalization
+    - id: whereis
+      label: Where Is ...
+    - id: accessibility
+      label: Accessibility
+    - id: connectivity
+      label: Connectivity
+    - id: security
+      label: Security
+    - id: other
+      label: Other
+tips:
+  - id: tip0
+    category: productivity
+    visible: true
+  - id: tip1
+    category: productivity
+    visible: true
+  - id: tip2
+    category: personalization
+    visible: true
+  - id: tip3
+    category: accessibility
+    visible: false
+  - id: tip4
+    category: whereis
+    visible: true
+  - id: tip5
+    category: whereis
+    visible: true
+  - id: tip6
+    category: whereis
+    visible: false
+  - id: tip7
+    category: other
+    visible: false
+  - id: tip8
+    category: connectivity
+    visible: true
+  - id: tip9
+    category: connectivity
+    visible: false
+  - id: tip10
+    category: security
+    visible: false
+  - id: tip11
+    category: accessibility
+    visible: true

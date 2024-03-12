@@ -4,26 +4,269 @@ define({
       "appName": "Console distante WebLogic"
     },
     "icons": {
-      "connectivity": {
-        "online": {
-          "tooltip": "En ligne"
+      "navtree": {
+        "toggler": {
+          "tooltip": "Activer/Désactiver la visibilité de l'arborescence de navigation"
+        }
+      },
+      "theme": {
+        "tooltip": "Switch theme"
+      },
+      "whatsNew": {
+        "tooltip": "What's New!"
+      },
+      "howDoI": {
+        "tooltip": "Open \"How Do I ...?\" Tasks"
+      },
+      "tips": {
+        "tooltip": "Toggle User Tips visibility"
+      },
+      "help": {
+        "tooltip": "Ouvrir la documentation interne WebLogic Remote Console"
+      },
+      "profile": {
+        "tooltip": "Profile"
+      }
+    },
+    "menus": {
+      "messageCenter": {
+        "value": "Ouvrir le centre de messages"
+      },
+      "theme": {
+        "light": {
+          "value": "Light"
         },
-        "offline": {
-          "tooltip": "Hors ligne"
-        },
-        "detached": {
-          "tooltip": "Détaché"
-        },
-        "unattached": {
-          "tooltip": "Détaché"
+        "dark": {
+          "value": "Dark"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright © 2020, 2022, Oracle et/ou ses affiliés.<br/>Oracle est une marque déposée d'Oracle Corporation et/ou ses affiliés. Tout autre nom mentionné peut correspondre à des marques appartenant à d'autres propriétaires qu'Oracle.<br/>",
+      "copyrightLegal": "Copyright (c) 2020, 2024, Oracle et/ou ses affiliés.<br/>Oracle (r), Java, MySQL et NetSuite sont des marques déposées d'Oracle Corporation et/ou de ses affiliés. Tout autre nom mentionné peut être une marque appartenant à un autre propriétaire qu'Oracle.<br/>",
       "builtWith": "Conçu avec Oracle JET"
+    }
+  },
+  "wrc-connectivity": {
+    "labels": {
+      "insecure": {
+        "value": "Non sécurisé"
+      }
+    },
+    "icons": {
+      "insecure": {
+        "tooltip": "Connexion au serveur d'administration non sécurisée"
+      }
+    }
+  },
+  "wrc-app-profile": {
+    "icons": {
+      "profile": {
+        "popup": {
+          "launcher": {
+            "tooltip": "Show Profiles List"
+          }
+        },
+        "dialog": {
+          "launcher": {
+            "tooltip": "Gérer les profils"
+          },
+          "editor": {
+            "tooltip": "Profile Editor",
+            "toolbar": {
+              "save": {
+                "tooltip": "Enregistrer le profil"
+              },
+              "activate": {
+                "tooltip": "Active Profile"
+              },
+              "add": {
+                "tooltip": "Ajouter un profil"
+              },
+              "remove": {
+                "tooltip": "Delete Profile"
+              }
+            }
+          }
+        },
+        "image": {
+          "tooltip": "Profile",
+          "capture": {
+            "tooltip": "Add or change image"
+          }
+        }
+      }
+    },
+    "tabstrip": {
+      "tabs": {
+        "general": {
+          "value": "Généralités"
+        },
+        "settings": {
+          "value": "Paramètres"
+        },
+        "preferences": {
+          "value": "Préférences"
+        },
+        "properties": {
+          "value": "Propriétés"
+        }
+      }
+    },
+    "dialog": {
+      "changeImage": {
+        "value": "Modifier l'image"
+      },
+      "clearImage": {
+        "value": "Clear Image"
+      },
+      "profile": {
+        "default": {
+          "value": "Profil par défaut"
+        },
+        "toggler": {
+          "editor": {
+            "show": {
+              "value": "Show Profile Editor"
+            },
+            "hide": {
+              "value": "Hide Profile Editor"
+            }
+          }
+        }
+      }
+    },
+    "popup": {
+      "profile": {
+        "manager": {
+          "open": {
+            "value": "Open Profile Manager"
+          },
+          "signout": {
+            "value": "Déconnexion"
+          }
+        }
+      }
+    },
+    "labels": {
+      "profile": {
+        "fields": {
+          "id": {
+            "value": "ID de profil"
+          },
+          "organization": {
+            "value": "Organization"
+          },
+          "name": {
+            "value": "Nom"
+          },
+          "email": {
+            "value": "Email"
+          },
+          "role": {
+            "default": {
+              "value": "Use as Default Profile"
+            }
+          },
+          "settings": {
+            "useCredentialStorage": {
+              "value": "Stocker les informations d'identification cryptées pour vos projets ?"
+            },
+            "disableHNV": {
+              "value": "Désactiver la vérification du nom d'hôte ?"
+            },
+            "proxyAddress": {
+              "value": "Adresse du proxy"
+            },
+            "trustStoreType": {
+              "value": "Type de truststore"
+            },
+            "trustStorePath": {
+              "value": "Chemin de truststore"
+            },
+            "trustStoreKey": {
+              "value": "Clé de truststore"
+            },
+            "connectionTimeout": {
+              "value": "Délai d'expiration de la connexion au serveur d'administration"
+            },
+            "readTimeout": {
+              "value": "Délai d'expiration de lecture du serveur d'administration"
+            }
+          },
+          "preferences": {
+            "theme": {
+              "value": "Theme"
+            },
+            "startupTaskChooserType": {
+              "value": "Startup Task Chooser Type"
+            },
+            "useMenusAsRootNodes": {
+              "value": "Use Tree Menus as the root level of Tree Navigators?"
+            },
+            "onQuit": {
+              "value": "Allow unsaved changes to prevent exiting application?"
+            },
+            "onDelete": {
+              "value": "Confirm all deletions?"
+            },
+            "onActionNotAllowed": {
+              "value": "Use \"Action Not Allowed\" popup to prevent data loss?"
+            },
+            "onUnsavedChangesDetected": {
+              "value": "Use \"Unsaved Changes Detected\" popup to prevent data loss?"
+            },
+            "onChangesNotDownloaded": {
+              "value": "Use \"Changes Not Download\" popup to prevent data loss?"
+            }
+          },
+          "properties": {
+            "javaSystemProperties": {
+              "value": "Java System Properties"
+            }
+          }
+        },
+        "legalValues": {
+          "themeOptions": {
+            "light": {
+              "value": "Light"
+            },
+            "dark": {
+              "value": "Dark"
+            }
+          },
+          "taskChooserTypeOptions": {
+            "useDialog": {
+              "value": "Use Dialog"
+            },
+            "useCards": {
+              "value": "Use Cards"
+            }
+          },
+          "trustStoreTypeOptions": {
+            "jks": {
+              "value": "JKS"
+            },
+            "pkcs12": {
+              "value": "PKCS12"
+            },
+            "windowsRoot": {
+              "value": "Windows ROOT"
+            },
+            "keyChainStore": {
+              "value": "Key Chain Store"
+            }
+          }
+        },
+        "messages": {
+          "save": {
+            "succeeded": {
+              "summary": "Profile \"{0}\" was saved successfully!"
+            }
+          }
+        }
+      }
     }
   },
   "wrc-data-providers": {
@@ -35,7 +278,7 @@ define({
         "tooltip": "Gérer"
       },
       "deactivate": {
-        "tooltip": "Deactivate"
+        "tooltip": "Désactiver"
       },
       "delete": {
         "tooltip": "Enlever"
@@ -51,6 +294,9 @@ define({
         },
         "url": {
           "value": "URL"
+        },
+        "proxyOverride": {
+          "value": "Proxy de remplacement"
         },
         "username": {
           "value": "Nom utilisateur"
@@ -110,6 +356,11 @@ define({
     },
     "popups": {
       "info": {
+        "project": {
+          "name": {
+            "label": "Nom du projet:"
+          }
+        },
         "provider": {
           "id": {
             "label": "ID du fournisseur :"
@@ -122,11 +373,17 @@ define({
           "url": {
             "label": "URL de domaine :"
           },
+          "proxyOverride": {
+            "label": "Proxy de remplacement:"
+          },
           "version": {
             "label": "Version de domaine :"
           },
           "username": {
             "label": "Nom utilisateur :"
+          },
+          "sso": {
+            "label": "SSO :"
           },
           "roles": {
             "label": "Rôles :"
@@ -136,6 +393,9 @@ define({
           },
           "readTimeout": {
             "label": "Expiration de la lecture :"
+          },
+          "insecure": {
+            "label": "Non sécurisé :"
           },
           "anyAttempt": {
             "label": "Toutes les tentatives de connexion :"
@@ -278,6 +538,9 @@ define({
         "startup": {
           "value": "Quelle tâche de démarrage souhaitez-vous effectuer ?"
         }
+      },
+      "project-busy": {
+        "value": "Enregistrez ou abandonnez les modifications non enregistrées avant d'en apporter d'autres à n'importe quelle partie du projet"
       }
     },
     "titles": {
@@ -331,6 +594,9 @@ define({
         "task": {
           "value": "Tâche de démarrage"
         }
+      },
+      "project-busy": {
+        "value": "Projet occupé"
       }
     },
     "messages": {
@@ -382,6 +648,11 @@ define({
           "detail": "Pour sélectionner le composite WDT, sélectionnez d'abord tous les modèles WDT utilisés par le composite WDT."
         }
       },
+      "sso": {
+        "secureContextRequired": {
+          "detail": "The URL must specify the HTTPS protocol or use localhost"
+        }
+      },
       "correctiveAction": {
         "filePathNotFound": {
           "detail": "<p>Modifiez le chemin dans le champ de nom de fichier, puis cliquez sur le bouton OK. Sinon, cliquez sur l'icône de téléchargement et choisissez un autre fichier.</p>"
@@ -400,12 +671,20 @@ define({
     },
     "prompts": {
       "info": {
-        "fileNotSet": "Non défini"
+        "fileNotSet": {
+          "value": "Non défini"
+        }
       }
     },
     "checkboxes": {
       "useSparseTemplate": {
         "label": "Utiliser un modèle dispersé"
+      },
+      "usesso": {
+        "label": "Use Web Authentication"
+      },
+      "insecure": {
+        "label": "Etablir une connexion non sécurisée"
       }
     }
   },
@@ -421,7 +700,7 @@ define({
         "tooltip": "Arborescence de la surveillance"
       },
       "security": {
-        "tooltip": "Security Data Tree"
+        "tooltip": "Arborescence des données de sécurité"
       },
       "modeling": {
         "tooltip": "Modèle WDT"
@@ -434,13 +713,25 @@ define({
       }
     }
   },
+  "wrc-navigation": {
+    "navstrip": {
+      "ariaLabel": {
+        "value": "Bandeau de navigation"
+      }
+    },
+    "navtree": {
+      "ariaLabel": {
+        "value": "Arborescence de navigation"
+      }
+    }
+  },
   "wrc-content-area-header": {
     "title": {
       "home": "Accueil",
       "configuration": "Modifier l'arborescence",
       "view": "Arborescence de la vue de configuration",
       "monitoring": "Arborescence de la surveillance",
-      "security": "Security Data Tree",
+      "security": "Arborescence des données de sécurité",
       "modeling": "Modèle WDT",
       "composite": "Modèle de composite WDT",
       "properties": "Liste des propriétés"
@@ -449,9 +740,6 @@ define({
       "buttons": {
         "home": {
           "label": "Accueil"
-        },
-        "preferences": {
-          "label": "Préférences"
         }
       }
     }
@@ -466,13 +754,107 @@ define({
           "label": "Vue d'ensemble"
         },
         "projectmanagement": {
-          "label": "Gestion des fournisseurs"
+          "label": "Providers"
+        },
+        "tips": {
+          "label": "User Tips"
+        },
+        "dashboards": {
+          "label": "Tableaux de bord"
         }
       }
     },
-    "icons": {
-      "kiosk": {
-        "tooltip": "Kiosque"
+    "popups": {
+      "tips": {
+        "title": "Filter Tips",
+        "checkboxes": {
+          "hideall": "Hide All Tips",
+          "productivity": "Show Productivity Tips",
+          "personalization": "Show Personalization Tips",
+          "whereis": "Show Where Is... Tips",
+          "accessibility": "Show Accessibility Tips",
+          "connectivity": "Show Connectivity Tips",
+          "security": "Show Security Tips",
+          "other": "Show Other Tips"
+        }
+      }
+    },
+    "tips": {
+      "labels": {
+        "hideall": {
+          "value": "Hide All"
+        },
+        "productivity": {
+          "value": "Productivity"
+        },
+        "personalization": {
+          "value": "Personalization"
+        },
+        "whereis": {
+          "value": "Where Is ..."
+        },
+        "accessibility": {
+          "value": "Accessibility"
+        },
+        "connectivity": {
+          "value": "Connectivity"
+        },
+        "security": {
+          "value": "Sécurité"
+        },
+        "other": {
+          "value": "Other"
+        }
+      },
+      "cards": {
+        "tip0": {
+          "title": "Think \"Search\" Before You Click!",
+          "descriptionHTML": "<p>Finding what you want in one of the provider's Trees, can involve a lot of clicking and scrolling. The <b><i>Search</i></b> field (located at the top of the app), lets you avoid having to do that!</p><p>Even better, clicking on an item in the generated search results, auto-expands the provider Tree to show you where the item is.</p>"
+        },
+        "tip1": {
+          "title": "\"Dashboards\" Are a User's Best Friend",
+          "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you''re on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+        },
+        "tip2": {
+          "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
+          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+        },
+        "tip3": {
+          "title": "Using the Keyboard With Tables and Actions",
+          "descriptionHTML": "<p></p>"
+        },
+        "tip4": {
+          "title": "Where is the \"Customize this table\" Link?",
+          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+        },
+        "tip5": {
+          "title": "Where is the \"Change Center\" Portlet?",
+          "descriptionHTML": "<p>The \"Change Center\" porlet has been replaced with the <i>Shopping Cart Drawer</i>, which has launcher icon in the iconbar when the \"Configuration Tree\" is selected.</p>"
+        },
+        "tip6": {
+          "title": "Where is the \"How Do I\" Portlet?",
+          "descriptionHTML": "<p></p>"
+        },
+        "tip7": {
+          "title": "Other Tip #1",
+          "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip8": {
+          "title": "Trouble Creating an Admin Server Provider?",
+          "descriptionHTML": "<p>The <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Reference -> Troubleshooting</a> section in the WebLogic Remote Console documentation, covers how to resolve connectivity issues caused by environment and network settings.</p><p>If trying those don't lead to a resolution, please post a message to the <b>@weblogic-remote-console</b> slack channel. Screenshots often provide context that aids in issue diagnosis, so include them in the post when possible.</p>"
+        },
+        "tip9": {
+          "title": "Connectivity Tip #2",
+          "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip10": {
+          "title": "Security Tip #1",
+          "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip11": {
+          "title": "Think \"Shortcut Keys\" Before You Press Tab!",
+          "descriptionHTML": "<p>\"Shortcut\" (or accelerator) keys allow you to move the focus directly to an area, instead of sighing while repeatedly pressing the <b>Tab</b> and <b>Shift+Tab</b> keys!</p><p>Here's 5 to try out:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Opens the <i>Providers Drawer</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the <i>Provider Tree</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a table, more precisely the first column header.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the gripper of the Tree width-resizer. Afterwards, use the <code><b>RightArrow</b></code> and <code><b>LeftArrow</b></code> keys to increase or decrease the width of the Tree.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a breadcrumb that is a <i>cross-link</i> (if present), or the first clickable breadcrumb label.</li></ul><p>Check out the documentation to see a complete list of the shortcut keys!</p>"
+        }
       }
     }
   },
@@ -480,26 +862,16 @@ define({
     "icons": {
       "history": {
         "tooltip": "Historique"
+      },
+      "separator": {
+        "tooltip": "Séparateur"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "Effacer l'historique"
-        }
-      }
-    }
-  },
-  "wrc-monitoring": {
-    "icons": {
-      "history": {
-        "tooltip": "Historique"
-      }
-    },
-    "menus": {
-      "history": {
-        "clear": {
-          "value": "Effacer l'historique"
+          "value": "Effacer les entrées de l'historique",
+          "label": "Effacer les entrées de l'historique"
         }
       }
     }
@@ -525,7 +897,10 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "Galerie"
+          "label": "Arborescences"
+        },
+        "startup-tasks": {
+          "label": "Startup Tasks"
         }
       }
     }
@@ -534,19 +909,19 @@ define({
     "cards": {
       "configuration": {
         "label": "Modifier l'arborescence",
-        "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
+        "description": "<p>Gérez la configuration du domaine WebLogic que vous utilisez.</p>"
       },
       "view": {
         "label": "Arborescence de la vue de configuration",
-        "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
+        "description": "<p>Examinez la configuration en lecture seule du domaine WebLogic que vous utilisez.</p>"
       },
       "monitoring": {
         "label": "Arborescence de la surveillance",
-        "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+        "description": "<p>Visualisez les informations du MBean d'exécution pour les ressources sélectionnées dans le domaine WebLogic que vous utilisez.</p>"
       },
       "security": {
-        "label": "Security Data Tree",
-        "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
+        "label": "Arborescence des données de sécurité",
+        "description": "<p>Gérez les informations relatives à la sécurité (par exemple, utilisateurs, groupes, rôles, stratégies, informations d'identification, etc.) dans le domaine WebLogic que vous utilisez actuellement.</p>"
       },
       "modeling": {
         "label": "Arborescence du modèle WDT",
@@ -559,6 +934,38 @@ define({
       "properties": {
         "label": "Editeur de liste des propriétés",
         "description": "<p>Visualisez ou modifiez un ensemble de propriétés provenant d'un fichier de liste des propriétés.</p>"
+      }
+    }
+  },
+  "wrc-startup-tasks": {
+    "cards": {
+      "addAdminServer": {
+        "label": "Ajouter un fournisseur de connexion au serveur d'administration",
+        "description": "This task creates a project resource that allows you to connect to an Admin Server"
+      },
+      "addWdtModel": {
+        "label": "Ajouter un fournisseur de fichier de modèle WDT",
+        "description": "This task creates a project resource that allows you to manage a WDT Model file, existing on your local filesystem"
+      },
+      "addWdtComposite": {
+        "label": "Ajouter un fournisseur de fichier de modèle de composite WDT",
+        "description": "This task creates a project resource that allows you to manage WDT Model file fragments, existing on your local filesystem"
+      },
+      "addPropertyList": {
+        "label": "Ajouter un fournisseur de liste des propriétés",
+        "description": "This task creates a project resource that allows you to manage a .properties file stored on your local filesystem"
+      },
+      "createWdtModel": {
+        "label": "Créer un fournisseur pour le nouveau fichier de modèle WDT",
+        "description": "This task creates a project resource that is a new WDT Model file, stored on your local filesystem"
+      },
+      "createPropertyList": {
+        "label": "Créer un fournisseur pour la nouvelle liste des propriétés",
+        "description": "This task creates a project resource that is a new .properties file, stored on your local filesystem"
+      },
+      "importProject": {
+        "label": "Importer un projet",
+        "description": "This task loads a previously exported project containing providers immediately ready for you to use or modify"
       }
     }
   },
@@ -654,24 +1061,9 @@ define({
         }
       }
     },
-    "labels": {
-      "start": {
-        "value": "Démarrer"
-      },
-      "resume": {
-        "value": "Reprendre"
-      },
-      "suspend": {
-        "value": "Suspendre"
-      },
-      "shutdown": {
-        "value": "Mettre hors service"
-      },
-      "restartSSL": {
-        "value": "Redémarrer SSL"
-      },
-      "stop": {
-        "value": "Arrêter"
+    "prompts": {
+      "download": {
+        "value": "Emplacements de fichier journal téléchargé :"
       }
     }
   },
@@ -686,7 +1078,7 @@ define({
         "value": "Nombre total de lignes : {0}"
       },
       "reloadHidden": {
-        "value": "Reload the table to view the current {0} values"
+        "value": "Recharger la table pour voir les valeurs {0} en cours"
       }
     }
   },
@@ -730,6 +1122,9 @@ define({
       },
       "customize": {
         "label": "Personnaliser la table"
+      },
+      "dashboard": {
+        "label": "Nouveau tableau de bord"
       }
     },
     "icons": {
@@ -789,8 +1184,15 @@ define({
     },
     "messages": {
       "savedTo": {
-        "shoppingcart": "Changes were added to cart!",
-        "customView": "Changes were saved!"
+        "shoppingcart": "Les modifications ont été ajoutées au panier.",
+        "generic": "Les modifications ont été enregistrées.",
+        "notSaved": "Aucune modification enregistrée car aucune n'a été détectée."
+      },
+      "action": {
+        "notAllowed": {
+          "summary": "Action non autorisée",
+          "detail": "Impossible d'effectuer l'action demandée pendant une opération de création. Cliquez sur le bouton Annuler pour annuler l'opération de création."
+        }
       }
     },
     "icons": {
@@ -813,6 +1215,19 @@ define({
           }
         }
       }
+    },
+    "labels": {
+      "relatedTopics": {
+        "value": "<b>Rubriques connexes :</b>"
+      }
+    },
+    "tabs": {
+      "attributes": {
+        "label": "Attributs"
+      },
+      "actions": {
+        "label": "Actions"
+      }
     }
   },
   "wrc-create-form": {
@@ -823,8 +1238,174 @@ define({
       }
     }
   },
+  "wrc-policy-management": {
+    "menus": {
+      "action": {
+        "addCondition": {
+          "label": "Ajouter une condition"
+        },
+        "combine": {
+          "label": "Combiner"
+        },
+        "uncombine": {
+          "label": "Annuler la combinaison"
+        },
+        "moveup": {
+          "label": "Déplacer vers le haut"
+        },
+        "movedown": {
+          "label": "Déplacer vers le bas"
+        },
+        "remove": {
+          "label": "Enlever"
+        },
+        "negate": {
+          "label": "Inverser"
+        },
+        "reset": {
+          "label": "Réinitialiser"
+        }
+      }
+    },
+    "contextMenus": {
+      "action": {
+        "addCondition": {
+          "at": {
+            "label": "Ajouter une nouvelle première condition..."
+          },
+          "above": {
+            "label": "Ajouter une condition au-dessus de la ligne sélectionnée..."
+          },
+          "below": {
+            "label": "Ajouter une condition en dessous de la ligne sélectionnée..."
+          }
+        }
+      }
+    },
+    "buttonMenus": {
+      "action": {
+        "addCondition": {
+          "above": {
+            "label": "Ajouter au-dessus de la condition sélectionnée..."
+          },
+          "below": {
+            "label": "Ajouter en dessous de la condition sélectionnée..."
+          }
+        }
+      }
+    },
+    "messages": {
+      "requiredFieldsMissing": {
+        "detail": "Certains champs requis ne contiennent aucune donnée."
+      },
+      "argumentValueHasWrongFormat": {
+        "summary": "Le champ ''{0}'' contient des données au format incorrect."
+      },
+      "conditionHasNoArgValues": {
+        "summary": "La condition sélectionnée ne comporte aucune valeur d'argument à modifier."
+      },
+      "conditionAlreadyExists": {
+        "summary": "Cette stratégie de sécurité comporte déjà une condition créée à l'aide du prédicat sélectionné ou une condition avec des valeurs d'argument correspondantes."
+      }
+    },
+    "instructions": {
+      "policyEditor": {
+        "value": "<p>Pour indiquer l'emplacement de la nouvelle condition, placez une coche en regard de la condition relative, puis cliquez sur le bouton <b>+ Ajouter une condition</b>.</p>"
+      }
+    }
+  },
+  "wrc-policy-editor": {
+    "labels": {
+      "monthDay": {
+        "value": "Plage : -31 à 31"
+      },
+      "dateTime": {
+        "value": "Format : y-MM-dd HH:mm:ss [HH:mm:ss] (par exemple, 2006-04-25 00:00:00)"
+      },
+      "time": {
+        "value": "Format : HH:mm:ss (par exemple, 14:22:47)"
+      },
+      "gmtOffset": {
+        "value": "Format : GMT+|-h:mm (par exemple, GMT-5:00)"
+      },
+      "weekDay": {
+        "value": "par exemple, dimanche, lundi, mardi..."
+      },
+      "or": {
+        "value": "ou"
+      },
+      "not": {
+        "value": "NOT"
+      },
+      "combination": {
+        "value": "Combinaison"
+      },
+      "nodata": {
+        "Policy": {
+          "value": "Utilisez le bouton <b>+ Ajouter une condition</b> pour ajouter une condition de stratégie."
+        },
+        "DefaultPolicy": {
+          "value": "Aucune condition de stratégie de sécurité par défaut n'est définie."
+        }
+      }
+    },
+    "tables": {
+      "policyConditions": {
+        "columns": {
+          "header": {
+            "combination": "Combinaison",
+            "operator": "Opérateur",
+            "expression": "Phrase de condition"
+          }
+        },
+        "dropdowns": {
+          "operator": {
+            "or": "Ou",
+            "and": "Et"
+          }
+        }
+      }
+    },
+    "wizard": {
+      "title": "Gestion des stratégies",
+      "pages": {
+        "choosePredicate": {
+          "header": {
+            "title": "Choisir un prédicat",
+            "instructions": "Choisissez le prédicat pour la nouvelle condition dans la liste déroulante."
+          },
+          "body": {
+            "labels": {
+              "predicateList": "Liste de prédicats"
+            },
+            "help": {
+              "predicateList": "La liste de prédicats est une liste de prédicats disponibles permettant d'élaborer une condition de stratégie de sécurité."
+            }
+          }
+        },
+        "manageArgumentValues": {
+          "header": {
+            "title": "Prédicat de groupe",
+            "instructions": "Commencez à saisir du texte dans le champ <i></i> pour ajouter des valeurs d'argument ou pour rechercher des valeurs d'argument existantes. Appuyez sur Entrée pour ajouter la valeur saisie à la liste. Pour modifier une valeur d'argument existante, cliquez dessus et modifiez-la à l'aide du champ d'entrée de la fenêtre instantanée."
+          },
+          "body": {
+            "labels": {
+              "conditionPhrase": "Phrase de condition",
+              "negate": "Inverser la condition"
+            },
+            "help": {
+              "negate": "Convertit la condition pour lui attribuer le sens opposé. Par exemple, \"est égal à\" devient \"n'est pas égal à\", \"dans\" devient \"pas dans\"."
+            }
+          }
+        }
+      }
+    }
+  },
   "wrc-common": {
     "buttons": {
+      "action": {
+        "label": "Action"
+      },
       "apply": {
         "label": "Appliquer"
       },
@@ -836,6 +1417,9 @@ define({
       },
       "cancel": {
         "label": "Annuler"
+      },
+      "restart": {
+        "label": "Redémarrage"
       },
       "yes": {
         "label": "Oui"
@@ -866,6 +1450,21 @@ define({
       },
       "savenow": {
         "label": "Enregistrer maintenant"
+      },
+      "next": {
+        "label": "Suivant"
+      },
+      "previous": {
+        "label": "Précédent"
+      },
+      "finish": {
+        "label": "Terminer"
+      },
+      "done": {
+        "label": "Terminé"
+      },
+      "close": {
+        "label": "Fermer"
       }
     },
     "tooltips": {
@@ -890,6 +1489,9 @@ define({
       "reset": {
         "value": "Réinitialiser"
       },
+      "filter": {
+        "value": "Filtre"
+      },
       "submit": {
         "value": "Soumettre les modifications"
       },
@@ -901,6 +1503,33 @@ define({
       },
       "reload": {
         "value": "Recharger le fichier"
+      },
+      "delete": {
+        "value": "Supprimer"
+      },
+      "remove": {
+        "value": "Enlever"
+      },
+      "noData": {
+        "value": "Aucune donnée"
+      },
+      "preloader": {
+        "value": "Préchargeur"
+      },
+      "checkAll": {
+        "value": "Sélectionner tout"
+      },
+      "checkNone": {
+        "value": "Désélectionner tout"
+      },
+      "checkSome": {
+        "value": "Effacer les sélections"
+      },
+      "close": {
+        "value": "Fermer"
+      },
+      "recentPages": {
+        "value": "Activer/Désactiver la visibilité de l'historique"
       }
     },
     "menu": {
@@ -926,6 +1555,51 @@ define({
       "search": {
         "value": "Rechercher"
       }
+    },
+    "title": {
+      "incorrectFileContent": {
+        "value": "Contenu incorrect détecté"
+      }
+    },
+    "messages": {
+      "incorrectFileContent": {
+        "detail": "''{0}'' contient des données JSON mais n''est pas une représentation JSON de {1}."
+      },
+      "dataCopiedToClipboard": {
+        "summary": "Les données ont été copiées dans le presse-papiers."
+      },
+      "tableCopiedToClipboard": {
+        "summary": "Table was successfully copied to the clipboard!"
+      },
+      "emptyCellData": {
+        "detail": "Aucune donnée n'a été copiée dans le presse-papiers car la cellule sélectionnée était vide."
+      },
+      "emptyRowData": {
+        "detail": "Aucune donnée n'a été copiée dans le presse-papiers car la ligne sélectionnée était vide."
+      },
+      "browserPermissionDenied": {
+        "summary": "Browser Permission Denied",
+        "detail": "You need to enable writing to the clipboard from JavaScript, in order to perform this operation. Also, the Clipboard API is only supported for pages served over HTTPS."
+      }
+    },
+    "contextMenus": {
+      "copyData": {
+        "cell": {
+          "label": "Copier la cellule dans le presse-papiers"
+        },
+        "row": {
+          "label": "Copier la ligne dans le presse-papiers"
+        },
+        "tableAsText": {
+          "label": "Copy Table to Clipboard (Text)"
+        },
+        "tableAsJSON": {
+          "label": "Copy Table to Clipboard (JSON)"
+        },
+        "tableAsYAML": {
+          "label": "Copy Table to Clipboard (YAML)"
+        }
+      }
     }
   },
   "wrc-wdt-form": {
@@ -948,7 +1622,7 @@ define({
     },
     "wdtOptionsDialog": {
       "title": "Modifier : {0}",
-      "default": "Valeur par défaut. (Non définie)",
+      "default": "Annuler la définition de la valeur",
       "instructions": "Indiquez un jeton à ajouter à la liste des éléments sélectionnables.",
       "enterValue": "Saisir une valeur",
       "selectValue": "Sélectionner une valeur",
@@ -962,7 +1636,7 @@ define({
       "enterVariable": "Entrer une variable",
       "variableName": "Nom de la variable (requis)",
       "variableValue": "Valeur de la variable",
-      "multiSelectUnset": "\"Valeur par défaut. (Sélection à partir de la liste des éléments disponibles)\""
+      "multiSelectUnset": "Sélectionner la valeur dans la liste des éléments disponibles"
     }
   },
   "wrc-unsaved-changes": {
@@ -980,18 +1654,18 @@ define({
           "value": "Toutes les modifications non enregistrées seront perdues. Continuer ?"
         },
         "areYouSure": {
-          "value": "Voulez-vous quitter cette page sans enregistrer les modifications ?"
+          "value": "Voulez-vous {0} sans enregistrer les modifications ?"
         },
         "saveBeforeExiting": {
-          "value": "Do you want to save changes before exiting?"
+          "value": "Voulez-vous enregistrer les modifications avant de quitter le système ?"
         },
         "needDownloading": {
-          "value": "Your changes have not been download to the file, yet.<br/><br/>Download them before continuing?"
+          "value": "Les modifications apportées à ''{0}'' n''ont pas été téléchargées vers le fichier.<br/><br/>Voulez-vous les télécharger avant de continuer ?"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "La nouvelle instance ''{0}'' n''a pas encore été ajoutée au modèle WDT.<br/><br/>Voulez-vous l''ajouter avant de continuer ?"
+          "value": "La nouvelle instance ''{0}'' n''a pas été ajoutée au modèle WDT.<br/><br/>Voulez-vous l''ajouter avant de continuer ?"
         }
       }
     }
@@ -1012,13 +1686,27 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "Message",
-          "detail": "L''appel de back-end de console a généré une réponse ''{0}'' lors de la tentative d''exécution de l''action indiquée sur ''{1}''."
+          "detail": "L''appel de back-end de console a généré une réponse ''{0}'' lors de la tentative d''exécution de l''action ''{1}''"
+        },
+        "actionNotPerformed": {
+          "detail": "Impossible d''effectuer l''action ''{0}'' sur au moins un des éléments sélectionnés"
+        },
+        "actionSucceeded": {
+          "summary": "L''action ''{0}'' a été effectuée."
         }
       }
     },
     "labels": {
       "cannotDetermineExactCause": {
         "value": "Impossible de déterminer la cause exacte. Consultez la console JavaScript pour obtenir des conseils."
+      }
+    }
+  },
+  "wrc-actions-strip": {
+    "dialogs": {
+      "cannotBeUndone": {
+        "title": "Confirmation de l'action",
+        "prompt": "L''action ''{0}'' ne peut pas être annulée.<br/><br/>Continuer ?"
       }
     }
   },
@@ -1136,22 +1824,22 @@ define({
         "detail": "Echec de la tentative : "
       },
       "badRequest": {
-        "detail": "Impossible de traiter la demande ou le fichier soumis "
+        "detail": "Impossible de traiter la demande ou le fichier soumis"
       },
       "invalidCredentials": {
-        "detail": "Les informations d'identification du domaine WebLogic ne sont pas valides "
+        "detail": "Les informations d'identification du domaine WebLogic ne sont pas valides"
       },
       "invalidUrl": {
-        "detail": "L'URL du domaine WebLogic n'est pas accessible "
+        "detail": "L'URL du domaine WebLogic n'est pas accessible"
       },
       "notInRole": {
         "detail": "Echec de la tentative : l'utilisateur n'est pas un administrateur, un responsable de déploiement, un opérateur ou un moniteur"
       },
       "notSupported": {
-        "detail": "Le domaine WebLogic n'est pas pris en charge "
+        "detail": "Le domaine WebLogic n'est pas pris en charge"
       },
       "unexpectedStatus": {
-        "detail": "Résultat inattendu (statut : {0}) "
+        "detail": "Résultat inattendu (statut : {0})"
       },
       "cbeRestApi": {
         "requestUnsuccessful": {
@@ -1200,6 +1888,55 @@ define({
       "connectionRefused": {
         "summary": "Problème de connexion",
         "details": "Problème d'envoi et de réception des données du fournisseur. Assurez-vous que ce dernier est accessible et réessayez."
+      },
+      "pathNotFound": {
+        "summary": "Chemin introuvable",
+        "details": "''{0}'' n''est pas un fichier ni un répertoire accessible sur le système de fichiers local."
+      }
+    }
+  },
+  "wrc-message-line": {
+    "menus": {
+      "more": {
+        "clear": {
+          "label": "Effacer le message"
+        },
+        "suppress": {
+          "info": {
+            "label": "Supprimer les messages d'information"
+          },
+          "warning": {
+            "label": "Supprimer les messages d'avertissement"
+          }
+        }
+      }
+    }
+  },
+  "wrc-alerts": {
+    "menus": {
+      "alerts": {
+        "error": {
+          "value": "You have {0} high-priority error {1}"
+        },
+        "warning": {
+          "value": "You have {0} high-priority warning {1}"
+        },
+        "info": {
+          "value": "You have {0} high-priority information {1}"
+        },
+        "view": {
+          "value": "Afficher les alertes"
+        }
+      }
+    },
+    "labels": {
+      "alerts": {
+        "singular": {
+          "value": "alert"
+        },
+        "plural": {
+          "value": "alerts"
+        }
       }
     }
   }

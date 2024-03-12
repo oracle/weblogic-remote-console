@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jdbc-data-source xmlns="http://www.bea.com/ns/weblogic/90" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <name>ASDS1</name>
+
+  <jdbc-driver-params>
+    <url>jdbc:oracle:thin:@//wlsqa.vcn2racregional.devweblogic2phx.oraclevcn.com:1521/pdb1.vcn2racregional.devweblogic2phx.oraclevcn.com</url>
+    <driver-name>oracle.jdbc.driver.OracleDriver</driver-name>
+    <properties>
+      <property>
+        <name>user</name>
+        <value>admin</value>
+      </property>
+      <property>
+        <name>password</name>
+        <value>welcome1</value>
+      </property>
+   </properties>
+  </jdbc-driver-params>
+
+  <jdbc-data-source-params>
+    <jndi-name>ASDS1</jndi-name>
+    <scope>Application</scope>
+  </jdbc-data-source-params>
+</jdbc-data-source>
+

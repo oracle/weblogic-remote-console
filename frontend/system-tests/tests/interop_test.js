@@ -53,21 +53,20 @@ describe.only('Test Suite: interop_test for WTC Servers and Jolt Connection Pool
 
             console.log("Modify testWTCServer-1 to select AdminServer as target");
             console.log("Click Targets tab");
-            await driver.findElement(By.xpath("//span[contains(.,\'Targets\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Targets')]")).click();
             await driver.sleep(4800);
             console.log("Select AdminServer as target");
             element = driver.findElement(
-                By.xpath("//oj-checkboxset[@id=\'availableCheckboxset\']/div/span/span/input"));
+                By.xpath("//oj-checkboxset[@id='availableCheckboxset']/div/span/span/input"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(800);
             await element.click();
             await driver.sleep(800);
             await driver.findElement(
-                By.xpath("//oj-button[@id=\'addToChosen\']/button/div/span")).click()
+                By.xpath("//oj-button[@id='addToChosen']/button/div/span")).click()
             await driver.sleep(800);
             await admin.saveAndCommitChanges(driver);
             await driver.sleep(3600);
-
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","InteroperabilityChevron","WTC Servers",0);
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"WTC Servers","testWTCServer-1",3);
@@ -97,23 +96,23 @@ describe.only('Test Suite: interop_test for WTC Servers and Jolt Connection Pool
 
             console.log("Modify testJoltConnectionPools-1 User account based on cookie credential");
             console.log("Click User tab");
-            await driver.findElement(By.xpath("//span[contains(.,\'User\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'User')]")).click();
             await driver.sleep(4800);
             await admin.saveToShoppingCart(driver);
 
             console.log("Modify testJoltConnectionPools-1 to select AdminServer as target");
             console.log("Click Targets tab");
-            await driver.findElement(By.xpath("//span[contains(.,\'Targets\')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'Targets')]")).click();
             await driver.sleep(4800);
             console.log("Select Cluster1 as target");
             element = driver.findElement(
-                By.xpath("//oj-checkboxset[@id=\'availableCheckboxset\']/div/span/span/input"));
+                By.xpath("//oj-checkboxset[@id='availableCheckboxset']/div/span/span/input"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(800);
             await element.click();
             await driver.sleep(800);
             await driver.findElement(
-                By.xpath("//oj-button[@id=\'addToChosen\']/button/div/span")).click()
+                By.xpath("//oj-button[@id='addToChosen']/button/div/span")).click()
             await driver.sleep(800);
             await admin.saveAndCommitChanges(driver);
             await driver.sleep(3600);

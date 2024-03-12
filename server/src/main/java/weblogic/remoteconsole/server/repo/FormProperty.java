@@ -64,4 +64,46 @@ public class FormProperty {
   public String toString() {
     return "FormProperty<" + getName() + ", " + getValue() + ">";
   }
+
+  public static String getStringPropertyValue(
+    String formFieldName,
+    List<FormProperty> properties,
+    String defaultValue
+  ) {
+    return
+      getPropertyValue(
+        formFieldName,
+        properties,
+        new StringValue(defaultValue)
+      ).asString().getValue();
+  }
+
+  public static Value getPropertyValue(
+    String formFieldName,
+    List<FormProperty> properties,
+    Value defaultValue
+  ) {
+    Value value = findPropertyValue(formFieldName, properties);
+    return (value != null) ? value : defaultValue;
+  }
+
+  public static Value findPropertyValue(
+    String formFieldName,
+    List<FormProperty> properties
+  ) {
+    FormProperty property = findProperty(formFieldName, properties);
+    return (property != null) ? property.getValue().asSettable().getValue() : null;
+  }
+
+  public static FormProperty findProperty(
+    String formFieldName,
+    List<FormProperty> properties
+  ) {
+    for (FormProperty property : properties) {
+      if (formFieldName.equals(property.getName())) {
+        return property;
+      }
+    }
+    return null;
+  }
 }

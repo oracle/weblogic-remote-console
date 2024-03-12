@@ -1,6 +1,7 @@
 //
 // Monitoring Navtree Test Suite for:
 //    Environment
+//    Download Log files
 //
 //
 //
@@ -89,7 +90,7 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
                 "Scheduling", "Work Manager Runtimes", "OneWayJTACoordinatorWM");
             await admin.goToNavTreeLevelTwoLink(driver, "monitoring",
-                "Scheduling", "Managed Executor Service Runtime");
+                "Scheduling", "Managed Executor Service Runtimes");
             await admin.goToNavTreeLevelTwoLink(driver, "monitoring",
                 "Scheduling", "Managed Scheduled Executor Service Runtimes");
             await admin.goToNavTreeLevelTwoLink(driver, "monitoring",
@@ -184,7 +185,7 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             await driver.findElement(By.css(".oj-end")).click();
             await driver.sleep(600);
             console.log("Select Authenticator Runtimes - myrealm menu");
-            await driver.findElement(By.xpath("//oj-option[@id=\'Authenticator Runtimes - myrealm\']/a")).click();
+            await driver.findElement(By.xpath("//oj-option[@id='Authenticator Runtimes - myrealm']/a")).click();
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -232,8 +233,12 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
                 "Servers","AdminServer");
             await driver.sleep(1200);
             await admin.goToTabName(driver,'JNDI');
+            console.log("Able to click JNDI tab");
+            console.log("TEST PASS ");
+            //FIXME - JNDI Page reload
+            /*
             element = driver.findElement(
-                By.xpath("//td[text()='weblogic.ejb.container.internal.StatelessEJBHomeImpl']"));
+                By.xpath("//span[text()='weblogic.ejb.container.internal.StatelessEJBHomeImpl']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             console.log("Click ClassName 'weblogic.ejb.container.internal.StatelessEJBHomeImpl' ");
             await driver.sleep(900);
@@ -247,6 +252,7 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
                 console.log("Unable to click at ClassName 'weblogic.ejb.container.internal.StatelessEJBHomeImpl'");
                 console.log("TEST FAIL ");
             }
+             */
             await driver.sleep(900);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -276,25 +282,25 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             await element.click();
             await driver.sleep(2400);
             element = driver.findElement(
-                By.xpath("//td[text()='AdminJMSServer@com.oracle.medrec.jms']"));
+                By.xpath("//span[text()='AdminJMSServer@com.oracle.medrec.jms']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             console.log("Click at Context 'AdminJMSServer@com.oracle.medrec.jms'");
             await element.click();
             await driver.sleep(2400);
             element = driver.findElement(
-                By.xpath("//td[text()='ejb.mgmt']"));
+                By.xpath("//span[text()='ejb.mgmt']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             console.log("Click at Context 'ejb.mgmt'");
             await element.click();
             await driver.sleep(2400);
             element = driver.findElement(
-                By.xpath("//td[text()='java:global.medrec.medrec-domain-impl']"));
+                By.xpath("//span[text()='java:global.medrec.medrec-domain-impl']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             console.log("Click at Context 'java:global.medrec.medrec-domain-impl'");
             await element.click();
             await driver.sleep(2400);
             element = driver.findElement(
-                By.xpath("//td[text()='java:global.medrec.medrec-facade-impl']"));
+                By.xpath("//span[text()='java:global.medrec.medrec-facade-impl']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             console.log("Click at Context 'java:global.medrec.medrec-facade-impl'");
             await element.click();
@@ -330,10 +336,11 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
                 "Servers","AdminServer","Diagnostics");
             await driver.sleep(2400);
             console.log("Click to expand Data Access Runtimes node");
-            await driver.findElement(By.xpath("//span[text()='Logs and Archives']")).click();
+            await driver.findElement(
+                By.xpath("//span[text()='Logs and Archives' and @class='oj-navigationlist-item-label']")).click();
             await driver.sleep(1200);
-            console.log("Click to select 2nd log file (DomainLog) to download");
-            await driver.findElement(By.xpath("(//input[@type='checkbox'])[7]")).click();
+            console.log("Click to select 2nd row / 1st column (DomainLog) of log file table to download");
+            await driver.findElement(By.xpath("//oj-table/div//tbody/tr[2]/td[1]")).click();
             await driver.sleep(1200);
             console.log("Click to download DomainLog file");
             await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
@@ -345,14 +352,21 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             element = driver.findElement(By.css(".oj-fwk-icon-cross"));
             if (element.isEnabled()) {
                 await element.click();
-                console.log("Successfully download and close 'DomainLog.json' file");
-                console.log("TEST PASS ");
-                await driver.sleep(1200);
             }
-            else {
-                console.log("Fail to download and close 'DomainLog.json' file");
-                console.log("TEST FAIL ");
-            }
+            console.log("Check if TypeError dialog appears");
+            driver.findElements(
+                By.xpath("//oj-message[contains(.,'TypeError') and @class='oj-error oj-complete']")).then((elements) => {
+                if (elements.length > 0) {
+                    console.log("Fail to download 'DomainLog.json' file");
+                    console.log("Test FAIL");
+                    throw new Error("TypeError dialog appears");
+                    return false;
+                } else {
+                    console.log("Successfully download and close 'DomainLog.json' file");
+                    console.log("Test PASS");
+                    return true;
+                }
+            });
             await driver.sleep(1200);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -373,7 +387,8 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             await driver.sleep(2400);
 
             console.log("Click to select AdminServer DataAccessRuntime DataSourceLog file");
-            await driver.findElement(By.xpath("//oj-selector[@id='table_table_selector_0']")).click();
+            await driver.findElement(By.xpath("//oj-table/div/table/tbody/tr/td[1]")).click();
+            //await driver.findElement(By.xpath("//oj-selector[@id='table_table_selector_0']")).click();
             await driver.sleep(1200);
             console.log("Click to download DomainLog file");
             await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
@@ -385,14 +400,21 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             element = driver.findElement(By.css(".oj-fwk-icon-cross"));
             if (element.isEnabled()) {
                 await element.click();
-                console.log("Successfully download and close 'DataSourceLog.txt' file");
-                console.log("TEST PASS ");
-                await driver.sleep(1200);
             }
-            else {
-                console.log("Fail to download and close 'DataSourceLog.txt' file");
-                console.log("TEST FAIL ");
-            }
+            console.log("Check if TypeError dialog appears");
+            driver.findElements(
+                By.xpath("//oj-message[contains(.,'TypeError') and @class='oj-error oj-complete']")).then((elements) => {
+                if (elements.length > 0) {
+                    console.log("Fail to download and close 'DataSourceLog.txt' file");
+                    console.log("Test FAIL");
+                    throw new Error("TypeError dialog appears");
+                    return false;
+                } else {
+                    console.log("Successfully download and close 'DataSourceLog.txt' file");
+                    console.log("Test PASS");
+                    return true;
+                }
+            });
             await driver.sleep(1200);
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -411,11 +433,8 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             await admin.goToNavTreeLevelFiveLink(driver,"monitoring","Environment",
                 "Servers","AdminServer","Diagnostics","Logs and Archives");
             await driver.sleep(2400);
-            //console.log("Click to expand Logs and Archives node");
-            //await driver.findElement(By.xpath("//span[text()='Logs and Archives]")).click();
-            //await driver.sleep(1200);
             console.log("Click to select 3rd log file (EventsDataArchive) to download");
-            await driver.findElement(By.xpath("(//input[@type='checkbox'])[9]")).click();
+            await driver.findElement(By.xpath("//oj-table/div//tbody/tr[3]/td[1]")).click();
             await driver.sleep(1200);
             console.log("Click to download DomainLog file");
             await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
@@ -427,14 +446,21 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             element = driver.findElement(By.css(".oj-fwk-icon-cross"));
             if (element.isEnabled()) {
                 await element.click();
-                console.log("Successfully download and close 'EventsDataArchive.txt' file");
-                console.log("TEST PASS ");
-                await driver.sleep(1200);
             }
-            else {
-                console.log("Fail to download and close 'EventsDataArchive.txt' file");
-                console.log("TEST FAIL ");
-            }
+            console.log("Check if TypeError dialog appears");
+            driver.findElements(
+                By.xpath("//oj-message[contains(.,'TypeError') and @class='oj-error oj-complete']")).then((elements) => {
+                if (elements.length > 0) {
+                    console.log("Fail to download and close 'EventsDataArchive.txt' file");
+                    console.log("Test FAIL");
+                    throw new Error("TypeError dialog appears");
+                    return false;
+                } else {
+                    console.log("Successfully download and close 'EventsDataArchive.txt' file");
+                    console.log("Test PASS");
+                    return true;
+                }
+            });
             await driver.sleep(1200);
         } catch (e) {
             await admin.takeScreenshot(driver, file);

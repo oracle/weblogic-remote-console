@@ -1,13 +1,36 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/ataglance/ataglance-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojmodule-element', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
-  function(oj, ko, ModuleElementUtils, PerspectiveMemoryManager, Runtime, AtAGlanceManager, ViewModelUtils, CoreTypes, CoreUtils) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojmodule-element-utils',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/microservices/ataglance/ataglance-manager',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/types',
+  'wrc-frontend/core/utils',
+  'ojs/ojmodule-element',
+  'ojs/ojknockout',
+  'ojs/ojnavigationlist'
+],
+  function(
+    oj,
+    ko,
+    ModuleElementUtils,
+    PerspectiveMemoryManager,
+    Runtime,
+    AtAGlanceManager,
+    ViewModelUtils,
+    CoreTypes,
+    CoreUtils
+  ) {
     function ContentAreaAncillaryContent(viewParams){
       const self = this;
 
@@ -18,11 +41,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
         PROVIDER_MANAGEMENT: {name: 'provider-management'},
         TIPS: {name: 'tips'}
       });
-      const tabFromName = (name) => {return Object.values(Tabs).find(tab => tab.name === name); }
+      const tabFromName = (name) => {return Object.values(Tabs).find(tab => tab.name === name); };
 
       this.tabModuleConfig = ko.observable({ view: [], viewModel: null });
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory('ancillary');
-      this.selectedItem = {id: ko.observable(''), state: 'closed', source: null};
+      this.selectedItem = {id: ko.observable(''), state: 'closed', source: null, options: {}};
 
       // Declare module-scoped variable for storing
       // bindings to "add" signal handlers.
@@ -46,9 +69,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
                 parentRouter: viewParams.parentRouter,
                 signaling: viewParams.signaling,
                 cachedState: this.perspectiveMemory.tabstrip.tab[newValue].cachedState,
+                options: this.selectedItem.options,
                 canExitCallback: this.canExitCallback,
                 onCachedStateChanged: changeTabModuleTabCachedState,
-                onClose: closeAncillaryContentItem
+                onClose: closeAncillaryContentItem,
+                onUnhide: openAncillaryContentItem
                 }
               })
                 .then(moduleConfig => {
@@ -56,30 +81,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
                   // knockout observable.
                   this.tabModuleConfig(moduleConfig);
 
-/*
-//MLW
-                  const onTimeout = (newValue, moduleConfig, tabstrip) => {
-                    if (CoreUtils.isNotUndefinedNorNull(tabstrip.tab[newValue]) &&
-                      CoreUtils.isNotUndefinedNorNull(tabstrip.tab[newValue].cachedState) &&
-                      (Object.keys(tabstrip.tab[newValue].cachedState).length > 0)
-                    ) {
-                      moduleConfig.viewModel.setCachedState(tabstrip.tab[newValue].cachedState);
-                    }
+                  const onTimeout = (newValue, options) => {
                     setDataSelectedItem(newValue);
-                    openAncillaryContentItem();
-                  };
-*/
-
-                  const onTimeout = (newValue, source) => {
-                    setDataSelectedItem(newValue);
-                    openAncillaryContentItem();
+                    openAncillaryContentItem(options);
                   };
 
                   // Call setTimeout passing in the callback function and the
                   // timeout milliseconds. Here, we use the bind() method to
                   // pass parameters to the callback.
-//MLW                  setTimeout(onTimeout.bind(undefined, newValue, moduleConfig, self.perspectiveMemory.tabstrip), 5);
-                  setTimeout(onTimeout.bind(undefined, newValue, this.selectedItem.source), 5);
+                  setTimeout(onTimeout.bind(undefined, newValue, this.selectedItem.options), 5);
                   // DON'T PUT ANY CODE IN THIS FUNCTION AFTER THIS POINT !!!
                 });
           }
@@ -91,10 +101,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
         // this module. In fact, the code for the add needs to
         // be moved here physically.
 
-        let binding = viewParams.signaling.ancillaryContentItemSelected.add((source, itemId) => {
+        let binding = viewParams.signaling.ancillaryContentItemSelected.add((source, itemId, options = {}) => {
           const tab = tabFromName(itemId);
 
           if (CoreUtils.isNotUndefinedNorNull(tab)) {
+            if (Object.keys(options).length > 0) self.selectedItem.options = options;
+
             if (source === 'perform-login') {
               // When login action is the source, update the list of dataproviders as well as
               // handling the tabstrip visibility. Note that use of dataProviderSelected will
@@ -134,11 +146,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
               closeAncillaryContentItem();
             }
             else {
+              if (Object.keys(options).length > 0) self.selectedItem.options = options;
               // Means this is not the first ancillary content item
               // being accessed, and tab.name is the same one already
               // loaded in a moduleConfig, and the state is either
               // "closed" or "hidden".
-              openAncillaryContentItem();
+              openAncillaryContentItem(options);
             }
           }
 
@@ -158,7 +171,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.navtreeSelectionChanged.add((source, node) => {
+        binding = viewParams.signaling.navtreeSelectionChanged.add((source, node, beanTree) => {
           closeAncillaryContentItem();
         });
 
@@ -170,14 +183,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
         });
 
         self.signalBindings.push(binding);
-/*
-//MLW
-        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
-          closeAncillaryContentItem();
-        });
 
-        self.signalBindings.push(binding);
-*/
         binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
           self.canExitCallback = exitFormCallback;
         });
@@ -208,15 +214,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/mi
 
       }.bind(this);
 
-      function openAncillaryContentItem() {
-        self.selectedItem.state = 'opened';
-        viewParams.signaling.ancillaryContentItemToggled.dispatch('ancillary-content', {id: self.selectedItem.id(), state: self.selectedItem.state});
+      function openAncillaryContentItem(options = {stealthEnabled: false}) {
+        if (!options.stealthEnabled) {
+          self.selectedItem.state = 'opened';
+          viewParams.signaling.ancillaryContentItemToggled.dispatch('ancillary-content', {id: self.selectedItem.id(), state: self.selectedItem.state}, options);
+        }
       }
 
       function closeAncillaryContentItem() {
         if (self.selectedItem.id() !== '') {
           self.selectedItem.state = 'closed';
-          viewParams.signaling.ancillaryContentItemToggled.dispatch('ancillary-content', {id: self.selectedItem.id(), state: self.selectedItem.state});
+          viewParams.signaling.ancillaryContentItemToggled.dispatch('ancillary-content', {id: self.selectedItem.id(), state: self.selectedItem.state}, {});
         }
       }
 

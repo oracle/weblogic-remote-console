@@ -21,6 +21,7 @@ public class PageActionDefSource {
   private StringValue label = new StringValue();
   private Rows rows = Rows.multiple;
   private ListValue<PageActionDefSource> actions = new ListValue<>();
+  private ListValue<String> requiredCapabilities = new ListValue<>();
 
   // The name of the action (i.e. in the urls, PDJs and RDJs)
   public String getName() {
@@ -64,5 +65,14 @@ public class PageActionDefSource {
 
   public void addAction(PageActionDefSource value) {
     actions.add(value);
+  }
+
+  // The bean repo capabilities that are required for this action to be present
+  public List<String> getRequiredCapabilities() {
+    return requiredCapabilities.getValue();
+  }
+  
+  public void setRequiredCapabilities(List<String> val) {
+    requiredCapabilities.setValue(val);
   }
 }

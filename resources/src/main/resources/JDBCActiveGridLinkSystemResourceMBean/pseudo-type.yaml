@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 name: weblogic.management.configuration.JDBCActiveGridLinkSystemResourceMBean
 baseType: weblogic.management.configuration.JDBCSystemResourceMBean
@@ -7,17 +7,6 @@ exclude:
 - JDBCResource.JDBCDataSourceParams.FailoverRequestIfBusy
 - JDBCResource.JDBCDataSourceParams.ConnectionPoolFailoverCallbackHandler
 - JDBCResource.JDBCDataSourceParams.DataSourceList
-- JDBCResource.JDBCDriverParams.UseXaDataSourceInterface
-- JDBCResource.JDBCXAParams.XaSetTransactionTimeout
-- JDBCResource.JDBCXAParams.XaTransactionTimeout
-- JDBCResource.JDBCXAParams.XaRetryDurationSeconds
-- JDBCResource.JDBCXAParams.XaRetryIntervalSeconds
-- JDBCResource.JDBCXAParams.KeepXaConnTillTxComplete
-- JDBCResource.JDBCDataSourceParams.KeepConnAfterGlobalTx
-- JDBCResource.JDBCXAParams.NeedTxCtxOnClose
-- JDBCResource.JDBCXAParams.KeepLogicalConnOpenOnRelease
-- JDBCResource.JDBCXAParams.ResourceHealthMonitoring
-- JDBCResource.JDBCXAParams.RecoverOnlyOnce
 - JDBCResource.JDBCXAParams.JDBCXADebugLevel
 - JDBCResource.JDBCDataSourceParams.ProxySwitchingProperties
 - JDBCResource.JDBCDataSourceParams.ProxySwitchingCallback

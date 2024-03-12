@@ -15,6 +15,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
+import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.providers.AdminServerDataProvider;
 
 /**
@@ -25,10 +26,6 @@ public class SsoTokenManager {
   private static final Logger LOGGER = Logger.getLogger(SsoTokenManager.class.getName());
   private static final int SEED_SIZE = 16;
   private static final int NONCE_SIZE = 8;
-
-  // Default SSO timer settings that align with application.yaml
-  public static final long DEFAULT_SSO_TIMER_SECONDS = 30L;
-  public static final long DEFAULT_SSO_TIMEOUT_SECONDS = 300L;
 
   private SecureRandom nonceGenerator = null;
   private volatile Timer ssoTimer = null;
@@ -56,15 +53,11 @@ public class SsoTokenManager {
   }
 
   private long getSSOTimerMillis() {
-    return ConsoleBackendRuntime.INSTANCE.getConfig()
-        .get("ssoTimerSeconds").asLong()
-        .orElse(DEFAULT_SSO_TIMER_SECONDS) * 1000L;
+    return ConsoleBackendRuntimeConfig.getSsoTimerSeconds() * 1000L;
   }
 
   private long getSSOTimeoutMillis() {
-    return ConsoleBackendRuntime.INSTANCE.getConfig()
-        .get("ssoTimeoutSeconds").asLong()
-        .orElse(DEFAULT_SSO_TIMEOUT_SECONDS) * 1000L;
+    return ConsoleBackendRuntimeConfig.getSsoTimeoutSeconds() * 1000L;
   }
 
   /**

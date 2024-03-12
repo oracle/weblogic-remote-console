@@ -1,29 +1,272 @@
 define({
   "wrc-header": {
     "text": {
-      "appName": "WebLogic 遠端主控台"
+      "appName": "WebLogic Remote Console"
     },
     "icons": {
-      "connectivity": {
-        "online": {
-          "tooltip": "線上"
+      "navtree": {
+        "toggler": {
+          "tooltip": "切換導覽樹狀結構可見性"
+        }
+      },
+      "theme": {
+        "tooltip": "Switch theme"
+      },
+      "whatsNew": {
+        "tooltip": "What's New!"
+      },
+      "howDoI": {
+        "tooltip": "Open \"How Do I ...?\" Tasks"
+      },
+      "tips": {
+        "tooltip": "Toggle User Tips visibility"
+      },
+      "help": {
+        "tooltip": "開啟 WebLogic Remote Console 內部文件"
+      },
+      "profile": {
+        "tooltip": "Profile"
+      }
+    },
+    "menus": {
+      "messageCenter": {
+        "value": "開啟訊息中心"
+      },
+      "theme": {
+        "light": {
+          "value": "Light"
         },
-        "offline": {
-          "tooltip": "離線"
-        },
-        "detached": {
-          "tooltip": "已取消連附"
-        },
-        "unattached": {
-          "tooltip": "已取消附加"
+        "dark": {
+          "value": "Dark"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "著作權所有 Â© 2020，2022，Oracle 和 (或) 其關係企業。<br/>Oracle 是 Oracle Corporation 和 (或) 其關係企業的註冊商標。其他名稱為各商標持有人所擁有之商標。<br/>",
+      "copyrightLegal": "著作權所有 (c) 2020，2024，Oracle 和 (或) 其關係企業。<br/>Oracle (r)、Java、MySQL 和 NetSuite 是 Oracle 和 (或) 其關係企業的註冊商標。其他名稱為各商標持有人所擁有之商標。<br/>",
       "builtWith": "使用 Oracle JET 建置"
+    }
+  },
+  "wrc-connectivity": {
+    "labels": {
+      "insecure": {
+        "value": "不安全"
+      }
+    },
+    "icons": {
+      "insecure": {
+        "tooltip": "管理伺服器連線不安全"
+      }
+    }
+  },
+  "wrc-app-profile": {
+    "icons": {
+      "profile": {
+        "popup": {
+          "launcher": {
+            "tooltip": "Show Profiles List"
+          }
+        },
+        "dialog": {
+          "launcher": {
+            "tooltip": "管理設定檔"
+          },
+          "editor": {
+            "tooltip": "Profile Editor",
+            "toolbar": {
+              "save": {
+                "tooltip": "儲存設定檔"
+              },
+              "activate": {
+                "tooltip": "Active Profile"
+              },
+              "add": {
+                "tooltip": "新增設定檔"
+              },
+              "remove": {
+                "tooltip": "刪除設定檔"
+              }
+            }
+          }
+        },
+        "image": {
+          "tooltip": "Profile",
+          "capture": {
+            "tooltip": "Add or change image"
+          }
+        }
+      }
+    },
+    "tabstrip": {
+      "tabs": {
+        "general": {
+          "value": "一般"
+        },
+        "settings": {
+          "value": "設定值"
+        },
+        "preferences": {
+          "value": "偏好設定"
+        },
+        "properties": {
+          "value": "特性"
+        }
+      }
+    },
+    "dialog": {
+      "changeImage": {
+        "value": "變更影像"
+      },
+      "clearImage": {
+        "value": "Clear Image"
+      },
+      "profile": {
+        "default": {
+          "value": "預設設定檔"
+        },
+        "toggler": {
+          "editor": {
+            "show": {
+              "value": "Show Profile Editor"
+            },
+            "hide": {
+              "value": "Hide Profile Editor"
+            }
+          }
+        }
+      }
+    },
+    "popup": {
+      "profile": {
+        "manager": {
+          "open": {
+            "value": "Open Profile Manager"
+          },
+          "signout": {
+            "value": "登出"
+          }
+        }
+      }
+    },
+    "labels": {
+      "profile": {
+        "fields": {
+          "id": {
+            "value": "設定檔 ID"
+          },
+          "organization": {
+            "value": "Organization"
+          },
+          "name": {
+            "value": "名稱"
+          },
+          "email": {
+            "value": "Email"
+          },
+          "role": {
+            "default": {
+              "value": "Use as Default Profile"
+            }
+          },
+          "settings": {
+            "useCredentialStorage": {
+              "value": "要儲存專案的加密證明資料嗎？"
+            },
+            "disableHNV": {
+              "value": "要停用主機名稱驗證嗎？"
+            },
+            "proxyAddress": {
+              "value": "代理主機位址"
+            },
+            "trustStoreType": {
+              "value": "信任存放區類型"
+            },
+            "trustStorePath": {
+              "value": "信任存放區路徑"
+            },
+            "trustStoreKey": {
+              "value": "信任存放區金鑰"
+            },
+            "connectionTimeout": {
+              "value": "管理伺服器連線逾時"
+            },
+            "readTimeout": {
+              "value": "管理伺服器讀取逾時"
+            }
+          },
+          "preferences": {
+            "theme": {
+              "value": "Theme"
+            },
+            "startupTaskChooserType": {
+              "value": "Startup Task Chooser Type"
+            },
+            "useMenusAsRootNodes": {
+              "value": "Use Tree Menus as the root level of Tree Navigators?"
+            },
+            "onQuit": {
+              "value": "Allow unsaved changes to prevent exiting application?"
+            },
+            "onDelete": {
+              "value": "Confirm all deletions?"
+            },
+            "onActionNotAllowed": {
+              "value": "Use \"Action Not Allowed\" popup to prevent data loss?"
+            },
+            "onUnsavedChangesDetected": {
+              "value": "Use \"Unsaved Changes Detected\" popup to prevent data loss?"
+            },
+            "onChangesNotDownloaded": {
+              "value": "Use \"Changes Not Download\" popup to prevent data loss?"
+            }
+          },
+          "properties": {
+            "javaSystemProperties": {
+              "value": "Java System Properties"
+            }
+          }
+        },
+        "legalValues": {
+          "themeOptions": {
+            "light": {
+              "value": "Light"
+            },
+            "dark": {
+              "value": "Dark"
+            }
+          },
+          "taskChooserTypeOptions": {
+            "useDialog": {
+              "value": "Use Dialog"
+            },
+            "useCards": {
+              "value": "Use Cards"
+            }
+          },
+          "trustStoreTypeOptions": {
+            "jks": {
+              "value": "JKS"
+            },
+            "pkcs12": {
+              "value": "PKCS12"
+            },
+            "windowsRoot": {
+              "value": "Windows ROOT"
+            },
+            "keyChainStore": {
+              "value": "Key Chain Store"
+            }
+          }
+        },
+        "messages": {
+          "save": {
+            "succeeded": {
+              "summary": "Profile \"{0}\" was saved successfully!"
+            }
+          }
+        }
+      }
     }
   },
   "wrc-data-providers": {
@@ -35,7 +278,7 @@ define({
         "tooltip": "管理"
       },
       "deactivate": {
-        "tooltip": "Deactivate"
+        "tooltip": "停用"
       },
       "delete": {
         "tooltip": "移除"
@@ -51,6 +294,9 @@ define({
         },
         "url": {
           "value": "URL"
+        },
+        "proxyOverride": {
+          "value": "代理主機覆寫"
         },
         "username": {
           "value": "使用者名稱"
@@ -110,6 +356,11 @@ define({
     },
     "popups": {
       "info": {
+        "project": {
+          "name": {
+            "label": "專案名稱："
+          }
+        },
         "provider": {
           "id": {
             "label": "提供者 ID："
@@ -122,11 +373,17 @@ define({
           "url": {
             "label": "網域 URL："
           },
+          "proxyOverride": {
+            "label": "代理主機覆寫："
+          },
           "version": {
             "label": "網域版本："
           },
           "username": {
             "label": "使用者名稱："
+          },
+          "sso": {
+            "label": "SSO："
           },
           "roles": {
             "label": "角色："
@@ -136,6 +393,9 @@ define({
           },
           "readTimeout": {
             "label": "讀取逾時："
+          },
+          "insecure": {
+            "label": "不安全："
           },
           "anyAttempt": {
             "label": "嘗試的任何連線："
@@ -278,6 +538,9 @@ define({
         "startup": {
           "value": "您想要執行哪個啟動作業？"
         }
+      },
+      "project-busy": {
+        "value": "在對專案的任何部分進行變更之前，請先儲存或放棄未儲存的變更"
       }
     },
     "titles": {
@@ -331,6 +594,9 @@ define({
         "task": {
           "value": "啟動作業"
         }
+      },
+      "project-busy": {
+        "value": "專案忙碌"
       }
     },
     "messages": {
@@ -382,6 +648,11 @@ define({
           "detail": "若要選取 WDT 複合項目，請先選取 WDT 複合項目使用的所有 WDT 模型。"
         }
       },
+      "sso": {
+        "secureContextRequired": {
+          "detail": "The URL must specify the HTTPS protocol or use localhost"
+        }
+      },
       "correctiveAction": {
         "filePathNotFound": {
           "detail": "<p>請編輯檔案名稱欄位中的路徑，然後按一下「確定」按鈕。或者，按一下上傳圖示並選擇其他檔案。</p>"
@@ -400,12 +671,20 @@ define({
     },
     "prompts": {
       "info": {
-        "fileNotSet": "未設定"
+        "fileNotSet": {
+          "value": "未設定"
+        }
       }
     },
     "checkboxes": {
       "useSparseTemplate": {
         "label": "使用稀疏樣板"
+      },
+      "usesso": {
+        "label": "Use Web Authentication"
+      },
+      "insecure": {
+        "label": "進行非安全連線"
       }
     }
   },
@@ -421,7 +700,7 @@ define({
         "tooltip": "監督樹狀結構"
       },
       "security": {
-        "tooltip": "Security Data Tree"
+        "tooltip": "安全資料樹狀結構"
       },
       "modeling": {
         "tooltip": "WDT 模型"
@@ -434,13 +713,25 @@ define({
       }
     }
   },
+  "wrc-navigation": {
+    "navstrip": {
+      "ariaLabel": {
+        "value": "導覽帶"
+      }
+    },
+    "navtree": {
+      "ariaLabel": {
+        "value": "導覽樹狀結構"
+      }
+    }
+  },
   "wrc-content-area-header": {
     "title": {
       "home": "首頁",
       "configuration": "編輯樹狀結構",
       "view": "組態檢視樹狀結構",
       "monitoring": "監督樹狀結構",
-      "security": "Security Data Tree",
+      "security": "安全資料樹狀結構",
       "modeling": "WDT 模型",
       "composite": "WDT 複合模型",
       "properties": "特性清單"
@@ -449,9 +740,6 @@ define({
       "buttons": {
         "home": {
           "label": "首頁"
-        },
-        "preferences": {
-          "label": "偏好設定"
         }
       }
     }
@@ -466,13 +754,107 @@ define({
           "label": "快速瀏覽"
         },
         "projectmanagement": {
-          "label": "提供者管理"
+          "label": "Providers"
+        },
+        "tips": {
+          "label": "使用者提示"
+        },
+        "dashboards": {
+          "label": "儀表板"
         }
       }
     },
-    "icons": {
-      "kiosk": {
-        "tooltip": "資訊小站"
+    "popups": {
+      "tips": {
+        "title": "Filter Tips",
+        "checkboxes": {
+          "hideall": "Hide All Tips",
+          "productivity": "Show Productivity Tips",
+          "personalization": "Show Personalization Tips",
+          "whereis": "Show Where Is... Tips",
+          "accessibility": "Show Accessibility Tips",
+          "connectivity": "Show Connectivity Tips",
+          "security": "Show Security Tips",
+          "other": "Show Other Tips"
+        }
+      }
+    },
+    "tips": {
+      "labels": {
+        "hideall": {
+          "value": "全部隱藏"
+        },
+        "productivity": {
+          "value": "Productivity"
+        },
+        "personalization": {
+          "value": "Personalization"
+        },
+        "whereis": {
+          "value": "Where Is ..."
+        },
+        "accessibility": {
+          "value": "Accessibility"
+        },
+        "connectivity": {
+          "value": "Connectivity"
+        },
+        "security": {
+          "value": "安全"
+        },
+        "other": {
+          "value": "Other"
+        }
+      },
+      "cards": {
+        "tip0": {
+          "title": "Think \"Search\" Before You Click!",
+          "descriptionHTML": "<p>Finding what you want in one of the provider's Trees, can involve a lot of clicking and scrolling. The <b><i>Search</i></b> field (located at the top of the app), lets you avoid having to do that!</p><p>Even better, clicking on an item in the generated search results, auto-expands the provider Tree to show you where the item is.</p>"
+        },
+        "tip1": {
+          "title": "\"Dashboards\" Are a User's Best Friend",
+          "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you''re on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+        },
+        "tip2": {
+          "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
+          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+        },
+        "tip3": {
+          "title": "Using the Keyboard With Tables and Actions",
+          "descriptionHTML": "<p></p>"
+        },
+        "tip4": {
+          "title": "Where is the \"Customize this table\" Link?",
+          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+        },
+        "tip5": {
+          "title": "Where is the \"Change Center\" Portlet?",
+          "descriptionHTML": "<p>The \"Change Center\" porlet has been replaced with the <i>Shopping Cart Drawer</i>, which has launcher icon in the iconbar when the \"Configuration Tree\" is selected.</p>"
+        },
+        "tip6": {
+          "title": "Where is the \"How Do I\" Portlet?",
+          "descriptionHTML": "<p></p>"
+        },
+        "tip7": {
+          "title": "Other Tip #1",
+          "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip8": {
+          "title": "Trouble Creating an Admin Server Provider?",
+          "descriptionHTML": "<p>The <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Reference -> Troubleshooting</a> section in the WebLogic Remote Console documentation, covers how to resolve connectivity issues caused by environment and network settings.</p><p>If trying those don't lead to a resolution, please post a message to the <b>@weblogic-remote-console</b> slack channel. Screenshots often provide context that aids in issue diagnosis, so include them in the post when possible.</p>"
+        },
+        "tip9": {
+          "title": "Connectivity Tip #2",
+          "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip10": {
+          "title": "Security Tip #1",
+          "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip11": {
+          "title": "Think \"Shortcut Keys\" Before You Press Tab!",
+          "descriptionHTML": "<p>\"Shortcut\" (or accelerator) keys allow you to move the focus directly to an area, instead of sighing while repeatedly pressing the <b>Tab</b> and <b>Shift+Tab</b> keys!</p><p>Here's 5 to try out:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Opens the <i>Providers Drawer</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the <i>Provider Tree</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a table, more precisely the first column header.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the gripper of the Tree width-resizer. Afterwards, use the <code><b>RightArrow</b></code> and <code><b>LeftArrow</b></code> keys to increase or decrease the width of the Tree.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a breadcrumb that is a <i>cross-link</i> (if present), or the first clickable breadcrumb label.</li></ul><p>Check out the documentation to see a complete list of the shortcut keys!</p>"
+        }
       }
     }
   },
@@ -480,26 +862,16 @@ define({
     "icons": {
       "history": {
         "tooltip": "歷史記錄"
+      },
+      "separator": {
+        "tooltip": "分隔符號"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "清除歷史記錄"
-        }
-      }
-    }
-  },
-  "wrc-monitoring": {
-    "icons": {
-      "history": {
-        "tooltip": "歷史記錄"
-      }
-    },
-    "menus": {
-      "history": {
-        "clear": {
-          "value": "清除歷史記錄"
+          "value": "清除歷史記錄項目",
+          "label": "清除歷史記錄項目"
         }
       }
     }
@@ -525,7 +897,10 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "配置庫"
+          "label": "樹狀結構"
+        },
+        "startup-tasks": {
+          "label": "Startup Tasks"
         }
       }
     }
@@ -534,31 +909,63 @@ define({
     "cards": {
       "configuration": {
         "label": "編輯樹狀結構",
-        "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
+        "description": "<p>維護目前所使用 WebLogic 網域的組態。</p>"
       },
       "view": {
         "label": "組態檢視樹狀結構",
-        "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
+        "description": "<p>檢查目前所使用 WebLogic 網域的唯讀組態。</p>"
       },
       "monitoring": {
         "label": "監督樹狀結構",
-        "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+        "description": "<p>檢視目前所使用 WebLogic 網域中所選資源的執行時期 MBean 資訊。</p>"
       },
       "security": {
-        "label": "Security Data Tree",
-        "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
+        "label": "安全資料樹狀結構",
+        "description": "<p>管理目前所使用 WebLogic 網域中的安全相關資訊 (例如使用者、群組、角色、原則、證明資料等)。</p>"
       },
       "modeling": {
         "label": "WDT 模型樹狀結構",
-        "description": "<p>維護與「WebLogic 部署工具」關聯的模型檔案。</p>"
+        "description": "<p>維護 WebLogic Deploy Tooling 工具的模型檔案。</p>"
       },
       "composite": {
         "label": "WDT 複合模型樹狀結構",
-        "description": "<p>檢視您目前正在使用的 WebLogic 部署工具模型檔案組合。</p>"
+        "description": "<p>檢視您目前正在使用的 WebLogic Deploy Tooling 模型檔案組合。</p>"
       },
       "properties": {
         "label": "特性清單編輯器",
         "description": "<p>可檢視或修改特性清單檔中的一組特性。</p>"
+      }
+    }
+  },
+  "wrc-startup-tasks": {
+    "cards": {
+      "addAdminServer": {
+        "label": "新增管理伺服器連線提供者",
+        "description": "This task creates a project resource that allows you to connect to an Admin Server"
+      },
+      "addWdtModel": {
+        "label": "新增 WDT 模型檔案提供者",
+        "description": "This task creates a project resource that allows you to manage a WDT Model file, existing on your local filesystem"
+      },
+      "addWdtComposite": {
+        "label": "新增 WDT 複合模型檔案提供者",
+        "description": "This task creates a project resource that allows you to manage WDT Model file fragments, existing on your local filesystem"
+      },
+      "addPropertyList": {
+        "label": "新增特性清單提供者",
+        "description": "This task creates a project resource that allows you to manage a .properties file stored on your local filesystem"
+      },
+      "createWdtModel": {
+        "label": "建立新 WDT 模型檔案的提供者",
+        "description": "This task creates a project resource that is a new WDT Model file, stored on your local filesystem"
+      },
+      "createPropertyList": {
+        "label": "建立新特性清單的提供者",
+        "description": "This task creates a project resource that is a new .properties file, stored on your local filesystem"
+      },
+      "importProject": {
+        "label": "匯入專案",
+        "description": "This task loads a previously exported project containing providers immediately ready for you to use or modify"
       }
     }
   },
@@ -654,24 +1061,9 @@ define({
         }
       }
     },
-    "labels": {
-      "start": {
-        "value": "啟動"
-      },
-      "resume": {
-        "value": "繼續"
-      },
-      "suspend": {
-        "value": "暫停"
-      },
-      "shutdown": {
-        "value": "關閉"
-      },
-      "restartSSL": {
-        "value": "重新啟動 SSL"
-      },
-      "stop": {
-        "value": "停止"
+    "prompts": {
+      "download": {
+        "value": "下載的日誌檔位置："
       }
     }
   },
@@ -686,7 +1078,7 @@ define({
         "value": "資料列總數: {0}"
       },
       "reloadHidden": {
-        "value": "Reload the table to view the current {0} values"
+        "value": "重新載入表格以檢視目前的 {0} 值"
       }
     }
   },
@@ -730,6 +1122,9 @@ define({
       },
       "customize": {
         "label": "自訂表格"
+      },
+      "dashboard": {
+        "label": "新建儀表板"
       }
     },
     "icons": {
@@ -789,8 +1184,15 @@ define({
     },
     "messages": {
       "savedTo": {
-        "shoppingcart": "Changes were added to cart!",
-        "customView": "Changes were saved!"
+        "shoppingcart": "已將變更新增至購物車！",
+        "generic": "已儲存變更！",
+        "notSaved": "未偵測到任何變更，因此未儲存任何項目。"
+      },
+      "action": {
+        "notAllowed": {
+          "summary": "不允許此動作",
+          "detail": "在建立作業期間不允許執行要求的動作。按一下「取消」按鈕可取消建立作業。"
+        }
       }
     },
     "icons": {
@@ -813,6 +1215,19 @@ define({
           }
         }
       }
+    },
+    "labels": {
+      "relatedTopics": {
+        "value": "<b>相關主題：</b>"
+      }
+    },
+    "tabs": {
+      "attributes": {
+        "label": "屬性"
+      },
+      "actions": {
+        "label": "動作"
+      }
     }
   },
   "wrc-create-form": {
@@ -823,8 +1238,174 @@ define({
       }
     }
   },
+  "wrc-policy-management": {
+    "menus": {
+      "action": {
+        "addCondition": {
+          "label": "新增條件"
+        },
+        "combine": {
+          "label": "組合"
+        },
+        "uncombine": {
+          "label": "取消組合"
+        },
+        "moveup": {
+          "label": "上移"
+        },
+        "movedown": {
+          "label": "下移"
+        },
+        "remove": {
+          "label": "移除"
+        },
+        "negate": {
+          "label": "否定"
+        },
+        "reset": {
+          "label": "重設"
+        }
+      }
+    },
+    "contextMenus": {
+      "action": {
+        "addCondition": {
+          "at": {
+            "label": "新增第一個條件..."
+          },
+          "above": {
+            "label": "在點選的資料列上方新增條件..."
+          },
+          "below": {
+            "label": "在點選的資料列下方新增條件..."
+          }
+        }
+      }
+    },
+    "buttonMenus": {
+      "action": {
+        "addCondition": {
+          "above": {
+            "label": "在上方新增勾選的條件..."
+          },
+          "below": {
+            "label": "在下方新增勾選的條件..."
+          }
+        }
+      }
+    },
+    "messages": {
+      "requiredFieldsMissing": {
+        "detail": "一或多個必要欄位未包含資料！"
+      },
+      "argumentValueHasWrongFormat": {
+        "summary": "''{0}'' 欄位包含格式不正確的資料！"
+      },
+      "conditionHasNoArgValues": {
+        "summary": "選取的條件沒有可編輯的引數值！"
+      },
+      "conditionAlreadyExists": {
+        "summary": "此安全原則已經有使用所選述詞建立的條件，或是有相符引數值的條件！"
+      }
+    },
+    "instructions": {
+      "policyEditor": {
+        "value": "<p>若要指定新條件的位置，請勾選相關條件旁的核取方塊，然後按一下 <b>+新增條件</b>按鈕。</p>"
+      }
+    }
+  },
+  "wrc-policy-editor": {
+    "labels": {
+      "monthDay": {
+        "value": "範圍：-31 到 31"
+      },
+      "dateTime": {
+        "value": "格式：y-MM-dd HH:mm:ss [HH:mm:ss] (例如 2006-04-25 00:00:00)"
+      },
+      "time": {
+        "value": "格式：HH:mm:ss (例如 14:22:47)"
+      },
+      "gmtOffset": {
+        "value": "格式：GMT+|-h:mm (例如 GMT-5:00)"
+      },
+      "weekDay": {
+        "value": "例如，星期日、星期一、星期二..."
+      },
+      "or": {
+        "value": "或"
+      },
+      "not": {
+        "value": "NOT"
+      },
+      "combination": {
+        "value": "組合"
+      },
+      "nodata": {
+        "Policy": {
+          "value": "使用 <b>+ 新增條件</b>按鈕新增原則條件。"
+        },
+        "DefaultPolicy": {
+          "value": "未定義預設安全原則條件。"
+        }
+      }
+    },
+    "tables": {
+      "policyConditions": {
+        "columns": {
+          "header": {
+            "combination": "組合",
+            "operator": "運算子",
+            "expression": "條件句"
+          }
+        },
+        "dropdowns": {
+          "operator": {
+            "or": "或",
+            "and": "且"
+          }
+        }
+      }
+    },
+    "wizard": {
+      "title": "原則管理",
+      "pages": {
+        "choosePredicate": {
+          "header": {
+            "title": "選擇述詞",
+            "instructions": "從下拉式清單中選擇新條件的述詞。"
+          },
+          "body": {
+            "labels": {
+              "predicateList": "述詞清單"
+            },
+            "help": {
+              "predicateList": "述詞清單是可以用來組成安全原則條件之可用述詞的清單。"
+            }
+          }
+        },
+        "manageArgumentValues": {
+          "header": {
+            "title": "群組述詞",
+            "instructions": "開始在 <i></i> 欄位中輸入以新增引數值或搜尋現有值。按 Enter 鍵即可將輸入的值新增至清單。若要編輯現有引數值，請按一下該值，然後使用彈出式輸入欄位進行修改。"
+          },
+          "body": {
+            "labels": {
+              "conditionPhrase": "條件句",
+              "negate": "否定條件"
+            },
+            "help": {
+              "negate": "將條件轉換成相反的意思 (例如，「等於」會變成「不等於」、「在」會變成「不在」)。"
+            }
+          }
+        }
+      }
+    }
+  },
   "wrc-common": {
     "buttons": {
+      "action": {
+        "label": "動作"
+      },
       "apply": {
         "label": "套用"
       },
@@ -836,6 +1417,9 @@ define({
       },
       "cancel": {
         "label": "取消"
+      },
+      "restart": {
+        "label": "重新啟動"
       },
       "yes": {
         "label": "是"
@@ -866,6 +1450,21 @@ define({
       },
       "savenow": {
         "label": "立即儲存"
+      },
+      "next": {
+        "label": "下一頁"
+      },
+      "previous": {
+        "label": "上一頁"
+      },
+      "finish": {
+        "label": "結束"
+      },
+      "done": {
+        "label": "完成"
+      },
+      "close": {
+        "label": "關閉"
       }
     },
     "tooltips": {
@@ -890,6 +1489,9 @@ define({
       "reset": {
         "value": "重設"
       },
+      "filter": {
+        "value": "篩選"
+      },
       "submit": {
         "value": "送出變更"
       },
@@ -901,6 +1503,33 @@ define({
       },
       "reload": {
         "value": "重新載入檔案"
+      },
+      "delete": {
+        "value": "刪除"
+      },
+      "remove": {
+        "value": "移除"
+      },
+      "noData": {
+        "value": "沒有資料"
+      },
+      "preloader": {
+        "value": "預先載入器"
+      },
+      "checkAll": {
+        "value": "全部勾選"
+      },
+      "checkNone": {
+        "value": "全部取消勾選"
+      },
+      "checkSome": {
+        "value": "清除勾選的項目"
+      },
+      "close": {
+        "value": "關閉"
+      },
+      "recentPages": {
+        "value": "切換歷史記錄可見性"
       }
     },
     "menu": {
@@ -926,6 +1555,51 @@ define({
       "search": {
         "value": "搜尋"
       }
+    },
+    "title": {
+      "incorrectFileContent": {
+        "value": "偵測到不正確的內容"
+      }
+    },
+    "messages": {
+      "incorrectFileContent": {
+        "detail": "''{0}'' 包含 JSON，但不是 {1} 的 JSON 表示法！"
+      },
+      "dataCopiedToClipboard": {
+        "summary": "資料已複製到剪貼簿！"
+      },
+      "tableCopiedToClipboard": {
+        "summary": "Table was successfully copied to the clipboard!"
+      },
+      "emptyCellData": {
+        "detail": "選取的儲存格是空的，因此未將資料複製到剪貼簿！"
+      },
+      "emptyRowData": {
+        "detail": "選取的資料列是空的，因此未將資料複製到剪貼簿！"
+      },
+      "browserPermissionDenied": {
+        "summary": "Browser Permission Denied",
+        "detail": "You need to enable writing to the clipboard from JavaScript, in order to perform this operation. Also, the Clipboard API is only supported for pages served over HTTPS."
+      }
+    },
+    "contextMenus": {
+      "copyData": {
+        "cell": {
+          "label": "將儲存格複製到剪貼簿"
+        },
+        "row": {
+          "label": "複製資料列至剪貼簿"
+        },
+        "tableAsText": {
+          "label": "Copy Table to Clipboard (Text)"
+        },
+        "tableAsJSON": {
+          "label": "Copy Table to Clipboard (JSON)"
+        },
+        "tableAsYAML": {
+          "label": "Copy Table to Clipboard (YAML)"
+        }
+      }
     }
   },
   "wrc-wdt-form": {
@@ -948,7 +1622,7 @@ define({
     },
     "wdtOptionsDialog": {
       "title": "編輯：{0}",
-      "default": "預設值。(未設定)",
+      "default": "取消設定值",
       "instructions": "輸入要新增至可選項目清單中的權杖。",
       "enterValue": "輸入值",
       "selectValue": "選取值",
@@ -962,7 +1636,7 @@ define({
       "enterVariable": "輸入變數",
       "variableName": "變數名稱 (必要)",
       "variableValue": "變數值",
-      "multiSelectUnset": "\"預設值。(從可用的項目清單中選取)\""
+      "multiSelectUnset": "從可用的項目清單中選取值"
     }
   },
   "wrc-unsaved-changes": {
@@ -980,18 +1654,18 @@ define({
           "value": "所有未儲存的變更都將會遺失。要繼續進行嗎？"
         },
         "areYouSure": {
-          "value": "確定要結束但不儲存變更嗎？"
+          "value": "確定要 {0} 而不儲存變更嗎？"
         },
         "saveBeforeExiting": {
-          "value": "Do you want to save changes before exiting?"
+          "value": "要先儲存變更再結束嗎？"
         },
         "needDownloading": {
-          "value": "Your changes have not been download to the file, yet.<br/><br/>Download them before continuing?"
+          "value": "您對 ''{0}'' 的變更尚未下載至檔案。<br/><br/>要先下載變更再繼續嗎？"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "您的新 ''{0}'' 執行處理尚未加到 WDT 模型。<br/><br/>要先將它加到模型後再繼續嗎？"
+          "value": "您的新建 ''{0}'' 執行處理尚未新增至 WDT 模型。<br/><br/>要先新增至模型再繼續嗎？"
         }
       }
     }
@@ -1012,13 +1686,27 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "訊息",
-          "detail": "嘗試對 ''{1}'' 執行指定動作時，主控台後端呼叫產生 ''{0}'' 回應。"
+          "detail": "嘗試執行 ''{1}'' 動作時，主控台後端呼叫產生 ''{0}'' 回應"
+        },
+        "actionNotPerformed": {
+          "detail": "無法在一或多個勾選的項目上執行 ''{0}'' 動作"
+        },
+        "actionSucceeded": {
+          "summary": "''{0}'' 動作已順利執行！"
         }
       }
     },
     "labels": {
       "cannotDetermineExactCause": {
         "value": "無法判斷確切原因。請查看「JavaScript 主控台」以獲取提示。"
+      }
+    }
+  },
+  "wrc-actions-strip": {
+    "dialogs": {
+      "cannotBeUndone": {
+        "title": "動作確認",
+        "prompt": "''{0}'' 動作無法還原！<br/><br/>要繼續進行嗎？"
       }
     }
   },
@@ -1136,10 +1824,10 @@ define({
         "detail": "嘗試失敗："
       },
       "badRequest": {
-        "detail": "無法處理送出的檔案或要求 "
+        "detail": "無法處理送出的檔案或要求"
       },
       "invalidCredentials": {
-        "detail": "WebLogic 網域證明資料無效 "
+        "detail": "WebLogic 網域證明資料無效"
       },
       "invalidUrl": {
         "detail": "無法連線 WebLogic 網域 URL"
@@ -1151,7 +1839,7 @@ define({
         "detail": "不支援 WebLogic 網域"
       },
       "unexpectedStatus": {
-        "detail": "未預期的結果 (狀態：{0}) "
+        "detail": "未預期的結果 (狀態：{0})"
       },
       "cbeRestApi": {
         "requestUnsuccessful": {
@@ -1200,6 +1888,55 @@ define({
       "connectionRefused": {
         "summary": "連線問題",
         "details": "無法傳送資料至提供者及從提供者接收資料！請確定提供者可供存取，然後再試一次。"
+      },
+      "pathNotFound": {
+        "summary": "找不到路徑",
+        "details": "''{0}'' 不是本機檔案系統上可存取的檔案或目錄。"
+      }
+    }
+  },
+  "wrc-message-line": {
+    "menus": {
+      "more": {
+        "clear": {
+          "label": "清除訊息"
+        },
+        "suppress": {
+          "info": {
+            "label": "抑制資訊訊息"
+          },
+          "warning": {
+            "label": "抑制警告訊息"
+          }
+        }
+      }
+    }
+  },
+  "wrc-alerts": {
+    "menus": {
+      "alerts": {
+        "error": {
+          "value": "You have {0} high-priority error {1}"
+        },
+        "warning": {
+          "value": "You have {0} high-priority warning {1}"
+        },
+        "info": {
+          "value": "You have {0} high-priority information {1}"
+        },
+        "view": {
+          "value": "檢視警示"
+        }
+      }
+    },
+    "labels": {
+      "alerts": {
+        "singular": {
+          "value": "alert"
+        },
+        "plural": {
+          "value": "alerts"
+        }
       }
     }
   }

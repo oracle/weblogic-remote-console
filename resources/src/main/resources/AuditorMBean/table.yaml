@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>An Auditing provider collects, stores, and distributes information
@@ -9,10 +9,21 @@ introductionHTML: >
   are required. The default security realm does not include an Auditing
   provider.</p>
 
+customizePageDefMethod: weblogic.remoteconsole.customizers.ProviderMBeanCustomizer.customizeTableDef
+
 displayedColumns:
 - name: "Name"
 - name: "Description"
 - name: "Version"
+actions:
+- name: moveDown
+  rows: one
+  requiredCapabilities:
+  - SecurityProviderReordering
+- name: moveUp
+  rows: one
+  requiredCapabilities:
+  - SecurityProviderReordering
 helpTopics:
 - label: "Configuring Messaging "
   href: "jmsad/basic_config.html"

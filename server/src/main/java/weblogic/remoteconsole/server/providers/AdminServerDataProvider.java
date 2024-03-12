@@ -25,6 +25,8 @@ public interface AdminServerDataProvider extends ConnectionOrientedProvider {
 
   public boolean setSsoToken(String token, String domainUrl, long expires);
 
+  public String getSsoDomainLoginUri();
+
   public long getConnectTimeout();
 
   public long getReadTimeout();

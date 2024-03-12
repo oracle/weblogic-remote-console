@@ -1,10 +1,11 @@
-// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import javax.ws.rs.core.UriBuilder;
 
 /**
@@ -444,5 +445,24 @@ public class StringUtils {
       return null;
     }
     return string.toString().replaceAll("[^A-Za-z0-9_]", " ");
+  }
+
+  /**
+   * get the query param to add to an url for a single string
+   */
+  public static String computeQueryParam(String queryParamName, String value) {
+    return computeQueryParam(queryParamName, List.of(value));
+  }
+
+  /**
+   * get the query param to add to an url for a list of strings
+   */
+  public static String computeQueryParam(String queryParamName, List<String> values) {
+    UriBuilder bldr = UriBuilder.fromPath("");
+    for (String value : values) {
+      bldr.queryParam(queryParamName, value);
+    }
+    String uriStr = bldr.build().toString();
+    return uriStr.substring(uriStr.indexOf("?") + 1);
   }
 }

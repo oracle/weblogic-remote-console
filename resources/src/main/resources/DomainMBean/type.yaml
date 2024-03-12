@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -79,6 +79,14 @@ properties:
 - name: EnableEECompliantClassloadingForEmbeddedAdapters
   offlineName: EnableEeCompliantClassloadingForEmbeddedAdapters
 
+- name: VirtualThreadEnableOption
+  label: Virtual Threads
+  legalValues:
+  - value: disabled
+    label: Disabled
+  - value: enabled
+    label: Enabled
+
 children:
 
 - name: SNMPAgent
@@ -88,6 +96,14 @@ children:
   creatable: true
   asyncCreate: true
   asyncDelete: true
+
+- name: DBClientDataDirectories
+  label: Database Client Data Directories
+  creatable: true
+  asyncCreate: true
+  asyncDelete: true
+  requiredCapabilities:
+  - AdminServerConnection
 
 - name: JDBCSystemResources
   label: Data Sources
@@ -101,3 +117,8 @@ children:
   label: Realms
   requiredCapabilities:
   - RealmsSecurityData
+
+# Remove this once WDT offline support is added:
+- name: HealthScore
+  requiredCapabilities:
+  - AdminServerConnection

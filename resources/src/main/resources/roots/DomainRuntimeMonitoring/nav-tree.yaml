@@ -1,4 +1,4 @@
-# Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - label: Environment
@@ -58,6 +58,8 @@ contents:
     label: Library Runtime Data
   - child: DomainRuntime.DeploymentManager.LibDeploymentRuntimes
     label: Library Management
+  - child: DomainRuntime.DeploymentManager.DBClientDataDeploymentRuntimes
+    label: Database Client Data Management
   - child: DomainRuntime.DeploymentManager.DeploymentProgressObjects
   - child: DomainRuntime.AggregatedWebServerRuntimes
   - label: Web Services

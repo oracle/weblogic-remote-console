@@ -1,23 +1,23 @@
 <!--
-  Copyright (c) 2015, 2022, Oracle and/or its affiliates.
+  Copyright (c) 2015, 2023, Oracle and/or its affiliates.
   Licensed under The Universal Permissive License (UPL), Version 1.0
   as shown at https://oss.oracle.com/licenses/upl/
 
 -->
 <div id="properties-table-container">
   <oj-table
-          id="properties-table"
-          class="cfe-model-properties-table"
-          aria-label="Editable Properties Table"
-          data="[[propertiesDataProvider]]"
-          edit-mode="[[editMode]]"
-          display="grid"
-          horizontal-grid-visible="enabled"
-          vertical-grid-visible="enabled"
-          layout="fixed"
-          columns='[[columnData]]'
-          on-oj-before-row-edit-end="[[onBeforeRowEditEndListener]]"
-          on-oj-animate-end="[[onAnimateEndListener]]"
+    id="properties-table"
+    class="cfe-model-properties-table"
+    aria-label="Editable Properties Table"
+    data="[[propertiesDataProvider]]"
+    edit-mode="[[editMode]]"
+    display="grid"
+    horizontal-grid-visible="enabled"
+    vertical-grid-visible="enabled"
+    layout="fixed"
+    columns='[[columnData]]'
+    on-oj-before-row-edit-end="[[onBeforeRowEditEndListener]]"
+    on-oj-animate-end="[[onAnimateEndListener]]"
   >
     <template slot="rowTemplate" data-oj-as="row">
       <tr data-bind="attr: {'data-uid': row.data.uid}">

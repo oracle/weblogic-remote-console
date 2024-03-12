@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -65,6 +65,20 @@ public class LocalizedConstants {
       "most likely the port should be set to the domain's administration port (which defaults to 9002)"
     );
 
+  // Indicates that the domain isn't properly configured to allow the admin server
+  // to make WebLogic REST requests to servers in the domain.
+  public static final LocalizableString WEBLOGIC_REST_DELEGATION_NOT_WORKING_MESSAGE =
+    addConstant(
+      "weblogicRestDelegationNotWorkingMessage",
+      "The domain is experiencing REST communication issues between servers."
+    );
+
+  public static final LocalizableString WEBLOGIC_REST_DELEGATION_NOT_WORKING_LINK =
+    addConstant(
+      "weblogicRestDelegationNotWorkingLink",
+      "Troubleshoot"
+    );
+
   // Indicates that a WLS domain version isn't one that the remote console supports.
   public static final LocalizableString UNSUPPORTED_DOMAIN_VERSION =
     addConstant(
@@ -100,6 +114,14 @@ public class LocalizedConstants {
       "nullReference",
       "None"
     );
+
+  // A catch-all message for the case where there is no error messages returned from UserBadRequest response.
+  public static final LocalizableString REFER_TO_LOGS =
+      addConstant(
+          "referToLogs",
+          "The cause of the failure is unavailable.  "
+            + "The WebLogic Remote Console and the admin server logs may have more information."
+      );
 
   // Indicates that a required property has not been set (e.g. not specifing a new Server's Name)
   public static final LocalizableString REQUIRED_PROPERTY_NOT_SPECIFIED =
@@ -144,10 +166,22 @@ public class LocalizedConstants {
       "Security Data Tree"
     );
 
+  public static final LocalizableString FILTERING_DASHBOARD_DEFAULT_DESCRIPTION =
+    addConstant(
+      "filteringDashboardDefaultDescription",
+      "Displays all {0} instances in the domain matching this custom filtering dashboard's filters.</p>"
+    );
+
   public static final LocalizableString CUSTOM_FILTERING_DASHBOARD_TYPE_LABEL =
     addConstant(
       "label.customFilteringDashboardType",
       "Custom Filtering Dashboard"
+    );
+
+  public static final LocalizableString BUILTIN_FILTERING_DASHBOARD_TYPE_LABEL =
+    addConstant(
+      "label.builtinFilteringDashboardType",
+      "Builtin Filtering Dashboard"
     );
 
   public static final LocalizableString NEW_CUSTOM_FILTERING_DASHBOARD_LABEL =
@@ -511,6 +545,18 @@ public class LocalizedConstants {
       "The application ''{0}'' already has a deployment plan: ''{1}''"
     );
 
+  public static final LocalizableString APPLICATION_HAS_NO_PLAN =
+      addConstant(
+          "applicationHasNoPlan",
+          "The application ''{0}'' does not have a deployment plan."
+      );
+
+  public static final LocalizableString REFER_TO_DEPLOYMENT_TASKS_DASHBOARD =
+      addConstant(
+          "referToDeploymentTasksDashboard",
+          "Refer to Deployment Tasks dashboard for more information."
+      );
+
   public static final LocalizableString DATA_PROVIDER_HELP_NAME_SUMMARY =
     addConstant(
       "dataProviderHelpNameSummary",
@@ -600,15 +646,14 @@ public class LocalizedConstants {
   public static final LocalizableString ADMIN_SERVER_HELP_SSO_SUMMARY =
     addConstant(
       "adminServerHelpSSOSummary",
-      "Use an alternate authentication mechanism"
+      "Use an alternative authentication method"
     );
 
   public static final LocalizableString ADMIN_SERVER_HELP_SSO_DETAIL =
     addConstant(
       "adminServerHelpSSODetail",
-      "Use the browser to perform an alternate authentication, "
-      + "usually with a Single Sign-On mechanism, "
-      + "and then obtain a token for access to the WebLogic Domain."
+      "Sends users to the browser to complete the login process with an "
+      + "alternative authentication method such as Single Sign On."
     );
 
   public static final LocalizableString WDT_PROVIDER_HELP_FILE_SUMMARY =
@@ -659,6 +704,56 @@ public class LocalizedConstants {
     addConstant(
       "cantShutdownAdminServerAndManagedServers",
       "Shut down the managed servers then shut down the administration server."
+    );
+
+  public static final LocalizableString DATA_SOURCE_TEST_POOL_SUCCESS =
+    addConstant(
+      "dataSourceTestPoolSuccess",
+      "The test of {0} on server {1} was successful."
+    );
+
+  public static final LocalizableString DATA_SOURCE_TEST_POOL_FAILURE =
+    addConstant(
+      "dataSourceTestPoolFailure",
+      "The test of {0} on server {1} failed: {2}"
+    );
+
+  public static final LocalizableString CUSTOM_HOSTNAME_VERIFIER_NOT_SPECIFIED =
+    addConstant(
+      "customHostnameVerifierNotSpecified",
+      "Custom Hostname Verifier must be specified."
+    );
+
+  public static final LocalizableString CANNOT_DELETE_BUILTIN_DASHBOARD =
+    addConstant(
+      "cannotDeleteBuiltintDashboard",
+      "Builtin dashboards cannot be deleted: ''{0}''"
+    );
+
+  public static final LocalizableString CANNOT_MODIFY_BUILTIN_DASHBOARD =
+    addConstant(
+      "cannotModifyBuiltintDashboard",
+      "Builtin dashboards cannot be modified: ''{0}''"
+    );
+
+
+  public static final LocalizableString NODE_MANAGER_LOG_DOWNLOAD_LABEL =
+    addConstant(
+      "nodeManagerLogDownloadLabel",
+      "Download"
+    );
+
+
+  public static final LocalizableString NODE_MANAGER_LOG_NOT_AVAILABLE_LABEL =
+    addConstant(
+      "nodeManagerLogNotAvailableLabel",
+      "Not Available"
+    );
+
+  public static final LocalizableString CONSOLE_REST_EXTENSION_NOT_INSTALLED =
+    addConstant(
+      "consoleRestExtensionNotInstalled",
+      "not installed"
     );
 
   // Returns all of the constants (used when the resource bundles are generated at build time)

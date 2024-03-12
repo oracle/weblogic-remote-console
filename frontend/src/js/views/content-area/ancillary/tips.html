@@ -1,0 +1,78 @@
+<!--
+ Copyright (c) 2023,2024, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+
+<oj-dialog
+  id="tips-dialog"
+  modality="modeless"
+  resize-behavior="resizable"
+  cancel-behavior="escape"
+  on-oj-focus="[[onOjFocus]]"
+  on-oj-before-close="[[onOjBeforeClose]]"
+  role="dialog"
+  aria-labelledby="ui-id-6"
+>
+  <div class="oj-dialog-container oj-flex-item">
+
+    <div class="oj-dialog-header oj-flex oj-sm-flex-items-initial">
+      <div class="oj-flex-item ancillary-content-item-header-label">
+        <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.ancillary.contentItem.iconFile + '.png', alt: i18n.icons.ancillary.contentItem.tooltip}"/>
+        <span class="oj-dialog-title" id="ui-id-6" data-bind="text: i18n.titles.ancillary.contentItem.value"></span>
+      </div>
+      <div title="Close" class="oj-flex-item oj-helper-margin-start-auto">
+        <a class="ancillary-content-item-close-icon" on-click="[[closeIconClickHandler]]" data-bind="attr: {href: '#', 'title': i18n.icons.close.tooltip}">
+          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.close.iconFile + '.png', alt: i18n.icons.close.tooltip}"/>
+        </a>
+      </div>
+    </div>
+
+    <div class="oj-dialog-content oj-dialog-default-content">
+      <div id="tips-tab-toolbar" class="oj-flex oj-sm-flex-items-initial cfe-ancillary-content-toolbar">
+        <div class="oj-flex-item oj-helper-margin-start-auto">
+          <a id="tipsFilterPopupLauncher" on-click="[[launchTipsFilterPopup]]" data-bind="attr: {href: '#', 'title': i18n.icons.close.tooltip}">
+            <span id="tips-filter-icon" :class="[[i18n.icons.filter.iconFile]]" title="Filter Tips"></span>
+            <span data-bind="text: i18n.icons.filter.tooltip"></span>
+          </a>
+        </div>
+      </div>
+
+      <section id="tips-tab-cards-container" class="oj-web-applayout-max-width oj-sm-web-padding-horizontal" tabindex="0">
+        <div class="oj-flex oj-sm-flex-items-initial">
+          <oj-bind-for-each data="[[filteredTipsCards]]">
+            <template>
+              <div :class="[['tips-panel-card-padding oj-flex oj-flex-item oj-sm-flex-items-1 ' + (filteredTipsCards().length > 1 ? 'oj-sm-12 oj-md-4 oj-lg-3' : 'oj-sm-9')]]">
+                <div class="tips-panel-card">
+                  <span class="tips-card-tag" data-bind="text: $current.data.tag"></span>
+                  <div class="tips-card-title" data-bind="text: $current.data.title"></div>
+                  <div class="tips-card-content">
+                    <oj-bind-dom config="[[$current.data.content]]"></oj-bind-dom>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </oj-bind-for-each>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</oj-dialog>
+
+<oj-popup id="tipsFilterPopup" initial-focus="firstFocusable">
+  <oj-checkboxset
+    id="tipsFilterCheckboxSet"
+    label-hint="[[i18n.popups.tips.title]]"
+    label-edge="inside"
+    value="{{includedCategories}}"
+    on-value-changed="[[tipsFiltersChanged]]"
+  >
+    <oj-bind-for-each data="[[allCategories]]" as="category">
+      <template>
+        <oj-option value="[[category.data.id]]">
+          <oj-bind-text value="[[category.data.option]]"></oj-bind-text>
+        </oj-option>
+      </template>
+    </oj-bind-for-each>
+  </oj-checkboxset>
+</oj-popup>

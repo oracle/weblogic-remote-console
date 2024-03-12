@@ -1,0 +1,45 @@
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+editable: true
+disableMBeanJavadoc: true
+instanceName: Web Single Sign-on Identity Provider Partner
+
+properties:
+- name: WantAuthnRequestsSigned
+  label: "Only Accept Signed Authentication Requests"
+  helpSummaryHTML: >
+    <p>Specifies whether authentication requests sent to this Identity
+    Provider partner must be signed.</p>
+  helpDetailsHTML: >
+    <p>If this attribute is set to <code>true</code>, authentication
+    requests sent to this Identity Provider partner are signed, even if
+    the SAML 2.0 Service Provider configuration for the local site are not
+    set to automatically sign authentication requests.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.WebSSOIdPPartner</code> interface.</p>
+- name: RedirectURIs
+  label: "Redirect URIs"
+  helpSummaryHTML: >
+    <p>An optional set of URIs from which unauthenticated users will be
+    redirected to the Identity Provider partner.</p>
+  helpDetailsHTML: >
+    <p>Note the following:</p>
+    <ul>
+      <li>A URI may include a wildcard pattern, but the wildcard pattern
+      must include a file type to match specific files in a directory. For
+      example, to create a match for all files in the
+      <code>/targetapp</code> directory, including all <code>.jsp</code>,
+      <code>.html</code>, and <code>.htm</code> files, the following
+      wildcard patterns are specified:<blockquote>
+          <p><code>/targetapp/*</code><br /><code>/targetapp/*.jsp</code><br /><code>/targetapp/*.html</code><br /><code>/targetapp/*.htm</code></p>
+        </blockquote></li>
+      <li>If two or more Identity Provider partners are configured that
+      are capable of authenticating a user for a given URI in this list,
+      the authentication request is sent to the first matching partner
+      that the SAML 2.0 services finds.</li>
+      <li>The use of Redirect URIs is only one mechanism for enabling a
+      Service Provider initiated web single sign-on session. Another is to
+      embed the Service Provider initiator service URI (by default, this
+      is <code>sp/sso/initiator</code>) in the URI of the requested resource.</li>
+    </ul>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.WebSSOIdPPartner</code> interface.</p>

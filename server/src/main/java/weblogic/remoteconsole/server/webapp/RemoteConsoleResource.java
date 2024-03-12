@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -37,6 +37,14 @@ public class RemoteConsoleResource extends BaseResource {
   @Context ResourceContext resourceContext;
   @Context HttpHeaders headers;
   @Context UriInfo uriInfo;
+
+  /*
+  // temporary
+  @Path("templog")
+  public TempDownloadResource getTempDownloadResource() {
+    return new TempDownloadResource();
+  }
+  */
 
   @Path(ABOUT_PATH)
   public AboutResource getAboutResourceNew() {
@@ -128,7 +136,7 @@ public class RemoteConsoleResource extends BaseResource {
           + getInvocationContext().getProvider().getName()
       );
     }
-    return copyContext(new PageRepoResource());
+    return copyContext(new WebLogicRestRuntimeTreeMonitoringResource());
   }
 
   /**

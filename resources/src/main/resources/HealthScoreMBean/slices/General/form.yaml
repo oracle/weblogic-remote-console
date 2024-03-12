@@ -1,0 +1,11 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+# manually created based on application/webapp/jsp/core/cluster/ClusterConfigOverload.jsp and consolehelp/docsrc/en-us/xml/pagehelp/core/cluster/ClusterConfigOverload.xml
+
+introductionHTML: >
+  <p>Use this page to configure a health score service for this server or server template (otherwise the domain level health score service will be used).</p>
+
+properties:
+- name: "Enabled"
+- name: "PluginClassName"
+- name: "CalculateIntervalSecs"

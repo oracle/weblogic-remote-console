@@ -1,0 +1,77 @@
+<!--
+  Copyright (c) 2024, Oracle and/or its affiliates.
+  Licensed under The Universal Permissive License (UPL), Version 1.0
+  as shown at https://oss.oracle.com/licenses/upl/
+
+-->
+<div id="breadcrumbs-container">
+  <ul :class="[[linksData && linksData().length > 0 ? 'breadcrumb-crosslink' : 'breadcrumb-link']]">
+    <oj-bind-if test="[[navigator.visible]]">
+      <oj-bind-for-each data="[[navigator.imageData]]" as="item">
+        <template>
+          <li>
+            <a href="#" :id="[[item.data.id]]" on-click="[[breadcrumbsNavigatorClick]]">
+              <span class="beanpath-history-navigator-icon">
+                <img data-bind="attr: {src: `js/jet-composites/wrc-frontend/1.0.0/images/${item.data.iconFile}.png`, alt: item.data.tooltip}"/>
+              </span>
+            </a>
+          </li>
+        </template>
+      </oj-bind-for-each>
+    </oj-bind-if>
+
+    <oj-bind-for-each data="[[breadcrumbs]]">
+      <template>
+        <oj-bind-if test="[[$current.data.index === breadcrumbs().length-1]]">
+          <li>
+            <oj-menu-button
+              chroming="borderless"
+              label="[[$current.data.label]]"
+            >
+              <oj-menu
+                slot="menu"
+                :id="[[$current.data.name + 'Menu']]"
+                on-oj-action="[[breadcrumbMenuClickListener]]"
+              >
+                <oj-bind-for-each data="[[linksData]]" as="link">
+                  <template>
+                    <oj-bind-if test="[[link.data.name === '---']]">
+                      <oj-option>---</oj-option>
+                    </oj-bind-if>
+                    <oj-bind-if test="[[link.data.name !== '---']]">
+                      <oj-option
+                        :id="[[link.data.name]]"
+                        value="[[link.data.label]]"
+                        data-perspective="[[link.data.beanTreeType]]"
+                        data-path="[[link.data.identity]]"
+                        data-breadcrumbs="[[link.data.identity]]"
+                        data-notFoundMessage="[[link.data.message]]"
+                      >
+                        <span data-bind="text: link.data.label"><</span>
+                      </oj-option>
+                    </oj-bind-if>
+                  </template>
+                </oj-bind-for-each>
+              </oj-menu>
+            </oj-menu-button>
+            <a href="#" :id="[[item.data.id]]" on-click="[[breadcrumbsNavigatorClick]]">
+              <span class="beanpath-history-navigator-icon">
+                <img data-bind="attr: {src: `js/jet-composites/wrc-frontend/1.0.0/images/${item.data.iconFile}.png`, alt: item.data.tooltip}"/>
+              </span>
+            </a>
+          </li>
+        </oj-bind-if>
+        <oj-bind-if test="[[$current.data.index < breadcrumbs().length-1]]">
+          <li>
+            <a href="#" :id="[[$current.data.resourceData]]" on-click="[[breadcrumbClick]]">
+              <span class="beanpath-history-navigator-icon">
+                <oj-bind-text value="[[$current.data.label]]"></oj-bind-text>
+              </span>
+            </a>
+          </li>
+        </oj-bind-if>
+      </template>
+    </oj-bind-for-each>
+  </ul>
+
+</div>

@@ -1,8 +1,9 @@
-// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.utils;
 
+import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.SocketException;
 import java.util.Map;
@@ -19,18 +20,17 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
-import org.glassfish.jersey.media.sse.EventSource;
-import weblogic.remoteconsole.server.ConsoleBackendRuntime;
-import weblogic.remoteconsole.server.ConsoleBackendRuntime.State;
-import weblogic.remoteconsole.server.connection.Connection;
+// import org.glassfish.jersey.media.sse.EventSource;
 
 /**
- * WebLogicRestClient uses state from the WebLogicRestRequest and ConsoleBackendRuntime to use
+ * WebLogicRestClient uses state from the WebLogicRestRequest to use
  * JAX-RS APIs and interact with a WebLogic RESTful Management endpoint.
  */
 public class WebLogicRestClient {
   private static final Logger LOGGER = Logger.getLogger(WebLogicRestClient.class.getName());
 
+  /*
+  ** Seems to be dead code
   public static EventSource getEventSource(
     WebLogicRestRequest request,
     String name
@@ -38,6 +38,7 @@ public class WebLogicRestClient {
     WebTarget webTarget = getWebTarget(request);
     return EventSource.target(webTarget).named(name).build();
   }
+  */
 
   /**
    * Invoke GET on a WLS REST endpoint.
@@ -81,11 +82,16 @@ public class WebLogicRestClient {
    *
    * @param entity
    *
+   * @param acceptType
    * @return
    *
    * @throws WebLogicRestClientException
    */
-  public static Response post(WebLogicRestRequest request, Entity<Object> entity) throws WebLogicRestClientException {
+  public static Response post(
+    WebLogicRestRequest request,
+    Entity<Object> entity,
+    String acceptType
+  ) throws WebLogicRestClientException {
     WebTarget webTarget = getWebTarget(request);
     MultivaluedMap<String, Object> headers = WebLogicRestClientHelper.createHeaders(request);
     Response response = null;
@@ -93,7 +99,7 @@ public class WebLogicRestClient {
       response =
         webTarget.request()
           .headers(headers)
-          .accept(MediaType.APPLICATION_JSON)
+          .accept(acceptType)
           .post(entity, Response.class);
 
       if (WebLogicRestClientHelper.isErrorResponse("POST", response.getStatus())) {
@@ -114,6 +120,10 @@ public class WebLogicRestClient {
     return response;
   }
 
+  public static Response post(WebLogicRestRequest request, Entity<Object> entity) throws WebLogicRestClientException {
+    return post(request, entity, MediaType.APPLICATION_JSON);
+  }
+
   public static Response post(WebLogicRestRequest request, JsonObject data) throws WebLogicRestClientException {
     LOGGER.finest("data=" + data);
     return post(request, Entity.entity(data, MediaType.APPLICATION_JSON));
@@ -121,6 +131,24 @@ public class WebLogicRestClient {
 
   public static Response post(WebLogicRestRequest request, FormDataMultiPart parts) throws WebLogicRestClientException {
     return post(request, Entity.entity(parts, MediaType.MULTIPART_FORM_DATA));
+  }
+
+  public static Response downloadAsInputStream(WebLogicRestRequest request, JsonObject data, String acceptType) {
+    try {
+      Response response =
+        post(
+          request,
+          Entity.entity(data, MediaType.APPLICATION_JSON),
+          acceptType
+        );
+      if (WebLogicRestClientHelper.isErrorResponse("POST", response.getStatus())) {
+        return response;
+      }
+      return Response.ok(response.readEntity(InputStream.class)).build();
+    } catch (WebLogicRestClientException e) {
+      // LOGGER.log(Level.WARNING, "Unexpected WebLogic Rest exception", e);
+      return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+    }
   }
 
   /**
@@ -200,12 +228,6 @@ public class WebLogicRestClient {
     } else if (request.connection() != null) {
       client = request.connection().getClient();
       LOGGER.finest("Client from WebLogicRestRequest Connection");
-    } else if (State.CONNECTED == ConsoleBackendRuntime.INSTANCE.getState()) {
-      Connection connection = ConsoleBackendRuntime.INSTANCE.getConnection();
-      if (connection != null) {
-        client = connection.getClient();
-        LOGGER.finest("Client from ConsoleBackendRuntime Connection");
-      }
     }
     return client;
   }
@@ -220,14 +242,6 @@ public class WebLogicRestClient {
       calculatedTargetUri =
         request.connection().getDomainUrl() + root;
       LOGGER.finest("Request Connection URL calculatedTargetUri=" + calculatedTargetUri);
-    } else if (State.CONNECTED == ConsoleBackendRuntime.INSTANCE.getState()) {
-      Connection connection = ConsoleBackendRuntime.INSTANCE.getConnection();
-      if (connection != null) {
-        calculatedTargetUri = connection.getDomainUrl() + root;
-        LOGGER.finest(
-          "ConsoleBackendRuntime Connection URL calculatedTargetUri=" + calculatedTargetUri
-        );
-      }
     }
     return calculatedTargetUri;
   }

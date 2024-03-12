@@ -1,10 +1,11 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
 import java.util.List;
 
+import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanChildDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
@@ -45,8 +46,8 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   }
 
   @Override
-  BeanTypeDefSource getBeanTypeDefSource(String type) {
-    BeanTypeDefSource source = super.getBeanTypeDefSource(type);
+  BeanTypeDefSource getBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    BeanTypeDefSource source = super.getBeanTypeDefSource(repoDef, type);
     // Add the fabricated collection of beans for recent simple search results
     {
       BeanPropertyDefSource property = new BeanPropertyDefSource();
@@ -79,7 +80,7 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     }
     // For every aggregatable child under a server runtime mbean,
     // add a corresponding aggregated property under the domain runtime mbean
-    BeanTypeDefSource serverRuntimeSource = getYamlReader().getBeanTypeDefSource(SERVER_RUNTIME_MBEAN);
+    BeanTypeDefSource serverRuntimeSource = getYamlReader().getBeanTypeDefSource(repoDef, SERVER_RUNTIME_MBEAN);
     for (BeanPropertyDefSource property : serverRuntimeSource.getProperties()) {
       String propertyType = property.getType();
       if (AGGREGATED_NAME_HANDLER.isFabricatableType(propertyType)) {
@@ -112,7 +113,8 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     // the ones under the ServerRuntimeMBean (i.e. SNMP Agent Runtime
     // instead of Aggregated SNMP Agent Runtime).  This is OK since
     // they're displayed under different nodes in the nav tree.
-    BeanTypeDefSource serverRuntimeSource = getYamlReader().getBeanTypeDefSource(SERVER_RUNTIME_MBEAN);
+    BeanTypeDefSource serverRuntimeSource =
+      getYamlReader().getBeanTypeDefSource(typeDef.getBeanRepoDef(), SERVER_RUNTIME_MBEAN);
     BeanTypeDefCustomizerSource serverRuntimeCustomizerSource =
       getYamlReader().getBeanTypeDefCustomizerSource(
         typeDef.getBeanRepoDef().getTypeDef(SERVER_RUNTIME_MBEAN)

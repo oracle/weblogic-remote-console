@@ -11,6 +11,7 @@ import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanActionArg;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
@@ -87,6 +88,20 @@ public class CombinedServerRuntimeMBeanCustomizer {
     return delegateToServerRuntimeAction(ic, "restartSSLChannels");
   }
 
+  public static Response<Value> publishSingleSignOnServices(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
+    return
+      delegateAction(ic,
+      "DomainRuntime.ServerRuntimes",
+      "SingleSignOnServicesRuntime",
+      "publish",
+      formProperties
+    );
+  }
+
   public static Response<Value> shutdown(
     InvocationContext ic,
     PageActionDef pageActionDef,
@@ -112,17 +127,14 @@ public class CombinedServerRuntimeMBeanCustomizer {
       return response.copyUnsuccessfulResponse(searchResponse);
     }
     BeanSearchResults searchResults = searchResponse.getResults();
-    BeanTreePath realPath = getRealBeanTreePath(ic, "DomainRuntime.ServerLifeCycleRuntimes");
+    BeanTreePath realPath = getRealBeanTreePath(ic, "DomainRuntime.ServerLifeCycleRuntimes", "");
     BeanActionDef actionDef =
       realPath.getTypeDef().getActionDef(new Path("shutdown_timeout_ignoreSessions"));
-    List<BeanActionArg> args = new ArrayList<>();
-    args.add(
+    List<BeanActionArg> args = List.of(
       new BeanActionArg(
         actionDef.getParamDef("timeout"),
         getServerPropertyValue(searchResults, timeoutPropertyDef)
-      )
-    );
-    args.add(
+      ),
       new BeanActionArg(
         actionDef.getParamDef("ignoreSessions"),
         getServerPropertyValue(searchResults, ignoreSessionsPropertyDef)
@@ -178,32 +190,52 @@ public class CombinedServerRuntimeMBeanCustomizer {
   }
 
   private static Response<Value> delegateToServerLifeCycleRuntimeAction(InvocationContext ic, String action) {
-    return delegateAction(ic, "DomainRuntime.ServerLifeCycleRuntimes", action);
+    return delegateAction(ic, "DomainRuntime.ServerLifeCycleRuntimes", "", action, List.of());
   }
 
   private static Response<Value> delegateToServerRuntimeAction(InvocationContext ic, String action) {
-    return delegateAction(ic, "DomainRuntime.ServerRuntimes", action);
+    return delegateAction(ic, "DomainRuntime.ServerRuntimes", "", action, List.of());
   }
 
-  private static Response<Value> delegateAction(InvocationContext ic, String realCollection, String action) {
-    BeanTreePath realPath = getRealBeanTreePath(ic, realCollection);
+  private static Response<Value> delegateAction(
+    InvocationContext ic,
+    String realCollection,
+    String singletonChild,
+    String action,
+    List<FormProperty> pageArgs
+  ) {
+    BeanTreePath realPath = getRealBeanTreePath(ic, realCollection, singletonChild);
+    List<BeanActionArg> beanArgs = new ArrayList<>();
+    for (FormProperty pageArg : pageArgs) {
+      beanArgs.add(
+        new BeanActionArg(
+          pageArg.getFieldDef().asBeanActionParamDef(),
+          pageArg.getValue().asSettable().getValue()
+        )
+      );
+    }
     return
       ic.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(
         ic,
         realPath,
         realPath.getTypeDef().getActionDef(new Path(action)),
-        new ArrayList<>() // no args
+        beanArgs
       );
   }
 
-  private static BeanTreePath getRealBeanTreePath(InvocationContext ic, String realCollection) {
+  private static BeanTreePath getRealBeanTreePath(
+    InvocationContext ic,
+    String realCollection,
+    String singletonChild
+  ) {
     // The bean path for the real runtime mbean to invoke is either
     // DomainRuntime/ServerRuntimes or ServerLifeCycleRuntimes/serverName
-    return
-      BeanTreePath.create(
-        ic.getBeanTreePath().getBeanRepo(),
-        new Path(realCollection + "." + getServerName(ic))
-      );
+    StringBuilder sb = new StringBuilder();
+    sb.append(realCollection).append(".").append(getServerName(ic));
+    if (!StringUtils.isEmpty(singletonChild)) {
+      sb.append(".").append(singletonChild);
+    }
+    return BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(),new Path(sb.toString()));
   }
 
   private static String getServerName(InvocationContext ic) {

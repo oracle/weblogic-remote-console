@@ -1,14 +1,19 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
 
+import java.lang.ref.WeakReference;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.ws.rs.container.ContainerRequestContext;
 
 import weblogic.remoteconsole.common.utils.StringUtils;
-import weblogic.remoteconsole.server.ConsoleBackendRuntime;
+import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.providers.ProviderManager;
 
 /**
@@ -21,15 +26,16 @@ public class Frontend {
   private long lastRequestTime;
   private ProviderManager pm = new ProviderManager();
   private static boolean isSameSiteCookieEnabled =
-    ConsoleBackendRuntime.INSTANCE.getConfig()
-    .get("enableSameSiteCookieValue")
-    .asBoolean()
-    .orElse(false);
+    ConsoleBackendRuntimeConfig.isSameSiteCookieEnabled();
   private static String valueSameSiteCookie =
-    ConsoleBackendRuntime.INSTANCE.getConfig()
-      .get("valueSameSiteCookie")
-      .asString()
-      .orElse(null);
+    ConsoleBackendRuntimeConfig.getSameSiteCookieValue();
+  private Map<String, StoredDataObject> storedData = new HashMap<>();
+
+  public Frontend(String id) {
+    if (id != null) {
+      this.id = id;
+    }
+  }
 
   public String getID() {
     return id;
@@ -65,5 +71,50 @@ public class Frontend {
 
   public String getValueSameSiteCookie() {
     return valueSameSiteCookie;
+  }
+
+  // Use the key and the reference key to form a single key
+  public synchronized Object getData(
+    String key,
+    Object referenceKey
+  ) {
+    clean();
+    StoredDataObject ret = storedData.get(key + referenceKey);
+    if (ret == null) {
+      return null;
+    }
+    return ret.value;
+  }
+
+  public void clean() {
+    List<String> removeList = new LinkedList<>();
+    for (Map.Entry<String, StoredDataObject> entry : storedData.entrySet()) {
+      if (entry.getValue().referenceKey.get() == null) {
+        removeList.add(entry.getKey());
+      }
+    }
+    for (String key : removeList) {
+      storedData.remove(key);
+    }
+  }
+
+  public synchronized void storeData(
+    String key,
+    Object referenceKey,
+    Object data
+  ) {
+    storedData.put(
+      key + referenceKey, new StoredDataObject(referenceKey, data));
+    clean();
+  }
+
+  private static class StoredDataObject {
+    public WeakReference<Object> referenceKey;
+    public Object value;
+
+    private StoredDataObject(Object referenceKey, Object value) {
+      this.referenceKey = new WeakReference<Object>(referenceKey);
+      this.value = value;
+    }
   }
 }

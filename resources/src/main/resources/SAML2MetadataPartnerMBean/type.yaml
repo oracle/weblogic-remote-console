@@ -1,0 +1,59 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: EntityID
+  helpSummaryHTML: >
+    <p>The Entity ID of this partner.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>
+- name: ContactPersonGivenName
+  helpSummaryHTML: >
+    <p>The given name (first name) of the contact person for this partner.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>
+- name: ContactPersonSurName
+  label: "Contact Person Surname"
+  helpSummaryHTML: >
+    <p>The surname (last name) of the contact person for this partner.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>
+- name: ContactPersonType
+  helpSummaryHTML: >
+    <p>The contact person type.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>
+- name: ContactPersonCompany
+  helpSummaryHTML: >
+    <p>The company name of the contact person.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>
+- name: ContactPersonTelephoneNumber
+  helpSummaryHTML: >
+    <p>The telephone number of the contact person.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>
+- name: ContactPersonEmailAddress
+  helpSummaryHTML: >
+    <p>The email address of the contact person.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>
+- name: OrganizationName
+  helpSummaryHTML: >
+    <p>The organization name of the partner.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>
+- name: OrganizationalURL
+  helpSummaryHTML: >
+    <p>The organization URL of the partner.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>
+- name: ErrorURL
+  helpSummaryHTML: >
+    <p>The URL to which the user's browser may be redirected in the event
+    of a failure caused by this partner's profile.</p>
+  helpDetailsHTML: >
+    <p>Note that the ability to redirect the user's browser to the Error
+    URL as described in the OASIS SAML 2.0 specification is not
+    implemented in WebLogic Server.</p>
+    <p>Operations on this parameter are described in the <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.</p>

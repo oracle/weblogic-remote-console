@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -9,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SimpleSearchCriteria;
 
@@ -34,8 +35,9 @@ public class SimpleSearchResource extends BaseResource {
       return response.copyUnsuccessfulResponse(criteriaResponse);
     }
     SimpleSearchCriteria criteria = criteriaResponse.getResults();
+    InvocationContext ic = getInvocationContext();
     Response<String> createResponse =
-      getInvocationContext().getPageRepo().asPageReaderRepo().getSimpleSearchManager().createSearch(
+      ic.getPageRepo().asPageReaderRepo().getSimpleSearchManager(ic).createSearch(
         getInvocationContext(),
         criteria
       );

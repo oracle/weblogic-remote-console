@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -17,6 +17,11 @@ import weblogic.remoteconsole.common.utils.Path;
  * Note: currently we only support actions that don't return values.
  */
 public interface BeanActionDef extends BeanValueDef {
+
+  public static final String IMPACT_INFO = "info";
+  public static final String IMPACT_ACTION = "action";
+  public static final String IMPACT_ACTION_INFO = "action_info";
+  public static final String IMPACT_UNKNOWN = "unknown";
 
   // The page-relative bean type containing this property, e.g. Server
   public BeanTypeDef getTypeDef();
@@ -69,4 +74,11 @@ public interface BeanActionDef extends BeanValueDef {
 
   // The roles that are allowed to invoke this action
   public Set<String> getInvokeRoles();
+
+  // The action's impact (same as a JMX Operation's Impact)
+  // info - only reads
+  // action - changes something (think of it as a 'write')
+  // action_info - reads and writes (I don't think this is ever used)
+  // unknown - we don't know whether it reads and/or writes
+  public String getImpact();
 }

@@ -1,4 +1,4 @@
-# Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 actions:
 
@@ -48,6 +48,7 @@ actions:
   definition:
     type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
 
+#createPlan
 - name: "createPlan"
   label: "Create Plan"
   disableMBeanJavadoc: true
@@ -61,6 +62,8 @@ actions:
     in its own directory to avoid it being inadvertently shared with other applications.</p>
     <p><code>Plan.xml</code> is the highly recommended name for the file.</p>
     <p><i>The plan file will be overwritten if it already exists.  Other files located in its directory may be overwritten too.</i></p>
+    <p>Note: if your new deployment plan isn't visible in the WebLogic Remote Console, go to the 'Edit' view
+    and see if the shopping cart has changes that need to be committed.</p>
   inputForm:
     customizePageMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.customizeCreatePlanActionInputForm
     introductionHTML: >
@@ -68,58 +71,132 @@ actions:
       in its own directory to avoid it being inadvertently shared with other applications.</p>
       <p><code>Plan.xml</code> is the highly recommended name for the file.</p>
       <p><i>The plan file will be overwritten if it already exists.  Other files located in its directory may be overwritten too.</i></p>
+      <p>Note: if your new deployment plan isn't visible in the WebLogic Remote Console, go to the 'Edit' view
+      and see if the shopping cart has changes that need to be committed.</p>
     parameters:
     - name: "PlanPath"
+      required: true
 
-- name: "redeploy"
-  label: "Redeploy"
-  actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.redeploy
-  mbeanOperation:
-    operation: redeploy_targets_applicationPath_plan_deploymentOptions
-  # don't specify polling since nothing on the current page changes when the redeploy finishes
+- name: "updateExisting"
+  label: "Update with Modified Existing Deployment Plan"
+  actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.updateExisting
   helpHTML: >
-    <p>Redeploy the application in the background for the targets specified
-    with the options specified.  This is an asynchronous operation that
-    returns immediately.  The returned DeploymentProgressObjectMBean
-    can be used to determine when the operation is completed.</p>
-  definition:
-    type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
-    roles:
-      allowed:
-      - Deployer
-
-- name: "redeploy_targets_applicationPath_plan_deploymentOptions"
-  disableMBeanJavadoc: true
+    <p>Use this page, after you've changed one or more dynamic attributes in this application's deployment plan, 
+      to tell this application to start using them immediately (without stopping and restarting the application). <br/>
+      Use 'redeploy' instead if you:
+      <ul><li>changed non-dynamic attributes in the deployment plan</li>
+      <li>changed contents of the application's archive</li>
+      <li>changed the path name of the archive or deployment plan</li></ul>
+       This is an asynchronous operation.  Its status is available under 'Deployment Progress Objects'.</p>
+  inputForm:
+    customizePageMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.customizeEditExistingActionInputForm
+    introductionHTML: >
+      <p>Use this page, after you've changed one or more dynamic attributes in this application's deployment plan, 
+        to tell this application to start using them immediately (without stopping and restarting the application). <br/>
+        Use 'redeploy' instead if you:
+        <ul><li>changed non-dynamic attributes in the deployment plan</li>
+        <li>changed contents of the application's archive</li>
+        <li>changed the path name of the archive or deployment plan</li></ul>
+         This is an asynchronous operation.  Its status is available under 'Deployment Progress Objects'.</p>
+    parameters:
+      - name: "PlanPath"
+        required: true
 
 - name: "update"
-  label: "Update"
-  actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.update
-  mbeanOperation:
-    operation: update_targets_plan_deploymentOptions
-  # don't specify polling since nothing on the current page changes when the update finishes
-  helpHTML: >
-     <p>Allows for updating an application configuration using an changed
-     deployment plan.</p>
-     <p>A configuration update is equivalent to replacing the application's
-     deployment plan. The deployment plan is redeployed in-place. A new
-     version of the application is not started, even if the new deployment
-     plan has a different version.</p>
-     <p>The update succeeds only if changes to the deployment plan do not
-     require the application to be restarted. Configuration changes in 
-     the new deployment plan must be limited to
-     tuning the application. Changes to resource bindings causes
-     the update to fail. Use redeploy()
-     to apply resource binding changes to a production application.</p>
-     <p>This method targets only root modules. Module level targeting is 
-     not supported.</p>
-  definition:
-    type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
-    roles:
-      allowed:
-      - Deployer
-
-- name: "update_targets_plan_deploymentOptions"
+  label: "Update Deployment Plan"
   disableMBeanJavadoc: true
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
+  actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.updatePlanOnServer
+  helpHTML: >
+    <p>Allows for updating an application configuration using an changed
+    deployment plan.</p>
+    <p>A configuration update is equivalent to replacing the application's
+    deployment plan. The deployment plan is redeployed in-place. A new
+    version of the application is not started, even if the new deployment
+    plan has a different version.</p>
+    <p>The update succeeds only if changes to the deployment plan do not
+    require the application to be restarted. Configuration changes in 
+    the new deployment plan must be limited to
+    tuning the application. Changes to resource bindings causes
+    the update to fail. Use redeploy()
+    to apply resource binding changes to a production application.</p>
+    <p>This method targets only root modules. Module level targeting is 
+    not supported.</p>
+  inputForm:
+    customizePageMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.customizeUpdatePlanActionInputForm
+    introductionHTML: >
+      <p>Use this page to update the application with a new or modified deployment plan.</p>
+      <p>You can specify a different deployment plan which is located on the admin server's file system.  The status of the update
+        will be available at the Deployment Progress Objects tree node. </p>
+    parameters:
+      - name: "PlanPath"
+        required: true
+
+- name: "redeploy"
+  label: "Redeploy Application"
+  actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.redeploySourceOnServer
+  disableMBeanJavadoc: true
+  polling:
+    reloadSeconds: 5
+    maxAttempts: 10
+  helpHTML: >
+    <p> Redeploy the application with new bits with new or modified deployment plan.  
+    Both the application and deployment plan must be on the server machine.</p>
+  inputForm:
+    customizePageMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.customizeRedeployActionInputForm
+    introductionHTML: >
+      <p>Use this page to redeploy the application with a new or modified deployment plan.</p>
+      <p>You can specify a different location for the application or a different deployment plan. Both must be located 
+      on the administration server's file system.</p>
+      <p>If the plan path is not specified, the application will be redeployed without a deployment plan. </p>
+    parameters:
+      - name: "SourcePath"
+        required: true
+      - name: "PlanPath"
+
+- name: uploadAndRedeploy
+  label: "Upload and Redeploy Application"
+  disableMBeanJavadoc: true
+  helpHTML: >
+    <p>Use this page to redeploy the application with a new or modified deployment plan.</p>
+    <p>The selected source and plan will be uploaded to the server machine, under the administration server's upload directory.</p>
+    <p>If the original source or plan is not under administration server's upload directory, a new directory will be 
+    created and the files will be upload there. The original archive or plan, which is outside the upload directory, will not be deleted.</p>
+    <p>If the plan is not selected, the application will be redeployed without a deployment plan. </p>
+  inputForm:
+    introductionHTML: >
+      <p>Use this page to redeploy the application with a new or modified deployment plan.</p>
+      <p>The selected source and plan will be uploaded to the server machine, under the administration server's upload directory.</p>
+      <p>If the original source or plan is not under administration server's upload directory, a new directory will be 
+      created and the files will be upload there. The original archive or plan, which is outside the upload directory, will not be deleted.</p>
+      <p>If the plan is not selected, the application will be redeployed without a deployment plan. </p>
+    parameters:
+    - name: Source
+      required: true
+      onlineName: source
+    - name: Plan
+      onlineName: plan
+
+- name: uploadAndUpdate
+  label: "Upload and Update the Deployment Plan."
+  disableMBeanJavadoc: true
+  helpHTML: >
+    <p>Use this page to update the deployment plan of the application.</p>
+    <p>The selected plan file will be uploaded to the server machine, under the administration server's upload directory.</p>
+    <p>If the Plan was not under administration server's upload directory, a new directory will be created and the files will be upload there. 
+    The original plan, which is outside the upload directory, will not be deleted.</p>
+  inputForm:
+    introductionHTML: >
+      <p>Use this page to update the deployment plan of the application.</p>
+      <p>The selected plan file will be uploaded to the server machine, under the administration server's upload directory.</p>
+      <p>If the Plan was not under administration server's upload directory, a new directory will be created and the files will be upload there. 
+      The original plan, which is outside the upload directory, will not be deleted.</p>
+    parameters:
+      - name: Plan
+        required: true
+        onlineName: plan
 
 children:
 - name: DeploymentPlan

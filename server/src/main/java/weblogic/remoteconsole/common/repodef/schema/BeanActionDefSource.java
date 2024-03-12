@@ -20,6 +20,15 @@ public class BeanActionDefSource extends BeanValueDefSource {
   private ListValue<BeanActionParamDefSource> parameters = new ListValue<>();
   private BooleanValue extension =  new BooleanValue();
   private Value<RolesDefSource> roles = new Value<>(null);
+  private Impact impact = Impact.unknown;
+
+  // Mirrors the JMX Operaration Impact
+  public enum Impact {
+    info, // reads
+    action, // writes
+    action_info, // writes and reads
+    unknown // don't know
+  }
 
   // A unique name for this action within the type.
   // Typically the arg list is added to it to make it unique,
@@ -83,5 +92,15 @@ public class BeanActionDefSource extends BeanValueDefSource {
   
   public void setRoles(RolesDefSource value) {
     roles.setValue(value);
+  }
+
+  // The action's impact
+  // e.g. info means it only reads, action means it does something ("writes")
+  public Impact getImpact() {
+    return impact;
+  }
+
+  public void setImpact(Impact value) {
+    impact = value;
   }
 }

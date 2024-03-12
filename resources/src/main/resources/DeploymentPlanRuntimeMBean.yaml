@@ -9,6 +9,7 @@ name: weblogic.management.runtime.DeploymentPlanRuntimeMBean
 roles:
   allowed:
   - Deployer
+  - Operator
 properties:
 - name: Name
   type: java.lang.String
@@ -30,6 +31,10 @@ properties:
   type: java.lang.String
   writable: true
   descriptionHTML: The deployment plan's contents, as xml
+  setRoles:
+    allowed:
+    - Deployer
+    - Operator
 - name: VariableAssignments
   relationship: containment
   type: weblogic.management.runtime.VariableAssignmentRuntimeMBean

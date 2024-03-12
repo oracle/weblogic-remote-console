@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -10,6 +10,7 @@ import java.util.Set;
 
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.PagePath;
@@ -49,10 +50,14 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   }
 
   @Override
-  BeanTypeDefSource getBeanTypeDefSource(String type) {
-    BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(NAME_HANDLER.getUnfabricatedType(type));
+  BeanTypeDefSource getBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(repoDef, NAME_HANDLER.getUnfabricatedType(type));
     if (source == null) {
       // The type doesn't exist in this WLS version.
+      return null;
+    }
+    BeanTypeDef unaggTypeDef = repoDef.getTypeDef(NAME_HANDLER.getUnfabricatedType(type));
+    if (unaggTypeDef == null) {
       return null;
     }
     // Add a server property that contains a reference to the corresponding ServerRuntimeMBean
@@ -66,14 +71,15 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     source.setBaseTypes(NAME_HANDLER.getFabricatedJavaTypes(source.getBaseTypes()));
     source.setDerivedTypes(NAME_HANDLER.getFabricatedJavaTypes(source.getDerivedTypes()));
     // allow the actions to flow through as-is
-    source.setProperties(aggregatePropertyDefs(source.getProperties()));
+    source.setProperties(aggregatePropertyDefs(unaggTypeDef, source.getProperties()));
     source.getProperties().add(server);
     return source;
   }
 
   @Override
-  PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(String type) {
-    PseudoBeanTypeDefSource source = getYamlReader().getPseudoBeanTypeDefSource(NAME_HANDLER.getUnfabricatedType(type));
+  PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    PseudoBeanTypeDefSource source =
+      getYamlReader().getPseudoBeanTypeDefSource(repoDef, NAME_HANDLER.getUnfabricatedType(type));
     if (source == null) {
       // This isn't a pseudo type
       return null;
@@ -205,13 +211,14 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   }
 
   private Set<String> getLocalActionNames(
-    BeanTypeDef undelTypeDef,
+    BeanTypeDef unaggTypeDef,
     List<BeanActionDefCustomizerSource> unaggActionCustomizers
   ) {
     // Make a set of the actions defined or customized on this type (v.s. inherited)
     Set<String> rtn = new HashSet<>();
     {
-      BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(undelTypeDef.getTypeName());
+      BeanTypeDefSource source =
+        getYamlReader().getBeanTypeDefSource(unaggTypeDef.getBeanRepoDef(), unaggTypeDef.getTypeName());
       if (source != null) {
         for (BeanActionDefSource actionSource : source.getActions()) {
           rtn.add(actionSource.getName());
@@ -219,7 +226,7 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       }
     }
     {
-      BeanTypeDefExtensionSource source = getYamlReader().getBeanTypeDefExtensionSource(undelTypeDef);
+      BeanTypeDefExtensionSource source = getYamlReader().getBeanTypeDefExtensionSource(unaggTypeDef);
       if (source != null) {
         for (BeanActionDefSource actionSource : source.getActions()) {
           rtn.add(actionSource.getName());
@@ -352,12 +359,13 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   @Override
   BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef typeDef) {
     // Return the aggregated versions of any aggregatable extended properties the unaggregated type supports
+    BeanTypeDef unaggTypeDef = NAME_HANDLER.getUnfabricatedTypeDef(typeDef);
     BeanTypeDefExtensionSource source =
-      getYamlReader().getBeanTypeDefExtensionSource(NAME_HANDLER.getUnfabricatedTypeDef(typeDef));
+      getYamlReader().getBeanTypeDefExtensionSource(unaggTypeDef);
     if (source == null) {
       return null;
     }
-    source.setProperties(aggregatePropertyDefs(source.getProperties()));
+    source.setProperties(aggregatePropertyDefs(unaggTypeDef, source.getProperties()));
     // allow the actions to flow through as-is
     if (source.getProperties().isEmpty() && source.getActions().isEmpty()) {
       return null;
@@ -464,14 +472,27 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     return getYamlReader().getLinksDefSource(NAME_HANDLER.getUnfabricatedTypeDef(typeDef));
   }
 
-  private List<BeanPropertyDefSource> aggregatePropertyDefs(List<BeanPropertyDefSource> propertyDefs) {
+  private List<BeanPropertyDefSource> aggregatePropertyDefs(
+    BeanTypeDef unaggTypeDef,
+    List<BeanPropertyDefSource> propertyDefs
+  ) {
     List<BeanPropertyDefSource> rtn = new ArrayList<>();
     for (BeanPropertyDefSource propertyDef : propertyDefs) {
-      if (propertyDef.isChild() && NAME_HANDLER.isFabricatableJavaType(propertyDef.getType())) {
-        propertyDef.setType(NAME_HANDLER.getFabricatedJavaType(propertyDef.getType()));
-        rtn.add(propertyDef);
+      if (propertyDef.isChild()) {
+        if (unaggTypeDef.hasChildDef(new Path(propertyDef.getName()), true)) {
+          if (NAME_HANDLER.isFabricatableJavaType(propertyDef.getType())) {
+            propertyDef.setType(NAME_HANDLER.getFabricatedJavaType(propertyDef.getType()));
+          }
+          rtn.add(propertyDef);
+        } else {
+          // the unaggregated type trimmed out the child.  we should too.
+        }
       } else {
-        rtn.add(propertyDef);
+        if (unaggTypeDef.hasPropertyDef(new Path(propertyDef.getName()), true)) {
+          rtn.add(propertyDef);
+        } else {
+          // the unaggregated type trimmed out the property.  we should too.
+        }
       }
     }
     return rtn;

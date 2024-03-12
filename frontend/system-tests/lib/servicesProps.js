@@ -130,13 +130,14 @@ module.exports = function (driver, file) {
         modifyJMSSysResTargetsTab: async function (driver, jmsSysResName, tabName, targetName) {
             await admin.goToNavTreeLevelThreeLink(driver, "configuration", "Services", "JMS System Resources",
                 jmsSysResName, tabName);
-            await driver.sleep(1200);
+            await driver.sleep(6400);
             await admin.goToTabName(driver, tabName);
-            await driver.sleep(1200);
+            await driver.sleep(6400);
             console.log("Select Targets = " + targetName);
             if (targetName == "All") {
-                element = driver.findElement(By.xpath("//oj-button[@id=\'addAllToChosen\']/button/div"));
+                element = driver.findElement(By.xpath("//oj-button[@id='addAllToChosen']/button/div"));
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await driver.sleep(6400);
                 await element.click();
             }
             await driver.sleep(800);
@@ -149,9 +150,12 @@ module.exports = function (driver, file) {
         createFileStoreFromJMSServerEclipseMenu: async function (driver, jmsServer, fileStoreName) {
             await admin.goToNavTreeLevelThreeLink(driver, "configuration", "Services", "JMS Servers",
                 jmsServer);
-            await driver.sleep(4800);
+            await driver.sleep(9800);
             element = driver.findElement(By.xpath("//a[@id='moreIcon_PersistentStore']/img"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            //WebElement button =
+              //  wait.until(ExpectedConditions.elementToBeClickable(By.id("buttonId")));
+            await driver.sleep(2400);
             await element.click();
             await driver.sleep(9800);
             element = driver.findElement(By.xpath("//span[contains(.,'Create New File Store...')]"));

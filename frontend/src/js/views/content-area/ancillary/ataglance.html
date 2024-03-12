@@ -13,6 +13,7 @@
   aria-labelledby="ui-id-7"
 >
   <div class="oj-dialog-container oj-flex-item">
+
     <div class="oj-dialog-header oj-flex oj-sm-flex-items-initial">
       <div class="oj-flex-item ancillary-content-item-header-label">
         <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.ancillary.contentItem.iconFile + '.png', alt: i18n.icons.ancillary.contentItem.tooltip}"/>
@@ -26,51 +27,51 @@
     </div>
 
     <div class="oj-dialog-content oj-dialog-default-content">
-<div id="ataglance-tab-container">
-  <div id="ataglance-tab-container-toolbar">
-    <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end cfe-flex-items-pad">
-      <div class="oj-flex-item">
+      <div id="ataglance-tab-container">
+        <div id="ataglance-tab-container-toolbar">
+          <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end cfe-flex-items-pad">
+            <div class="oj-flex-item">
+            </div>
+          </div>
+        </div>
+
+        <div id="ataglance-tab-container-header">
+        </div>
+
+        <oj-accordion
+          id="ataglance-tab"
+          multiple="true"
+        >
+          <oj-collapsible
+            id="serversGlance"
+            on-oj-before-expand="[[atAGlanceSectionBeforeExpand]]"
+            expanded="[[serversGlanceExpanded]]"
+          >
+            <span slot="header">
+              <span data-bind="text: atAGlanceSections()[0].label"></span>
+            </span>
+            <div id="serversGlance-dom">
+              <oj-bind-dom config="[[serversGlanceDom]]" />
+            </div>
+          </oj-collapsible>
+
+          <oj-collapsible
+            id="systemStatus"
+            on-oj-before-expand="[[atAGlanceSectionBeforeExpand]]"
+            on-oj-collapse="[[atAGlanceSectionCollapse]]"
+            expanded="[[systemGlanceExpanded]]"
+          >
+            <span slot="header">
+              <span data-bind="text: atAGlanceSections()[1].label"></span>
+            </span>
+            <div id="systemStatus-dom">
+              <oj-bind-dom config="[[systemStatusDom]]" />
+            </div>
+          </oj-collapsible>
+
+        </oj-accordion>
+
       </div>
-    </div>
-  </div>
-
-  <div id="ataglance-tab-container-header">
-  </div>
-
-  <oj-accordion
-    id="ataglance-tab"
-    multiple="true"
-  >
-    <oj-collapsible
-      id="serversGlance"
-      on-oj-before-expand="[[atAGlanceSectionBeforeExpand]]"
-      expanded="[[serversGlanceExpanded]]"
-    >
-      <span slot="header">
-        <span data-bind="text: atAGlanceSections()[0].label"></span>
-      </span>
-      <div id="serversGlance-dom">
-        <oj-bind-dom config="[[serversGlanceDom]]" />
-      </div>
-    </oj-collapsible>
-
-    <oj-collapsible
-      id="systemStatus"
-      on-oj-before-expand="[[atAGlanceSectionBeforeExpand]]"
-      on-oj-collapse="[[atAGlanceSectionCollapse]]"
-      expanded="[[systemGlanceExpanded]]"
-    >
-      <span slot="header">
-        <span data-bind="text: atAGlanceSections()[1].label"></span>
-      </span>
-      <div id="systemStatus-dom">
-        <oj-bind-dom config="[[systemStatusDom]]" />
-      </div>
-    </oj-collapsible>
-
-  </oj-accordion>
-
-</div>
     </div>
 
   </div>

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server;
@@ -19,21 +19,21 @@ public abstract class PersistableFeature<T> {
 
   protected void refresh(InvocationContext ic) {
     LOGGER.finest("refresh");
-    PersistenceManager<T>.State newState = getPersistenceManager().get();
+    PersistenceManager<T>.State newState = getPersistenceManager().get(ic);
     if (newState != state) {
       LOGGER.finest("reloading");
       state = newState;
       try {
         fromPersistedData(ic, state.getData());
       } catch (BadFormatException e) {
-        getPersistenceManager().reportBadFormat(e.getMessage());
+        getPersistenceManager().reportBadFormat(ic, e.getMessage());
       }
     }
   }
 
   protected void update(InvocationContext ic) {
     LOGGER.finest("update");
-    getPersistenceManager().set(toPersistedData(ic));
+    getPersistenceManager().set(ic, toPersistedData(ic));
   }
 
   // Return the persistence manager for this feature for the entire CBE.

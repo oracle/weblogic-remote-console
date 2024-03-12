@@ -10,6 +10,10 @@ introductionHTML: >
   For example, to create a custom filtering dashboard of Application Runtime instances,
   navigate to 'Deployments -> Application Runtimes' then select 'New Dashboard'.</p>
 
+actions:
+- name: "copy"
+  rows: "one"
+
 displayedColumns:
 - name: "Name"
 - name: "Type"

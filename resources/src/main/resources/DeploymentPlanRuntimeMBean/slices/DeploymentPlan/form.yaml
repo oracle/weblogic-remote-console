@@ -3,8 +3,6 @@
 
 introductionHTML: "<p>Use this page to view this application's deployment plan.</p>"
 
-customizePageDefMethod: weblogic.remoteconsole.customizers.DeploymentPlanRuntimeMBeanCustomizer.customizeDeploymentPlanSliceDef
-
 properties:
 - name: DeploymentPlan
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -178,6 +178,12 @@ public class JDBCSystemResourceMBeanCustomizerUtils {
     driverName = driverName.replaceAll("_SLASH_", "/");
     driverName = driverName.replaceAll("_DASH_", "-");
     return driverName;
+  }
+
+  public static boolean isXADriver(String driverName) {
+    JDBCDriverInfo jdbcDriverInfo = getDriverInfoFactory().getDriverInfoByClass(driverName);
+    //if we don't have the driveInfo for this driver, we just return false
+    return  (jdbcDriverInfo == null) ? false : jdbcDriverInfo.isForXA();
   }
 
   private static String scopedName(String scope, String name) {

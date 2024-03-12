@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -11,6 +11,7 @@ import java.util.Set;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
@@ -86,7 +87,7 @@ import weblogic.remoteconsole.common.utils.StringUtils;
  *           - fabricated DelegatedServerRuntimeApplicationRuntimeMBean
  *           - delegates to DomainRuntime.ServerRuntimes.Server1.ApplicationRuntimes.App1
  *    Server2 (not running right now)
- *     - fabricated NotRunningServerRuntimeMBean
+ *     - fabricated UnreachableServerRuntimeMBean
  *       ServerLifeCycleRuntime
  *       - fabricated DelegatedServerLifeCycleRuntimeServerLifeCycleMBean
  *       - delegates to DomainRuntime.ServerLifeCycleRuntimes.Server2
@@ -109,24 +110,28 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
   }
 
   @Override
-  BeanTypeDefSource getBeanTypeDefSource(String type) {
-    BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(nameHandler.getUnfabricatedType(type));
+  BeanTypeDefSource getBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(repoDef, nameHandler.getUnfabricatedType(type));
     if (source == null) {
       // The type doesn't exist in this WLS version.
-      return null;
     }
     // Create the fabricated type that delegates to another type.
+    BeanTypeDef undelTypeDef = repoDef.getTypeDef(nameHandler.getUnfabricatedType(type));
+    if (undelTypeDef == null) {
+      return null;
+    }
     source.setName(nameHandler.getFabricatedJavaType(source.getName()));
     source.setBaseTypes(nameHandler.getFabricatedJavaTypes(source.getBaseTypes()));
     source.setDerivedTypes(nameHandler.getFabricatedJavaTypes(source.getDerivedTypes()));
-    source.setActions(delegateActionDefs(source.getActions()));
-    source.setProperties(delegatePropertyDefs(source.getProperties()));
+    source.setActions(delegateActionDefs(undelTypeDef, source.getActions()));
+    source.setProperties(delegatePropertyDefs(undelTypeDef, source.getProperties()));
     return source;
   }
 
   @Override
-  PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(String type) {
-    PseudoBeanTypeDefSource source = getYamlReader().getPseudoBeanTypeDefSource(nameHandler.getUnfabricatedType(type));
+  PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    PseudoBeanTypeDefSource source =
+      getYamlReader().getPseudoBeanTypeDefSource(repoDef, nameHandler.getUnfabricatedType(type));
     if (source == null) {
       // This isn't a pseudo type
       return null;
@@ -263,7 +268,8 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
     // Make a set of the actions defined or customized on this type (v.s. inherited)
     Set<String> rtn = new HashSet<>();
     {
-      BeanTypeDefSource source = getYamlReader().getBeanTypeDefSource(undelTypeDef.getTypeName());
+      BeanTypeDefSource source =
+        getYamlReader().getBeanTypeDefSource(undelTypeDef.getBeanRepoDef(), undelTypeDef.getTypeName());
       if (source != null) {
         for (BeanActionDefSource actionSource : source.getActions()) {
           rtn.add(actionSource.getName());
@@ -388,13 +394,14 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
   @Override
   BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef typeDef) {
     // Return the delegated versions of any extended properties the undelegated type supports
+    BeanTypeDef undelTypeDef = nameHandler.getUnfabricatedTypeDef(typeDef);
     BeanTypeDefExtensionSource source =
-      getYamlReader().getBeanTypeDefExtensionSource(nameHandler.getUnfabricatedTypeDef(typeDef));
+      getYamlReader().getBeanTypeDefExtensionSource(undelTypeDef);
     if (source == null) {
       return null;
     }
-    source.setProperties(delegatePropertyDefs(source.getProperties()));
-    source.setActions(delegateActionDefs(source.getActions()));
+    source.setProperties(delegatePropertyDefs(undelTypeDef, source.getProperties()));
+    source.setActions(delegateActionDefs(undelTypeDef, source.getActions()));
     if (source.getProperties().isEmpty() && source.getActions().isEmpty()) {
       return null;
     }
@@ -436,24 +443,44 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
     return getYamlReader().getLinksDefSource(nameHandler.getUnfabricatedTypeDef(typeDef));
   }
 
-  private List<BeanPropertyDefSource> delegatePropertyDefs(List<BeanPropertyDefSource> propertyDefs) {
+  private List<BeanPropertyDefSource> delegatePropertyDefs(
+    BeanTypeDef undelTypeDef,
+    List<BeanPropertyDefSource> propertyDefs
+  ) {
     List<BeanPropertyDefSource> rtn = new ArrayList<>();
     for (BeanPropertyDefSource propertyDef : propertyDefs) {
-      if (propertyDef.isChild() && nameHandler.isFabricatableJavaType(propertyDef.getType())) {
-        propertyDef.setType(nameHandler.getFabricatedJavaType(propertyDef.getType()));
-        rtn.add(propertyDef);
+      if (propertyDef.isChild()) {
+        if (undelTypeDef.hasChildDef(new Path(propertyDef.getName()), true)) {
+          if (nameHandler.isFabricatableJavaType(propertyDef.getType())) {
+            propertyDef.setType(nameHandler.getFabricatedJavaType(propertyDef.getType()));
+          }
+          rtn.add(propertyDef);
+        } else {
+          // the undelegated type trimmed out the child.  we should too.
+        }
       } else {
-        rtn.add(propertyDef);
+        if (undelTypeDef.hasPropertyDef(new Path(propertyDef.getName()), true)) {
+          rtn.add(propertyDef);
+        } else {
+          // the undelegated type trimmed out the property.  we should too.
+        }
       }
     }
     return rtn;
   }
 
-  private List<BeanActionDefSource> delegateActionDefs(List<BeanActionDefSource> actionDefs) {
+  private List<BeanActionDefSource> delegateActionDefs(
+    BeanTypeDef undelTypeDef,
+    List<BeanActionDefSource> actionDefs
+  ) {
     // copy them as-is
     List<BeanActionDefSource> rtn = new ArrayList<>();
     for (BeanActionDefSource actionDef : actionDefs) {
-      rtn.add(actionDef);
+      if (undelTypeDef.hasActionDef(new Path(actionDef.getName()), true)) {
+        rtn.add(actionDef);
+      } else {
+        // the undelegated type trimmed out the action.  we should too.
+      }
     }
     return rtn;
   }

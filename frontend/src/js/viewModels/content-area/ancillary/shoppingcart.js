@@ -1,15 +1,15 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/core/utils/keyset-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander'],
-  function(oj, ko, ArrayDataProvider, HtmlUtils, keySet, keySetUtils, Runtime, ChangeManager, PageDefinitionUtils, ViewModelUtils, CoreUtils, Logger){
+define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/core/utils/keyset-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojaccordion', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojrowexpander'],
+  function(oj, ko, ArrayDataProvider, HtmlUtils, keySet, keySetUtils, Runtime, ChangeManager, PerspectiveManager, PageDefinitionUtils, ViewModelUtils, CoreUtils, Logger){
     function ShoppingCartTabTemplate(viewParams) {
-      var self = this;
+      const self = this;
 
       this.changeManagerDom = ko.observable({});
       this.additionsDom = ko.observable({});
@@ -39,10 +39,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       this.i18n = {
         tabstrip: {
           tabs: ko.observableArray([
-            {id: 'discard-tab-button', iconFile: 'discard-changes-blk_24x24', disabled: false, visible: ko.observable(true),
+            {id: 'discard-tab-button', iconFile: ko.observable('oj-ux-ico-cart-abandon'), disabled: ko.observable(true), visible: ko.observable(true),
               label: oj.Translations.getTranslatedString('wrc-shoppingcart.icons.discard.tooltip')
             },
-            {id: 'commit-tab-button', iconFile: 'commit-changes-blk_24x24', disabled: false, visible: ko.observable(true),
+            {id: 'commit-tab-button', iconFile: ko.observable('oj-ux-ico-cart-add'), disabled: ko.observable(true), visible: ko.observable(true),
               label: oj.Translations.getTranslatedString('wrc-shoppingcart.icons.commit.tooltip')
             }
           ])
@@ -51,7 +51,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
           'ancillary': {
             'contentItem': {
               id: 'shoppingcart',
-              iconFile: 'shopping-cart-non-empty-blk_24x24',
+              iconFile: ko.observable('shopping-cart-non-empty-blk_24x24'),
               tooltip: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.shoppingcart.label')
             }
           },
@@ -69,30 +69,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
 
       this.tabNode = ChangeManager.Entity.SHOPPING_CART.name;
       this.canExitCallback = viewParams.canExitCallback;
+      this.perspective = undefined;
 
       this.signalBindings = [];
 
       this.connected = function () {
-        let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
-          setTabStripTabsVisibility(!newRO);
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.perspectiveSelected.add((newPerspective) => {
-          setTabStripTabsVisibility(newPerspective.id === 'configuration');
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
+        let binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
           self.canExitCallback = exitFormCallback;
         });
-
+  
         self.signalBindings.push(binding);
-
-        const readonly = Runtime.isReadOnly();
-        setTabStripTabsVisibility(!readonly);
       };
 
       this.disconnected = function () {
@@ -101,30 +87,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         });
         self.signalBindings = [];
       };
-
-      this.onOjFocus = function () {
-        const dialog = document.getElementById(`${self.tabNode}-dialog`);
-        dialog.onkeyup = (event) => {
-          if (event.key === 'Escape'){
-            viewParams.onClose(self.tabNode);
-          }
-        };
+  
+      this.onOjFocus = function (event) {
+        removeDialogResizableHandleNodes(event);
+        self.perspective = PerspectiveManager.current();
         loadChangeManagerSections();
       };
-
+  
+      this.onOjBeforeClose = function (event) {
+        viewParams.onClose(self.tabNode);
+      };
+  
       this.closeIconClickHandler = function(event) {
         viewParams.onClose(self.tabNode);
       };
-
+  
       this.getCachedState = () => {
-        Logger.log('[SHOPPINGCART] getCachedState.');
         return {};
       };
-
-      function setTabStripTabsVisibility(visible) {
-        self.i18n.tabstrip.tabs().forEach(item =>{
-          item.visible(visible)})
-      }
 
       function checkLockOwner(){
         const changeManager = ChangeManager.getMostRecent();
@@ -182,10 +162,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
 
             updateChangeManagerSection(data.changeManager);
             expandChangeManagerSections();
+            updateShoppingCartIconFile(data.changeManager);
           })
           .catch( error => {
             ViewModelUtils.failureResponseDefaultHandling(error);
           });
+      }
+
+      function updateShoppingCartIconFile(changeManager) {
+        const iconFile = (changeManager.isLockOwner && changeManager.hasChanges ? 'shopping-cart-non-empty-tabstrip_24x24' : 'shopping-cart-empty-tabstrip_24x24');
+        self.i18n.icons.ancillary.contentItem.iconFile(iconFile);
       }
 
       function updateChangeManagerSection(changeManager){
@@ -195,38 +181,58 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
           section.count(1);
 
           self.i18n.tabstrip.tabs().forEach((tabButton) => {
-            tabButton.disabled = (!changeManager.hasChanges);
-            const ele = document.getElementById(tabButton.id);
-            switch (tabButton.id) {
-              case 'discard-tab-button':
-                if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/discard-changes-' + (tabButton.disabled ? 'disabled' : 'blk') + '_24x24.png';
-                break;
-              case 'commit-tab-button':
-                if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/commit-changes-' + (tabButton.disabled ? 'disabled' : 'blk') + '_24x24.png';
-                break;
-            }
+            setIconbarIconsEnablement(tabButton, !changeManager.hasChanges);
           });
 
           const ele = document.getElementById('shoppingcart-tab');
           if (ele !== null) ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + (changeManager.hasChanges ? 'non-empty' : 'empty') + '-tabstrip_24x24.png';
         }
       }
+  
+      function setIconbarIconsEnablement(iconbarIcon, state) {
+        if (CoreUtils.isNotUndefinedNorNull(iconbarIcon)) {
+          const index = self.i18n.tabstrip.tabs().map(item => item.id).indexOf(iconbarIcon.id);
+          if (index !== -1) {
+            self.i18n.tabstrip.tabs()[index].disabled(state);
+          }
+        }
+      }
 
+      function setAllIconbarIconsEnablement(state) {
+        for (const iconbarIcon of self.i18n.tabstrip.tabs()) {
+          setIconbarIconsEnablement(iconbarIcon, state);
+        }
+      }
+    
       this.shoppingCartTabButtonClickHandler = function(event) {
-        let id;
-        if (event.target.localName === 'img') {
-          id = event.target.id;
+        function getButtonId(event) {
+          let id;
+          if (event.type === 'click') {
+            if (event.target.localName === 'span') {
+              // The id for the button will be on the event.target element, if the icon
+              // was clicked with the mouse.
+              id = event.target.id;
+            }
+            else if (event.pointerType === '') {
+              // The id for the button will be on the event.target.firstElementChild
+              // element, if the the Enter key was press when the icon had focus.
+              if (event.target.firstElementChild.localName === 'span') {
+                id = event.target.firstElementChild.id;
+              }
+            }
+          }
+          return id;
         }
 
-        const tabButton = self.i18n.tabstrip.tabs().find(button => button.id === id);
-        if (typeof tabButton === 'undefined' || tabButton.disabled) {
+        const buttonId = getButtonId(event);
+
+        const tabButton = self.i18n.tabstrip.tabs().find(button => button.id === buttonId);
+        if (typeof tabButton === 'undefined' || tabButton.disabled()) {
           event.preventDefault();
           return false;
         }
 
-        Logger.log(`id=${id}`);
-
-        switch(id){
+        switch(buttonId){
           case 'commit-tab-button':
             ViewModelUtils.setPreloaderVisibility(true);
             ChangeManager.commitChanges()
@@ -257,21 +263,36 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         if (CoreUtils.isUndefinedOrNull(path)) return;
 
         ViewModelUtils.goToRouterPath(viewParams.parentRouter, `/configuration/${encodeURIComponent(path)}`, self.canExitCallback);
-//MLW        viewParams.onTabStripContentVisible(false);
       }.bind(this);
 
+      function handleParentIdentityEvent(node) {
+        const attr = node.attributes['data-key'];
+        if (CoreUtils.isNotUndefinedNorNull(attr)) {
+          const dataKey = attr.value;
+          const ele = document.querySelector('[name=\'' + dataKey +'\']');
+          if (node.classList.contains('oj-fwk-icon-arrow03-e')) {
+            node.classList.remove('oj-fwk-icon-arrow03-e');
+            node.classList.add('oj-fwk-icon-arrow03-s');
+            ele.style.display = 'inline-block';
+          }
+          else {
+            node.classList.remove('oj-fwk-icon-arrow03-s');
+            node.classList.add('oj-fwk-icon-arrow03-e');
+            ele.style.display = 'none';
+          }
+        }
+      }
+
       this.parentIdentityKeyClickHandler = function(event) {
-        const dataKey = event.target.attributes['data-key'].value;
-        const ele = document.querySelector('[name=\'' + dataKey +'\']');
-        if (event.target.classList.contains('oj-fwk-icon-arrow03-e')) {
-          event.target.classList.remove('oj-fwk-icon-arrow03-e');
-          event.target.classList.add('oj-fwk-icon-arrow03-s');
-          ele.style.display = 'inline-block';
+        let attr = event.target.attributes['data-key'];
+        if (CoreUtils.isNotUndefinedNorNull(attr)) {
+          handleParentIdentityEvent(event.target);
         }
         else {
-          event.target.classList.remove('oj-fwk-icon-arrow03-s');
-          event.target.classList.add('oj-fwk-icon-arrow03-e');
-          ele.style.display = 'none';
+          attr = event.target.firstElementChild.attributes['data-key'];
+          if (CoreUtils.isNotUndefinedNorNull(attr)) {
+            handleParentIdentityEvent(event.target.firstElementChild);
+          }
         }
       }.bind(this);
 
@@ -504,6 +525,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
         return { view: HtmlUtils.stringToNodeArray(bindHtml), data: self};
       }
 
+      function removeDialogResizableHandleNodes(event) {
+        const nodeList = document.querySelectorAll(`#${event.currentTarget.id} .oj-resizable-handle`);
+        if (nodeList !== null) {
+          let arr = Array.from(nodeList);
+          for (let i in arr.reverse()) {
+            const classList = nodeList[i].className.split(' ').filter(e => e);
+            if (!['oj-resizable-w', 'oj-resizable-sw','oj-resizable-s'].includes(classList.at(-1))) {
+              nodeList[i].remove();
+            }
+          }
+        }
+      }
     }
 
     return ShoppingCartTabTemplate;

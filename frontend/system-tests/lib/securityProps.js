@@ -22,8 +22,7 @@ module.exports = function (driver, file) {
         {
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","SecurityChevron","Realms",0);
             await driver.sleep(2400);
-
-            element = await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img"));
+            element = await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img"));
             await driver.sleep(4800);
             if (element.isEnabled()) {
                 await element.click();

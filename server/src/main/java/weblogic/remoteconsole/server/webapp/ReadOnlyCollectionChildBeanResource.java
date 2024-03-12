@@ -13,6 +13,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 /**
  * Handles the JAXRS methods for a readonly collection child bean's pages.
  */
@@ -44,6 +47,32 @@ public class ReadOnlyCollectionChildBeanResource extends BeanResource {
     @QueryParam("actionForm") @DefaultValue("") String actionForm,
     @QueryParam("identifier") @DefaultValue("") String identifier,
     JsonObject requestBody
+
+  ) {
+    return internalPost(slice, action, actionForm, identifier, requestBody, null);
+  }
+
+  @POST
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
+  @Produces(MediaType.APPLICATION_JSON)
+  public javax.ws.rs.core.Response post(
+    @QueryParam("slice") @DefaultValue("") String slice,
+    @QueryParam("action") @DefaultValue("") String action,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @QueryParam("identifier") @DefaultValue("") String identifier,
+    @FormDataParam("requestBody") JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
+    return internalPost(slice, action, actionForm, identifier, requestBody, parts);
+  }
+
+  protected Response internalPost(
+    String slice,
+    String action,
+    String actionForm,
+    String identifier,
+    JsonObject requestBody,
+    FormDataMultiPart parts
   ) {
     getInvocationContext().setIdentifier(identifier);
     setSlicePagePath(slice);
@@ -53,7 +82,7 @@ public class ReadOnlyCollectionChildBeanResource extends BeanResource {
     if (INPUT_FORM.equals(actionForm)) {
       return getActionInputForm(action, requestBody);
     }
-    return invokeAction(action, requestBody);
+    return invokeAction(action, requestBody, parts);
   }
 
   protected Response getSlice() {

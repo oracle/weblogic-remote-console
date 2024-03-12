@@ -1,14 +1,50 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/core/runtime', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/policy-management/policy-manager', 'wrc-frontend/microservices/policy-management/policy-data', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/pages', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger'],
-  function (oj, ko, PageDefinitionFormLayouts, PageDefinitionFields, Runtime, MessageDisplaying, PolicyManager, PolicyData, PageDataTypes, PageDefinitionPages, PageDefinitionUtils, ViewModelUtils, CbeTypes, CbeUtils, CoreUtils, CoreTypes, Logger) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'wrc-frontend/microservices/page-definition/form-layouts',
+  'wrc-frontend/microservices/page-definition/fields',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/apis/message-displaying',
+  'wrc-frontend/microservices/policy-management/policy-manager',
+  'wrc-frontend/microservices/policy-management/policy-data',
+  'wrc-frontend/microservices/page-definition/types',
+  'wrc-frontend/microservices/page-definition/pages',
+  'wrc-frontend/microservices/page-definition/utils',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/cbe-types',
+  'wrc-frontend/core/cbe-utils',
+  'wrc-frontend/core/utils',
+  'wrc-frontend/core/types',
+  'ojs/ojlogger'
+],
+  function (
+    oj,
+    ko,
+    PageDefinitionFormLayouts,
+    PageDefinitionFields,
+    Runtime,
+    MessageDisplaying,
+    PolicyManager,
+    PolicyData,
+    PageDataTypes,
+    PageDefinitionPages,
+    PageDefinitionUtils,
+    ViewModelUtils,
+    CbeTypes,
+    CbeUtils,
+    CoreUtils,
+    CoreTypes,
+    Logger
+  ) {
 
     function PolicyForm(policyData, section, rdjUrl) {
       this.policyData = policyData;
@@ -688,7 +724,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
         // Create <cfe-policy-editor> element (i.e. custom JET composite(
         const field = PageDefinitionFields.createPolicyEditor(
           'wrc-policy-editor',
-          options.isReadOnly
+          {readonly: options.isReadOnly, width: '20.625rem'}
         );
         field.setAttribute('data-parsed-expression-section', '');
         rootFormLayout.append(field);
@@ -903,6 +939,13 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/page-definition/fo
         //      policy that can later be imported.
       }
 
+    };
+
+    PolicyForm.prototype.renderActionsStrip = function (visibility = true) {
+      const div = document.querySelector('.cfe-buttonset');
+      if (div !== null) {
+        div.style.display = (visibility ? 'inline-flex' : 'none');
+      }
     };
 
     // Return PolicyForm constructor function

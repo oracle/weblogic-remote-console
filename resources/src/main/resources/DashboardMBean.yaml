@@ -16,6 +16,9 @@ properties:
 - descriptionHTML: "<p>This dashboard's type.</p>"
   name: Type
   type: java.lang.String
+- descriptionHTML: "<p>This dashboard's description.</p>"
+  name: Description
+  type: java.lang.String
 - name: TemplateBeanKeyCriteria
   type: java.lang.String
   legalValues:
@@ -158,3 +161,12 @@ properties:
       value: unfiltered
 - name: TemplateGenericPropertyValue
   type: java.lang.String
+actions:
+- name: "copy"
+  type: "void" # tbd - shouldn't it be a reference to the copy?
+  descriptionHTML: >
+    <p>Make a copy of this dashboard</p>
+  parameters:
+  - name: Name
+    type: java.lang.String
+    descriptionHTML: "The copy's name."

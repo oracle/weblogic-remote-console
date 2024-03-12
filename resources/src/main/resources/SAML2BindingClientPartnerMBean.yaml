@@ -1,0 +1,56 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.saml2.SAML2BindingClientPartnerMBean
+baseTypes:
+- weblogic.security.providers.saml2.SAML2PartnerMBean
+derivedTypes:
+- weblogic.security.providers.saml2.SAML2WebSSOPartner
+
+properties:
+- name: ClientUsername
+  type: java.lang.String
+  writable: true
+- name: ClientPassword
+  type: java.lang.String
+  encrypted: true
+  writable: true
+- name: TransportLayerClientCertHaveCertificate
+  type: boolean
+- name: TransportLayerClientCertIssuedTo
+  type: java.lang.String
+- name: TransportLayerClientCertIssuedBy
+  type: java.lang.String
+- name: TransportLayerClientCertValidFrom
+  type: java.lang.String
+- name: TransportLayerClientCertValidUntil
+  type: java.lang.String
+- name: TransportLayerClientCertVersion
+  type: int
+- name: TransportLayerClientCertSerialNumber
+  type: java.lang.String
+- name: TransportLayerClientCertSignatureAlgorithm
+  type: java.lang.String
+- name: TransportLayerClientCertPublicKey
+  type: java.lang.String
+- name: TransportLayerClientCertSubjectAlternativeNames
+  type: java.lang.String
+- name: TransportLayerClientCertExtendedKeyUsage
+  type: java.lang.String
+- name: TransportLayerClientCertBasicConstraints
+  type: int
+- name: TransportLayerClientCertThumbprintAlgorithm
+  type: java.lang.String
+- name: TransportLayerClientCertThumbprint
+  type: java.lang.String
+
+actions:
+- name: importTransportLayerClientCert
+  type: void
+  descriptionHTML: >
+    <p>Imports a SAML 2.0 Web Single Sign-On Partner's transport layer client certificate from a PEM or DER file.</p>
+  parameters:
+  - name: FileName
+    type: java.lang.String
+    descriptionHTML: >
+      Specify the path name of a .pem or .der file containing the X509 certificate you wish to import.

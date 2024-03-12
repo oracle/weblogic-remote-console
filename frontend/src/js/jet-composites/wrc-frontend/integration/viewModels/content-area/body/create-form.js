@@ -1,14 +1,52 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/pages', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/cbe-utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger'],
-  function (oj, ko, HtmlUtils, Preferences, Runtime, PerspectiveMemoryManager, MessageDisplaying, DataOperations, PageDataTypes, PageDefinitionUsedIfs, PageDefinitionPages, PageDefinitionUtils, ViewModelUtils, CbeTypes, CbeUtils, CoreUtils, CoreTypes, Logger) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojhtmlutils',
+  'wrc-frontend/microservices/preferences/preferences-manager',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/apis/message-displaying',
+  'wrc-frontend/apis/data-operations',
+  'wrc-frontend/microservices/page-definition/types',
+  'wrc-frontend/microservices/page-definition/usedifs',
+  'wrc-frontend/microservices/page-definition/pages',
+  'wrc-frontend/microservices/page-definition/utils',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/cbe-types',
+  'wrc-frontend/core/cbe-utils',
+  'wrc-frontend/core/utils',
+  'wrc-frontend/core/types',
+  'ojs/ojlogger'
+],
+  function (
+    oj,
+    ko,
+    HtmlUtils,
+    PreferencesManager,
+    Runtime,
+    PerspectiveMemoryManager,
+    MessageDisplaying,
+    DataOperations,
+    PageDataTypes,
+    PageDefinitionUsedIfs,
+    PageDefinitionPages,
+    PageDefinitionUtils,
+    ViewModelUtils,
+    CbeTypes,
+    CbeUtils,
+    CoreUtils,
+    CoreTypes,
+    Logger
+  ) {
 
     /**
      *
@@ -414,18 +452,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
 
       const pdjTypes = new PageDataTypes(properties, this.beanTree.type);
       for (const [key, tdvrdu] of Object.entries(this.backingData.attributes)) {
-        const filtered = properties.filter(property => property.name === key);
-        if (tdvrdu.required && filtered.length > 0) {
-          const value = pdjTypes.getConvertedObservableValue(key, tdvrdu.value);
-          const completed = (typeof value !== 'undefined' && value !== null);
-          if (!completed) {
-            const property = properties.find(property => property.name === key);
-            if (typeof property !== 'undefined') {
-              pageState.messages.push({
-                severity: 'error',
-                detail: oj.Translations.getTranslatedString('wrc-create-form.pageState.error.detail', property.label)
-              });
-              pageState.succeeded = false;
+        // Targets is not required for WKT-UI and WDT when deploying an application.
+        if (!(this.viewParams.perspective.id === 'modeling' && key === 'Targets' &&
+          this.rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries]/))) {
+          const filtered = properties.filter(property => property.name === key);
+          if (tdvrdu.required && filtered.length > 0) {
+            const value = pdjTypes.getConvertedObservableValue(key, tdvrdu.value);
+            let completed = (typeof value !== 'undefined' && value !== null);
+            if (completed) {
+              if (typeof value.length !== 'undefined')
+                completed = (value.length === 0) ? false : true;
+            }
+            if (!completed) {
+              const property = properties.find(property => property.name === key);
+              if (typeof property !== 'undefined') {
+                pageState.messages.push({
+                  severity: 'error',
+                  detail: oj.Translations.getTranslatedString('wrc-create-form.pageState.error.detail', property.label)
+                });
+                pageState.succeeded = false;
+              }
             }
           }
         }
@@ -490,7 +536,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
           MessageDisplaying.displayErrorMessagesHTML(
             pageState.messages,
             pageState.summary,
-            Preferences.notifications.autoCloseInterval()
+            PreferencesManager.notifications.autoCloseInterval()
           );
         }
         return pageState;
@@ -546,7 +592,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
         if (typeof attrValues !== 'undefined') {
           rtnval = attrValues.default;
         } else {
-          if (fieldName === 'Upload') {
+          if (fieldName === 'Upload' || fieldName === 'StartApplication') {
             rtnval = this.rdjData.data[fieldName].value;
           }
         }
@@ -631,7 +677,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/microservices
               // currently in the properties we're looping through to
               // create the new dataPayload. This is unlikely, but you
               // never know with the usedIf stuff TM creates.
-              const entry = backingData.removed.find(entry => entry.name.endsWith(replacer));
+              const entry = backingData.removed.find(entry =>
+                this.getBackingDataAttributeReplacer(entry.name) === replacer);
               if (typeof entry !== 'undefined') {
                 // Found a removed array item, so update the backing
                 // data value from it.

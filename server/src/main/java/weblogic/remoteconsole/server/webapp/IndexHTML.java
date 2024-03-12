@@ -56,8 +56,6 @@ public class IndexHTML {
       // cache it
       resources.put(selectedLang,resource);
     }
-
     return resource;
   }
-
 }

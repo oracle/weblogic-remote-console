@@ -1,8 +1,9 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
+import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 
@@ -21,8 +22,8 @@ class DomainMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   }
 
   @Override
-  BeanTypeDefSource getBeanTypeDefSource(String type) {
-    BeanTypeDefSource source = super.getBeanTypeDefSource(type);
+  BeanTypeDefSource getBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    BeanTypeDefSource source = super.getBeanTypeDefSource(repoDef, type);
     // Add the fabricated collection of beans for recent simple search results
     {
       BeanPropertyDefSource property = new BeanPropertyDefSource();

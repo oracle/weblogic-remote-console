@@ -1,34 +1,21 @@
 <!--
-Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="header-container">
 
-  <div id="header-container-images">
-    <!--
-      When the CBE goes down there is no Helidon server to serve up images, so
-      we need to stash images here. Doing that allows us to have the images in
-      memory, and be able to use them with a <canvas> element to set the image
-      for the connectivity indicator.
-    -->
-    <img id="online-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.online.iconFile + '.png', title: i18n.icons.connectivity.online.tooltip, alt: i18n.icons.connectivity.online.tooltip}"/>
-    <img id="offline-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.offline.iconFile + '.png', title: i18n.icons.connectivity.offline.tooltip, alt: i18n.icons.connectivity.offline.tooltip}"/>
-    <img id="detached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.detached.iconFile + '.png', title: i18n.icons.connectivity.detached.tooltip, alt: i18n.icons.connectivity.detached.tooltip}"/>
-    <img id="unattached-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.unattached.iconFile + '.png', title: i18n.icons.connectivity.unattached.tooltip, alt: i18n.icons.connectivity.unattached.tooltip}"/>
-  </div>
-
   <div class="oj-flex oj-sm-flex-items-initial">
-    <div id="navtreeToggle" class="oj-flex-item">
-      <oj-module config="[[navtreeTogglerModuleConfig]]">
-      </oj-module>
-    </div>
 
-    <div id="header-title" class="oj-flex-item">
-      <img id="wrc-app-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.wrcApp.iconFile + '.png', alt: i18n.app.name}"/>
-      <a href="/">
-        <span id="app-name" :class="[[appInfoTitleClass]]">
+    <oj-module config="[[navtreeTogglerModuleConfig]]">
+    </oj-module>
+
+    <div id="branding-area-title-container">
+      <oj-module config="[[appMenuModuleConfig]]"></oj-module>
+
+      <a href="/" id="app-reset-link">
+        <span :class="[[appInfoTitleClass]]">
           <oj-bind-text value="[[appName]]"></oj-bind-text>
-          <span id="app-version" :class="[[appInfoTitleClass]]">
+          <span :class="[[appInfoTitleClass]]">
             <oj-bind-text value="[[i18n.app.version.value]]"></oj-bind-text>
           </span>
         </span>
@@ -40,22 +27,58 @@ Copyright (c) 2020, 2023, Oracle and/or its affiliates.
     </div>
 
     <div id="branding-area-header-iconbar" class="oj-flex-item oj-helper-margin-start-auto">
-      <oj-bind-if test="[[i18n.icons.messageCenter.visible]]">
-        <a id="messageCenter" on-click="[[brandingAreaIconbarClickListener]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.messageCenter.tooltip}">
+      <div id="app-alerts" class="oj-flex-item">
+        <oj-module config="[[appAlertsModuleConfig]]"></oj-module>
+      </div>
+
+      <div id="app-theme" class="oj-flex-item">
+        <oj-module config="[[appThemeModuleConfig]]"></oj-module>
+      </div>
+
+      <oj-bind-if test="[[i18n.icons.whatsNew.visible]]">
+        <a
+          :id="[[i18n.icons.whatsNew.id]]"
+          href="#"
+          on-click="[[brandingAreaIconbarClickListener]]"
+        >
           <span class="cfe-branding-area-header-iconbar-icon">
-            <oj-bind-if test="[[alerts.count() > 0]]">
-              <span class="cfe-icon-overlay" data-bind="text: [[alerts.count()]]"></span>
-            </oj-bind-if>
-            <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.messageCenter.iconFile + '.png', alt: i18n.icons.messageCenter.tooltip}"/>
+            <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.whatsNew.iconFile + '.png', alt: i18n.icons.whatsNew.tooltip, title: i18n.icons.whatsNew.tooltip}"/>
           </span>
         </a>
       </oj-bind-if>
 
+      <oj-bind-if test="[[i18n.icons.howDoI.visible]]">
+        <a
+          :id="[[i18n.icons.howDoI.id]]"
+          href="#"
+          on-click="[[brandingAreaIconbarClickListener]]"
+        >
+          <span class="cfe-branding-area-header-iconbar-icon" :title="[[i18n.icons.howDoI.tooltip]]">
+            <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.howDoI.iconFile + '.png', alt: i18n.icons.howDoI.tooltip}"/>
+          </span>
+        </a>
+      </oj-bind-if>
+
+      <oj-bind-if test="[[i18n.icons.tips.visible]]">
+        <a
+          :id="[[i18n.icons.tips.id]]"
+          href="#"
+          on-click="[[brandingAreaIconbarClickListener]]"
+        >
+          <span class="cfe-branding-area-header-iconbar-icon" :title="[[i18n.icons.tips.tooltip]]">
+            <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.tips.iconFile + '.png', alt: i18n.icons.tips.tooltip}"/>
+          </span>
+        </a>
+      </oj-bind-if>
 
       <oj-bind-if test="[[i18n.icons.help.visible]]">
-        <a id="help" on-click="[[brandingAreaIconbarClickListener]]" data-bind="attr: {href: '#', tabindex: '-1', 'title': i18n.icons.help.tooltip}">
+        <a
+          :id="[[i18n.icons.help.id]]"
+          href="#"
+          on-click="[[brandingAreaIconbarClickListener]]"
+        >
           <span class="cfe-branding-area-header-iconbar-icon">
-            <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.help.iconFile + '.png', alt: i18n.icons.help.tooltip}"/>
+            <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.help.iconFile + '.png', alt: i18n.icons.help.tooltip, title: i18n.icons.help.tooltip}"/>
           </span>
         </a>
       </oj-bind-if>
@@ -67,19 +90,22 @@ Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 
         <span class="cfe-branding-area-header-iconbar-icon">
           <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.connectivity.insecure.iconFile + '.png', alt: i18n.icons.connectivity.insecure.tooltip, title: i18n.icons.connectivity.insecure.tooltip}"/>
-          <!--
-            This image is an indicator, not a clickable icon or
-            button with an image, so it shouldn't have a label.
-            It has a tooltip for users that are curious about
-            it's meaning. The tooltip is also used as the image's
-            alt attribute, as required for screen readers.
+<!--
+          This image is an indicator, not a clickable icon or
+          button with an image, so it shouldn't have a label.
+          It has a tooltip for users that are curious about
+          it's meaning. The tooltip is also used as the image's
+          alt attribute, as required for screen readers.
 
-          <span class="cfe-insecure-indicator-label">
-            <oj-bind-text value="[[i18n.labels.connectivity.insecure]]"></oj-bind-text>
-          </span>
-          -->
+        <span class="cfe-insecure-indicator-label">
+          <oj-bind-text value="[[i18n.labels.connectivity.insecure]]"></oj-bind-text>
+        </span>
+-->
         </span>
       </oj-bind-if>
+
+      <oj-module config="[[appProfileModuleConfig]]"></oj-module>
+
       <!-- Keep connectivity indicator icon hidden because no one likes it and the meaning is too confusing :-)
           <canvas id="console-state-bar" width="12" height="24" data-bind="attr: {title: i18n.icons.connectivity.unattached.tooltip}"></canvas>
       -->

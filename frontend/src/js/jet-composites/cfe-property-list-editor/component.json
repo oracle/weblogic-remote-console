@@ -4,6 +4,12 @@
   "jetVersion": "^11.1.0",
   "displayName": "A user friendly, translatable name of the component.",
   "description": "A translatable high-level description for the component.",
+  "dependencies": {
+    "wrc-frontend-apis": "^1.0.0",
+    "wrc-frontend-core": "^1.0.0",
+    "wrc-frontend-integration": "^1.0.0",
+    "wrc-frontend-microservices": "^1.0.0"
+  },
   "properties": {
     "propertyListName": {
       "description": "Name of property list, which should be set to property name specified in PDJ.",
@@ -27,6 +33,16 @@
       "description": "Indicates if this property list editor is read only, defaults to false.",
       "type": "boolean"
     },
+    "resize": {
+      "description": "",
+      "type": "string",
+      "value": "both"
+    },
+    "width": {
+      "description": "",
+      "type": "string",
+      "value": "40.625rem"
+    },
     "addButtonTooltip": {
       "description": "Tooltip for the add-row icon",
       "type": "string"
@@ -45,8 +61,34 @@
     }
   },
   "events": {
-
-  }, 
+    "propertyAdded": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "displayName": "property",
+        "description": "",
+        "type": "object"
+      }
+    },
+    "propertyChanged": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "displayName": "property",
+        "description": "",
+        "type": "object"
+      }
+    },
+    "propertyDeleted": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "displayName": "property",
+        "description": "",
+        "type": "object"
+      }
+    }
+  },
   "slots": {
 
   }

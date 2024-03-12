@@ -3,6 +3,7 @@
 'use strict';
 
 const {By, Key, until, wait, webdriver} = require("selenium-webdriver");
+const path = require("path");
 
 //Browser type, Hostname and AdminServer Port
 //const browserName = process.env.browser='chrome';
@@ -10,9 +11,11 @@ const browserName = process.env.browser='chrome-headless';
 const hostName = process.env.hostname || 'localhost';
 const adminPort = process.env.adminPort || '8012';
 const remoteAdminPort =  process.env.consolePort || '7001';
-const adminUrl = 'http://' + hostName + ':' + adminPort;
-const remoteUrl = 'http://'+hostName+':'+remoteAdminPort;
-const domConName = "1411LocalDomain";
+const adminUrl = process.env.adminUrl || 'http://' + hostName + ':' + adminPort;
+const remoteUrl = process.env.remoteUrl || 'http://'+hostName+':'+remoteAdminPort;
+const domConName = "14120LocalDomain";
+const domSSLProductDomain = "141200(100.111.143.228)SSLProductDomain";
+const remoteSSLAdminUrl = "https://100.111.143.228:9002";
 
 if (process.argv.length < 8) {
     console.log("Incorrect syntax, missing parameters");
@@ -173,22 +176,52 @@ module.exports = function (driver, file) {
             }
         },
 
-        goToDefaultDomain: async function (driver) {
-            let projectName = "domainProject";
-            const file = "frontend/system-tests/lib/domainProject.json";
+        connectSSLAdminServer: async function (driver,projectFileName,providerName,userName,password) {
+            const file = "frontend/system-tests/lib/"+projectFileName;
             const path = require('path');
-            const fileName = process.env.OLDPWD + path.sep + file;
-            await this.importProject(driver,projectFileName);
-            if (System.getenv("CONSOLE_TEST_PASSWORD")) {
-              password = System.getenv("CONSOLE_TEST_PASSWORD");
-            }
-            await this.selectDomainConnection(driver,domConName);
+            const projectFilePath = process.env.OLDPWD + path.sep + file;
             try {
-                console.log("Create Domain Connection");
-                await this.login(driver,domConName,userName,password,remoteAdminUrl);
+                await admin.importProject(driver,projectFilePath);
+                await driver.sleep(2400);
+                await admin.selectTree(driver,providerName);
+                await driver.sleep(1200);
+                console.log("Enter user name: " + userName);
+                element = driver.findElement(By.xpath("//input[@id='username-field|input']"));
+                if (element.isEnabled()) {
+                    await element.clear();
+                    await element.sendKeys(userName);
+                }
+                await driver.sleep(1200);
+                console.log("Enter password name: " + password);
+                element = driver.findElement(By.xpath("//input[@id='password-field|input']"));
+                if (element.isEnabled()) {
+                    await element.clear();
+                    await element.sendKeys(password);
+                }
+                await driver.sleep(1200);
+                console.log("Enter Remote SSL Product AdminServer URL");
+                element = driver.findElement(By.xpath("//input[@id='url-field|input']"));
+                if (element.isEnabled()) {
+                    await element.clear();
+                    await element.sendKeys(remoteSSLAdminUrl);
+                }
+                await driver.sleep(1200);
+                console.log("Check 'Make Insecure Connection' option");
+                element = driver.findElement(By.xpath("//input[@id='insecure-checkbox']"));
+                if (!element.isSelected()) {
+                    console.log("'Insecure Connection' option is disable - enable it.");
+                    await element.click();
+                }
+                else {
+                    console.log("'Insecure Connection' option is already enable, skip to enable it.");
+                }
+                await driver.sleep(2400);
+                console.log("Click OK button");
+                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn11')]")).click();
+                await driver.sleep(2400);
             }
             catch (e) {
-                console.log("Remote Console either run in credential mode, or already login - skip to login");
+                console.log("SSL AdminServer is already connected - skip to login");
             }
         },
 
@@ -251,8 +284,6 @@ module.exports = function (driver, file) {
             await driver.findElement(By.xpath("//input[@id='file-chooser']")).sendKeys(wdtModelFile);
             await driver.sleep(2400);
             console.log("Click OK button");
-            //await driver.findElement(By.xpath("//span[@id=''dlgOkBtn12_oj38|text']")).click();
-            //await driver.findElement(By.xpath("//oj-button[starts-with(@id,'dlgOkBtn')]")).click();
             await driver.findElement(By.xpath("//oj-button[starts-with(@id,'dlgOkBtn12')]")).click();
             await driver.sleep(2400);
         },
@@ -279,7 +310,7 @@ module.exports = function (driver, file) {
             await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
             await driver.sleep(1400);
             console.log("Select to Import Project " + projectFileName);
-            await driver.findElement(By.id("file-chooser")).sendKeys(projectFileName);
+            await driver.findElement(By.xpath("//input[@id='file-chooser-provider-management']")).sendKeys(projectFileName);
             await driver.sleep(1400);
             console.log("Click OK button");
             await driver.findElement(By.xpath("//oj-button[@id='dlgOkBtn14']/button/div")).click();
@@ -348,61 +379,80 @@ module.exports = function (driver, file) {
             }
         },
 
-        goToNavStripImageMenuLink: async function(driver,navImageMenuLink) {
-            await driver.manage().setTimeouts( { implicit: 6400 } )
-            await this.goToHomePageUrl(driver);
-            await driver.sleep(6400);
-            console.log("Click NavStrip "+navImageMenuLink+" link.");
-            element = driver.findElement(By.css("#"+navImageMenuLink+" > .navstrip-icon"));
-            if (element.isEnabled()) {
-                await element.click();
-            }
-        },
-
-        goToNavTreeLevelOneLink: async function(driver,navImageMenuLink,levelOneLink) {
-            await driver.manage().setTimeouts( { implicit: 900000 } )
-            await this.goToNavStripImageMenuLink(driver,navImageMenuLink);
-            await driver.sleep(8400);
-            console.log("Click "+navImageMenuLink+"->"+levelOneLink+" NavTree link.");
-            element = driver.findElement(By.xpath("//span[contains(.,\'"+levelOneLink+"\')]"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            if (element.isEnabled()) {
-                await element.click();
-            }
-        },
-
-        goToNavTreeLevelTwoLink: async function(driver,navImageMenuLink,levelOneLink,levelTwoLink) {
-            await this.goToNavTreeLevelOneLink(driver,navImageMenuLink,levelOneLink);
-            await driver.sleep(8400);
-            console.log("Click " + navImageMenuLink + "->" + levelOneLink + "->" + levelTwoLink + " NavTree link.");
-            if (levelTwoLink.toString() == "Domain") {
-                await driver.findElement(By.xpath("//li/a/span[2]")).click();
+        goToNavStripImageMenuLink: async function(driver,navImageMenuLink,nonSSL=true) {
+            await driver.manage().setTimeouts( { implicit: 640000 } )
+            if (nonSSL) {
+                console.log("Test run with Non SSL Production Server provider");
+                await this.goToHomePageUrl(driver);
+                await driver.sleep(6400);
+                console.log("Click NavStrip " + navImageMenuLink + " link.");
+                element = driver.findElement(By.css("#" + navImageMenuLink + " > .navstrip-icon"));
+                if (element.isEnabled()) {
+                    await element.click();
+                }
             }
             else {
-                element = driver.findElement(By.xpath("//span[contains(.,\'" + levelTwoLink + "\')]"));
+                console.log("Test run with SSL Production Server provider");
+                await admin.connectSSLAdminServer(driver,"wdtDomainProject.json",
+                    domSSLProductDomain,userName,password);
+                console.log("Click NavStrip " + navImageMenuLink + " link.");
+                element = driver.findElement(By.css("#" + navImageMenuLink + " > .navstrip-icon"));
                 if (element.isEnabled()) {
                     await element.click();
                 }
             }
         },
 
-        goToNavTreeLevelThreeLink: async function(driver,navImageMenuLink,levelOneLink,levelTwoLink,levelThreeLink) {
-            await this.goToNavTreeLevelTwoLink(driver,navImageMenuLink,levelOneLink,levelTwoLink);
+        goToNavTreeLevelOneLink: async function(driver,navImageMenuLink,levelOneLink,nonSSL) {
+            await driver.manage().setTimeouts( { implicit: 900000 } )
+            await this.goToNavStripImageMenuLink(driver,navImageMenuLink,nonSSL);
+            await driver.sleep(8400);
+            console.log("Click "+navImageMenuLink+"->"+levelOneLink+" NavTree link.");
+            //element = driver.findElement(By.xpath("//span[contains(.,\'"+levelOneLink+"\')]"));
+            element = driver.findElement(
+                By.xpath("//*[text()=\'"+levelOneLink+"\' and @class='oj-navigationlist-item-label']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            if (element.isEnabled()) {
+                await element.click();
+            }
+        },
+
+        goToNavTreeLevelTwoLink: async function(driver,navImageMenuLink,levelOneLink,levelTwoLink,nonSSL) {
+            await this.goToNavTreeLevelOneLink(driver,navImageMenuLink,levelOneLink,nonSSL);
+            await driver.sleep(8400);
+            console.log("Click " + navImageMenuLink + "->" + levelOneLink + "->" + levelTwoLink + " NavTree link.");
+            if (levelTwoLink.toString() == "Domain") {
+                await driver.findElement(By.xpath("//li/a/span[2]")).click();
+            }
+            else {
+                //element = driver.findElement(By.xpath("//span[contains(.,\'" + levelTwoLink + "\')]"));
+                element = driver.findElement(
+                    By.xpath("//span[text()=\'"+levelTwoLink+"\' and @class='oj-navigationlist-item-label']"));
+                if (element.isEnabled()) {
+                    await element.click();
+                }
+            }
+        },
+
+        goToNavTreeLevelThreeLink: async function(driver,navImageMenuLink,levelOneLink,levelTwoLink,levelThreeLink,nonSSL) {
+            await this.goToNavTreeLevelTwoLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,nonSSL);
             await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+" NavTree link.");
-            element = driver.findElement(By.xpath("//span[contains(.,\'"+levelThreeLink+"\')]"));
+            //element = driver.findElement(By.xpath("//span[contains(.,\'"+levelThreeLink+"\')]"));
+            element = driver.findElement(
+                By.xpath("//span[text()=\'"+levelThreeLink+"\' and @class='oj-navigationlist-item-label']"));
             if (element.isEnabled()) {
                 await element.click();
             }
         },
 
         goToNavTreeLevelFourLink: async function(driver,navImageMenuLink,levelOneLink,
-                                                 levelTwoLink,levelThreeLink,levelFourLink)
+                                                 levelTwoLink,levelThreeLink,levelFourLink,nonSSL)
         {
-            await this.goToNavTreeLevelThreeLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,levelThreeLink);
+            await this.goToNavTreeLevelThreeLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,levelThreeLink,nonSSL);
             await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"
-                                    +levelThreeLink+"->"+levelFourLink+" NavTree link.");
+                +levelThreeLink+"->"+levelFourLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelFourLink+"\')]"));
             if (element.isEnabled()) {
                 await element.click();
@@ -410,12 +460,12 @@ module.exports = function (driver, file) {
         },
 
         goToNavTreeLevelFiveLink: async function(driver,navImageMenuLink,levelOneLink,
-                                                 levelTwoLink,levelThreeLink,levelFourLink,levelFiveLink)
+                                                 levelTwoLink,levelThreeLink,levelFourLink,levelFiveLink,nonSSL)
         {
-            await this.goToNavTreeLevelFourLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,levelThreeLink,levelFourLink);
+            await this.goToNavTreeLevelFourLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,levelThreeLink,levelFourLink,nonSSL);
             await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"
-                                +levelThreeLink+"->"+levelFourLink+"->"+levelFiveLink+" NavTree link.");
+                +levelThreeLink+"->"+levelFourLink+"->"+levelFiveLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelFiveLink+"\')]"));
             if (element.isEnabled()) {
                 await element.click();
@@ -423,10 +473,10 @@ module.exports = function (driver, file) {
         },
 
         goToNavTreeLevelSixLink: async function(driver,navImageMenuLink,levelOneLink,
-                                                levelTwoLink,levelThreeLink,levelFourLink,levelFiveLink,levelSixLink)
+                                                levelTwoLink,levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,nonSSL)
         {
             await this.goToNavTreeLevelFiveLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,
-            levelThreeLink,levelFourLink,levelFiveLink);
+                levelThreeLink,levelFourLink,levelFiveLink,nonSSL);
             await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"
                 +levelThreeLink+"->"+levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+" NavTree link.");
@@ -437,10 +487,10 @@ module.exports = function (driver, file) {
         },
 
         goToNavTreeLevelSevenLink: async function(driver,navImageMenuLink,levelOneLink,levelTwoLink,
-                                                  levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink)
+                                                  levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink,nonSSL)
         {
             await this.goToNavTreeLevelSixLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,
-                levelThreeLink,levelFourLink,levelFiveLink,levelSixLink);
+                levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,nonSSL);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+"->"
                 +levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+"->"+levelSevenLink+" NavTree link.");
             await driver.sleep(8400);
@@ -452,10 +502,10 @@ module.exports = function (driver, file) {
 
         goToNavTreeLevelEightLink: async function(driver,navImageMenuLink,levelOneLink,levelTwoLink,
                                                   levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink,
-                                                  levelEightLink)
+                                                  levelEightLink,nonSSL)
         {
             await this.goToNavTreeLevelSevenLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,
-            levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink);
+                levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink,nonSSL);
             await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+"->"
                 +levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+"->"+levelSevenLink+"->"+levelEightLink+" NavTree link.");
@@ -466,10 +516,10 @@ module.exports = function (driver, file) {
 
         goToNavTreeLevelNineLink: async function(driver,navImageMenuLink,levelOneLink,levelTwoLink,
                                                  levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink,
-                                                 levelEightLink,levelNineLink)
+                                                 levelEightLink,levelNineLink,nonSSL)
         {
             await this.goToNavTreeLevelEightLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,
-            levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink,levelEightLink);
+                levelThreeLink,levelFourLink,levelFiveLink,levelSixLink,levelSevenLink,levelEightLink,nonSSL);
             await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+"->"
                 +levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+"->"+levelSevenLink+"->"
@@ -590,10 +640,6 @@ module.exports = function (driver, file) {
                     await driver.sleep(1400);
                     console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
                                 " Delete row button to delete " + objectMBeanName + " object.");
-                    element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span"));
-                    driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-                    await driver.sleep(900);
-                    await element.click();
                     break;
                 case '3':
                     await this.goToNavTreeLevelThreeLink(driver,navImageMenuLink,levelOneLink,
@@ -601,10 +647,6 @@ module.exports = function (driver, file) {
                     await driver.sleep(1400);
                     console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
                         "->"+levelThreeLink+" Delete row button");
-                    element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span"));
-                    driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-                    await driver.sleep(900);
-                    await element.click();
                     break;
                 case '4':
                     await this.goToNavTreeLevelFourLink(driver,navImageMenuLink,levelOneLink,
@@ -612,15 +654,18 @@ module.exports = function (driver, file) {
                     await driver.sleep(1400);
                     console.log("Click " +navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+
                         "->"+levelThreeLink+"->"+levelFourLink+" Delete row button");
-                    element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span"));
-                    driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-                    await driver.sleep(900);
-                    await element.click();
                     break;
             }
-            await driver.sleep(8400);
+            console.log("Select object at "+objLocation+" row to delete from Object table");
+            element =  driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-selector/span/input"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(1200);
+            console.log("Click Delete button");
+            await driver.findElement(By.xpath("//oj-button[@id='delete']")).click();
+            await driver.sleep(1200);
             await this.commitChanges(driver);
-            await driver.sleep(9600);
+            await driver.sleep(6400);
         },
 
         //
@@ -686,10 +731,13 @@ module.exports = function (driver, file) {
             console.log("Click to delete "+objName+ " from "+scrumName+" list");
             //Different syntax to delete an object - utilities test case 2
             await driver.sleep(1400);
-            element = driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-button/button/div/span/span"));
+            element =  driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-selector/span/input"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
-            await driver.sleep(900);
+            await driver.sleep(1200);
+            console.log("Click Delete button");
+            await driver.findElement(By.xpath("//oj-button[@id='delete']")).click();
+            await driver.sleep(1200);
         },
 
 
@@ -828,7 +876,7 @@ module.exports = function (driver, file) {
         /////
         //GoTo specific page
         goToLandingPanelSubTreeCard: async function(driver,landingImageName,
-                                                          headerContainerName,panelCard,arrowIndex) {
+                                                    headerContainerName,panelCard,arrowIndex) {
             await this.goToLandingPanelHeader(driver, landingImageName, headerContainerName, arrowIndex);
             await driver.sleep(4800);
             console.log("Click " + landingImageName + "->" + headerContainerName + "->" + panelCard + " link.");
@@ -876,19 +924,46 @@ module.exports = function (driver, file) {
                                       panelCard,arrowIndex,tabNameId)
         {
             //arrowIndex: 5 for right and 3 for left arrow (1 doesn't need arrow)
-            //tabNameId: 1(General), 3(Security), 5(Concurrency), 7(Web Application), 9(Logging), 11(Batch)
+            //tabNameId: 1(General), 3(Security), 5(Concurrency), 7(Web Application), 9(Logging), 11(Management Services)
             await this.goToLandingPanelSubTreeCard(driver,landingImageName, headerContainerName,
                                                          panelCard,arrowIndex);
             await driver.sleep(1200);
-            console.log("Click " +landingImageName+"->"+headerContainerName+"->"+panelCard+"->"+tabNameId+" index tab.");
-            if (tabNameId == 1)
-                element = driver.findElement(By.xpath("//span[contains(.,'General')]"));
-            else if (tabNameId == 7)
-                element = driver.findElement(By.xpath("//span[contains(.,'Web Application')]"));
-            else if (tabNameId == 11)
-                element = driver.findElement(By.xpath("//span[contains(.,'Batch')]"));
-            else
-                element = driver.findElement(By.xpath("//li["+tabNameId+"]/a/span"));
+            switch(tabNameId.toString()) {
+                case '1':
+                    element = driver.findElement(
+                        By.xpath("//span[@class='oj-tabbar-item-label' and text()='General'] "));
+                    console.log("Click " + landingImageName + "->" + headerContainerName + "->" + panelCard + "->" + tabNameId + " index General tab ");
+                    break;
+                case '3':
+                    element = driver.findElement(
+                        By.xpath("//span[@class='oj-tabbar-item-label' and text()='Security']"));
+                    console.log("Click " + landingImageName + "->" + headerContainerName + "->" + panelCard + "->" + tabNameId + " index Security tab ");
+                    break;
+                case '5':
+                    element = driver.findElement(
+                        By.xpath("//span[@class='oj-tabbar-item-label' and text()='Concurrency']"));
+                    console.log("Click " + landingImageName + "->" + headerContainerName + "->" + panelCard + "->" + tabNameId + " index Concurrency tab ");
+                    break;
+                case '7':
+                    element = driver.findElement(
+                        By.xpath("//span[@class='oj-tabbar-item-label' and text()='Web Application']"));
+                    console.log("Click " + landingImageName + "->" + headerContainerName + "->" + panelCard + "->" + tabNameId + " index Web Application tab ");
+                    break;
+                case '9':
+                    element = driver.findElement(
+                        By.xpath("//span[@class='oj-tabbar-item-label' and text()='Logging']"));
+                    console.log("Click " + landingImageName + "->" + headerContainerName + "->" + panelCard + "->" + tabNameId + " index Logging tab ");
+                    break;
+                case '11':
+                    element = driver.findElement(
+                        By.xpath("//span[@class='oj-tabbar-item-label' and text()='Management Services']"));
+                    console.log("Click " + landingImageName + "->" + headerContainerName + "->" + panelCard + "->" + tabNameId + " index Management Srvices tab ");
+                    break;
+                default:
+                    console.log("Invalid Index for Domain Properties tab");
+                    break;
+            }
+            await driver.sleep(1200);
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -1086,11 +1161,11 @@ module.exports = function (driver, file) {
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})",element);
             await driver.sleep(8400);
             await element.click();
-            await driver.sleep(1200);
+            await driver.sleep(6400);
             element = await driver.findElement(By.id(idSearchList));
-            await driver.sleep(1200);
+            await driver.sleep(6400);
             await element.sendKeys(Key.DOWN);
-            await driver.sleep(3600);
+            await driver.sleep(6400);
             //Clear current element in the oj-search-select-list
             var i;
             for (i = 0; i < 60; i++) {
@@ -1099,7 +1174,7 @@ module.exports = function (driver, file) {
             }
             await element.sendKeys(Key.CLEAR);
             await element.sendKeys(searchItem);
-            await driver.sleep(3600);
+            await driver.sleep(6400);
             await element.sendKeys(Key.DOWN);
             await element.sendKeys(Key.ENTER);
             await element.sendKeys(Key.TAB);
@@ -1207,6 +1282,8 @@ module.exports.remoteAdminUrl = remoteAdminUrl;
 module.exports.remoteUrl = remoteUrl;
 module.exports.browserName = browserName;
 module.exports.domConName = domConName;
+module.exports.domSSLProductDomain = domSSLProductDomain;
+module.exports.remoteSSLAdminUrl = remoteSSLAdminUrl;
 // FortifyIssueSuppression Password Management: Password in Comment
 // This is not a password, but just a parameter
 module.exports.credential = {

@@ -49,7 +49,7 @@ describe.only('Test Suite: monitoringPanel_test for runtime and control ', funct
             await admin.goToLandingPanelSubTreeCard(driver,"Monitoring Tree","EnvironmentChevron",
                 "JVM Runtime");
             await admin.goToLandingPanelSubTreeCard(driver,"Monitoring Tree","EnvironmentChevron",
-                "Node Manager Runtimes");
+                "Node Manager Logs");
             await admin.goToLandingPanelSubTreeCard(driver,"Monitoring Tree","EnvironmentChevron",
                 "Clustering");
             await admin.goToLandingPanelSubTreeCard(driver,"Monitoring Tree","EnvironmentChevron",

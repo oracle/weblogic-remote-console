@@ -33,5 +33,6 @@ properties:
 - name: DeploymentPlan
   multiLineString: true
 
+editable: true
 disableMBeanJavadoc: true
-supportsCustomFilteringDashboards: false
+supportsFilteringDashboards: false

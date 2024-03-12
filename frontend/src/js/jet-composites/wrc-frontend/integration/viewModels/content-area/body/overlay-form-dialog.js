@@ -1,14 +1,14 @@
 /**
  * @license
- * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/common', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/utils', './create-form', './help-form', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset'],
-  function (oj, ko, Router, ArrayDataProvider, HtmlUtils, DataOperations, MessageDisplaying, NavtreeManager, PerspectiveMemoryManager, PageDefinitionCommon, PageDataTypes, PageDefinitionFields, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, CreateForm, HelpForm, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/common/multipart-form', 'wrc-frontend/microservices/page-definition/common', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/common/page-definition-helper', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/utils', './create-form', './help-form', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset'],
+  function (oj, ko, Router, ArrayDataProvider, HtmlUtils, DataOperations, MessageDisplaying, NavtreeManager, PerspectiveMemoryManager, MultipartForm, PageDefinitionCommon, PageDataTypes, PageDefinitionFields, PageDefinitionHelper, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, CreateForm, HelpForm, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function OverlayDialogViewModel(viewParams) {
 
       const self = this;
@@ -83,6 +83,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       this.helpDataSource = ko.observableArray([]);
       this.helpDataProvider = new ArrayDataProvider(this.helpDataSource);
       this.helpFooterDom = ko.observable({});
+      this.hasHelpTopics = ko.observable(false);
       this.tableHelpColumns = ko.observableArray([]);
 
       this.valueSubscriptions = [];
@@ -137,9 +138,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             if (isActionInputForm(self.pdjData)) {
               const results = createActionInputFormPayload();
               const pageState = hasIncompleteRequiredFields(results);
-              delete results.properties;
               if (pageState.succeeded) {
-                viewParams.overlayDialogParams.onSubmit(self.rdjData, results, {action: viewParams.overlayDialogParams.action, label: viewParams.overlayDialogParams.title});
+                const options = {action: viewParams.overlayDialogParams.action, label: viewParams.overlayDialogParams.title};
+                if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams['multipartForm'])) {
+                  options['multipartForm'] = viewParams.overlayDialogParams.multipartForm;
+                }
+                else {
+                  delete results.properties;
+                }
+                
+                viewParams.overlayDialogParams.onSubmit(self.rdjData, results, options);
                 closeDialog();
               }
               else {
@@ -167,14 +175,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
         function toggleHelpPage(withHelpVisible, withHistoryVisible) {
           self.showHelp(withHelpVisible);
-          setFormContainerMaxHeight(withHistoryVisible);
           if (withHelpVisible === false){
             const pdjData = viewParams.parentRouter.data.pdjData();
             const rdjData = viewParams.parentRouter.data.rdjData();
             renderFormLayout(pdjData, rdjData);
           }
         }
-
+  
+        toggleInstructions(self.showHelp());
         const helpVisible = !self.showHelp();
         toggleToolbarButtonsVisibility(helpVisible);
         toggleHelpPage(helpVisible, false);
@@ -225,7 +233,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       };
 
       this.chooseFileClickHandler = function(event) {
-        const chooser = $('#file-chooser');
+        const chooser = $('#file-chooser-overlay-form-dialog');
         chooser.on('change', self.chooseFileChangeHandler);
         chooser.trigger('click');
         chooser.attr('data-input', event.currentTarget.attributes['data-input'].value);
@@ -235,7 +243,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       this.clearChosenFileClickHandler = function(event) {
         const name = event.currentTarget.attributes['data-input'].value;
         self[`${PageDefinitionCommon.FIELD_VALUES}${name}`](null);
-        self.createForm.clearUploadedFile(name);
+        clearUploadedFile(name);
         $('#' + name + '_clearChosen').css({'display':'none'});
       };
 
@@ -247,10 +255,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           const fileExt = '.' + fileName.split('.').pop();
 
           self[`${PageDefinitionCommon.FIELD_VALUES}${name}`](fileName);
-          self.createForm.addUploadedFile(name, files[0]);
+          addUploadedFile(name, files[0]);
           $('#' + name + '_clearChosen').css({'display':'inline-flex'});
 
-          const chooser = $('#file-chooser');
+          const chooser = $('#file-chooser-overlay-form-dialog');
           chooser.off('change', self.chooseFileChangeHandler);
           chooser.val('');
         }
@@ -297,6 +305,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         const results = getCreateFormPayload(self.pdjData.createForm.properties, true);
         return results.data;
       };
+  
+  
+      function toggleInstructions(visible) {
+        self.showInstructions(visible);
+        if (self.showInstructions()) {
+          setFormContainerMaxHeight(!visible, self.perspectiveMemory.beanPathHistory.visibility);
+        }
+        else {
+          setFormContainerMaxHeight(visible, self.perspectiveMemory.beanPathHistory.visibility);
+        }
+      }
 
       function showModalDialog(title, linkedResource, formLayout) {
         self.hasLinkedResource(CoreUtils.isNotUndefinedNorNull(linkedResource) && CoreUtils.isNotUndefinedNorNull(linkedResource.label));
@@ -694,7 +713,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         div.style.display = 'block';
 
         //wizard form always use single column. If this is changed, the param calling populateFormLayout will need to change.
-        const formLayout = PageDefinitionFormLayouts.createWizardFormLayout({labelWidthPcnt: '32%', maxColumns: '1'});
+        const formLayout = PageDefinitionFormLayouts.createWizardFormLayout({labelWidthPcnt: '32%', maxColumns: '1', fullWidth: true});
         div.append(formLayout);
 
         document.documentElement.style.setProperty('--form-input-min-width', '25em');
@@ -758,7 +777,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           div.append(formLayout);
         }
         else if (isUseCheckBoxesForBooleans) {
-          formLayout = PageDefinitionFormLayouts.createCheckBoxesFormLayout({labelWidthPcnt: '45%', maxColumns: '1'} );
+          formLayout = PageDefinitionFormLayouts.createCheckBoxesFormLayout({labelWidthPcnt: '45%', maxColumns: '1', fullWidth: true} );
           div.append(formLayout);
         }
         else {
@@ -767,7 +786,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             div.append(formLayout);
           }
           else if (isSingleColumn) {
-            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({labelWidthPcnt: '32%', maxColumns: '1'});
+            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({labelWidthPcnt: '32%', maxColumns: '1', fullWidth: true});
             div.append(formLayout);
           }
           else {
@@ -900,6 +919,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
               const dataProviderName = `${PageDefinitionCommon.FIELD_SELECTDATA}${replacer}`;
               const options = {
                 'name': name,
+                'className': 'cfe-lg-width-hint',
                 'isEdit': (typeof self.pdjData.sliceForm !== 'undefined'),
                 'isSingleColumn': isSingleColumn,
                 'isReadOnly': isReadOnly
@@ -919,7 +939,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             }
           }
           else if (pdjTypes.isSecretType(name)) {
-            field = PageDefinitionFields.createInputPassword('cfe-form-input-password');
+            const options = {className: 'cfe-form-input-password', readonly: pdjTypes.isReadOnly(name) || isReadOnly};
+            options['maskIcon'] = pdjTypes.getMaskIconState(name, dataValues[name]);
+            field = PageDefinitionFields.createInputPassword(options);
           }
           else if (pdjTypes.isArray(name) || pdjTypes.isPropertiesType(name) || pdjTypes.isMultiLineStringType(name)) {
             const options = {
@@ -949,7 +971,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             field.setAttribute('title', value);
           }
           else if (pdjTypes.isUploadedFileType(name)) {
-            field = PageDefinitionFields.createFileChooser('cfe-file-picker');
+            //text box is readonly for WRC, but keep it as false for WKT-UI
+            const options = {
+              'className': 'cfe-file-picker-23em',
+              'readonly': Runtime.getRole() !== CoreTypes.Console.RuntimeRole.TOOL.name
+            };
+            field = PageDefinitionFields.createFileChooser(options);
             field.setAttribute('title', value);
           }
           else {
@@ -1005,12 +1032,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
                 self[`${PageDefinitionCommon.FIELD_VALUES}${replacer}`](dataValues[name].value);
               }
             }
-
+            
             field.setAttribute('value', `{{${PageDefinitionCommon.FIELD_VALUES}${replacer}}}`);
             field.setAttribute('messages-custom', `[[${PageDefinitionCommon.FIELD_MESSAGES}${replacer}]]`);
             field.setAttribute('display-options.messages', 'none');
           }
-
+          
           if (typeof field !== 'undefined') {
             var messageArea = document.createElement('div');
             messageArea.setAttribute('class', '');
@@ -1149,7 +1176,30 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
         return results;
       }
-      
+  
+      function addUploadedFile(fieldName, file) {
+        if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams)) {
+          if (CoreUtils.isUndefinedOrNull(viewParams.overlayDialogParams['multipartForm'])) {
+            viewParams.overlayDialogParams['multipartForm'] = new MultipartForm();
+          }
+          viewParams.overlayDialogParams.multipartForm.addUploadedFile(fieldName, file);
+        }
+        else {
+          self.createForm.addUploadedFile(fieldName. file);
+        }
+      }
+  
+      function clearUploadedFile(fieldName) {
+        if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams)) {
+          if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams['multipartForm'])) {
+            viewParams.overlayDialogParams.multipartForm.clearUploadedFile(fieldName);
+          }
+        }
+        else {
+          self.createForm.clearUploadedFile(fieldName);
+        }
+      }
+
       function createActionInputFormPayload() {
         const results = {properties: self.pdjData.actionInputForm.properties, data: null};
         results.data = getActionInputFormFieldValues(results.properties);
@@ -1199,6 +1249,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       }
 
       function createHelp(pdjData) {
+        self.hasHelpTopics(PageDefinitionHelper.hasHelpTopics(pdjData));
+
         const helpForm = new HelpForm(
           viewParams.parentRouter.data.pdjData(),
           viewParams.parentRouter.data.rdjData(),

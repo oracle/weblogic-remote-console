@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -27,7 +27,7 @@ class WebLogicBeanTypeSearchHelper {
   public static WebLogicBeanTypeSearchHelper getHelper(String type) {
     if ("CombinedServerRuntimeMBean".equals(type)
          || "RunningServerRuntimeMBean".equals(type)
-         || "NotRunningServerRuntimeMBean".equals(type)
+         || "UnreachableServerRuntimeMBean".equals(type)
     ) {
       return new CombinedServerRuntimeMBeanWebLogicSearchHelper();
     }

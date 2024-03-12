@@ -13,6 +13,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 /**
  * Handles JAXRS methods for a readonly collection of beans.
  */
@@ -42,6 +45,27 @@ public class ReadOnlyBeanCollectionResource extends BeanResource {
     @QueryParam("actionForm") @DefaultValue("") String actionForm,
     JsonObject requestBody
   ) {
+    return internalPost(action, actionForm, requestBody, null);
+  }
+
+  @POST
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
+  @Produces(MediaType.APPLICATION_JSON)
+  public javax.ws.rs.core.Response post(
+    @QueryParam("action") @DefaultValue("") String action,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @FormDataParam("requestBody") JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
+    return internalPost(action, actionForm, requestBody, parts);
+  }
+
+  protected Response internalPost(
+    String action,
+    String actionForm,
+    JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
     setTablePagePath();
     if (CUSTOMIZE_TABLE.equals(action)) {
       return customizeTable(requestBody);
@@ -49,7 +73,7 @@ public class ReadOnlyBeanCollectionResource extends BeanResource {
     if (INPUT_FORM.equals(actionForm)) {
       return getActionInputForm(action, requestBody);
     }
-    return invokeAction(action, requestBody);
+    return invokeAction(action, requestBody, parts);
   }
 
   protected Response getTable() {

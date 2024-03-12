@@ -18,7 +18,7 @@ import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
-import weblogic.remoteconsole.server.repo.CustomFilteringDashboardDefManager;
+import weblogic.remoteconsole.server.repo.FilteringDashboardDefManager;
 import weblogic.remoteconsole.server.repo.Form;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -103,6 +103,10 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     addCustomizeTableLink(table);
     for (TableRow tableRowValues : table.getRows()) {
       builder.add(tableRowToJson(tableRowValues));
+    }
+    BeanTreePath btp = getPage().getSelf();
+    if (btp.isCollection()) {
+      getEntityBuilder().add("deletable", btp.isDeletable());
     }
     getEntityBuilder().add("data", builder);
   }
@@ -192,7 +196,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
   // Add a link for getting the create form for creating custom filtering dashboards
   // for beans like this bean to this bean's RDJ.
   private void addCustomFilteringDashboardCreateFormLink(BeanTreePath btp) {
-    if (!CustomFilteringDashboardDefManager.isSupportsCustomFilteringDashboards(getInvocationContext(), btp)) {
+    if (!FilteringDashboardDefManager.isSupportsFilteringDashboards(getInvocationContext(), btp)) {
       return;
     }
     // Create a query parameter that identifies this bean
@@ -217,7 +221,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
   }
 
   private String computeCustomFilteringDashboardCreateFormQueryParams(BeanTreePath btp) {
-    return "?view=createForm&" + CustomFilteringDashboardDefManager.computePathQueryParam(btp);
+    return "?view=createForm&" + FilteringDashboardDefManager.computePathQueryParam(btp);
   }
 
   private String getBeanTreePathKind(BeanTreePath btp) {

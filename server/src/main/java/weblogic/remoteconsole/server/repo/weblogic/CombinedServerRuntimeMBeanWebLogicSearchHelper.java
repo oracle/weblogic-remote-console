@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -36,7 +36,7 @@ class CombinedServerRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSea
       addProperty(searchBuilder, slcrtPath, identityPath);
       addProperty(searchBuilder, srtPath, identityPath);
       // Fetch the SRT state if it's available
-      // That is, set the state to the SRT's state if it's available, otherwise set it to 'NOT_RUNNING'
+      // That is, set the state to the SRT's state if it's available, otherwise set it to 'UNREACHABLE'
       // (since it's too expensive to get it from SLCRT's state)
       addProperty(searchBuilder, srtPath, new Path("State"));
     } else if ("Name".equals(firstComponent)) {
@@ -129,8 +129,8 @@ class CombinedServerRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSea
       rtn.add("type", "RunningServerRuntime");
       rtn.add("state", srt.get("state"));
     } else {
-      rtn.add("type", "NotRunningServerRuntime");
-      rtn.add("state", "NOT_RUNNING");
+      rtn.add("type", "UnreachableServerRuntime");
+      rtn.add("state", "UNREACHABLE");
     }
 
     // TBD - need to update all the identities from

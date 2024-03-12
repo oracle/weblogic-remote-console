@@ -1,0 +1,40 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Configures this SAML 2.0 Web Service Identity Provider Partner's General Properties.</p>
+
+sections:
+- title: "Overview"
+  properties:
+  - name: "Name"
+  - name: "Description"
+  - name: "Enabled"
+- title: "Authentication Requests"
+  properties:
+  - name: AudienceURIs
+  - name: IssuerURI
+  - name: IdentityProviderNameMapperClassname
+  - name: VirtualUserEnabled
+  - name: ConfirmationMethod
+  - name: ProcessAttributes
+
+helpTopics:
+- label: "Configuring a SAML 2.0 Identity Assertion Provider"
+  href: "secmg/ia_atn.html#SECMG223"
+  type: edocs
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: edocs
+- label: "Using Security Assertion Markup Language (SAML) Tokens For Identity"
+  href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"
+  type: generic
+- label: "API reference for com.bea.security.saml2.providers.registry.Partner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/Partner.html"
+  type: edocs
+- label: "API reference for com.bea.security.saml2.providers.registry.IdPPartner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/IdPPartner.html"
+  type: edocs
+- label: "API reference for com.bea.security.saml2.providers.registry.WSSSPPartner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/WSSSPPartner.html"
+  type: edocs

@@ -122,7 +122,7 @@ class RootBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   }
 
   @Override
-  public boolean isSupportsCustomFilteringDashboards() {
+  public boolean isSupportsFilteringDashboards() {
     return false;
   }
 

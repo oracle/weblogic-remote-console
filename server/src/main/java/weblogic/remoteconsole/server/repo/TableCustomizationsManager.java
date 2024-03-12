@@ -17,7 +17,7 @@ import weblogic.remoteconsole.server.PersistenceManager;
  */
 public class TableCustomizationsManager extends PersistableFeature<PersistedTablesCustomizations> {
 
-  private static final PersistenceManager<PersistedTablesCustomizations> PERSISTENCE_MANAGER =
+  private PersistenceManager<PersistedTablesCustomizations> persistenceManager =
     new PersistenceManager<>(PersistedTablesCustomizations.class, "table-customizations");
 
   private PersistedTablesCustomizations customizations = new PersistedTablesCustomizations();
@@ -27,7 +27,7 @@ public class TableCustomizationsManager extends PersistableFeature<PersistedTabl
 
   @Override
   protected PersistenceManager<PersistedTablesCustomizations> getPersistenceManager() {
-    return PERSISTENCE_MANAGER;
+    return persistenceManager;
   }
 
   @Override
@@ -169,21 +169,25 @@ public class TableCustomizationsManager extends PersistableFeature<PersistedTabl
     }
     if (pageDef.isSliceTableDef()) {
       String slice = pageDef.getPagePath().asSlicePagePath().getSlicePath().getDotSeparatedPath();
-      // Currently, only the custom filtering dashboards' 'View' slice table needs
+      // Currently, only the filtering dashboards' 'View' slice table needs
       // a non-standard table id. For expedience, special case it here.
       // If, in the future, another table needs a non-standard table id,
       // we can add a way for a page to customize its table id
       // (v.s. special casing it here too).
       if ("CustomFilteringDashboardMBean".equals(typeName) && "View".equals(slice)) {
-        return getCustomFilteringDashboardTableId(ic);
+        return getFilteringDashboardTableId(ic, false);
+      }
+      if ("BuiltinFilteringDashboardMBean".equals(typeName) && "View".equals(slice)) {
+        return getFilteringDashboardTableId(ic, true);
       }
       return typeName + "?slice=" + slice;
     }
     throw new AssertionError(pageDef.getPagePath() + " is not a table or a slice table");
   }
 
-  String getCustomFilteringDashboardTableId(InvocationContext ic) {
-    return "CustomFilteringDashboard=" + ic.getBeanTreePath().getLastSegment().getKey();
+  String getFilteringDashboardTableId(InvocationContext ic, boolean builtin) {
+    String prefix = (builtin) ? "Builtin" : "Custom";
+    return prefix + "FilteringDashboard=" + ic.getBeanTreePath().getLastSegment().getKey();
   }
 
   private List<PagePropertyDef> getDefaultDisplayedColumnDefs(PageDef pageDef) {

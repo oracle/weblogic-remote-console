@@ -1,0 +1,392 @@
+<!--
+ Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+
+<!--
+  FortifyIssueSuppression Often Misused: File Upload
+-->
+<input class="cfe-file-chooser" id="file-chooser" type="file"/>
+
+<oj-navigation-list aria-label="Choose a connections/model item"
+  id="connections-models"
+  data="[[connectionsModelsDataProvider]]"
+  drill-mode="none"
+  display="all"
+  selection="{{connectionsModelsSelectedItem}}"
+  on-selection-changed="[[connectionsModelsSelectedItemChanged]]"
+>
+  <template slot="itemTemplate" data-oj-as="item">
+    <li role="list" data-bind="attr: {id: item.data.id}" class="cfe-project-provider-listitem">
+      <a href="#"
+        :data-item-id="[[item.data.id]]"
+         on-keyup="[[registerKeyUpFocuser('.cfe-project-provider-iconbar')]]"
+         data-key-focuser-id=".cfe-project-provider-iconbar"
+      >
+        <span :class="[[item.data.class]]"></span>
+        <oj-bind-text value="[[item.data.name]]"></oj-bind-text>
+      </a>
+      <span
+        :id="[[item.data.id + '-iconbar']]"
+        class="cfe-project-provider-iconbar oj-navigationlist-item-end"
+      >
+        <a href="#" class="cfe-project-provider-iconbar-link"
+           data-item-action="info" :data-item-type="[[item.data.type]]"
+           :data-item-id="[[item.data.id]]"
+           on-click="[[connectionsModelsIconBarClickListener]]"
+        >
+          <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.info.iconFile + '.png', 'title': i18n.icons.info.tooltip, alt: i18n.icons.info.tooltip}" />
+        </a>
+        <oj-bind-if test="[[!item.data?.settings?.local]]">
+          <a href="#" class="cfe-project-provider-iconbar-link"
+             data-item-action="edit" :data-item-type="[[item.data.type]]"
+            :data-item-id="[[item.data.id]]"
+            on-click="[[connectionsModelsIconBarClickListener]]"
+          >
+            <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.edit.iconFile + '.png', 'title': i18n.icons.edit.tooltip, alt: i18n.icons.edit.tooltip}" />
+          </a>
+        </oj-bind-if>
+        <oj-bind-if test="[[!item.data?.settings?.local && item.data.state === 'connected']]">
+          <a href="#" class="cfe-project-provider-iconbar-link"
+             data-item-action="deactivate" :data-item-type="[[item.data.type]]"
+            :data-item-id="[[item.data.id]]"
+            on-click="[[connectionsModelsIconBarClickListener]]"
+          >
+            <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.deactivate.iconFile + '.png', 'title': i18n.icons.deactivate.tooltip, alt: i18n.icons.deactivate.tooltip}" />
+          </a>
+        </oj-bind-if>
+        <oj-bind-if test="[[!item.data?.settings?.local]]">
+          <a href="#" class="cfe-project-provider-iconbar-link"
+             data-item-action="delete" :data-item-type="[[item.data.type]]"
+            :data-item-id="[[item.data.id]]"
+            on-click="[[connectionsModelsIconBarClickListener]]"
+          >
+            <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.delete.iconFile + '.png', 'title': i18n.icons.delete.tooltip, alt: i18n.icons.delete.tooltip}" />
+          </a>
+        </oj-bind-if>
+      </span>
+    </li>
+  </template>
+  <template slot="noData">
+  </template>
+</oj-navigation-list>
+
+<oj-popup id="dataProviderActionsPopup">
+  <oj-bind-if test="typeof providerInfo.project !== 'undefined'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.project.name.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[providerInfo.project.name()]]"></oj-bind-text></span>
+    </span>
+    <br/>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.state() === 'connected'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.provider.id.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.provider.id.value()]]"></oj-bind-text></span>
+    </span>
+    <br/>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'adminserver'">
+    <oj-bind-if test="typeof i18n.popups.info.domain.name.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.name.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.name.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+
+    <oj-bind-if test="typeof i18n.popups.info.domain.url.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.url.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.url.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="typeof i18n.popups.info.domain.proxyOverride.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.proxyOverride.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.proxyOverride.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+
+    <oj-bind-if test="typeof i18n.popups.info.domain.consoleExtensionVersion.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.consoleExtensionVersion.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.consoleExtensionVersion.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+
+    <oj-bind-if test="typeof i18n.popups.info.domain.version.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.version.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.version.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+
+    <oj-bind-if test="typeof i18n.popups.info.domain.username.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.username.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.username.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="i18n.popups.info.domain.sso.value() === true">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.sso.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.sso.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="typeof i18n.popups.info.domain.roles.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.roles.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.roles.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="typeof i18n.popups.info.domain.connectTimeout.value() !== 'undefined'">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.connectTimeout.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.connectTimeout.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.readTimeout.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.readTimeout.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+    <oj-bind-if test="i18n.popups.info.domain.insecure.value() === true">
+      <span><b><oj-bind-text value="[[i18n.popups.info.domain.insecure.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.domain.insecure.value()]]"></oj-bind-text></span>
+      </span>
+      <br/>
+    </oj-bind-if>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'model'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.model.file.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.model.file.value()]]"></oj-bind-text></span>
+    </span>
+    <oj-bind-if test="typeof i18n.popups.info.model.props.value() !== 'undefined'">
+      <br/>
+      <span><b><oj-bind-text value="[[i18n.popups.info.model.props.label]]"></oj-bind-text></b>
+        <span><oj-bind-text value="[[i18n.popups.info.model.props.value()]]"></oj-bind-text></span>
+      </span>
+    </oj-bind-if>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'modelComposite'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.composite.models.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.composite.models.value()]]"></oj-bind-text></span>
+    </span>
+  </oj-bind-if>
+  <oj-bind-if test="providerInfo.type() === 'properties'">
+    <span><b><oj-bind-text value="[[i18n.popups.info.proplist.file.label]]"></oj-bind-text></b>
+      <span><oj-bind-text value="[[i18n.popups.info.proplist.file.value()]]"></oj-bind-text></span>
+    </span>
+  </oj-bind-if>
+</oj-popup>
+
+<oj-dialog
+  id="domainConnectionDialog"
+  dialog-title="[[i18n.dialog.title]]"
+  initial-visibility="hide"
+  on-oj-focus="[[onOjFocus]]"
+  on-oj-close="[[onOjClose]]"
+>
+  <div slot="body">
+    <div class="cfe-dialog-prompt">
+      <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
+    </div>
+
+    <oj-form-layout id="domain-connect-form-layout" label-edge="start" label-width="48%">
+      <oj-label data-help-key="name" slot="label" label-edge="start" for="connection-name-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.labels.connections.name.value + '*']]"></oj-bind-text>
+      </oj-label>
+      <oj-input-text id="connection-name-field" class="cfe-dialog-field" value='{{dialogFields().name}}'></oj-input-text>
+
+      <oj-bind-if test="[[dialogFields().ssoOption]]">
+        <oj-label data-help-key="settings.sso" slot="label" label-edge="start" for="sso-field" on-click="[[helpIconClick]]">
+          <oj-bind-text value="[[i18n.checkboxes.usesso.label]]"></oj-bind-text>
+        </oj-label>
+        <oj-checkboxset id="sso-field" value="{{dialogFields().ssoCheckbox}}" on-value-changed="[[ssoAdminServerConnectionStateChanged]]">
+          <oj-option id="use-sso-option" value="[[i18n.checkboxes.usesso.id]]">
+          </oj-option>
+        </oj-checkboxset>
+      </oj-bind-if>
+
+      <oj-label data-help-key="username" slot="label" label-edge="start" for="username-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.labels.connections.username.value + '*']]"></oj-bind-text>
+      </oj-label>
+      <oj-input-text id="username-field" class="cfe-dialog-field" value='{{dialogFields().username}}'></oj-input-text>
+
+      <oj-label data-help-key="password" slot="label" label-edge="start" for="password-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.labels.connections.password.value + '*']]"></oj-bind-text>
+      </oj-label>
+      <oj-input-password id="password-field" class="cfe-dialog-field" value='{{dialogFields().password}}' mask-icon='visible'></oj-input-password>
+
+      <oj-label data-help-key="url" slot="label" label-edge="start" for="url-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.labels.connections.url.value + '*']]"></oj-bind-text>
+      </oj-label>
+      <oj-input-text id="url-field" class="cfe-dialog-field" value='{{dialogFields().url}}'></oj-input-text>
+
+      <oj-label data-help-key="settings.proxyOverride" slot="label" label-edge="start" for="proxyOverride-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.labels.connections.proxyOverride.value]]"></oj-bind-text>
+      </oj-label>
+      <oj-input-text id="proxyOverride-field" class="cfe-dialog-field-optional" value='{{dialogFields().proxyOverride}}'></oj-input-text>
+
+      <oj-label data-help-key="settings.insecure" slot="label" label-edge="start" for="insecure-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.checkboxes.insecure.label]]"></oj-bind-text>
+      </oj-label>
+      <!-- Replace the oj-checkboxset with HTML input checkbox to workaround TypeError for the dialog box -->
+      <!-- <oj-checkboxset id="insecure-field" value="{{dialogFields().insecureCheckbox}}">
+             <oj-option id="use-insecure-option" value="[[i18n.checkboxes.insecure.id]]">
+               <oj-bind-text value="[[i18n.checkboxes.insecure.label]]"></oj-bind-text>
+             </oj-option>
+           </oj-checkboxset> -->
+      <div id="insecure-field" class="oj-form-control-container">
+        <span id="insecure-checkbox-area" class="oj-choice-item oj-enabled">
+          <input type="checkbox" id="insecure-checkbox" name="insecure-field"
+                 :value="[[i18n.checkboxes.insecure.id]]" class="cfe-checkbox-input">
+          <!-- label for="insecure-checkbox" class="oj-checkboxset oj-checkbox-label oj-enabled">
+            <span class="oj-radiocheckbox-label-text">
+            </span>
+          </label -->
+          <label for="insecure-checkbox" aria-label="Insecure Checkbox"></label>
+        </span>
+      </div>
+    </oj-form-layout>
+
+    <div id="connection-response-message" class="oj-flex-item">
+      <span data-bind="text: [[responseMessage()]]"></span>
+    </div>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgOkBtn11" disabled="[[i18n.buttons.ok.disabled()]]">
+      <span class="button-label" data-bind="text: [[i18n.buttons.ok.label()]]"></span>
+    </oj-button>
+    <oj-button id="dlgCancelBtn11">
+      <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<oj-dialog
+  id="modelDialog"
+  dialog-title="[[i18n.dialog.title]]"
+  initial-visibility="hide"
+  on-oj-focus="[[onOjFocus]]"
+  on-oj-close="[[onOjClose]]"
+>
+  <div slot="body">
+    <div class="cfe-dialog-prompt">
+      <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
+    </div>
+
+    <oj-form-layout id="model-form-layout" class="cfe-dialog-form-layout" label-edge="start" label-width="26%">
+      <oj-label data-help-key="name" slot="label" label-edge="start" for="model-name-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.dialog.nameLabel() + '*']]"></oj-bind-text>
+      </oj-label>
+      <oj-input-text id="model-name-field" class="cfe-dialog-field" value='{{dialogFields().name}}'></oj-input-text>
+
+      <oj-label data-help-key="file" slot="label" label-edge="start" for="model-file-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.dialog.fileLabel() + '*']]"></oj-bind-text>
+      </oj-label>
+      <div>
+        <oj-bind-if test="[[dialogFields().action === 'new']]">
+          <oj-input-text id="model-file-field" class="cfe-file-chooser-field" value="{{contentFile}}" placeholder="e.g. mynewfile.ext" readonly="[[dialogFields().readonly]]"></oj-input-text>
+          <a href="#"
+             :data-input="[[dialogFields().id]]"
+             :data-input-type="[[dialogFields().type]]"
+             on-click="[[newFileClickHandler]]"
+          >
+            <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip, alt: i18n.dialog.tooltip}"/>
+          </a>
+          <oj-bind-if test="[[dialogFields().checkbox]]">
+            <oj-checkboxset value="{{useSparseTemplate}}">
+              <oj-option id="use-sparse-template" value="[[i18n.checkboxes.useSparseTemplate.id]]">
+                <span><oj-bind-text value="[[i18n.checkboxes.useSparseTemplate.label]]"></oj-bind-text></span>
+              </oj-option>
+            </oj-checkboxset>
+          </oj-bind-if>
+        </oj-bind-if>
+        <oj-bind-if test="[[dialogFields().action === 'existing']]">
+          <oj-input-text id="model-file-field" :class="[[isReloadable() ? 'cfe-file-reloader-field' : 'cfe-file-chooser-field']]" value="{{contentFile}}" readonly="[[dialogFields().readonly]]"></oj-input-text>
+          <a href="#"
+             :data-input="[[dialogFields().id]]"
+             :data-input-type="[[dialogFields().type]]"
+             on-click="[[chooseFileClickHandler]]"
+          >
+            <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip, alt: i18n.dialog.tooltip}"/>
+          </a>
+          <oj-bind-if test="[[isReloadable()]]">
+            <a href="#" index="-1"
+               :data-input="[[dialogFields().id]]"
+               on-click="[[reloadFileClickListener]]"
+            >
+              <img class="reload-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.reload.iconFile + '.png', 'title': i18n.icons.reload.tooltip, alt: i18n.icons.reload.tooltip}" />
+            </a>
+          </oj-bind-if>
+        </oj-bind-if>
+      </div>
+
+      <oj-bind-if test="[[dialogFields().selectProps]]">
+        <oj-label data-help-key="selectProps" slot="label" label-edge="start" for="model-proplist-selection-field" on-click="[[helpIconClick]]">
+          <oj-bind-text value="[[i18n.labels.models.props.value]]"></oj-bind-text>
+        </oj-label>
+        <div>
+          <oj-select-single id="model-proplist-selection-field" class="cfe-dialog-field cfe-dialog-field-optional"
+                            value="{{propProviderSelectedValue}}" data="[[propProvidersDataProvider]]">
+          </oj-select-single>
+        </div>
+      </oj-bind-if>
+    </oj-form-layout>
+
+    <div id="model-response-message">
+      <span data-bind="html: [[responseMessage()]]"></span>
+    </div>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgOkBtn12" disabled="[[i18n.buttons.ok.disabled()]]">
+      <span class="button-label" data-bind="text: [[i18n.buttons.ok.label()]]"></span>
+    </oj-button>
+    <oj-button id="dlgCancelBtn12">
+      <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>
+
+<!-- WDT Composite Model Provider Dialog -->
+<oj-dialog
+  id="modelCompositeDialog"
+  dialog-title="[[i18n.dialog.title]]"
+  on-oj-focus="[[onOjFocus]]"
+  on-oj-close="[[onOjClose]]"
+>
+  <div slot="body">
+    <div class="cfe-dialog-prompt">
+      <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
+    </div>
+
+    <oj-form-layout id="model-composite-form-layout" class="cfe-dialog-form-layout" label-edge="start" label-width="26%">
+      <oj-label data-help-key="name" slot="label" label-edge="start" for="model-composite-name-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.labels.composite.name.value + '*']]"></oj-bind-text>
+      </oj-label>
+      <oj-input-text id="model-composite-name-field" class="cfe-dialog-field" value='{{dialogFields().name}}'></oj-input-text>
+
+      <oj-label data-help-key="selectModelFrags" slot="label" label-edge="start" for="model-composite-selection-field" on-click="[[helpIconClick]]">
+        <oj-bind-text value="[[i18n.labels.composite.providers.value + '*']]"></oj-bind-text>
+      </oj-label>
+      <div>
+        <oj-select-many id="model-composite-selection-field" class="cfe-dialog-field"
+                        value="{{wdtProvidersSelectedValues}}" options="[[wdtProvidersDataProvider]]">
+        </oj-select-many>
+      </div>
+    </oj-form-layout>
+
+    <div id="model-composite-response-message">
+      <span data-bind="text: [[responseMessage()]]"></span>
+    </div>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgOkBtn17" disabled="[[i18n.buttons.ok.disabled()]]">
+      <span class="button-label" data-bind="text: [[i18n.buttons.ok.label()]]"></span>
+    </oj-button>
+    <oj-button id="dlgCancelBtn17">
+      <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
+    </oj-button>
+  </div>
+</oj-dialog>

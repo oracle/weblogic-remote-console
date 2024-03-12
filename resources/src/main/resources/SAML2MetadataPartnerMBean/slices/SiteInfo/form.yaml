@@ -1,0 +1,40 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Configures a SAML 2.0 Web Single Sign-on Partner's Site Information</p>
+  <p>This page displays the contents of the partner's metadata file that
+  provides general information about the web single sign-on partner's site.
+  The data displayed in this page is read-only.</p>
+  <p>Its parameters can also be accessed programmatically via the
+  <code>com.bea.security.saml2.providers.registry.MetadataPartner</code> interface.
+  See Related Topics.</p>
+
+properties:
+- name: EntityID
+- name: ContactPersonGivenName
+- name: ContactPersonSurName
+- name: ContactPersonType
+- name: ContactPersonCompany
+- name: ContactPersonTelephoneNumber
+- name: ContatPersonEmailAddress
+- name: OrganizationName
+- name: OrganizationURL
+- name: ErrorURL
+
+helpTopics:
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html"
+  type: "edocs"
+- label: "Viewing Partner Site, Certificate, and Service Endpoint Information"
+  href: "secmg/saml20.html#SECMG313"
+  type: "edocs"
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "API reference for com.bea.security.saml2.providers.registry.MetadataPartner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/MetadataPartner.html"
+  type: "edocs"

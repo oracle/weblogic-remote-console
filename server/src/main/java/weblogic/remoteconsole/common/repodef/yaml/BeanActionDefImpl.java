@@ -150,6 +150,11 @@ public class BeanActionDefImpl extends BeanValueDefImpl implements BeanActionDef
     return invokeRoles;
   }
 
+  @Override
+  public String getImpact() {
+    return source.getImpact().toString();
+  }
+
   BeanActionDefSource getSource() {
     return source;
   }

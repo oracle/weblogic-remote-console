@@ -1,0 +1,25 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to help determine why this Managed Server's 'State' is 'Unreachable'.
+  If the Administration Server can't find the HTTP/S address for sending administration traffic to the Managed Server
+  (typically because the Managed Server is not running), then 'Server URL' displays 'unknown'.</p>
+  <p>Otherwise, this page prompts the WebLogic Remote Console extension to ask the Administration Server
+  to send an HTTP/S REST request to the unreachable Managed Server.
+  If a response is received, then this page displays the response's status code, response headers and response body.
+  If it receives a Java exception, then this page displays the exception's text and stack trace instead.</p>
+  <p/>
+  <p>See Troubleshooting section of WebLogic Remote Console documentation for more information.</p>
+
+presentation:
+  singleColumn: true
+
+properties:
+- name: "ConnectionStatus.Name"
+- name: "ConnectionStatus.ServerURL"
+- name: "ConnectionStatus.Status"
+- name: "ConnectionStatus.ResponseHeaders"
+- name: "ConnectionStatus.ResponseBody"
+- name: "ConnectionStatus.Exception"
+- name: "ConnectionStatus.StackTrace"

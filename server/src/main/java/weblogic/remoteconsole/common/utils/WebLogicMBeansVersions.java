@@ -1,8 +1,9 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
 
+import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -15,7 +16,7 @@ public class WebLogicMBeansVersions {
   }
 
   // Maps from a weblogic version + roles to a WebLogicMBeansVersion
-  private static Map<String, WebLogicMBeansVersion> versionsMap = new ConcurrentHashMap<>();
+  private static Map<String, WeakReference<WebLogicMBeansVersion>> versionsMap = new ConcurrentHashMap<>();
 
   public static WebLogicMBeansVersion getVersion(
     WebLogicVersion weblogicVersion,
@@ -29,11 +30,18 @@ public class WebLogicMBeansVersions {
     Set<String> roles,
     Set<String> capabilities
   ) {
-    return
+    String key = computeKey(weblogicVersion, roles, capabilities);
+    WeakReference<WebLogicMBeansVersion> ret =
       versionsMap.computeIfAbsent(
-        computeKey(weblogicVersion, roles, capabilities),
-        k -> new WebLogicMBeansVersion(weblogicVersion, roles, capabilities)
+        key,
+        k -> new WeakReference<WebLogicMBeansVersion>(new WebLogicMBeansVersion(weblogicVersion, roles, capabilities))
       );
+    if (ret.get() == null) {
+      ret = new WeakReference<WebLogicMBeansVersion>(
+        new WebLogicMBeansVersion(weblogicVersion, roles, capabilities));
+      versionsMap.put(key, ret);
+    }
+    return ret.get();
   }
 
   private static String computeKey(

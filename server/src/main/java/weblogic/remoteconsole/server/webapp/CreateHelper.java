@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import javax.json.JsonObject;
 
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
@@ -40,21 +40,35 @@ public class CreateHelper {
 
   public static javax.ws.rs.core.Response create(
     InvocationContext ic,
-    JsonObject requestBody,
-    FormDataBodyPart... uploadedFiles
+    JsonObject requestBody
   ) {
-    return (new CreateHelper()).createBean(ic, requestBody, uploadedFiles);
+    return (new CreateHelper()).createBean(ic, requestBody);
+  }
+
+  public static javax.ws.rs.core.Response create(
+    InvocationContext ic,
+    JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
+    return (new CreateHelper()).createBean(ic, requestBody, parts);
+  }
+
+  public javax.ws.rs.core.Response createBean(
+    InvocationContext ic,
+    JsonObject requestBody
+  ) {
+    return createBean(ic, requestBody, null);
   }
 
   public javax.ws.rs.core.Response createBean(
     InvocationContext ic,
     JsonObject requestBody,
-    FormDataBodyPart... uploadedFiles
+    FormDataMultiPart parts
   ) {
     Response<BeanTreePath> response = new Response<>();
     // Unmarshal the request body.
     Response<List<FormProperty>> unmarshalResponse =
-      FormRequestBodyMapper.fromRequestBody(ic, requestBody, uploadedFiles);
+      FormRequestBodyMapper.fromRequestBody(ic, requestBody, parts);
     if (!unmarshalResponse.isSuccess()) {
       response.copyUnsuccessfulResponse(unmarshalResponse);
       return CreateResponseMapper.toResponse(ic, response);

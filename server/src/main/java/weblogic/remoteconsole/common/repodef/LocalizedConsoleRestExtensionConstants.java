@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -75,11 +75,29 @@ public class LocalizedConsoleRestExtensionConstants {
       "The application ''{0}'' already has a deployment plan."
     );
 
+    addConstant(
+        "applicationHasNoPlan",
+        "The application ''{0}'' does not have a deployment plan."
+    );
+
     // {0} is the plan path
     addConstant(
       "planPathNotXml",
       "The plan path ''{0}'' must end in ''.xml''."
     );
+
+    // {0} is the configured staging mode.
+    addConstant(
+        "stageModeNotSupported",
+        "This deployment cannot be redeployed because its staging mode is ''{0}''.  Remove and add it instead."
+    );
+
+    addConstant(
+        "libraryRedeployNotSupported",
+        "The library ''{0}'' cannot be redeployed because its source is not under "
+            + "the administration server's upload directory.  Remove and add it instead."
+    );
+
   }
 
   // Find the LocalizableString for a key.

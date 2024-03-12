@@ -6,6 +6,8 @@ package weblogic.remoteconsole.common.repodef;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.remoteconsole.common.utils.ListUtils;
+
 /**
  * POJO used to help build implementations of interfaces that extend PageDef.
  * 
@@ -21,8 +23,8 @@ class CustomFormDef {
 
   public CustomFormDef(FormDef toClone) {
     pageDef = new CustomPageDef(toClone);
-    getPropertyDefs().addAll(toClone.getPropertyDefs());
-    getSectionDefs().addAll(toClone.getSectionDefs());
+    getPropertyDefs().addAll(ListUtils.nonNull(toClone.getPropertyDefs()));
+    getSectionDefs().addAll(ListUtils.nonNull(toClone.getSectionDefs()));
   }
 
   List<PagePropertyDef> getPropertyDefs() {

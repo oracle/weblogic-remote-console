@@ -44,6 +44,14 @@ define(['wrc-frontend/core/utils'],
       }
       return pathSegments;
     }
+  
+    function pathSegmentsFromResourceData(resourceData) {
+      let pathSegments = [];
+      if (CoreUtils.isNotUndefinedNorNull(resourceData)) {
+        pathSegments = resourceData.split('/').filter(e => e);
+      }
+      return pathSegments;
+    }
 
     function pathEncodedFromIdentity(id) {
       let path = '';
@@ -476,6 +484,7 @@ define(['wrc-frontend/core/utils'],
       typeLabelFromIdentity: typeLabelFromIdentity,
       parentPropertyFromIdentity: parentPropertyFromIdentity,
       pathSegmentsFromIdentity: pathSegmentsFromIdentity,
+      pathSegmentsFromResourceData: pathSegmentsFromResourceData,
       pathEncodedFromIdentity: pathEncodedFromIdentity,
       breadcrumbsFromIdentity: breadcrumbsFromIdentity,
       filterPathSegments: filterPathSegments,

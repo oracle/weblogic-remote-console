@@ -1,10 +1,16 @@
-# Copyright (c) 2022, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
 - label: Server Configurations
   root: DomainConfiguration
   resourceData: Domain/Servers
+- label: Server States Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Server States"
+- label: Server Tasks Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Server Tasks"
 instanceLinks:
 - label: Server Configuration
   root: DomainConfiguration

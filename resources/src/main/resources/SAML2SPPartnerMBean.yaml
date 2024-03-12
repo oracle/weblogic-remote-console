@@ -1,0 +1,39 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.saml2.SAML2SPPartnerMBean
+baseTypes:
+- weblogic.security.providers.saml2.SAML2PartnerMBean
+derivedTypes:
+- weblogic.security.providers.saml2.SAML2WebSSOSPPartner
+- weblogic.security.providers.saml2.SAML2WSSSPPartner
+
+properties:
+- name: Type
+  descriptionHTML: "<p>The Service Provider Partner's type (Web Service or Web Single Sign-On).</p>"
+  type: java.lang.String
+  writable: true
+  legalValues:
+  - WSSSPPartner
+  - WebSSOSPPartner
+- name: GenerateAttributes
+  type: boolean
+  writable: true
+- name: KeyinfoIncluded
+  type: boolean
+  writable: true
+- name: IncludeOneTimeUseCondition
+  type: boolean
+  writable: true
+- name: ServiceProviderNameMapperClassname
+  type: java.lang.String
+  writable: true
+- name: TimeToLive
+  type: int
+  writable: true
+- name: TimeToLiveOffset
+  type: int
+  writable: true
+- name: WantAssertionsSigned
+  type: boolean
+  writable: true

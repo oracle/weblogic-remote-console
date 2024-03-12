@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
@@ -35,7 +36,28 @@ class ActionInvoker extends PageReader {
     this.formProperties = formProperties;
   }
 
+  // Invoke the action. Ensure it is done in a configuration transaction if needed.
   Response<Void> invokeAction() {
+    String impact = pageActionDef.getImpact();
+    if (BeanActionDef.IMPACT_ACTION.equals(impact) || BeanActionDef.IMPACT_ACTION_INFO.equals(impact)) {
+      // The impact is either action, action_info or unknown.
+      // This action might modify mbeans. Wrap it in a config transaction.
+      return ConfigurationTransactionHelper.editConfiguration(
+        getInvocationContext(),
+        new ConfigurationTransactionHelper.ConfigurationEditor() {
+          @Override
+          public Response<Void> editConfiguration() {
+            return doInvokeAction();
+          }
+        }
+      );
+    } else {
+      // This action doesn't modify mbeans.  Call it directly.
+      return doInvokeAction();
+    }
+  }
+
+  private Response<Void> doInvokeAction() {
     Response<Void> response = new Response<>();
     Response<Value> invokeResponse = null;
     Response<PageDef> pageDefResponse = getPageDef();

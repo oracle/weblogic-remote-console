@@ -1,14 +1,29 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function (ko, ArrayDataProvider, PerspectiveMemoryManager, NavtreeManager, PageDefinitionUtils, CoreUtils, Logger) {
-
+define([
+  'knockout',
+  'ojs/ojarraydataprovider',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/microservices/navtree/navtree-manager',
+  'wrc-frontend/microservices/page-definition/utils',
+  'wrc-frontend/core/utils',
+  'ojs/ojlogger'
+],
+  function (
+    ko,
+    ArrayDataProvider,
+    PerspectiveMemoryManager,
+    NavtreeManager,
+    PageDefinitionUtils,
+    CoreUtils,
+    Logger
+  ) {
     function BreadcrumbsManager(beanTree, breadcrumbsObservableArray, options = {}){
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(beanTree.type);
       this.navtreeManager = new NavtreeManager(beanTree);
@@ -121,8 +136,10 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
 
       renderBreadcrumbs: function(linksData) {
         let crumb, menu;
+
         const div = document.createElement('div');
         div.setAttribute('id', 'breadcrumbs-container');
+        div.setAttribute('on-click', '[[accessKeyClick]]');
         const ul = document.createElement('ul');
         if (this.navigatorVisible) {
           // Create bean path history navigator
@@ -161,8 +178,16 @@ define(['knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/persp
         else {
           ul.className = 'breadcrumb-link';
         }
+
         div.append(ul);
-        return div;
+  
+        const conveyor = document.createElement('oj-conveyor-belt');
+        conveyor.setAttribute('arrow-visibility', 'auto');
+        conveyor.setAttribute('content-parent', '#breadcrumbs-container');
+  
+        conveyor.append(div);
+
+        return conveyor;
       },
 
       getBreadcrumbsVisibility: function () {

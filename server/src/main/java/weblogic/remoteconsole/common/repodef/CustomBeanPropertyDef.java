@@ -3,6 +3,7 @@
 
 package weblogic.remoteconsole.common.repodef;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import weblogic.remoteconsole.common.utils.Path;
@@ -23,8 +24,6 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
   private String onlinePropertyName;
   private String offlinePropertyName;
   private Path parentPath = new Path();
-  private boolean ordered;
-  private boolean multiLineString;
   private boolean key;
   private boolean createWritable;
   private boolean updateWritable;
@@ -51,7 +50,6 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
     setOnlinePropertyName(toClone.getOnlinePropertyName());
     setOfflinePropertyName(toClone.getOfflinePropertyName());
     setParentPath(toClone.getParentPath());
-    setOrdered(toClone.isOrdered());
     setKey(toClone.isKey());
     setCreateWritable(toClone.isCreateWritable());
     setUpdateWritable(toClone.isUpdateWritable());
@@ -64,8 +62,8 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
     setSecureDefaultValue(toClone.getSecureDefaultValue());
     setProductionDefaultValue(toClone.getProductionDefaultValue());
     setStandardDefaultValue(toClone.getStandardDefaultValue());
-    getGetRoles().addAll(toClone.getGetRoles());
-    getSetRoles().addAll(toClone.getSetRoles());
+    setGetRoles(new HashSet<>(toClone.getGetRoles()));
+    setSetRoles(new HashSet<>(toClone.getSetRoles()));
   }
 
   @Override
@@ -155,34 +153,6 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   public CustomBeanPropertyDef parentPath(Path val) {
     setParentPath(val);
-    return this;
-  }
-
-  @Override
-  public boolean isOrdered() {
-    return ordered;
-  }
-
-  public void setOrdered(boolean val) {
-    ordered = val;
-  }
-
-  public CustomBeanPropertyDef ordered(boolean val) {
-    setOrdered(val);
-    return this;
-  }
-
-  @Override
-  public boolean isMultiLineString() {
-    return multiLineString;
-  }
-
-  public void setMultiLineString(boolean val) {
-    multiLineString = val;
-  }
-
-  public CustomBeanPropertyDef multiLineString(boolean val) {
-    setMultiLineString(val);
     return this;
   }
 
@@ -421,6 +391,20 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
   }
 
   @Override
+  public boolean isOrdered() {
+    return valueDef.isOrdered();
+  }
+
+  public void setOrdered(boolean val) {
+    valueDef.setOrdered(val);
+  }
+
+  public CustomBeanPropertyDef ordered(boolean val) {
+    setOrdered(val);
+    return this;
+  }
+
+  @Override
   public BeanTypeDef getReferenceTypeDef() {
     return valueDef.getReferenceTypeDef();
   }
@@ -459,6 +443,20 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   public CustomBeanPropertyDef dateAsLong(boolean val) {
     setDateAsLong(val);
+    return this;
+  }
+
+  @Override
+  public boolean isMultiLineString() {
+    return valueDef.isMultiLineString();
+  }
+
+  public void setMultiLineString(boolean val) {
+    valueDef.setMultiLineString(val);
+  }
+
+  public CustomBeanPropertyDef multiLineString(boolean val) {
+    setMultiLineString(val);
     return this;
   }
 }

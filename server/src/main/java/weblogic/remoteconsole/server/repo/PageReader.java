@@ -293,6 +293,7 @@ class PageReader extends PageManager {
     PageDef pageDef = getPageRepoDef().getPageDef(pagePath);
     if (pageDef == null) {
       LOGGER.warning("Can't find page " + pagePath);
+      Thread.dumpStack();
       return response.setNotFound();
     }
     return response.setSuccess(pageDef);

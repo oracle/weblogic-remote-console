@@ -1,0 +1,112 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: ConfirmationMethod
+  helpSummaryHTML: >
+    <p>Specifies the type of confirmation method that is used when using SAML 2.0 assertions for identity.</p>
+  helpDetailsHTML: >
+    <p>The available confirmation methods are:</p>
+    <ul>
+      <li><code>sender-vouches</code> (default)</li>
+      <li><code>holder-of-key</code></li>
+      <li><code>bearer</code></li>
+    </ul>
+    <p>When specifying a confirmation method, include the fully-qualified URN of the method.
+    For example, <code>urn:oasis:names:tc:SAML:2.0:cm:sender-vouches</code>.</p>
+    <p>Note that if you use WLST to configure a partner, WebLogic Server
+    provides constants for each of the confirmation methods that may be
+    defined on partner class objects. For example, the following WLST
+    command sets the <code>bearer</code> confirmation method on a partner:</p>
+    <code>p.setConfirmationMethod(p.ASSERTION_TYPE_BEARER)</code>
+    <p>Operations on this parameter are available in the
+    <code>com.bea.security.saml2.providers.registry.WSSSPPartner</code> interface.</p>
+  legalValues:
+  - value: urn:oasis:names:tc:SAML:2.0:cm:bearer
+    label: "Bearer"
+  - value: urn:oasis:names:tc:SAML:2.0:cm:holder-of-key
+    label: 'Holder of Key'
+  - value: urn:oasis:names:tc:SAML:2.0:cm:sender-vouches
+    label: "Sender Vouches"
+- name: WantArtifactRequestSigned
+  label: "Only Accept Signed Artifact Requests"
+  helpSummaryHTML: >
+    <p>Specifies whether inbound SAML artifact requests from this Service Provider partner must be signed.</p>
+  helpDetailsHTML: >
+    <p>If enabled, unsigned artifact requests received from this Service
+    Provider are rejected. This attribute is available to be set if the
+    Artifact binding is enabled for either partner.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.WebSSOPartner</code> interface.</p>
+- name: ArtifactBindingUsePOSTMethod
+  label: "Send Artifact via POST"
+  helpSummaryHTML: >
+    <p>Specifies whether SAML artifacts are delivered to this Service
+    Provider partner via the HTTP POST binding.</p>
+  helpDetailsHTML: >
+    <p>If <code>false</code>, artifacts are delivered via the HTTP GET binding.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.WebSSOPartner</code> interface.</p>
+- name: ArtifactBindingPostForm
+  label: "Artifact Binding POST Form"
+  helpSummaryHTML: >
+    <p>The URI of the custom web application that generates the HTTP POST
+    form for sending the SAML artifact.</p>
+  helpDetailsHTML: >
+    <p>You may enter a URI in this field only if Send Artifact via POST is
+    enabled. Details about the required fields in this custom application
+    are available in the OASIS SAML 2.0 specifications.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.WebSSOPartner</code> interface.</p>
+  usedIf:
+    property: ArtifactBindingUsePOSTMethod
+    values:
+    - true
+- name: PostBindingPostForm
+  label: "POST Binding POST Form"
+  helpSummaryHTML: >
+    <p>The URI of the custom web application that generates the HTTP POST
+    form for sending the message via the POST binding.</p>
+  helpDetailsHTML: >
+    <p>Details about the required fields in this custom application are
+    available in the OASIS SAML 2.0 specifications.</p>
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.WebSSOPartner</code> interface.</p>
+# TBD - fill in the certificate property help text.  The admin console doesn't have any we can harvest.
+- name: SSOSigningCertIssuedTo
+  label: "Issued To"
+  helpHTML: " "
+- name: SSOSigningCertIssuedBy
+  label: "Issued By"
+  helpHTML: " "
+- name: SSOSigningCertValidFrom
+  label: "Valid From"
+  helpHTML: " "
+- name: SSOSigningCertValidUntil
+  label: "Valid Until"
+  helpHTML: " "
+- name: SSOSigningCertVersion
+  label: "Version"
+  helpHTML: " "
+- name: SSOSigningCertSerialNumber
+  label: "Serial Number"
+  helpHTML: " "
+- name: SSOSigningCertSignatureAlgorithm
+  label: "Signature Algorithm"
+  helpHTML: " "
+- name: SSOSigningCertPublicKey
+  label: "Public Key"
+  helpHTML: " "
+  multiLineString: true
+  presentation:
+    width: xxl
+- name: SSOSigningCertSubjectAlternativeNames
+  label: "Subject Alternative Names"
+- name: SSOSigningCertExtendedKeyUsage
+  label: "Extended Key Usage"
+  helpHTML: " "
+- name: SSOSigningCertBasicConstraints
+  label: "Basic Constraints"
+  helpHTML: " "
+- name: SSOSigningCertThumbprintAlgorithm
+  label: "Thumbprint Algorithm"
+  helpHTML: " "
+- name: SSOSigningCertThumbprint
+  label: "Thumbprint"
+  helpHTML: " "

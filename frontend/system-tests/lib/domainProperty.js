@@ -57,6 +57,7 @@ module.exports = function (driver, file) {
             await admin.enableCheckBox(driver, idName = 'AdministrationPortEnabled');
             //await admin.setFieldValue(driver, idName = 'AdministrationPort|input', newValue=adminPortTF);
             await admin.enableCheckBox(driver, idName = 'ProductionModeEnabled');
+            await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_SecureModeEnabled');
             await admin.enableCheckBox(driver, idName = 'ExalogicOptimizationsEnabled');
             await admin.enableCheckBox(driver, idName = 'ClusterConstraintsEnabled');
             await admin.disableCheckBox(driver, idName = 'InternalAppsDeployOnDemandEnabled');
@@ -157,7 +158,7 @@ module.exports = function (driver, file) {
             await admin.disableCheckBox(driver,idName='SecurityConfiguration_CompatibilityConnectionFiltersEnabled');
             await admin.disableCheckBox(driver,idName='SecurityConfiguration_ClearTextCredentialAccessEnabled');
             await admin.disableCheckBox(driver,idName='SecurityConfiguration_UseKSSForDemo');
-            await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_SecureModeEnabled');
+            //await admin.disableCheckBox(driver,idName='SecurityConfiguration_SecureMode_SecureModeEnabled');
             /*
             //await admin.selectDropDownValue(driver,idName='DefaultRealm_selected',selectValue=DefaultRealmDB,'N');
             await admin.setFieldValue(driver,idName='AdministrativeIdentityDomain|input',newValue=AdministrativeIdentityDomainTF);

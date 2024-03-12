@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -18,15 +18,19 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
   property = "type"
 )
 @JsonSubTypes(
-  { @JsonSubTypes.Type(value = PersistedCustomFilteringDashboard.class, name = "CustomFilteringDashboard") }
+  {
+    @JsonSubTypes.Type(value = PersistedFilteringDashboard.class, name = "FilteringDashboard"),
+    // To support old persisted dashboards customers might have:
+    @JsonSubTypes.Type(value = PersistedFilteringDashboard.class, name = "CustomFilteringDashboard")
+  }
 )
 public class PersistedDashboard {
 
-  public boolean isCustomFilteringDashboard() {
-    return this instanceof PersistedCustomFilteringDashboard;
+  public boolean isFilteringDashboard() {
+    return this instanceof PersistedFilteringDashboard;
   }
 
-  public PersistedCustomFilteringDashboard asCustomFilteringDashboard() {
-    return (PersistedCustomFilteringDashboard)this;
+  public PersistedFilteringDashboard asFilteringDashboard() {
+    return (PersistedFilteringDashboard)this;
   }
 }

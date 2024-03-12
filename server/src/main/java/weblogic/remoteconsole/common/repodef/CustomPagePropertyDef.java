@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import weblogic.remoteconsole.common.utils.ListUtils;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.Value;
 
@@ -39,9 +40,9 @@ public class CustomPagePropertyDef implements PagePropertyDef {
     setPageDef(toClone.getPageDef());
     setHelpSummaryHTML(toClone.getHelpSummaryHTML());
     setDetailedHelpHTML(toClone.getDetailedHelpHTML());
-    setLegalValueDefs(toClone.getLegalValueDefs());
+    getLegalValueDefs().addAll(ListUtils.nonNull(toClone.getLegalValueDefs()));
     setSupportsOptions(toClone.isSupportsOptions());
-    setOptionsSources(toClone.getOptionsSources());
+    getOptionsSources().addAll(ListUtils.nonNull(toClone.getOptionsSources()));
     setAllowNoneOption(toClone.isAllowNoneOption());
     setLabel(toClone.getLabel());
     setUsedIfDef(toClone.getUsedIfDef());

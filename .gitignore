@@ -71,3 +71,9 @@ hugo/*/.hugo_build.lock
 # These are side effects of the WKTUI tests
 frontend/wktui-tests/node_modules/**
 weblogic-toolkit-ui/
+
+upload
+upload/**
+
+wls-remote-console-helper-war/signin/package-lock.json
+wls-remote-console-helper-war/ui/package-lock.json

@@ -11,8 +11,8 @@
  * Module used to manage console projects.
  * @module
  */
-define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'text!wrc-frontend/config/wrc-projects.yaml', './console-project', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/provider-management/data-provider', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/cfe-errors', 'ojs/ojlogger' ],
-  function(YamlParser, JsonParser, WrcProjectsFileContents, ConsoleProject, DataProviderManager, DataProvider, Runtime, CoreUtils, CoreTypes, CfeErrors, Logger){
+define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'text!wrc-frontend/config/wrc-projects.json', 'text!wrc-frontend/config/wrc-projects.yaml', './console-project', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/provider-management/data-provider', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/cfe-errors', 'ojs/ojlogger' ],
+  function(YamlParser, JsonParser, WrcProjectsFileContentsJSON, WrcProjectsFileContents, ConsoleProject, DataProviderManager, DataProvider, Runtime, CoreUtils, CoreTypes, CfeErrors, Logger){
     var projects = [];
 
     function createProject(entry) {
@@ -395,16 +395,21 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
       },
 
       loadConfigProjects: function() {
+        if (WrcProjectsFileContentsJSON.length != 0) {
+          return this.createFromJSONString(WrcProjectsFileContentsJSON);
+          // WrcProjectsFileContentsJSON.isDefault = true;
+          // this.createFromEntry(WrcProjectsFileContentsJSON);
+          // return Promise.resolve(this.getDefault());
+        }
         return YamlParser.parse(WrcProjectsFileContents)
           .then(WrcProjects => {
             if (CoreUtils.isNotUndefinedNorNull(WrcProjects)){
               projects.forEach((project, index) => {
                 if (project.isDefault) projects[index].isDefault = false;
               });
-              WrcProjects.forEach((project) => {
-                project.isDefault = true;
-                this.createFromEntry(project);
-              });
+              console.log(`WrcProjects is ${JSON.stringify(WrcProjects)}`);
+              WrcProjects[0].isDefault = true;
+              this.createFromEntry(WrcProjects[0]);
             }
             return Promise.resolve(this.getDefault());
           });

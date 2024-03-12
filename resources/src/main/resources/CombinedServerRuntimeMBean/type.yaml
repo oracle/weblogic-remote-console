@@ -1,4 +1,4 @@
-# Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 instanceName: ServerRuntime
@@ -10,8 +10,8 @@ subTypeDiscriminatorProperty: Type
 subTypes:
 - type: weblogic.management.runtime.RunningServerRuntimeMBean
   value: RunningServerRuntime
-- type: weblogic.management.runtime.NotRunningServerRuntimeMBean
-  value: NotRunningServerRuntime
+- type: weblogic.management.runtime.UnreachableServerRuntimeMBean
+  value: UnreachableServerRuntime
 
 properties:
 - name: State
@@ -56,8 +56,8 @@ properties:
     label: Suspending
   - value: UNKNOWN
     label: Unknown
-  - value: NOT_RUNNING
-    label: Not running, select this row for more info
+  - value: UNREACHABLE
+    label: Unreachable, select this row for more info
 
 actions:
 
@@ -180,3 +180,71 @@ actions:
   mbeanOperation:
     type: ServerRuntimeMBean
     operation: restartSSLChannels
+
+- name: "publishSingleSignOnServices"
+  label: "Publish Metadata"
+  actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.publishSingleSignOnServices
+  # don't configure polling since this action is synchronous
+  inputForm:
+    introductionHTML: >
+      <p>Write the SAML 2.0 Single Sign-on Service metadata for this server to a file.</p>
+      <p>The OASIS SAML 2.0 specification defines a metadata schema for the
+      purpose of exchanging configuration information -- for example, SAML
+      bindings, PKI information, contact information, etc. -- between two
+      business partners to support web single sign-on. After you have configured
+      the SAML 2.0 services available from this server, you publish the
+      configuration information in a metadata file that you share with your
+      business partners. This information can be shared via a variety of
+      mechanisms; for example, via secure email or FTP. Your business partners
+      then import this metadata file into their SAML 2.0 service to obtain the
+      configuration data they need to enable.</p>
+    parameters:
+    - name: fileName
+      label: "File Name"
+    - name: prohibitOverwrite
+      label: "Don't Overwrite"
+    helpTopics:
+    - label: "Understanding Security for Oracle WebLogic Serve"
+      href: "scovr/index.html"
+      type: "edocs"
+    - label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+      href: "secmg/saml.html"
+      type: "edocs"
+    - label: "Configuring SAML 2.0 Services"
+      href: "secmg/saml20.html"
+      type: "edocs"
+  mbeanOperation:
+    type: SingleSignOnServicesRuntimeMBean
+    operation: publish
+  definition:
+    type: "void"
+    descriptionHTML: >
+      <p>Write the SAML 2.0 Single Sign-on Service metadata for this server to a file.</p>
+      <p>The OASIS SAML 2.0 specification defines a metadata schema for the
+      purpose of exchanging configuration information -- for example, SAML
+      bindings, PKI information, contact information, etc. -- between two
+      business partners to support web single sign-on. After you have configured
+      the SAML 2.0 services available from this server, you publish the
+      configuration information in a metadata file that you share with your
+      business partners. This information can be shared via a variety of
+      mechanisms; for example, via secure email or FTP. Your business partners
+      then import this metadata file into their SAML 2.0 service to obtain the
+      configuration data they need to enable.</p>
+    # If we don't customize this action's roles, it will inherit CombinedServerRuntimeMBean's
+    # roles which would allow Operator and Admin.
+    # However, this action delegates to SingleSignOnRuntimeMBean.public which can only be accessed by Admin.
+    # So, customize the roles to only allow Admin.
+    roles:
+      allowed:
+      - Admin
+    parameters:
+    - name: fileName
+      type: java.lang.String
+      descriptionHTML: >
+        <p>The name of the file (relative to the admin server) to write the metadata to.</p>
+        <p>The directory must exist on admin server.</p>
+        <p>The file name must end with <code>.xml</code></p>
+    - name: prohibitOverwrite
+      type: boolean
+      descriptionHTML: >
+        Don't overwrite the file if it already exists.

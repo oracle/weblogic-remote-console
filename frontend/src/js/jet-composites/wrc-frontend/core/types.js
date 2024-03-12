@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -48,6 +48,7 @@ define(
         NOT_FOUND: {name: 'NOT_FOUND'},
         INCORRECT_CONTENT: {name: 'INCORRECT_CONTENT'},
         CBE_REST_API: {name: 'CBE_REST_API'},
+        STORAGE_API: {name: 'STORAGE_API'},
         CONNECTION_REFUSED: {name: 'CONNECTION_REFUSED'},
         UNEXPECTED: {name: 'UNEXPECTED'}
       }),
@@ -55,7 +56,9 @@ define(
         return Object.values(this.FailureType).find(failureType => failureType.name === name);
       },
       TypeErrors: Object.freeze({
-        FETCH_FAILURE: 'Failed to fetch'
+        FETCH_FAILURE: 'Failed to fetch',
+        LOAD_FAILED: 'Load failed',
+        NETWORK_ERROR_FETCH_RESOURCES: 'NetworkError when attempting to fetch resource.'
       }),
       Navtree: {
         /** @type {{DOCKED: {name: string}, FLOATING: {name: string}, MINIMIZED: {name: string}}} */
@@ -68,6 +71,13 @@ define(
         placementFromName: function (name) {
           return Object.values(this.Placement).find(placement => placement.name === name);
         }
+      },
+      isConnectionResponseFailure: function (response) {
+        return (response?.failureType?.name === this.FailureType.CONNECTION_REFUSED.name ||
+          response?.failureReason?.message === this.TypeErrors.NETWORK_ERROR_FETCH_RESOURCES ||
+          response?.failureReason?.message === this.TypeErrors.LOAD_FAILED ||
+          response?.failureReason?.message === this.TypeErrors.FETCH_FAILURE
+        );
       }
 
     };

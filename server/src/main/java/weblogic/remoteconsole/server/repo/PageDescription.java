@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -14,6 +14,7 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
 import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
+import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanValueDef;
 import weblogic.remoteconsole.common.repodef.CreateFormDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPresentationDef;
@@ -115,9 +116,17 @@ public class PageDescription {
   private JsonObject sliceFormDefToJson(SliceFormDef sliceFormDef) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
     addIfNotEmpty(builder, "slices", slicesDefToJson(getSlicesDef(sliceFormDef.getPagePath())));
-    addIfNotEmpty(builder, "properties", sliceFormPropertyDefsToJson(sliceFormDef.getPropertyDefs()));
-    addIfNotEmpty(builder, "advancedProperties", sliceFormPropertyDefsToJson(sliceFormDef.getAdvancedPropertyDefs()));
-    addIfNotEmpty(builder, "sections", sliceFormSectionDefsToJson(sliceFormDef.getSectionDefs()));
+    JsonArray properties = sliceFormPropertyDefsToJson(sliceFormDef.getPropertyDefs());
+    JsonArray advancedProperties = sliceFormPropertyDefsToJson(sliceFormDef.getAdvancedPropertyDefs());
+    JsonArray sections = sliceFormSectionDefsToJson(sliceFormDef.getSectionDefs());
+    if (properties.isEmpty() && advancedProperties.isEmpty() && sections.isEmpty()) {
+      // The CFE requires that the page at least have an empty 'properties' array
+      builder.add("properties", properties);
+    } else {
+      addIfNotEmpty(builder, "properties", properties);
+      addIfNotEmpty(builder, "advancedProperties", advancedProperties);
+      addIfNotEmpty(builder, "sections", sections);
+    }
     addIfNotEmpty(builder, "presentation", sliceFormPresentationDefToJson(sliceFormDef.getPresentationDef()));
     addIfNotEmpty(builder, "actions", actionDefsToJson(sliceFormDef.getActionDefs()));
     builder.add(READ_ONLY, sliceFormDef.isReadOnly());
@@ -133,7 +142,9 @@ public class PageDescription {
     addIfNotEmpty(builder, "actions", actionDefsToJson(sliceTableDef.getActionDefs()));
     if (requiresRowSelection(sliceTableDef.getActionDefs())) {
       builder.add("requiresRowSelection", true);
-      builder.add("rowSelectionProperty", "identifier");
+      String rowSelectionProperty =
+        sliceTableDef.isUseRowIdentities() ? "identity" : "identifier";
+      builder.add("rowSelectionProperty", rowSelectionProperty);
     } else {
       builder.add("requiresRowSelection", false);
       builder.add("rowSelectionProperty", "none");
@@ -354,10 +365,21 @@ public class PageDescription {
       addIfNotEmpty(builder, "helpSummaryHTML", actionDef.getHelpSummaryHTML());
       addIfNotEmpty(builder, "detailedHelpHTML", actionDef.getDetailedHelpHTML());
       addIfNotEmpty(builder, "externalHelp", pageActionExternalHelpDefToJson(actionDef.getExternalHelpDef()));
+      addIfTrue(builder, "affectsChangeManager", actionAffectsChangeManager(actionDef));
     }
     addIfNotEmpty(builder, "actions", actionDefsToJson(actionDef.getActionDefs()));
     addIfNotEmpty(builder, "polling", pageActionPollingDefToJson(actionDef.getPollingDef()));
     return builder.build();
+  }
+
+  private boolean actionAffectsChangeManager(PageActionDef actionDef) {
+    if (ic.getPageRepo().isChangeManagerPageRepo()) {
+      String impact = actionDef.getImpact();
+      if (BeanActionDef.IMPACT_ACTION.equals(impact) || BeanActionDef.IMPACT_ACTION_INFO.equals(impact)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   // property info returned for all forms
@@ -559,7 +581,7 @@ public class PageDescription {
       return "throwable";
     }
     if (valueDef.isFileContents()) {
-      return "fileContents";
+      return (writable) ? "fileContents" : "href";
     }
     if (valueDef.isHealthState()) {
       // For now, just treat it as a string:

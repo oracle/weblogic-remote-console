@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -12,20 +12,18 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.helidon.config.Config;
-import weblogic.remoteconsole.server.ConsoleBackendRuntime;
+import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 
 public class AboutResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response about(@Context ResourceContext context) {
-    Config config = ConsoleBackendRuntime.INSTANCE.getConfig();
     JsonObjectBuilder builder =
       Json.createObjectBuilder().add("about",
         Json.createObjectBuilder()
-          .add("name", config.get("name").asString().orElse(""))
-          .add("version", config.get("version").asString().orElse("")
-        ).build()
+          .add("name", ConsoleBackendRuntimeConfig.getName())
+          .add("version", ConsoleBackendRuntimeConfig.getVersion())
+        .build()
       );
 
     return

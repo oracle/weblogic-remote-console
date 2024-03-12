@@ -1,14 +1,26 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojcontext', 'ojs/ojknockout', 'ojs/ojbutton', 'ojs/ojcheckboxset', 'ojs/ojlabel'],
-  function (ko, ArrayDataProvider, Context) {
+define([
+  'knockout',
+  'ojs/ojarraydataprovider',
+  'ojs/ojcontext',
+  'ojs/ojknockout',
+  'ojs/ojbutton',
+  'ojs/ojcheckboxset',
+  'ojs/ojlabel'
+],
+  function (
+    ko,
+    ArrayDataProvider,
+    Context
+  ) {
 
     function MultiSelectViewModel(context) {
 

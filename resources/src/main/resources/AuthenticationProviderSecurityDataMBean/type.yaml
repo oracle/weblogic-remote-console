@@ -1,8 +1,10 @@
-# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 subTypeDiscriminatorProperty: Type
 subTypes:
 - type: weblogic.security.providers.authentication.DefaultAuthenticatorSecurityDataMBean
   value: weblogic.security.providers.authentication.DefaultAuthenticator
+- type: com.bea.security.saml2.providers.SAML2IdentityAsserterSecurityDataMBean
+  value: com.bea.security.saml2.providers.SAML2IdentityAsserter
 disableMBeanJavadoc: true

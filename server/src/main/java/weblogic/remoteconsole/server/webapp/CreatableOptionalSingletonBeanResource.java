@@ -14,6 +14,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 /**
  * Handles the JAXRS methods for a creatable optional singleton bean.
  */
@@ -70,10 +73,35 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
     @QueryParam("identifier") @DefaultValue("") String identifier,
     JsonObject requestBody
   ) {
+    return internalPost(slice, action, actionForm, identifier, requestBody, null);
+  }
+
+  @POST
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
+  @Produces(MediaType.APPLICATION_JSON)
+  public javax.ws.rs.core.Response post(
+    @QueryParam("slice") @DefaultValue("") String slice,
+    @QueryParam("action") @DefaultValue(UPDATE) String action,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @QueryParam("identifier") @DefaultValue("") String identifier,
+    @FormDataParam("requestBody") JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
+    return internalPost(slice, action, actionForm, identifier, requestBody, parts);
+  }
+
+  protected javax.ws.rs.core.Response internalPost(
+    String slice,
+    String action,
+    String actionForm,
+    String identifier,
+    JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
     getInvocationContext().setIdentifier(identifier);
     if (CREATE.equals(action)) {
       setCreateFormPagePath();
-      return createOptionalSingleton(requestBody);
+      return createOptionalSingleton(requestBody, parts);
     }
     setSlicePagePath(slice);
     if (CUSTOMIZE_TABLE.equals(action)) {
@@ -83,9 +111,9 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
       return getActionInputForm(action, requestBody);
     }
     if (UPDATE.equals(action)) {
-      return updateSliceForm(requestBody);
+      return updateSliceForm(requestBody); // TBD parts?
     }
-    return invokeAction(action, requestBody);
+    return invokeAction(action, requestBody, parts);
   }
 
   /**
@@ -107,6 +135,14 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
 
   protected Response updateSliceForm(JsonObject requestBody) {
     return UpdateHelper.update(getInvocationContext(), requestBody);
+  }
+
+  protected Response createOptionalSingleton(JsonObject requestBody, FormDataMultiPart parts) {
+    if (parts == null) {
+      return createOptionalSingleton(requestBody);
+    } else {
+      return CreateHelper.create(getInvocationContext(), requestBody, parts);
+    }
   }
 
   protected Response createOptionalSingleton(JsonObject requestBody) {
