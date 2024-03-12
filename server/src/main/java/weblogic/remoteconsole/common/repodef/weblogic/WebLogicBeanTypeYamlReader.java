@@ -1,8 +1,9 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
+import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
@@ -50,8 +51,8 @@ class WebLogicBeanTypeYamlReader {
     if ("RunningServerRuntimeMBean".equals(type)) {
       return new RunningServerRuntimeMBeanYamlReader(yamlReader);
     }
-    if ("NotRunningServerRuntimeMBean".equals(type)) {
-      return new NotRunningServerRuntimeMBeanYamlReader(yamlReader);
+    if ("UnreachableServerRuntimeMBean".equals(type)) {
+      return new UnreachableServerRuntimeMBeanYamlReader(yamlReader);
     }
     if (AggregatedRuntimeMBeanNameHandler.INSTANCE.isFabricatedType(type)) {
       return new AggregatedRuntimeMBeanYamlReader(yamlReader);
@@ -73,16 +74,16 @@ class WebLogicBeanTypeYamlReader {
     return yamlReader;
   }
 
-  BeanTypeDefSource getBeanTypeDefSource(String type) {
-    return getYamlReader().getDefaultBeanTypeDefSource(type);
+  BeanTypeDefSource getBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    return getYamlReader().getDefaultBeanTypeDefSource(repoDef, type);
   }
 
   BeanTypeDefCustomizerSource getBeanTypeDefCustomizerSource(BeanTypeDef typeDef) {
     return getYamlReader().getDefaultBeanTypeDefCustomizerSource(typeDef);
   }
 
-  PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(String type) {
-    return getYamlReader().getDefaultPseudoBeanTypeDefSource(type);
+  PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    return getYamlReader().getDefaultPseudoBeanTypeDefSource(repoDef, type);
   }
 
   BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef typeDef) {

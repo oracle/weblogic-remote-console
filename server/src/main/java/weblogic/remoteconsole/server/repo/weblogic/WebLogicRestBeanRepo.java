@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -13,7 +13,10 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
+import javax.ws.rs.core.MediaType;
 
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.file.StreamDataBodyPart;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanActionParamDef;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
@@ -26,6 +29,7 @@ import weblogic.remoteconsole.server.repo.BeanReaderRepo;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.BeanTreePathSegment;
+import weblogic.remoteconsole.server.repo.FileContentsValue;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
@@ -89,19 +93,50 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
       response.copyUnsuccessfulResponse(reqBodyResponse);
       return response;
     }
+    Path restPath = getRestActionPath(ic, beanPath, actionDef);
     JsonObject restRequestBody = reqBodyResponse.getResults();
     boolean async = actionDef.isAsynchronous();
-    Response<JsonObject> restResponse =
-      WebLogicRestInvoker.post(
-        ic,
-        getRestActionPath(beanPath, actionDef),
-        restRequestBody,
-        false, // expandedValues,
-        false, // saveChanges,
-        async
-      );
-    convertRestActionResponseToRepoResponse(beanPath, response, restResponse, actionDef, async);
+    Response<JsonObject> postResponse = null;
+    boolean expandedValues = false;
+    boolean saveChanges = false;
+    if (isMultiPart(args)) {
+      FormDataMultiPart parts = getParts(restRequestBody, args);
+      postResponse =
+        WebLogicRestInvoker.post(ic, restPath, parts, expandedValues, saveChanges, async);
+    } else {
+      postResponse =
+        WebLogicRestInvoker.post(ic, restPath, restRequestBody, expandedValues, saveChanges, async);
+    }
+    convertRestActionResponseToRepoResponse(beanPath, response, postResponse, actionDef, async);
     return response;
+  }
+
+  private boolean isMultiPart(List<BeanActionArg> args) {
+    for (BeanActionArg arg : args) {
+      if (arg.getValue().isFileContents()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private FormDataMultiPart getParts(JsonObject requestBody, List<BeanActionArg> args) {
+    FormDataMultiPart parts = new FormDataMultiPart();
+    parts.field("model", requestBody.toString(), MediaType.APPLICATION_JSON_TYPE);
+    for (BeanActionArg arg : args) {
+      Value value = arg.getValue();
+      if (value.isFileContents()) {
+        FileContentsValue fcValue = value.asFileContents();
+        parts.bodyPart(
+          new StreamDataBodyPart(
+            arg.getParamDef().getOnlineParamName(),
+            fcValue.getInputStream(),
+            fcValue.getFileName()
+          )
+        );
+      }
+    }
+    return parts;
   }
 
   private Response<JsonObject> createRestActionRequestBody(BeanActionDef actionDef, List<BeanActionArg> args) {
@@ -114,7 +149,12 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
         if (argsOK) {
           BeanActionArg arg = findActionArg(paramDef, args);
           if (arg != null) {
-            bldr.add(paramDef.getParamName(), toJson(arg.getValue()));
+            Value value = arg.getValue();
+            if (value != null && value.isFileContents()) {
+              // these go into a multi part form (v.s. the json request body)
+            } else {
+              bldr.add(arg.getParamDef().getOnlineParamName(), toJson(arg.getValue()));
+            }
           } else {
             argsOK = false;
           }
@@ -174,7 +214,11 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
     return null;
   }
 
-  private Path getRestActionPath(BeanTreePath beanPath, BeanActionDef actionDef) {
+  private Path getRestActionPath(
+    InvocationContext ic,
+    BeanTreePath beanPath,
+    BeanActionDef actionDef
+  ) {
     // e.g. if beanPath is DomainRuntime/ServerLifeCycleRuntimes/Server1 and actionDef is start
     // then return domainRuntime/ServerLifeCycleRuntimes/Server1/start
 
@@ -195,6 +239,24 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
     // Add the name of the action:
     restActionPath.addComponent(actionDef.getRemoteActionName());
   
+    // Shortcut domainRuntime/serverRuntimes/<adminserver>/... to serverRuntime/...
+    List<String> components = restActionPath.getComponents();
+    if (components.size() >= 3) {
+      Path have = restActionPath.subPath(0, 3);
+      Path want = new Path();
+      want.addComponent("domainRuntime");
+      want.addComponent("serverRuntimes");
+      want.addComponent(ic.getConnection().getAdminServerName());
+      if (have.equals(want)) {
+        Path shortcut = new Path("serverRuntime");
+        if (components.size() > 3) {
+          List<String> restOfPath = components.subList(3, components.size());
+          shortcut.addComponents(restOfPath);
+        }
+        return shortcut;
+      }
+    }
+
     return restActionPath;
   }
 

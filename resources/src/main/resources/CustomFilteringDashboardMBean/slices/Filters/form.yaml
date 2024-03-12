@@ -6,11 +6,13 @@ introductionHTML: >
   <p>This dashboard will include all {0} instances in this domain that match all the filters.
   If no filters are specified, then all {0} instances will be included.</p>
 
-customizePageDefMethod: weblogic.remoteconsole.customizers.CustomFilteringDashboardMBeanCustomizer.customizeFiltersSliceDef
-customizePageMethod: weblogic.remoteconsole.customizers.CustomFilteringDashboardMBeanCustomizer.customizeFiltersSlice
+customizePageDefMethod: weblogic.remoteconsole.customizers.FilteringDashboardMBeanCustomizer.customizeFiltersSliceDef
+customizePageMethod: weblogic.remoteconsole.customizers.FilteringDashboardMBeanCustomizer.customizeFiltersSlice
 
 sections:
 - properties:
   - name: "Name"
+- properties:
+  - name: "Description"
 - title: "Name Filters"
 - title: "Property Filters"

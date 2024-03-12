@@ -1,13 +1,39 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/integration/controller', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/microservices/data-management/cbe-data-storage', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function (oj, ko, ModuleElementUtils, Controller, Runtime, DeclarativeActionsManager, CbeDataStorage, DataOperations, MessageDisplaying, PageDefinitionUtils, ViewModelUtils, CoreUtils, Logger) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojmodule-element-utils',
+  'wrc-frontend/common/controller',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/microservices/actions-management/declarative-actions-manager',
+  'wrc-frontend/microservices/data-management/cbe-data-storage',
+  'wrc-frontend/apis/data-operations',
+  'wrc-frontend/apis/message-displaying',
+  './utils',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/utils',
+],
+  function (
+    oj,
+    ko,
+    ModuleElementUtils,
+    Controller,
+    Runtime,
+    DeclarativeActionsManager,
+    CbeDataStorage,
+    DataOperations,
+    MessageDisplaying,
+    PageDefinitionUtils,
+    ViewModelUtils,
+    CoreUtils
+) {
     
     /**
      * No-arg constructor
@@ -56,7 +82,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
               formLayout: {
                 options: {
                   labelWidthPcnt: '24%',
-                  maxColumns: '1'
+                  maxColumns: '1',
+                  fullWidth: true
                 },
                 minWidth: parseInt(ViewModelUtils.getCustomCssProperty('overlayDialog-actionInput-width'), 10)
               },

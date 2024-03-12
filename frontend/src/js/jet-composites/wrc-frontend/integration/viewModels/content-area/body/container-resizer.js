@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -13,8 +13,14 @@
  * @class
  * @classdesc Class for calculating the actual ``min-height`` of a form or table container, in the Content Area.
  */
-define(['wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime'],
-  function (PerspectiveMemoryManager, ViewModelUtils, Runtime) {
+define([
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/integration/viewModels/utils'
+],
+  function (
+    PerspectiveMemoryManager,
+    ViewModelUtils
+  ) {
 
     //public:
     /**
@@ -24,9 +30,6 @@ define(['wrc-frontend/microservices/perspective/perspective-memory-manager', 'wr
      * @typedef ContentAreaContainerResizer
      */
     function ContentAreaContainerResizer(perspective){
-      var _wasHelpVisible = false;
-      this.setWasHelpVisible = function(visible) { _wasHelpVisible = visible;};
-      this.getWasHelpVisible = function() { return _wasHelpVisible; };
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(perspective.id);
     }
 
@@ -36,16 +39,25 @@ define(['wrc-frontend/microservices/perspective/perspective-memory-manager', 'wr
        * <p>This is a calculation based on the information in the options parameter, as well as height calculations that take into consideration that the container is in a Flexbox layout.</p>
        * @param {string} containerDOMSelector
        * @param {string} offsetHeightCSSVariable
-       * @param {{withHistoryVisible: boolean, withHelpVisible: boolean}} options
+       * @param {{withHistoryVisible?: boolean, withHelpVisible?: boolean}} options
        * @returns {Number}
        */
       getOffsetMaxHeight: function(containerDOMSelector, offsetHeightCSSVariable, options) {
-        const getOffsetTop = element => {
+        const getOffsetTop = (element, options) => {
           let offsetTop = 0;
           while(element) {
             offsetTop += element.offsetTop;
             element = element.offsetParent;
           }
+
+          if (options.withHelpVisible) {
+            const helpFooter = document.querySelector('tfoot.oj-table-footer');
+            offsetTop += (helpFooter !== null ? helpFooter.offsetHeight : 0);
+          }
+          else if (options.isPolicyForm) {
+            offsetTop -= 30;
+          }
+
           return offsetTop;
         };
 
@@ -55,9 +67,9 @@ define(['wrc-frontend/microservices/perspective/perspective-memory-manager', 'wr
         // Get what perspective memory has for current
         // state of beanPath history visibility.
         const wasHistoryVisible = this.perspectiveMemory.historyVisibility.call(this.perspectiveMemory);
-        // Get what private instance variable has for
-        // current state of help visibility.
-        const wasHelpVisible = this.getWasHelpVisible();
+        // Get what perspective memory has for current
+        // state of help visibility.
+        const wasHelpVisible = this.perspectiveMemory.helpVisibility.call(this.perspectiveMemory);
         // Set initial value of return variable to the
         // height of the fixed footer (70px), plus it's
         // margin-top (5px), plus it's margin-bottom (5px).
@@ -68,22 +80,20 @@ define(['wrc-frontend/microservices/perspective/perspective-memory-manager', 'wr
         }
 
         if (wasHelpVisible && options.withHelpVisible) {
-          if (!wasHistoryVisible && options.withHistoryVisible) {
-            offsetValue += 40;  // 110
-          }
+          offsetValue = (!wasHistoryVisible && options.withHistoryVisible ? offsetValue + 40 : offsetValue + 30);
         }
         else if (options.withHelpVisible) {
-          if (wasHelpVisible) offsetValue -= 40;
+          offsetValue = (wasHelpVisible ? offsetValue - 40 : offsetValue + 40);
         }
         else if (options.withHistoryVisible) {
-          offsetValue += (!wasHistoryVisible ? 40 : 0);
+          offsetValue += (!wasHistoryVisible ? 40 : 5);
         }
 
         this.perspectiveMemory.setHistoryVisibility.call(this.perspectiveMemory, options.withHistoryVisible);
-        this.setWasHelpVisible(options.withHelpVisible);
+        this.perspectiveMemory.setHelpVisibility.call(this.perspectiveMemory, options.withHelpVisible);
 
         const container = document.querySelector(containerDOMSelector);
-        const offsetTop = (container !== null ? getOffsetTop(container) : 0);
+        let offsetTop = (container !== null ? getOffsetTop(container, options) : 0);
         return offsetTop + offsetValue;
       }
     };

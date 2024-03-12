@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -31,7 +31,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
     function computeIsLockOwner(changeManager) {
       let isLockOwner = false;
       if (CoreUtils.isNotUndefinedNorNull(changeManager.lockOwner)) {
-        isLockOwner = (Runtime.getWebLogicUsername() === changeManager.lockOwner);
+        const username = Runtime.getWebLogicUsername();
+        isLockOwner = (CoreUtils.isUndefinedOrNull(username) ? true : (username === changeManager.lockOwner));
       }
       return isLockOwner;
     }

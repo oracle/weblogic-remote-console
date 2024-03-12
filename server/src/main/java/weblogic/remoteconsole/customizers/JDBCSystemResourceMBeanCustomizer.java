@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -10,9 +10,11 @@ import java.util.Map;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.server.repo.BooleanValue;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Option;
 import weblogic.remoteconsole.server.repo.Response;
+import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.BaseResource;
 
@@ -107,4 +109,16 @@ public class JDBCSystemResourceMBeanCustomizer {
     }
     return (new Response<List<Option>>()).setSuccess(options);
   }
+
+  public static Response<SettableValue> getIsXADriver(
+    @Source(
+      property = "JDBCResource.JDBCDriverParams.DriverName"
+    ) SettableValue driverNameValue
+  ) {
+    String driverName = driverNameValue.getValue().asString().getValue();
+    boolean isXADriver = JDBCSystemResourceMBeanCustomizerUtils.isXADriver(driverName);
+    Response<SettableValue> response = new Response<>();
+    return response.setSuccess(new SettableValue(new BooleanValue(isXADriver)));
+  }
+
 }

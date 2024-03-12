@@ -1,0 +1,19 @@
+<!--
+ Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+
+<oj-bind-if test="[[i18n.buttons.home.visible]]">
+  <oj-button
+    :id="[[i18n.buttons.home.id]]"
+    chroming="borderless"
+    disabled="[[i18n.buttons.home.disabled()]]"
+    on-oj-action="[[contentAreaHeaderButtonClickHandler]]"
+    on-keyup="[[onKeyUp]]"
+    data-key-focuser-id=".gallery-panel-card"
+    accesskey="H"
+  >
+    <img class="cfe-toolbar-button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.home.image + '.png', alt: i18n.buttons.home.label}" />
+    <span class="cfe-toolbar-button-label" data-bind="text: [[i18n.buttons.home.label]]"></span>
+  </oj-button>
+</oj-bind-if>

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -14,8 +14,8 @@ define(['./perspective'],
 
     function ModelingViewModel(viewParams) {
       Perspective.call(this, viewParams);
-
-      ModelingViewModel.prototype = Object.create(Perspective.prototype);
+  
+      Object.setPrototypeOf(ModelingViewModel.prototype, Perspective.prototype);
     }
 
     /*

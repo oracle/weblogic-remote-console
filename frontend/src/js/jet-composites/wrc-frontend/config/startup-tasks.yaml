@@ -1,0 +1,32 @@
+# Copyright 2023, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+startup-tasks:
+  - id: addAdminServer
+    iconFiles:
+      light: navstrip-icon-adminserver-blk_48x48
+      dark: navstrip-icon-adminserver-wht_48x48
+  - id: addWdtModel
+    iconFiles:
+      light: navstrip-icon-wdt-blk_48x48
+      dark: navstrip-icon-wdt-wht_48x48
+  - id: addWdtComposite
+    iconFiles:
+      light: navstrip-icon-wdt-composite-blk_48x48
+      dark: navstrip-icon-wdt-composite-wht_48x48
+  - id: addPropertyList
+    iconFiles:
+      light: navstrip-icon-property-list-blk_48x48
+      dark: navstrip-icon-property-list-wht_48x48
+  - id: createWdtModel
+    iconFiles:
+      light: navstrip-icon-wdt-blk_48x48
+      dark: navstrip-icon-wdt-wht_48x48
+  - id: createPropertyList
+    iconFiles:
+      light: navstrip-icon-property-list-blk_48x48
+      dark: navstrip-icon-property-list-wht_48x48
+  - id: importProject
+    iconFiles:
+      light: navstrip-icon-import-project-blk_48x48
+      dark: navstrip-icon-import-project-blk_48x48

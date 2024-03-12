@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -16,8 +16,24 @@
  * </ul>
  * @module
  */
-define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manager', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils' , 'wrc-frontend/core/cfe-errors', 'wrc-frontend/core/cbe-types'],
-  function (oj, CbeDataManager, Runtime, CoreTypes, CoreUtils, CfeErrors, CbeTypes) {
+define([
+  'ojs/ojcore',
+  'wrc-frontend/microservices/data-management/cbe-data-manager',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/core/types',
+  'wrc-frontend/core/utils' ,
+  'wrc-frontend/core/cfe-errors',
+  'wrc-frontend/core/cbe-types'
+],
+  function (
+    oj,
+    CbeDataManager,
+    Runtime,
+    CoreTypes,
+    CoreUtils,
+    CfeErrors,
+    CbeTypes
+  ) {
     function getConnectionErrorMessage(response) {
       let msg = oj.Translations.getTranslatedString('wrc-data-operations.messages.connectFailed.detail');
       if (response?.body?.data?.messages[0]?.message)
@@ -52,8 +68,9 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
       // Don't assume that this is a CBE_REST_API failure type!! Check and see what failure
       // type it actually is, before you alter the response :-)
       if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-        if (response.failureReason.message === 'Failed to fetch') {
+        if (CoreTypes.isConnectionResponseFailure(response)) {
           response['failureReason'] = messages.backendNotReachable.detail;
+          response.failureType = CoreTypes.FailureType.CONNECTION_REFUSED;
         }
         else {
           response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
@@ -91,10 +108,11 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
 
     function processUploadErrorResponse(response, messages) {
       if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-        if (response.failureReason.message === 'Failed to fetch') {
+        if (CoreTypes.isConnectionResponseFailure(response)) {
           response['failureReason'] = messages.backendNotReachable.detail;
+          response.failureType = CoreTypes.FailureType.CONNECTION_REFUSED;
           response.body.messages.push({
-            severity: 'warn',
+            severity: 'warning',
             summary: oj.Translations.getTranslatedString('wrc-data-operations.messages.cbeRestApi.requestUnsuccessful.summary'),
             detail: messages.backendNotReachable.detail
           });
@@ -130,8 +148,77 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
       return 'Basic ' + btoa(dataProvider.username + ':' + dataProvider.password);
     }
 
-    //public:
+  //public:
     return {
+      profile: {
+        getDefault: () => {
+          return CbeDataManager.getDefaultAppProfile();
+        },
+        setCurrent: (id) => {
+          return CbeDataManager.setCurrentAppProfile(id);
+        },
+        getList: (defaultImageDataUrl) => {
+          return CbeDataManager.getAppProfilesList(defaultImageDataUrl);
+        },
+        create: (id, data) => {
+          return CbeDataManager.createAppProfile(id, data);
+        },
+        update: (id, data) => {
+          return CbeDataManager.updateAppProfile(id, data);
+        },
+        clearImage: (id) => {
+          return CbeDataManager.clearAppProfileImage(id);
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {File} file
+         * @returns {Promise<any>}
+         * @example
+         *  DataOperations.profile.replaceImage('mwooten', event.target.files[0])
+         *    .then(reply => {
+         *      const img = document.getElementById('current-profile-pic');
+         *      if (img !== null) {
+         *        img.src = reply.body.data.imageDataUrl;
+         *      }
+         *    })
+         *    .catch(response => {
+         *      ViewModelUtils.failureResponseDefaultHandling(response);
+         *    });
+         */
+        replaceImage: (id, file) => {
+          return CbeDataManager.replaceAppProfileImage(id, file);
+        },
+        remove: (id) => {
+          return CbeDataManager.removeAppProfile(id);
+        },
+        activate: (id) => {
+          return CbeDataManager.activateAppProfile(id);
+        },
+        load: (id) => {
+          return CbeDataManager.loadAppProfile(id);
+        },
+        loadCurrent: () => {
+          return CbeDataManager.loadCurrentAppProfile();
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {{id: string|null, general?: {account?: {organization?: string, name?: string, email?: string}}, role?: {isDefault?: boolean, isPrivate?: boolean}, settings?: {startup?: {taskChooserType?: 'use-dialog'|'use-cards'}},imageDataUrl?: string}} data
+         * @returns {Promise<any>}
+         */
+        save: (id, data) => {
+          return CbeDataManager.saveAppProfile(id, data);
+        }
+      },
+      preferences: {
+        getTheme: (id) => {
+          return CbeDataManager.getThemePreference(id);
+        },
+        setTheme: (id, theme) => {
+          return CbeDataManager.setThemePreference(id, theme);
+        }
+      },
       mbean: {
         messages: {
           'cfeApi': {
@@ -195,22 +282,33 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
         reload: function(uri) {
-          return CbeDataManager.reloadData(uri)
-            .catch(response =>{
-              if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
-              }
-              else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                // Try to make FailureType more accurate, if
-                // it was a CBE_REST_API generated failure
-                if (response.transport.status === 404) {
-                  // Switch it to FailureType.NOT_FOUND
-                  response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
+          if (uri.endsWith('DomainRuntime/MessageCenter/Alerts')) {
+            return CbeDataManager.mockupAlerts(uri)
+              .then(reply => {
+                return {
+                  body: {data: reply.body.data.get('rdjData')},
+                  messages: []
+                };
+              })
+          }
+          else {
+            return CbeDataManager.reloadData(uri)
+              .catch(response =>{
+                if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                  response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
                 }
-              }
-              // Rethrow updated (or not updated) reject
-              return Promise.reject(response);
-            });
+                else if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                  // Try to make FailureType more accurate, if
+                  // it was a CBE_REST_API generated failure
+                  if (response.transport.status === 404) {
+                    // Switch it to FailureType.NOT_FOUND
+                    response['failureType'] = CoreTypes.FailureType.NOT_FOUND;
+                  }
+                }
+                // Rethrow updated (or not updated) reject
+                return Promise.reject(response);
+              });
+          }
         },
         /**
          *
@@ -363,6 +461,12 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         }
       },
 
+      messageCenter: {
+        getData: function(messageCenterUri) {
+          return CbeDataManager.getMessageCenterData(messageCenterUri);
+        }
+      },
+
       connection: {
         messages: {
           'connectionMessage': {summary: oj.Translations.getTranslatedString('wrc-data-operations.messages.connectionMessage.summary')},
@@ -393,6 +497,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         stageConnection: function (dataProvider) {
           const dataPayload = {
             name: dataProvider.id,
+            label: dataProvider.name,
             providerType: CbeTypes.ProviderType.ADMIN_SERVER_CONNECTION.name,
             domainUrl: dataProvider.url
           };
@@ -420,8 +525,9 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
                     // type it actually is, before you alter the
                     // response :-)
                     if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
-                      if (response.failureReason.message === 'Failed to fetch') {
+                      if (CoreTypes.isConnectionResponseFailure(response)) {
                         response['failureReason'] = this.messages.backendNotReachable.detail;
+                        response.failureType = CoreTypes.FailureType.CONNECTION_REFUSED;
                       }
                       else {
                         response['failureReason'] = (response.failureReason.stack === '' ? response.failureReason.message : response.failureReason.stack);
@@ -604,6 +710,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/data-management/cbe-data-manag
         createComposite: function (dataProvider) {
           const dataPayload = {
             name: dataProvider.id,
+            label: dataProvider.name,
             providerType: CbeTypes.ProviderType.WDT_COMPOSITE.name,
             modelNames: dataProvider.modelProviders
           };

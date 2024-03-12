@@ -5,36 +5,47 @@ define({
         "appName": "WebLogic Remote Console"
       },
       "icons": {
-        "connectivity": {
-          "detached": {
-            "tooltip": "Detached"
-          },
-          "offline": {
-            "tooltip": "Offline"
-          },
-          "online": {
-            "tooltip": "Online"
-          },
-          "unattached": {
-            "tooltip": "Unattached"
-          }
-        },
         "navtree": {
           "toggler": {
             "tooltip": "Toggle Navigation Tree visibility"
           }
         },
-        "messageCenter": {
-          "tooltip": "Open Message Center"
+        "theme": {
+          "tooltip": "Switch theme"
+        },
+        "whatsNew": {
+          "tooltip": "What's New!"
+        },
+        "howDoI": {
+          "tooltip": "Open \"How Do I ...?\" Tasks"
+        },
+        "tips": {
+          "tooltip": "Toggle User Tips visibility"
         },
         "help": {
           "tooltip": "Open WebLogic Remote Console Internal Documentation"
+        },
+        "profile": {
+          "tooltip": "Profile"
+        }
+      },
+      "menus": {
+        "messageCenter": {
+          "value": "Open Message Center"
+        },
+        "theme": {
+          "light": {
+            "value": "Light"
+          },
+          "dark": {
+            "value": "Dark"
+          }
         }
       }
     },
     "wrc-footer": {
       "text": {
-        "copyrightLegal": "Copyright (c) 2020, 2023, Oracle and/or its affiliates.<br/>Oracle (r), Java, MySQL, and NetSuite are registered trademarks of Oracle and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
+        "copyrightLegal": "Copyright (c) 2020, 2024, Oracle and/or its affiliates.<br/>Oracle (r), Java, MySQL, and NetSuite are registered trademarks of Oracle and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
         "builtWith": "Built with Oracle JET"
       }
     },
@@ -45,20 +56,217 @@ define({
         }
       },
       "icons": {
-        "online": {
-          "tooltip": "Online"
-        },
-        "offline": {
-          "tooltip": "Offline"
-        },
-        "detached": {
-          "tooltip": "Detached"
-        },
-        "unattached": {
-          "tooltip": "Unattached"
-        },
         "insecure": {
           "tooltip": "Admin Server Connection Not Secure"
+        }
+      }
+    },
+    "wrc-app-profile": {
+      "icons": {
+        "profile": {
+          "popup": {
+            "launcher": {
+              "tooltip": "Show Profiles List"
+            }
+          },
+          "dialog": {
+            "launcher": {
+              "tooltip": "Manage Profiles"
+            },
+            "editor": {
+              "tooltip": "Profile Editor",
+              "toolbar": {
+                "save": {
+                  "tooltip": "Save Profile"
+                },
+                "activate": {
+                  "tooltip": "Active Profile"
+                },
+                "add": {
+                  "tooltip": "Add Profile"
+                },
+                "remove": {
+                  "tooltip": "Delete Profile"
+                }
+              }
+            }
+          },
+          "image": {
+            "tooltip": "Profile",
+            "capture": {
+              "tooltip": "Add or change image"
+            }
+          }
+        }
+      },
+      "tabstrip": {
+        "tabs": {
+          "general": {
+            "value": "General"
+          },
+          "settings": {
+            "value": "Settings"
+          },
+          "preferences": {
+            "value": "Preferences"
+          },
+          "properties": {
+            "value": "Properties"
+          }
+        }
+      },
+      "dialog": {
+        "changeImage": {
+          "value": "Change Image"
+        },
+        "clearImage": {
+          "value": "Clear Image"
+        },
+        "profile": {
+          "default": {
+            "value": "Default Profile"
+          },
+          "toggler": {
+            "editor": {
+              "show": {
+                "value": "Show Profile Editor"
+              },
+              "hide": {
+                "value": "Hide Profile Editor"
+              }
+            }
+          }
+        }
+      },
+      "popup": {
+        "profile": {
+          "manager": {
+            "open": {
+              "value": "Open Profile Manager"
+            },
+            "signout": {
+              "value": "Sign out"
+            }
+          }
+        }
+      },
+      "labels": {
+        "profile": {
+          "fields": {
+            "id": {
+              "value": "Profile ID"
+            },
+            "organization": {
+              "value": "Organization"
+            },
+            "name": {
+              "value": "Name"
+            },
+            "email": {
+              "value": "Email"
+            },
+            "role": {
+              "default": {
+                "value": "Use as Default Profile"
+              }
+            },
+            "settings": {
+              "useCredentialStorage": {
+                "value": "Store encrypted credentials for your projects?"
+              },
+              "disableHNV": {
+                "value": "Disable host name verification?"
+              },
+              "proxyAddress": {
+                "value": "Proxy Address"
+              },
+              "trustStoreType": {
+                "value": "Trust Store Type"
+              },
+              "trustStorePath": {
+                "value": "Trust Store Path"
+              },
+              "trustStoreKey": {
+                "value": "Trust Store Key"
+              },
+              "connectionTimeout": {
+                "value": "Administration Server Connection Timeout"
+              },
+              "readTimeout": {
+                "value": "Administration Server Read Timeout"
+              }
+            },
+            "preferences": {
+              "theme": {
+                "value": "Theme"
+              },
+              "startupTaskChooserType": {
+                "value": "Startup Task Chooser Type"
+              },
+              "useTreeMenusAsRootNodes": {
+                "value": "Use Tree Menus as the root level of Tree Navigators?"
+              },
+              "onQuit": {
+                "value": "Allow unsaved changes to prevent exiting application?"
+              },
+              "onDelete": {
+                "value": "Confirm all deletions?"
+              },
+              "onActionNotAllowed": {
+                "value": "Use \"Action Not Allowed\" popup to prevent data loss?"
+              },
+              "onUnsavedChangesDetected": {
+                "value": "Use \"Unsaved Changes Detected\" popup to prevent data loss?"
+              },
+              "onChangesNotDownloaded": {
+                "value": "Use \"Changes Not Download\" popup to prevent data loss?"
+              }
+            },
+            "properties": {
+              "javaSystemProperties": {
+                "value": "Java System Properties"
+              }
+            }
+          },
+          "legalValues": {
+            "themeOptions": {
+              "light": {
+                "value": "Light"
+              },
+              "dark": {
+                "value": "Dark"
+              }
+            },
+            "taskChooserTypeOptions": {
+              "useDialog": {
+                "value": "Use Dialog"
+              },
+              "useCards": {
+                "value": "Use Cards"
+              }
+            },
+            "trustStoreTypeOptions": {
+              "jks": {
+                "value": "JKS"
+              },
+              "pkcs12": {
+                "value": "PKCS12"
+              },
+              "windowsRoot": {
+                "value": "Windows ROOT"
+              },
+              "keyChainStore": {
+                "value": "Key Chain Store"
+              }
+            }
+          },
+          "messages": {
+            "save": {
+              "succeeded": {
+                "summary": "Profile \"{0}\" was saved successfully!"
+              }
+            }
+          }
         }
       }
     },
@@ -160,6 +368,9 @@ define({
             }
           },
           "domain": {
+            "consoleExtensionVersion": {
+              "label": "Console Extension Version:"
+            },
             "name": {
               "label": "Domain Name:"
             },
@@ -441,6 +652,11 @@ define({
             "detail": "In order to select the WDT Composite, first select all of the WDT Models used by the WDT Composite."
           }
         },
+        "sso": {
+          "secureContextRequired": {
+            "detail": "The URL must specify the HTTPS protocol or use localhost"
+          }
+        },
         "correctiveAction": {
           "filePathNotFound": {
             "detail": "<p>Edit path in filename field, then click the OK button. Alternatively, click the upload icon and choose another file.</p>"
@@ -459,7 +675,9 @@ define({
       },
       "prompts": {
         "info": {
-          "fileNotSet": "Not set"
+          "fileNotSet": {
+            "value": "Not set"
+          }
         }
       },
       "checkboxes": {
@@ -467,7 +685,7 @@ define({
           "label": "Use Sparse Template"
         },
         "usesso": {
-          "label": "Single Sign-On"
+          "label": "Use Web Authentication"
         },
         "insecure": {
           "label": "Make Insecure Connection"
@@ -543,13 +761,104 @@ define({
             "label": "Providers"
           },
           "tips": {
-            "label": "Tips"
+            "label": "User Tips"
+          },
+          "dashboards": {
+            "label": "Dashboards"
           }
         }
       },
-      "icons": {
-        "kiosk": {
-          "tooltip": "Kiosk"
+      "popups": {
+        "tips": {
+          "title": "Filter Tips",
+          "checkboxes": {
+            "hideall": "Hide All Tips",
+            "productivity": "Show Productivity Tips",
+            "personalization": "Show Personalization Tips",
+            "whereis": "Show Where Is... Tips",
+            "accessibility": "Show Accessibility Tips",
+            "connectivity": "Show Connectivity Tips",
+            "security": "Show Security Tips",
+            "other": "Show Other Tips"
+          }
+        }
+      },
+      "tips": {
+        "labels": {
+          "hideall": {
+            "value": "Hide All"
+          },
+          "productivity": {
+            "value": "Productivity"
+          },
+          "personalization": {
+            "value": "Personalization"
+          },
+          "whereis": {
+            "value": "Where Is ..."
+          },
+          "accessibility": {
+            "value": "Accessibility"
+          },
+          "connectivity": {
+            "value": "Connectivity"
+          },
+          "security": {
+            "value": "Security"
+          },
+          "other": {
+            "value": "Other"
+          }
+        },
+        "cards": {
+          "tip0": {
+            "title": "Think \"Search\" Before You Click!",
+            "descriptionHTML": "<p>Finding what you want in one of the provider's Trees, can involve a lot of clicking and scrolling. The <b><i>Search</i></b> field (located at the top of the app), lets you avoid having to do that!</p><p>Even better, clicking on an item in the generated search results, auto-expands the provider Tree to show you where the item is.</p>"
+          },
+          "tip1": {
+            "title": "\"Dashboards\" Are a User's Best Friend",
+            "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you''re on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+          },
+          "tip2": {
+            "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
+            "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+          },
+          "tip3": {
+            "title": "Using the Keyboard With Tables and Actions",
+            "descriptionHTML": "<p></p>"
+          },
+          "tip4": {
+            "title": "Where is the \"Customize this table\" Link?",
+            "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+          },
+          "tip5": {
+            "title": "Where is the \"Change Center\" Portlet?",
+            "descriptionHTML": "<p>The \"Change Center\" porlet has been replaced with the <i>Shopping Cart Drawer</i>, which has launcher icon in the iconbar when the \"Configuration Tree\" is selected.</p>"
+          },
+          "tip6": {
+            "title": "Where is the \"How Do I\" Portlet?",
+            "descriptionHTML": "<p></p>"
+          },
+          "tip7": {
+            "title": "Other Tip #1",
+            "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          },
+          "tip8": {
+            "title": "Trouble Creating an Admin Server Provider?",
+            "descriptionHTML": "<p>The <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Reference -> Troubleshooting</a> section in the WebLogic Remote Console documentation, covers how to resolve connectivity issues caused by environment and network settings.</p><p>If trying those don't lead to a resolution, please post a message to the <b>@weblogic-remote-console</b> slack channel. Screenshots often provide context that aids in issue diagnosis, so include them in the post when possible.</p>"
+          },
+          "tip9": {
+            "title": "Connectivity Tip #2",
+            "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          },
+          "tip10": {
+            "title": "Security Tip #1",
+            "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          },
+          "tip11": {
+            "title": "Think \"Shortcut Keys\" Before You Press Tab!",
+            "descriptionHTML": "<p>\"Shortcut\" (or accelerator) keys allow you to move the focus directly to an area, instead of sighing while repeatedly pressing the <b>Tab</b> and <b>Shift+Tab</b> keys!</p><p>Here's 5 to try out:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Opens the <i>Providers Drawer</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the <i>Provider Tree</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a table, more precisely the first column header.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the gripper of the Tree width-resizer. Afterwards, use the <code><b>RightArrow</b></code> and <code><b>LeftArrow</b></code> keys to increase or decrease the width of the Tree.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a breadcrumb that is a <i>cross-link</i> (if present), or the first clickable breadcrumb label.</li></ul><p>Check out the documentation to see a complete list of the shortcut keys!</p>"
+          }
         }
       }
     },
@@ -580,7 +889,7 @@ define({
       "messages": {
         "lostConnection": {
           "summary": "Lost Connection",
-          "detail": "Connection to remote console backend was lost. Ensure that it is running or restart it and try the link again."
+          "detail": "Connection to remote console backend was lost. Please ensure it and the CBE are running, or restart them and try the link again."
         },
         "cannotConnect": {
           "summary": "Connection Attempt Failed",
@@ -595,7 +904,7 @@ define({
             "label": "Trees"
           },
           "startup-tasks": {
-            "label": "Tasks"
+            "label": "Startup Tasks"
           }
         }
       }
@@ -648,7 +957,7 @@ define({
         },
         "addPropertyList": {
           "label": "Add Property List Provider",
-          "description": "This task creates a project resource that allows you to manage a .properties files stored on your local filesystem"
+          "description": "This task creates a project resource that allows you to manage a .properties file stored on your local filesystem"
         },
         "createWdtModel": {
           "label": "Create Provider for New WDT Model File",
@@ -1015,7 +1324,7 @@ define({
           "value": "Range: -31 to 31"
         },
         "dateTime": {
-          "value": "Format: y-MM-dd HH:mm:ss [HH:mm:ss] (e.g. 2006-04-25 00:00:00)"
+          "value": "Format: yyyy-MM-dd [HH:mm:ss [AM|PM]] (e.g. 2022-02-14 09:00:00 AM)"
         },
         "time": {
           "value": "Format: HH:mm:ss (e.g. 14:22:47)"
@@ -1184,6 +1493,9 @@ define({
         "reset": {
           "value": "Reset"
         },
+        "filter": {
+          "value": "Filter"
+        },
         "submit": {
           "value": "Submit Changes"
         },
@@ -1257,14 +1569,21 @@ define({
         "incorrectFileContent": {
           "detail": "'{0}' contains JSON, but it is not a JSON representation of a {1}!"
         },
-        "copiedToClipboard": {
+        "dataCopiedToClipboard": {
           "detail": "Data was copied to clipboard!"
+        },
+        "tableCopiedToClipboard": {
+          "summary": "Table was successfully copied to the clipboard!"
         },
         "emptyCellData": {
           "detail": "Data not copied to clipboard because selected cell was empty!"
         },
         "emptyRowData": {
           "detail": "Data not copied to clipboard because selected row was empty!"
+        },
+        "browserPermissionDenied": {
+          "summary": "Browser Permission Denied",
+          "detail": "You need to enable writing to the clipboard from JavaScript, in order to perform this operation. Also, the Clipboard API is only supported for pages served over HTTPS."
         }
       },
       "contextMenus": {
@@ -1274,7 +1593,26 @@ define({
           },
           "row": {
             "label": "Copy Row to Clipboard"
+          },
+          "tableAsText": {
+            "label": "Copy Table to Clipboard (Text)"
+          },
+          "tableAsJSON": {
+            "label": "Copy Table to Clipboard (JSON)"
+          },
+          "tableAsYAML": {
+            "label": "Copy Table to Clipboard (YAML)"
           }
+        }
+      }
+    },
+    "wrc-navtree-toolbar": {
+      "menu": {
+        "collapseAll": {
+          "value": "Collapse All"
+        },
+        "useTreeMenusAsRootNodes": {
+          "value": "Use Tree Menus as Root Nodes"
         }
       }
     },
@@ -1563,7 +1901,7 @@ define({
       "messages": {
         "connectionRefused": {
           "summary": "Connection Issue",
-          "details": "Having trouble sending and receiving data from provider! Please ensure it is accessible and try again."
+          "details": "Having trouble sending and receiving data from provider! Please ensure it and the CBE are accessible, and try again."
         },
         "pathNotFound": {
           "summary": "Path Not Found",
@@ -1588,268 +1926,30 @@ define({
         }
       }
     },
-    "wrc-electron": {
-      "common": {
-        "save": "Save",
-        "dismiss": "Dismiss"
-      },
-      "messages": {
-        "initializing": "Initializing...",
-        "failure-messagebox": {
-          "title": "Failure starting remote console",
-          "button": "Exit"
+    "wrc-alerts": {
+      "menus": {
+        "alerts": {
+          "error": {
+            "value": "You have {0} high-priority error {1}"
+          },
+          "warning": {
+            "value": "You have {0} high-priority warning {1}"
+          },
+          "info": {
+            "value": "You have {0} high-priority information {1}"
+          },
+          "view": {
+            "value": "View Alerts"
+          }
         }
       },
       "labels": {
-        "app": {
-          "appName": {
-            "value": "WebLogic Remote Console"
+        "alerts": {
+          "singular": {
+            "value": "alert"
           },
-          "copyright": {
-            "value": "Copyright (c) 2021, 2023, Oracle and/or its affiliates."
-          }
-        }
-      },
-      "menus": {
-        "app": {
-          "about": {
-            "value": "About {0}"
-          },
-          "services": {
-            "value": "Services"
-          },
-          "hide": {
-            "value": "Hide {0}"
-          },
-          "hide-others": {
-            "value": "Hide Others"
-          },
-          "show-all": {
-            "value": "Show All"
-          },
-          "quit": {
-            "value": "Quit {0}"
-          },
-          "preferences": {
-            "value": "Preferences"
-          }
-        },
-        "file": {
-          "label": "File",
-          "newWindow": {
-            "value": "New Window"
-          },
-          "newProject": {
-            "value": "New Project"
-          },
-          "switchToProject": {
-            "value": "Switch to Project"
-          },
-          "deleteProject": {
-            "value": "Delete Project"
-          },
-          "nameProject": {
-            "value": "Name Project..."
-          },
-          "renameProject": {
-            "value": "Rename \"{0}\"..."
-          },
-          "settings": {
-            "value": "Settings"
-          },
-          "preferences": {
-            "value": "Preferences",
-            "mac": {
-              "value": "Application Preferences"
-            }
-          }
-        },
-        "edit": {
-          "label": "Edit",
-          "undo": {
-            "label": "Undo"
-          },
-          "redo": {
-            "label": "Redo"
-          },
-          "cut": {
-            "label": "Cut"
-          },
-          "copy": {
-            "label": "Copy"
-          },
-          "paste": {
-            "label": "Paste"
-          },
-          "select-all": {
-            "label": "Select All"
-          },
-          "find": {
-            "label": "Find",
-            "prompt": {
-              "title": "Find in Page",
-              "button": "Find"
-            }
-          },
-          "find-next": {
-            "label": "Find"
-          }
-        },
-        "view": {
-          "label": "View"
-        },
-        "help": {
-          "label": "Help",
-          "checkForUpdates": {
-            "value": "Check for \"{0}\" Updates..."
-          },
-          "visit": {
-            "value": "Visit {0} Github Project"
-          }
-        },
-        "updates": {
-          "value": "Updates Available - Click here",
-          "downloadFailed": {
-            "title": "Download failed",
-            "message": "Error from downloader: {0}"
-          }
-        },
-        "settings": {
-          "title": "Settings",
-          "section": {
-            "networking": {
-              "label": "Networking"
-            },
-            "other-list": {
-              "label": "Other Java System Properties"
-            }
-          },
-          "other-list": {
-            "label": "Add Property",
-            "add": {
-              "label": "Enter property in this format: key=value"
-            },
-            "help": "Java system properties are case-sensitive."
-          },
-          "trust-store": {
-            "path": {
-              "label": "Trust Store Path",
-              "button": {
-                "label": "Choose a Trust Store file"
-              }
-            },
-            "type": {
-              "help": "Common types include JKS, PKCS12, Windows-ROOT, KeyChainStore. See javax.net.ssl.trustStoreType documentation for more types.",
-              "label": "Trust Store Type"
-            },
-            "key": {
-              "label": "Trust Store Key"
-            }
-          },
-          "proxy": {
-            "help": "Enter the host and port of the proxy server.",
-            "label": "Proxy Address",
-            "error": {
-              "title": "Invalid proxy address",
-              "details": "Enter URL in this format: protocol://host:port, where protocol must be one of: socks (which is socks5), socks4, socks5, http, https."
-            }
-          },
-          "connect-timeout": {
-            "label": "Administration Server Connection Timeout",
-            "help": "Specify how long (in milliseconds) to wait for a connection to succeed."
-          },
-          "read-timeout": {
-            "label": "Administration Server Read Timeout",
-            "help": "Specify how long (in milliseconds) to wait for the server to respond to a request."
-          },
-          "disable-host-name-verification": {
-            "label": "Disable host name verification?",
-            "help": "Disabling host name verification increases your vulnerability to man-in-the-middle attacks."
-          }
-        },
-        "preferences": {
-          "no": "No",
-          "yes": "Yes",
-          "title": "Preferences",
-          "section": {
-            "unsaved-confirmation": {
-              "label": "Confirmation Alerts",
-              "appExit": {
-                "label": "Always prompt to save any unsaved changes before closing the application?",
-                "help": "Unsaved changes are discarded when the application closes."
-              },
-              "unload": {
-                "label": "Before Unload",
-                "help": "You are exiting a blah blah, but there are unsaved changes, exit anyway?"
-              }
-            },
-            "credential-storage": {
-              "label": "Credential Storage",
-              "confirmation": {
-                "label": "Store encrypted credentials for your projects?",
-                "apple": {
-                  "help": "The Apple Keychain Store and Chrome Safe Storage enable the safety of this storage."
-                },
-                "linux": {
-                  "help": "The Linux Desktop keyring and Chrome Safe Storage enable the safety of this storage."
-                },
-                "windows": {
-                  "help": "The Windows cryptography API and Chrome Safe Storage enable the safety of this storage."
-                }
-              }
-            }
-          }
-        }
-      },
-      "prompt": {
-        "file": {
-          "newProject": {
-            "title": "New Project",
-            "label": "Name",
-            "already-exists-error": {
-              "title": "Project Already Exists",
-              "detail": "A project named \"{0}\" already exists!"
-            }
-          },
-          "nameProject": {
-            "title": "Name Project",
-            "label": "Name"
-          },
-          "renameProject": {
-            "title": "Rename \"{0}\"",
-            "label": "New name"
-          }
-        }
-      },
-      "dialog": {
-        "help": {
-          "checkForUpdates": {
-            "alreadyOnCurrent": {
-              "title": "You Are Up To Date",
-              "message": "Current version is {0}"
-            },
-            "updateDownloaded": {
-              "message": "Update downloaded and will be installed upon exit"
-            },
-            "restartNow": {
-              "message": "Restart now with {0}?"
-            },
-            "button": {
-              "gotosite": {
-                "value": "Go to site"
-              },
-              "download-and-install": {
-                "value": "Download and install version {0}"
-              }
-            },
-            "newVersionAvailable": {
-              "title": "Newer Version Available!",
-              "message": "Go to {0} to get version {1}"
-            },
-            "connectionIssue": {
-              "title": "Connection Issue",
-              "message": "Could not reach update site"
-            }
+          "plural": {
+            "value": "alerts"
           }
         }
       }
@@ -1862,9 +1962,9 @@ define({
   "es": true,
   "fr": true,
   "it": true,
-  "ja": false,
-  "ko": false,
-  "pt-BR": false,
-  "zh-CN": false,
-  "zh-TW": false
+  "ja": true,
+  "ko": true,
+  "pt-BR": true,
+  "zh-CN": true,
+  "zh-TW": true
 });

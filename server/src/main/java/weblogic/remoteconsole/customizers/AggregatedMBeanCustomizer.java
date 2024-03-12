@@ -67,7 +67,7 @@ public class AggregatedMBeanCustomizer {
         pageActionDef.getActionName(),
         Json.createObjectBuilder().build()
       );
-    Response<Void> actionResponse = helper.invokeAction();
+    Response<Void> actionResponse = helper.invokeActionReturnResponse();
     if (!actionResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(actionResponse);
     }

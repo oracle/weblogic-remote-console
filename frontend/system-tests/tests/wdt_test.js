@@ -222,10 +222,11 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//img[@alt='Property List Editor']")).click();
                 await driver.sleep(600);
                 console.log("Click Property Image");
-                await driver.findElement(By.id("Properties")).click();
+                await driver.findElement(By.xpath("//div[@id='Properties']")).click();
                 await driver.sleep(600);
                 console.log("Click Add \(+\) symbol to add new property");
-                await driver.findElement(By.css(".oj-ux-ico-plus")).click();
+                await driver.findElement(
+                    By.xpath("//*[starts-with(@id,'properties-table')]/oj-button/button/div/span[2]/span")).click();
                 await driver.sleep(600);
                 try {
                     element = driver.findElement(By.xpath("//oj-button[@id='dlgNoBtn']"));
@@ -244,20 +245,23 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 {
                     console.log("Double click default new-property-1");
                     const element = await driver.findElement(By.xpath("//td[contains(.,'new-property-1')]"))
+                    //oj-table[@id='properties-table']/div/table/tbody/tr/td
                     await driver.actions({ bridge: true}).doubleClick(element).perform()
                 }
-                await driver.sleep(600);
-                console.log("Replace new-property-1 by AdminUserName");
-                await driver.findElement(By.xpath("//oj-input-text/div/div/input")).sendKeys("AdminUserName");
-                await driver.sleep(600);
+                await driver.sleep(880);
+                console.log("Replace new-property-1 (1st row, 1st column) by AdminUserName");
+                await driver.findElement(
+                    By.xpath("//oj-input-text[starts-with(@id,'ui-id-')]/div/div/input")).sendKeys("AdminUserName");
+                await driver.sleep(800);
                 console.log("Click AdminUserName value text box");
                 await driver.findElement(By.xpath("//td[2]/oj-input-text/div/div/input")).click();
                 await driver.sleep(600);
                 console.log("Enter "+user+" name");
                 await driver.findElement(By.xpath("//td[2]/oj-input-text/div/div/input")).sendKeys(user);
                 await driver.sleep(600);
-                console.log("Click Add \(+\) symbol to add another property");
-                await driver.findElement(By.css(".oj-ux-ico-plus")).click();
+                console.log("Click Add \(+\) symbol to add new property");
+                await driver.findElement(
+                    By.xpath("//*[starts-with(@id,'properties-table')]/oj-button/button/div/span[2]/span")).click();
                 await driver.sleep(600);
                 try {
                     element = driver.findElement(By.xpath("//oj-button[@id='dlgNoBtn']"));
@@ -280,7 +284,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 }
                 await driver.sleep(600);
                 console.log("Replace new-property-1 by AdminPassword");
-                await driver.findElement(By.xpath("//oj-input-text/div/div/input")).sendKeys("AdminPassword");
+                await driver.findElement(
+                    By.xpath("//oj-input-text[starts-with(@id,'ui-id-')]/div/div/input")).sendKeys("AdminPassword");
                 await driver.sleep(600);
                 console.log("Click AdminPassword value text box");
                 await driver.findElement(By.xpath("//td[2]/oj-input-text/div/div/input")).click();
@@ -288,8 +293,9 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Enter "+password+" password");
                 await driver.findElement(By.xpath("//td[2]/oj-input-text/div/div/input")).sendKeys(password);
                 await driver.sleep(600);
-                console.log("Click Add \(+\) symbol to add another property");
-                await driver.findElement(By.css(".oj-ux-ico-plus")).click();
+                console.log("Click Add \(+\) symbol to add new property");
+                await driver.findElement(
+                    By.xpath("//*[starts-with(@id,'properties-table')]/oj-button/button/div/span[2]/span")).click();
                 await driver.sleep(600);
                 try {
                     element = driver.findElement(By.xpath("//oj-button[@id='dlgNoBtn']"));
@@ -312,7 +318,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 }
                 await driver.sleep(600);
                 console.log("Replace new-property-1 by NodeManagerPasswordEncrypted");
-                await driver.findElement(By.xpath("//oj-input-text/div/div/input")).sendKeys("NodeManagerPasswordEncrypted");
+                await driver.findElement(
+                    By.xpath("//oj-input-text[starts-with(@id,'ui-id-')]/div/div/input")).sendKeys("NodeManagerPasswordEncrypted");
                 await driver.sleep(600);
                 console.log("Click NodeManagerPasswordEncrypted value text box");
                 await driver.findElement(By.xpath("//td[2]/oj-input-text/div/div/input")).click();
@@ -345,11 +352,12 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(2400);
                 await admin.selectTree(driver,"baseDomainPropList", baseDomainPropertyFile);
                 await driver.sleep(600);
+
                 console.log("Click Property List Editor Image");
                 await driver.findElement(By.xpath("//img[@alt='Property List Editor']")).click();
                 await driver.sleep(600);
                 console.log("Click Property Image");
-                await driver.findElement(By.id("Properties")).click();
+                await driver.findElement(By.xpath("//div[@id='Properties']")).click();
                 await driver.sleep(600);
                 console.log("Click AdminPassword property text box");
                 await driver.findElement(By.xpath("//td[contains(.,'AdminPassword')]")).click();
@@ -398,9 +406,10 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Click OK button");
                 await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
 
-                await driver.sleep(4800);
+                await driver.sleep(8400);
                 console.log("Click Provider Management Image link");
                 await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
+                await driver.sleep(6400);
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(9600);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
@@ -416,7 +425,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
 
                console.log("Click WDT Model Tree");
-               await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
+               await driver.findElement(By.xpath("//div[@id='modeling-gallery-panel-card']/img")).click();
                await driver.sleep(2400);
                console.log("Click Navtree Environment");
                await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
@@ -438,16 +447,22 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                await driver.findElement(By.xpath("//input[@id='text_Name|input']")).clear();
                await driver.sleep(2400);
                console.log("Enter domain name = base_domain at Edit Domain text dialog");
-               await driver.findElement(By.id("text_Name|input")).sendKeys("base_domain");
+               await driver.findElement(By.id("text_Name|input")).sendKeys("test_domain");
                await driver.sleep(2400);
                console.log("Click Ok button");
                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
                await driver.sleep(2400);
                console.log("Click Administration Port Enable switch");
-               await driver.findElement(By.xpath("//oj-switch[@id='AdministrationPortEnabled']/div[1]/div/div")).click();
+               element = driver.findElement(By.xpath("//oj-switch[@id='AdministrationPortEnabled']/div[1]/div/div"));
+               driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+               await driver.sleep(2400);
+               await element.click();
                await driver.sleep(2400);
                console.log("Click Production Mode Enable switch");
                await driver.findElement(By.xpath("//oj-switch[@id='ProductionModeEnabled']/div[1]/div/div")).click();
+               await driver.sleep(2400);
+
+               await admin.enableCheckBox(driver,"SecurityConfiguration_SecureMode_SecureModeEnabled",3);
                await driver.sleep(2400);
 
                console.log("Click Administration Port WDT Setting option");
@@ -549,8 +564,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(1200);
                 console.log("Click OK button to save Invocation Timeout Variable");
                 await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
-                //await driver.findElement(By.xpath("//oj-button[@id='dlgOkBtn22']/button/div/span")).click();
-
                 console.log("Click Download (Save) File");
                 driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.write.id]]']/button/div/span")).click();
                 await driver.sleep(4800);
@@ -609,7 +622,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
 
                 console.log("Click WDT Model Tree");
-                await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
+                await driver.findElement(By.xpath("//div[@id='modeling-gallery-panel-card']/img")).click();
                 await driver.sleep(2800);
                 console.log("Click Navtree Environment");
                 await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
@@ -617,9 +630,9 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Click Domain");
                 await driver.findElement(By.xpath("//span[contains(.,'Domain')]")).click();
                 await driver.sleep(4800)
-
                 console.log("Click Security Tab");
-                await driver.findElement(By.xpath("//div/ul/li[3]/a/span")).click();
+                await driver.findElement(
+                    By.xpath("//span[text()='Security' and @class='oj-tabbar-item-label']")).click();
                 await driver.sleep(2400);
                 console.log("Click Show Advanced Fields");
                 element = driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']"));
@@ -627,9 +640,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
                 await element.click();
                 await driver.sleep(2400);
-
                 console.log("Click More Action at Default Realm");
-                await driver.findElement(By.xpath("//img[@title='More Actions']")).click();
+                await driver.findElement(By.xpath("//a[@id='moreIcon_SecurityConfiguration_DefaultRealm']/img")).click();
                 await driver.sleep(2800);
                 console.log("Click Create New Realm");
                 await driver.findElement(By.xpath("//oj-option[2]/a/span")).click();
@@ -646,7 +658,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 element =  driver.findElement(By.id("SecurityConfiguration_AdministrativeIdentityDomain|input"));
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                 await element.sendKeys("welcome1");
-
                 await admin.enableOjSwitchCheckBox(driver,"SecurityConfiguration_DowngradeUntrustedPrincipals",3);
                 await driver.sleep(2400);
                 await admin.enableOjSwitchCheckBox(driver,"SecurityConfiguration_PrincipalEqualsCompareDnAndGuid",3);
@@ -654,8 +665,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await admin.enableCheckBox(driver,"SecurityConfiguration_ClearTextCredentialAccessEnabled",3);
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"SecurityConfiguration_UseKSSForDemo",3);
-                await driver.sleep(2400);
-                await admin.enableCheckBox(driver,"SecurityConfiguration_SecureMode_SecureModeEnabled",3);
                 await driver.sleep(2400);
                 await admin.enableCheckBox(driver,"SecurityConfiguration_ClearTextCredentialAccessEnabled",3);
                 await driver.sleep(2400);
@@ -720,7 +729,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(4800);
 
                 console.log("Click WDT Model Tree");
-                await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
+                await driver.findElement(By.xpath("//div[@id='modeling-gallery-panel-card']/img")).click();
                 await driver.sleep(2800);
                 console.log("Click Navtree Environment");
                 await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
@@ -728,9 +737,9 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Click Domain");
                 await driver.findElement(By.xpath("//span[contains(.,'Domain')]")).click();
                 await driver.sleep(4800);
-
                 console.log("Click Security Tab");
-                await driver.findElement(By.xpath("//div/ul/li[3]/a/span")).click();
+                await driver.findElement(
+                    By.xpath("//span[text()='Security' and @class='oj-tabbar-item-label']")).click();
                 await driver.sleep(4800);
                 console.log("Click Filter Tab");
                 await driver.findElement(By.xpath("//span[text()='Filter']")).click();
@@ -809,10 +818,9 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(1400);
                 console.log("Click OK button");
                 await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
-                //await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
                 await driver.sleep(4800);
                 console.log("Click WDT Model Tree");
-                await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
+                await driver.findElement(By.xpath("//div[@id='modeling-gallery-panel-card']/img")).click();
                 await driver.sleep(2800);
                 console.log("Click Navtree Environment");
                 await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
@@ -942,10 +950,9 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(1400);
                 console.log("Click OK button");
                 await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
-                //await driver.findElement(By.xpath("//span[contains(.,'OK')]")).click();
                 await driver.sleep(4800);
                 console.log("Click WDT Model Tree");
-                await driver.findElement(By.xpath("//div[@id='modeling-site-panel-card']/img")).click();
+                await driver.findElement(By.xpath("//div[@id='modeling-gallery-panel-card']/img")).click();
                 await driver.sleep(2800);
                 console.log("Click Environment");
                 await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();

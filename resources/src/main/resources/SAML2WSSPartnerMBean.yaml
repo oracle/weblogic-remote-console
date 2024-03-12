@@ -1,0 +1,19 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.saml2.SAML2WSSPartnerMBean
+baseTypes:
+- weblogic.security.providers.saml2.SAML2PartnerMBean
+derivedTypes:
+- weblogic.security.providers.saml2.SAML2WSSIdPPartner
+- weblogic.security.providers.saml2.SAML2WSSSPPartner
+
+properties:
+- name: ConfirmationMethod
+  descriptionHTML: "<p>TBD confirmation method.</p>"
+  type: java.lang.String
+  writable: true
+  legalValues:
+  - urn:oasis:names:tc:SAML:2.0:cm:bearer
+  - urn:oasis:names:tc:SAML:2.0:cm:holder-of-key
+  - urn:oasis:names:tc:SAML:2.0:cm:sender-vouches

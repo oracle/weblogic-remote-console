@@ -9,3 +9,5 @@ slices:
   requiredCapabilities:
   - JNDI
 - name: PatchList
+- name: SAML20
+  label: "SAML 2.0"

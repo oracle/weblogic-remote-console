@@ -1,26 +1,34 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonString;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
+import weblogic.remoteconsole.server.PersistenceManager;
 import weblogic.remoteconsole.server.repo.Frontend;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.token.SsoTokenManager;
 
 public class ProviderManager {
+  private static final Logger LOGGER = Logger.getLogger(ProviderManager.class.getName());
   private static final SsoTokenManager SSO_TOKEN_MANAGER =
     ConsoleBackendRuntime.INSTANCE.getSsoTokenManager();
 
@@ -28,32 +36,34 @@ public class ProviderManager {
 
   public AdminServerDataProvider createAdminServerDataProvider(
     String name,
+    String label,
     String url,
     String authorizationHeader,
-    boolean useSso) {
+    boolean useSso,
+    boolean local) {
     // Ignore the authorization header when using SSO tokens
     String auth = useSso ? null : authorizationHeader;
-    AdminServerDataProvider ret = new AdminServerDataProviderImpl(name, url, auth);
+    AdminServerDataProvider ret = new AdminServerDataProviderImpl(name, label, url, auth, local);
     // Obtain an SSO token ID from the SSO token manager
     ret.setSsoTokenId(useSso ? SSO_TOKEN_MANAGER.add(ret) : null);
     providers.put(name, ret);
     return ret;
   }
 
-  public PropertyListDataProvider createPropertyListDataProvider(String name) {
-    PropertyListDataProvider ret = new PropertyListDataProviderImpl(name);
+  public PropertyListDataProvider createPropertyListDataProvider(String name, String label) {
+    PropertyListDataProvider ret = new PropertyListDataProviderImpl(name, label);
     providers.put(name, ret);
     return ret;
   }
 
-  public WDTModelDataProvider createWDTModelDataProvider(String name) {
-    WDTModelDataProvider ret = new WDTModelDataProviderImpl(name);
+  public WDTModelDataProvider createWDTModelDataProvider(String name, String label) {
+    WDTModelDataProvider ret = new WDTModelDataProviderImpl(name, label);
     providers.put(name, ret);
     return ret;
   }
 
-  public WDTCompositeDataProvider createWDTCompositeDataProvider(String name, List<String> models) {
-    WDTCompositeDataProvider ret = new WDTCompositeDataProviderImpl(name, models, this);
+  public WDTCompositeDataProvider createWDTCompositeDataProvider(String name, String label, List<String> models) {
+    WDTCompositeDataProvider ret = new WDTCompositeDataProviderImpl(name, label, models, this);
     providers.put(name, ret);
     return ret;
   }
@@ -164,5 +174,144 @@ public class ProviderManager {
 
   public JsonObject getJSON(String name, InvocationContext ic) {
     return providers.get(name).toJSON(ic);
+  }
+
+  private static JsonObject genDefaultProvider(InvocationContext ic) {
+    JsonObjectBuilder provBuilder = Json.createObjectBuilder();
+    provBuilder.add("name", "This Server");
+    provBuilder.add("type", "adminserver");
+    // We're gonna put a URL in here, but it is going to get overridden
+    // when the user tries to connect
+    provBuilder.add("url",
+      ic.getUriInfo().getRequestUri().getScheme() + "://"
+      + ic.getUriInfo().getRequestUri().getHost() + ":"
+      + ic.getUriInfo().getRequestUri().getPort());
+    JsonObjectBuilder settingsBuilder = Json.createObjectBuilder();
+    settingsBuilder.add("local", true);
+    provBuilder.add("settings", settingsBuilder.build());
+    return provBuilder.build();
+  }
+
+  public static JsonObject genDefaultProject(InvocationContext ic) {
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    builder.add("name", "WebLogic Remote Console Hosted");
+    JsonArrayBuilder childrenBuilder = Json.createArrayBuilder();
+    childrenBuilder.add(genDefaultProvider(ic));
+    builder.add("dataProviders", childrenBuilder.build());
+    builder.add("current", true);
+    return builder.build();
+  }
+
+  // This seems bad, but it actually makes sense.  The toJSON() method
+  // is combination of runtime state and configuration information.  Here
+  // we just need the latter.
+  private static JsonObject convertToPersistenceFormat(
+    Provider prov,
+    InvocationContext ic
+  ) {
+    JsonObject provJSON = prov.toJSON(ic);
+    JsonObjectBuilder provBuilder = Json.createObjectBuilder();
+    if (provJSON.get("label") != null) {
+      provBuilder.add("name", provJSON.getString("label"));
+    } else {
+      provBuilder.add("name", provJSON.getString("name"));
+    }
+    provBuilder.add("type", provJSON.getString("providerType"));
+    if (provJSON.get("domainUrl") != null) {
+      provBuilder.add("url", provJSON.getString("domainUrl"));
+    }
+    if (provJSON.get("username") != null) {
+      provBuilder.add("username", provJSON.getString("username"));
+    }
+    if (provJSON.get("file") != null) {
+      provBuilder.add("file", provJSON.getString("file"));
+    }
+    if (provJSON.get("models") != null) {
+      JsonArrayBuilder modelBuilder = Json.createArrayBuilder();
+      for (JsonString walk : provJSON.getJsonArray("models").getValuesAs(JsonString.class)) {
+        modelBuilder.add(walk.getString());
+      }
+      provBuilder.add("models", modelBuilder.build());
+    }
+    if (provJSON.get("propertyLists") != null) {
+      JsonArrayBuilder propertyListBuilder = Json.createArrayBuilder();
+      for (JsonString walk : provJSON.getJsonArray("propertyLists").getValuesAs(JsonString.class)) {
+        propertyListBuilder.add(walk.getString());
+      }
+      provBuilder.add("propertyLists", propertyListBuilder.build());
+    }
+    JsonObjectBuilder settingsBuilder = Json.createObjectBuilder();
+    if (provJSON.get("sso") != null) {
+      settingsBuilder.add("sso", provJSON.getBoolean("sso"));
+    }
+    if (provJSON.get("insecure") != null) {
+      settingsBuilder.add("insecure", provJSON.getBoolean("insecure"));
+    }
+    if (provJSON.get("proxyOverride") != null) {
+      settingsBuilder.add("proxyOverride", provJSON.getString("proxyOverride"));
+    }
+    JsonObject settings = settingsBuilder.build();
+    if (!settings.isEmpty()) {
+      provBuilder.add("settings", settings);
+    }
+    return provBuilder.build();
+  }
+
+  public JsonObject getJSONAll(InvocationContext ic) {
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    builder.add("name", "WebLogic Remote Console Hosted");
+    builder.add("label", "WebLogic Remote Console Hosted");
+    JsonArrayBuilder childrenBuilder = Json.createArrayBuilder();
+    if (providers.isEmpty()) {
+      childrenBuilder.add(genDefaultProvider(ic));
+    } else {
+      for (Provider prov : providers.values()) {
+        childrenBuilder.add(convertToPersistenceFormat(prov, ic));
+      }
+    }
+    builder.add("dataProviders", childrenBuilder.build());
+    builder.add("current", true);
+    return builder.build();
+  }
+
+  public void save(InvocationContext ic) {
+    if (!PersistenceManager.shouldIPersistProjects(ic)) {
+      return;
+    }
+    String path = PersistenceManager.getPersistenceFilePath(ic);
+    if (path == null) {
+      return;
+    }
+    String fullPath = path + "/user-projects.json";
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      mapper.writerWithDefaultPrettyPrinter().writeValue(
+        new File(fullPath), mapper.readValue(getJSONAll(ic).toString(), Object.class));
+    } catch (Throwable t) {
+      LOGGER.severe(
+        "Problem writing" + " " + fullPath + ": " + t.getMessage()
+      );
+    }
+  }
+
+  public static InputStream loader(InvocationContext ic) {
+    String path = PersistenceManager.getPersistenceFilePath(ic);
+    if (path == null) {
+      return null;
+    }
+    String fullPath = path + "/user-projects.json";
+    if (!new File(fullPath).exists()) {
+      return null;
+    }
+    try {
+      return new FileInputStream(fullPath);
+    } catch (Throwable t) {
+      // FortifyIssueSuppression Log Forging
+      // This path name comes from our own code only
+      LOGGER.severe(
+        "Problem reading" + " " + fullPath + ": " + t.getMessage()
+      );
+    }
+    return null;
   }
 }

@@ -1,5 +1,5 @@
 /**
- Copyright (c) 2022,2023, Oracle and/or its affiliates.
+ Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  Licensed under The Universal Permissive License (UPL), Version 1.0
  as shown at https://oss.oracle.com/licenses/upl/
 
@@ -20,8 +20,39 @@
  * @typedef {[{before: {uid: string, parentUid: string}, after: {uid: string, parentUid: string}}]} RecomputedUids
  * @type {RecomputedUids}
  */
-define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'ojs/ojflattenedtreedataproviderview', 'ojs/ojlistdataproviderview', 'ojs/ojknockout-keyset', 'ojs/ojkeyset', './wizard/policy-editor-wizard', 'wrc-frontend/microservices/policy-management/condition-phraser', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojtable', 'ojs/ojselector', 'ojs/ojselectsingle', 'ojs/ojselectcombobox', 'ojs/ojrowexpander'],
-  function (ko, ArrayDataProvider, ArrayTreeDataProvider, FlattenedTreeDataProviderView, ListDataProviderView, keySet, ojkeyset_1, PolicyEditorWizard, ConditionPhraser, MessageDisplaying, ViewModelUtils,  CoreUtils) {
+define([
+  'knockout',
+  'ojs/ojarraydataprovider',
+  'ojs/ojarraytreedataprovider',
+  'ojs/ojflattenedtreedataproviderview',
+  'ojs/ojlistdataproviderview',
+  'ojs/ojknockout-keyset',
+  'ojs/ojkeyset',
+  './wizard/policy-editor-wizard',
+  'wrc-frontend/microservices/policy-management/condition-phraser',
+  'wrc-frontend/apis/message-displaying',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/utils',
+  'ojs/ojtable',
+  'ojs/ojselector',
+  'ojs/ojselectsingle',
+  'ojs/ojselectcombobox',
+  'ojs/ojrowexpander'
+],
+  function (
+    ko,
+    ArrayDataProvider,
+    ArrayTreeDataProvider,
+    FlattenedTreeDataProviderView,
+    ListDataProviderView,
+    keySet,
+    ojkeyset_1,
+    PolicyEditorWizard,
+    ConditionPhraser,
+    MessageDisplaying,
+    ViewModelUtils,
+    CoreUtils
+  ) {
 
     function PolicyEditorViewModel(context) {
       const self = this;
@@ -299,6 +330,14 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
         }
       }
 
+      function getSelectedPolicyCondition(uid, asDeepCopy = false) {
+        let policyCondition = self.flattenedPolicyConditions.find(item => item.uid === uid);
+        if (CoreUtils.isNotUndefinedNorNull(policyCondition)) {
+          if (asDeepCopy) policyCondition = JSON.parse(JSON.stringify(policyCondition));
+        }
+        return policyCondition;
+      }
+
       function editPolicyCondition(action, policyCondition, failureMessage) {
         function updatePredicateArguments(predicate) {
           if (CoreUtils.isNotUndefinedNorNull(predicate['arguments']) &&
@@ -369,16 +408,18 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
       }
 
       this.policyConditionsSelectedChanged = (event) => {
-        if (event.type === 'selectedChanged'&&
+        if (event.type === 'selectedChanged' &&
           event.detail.value.row !== null &&
-          event.detail.value.row?.values()?.size > 0 &&
+          event.detail.value.row.values() &&
+          event.detail.value.row.values().size &&
+          event.detail.value.row.values().size > 0 &&
           !context.properties.readonly
         ) {
           const uid = Array.from(event.detail.value.row.values())[0];
           // Create a deep copy from self.flattenedPolicyConditions[~~uid]
-          const policyCondition = JSON.parse(JSON.stringify(self.flattenedPolicyConditions[~~uid]));
+          const policyCondition = getSelectedPolicyCondition(uid, true);
 
-          if (!policyCondition.options.combined) {
+          if (policyCondition && !policyCondition.options.combined) {
             const action = {
               id: 'editCondition',
               event: 'policyConditionModified'
@@ -409,7 +450,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
         };
 
         const uid = event.target.attributes['data-uid'].value;
-        const policyCondition = JSON.parse(JSON.stringify(self.flattenedPolicyConditions[~~uid]));
+        const policyCondition = getSelectedPolicyCondition(uid, true);
         policyCondition.operator = event.detail.value;
         dispatchPolicyConditionModifiedEvent(policyCondition, event.detail.previousValue, event.detail.value);
       };
@@ -720,7 +761,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
             (CoreUtils.isNotUndefinedNorNull(action.checkedItems[0].uid))
           ) {
             const uid = action.checkedItems[0].uid;
-            const policyCondition = self.flattenedPolicyConditions[~~uid];
+            const policyCondition = getSelectedPolicyCondition(uid);
 
             let removedItems = [];
 
@@ -938,7 +979,7 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
         const toggledUid = event.target.rowKey;
         // Get policy condition for toggledUid from the module-scoped
         // "flattened" policy conditions array.
-        const policyCondition = self.flattenedPolicyConditions[~~toggledUid];
+        const policyCondition = getSelectedPolicyCondition(toggledUid);
 
         if (CoreUtils.isNotUndefinedNorNull(policyCondition)) {
           const isChecked = event.detail.value.has(toggledUid);
@@ -1135,22 +1176,23 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojarraytreedataprovider', 'o
             });
           };
 
-          const flattenPolicyConditions = (data, flattened) => {
-            return data.map(({children = [], ...rest}) => {
-              flattened.push({
-                ...rest
-              });
-              if (children.length) flattenPolicyConditions(children, flattened);
-            });
+          const flattenPolicyConditions = (data) => {
+            let children = [];
+            return data.map(condition => {
+              const cond = {...condition};  // use spread operator
+              if (cond.children && cond.children.length) {
+                children = [...children, ...cond.children];
+              }
+              delete cond.children; // this will not affect the original array object
+              return cond;
+            }).concat(children.length ? flattenPolicyConditions(children) : children);
           };
-
-          let flattened = [];
 
           self.policyConditions.valueWillMutate();
           self.policyConditions([]);
           self.policyConditions.valueHasMutated();
 
-          flattenPolicyConditions([...data], flattened);
+          let flattened = flattenPolicyConditions([...data]);
 
           // flattened needs to have the knockout observable
           // for the checkbox, added to each item.

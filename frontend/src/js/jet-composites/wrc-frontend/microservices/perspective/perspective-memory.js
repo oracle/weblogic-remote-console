@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -17,6 +17,10 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       this.perspective = PerspectiveManager.getById(perspectiveId);
       this.beanPathHistory = {
         items: [],
+        visibility: false
+      };
+      this.breadcrumbs = {
+        items: [],
         visibility: false,
         navigator: {
           visibility: false,
@@ -27,8 +31,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
           }
         }
       };
-      this.breadcrumbs = {
-        items: [],
+      this.help = {
         visibility: false
       };
       this.instructions = {
@@ -137,6 +140,12 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       },
       breadcrumbsVisibility: function () {
         return this.breadcrumbs.visibility;
+      },
+      setHelpVisibility: function (visible) {
+        this.help.visibility = visible;
+      },
+      helpVisibility: function () {
+        return this.help.visibility;
       },
       setInstructionsVisibility: function (visible) {
         this.instructions.visibility = visible;

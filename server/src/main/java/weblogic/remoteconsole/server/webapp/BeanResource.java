@@ -6,6 +6,8 @@ package weblogic.remoteconsole.server.webapp;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.utils.Path;
  
@@ -28,17 +30,16 @@ public class BeanResource extends BaseResource {
   protected void setSlicePagePath(String slice) {
     setPagePath(
       getInvocationContext().getPageRepo().getPageRepoDef().newSlicePagePath(
-        getInvocationContext().getBeanTreePath().getTypeDef(),
+        getTypeDef(),
         new Path(slice)
       )
     );
-
   }
 
   protected void setCreateFormPagePath() {
     setPagePath(
       getInvocationContext().getPageRepo().getPageRepoDef().newCreateFormPagePath(
-        getInvocationContext().getBeanTreePath().getTypeDef()
+        getTypeDef()
       )
     );
   }
@@ -46,9 +47,13 @@ public class BeanResource extends BaseResource {
   protected void setTablePagePath() {
     setPagePath(
       getInvocationContext().getPageRepo().getPageRepoDef().newTablePagePath(
-        getInvocationContext().getBeanTreePath().getTypeDef()
+        getTypeDef()
       )
     );
+  }
+
+  protected BeanTypeDef getTypeDef() {
+    return getInvocationContext().getBeanTreePath().getTypeDef();
   }
 
   private void setPagePath(PagePath pagePath) {
@@ -57,6 +62,14 @@ public class BeanResource extends BaseResource {
 
   protected Response customizeTable(JsonObject requestBody) {
     return CustomizeTableHelper.customizeTable(getInvocationContext(), requestBody);
+  }
+
+  protected Response invokeAction(String action, JsonObject requestBody, FormDataMultiPart parts) {
+    if (parts == null) {
+      return invokeAction(action, requestBody);
+    } else {
+      return InvokeActionHelper.invokeAction(getInvocationContext(), action, requestBody, parts);
+    }
   }
 
   protected Response invokeAction(String action, JsonObject requestBody) {

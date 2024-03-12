@@ -1,0 +1,7 @@
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Use this page to publish the SAML 2.0 metadata for this server.</p>
+
+actions:
+- name: "publishSingleSignOnServices"

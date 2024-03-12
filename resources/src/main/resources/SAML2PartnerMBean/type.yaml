@@ -1,0 +1,21 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: Name
+  writable: createOnly
+  required: true
+  helpSummaryHTML: >
+    <p>Name of this partner.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.Partner</code> interface.</p>
+- name: Enabled
+  helpSummaryHTML: >
+    <p>Specifies whether interactions with this partner are enabled.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.Partner</code> interface.</p>
+- name: Description
+  helpSummaryHTML: >
+    <p>A short description of this partner.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.Partner</code> interface.</p>

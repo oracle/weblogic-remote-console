@@ -4,11 +4,13 @@
 createResourceMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.createResource
 getCollectionMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.getCollection
 disableMBeanJavadoc: true
-supportsCustomFilteringDashboards: false
+supportsFilteringDashboards: false
 subTypeDiscriminatorProperty: Type
 subTypes:
 - type: weblogic.management.CustomFilteringDashboardMBean
   value: "Custom Filtering Dashboard"
+- type: weblogic.management.BuiltinFilteringDashboardMBean
+  value: "Builtin Filtering Dashboard"
 properties:
 - name: Type
   getMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.getType
@@ -145,3 +147,13 @@ properties:
     label: "Any"
   - value: "contains"
     label: "Contains"
+
+actions:
+- name: "copy"
+  label: "Copy"
+  actionMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.copy
+  inputForm:
+    introductionHTML: >
+      "<p>Create a copy of this dashboard.</p>"
+    parameters:
+    - name: "Name"

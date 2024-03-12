@@ -1,0 +1,74 @@
+{
+  "appId": "remote.console",
+  "files": [
+    "app/main.js",
+    "app/js/auto-prefs-json.js",
+    "app/js/auto-update-utils.js",
+    "app/js/config-json.js",
+    "app/js/console-logger.js",
+    "app/js/core-utils.js",
+    "app/js/error-utils.js",
+    "app/js/file-utils.js",
+    "app/js/i18n-utils.js",
+    "app/js/ipcRendererPreload.js",
+    "app/js/os-utils.js",
+    "app/js/settings-editor.js",
+    "app/js/project-management.js",
+    "app/js/user-prefs-json.js",
+    "app/js/user-projects-json.js",
+    "app/js/watcher.js",
+    "app/js/window-management.js",
+    "package.json",
+    "node_modules"
+  ],
+  "rpm": {
+    "fpm": [
+      "--rpm-rpmbuild-define",
+      "_build_id_links none"
+    ]
+  },
+  "mac": {
+    "category": "Utility",
+    "target": "default",
+    "darkModeSupport": false,
+    "type": "distribution",
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "artifactName": "${productName}-${buildVersion}-${arch}-${os}.${ext}",
+    "entitlements": "./entitlements.mac.plist"
+  },
+  "linux": {
+    "target": [
+      {
+        "target": "rpm"
+      },
+      {
+        "target": "deb"
+      },
+      {
+        "target": "appimage"
+      },
+      {
+        "target": "zip"
+      }
+    ],
+    "artifactName": "${productName}-${buildVersion}-${os}.${ext}",
+    "category": "Utility"
+  },
+  "win": {
+    "artifactName": "${productName}-${buildVersion}-${os}.${ext}",
+    "target": [
+      "nsis",
+      "zip"
+    ]
+  },
+  "nsis": {
+    "runAfterFinish": "false",
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  },
+  "extraFiles": {
+    "from": "extraFiles/.",
+    "to": "."
+  }
+}

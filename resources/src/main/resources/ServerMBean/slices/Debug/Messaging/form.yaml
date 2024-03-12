@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021m Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage the messaging-related server debug flags; that is, the flags
@@ -15,11 +15,14 @@ properties:
 - name: ServerDebug.DebugJMSBackEnd
 - name: ServerDebug.DebugJMSBoot
 - name: ServerDebug.DebugJMSCDS
+- name: ServerDebug.DebugJMSCICHelper
 - name: ServerDebug.DebugJMSCommon
 - name: ServerDebug.DebugJMSConfig
 # excluded - name: ServerDebug.DebugJMSCrossDomainSecurity
 - name: ServerDebug.DebugJMSDispatcher
+- name: ServerDebug.DebugJMSDispatcherLifecycle
 - name: ServerDebug.DebugJMSDispatcherProxy
+- name: ServerDebug.DebugJMSDispatcherRMI
 # excluded - name: ServerDebug.DebugJMSDispatcherUtilsVerbose
 # excluded - name: ServerDebug.DebugJMSDispatcherVerbose
 - name: ServerDebug.DebugJMSDistTopic
@@ -30,6 +33,7 @@ properties:
 # deprecated - name: ServerDebug.DebugJMSDurableSubscribers
 - name: ServerDebug.DebugJMSFrontEnd
 # deprecated - name: ServerDebug.DebugJMSJDBCScavengeOnFlush
+- name: ServerDebug.DebugJMSInvocableVerbose
 # excluded - name: ServerDebug.DebugJMSJNDI
 # deprecated - name: ServerDebug.DebugJMSLocking
 - name: ServerDebug.DebugJMSMessagePath

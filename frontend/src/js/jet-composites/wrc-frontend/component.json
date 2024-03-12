@@ -8,6 +8,7 @@
   "dependencies": {
     "wrc-frontend-apis": "1.0.0",
     "wrc-frontend-config": "1.0.0",
+    "wrc-frontend-common": "1.0.0",
     "wrc-frontend-core": "1.0.0",
     "wrc-frontend-css": "1.0.0",
     "wrc-frontend-images": "1.0.0",

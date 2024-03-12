@@ -18,20 +18,15 @@ import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.webapp.InvokeActionHelper;
 import weblogic.remoteconsole.server.webapp.ReadOnlyBeanCollectionResource;
-import weblogic.remoteconsole.server.webapp.VoidResponseMapper;
-
 
 /**
  * Custom JAXRS resource for CombinedServerRuntimeMBean collections
  */
 public class CombinedServerRuntimeMBeanCollectionResource extends ReadOnlyBeanCollectionResource {
 
+  @Override
   protected javax.ws.rs.core.Response invokeAction(String action, JsonObject requestBody) {
-    return
-      VoidResponseMapper.toResponse(
-        getInvocationContext(),
-        new CustomInvokeActionHelper(getInvocationContext(), action, requestBody).invokeAction()
-      );
+    return (new CustomInvokeActionHelper(getInvocationContext(), action, requestBody)).invokeAction();
   }
 
   private static class CustomInvokeActionHelper extends InvokeActionHelper {

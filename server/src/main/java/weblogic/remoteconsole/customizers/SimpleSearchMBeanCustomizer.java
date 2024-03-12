@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -10,12 +10,14 @@ import java.util.TreeMap;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
+import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.CustomBeanSearchResults;
 import weblogic.remoteconsole.server.repo.DateValue;
+import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.LongValue;
 import weblogic.remoteconsole.server.repo.Page;
@@ -26,6 +28,7 @@ import weblogic.remoteconsole.server.repo.SimpleSearchManager;
 import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.TableCell;
 import weblogic.remoteconsole.server.repo.TableRow;
+import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.SearchResponseMapper;
 
 /** 
@@ -115,6 +118,16 @@ public class SimpleSearchMBeanCustomizer {
     return new Response<List<BeanSearchResults>>().setSuccess(collectionResults);
   }
 
+  // Clear the search history
+  public static Response<Value> clearSearches(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
+    getSimpleSearchManager(ic).clearSearches(ic);
+    return new Response<Value>().setSuccess(null);
+  }
+
   private static String getRecentSearchName(InvocationContext ic) {
     String search = ic.getBeanTreePath().getLastSegment().getKey();
     for (SimpleSearch s : getRecentSearches(ic)) {
@@ -130,6 +143,6 @@ public class SimpleSearchMBeanCustomizer {
   }
 
   private static SimpleSearchManager getSimpleSearchManager(InvocationContext ic) {
-    return ic.getPageRepo().asPageReaderRepo().getSimpleSearchManager();
+    return ic.getPageRepo().asPageReaderRepo().getSimpleSearchManager(ic);
   }
 }

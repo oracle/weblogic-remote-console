@@ -1,46 +1,73 @@
-/*! Copyright (c) 2020, 2023, Oracle and/or its affiliates. All rights reserved. */
-
+/*! Copyright (c) 2020, 2024, Oracle and/or its affiliates. All rights reserved. */
 :root {
 	--navtree-background-color: #c3b2ab;
 	--navtree-label-color: #161513;
 	--navtree-min-width: 200px;
 	--navtree-max-width: 490px;
-	--navtree-offset-max-height: 70px;		/* 4.375rem; */
-	--navtree-calc-max-height: 70px;		/* 4.375rem; */
-
+	--navtree-calc-max-height: 106px;
+	--navtree-offset-max-height: 106px;
 	--oj-dialog-title-font-size: 1.5rem;
 	--oj-navigation-list-item-max-width: 15rem;
 	--cfe-navlist-item-selected-bg-color-hover: rgba(0,0,0,.1);
 	--cfe-navlist-item-selected-bg-color-active: rgba(0,0,0,.22);
+	--cfe-navlist-item-selected-bg-color-focus-visible: rgba(0,0,0,.1);
 }
 
 cfe-navtree:not(.oj-complete){
 	visibility: hidden;
 }
 
-/* ruleset for runtime-role="app" data attribute */
-[data-runtime-role="app"] {
-	--navtree-offset-max-height: 70px;
+#navtree-toolbar
+{
+	position: sticky;
+	background-color: #a2978f;
+	min-width: 100%;
 }
 
-/* ruleset for runtime-role="tool" data attribute */
-[data-runtime-role="tool"] {
-	--navtree-offset-max-height: 155px;
+#navtree-toolbar > div > a
+{
+	padding: 0.25rem .325rem;
+	line-height: 1.5rem;
+	text-decoration: none;
+	display: inline-block;
+}
+
+#navtree-toolbar > div > a > span > img
+{
+	vertical-align: middle;
+}
+
+#navtree-toolbar-more-icon-container
+{
+	text-align: center;
+	height: 1.75rem;	/* 28px; */
+	width: 1.75rem;	/* 28px; */
+	display: inline-block;
+}
+
+#navtreeToolbarMoreMenuLauncher:hover > span,
+#navtreeToolbarMoreMenuLauncher:focus-visible > span
+{
+	border-radius: 50%;
+	background-color: rgba(0,0,0,.15);
+}
+
+#navtree {
+	height: calc(100vh - var(--navtree-calc-max-height));
+	max-height: calc(100vh - var(--navtree-calc-max-height));
+	overflow: auto;
+	scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color1);
 }
 
 #navtree-container {
-	padding-top: 0.3125rem;
 	display: none;
+	padding-right: 1px;
 	background-color: var(--navtree-background-color);
-	height: calc(100vh - var(--navtree-calc-max-height));
-	max-height: calc(100vh - var(--navtree-calc-max-height));
 	/*
-        min-height: calc(100vh - var(--navtree-calc-min-height));
-        max-height: calc(100vh - var(--navtree-calc-max-height));
-        max-width: var(--navtree-max-width);
-    */
-	overflow: auto;
-	scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color1);
+    min-height: calc(100vh - var(--navtree-calc-min-height));
+    max-height: calc(100vh - var(--navtree-calc-max-height));
+    max-width: var(--navtree-max-width);
+  */
 }
 
 oj-navigation-list[id="nav"] span.oj-navigationlist-item-icon
@@ -67,13 +94,18 @@ oj-navigation-list[id="nav"] li.oj-navigationlist-focused-element.oj-navigationl
 }
 
 oj-navigation-list[id="nav"].oj-navigationlist-vertical {
-	--oj-navigation-list-item-padding: 0.875rem;	/* 14px; */
+	--oj-navigation-list-item-padding: 0.5rem;	/* 8px; */
 	--oj-navigation-list-item-bg-color-hover: var(--cfe-navlist-item-selected-bg-color-hover);
 	--oj-navigation-list-item-bg-color-selected: var(--cfe-navlist-item-selected-bg-color-active);
 	--oj-navigation-list-icon-margin: 0;
 	--oj-navigation-list-icon-to-text-padding: 0.375rem;
 	--oj-navigation-list-item-min-height: 1.75rem;
 	--oj-navigation-list-item-margin: 0;
+}
+
+oj-navigation-list[id="nav"] .oj-focus-highlight:not(.oj-selected)
+{
+	background-color: var(--cfe-navlist-item-selected-bg-color-focus-visible);
 }
 
 oj-navigation-list[id="nav"] .oj-navigationlist-depth-1 .oj-navigationlist-item-content
@@ -83,15 +115,15 @@ oj-navigation-list[id="nav"] .oj-navigationlist-depth-1 .oj-navigationlist-item-
 
 oj-navigation-list[id="nav"] li[class*="oj-navigationlist-depth-"]
 {
-	padding-left: 1.5rem !important;     /* 24px */
+	padding-left: .875rem !important;     /* 14px */
 }
 
 oj-navigation-list[id="nav"] li[class*="oj-navigationlist-item"]:not(li[class*="oj-navigationlist-depth-"])
 {
-	padding-left: 0rem !important;  /* no padding for all top level entries */
+	padding-left: 0 !important;  /* no padding for all top level entries */
 }
 
 oj-navigation-list[id="nav"] div[class*="oj-navigationlist-item"]
 {
-	padding-left: 0rem !important;
+	padding-left: 0 !important;
 }

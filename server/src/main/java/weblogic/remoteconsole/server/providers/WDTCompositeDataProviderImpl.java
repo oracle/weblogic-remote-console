@@ -35,6 +35,7 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
 
   public static final String TYPE_NAME = "WDTCompositeModel";
   private String name;
+  private String label;
   private List<String> modelNames;
   private ProviderManager pm;
   private String lastMessage = null;
@@ -43,8 +44,9 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
   private Map<String, Root> roots = new HashMap<String, Root>();
   private Root viewRoot;
 
-  public WDTCompositeDataProviderImpl(String name, List<String> modelNames, ProviderManager pm) {
+  public WDTCompositeDataProviderImpl(String name, String label, List<String> modelNames, ProviderManager pm) {
     this.name = name;
+    this.label = label;
     this.modelNames = modelNames;
     this.pm = pm;
 
@@ -112,6 +114,11 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
         LocalizedConstants.WDT_COMPOSITE_PROVIDER_HELP_MODELS_DETAIL
     ));
     return ret.build();
+  }
+
+  @Override
+  public String getLabel() {
+    return label;
   }
 
   @Override
@@ -217,6 +224,9 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
   public JsonObject toJSON(InvocationContext ic) {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", getName());
+    if ((getLabel() != null) && !getName().equals(getLabel())) {
+      ret.add("label", getLabel());
+    }
     ret.add(ProviderResource.PROVIDER_TYPE, getType());
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (Root root : getRoots().values()) {

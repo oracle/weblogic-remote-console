@@ -4,6 +4,12 @@
   "jetVersion": "^11.1.0",
   "displayName": "A user friendly, translatable name of the component.",
   "description": "A translatable high-level description for the component.",
+  "dependencies": {
+    "wrc-frontend-apis": "^1.0.0",
+    "wrc-frontend-core": "^1.0.0",
+    "wrc-frontend-integration": "^1.0.0",
+    "wrc-frontend-microservices": "^1.0.0"
+  },
   "properties": {
     "operatorLegalValues": {
       "description": "Legal values for the 'Operator' dropdown in the 'Policy Conditions' table",

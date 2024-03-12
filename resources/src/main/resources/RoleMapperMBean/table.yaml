@@ -9,10 +9,21 @@ introductionHTML: >
   are configured, this Role Mappers page displays key information about
   each of them.</p>
 
+customizePageDefMethod: weblogic.remoteconsole.customizers.ProviderMBeanCustomizer.customizeTableDef
+
 displayedColumns:
 - name: "Name"
 - name: "Description"
 - name: "Version"
+actions:
+- name: moveDown
+  rows: one
+  requiredCapabilities:
+  - SecurityProviderReordering
+- name: moveUp
+  rows: one
+  requiredCapabilities:
+  - SecurityProviderReordering
 helpTopics:
 - label: "Developing Resource Adapters for Oracle WebLogic Server "
   href: "adapt/index.html"

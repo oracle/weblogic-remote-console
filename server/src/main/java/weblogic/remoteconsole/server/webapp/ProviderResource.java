@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -65,10 +65,12 @@ public class ProviderResource extends BaseResource {
   public static final String PROPERTY_LISTS = "propertyLists";
   public static final String PROVIDER_TYPE = "providerType";
   public static final String PROVIDER_NAME = "name";
+  public static final String PROVIDER_LABEL = "label";
   public static final String PROVIDER_SETTINGS = "settings";
   public static final String PROVIDER_INSECURE = "insecure";
   public static final String PROXY_OVERRIDE = "proxyOverride";
   public static final String PROVIDER_SSO = "sso";
+  public static final String PROVIDER_LOCAL = "local";
   public static final String TEST_ACTION = "test";
   @Context HttpHeaders headers;
 
@@ -115,6 +117,7 @@ public class ProviderResource extends BaseResource {
     }
     nameConstraint = pathSegments.get(nameIndex).getPath();
     ProviderManager pm = ProviderManager.getFromContext(resourceContext);
+    InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
     for (Provider prov : pm.getAll()) {
       if ((typeConstraint != null) && !prov.getType().equals(typeConstraint)) {
         continue;
@@ -122,7 +125,6 @@ public class ProviderResource extends BaseResource {
       if ((nameConstraint != null) && !prov.getName().equals(nameConstraint)) {
         continue;
       }
-      InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
       if (action.equals("test")) {
         prov.test(ic);
         removeSsoTokenAdminServerConnection(pm, prov);
@@ -134,6 +136,7 @@ public class ProviderResource extends BaseResource {
       return WebAppUtils.addCookieFromContext(resourceContext,
         Response.ok(prov.toJSON(ic), MediaType.APPLICATION_JSON)).build();
     }
+    pm.save(ic);
     return
       WebAppUtils.addCookieFromContext(
         resourceContext,
@@ -274,8 +277,16 @@ public class ProviderResource extends BaseResource {
         Status.BAD_REQUEST.getStatusCode(), "Missing Name").build();
     }
     String name = jname.getString();
+    JsonString jsonLabel = data.getJsonString(PROVIDER_LABEL);
+    String label;
+    if (jsonLabel == null) {
+      label = name;
+    } else {
+      label = jsonLabel.getString();
+    }
+
     return submitAdminServerDataProviderInfo(
-      pm, name, resourceContext, authHeader, data);
+      pm, name, label, resourceContext, authHeader, data);
   }
 
   @POST
@@ -318,8 +329,16 @@ public class ProviderResource extends BaseResource {
       isJson = fileName.endsWith(".json");
     }
 
+    JsonString jsonLabel = data.getJsonString(PROVIDER_LABEL);
+    String label;
+    if (jsonLabel == null) {
+      label = name;
+    } else {
+      label = jsonLabel.getString();
+    }
+
     return submitWDTModelDataProviderInfo(
-      pm, name, resourceContext, modelStream, propLists, isJson);
+      pm, name, label, resourceContext, modelStream, propLists, isJson);
   }
 
   @POST
@@ -346,7 +365,15 @@ public class ProviderResource extends BaseResource {
         Status.BAD_REQUEST.getStatusCode(), "Missing Name").build();
     }
     String name = jname.getString();
-    return submitWDTCompositeDataProviderInfo(pm, name, resourceContext, data);
+    JsonString jsonLabel = data.getJsonString(PROVIDER_LABEL);
+    String label;
+    if (jsonLabel == null) {
+      label = name;
+    } else {
+      label = jsonLabel.getString();
+    }
+
+    return submitWDTCompositeDataProviderInfo(pm, name, label, resourceContext, data);
   }
 
   @POST
@@ -369,8 +396,16 @@ public class ProviderResource extends BaseResource {
         Status.BAD_REQUEST.getStatusCode(), "Missing Name").build();
     }
     String name = jname.getString();
+    JsonString jsonLabel = data.getJsonString(PROVIDER_LABEL);
+    String label;
+    if (jsonLabel == null) {
+      label = name;
+    } else {
+      label = jsonLabel.getString();
+    }
+
     return submitPropertyListDataProviderInfo(
-      pm, name, resourceContext, propertiesStream);
+      pm, name, label, resourceContext, propertiesStream);
   }
 
   @POST
@@ -390,6 +425,7 @@ public class ProviderResource extends BaseResource {
       return Response.status(
         Status.BAD_REQUEST.getStatusCode(), "Missing Request Content").build();
     }
+
     JsonString jname = data.getJsonString(PROVIDER_NAME);
     if (jname == null) {
       LOGGER.fine("POST create bad request: no name");
@@ -397,6 +433,15 @@ public class ProviderResource extends BaseResource {
         Status.BAD_REQUEST.getStatusCode(), "Missing Name").build();
     }
     String name = jname.getString();
+
+    JsonString jsonLabel = data.getJsonString(PROVIDER_LABEL);
+    String label;
+    if (jsonLabel == null) {
+      label = name;
+    } else {
+      label = jsonLabel.getString();
+    }
+
     JsonString jtype = data.getJsonString(PROVIDER_TYPE);
     if (jtype == null) {
       LOGGER.fine("POST create bad request: no type");
@@ -405,16 +450,16 @@ public class ProviderResource extends BaseResource {
     }
     if (jtype.getString().equals(AdminServerDataProviderImpl.TYPE_NAME)) {
       return submitAdminServerDataProviderInfo(
-        pm, name, resourceContext, authorizationHeader, data);
+        pm, name, label, resourceContext, authorizationHeader, data);
     }
     if (jtype.getString().equals(WDTModelDataProviderImpl.TYPE_NAME)) {
-      return submitWDTModelDataProviderInfo(pm, name, resourceContext, data);
+      return submitWDTModelDataProviderInfo(pm, name, label, resourceContext, data);
     }
     if (jtype.getString().equals(WDTCompositeDataProviderImpl.TYPE_NAME)) {
-      return submitWDTCompositeDataProviderInfo(pm, name, resourceContext, data);
+      return submitWDTCompositeDataProviderInfo(pm, name, label, resourceContext, data);
     }
     if (jtype.getString().equals(PropertyListDataProviderImpl.TYPE_NAME)) {
-      return submitPropertyListDataProviderInfo(pm, name, resourceContext, data);
+      return submitPropertyListDataProviderInfo(pm, name, label, resourceContext, data);
     }
     LOGGER.fine("POST create bad request: bad type");
     return Response.status(Status.BAD_REQUEST.getStatusCode(),
@@ -424,6 +469,7 @@ public class ProviderResource extends BaseResource {
   private static Response submitAdminServerDataProviderInfo(
     ProviderManager pm,
     String name,
+    String label,
     ResourceContext resourceContext,
     String authorizationHeader,
     JsonObject data
@@ -447,11 +493,16 @@ public class ProviderResource extends BaseResource {
       return Response.status(Status.BAD_REQUEST.getStatusCode(),
         "Missing Admin Server Data Provider Content").build();
     }
+    boolean local = getDirectAdminServerDataProviderSetting(data);
     // Now obtain the domain URL and try connecting to the domain with the
     // supplied credentials
     LOGGER.fine("POST data: " + data.toString());
-    updateAdminServerDataProvider(pm.createAdminServerDataProvider(name, url, authorizationHeader, sso), data);
     InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
+    updateAdminServerDataProvider(
+      pm.createAdminServerDataProvider(name, label, url, authorizationHeader, sso, local),
+      data
+    );
+    pm.save(ic);
     return
       WebAppUtils.addCookieFromContext(
         resourceContext,
@@ -470,7 +521,21 @@ public class ProviderResource extends BaseResource {
     return false;
   }
 
-  private static void updateAdminServerDataProvider(AdminServerDataProvider provider, JsonObject data) {
+  private static boolean getDirectAdminServerDataProviderSetting(JsonObject data) {
+    JsonObject bag = data.getJsonObject(PROVIDER_SETTINGS);
+    if ((bag != null) && (bag != JsonValue.NULL)) {
+      JsonValue localJSON = bag.get(PROVIDER_LOCAL);
+      if ((localJSON != null) && (localJSON != JsonValue.NULL) && bag.getBoolean(PROVIDER_LOCAL)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private static void updateAdminServerDataProvider(
+    AdminServerDataProvider provider,
+    JsonObject data
+  ) {
     // Check if any settings are provided for the connection
     JsonObject bag = data.getJsonObject(PROVIDER_SETTINGS);
     if ((bag == null) || (bag == JsonValue.NULL)) {
@@ -493,6 +558,7 @@ public class ProviderResource extends BaseResource {
   private static Response submitWDTModelDataProviderInfo(
     ProviderManager pm,
     String name,
+    String label,
     ResourceContext resourceContext,
     JsonObject data
   ) {
@@ -521,7 +587,8 @@ public class ProviderResource extends BaseResource {
 
     // Convert the posted JSON data to a stream like that of the form data
     try (ByteArrayInputStream is = new ByteArrayInputStream(jmodel.getString().getBytes())) {
-      return submitWDTModelDataProviderInfo(pm, name, resourceContext, is, propLists, false);
+      return submitWDTModelDataProviderInfo(
+        pm, name, label, resourceContext, is, propLists, false);
     } catch (IOException ioe) {
       LOGGER.fine("POST create bad request: bad model - " + ioe.toString());
       return Response.status(
@@ -532,6 +599,7 @@ public class ProviderResource extends BaseResource {
   private static Response submitWDTModelDataProviderInfo(
     ProviderManager pm,
     String name,
+    String label,
     ResourceContext resourceContext,
     InputStream modelStream,
     List<String> propLists,
@@ -543,11 +611,12 @@ public class ProviderResource extends BaseResource {
         Status.BAD_REQUEST.getStatusCode(), "Reserved name").build();
     }
     InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
-    WDTModelDataProvider provider = pm.createWDTModelDataProvider(name);
+    WDTModelDataProvider provider = pm.createWDTModelDataProvider(name, label);
     provider.parseModel(modelStream, isJson, ic);
     if (propLists != null) {
       provider.setPropertyListProviders(propLists, pm);
     }
+    pm.save(ic);
     return WebAppUtils.addCookieFromContext(
       resourceContext,
       Response.status(Status.CREATED)
@@ -563,7 +632,8 @@ public class ProviderResource extends BaseResource {
     List<String> propLists
   ) {
     InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
-    WDTModelDataProvider provider = (WDTModelDataProvider)pm.getProvider(name, WDTModelDataProviderImpl.TYPE_NAME);
+    WDTModelDataProvider provider = (WDTModelDataProvider)
+      pm.getProvider(name, WDTModelDataProviderImpl.TYPE_NAME);
     provider.setPropertyListProviders(propLists, pm);
     return WebAppUtils.addCookieFromContext(
       resourceContext,
@@ -576,6 +646,7 @@ public class ProviderResource extends BaseResource {
   private static Response submitPropertyListDataProviderInfo(
     ProviderManager pm,
     String name,
+    String label,
     ResourceContext resourceContext,
     JsonObject data
   ) {
@@ -588,7 +659,7 @@ public class ProviderResource extends BaseResource {
 
     // Convert the posted JSON data to a stream like that of the form data
     try (ByteArrayInputStream is = new ByteArrayInputStream(properties.getString().getBytes())) {
-      return submitPropertyListDataProviderInfo(pm, name, resourceContext, is);
+      return submitPropertyListDataProviderInfo(pm, name, label, resourceContext, is);
     } catch (IOException ioe) {
       LOGGER.fine("POST create bad request: bad properties - " + ioe.toString());
       return Response.status(
@@ -599,6 +670,7 @@ public class ProviderResource extends BaseResource {
   private static Response submitPropertyListDataProviderInfo(
     ProviderManager pm,
     String name,
+    String label,
     ResourceContext resourceContext,
     InputStream propertiesStream
   ) {
@@ -608,7 +680,8 @@ public class ProviderResource extends BaseResource {
         Status.BAD_REQUEST.getStatusCode(), "Reserved name").build();
     }
     InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
-    pm.createPropertyListDataProvider(name).parse(propertiesStream, ic);
+    pm.createPropertyListDataProvider(name, label).parse(propertiesStream, ic);
+    pm.save(ic);
     return WebAppUtils.addCookieFromContext(
       resourceContext,
       Response.status(Status.CREATED)
@@ -620,6 +693,7 @@ public class ProviderResource extends BaseResource {
   private static Response submitWDTCompositeDataProviderInfo(
     ProviderManager pm,
     String name,
+    String label,
     ResourceContext resourceContext,
     JsonObject data
   ) {
@@ -645,7 +719,8 @@ public class ProviderResource extends BaseResource {
       models.add(model);
     }
     InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
-    pm.createWDTCompositeDataProvider(name, models).checkModels(ic);
+    pm.createWDTCompositeDataProvider(name, label, models).checkModels(ic);
+    pm.save(ic);
     return
       WebAppUtils.addCookieFromContext(
         resourceContext,
@@ -687,7 +762,9 @@ public class ProviderResource extends BaseResource {
       if ((nameConstraint != null) && !prov.getName().equals(nameConstraint)) {
         continue;
       }
-      pm.deleteProvider(nameConstraint);
+      pm.deleteProvider(prov.getName());
+      InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
+      pm.save(ic);
       return WebAppUtils.addCookieFromContext(
         resourceContext,
         Response.ok()

@@ -1,0 +1,55 @@
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+editable: true
+disableMBeanJavadoc: true
+instanceName: Web Service Identity Provider Partner
+
+properties:
+# TBD - fill in the certificate property help text.  The admin console doesn't have any we can harvest.
+- name: AssertionSigningCertIssuedTo
+  label: "Issued To"
+  helpHTML: " "
+- name: AssertionSigningCertIssuedBy
+  label: "Issued By"
+  helpHTML: " "
+- name: AssertionSigningCertValidFrom
+  label: "Valid From"
+  helpHTML: " "
+- name: AssertionSigningCertValidUntil
+  label: "Valid Until"
+  helpHTML: " "
+- name: AssertionSigningCertVersion
+  label: "Version"
+  helpHTML: " "
+- name: AssertionSigningCertSerialNumber
+  label: "Serial Number"
+  helpHTML: " "
+- name: AssertionSigningCertSignatureAlgorithm
+  label: "Signature Algorithm"
+  helpHTML: " "
+- name: AssertionSigningCertPublicKey
+  label: "Public Key"
+  helpHTML: " "
+  multiLineString: true
+  presentation:
+    width: xxl
+- name: AssertionSigningCertSubjectAlternativeNames
+  label: "Subject Alternative Names"
+- name: AssertionSigningCertExtendedKeyUsage
+  label: "Extended Key Usage"
+- name: AssertionSigningCertBasicConstraints
+  label: "Basic Constraints"
+- name: AssertionSigningCertThumbprintAlgorithm
+  label: "Thumbprint Algorithm"
+- name: AssertionSigningCertThumbprint
+  label: "Thumbprint"
+
+actions:
+- name: importAssertionSigningCert
+  label: "Import Certificate from File"
+  inputForm:
+    introductionHTML: >
+      <p>Imports a SAML 2.0 Web Service Partner's assertion signing certificate from a PEM or DER file.</p>
+    parameters:
+    - name: FileName

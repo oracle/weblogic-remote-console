@@ -1,10 +1,13 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
 - label: Application Configurations
   root: DomainConfiguration
   resourceData: Domain/AppDeployments
+- label: Application Runtime Data Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Application Runtime Data"
 instanceLinks:
 - label: Application Configuration
   root: DomainConfiguration

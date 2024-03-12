@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -6,6 +6,7 @@ package weblogic.remoteconsole.common.repodef.weblogic;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.PagePath;
@@ -55,21 +56,21 @@ class WebLogicYamlReader extends YamlReader {
   }
 
   @Override
-  public BeanTypeDefSource getBeanTypeDefSource(String type) {
-    return getTypeYamlReader(type).getBeanTypeDefSource(type);
+  public BeanTypeDefSource getBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    return getTypeYamlReader(type).getBeanTypeDefSource(repoDef, type);
   }
 
-  BeanTypeDefSource getDefaultBeanTypeDefSource(String type) {
-    return super.getBeanTypeDefSource(type);
+  BeanTypeDefSource getDefaultBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    return super.getBeanTypeDefSource(repoDef, type);
   }
 
   @Override
-  public PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(String type) {
-    return getTypeYamlReader(type).getPseudoBeanTypeDefSource(type);
+  public PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    return getTypeYamlReader(type).getPseudoBeanTypeDefSource(repoDef, type);
   }
 
-  PseudoBeanTypeDefSource getDefaultPseudoBeanTypeDefSource(String type) {
-    return super.getPseudoBeanTypeDefSource(type);
+  PseudoBeanTypeDefSource getDefaultPseudoBeanTypeDefSource(BeanRepoDef repoDef, String type) {
+    return super.getPseudoBeanTypeDefSource(repoDef, type);
   }
 
   @Override

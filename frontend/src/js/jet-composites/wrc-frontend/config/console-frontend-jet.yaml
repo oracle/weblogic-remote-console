@@ -1,12 +1,18 @@
+# Copyright 2022, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
 name: WebLogic Remote Console
-version: '2.4.7'
+version: '2.4.8'
+kind: remote
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
   version: '1.0'
   baseUrl: 'http://localhost:8012'
+  basePath:
   pollingMillis: 60000
   retryAttempts: 5
   docs: 'https://oracle.github.io/weblogic-remote-console/'
+  whatsnew: 'https://github.com/oracle/weblogic-remote-console/releases/tag/v2.4.7'
   services:
     - id: configuration
       path: /configuration
@@ -41,18 +47,88 @@ console-backend:
       path: /providers
     - id: token
       path: /token
+accelerators:
+  linux:
+    Shift:
+      text: 'Shift'
+    Control:
+      text: 'Ctrl'
+    Atl:
+      text: 'Alt'
+    Meta:
+      text: 'Meta'
+  windows:
+    Shift:
+      text: 'Shift'
+    Control:
+      text: 'Ctrl'
+    Atl:
+      text: 'Alt'
+    Meta:
+      icon: 'windows-command-wht_24x24'
+  macOS:
+    Shift:
+      icon: 'macOS-shift-wht_24x24'
+    Control:
+      icon: 'macOS-control-wht_24x24'
+    Atl:
+      icon: 'macOS-option-wht_24x24'
+    Meta:
+      icon: 'macOS-command-wht_24x24'
+shortcutKeys:
+  - id: appMenu
+    label: 'Application Menu Icon'
+    key: '/'
+  - id: appProfile
+    label: 'Application Profiles Selector'
+    key: '='
+  - id: simpleSearch
+    label: 'Simple Search Field'
+    key: 'K'
+  - id: settings
+    label: 'Application Profiles Settings Tab'
+    key: ','
+  - id: preferences
+    label: 'Application Profiles Settings Tab'
+    key: '.'
+  - id: verticalGripper
+    label: 'Provider Tree Resizing Gripper'
+    key: '\\'
+  - id: navstrip
+    label: 'Provider Trees Menu'
+    key: 'M'
+  - id: navtree
+    label: 'Tree Navigator'
+    key: 'N'
+  - id: landing
+    label: 'Tree Landing Page'
+    key: 'L'
+  - id: home
+    label: 'Home Button'
+    key: 'H'
+  - id: providerManagement
+    label: 'Providers Drawer'
+    key: 'P'
+  - id: table
+    label: 'Content Area Table'
+    key: 'T'
+  - id: form
+    label: 'Content Area Form'
+    key: 'F'
+  - id: tabstrip
+    label: 'Form Tabstrip'
+    key: ']'
+  - id: showAdvancedFields
+    label: 'Show Advanced Fields Checkbox'
+    key: '['
+  - id: breadcrumbs
+    label: 'Breadcrumbs Row'
+    key: ';'
 preferences:
-  themes:
-    dark:
-      - '#413e3c'
-      - '#624f4f'
-    light:
-      - '#dcd6d1'
-      - '#b6a29a'
-  shoppingcart:
-    location: 'content-area-body'
-  recentPages:
-    location: 'content-area-body'
+  general:
+    theme: light
+  navtree:
+    useTreeMenusAsRootNodes: false
   providerManagement:
     location: kiosk
     newModel:
@@ -80,64 +156,33 @@ preferences:
       #            url: "http://localhost:7001"
       # Legal values are: 'use-dialog', 'use-cards'
       chooser: 'use-dialog'
+features:
+  appMenu:
+    disabled: true
+  appProfiles:
+    disabled: true
+  appAlerts:
+    disabled: true
+  theme:
+    disabled: true
+  whatsNew:
+    disabled: true
+  howDoI:
+    disabled: true
+  iconbarIcons:
+    relocated: true
 settings:
   logging:
+    logFailureResponses: true
     defaultLevel: ERROR
   autoSync:
     minimumSecs: 30
   autoDownloadTimer:
     minimumSecs: 1
+  notifications:
+    showPopupForFailureResponses: true
+    autoCloseInterval: 5000
   sso:
+    tokenClockSkew: 180
     maxPollCount: 1800
-    domainLoginUri: ''
-  actions:
-    - id: start
-      iconFile: action-start-icon-blk_24x24
-    - id: startActions
-      iconFile: action-start-icon-blk_24x24
-    - id: resume
-      iconFile: action-resume-icon-blk_24x24
-    - id: suspendActions
-      iconFile: action-suspend-icon-blk_24x24
-    - id: shutdownActions
-      iconFile: action-stop-icon-blk_24x24
-    - id: restartSSL
-      iconFile: action-restart-icon-blk_24x24
-    - id: stop
-      iconFile: action-stop-icon-blk_24x24
-    - id: stopActions
-      iconFile: action-stop-icon-blk_24x24
-    - id: download
-      iconFile: action-download-icon-blk_24x24
-    - id: shrink
-      iconFile: action-shrink-icon-blk_24x24
-    - id: reset
-      iconFile: action-reset-icon-blk_24x24
-    - id: clearStatementCache
-      iconFile: action-clear-icon-blk_24x24
-    - id: pauseActions
-      iconFile: action-pause-icon-blk_24x24
-    - id: resumeActions
-      iconFile: action-resume-icon-blk_24x24
-    - id: forceCommitSelectedTransactions
-      iconFile: action-commit-icon-blk_24x24
-    - id: forceRollbackSelectedTransactions
-      iconFile: action-rollback-icon-blk_24x24
-    - id: deleteActions
-      iconFile: delete-icon-blk_24x24
-    - id: exportActions
-      iconFile: action-export-3d-icon-blk_24x24
-    - id: importMessages
-      iconFile: action-import-3d-icon-blk_24x24
-    - id: edit
-      iconFile: action-edit-icon-blk_24x24
-    - id: redeploy
-      iconFile: action-redeploy-icon-blk_24x24
-    - id: update
-      iconFile: action-upload-icon-blk_24x24
-    - id: createPlan
-      iconFile: action-create-icon-blk_24x24
-    - id: refreshCache
-      iconFile: action-refresh-icon-blk_24x24
-    - id: purgeCompletedDeploymentProgressObjects
-      iconFile: delete-icon-blk_24x24
+    domainLoginUri: '/console/login'

@@ -41,6 +41,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
 
   public static final String TYPE_NAME = "WDTModel";
   private String name;
+  private String label;
   private String lastMessage = null;
   private Map<String, Object> model = null;
   private Map<String, Root> roots = new HashMap<String, Root>();
@@ -49,8 +50,9 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
   private List<String> propertyListNames = null;
   private ProviderManager pm = null;
 
-  public WDTModelDataProviderImpl(String name) {
+  public WDTModelDataProviderImpl(String name, String label) {
     this.name = name;
+    this.label = label;
     editRoot = new Root(
       this,
       Root.EDIT_NAME,
@@ -222,6 +224,11 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
   }
 
   @Override
+  public String getLabel() {
+    return label;
+  }
+
+  @Override
   public String getName() {
     return name;
   }
@@ -292,6 +299,9 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
   public JsonObject toJSON(InvocationContext ic) {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", getName());
+    if ((getLabel() != null) && !getName().equals(getLabel())) {
+      ret.add("label", getLabel());
+    }
     ret.add(ProviderResource.PROVIDER_TYPE, getType());
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (Root root : getRoots().values()) {

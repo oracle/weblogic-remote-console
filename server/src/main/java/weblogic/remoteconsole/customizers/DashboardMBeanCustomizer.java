@@ -1,30 +1,38 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import javax.ws.rs.NotFoundException;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.CustomBeanSearchResults;
-import weblogic.remoteconsole.server.repo.CustomFilteringDashboard;
-import weblogic.remoteconsole.server.repo.CustomFilteringDashboardDefManager;
 import weblogic.remoteconsole.server.repo.Dashboard;
 import weblogic.remoteconsole.server.repo.DashboardManager;
 import weblogic.remoteconsole.server.repo.DateValue;
+import weblogic.remoteconsole.server.repo.FilteringDashboard;
+import weblogic.remoteconsole.server.repo.FilteringDashboardDefManager;
+import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.LongValue;
 import weblogic.remoteconsole.server.repo.Page;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.StringValue;
+import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.BaseResource;
 
 /** 
@@ -39,7 +47,7 @@ public class DashboardMBeanCustomizer {
   public static Response<SettableValue> getType(InvocationContext ic) {
     Response<SettableValue> response = new Response<>();
     Response<Dashboard> dashboardResponse =
-      ic.getPageRepo().asPageReaderRepo().getDashboardManager().getDashboard(ic);
+      ic.getPageRepo().asPageReaderRepo().getDashboardManager(ic).getDashboard(ic);
     if (!dashboardResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(dashboardResponse);
     }
@@ -53,17 +61,22 @@ public class DashboardMBeanCustomizer {
     if (ic.getBeanTreePath().isCollection()) {
       return new DashboardMBeanCollectionResource();
     } else {
-      // When this collection becomes truly heterogeneous,
-      // find the type for the collection child and create
-      // the corresponding resource for that type:
-      // Can we just fetch its type def?
-      return new CustomFilteringDashboardMBeanCollectionChildResource();
+      Dashboard dashboard = getDashboardManager(ic).getDashboardOrNull(ic);
+      if (dashboard == null) {
+        throw new NotFoundException();
+      }
+      if (dashboard.isCustomFilteringDashboard()) {
+        return new CustomFilteringDashboardMBeanCollectionChildResource();
+      } else if (dashboard.isBuiltinFilteringDashboard()) {
+        return new BuiltinFilteringDashboardMBeanCollectionChildResource();
+      }
+      throw new AssertionError("Unknown dashboard: " + dashboard);
     }
   }
 
   // Customizes the PDJ for creating a custom filtering dashboard.
   public static Response<PageDef> customizeCreateFormDef(InvocationContext ic, PageDef uncustomizedPageDef) {
-    return CustomFilteringDashboardDefManager.customizeCreateFormDef(ic, uncustomizedPageDef);
+    return FilteringDashboardDefManager.customizeCreateFormDef(ic, uncustomizedPageDef);
   }
 
   // Customizes the RDJ for creating a custom filtering dashboard.
@@ -73,8 +86,8 @@ public class DashboardMBeanCustomizer {
     // The current request includes a 'path' query parameter that indicates
     // the bean to create a custom filtering dashboard for.
     // Get it and add it to the PDJ's url since it needs to know too.
-    BeanTreePath btpTemplate = CustomFilteringDashboardDefManager.getBeanTreePathTemplateFromPathQueryParam(ic);
-    String pathQueryParam = CustomFilteringDashboardDefManager.computePathQueryParam(btpTemplate);
+    BeanTreePath btpTemplate = FilteringDashboardDefManager.getBeanTreePathTemplateFromPathQueryParam(ic);
+    String pathQueryParam = FilteringDashboardDefManager.computePathQueryParam(btpTemplate);
     page.setBackendRelativePDJURI(page.getBackendRelativePDJURI() + "&" + pathQueryParam);
     // Customize the page's intro to include the type.
     page.setLocalizedIntroductionHTML(
@@ -83,7 +96,7 @@ public class DashboardMBeanCustomizer {
         getCustomFilteringDashboardTypeLabel(ic, btpTemplate)
       )
     );
-    CustomFilteringDashboardDefManager.customizeCreateForm(ic, page);
+    FilteringDashboardDefManager.customizeCreateForm(ic, page);
     return response.setSuccess(null);
   }
 
@@ -95,7 +108,7 @@ public class DashboardMBeanCustomizer {
     List<BeanPropertyDef> propertyDefs
   ) {
     BeanTypeDef typeDef = collectionPath.getTypeDef();
-    List<BeanSearchResults> collectionResults = new ArrayList<>();
+    Map<String,BeanSearchResults> collectionResults = new TreeMap<>();
     // Loop over the dashboards
     for (Dashboard dashboard : getDashboardManager(ic).getDashboards(ic)) {
       // Compute the dashboard's identity
@@ -114,14 +127,14 @@ public class DashboardMBeanCustomizer {
       );
       beanResults.addPropertyResults(
         typeDef.getPropertyDef(new Path("Name")),
-        new StringValue(dashboardName)
+        new StringValue(dashboard.getName())
       );
       beanResults.addPropertyResults(
         typeDef.getPropertyDef(new Path("Type")),
         new StringValue(dashboard.getTypeLabel(ic))
       );
-      if (dashboard.isCustomFilteringDashboard()) {
-        CustomFilteringDashboard filteringDashboard = dashboard.asCustomFilteringDashboard();
+      if (dashboard.isFilteringDashboard()) {
+        FilteringDashboard filteringDashboard = dashboard.asFilteringDashboard();
         if (filteringDashboard.getResults() != null) {
           boolean includeSubTypes = true;
           // We've done this search earlier
@@ -140,9 +153,39 @@ public class DashboardMBeanCustomizer {
       } else {
         throw new AssertionError("Unsupported dashboard : " + dashboard.getName() + " " + dashboard.getClass());
       }
-      collectionResults.add(beanResults);
+      collectionResults.put(dashboardName, beanResults);
     }
-    return new Response<List<BeanSearchResults>>().setSuccess(collectionResults);
+    return new Response<List<BeanSearchResults>>().setSuccess(new ArrayList<>(collectionResults.values()));
+  }
+
+  // Create a copy of a dashboard
+  public static Response<Value> copy(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
+    Response<Value> response = new Response<>();
+    Response<Dashboard> getResponse =
+      ic.getPageRepo().asPageReaderRepo().getDashboardManager(ic).getDashboard(ic);
+    if (!getResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(getResponse);
+    }
+    String name = FormProperty.getStringPropertyValue("Name", formProperties, null);
+    if (StringUtils.isEmpty(name)) {
+      response.addFailureMessage(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.REQUIRED_PROPERTY_NOT_SPECIFIED,
+          "Name"
+        )
+      );
+      return response.setUserBadRequest();
+    }
+    Response<String> copyResponse =
+      getResponse.getResults().copy(ic, name);
+    if (!copyResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(copyResponse);
+    }
+    return response.setSuccess(null); // TBD return a reference to the copy?
   }
 
   private static String getCustomFilteringDashboardTypeLabel(InvocationContext ic, BeanTreePath btpTemplate) {
@@ -153,6 +196,6 @@ public class DashboardMBeanCustomizer {
   }
 
   private static DashboardManager getDashboardManager(InvocationContext ic) {
-    return ic.getPageRepo().asPageReaderRepo().getDashboardManager();
+    return ic.getPageRepo().asPageReaderRepo().getDashboardManager(ic);
   }
 }

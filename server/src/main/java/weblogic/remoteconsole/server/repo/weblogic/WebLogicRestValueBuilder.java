@@ -64,6 +64,18 @@ class WebLogicRestValueBuilder {
     return getReference(jsonValue, false);
   }
 
+  Value buildReferences(JsonValue jsonValue) {
+    List<Value> values = new ArrayList<>();
+    if (jsonValue != JsonValue.NULL) {
+      for (JsonValue jsonVal : jsonValue.asJsonArray()) {
+        values.add(getReference(jsonVal, true));
+      }
+    } else {
+      // sometimes the WLS REST api represents empty arrays as nulls
+    }
+    return new ArrayValue(values);
+  }
+
   private Value getValue(BeanValueDef valueDef, JsonValue jsonValue, boolean processingArray) {
     if (valueDef.isReferenceAsReferences()) {
       List<Value> values = new ArrayList<Value>();

@@ -1,0 +1,52 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Configures this SAML 2.0 Web Service Service Provider Partner's Properties.</p>
+
+sections:
+- title: "Overview"
+  properties:
+  - name: "Name"
+  - name: "Description"
+  - name: "Enabled"
+- title: "Assertions"
+  properties:
+  - name: AudienceURIs
+  - name: ServiceProviderNameMapperClassname
+  - name: TimeToLive
+  - name: TimeToLiveOffset
+  - name: GenerateAttributes
+  - name: IncludeOneTimeUseCondition
+  - name: KeyinfoIncluded
+  - name: ConfirmationMethod
+  - name: WantAssertionsSigned
+
+helpTopics:
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: edocs
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html"
+  type: edocs
+- label: "Configuring a SAML 2.0 Credential Mapping Provider"
+  href: "secmg/credmapper.html#SECMG155"
+  type: edocs
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: edocs
+- label: "Configuring Keystores"
+  href: "secmg/identity_trust.html"
+  type: edocs
+- label: "Using Security Assertion Markup Language (SAML) Tokens For Identity"
+  href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"
+  type: generic
+- label: "API reference for com.bea.security.saml2.providers.registry.Partner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/Partner.html"
+  type: edocs
+- label: "API reference for com.bea.security.saml2.providers.registry.SPPartner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/SPPartner.html"
+  type: edocs
+- label: "API reference for com.bea.security.saml2.providers.registry.WSSSPPartner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/WSSSPPartner.html"
+  type: edocs

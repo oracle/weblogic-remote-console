@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -9,3 +9,13 @@ properties:
 # manually add this since the underlying bean infos doesn't list it, yet all providers must support it:
 - name: ProviderClassName
   type: java.lang.String
+
+actions:
+
+- name: moveDown
+  type: void
+  impact: action # since it modifies the mbeans
+
+- name: moveUp
+  type: void
+  impact: action # since it modifies the mbeans

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022,2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022,2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -240,6 +240,7 @@ define(['./parsed-expression-tree', 'wrc-frontend/microservices/policy-managemen
         let stringExpression = null;
         if (isValidSection(section)) {
           stringExpression = getRdjStringExpression.call(this, section);
+          if (CoreUtils.isUndefinedOrNull(stringExpression)) stringExpression = null;
         }
         return stringExpression;
       }

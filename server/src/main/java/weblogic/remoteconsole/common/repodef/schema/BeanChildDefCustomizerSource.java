@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -195,7 +195,7 @@ public class BeanChildDefCustomizerSource {
     asyncDelete.setValue(value);
   }
 
-  // The bean repo capabilities that are required for child type to be present
+  // The bean repo capabilities that are required for child to be present
   public List<String> getRequiredCapabilities() {
     return requiredCapabilities.getValue();
   }

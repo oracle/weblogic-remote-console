@@ -102,4 +102,9 @@ public class SliceTableDefImpl extends PageDefImpl implements SliceTableDef {
   public boolean isSupportsNavigation() {
     return supportsNavigation;
   }
+
+  @Override
+  public boolean isUseRowIdentities() {
+    return false;
+  }
 }

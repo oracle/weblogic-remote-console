@@ -1,14 +1,29 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['knockout', 'ojs/ojcontext', 'ojs/ojarraydataprovider', 'wrc-frontend/core/utils', 'ojs/ojlabel', 'ojs/ojformlayout', 'ojs/ojselectsingle', 'ojs/ojselectcombobox', 'ojs/ojinputtext' ],
-  function(ko, Context, ArrayDataProvider, CoreUtils) {
+define([
+  'knockout',
+  'ojs/ojcontext',
+  'ojs/ojarraydataprovider',
+  'wrc-frontend/core/utils',
+  'ojs/ojlabel',
+  'ojs/ojformlayout',
+  'ojs/ojselectsingle',
+  'ojs/ojselectcombobox',
+  'ojs/ojinputtext'
+],
+  function(
+    ko,
+    Context,
+    ArrayDataProvider,
+    CoreUtils
+  ) {
 
     function PolicyEditorWizardPage(viewParams) {
       const self = this;

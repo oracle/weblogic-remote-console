@@ -1,0 +1,80 @@
+{
+  "dashboards" : {
+    "Application Runtime Data" : {
+      "type" : "FilteringDashboard",
+      "path" : "DomainRuntime.CombinedServerRuntimes.ServerRuntime.ApplicationRuntimes",
+      "description" : "This dashboard displays data about all running applications.",
+      "defaultColumns" : [
+        "BeanKeyResult_CombinedServerRuntimes",
+        "BeanKeyResult_ApplicationRuntimes",
+        "ApplicationVersion",
+        "OverallHealthState",
+        "HealthState"
+      ]
+    },
+    "Deployment Tasks" : {
+      "type" : "FilteringDashboard",
+      "description" : "This dashboard displays data about all application, library and data base client data deployment operations.",
+      "path" : "DomainRuntime.DeploymentManager.DeploymentProgressObjects",
+      "defaultColumns" : [
+        "BeanKeyResult_DeploymentProgressObjects",
+        "ApplicationName",
+        "OperationType",
+        "Progress",
+        "StartTime",
+        "EndTime",
+        "Completed",
+        "Id",
+        "State"
+      ]
+    },
+    "Logs and Archives" : {
+      "type" : "FilteringDashboard",
+      "description" : "This dashboard contains all diagnostic (e.g. server and domain) logs",
+      "path" : "DomainRuntime.CombinedServerRuntimes.ServerRuntime.WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes",
+      "defaultColumns" : [
+        "BeanKeyResult_CombinedServerRuntimes",
+        "BeanKeyResult_WLDFDataAccessRuntimes",
+        "Type",
+        "LatestAvailableTimestamp",
+        "LatestRecordId"
+      ]
+    },
+    "Node Manager Logs" : {
+      "type" : "FilteringDashboard",
+      "description" : "This dashboard contains all node manger logs.",
+      "path" : "DomainRuntime.NodeManagerRuntimes",
+      "defaultColumns" : [
+        "BeanKeyResult_NodeManagerRuntimes",
+        "Reachable",
+        "DownloadLogLink"
+      ]
+    },
+    "Server States" : {
+      "type" : "FilteringDashboard",
+      "path" : "DomainRuntime.CombinedServerRuntimes",
+      "description" : "<p>This dashboard displays the state of each server.</p><p>The 'Server LifeCycle State' column is the Administration Server's view of the server's state.</p><p>The 'State' column is the server's view of its state and is not available if the server isn't running or the Administration Server is not able to contact the server.</p>",
+      "defaultColumns" : [
+        "BeanKeyResult_CombinedServerRuntimes",
+        "ServerLifeCycleRuntime_State",
+        "State",
+        "ServerRuntime_HealthState",
+        "ServerRuntime_OverallHealthState"
+      ]
+    },
+    "Server Tasks" : {
+      "type" : "FilteringDashboard",
+      "path" : "DomainRuntime.CombinedServerRuntimes.ServerLifeCycleRuntime.Tasks",
+      "description" : "This dashboard displays the status of all server tasks.",
+      "defaultColumns" : [
+        "BeanKeyResult_CombinedServerRuntimes",
+        "BeanKeyResult_Tasks",
+        "Operation",
+        "Progress",
+        "TaskError",
+        "StartTime",
+        "EndTime"
+      ]
+    }
+  }
+}

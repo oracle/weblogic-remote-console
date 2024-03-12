@@ -1,0 +1,19 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: Status
+  # MOREAUT_TBD - add more status codes
+  legalValues:
+  - value: 401
+    label: "401 Not Authorized"
+  - value: 404
+    label: "404 Not Found"
+- name: ResponseBody
+  multiLineString: true
+  presentation:
+    width: xxl
+- name: StackTrace
+  multiLineString: true
+  presentation:
+    width: xxl

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -7,12 +7,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PageFieldDef;
 import weblogic.remoteconsole.server.repo.ArrayValue;
@@ -49,18 +51,25 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
 
   public static Response<List<FormProperty>> fromRequestBody(
     InvocationContext ic,
-    JsonObject requestBody,
-    FormDataBodyPart... uploadedFiles
+    JsonObject requestBody
   ) {
-    return (new FormRequestBodyMapper(ic, requestBody, uploadedFiles)).fromRequestBody();
+    return fromRequestBody(ic, requestBody, null);
+  }
+
+  public static Response<List<FormProperty>> fromRequestBody(
+    InvocationContext ic,
+    JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
+    return (new FormRequestBodyMapper(ic, requestBody, parts)).fromRequestBody();
   }
 
   private FormRequestBodyMapper(
     InvocationContext ic,
     JsonObject requestBody,
-    FormDataBodyPart... uploadedFiles
+    FormDataMultiPart parts
   ) {
-    super(ic, requestBody, uploadedFiles);
+    super(ic, requestBody, parts);
     Response<PageDef> pageDefResponse =
       ic.getPageRepo().asPageReaderRepo().getPageDef(getInvocationContext());
     if (!pageDefResponse.isSuccess()) {
@@ -102,13 +111,25 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
         formProperties.add(formProperty);
       }
     }
-    for (FormDataBodyPart uploadedFile : getUploadedFiles()) {
-      FormProperty formProperty = getFormProperty(uploadedFile);
-      if (!isOK()) {
-        return null;
-      }
-      if (formProperty != null) {
-        formProperties.add(formProperty);
+    if (getParts() != null) {
+      for (Map.Entry<String, List<FormDataBodyPart>> entry : getParts().getFields().entrySet()) {
+        List<FormDataBodyPart> parts = entry.getValue();
+        if (parts == null || parts.isEmpty()) {
+          badFormat("No parts for the property " + entry.getKey());
+          return null;
+        }
+        if (parts.size() > 1) {
+          // Currently we don't support multiple parts with the same name
+          badFormat("More than one part for the property " + entry.getKey());
+          return null;
+        }
+        FormProperty formProperty = getFormProperty(parts.get(0));
+        if (!isOK()) {
+          return null;
+        }
+        if (formProperty != null) {
+          formProperties.add(formProperty);
+        }
       }
     }
     return formProperties;
@@ -140,11 +161,17 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
     return new FormProperty(fieldDef, value);
   }
 
-  private FormProperty getFormProperty(FormDataBodyPart uploadedFile) {
-    if (uploadedFile == null) {
+  private FormProperty getFormProperty(FormDataBodyPart part) {
+    if (part == null) {
       return null;
     }
-    String name = uploadedFile.getFormDataContentDisposition().getName();
+    String name = part.getFormDataContentDisposition().getName();
+    if ("requestBody".equals(name)) {
+      // multi-part POSTs always send in the request body as a part.
+      // It's always called 'requestBody' and is always handled separately
+      // by a JsonObject arg to the jaxrs method.
+      return null;
+    }
     PageFieldDef fieldDef = getFieldDef(name);
     if (!isOK()) {
       return null;
@@ -160,9 +187,9 @@ public class FormRequestBodyMapper extends RequestBodyMapper<List<FormProperty>>
     }
     Value value =
       new FileContentsValue(
-        uploadedFile.getFormDataContentDisposition().getFileName(),
-        uploadedFile.getEntityAs(InputStream.class),
-        uploadedFile.getMediaType().getType()
+        part.getFormDataContentDisposition().getFileName(),
+        part.getEntityAs(InputStream.class),
+        part.getMediaType().getType()
       );
     return new FormProperty(fieldDef, new SettableValue(value));
   }

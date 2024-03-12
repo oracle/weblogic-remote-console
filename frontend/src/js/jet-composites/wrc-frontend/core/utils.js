@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022,2023, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -13,6 +13,7 @@
 define(
   function () {
     return {
+      NULL_VALUE: Object.freeze('___NULL___'),
       isEquivalent: function (a, b) {
         // Create arrays of property names
         const aProps = Object.getOwnPropertyNames(a);
@@ -158,7 +159,21 @@ define(
         };
         return deepEqual(object1, object2);
       },
-      getFunctionNames: (obj) => Object.getOwnPropertyNames(obj).filter(item => typeof obj[item] === 'function')
+      getFunctionNames: (obj) => {
+        return Object.getOwnPropertyNames(obj).filter(item => typeof obj[item] === 'function');
+      },
+      isValidUrl: (url) => {
+        try {
+          const checkUrl = new URL(url);
+          if (!['https:', 'http:'].includes(checkUrl.protocol.toLowerCase())) {
+            return false;
+          }
+        }
+        catch (error) {
+          return false;
+        }
+        return true;
+      }
 
     };
 

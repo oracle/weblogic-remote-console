@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -217,20 +217,18 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   private void initializeLabel() {
-    String englishLabel = computeEnglishLabel();
+    String lbl = beanPropertyDefImpl.getCustomizerSource().getLabel();
     if (beanPropertyDefImpl.getCustomizerSource().isUseUnlocalizedNameAsLabel()) {
-      this.label = new LocalizableString(englishLabel);
+      if (StringUtils.isEmpty(lbl)) {
+        lbl = getPropertyName();
+      }
+      this.label = new LocalizableString(lbl);
     } else {
-      this.label = new LocalizableString(getLabelLocalizationKey(), englishLabel);
+      if (StringUtils.isEmpty(lbl)) {
+        lbl = StringUtils.camelCaseToUpperCaseWords(getPropertyName());
+      }
+      this.label = new LocalizableString(getLabelLocalizationKey(), lbl);
     }
-  }
-
-  private String computeEnglishLabel() {
-    String englishLabel = beanPropertyDefImpl.getCustomizerSource().getLabel();
-    if (StringUtils.isEmpty(englishLabel)) {
-      englishLabel = StringUtils.camelCaseToUpperCaseWords(getPropertyName());
-    }
-    return englishLabel;
   }
 
   private void initializePresentationDef() {

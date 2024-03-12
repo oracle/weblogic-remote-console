@@ -1,0 +1,47 @@
+<!--
+Copyright (c) 2023,2024, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+<oj-bind-if test="[[i18n.icons.alerts.visible()]]">
+  <a
+    id="alertsMenuLauncher"
+    href="#"
+    on-click="[[launchAlertsMenu]]"
+  >
+    <oj-bind-if test="[[i18n.icons.alerts.visible]]">
+    <span class="cfe-branding-area-header-iconbar-icon">
+      <oj-bind-if test="[[alerts.counts.total() > 0]]">
+        <span class="cfe-icon-overlay" data-bind="text: [[alerts.counts.total()]]"></span>
+      </oj-bind-if>
+      <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.alerts.iconFile() + '.png', alt: i18n.icons.alerts.tooltip}"/>
+    </span>
+    </oj-bind-if>
+  </a>
+
+  <oj-bind-if test="[[!i18n.icons.alerts.disabled()]]">
+    <oj-menu
+        id="alertsMenu"
+        aria-labelledby="alertsMenuLauncher"
+        on-oj-action="[[alertsMenuClickListener]]"
+        on-oj-before-open="[[alertsMenuBeforeOpen]]"
+        open-options.launcher="alertsMenuLauncher"
+        open-options.initial-focus="firstItem"
+    >
+      <oj-option id="[[i18n.menus.alerts.error.id]]" class="oj-disabled cfe-menu-item-alerts-error" value="[[i18n.menus.alerts.error.id]]">
+        <span class="cfe-menu-item-alerts" data-bind="html: i18n.menus.alerts.error.value"></span>
+      </oj-option>
+      <oj-option id="[[i18n.menus.alerts.warning.id]]" class="oj-disabled cfe-menu-item-alerts-warning" value="[[i18n.menus.alerts.warning.id]]">
+        <span class="cfe-menu-item-alerts" data-bind="html: i18n.menus.alerts.warning.value"></span>
+      </oj-option>
+      <oj-option id="[[i18n.menus.alerts.info.id]]" class="oj-disabled cfe-menu-item-alerts-info" value="[[i18n.menus.alerts.info.id]]">
+        <span class="cfe-menu-item-alerts" data-bind="html: i18n.menus.alerts.info.value"></span>
+      </oj-option>
+      <oj-option>---</oj-option>
+      <oj-option id="[[i18n.menus.alerts.view.id]]" value="[[i18n.menus.alerts.view.id]]">
+        <span data-bind="html: i18n.menus.alerts.view.value + '...'"></span>
+      </oj-option>
+    </oj-menu>
+
+  </oj-bind-if>
+
+</oj-bind-if>

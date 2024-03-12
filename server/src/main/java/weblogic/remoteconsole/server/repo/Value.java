@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -227,6 +227,28 @@ public class Value {
   // Throws a ClassCastException if this value isn't a FileContentsValue.
   public FileContentsValue asFileContents() {
     return (FileContentsValue)this;
+  }
+
+  // Returns whether this value is an href used to download a file.
+  public boolean isDownload() {
+    return (this instanceof DownloadValue);
+  }
+
+  // Converts this value to a DownloadValue.
+  // Throws a ClassCastException if this value isn't a DownloadValue.
+  public DownloadValue asDownload() {
+    return (DownloadValue)this;
+  }
+
+  // Returns whether this value is an href that just displays a label.
+  public boolean isLabel() {
+    return (this instanceof LabelValue);
+  }
+
+  // Converts this value to a LabelValue.
+  // Throws a ClassCastException if this value isn't a LabelValue.
+  public LabelValue asLabel() {
+    return (LabelValue)this;
   }
 
   // Returns whether this value an entitleNet expression .

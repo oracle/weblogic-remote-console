@@ -12,13 +12,8 @@ import javax.json.JsonValue;
 
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
-import weblogic.remoteconsole.common.repodef.CustomPagePropertyDef;
-import weblogic.remoteconsole.common.repodef.CustomSliceFormDef;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
-import weblogic.remoteconsole.common.repodef.PageDef;
-import weblogic.remoteconsole.common.repodef.PagePropertyDef;
-import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
@@ -53,26 +48,6 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
 
   public static BaseResource createResource(InvocationContext ic) {
     return new DeploymentPlanRuntimeMBeanResource();
-  }
-
-  // Customizes the PDJ for configuring the deployment plan xml
-  public static Response<PageDef> customizeDeploymentPlanSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
-    // Force all the properties to be writable (otherwise, since we're in the monitoring tree,
-    // they're considered read-only regardless of what the PDY says)
-    Response<PageDef> response = new Response<>();
-    SliceFormDef uncustomizedSliceFormDef = uncustomizedPageDef.asSliceFormDef();
-    List<PagePropertyDef> customizedPropertyDefs = new ArrayList<>();
-    for (PagePropertyDef uncustomizedPropertyDef : uncustomizedSliceFormDef.getPropertyDefs()) {
-      // make it writable
-      customizedPropertyDefs.add(
-        new CustomPagePropertyDef(uncustomizedPropertyDef).writable(true)
-      );
-    }
-    return
-      response.setSuccess(
-        new CustomSliceFormDef(uncustomizedSliceFormDef)
-          .propertyDefs(customizedPropertyDefs)
-      );
   }
 
   // Write out new xml for a deployment plan

@@ -13,7 +13,7 @@ import javax.json.JsonString;
 import javax.json.JsonValue;
 import javax.json.JsonValue.ValueType;
 
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import weblogic.remoteconsole.common.utils.DateUtils;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -28,7 +28,7 @@ public abstract class RequestBodyMapper<T> {
 
   private InvocationContext ic;
   private JsonObject requestBody;
-  private FormDataBodyPart[] uploadedFiles;
+  private FormDataMultiPart parts;
   // use a response so we can return BadRequest for poorly formatted request bodies:
   private Response<T> response = new Response<>();
 
@@ -36,11 +36,19 @@ public abstract class RequestBodyMapper<T> {
 
   protected RequestBodyMapper(
     InvocationContext ic,
+    JsonObject requestBody
+  ) {
+    this(ic, requestBody, null);
+  }
+
+  protected RequestBodyMapper(
+    InvocationContext ic,
     JsonObject requestBody,
-    FormDataBodyPart... uploadedFiles) {
+    FormDataMultiPart parts
+  ) {
     this.ic = ic;
     this.requestBody = requestBody;
-    this.uploadedFiles = uploadedFiles;
+    this.parts = parts;
   }
 
   public Response<T> fromRequestBody() {
@@ -58,8 +66,8 @@ public abstract class RequestBodyMapper<T> {
     return requestBody;
   }
 
-  protected FormDataBodyPart[] getUploadedFiles() {
-    return uploadedFiles;
+  protected FormDataMultiPart getParts() {
+    return parts;
   }
 
   public Response<T> getResponse() {

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -47,10 +47,10 @@ define(['ojs/ojcore', 'knockout', './console-backend-connection-verifier', 'wrc-
 
       function showLostConnectionMessage() {
         MessageDisplaying.displayMessage({
-          severity: 'info',
+          severity: 'warning',
           summary: oj.Translations.getTranslatedString('wrc-domain-connection.messages.lostConnection.summary'),
           detail: oj.Translations.getTranslatedString('wrc-domain-connection.messages.lostConnection.detail')
-        }, 10000);
+        });
       }
 
       Context.getPageContext().getBusyContext().whenReady()

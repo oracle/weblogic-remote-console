@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -61,11 +61,13 @@ public class ServerRuntimeMBeanCustomizer {
       String name = binding.getString("name");
       String clazz = binding.getString("class");
       String toString = binding.getString("toString");
+      String error = binding.getString("error", ""); // optional: added in version 7 of the console rest extension
       TableRow row = new TableRow();
       row.getCells().add(new TableCell("Context", new StringValue(context)));
       row.getCells().add(new TableCell("Name", new StringValue(name)));
       row.getCells().add(new TableCell("Class", new StringValue(clazz)));
       row.getCells().add(new TableCell("toString", new StringValue(toString)));
+      row.getCells().add(new TableCell("error", new StringValue(error)));
       rows.add(row);
     }
     return rows;

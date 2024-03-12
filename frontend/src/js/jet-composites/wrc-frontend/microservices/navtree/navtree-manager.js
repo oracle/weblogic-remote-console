@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -247,7 +247,7 @@ define([
       if (this.treeData().length === 0) {
         this.treeData(newTreeData);
       }
-      this.treeData.valueHasMutated();
+      document.querySelector('#nav').refresh();
     },
 
     getNodeById: function (nodeId) {

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -6,8 +6,8 @@ package weblogic.remoteconsole.server.webapp;
 import java.util.List;
 import javax.json.JsonObject;
 
-import weblogic.remoteconsole.server.repo.CustomFilteringDashboardConfig;
-import weblogic.remoteconsole.server.repo.CustomFilteringDashboardConfigManager;
+import weblogic.remoteconsole.server.repo.FilteringDashboardConfig;
+import weblogic.remoteconsole.server.repo.FilteringDashboardConfigManager;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
@@ -18,7 +18,7 @@ import weblogic.remoteconsole.server.repo.Response;
  */
 public class DashboardCreateHelper extends CreateHelper {
 
-  public static javax.ws.rs.core.Response create(InvocationContext ic, JsonObject requestBody) {
+  public static javax.ws.rs.core.Response createDashboard(InvocationContext ic, JsonObject requestBody) {
     return (new DashboardCreateHelper()).createBean(ic, requestBody);
   }
 
@@ -31,13 +31,13 @@ public class DashboardCreateHelper extends CreateHelper {
     // When we add support for other kinds of dashboards, look at properties
     // to see what kind to create.
     Response<Void> response = new Response<>();
-    Response<CustomFilteringDashboardConfig> configResponse =
-      CustomFilteringDashboardConfigManager.createConfig(ic, properties);
+    Response<FilteringDashboardConfig> configResponse =
+      FilteringDashboardConfigManager.createConfig(ic, properties);
     if (!configResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(configResponse);
     }
     Response<String> createResponse =
-      ic.getPageRepo().asPageReaderRepo().getDashboardManager().createCustomFilteringDashboard(
+      ic.getPageRepo().asPageReaderRepo().getDashboardManager(ic).createCustomFilteringDashboard(
         ic,
         configResponse.getResults()
       );

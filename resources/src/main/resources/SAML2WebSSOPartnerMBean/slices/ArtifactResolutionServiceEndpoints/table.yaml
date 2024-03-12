@@ -1,0 +1,53 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Displays this SAML 2.0 Web Single Sign-on Partner's Artifact Resolution
+  Service Endpoints</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.SAML2PartnerMBeanCustomizer.getArtifactResolutionServiceEndpointsSliceTableRows
+
+displayedColumns:
+- name: "Binding"
+  helpHTML: " "
+  definition:
+    type: "java.lang.String"
+    legalValues:
+    - "HTTP/POST"
+    - "HTTP/Redirect"
+    - "HTTP/Artifact"
+    - "SOAP"
+- name: "Location"
+  helpHTML: " "
+  definition:
+    type: "java.lang.String"
+- name: "Index"
+  label: "Order"
+  helpHTML: " "
+  definition:
+    type: "int"
+- name: "Default"
+  helpHTML: " "
+  definition:
+    type: "java.lang.String"
+    legalValues:
+    - ""
+    - "true"
+    - "false"
+
+helpTopics:
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html"
+  type: "edocs"
+- label: "Configuring a Service Provider Site for SAML 2.0 Single Sign-On"
+  href: "secmg/saml20.html#SECMG297"
+  type: "edocs"
+- label: "Viewing Partner Site, Certificate, and Service Endpoint Information"
+  href: "secmg/saml20.html#SECMG313"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: "edocs"

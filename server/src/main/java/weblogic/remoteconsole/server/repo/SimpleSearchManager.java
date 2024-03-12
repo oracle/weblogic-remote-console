@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -15,7 +15,7 @@ import weblogic.remoteconsole.server.PersistenceManager;
  */
 public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearches> {
 
-  private static final PersistenceManager<PersistedRecentSearches> PERSISTENCE_MANAGER =
+  private PersistenceManager<PersistedRecentSearches> persistenceManager =
     new PersistenceManager<>(PersistedRecentSearches.class, "recent-searches");
 
   private List<SimpleSearch> recentSearches = new ArrayList<>();
@@ -35,7 +35,7 @@ public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearc
 
   @Override
   protected PersistenceManager<PersistedRecentSearches> getPersistenceManager() {
-    return PERSISTENCE_MANAGER;
+    return persistenceManager;
   }
 
   @Override
@@ -91,6 +91,13 @@ public class SimpleSearchManager extends PersistableFeature<PersistedRecentSearc
     SimpleSearch search = new SimpleSearch(criteria, getLanguage(ic), null, null, null);
     recordSearch(ic, search);
     return response.setSuccess(search.getName());
+  }
+
+  // Remove all simple searches.
+  public synchronized void clearSearches(InvocationContext ic) {
+    refresh(ic);
+    recentSearches.clear();
+    update(ic);
   }
 
   private void recordSearch(InvocationContext ic, SimpleSearch newSearch) {

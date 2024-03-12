@@ -1,19 +1,14 @@
-/* This file is where css selectors for the component go.
-   There will be hard coded properties and properties controlled by variables, for example
+/*! Copyright (c) 2020, 2024, Oracle and/or its affiliates. All rights reserved. */
 
-   cfe-property-list-editor .cfe-property-list-editor-value-text {
-   color: var(--cfe-property-list-editor-value-text-color);
-   display: inline-block;
-	 }
-*/
+:root {
+	--cfe-property-list-editor-width: 40.625rem;
+	--cfe-property-list-editor-header-font-size: .92em;
+	--cfe-property-list-editor-cell-font-size: 1em;
+	--cfe-property-list-editor-resize: both;
+}
 
 cfe-property-list-editor:not(.oj-complete){
 	visibility: hidden;
-}
-
-cfe-property-list-editor{
-	min-height: 50px;
-	width: 50px;
 }
 
 .cfe-model-properties-table {
@@ -59,12 +54,32 @@ cfe-property-list-editor{
 	margin-top: 0;
 }
 
-.oj-button {
-	margin-left: 0.25em;
+oj-table[id="properties-table"] th.cfe-table-add-header > oj-button.oj-button .oj-button-icon
+{
+	font-size: 1.2em;
 }
 
 #properties-table-container {
 	overflow: auto;
-	resize: both;
-	width: 40.625rem;
+	resize: var(--cfe-property-list-editor-resize);
+	width: var(--cfe-property-list-editor-width);
+}
+
+oj-table[id="properties-table"] > div.oj-table-scroller > table > tbody > tr
+{
+	font-size: var(--cfe-property-list-editor-cell-font-size);
+}
+
+oj-table[id="properties-table"] .oj-table-column-header-cell {
+	background-color: inherit;
+	font-size: var(--cfe-property-list-editor-header-font-size);
+	font-weight: var(--oj-collection-header-font-weight);
+	padding: 0;
+	height: var(--oj-collection-list-row-height);
+	vertical-align: middle;
+	float: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-align: start;
+	box-sizing: border-box;
 }

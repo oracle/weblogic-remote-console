@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -35,7 +35,7 @@ class RunningServerRuntimeMBeanYamlReader extends CombinedServerRuntimeMBeanYaml
     // Get just the delegated running server nodes
     NavTreeDefSource runningSource = super.getNavTreeDefSource(type);
     // Get just the delegated non-server nodes
-    NavTreeDefSource notRunningSource = getYamlReader().getNavTreeDefSource("NotRunningServerRuntimeMBean");
+    NavTreeDefSource notRunningSource = getYamlReader().getNavTreeDefSource("UnreachableServerRuntimeMBean");
     if (runningSource == null && notRunningSource == null) {
       // no nav tree nodes
       return null;

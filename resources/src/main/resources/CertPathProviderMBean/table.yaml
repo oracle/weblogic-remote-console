@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>A Certification Path provider completes and validates certificate
@@ -9,10 +9,21 @@ introductionHTML: >
   of these checks fail, the chain is not valid. The provider optionally
   checks the certificate chain's basic constraints.</p>
 
+customizePageDefMethod: weblogic.remoteconsole.customizers.ProviderMBeanCustomizer.customizeTableDef
+
 displayedColumns:
 - name: "Name"
 - name: "Description"
 - name: "Version"
+actions:
+- name: moveDown
+  rows: one
+  requiredCapabilities:
+  - SecurityProviderReordering
+- name: moveUp
+  rows: one
+  requiredCapabilities:
+  - SecurityProviderReordering
 helpTopics:
 - label: "Auditing Providers "
   href: "devsp/aud.html"

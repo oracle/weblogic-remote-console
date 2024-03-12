@@ -22,6 +22,11 @@ properties:
   - value: Unhealthy
   - value: Overloaded
   - value: Unknown
+- name: TestResults
+  getMethod: weblogic.remoteconsole.customizers.JDBCDataSourceRuntimeMBeanCustomizer.getTestResults
+  multiLineString: true
+  presentation:
+    width: xxl
 
 # Note - the WLS console hides the actions of UCP data sources.
 # Also, it calls DataSourceRuntimeMBean.isOperationAllowed to

@@ -41,6 +41,13 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
   private PageActionPollingDefImpl pollingDefImpl;
 
   static PageActionDefImpl create(PageDefImpl pageDefImpl, PageActionDefSource pageActionDefSource) {
+    boolean supported =
+      pageDefImpl.getPageRepoDefImpl().getBeanRepoDefImpl().supportsCapabilities(
+        pageActionDefSource.getRequiredCapabilities()
+      );
+    if (!supported) {
+      return null;
+    }
     if (!pageActionDefSource.getActions().isEmpty()) {
       // This is just a group of actions.  We have a label, but no underlying bean action.
       // Make sure the type doesn't have an action that matches the group name

@@ -1,0 +1,65 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Manages this SAML 2.0 Web Single Sign-on Identity Provider Partner's General Properties.</p>
+  <p>Its parameters can also be accessed programmatically via Java interfaces. See Related Topics.</p>
+
+sections:
+- title: "Overview"
+  properties:
+  - name: "Name"
+  - name: "Description"
+  - name: "Enabled"
+- title: "Authentication Requests"
+  properties:
+  - name: IdentityProviderNameMapperClassname
+  - name: IssuerURI
+    writable: never
+  - name: VirtualUserEnabled
+  - name: RedirectURIs
+  - name: ProcessAttributes
+- title: "Signing"
+  properties:
+  - name: WantAuthnRequestsSigned
+    writable: never
+  - name: WantArtifactRequestSigned
+- title: "Transport"
+  properties:
+  - name: ArtifactBindingUsePOSTMethod
+  - name: ArtifactBindingPostForm
+  - name: PostBindingPostForm
+  - name: ClientUsername
+  - name: ClientPassword
+
+helpTopics:
+- label: "Configuring a Service Provider Site for SAML 2.0 Single Sign-On"
+  href: "secmg/saml20.html#SECMG297"
+  type: "edocs"
+- label: "Configuring the SAML Authentication Provider"
+  href: "secmg/saml_atn.html"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring Single Sign-On with Web Browsers and HTTP Clients"
+  href: "secmg/saml.html"
+  type: "edocs"
+- label: "Configuring SAML 2.0 Services"
+  href: "secmg/saml20.html"
+  type: "edocs"
+- label: "API description of com.bea.security.saml2.providers.registry.Partner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/Partner.html"
+  type: "edocs"
+- label: "API description of com.bea.security.saml2.providers.registry.IdPPartner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/IdPPartner.html"
+  type: "edocs"
+- label: "API description of com.bea.security.saml2.providers.registry.WebSSOIdPPartner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/WebSSOIdPPartner.html"
+  type: "edocs"
+- label: "API description of com.bea.security.saml2.providers.registry.WebSSOPartner interface interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/WebSSOPartner.html"
+  type: "edocs"
+- label: "API description of com.bea.security.saml2.providers.registry.BindingClientPartner interface"
+  href: "wlapi/com/bea/security/saml2/providers/registry/BindingClientPartner.html"
+  type: "edocs"

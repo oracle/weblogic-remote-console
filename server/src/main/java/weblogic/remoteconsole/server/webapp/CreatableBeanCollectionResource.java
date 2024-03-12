@@ -13,6 +13,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 /**
  * Handles JAXRS methods for a creatable collection of beans.
  */
@@ -66,9 +69,30 @@ public class CreatableBeanCollectionResource extends BeanResource {
     @QueryParam("actionForm") @DefaultValue("") String actionForm,
     JsonObject requestBody
   ) {
+    return internalPost(action, actionForm, requestBody, null);
+  }
+
+  @POST
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
+  @Produces(MediaType.APPLICATION_JSON)
+  public javax.ws.rs.core.Response post(
+    @QueryParam("action") @DefaultValue(CREATE) String action,
+    @QueryParam("actionForm") @DefaultValue("") String actionForm,
+    @FormDataParam("requestBody") JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
+    return internalPost(action, actionForm, requestBody, parts);
+  }
+
+  protected Response internalPost(
+    String action,
+    String actionForm,
+    JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
     if (CREATE.equals(action)) {
       setCreateFormPagePath();
-      return createCollectionChild(requestBody);
+      return createCollectionChild(requestBody, parts);
     }
     setTablePagePath();
     if (CUSTOMIZE_TABLE.equals(action)) {
@@ -77,7 +101,15 @@ public class CreatableBeanCollectionResource extends BeanResource {
     if (INPUT_FORM.equals(actionForm)) {
       return getActionInputForm(action, requestBody);
     }
-    return invokeAction(action, requestBody);
+    return invokeAction(action, requestBody, parts);
+  }
+
+  protected Response createCollectionChild(JsonObject requestBody, FormDataMultiPart parts) {
+    if (parts == null) {
+      return createCollectionChild(requestBody);
+    } else {
+      return CreateHelper.create(getInvocationContext(), requestBody, parts);
+    }
   }
 
   protected Response createCollectionChild(JsonObject requestBody) {

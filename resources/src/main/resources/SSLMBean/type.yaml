@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -24,26 +24,8 @@ properties:
 - name: SSLv2HelloEnabled
   offlineName: SsLv2HelloEnabled
 
-- name: HostnameVerifier
-  helpSummaryHTML: >
-    <p>The name of the class that implements the
-    <code>weblogic.security.SSL.HostnameVerifier</code> interface.</p>
-  helpDetailsHTML: >
-    <p>This class verifies whether the connection to the host with the
-    hostname from URL should be allowed. The class is used to prevent
-    man-in-the-middle attacks.
-    The <code>weblogic.security.SSL.HostnameVerifier</code> has a
-    <code>verify()</code> method that WebLogic Server calls on the client
-    during the SSL handshake.</p>
-    <p>The following built-in hostname verifiers are available:</p>
-    <ul>
-    <li><code>weblogic.security.utils.SSLWLSHostnameVerifier$DefaultHostnameVerifier</code> (the default hostname verifier)</li>
-    <li><code>weblogic.security.utils.SSLWLSWildcardHostnameVerifier</code> (the wildcard hostname verifier)</li>
-    </ul>
-  usedIf:
-    property: HostnameVerificationIgnored
-    values:
-    - false
+- name: HostnameVerificationIgnored
+  label: "Disable Hostname Verification"
 
 - name: ClientCertificateEnforced
   usedIf:

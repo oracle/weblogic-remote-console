@@ -1,10 +1,18 @@
-# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
-  <p>This page displays the list of Java EE applications and standalone application modules installed to this domain.</p>
-  <p>Use it to start and stop an application, view the application's intended and current state, and to manage the application's deployment plan.</p>
-  <p>Note: Use 'Application Runtimes', instead of this page, to view the applications' runtime information.</p>
+  <p>This page displays the list of Java EE applications and standalone application modules installed
+  in this domain.<br/>
+  Use it to start and stop an application, view the application's intended and current state, and to manage the application's deployment plan.</p>
+  <p>Modules in the application can have one of the following states:</p>
+    <ul>
+      <li>Unprepared - Indicates that none of the modules in this application are currently prepared or active.</li>
+      <li>Prepared -  Indicates that at least one module in this application is prepared, but none are active.</li>
+      <li>Active - Indicates that at least one module in this application is currently active.</li>
+    </ul>
+  </p>
+  <p>Note: To view an application's runtime information, use the 'Application Runtime Data' page.</p>
 
 displayedColumns:
 - name: "Name"
@@ -30,8 +38,39 @@ actions:
     label: "Force stop now"
   - name: "stopToAdminMode"
     label: "Servicing non-administration requests"
-- name: "redeploy"
-- name: "update"
+
+- name: "updateRedeployActions"
+  label: "Update/Redeploy"
+  rows: "one"
+  actions:
+    - name: "updatePlan"
+      label: "Update with New Deployment Plan"
+      rows: "one"
+      actions:
+        - name: "update"
+          label: "Deployment Plan on Server"
+          rows: "one"
+        - name: "uploadAndUpdate"
+          label: "Deployment Plan on Local Machine"
+          rows: "one"
+          requiredCapabilities:
+            - AppDeploymentRuntimeUploadAndUpdate
+    - name: "updateExisting"
+      label: "Update with Modified Existing Deployment Plan"
+      rows: "one"
+    - name: "redeployApp"
+      label: "Redeploy"
+      rows: "one"
+      actions:
+        - name: "redeploy"
+          label: "Deployment Source and Plan on Server"
+          rows: "one"
+        - name: "uploadAndRedeploy"
+          label: "Deployment Source and Plan on Local Machine"
+          rows: "one"
+          requiredCapabilities:
+            - AppDeploymentRuntimeUploadAndRedeploy
+
 - name: "createPlan"
   rows: "one"
 

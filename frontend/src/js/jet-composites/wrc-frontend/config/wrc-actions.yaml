@@ -1,0 +1,180 @@
+# Copyright 2023, 2024, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+actions:
+  backend:
+    - id: updateRedeployActions
+      iconFile: action-redeploy-icon-blk_24x24
+    - id: updateExisting
+      iconFile: action-redeploy-icon-blk_24x24
+    - id: update
+      iconFile: action-redeploy-icon-blk_24x24
+    - id: uploadAndUpdate
+      iconFile: action-upload-icon-blk_24x24
+    - id: redeploy
+      iconFile: action-redeploy-icon-blk_24x24
+    - id: uploadAndRedeploy
+      iconFile: action-redeploy-icon-blk_24x24
+    - id: start
+      iconFile: action-start-icon-blk_24x24
+    - id: startActions
+      iconFile: action-start-icon-blk_24x24
+    - id: resume
+      iconFile: action-resume-icon-blk_24x24
+    - id: suspendActions
+      iconFile: action-suspend-icon-blk_24x24
+    - id: shutdownActions
+      iconFile: action-stop-icon-blk_24x24
+    - id: restartSSL
+      iconFile: action-restart-icon-blk_24x24
+    - id: stop
+      iconFile: action-stop-icon-blk_24x24
+    - id: stopActions
+      iconFile: action-stop-icon-blk_24x24
+    - id: download
+      iconFile: action-download-icon-blk_24x24
+    - id: shrink
+      iconFile: action-shrink-icon-blk_24x24
+    - id: reset
+      iconFile: action-reset-icon-blk_24x24
+    - id: clearStatementCache
+      iconFile: action-clear-icon-blk_24x24
+    - id: pauseActions
+      iconFile: action-pause-icon-blk_24x24
+    - id: resumeActions
+      iconFile: action-resume-icon-blk_24x24
+    - id: forceCommitSelectedTransactions
+      iconFile: action-commit-icon-blk_24x24
+    - id: forceRollbackSelectedTransactions
+      iconFile: action-rollback-icon-blk_24x24
+    - id: deleteActions
+      iconFile: delete-icon-blk_24x24
+    - id: exportActions
+      iconFile: action-export-3d-icon-blk_24x24
+    - id: importMessages
+      iconFile: action-import-3d-icon-blk_24x24
+    - id: edit
+      iconFile: action-edit-icon-blk_24x24
+    - id: createPlan
+      iconFile: action-create-icon-blk_24x24
+    - id: refreshCache
+      iconFile: action-refresh-icon-blk_24x24
+    - id: purgeCompletedDeploymentProgressObjects
+      iconFile: delete-icon-blk_24x24
+    - id: copy
+      iconFile: action-copy-icon-blk_24x24
+    - id: clearSearches
+      iconFile: action-clear-icon-blk_24x24
+    - id: importTransportLayerClientCert
+      iconFile: action-import-3d-icon-blk_24x24
+    - id: importAssertionSigningCert
+      iconFile: action-import-3d-icon-blk_24x24
+    - id: publishSingleSignOnServices
+      iconFile: action-publish-icon-blk_24x24
+    - id: moveDown
+      iconFile: action-movedown-blk_24x24
+      constraint:
+        type: rowIndex
+        value: last
+    - id: moveUp
+      iconFile: action-moveup-blk_24x24
+      constraint:
+        type: rowIndex
+        value: first
+
+  frontend:
+    - id: new
+      iconFile: new-icon-blk_24x24
+      label: 'New'
+      rows: 'none'
+      helpLabel: 'New'
+      helpSummaryHTML: 'Help summary will be provided in a later release.'
+      detailedHelpHTML: '<p>Detailed help will be provided in a later release.</p>'
+    - id: delete
+      iconFile: action-clear-icon-blk_24x24
+      label: 'Delete'
+      rows: 'one'
+      helpLabel: 'Delete'
+      helpSummaryHTML: 'Help summary will be provided in a later release.'
+      detailedHelpHTML: '<p>Detailed help will be provided in a later release.</p>'
+    - id: addCondition
+      group: policyEditor
+      type: 'buttonMenu'
+      iconFile: policy-add-condition-brn_24x24
+      label: 'Add Condition'
+      launchMenuListener: 'launchAddConditionMenu'
+      menuClickListener: 'addConditionMenuClickListener'
+      rows: 'one'
+      helpLabel: 'Add Condition'
+      helpSummaryHTML: 'The <b>+Add Condition</b> action adds a new condition to the policy.'
+      detailedHelpHTML: '<p>The <b>+Add Condition</b> action adds a new condition to the policy. It is always enabled, because you can always add a new condition to a policy.</p><p>One of two things will happen when you click the <b>+Add Condition</b> button:<ul><li><p>If no conditions are checked, you will see the popup that lets you define the new condition. When you click the "OK" button after completing the fields, the newly added condition will show up as the first policy condition.</p></li><li><p>If a condition was checked when you clicked the <b>+Add Condition</b> button, then you will see a menu with "Add Above Checked Condition..." and "Add Below Checked Condition..." menu items. Choose one of those menu items as the location for the newly created policy condition.</p></li></ul></p>'
+    - id: above
+      group: policyEditor
+      type: 'menuItem'
+      label: 'Add Above Checked Condition...'
+      launchMenuListener: 'launchAddConditionMenu'
+      menuClickListener: 'addConditionMenuClickListener'
+      rows: 'one'
+      helpLabel: 'Add Above Checked Condition'
+      helpSummaryHTML: 'The <b>Add Above Checked Condition</b> action allows you to designate which existing condition you want the new one to be above.'
+      detailedHelpHTML: '<p>The <b>Add Above Checked Condition</b> action allows you to designate which existing condition you want the new one to be above:</p><ol><li><p>Put a check in the checkbox of the condition you want the new condition to appear above, then click the <b>+Add Condition</b> button.</p></li><li><p>Choose the "Add Above Checked Condition" menu item, define the new condition in the popup and then click the "OK" button.</p></li><li><p>The new condition will appear above the one that was checked in the first step.</p></li></ol><div><div style="float: left; margin-right: .325rem;"><img src="js/jet-composites/wrc-frontend/1.0.0/images/doc-note-blk_24x24.png" alt="Note" style="height: 24px; width: 24px; vertical-align: middle;"></div><div>If the "Add Above Checked Condition..." menu item is disabled (i.e. "grayed-out"), it means WLS does not support having a condition in that location.</div></div>'
+    - id: below
+      group: policyEditor
+      type: 'menuItem'
+      label: 'Add Below Checked Condition...'
+      launchMenuListener: 'launchAddConditionMenu'
+      menuClickListener: 'addConditionMenuClickListener'
+      rows: 'one'
+      helpLabel: 'Add Below Checked Condition'
+      helpSummaryHTML: 'The <b>Add Below Checked Condition</b> action allows you to designate which existing condition you want the new one to be below.'
+      detailedHelpHTML: '<p>The <b>Add Below Checked Condition</b> action allows you to designate which existing condition you want the new one to be below:</p><ol><li><p>Put a check in the checkbox of the condition you want the new condition to appear below, then click the <b>+Add Condition</b> button.</p></li><li><p>Choose the "Add Below Checked Condition" menu item, define the new condition in the popup and then click the "OK" button.</p></li><li><p>The new condition will appear below the one that was checked in the first step.</p></li></ol><div><div style="float: left; margin-right: .325rem;"><img src="js/jet-composites/wrc-frontend/1.0.0/images/doc-note-blk_24x24.png" alt="Note" style="height: 24px; width: 24px; vertical-align: middle;"></div><div>If the "Add Below Checked Condition..." menu item is disabled (i.e. "grayed-out"), it means WLS does not support having a condition in that location.</div></div>'
+    - id: combine
+      group: policyEditor
+      type: 'button'
+      iconFile: policy-combine-brn_24x24
+      label: 'Combine'
+      buttonClickListener: 'policyActionMenuClickListener'
+      rows: 'one'
+      helpLabel: 'Combine'
+      helpSummaryHTML: 'The <b>Combine</b> action allows you to create a <i>Combination</i> policy condition, from sibling conditions.'
+      detailedHelpHTML: '<p>The <b>Combine</b> action allows you to create a <i>Combination</i> policy condition, from sibling conditions.</p><div><div style="float: left; margin-right: .325rem;"><img src="js/jet-composites/wrc-frontend/1.0.0/images/doc-note-blk_24x24.png" alt="Note" style="height: 24px; width: 24px; vertical-align: middle;"></div><div>If the "Combine" action is disabled (i.e. "grayed-out"), it means WLS does not support combining the checked conditions or less than 2 conditions are checked.</div></div>'
+    - id: uncombine
+      group: policyEditor
+      type: 'button'
+      iconFile: policy-uncombine-brn_24x24
+      label: 'Uncombine'
+      buttonClickListener: 'policyActionMenuClickListener'
+      rows: 'one'
+      helpLabel: 'Uncombine'
+      helpSummaryHTML: 'The <b>Uncombine</b> action allows you to remove a <i>Combination</i> policy condition.'
+      detailedHelpHTML: '<p>The <b>Uncombine</b> action allows you to remove a <i>Combination</i> policy condition. The conditions inside the removed <i>Combination</i> policy condition remain siblings, but they now appear at the root level or inside a parent <i>Combination</i> policy condition.</p><div><div style="float: left; margin-right: .325rem;"><img src="js/jet-composites/wrc-frontend/1.0.0/images/doc-note-blk_24x24.png" alt="Note" style="height: 24px; width: 24px; vertical-align: middle;"></div><div>If the "Uncombine" action is disabled (i.e. "grayed-out"), it means WLS does not support uncombining the checked conditions.</div></div>'
+    - id: remove
+      group: policyEditor
+      type: 'button'
+      iconFile: policy-delete-brn_24x24
+      label: 'Remove'
+      buttonClickListener: 'policyActionMenuClickListener'
+      rows: 'one'
+      helpLabel: 'Remove'
+      helpSummaryHTML: 'The <b>Remove</b> action allows you to delete a condition from a policy.'
+      detailedHelpHTML: '<p>The <b>Remove</b> action allows you to delete a condition from a policy.</p><div><div style="float: left; margin-right: .325rem;"><img src="js/jet-composites/wrc-frontend/1.0.0/images/doc-note-blk_24x24.png" alt="Note" style="height: 24px; width: 24px; vertical-align: middle;"></div><div>If the "Remove" action is disabled (i.e. "grayed-out"), it means WLS does not support removing the checked condition or more than 1 condition is checked.</div></div>'
+    - id: negate
+      group: policyEditor
+      type: 'button'
+      iconFile: policy-negate-brn_24x24
+      label: 'Negate'
+      buttonClickListener: 'policyActionMenuClickListener'
+      rows: 'one'
+      helpLabel: 'Negate'
+      helpSummaryHTML: 'The <b>Negate</b> action allows you to add/remove the <i>NOT</i> from the condition expression.'
+      detailedHelpHTML: '<p>The <b>Negate</b> action allows you to add/remove the <i>NOT</i> from the condition expression.</p><p>When you put a check in the checkbox for a condition and click the <b>Negate</b> button, one of two things will happen:<ol><li><p>The <i>NOT</i> will be removed from the expression of any checked condition, where it was previously present.</p></li><li><p>The <i>NOT</i> will be added to the expression of any checked condition, where it was previously not present.</p></li></ol><p>In other words, the <i>NOT</i> in the condition expression, will be toggled.</p>'
+    - id: reset
+      group: policyEditor
+      type: 'button'
+      iconFile: policy-reset-brn_24x24
+      label: 'Reset'
+      buttonClickListener: 'policyActionMenuClickListener'
+      rows: 'one'
+      helpLabel: 'Reset'
+      helpSummaryHTML: 'Help summary will be provided in a later release.'
+      detailedHelpHTML: '<p>Detailed help will be provided in a later release.</p>'

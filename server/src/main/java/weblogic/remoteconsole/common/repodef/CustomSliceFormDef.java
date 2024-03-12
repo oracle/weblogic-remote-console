@@ -6,6 +6,8 @@ package weblogic.remoteconsole.common.repodef;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.remoteconsole.common.utils.ListUtils;
+
 /**
  * POJO that implements SliceFormDef.
  * 
@@ -21,7 +23,7 @@ public class CustomSliceFormDef implements SliceFormDef {
 
   public CustomSliceFormDef(SliceFormDef toClone) {
     formDef = new CustomFormDef(toClone);
-    getAdvancedPropertyDefs().addAll(toClone.getAdvancedPropertyDefs());
+    getAdvancedPropertyDefs().addAll(ListUtils.nonNull(toClone.getAdvancedPropertyDefs()));
     setPresentationDef(toClone.getPresentationDef());
   }
 

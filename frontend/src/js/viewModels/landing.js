@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -9,8 +9,45 @@
 /**
  * @module
  */
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojbinddom', 'ojs/ojmodule', 'ojs/ojconveyorbelt'],
-  function(oj, ko, HtmlUtils, DataOperations, DataProviderManager, PerspectiveManager, PerspectiveMemoryManager, PageDefinitionUtils, ViewModelUtils, Runtime, CoreUtils, Logger){
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojmodule-element-utils',
+  'ojs/ojhtmlutils',
+  'wrc-frontend/common/keyup-focuser',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/microservices/perspective/perspective-manager',
+  'wrc-frontend/common/controller',
+  'wrc-frontend/apis/data-operations',
+  'wrc-frontend/microservices/provider-management/data-provider-manager',
+  'wrc-frontend/microservices/page-definition/utils',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/core/utils',
+  'ojs/ojlogger',
+  'ojs/ojknockout',
+  'ojs/ojbinddom',
+  'ojs/ojmodule-element',
+  'ojs/ojmodule',
+  'ojs/ojconveyorbelt'
+],
+  function(
+    oj,
+    ko,
+    ModuleElementUtils,
+    HtmlUtils,
+    KeyUpFocuser,
+    PerspectiveMemoryManager,
+    PerspectiveManager,
+    Controller,
+    DataOperations,
+    DataProviderManager,
+    PageDefinitionUtils,
+    ViewModelUtils,
+    Runtime,
+    CoreUtils,
+    Logger
+  ){
     function LandingPageTemplate(viewParams) {
       const self = this;
 
@@ -58,6 +95,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
 
         let binding = viewParams.signaling.beanTreeChanged.add(newBeanTree => {
           if (newBeanTree.type !== 'home') {
+            if (self.perspectiveMemory.perspective.id !== newBeanTree.type) {
+              self.perspectiveMemory.setExpandableName.call(self.perspectiveMemory, null);
+            }
             switchPerspective(newBeanTree.type);
           }
         });
@@ -74,7 +114,108 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         self.signalBindings = [];
       }.bind(this);
 
+      this.recentPagesModuleConfig = ModuleElementUtils.createConfig({
+        viewPath: `${Controller.getModulePathPrefix()}views/content-area/recent-pages.html`,
+        viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/recent-pages`,
+        params: {
+          parentRouter: viewParams.parentRouter,
+          signaling: viewParams.signaling
+        }
+      });
+
+      this.registerLandingPageCardKeyUpFocuser = (id) => {
+        let result = KeyUpFocuser.getKeyUpCallback(id);
+        
+        if (!result.alreadyRegistered) {
+          const options = {
+            focusItems: self.perspectiveGroups().map(({name}) => name)
+          };
+          
+          result = KeyUpFocuser.register(
+            id,
+            {
+              ArrowUp: {key: 'ArrowUp', selector: '#home', isArray: false},
+              Escape: {key: 'Escape', selector: '#home', isArray: false},
+              ArrowDown: {key: 'ArrowDown', selector: '.landing-page-panel-subtree-card', isArray: true},
+              Tab: {key: 'Tab', action: 'navigate', callback: onKeyUpFocuserNavigateKeyEvent},
+              ArrowRight: {key: 'ArrowRight', action: 'navigate'},
+              ArrowLeft: [
+                {key: 'ArrowLeft', action: 'navigate'},
+                {key: 'Shift+ArrowLeft', selector: '#nav', isArray: false}
+              ],
+              Home: {key: 'Home', action: 'navigate'},
+              End: {key: 'End', action: 'navigate'}
+            },
+            options
+          );
+        }
+        
+        return result.keyUpCallback;
+      };
+      
+      this.registerLandingPageSubtreeCardKeyUpFocuser = (id) => {
+        let result = KeyUpFocuser.getKeyUpCallback(id);
+        
+        if (!result.alreadyRegistered) {
+          const options = {
+            focusItems: self.subtreeItemChildren().map(({label}) => label)
+          };
+          
+          result = KeyUpFocuser.register(
+            id,
+            {
+              Escape: {key: 'Escape', parent: '.landing-page-card', isArray: true},
+              Tab: {key: 'Shift+Tab', action: 'navigate'},
+              ArrowUp: {key: 'ArrowUp', action: 'navigate'},
+              ArrowDown: {key: 'ArrowDown', action: 'navigate'},
+              Enter: {key: 'Enter', action: 'select', callback: onKeyUpFocuserActionSelect}
+            },
+            options
+          );
+        }
+        
+        return result.keyUpCallback;
+      };
+
+      function onKeyUpFocuserNavigateKeyEvent(event, focusRule) {
+        const id = document.activeElement.firstElementChild.id;
+        if (CoreUtils.isNotUndefinedNorNull(id)) {
+          const focusItems = self.perspectiveGroups().map(({name}) => name);
+          if (focusItems.length > 0) {
+            const index = focusItems.indexOf(id);
+            if (index !== -1) {
+              const keyUpFocuserId = `.${event.currentTarget.className}`;
+              KeyUpFocuser.setLastExecutedRule(keyUpFocuserId, {key: event.key, focusIndexValue: index});
+            }
+          }
+        }
+      }
+
+      function onKeyUpFocuserActionSelect(event) {
+        const pathValue = event.currentTarget.firstElementChild.children[0].id;
+        
+        if (CoreUtils.isNotUndefinedNorNull(pathValue)) {
+          const fauxEvent = {currentTarget: {children: [{id: pathValue}]}};
+          self.perspectiveGroupSubtreeItemClickHandler(fauxEvent);
+        }
+      }
+
       function loadPerspectiveGroups() {
+        function landingPageCardsPresent() {
+          return (document.getElementById('landing-page-cards') !== null);
+        }
+
+        function selectFocusIndexValueItem(id, expandableName) {
+          let rule = {focusIndexValue: 0};
+          if (expandableName === null) {
+            KeyUpFocuser.setLastExecutedRule(id, {focusIndexValue: rule.focusIndexValue});
+          }
+          else{
+            rule = KeyUpFocuser.getLastExecutedRule(id);
+          }
+          $(id)[rule.focusIndexValue].focus();
+        }
+        
         if (CoreUtils.isNotUndefinedNorNull(self.dataProvider)) {
           ViewModelUtils.setPreloaderVisibility(true);
           const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(
@@ -114,9 +255,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
                   },
                 };
                 self.landingPanelClickHandler(fauxEvent);
-              } else {
-                setPagePanelSubtreeVisibility(false);
+                selectFocusIndexValueItem('.landing-page-card', expandableName);
               }
+              else if (landingPageCardsPresent()) {
+                setPagePanelSubtreeVisibility(false);
+                selectFocusIndexValueItem('.landing-page-card', expandableName);
+              }
+            })
+            .then(() => {
+              self.recentPagesModuleConfig
+                .then(moduleConfig => {
+                  moduleConfig.viewModel.setBeanTree(beanTree);
+                });
             })
             .catch(response => {
               ViewModelUtils.failureResponseDefaultHandling(response);
@@ -138,10 +288,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         pathModels.forEach((pathModel) => {
           pathModels.forEach((pathModel) => {
             if (pathModel.type === 'group') {
-              groups.push({name: pathModel.name, label: pathModel.label});
+              groups.push({name: pathModel.name, label: pathModel.label, type: pathModel.type});
             }
             else if (pathModel.type === 'collection') {
-              groups.push({name: pathModel.resourceData.label, label: pathModel.resourceData.label, path: pathModel.resourceData.resourceData});
+              groups.push({name: pathModel.resourceData.label, label: pathModel.resourceData.label, path: pathModel.resourceData.resourceData, type: pathModel.type});
             }
           });
         });
@@ -219,10 +369,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
       /**
        *
        * @param {{actionsEnabled: boolean, content?: {view: Array}, iconFile: string, label: string, name: "edit|serverConfig|domainRuntime", type: "configuration|monitoring|view|modeling", navtree: string, changeManager?: string, readOnly?: boolean, provider?: {id: string, name: string}}} beanTree
+       * @param [treeModel = {object}]
        * @returns {Promise<{contents: [{identifier: string, label: string, name: string, type: "configuration|monitoring|view|modeling", selectable: boolean, expanded?: boolean, expandable?: boolean, type: "root|group|collection", children?: [any], contents?: any}]}>}
        * @private
        */
-      function getRootContents(beanTree, treeModel={}) {
+      function getRootContents(beanTree, treeModel = {}) {
         return new Promise((resolve) => {
           if (CoreUtils.isUndefinedOrNull(self.treeModel.contents)) {
             return DataOperations.navtree.refreshNavtreeData(beanTree.navtree, treeModel)
@@ -241,8 +392,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
       }
 
       function expandGroups(beanTree, root) {
+        const rootNode = {name: '', expandable: false};
         root.contents.forEach((content) => {
           content.expanded = true;
+          rootNode.expandable = (content.type === 'collection');
+          if (rootNode.expandable) {
+            rootNode.name = content.name;
+            rootNode['label'] = content.label;
+            rootNode['resourceData'] = {resourceData: content.resourceData.resourceData};
+          }
+          viewParams.signaling.navtreeRootNodeAdded.dispatch(rootNode, beanTree);
         });
 
         return getRootContents(beanTree, root);
@@ -322,7 +481,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
                 return {
                   type: item.type,
                   path: item.resourceData.resourceData,
-//MLW                  label: item.resourceData.label,
                   label: item.label,
                   descriptionHTML: {view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`)}
                 };
@@ -381,6 +539,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
        * @param event
        */
       this.landingPanelClickHandler = function(event) {
+        function getPerspectiveGroupPathValue(groupName, path) {
+          if (CoreUtils.isNotUndefinedNorNull(path)) {
+            return path.value;
+          }
+          else {
+            const item = self.perspectiveGroups().find(item => item.name === groupName);
+            if (CoreUtils.isNotUndefinedNorNull(item)) {
+              return item.path;
+            }
+          }
+        }
+        
+        viewParams.signaling.ancillaryContentItemCleared.dispatch('landing');
         // The id attribute with the perspectiveId assigned
         // to it, is on the first child element of the
         // click event's current target. The click event's
@@ -390,16 +561,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         const value = event.currentTarget.children[0].id;
         if (CoreUtils.isUndefinedOrNull(value)) return;
 
-        let pathValue;
-        const path = event.currentTarget.children[0].attributes['data-path'];
-        if (CoreUtils.isNotUndefinedNorNull(path)) {
-          pathValue = path.value;
-        }
-        else {
-          const item = self.perspectiveGroups().find(item => item.name === value);
-          if (CoreUtils.isNotUndefinedNorNull(item)) pathValue = item.path;
-        }
+        setFocusIndexValue(value);
+        KeyUpFocuser.unregister('.landing-page-panel-subtree-card');
 
+        const path = event.currentTarget.children[0].attributes['data-path'];
+        let pathValue = getPerspectiveGroupPathValue(value, path);
+        
         if (CoreUtils.isNotUndefinedNorNull(pathValue)) {
           const fauxEvent = {currentTarget: {children: [{id: pathValue}]}};
           self.perspectiveGroupSubtreeItemClickHandler(fauxEvent);
@@ -449,6 +616,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
 
       };
 
+      function setFocusIndexValue(groupName) {
+        const focusIndexValue = self.perspectiveGroups().map(item => item.name).indexOf(groupName);
+        KeyUpFocuser.setLastExecutedRule('.landing-page-card', {focusIndexValue: focusIndexValue});
+      }
+      
       // Get subgroups by looking for the non-selectable items from the supplied
       // subtree page items. When non-selectable items exist, expand those subgroups
       // using the navtree and then for each subgroup expanded, replace the original
@@ -510,7 +682,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/data-ope
         self.perspective = PerspectiveManager.getById(perspectiveId);
         viewParams.signaling.perspectiveSelected.dispatch(self.perspective);
         viewParams.signaling.perspectiveChanged.dispatch(self.perspective);
-        document.title = Runtime.getName() + ' - ' + self.perspective.label;
         self.treeModel = {};
         loadPerspectiveGroups();
       }

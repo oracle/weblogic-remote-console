@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.connection;
@@ -49,7 +49,7 @@ import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
-import weblogic.remoteconsole.server.ConsoleBackendRuntime;
+import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.filter.ClientAuthFeature;
 import weblogic.remoteconsole.server.utils.ResponseHelper;
 import weblogic.remoteconsole.server.utils.WebLogicRestClient;
@@ -61,6 +61,7 @@ public class ConnectionManager {
 
   // String constants for handling WebLogic REST response mapping
   private static final String NAME = "name";
+  private static final String ADMIN_SERVER_NAME = "adminServerName";
   private static final String WEBLOGIC_VERSION = "weblogicVersion";
   private static final String RETURN = "return";
   private static final String CONSOLE_BACKEND = "consoleBackend";
@@ -71,9 +72,6 @@ public class ConnectionManager {
   // Placeholder when username is not known from authorization
   public static final String DEFAULT_USERNAME_UNKNOWN = "<unknown>";
 
-  // Default connection timeouts - should match application.yaml
-  public static final long DEFAULT_CONNECT_TIMEOUT_MILLIS = 10000L;
-  public static final long DEFAULT_READ_TIMEOUT_MILLIS = 20000L;
   private static HostnameVerifier defaultHNV = HttpsURLConnection.getDefaultHostnameVerifier();
 
   // Collection of connections
@@ -82,47 +80,16 @@ public class ConnectionManager {
 
   private static long getConnectTimeout() {
     // Setup connection timeouts
-    return ConsoleBackendRuntime.INSTANCE.getConfig()
-      .get("connectTimeoutMillis")
-      .asLong()
-      .orElse(DEFAULT_CONNECT_TIMEOUT_MILLIS);
+    return ConsoleBackendRuntimeConfig.getConnectTimeout();
   }
 
   private static long getReadTimeout() {
-    return ConsoleBackendRuntime.INSTANCE.getConfig()
-      .get("readTimeoutMillis")
-      .asLong()
-      .orElse(DEFAULT_READ_TIMEOUT_MILLIS);
-  }
-
-  public static boolean isSameSiteCookieEnabled() {
-    return ConsoleBackendRuntime.INSTANCE.getConfig()
-        .get("enableSameSiteCookieValue")
-        .asBoolean()
-        .orElse(false);
-  }
-
-  public static String getSameSiteCookieValue() {
-    if (!isSameSiteCookieEnabled()) {
-      return null;
-    }
-    String ret =
-      ConsoleBackendRuntime.INSTANCE.getConfig()
-        .get("valueSameSiteCookie")
-        .asString()
-        .orElse(null);
-    LOGGER.info("SameSite Cookie attribute is enabled using value: " + ret);
-    return ret;
+    return ConsoleBackendRuntimeConfig.getReadTimeout();
   }
 
   private static void maybeDisableHostnameVerification() {
     // Check and disable HNV for the CBE with all connections
-    boolean disableHostnameVerification =
-      ConsoleBackendRuntime.INSTANCE.getConfig()
-        .get("disableHostnameVerification")
-        .asBoolean()
-        .orElse(false);
-    if (disableHostnameVerification) {
+    if (ConsoleBackendRuntimeConfig.isHostnameVerificationDisabled()) {
       LOGGER.info("Hostname verification for SSL/TLS connections has been disabled!");
       HttpsURLConnection.setDefaultHostnameVerifier(
         new HostnameVerifier() {
@@ -199,6 +166,7 @@ public class ConnectionManager {
   Connection newConnection(
     String domainUrl,
     String domainName,
+    String adminServerName,
     WebLogicVersion weblogicVersion,
     String consoleExtensionVersion,
     Set<String> capabilities,
@@ -216,6 +184,7 @@ public class ConnectionManager {
         id,
         domainUrl,
         domainName,
+        adminServerName,
         weblogicVersion,
         consoleExtensionVersion,
         capabilities,
@@ -469,7 +438,6 @@ public class ConnectionManager {
    * @return The connection response; The connection id is available when status is successful
    */
   private ConnectionResponse connect(String domainUrl, String username, Client client, List<Locale> locales) {
-
     // Try to connect to the admin server's domainConfig endpoint to get the domain's name
     // and info about the console rest extension
     ConnectionResponse domainConfigResponse =
@@ -485,6 +453,11 @@ public class ConnectionManager {
     if (domainName == null) {
       LOGGER.info("Unexpected response from WebLogic Domain: No name found!");
       return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Missing name");
+    }
+    String adminServerName = domainConfigEntity.getString(ADMIN_SERVER_NAME, null);
+    if (adminServerName == null) {
+      LOGGER.info("Unexpected response from WebLogic Domain: No adminServer found!");
+      return newConnectionResponse(Status.INTERNAL_SERVER_ERROR, client, "Missing adminServerName");
     }
     String consoleExtensionVersion = getConsoleExtensionVersion(domainConfigEntity);
     Set<String> capabilities = getCapabilities(domainUrl, client, domainConfigEntity);
@@ -550,6 +523,7 @@ public class ConnectionManager {
         newConnection(
           domainUrl,
           domainName,
+          adminServerName,
           weblogicVersion,
           consoleExtensionVersion,
           capabilities,
@@ -602,6 +576,7 @@ public class ConnectionManager {
     Set<String> beanCapabilities = getBeanCapabilities(domainUrl, client, consoleExtensionCapabilities);
     Set<String> capabilities = new HashSet<>(consoleExtensionCapabilities);
     capabilities.addAll(beanCapabilities);
+    capabilities.add("AdminServerConnection");
     return capabilities;
   }
 
@@ -836,6 +811,7 @@ public class ConnectionManager {
   private JsonObject getDomainConfigQuery() {
     BeanQueryBuilder builder = new BeanQueryBuilder();
     builder.addField(NAME);
+    builder.addField(ADMIN_SERVER_NAME);
     BeanQueryBuilder consoleBackendBuilder = builder.getChild(CONSOLE_BACKEND);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_VERSION);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_CAPABILITIES);

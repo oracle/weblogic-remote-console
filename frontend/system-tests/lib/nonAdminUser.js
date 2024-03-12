@@ -10,6 +10,7 @@ const adminUrl = require('../lib/admin').adminUrl;
 const remoteUrl = require('../lib/admin').remoteUrl;
 const user = require('../lib/admin').credential.userName;
 const password = require('../lib/admin').credential.password;
+const domSSLProductDomain = require('../lib/admin').domSSLProductDomain;
 const fs = require('fs')
 
 module.exports = function (driver, file) {
@@ -37,68 +38,74 @@ module.exports = function (driver, file) {
             await driver.findElement(By.css(".formButton")).click();
             await driver.sleep(4800);
         },
+
         //Create users+group role from OLD Admin console page
         createUser: async function (driver, user) {
+            let groupName = "AdminChannelUsers"; //Administrator Users Group
             switch (user) {
                 case 'deployerUser':
-                    groupId = "SecurityUsersUserConfigGroupsPortletavailablegroups4";
+                    groupName = "Deployers";
                     break;
                 case 'monitorUser':
-                    groupId = "SecurityUsersUserConfigGroupsPortletavailablegroups5";
+                    groupName = "Monitors";
                     break;
                 case 'operatorUser':
-                    groupId = "SecurityUsersUserConfigGroupsPortletavailablegroups6";
+                    groupName = "Operators";
                     break;
                 default:
-                    console.log("Problem: user doesn't belong to the group [Deployer, Operator or Monitor] Users!");
+                    console.log("Problem: user doesn't belong to the group [Deployers, Operators or Monitors] Users!");
                     break;
             }
-            console.log("Click Security Realm Link");
-            await driver.findElement(By.xpath("//a[@id=\'linkSecurityRealmRealmTablePage\']")).click()
-            await driver.sleep(1200);
-            console.log("Click at myrealm");
-            await driver.findElement(By.linkText("myrealm")).click();
-            await driver.sleep(1200);
-            console.log("Click Users and Groups tab");
-            await driver.findElement(By.xpath("//*[@id=\'SecurityRealmGeneralBook\']/div/div/ul/li[2]/a/span/span")).click()
-            await driver.sleep(1200);
             console.log("Click New button");
-            await driver.findElement(By.name("New")).click();
+            await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span[1]/img")).click();
             await driver.sleep(1200);
             console.log("Enter name = " + user);
-            await driver.findElement(By.id("SecurityUsersCreateUserPortletuserTable.name")).click();
-            await driver.findElement(By.id("SecurityUsersCreateUserPortletuserTable.name")).sendKeys(user);
+            await driver.findElement(By.xpath("//input[@id='Name|input']")).clear();
+            await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys(user);
             await driver.sleep(1200);
             console.log("Enter Description for " + user + " User");
-            await driver.findElement(By.id("SecurityUsersCreateUserPortletuserTable.description")).click()
-            await driver.findElement(By.id("SecurityUsersCreateUserPortletuserTable.description")).sendKeys("User: "+user);
+            await driver.findElement(By.xpath("//input[@id='Description|input']")).clear();
+            await driver.findElement(By.xpath("//input[@id='Description|input']")).sendKeys("Test User: "+user);
             await driver.sleep(1200);
             console.log("Enter password = " + password);
-            await driver.findElement(By.id("SecurityUsersCreateUserPortletuserTable.password")).click();
-            await driver.findElement(By.id("SecurityUsersCreateUserPortletuserTable.password")).sendKeys(password);
+            await driver.findElement(By.xpath("//input[@id='Password|input']")).clear();
+            await driver.findElement(By.xpath("//input[@id='Password|input']")).sendKeys(password);
             await driver.sleep(1200);
-            console.log("Enter confirm password = " + password);
-            await driver.findElement(By.id("SecurityUsersCreateUserPortletuserTable.confirmPassword")).click()
-            await driver.findElement(By.id("SecurityUsersCreateUserPortletuserTable.confirmPassword")).sendKeys(password);
-
-            console.log("Click Ok button");
-            await driver.findElement(By.css(".lowerButtonBar .formButton:nth-child(1)")).click();
+            console.log("Click Create button");
+            await driver.findElement(
+                By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span[1]/img")).click();
             await driver.sleep(1200);
-            console.log("Click at " + user);
-            await driver.findElement(By.linkText(user)).click();
+            console.log("Click Membership tab ");
+            await driver.findElement(By.xpath("//span[text()='Membership']")).click();
             await driver.sleep(1200);
-            console.log("Click at Group tab");
-            await driver.findElement(By.xpath("//div[@id=\'SecurityUsersUserConfigBook\']/div/div/ul/li[4]/a/span/span")).click();
+            console.log("Check Deployers parent group option ");
+            element = driver.findElement(By.xpath("//oj-option[text()=\'"+groupName+"\']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            if (element.isEnabled()) {
+                await element.click();
+            }
             await driver.sleep(1200);
-            console.log("Select user Group to add ");
-            await driver.findElement(By.id(groupId)).click();
+            console.log("Check Add Chosen button ");
+            await driver.findElement(
+                By.xpath("//oj-button[@id='addToChosen']/button/div/span[1]/span")).click();
             await driver.sleep(1200);
-            console.log("Click at > symbol ");
-            await driver.findElement(By.id("SecurityUsersUserConfigGroupsPortletuserGeneralFormgroupsAdd")).click()
-            await driver.sleep(1200);
-            console.log("Click Save button");
-            await driver.findElement(By.xpath("(//button[@name='Save'])[2]")).click();
+            console.log("Click Save button ");
+            await driver.findElement(
+                By.xpath("//span[text()='Save' and @class='button-label']")).click();
             await driver.sleep(4800);
+        },
+
+        deleteUser: async function(driver, user) {
+            console.log("Click to select Column 1, Row 3 for "+user+" in the oj-table-body");
+            element = driver.findElement(By.xpath("//tbody/tr[3]/td[1]/oj-selector/span/input"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            if (element.isEnabled()) {
+                await element.click();
+            }
+            await driver.sleep(1200);
+            console.log("Click Delete button ");
+            await driver.findElement(By.xpath("//oj-button[@id='delete']")).click();
+            await driver.sleep(1200);
         },
 
         createConnectionProvider: async function(driver, userName) {
@@ -115,19 +122,16 @@ module.exports = function (driver, file) {
             console.log("Click Home Image link");
             await driver.sleep(2400);
             await driver.findElement(By.xpath("//span[starts-with(@id,'home')]")).click();
-            await driver.sleep(2400);
-            //FIXME
-            console.log("Click Home Image link again");
-            await driver.findElement(By.xpath("//span[starts-with(@id,'home')]")).click();
-            await driver.sleep(2400);
+            await driver.sleep(800);
             console.log("Click Config View Tree");
-            await driver.findElement(By.xpath("//div[@id='view-site-panel-card']")).click();
+            await driver.findElement(By.xpath("//div[@id='view-gallery-panel-card']")).click();
             await driver.sleep(2400);
             console.log("Click Environment Navtree link");
             await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
             await driver.sleep(2400);
             console.log("Click Servers Navtree link");
-            await driver.findElement(By.xpath("//span[contains(.,'Servers')]")).click();
+            await driver.findElement(
+                By.xpath("//span[@class='oj-navigationlist-item-label' and text()='Servers']")).click();
             await driver.sleep(1200);
         },
 
@@ -146,12 +150,23 @@ module.exports = function (driver, file) {
             await driver.sleep(1200);
         },
 
-        testUserPrivilegeRole: async function (driver, userName, navImageMenuLink) {
-            await driver.manage().setTimeouts({implicit: 7200})
-            await this.createConnectionProvider(driver,userName);
+        testUserPrivilegeRole: async function (driver, userName, navImageMenuLink,nonSSL=true) {
+            await driver.manage().setTimeouts({implicit: 72000})
+            if (nonSSL) {
+                console.log("Test testUserPrivilegeRole run with Development Server");
+                await this.createConnectionProvider(driver,userName);
+            }
+            else {
+                console.log("Test testUserPrivilegeRole run with SSL Production Server");
+                await admin.connectSSLAdminServer(driver,"wdtDomainProject.json",
+                    domSSLProductDomain,userName,password);
+            }
+            await driver.sleep(1200);
             switch (userName.toString()) {
                 case 'monitoruser':
+                case 'monitorUser':
                     //Validate: Monitor user won't see Edit Tree
+                    console.log("Click " +navImageMenuLink+ " .");
                     driver.findElements(By.xpath("//img[@alt=\'" + navImageMenuLink + "\']")).then((elements) => {
                         if (elements.length > 0) {
                             console.log("Test FAIL");
@@ -166,8 +181,9 @@ module.exports = function (driver, file) {
                     console.log("Click App Deployments drop down menu");
                     await driver.findElement(By.xpath("//oj-menu-button/button/div/span[2]")).click();
                     await driver.sleep(1200);
-                    console.log("Select Status Monitoring Tree");
-                    await driver.findElement(By.xpath("//span[contains(.,'Runtime Data - Monitoring Tree')]")).click();
+                    console.log("Select Application Runtime Data - Monitoring Tree");
+                    await driver.findElement(
+                        By.xpath("//span[contains(.,'Application Runtime Data - Monitoring Tree')]")).click();
                     await driver.sleep(1200);
                     driver.findElements(By.xpath("//img[@alt='start']")).then((elements) => {
                         if (elements.length > 0) {
@@ -178,16 +194,16 @@ module.exports = function (driver, file) {
                             return true;
                         }
                     });
-
                     //Validate Monitor users won't see any action buttons to start/stop Servers
                     await this.goToServerPage(driver);
                     console.log("Click Servers drop down menu");
                     await driver.findElement(By.xpath("//oj-menu-button/button/div/span[2]")).click();
                     await driver.sleep(1200);
-                    console.log("Select Status Monitoring Tree");
-                    await driver.findElement(By.xpath("//span[contains(.,\'Runtime Data - Monitoring Tree\')]")).click();
+                    console.log("Select Server States Dashboard - Monitoring Tree");
+                    await driver.findElement(
+                        By.xpath("//span[contains(.,'Server States Dashboard - Monitoring Tree')]")).click();
                     await driver.sleep(1200);
-                    driver.findElements(By.xpath("//img[@alt=\'Start\']")).then((elements) => {
+                    driver.findElements(By.xpath("//img[@alt='Start']")).then((elements) => {
                         if (elements.length > 0) {
                             console.log("Test FAIL");
                             throw new Error("User: " +userName+ " must not see start/stop server button - Validation FAIL");
@@ -198,6 +214,7 @@ module.exports = function (driver, file) {
                     });
                     break;
                 case 'operatoruser':
+                case 'operatorUser':
                     //Validate: Operator user won't see Edit Tree
                     driver.findElements(By.xpath("//img[@alt=\'" + navImageMenuLink + "\']")).then((elements) => {
                         if (elements.length > 0) {
@@ -227,6 +244,7 @@ module.exports = function (driver, file) {
                     });
                     break;
                 case 'deployeruser':
+                case 'deployerUser':
                     //Validate Deployer users won't see any action buttons to start/stop Servers
                     await this.goToServerPage(driver);
                     console.log("Click Servers dop down menu");
@@ -272,31 +290,38 @@ module.exports = function (driver, file) {
                 try {
                     await this.createConnectionProvider(driver,userName);
                     await this.goToAppDeploymentPage(driver, "Edit Tree");
+                    await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree", "DeploymentsChevron",
+                        "App Deployments");
+                    driver.sleep(2400);
                     console.log("Click New button");
                     await driver.findElement(
-                        By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img")).click();
+                        By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
                     await driver.sleep(2400);
                     console.log("Enter App Deployment Name = sample-2");
                     await driver.findElement(By.id("Name|input")).clear();
                     await driver.findElement(By.id("Name|input")).sendKeys("sample-2");
                     await driver.sleep(2400);
                     console.log("Click to choose All available targets");
-                    element = driver.findElement(By.xpath("//oj-button[@id=\'addAllToChosen\']/button/div/span/span"));
+                    element = driver.findElement(By.xpath("//oj-button[@id='addAllToChosen']/button/div/span/span"));
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     element.click();
                     await driver.sleep(2400);
                     console.log("Click Choose File to deploy");
-                    element = driver.findElement(By.xpath("//img[@title=\'Choose File\']"));
+                    element = driver.findElement(By.xpath("//img[@title='Choose File']"));
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                     element.click();
                     await driver.sleep(2400);
                     console.log("Click select " +deployWarFilePath+ " to deploy");
-                    await driver.findElement(By.xpath("//input[@id=\'file-chooser\']")).sendKeys(deployWarFilePath);
+                    await driver.findElement(By.xpath("//input[@id='file-chooser-form']")).sendKeys(deployWarFilePath);
+                    driver.sleep(9600);
+                    console.log("Click Create/Finish button");
+                    await driver.findElement(
+                        By.xpath("//oj-button[@id='[[i18n.buttons.finish.id]]']/button/div/span[1]/img")).click();
                     driver.sleep(2400);
-                    console.log("Click Create button");
-                    await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.finish.id]]\']/button/div/span/img")).click();
-                    driver.sleep(2400);
-                    await admin.commitChanges(driver);
+                    console.log("Click Save button");
+                    await driver.findElement(
+                        By.xpath("//span[@class='button-label' and text()='Save']")).click();
+                    await admin.discardChanges(driver);
                     driver.sleep(2400);
                     console.log("User: "+userName+" was able to deploy and start Application - Validation SUCCEED ");
                 } catch (e) {
@@ -308,6 +333,5 @@ module.exports = function (driver, file) {
                 this.skip();
             }
         },
-
     };
 }

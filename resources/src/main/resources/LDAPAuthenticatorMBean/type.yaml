@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -215,5 +215,6 @@ properties:
   label: Static Group DNs From Member DN Filter
 
 - name: UserDescriptionAttribute
+  useUnlocalizedLegalValuesAsLabels: true
   helpHTML: >
     <p>The brief description of an LDAP user object.</p>

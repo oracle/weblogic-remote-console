@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Oracle and/or its affiliates.
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -7,13 +7,16 @@ introductionHTML: >
 presentation:
   singleColumn: true
 
-properties:
-- name: WLSUser
-- name: IdentityDomain
-- name: RemoteUser
-- name: CreateCredential
-- name: RemotePassword
-  usedIf:
+sections:
+- properties:
+  - name: WLSUser
+  - name: IdentityDomain
+  - name: RemoteUser
+  - name: CreateCredential
+- usedIf:
+    hide: true
     property: CreateCredential
     values:
     - true
+  properties:
+  - name: RemotePassword

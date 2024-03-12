@@ -150,7 +150,6 @@ describe.only('Test Suite: serverAndTemplate_test for Configuration-Servers-And-
                 "DebugBeanTreeHarvesterControl","DebugBeanTreeHarvesterDataCollection","DebugBeanTreeHarvesterResolution",
                 "DebugBeanTreeHarvesterThreading","DebugDiagnosticAccessor");
             await driver.sleep(1200);
-
             //TODO: Management, Messaging, Networking, Persistence and Security
             await server.modifyServerDebugTab(driver,"AdminServer","Transactions",
                 "DebugJTA2PC","DebugJTA2PCStackTrace");
@@ -168,40 +167,38 @@ describe.only('Test Suite: serverAndTemplate_test for Configuration-Servers-And-
         // Validate the Kebab menu action successful by deleted the recently created
         // testCluster-123 and testServer-123 objets
         //
-        it('6. Test Category: GAT/Risk1\n \t Test Scenario: Create Cluster Kebab menu for a Server ',
+        it('7. Test Category: GAT/Risk1\n \t Test Scenario: Create Cluster Kebab menu for a Server ',
             async function() {
                 file = "testServerKebabMenu.png";
                 try {
                     await admin.createNewMBeanObject(driver,"testServer-123",2,"configuration",
                         "Environment","Servers");
-                    await driver.sleep(1200);
-                    console.log("Click  More Action on CLuster menu");
-                    await driver.findElement(By.xpath("(//img[@title='More Actions'])[2]")).click();
                     await driver.sleep(800);
+                    console.log("Click  More Action on CLuster menu");
+                    await driver.findElement(By.xpath("(//a[@id='moreIcon_Cluster'])")).click();
+                    await driver.sleep(1200);
                     console.log("Select Create New Cluster...");
                     await driver.findElement(
-                        By.xpath("//oj-option[@id='moreMenuItem_create_Cluster']")).click();
-                    await driver.sleep(800);
+                        By.xpath("//span[@class='cfe-more-menuitem' and text()='Create New Cluster...'] ")).click();
+                    await driver.sleep(1200);
                     console.log("Enter testCluster-123");
                     await driver.findElement(By.xpath("//input[@id='Name|input']")).click();
                     await driver.findElement(By.xpath("//input[@id='Name|input']")).sendKeys("testCluster-123");
                     await driver.sleep(800);
                     console.log("Click Save button");
                     await driver.findElement(
-                        By.xpath("//oj-button[@id=\'[[i18n.buttons.save.id]]\']/button/div/span/img")).click();
+                        By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span/img")).click();
                     await driver.sleep(800);
                     await admin.commitChanges(driver);
-                    await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Clusters");
-                    await driver.sleep(800);
                     console.log("Click to delete testCluster-123");
-                    await driver.findElement(By.xpath("//span[contains(@id, 'testCluster-123')]")).click();
+                    await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Clusters",0);
+                    await driver.sleep(2400);
+                    await admin.deleteMBeanFromLandingPage(driver,"Clusters","testCluster-123",3);
                     await driver.sleep(800);
-                    await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Servers");
-                    await driver.sleep(800);
-                    console.log("Click to delete testCluster-123");
-                    await driver.findElement(By.xpath("//span[contains(@id, 'testServer-123')]")).click();
-                    await driver.sleep(800);
-                    await admin.commitChanges(driver);
+                    console.log("Click to delete testServer-123");
+                    await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Servers",0);
+                    await driver.sleep(2400);
+                    await admin.deleteMBeanFromLandingPage(driver,"Servers","testServer-123",5);
                     await driver.sleep(800);
                     console.log("TEST PASS ");
                 } catch (e) {

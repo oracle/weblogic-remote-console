@@ -25,103 +25,126 @@ class PersistedDashboardsToDashboards {
   }
 
   // Convert the persisted dashboards into in-memory ones.
-  // Retain cached results for dashboards that haven't  changed.
+  // Retain cached results for dashboards that haven't changed.
   public static Dashboards fromPersistedData(
     InvocationContext ic,
     Dashboards oldDashboards,
-    PersistedDashboards persistedDashboards
+    PersistedDashboards persistedBuiltinDashboards,
+    PersistedDashboards persistedCustomDashboards
   ) {
     Dashboards newDashboards = new Dashboards();
+    addDashboards(ic, oldDashboards, newDashboards, persistedBuiltinDashboards, true);
+    addDashboards(ic, oldDashboards, newDashboards, persistedCustomDashboards, false);
+    return newDashboards;
+  }
+
+  private static void addDashboards(
+    InvocationContext ic,
+    Dashboards oldDashboards,
+    Dashboards newDashboards,
+    PersistedDashboards persistedDashboards,
+    boolean builtin
+  ) {
     if (persistedDashboards != null) {
       for (Map.Entry<String,PersistedDashboard> entry : persistedDashboards.getDashboards().entrySet()) {
         String dashboardName = entry.getKey();
         PersistedDashboard persistedDashboard = entry.getValue();
-        if (persistedDashboard.isCustomFilteringDashboard()) {
-          CustomFilteringDashboard newDashboard =
-            customFilteringDashboardFromPersistedData(
-              ic,
-              dashboardName,
-              persistedDashboard.asCustomFilteringDashboard()
-            );
-          if (newDashboard != null) {
-            Dashboard oldDash =
-              oldDashboards.getDashboards().get(dashboardName);
-            CustomFilteringDashboard oldDashboard =
-              (oldDash != null) ? oldDash.asCustomFilteringDashboard() : null;
-            if (reuseCachedResults(oldDashboard, newDashboard)) {
-              // The dashboard previously existed.  Reuse its cached results
-              // but use the newest list of unsupported properties.
-              newDashboard =
-                new CustomFilteringDashboard(
-                  newDashboard.getConfig(),
-                  oldDashboard.getResults(),
-                  oldDashboard.getResultsDate(),
-                  oldDashboard.getExpirationDate()
-                );
+        boolean unsupported = true;
+        if (!newDashboards.getDashboards().containsKey(dashboardName)) {
+          if (persistedDashboard.isFilteringDashboard()) {
+            FilteringDashboard newDashboard =
+              filteringDashboardFromPersistedData(
+                ic,
+                builtin,
+                dashboardName,
+                persistedDashboard.asFilteringDashboard()
+              );
+            if (newDashboard != null) {
+              Dashboard oldDash =
+                oldDashboards.getDashboards().get(dashboardName);
+              FilteringDashboard oldDashboard =
+                (oldDash != null) ? oldDash.asFilteringDashboard() : null;
+              if (reuseCachedResults(oldDashboard, newDashboard)) {
+                // The dashboard previously existed.  Reuse its cached results
+                // but use the newest list of unsupported properties.
+                newDashboard =
+                  newDashboard.clone(
+                    oldDashboard.getResults(),
+                    oldDashboard.getResultsDate(),
+                    oldDashboard.getExpirationDate()
+                  );
+              }
+              newDashboards.getDashboards().put(dashboardName, newDashboard);
+              unsupported = false;
             }
-            newDashboards.getDashboards().put(dashboardName, newDashboard);
-          } else {
-            newDashboards.getUnsupportedDashboards().put(dashboardName, persistedDashboard);
           }
-        } else {
-          throw new AssertionError("Unsupported dashboard " + persistedDashboard.getClass());
+        }
+        if (unsupported) {
+          newDashboards.getUnsupportedDashboards().put(dashboardName, persistedDashboard);
         }
       }
     }
-    return newDashboards;
   }
 
-  // Convert a persisted custom filtering dashboard to an in-memory dashboard
+  // Convert a persisted filtering dashboard to an in-memory dashboard
   // (without any cached results)
-  private static CustomFilteringDashboard customFilteringDashboardFromPersistedData(
+  private static FilteringDashboard filteringDashboardFromPersistedData(
     InvocationContext ic,
+    boolean builtin,
     String dashboardName,
-    PersistedCustomFilteringDashboard persistedDashboard
+    PersistedFilteringDashboard persistedDashboard
   ) {
     BeanTreePath btpTemplate = getBeanTreePathTemplate(ic, persistedDashboard);
     if (btpTemplate == null) {
       return null;
     }
-    Response<CustomFilteringDashboardConfig> configResponse =
-      CustomFilteringDashboardConfigManager.createDefaultConfig(ic, btpTemplate, dashboardName);
+    Response<FilteringDashboardConfig> configResponse =
+      FilteringDashboardConfigManager.createDefaultConfig(
+        ic,
+        btpTemplate,
+        dashboardName,
+        persistedDashboard.getDescription(),
+        persistedDashboard.getDefaultColumns()
+      );
     if (!configResponse.isSuccess()) {
-      // The btpTemplate doesn't support custom filtering dashboards in this version of WebLogic.
+      // The btpTemplate doesn't support filtering dashboards in this version of WebLogic.
       return null;
     }
-    CustomFilteringDashboardConfig defaultConfig = configResponse.getResults();
-    return
-      new CustomFilteringDashboard(
-        new CustomFilteringDashboardConfig(
-          defaultConfig.getDashboardDef(),
-          defaultConfig.getName(),
-          computePath(defaultConfig, persistedDashboard),
-          computeProperties(defaultConfig, persistedDashboard),
-          computeUnsupportedPropertyFilters(defaultConfig, persistedDashboard)
-        )
+    FilteringDashboardConfig defaultConfig = configResponse.getResults();
+    FilteringDashboardConfig config =
+      new FilteringDashboardConfig(
+        defaultConfig.getDashboardDef(),
+        defaultConfig.getName(),
+        defaultConfig.getDescription(),
+        defaultConfig.getDefaultColumns(),
+        computePath(defaultConfig, persistedDashboard),
+        computeProperties(defaultConfig, persistedDashboard),
+        computeUnsupportedPropertyFilters(defaultConfig, persistedDashboard)
       );
+    return (builtin) ? new BuiltinFilteringDashboard(config) : new CustomFilteringDashboard(config);
   }
 
   // Compute the in-memory dashboard's list of path segments
   // by starting with the default list of unfiltered segments
   // for the btpTemplate then overlaying any persisted
   // bean filters.
-  private static List<CustomFilteringDashboardPathSegment> computePath(
-    CustomFilteringDashboardConfig defaultConfig,
-    PersistedCustomFilteringDashboard persistedDashboard
+  private static List<FilteringDashboardPathSegment> computePath(
+    FilteringDashboardConfig defaultConfig,
+    PersistedFilteringDashboard persistedDashboard
   ) {
-    List<CustomFilteringDashboardPathSegment> path = new ArrayList<>();
-    for (CustomFilteringDashboardPathSegment defaultSegment : defaultConfig.getPath()) {
+    List<FilteringDashboardPathSegment> path = new ArrayList<>();
+    for (FilteringDashboardPathSegment defaultSegment : defaultConfig.getPath()) {
       path.add(computeSegment(defaultSegment, persistedDashboard));
     }
     return path;
   }
 
-  // Compute an in-memory path segment of a custom filtering dashboard
+  // Compute an in-memory path segment of a filtering dashboard
   // by starting with its default unfiltered segment then overlaying
   // its persisted bean filter if there is one.
-  private static CustomFilteringDashboardPathSegment computeSegment(
-    CustomFilteringDashboardPathSegment defaultSegment,
-    PersistedCustomFilteringDashboard persistedDashboard
+  private static FilteringDashboardPathSegment computeSegment(
+    FilteringDashboardPathSegment defaultSegment,
+    PersistedFilteringDashboard persistedDashboard
   ) {
     String beanKey =
       defaultSegment
@@ -135,46 +158,46 @@ class PersistedDashboardsToDashboards {
     if (filter == null) {
       return defaultSegment;
     }
-    CustomFilteringDashboardPathSegmentDef segmentDef = defaultSegment.getSegmentDef();
+    FilteringDashboardPathSegmentDef segmentDef = defaultSegment.getSegmentDef();
     String criteria = null;
     String value = filter.getEquals();
     if (value  != null) {
-      criteria = CustomFilteringDashboardPathSegmentDef.CRITERIA_EQUALS;
+      criteria = FilteringDashboardPathSegmentDef.CRITERIA_EQUALS;
     }
     if (criteria == null) {
       value = filter.getContains();
       if (value != null) {
-        criteria = CustomFilteringDashboardPathSegmentDef.CRITERIA_CONTAINS;
+        criteria = FilteringDashboardPathSegmentDef.CRITERIA_CONTAINS;
       }
     }
     if (criteria == null) {
       throw new AssertionError(beanKey + " must specify == or contains");
     }
-    return new CustomFilteringDashboardPathSegment(segmentDef, criteria, value);
+    return new FilteringDashboardPathSegment(segmentDef, criteria, value);
   }
 
-  // Compute an in-memory custom filtering dashboard's list of properties by
+  // Compute an in-memory filtering dashboard's list of properties by
   // starting with the default unfiltered ones for the
   // btpTemplate then overlaying the persisted property filters.
-  public static List<CustomFilteringDashboardProperty> computeProperties(
-    CustomFilteringDashboardConfig defaultConfig,
-    PersistedCustomFilteringDashboard persistedDashboard
+  public static List<FilteringDashboardProperty> computeProperties(
+    FilteringDashboardConfig defaultConfig,
+    PersistedFilteringDashboard persistedDashboard
   ) {
-    List<CustomFilteringDashboardProperty> properties = new ArrayList<>();
-    for (CustomFilteringDashboardProperty defaultProperty : defaultConfig.getProperties()) {
+    List<FilteringDashboardProperty> properties = new ArrayList<>();
+    for (FilteringDashboardProperty defaultProperty : defaultConfig.getProperties()) {
       properties.add(computeProperty(defaultProperty, persistedDashboard));
     }
     return properties;
   }
 
-  // Compute an in-memory property of a custom filtering dashboard by
+  // Compute an in-memory property of a filtering dashboard by
   // starting with the default unfiltered one for the btpTemplate then
   // overlaying the persisted property filter if there is one.
-  private static CustomFilteringDashboardProperty computeProperty(
-    CustomFilteringDashboardProperty defaultProperty,
-    PersistedCustomFilteringDashboard persistedDashboard
+  private static FilteringDashboardProperty computeProperty(
+    FilteringDashboardProperty defaultProperty,
+    PersistedFilteringDashboard persistedDashboard
   ) {
-    CustomFilteringDashboardPropertyDef propertyDef = defaultProperty.getPropertyDef();
+    FilteringDashboardPropertyDef propertyDef = defaultProperty.getPropertyDef();
     PersistedPropertyFilter filter =
       persistedDashboard.getPropertyFilters().get(
         getPropertyPath(propertyDef)
@@ -208,22 +231,22 @@ class PersistedDashboardsToDashboards {
     return computeGenericProperty(propertyDef, filter);
   }
 
-  // Compute an in-memory string property of a custom filtering dashboard by
+  // Compute an in-memory string property of a filtering dashboard by
   // starting with its default unfiltered one then overlaying its persisted filter.
-  private static CustomFilteringDashboardProperty computeStringProperty(
+  private static FilteringDashboardProperty computeStringProperty(
     boolean isEnum,
-    CustomFilteringDashboardPropertyDef propertyDef,
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     String criteria = null;
     Object value = filter.getEquals();
     if (value != null) {
-      criteria = CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS;
+      criteria = FilteringDashboardPropertyDef.CRITERIA_EQUALS;
     }
     if (criteria == null) {
       value = filter.getNotEquals();
       if (value != null) {
-        criteria = CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS;
+        criteria = FilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS;
       }
     }
     if (isEnum) {
@@ -234,7 +257,7 @@ class PersistedDashboardsToDashboards {
       if (criteria == null) {
         value = filter.getContains();
         if (value != null) {
-          criteria = CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS;
+          criteria = FilteringDashboardPropertyDef.CRITERIA_CONTAINS;
         }
       }
       if (criteria == null) {
@@ -242,17 +265,17 @@ class PersistedDashboardsToDashboards {
       }
     }
     return
-      new CustomFilteringDashboardProperty(
+      new FilteringDashboardProperty(
         propertyDef,
         criteria,
         new StringValue(value.toString())
       );
   }
 
-  // Compute an in-memory int property of a custom filtering dashboard by
+  // Compute an in-memory int property of a filtering dashboard by
   // starting with its default unfiltered one then overlaying its persisted filter.
-  private static CustomFilteringDashboardProperty computeIntProperty(
-    CustomFilteringDashboardPropertyDef propertyDef,
+  private static FilteringDashboardProperty computeIntProperty(
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     boolean isEnum = !propertyDef.getSourcePropertyDef().getLegalValueDefs().isEmpty();
@@ -260,7 +283,7 @@ class PersistedDashboardsToDashboards {
     Object value = getNumberPropertyValue(propertyDef, filter);
     try {
       return
-        new CustomFilteringDashboardProperty(
+        new FilteringDashboardProperty(
           propertyDef,
           criteria,
           new IntValue(Integer.parseInt(value.toString()))
@@ -270,17 +293,17 @@ class PersistedDashboardsToDashboards {
     }
   }
 
-  // Compute an in-memory long property of a custom filtering dashboard by
+  // Compute an in-memory long property of a filtering dashboard by
   // starting with its default unfiltered one then overlaying its persisted filter.
-  private static CustomFilteringDashboardProperty computeLongProperty(
-    CustomFilteringDashboardPropertyDef propertyDef,
+  private static FilteringDashboardProperty computeLongProperty(
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     String criteria = getNumberPropertyCriteria(propertyDef, filter);
     Object value = getNumberPropertyValue(propertyDef, filter);
     try {
       return
-        new CustomFilteringDashboardProperty(
+        new FilteringDashboardProperty(
           propertyDef,
           criteria,
           new LongValue(Long.parseLong(value.toString()))
@@ -290,17 +313,17 @@ class PersistedDashboardsToDashboards {
     }
   }
 
-  // Compute an in-memory double property of a custom filtering dashboard by
+  // Compute an in-memory double property of a filtering dashboard by
   // starting with its default unfiltered one then overlaying its persisted filter.
-  private static CustomFilteringDashboardProperty computeDoubleProperty(
-    CustomFilteringDashboardPropertyDef propertyDef,
+  private static FilteringDashboardProperty computeDoubleProperty(
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     String criteria = getNumberPropertyCriteria(propertyDef, filter);
     Object value = getNumberPropertyValue(propertyDef, filter);
     try {
       return
-        new CustomFilteringDashboardProperty(
+        new FilteringDashboardProperty(
           propertyDef,
           criteria,
           new DoubleValue(Double.parseDouble(value.toString()))
@@ -310,32 +333,32 @@ class PersistedDashboardsToDashboards {
     }
   }
 
-  // Compute an in-memory date property of a custom filtering dashboard by
+  // Compute an in-memory date property of a filtering dashboard by
   // starting with its default unfiltered one then overlaying its persisted filter.
-  private static CustomFilteringDashboardProperty computeDateProperty(
-    CustomFilteringDashboardPropertyDef propertyDef,
+  private static FilteringDashboardProperty computeDateProperty(
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     String criteria = getNumberPropertyCriteria(propertyDef, filter);
     Object value = getNumberPropertyValue(propertyDef, filter);
     return
-      new CustomFilteringDashboardProperty(
+      new FilteringDashboardProperty(
         propertyDef,
         criteria,
         new DateValue(getDateFromPersistedValue(propertyDef, value))
       );
   }
 
-  // Compute an in-memory date as long property of a custom filtering dashboard by
+  // Compute an in-memory date as long property of a filtering dashboard by
   // starting with its default unfiltered one then overlaying its persisted filter.
-  private static CustomFilteringDashboardProperty computeDateAsLongProperty(
-    CustomFilteringDashboardPropertyDef propertyDef,
+  private static FilteringDashboardProperty computeDateAsLongProperty(
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     String criteria = getNumberPropertyCriteria(propertyDef, filter);
     Object value = getNumberPropertyValue(propertyDef, filter);
     return
-      new CustomFilteringDashboardProperty(
+      new FilteringDashboardProperty(
         propertyDef,
         criteria,
         new DateAsLongValue(getDateFromPersistedValue(propertyDef, value))
@@ -343,7 +366,7 @@ class PersistedDashboardsToDashboards {
   }
 
   private static Date getDateFromPersistedValue(
-    CustomFilteringDashboardPropertyDef propertyDef,
+    FilteringDashboardPropertyDef propertyDef,
     Object value
   ) {
     try {
@@ -363,7 +386,7 @@ class PersistedDashboardsToDashboards {
 
   // Get the in-memory criteria for a persisted non-enum number property filter
   private static String getNumberPropertyCriteria(
-    CustomFilteringDashboardPropertyDef propertyDef,
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     return getNumberPropertyCriteria(false, propertyDef, filter);
@@ -372,29 +395,29 @@ class PersistedDashboardsToDashboards {
   // Get the in-memory criteria for a persisted number property filter
   private static String getNumberPropertyCriteria(
     boolean isEnum,
-    CustomFilteringDashboardPropertyDef propertyDef,
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     if (filter.getEquals() != null) {
-      return CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS;
+      return FilteringDashboardPropertyDef.CRITERIA_EQUALS;
     }
     if (filter.getNotEquals() != null) {
-      return CustomFilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS;
+      return FilteringDashboardPropertyDef.CRITERIA_NOT_EQUALS;
     }
     if (isEnum) {
       throw new AssertionError(getPropertyPath(propertyDef) + " must specify == or !=");
     } else {
       if (filter.getLessThan() != null) {
-        return CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN;
+        return FilteringDashboardPropertyDef.CRITERIA_LESS_THAN;
       }
       if (filter.getLessThanOrEquals() != null) {
-        return CustomFilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS;
+        return FilteringDashboardPropertyDef.CRITERIA_LESS_THAN_OR_EQUALS;
       }
       if (filter.getGreaterThan() != null) {
-        return CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN;
+        return FilteringDashboardPropertyDef.CRITERIA_GREATER_THAN;
       }
       if (filter.getGreaterThanOrEquals() != null) {
-        return CustomFilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS;
+        return FilteringDashboardPropertyDef.CRITERIA_GREATER_THAN_OR_EQUALS;
       }
       throw new AssertionError(getPropertyPath(propertyDef) + " must specify ==, !=, <, <=, > or >=");
     }
@@ -402,7 +425,7 @@ class PersistedDashboardsToDashboards {
 
   // Get the in-memory value for a persisted number property filter
   private static Object getNumberPropertyValue(
-    CustomFilteringDashboardPropertyDef propertyDef,
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     Object value = filter.getEquals();
@@ -427,10 +450,10 @@ class PersistedDashboardsToDashboards {
     return value;
   }
 
-  // Compute an in-memory boolean property of a custom filtering dashboard by
+  // Compute an in-memory boolean property of a filtering dashboard by
   // starting with its default unfiltered one then overlaying its persisted filter.
-  private static CustomFilteringDashboardProperty computeBooleanProperty(
-    CustomFilteringDashboardPropertyDef propertyDef,
+  private static FilteringDashboardProperty computeBooleanProperty(
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     Object value = filter.getEquals();
@@ -447,40 +470,40 @@ class PersistedDashboardsToDashboards {
       throw new AssertionError(getPropertyPath(propertyDef) + " must be true or false: " + value);
     }
     return
-      new CustomFilteringDashboardProperty(
+      new FilteringDashboardProperty(
         propertyDef,
-        CustomFilteringDashboardPropertyDef.CRITERIA_EQUALS,
+        FilteringDashboardPropertyDef.CRITERIA_EQUALS,
         boolVal
       );
   }
 
-  // Compute an in-memory generic property of a custom filtering dashboard by
+  // Compute an in-memory generic property of a filtering dashboard by
   // starting with its default unfiltered one then overlaying its persisted filter.
-  private static CustomFilteringDashboardProperty computeGenericProperty(
-    CustomFilteringDashboardPropertyDef propertyDef,
+  private static FilteringDashboardProperty computeGenericProperty(
+    FilteringDashboardPropertyDef propertyDef,
     PersistedPropertyFilter filter
   ) {
     String value = filter.getContains();
     if (value != null) {
       return
-        new CustomFilteringDashboardProperty(
+        new FilteringDashboardProperty(
           propertyDef,
-          CustomFilteringDashboardPropertyDef.CRITERIA_CONTAINS,
+          FilteringDashboardPropertyDef.CRITERIA_CONTAINS,
           new StringValue(value)
         );
     }
     throw new AssertionError(getPropertyPath(propertyDef) + " must specify contains");
   }
 
-  // Get a custom filtering dashboard's property's dot separated path
-  private static String getPropertyPath(CustomFilteringDashboardPropertyDef propertyDef) {
+  // Get a filtering dashboard's property's dot separated path
+  private static String getPropertyPath(FilteringDashboardPropertyDef propertyDef) {
     return propertyDef.getSourcePropertyDef().getPropertyPath().getDotSeparatedPath();
   }
 
-  // Return the persisted properties of a persisted custom filtering dashboard that its btpTemplate doesn't support.
+  // Return the persisted properties of a persisted filtering dashboard that its btpTemplate doesn't support.
   public static Map<String,PersistedPropertyFilter> computeUnsupportedPropertyFilters(
-    CustomFilteringDashboardConfig defaultConfig,
-    PersistedCustomFilteringDashboard persistedDashboard
+    FilteringDashboardConfig defaultConfig,
+    PersistedFilteringDashboard persistedDashboard
   ) {
     Map<String,PersistedPropertyFilter> unsupported = new HashMap<>();
     for (Map.Entry<String,PersistedPropertyFilter> entry :
@@ -494,8 +517,8 @@ class PersistedDashboardsToDashboards {
   }
 
   // Return whether the current version of WebLogic for this btpTemplate supports a property
-  private static boolean isSupportedProperty(String property, CustomFilteringDashboardConfig defaultConfig) {
-    for (CustomFilteringDashboardPropertyDef propertyDef : defaultConfig.getDashboardDef().getAllPropertyDefs()) {
+  private static boolean isSupportedProperty(String property, FilteringDashboardConfig defaultConfig) {
+    for (FilteringDashboardPropertyDef propertyDef : defaultConfig.getDashboardDef().getAllPropertyDefs()) {
       if (propertyDef.getSourcePropertyDef().getPropertyPath().getDotSeparatedPath().equals(property)) {
         return true;
       }
@@ -503,11 +526,11 @@ class PersistedDashboardsToDashboards {
     return false;
   }
 
-  // Convert a persisted custom filtering dashboard to its btpTemplate.
+  // Convert a persisted filtering dashboard to its btpTemplate.
   // Returns null if this version of WebLogic doesn't support the dashboard's btpTemplate.
   private static BeanTreePath getBeanTreePathTemplate(
     InvocationContext ic,
-    PersistedCustomFilteringDashboard persistedDashboard
+    PersistedFilteringDashboard persistedDashboard
   ) {
     BeanRepo beanRepo = ic.getPageRepo().getBeanRepo();
     BeanTreePath btpTemplate = BeanTreePath.create(beanRepo, new Path());
@@ -524,18 +547,18 @@ class PersistedDashboardsToDashboards {
     return btpTemplate;
   }
 
-  // Determine whether the previous custom filtering dashboard's cached results should be re-used.
+  // Determine whether the previous filtering dashboard's cached results should be re-used.
   // They're reusable if the dashboard previously existed and its path segments and properties
   // haven't changed.
   private static boolean reuseCachedResults(
-    CustomFilteringDashboard oldDashboard,
-    CustomFilteringDashboard newDashboard
+    FilteringDashboard oldDashboard,
+    FilteringDashboard newDashboard
   ) {
     if (oldDashboard == null) {
       return false;
     }
-    CustomFilteringDashboardConfig oldConfig = oldDashboard.getConfig();
-    CustomFilteringDashboardConfig newConfig = newDashboard.getConfig();
+    FilteringDashboardConfig oldConfig = oldDashboard.getConfig();
+    FilteringDashboardConfig newConfig = newDashboard.getConfig();
     {
       int oldSize = oldConfig.getPath().size();
       int newSize = newConfig.getPath().size();
@@ -543,8 +566,8 @@ class PersistedDashboardsToDashboards {
         return false;
       }
       for (int i = 0; i < newSize; i++) {
-        CustomFilteringDashboardPathSegment oldSegment = oldConfig.getPath().get(i);
-        CustomFilteringDashboardPathSegment newSegment = newConfig.getPath().get(i);
+        FilteringDashboardPathSegment oldSegment = oldConfig.getPath().get(i);
+        FilteringDashboardPathSegment newSegment = newConfig.getPath().get(i);
         Path oldChildPath = oldSegment.getSegmentDef().getSegmentTemplate().getChildDef().getChildPath();
         Path newChildPath = newSegment.getSegmentDef().getSegmentTemplate().getChildDef().getChildPath();
         if (!oldChildPath.equals(newChildPath)) {
@@ -569,8 +592,8 @@ class PersistedDashboardsToDashboards {
         return false;
       }
       for (int i = 0; i < newSize; i++) {
-        CustomFilteringDashboardProperty oldProperty = oldConfig.getProperties().get(i);
-        CustomFilteringDashboardProperty newProperty = newConfig.getProperties().get(i);
+        FilteringDashboardProperty oldProperty = oldConfig.getProperties().get(i);
+        FilteringDashboardProperty newProperty = newConfig.getProperties().get(i);
         Path oldPropPath = oldProperty.getPropertyDef().getSourcePropertyDef().getPropertyPath();
         Path newPropPath = newProperty.getPropertyDef().getSourcePropertyDef().getPropertyPath();
         if (!oldPropPath.equals(newPropPath)) {

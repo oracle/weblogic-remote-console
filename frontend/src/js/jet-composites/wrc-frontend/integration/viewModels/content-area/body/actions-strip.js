@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2024,, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -88,18 +88,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           label: event.currentTarget.innerText
         };
         options['isDownloadAction'] = (['downloadLogAsJson', 'downloadLogAsPlainText'].includes(options.action));
+        options['isDeleteAction'] = (options.action === 'delete');
 
         viewParams.signaling.ancillaryContentItemCleared.dispatch('actions-strip');
 
         const pdjData = viewParams.parentRouter.data.pdjData();
         const rdjData = viewParams.parentRouter.data.rdjData();
-
+  
         const hasActionInputForm = DeclarativeActionsManager.hasActionInputForm(rdjData.actions, options.action);
 
         if (hasActionInputForm) {
           const actionInputFormLabels = DeclarativeActionsManager.getActionInputFormLabels(pdjData, options.action);
           options['label'] = actionInputFormLabels.label;
           options['title'] = actionInputFormLabels.title;
+          options['formLayout'] = DeclarativeActionsManager.getActionInputFormLayoutSettings(pdjData, options.action);
           viewParams.onActionInputButtonClicked(rdjData, options);
         }
         else {

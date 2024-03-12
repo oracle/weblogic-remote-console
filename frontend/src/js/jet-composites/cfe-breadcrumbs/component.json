@@ -1,0 +1,101 @@
+{
+  "name": "cfe-breadcrumbs",
+  "version": "1.0.0",
+  "jetVersion": "^11.1.0",
+  "displayName": "A user friendly, translatable name of the component.",
+  "description": "A translatable high-level description for the component.",
+  "dependencies": {
+    "wrc-frontend-apis": "^1.0.0",
+    "wrc-frontend-common": "^1.0.0",
+    "wrc-frontend-core": "^1.0.0",
+    "wrc-frontend-css": "^1.0.0",
+    "wrc-frontend-integration": "^1.0.0",
+    "wrc-frontend-microservices": "^1.0.0"
+  },
+  "properties": {
+    "beanTree": {
+      "description": "",
+      "type": "object",
+      "value": {
+        "name": "edit",
+        "type": "configuration"
+      }
+    },
+    "navigator": {
+      "description": "",
+      "type": "object",
+      "value": {
+        "visible": false
+      }
+    },
+    "visible": {
+      "description": "",
+      "type": "boolean",
+      "value": false
+    }
+  },
+  "methods": {
+    "createBreadcrumbs": {
+      "description": "",
+      "params" : [
+        {
+          "description": "",
+          "name" : "reply",
+          "type": "object"
+        }
+      ]
+    },
+    "getBreadcrumbLabels": {
+      "description": "",
+      "params" : [
+        {
+          "description": "",
+          "name" : "breadcrumbs",
+          "type": "array"
+        }
+      ]
+    },
+    "renderBreadcrumbs": {
+      "description": "",
+      "params" : [
+        {
+          "description": "",
+          "name" : "linksData",
+          "type": "array"
+        }
+      ]
+    }
+  },
+  "events": {
+    "propertyAdded": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "displayName": "property",
+        "description": "",
+        "type": "object"
+      }
+    },
+    "propertyChanged": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "displayName": "property",
+        "description": "",
+        "type": "object"
+      }
+    },
+    "propertyDeleted": {
+      "description": "",
+      "bubbles": true,
+      "detail": {
+        "displayName": "property",
+        "description": "",
+        "type": "object"
+      }
+    }
+  },
+  "slots": {
+
+  }
+}

@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Oracle and/or its affiliates.
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: Status
@@ -7,3 +7,8 @@ properties:
     label: Deployed
   - value: UNDEPLOYED
     label: Undeployed
+- name: ContextRootURL
+  getMethod: weblogic.remoteconsole.customizers.ComponentRuntimeMBeanCustomizer.getContextRootURL
+  disableMBeanJavadoc: true
+  requiredCapabilities:
+  - getServerHttpURL

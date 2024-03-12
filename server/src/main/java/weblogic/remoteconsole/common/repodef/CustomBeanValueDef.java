@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -11,9 +11,11 @@ package weblogic.remoteconsole.common.repodef;
 class CustomBeanValueDef {
   private BeanValueDef.ValueKind kind;
   private boolean array;
+  private boolean ordered;
   private BeanTypeDef referenceTypeDef;
   private boolean referenceAsReferences;
   private boolean dateAsLong;
+  private boolean multiLineString;
 
   public CustomBeanValueDef() {
   }
@@ -21,9 +23,11 @@ class CustomBeanValueDef {
   public CustomBeanValueDef(BeanValueDef toClone) {
     setValueKind(toClone.getValueKind());
     setArray(toClone.isArray());
+    setOrdered(toClone.isOrdered());
     setReferenceTypeDef(toClone.getReferenceTypeDef());
     setReferenceAsReferences(toClone.isReferenceAsReferences());
     setDateAsLong(toClone.isDateAsLong());
+    setMultiLineString(toClone.isMultiLineString());
   }
 
   BeanValueDef.ValueKind getValueKind() {
@@ -40,6 +44,14 @@ class CustomBeanValueDef {
 
   void setArray(boolean val) {
     array = val;
+  }
+
+  boolean isOrdered() {
+    return ordered;
+  }
+
+  void setOrdered(boolean val) {
+    ordered = val;
   }
 
   BeanTypeDef getReferenceTypeDef() {
@@ -64,5 +76,13 @@ class CustomBeanValueDef {
 
   void setDateAsLong(boolean val) {
     dateAsLong = val;
+  }
+
+  boolean isMultiLineString() {
+    return multiLineString;
+  }
+
+  void setMultiLineString(boolean val) {
+    multiLineString = val;
   }
 }

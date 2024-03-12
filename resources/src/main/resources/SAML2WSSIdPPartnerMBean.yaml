@@ -1,0 +1,49 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.saml2.SAML2WSSIdPPartnerMBean
+baseTypes:
+- weblogic.security.providers.saml2.SAML2IdPPartnerMBean
+- weblogic.security.providers.saml2.SAML2WSSPartnerMBean
+
+properties:
+- name: AssertionSigningCertHaveCertificate
+  type: boolean
+- name: AssertionSigningCertIssuedTo
+  type: java.lang.String
+- name: AssertionSigningCertIssuedBy
+  type: java.lang.String
+- name: AssertionSigningCertValidFrom
+  type: java.lang.String
+- name: AssertionSigningCertValidUntil
+  type: java.lang.String
+- name: AssertionSigningCertVersion
+  type: int
+- name: AssertionSigningCertSerialNumber
+  type: java.lang.String
+- name: AssertionSigningCertSignatureAlgorithm
+  type: java.lang.String
+- name: AssertionSigningCertPublicKey
+  type: java.lang.String
+- name: AssertionSigningCertSubjectAlternativeNames
+  type: java.lang.String
+- name: AssertionSigningCertExtendedKeyUsage
+  type: java.lang.String
+- name: AssertionSigningCertBasicConstraints
+  type: int
+- name: AssertionSigningCertThumbprintAlgorithm
+  type: java.lang.String
+- name: AssertionSigningCertThumbprint
+  type: java.lang.String
+
+actions:
+- name: importAssertionSigningCert
+  type: void
+  descriptionHTML: >
+    <p>Imports this SAML 2.0 Web Service Identity Provider Partner's assertion
+    signing certificate from a PEM or DER file.</p>
+  parameters:
+  - name: FileName
+    type: java.lang.String
+    descriptionHTML: >
+      Specify the path name of a .pem or .der file containing the X509 certificate you wish to import.

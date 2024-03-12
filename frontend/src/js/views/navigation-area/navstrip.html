@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2020, 2021, 2022, 2023, Oracle Corporation and/or its affiliates.
+Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <nav :aria-label="[[i18n.navstrip.ariaLabel]]">
@@ -20,6 +20,8 @@ Copyright (c) 2020, 2021, 2022, 2023, Oracle Corporation and/or its affiliates.
           selection="{{builtInsSelectedItem}}"
           on-oj-before-select="[[builtInsBeforeSelectEventHandler]]"
           on-selection-changed="[[builtInsSelectedItemChanged]]"
+          on-keyup="[[onKeyUp]]"
+          accesskey="M"
         >
           <template slot="itemTemplate" data-oj-as="item">
             <div>

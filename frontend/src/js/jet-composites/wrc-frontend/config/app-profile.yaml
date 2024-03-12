@@ -1,0 +1,309 @@
+# Copyright 2023,2024, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+
+schema:
+  tabs:
+    - id: general
+      label:
+        value: General
+        widthPcnt: '42%'
+      visible: true
+      disabled: false
+      sections:
+        - id: account
+          label:
+            value: Account
+            widthPcnt: '42%'
+          visible: true
+          disabled: false
+          fields:
+            - id: imageDataUrl
+              label: Image
+              type: base64
+              required: false
+              visible: true
+              disabled: false
+            - id: organization
+              label: Organization
+              type: string
+              required: false
+              visible: true
+              disabled: false
+            - id: name
+              label: Name
+              type: string
+              required: false
+              visible: true
+              disabled: false
+            - id: email
+              label: Email
+              type: string
+              required: false
+              visible: true
+              disabled: false
+        - id: role
+          label:
+            value: Role and Sharing
+            widthPcnt: '42%'
+          visible: true
+          disabled: false
+          fields:
+            - id: isDefault
+              label: Use as Default Profile
+              type: boolean
+              required: false
+              default: true
+              visible: true
+              disabled: false
+    - id: settings
+      label:
+        value: Settings
+        widthPcnt: '42%'
+      visible: true
+      disabled: false
+      fields:
+        - id: useCredentialStorage
+          label: Store encrypted credentials for your projects?
+          type: boolean
+          required: false
+          default: true
+          visible: true
+          disabled: false
+        - id: disableHNV
+          label: Disable host name verification?
+          type: boolean
+          required: false
+          default: false
+          visible: true
+          disabled: false
+      sections:
+        - id: networking
+          label:
+            value: Networking
+            widthPcnt: '42%'
+          visible: true
+          disabled: false
+          fields:
+            - id: proxyAddress
+              label: Proxy Address
+              type: string
+              required: false
+              visible: true
+              disabled: false
+        - id: security
+          label:
+            value: Security
+            widthPcnt: '42%'
+          visible: true
+          disabled: false
+          fields:
+            - id: trustStoreType
+              label: Trust Store Type
+              type: string
+              required: false
+              visible: true
+              disabled: false
+              legalValues:
+                - value: jks
+                  label: JKS
+                - value: pkcs12
+                  label: PKCS12
+                - value: windowsRoot
+                  label: Windows ROOT
+                - value: keyChainStore
+                  label: Key Chain Store
+            - id: trustStorePath
+              label: Trust Store Path
+              type: string
+              required: false
+              visible: true
+              disabled: false
+            - id: trustStoreKey
+              label: Trust Store Key
+              type: file
+              required: false
+              visible: true
+              disabled: false
+        - id: timeouts
+          label:
+            value: Timeouts
+            widthPcnt: '42%'
+          visible: true
+          disabled: false
+          fields:
+            - id: connectionTimeout
+              label: Administration Server Connection Timeout
+              type: number
+              required: false
+              default: 10000
+              visible: true
+              disabled: false
+            - id: readTimeout
+              label: Administration Server Read Timeout
+              type: number
+              required: false
+              default: 10000
+              visible: true
+              disabled: false
+    - id: preferences
+      label:
+        value: Preferences
+        widthPcnt: '50%'
+      visible: true
+      disabled: false
+      fields:
+        - id: theme
+          label: Theme
+          type: string
+          required: false
+          default: light
+          visible: true
+          disabled: false
+          legalValues:
+            - value: light
+              label: Light
+            - value: dark
+              label: Dark
+        - id: startupTaskChooserType
+          label: Startup Task Chooser Type
+          type: string
+          required: false
+          visible: true
+          disabled: false
+          legalValues:
+            - value: use-dialog
+              label: Use Dialog
+            - value: use-cards
+              label: Use Cards
+      sections:
+        - id: navigation
+          label:
+            value: Navigation
+            widthPcnt: '90%'
+          visible: true
+          disabled: false
+          fields:
+            - id: useTreeMenusAsRootNodes
+              label: Use Tree Menus as the root level of Tree Navigators?
+              type: boolean
+              required: false
+              default: false
+              visible: true
+              disabled: false
+        - id: confirmations
+          label:
+            value: Confirmations
+            widthPcnt: '90%'
+          visible: true
+          disabled: false
+          fields:
+            - id: onQuit
+              label: Allow unsaved changes to prevent exiting application?
+              type: boolean
+              required: false
+              default: false
+              visible: true
+              disabled: false
+            - id: onDelete
+              label: Confirm all deletions?
+              type: boolean
+              required: false
+              default: true
+              visible: true
+              disabled: false
+        - id: popups
+          label:
+            value: Popup Messages
+            widthPcnt: '90%'
+          visible: true
+          disabled: false
+          fields:
+            - id: onActionNotAllowed
+              label: Use "Action Not Allowed" popup to prevent data loss?
+              type: boolean
+              required: false
+              default: false
+              visible: true
+              disabled: false
+            - id: onUnsavedChangesDetected
+              label: Use "Unsaved Changes Detected" popup to prevent data loss?
+              type: boolean
+              required: false
+              default: true
+              visible: true
+              disabled: false
+            - id: onChangesNotDownloaded
+              label: Use "Changes Not Download" popup to prevent data loss?
+              type: boolean
+              required: false
+              default: true
+              visible: true
+              disabled: false
+    - id: properties
+      label:
+        value: Properties
+        widthPcnt: '90%'
+      visible: false
+      disabled: false
+      fields:
+        - id: javaSystemProperties
+          label: Java System Properties
+          type: propertyList
+          required: false
+          visible: true
+          disabled: false
+profiles:
+  - id: mwooten
+    imageDataUrl: ''
+    tabs:
+      - id: general
+        sections:
+          - id: account
+            fields:
+              - id: organization
+                value: Oracle Corporation
+              - id: name
+                value: Mike Wooten
+              - id: email
+                value: mike.wooten@oracle.com
+          - id: role
+            fields:
+              - id: isDefault
+                value: true
+      - id: settings
+        fields:
+          - id: disableHNV
+            value: false
+        sections:
+          - id: networking
+            fields:
+              - id: proxyAddress
+                value:
+          - id: security
+            fields:
+              - id: trustStoreType
+                value: jks
+              - id: trustStorePath
+                value: /Users/mwooten/security/truststores/my-truststore.jks
+              - id: trustStoreKey
+                value:
+          - id: timeouts
+            fields:
+              - id: connectionTimeout
+                value: 10000
+              - id: readTimeout
+                value: 10000
+      - id: preferences
+        fields:
+          - id: startupTaskChooserType
+            value: use-cards
+      - id: properties
+        fields:
+          - id: javaSystemProperties
+            value: |
+              {
+                "javax.net.ssl.trustStore":"my-truststore.jks",
+                "mail.imap.host":"localhost",
+                "mail.imap.port":"465",
+                "mail.smtp.sendpartial":"false"
+              }

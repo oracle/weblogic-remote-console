@@ -6,6 +6,7 @@
   "description": "GUI for navigating MBean data managed with the WebLogic Server Remote Console (WRC).",
   "dependencies": {
     "wrc-frontend-apis": "^1.0.0",
+    "wrc-frontend-common": "^1.0.0",
     "wrc-frontend-core": "^1.0.0",
     "wrc-frontend-integration": "^1.0.0",
     "wrc-frontend-microservices": "^1.0.0"

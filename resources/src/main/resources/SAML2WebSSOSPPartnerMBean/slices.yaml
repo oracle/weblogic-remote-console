@@ -1,0 +1,17 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+alternateSliceSources:
+- SAML2MetadataPartnerMBean/slices
+- SAML2BindingClientPartnerMBean/slices
+- SAML2WebSSOPartnerMBean/slices
+slices:
+- name: General
+- name: SiteInfo
+- name: SSOSigningCert
+  label: "Single Sign-On Signing Certificate"
+- name: TransportLayerClientCert
+  label: "Transport Layer Client Certificate"
+- name: AssertionConsumerServiceEndpoints
+  label: "Assertion Consumer Service"
+- name: ArtifactResolutionServiceEndpoints
+  label: "Artifact Resolution Service"

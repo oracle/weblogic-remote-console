@@ -68,7 +68,7 @@ public interface PageActionDef extends BeanActionDef {
 
   // The input form for gathering the args needed to invoke this action.
   // Returns null if no args are needed.
-  ActionInputFormDef getInputFormDef();
+  public ActionInputFormDef getInputFormDef();
 
   // Whether, and how, the CFE should auto reload the table
   // after invoking this action.  Returns null if the CFE should

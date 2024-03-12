@@ -135,10 +135,21 @@ class WebLogicRestEditTreeBeanRepoSearchResults
         changes.getModifications().add(
           new ModifiedBeanProperty(
             beanPath,
-            propertyDef,
+            propertyDef.getPropertyPath(),
             weblogicVal.getBoolean("unset"),
             getModificationValue(beanPath, propertyDef, weblogicVal.get("oldValue")),
             getModificationValue(beanPath, propertyDef, weblogicVal.get("newValue"))
+          )
+        );
+      } else if (beanPath.getTypeDef().hasChildDef(propertyPath, true)) {
+        BeanChildDef childDef = beanPath.getTypeDef().getChildDef(propertyPath, true);
+        changes.getModifications().add(
+          new ModifiedBeanProperty(
+            beanPath,
+            childDef.getChildPath(),
+            weblogicVal.getBoolean("unset"),
+            getModificationValue(beanPath, null, weblogicVal.get("oldValue")),
+            getModificationValue(beanPath, null, weblogicVal.get("newValue"))
           )
         );
       } else {
@@ -162,7 +173,13 @@ class WebLogicRestEditTreeBeanRepoSearchResults
         // jsonVal should be an expanded value with a value property but without a set property
         jsonVal = jsonVal.asJsonObject().get("value");
       }
-      return builder.buildValue(propertyDef, jsonVal);
+      if (propertyDef == null) {
+        // Reordered a collection.
+        return builder.buildReferences(jsonVal);
+      } else {
+        // Modified a property.
+        return builder.buildValue(propertyDef, jsonVal);
+      }
     }
 
     private void buildAddition(JsonObject weblogicVal) {

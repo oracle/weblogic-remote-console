@@ -14,7 +14,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import io.helidon.microprofile.server.Server;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.webapp.WebAppUtils;
 
 public final class Main {
@@ -64,6 +64,7 @@ public final class Main {
     boolean stdin = false;
     boolean showPortOnStdout = false;
     String persistenceDirectory = System.getenv("CBE_PERSISTENCE_DIRECTORY");
+    boolean configInitialized = false;
     for (int i = 0; i < args.length; i++) {
       if (args[i].equals("-p")) {
         i++;
@@ -85,6 +86,7 @@ public final class Main {
           usage();
         }
         new PropertyFileHandler(args[i]);
+        configInitialized = true;
       } else if (args[i].equals("--persistenceDirectory")) {
         i++;
         if (args.length == i) {
@@ -93,41 +95,22 @@ public final class Main {
         persistenceDirectory = args[i];
       }
     }
-    Logger logger = configureLogging();
+    if (!configInitialized) {
+      ConsoleBackendRuntimeConfig.init(null);
+    }
+    configureLogging();
 
-    PersistenceManager.initialize(persistenceDirectory);
-
-    ConsoleBackendRuntime.INSTANCE.init(new String[0]);
-    // The ConsoleBackendRuntime will attempt to connect
-    // to the WebLogic Domain when WebLogic RESTful Management
-    // endpoint related properties are specified at startup.
-    // When unable to contact the WebLogic Domain URL, then
-    // the Console Backend will be in the disconnected state.
-    // Ensure that the poper credentials and URL have been
-    // specified and that the Domain URL is reachable.
-    String domainUrl = ConsoleBackendRuntime.INSTANCE.attemptConnection();
+    if (persistenceDirectory != null) {
+      PersistenceManager.initialize(new SimplePersistenceConfigurator(persistenceDirectory));
+    } else {
+      PersistenceManager.initialize(null);
+    }
 
     // Start the server instance
     Server server = startServer();
 
-    // Log the current WebLogic Console Backend Mode and Connection State
-    ConsoleBackendRuntime.Mode mode = ConsoleBackendRuntime.INSTANCE.getMode();
     if (showPortOnStdout) {
       System.out.println("Port=" + server.port());
-    }
-    // logger.info(WLS_CONSOLE_BACKEND + "\n>>>> Started in " + mode + " mode <<<<");
-    if (mode == ConsoleBackendRuntime.Mode.CREDENTIALS) {
-      ConsoleBackendRuntime.State state = ConsoleBackendRuntime.INSTANCE.getState();
-      // FortifyIssueSuppression Log Forging
-      // The URL is scrubbed by cleanStringForLogging
-      // The state is not user input but fortify thinks it is
-      logger.info(
-        WLS_CONSOLE_BACKEND
-          + "\n>>>> WebLogic Domain URL '"
-          + StringUtils.cleanStringForLogging(domainUrl)
-          + "' is "
-          + state
-          + " <<<<");
     }
     if (stdin) {
       readStandardInput();
@@ -213,5 +196,24 @@ public final class Main {
     }
 
     return source;
+  }
+
+  private static class SimplePersistenceConfigurator implements
+      PersistenceManager.PersistenceConfigurator {
+    private File file;
+
+    private SimplePersistenceConfigurator(String path) {
+      // FortifyIssueSuppression Path Manipulation
+      // Users do not have access to the configuration file and people that do are
+      file = new File(path);
+    }
+
+    public boolean shouldIPersistProjects(InvocationContext ic) {
+      return false;
+    }
+
+    public File getDirectory(InvocationContext ic) {
+      return file;
+    }
   }
 }

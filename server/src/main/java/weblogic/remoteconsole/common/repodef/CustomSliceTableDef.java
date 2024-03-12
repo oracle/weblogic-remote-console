@@ -6,6 +6,8 @@ package weblogic.remoteconsole.common.repodef;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.remoteconsole.common.utils.ListUtils;
+
 /**
  * POJO that implements SliceTableDef.
  * 
@@ -16,19 +18,20 @@ public class CustomSliceTableDef implements SliceTableDef {
   private List<PagePropertyDef> displayedColumnDefs = new ArrayList<>();
   private List<PagePropertyDef> hiddenColumnDefs = new ArrayList<>();
   private List<PagePropertyDef> allPropertyDefs = new ArrayList<>();
-  private List<PageActionDef> actionDefs = new ArrayList<>();
   private String getTableRowsMethod;
   private boolean supportsNavigation;
+  private boolean useRowIdentities;
 
   public CustomSliceTableDef() {
   }
 
   public CustomSliceTableDef(SliceTableDef toClone) {
     pageDef = new CustomPageDef(toClone);
-    getDisplayedColumnDefs().addAll(toClone.getDisplayedColumnDefs());
-    getHiddenColumnDefs().addAll(toClone.getHiddenColumnDefs());
+    getDisplayedColumnDefs().addAll(ListUtils.nonNull(toClone.getDisplayedColumnDefs()));
+    getHiddenColumnDefs().addAll(ListUtils.nonNull(toClone.getHiddenColumnDefs()));
     computeAllPropertyDefs();
     setGetTableRowsMethod(toClone.getGetTableRowsMethod());
+    setUseRowIdentities(toClone.isUseRowIdentities());
   }
 
   @Override
@@ -73,20 +76,6 @@ public class CustomSliceTableDef implements SliceTableDef {
   }
 
   @Override
-  public List<PageActionDef> getActionDefs() {
-    return actionDefs;
-  }
-
-  public void setActionDefs(List<PageActionDef> val) {
-    actionDefs = val;
-  }
-
-  public CustomSliceTableDef actionDefs(List<PageActionDef> val) {
-    setActionDefs(val);
-    return this;
-  }
-
-  @Override
   public String getGetTableRowsMethod() {
     return getTableRowsMethod;
   }
@@ -97,6 +86,48 @@ public class CustomSliceTableDef implements SliceTableDef {
 
   public CustomSliceTableDef getTableRowsMethod(String val) {
     setGetTableRowsMethod(val);
+    return this;
+  }
+
+  @Override
+  public boolean isSupportsNavigation() {
+    return supportsNavigation;
+  }
+
+  public void setSupportsNavigation(boolean val) {
+    supportsNavigation = val;
+  }
+
+  public CustomSliceTableDef supportsNavigation(boolean val) {
+    setSupportsNavigation(val);
+    return this;
+  }
+
+  @Override
+  public boolean isUseRowIdentities() {
+    return useRowIdentities;
+  }
+
+  public void setUseRowIdentities(boolean val) {
+    useRowIdentities = val;
+  }
+
+  public CustomSliceTableDef useRowIdentities(boolean val) {
+    setUseRowIdentities(val);
+    return this;
+  }
+
+  @Override
+  public List<PageActionDef> getActionDefs() {
+    return pageDef.getActionDefs();
+  }
+
+  public void setActionDefs(List<PageActionDef> val) {
+    pageDef.setActionDefs(val);
+  }
+
+  public CustomSliceTableDef actionDefs(List<PageActionDef> val) {
+    setActionDefs(val);
     return this;
   }
 
@@ -157,13 +188,13 @@ public class CustomSliceTableDef implements SliceTableDef {
   }
 
   @Override
-  public String getCustomizePageMethod() {
-    return pageDef.getCustomizePageMethod();
+  public String getCustomizePageDefMethod() {
+    return pageDef.getCustomizePageDefMethod();
   }
 
   @Override
-  public String getCustomizePageDefMethod() {
-    return pageDef.getCustomizePageDefMethod();
+  public String getCustomizePageMethod() {
+    return pageDef.getCustomizePageMethod();
   }
 
   public void setCustomizePageMethod(String val) {
@@ -172,20 +203,6 @@ public class CustomSliceTableDef implements SliceTableDef {
 
   public CustomSliceTableDef customizePageMethod(String val) {
     setCustomizePageMethod(val);
-    return this;
-  }
-
-  @Override
-  public boolean isSupportsNavigation() {
-    return supportsNavigation;
-  }
-
-  public void setSupportsNavigation(boolean val) {
-    supportsNavigation = val;
-  }
-
-  public CustomSliceTableDef supportsNavigation(boolean val) {
-    setSupportsNavigation(val);
     return this;
   }
 }

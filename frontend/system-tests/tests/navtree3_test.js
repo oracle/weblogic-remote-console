@@ -74,7 +74,6 @@ describe.only('Test Suite: navtree3_test for Navtree Test-Suite', function () {
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Scheduling","Managed Executor Service Templates");
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Scheduling","Managed Scheduled Executor Service Templates");
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Scheduling","Managed Thread Factory Templates");
-
             //Delete WorkManager-2,FairShareRequestClass-1,MaxThreadsConstraint-1,MinThreadsConstraint-1,
             //       ContextRequestClass-1,ResponseTimeRequestClass-1,ManagedExecutorServiceTemplate-1,
             await admin.deleteMBeanObject(driver,"TestWorkManager-1","WorkManagers",2,"configuration",

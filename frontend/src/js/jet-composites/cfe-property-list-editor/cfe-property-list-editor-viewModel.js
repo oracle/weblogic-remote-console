@@ -1,16 +1,34 @@
 /**
- Copyright (c) 2015, 2022, Oracle and/or its affiliates.
+ Copyright (c) 2015, 2024, Oracle and/or its affiliates.
  Licensed under The Universal Permissive License (UPL), Version 1.0
  as shown at https://oss.oracle.com/licenses/upl/
 
  */
 'use strict';
 
-define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojbufferingdataprovider', 'cfe-property-list-editor/observable-properties', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojtreeview', 'ojs/ojcorerouter',
-    'ojs/ojmodulerouter-adapter', 'ojs/ojtable', 'ojs/ojbutton', 'ojs/ojformlayout', 'ojs/ojvalidationgroup'],
-
-  function (ko, ArrayDataProvider, BufferingDataProvider, props, ViewModelUtils, CoreUtils) {
-
+define([
+  'knockout',
+  'ojs/ojarraydataprovider',
+  'ojs/ojbufferingdataprovider',
+  'cfe-property-list-editor/observable-properties',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/utils',
+  'ojs/ojtreeview',
+  'ojs/ojcorerouter',
+  'ojs/ojmodulerouter-adapter',
+  'ojs/ojtable',
+  'ojs/ojbutton',
+  'ojs/ojformlayout',
+  'ojs/ojvalidationgroup'
+],
+function (
+  ko,
+  ArrayDataProvider,
+  BufferingDataProvider,
+  props,
+  ViewModelUtils,
+  CoreUtils
+) {
     function PropertiesEditorViewModel(context) {
       const self = this;
 
@@ -59,6 +77,12 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojbufferingdataprovider', 'c
         switch (context.property) {
           case 'propertiesString':
             self.propertiesContent = getPropertiesContent(context.value);
+            break;
+          case 'resize':
+            document.documentElement.style.setProperty('--cfe-property-list-editor-resize', (['both','none'].includes(context.value) ? context.value : 'none'));
+            break;
+          case 'width':
+            document.documentElement.style.setProperty('--cfe-property-list-editor-width', context.value);
             break;
         }
       };
@@ -218,10 +242,24 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojbufferingdataprovider', 'c
             // Update self.propertyListSnapshot item
             self.propertyListSnapshot[index].name = property.Name;
             self.propertyListSnapshot[index].value = property.Value;
+            const params = {
+              'bubbles': true,
+              'detail': {
+                'property': self.propertyListSnapshot[index]
+              }
+            };
+            context.element.dispatchEvent(new CustomEvent('propertyChanged', params));
           }
           else {
             // Create self.propertyListSnapshot item
             self.propertyListSnapshot.push({uid: property.uid, name: property.Name, value: property.Value});
+            const params = {
+              'bubbles': true,
+              'detail': {
+                'property': self.propertyListSnapshot.at(-1)
+              }
+            };
+            context.element.dispatchEvent(new CustomEvent('propertyAdded', params));
           }
         });
       };
@@ -269,7 +307,13 @@ define(['knockout', 'ojs/ojarraydataprovider', 'ojs/ojbufferingdataprovider', 'c
 
       function removePropertyListSnapshotItem(rowIndex) {
         if (CoreUtils.isNotUndefinedNorNull(self.propertyListSnapshot[rowIndex])) {
-          self.propertyListSnapshot[rowIndex]['action'] = 'deleted';
+          const params = {
+            'bubbles': true,
+            'detail': {
+              'property': self.propertyListSnapshot[rowIndex]
+            }
+          };
+          context.element.dispatchEvent(new CustomEvent('propertyDeleted', params));
           sendBlurEvent();
         }
       }

@@ -102,11 +102,12 @@ class SliceReader extends FormReader {
   }
 
   private void setTableCustomizations(Table table, SliceTableDef sliceTableDef) {
+    InvocationContext ic = getInvocationContext();
     TableCustomizations customizations =
-      getInvocationContext()
+      ic
         .getPageRepo()
         .asPageReaderRepo()
-        .getTableCustomizationsManager()
+        .getTableCustomizationsManager(ic)
         .getTableCustomizations(getInvocationContext(), sliceTableDef);
     if (customizations != null) {
       table.getDisplayedColumns().addAll(customizations.getDisplayedColumns());

@@ -84,8 +84,8 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             console.log("Click Domain/Servers/TestServer-1 link - 4th row in the Addition section");
             await driver.findElement(By.xpath("//table[@id='additions-table']/tr[4]/td/a")).click();
             await driver.sleep(2400);
-            console.log("Click Discard Changes Icon Image");
-            await driver.findElement(By.xpath("//img[@id='discard-tab-button']")).click();
+            console.log("Click Discard Changes Icon Menu");
+            await driver.findElement(By.xpath("//span[@id='discard-tab-button']")).click();
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -121,12 +121,13 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.sleep(900);
             console.log("Verify if TestCluster-1 and TestServer-1 objects appear in Removals section");
             if (await driver.findElement(
-                By.xpath("//div[@id='shoppingcart-tab-container-toolbar']/div/div/a["+object_count+"]/img")));
+                By.xpath("//span[@id='removals-count' and text()='Removals (2)']")));
             console.log("Found " +object_count+ " objects (TestCluster-1 and TestServer-1) in Shopping Cart Removal menu");
             await driver.sleep(900);
             console.log("Click commit changes in shopping cart to validate removal of TestCluster-1 and TestServer-1 objects");
             console.log("Click Commit Changes Icon Image");
-            await driver.findElement(By.xpath("//img[@id='commit-tab-button']")).click();
+            //await driver.findElement(By.xpath("//img[@id='commit-tab-button']")).click();
+            await driver.findElement(By.xpath("//span[@id='commit-tab-button']")).click();
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -155,9 +156,9 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
                 "Server Templates",1);
             await driver.sleep(900);
             await admin.saveToShoppingCart(driver);
-            await driver.sleep(900);
+            await driver.sleep(8800);
             console.log("Click Toggle History link");
-            await driver.findElement(By.id("toggle-history")).click();
+            await driver.findElement(By.xpath("//img[@title='Toggle visibility of history']")).click();
             await driver.sleep(900);
             console.log("Click MenuLauncher button");
             element = driver.findElement(By.css("#moreMenuLauncher > .button-icon"));
@@ -360,15 +361,21 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.findElement(
                 By.xpath("//*[@id='breadcrumbs-container']/ul/li[2]/oj-menu-button/button/div/span[2]")).click();
             await driver.sleep(8400);
-            console.log("Click to select Recent Searches - Configuration View Tree");
+            console.log("Click to select Recent Searches - Server");
             await driver.findElement(By.xpath("//span")).click();
+
             await driver.sleep(8600);
             await driver.executeScript("window.scrollTo(0,0)");
             console.log("Click Customizer Table");
             await driver.findElement(By.xpath("//span[@id='table-customizer-toggler']")).click();
             await driver.sleep(8400);
             console.log("Click Reset button");
-            await driver.findElement(By.xpath("//oj-button[@id='reset']")).click();
+            element = driver.findElement(By.xpath("//oj-button[@id='reset']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.sleep(300);
+            if (element.isEnabled()) {
+                await element.click();
+            }
             await driver.sleep(900);
             await driver.executeScript("window.scrollTo(0,0)");
             console.log("Click Add All Left button");
@@ -389,14 +396,11 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.findElement(
                 By.xpath("//div[@id='breadcrumbs-container']/ul/li[2]/oj-menu-button")).click();
             await driver.sleep(8400);
-            console.log("Click to switch to AdminJMSServer - Edit Tree");
-            await driver.findElement(By.xpath("//span[contains(.,'AdminJMSServer - Edit Tree')]")).click();
+            console.log("Click to switch to AdminJMSServer - Configuration Tree");
+            await driver.findElement(By.xpath("//span[contains(.,'AdminJMSServer - Configuration View Tree')]")).click();
             await driver.sleep(8400);
-            await driver.executeScript("window.scrollTo(0,0)");
-            element = driver.findElement(By.xpath("//oj-input-text[@id='Name']"));
-            await driver.sleep(2400);
             var server_name;
-            element = driver.findElement(By.xpath("//oj-input-text[@id='Name']/div/div/div/div"));
+            element = driver.findElement(By.xpath("//oj-input-text[@id='Name']"));
             await driver.sleep(2400);
             var promise = element.getText();
             promise.then(function (text) {
@@ -404,12 +408,13 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             });
             if (element.isEnabled()) {
                 await element.click();
-                console.log("Server Name is: " + server_name);
-                await driver.findElement(By.xpath("//input[@id='show-advanced-fields|cb']")).click();
-                console.log("TEST PASS ");
+                if (server_name == 'AdminJMSServer') {
+                    console.log("Server Name is: " + server_name);
+                    console.log("TEST PASS ");
+                }
             }
             else {
-                console.log("Element Search has no AdminServer page! ");
+                console.log("Server Name is not equal to AdminJMSServer ");
                 console.log("TEST FAIL ");
             }
             await driver.sleep(1200);
@@ -529,7 +534,8 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await element.click();
             await driver.sleep(2400);
             console.log("Click at 'test' Searches Node");
-            await driver.findElement(By.xpath("//td[text()='test']")).click()
+            await driver.findElement(
+                By.xpath("//span[text()='test']")).click();
             await driver.sleep(2400);
             driver.findElements(By.xpath("//td[text()='testJMSServer-1']")).then((elements) => {
                 if (elements.length > 0) {

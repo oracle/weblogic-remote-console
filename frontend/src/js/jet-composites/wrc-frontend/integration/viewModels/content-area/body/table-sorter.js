@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -14,23 +14,23 @@ define(['ojs/ojarraydataprovider'],
         let rtnval;
         if (direction === 'ascending') {
           rowsArray.sort((a, b) => {
-            if (a[sortProperty].data === b[sortProperty].data)
+            if (a[sortProperty].label === b[sortProperty].label)
               rtnval = 0;
-            else if (a[sortProperty].data === null)
+            else if (a[sortProperty].label === null)
               rtnval = 1;
             else
-              rtnval = (a[sortProperty].data > b[sortProperty].data ? 1 : -1);
+              rtnval = (a[sortProperty].label > b[sortProperty].label ? 1 : -1);
             return rtnval;
           });
         }
         else {
           rowsArray.sort((a, b) => {
-            if (a[sortProperty].data === b[sortProperty].data)
+            if (a[sortProperty].label === b[sortProperty].label)
               rtnval = 0;
-            else if (a[sortProperty].data === null)
+            else if (a[sortProperty].label === null)
               rtnval = -1;
             else
-              rtnval = (a[sortProperty].data < b[sortProperty].data ? 1 : -1);
+              rtnval = (a[sortProperty].label < b[sortProperty].label ? 1 : -1);
             return rtnval;
           });
         }

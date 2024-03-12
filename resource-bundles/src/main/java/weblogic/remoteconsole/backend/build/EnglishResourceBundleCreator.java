@@ -5,6 +5,7 @@ package weblogic.remoteconsole.backend.build;
 
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -38,6 +39,11 @@ import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
+import weblogic.remoteconsole.server.repo.BuiltinFilteringDashboard;
+import weblogic.remoteconsole.server.repo.DashboardManager;
+import weblogic.remoteconsole.server.repo.PersistedDashboard;
+import weblogic.remoteconsole.server.repo.PersistedDashboards;
+import weblogic.remoteconsole.server.repo.PersistedFilteringDashboard;
 
 /**
  * The yaml files for all of the console pages (and the weblogic bean types they represent) contain
@@ -100,6 +106,7 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
     for (LocalizableString ls : LocalizedConsoleRestExtensionConstants.getAllConstants()) {
       addResourceDefinition(ls);
     }
+    addBuiltinDashboards();
     writeResourceBundles();
   }
 
@@ -282,6 +289,28 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
     if (nfm != null) {
       addResourceDefinition(linkDef.getNotFoundMessage());
     }
+  }
+
+  private void addBuiltinDashboards() {
+    PersistedDashboards dashboards = DashboardManager.createPersistedBuiltinDashboards();
+    for (Map.Entry<String,PersistedDashboard> entry : dashboards.getDashboards().entrySet()) {
+      addBuiltinDashboard(entry.getKey(), entry.getValue());
+    }
+  }
+
+  private void addBuiltinDashboard(String name, PersistedDashboard dashboard) {
+    if (dashboard.isFilteringDashboard()) {
+      addBuiltinFilteringDashboard(name, dashboard.asFilteringDashboard());
+    }
+  }
+
+  private void addBuiltinFilteringDashboard(String name, PersistedFilteringDashboard dashboard) {
+    addResourceDefinition(
+      BuiltinFilteringDashboard.getNameLabel(name)
+    );
+    addResourceDefinition(
+      BuiltinFilteringDashboard.getDescriptionLabel(name, dashboard.getDescription())
+    );
   }
 
   private void addResourceDefinition(LocalizableString localizableString) {

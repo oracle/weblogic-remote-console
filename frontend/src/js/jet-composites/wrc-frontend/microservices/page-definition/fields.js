@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -8,8 +8,6 @@
 
 define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/utils', 'ojs/ojlogger', './unset'],
   function (oj, ko, ArrayDataProvider, CoreUtils, Logger, Unset) {
-
-    const NULL_VALUE = Object.freeze('___NULL___');
 
     const i18n = {
       'cfe-multi-select': {
@@ -37,9 +35,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         //field.setAttribute("readonly", "readonly");
 
         field.setAttribute('readonly', 'true');
-        field.className = (options['isSingleColumn']) ? 'cfe-form-readonly-select-one-md' : 'cfe-form-readonly-select-one' ;
-      } else {
-        field.className = (options['isSingleColumn']) ? 'cfe-form-select-one-md' : 'cfe-form-select-one' ;
+        if (options['className']) {
+          field.className = options['className'];
+        }
+        else {
+          field.className = (options['isSingleColumn']) ? 'cfe-form-readonly-select-one-md' : 'cfe-form-readonly-select-one';
+        }
+      }
+      else {
+        if (options['className']) {
+          field.className = options['className'];
+        }
+        else {
+          field.className = (options['isSingleColumn']) ? 'cfe-form-select-one-md' : 'cfe-form-select-one';
+        }
       }
 
       if (dataValues[name] != null && typeof dataValues[name].options !== 'undefined') {
@@ -60,13 +69,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         for (const j in legalValues) {
           const o = legalValues[j];
           if (o.value === null) {
-            o.value = NULL_VALUE;
+            o.value = CoreUtils.NULL_VALUE;
           }
           const option = { value: o.value, label: o.label || o.value};
           optionsArray.push(option);
           legalValueWidth = option.label.length;
         }
-       // checking if value is part of legalValues, if it is not, add it to dropdown
+        // checking if value is part of legalValues, if it is not, add it to dropdown
         const dataValue = (dataValues[name] != null) ? dataValues[name].value : undefined;
         if (dataValue && !legalValues.some((option) => `${option.value}''`.toLowerCase() === `${dataValue}''`.toLowerCase())) {
           optionsArray.push({ value: dataValue, label: `${dataValue}''` });
@@ -104,7 +113,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
           else {
             image.style.visibility = 'hidden';
           }
-          container.append(image);
+          if (params.field.className !== 'cfe-property-list-editor') container.append(image);
         }
         const id = params.field.getAttribute('id');
         if ( !params.readOnly && params.needsWdtIcon) {
@@ -240,13 +249,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         chooseLink.setAttribute('href', '#');
         chooseLink.setAttribute('data-input', params.id);
         chooseLink.setAttribute('data-accepts', params.accepts);
-        if (params.choose?.menu) {
+        if (params.choose && params.choose.menu) {
           chooseLink.setAttribute('on-click', params.choose.menu['on-click']);
         }
         else {
           chooseLink.setAttribute('on-click', params.choose['on-click']);
         }
-        chooseLink.setAttribute('tabindex', '-1');
 
         image = document.createElement('img');
         image.classList.add('choose-file-icon');
@@ -261,7 +269,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
           clearLink.setAttribute('href', '#');
           clearLink.setAttribute('data-input', params.id);
           clearLink.setAttribute('on-click', params.clear['on-click']);
-          clearLink.setAttribute('tabindex', '-1');
 
           image = document.createElement('img');
           image.setAttribute('id', `${params.id}_clearChosen`);
@@ -274,7 +281,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
           container.append(clearLink);
         }
 
-        if (params.choose?.menu?.items) {
+        if (params.choose && params.choose.menu && params.choose.menu.items) {
           chooseLink.setAttribute('id', `${params.id}MenuLauncher`);
           const menu = document.createElement('oj-menu');
           menu.setAttribute('id', `${params.id}Menu`);
@@ -337,28 +344,35 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
        * Create a cfe-property-list-editor for type properties.
        * @param {name} name
        * @param {object} mapValue
-       * @param readonly
-       * @returns field
+       * @param {{readonly?: boolean, width?: string}} options
+       * @returns HTMLElement
        */
-      createPropertyListEditor: function (name, mapValue, readonly) {
+      createPropertyListEditor: function (name, mapValue, options) {
         let field = document.createElement('cfe-property-list-editor');
         field.classList.add('cfe-property-list-editor');
         field.setAttribute('id', name);
         field.setAttribute('property-list-name', name);
         field.setAttribute('properties-string', mapValue);
-        field.setAttribute('readonly', readonly);
+        field.setAttribute('readonly', options.readonly);
+        field.setAttribute('width', options.width);
         field.setAttribute('name-header-label',  i18n['cfe-property-list-editor'].labels.nameHeader);
         field.setAttribute('value-header-label',  i18n['cfe-property-list-editor'].labels.valueHeader);
         field.setAttribute('add-button-tooltip',  i18n['cfe-property-list-editor'].labels.addButtonTooltip);
         field.setAttribute('delete-button-tooltip',  i18n['cfe-property-list-editor'].labels.deleteButtonTooltip);
         return field;
       },
-
-      createPolicyEditor: function (name, readonly) {
+  
+      /**
+       *
+       * @param {string} name
+       * @param {{readonly?: boolean }} options
+       * @returns HTMLElement
+       */
+      createPolicyEditor: function (name, options) {
         let field = document.createElement('cfe-policy-editor');
         field.classList.add('cfe-policy-editor');
         field.setAttribute('id', name);
-        field.setAttribute('readonly', readonly);
+        field.setAttribute('readonly', options.readonly);
         return field;
       },
 
@@ -511,11 +525,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         return debugFlagsEnabled;
       },
 
-      createInputPassword: function (className, isReadOnly) {
+      createInputPassword: function (options) {
         const field = document.createElement('oj-input-password');
-        field.setAttribute('mask-icon', 'visible');
-        field.setAttribute('readonly', isReadOnly);
-        field.classList.add(className);
+        field.setAttribute('mask-icon', options.maskIcon);
+        field.setAttribute('readonly', options.readonly);
+        field.classList.add(options.className);
         return field;
       },
 
@@ -551,9 +565,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         return field;
       },
 
-      createLabel: function (name, pdjTypes, helpInstruction) {
+      createLabel: function (name, pdjTypes, helpInstruction, required) {
         const label = document.createElement('oj-label');
-        label.innerHTML = `${pdjTypes.getLabel(name)}${(pdjTypes.isRequired(name) ? '*': '')}`;
+        if (CoreUtils.isNotUndefinedNorNull(required))
+          label.innerHTML = `${pdjTypes.getLabel(name)}${(required ? '*': '')}`;
+        else
+          label.innerHTML = `${pdjTypes.getLabel(name)}${(pdjTypes.isRequired(name) ? '*': '')}`;
         label.style.color = '#161513';
         label.setAttribute('for', name);
         label.setAttribute('slot', 'label');
@@ -578,10 +595,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         return field;
       },
 
-      createFileChooser: function (className) {
+      createFileChooser: function (options) {
         const field = document.createElement('oj-input-text');
-        field.classList.add(className, 'cfe-form-input-text');
-        field.setAttribute('readonly', false);
+        field.classList.add(options['className']);
+        field.setAttribute('readonly', options['readonly']);
         return field;
       },
 
@@ -704,7 +721,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
             image.setAttribute('id', iconItem.name);
 
             linkRef.setAttribute('href', '#');
-            linkRef.setAttribute('tabindex', '-1');
             linkRef.setAttribute('title', iconItem.label);
             linkRef.setAttribute('disabled', `[[${iconItem.observable}]]`);
             linkRef.setAttribute('on-click', `[[${action.iconClickListener}]]`);
@@ -773,7 +789,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
           const link = document.createElement('a');
           link.setAttribute('id', `${buttonSetItem.name}Launcher`);
           link.setAttribute('href', '#');
-          link.setAttribute('tabindex', '-1');
           link.setAttribute('data-action', buttonSetItem.name);
           link.setAttribute('data-menu-id', `${buttonSetItem.name}Menu`);
           link.setAttribute('on-click', `[[${buttonSetItem.launchMenuListener}]]`);

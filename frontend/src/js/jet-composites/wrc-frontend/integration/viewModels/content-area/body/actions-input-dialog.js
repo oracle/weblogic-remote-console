@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2024 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -77,7 +77,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/actions-management/declarative
       function processActionInputFormDataReply(reply, endpoint) {
         const pdjData = reply.body.data.get('pdjData');
         const rdjData = reply.body.data.get('rdjData');
-        DeclarativeActionsManager.updatePDJTypesActionInputProperties(pdjData);
+//MLW-1        DeclarativeActionsManager.updatePDJTypesActionInputProperties(pdjData);
         const actionInputFormStyle = DeclarativeActionsManager.getActionInputFormStyle(pdjData);
         if (CoreUtils.isNotUndefinedNorNull(actionInputFormStyle)) {
           if (actionInputFormStyle === DeclarativeActionsManager.ActionInputFormStyle.ACTION_POPUP.name) {

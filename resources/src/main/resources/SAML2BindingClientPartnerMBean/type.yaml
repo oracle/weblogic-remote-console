@@ -1,0 +1,63 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: ClientUsername
+  label: "Client User Name"
+  helpSummaryHTML: >
+    <p>The username that is expected from this Service Provider partner
+    when connecting to the partner site's SOAP/HTTPS binding using Basic authentication.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.BindingClientPartner</code> interface.</p>
+- name: ClientPassword
+  helpSummaryHTML: >
+    <p>The password for the client username.</p>
+  helpDetailsHTML: >
+    <p>Operations on this parameter are available in the <code>com.bea.security.saml2.providers.registry.BindingClientPartner</code> interface.</p>
+# TBD - fill in the certificate property help text.  The admin console doesn't have any we can harvest.
+- name: TransportLayerClientCertIssuedTo
+  label: "Issued To"
+  helpHTML: " "
+- name: TransportLayerClientCertIssuedBy
+  label: "Issued By"
+  helpHTML: " "
+- name: TransportLayerClientCertValidFrom
+  label: "Valid From"
+  helpHTML: " "
+- name: TransportLayerClientCertValidUntil
+  label: "Valid Until"
+  helpHTML: " "
+- name: TransportLayerClientCertVersion
+  label: "Version"
+  helpHTML: " "
+- name: TransportLayerClientCertSerialNumber
+  label: "Serial Number"
+  helpHTML: " "
+- name: TransportLayerClientCertSignatureAlgorithm
+  label: "Signature Algorithm"
+  helpHTML: " "
+- name: TransportLayerClientCertPublicKey
+  label: "Public Key"
+  helpHTML: " "
+  multiLineString: true
+  presentation:
+    width: xxl
+- name: TransportLayerClientCertSubjectAlternativeNames
+  label: "Subject Alternative Names"
+- name: TransportLayerClientCertExtendedKeyUsage
+  label: "Extended Key Usage"
+- name: TransportLayerClientCertBasicConstraints
+  label: "Basic Constraints"
+- name: TransportLayerClientCertThumbprintAlgorithm
+  label: "Thumbprint Algorithm"
+- name: TransportLayerClientCertThumbprint
+  label: "Thumbprint"
+
+actions:
+- name: importTransportLayerClientCert
+  label: "Import Certificate from File"
+  inputForm:
+    introductionHTML: >
+      <p>Imports a SAML 2.0 Web Single Sign-On Partner's transport layer client certificate from a PEM or DER file.</p>
+    parameters:
+    - name: FileName

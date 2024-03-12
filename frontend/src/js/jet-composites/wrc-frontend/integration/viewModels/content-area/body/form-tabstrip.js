@@ -1,14 +1,14 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operations', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout'],
-  function (ko, ArrayDataProvider, DataOperations, ViewModelUtils, Runtime, PageDefinitionUtils, CoreTypes, CoreUtils, Logger) {
+define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operations', 'wrc-frontend/common/page-definition-helper', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout'],
+  function (ko, ArrayDataProvider, DataOperations, PageDefinitionHelper, ViewModelUtils, Runtime, PageDefinitionUtils, CoreTypes, CoreUtils, Logger) {
     function FormTabStrip(viewParams) {
       const self = this;
 
@@ -65,16 +65,20 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
         let sliceParam = getQualifiedSlice(level);
 
         if (sliceParam !== '') {
-          const pdjData = viewParams.parentRouter.data.pdjData();
-          const pdjSlices = pdjData?.sliceForm?.slices || pdjData?.sliceTable?.slices;
-
-          if (pdjSlices) {
-            const rootSliceName = (sliceParam.split('.'))[0];
-            const index = pdjSlices.map(pdjSlice => pdjSlice.name).indexOf(rootSliceName);
-            if (index === -1 && pdjSlices.length > 0) {
-              // pdjSlices array does not contain rootSliceName, so
-              // set sliceParam to default slice (e.g. 'General')
-              sliceParam = pdjSlices[0].name;
+          if (PageDefinitionHelper.hasPDJData(viewParams.parentRouter)) {
+            const pdjData = viewParams.parentRouter.data.pdjData();
+            let pdjSlices = [];
+            if (PageDefinitionHelper.hasSliceFormSlices(pdjData)) pdjSlices = pdjData.sliceForm.slices;
+            if (PageDefinitionHelper.hasSliceTableSlices(pdjData)) pdjSlices = pdjData.sliceTable.slices;
+            
+            if (pdjSlices.length > 0) {
+              const rootSliceName = (sliceParam.split('.'))[0];
+              const index = pdjSlices.map(pdjSlice => pdjSlice.name).indexOf(rootSliceName);
+              if (index === -1 && pdjSlices.length > 0) {
+                // pdjSlices array does not contain rootSliceName, so
+                // set sliceParam to default slice (e.g. 'General')
+                sliceParam = pdjSlices[0].name;
+              }
             }
           }
         }
@@ -195,14 +199,6 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
               // Update module-scoped variables that have to
               // do with the slice being read-only or not.
               updateSliceReadOnlyVariable(reply.pdj);
-              
-              if (viewParams.perspective.id === 'configuration') {
-                viewParams.signaling.tabStripTabSelected.dispatch(
-                  'form-tabstrip',
-                  'shoppingcart',
-                  false
-                );
-              }
             }
   
           })
@@ -393,19 +389,25 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
         // only update pdj/rdj observables for the isNonDefaultTab
         // to avoid looping on hot rdj's (e.g. JVM Runtimes)
         if (isNonDefaultTab) {
+          let changePageTitle = false;
           if (JSON.stringify(reply.pdj) !== JSON.stringify(parentRouter.data.pdjData())) {
             parentRouter.data.pdjData(reply.pdj);
+            changePageTitle = true;
           }
       
           if (JSON.stringify(reply.rdj) !== JSON.stringify(parentRouter.data.rdjData())) {
             parentRouter.data.rdjData(reply.rdj);
+          }
 
-            if (CoreUtils.isNotUndefinedNorNull(reply.rdj.data.Name) &&
-              CoreUtils.isNotUndefinedNorNull(reply.rdj.data.Name.value)
-            ) {
-              const pageTitle = `${Runtime.getName()} - ${reply.rdj.data.Name.value}`;
-              parentRouter.data.pageTitle(pageTitle);
-            }
+          // Update the page title when the PDJ changes
+          if (changePageTitle) {
+            const titleName = Runtime.getName();
+            const titlePage = reply.pdj.helpPageTitle;
+            const pageTitle = (titlePage ? `${titleName} - ${titlePage}` : titleName);
+
+            // Set document title as the form/table is not connected, just rendered again!
+            document.title = pageTitle;
+            parentRouter.data.pageTitle(pageTitle);
           }
         }
       }

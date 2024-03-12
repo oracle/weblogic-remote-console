@@ -27,6 +27,7 @@ import weblogic.remoteconsole.server.webapp.UriUtils;
 public class PropertyListDataProviderImpl implements PropertyListDataProvider {
   public static final String TYPE_NAME = "PropertyList";
   private String name;
+  private String label;
   private String pageDescription;
   private String resourceData;
   private String lastMessage = null;
@@ -34,8 +35,9 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
   private Map<String, Root> roots = new HashMap<String, Root>();
   private Root editRoot;
 
-  public PropertyListDataProviderImpl(String name) {
+  public PropertyListDataProviderImpl(String name, String label) {
     this.name = name;
+    this.label = label;
     editRoot = new Root(
       this,
       Root.PROPERTY_LIST_CONFIGURATION_NAME,
@@ -121,6 +123,11 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
   }
 
   @Override
+  public String getLabel() {
+    return label;
+  }
+
+  @Override
   public String getName() {
     return name;
   }
@@ -152,6 +159,9 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
   public JsonObject toJSON(InvocationContext ic) {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", getName());
+    if ((getLabel() != null) && !getName().equals(getLabel())) {
+      ret.add("label", getLabel());
+    }
     ret.add(ProviderResource.PROVIDER_TYPE, getType());
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (Root root : getRoots().values()) {

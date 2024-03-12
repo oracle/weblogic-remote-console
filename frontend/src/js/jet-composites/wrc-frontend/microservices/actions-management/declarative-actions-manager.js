@@ -1,13 +1,53 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function (oj, ko, DataOperations, PageDefinitionUtils, Runtime, CoreTypes, CoreUtils, Logger) {
+define([
+    'wrc-frontend/core/parsers/yaml',
+    'text!wrc-frontend/config/wrc-actions.yaml',
+    'ojs/ojcore',
+    'knockout',
+    'wrc-frontend/apis/data-operations',
+    'wrc-frontend/microservices/page-definition/utils',
+    'wrc-frontend/common/page-definition-helper',
+    'wrc-frontend/integration/viewModels/utils',
+    'wrc-frontend/core/runtime',
+    'wrc-frontend/core/types',
+    'wrc-frontend/core/utils',
+    'ojs/ojlogger'
+  ],
+  function (
+    YamlParser,
+    WrcActionsFileContents,
+    oj,
+    ko,
+    DataOperations,
+    PageDefinitionUtils,
+    PageDefinitionHelper,
+    ViewModelUtils,
+    Runtime,
+    CoreTypes,
+    CoreUtils,
+    Logger
+  ) {
+    let backendActions = [], frontendActions;
+  
+    YamlParser.parse(WrcActionsFileContents)
+      .then(config => {
+        if (config && config.actions && config.actions.backend) {
+          backendActions = config.actions.backend;
+        }
+        if (config && config.actions && config.actions.frontend) {
+          frontendActions = config.actions.frontend;
+        }
+      })
+      .catch((err) => {
+        Logger.error(err);
+      });
 
     const i18n = {
       messages: {
@@ -59,12 +99,25 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       if (checkedRows.size > 0) {
         for (const rowKeyValue of Array.from(checkedRows)) {
           const index = rdjData.data.map(row => row.identity.value.resourceData).indexOf(rowKeyValue);
+          
           if (index !== -1 && CoreUtils.isNotUndefinedNorNull(rdjData.data[index].identifier)) {
             const row = {value: rdjData.data[index].identifier.value};
             actionDataPayload.rows.value.push(row);
           }
           else {
-            const row = {value: {resourceData: rowKeyValue}};
+            let row;
+
+            // the checked row might refer to rdjData.data[x].identifier.value such as invoking an aggregate action on a sliceTable..
+            // if that is the case pass the entire identifier to the backend
+            const identifierIndex = rdjData.data.findIndex(row => row.identifier?.value === rowKeyValue);
+
+            if (identifierIndex !== -1) {
+               row = rdjData.data[identifierIndex].identifier;
+            }
+            else {
+              // assume that the rowKeyValue is a path to a resource 
+               row = { value: { resourceData: rowKeyValue } };
+            }
             actionDataPayload.rows.value.push(row);
           }
         }
@@ -87,6 +140,31 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         }
       }
       return rows;
+    }
+
+    function getActionInputMultipartFormDataPayload(multipartForm, submitResults, checkedRows) {
+      let multipartFormDataPayload = {};
+      if (checkedRows.size > 0) {
+        const actionInputDataPayload = {rows: {value: []}};
+        for (const identity of Array.from(checkedRows)) {
+          actionInputDataPayload.rows.value.push({value: {resourceData: identity}});
+        }
+        const requestBody = {
+          data: {},
+          rows: actionInputDataPayload.rows
+        };
+        multipartFormDataPayload = multipartForm.createMultipartFormData(
+          requestBody,
+          submitResults,
+          false
+        );
+      }
+      
+      // If all went well inside the createMultipartFormData()
+      // call, then the form data for the multipart-form will
+      // be assigned to multipartFormDataPayload.formData. Otherwise,
+      // multipartFormDataPayload will be an empty JS object.
+      return multipartFormDataPayload.formData;
     }
 
     function getActionInputDataPayload(submitResults, checkedRows) {
@@ -143,17 +221,61 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         actionButtons.buttons[menuItem.name] = {
           disabled: ko.observable(menuItem.disabled)
         };
+        if (CoreUtils.isNotUndefinedNorNull(menuItem.menus)) {
+          
+          let option = document.createElement('oj-option');
+          option.setAttribute('id', menuItem.name);
+          option.setAttribute('value', menuItem.name);
+          option.setAttribute('data-action', action.name);
+          option.setAttribute('disabled', false);
+          const span1 = document.createElement('span');
+          span1.innerText = menuItem.label;
+          option.append(span1);
+          const subMenu = createSubMenu(menuItem, actionButtons, action.name);
+          option.append(subMenu);
+          menu.append(option);
+          //actionButtons.html.append(subMenu);
+        }
+        else {
+          option = document.createElement('oj-option');
+          option.setAttribute('id', menuItem.name);
+          option.setAttribute('value', menuItem.name);
+          option.setAttribute('data-action', action.name);
+          option.setAttribute('disabled', `[[actionButtons.buttons.${menuItem.name}.disabled]]`);
+          const span = document.createElement('span');
+          span.innerText = menuItem.label;
+          option.append(span);
+          menu.append(option);
+          const AM = menu.innerHTML;
+        }
+      });
+      return menu;
+    }
+
+    function createSubMenu(menu, actionButtons, actionName) {
+      let option;
+      const subMenu = document.createElement('oj-menu');
+      subMenu.setAttribute('id', `${menu.name}Menu`);
+      menu.menus.forEach((menuItem) => {
+        actionButtons.buttons[menuItem.name] = {
+          disabled: ko.observable(menuItem.disabled)
+        };
         option = document.createElement('oj-option');
         option.setAttribute('id', menuItem.name);
         option.setAttribute('value', menuItem.name);
-        option.setAttribute('data-action', action.name);
-        option.setAttribute('disabled', `[[actionButtons.buttons.${menuItem.name}.disabled]]`);
+        option.setAttribute('data-action', actionName);
+        //option.setAttribute('disabled', `[[actionButtons.buttons.${menuItem.name}.disabled]]`);
+        option.setAttribute('disabled', false);
         const span = document.createElement('span');
         span.innerText = menuItem.label;
         option.append(span);
-        menu.append(option);
+        subMenu.append(option);
+        const AO = option.innerHTML;
+        const AS = subMenu.innerHTML;
+        const ATemp = false;
       });
-      return menu;
+      const SIn = subMenu.innerHTML;
+      return subMenu;
     }
 
     function isAggregatedRuntimeMBean(rdjData) {
@@ -230,11 +352,21 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
           break;
         }
         else if (CoreUtils.isNotUndefinedNorNull(pdjActions[i].actions)) {
-          const index = pdjActions[i].actions.map(item => item.name).indexOf(action);
-          if (index !== -1) {
-            actionInputFormLabels['label'] = pdjActions[i].label;
-            actionInputFormLabels['title'] = pdjActions[i].actions[index].helpLabel;
-            break;
+          let subAction = pdjActions[i].actions;
+          for (let sub = 0; sub < subAction.length; sub++) {
+            if (subAction[sub].name === action) {
+              actionInputFormLabels['label'] = subAction[sub].label;
+              actionInputFormLabels['title'] = subAction[sub].helpLabel;
+              break;
+            }
+            else if (CoreUtils.isNotUndefinedNorNull(subAction[sub].actions)) {
+              const index = subAction[sub].actions.map(item => item.name).indexOf(action);
+              if (index !== -1) {
+                actionInputFormLabels['label'] = subAction[sub].label;
+                actionInputFormLabels['title'] = subAction[sub].actions[index].helpLabel;
+                break;
+              }
+            }
           }
         }
       }
@@ -254,7 +386,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       }
       return rtnval;
     }
-
+  
     function getRowSelectionProperty(pdjData) {
       let rtnval = 'none';
       if (CoreUtils.isNotUndefinedNorNull(pdjData.table)) {
@@ -316,6 +448,73 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       return disabledState;
     }
 
+    function setActionConstraintDisabledState(tableData, declarativeActions, buttons, action) {
+      function matchedRowIndexConstraintValue(constraint, tableData, rowIndex) {
+        let rtnval = false;
+        switch (constraint.value) {
+          case 'first':
+            rtnval = (rowIndex === 0);
+            break;
+          case 'last':
+            rtnval = (rowIndex === tableData.length - 1);
+            break;
+        }
+        return rtnval;
+      }
+  
+      if (declarativeActions.checkedRows.size !== 1) {
+        for (let i = 0; i < declarativeActions.buttons.length; i++) {
+          declarativeActions.buttons[i].disabled = true;
+          buttons[declarativeActions.buttons[i].name].disabled(true);
+        }
+      }
+      else if (declarativeActions.checkedRows.size === 1) {
+        const values = Array.from(declarativeActions.checkedRows);
+        if (values && values.length > 0) {
+          const resourceData = values[0];
+          const identityRows = tableData.filter(row => CoreUtils.isNotUndefinedNorNull(row.identity));
+          if (identityRows.length > 0) {
+            const rowIndex = tableData.map(row => row.identity.value.resourceData).indexOf(resourceData);
+            if (rowIndex !== -1) {
+              let actions;
+              if (CoreUtils.isNotUndefinedNorNull(action)) {
+                actions = declarativeActions.buttons.filter(action => action.constraint && action.name === action);
+              }
+              else {
+                actions = declarativeActions.buttons.filter(action => CoreUtils.isNotUndefinedNorNull(action.constraint));
+              }
+    
+              for (const action of actions) {
+                // At this point, we already know that action has a
+                // constraint property. What we don't know is whether
+                // the constraint.type is 'rowIndex', or not.
+                if (action.constraint.type === 'rowIndex') {
+                  // It is, so we need to disable the action when the
+                  // row checked in the table, matches constraint.value.
+                  const valueMatched = matchedRowIndexConstraintValue(
+                    action.constraint,
+                    tableData,
+                    rowIndex
+                  );
+                  // Next, we need to get the index of the UI button
+                  // control.
+                  const buttonIndex = declarativeActions.buttons.map(button => button.name).indexOf(action.name);
+                  if (buttonIndex !== -1) {
+                    declarativeActions.buttons[buttonIndex].disabled = valueMatched;
+                    // Found it, so use buttonIndex to get the buttonId.
+                    const buttonId = declarativeActions.buttons[buttonIndex].name;
+                    // Last but not least, use buttonId to update value of disabled
+                    // observable.
+                    buttons[buttonId].disabled(valueMatched);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     function setActionsDisabledState(declarativeActions, buttons) {
       function computeDisabledState(action, checkedRowsCount, rowSelectionRequired, dataRowsCount) {
         let rtnval = false;
@@ -339,31 +538,33 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       }
 
       let disabledState;
+  
+      const filtered = declarativeActions.buttons.filter(action => CoreUtils.isUndefinedOrNull(action.constraint));
 
-      for (let i = 0; i < declarativeActions.buttons.length; i++) {
+      for (let i = 0; i < filtered.length; i++) {
         disabledState = computeDisabledState(
-          declarativeActions.buttons[i],
+          filtered[i],
           declarativeActions.checkedRows.size,
           declarativeActions.rowSelectionRequired,
           declarativeActions.dataRowsCount
         );
-        declarativeActions.buttons[i].disabled = disabledState;
-        const buttonId = declarativeActions.buttons[i].name;
+        filtered[i].disabled = disabledState;
+        const buttonId = filtered[i].name;
         buttons[buttonId].disabled(disabledState);
-        if (CoreUtils.isNotUndefinedNorNull(declarativeActions.buttons[i].menus)) {
-          for (let j = 0; j < declarativeActions.buttons[i].menus.length; j++) {
+        if (CoreUtils.isNotUndefinedNorNull(filtered[i].menus)) {
+          for (let j = 0; j < filtered[i].menus.length; j++) {
             disabledState = computeDisabledState(
-              declarativeActions.buttons[i].menus[j],
+              filtered[i].menus[j],
               declarativeActions.checkedRows.size,
               declarativeActions.rowSelectionRequired,
               declarativeActions.dataRowsCount
             );
-            declarativeActions.buttons[i].menus[j].disabled = disabledState;
-            const menuId = declarativeActions.buttons[i].menus[j].name;
+            filtered[i].menus[j].disabled = disabledState;
+            const menuId = filtered[i].menus[j].name;
             buttons[menuId].disabled(disabledState);
           }
-          declarativeActions.buttons[i].disabled = getParentActionsDisabledState(declarativeActions.buttons[i]);
-          buttons[buttonId].disabled(declarativeActions.buttons[i].disabled);
+          filtered[i].disabled = getParentActionsDisabledState(filtered[i]);
+          buttons[buttonId].disabled(filtered[i].disabled);
         }
       }
     }
@@ -387,51 +588,82 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         })
         .catch(response => {
           if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-            const reply = {
-              succeeded: false
-            };
-            if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
-              const message = response.body.messages[0].message;
-              if (message.indexOf('Read timed out') !== -1) {
-                reply['succeeded'] = true;
-              }
-              else {
-                if (addActionNotPerformedMessage) {
-                  response.body.messages.unshift({
-                    severity: 'error',
-                    message: i18n.messages.action.actionNotPerformed.detail.replace('{0}', actionLabel)
-                  });
-                }
-                reply['messages'] = response.body.messages;
-              }
-            }
-            else {
-              reply['messages'] = [{
-                severity: 'error',
-                summary: i18n.messages.action.unableToPerform.summary,
-                detail: i18n.messages.action.unableToPerform.detail.replace('{1}', actionLabel).replace('{0}', response.transport.statusText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
-              }];
-            }
-            return Promise.reject(reply);
+            return handlePostActionDataResponse(response, actionLabel, addActionNotPerformedMessage);
+          }
+          
+        });
+    }
+    
+    /**
+     *
+     * @param {string} actionLabel
+     * @param {{resourceData: string}} endpoint
+     * @param {FormData} formData
+     * @param {boolean} [addActionNotPerformedMessage=true]
+     * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+     * @private
+     */
+    function multipartPostActionData(actionLabel, endpoint, formData, addActionNotPerformedMessage = true) {
+      const url = `${Runtime.getBackendUrl()}${endpoint.resourceData}`;
+      return DataOperations.mbean.upload(url, formData)
+        .then(reply => {
+          return {
+            succeeded: true,
+            messages: reply.body.messages
+          };
+        })
+        .catch(response => {
+          return handlePostActionDataResponse(response, actionLabel, addActionNotPerformedMessage);
+        });
+    }
+    
+    function handlePostActionDataResponse(response, actionLabel, addActionNotPerformedMessage) {
+      if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+        const reply = {
+          succeeded: false
+        };
+        if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
+          const message = response.body.messages[0].message;
+          if (message.indexOf('Read timed out') !== -1) {
+            reply['succeeded'] = true;
           }
           else {
-            let reasonText = i18n.labels.cannotDetermineExactCause.value;
-            if (CoreUtils.isError(response.reason)) {
-              reasonText = response.name;
-            } else if (CoreUtils.isError(response.failureReason)) {
-              reasonText = response.failureReason.name;
-            }
-            return Promise.reject({
-              succeeded: false,
-              messages: [{
+            if (addActionNotPerformedMessage) {
+              response.body.messages.unshift({
                 severity: 'error',
-                summary: i18n.messages.action.unableToPerform.summary,
-                detail: i18n.messages.action.unableToPerform.detail.replace('{1}', actionLabel).replace('{0}', response.transport.statusText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
-              }]
-            });
+                message: i18n.messages.action.actionNotPerformed.detail.replace('{0}', actionLabel)
+              });
+            }
+            reply['messages'] = response.body.messages;
           }
-
+        }
+        else {
+          reply['messages'] = [{
+            severity: 'error',
+            summary: i18n.messages.action.unableToPerform.summary,
+            detail: i18n.messages.action.unableToPerform.detail.replace('{1}', actionLabel).replace('{0}', response.transport.statusText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
+          }];
+        }
+        return Promise.reject(reply);
+      }
+      else {
+        let reasonText = i18n.labels.cannotDetermineExactCause.value;
+        if (CoreUtils.isError(response.reason)) {
+          reasonText = response.name;
+        }
+        else if (CoreUtils.isError(response.failureReason)) {
+          reasonText = response.failureReason.name;
+        }
+        return Promise.reject({
+          succeeded: false,
+          messages: [{
+            severity: 'error',
+            summary: i18n.messages.action.unableToPerform.summary,
+            detail: i18n.messages.action.unableToPerform.detail.replace('{1}', actionLabel).replace('{0}', response.transport.statusText) + ' ' + oj.Translations.getTranslatedString('wrc-message-displaying.messages.seeJavascriptConsole.detail')
+          }]
         });
+      }
+
     }
     
     async function performDownloadAction(rdjData, declarativeActions, options) {
@@ -446,16 +678,31 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
 
       if (declarativeActions.checkedRows.size > 0) {
         const replies = [];
-        const rowKeyName = `_${declarativeActions.rowSelectionProperty}` ;
         const endpoint = getActionEndpoint(rdjData.actions, options.action);
         for (const rowKeyValue of Array.from(declarativeActions.checkedRows)) {
           const actionDataPayload = {rows: {value: []}};
-          const row = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
-          if (rowKeyName === '_identity') {
-            actionDataPayload.rows.value.push({value: row.identity.value});
-          }
-          else if (rowKeyName === '_identifier') {
-            actionDataPayload.rows.value.push({value: row.identifier.value});
+          // Look for row in rdjData with rowKeyValue assigned to the identity
+          // column.
+          let identityRow = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
+          if (CoreUtils.isNotUndefinedNorNull(identityRow)) {
+            // Found one, so get value of rowSelectionProperty that
+            // came from the PDJ.
+            const rowKeyName = `_${declarativeActions.rowSelectionProperty}`;
+            if (rowKeyName === '_identifier' && CoreUtils.isNotUndefinedNorNull(identityRow.identifier)) {
+              // Create request payload for the POST using identifier
+              // of identityRow that was found
+              actionDataPayload.rows.value.push({value: identityRow.identifier.value});
+            }
+            else if (rowKeyName === '_identity') {
+              // Look for row in rdjData with rowKeyCalue assigned to
+              // the identity column.
+              identityRow = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
+              if (CoreUtils.isNotUndefinedNorNull(identityRow)) {
+                // Found one, so create request payload for the POST
+                // using identity of identityRow.
+                actionDataPayload.rows.value.push({value: identityRow.identity.value});
+              }
+            }
           }
 
           try {
@@ -480,6 +727,31 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       else {
         return Promise.resolve({succeeded: true, messages: []});
       }
+    }
+
+    async function performDeleteAction(rdjData, declarativeActions, options) {
+      if (declarativeActions.checkedRows.size > 0) {
+        const actionDataPayload = {rows: {value: []}};
+        const rowKeyName = declarativeActions.rowSelectionProperty;
+        for (const rowKeyValue of Array.from(declarativeActions.checkedRows)) {
+          const row = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
+          if (rowKeyName === 'identity') {
+            actionDataPayload.rows.value.push({value: row.identity.value});
+          }
+          else if (rowKeyName === 'identifier') {
+            actionDataPayload.rows.value.push({value: row.identifier.value});
+          }
+        }
+
+        if (actionDataPayload.rows.value.length > 0 &&
+          typeof declarativeActions.deleteActionCallback === 'function'
+        ) {
+          for (const identity of actionDataPayload.rows.value) {
+            declarativeActions.deleteActionCallback(identity.value.resourceData);
+          }
+        }
+      }
+      return Promise.resolve({succeeded: true, messages: []});
     }
 
     /**
@@ -522,7 +794,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
           wasFound = true;
         }
         else if (CoreUtils.isNotUndefinedNorNull(declarativeActions.buttons[i].menus)) {
-          for (let j = 0; j < declarativeActions.buttons[i].menus.length  && !wasFound; j++) {
+          for (let j = 0; j < declarativeActions.buttons[i].menus.length && !wasFound; j++) {
             if (declarativeActions.buttons[i].menus[j].name === action &&
               CoreUtils.isNotUndefinedNorNull(declarativeActions.buttons[i].menus[j].polling)
             ) {
@@ -561,6 +833,10 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         ACTION_POPUP: {name: 'ACTION_POPUP'}
       }),
       
+      hasFrontendActions: () => {
+        return (frontendActions.length > 0);
+      },
+      
       hasActions: (pdjData) => {
         return hasActions(pdjData);
       },
@@ -568,17 +844,23 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       hasActionInputForm: (rdjActions, action) => {
         return hasActionInputForm(rdjActions, action);
       },
-
+  
       hasSliceFormActionInput: (pdjData) => {
         return hasSliceFormActionInput(pdjData);
       },
-
-      getRowSelectionProperty: (pdjData) => {
-        return getRowSelectionProperty(pdjData);
+  
+      hasActionConstraints: (action = '') => {
+        let filtered = backendActions.filter(item => item.constraint && item.id === action);
+        return (filtered.length > 0);
+      },
+  
+      willAffectChangeManager: (action = '') => {
+        let filtered = backendActions.filter(item => item.affectsChangeManager && item.id === action);
+        return (filtered.length > 0);
       },
 
-      getNavigationProperty: (pdjData) => {
-        return getNavigationProperty(pdjData);
+      getDeletable: (rdjData) => {
+        return PageDefinitionHelper.isDeletable(rdjData);
       },
 
       getActionInputFormStyle: (pdjData) => {
@@ -590,6 +872,26 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         return getActionInputFormLabels(pdjActions, action);
       },
 
+      getActionInputFormLayoutSettings: (pdjActions, action) => {
+        const formLayout = {
+          options: {
+            labelWidthPcnt: '24%',
+            maxColumns: '1'
+          },
+          minWidth: parseInt(ViewModelUtils.getCustomCssProperty('overlayDialog-actionInput-width'), 10)
+        };
+        if (['updatePlanOnServer', 'uploadAndUpdate', 'updateExisting',
+          'redeploySourceOnServer', 'uploadAndRedeploy'].includes(action)) {
+          formLayout.options.labelWidthPcnt = '28%';
+          formLayout.minWidth = 850;
+        }
+        return formLayout;
+      },
+
+      onApplyActionConstraints: (tableData, declarativeActions, buttons, action) => {
+        setActionConstraintDisabledState(tableData, declarativeActions, buttons, action);
+      },
+
       onCheckedRowsChanged: (declarativeActions, buttons) => {
         setActionsDisabledState(declarativeActions, buttons);
       },
@@ -598,25 +900,109 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         return updateSubmittedCheckedRows(declarativeActions, options);
       },
 
+      addDeclarativeAction: (action, rdjData, pdjData, declarativeActions) => {
+        function createPDJAction(settingsAction, rdjData, pdjData) {
+          declarativeActions['rowSelectionRequired'] = true;
+          declarativeActions['rowSelectionProperty'] = 'identity';
+          declarativeActions['navigationProperty'] = 'identity';
+          declarativeActions['isDeletable'] = PageDefinitionHelper.isDeletable(rdjData);
+          declarativeActions.dataRowsCount = rdjData.data.length;
+          return {
+            name: settingsAction.id,
+            label: settingsAction.label,
+            rows: settingsAction.rows,
+            helpLabel: settingsAction.helpLabel,
+            helpSummaryHTML: settingsAction.helpSummaryHTML,
+            detailedHelpHTML: settingsAction.detailedHelpHTML
+          };
+        }
+
+        function addPDJAction(buttons, settingsAction, rdjData, pdjData) {
+          const pdjAction = createPDJAction(settingsAction, rdjData, pdjData);
+          if (PageDefinitionHelper.hasTable(pdjData)) {
+            if (hasActions(pdjData)) {
+              const index = pdjData.table.actions.map(item => item.name).indexOf(settingsAction.id);
+              if (index === -1) {
+                pdjData.table.actions.unshift(pdjAction);
+              }
+            }
+            else {
+              pdjData.table.requiresRowSelection = true;
+              pdjData.table.rowSelectionProperty = 'identity';
+              pdjData.table['actions'] = [pdjAction];
+            }
+          }
+          else if (PageDefinitionHelper.hasSliceTable(pdjData)) {
+            if (hasActions(pdjData)) {
+              const index = pdjData.sliceTable.actions.map(item => item.name).indexOf(settingsAction.id);
+              if (index === -1) {
+                pdjData.sliceTable.actions.unshift(pdjAction);
+              }
+            }
+            else {
+              pdjData.sliceTable.requiresRowSelection = true;
+              pdjData.sliceTable.rowSelectionProperty = 'identity';
+              pdjData.sliceTable['actions'] = [pdjAction];
+            }
+          }
+
+          const index = buttons.map(button => button.name).indexOf(pdjAction.name);
+
+          if (index === -1) {
+            const button = {};
+            button['name'] = pdjAction.name;
+            button['label'] = pdjAction.label;
+            button['iconFile'] = settingsAction.iconFile;
+            button['disabled'] = true;
+            if (CoreUtils.isNotUndefinedNorNull(pdjAction.rows)) {
+              button['disabled'] = (pdjAction.rows !== 'none');
+              button['rows'] = pdjAction.rows;
+            }
+            else {
+              button['rows'] = 'blank';
+            }
+            buttons.unshift(button);
+          }
+        }
+
+        declarativeActions['isDeletable'] = PageDefinitionHelper.isDeletable(rdjData);
+
+        if (CoreUtils.isNotUndefinedNorNull(declarativeActions.isDeletable) && declarativeActions.isDeletable) {
+          if (frontendActions.length > 0) {
+            const index = frontendActions.map(item => item.id).indexOf(action);
+            if (index !== -1) {
+              addPDJAction(declarativeActions.buttons, frontendActions[index], rdjData, pdjData);
+            }
+          }
+        }
+      },
+
       populateDeclarativeActions: (rdjData, pdjData, declarativeActions) => {
         declarativeActions.dataRowsCount = 0;
-        const settingsActions = Runtime.getSettingsActions();
-        if (CoreUtils.isNotUndefinedNorNull(settingsActions)) {
+        if (backendActions.length > 0) {
           const pdjActions = getPDJActions(pdjData);
           if (CoreUtils.isNotUndefinedNorNull(pdjActions)) {
             declarativeActions.rowSelectionRequired = rowSelectionRequired(pdjData);
             declarativeActions['rowSelectionProperty'] = getRowSelectionProperty(pdjData);
+            declarativeActions['isDeletable'] = PageDefinitionHelper.isDeletable(rdjData);
             declarativeActions['navigationProperty'] = getNavigationProperty(pdjData);
+            declarativeActions['hasActionConstraints'] = (backendActions.filter(item => CoreUtils.isNotUndefinedNorNull(item.constraint)).length > 0);
             declarativeActions.dataRowsCount = rdjData.data.length;
             declarativeActions.buttons = [];
             for (const pdjAction of pdjActions) {
-              const index = settingsActions.map(item => item.id).indexOf(pdjAction.name);
+              const index = backendActions.map(item => item.id).indexOf(pdjAction.name);
               if (index !== -1) {
                 const button = {};
                 button['name'] = pdjAction.name;
                 button['label'] = pdjAction.label;
-                button['iconFile'] = settingsActions[index].iconFile;
+                button['iconFile'] = backendActions[index].iconFile;
                 button['disabled'] = true;
+                if (CoreUtils.isNotUndefinedNorNull(backendActions[index].constraint)) {
+                  button['constraint'] = backendActions[index].constraint;
+                }
+                if (CoreUtils.isNotUndefinedNorNull(pdjAction.affectsChangeManager)) {
+                  button['affectsChangeManager'] = pdjAction.affectsChangeManager;
+                }
                 if (CoreUtils.isNotUndefinedNorNull(pdjAction.rows)) {
                   button['disabled'] = (pdjAction.rows !== 'none');
                   button['rows'] = pdjAction.rows;
@@ -641,12 +1027,28 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
                       menuItem['polling'] = getActionPollingObject(menu);
                     }
                     button.menus.push(menuItem);
+                    if (menu.actions) {
+                      menuItem['menus'] = [];
+                      for (const subMenu of menu.actions) {
+                        const subMenuItem = {
+                          name: subMenu.name,
+                          label: subMenu.label,
+                          disabled: (declarativeActions.rowSelectionRequired),
+                          //rows: subMenu.rows
+                        };
+                        if (CoreUtils.isNotUndefinedNorNull(subMenu.polling)) {
+                          subMenuItem['polling'] = getActionPollingObject(subMenu);
+                        }
+                        menuItem.menus.push(subMenuItem);
+                      }
+                    }
                   }
                   button.disabled = getParentActionsDisabledState(button);
                 }
                 declarativeActions.buttons.push(button);
               }
             }
+            declarativeActions['willAffectChangeManager'] = (declarativeActions.buttons.filter(item => CoreUtils.isNotUndefinedNorNull(item.affectsChangeManager)).length > 0);
           }
         }
       },
@@ -671,24 +1073,33 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         return actionButtons;
       },
 
+      getFrontendActionsHelpColumns: (group) => {
+        return frontendActions.filter(item => item.group === group);
+      },
+
       getPDJTypesHelpColumns: (pdjData) => {
+        const traverseActions = (actions, pdjTypesHelpColumns) => {
+          let children = [];
+          return actions.map((child) => {
+            if (child.detailedHelpHTML) {
+              pdjTypesHelpColumns.push(child);
+            }
+
+            if (child.actions) {
+              children = [...child.actions];
+              traverseActions(children, pdjTypesHelpColumns);
+            }
+          });
+        };
+
         let pdjTypesHelpColumns = [];
         const pdjActions = getPDJActions(pdjData);
-        if (CoreUtils.isNotUndefinedNorNull(pdjActions)) {
-          for (const pdjAction of pdjActions) {
-            if (CoreUtils.isUndefinedOrNull(pdjAction.actions)) {
-              pdjTypesHelpColumns.push(pdjAction);
-            }
-            else if (CoreUtils.isNotUndefinedNorNull(pdjAction.actions)) {
-              for (const menu of pdjAction.actions) {
-                pdjTypesHelpColumns.push(menu);
-              }
-            }
-          }
-        }
+
+        traverseActions([...pdjActions], pdjTypesHelpColumns);
+
         return pdjTypesHelpColumns;
       },
-      
+
       updatePDJTypesActionInputProperties: (pdjData) => {
         if (CoreUtils.isNotUndefinedNorNull(pdjData.actionInputForm) &&
           CoreUtils.isNotUndefinedNorNull(pdjData.actionInputForm.properties)
@@ -708,7 +1119,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         return getActionEndpoint(rdjActions, action);
       },
 
-      getActionInputFormRequest:(rdjData, declarativeActions, action, rowKeyName) => {
+      getActionInputFormRequest: (rdjData, declarativeActions, action, rowKeyName) => {
         delete declarativeActions.inputForm;
         const result = getActionInputFormRequest(rdjData, declarativeActions.checkedRows, action, rowKeyName);
         if (CoreUtils.isNotUndefinedNorNull(result.dataPayload.rows)) {
@@ -719,8 +1130,8 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
 
       getActionIconFile: (action) => {
         let iconFile = 'action-empty-icon-blk_24x24';
-        const settingsActions = Runtime.getSettingsActions();
-        if (CoreUtils.isNotUndefinedNorNull(settingsActions)) {
+        const settingsActions = [...backendActions, ...frontendActions];
+        if (settingsActions.length > 0) {
           const index = settingsActions.map(item => item.id).indexOf(action);
           if (index !== -1) {
             iconFile = settingsActions[index].iconFile;
@@ -733,6 +1144,9 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         if (options.isDownloadAction) {
           return performDownloadAction(rdjData, declarativeActions, options);
         }
+        else if (options.isDeleteAction) {
+          return performDeleteAction(rdjData, declarativeActions, options);
+        }
         else {
           const dataPayload = getActionDataPayload(rdjData, options, declarativeActions.checkedRows);
           const endpoint = getActionEndpoint(rdjData.actions, options.action);
@@ -741,8 +1155,21 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       },
 
       submitActionInputForm: (submitResults, checkedRows, endpoint, options) => {
-        const dataPayload = getActionInputDataPayload(submitResults, checkedRows);
-        return postActionData(options.label, endpoint, dataPayload);
+        if (CoreUtils.isNotUndefinedNorNull(options.multipartForm)) {
+          const formData = getActionInputMultipartFormDataPayload(
+            options.multipartForm,
+            submitResults,
+            checkedRows
+          );
+          return multipartPostActionData(options.label, endpoint, formData);
+        }
+        else {
+          const dataPayload = getActionInputDataPayload(
+            submitResults,
+            checkedRows
+          );
+          return postActionData(options.label, endpoint, dataPayload);
+        }
       }
 
     };

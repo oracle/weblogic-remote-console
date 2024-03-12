@@ -1,0 +1,36 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: []
+name: weblogic.management.runtime.ServerConnectionStatusRuntimeMBean
+properties:
+- name: ServerURL
+  type: java.lang.String
+  descriptionHTML: >
+    The HTTP/S url that was used to send a REST request to this managed server.
+    'unknown' if the Administration Server doesn't know its address
+    (typically because the managed server isn't running).
+- name: Status
+  type: int
+  descriptionHTML: >
+    The response's HTTP status code (if a response was received).  See https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/wlrdc/status-codes.html for more information about HTTP status codes
+- name: ResponseHeaders
+  type: java.lang.String
+  array: true
+  descriptionHTML: >
+    The response headers (if a response was received).
+- name: ResponseBody
+  type: java.lang.String
+  descriptionHTML: >
+    The response body (if a response was received).
+- name: Exception
+  type: java.lang.String
+  descriptionHTML: >
+    The nested exception's message (if an exception occurred).
+- name: StackTrace
+  type: java.lang.String
+  descriptionHTML: >
+    The nested exception's stack trace (if an exception occurred).

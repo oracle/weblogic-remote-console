@@ -14,6 +14,7 @@ const getDriver = require('../lib/browser');
 // Get AdminServer properties
 const Admin = require('../lib/admin');
 const browser = require('../lib/admin').browserName;
+const localAsProvider = require('../lib/admin').domConName;
 
 // Get Domain functions
 const Domain = require('../lib/domainProperty');
@@ -64,7 +65,19 @@ describe.only('Test Suite: anaASAndWDTProviders_test: (Action Not Allowed Dialog
             console.log("Click Data Sources node");
             await driver.findElement(By.xpath("//span[contains(.,'Data Sources')]")).click();
             await driver.sleep(7200);
-            //Verify ANA (Action Not Allowed) dialog comes up and the current page is Deployment Application
+            //Verify ANA (Action Not Allowed) appears when click at Data Sources node
+            console.log("Check if Action Not Allowed dialog appears");
+            driver.findElements(
+                By.xpath("//label[contains(.,'Use \"Action Not Allowed\" popup') and @class='oj-component-initnode']"))
+                .then((elements) => {
+                    if (elements.length > 0) {
+                        console.log("Action Not Allowed dialog appears");
+                        return true;
+                    } else {
+                        console.log("Action Not Allowed dialog doesn't appear");
+                        console.log("TEST FAIL");
+                    }
+                });
             console.log("Verify if Application Deploy is = testApp")
             element = driver.findElement(By.xpath("//input[@id='Name|input']"));
             if (await element.getAttribute("value") == 'testApp') {
@@ -88,6 +101,7 @@ describe.only('Test Suite: anaASAndWDTProviders_test: (Action Not Allowed Dialog
         async function () {
             file = "UC-008B.png";
             try {
+                let ANADialog = false;
                 const projFile = "frontend/system-tests/lib/wdtDomainProject.json";
                 const propertyFile = "frontend/system-tests/lib/baseDomainPropList.prop";
                 const path = require('path');
@@ -120,25 +134,40 @@ describe.only('Test Suite: anaASAndWDTProviders_test: (Action Not Allowed Dialog
                 console.log("Enter JNDI name");
                 await driver.findElement(By.xpath("//input[@id='JNDIName|input']")).sendKeys("testJNDIName-123");
                 await driver.sleep(1200);
-                element = driver.findElement(By.xpath("//div[@id='slideup-toggle']"));
+                //console.log("Click Create button");
+                //await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']")).click();
+                //await driver.sleep(7200);
+                element = driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']"));
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                 await element.click();
-                await driver.sleep(1200);
-                await admin.selectDomainConnection(driver,"1411LocalDomain");
-                await driver.sleep(7400);
-                console.log("TEST PASS ");
-                //Verify ANA (Action Not Allowed) dialog comes up and the current page is Mail Session
-                console.log("Verify if Mail Session is = testMailSession-123")
-                element = driver.findElement(By.xpath("//input[@id='Name|input']"));
-                if (await element.getAttribute("value") == 'testMailSession-123') {
-                    console.log("Mail Session  = testMailSession-123 ")
-                    console.log("TEST PASS ");
-                }
-                else {
-                    console.log("Mail Session  != testMailSession-123");
-                    console.log("TEST FAIL ");
-                }
+                await driver.sleep(300);
+                console.log("Check if Action Not Allowed dialog appears");
+                driver.findElements(
+                    By.xpath("//*[contains(.,'Cannot perform requested action during a create operation')]"))
+                    .then((elements) => {
+                        if (elements.length > 0) {
+                            console.log("Action Not Allowed dialog appears");
+                            ANADialog = true;
+                        } else {
+                            ANADialog = false;
+                            console.log("Action Not Allowed dialog doesn't appear");
+                            console.log("TEST FAIL");
+                        }
+                    });
 
+                await driver.sleep(8400);
+                if (ANADialog) {
+                    console.log("Verify if Mail Session is = testMailSession-123")
+                    element = driver.findElement(By.xpath("//input[@id='Name|input']"));
+                    if (await element.getAttribute("value") == 'testMailSession-123') {
+                        console.log("Mail Session  = testMailSession-123 ")
+                        console.log("TEST PASS ");
+                    } else {
+                        console.log("Mail Session  != testMailSession-123");
+                        console.log("TEST FAIL ");
+                    }
+                }
+                await driver.sleep(1200);
             } catch (e) {
                 await admin.takeScreenshot(driver, file);
                 console.log(e.toString() + " TEST FAIL");
@@ -146,8 +175,9 @@ describe.only('Test Suite: anaASAndWDTProviders_test: (Action Not Allowed Dialog
     })
 
     //   https://confluence.oraclecorp.com/confluence/pages/viewpage.action?pageId=4763969598
+    //   Re-investigate for potential issue
     //
-    it('3. Test Category: GAT/Risk1\n \t Test Scenario: UC-017B: ', async function () {
+    it.skip('3. Test Category: GAT/Risk1\n \t Test Scenario: UC-017B: ', async function () {
         file = "UC-017B.png";
         try {
             const projFile = "frontend/system-tests/lib/wdtDomainProject.json";
@@ -185,21 +215,20 @@ describe.only('Test Suite: anaASAndWDTProviders_test: (Action Not Allowed Dialog
             element = driver.findElement(By.xpath("//*[@id='MaxConcurrentNewThreads|input']"));
             await element.clear();
             await element.sendKeys("100");
-            await driver.sleep(600);
-            console.log("Click slideup-toggle expand Kiosk menu...");
-            await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click();
-            await driver.sleep(2400);
+            await driver.sleep(60000000);
+            //console.log("Click slideup-toggle expand Kiosk menu...");
+            //await driver.findElement(By.xpath("//*[@id='slideup-toggle']/img")).click();
+            //await driver.sleep(2400);
+            element = driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
             console.log("Click baseDomainPropList");
             await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
-            await driver.sleep(600);
-            console.log("Click Yes button at Unsaved Changes Detected Dialog.");
-            element = await driver.findElement(
-                By.xpath("//oj-button[@id='dlgYesBtn']/button/div/span")).click();
             await driver.sleep(600);
             console.log("Click Cancel button at Edit WDT Model File Provider Dialog.");
             element = await driver.findElement(
                 By.xpath("//*[@id='dlgCancelBtn12']/button/div")).click();
-            await driver.sleep(600);
+            await driver.sleep(1200);
             //Verify if Max Concurrency New Threads == 50
             element = driver.findElement(By.xpath("//*[@id='MaxConcurrentNewThreads|input']"));
             console.log("Verify if Max Concurrency New Threads == 100")

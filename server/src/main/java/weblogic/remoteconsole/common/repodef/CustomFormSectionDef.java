@@ -1,10 +1,12 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import weblogic.remoteconsole.common.utils.ListUtils;
 
 /**
  * POJO that implements CreateFormDef.
@@ -28,8 +30,8 @@ public class CustomFormSectionDef implements FormSectionDef {
     setTitle(toClone.getTitle());
     setIntroductionHTML(toClone.getIntroductionHTML());
     setUsedIfDef(toClone.getUsedIfDef());
-    getPropertyDefs().addAll(toClone.getPropertyDefs());
-    getSectionDefs().addAll(toClone.getSectionDefs());
+    getPropertyDefs().addAll(ListUtils.nonNull(toClone.getPropertyDefs()));
+    getSectionDefs().addAll(ListUtils.nonNull(toClone.getSectionDefs()));
   }
 
   @Override

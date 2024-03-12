@@ -2,7 +2,7 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "2.4.7",
+  "version": "2.4.8",
   "main": "app/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,7 +21,7 @@
   },
   "license": "UPL",
   "description": "A remote console for WebLogic",
-  "copyright": "Copyright (c) 2021, 2023, Oracle and/or its affiliates.",
+  "copyright": "Copyright (c) 2021, 2024, Oracle and/or its affiliates.",
   "dependencies": {
     "chokidar": "^3.5.3",
     "electron-log": "^4.4.8",

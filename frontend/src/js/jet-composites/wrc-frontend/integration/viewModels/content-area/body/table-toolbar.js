@@ -1,14 +1,36 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojcheckboxset'],
-  function (oj, ko, Runtime, ChangeManager, PerspectiveMemoryManager, ViewModelUtils, CoreTypes, CoreUtils, Logger) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'wrc-frontend/common/keyup-focuser',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/core/types',
+  'wrc-frontend/core/utils',
+  'ojs/ojlogger',
+  'ojs/ojknockout',
+  'ojs/ojcheckboxset'
+],
+  function (
+    oj,
+    ko,
+    KeyUpFocuser,
+    PerspectiveMemoryManager,
+    ViewModelUtils,
+    Runtime,
+    CoreTypes,
+    CoreUtils,
+    Logger
+  ) {
     function TableToolbar(viewParams) {
       const self = this;
 
@@ -38,7 +60,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           }
         },
         icons: {
-          'landing': { iconFile: 'landing-page-icon-blk_24x24',
+          'landing': { iconFile: 'landing-page-icon-blk_24x24', visible: ko.observable(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name),
             tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.landing.tooltip')
           },
           'history': { iconFile: 'beanpath-history-icon-blk_24x24',
@@ -50,15 +72,12 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           'help': { iconFile: 'toggle-help-on-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.help.tooltip')
           },
-          'sync': { iconFile: 'sync-off-icon-blk_24x24',
+          'sync': { iconFile: ko.observable('sync-off-icon-blk_24x24'),
             tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.sync.tooltip'),
             tooltipOn: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.sync.tooltipOn')
           },
           'syncInterval': { iconFile: 'sync-interval-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.syncInterval.tooltip')
-          },
-          'shoppingcart': { iconFile: 'commit-to-cart-icon_24x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.shoppingcart.tooltip')
           },
           'separator': {
             iconFile: 'separator-vertical_10x24',
@@ -66,17 +85,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
           }
         },
         menus: {
-          shoppingcart: {
-            'view': { id: 'view', iconFile: '', disabled: false, visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.view.label')
-            },
-            'discard': { id: 'discard', iconFile: 'discard-changes-blk_24x24', disabled: false, visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.discard.label')
-            },
-            'commit': { id: 'commit', iconFile: 'commit-changes-blk_24x24', disabled: false, visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.commit.label')
-            }
-          },
           history: {
             'clear': {
               id: 'clear-history',
@@ -101,10 +109,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       // <img id="sync-icon">
       this.autoSyncEnabled = ko.observable(false);
       this.showAutoSyncIcons = ko.observable(true);
-
-      // Need initial values because table-toolbar.html has binding
-      // expressions that reference changeManager
-      this.changeManager = ko.observable({isLockOwner: false, hasChanges: false, supportsChanges: false});
 
       // This instance-scope variable is used to remember and
       // recall the value of the auto-sync interval
@@ -132,8 +136,6 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
         let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
           self.readonly(newRO);
-          self.i18n.menus.shoppingcart.discard.visible(!newRO);
-          self.i18n.menus.shoppingcart.commit.visible(!newRO);
         });
 
         self.signalBindings.push(binding);
@@ -149,70 +151,11 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager) => {
-          // For refresh event, issue a request to check then set the current state
-          if (eventType === 'refresh') {
-            ChangeManager.getLockState()
-              .then((data) => {
-                self.changeManager(data.changeManager);
-              })
-              .catch(response => {
-                ViewModelUtils.failureResponseDefaultHandling(response);
-              });
-            return;
-          } else
-          //we want to get the latest info from ChangeManager so that everything is in sync when we first
-          //bring up the form.
-          if (eventType === 'sync') {
-            ChangeManager.getData()
-            .then(data => {
-              changeManager.supportsChanges = data.changeManager.supportsChanges;
-              changeManager.isLockOwner = data.changeManager.isLockOwner;
-              changeManager.hasChanges = data.changeManager.hasChanges;
-              ChangeManager.putMostRecent(changeManager);
-              self.changeManager(changeManager);
-            });
-          }
-
-          // Handle the event based on the supplied changeManager
-          Logger.log(`[TABLE-TOOLBAR] self.changeManager()=${self.changeManager()}`);
-          changeManager.supportsChanges = self.changeManager().supportsChanges;
-          if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
-            ChangeManager.putMostRecent(changeManager);
-            self.changeManager(changeManager);
-            if (eventType === 'discard') viewParams.onShoppingCartDiscarded();
-          }
-        });
-
-        self.signalBindings.push(binding);
-
-        // The establishment of this subscription will happen
-        // BEFORE the Promise for ChangeManager.getLockState()
-        // is resolved! The update of self.changeManager()
-        // inside the Promise.then() block, will subsequently
-        // trigger this subscription
-        this.changeManager.subscribe((newValue) => {
-          shoppingCartContentsChanged(newValue);
-        });
-
-        // Get value of changeManager properties asynchronously
-        ChangeManager.getLockState()
-          .then((data) => {
-            self.changeManager(data.changeManager);
-          })
-          .catch(response => {
-            ViewModelUtils.failureResponseDefaultHandling(response);
-          })
-          .then(() => {
-            self.renderToolbarButtons();
-            self.showBeanPathHistory(self.perspectiveMemory.beanPathHistory.visibility);
-            self.showInstructions(self.perspectiveMemory.instructions.visibility);
-            viewParams.onConnected(self.perspectiveMemory.beanPathHistory.visibility);
-          });
-
+        this.renderToolbarButtons();
       };
 
       this.disconnected = function () {
+        KeyUpFocuser.unregister('.cfe-content-area-body-iconbar-icon');
         // autoSyncCancelled is for stopping auto-sync when the user presses the
         // "Disconnect" icon in the toolbar icon of domain.js, or
         // the CFE notices that the CBE process is stopped.
@@ -224,79 +167,70 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         self.signalBindings = [];
       };
 
-      this.launchShoppingCartMenu = function(event) {
-        event.preventDefault();
-        document.getElementById('shoppingCartMenu').open(event);
-      };
-
-      this.shoppingCartMenuClickListener = function (event) {
-        const value = event.target.value;
-        if (value === 'view') {
-          viewParams.signaling.ancillaryContentItemSelected.dispatch('table-toolbar', ChangeManager.Entity.SHOPPING_CART.name);
+      this.registerTableIconbarIconsKeyUpFocuser = (id) => {
+        let result = KeyUpFocuser.getKeyUpCallback(id);
+    
+        if (!result.alreadyRegistered) {
+          result = KeyUpFocuser.register(
+            id,
+            {
+              Enter: {key: 'Enter', action: 'select', callback: onKeyUpFocuserActionSelect}
+            },
+            {}
+          );
         }
-        else {
-          switch (value){
-            case 'commit':
-              ViewModelUtils.setPreloaderVisibility(true);
-              ChangeManager.commitChanges()
-                .then(value => {
-                  self.changeManager(value);
-                  viewParams.signaling.ancillaryContentItemCleared.dispatch('shoppingcart-launcher');
-                })
-                .catch(response => {
-                  ViewModelUtils.failureResponseDefaultHandling(response);
-                })
-                .finally(() => {
-                  ViewModelUtils.setPreloaderVisibility(false);
-                });
-              break;
-            case 'discard':
-              ViewModelUtils.setPreloaderVisibility(true);
-              ChangeManager.discardChanges()
-                .then((changeManager) => {
-                  self.changeManager(changeManager);
-                  viewParams.signaling.ancillaryContentItemCleared.dispatch('shoppingcart-launcher');
-                  viewParams.onShoppingCartDiscarded();
-                })
-                .catch(response => {
-                  ViewModelUtils.failureResponseDefaultHandling(response);
-                })
-                .finally(() => {
-                  ViewModelUtils.setPreloaderVisibility(false);
-                });
-              break;
+    
+        return result.keyUpCallback;
+      };
+  
+      function onKeyUpFocuserActionSelect(event) {
+        function simulateHelpIconClickEvent(event) {
+          const link = document.querySelector(`#${event.target.id} > a`);
+          if (link !== null) {
+            event.preventDefault();
+            const event1 = new Event('click', {bubbles: true});
+            link.dispatchEvent(event1);
           }
         }
-
-      }.bind(this);
+  
+        function simulateSyncIconClickEvent(node) {
+          event.preventDefault();
+          const attr = node.attributes['data-interval'];
+          if (CoreUtils.isNotUndefinedNorNull(attr)) {
+            handleSyncIconEvent(node);
+          }
+        }
+  
+        const firstElementChild = event.target.firstElementChild.firstElementChild;
+        const iconId = firstElementChild.getAttribute('id');
+    
+        switch (iconId) {
+          case 'landing-page-icon':
+            self.landingPageClick(event);
+            break;
+          case 'toggle-history':
+            self.toggleHistoryClick(event);
+            break;
+          case 'page-help-icon':
+            simulateHelpIconClickEvent(event);
+            break;
+          case 'sync-icon':
+            simulateSyncIconClickEvent(firstElementChild);
+            break;
+          case 'sync-interval-icon':
+            self.syncIntervalClick(event);
+            break;
+        }
+      }
 
       function resetIconsVisibleState(state) {
         self.showAutoSyncIcons(state);
       }
 
-      this.isShoppingCartVisible = function() {
-        // Default to false
-        let visible = false;
-        // The console extension is installed, but the
-        // shopping cart icon may be hidden for the
-        // current perspective.
-        if (self.perspective.id === 'configuration') {
-          // The console extension isn't installed, but
-          // there is one perspective where still showing
-          // the shopping cart icon is required. That's
-          // the configuration perspective.
-          visible = viewParams.isShoppingCartVisible();
-        }
-        return visible;
+      this.isHistoryVisible = function() {
+        return viewParams.isHistoryVisible();
       };
-
-      function shoppingCartContentsChanged(changeManager) {
-        let ele = document.getElementById('shoppingCartImage');
-        if (ele !== null) {
-          ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + (changeManager.isLockOwner && changeManager.hasChanges ? 'non-empty' : 'empty') + '-tabstrip_24x24.png';
-        }
-      }
-
+  
       this.renderToolbarButtons =  function () {
         const rdjData = viewParams.parentRouter?.data?.rdjData();
         const isDashboard = (self.perspective.id === 'monitoring' && CoreUtils.isNotUndefinedNorNull(rdjData?.dashboardCreateForm));
@@ -308,9 +242,12 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       }.bind(this);
 
       this.toggleHistoryClick = function (event) {
-        const withHistoryVisible = viewParams.onBeanPathHistoryToggled(!self.showBeanPathHistory());
-        // Call function in table.js assigned to the
-        // onBeanPathHistoryToggled field in viewParams
+        const withHistoryVisible = !self.showBeanPathHistory();
+        // Call function in table.js with negation of value
+        // assigned to the knockout observable.
+        viewParams.onBeanPathHistoryToggled(withHistoryVisible);
+        // Set knockout observable to value returned from
+        // onBeanPathHistoryToggled() function in table.js
         self.showBeanPathHistory(withHistoryVisible);
       };
 
@@ -329,23 +266,37 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
         self.showHelp(helpVisible);
         viewParams.onHelpPageToggled(helpVisible);
       };
-
-      this.syncClick = function (event) {
-        const autoSyncEnabled = self.autoSyncEnabled();
-        let syncInterval = parseInt(event.target.attributes['data-interval'].value);
-        if (syncInterval === 0) {
-          // Just reload and ensure the sync state is not running.
-          if (autoSyncEnabled) {
-            self.autoSyncEnabled(false);
+  
+      function handleSyncIconEvent(node) {
+        const attr = node.attributes['data-interval'];
+        if (CoreUtils.isNotUndefinedNorNull(attr)) {
+          const autoSyncEnabled = self.autoSyncEnabled();
+          let syncInterval = 0;
+          if (CoreUtils.isNotUndefinedNorNull(attr.value)) {
+            // Get sync interval from the "data-interval" attribute
+            syncInterval = parseInt(attr.value);
           }
+          if (syncInterval === 0) {
+            // Just reload and ensure the sync state is not running
+            if (autoSyncEnabled) {
+              self.autoSyncEnabled(false);
+            }
+          }
+          else {
+            // Toggle the sync state and no interval when currently enabled
+            self.autoSyncEnabled(!autoSyncEnabled);
+            if (autoSyncEnabled) syncInterval = 0;
+          }
+          setAutoSyncIcon();
+          viewParams.onSyncClicked(syncInterval);
         }
-        else {
-          // Toggle the sync state and no interval when currently enabled
-          self.autoSyncEnabled(!autoSyncEnabled);
-          if (autoSyncEnabled) syncInterval = 0;
+      }
+  
+      this.syncClick = function (event) {
+        const attr = event.target.attributes['data-interval'];
+        if (CoreUtils.isNotUndefinedNorNull(attr)) {
+          handleSyncIconEvent(event.target);
         }
-        setAutoSyncIcon();
-        viewParams.onSyncClicked(syncInterval);
       };
 
       this.syncIntervalClick = function (event) {
@@ -379,8 +330,10 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/core/runtime', 'wrc-frontend/mic
       function setAutoSyncIcon() {
         // Change tooltip to let end user know the state
         let syncIconElement = document.getElementById('sync-icon');
-        if ((typeof syncIconElement !== 'undefined') && (syncIconElement !== null))
+        if (syncIconElement !== null) {
           syncIconElement.setAttribute('title', (self.autoSyncEnabled() ? self.i18n.icons.sync.tooltipOn : self.i18n.icons.sync.tooltip));
+          self.i18n.icons.sync.iconFile(self.autoSyncEnabled() ? 'bouncing-icon-blk_24x38' : 'sync-off-icon-blk_24x38');
+        }
       }
 
       this.cancelAutoSync = function () {

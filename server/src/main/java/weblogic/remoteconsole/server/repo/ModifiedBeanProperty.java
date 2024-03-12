@@ -1,37 +1,32 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
 
-import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.utils.Path;
 
 /**
- * This class information about a bean property that was modified
- * in the current configuration transaction.
+ * This class information about a bean property or ordered collection that
+ * was modified in the current configuration transaction.
  */
 public class ModifiedBeanProperty extends BaseBeanChange {
-  private BeanPropertyDef propertyDef;
+  private Path path;
   private boolean unset;
   private Value oldValue;
   private Value newValue;
 
   public ModifiedBeanProperty(
     BeanTreePath beanPath,
-    BeanPropertyDef propertyDef,
+    Path path,
     boolean unset,
     Value oldValue,
     Value newValue
   ) {
     super(beanPath);
-    this.propertyDef = propertyDef;
+    this.path = path;
     this.unset = unset;
     this.oldValue = oldValue;
     this.newValue = newValue;
-  }
-
-  // Returns the definition of the property
-  public BeanPropertyDef getPropertyDef() {
-    return propertyDef;
   }
 
   // Returns whether this modification has unset the property
@@ -47,5 +42,9 @@ public class ModifiedBeanProperty extends BaseBeanChange {
   // Returns the new (pending) value of the property
   public Value getNewValue() {
     return newValue;
+  }
+
+  public Path getPath() {
+    return path;
   }
 }

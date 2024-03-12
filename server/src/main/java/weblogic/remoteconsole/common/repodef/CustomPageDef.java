@@ -6,6 +6,8 @@ package weblogic.remoteconsole.common.repodef;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.remoteconsole.common.utils.ListUtils;
+
 /**
  * POJO used to help build implementations of interfaces that extend PageDef.
  * 
@@ -27,8 +29,8 @@ class CustomPageDef {
     setPagePath(toClone.getPagePath());
     setIntroductionHTML(toClone.getIntroductionHTML());
     setHelpPageTitle(toClone.getHelpPageTitle());
-    getHelpTopicDefs().addAll(toClone.getHelpTopicDefs());
-    getActionDefs().addAll(toClone.getActionDefs());
+    getHelpTopicDefs().addAll(ListUtils.nonNull(toClone.getHelpTopicDefs()));
+    getActionDefs().addAll(ListUtils.nonNull(toClone.getActionDefs()));
     setCustomizePageMethod(toClone.getCustomizePageMethod());
     setCustomizePageDefMethod(toClone.getCustomizePageDefMethod());
   }

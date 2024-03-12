@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -224,8 +224,8 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
-  public boolean isSupportsCustomFilteringDashboards() {
-    return getCustomizerSource().isSupportsCustomFilteringDashboards();
+  public boolean isSupportsFilteringDashboards() {
+    return getCustomizerSource().isSupportsFilteringDashboards();
   }
 
   @Override
@@ -309,6 +309,9 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     BeanPropertyDefCustomizerSource customizerSrc = propertyDefSources.getCustomizerSource();
     customizerSrc.setName(source.getName());
     Path parentPath = propertyDefSources.getPath().getParent();
+    if (!getBeanRepoDefImpl().supportsCapabilities(customizerSrc.getRequiredCapabilities())) {
+      return;
+    }
     BeanPropertyDefImpl propertyDefImpl = createBeanPropertyDefImpl(parentPath, src, customizerSrc);
     if (!propertyDefImpl.isSupportedType()) {
       LOGGER.finest(
@@ -330,6 +333,9 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     BeanChildDefCustomizerSource customizerSrc = childDefSources.getCustomizerSource();
     customizerSrc.setName(src.getName());
     Path parentPath = childDefSources.getPath().getParent();
+    if (!getBeanRepoDefImpl().supportsCapabilities(customizerSrc.getRequiredCapabilities())) {
+      return;
+    }
     addChildDefImpl(createBeanChildDefImpl(parentPath, src, customizerSrc));
   }
 

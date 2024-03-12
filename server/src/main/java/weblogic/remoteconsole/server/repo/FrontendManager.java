@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -25,8 +25,13 @@ public class FrontendManager {
     return frontends.get(id);
   }
 
+
   public static synchronized Frontend create() {
-    Frontend ret = new Frontend();
+    return create(null);
+  }
+
+  public static synchronized Frontend create(String id) {
+    Frontend ret = new Frontend(id);
     if (frontends.size() >= MAX_ENTRIES_CHECK) {
       Frontend oldest = null;
       for (Frontend walk : frontends.values()) {
@@ -46,5 +51,15 @@ public class FrontendManager {
     LOGGER.fine("Creating frontend with ID: " + ret.getID());
     frontends.put(ret.getID(), ret);
     return ret;
+  }
+
+  public static synchronized boolean destroy(String id) {
+    Frontend frontend = find(id);
+    if (frontend == null) {
+      return false;
+    }
+    frontend.terminate();
+    frontends.remove(id);
+    return true;
   }
 }

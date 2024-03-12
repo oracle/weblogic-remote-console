@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -20,6 +20,10 @@ public class UpdateHelper {
   }
 
   public static javax.ws.rs.core.Response update(InvocationContext ic, JsonObject requestBody) {
+    return (new UpdateHelper()).updateBean(ic, requestBody);
+  }
+
+  public javax.ws.rs.core.Response updateBean(InvocationContext ic, JsonObject requestBody) {
     Response<Void> response = new Response<>();
     // Make sure the bean exists
     Response<Void> existsResponse =
@@ -50,9 +54,24 @@ public class UpdateHelper {
       response.copyUnsuccessfulResponse(unmarshalResponse);
       return VoidResponseMapper.toResponse(actualIc, response);
     }
+    // Customize the form properties
+    Response<List<FormProperty>> customizeResponse =
+      customizeFormProperties(actualIc, unmarshalResponse.getResults());
+    if (!customizeResponse.isSuccess()) {
+      response.copyUnsuccessfulResponse(customizeResponse);
+      return VoidResponseMapper.toResponse(actualIc, response);
+    }
     // Update the underlying beans
-    response = ic.getPageRepo().asPageEditorRepo().update(actualIc, unmarshalResponse.getResults());
+    response = ic.getPageRepo().asPageEditorRepo().update(actualIc, customizeResponse.getResults());
     return VoidResponseMapper.toResponse(actualIc, response);
+  }
+
+  protected Response<List<FormProperty>> customizeFormProperties(
+    InvocationContext ic,
+    List<FormProperty> formProperties
+  ) {
+    Response<List<FormProperty>> response = new Response<>();
+    return response.setSuccess(formProperties);
   }
 
   public static Response<Boolean> isReadOnly(InvocationContext ic) {

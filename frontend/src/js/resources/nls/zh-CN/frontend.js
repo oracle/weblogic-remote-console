@@ -4,26 +4,269 @@ define({
       "appName": "WebLogic 远程控制台"
     },
     "icons": {
-      "connectivity": {
-        "online": {
-          "tooltip": "联机"
+      "navtree": {
+        "toggler": {
+          "tooltip": "显示/隐藏导航树"
+        }
+      },
+      "theme": {
+        "tooltip": "Switch theme"
+      },
+      "whatsNew": {
+        "tooltip": "What's New!"
+      },
+      "howDoI": {
+        "tooltip": "Open \"How Do I ...?\" Tasks"
+      },
+      "tips": {
+        "tooltip": "Toggle User Tips visibility"
+      },
+      "help": {
+        "tooltip": "打开 WebLogic 远程控制台内部文档"
+      },
+      "profile": {
+        "tooltip": "Profile"
+      }
+    },
+    "menus": {
+      "messageCenter": {
+        "value": "打开消息中心"
+      },
+      "theme": {
+        "light": {
+          "value": "Light"
         },
-        "offline": {
-          "tooltip": "脱机"
-        },
-        "detached": {
-          "tooltip": "已分离"
-        },
-        "unattached": {
-          "tooltip": "未附加"
+        "dark": {
+          "value": "Dark"
         }
       }
     }
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "版权所有 © 2020，2022，Oracle 和/或其关联公司。<br/>Oracle 是 Oracle Corporation 和/或其关联公司的注册商标。其他名称可能是各自所有者的商标。<br/>",
+      "copyrightLegal": "版权所有 (c) 2020，2024，Oracle 和/或其关联公司。<br/>Oracle (r)、Java、MySQL 和 NetSuite 是 Oracle 和/或其关联公司的注册商标。其他名称可能是各自所有者的商标。<br/>",
       "builtWith": "使用 Oracle JET 构建"
+    }
+  },
+  "wrc-connectivity": {
+    "labels": {
+      "insecure": {
+        "value": "不安全"
+      }
+    },
+    "icons": {
+      "insecure": {
+        "tooltip": "管理服务器连接不安全"
+      }
+    }
+  },
+  "wrc-app-profile": {
+    "icons": {
+      "profile": {
+        "popup": {
+          "launcher": {
+            "tooltip": "Show Profiles List"
+          }
+        },
+        "dialog": {
+          "launcher": {
+            "tooltip": "Manage Profiles"
+          },
+          "editor": {
+            "tooltip": "Profile Editor",
+            "toolbar": {
+              "save": {
+                "tooltip": "Save Profile"
+              },
+              "activate": {
+                "tooltip": "Active Profile"
+              },
+              "add": {
+                "tooltip": "Add Profile"
+              },
+              "remove": {
+                "tooltip": "Delete Profile"
+              }
+            }
+          }
+        },
+        "image": {
+          "tooltip": "Profile",
+          "capture": {
+            "tooltip": "Add or change image"
+          }
+        }
+      }
+    },
+    "tabstrip": {
+      "tabs": {
+        "general": {
+          "value": "一般信息"
+        },
+        "settings": {
+          "value": "设置"
+        },
+        "preferences": {
+          "value": "首选项"
+        },
+        "properties": {
+          "value": "属性"
+        }
+      }
+    },
+    "dialog": {
+      "changeImage": {
+        "value": "更改图像"
+      },
+      "clearImage": {
+        "value": "Clear Image"
+      },
+      "profile": {
+        "default": {
+          "value": "Default Profile"
+        },
+        "toggler": {
+          "editor": {
+            "show": {
+              "value": "Show Profile Editor"
+            },
+            "hide": {
+              "value": "Hide Profile Editor"
+            }
+          }
+        }
+      }
+    },
+    "popup": {
+      "profile": {
+        "manager": {
+          "open": {
+            "value": "Open Profile Manager"
+          },
+          "signout": {
+            "value": "注销"
+          }
+        }
+      }
+    },
+    "labels": {
+      "profile": {
+        "fields": {
+          "id": {
+            "value": "Profile ID"
+          },
+          "organization": {
+            "value": "Organization"
+          },
+          "name": {
+            "value": "名称"
+          },
+          "email": {
+            "value": "Email"
+          },
+          "role": {
+            "default": {
+              "value": "Use as Default Profile"
+            }
+          },
+          "settings": {
+            "useCredentialStorage": {
+              "value": "是否为您的项目存储加密身份证明？"
+            },
+            "disableHNV": {
+              "value": "是否禁用主机名验证？"
+            },
+            "proxyAddress": {
+              "value": "代理地址"
+            },
+            "trustStoreType": {
+              "value": "信任库类型"
+            },
+            "trustStorePath": {
+              "value": "信任库路径"
+            },
+            "trustStoreKey": {
+              "value": "信任库密钥"
+            },
+            "connectionTimeout": {
+              "value": "管理服务器连接超时"
+            },
+            "readTimeout": {
+              "value": "管理服务器读取超时"
+            }
+          },
+          "preferences": {
+            "theme": {
+              "value": "Theme"
+            },
+            "startupTaskChooserType": {
+              "value": "Startup Task Chooser Type"
+            },
+            "useMenusAsRootNodes": {
+              "value": "Use Tree Menus as the root level of Tree Navigators?"
+            },
+            "onQuit": {
+              "value": "Allow unsaved changes to prevent exiting application?"
+            },
+            "onDelete": {
+              "value": "Confirm all deletions?"
+            },
+            "onActionNotAllowed": {
+              "value": "Use \"Action Not Allowed\" popup to prevent data loss?"
+            },
+            "onUnsavedChangesDetected": {
+              "value": "Use \"Unsaved Changes Detected\" popup to prevent data loss?"
+            },
+            "onChangesNotDownloaded": {
+              "value": "Use \"Changes Not Download\" popup to prevent data loss?"
+            }
+          },
+          "properties": {
+            "javaSystemProperties": {
+              "value": "Java System Properties"
+            }
+          }
+        },
+        "legalValues": {
+          "themeOptions": {
+            "light": {
+              "value": "Light"
+            },
+            "dark": {
+              "value": "Dark"
+            }
+          },
+          "taskChooserTypeOptions": {
+            "useDialog": {
+              "value": "Use Dialog"
+            },
+            "useCards": {
+              "value": "Use Cards"
+            }
+          },
+          "trustStoreTypeOptions": {
+            "jks": {
+              "value": "JKS"
+            },
+            "pkcs12": {
+              "value": "PKCS12"
+            },
+            "windowsRoot": {
+              "value": "Windows ROOT"
+            },
+            "keyChainStore": {
+              "value": "Key Chain Store"
+            }
+          }
+        },
+        "messages": {
+          "save": {
+            "succeeded": {
+              "summary": "Profile \"{0}\" was saved successfully!"
+            }
+          }
+        }
+      }
     }
   },
   "wrc-data-providers": {
@@ -35,7 +278,7 @@ define({
         "tooltip": "管理"
       },
       "deactivate": {
-        "tooltip": "Deactivate"
+        "tooltip": "停用"
       },
       "delete": {
         "tooltip": "删除"
@@ -51,6 +294,9 @@ define({
         },
         "url": {
           "value": "URL"
+        },
+        "proxyOverride": {
+          "value": "代理覆盖"
         },
         "username": {
           "value": "用户名"
@@ -110,6 +356,11 @@ define({
     },
     "popups": {
       "info": {
+        "project": {
+          "name": {
+            "label": "项目名称："
+          }
+        },
         "provider": {
           "id": {
             "label": "提供程序 ID："
@@ -122,11 +373,17 @@ define({
           "url": {
             "label": "域 URL："
           },
+          "proxyOverride": {
+            "label": "代理覆盖："
+          },
           "version": {
             "label": "域版本："
           },
           "username": {
             "label": "用户名："
+          },
+          "sso": {
+            "label": "SSO："
           },
           "roles": {
             "label": "角色："
@@ -136,6 +393,9 @@ define({
           },
           "readTimeout": {
             "label": "读取超时:"
+          },
+          "insecure": {
+            "label": "不安全："
           },
           "anyAttempt": {
             "label": "尝试的任何连接："
@@ -278,6 +538,9 @@ define({
         "startup": {
           "value": "您希望执行哪个启动任务？"
         }
+      },
+      "project-busy": {
+        "value": "在对项目的任何部分进行更改之前，请保存或放弃未保存的更改"
       }
     },
     "titles": {
@@ -331,6 +594,9 @@ define({
         "task": {
           "value": "启动任务"
         }
+      },
+      "project-busy": {
+        "value": "项目繁忙"
       }
     },
     "messages": {
@@ -382,6 +648,11 @@ define({
           "detail": "要选择 WDT 组合，请首先选择 WDT 组合使用的所有 WDT 模型。"
         }
       },
+      "sso": {
+        "secureContextRequired": {
+          "detail": "The URL must specify the HTTPS protocol or use localhost"
+        }
+      },
       "correctiveAction": {
         "filePathNotFound": {
           "detail": "<p>在文件名字段中编辑路径，然后单击“确定”按钮。或者，单击上载图标并选择其他文件。</p>"
@@ -400,12 +671,20 @@ define({
     },
     "prompts": {
       "info": {
-        "fileNotSet": "未设置"
+        "fileNotSet": {
+          "value": "未设置"
+        }
       }
     },
     "checkboxes": {
       "useSparseTemplate": {
         "label": "使用稀疏模板"
+      },
+      "usesso": {
+        "label": "Use Web Authentication"
+      },
+      "insecure": {
+        "label": "建立不安全的连接"
       }
     }
   },
@@ -421,7 +700,7 @@ define({
         "tooltip": "监视树"
       },
       "security": {
-        "tooltip": "Security Data Tree"
+        "tooltip": "安全数据树"
       },
       "modeling": {
         "tooltip": "WDT 模型"
@@ -434,13 +713,25 @@ define({
       }
     }
   },
+  "wrc-navigation": {
+    "navstrip": {
+      "ariaLabel": {
+        "value": "导航条"
+      }
+    },
+    "navtree": {
+      "ariaLabel": {
+        "value": "导航树"
+      }
+    }
+  },
   "wrc-content-area-header": {
     "title": {
       "home": "主页",
       "configuration": "编辑树",
       "view": "配置视图树",
       "monitoring": "监视树",
-      "security": "Security Data Tree",
+      "security": "安全数据树",
       "modeling": "WDT 模型",
       "composite": "WDT 组合模型",
       "properties": "属性列表"
@@ -449,9 +740,6 @@ define({
       "buttons": {
         "home": {
           "label": "主页"
-        },
-        "preferences": {
-          "label": "首选项"
         }
       }
     }
@@ -466,13 +754,107 @@ define({
           "label": "概览"
         },
         "projectmanagement": {
-          "label": "提供程序管理"
+          "label": "Providers"
+        },
+        "tips": {
+          "label": "用户提示"
+        },
+        "dashboards": {
+          "label": "仪表盘"
         }
       }
     },
-    "icons": {
-      "kiosk": {
-        "tooltip": "信息终端"
+    "popups": {
+      "tips": {
+        "title": "Filter Tips",
+        "checkboxes": {
+          "hideall": "Hide All Tips",
+          "productivity": "Show Productivity Tips",
+          "personalization": "Show Personalization Tips",
+          "whereis": "Show Where Is... Tips",
+          "accessibility": "Show Accessibility Tips",
+          "connectivity": "Show Connectivity Tips",
+          "security": "Show Security Tips",
+          "other": "Show Other Tips"
+        }
+      }
+    },
+    "tips": {
+      "labels": {
+        "hideall": {
+          "value": "全部隐藏"
+        },
+        "productivity": {
+          "value": "Productivity"
+        },
+        "personalization": {
+          "value": "Personalization"
+        },
+        "whereis": {
+          "value": "Where Is ..."
+        },
+        "accessibility": {
+          "value": "Accessibility"
+        },
+        "connectivity": {
+          "value": "Connectivity"
+        },
+        "security": {
+          "value": "安全"
+        },
+        "other": {
+          "value": "Other"
+        }
+      },
+      "cards": {
+        "tip0": {
+          "title": "Think \"Search\" Before You Click!",
+          "descriptionHTML": "<p>Finding what you want in one of the provider's Trees, can involve a lot of clicking and scrolling. The <b><i>Search</i></b> field (located at the top of the app), lets you avoid having to do that!</p><p>Even better, clicking on an item in the generated search results, auto-expands the provider Tree to show you where the item is.</p>"
+        },
+        "tip1": {
+          "title": "\"Dashboards\" Are a User's Best Friend",
+          "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you''re on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+        },
+        "tip2": {
+          "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
+          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+        },
+        "tip3": {
+          "title": "Using the Keyboard With Tables and Actions",
+          "descriptionHTML": "<p></p>"
+        },
+        "tip4": {
+          "title": "Where is the \"Customize this table\" Link?",
+          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+        },
+        "tip5": {
+          "title": "Where is the \"Change Center\" Portlet?",
+          "descriptionHTML": "<p>The \"Change Center\" porlet has been replaced with the <i>Shopping Cart Drawer</i>, which has launcher icon in the iconbar when the \"Configuration Tree\" is selected.</p>"
+        },
+        "tip6": {
+          "title": "Where is the \"How Do I\" Portlet?",
+          "descriptionHTML": "<p></p>"
+        },
+        "tip7": {
+          "title": "Other Tip #1",
+          "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip8": {
+          "title": "Trouble Creating an Admin Server Provider?",
+          "descriptionHTML": "<p>The <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Reference -> Troubleshooting</a> section in the WebLogic Remote Console documentation, covers how to resolve connectivity issues caused by environment and network settings.</p><p>If trying those don't lead to a resolution, please post a message to the <b>@weblogic-remote-console</b> slack channel. Screenshots often provide context that aids in issue diagnosis, so include them in the post when possible.</p>"
+        },
+        "tip9": {
+          "title": "Connectivity Tip #2",
+          "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip10": {
+          "title": "Security Tip #1",
+          "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+        },
+        "tip11": {
+          "title": "Think \"Shortcut Keys\" Before You Press Tab!",
+          "descriptionHTML": "<p>\"Shortcut\" (or accelerator) keys allow you to move the focus directly to an area, instead of sighing while repeatedly pressing the <b>Tab</b> and <b>Shift+Tab</b> keys!</p><p>Here's 5 to try out:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Opens the <i>Providers Drawer</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the <i>Provider Tree</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a table, more precisely the first column header.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the gripper of the Tree width-resizer. Afterwards, use the <code><b>RightArrow</b></code> and <code><b>LeftArrow</b></code> keys to increase or decrease the width of the Tree.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a breadcrumb that is a <i>cross-link</i> (if present), or the first clickable breadcrumb label.</li></ul><p>Check out the documentation to see a complete list of the shortcut keys!</p>"
+        }
       }
     }
   },
@@ -480,26 +862,16 @@ define({
     "icons": {
       "history": {
         "tooltip": "历史记录"
+      },
+      "separator": {
+        "tooltip": "分隔符"
       }
     },
     "menus": {
       "history": {
         "clear": {
-          "value": "清除历史记录"
-        }
-      }
-    }
-  },
-  "wrc-monitoring": {
-    "icons": {
-      "history": {
-        "tooltip": "历史记录"
-      }
-    },
-    "menus": {
-      "history": {
-        "clear": {
-          "value": "清除历史记录"
+          "value": "清除历史记录条目",
+          "label": "清除历史记录条目"
         }
       }
     }
@@ -525,7 +897,10 @@ define({
     "tabstrip": {
       "tabs": {
         "gallery": {
-          "label": "库"
+          "label": "树"
+        },
+        "startup-tasks": {
+          "label": "Startup Tasks"
         }
       }
     }
@@ -534,19 +909,19 @@ define({
     "cards": {
       "configuration": {
         "label": "编辑树",
-        "description": "<p>Maintain configuration of the WebLogic domain you are currently working with.</p>"
+        "description": "<p>维护您当前使用的 WebLogic 域的配置。</p>"
       },
       "view": {
         "label": "配置视图树",
-        "description": "<p>Examine read-only configuration of the WebLogic domain you are currently working with.</p>"
+        "description": "<p>检查您当前使用的 WebLogic 域的只读配置。</p>"
       },
       "monitoring": {
         "label": "监视树",
-        "description": "<p>View runtime MBean information for select resources in the WebLogic domain you are currently working with.</p>"
+        "description": "<p>查看您当前使用的 WebLogic 域中选定资源的运行时 MBean 信息。</p>"
       },
       "security": {
-        "label": "Security Data Tree",
-        "description": "<p>Manage security-related information (e.g. users, groups, roles, policies, credentials, etc.) in the WebLogic domain you are currently working with.</p>"
+        "label": "安全数据树",
+        "description": "<p>管理您当前使用的 WebLogic 域中的安全相关信息（例如用户、组、角色、策略、身份证明等）。</p>"
       },
       "modeling": {
         "label": "WDT 模型树",
@@ -554,11 +929,43 @@ define({
       },
       "composite": {
         "label": "WDT 组合模型树",
-        "description": "<p>查看当前正在使用的 WebLogic 部署工具模型文件的组合集。</p>"
+        "description": "<p>查看当前正在使用的 WebLogic Deploy Tooling 模型文件的组合集。</p>"
       },
       "properties": {
         "label": "属性列表编辑器",
         "description": "<p>查看或修改属性列表文件中的一组属性。</p>"
+      }
+    }
+  },
+  "wrc-startup-tasks": {
+    "cards": {
+      "addAdminServer": {
+        "label": "添加管理服务器连接提供程序",
+        "description": "This task creates a project resource that allows you to connect to an Admin Server"
+      },
+      "addWdtModel": {
+        "label": "添加 WDT 模型文件提供程序",
+        "description": "This task creates a project resource that allows you to manage a WDT Model file, existing on your local filesystem"
+      },
+      "addWdtComposite": {
+        "label": "添加 WDT 组合模型文件提供程序",
+        "description": "This task creates a project resource that allows you to manage WDT Model file fragments, existing on your local filesystem"
+      },
+      "addPropertyList": {
+        "label": "添加属性列表提供程序",
+        "description": "This task creates a project resource that allows you to manage a .properties file stored on your local filesystem"
+      },
+      "createWdtModel": {
+        "label": "为新 WDT 模型文件创建提供程序",
+        "description": "This task creates a project resource that is a new WDT Model file, stored on your local filesystem"
+      },
+      "createPropertyList": {
+        "label": "为新属性列表创建提供程序",
+        "description": "This task creates a project resource that is a new .properties file, stored on your local filesystem"
+      },
+      "importProject": {
+        "label": "导入项目",
+        "description": "This task loads a previously exported project containing providers immediately ready for you to use or modify"
       }
     }
   },
@@ -654,24 +1061,9 @@ define({
         }
       }
     },
-    "labels": {
-      "start": {
-        "value": "启动"
-      },
-      "resume": {
-        "value": "恢复"
-      },
-      "suspend": {
-        "value": "挂起"
-      },
-      "shutdown": {
-        "value": "关闭"
-      },
-      "restartSSL": {
-        "value": "重新启动 SSL"
-      },
-      "stop": {
-        "value": "停止"
+    "prompts": {
+      "download": {
+        "value": "下载的日志文件位置："
       }
     }
   },
@@ -686,7 +1078,7 @@ define({
         "value": "总行数: {0}"
       },
       "reloadHidden": {
-        "value": "Reload the table to view the current {0} values"
+        "value": "重新加载表以查看当前的 {0} 个值"
       }
     }
   },
@@ -730,6 +1122,9 @@ define({
       },
       "customize": {
         "label": "定制表"
+      },
+      "dashboard": {
+        "label": "新建仪表盘"
       }
     },
     "icons": {
@@ -789,8 +1184,15 @@ define({
     },
     "messages": {
       "savedTo": {
-        "shoppingcart": "Changes were added to cart!",
-        "customView": "Changes were saved!"
+        "shoppingcart": "更改已添加到购物车！",
+        "generic": "已保存更改！",
+        "notSaved": "由于未检测到任何更改，未保存任何内容。"
+      },
+      "action": {
+        "notAllowed": {
+          "summary": "不允许操作",
+          "detail": "在创建操作期间，无法执行请求的操作。单击“取消”按钮可取消创建操作。"
+        }
       }
     },
     "icons": {
@@ -813,6 +1215,19 @@ define({
           }
         }
       }
+    },
+    "labels": {
+      "relatedTopics": {
+        "value": "<b>相关主题：</b>"
+      }
+    },
+    "tabs": {
+      "attributes": {
+        "label": "属性"
+      },
+      "actions": {
+        "label": "操作"
+      }
     }
   },
   "wrc-create-form": {
@@ -823,8 +1238,174 @@ define({
       }
     }
   },
+  "wrc-policy-management": {
+    "menus": {
+      "action": {
+        "addCondition": {
+          "label": "添加条件"
+        },
+        "combine": {
+          "label": "组合"
+        },
+        "uncombine": {
+          "label": "取消组合"
+        },
+        "moveup": {
+          "label": "上移"
+        },
+        "movedown": {
+          "label": "下移"
+        },
+        "remove": {
+          "label": "删除"
+        },
+        "negate": {
+          "label": "求反"
+        },
+        "reset": {
+          "label": "重置"
+        }
+      }
+    },
+    "contextMenus": {
+      "action": {
+        "addCondition": {
+          "at": {
+            "label": "添加新的第一个条件..."
+          },
+          "above": {
+            "label": "在单击的行上面添加条件..."
+          },
+          "below": {
+            "label": "在单击的行下面添加条件..."
+          }
+        }
+      }
+    },
+    "buttonMenus": {
+      "action": {
+        "addCondition": {
+          "above": {
+            "label": "在选中条件上面添加..."
+          },
+          "below": {
+            "label": "在选中条件下面添加..."
+          }
+        }
+      }
+    },
+    "messages": {
+      "requiredFieldsMissing": {
+        "detail": "一个或多个必填字段不包含数据！"
+      },
+      "argumentValueHasWrongFormat": {
+        "summary": "''{0}'' 字段包含格式不正确的数据！"
+      },
+      "conditionHasNoArgValues": {
+        "summary": "所选条件没有可编辑的参数值！"
+      },
+      "conditionAlreadyExists": {
+        "summary": "此安全策略已具有使用所选谓词构建的条件，或者具有与参数值匹配的条件！"
+      }
+    },
+    "instructions": {
+      "policyEditor": {
+        "value": "<p>要指定新条件的位置，请在相对条件旁边打勾，然后单击 <b>+添加条件</b>按钮。</p>"
+      }
+    }
+  },
+  "wrc-policy-editor": {
+    "labels": {
+      "monthDay": {
+        "value": "范围: -31 到 31"
+      },
+      "dateTime": {
+        "value": "格式：y-MM-dd HH:mm:ss [HH:mm:ss]（例如 2006-04-25 00:00:00）"
+      },
+      "time": {
+        "value": "格式：HH:mm:ss（例如 14:22:47）"
+      },
+      "gmtOffset": {
+        "value": "格式：GMT+|-h:mm（例如 GMT-5:00）"
+      },
+      "weekDay": {
+        "value": "例如星期日、星期一、星期二、..."
+      },
+      "or": {
+        "value": "或"
+      },
+      "not": {
+        "value": "NOT"
+      },
+      "combination": {
+        "value": "组合"
+      },
+      "nodata": {
+        "Policy": {
+          "value": "使用 <b>+ 添加条件</b>按钮添加策略条件。"
+        },
+        "DefaultPolicy": {
+          "value": "未定义默认安全策略条件。"
+        }
+      }
+    },
+    "tables": {
+      "policyConditions": {
+        "columns": {
+          "header": {
+            "combination": "组合",
+            "operator": "运算符",
+            "expression": "条件短语"
+          }
+        },
+        "dropdowns": {
+          "operator": {
+            "or": "或",
+            "and": "与"
+          }
+        }
+      }
+    },
+    "wizard": {
+      "title": "策略管理",
+      "pages": {
+        "choosePredicate": {
+          "header": {
+            "title": "选择谓词",
+            "instructions": "从下拉列表中为您的新条件选择谓词。"
+          },
+          "body": {
+            "labels": {
+              "predicateList": "谓词列表"
+            },
+            "help": {
+              "predicateList": "谓词列表是可用于组成安全策略条件的可用谓词的列表。"
+            }
+          }
+        },
+        "manageArgumentValues": {
+          "header": {
+            "title": "组谓词",
+            "instructions": "首先，在<i></i>字段中键入值以添加参数值或搜索现有参数值。按 Enter 键以将键入的值添加到列表中。要编辑现有参数值，请单击它并使用弹出式输入字段进行修改。"
+          },
+          "body": {
+            "labels": {
+              "conditionPhrase": "条件短语",
+              "negate": "条件求反"
+            },
+            "help": {
+              "negate": "将条件转换为具有相反含义（例如，“等于”变为“不等于”，“位于”变为“不位于”）。"
+            }
+          }
+        }
+      }
+    }
+  },
   "wrc-common": {
     "buttons": {
+      "action": {
+        "label": "操作"
+      },
       "apply": {
         "label": "应用"
       },
@@ -836,6 +1417,9 @@ define({
       },
       "cancel": {
         "label": "取消"
+      },
+      "restart": {
+        "label": "重新启动"
       },
       "yes": {
         "label": "是"
@@ -866,6 +1450,21 @@ define({
       },
       "savenow": {
         "label": "立即保存"
+      },
+      "next": {
+        "label": "下一步"
+      },
+      "previous": {
+        "label": "上一个"
+      },
+      "finish": {
+        "label": "完成"
+      },
+      "done": {
+        "label": "完成"
+      },
+      "close": {
+        "label": "关闭"
       }
     },
     "tooltips": {
@@ -890,6 +1489,9 @@ define({
       "reset": {
         "value": "重置"
       },
+      "filter": {
+        "value": "筛选器"
+      },
       "submit": {
         "value": "提交更改"
       },
@@ -901,6 +1503,33 @@ define({
       },
       "reload": {
         "value": "重新加载文件"
+      },
+      "delete": {
+        "value": "删除"
+      },
+      "remove": {
+        "value": "删除"
+      },
+      "noData": {
+        "value": "无数据"
+      },
+      "preloader": {
+        "value": "预加载器"
+      },
+      "checkAll": {
+        "value": "全部选中"
+      },
+      "checkNone": {
+        "value": "全部取消选中"
+      },
+      "checkSome": {
+        "value": "清除选中"
+      },
+      "close": {
+        "value": "关闭"
+      },
+      "recentPages": {
+        "value": "显示/隐藏历史记录"
       }
     },
     "menu": {
@@ -926,6 +1555,51 @@ define({
       "search": {
         "value": "搜索"
       }
+    },
+    "title": {
+      "incorrectFileContent": {
+        "value": "检测到不正确内容"
+      }
+    },
+    "messages": {
+      "incorrectFileContent": {
+        "detail": "''{0}'' 包含 JSON，但不是 {1} 的 JSON 表示形式！"
+      },
+      "dataCopiedToClipboard": {
+        "summary": "数据已复制到剪贴板！"
+      },
+      "tableCopiedToClipboard": {
+        "summary": "Table was successfully copied to the clipboard!"
+      },
+      "emptyCellData": {
+        "detail": "数据未复制到剪贴板，因为所选单元格为空！"
+      },
+      "emptyRowData": {
+        "detail": "数据未复制到剪贴板，因为所选行为空！"
+      },
+      "browserPermissionDenied": {
+        "summary": "Browser Permission Denied",
+        "detail": "You need to enable writing to the clipboard from JavaScript, in order to perform this operation. Also, the Clipboard API is only supported for pages served over HTTPS."
+      }
+    },
+    "contextMenus": {
+      "copyData": {
+        "cell": {
+          "label": "将单元格复制到剪贴板"
+        },
+        "row": {
+          "label": "将行复制到剪贴板"
+        },
+        "tableAsText": {
+          "label": "Copy Table to Clipboard (Text)"
+        },
+        "tableAsJSON": {
+          "label": "Copy Table to Clipboard (JSON)"
+        },
+        "tableAsYAML": {
+          "label": "Copy Table to Clipboard (YAML)"
+        }
+      }
     }
   },
   "wrc-wdt-form": {
@@ -948,7 +1622,7 @@ define({
     },
     "wdtOptionsDialog": {
       "title": "编辑：{0}",
-      "default": "默认值。（取消设置）",
+      "default": "取消设置值",
       "instructions": "输入要添加到可选项目列表的令牌。",
       "enterValue": "输入值",
       "selectValue": "选择值",
@@ -962,7 +1636,7 @@ define({
       "enterVariable": "输入变量",
       "variableName": "变量名（必需）",
       "variableValue": "变量值",
-      "multiSelectUnset": "\"默认值。（从可用项列表中选择）\""
+      "multiSelectUnset": "从可用项目列表中选择值"
     }
   },
   "wrc-unsaved-changes": {
@@ -980,13 +1654,13 @@ define({
           "value": "所有未保存的更改都将丢失。是否继续？"
         },
         "areYouSure": {
-          "value": "是否确实要退出而不保存更改？"
+          "value": "是否确实要 {0} 而不保存所做的更改？"
         },
         "saveBeforeExiting": {
-          "value": "Do you want to save changes before exiting?"
+          "value": "退出前是否要保存更改？"
         },
         "needDownloading": {
-          "value": "Your changes have not been download to the file, yet.<br/><br/>Download them before continuing?"
+          "value": "您对 ''{0}'' 所做更改尚未下载到文件。<br/><br/>先进行下载再继续？"
         }
       },
       "uncommitedCreate": {
@@ -1012,13 +1686,27 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "消息",
-          "detail": "当尝试对 ''{1}'' 执行指定操作时，控制台后端调用生成了 ''{0}'' 响应。"
+          "detail": "当尝试执行 ''{1}'' 操作时，控制台后端调用生成了 ''{0}'' 响应"
+        },
+        "actionNotPerformed": {
+          "detail": "无法对一个或多个选中的项目执行 ''{0}'' 操作"
+        },
+        "actionSucceeded": {
+          "summary": "已成功执行 ''{0}'' 操作！"
         }
       }
     },
     "labels": {
       "cannotDetermineExactCause": {
         "value": "无法确定确切原因。请查看 JavaScript 控制台中的提示。"
+      }
+    }
+  },
+  "wrc-actions-strip": {
+    "dialogs": {
+      "cannotBeUndone": {
+        "title": "操作确认",
+        "prompt": "无法撤消 ''{0}'' 操作！<br/><br/>是否继续？"
       }
     }
   },
@@ -1139,16 +1827,16 @@ define({
         "detail": "无法处理提交的文件或请求"
       },
       "invalidCredentials": {
-        "detail": "WebLogic 域身份证明无效 "
+        "detail": "WebLogic 域身份证明无效"
       },
       "invalidUrl": {
-        "detail": "无法访问 WebLogic 域 URL "
+        "detail": "无法访问 WebLogic 域 URL"
       },
       "notInRole": {
         "detail": "尝试失败：用户不是管理员、部署人员、操作员或监视人员"
       },
       "notSupported": {
-        "detail": "不支持 WebLogic 域 "
+        "detail": "不支持 WebLogic 域"
       },
       "unexpectedStatus": {
         "detail": "意外的结果（状态：{0}）"
@@ -1200,6 +1888,55 @@ define({
       "connectionRefused": {
         "summary": "连接问题",
         "details": "从提供程序发送和接收数据出现问题！请确保提供程序可访问，然后重试。"
+      },
+      "pathNotFound": {
+        "summary": "找不到路径",
+        "details": "''{0}'' 是在本地文件系统上不可访问的文件或目录。"
+      }
+    }
+  },
+  "wrc-message-line": {
+    "menus": {
+      "more": {
+        "clear": {
+          "label": "清除消息"
+        },
+        "suppress": {
+          "info": {
+            "label": "隐藏信息消息"
+          },
+          "warning": {
+            "label": "隐藏警告消息"
+          }
+        }
+      }
+    }
+  },
+  "wrc-alerts": {
+    "menus": {
+      "alerts": {
+        "error": {
+          "value": "You have {0} high-priority error {1}"
+        },
+        "warning": {
+          "value": "You have {0} high-priority warning {1}"
+        },
+        "info": {
+          "value": "You have {0} high-priority information {1}"
+        },
+        "view": {
+          "value": "查看预警"
+        }
+      }
+    },
+    "labels": {
+      "alerts": {
+        "singular": {
+          "value": "alert"
+        },
+        "plural": {
+          "value": "alerts"
+        }
       }
     }
   }

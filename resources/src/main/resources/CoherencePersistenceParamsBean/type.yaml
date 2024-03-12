@@ -1,8 +1,17 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
 - name: DefaultPersistenceMode
+  legalValues:
+  - value: on-demand
+    label: On-Demand
+  - value: active
+    label: Active
+  - value: active-backup
+    label: Active-Backup
+  - value: active-async
+    label: Active-Async
   helpHTML: >
     <p>Specifies the default persistence mode.</p>
 

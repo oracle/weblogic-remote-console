@@ -1,0 +1,54 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.saml2.SAML2WebSSOPartnerMBean
+baseTypes:
+- weblogic.security.providers.saml2.SAML2BindingClientPartnerMBean
+- weblogic.security.providers.saml2.SAML2MetadataPartnerMBean
+derivedTypes:
+- weblogic.security.providers.saml2.SAML2WebSSOIdPPartner
+- weblogic.security.providers.saml2.SAML2WebSSOSPPartner
+
+properties:
+- name: ArtifactBindingPostForm
+  type: java.lang.String
+  writable: true
+- name: ArtifactBindingUsePOSTMethod
+  type: boolean
+  writable: true
+# TBD ArtifactResolutionService, IndexedEndpoint
+- name: PostBindingPostForm
+  type: java.lang.String
+  writable: true
+# TBD SingleLogoutService, Endpoint[]
+- name: SSOSigningCertHaveCertificate
+  type: boolean
+- name: SSOSigningCertIssuedTo
+  type: java.lang.String
+- name: SSOSigningCertIssuedBy
+  type: java.lang.String
+- name: SSOSigningCertValidFrom
+  type: java.lang.String
+- name: SSOSigningCertValidUntil
+  type: java.lang.String
+- name: SSOSigningCertVersion
+  type: int
+- name: SSOSigningCertSerialNumber
+  type: java.lang.String
+- name: SSOSigningCertSignatureAlgorithm
+  type: java.lang.String
+- name: SSOSigningCertPublicKey
+  type: java.lang.String
+- name: SSOSigningCertSubjectAlternativeNames
+  type: java.lang.String
+- name: SSOSigningCertExtendedKeyUsage
+  type: java.lang.String
+- name: SSOSigningCertBasicConstraints
+  type: int
+- name: SSOSigningCertThumbprintAlgorithm
+  type: java.lang.String
+- name: SSOSigningCertThumbprint
+  type: java.lang.String
+- name: WantArtifactRequestSigned
+  type: boolean
+  writable: true

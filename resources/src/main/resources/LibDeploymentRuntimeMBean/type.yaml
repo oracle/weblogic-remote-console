@@ -1,22 +1,39 @@
-# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 actions:
+
 
 - name: "redeploy"
   label: "Redeploy"
   actionMethod: weblogic.remoteconsole.customizers.LibDeploymentRuntimeMBeanCustomizer.redeploy
-  mbeanOperation:
-    operation: redeploy_targets_deploymentOptions
+  disableMBeanJavadoc: true
   helpHTML: >
-    <p>Redeploy the library in the background for the targets specified
-    with the options specified.  This is an synchronous operation that
-    returns immediately.  The returned DeploymentProgressObjectMBean
-    can be used to determine when the operation is completed.</p>
-  definition:
-    type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
-    roles:
-      allowed:
-      - Deployer
+    <p>Use this page to redeploy this library.  Its archive must already be on the administration server's file system. 
+    To change its source path, remove and add the library.</p>
+  inputForm:
+    customizePageMethod: weblogic.remoteconsole.customizers.LibDeploymentRuntimeMBeanCustomizer.customizeRedeployActionInputForm
+    introductionHTML: >
+      <p>Use this page to redeploy this library.  Its archive must already be on the administration server's file system. 
+          To change its source path, remove and add the library.</p>
+    parameters:
+      - name: "SourcePath"
+
+- name: uploadAndRedeploy
+  label: "Upload and Redeploy"
+  disableMBeanJavadoc: true
+  helpHTML: >
+    <p>Upload and redeploy a new archive for this library.
+       If the library's current archive is not under the administration server's upload directory, 
+       remove and add the library instead.</p>
+  inputForm:
+    introductionHTML: >
+      <p>Upload and redeploy a new archive for this library.
+        If the library's current archive is not under the administration server's upload directory, 
+        remove and add the library instead. </p>
+    parameters:
+    - name: Source
+      onlineName: source
+      required: true
 
 children:
 - name: State

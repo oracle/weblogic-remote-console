@@ -1,0 +1,426 @@
+<!--
+Copyright (c) 2023,2024, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+
+<oj-bind-if test="[[i18n.icons.profile.popup.launcher.visible]]">
+  <a
+      id="appProfileDialogLauncher"
+      href="#"
+      on-click="[[appProfileIconClickHandler]]"
+      accesskey="="
+  >
+    <span class="cfe-branding-area-profile-icon"></span>
+  </a>
+  <a id="select-settings-tab" class="cfe-hidden-accesskey-link" href="#"
+     accesskey="," tabindex="-1" on-click="[[hiddenAccessKeyClickHandler]]"
+  >
+  </a>
+  <a id="select-preferences-tab" class="cfe-hidden-accesskey-link" href="#"
+     accesskey="." tabindex="-1" on-click="[[hiddenAccessKeyClickHandler]]"
+  >
+  </a>
+</oj-bind-if>
+
+<oj-popup id="selectAppProfilePopup" initial-focus="firstFocusable">
+  <oj-list-view
+      id="profilesPopupListView"
+      aria-label="Profiles list"
+      data="[[profilesListDataProvider]]"
+      selected="{{profileListSelectedItem}}"
+      selection-mode="single"
+      on-selected-changed="[[profilesListSelectedChanged]]"
+  >
+    <template slot="itemTemplate" data-oj-as="profile">
+      <li>
+        <div class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
+          <div id="profile-list-avatar" :class="[[profile.item.data.imageDataUrl.startsWith('data:image/') ? 'cfe-profile-avatar' : 'cfe-profile-no-avatar']]">
+            <img data-bind="attr: {src: profile.item.data.imageDataUrl, alt: profile.item.data.id}"/>
+          </div>
+          <div id="profile-list-info" class="oj-flex-item">
+            <div id="profile-list-info-id" class="oj-flex-item">
+              <span data-bind="text: profile.item.data.id"></span>
+            </div>
+            <div class="oj-flex-item">
+              <span data-bind="text: profile.item.data.name"></span>
+            </div>
+            <div class="oj-flex-item">
+              <span data-bind="text: profile.item.data.email"></span>
+            </div>
+          </div>
+        </div>
+      </li>
+    </template>
+  </oj-list-view>
+
+  <div id="open-profile-viewer"  class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
+    <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.profile.image.iconFile + '.png', alt: i18n.icons.profile.image.tooltip}" />
+    <a
+        id="open-profile-viewer-link"
+        href="#"
+        on-click="[[appProfilePopupClickListener]]
+    ">
+      <span data-bind="text: i18n.popup.profile.manager.open.value"></span>
+    </a>
+    <div class="oj-flex-item oj-helper-margin-start-auto">
+      <a
+          id="profile-signout-link"
+          href="#"
+          on-click="[[appProfilePopupClickListener]]"
+      >
+        <span data-bind="text: i18n.popup.profile.manager.signout.value"></span>
+      </a>
+    </div>
+  </div>
+</oj-popup>
+
+<oj-dialog
+    id="app-profile-dialog"
+    modality="modeless"
+    resize-behavior="resizable"
+    cancel-behavior="escape"
+    on-oj-focus="[[onOjFocus]]"
+    on-oj-before-close="[[onOjBeforeClose]]"
+    on-oj-resize-stop="[[onOjResizeStop]]"
+    role="dialog"
+    aria-labelledby="ui-id-6"
+>
+
+  <div class="oj-dialog-container oj-flex-item cfe-account-profile-container">
+
+    <div class="oj-dialog-header oj-flex oj-sm-flex-items-initial cfe-account-profile-header">
+      <span data-bind="text: dialogFields.general.account.organization"></span>
+      <div title="Close" class="oj-flex-item oj-helper-margin-start-auto">
+        <a class="ancillary-content-item-close-icon" on-click="[[closeIconClickHandler]]" data-bind="attr: {href: '#', 'title': i18n.icons.close.tooltip}">
+          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.close.iconFile + '.png', alt: i18n.icons.close.tooltip}"/>
+        </a>
+      </div>
+    </div>
+
+    <div class="oj-dialog-content oj-dialog-default-content">
+      <div id="profile-editor-account-content" class="oj-flex oj-sm-flex-direction-column">
+        <!-- row 1 -->
+        <div class="oj-flex oj-sm-flex-direction-row">
+          <!-- column 1 -->
+          <div class="oj-flex-item profile-pic">
+            <label class="-label" for="profile-file-chooser">
+              <span id="camera-icon" class="oj-ux-ico-camera"></span>
+              <span id="change-image-text" data-bind="text: i18n.dialog.changeImage.value"></span>
+            </label>
+            <!--
+            FortifyIssueSuppression Often Misused: File Upload
+            This is safe because it is just a client-side way to have the
+            web browser create a base64 string, of an image
+            -->
+            <input id="profile-file-chooser" type="file" on-change="[[onChangeProfileImage]]"/>
+            <img
+                id="new-profile-pic"
+                tabindex="0"
+                on-keyup="[[onKeyUpProfileImage]]"
+                data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.profile.image.capture.iconFile + '.png', alt: i18n.icons.profile.image.capture.tooltip}"
+            />
+          </div>
+          <a id="clear-image-icon" href="#" on-click="[[appProfileDialogClickListener]]">
+            <span class="oj-ux-ico-camera-off" :title="[[i18n.dialog.clearImage.value]]"></span>
+          </a>
+          <!-- column 2 -->
+          <div id="account-info" class="oj-flex-item">
+            <div id="account-name" data-bind="text: dialogFields.general.account.name"></div>
+            <div id="account-email" data-bind="text: dialogFields.general.account.email"></div>
+          </div>
+        </div>
+        <!-- row 2 -->
+        <div class="oj-flex oj-sm-flex-items-initial">
+          <div id="profile-editor-account-footer" class="oj-flex-item oj-helper-margin-start-auto">
+            <a
+                id="profile-editor-toggler" href="#"
+                on-click="[[appProfileDialogClickListener]]"
+            >
+              <span data-bind="text: i18n.dialog.profile.editor.toggler.editor.value()"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div slot="body" id="profile-editor-container" data-profile-editor-state="show">
+      <div id="profile-editor-toolbar" class="oj-flex oj-sm-flex-items-initial">
+        <div class="oj-flex-item">
+          <a
+              :id="[[i18n.icons.profile.dialog.editor.toolbar.save.id]]" href="#"
+              :title="[[i18n.icons.profile.dialog.editor.toolbar.save.tooltip]]"
+              on-click="[[profileEditorToolbarAction]]"
+          >
+            <span class="oj-ux-ico-save"></span>
+          </a>
+          <oj-bind-if test="[[i18n.icons.profile.dialog.editor.toolbar.activate.visible()]]">
+            <a
+                :id="[[i18n.icons.profile.dialog.editor.toolbar.activate.id]]" href="#"
+                :title="[[i18n.icons.profile.dialog.editor.toolbar.activate.tooltip]]"
+                on-click="[[profileEditorToolbarAction]]"
+            >
+              <span class="oj-ux-ico-action-alt"></span>
+            </a>
+          </oj-bind-if>
+        </div>
+        <div class="oj-flex-item oj-helper-margin-start-auto">
+          <a
+              :id="[[i18n.icons.profile.dialog.editor.toolbar.add.id]]" href="#"
+              :title="[[i18n.icons.profile.dialog.editor.toolbar.add.tooltip]]"
+              on-click="[[profileEditorToolbarAction]]"
+          >
+            <span class="oj-ux-ico-plus"></span>
+          </a>
+          <a
+              :id="[[i18n.icons.profile.dialog.editor.toolbar.remove.id]]" href="#"
+              :title="[[i18n.icons.profile.dialog.editor.toolbar.remove.tooltip]]"
+              on-click="[[profileEditorToolbarAction]]"
+          >
+            <span class="oj-ux-ico-minus"></span>
+          </a>
+        </div>
+      </div>
+
+      <div id="profile-editor-content" class="oj-flex-item">
+        <oj-tab-bar
+            id="profile-editor-content-tabstrip"
+            class="oj-sm-condense"
+            data="[[profileEditorTabsDataProvider]]"
+            edge="top"
+            role="tablist"
+            selection="{{selectedTabStripItem}}"
+        >
+          <template slot="itemTemplate" data-oj-as="tab">
+            <li :id="[[tab.data.id]]">
+              <a href="#" aria-controls="[[tab.data.id + '-tab-panel']]" :id="[[tab.data.id + '-tab']]">
+                <span data-bind="text: tab.data.label"></span>
+              </a>
+            </li>
+          </template>
+        </oj-tab-bar>
+
+        <oj-switcher value="[[selectedTabStripItem]]">
+          <div slot="general" id="general-tab-panel" class="cfe-profile-editor-content-tab-panel" role="tabpanel" aria-labelledby="general-tab">
+            <oj-form-layout id="general-tab-form-layout" class="cfe-profile-form-layout" label-edge="start" label-width="42%" direction="row">
+              <oj-label slot="label" label-edge="start" for="profile-editor-field-id">
+                <oj-bind-text value="[[i18n.labels.profile.fields.id.value]]"></oj-bind-text>
+              </oj-label>
+              <oj-input-text id="profile-editor-field-id" class="cfe-profile-field" value="{{dialogFields.id}}"></oj-input-text>
+
+              <div class="cfe-sections-form-layout-title">
+                <a href="#" on-click="[[sectionExpanderClickHandler]]" class="cfe-sections-form-layout-title-arrow">
+                  <span class="oj-component-icon oj-clickable-icon-nocontext oj-collapsible-open-icon" title="Collapse" data-section-id="general-section-0"></span>
+                </a>
+                <span class="cfe-sections-form-layout-title-text">Account</span>
+              </div>
+
+              <oj-form-layout id="general-section-0" class="cfe-profile-form-layout" label-edge="start" label-width="42%" direction="row">
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-organization">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.organization.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-input-text id="profile-editor-field-organization" class="cfe-profile-field" value="{{dialogFields.general.account.organization}}"></oj-input-text>
+
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-name">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.name.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-input-text id="profile-editor-field-name" class="cfe-profile-field" value="{{dialogFields.general.account.name}}"></oj-input-text>
+
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-email">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.email.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-input-text id="profile-editor-field-email" class="cfe-profile-field" value="{{dialogFields.general.account.email}}"></oj-input-text>
+              </oj-form-layout>
+
+              <div class="cfe-sections-form-layout-title">
+                <a href="#" on-click="[[sectionExpanderClickHandler]]" class="cfe-sections-form-layout-title-arrow">
+                  <span class="oj-component-icon oj-clickable-icon-nocontext oj-collapsible-open-icon" title="Collapse" data-section-id="general-section-1"></span>
+                </a>
+                <span class="cfe-sections-form-layout-title-text">Role</span>
+              </div>
+
+              <oj-form-layout id="general-section-1" class="cfe-profile-form-layout" label-edge="start" label-width="42%" direction="row">
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-role-defaultt">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.role.default.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-switch id="profile-editor-field-role-default" slot="value" value="{{dialogFields.general.role.isDefault}}"></oj-switch>
+              </oj-form-layout>
+
+            </oj-form-layout>
+          </div>
+
+          <div slot="settings" id="settings-tab-panel" class="cfe-profile-editor-content-tab-panel" role="tabpanel" aria-labelledby="settings-tab">
+            <oj-form-layout id="settings-tab-form-layout" class="cfe-profile-form-layout" label-edge="start" label-width="42%" direction="row">
+              <oj-form-layout class="cfe-profile-form-layout" label-edge="start" label-width="90%" direction="row">
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-settings-useCredentialStorage">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.settings.useCredentialStorage.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-switch id="profile-editor-field-preferences-useCredentialStorage" slot="value" value="{{dialogFields.settings.useCredentialStorage}}"></oj-switch>
+
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-disableHNV">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.settings.disableHNV.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-switch id="profile-editor-field-disableHNV" slot="value" value="{{dialogFields.settings.disableHNV}}"></oj-switch>
+              </oj-form-layout>
+
+              <div class="cfe-sections-form-layout-title">
+                <a href="#" on-click="[[sectionExpanderClickHandler]]" class="cfe-sections-form-layout-title-arrow">
+                  <span class="oj-component-icon oj-clickable-icon-nocontext oj-collapsible-open-icon" title="Collapse" data-section-id="settings-section-0"></span>
+                </a>
+                <span class="cfe-sections-form-layout-title-text">Networking</span>
+              </div>
+
+              <oj-form-layout id="settings-section-0" class="cfe-profile-form-layout" label-edge="start" label-width="42%" direction="row">
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-proxyAddress">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.settings.proxyAddress.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-input-text id="profile-editor-field-proxyAddress" class="cfe-profile-field" value="{{dialogFields.settings.proxyAddress}}"></oj-input-text>
+
+              </oj-form-layout>
+
+              <div class="cfe-sections-form-layout-title">
+                <a href="#" on-click="[[sectionExpanderClickHandler]]" class="cfe-sections-form-layout-title-arrow">
+                  <span class="oj-component-icon oj-clickable-icon-nocontext oj-collapsible-open-icon" title="Collapse" data-section-id="settings-section-1"></span>
+                </a>
+                <span class="cfe-sections-form-layout-title-text">Security</span>
+              </div>
+
+              <oj-form-layout id="settings-section-1" class="cfe-profile-form-layout" label-edge="start" label-width="42%" direction="row">
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-trustStoreType">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.settings.trustStoreType.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-select-single id="profile-editor-field-trustStoreType" class="cfe-profile-field"
+                                  data="[[trustStoreTypeDataProvider]]" value="{{dialogFields.settings.trustStoreType}}">
+                </oj-select-single>
+
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-trustStorePath">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.settings.trustStorePath.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-input-text id="profile-editor-field-trustStorePath" class="cfe-profile-field" value="{{dialogFields.settings.trustStorePath}}"></oj-input-text>
+
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-trustStoreKey">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.settings.trustStoreKey.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-input-password id="profile-editor-field-trustStoreKey" class="cfe-profile-field" value="{{dialogFields.settings.trustStoreKey}}" mask-icon="visible"></oj-input-password>
+
+              </oj-form-layout>
+
+              <div class="cfe-sections-form-layout-title">
+                <a href="#" on-click="[[sectionExpanderClickHandler]]" class="cfe-sections-form-layout-title-arrow">
+                  <span class="oj-component-icon oj-clickable-icon-nocontext oj-collapsible-open-icon" title="Collapse" data-section-id="settings-section-2"></span>
+                </a>
+                <span class="cfe-sections-form-layout-title-text">Timeouts</span>
+              </div>
+
+              <oj-form-layout id="settings-section-2" class="cfe-profile-form-layout" label-edge="start" label-width="42%" direction="row">
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-connectionTimeout">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.settings.connectionTimeout.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-input-text id="profile-editor-field-connectionTimeout" class="cfe-profile-field" value="{{dialogFields.settings.connectionTimeout}}"></oj-input-text>
+
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-readTimeout">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.settings.readTimeout.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-input-text id="profile-editor-field-readTimeout" class="cfe-profile-field" value="{{dialogFields.settings.readTimeout}}"></oj-input-text>
+
+              </oj-form-layout>
+
+            </oj-form-layout>
+
+          </div>
+
+          <div slot="preferences" id="preferences-tab-panel" class="cfe-profile-editor-content-tab-panel" role="tabpanel" aria-labelledby="preferences-tab">
+            <oj-form-layout id="preferences-tab-form-layout" class="cfe-profile-form-layout" label-edge="start" label-width="50%" direction="row">
+              <oj-label slot="label" label-edge="start" for="profile-editor-field-theme-type">
+                <oj-bind-text value="[[i18n.labels.profile.fields.preferences.theme.value]]"></oj-bind-text>
+              </oj-label>
+
+              <oj-select-single
+                  id="profile-editor-field-theme-type"
+                  class="cfe-profile-field"
+                  data="[[themeDataProvider]]"
+                  value="{{dialogFields.preferences.theme}}"
+              >
+              </oj-select-single>
+
+              <oj-label slot="label" label-edge="start" for="profile-editor-field-chooser-type">
+                <oj-bind-text value="[[i18n.labels.profile.fields.preferences.startupTaskChooserType.value]]"></oj-bind-text>
+              </oj-label>
+
+              <oj-select-single
+                  id="profile-editor-field-chooser-type"
+                  class="cfe-profile-field"
+                  data="[[taskChooserTypeDataProvider]]"
+                  value="{{dialogFields.preferences.startupTaskChooserType}}"
+              >
+              </oj-select-single>
+
+              <div class="cfe-sections-form-layout-title">
+                <a href="#" on-click="[[sectionExpanderClickHandler]]" class="cfe-sections-form-layout-title-arrow">
+                  <span class="oj-component-icon oj-clickable-icon-nocontext oj-collapsible-open-icon" title="Collapse" data-section-id="preferences-section-0"></span>
+                </a>
+                <span class="cfe-sections-form-layout-title-text">Navigation</span>
+              </div>
+
+              <oj-form-layout id="preferences-section-0" class="cfe-profile-form-layout" label-edge="start" label-width="90%" direction="row">
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-preferences-useTreeMenusAsRootNodes">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.preferences.useTreeMenusAsRootNodes.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-switch id="profile-editor-field-preferences-useTreeMenusAsRootNodes" slot="value" value="{{dialogFields.preferences.useTreeMenusAsRootNodes}}"></oj-switch>
+              </oj-form-layout>
+
+              <div class="cfe-sections-form-layout-title">
+                <a href="#" on-click="[[sectionExpanderClickHandler]]" class="cfe-sections-form-layout-title-arrow">
+                  <span class="oj-component-icon oj-clickable-icon-nocontext oj-collapsible-open-icon" title="Collapse" data-section-id="preferences-section-1"></span>
+                </a>
+                <span class="cfe-sections-form-layout-title-text">Confirmations</span>
+              </div>
+
+              <oj-form-layout id="preferences-section-1" class="cfe-profile-form-layout" label-edge="start" label-width="90%" direction="row">
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-preferences-onQuit">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.preferences.onQuit.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-switch id="profile-editor-field-preferences-onQuit" slot="value" value="{{dialogFields.preferences.onQuit}}"></oj-switch>
+
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-preferences-onDelete">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.preferences.onDelete.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-switch id="profile-editor-field-preferences-onDelete" slot="value" value="{{dialogFields.preferences.onDelete}}"></oj-switch>
+              </oj-form-layout>
+
+              <div class="cfe-sections-form-layout-title">
+                <a href="#" on-click="[[sectionExpanderClickHandler]]" class="cfe-sections-form-layout-title-arrow">
+                  <span class="oj-component-icon oj-clickable-icon-nocontext oj-collapsible-open-icon" title="Collapse" data-section-id="preferences-section-2"></span>
+                </a>
+                <span class="cfe-sections-form-layout-title-text">Popup Messages</span>
+              </div>
+
+              <oj-form-layout id="preferences-section-2" class="cfe-profile-form-layout" label-edge="start" label-width="90%" direction="row">
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-preferences-onActionNotAllowed">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.preferences.onActionNotAllowed.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-switch id="profile-editor-field-preferences-onActionNotAllowed" slot="value" value="{{dialogFields.preferences.onActionNotAllowed}}"></oj-switch>
+
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-preferences-onUnsavedChangesDetected">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.preferences.onUnsavedChangesDetected.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-switch id="profile-editor-field-preferences-onUnsavedChangesDetected" slot="value" value="{{dialogFields.preferences.onUnsavedChangesDetected}}"></oj-switch>
+
+                <oj-label slot="label" label-edge="start" for="profile-editor-field-preferences-onChangesNotDownloaded">
+                  <oj-bind-text value="[[i18n.labels.profile.fields.preferences.onChangesNotDownloaded.value]]"></oj-bind-text>
+                </oj-label>
+                <oj-switch id="profile-editor-field-preferences-onChangesNotDownloaded" slot="value" value="{{dialogFields.preferences.onChangesNotDownloaded}}"></oj-switch>
+              </oj-form-layout>
+
+            </oj-form-layout>
+
+          </div>
+
+        </oj-switcher>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</oj-dialog>

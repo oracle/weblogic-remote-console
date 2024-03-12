@@ -1,0 +1,11 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: ContextRootURL
+  type: java.lang.String
+  descriptionHTML: >
+    The URL of the context root of the web application on this server.
+    To test the default endpoint of the application, open the Context Root URL in a browser.
+    To test other endpoints within the application, extend the context path.
+    For example, if the application has a start.html page, add /start.html to the end of this URL.

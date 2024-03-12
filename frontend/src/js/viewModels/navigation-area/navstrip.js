@@ -1,26 +1,45 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle Corp and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle Corp and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/microservices/provider-management/data-provider-manager','wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojnavigationlist'],
-  function(oj, ko, Router, ArrayDataProvider, PerspectiveManager, Perspective, Preferences, DataProviderManager, ViewModelUtils, Runtime, CoreUtils, CoreTypes, Logger){
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojrouter',
+  'ojs/ojarraydataprovider',
+  'wrc-frontend/microservices/perspective/perspective-manager',
+  'wrc-frontend/microservices/provider-management/data-provider-manager',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/core/utils',
+  'wrc-frontend/core/types',
+  'ojs/ojknockout',
+  'ojs/ojnavigationlist'
+],
+  function(
+    oj,
+    ko,
+    Router,
+    ArrayDataProvider,
+    PerspectiveManager,
+    DataProviderManager,
+    ViewModelUtils,
+    Runtime,
+    CoreUtils,
+    CoreTypes
+  ){
     function NavStripTemplate(viewParams){
       var self = this;
 
       var builtIns = ko.observableArray();
 
-      this.builtInsDataProvider = loadBuiltInPerspectives(
-        Preferences.general.themePreference(),
-        Runtime.getDomainConnectState()
-      );
+      this.builtInsDataProvider = loadBuiltInPerspectives(Runtime.getDomainConnectState());
 
-      setThemePreference(Preferences.general.themePreference());
-
-      function loadBuiltInPerspectives(theme, connectState, dataProvider){
+      function loadBuiltInPerspectives(connectState, dataProvider){
         let dataArray = [];
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
           dataArray = dataProvider.beanTrees;
@@ -42,7 +61,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
           dataArray.forEach((beanTree) => {
             const perspective = PerspectiveManager.getByBeanTreeType(beanTree.type);
             if (connectState === CoreTypes.Domain.ConnectState.CONNECTED.name) {
-              beanTree['iconFile'] = perspective.iconFiles[theme];
+              beanTree['iconFile'] = perspective.iconFiles['light'];
             }
             else {
               beanTree['iconFile'] = perspective.iconFiles['greyed'];
@@ -131,7 +150,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
           self.canExitCallback = undefined;
           self.builtInsSelectedItem(null);
           self.builtInsDataProvider = loadBuiltInPerspectives(
-            Preferences.general.themePreference(),
             Runtime.getDomainConnectState(),
             dataProvider
           );
@@ -171,19 +189,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.themeChanged.add((newTheme) => {
-          setThemePreference(newTheme);
-        });
-
-        self.signalBindings.push(binding);
-
         binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
           self.canExitCallback = exitFormCallback;
         });
 
         self.signalBindings.push(binding);
-
-        setThemePreference(Preferences.general.themePreference());
       }.bind(this);
 
       this.disconnected = function() {
@@ -195,6 +205,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
         // the JS engine.
         self.signalBindings = [];
       }.bind(this);
+
+      this.onKeyUp = (event) => {
+        if (event.key === 'ArrowRight' && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+          let target = document.querySelector('#nav');
+          if (target !== null) {
+            $(target).focus();
+          }
+          else {
+            target = document.querySelector('#home');
+            if (target !== null) $(target).focus();
+          }
+        }
+      };
 
       /**
        * Returns the NLS translated string for the tooltip of a navstrip item.
@@ -236,12 +259,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
             if (reply) {
               if (self.builtInsSelectedItem() !== null) {
                 viewParams.signaling.beanTreeChanged.dispatch(beanTree);
+                viewParams.signaling.appMenuChangeRequested.dispatch('gallery', 'disableMenu', beanTree.type !== 'configuration', {menuId: 'goMenu', menuItemId: 'shoppingCartDrawer'});
               }
 
               Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, CoreUtils.isUndefinedOrNull(beanTree.readOnly) ? false : beanTree.readOnly);
               viewParams.signaling.readonlyChanged.dispatch(Runtime.isReadOnly());
 
               builtInsSelected(beanTree);
+            }
+            else {
+              self.builtInsSelectedItem(null);
             }
           })
           .catch(failure => {
@@ -299,21 +326,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'wr
 
       function clearBuiltInsSelection(){
         self.builtInsSelectedItem(null);
-      }
-
-      function setThemePreference(theme) {
-        let ele = document.getElementById('navstrip-header');
-        if (ele !== null) {
-          ele.style.backgroundColor = Runtime.getConfig()['preferences']['themes'][theme][1];
-          switch(theme){
-            case 'light':
-              ele.style.color = 'black';
-              break;
-            case 'dark':
-              ele.style.color = 'white';
-              break;
-          }
-        }
       }
 
     }

@@ -1,14 +1,20 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['wrc-frontend/microservices/perspective/perspective-manager', 'wrc-frontend/microservices/perspective/perspective-memory', 'wrc-frontend/core/runtime'],
-  function(PerspectiveManager, PerspectiveMemory, Runtime){
+define([
+  'wrc-frontend/microservices/perspective/perspective-memory',
+  'wrc-frontend/core/runtime'
+],
+function(
+  PerspectiveMemory,
+  Runtime
+){
     var perspectiveMemories = {};
     var modeChanged;
 
@@ -65,9 +71,10 @@ define(['wrc-frontend/microservices/perspective/perspective-manager', 'wrc-front
        * @throws {InvalidPerspectiveIdError} If ``perspectiveId`` provided is not associated with a perspective.
        */
       getPerspectiveMemory: function(perspectiveId, providerId = Runtime.getDataProviderId()) {
-        const perspective = PerspectiveManager.getById(perspectiveId);
-        if (typeof perspective === 'undefined') throw new this.InvalidPerspectiveIdError(`${perspectiveId} is not the id for a currently supported perspective.`);
-
+        if (perspectiveId === null || typeof perspectiveId !== 'string' || perspectiveId.trim() === '') {
+          throw new this.InvalidPerspectiveIdError(`${perspectiveId} is not the id for a currently supported perspective.`);
+        }
+  
         if (providerId === '') {
           if (typeof perspectiveMemories[perspectiveId] === 'undefined') {
             perspectiveMemories[perspectiveId] = {};
@@ -159,7 +166,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager', 'wrc-front
         if (typeof perspectiveMemories[providerId] !== 'undefined') {
           const perspectiveIds = Object.keys(perspectiveMemories[providerId]);
           for (const perspectiveId of perspectiveIds) {
-            perspectiveMemories[providerId][perspectiveId].beanPathHistory.navigator.position = position;
+            perspectiveMemories[providerId][perspectiveId].breadcrumbs.navigator.position = position;
           }
         }
       },
@@ -174,14 +181,14 @@ define(['wrc-frontend/microservices/perspective/perspective-manager', 'wrc-front
         if (typeof perspectiveMemories[providerId] !== 'undefined') {
           const perspectiveIds = Object.keys(perspectiveMemories[providerId]);
           for (const perspectiveId of perspectiveIds) {
-            perspectiveMemories[providerId][perspectiveId].beanPathHistory.navigator.icons[iconId].state = state;
+            perspectiveMemories[providerId][perspectiveId].breadcrumbs.navigator.icons[iconId].state = state;
           }
         }
       },
       getProviderPerspectivesNavigatorVisibility: (providerId) => {
         let visible = false;
         if (typeof perspectiveMemories[providerId] !== 'undefined') {
-          const filtered = Object.values(perspectiveMemories[providerId]).filter(perspectiveMemory => perspectiveMemory.beanPathHistory.navigator.visibility);
+          const filtered = Object.values(perspectiveMemories[providerId]).filter(perspectiveMemory => perspectiveMemory.breadcrumbs.navigator.visibility);
           visible = (filtered.length > 0);
         }
         return visible;
@@ -190,7 +197,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager', 'wrc-front
         if (typeof perspectiveMemories[providerId] !== 'undefined') {
           const perspectiveIds = Object.keys(perspectiveMemories[providerId]);
           for (const perspectiveId of perspectiveIds) {
-            perspectiveMemories[providerId][perspectiveId].beanPathHistory.navigator.visibility = visible;
+            perspectiveMemories[providerId][perspectiveId].breadcrumbs.navigator.visibility = visible;
           }
         }
       }

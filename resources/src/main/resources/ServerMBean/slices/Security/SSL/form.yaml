@@ -32,7 +32,52 @@ properties:
 
 advancedProperties:
 - name: SSL.HostnameVerificationIgnored
-- name: SSL.HostnameVerifier
+- name: HostnameVerifierType
+  label: "Hostname Verifier"
+  getMethod: weblogic.remoteconsole.customizers.ServerMBeanCustomizer.getHostnameVerifierType
+  helpSummaryHTML: >
+    <p>A hostname verifier determines whether the connection to the host
+    with the hostname from the URL should be allowed. It is used to prevent
+    man-in-the-middle attacks.  It is called during the SSL handshake when
+    this server is acting as a client of another application server.</p>
+    <p>The default verifier for WebLogic Server 14.1.1 and later is the wildcard verifier
+    and the BEA verifier if earlier.
+  helpDetailsHTML: >
+    <p>The wildcard verifier uses <code>weblogic.security.utils.SSLWLSWildcardHostnameVerifier</code></p>
+    <p>The BEA verifier uses <code>weblogic.security.utils.SSLWLSHostnameVerifier$DefaultHostnameVerifier</code></li>
+  mbeanAttribute:
+    type: SSLMBean
+    attribute: HostnameVerifier
+  legalValues:
+  - value: null
+    label: "Default Verifier"
+  definition:
+    type: java.lang.String
+    writable: true
+    legalValues:
+    - null
+    - "Wildcard Verifier"
+    - "BEA Verifier"
+    - "Custom Verifier"
+    defaultValue:
+      value:
+        value: "Default Verifier"
+- name: CustomHostnameVerifier
+  getMethod: weblogic.remoteconsole.customizers.ServerMBeanCustomizer.getCustomHostnameVerifier
+  usedIf:
+    property: HostnameVerifierType
+    values:
+    - "Custom Verifier"
+  mbeanAttribute:
+    type: SSLMBean
+    attribute: HostnameVerifier
+  definition:
+    type: java.lang.String
+    writable: true
+    descriptionHTML: >
+      <p>The name of a class that implements the <code>weblogic.security.SSL.HostnameVerifier</code> interface.
+      Its <code>verify()</code> method is called during the SSL handshake when
+      this server is acting as a client of another application server.</p>
 - name: SSL.UseClientCertForOutbound
 - name: SSL.ClientCertAlias
 - name: SSL.ClientCertPrivateKeyPassPhrase

@@ -9,6 +9,7 @@ name: weblogic.management.runtime.VariableAssignmentRuntimeMBean
 roles:
   allowed:
   - Deployer
+  - Operator
 properties:
 - name: ModuleName
   type: java.lang.String

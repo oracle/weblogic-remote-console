@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage the persistence-related server debug flags; that is, the flags
@@ -38,6 +38,7 @@ properties:
 # excluded - name: ServerDebug.DebugStore
 - name: ServerDebug.DebugStoreAdmin
 # excluded - name: ServerDebug.DebugStoreCache
+- name: ServerDebug.DebugStoreConnectionCaching
 - name: ServerDebug.DebugStoreIOLogical
 - name: ServerDebug.DebugStoreIOLogicalBoot
 - name: ServerDebug.DebugStoreIOPhysical

@@ -1,0 +1,40 @@
+# Copyright (c) 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.saml2.SAML2MetadataPartnerMBean
+baseTypes:
+- weblogic.security.providers.saml2.SAML2PartnerMBean
+derivedTypes:
+- weblogic.security.providers.saml2.SAML2WebSSOPartner
+
+properties:
+- name: ContactPersonCompany
+  descriptionHTML: "<p>TBD contact person company.</p>"
+  type: java.lang.String
+- name: ContactPersonEmailAddress
+  descriptionHTML: "<p>TBD contact person email address.</p>"
+  type: java.lang.String
+- name: ContactPersonGivenName
+  descriptionHTML: "<p>TBD contact person given name.</p>"
+  type: java.lang.String
+- name: ContactPersonSurName
+  descriptionHTML: "<p>TBD contact person sur name.</p>"
+  type: java.lang.String
+- name: ContactPersonTelephoneNumber
+  descriptionHTML: "<p>TBD contact person telephone number.</p>"
+  type: java.lang.String
+- name: ContactPersonType
+  descriptionHTML: "<p>TBD contact person type.</p>"
+  type: java.lang.String
+- name: EntityID
+  descriptionHTML: "<p>TBD entity ID.</p>"
+  type: java.lang.String
+- name: ErrorURL
+  descriptionHTML: "<p>TBD error URL.</p>"
+  type: java.lang.String
+- name: OrganizationName
+  descriptionHTML: "<p>TBD organization name.</p>"
+  type: java.lang.String
+- name: OrganizationURL
+  descriptionHTML: "<p>TBD organization URL.</p>"
+  type: java.lang.String

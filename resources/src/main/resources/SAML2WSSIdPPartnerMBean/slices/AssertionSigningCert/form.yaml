@@ -1,0 +1,43 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: importAssertionSigningCert
+
+introductionHTML: >
+  <p>Imports this SAML 2.0 Web Service Identity Provider Partner's assertion
+  signing certificate from a PEM or DER file.</p>
+
+presentation:
+  singleColumn: true
+
+properties:
+- name: AssertionSigningCertIssuedTo
+- name: AssertionSigningCertIssuedBy
+- name: AssertionSigningCertValidFrom
+- name: AssertionSigningCertValidUntil
+- name: AssertionSigningCertSubjectAlternativeNames
+
+advancedProperties:
+- name: AssertionSigningCertVersion
+- name: AssertionSigningCertSerialNumber
+- name: AssertionSigningCertSignatureAlgorithm
+- name: AssertionSigningCertExtendedKeyUsage
+- name: AssertionSigningCertBasicConstraints
+- name: AssertionSigningCertThumbprintAlgorithm
+- name: AssertionSigningCertThumbprint
+- name: AssertionSigningCertPublicKey
+
+helpTopics:
+- label: "Configuring a SAML 2.0 Identity Assertion Provider"
+  href: "secmg/ia_atn.html#SECMG223"
+  type: "edocs"
+- label: "Configuring Keystores"
+  href: "secmg/identity_trust.html"
+  type: "edocs"
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Using Security Assertion Markup Language (SAML) Tokens For Identity"
+  href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"
+  type: "generic"

@@ -1,14 +1,38 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout'],
-  function (oj, ko, Runtime, ChangeManager, PerspectiveMemoryManager, ViewModelUtils, CoreTypes, CoreUtils, Logger) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'wrc-frontend/common/keyup-focuser',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/microservices/change-management/change-manager',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/core/types',
+  'wrc-frontend/core/utils',
+  'ojs/ojlogger',
+  'ojs/ojknockout',
+  'ojs/ojcheckboxset'
+],
+  function (
+    oj,
+    ko,
+    KeyUpFocuser,
+    PerspectiveMemoryManager,
+    ChangeManager,
+    ViewModelUtils,
+    Runtime,
+    CoreTypes,
+    CoreUtils,
+    Logger
+  ) {
     function FormToolbar(viewParams) {
       const self = this;
 
@@ -60,7 +84,7 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
           'create': { id: 'create', iconFile: 'add-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.create.tooltip')
           },
-          'landing': { iconFile: 'landing-page-icon-blk_24x24',
+          'landing': { iconFile: 'landing-page-icon-blk_24x24', visible: ko.observable(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name),
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.landing.tooltip')
           },
           'history': { iconFile: 'beanpath-history-icon-blk_24x24',
@@ -72,15 +96,12 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
           'help': { iconFile: 'toggle-help-on-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.help.tooltip')
           },
-          'sync': { iconFile: 'sync-off-icon-blk_24x24',
+          'sync': { iconFile: ko.observable('sync-off-icon-blk_24x24'),
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.sync.tooltip'),
             tooltipOn: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.sync.tooltipOn')
           },
           'syncInterval': { iconFile: 'sync-interval-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.syncInterval.tooltip')
-          },
-          'shoppingcart': { iconFile: 'commit-to-cart-icon_24x24',
-            tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.shoppingcart.tooltip')
           },
           'separator': {
             iconFile: 'separator-vertical_10x24',
@@ -88,17 +109,6 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
           }
         },
         menus: {
-          shoppingcart: {
-            'view': { id: 'view', iconFile: '', disabled: false,
-              label: oj.Translations.getTranslatedString('wrc-form-toolbar.menu.shoppingcart.view.label')
-            },
-            'discard': { id: 'discard', iconFile: 'discard-changes-blk_24x24', visible: ko.observable(true), disabled: false,
-              label: oj.Translations.getTranslatedString('wrc-form-toolbar.menu.shoppingcart.discard.label')
-            },
-            'commit': { id: 'commit', iconFile: 'commit-changes-blk_24x24', visible: ko.observable(true), disabled: false,
-              label: oj.Translations.getTranslatedString('wrc-form-toolbar.menu.shoppingcart.commit.label')
-            }
-          },
           history: {
             'clear': {
               id: 'clear-history',
@@ -122,10 +132,6 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
       // <img id="sync-icon">
       this.autoSyncEnabled = ko.observable(false);
       this.showAutoSyncIcons = ko.observable(true);
-
-      // Need initial values because form-toolbar.html has binding
-      // expressions that reference changeManager.
-      this.changeManager = ko.observable({isLockOwner: false, hasChanges: false, supportsChanges: false});
 
       // This instance-scope variable is used to remember and
       // recall the value of the auto-sync interval.
@@ -155,8 +161,6 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
 
         let binding = viewParams.signaling.readonlyChanged.add((newRO) => {
           self.readonly(newRO);
-          self.i18n.menus.shoppingcart.discard.visible(!newRO);
-          self.i18n.menus.shoppingcart.commit.visible(!newRO);
           if (['modeling','properties','configuration','security'].includes(self.perspective.id)) {
             setToolbarButtonsVisibility('save', (!newRO ? 'inline-flex' : 'none'));
           }
@@ -166,7 +170,11 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
 
         binding = viewParams.signaling.formSliceSelected.add((selectedSlice) => {
           if (self.perspective.id === 'monitoring') {
-            const visible = (selectedSlice.current.selection() === 'Edit' || selectedSlice.current.selection() === 'Criteria' || selectedSlice.current.selection() === 'Filters');
+            let visible = false;
+
+            if (CoreUtils.isNotUndefinedNorNull(selectedSlice.current)) {
+              visible = (selectedSlice.current.selection() === 'Edit' || selectedSlice.current.selection() === 'Criteria' || selectedSlice.current.selection() === 'Filters');
+            }
             self.sliceReadOnly(!visible);
             self.i18n.buttons.save.visible(visible);
             this.resetIconsVisibleState(!visible);
@@ -197,48 +205,9 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager) => {
-          //we want to get the latest info from ChangeManager so that everything is in sync when we first
-          //bring up the form.
-          if (eventType === 'sync') {
-            ChangeManager.getData()
-            .then(data => {
-              changeManager.supportsChanges = data.changeManager.supportsChanges;
-              changeManager.isLockOwner = data.changeManager.isLockOwner;
-              changeManager.hasChanges = data.changeManager.hasChanges;
-              ChangeManager.putMostRecent(changeManager);
-              self.changeManager(changeManager);
-            });
-          }  else {
-            changeManager.supportsChanges = self.changeManager().supportsChanges;
-            if (!CoreUtils.isEquivalent(self.changeManager(), changeManager)) {
-              ChangeManager.putMostRecent(changeManager);
-              self.changeManager(changeManager);
-              if (eventType === 'discard') viewParams.onShoppingCartDiscarded(self.toolbarButton);
-              if (eventType === 'commit') viewParams.onShoppingCartCommitted(self.toolbarButton);
-            }
-
-            if (source === 'shoppingcart') {
-              viewParams.signaling.ancillaryContentItemCleared.dispatch(source);
-            }
-          }
-        });
-
-        self.signalBindings.push(binding);
-
-        // The establishment of this subscription will happen
-        // BEFORE the Promise for ChangeManager.getLockState()
-        // is resolved! The update of self.changeManager()
-        // inside the Promise.then() block, will subsequently
-        // trigger this subscription.
-        this.changeManager.subscribe((newValue) => {
-          shoppingCartContentsChanged(newValue);
-        });
-
         // Get value of changeManager properties asynchronously.
         ChangeManager.getLockState()
           .then((data) => {
-            self.changeManager(data.changeManager);
             self.renderToolbarButtons(renderToolbarButtonsEventType);
           })
           .catch(response => {
@@ -251,6 +220,7 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
       };
 
       this.disconnected = function () {
+        KeyUpFocuser.unregister('.cfe-content-area-body-iconbar-icon');
         // autoSyncCancelled is for stopping auto-sync when the user presses the
         // "Disconnect" icon in the toolbar icon of domain.js, or
         // the CFE notices that the CBE process is stopped.
@@ -262,78 +232,69 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
         self.signalBindings = [];
       };
 
-      this.launchShoppingCartMenu = function (event) {
-        event.preventDefault();
-        document.getElementById('shoppingCartMenu').open(event);
-      };
-
-      this.shoppingCartMenuClickListener = function (event) {
-        const value = event.target.value;
-        if (value === 'view') {
-          viewParams.signaling.ancillaryContentItemSelected.dispatch('form-toolbar', ChangeManager.Entity.SHOPPING_CART.name);
+      this.registerFormIconbarIconsKeyUpFocuser = (id) => {
+        let result = KeyUpFocuser.getKeyUpCallback(id);
+    
+        if (!result.alreadyRegistered) {
+          result = KeyUpFocuser.register(
+            id,
+            {
+              Enter: {key: 'Enter', action: 'select', callback: onKeyUpFocuserActionSelect}
+            },
+            {}
+          );
         }
-        else {
-          switch (value){
-            case 'commit':
-              ViewModelUtils.setPreloaderVisibility(true);
-              ChangeManager.commitChanges()
-                .then(value => {
-                  self.changeManager(value);
-                  viewParams.signaling.ancillaryContentItemCleared.dispatch('shoppingcart-launcher');
-                })
-                .catch(response => {
-                  ViewModelUtils.failureResponseDefaultHandling(response);
-                })
-                .finally(() => {
-                  ViewModelUtils.setPreloaderVisibility(false);
-                });
-              break;
-            case 'discard':
-              ViewModelUtils.setPreloaderVisibility(true);
-              ChangeManager.discardChanges()
-                .then((changeManager) => {
-                  self.changeManager(changeManager);
-                  viewParams.signaling.ancillaryContentItemCleared.dispatch('shoppingcart-launcher');
-                  viewParams.onShoppingCartDiscarded();
-                })
-                .catch(response => {
-                  ViewModelUtils.failureResponseDefaultHandling(response);
-                })
-                .finally(() => {
-                  ViewModelUtils.setPreloaderVisibility(false);
-                });
-              break;
+    
+        return result.keyUpCallback;
+      };
+  
+      function onKeyUpFocuserActionSelect(event) {
+        function simulateHelpIconClickEvent(event) {
+          const link = document.querySelector(`#${event.target.id} > a`);
+          if (link !== null) {
+            event.preventDefault();
+            const event1 = new Event('click', {bubbles: true});
+            link.dispatchEvent(event1);
+          }
+        }
+    
+        function simulateSyncIconClickEvent(node) {
+          event.preventDefault();
+          const attr = node.attributes['data-interval'];
+          if (CoreUtils.isNotUndefinedNorNull(attr)) {
+            handleSyncIconEvent(node);
           }
         }
 
-      }.bind(this);
+        const firstElementChild = event.target.firstElementChild.firstElementChild;
+        const iconId = firstElementChild.getAttribute('id');
+    
+        switch (iconId) {
+          case 'landing-page-icon':
+            self.landingPageClick(event);
+            break;
+          case 'toggle-history':
+            self.toggleHistoryClick(event);
+            break;
+          case 'page-help-icon':
+            simulateHelpIconClickEvent(event);
+            break;
+          case 'sync-icon':
+            simulateSyncIconClickEvent(firstElementChild);
+            break;
+          case 'sync-interval-icon':
+            self.syncIntervalClick(event);
+            break;
+        }
+      }
 
       this.resetIconsVisibleState = function(state) {
         self.showAutoSyncIcons(state);
       };
 
-      this.isShoppingCartVisible = function() {
-        // Default to false
-        let visible = false;
-        // The console extension is installed, but the
-        // shopping cart icon may be hidden for the
-        // current perspective.
-        if (self.perspective.id === 'configuration') {
-          // The console extension isn't installed, but
-          // there is one perspective where still showing
-          // the shopping cart icon is required. That's
-          // the configuration perspective.
-          visible = viewParams.isShoppingCartVisible();
-        }
-        return visible;
+      this.isHistoryVisible = function() {
+        return viewParams.isHistoryVisible();
       };
-
-      function shoppingCartContentsChanged(changeManager) {
-        let ele = document.getElementById('shoppingCartImage');
-        if (ele !== null) {
-          ele.src = 'js/jet-composites/wrc-frontend/1.0.0/images/shopping-cart-' + (changeManager.isLockOwner && changeManager.hasChanges ? 'non-empty' : 'empty') + '-tabstrip_24x24.png';
-        }
-      }
 
       this.resetButtonsDisabledState = function (buttons) {
         buttons.forEach((button) => {
@@ -495,9 +456,12 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
       }
 
       this.toggleHistoryClick = function (event) {
-        const withHistoryVisible = viewParams.onBeanPathHistoryToggled(!self.showBeanPathHistory());
-        // Call function in form.js assigned to the
-        // onBeanPathHistoryToggled field in viewParams
+        const withHistoryVisible = !self.showBeanPathHistory();
+        // Call function in form.js with negation of value
+        // assigned to the knockout observable.
+        viewParams.onBeanPathHistoryToggled(withHistoryVisible);
+        // Set knockout observable to value returned from
+        // onBeanPathHistoryToggled() function in form.js
         self.showBeanPathHistory(withHistoryVisible);
       };
 
@@ -518,21 +482,36 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
         viewParams.onHelpPageToggled(helpVisible);
       };
 
+      function handleSyncIconEvent(node) {
+        const attr = node.attributes['data-interval'];
+        if (CoreUtils.isNotUndefinedNorNull(attr)) {
+          const autoSyncEnabled = self.autoSyncEnabled();
+          let syncInterval = 0;
+          if (CoreUtils.isNotUndefinedNorNull(attr.value)) {
+            // Get sync interval from the "data-interval" attribute
+            syncInterval = parseInt(attr.value);
+          }
+          if (syncInterval === 0) {
+            // Just reload and ensure the sync state is not running
+            if (autoSyncEnabled) {
+              self.autoSyncEnabled(false);
+            }
+          }
+          else {
+            // Toggle the sync state and no interval when currently enabled
+            self.autoSyncEnabled(!autoSyncEnabled);
+            if (autoSyncEnabled) syncInterval = 0;
+          }
+          setAutoSyncIcon();
+          viewParams.onSyncClicked(syncInterval);
+        }
+      }
+
       this.syncClick = function (event) {
-        // Get sync interval from the "data-interval" attribute
-        let syncInterval = parseInt(event.target.attributes['data-interval'].value);
-        let autoSyncEnabled = self.autoSyncEnabled();
-        if (syncInterval === 0) {
-          // Just reload and ensure the sync state is not running
-          if (autoSyncEnabled) self.autoSyncEnabled(false);
+        const attr = event.target.attributes['data-interval'];
+        if (CoreUtils.isNotUndefinedNorNull(attr)) {
+          handleSyncIconEvent(event.target);
         }
-        else {
-          // Toggle the sync state and no interval when currently enabled
-          self.autoSyncEnabled(!autoSyncEnabled);
-          if (autoSyncEnabled) syncInterval = 0;
-        }
-        setAutoSyncIcon();
-        viewParams.onSyncClicked(syncInterval);
       };
 
       this.syncIntervalClick = function (event) {
@@ -566,8 +545,9 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
       function setAutoSyncIcon() {
         // Change tooltip to let end user know the state
         let syncIconElement = document.getElementById('sync-icon');
-        if ((typeof syncIconElement !== 'undefined') && (syncIconElement !== null))
+        if (syncIconElement !== null) {
           syncIconElement.setAttribute('title', (self.autoSyncEnabled() ? self.i18n.icons.sync.tooltipOn : self.i18n.icons.sync.tooltip));
+        }
       }
 
       this.cancelAutoSync = function () {
@@ -624,7 +604,6 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
       this.finishAction = function (event) {
         self.toolbarButton = 'finish';
         viewParams.signaling.navtreeSelectionCleared.dispatch();
-        self.changeManager(ChangeManager.getMostRecent());
         return viewParams.finishedAction();
       };
 
@@ -632,7 +611,6 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
         self.toolbarButton = 'delete';
         // clear treenav selection
         viewParams.signaling.navtreeSelectionCleared.dispatch();
-        self.changeManager(ChangeManager.getMostRecent());
         // The "delete" toolbar button is only available for
         // a "creatableOptionalSingleton", so we need to use
         // viewParams.parentRouter.data.rdjData.self.resourceData
@@ -656,9 +634,6 @@ define(['ojs/ojcore', 'knockout',  'wrc-frontend/core/runtime', 'wrc-frontend/mi
         function (event) {
           // event.target.id;
           self.toolbarButton = 'save';
-          // clear treenav selection
-          viewParams.signaling.navtreeSelectionCleared.dispatch();
-          self.changeManager(ChangeManager.getMostRecent());
           viewParams.onSaveButtonClicked('update');
         }
       );

@@ -1,10 +1,11 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: Create a new Application Deployment
 sections:
 - properties:
   - name: Name
   - name: Targets
+    required: true
   - name: Upload
     required: true
     definition:
@@ -40,6 +41,18 @@ sections:
       type: java.io.InputStream
       writable: true
       descriptionHTML: "Select the deployment plan document to upload to the Administration Server and deploy."
+  - name: StartApplicationUpload
+    label: Start Application
+    required: false
+    definition:
+      name: StartApplicationUpload
+      type: boolean
+      writable: false
+      defaultValue:
+        value:
+          value: true
+      descriptionHTML: "Application starts immediately upon deployment."
+
 - usedIf:
     property: Upload
     values:
@@ -77,12 +90,24 @@ sections:
          set, it cannot be changed while the application is configured in the domain. The
          only way to change the staging mode is to undeploy and then redeploy the application.</p>
        <p>This attribute overrides the server''s staging mode. </p> '
-  - name: AdminMode
+
+  - name: OnDeployment
+    legalValues:
+      - value: "doNotStart"
+        label: "Do not start application"
+      - value: "start"
+        label: "Start Application"
+      - value: "startInAdminMode"
+        label: "Start application in admin mode (only services admin requests)"
     definition:
-      name: AdminMode
-      type: boolean
+      name: OnDeployment
+      type: java.lang.String
+      legalValues:
+        - "doNotStart"
+        - "start"
+        - "startInAdminMode"
       writable: true
       defaultValue:
         value:
-          value: false
-      descriptionHTML: "Do you want to start the application with restricted access ? "
+          value: "doNotStart"
+      descriptionHTML: 'Start the application on deployment.'

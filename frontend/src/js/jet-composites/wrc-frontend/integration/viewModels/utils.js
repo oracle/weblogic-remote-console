@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -9,20 +9,47 @@
 /**
  * @module
  */
-define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function (oj, Preferences, MessageDisplaying, CoreTypes, CoreUtils, Logger) {
-    return {
-      i18n: {
-        'labels': {
-          'unexpectedErrorResponse': {value: oj.Translations.getTranslatedString('wrc-view-model-utils.labels.unexpectedErrorResponse.value')}
-        },
-        'messages': {
-          'connectionRefused': {
-            'summary': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.summary'),
-            'details': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.details')
-          }
-        }
+define([
+  'ojs/ojcore',
+  'wrc-frontend/microservices/preferences/preferences-manager',
+  'wrc-frontend/apis/message-displaying',
+  'wrc-frontend/core/utils',
+  'wrc-frontend/core/types',
+  'wrc-frontend/core/utils',
+  'ojs/ojlogger'
+],
+  function (
+    oj,
+    PreferencesManager,
+    MessageDisplaying,
+    Runtime,
+    CoreTypes,
+    CoreUtils,
+    Logger
+  ) {
+    const i18n = {
+      'labels': {
+        'unexpectedErrorResponse': {value: oj.Translations.getTranslatedString('wrc-view-model-utils.labels.unexpectedErrorResponse.value')}
       },
+      'messages': {
+        'connectionRefused': {
+          'summary': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.summary'),
+            'details': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.details')
+        }
+      }
+    };
+
+    function displayResponseMessage(message) {
+      MessageDisplaying.displayMessage({
+          severity: message.severity || 'error',
+          summary: message.summary,
+          detail: message.detail
+        }, PreferencesManager.notifications.autoCloseInterval()
+      );
+    }
+  
+    return {
+      i18n: i18n,
 
       /**
        * Determines if a given ``response`` has messages in it.
@@ -37,14 +64,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         );
       },
 
-      displayResponseMessage: function (message) {
-        MessageDisplaying.displayMessage({
-            severity: message.severity || 'error',
-            summary: message.summary,
-            detail: message.detail
-          }, Preferences.notifications.autoCloseInterval()
-        );
-      },
+      displayResponseMessage: displayResponseMessage,
 
       getResponseBodyMessages: function (response, properties) {
         let bodyMessages = [], errorMessage;
@@ -100,7 +120,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
           failure.failureReason.mark.column
         );
       },
-
+  
       /**
        * Provides default handling of responses passed in Promise rejections.
        * <p>User preferences govern the behavior of this method:<p>
@@ -121,15 +141,24 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         // the actual failureType and failureReason
         // properties.
         if (CoreUtils.isError(response) ||
-          CoreUtils.isUndefinedOrNull(response.failureType)
+          CoreUtils.isError(response.failureReason)
         ) {
-          response = {
-            failureType: CoreTypes.FailureType.UNEXPECTED,
-            failureReason: response
-          };
+          if (CoreTypes.isConnectionResponseFailure(response)) {
+            severity = 'warning';
+            response = {
+              failureType: CoreTypes.FailureType.CONNECTION_REFUSED,
+              failureReason: response.failureReason.message
+            };
+          }
+          else {
+            response = {
+              failureType: CoreTypes.FailureType.UNEXPECTED,
+              failureReason: response
+            };
+          }
         }
 
-        if (Preferences.notifications.showPopupForFailureResponsesPreference()) {
+        if (PreferencesManager.notifications.showPopupForFailureResponsesPreference()) {
           let messageSummary, messageDetails;
           // The end user's "showPopupForFailureResponses"
           // preference setting has a value of true, so
@@ -149,19 +178,19 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
 
           // Set value of severity to "info", if an invalid value was
           // assigned to the severity parameter.
-          if (!['error', 'warn', 'info'].includes(severity)) severity = 'info';
+          if (!['error', 'warning', 'info'].includes(severity)) severity = 'info';
 
-          // Display message used for default failure response handling,
-          // using parameter and preference values.
-          MessageDisplaying.displayMessage({
+          // Display failure type message.
+          MessageDisplaying.displayMessage(
+            {
               severity: severity,
               summary: messageSummary,
               detail: messageDetails
-            }, Preferences.notifications.autoCloseInterval()
+            }
           );
         }
 
-        if (Preferences.logging.logFailureResponses()) {
+        if (PreferencesManager.logging.logFailureResponses()) {
           // The end user's "logFailureResponses"
           // preference setting has a value of true, so
           // log the failure reason.
@@ -266,9 +295,16 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
        * @param {{filepath: string, fileContents: string, mediaType: string}} options - JS object with properties containing data for the file to be downloaded.
        */
       downloadFile: (options) => {
-        const blob = new Blob([options.fileContents], {type: options.mediaType});
         const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
+        if (options.fileContents) {
+          const blob = new Blob([options.fileContents], {type: options.mediaType});
+          link.href = URL.createObjectURL(blob);
+        }
+        else if (options.href) {
+          link.href = options.href;
+          if (options.target) link.target = options.target;
+          if (options.mediaType) link.type = options.mediaType;
+        }
         link.download = options.filepath;
         Object.assign(link.style, {
           visibility: 'hidden',
@@ -286,8 +322,8 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         link.click();
         link.remove();
       },
-
-      /**
+    
+        /**
        * Uses a given ``router`` to go to a given ``path``, calling a can exit callback, if specified
        * @param {object} router
        * @param {string} path
@@ -356,8 +392,93 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         }
       },
 
+      detectOS: () => {
+        let userAgent = window.navigator.userAgent,
+          platform = window.navigator.platform,
+          macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+          windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+          iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+          os = null;
+  
+        if (macosPlatforms.indexOf(platform) !== -1) {
+          os = 'macOS';
+        } else if (iosPlatforms.indexOf(platform) !== -1) {
+          os = 'iOS';
+        } else if (windowsPlatforms.indexOf(platform) !== -1) {
+          os = 'windows';
+        } else if (/Android/.test(userAgent)) {
+          os = 'android';
+        } else if (!os && /Linux/.test(platform)) {
+          os = 'linux';
+        }
+  
+        return os;
+      },
+
+      openExternalURL: (url) => {
+        if (CoreUtils.isNotUndefinedNorNull(window.electron_api)) {
+          window.electron_api.ipc.invoke('external-url-opening', url);
+        }
+        else {
+          window.open(url, '_blank', 'noopener noreferrer');
+        }
+      },
+
       copyToClipboard: async (text) => {
         return navigator.clipboard.writeText(text);
+      },
+  
+      /**
+       *
+       * @param {number} keyCode - The `keyCode` of the key to simulate
+       * @param {string} [type='down'] - The type of event : down, up or press. The default is down
+       * @param {object} [modifiers={}] - An object which contains modifiers keys. For example: `{ ctrlKey: true, altKey: false, ...}`
+       * @example
+       *  // Simulate 'ArrowUp'
+       *  ViewModelUtils.simulateKeyPress(38);
+       *  // Simulate 'F2'
+       *  ViewModelUtils.simulateKeyPress(113);
+       *  // Simulate 'Option+Command+i' (i.e. "Open Developer Tools")
+       *  ViewModelUtils.simulateKeyPress(73, 'up', {altKey: true, metaKey: true});
+       */
+      simulateKeyPress: (keyCode, type, modifiers) => {
+        const eventName = (typeof type === 'string' ? `key${type}` : 'keydown');
+        const modifiersObj = (modifiers instanceof Object ? modifiers : {});
+        modifiersObj['keyCode'] = keyCode;
+        if (modifiers.ctrlKey) modifiersObj['ctrlKey'] = modifiers.ctrlKey;
+        if (modifiers.shiftKey) modifiersObj['shiftKey'] = modifiers.shiftKey;
+        if (modifiers.altKey) modifiersObj['altKey'] = modifiers.altKey;
+        if (modifiers.metaKey) modifiersObj['metaKey'] = modifiers.metaKey;
+        const event = new KeyboardEvent(eventName, modifiersObj);
+        document.dispatchEvent(event);
+      },
+
+      getAcceleratorElement: (accelerator = 'Alt|Q' , platform = 'linux') => {
+        function linuxAcceleratorElement(span, values) {
+        }
+  
+        function macOSAcceleratorElement(span, values) {
+        }
+  
+        function windowsOSAcceleratorElement(span, values) {
+        }
+  
+        let span = document.createElement('span');
+        span.setAttribute('slot', 'endIcon');
+
+        switch (platform) {
+          case 'linux':
+            linuxAcceleratorElement(span, accelerator.split('|'));
+            break;
+          case 'macOS':
+            macOSAcceleratorElement(span, accelerator.split('|'));
+            break;
+          case 'windows':
+            windowsOSAcceleratorElement(span, accelerator.split('|'));
+            break;
+        }
+
+        return span;
       },
 
       helpIconClickListener: (event) => {
@@ -365,7 +486,7 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
         const detailedHelp = event.currentTarget.attributes['data-detailed-help'].value;
 
         if (detailedHelp !== null) {
-          const popup = document.getElementById(event.target.getAttribute('aria-describedby'))
+          const popup = document.getElementById(event.target.getAttribute('aria-describedby'));
 
           if (popup != null) {
             const content = popup.getElementsByClassName('oj-label-help-popup-container')[0];
@@ -380,6 +501,14 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/preferences/preferences', 'wrc
               }
             }
           }
+        }
+      },
+      helpLinkClickListener: (event) => {
+        if (window.electron_api) {
+          window.electron_api.ipc.invoke('external-url-opening', event.target.attributes['data-external-help-link'].value);
+        }
+        else {
+          window.open(event.target.attributes['data-external-help-link'].value, '_blank', 'noopener noreferrer');
         }
       }
 

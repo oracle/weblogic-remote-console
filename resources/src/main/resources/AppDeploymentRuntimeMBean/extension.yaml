@@ -1,4 +1,4 @@
-# Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions:
@@ -118,11 +118,73 @@ actions:
   roles:
     allowed:
     - Deployer
+    - Operator
   parameters:
   - name: "PlanPath"
     type: "java.lang.String"
     descriptionHTML: >
       <p>The path name, on the admin server's file system, of the deployment plan file to create.</p>
+
+- name: "updateExisting"
+  type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+  roles:
+    allowed:
+      - Deployer
+      - Operator
+  parameters:
+    - name: "PlanPath"
+      type: "java.lang.String"
+      descriptionHTML: >
+        <p>The file path to the deployment plan on the administration server's file system</p>
+
+- name: "update"
+  type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+  roles:
+    allowed:
+      - Deployer
+      - Operator
+  parameters:
+    - name: "PlanPath"
+      type: "java.lang.String"
+      descriptionHTML: >
+        <p>The file path to the deployment plan on the administration server's file system</p>
+
+- name: "redeploy"
+  type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+  roles:
+    allowed:
+      - Deployer
+      - Operator
+  parameters:
+    - name: "SourcePath"
+      type: "java.lang.String"
+      descriptionHTML: >
+        <p>The file path to the application archive on the administration server's file system.</p>
+    - name: "PlanPath"
+      type: "java.lang.String"
+      descriptionHTML: >
+        <p>The file path to the deployment plan on the administration server's file system</p>
+
+- name: uploadAndRedeploy
+  type: "void"
+  parameters:
+  - name: Source
+    type: java.io.InputStream
+    descriptionHTML: >
+      <p>Select the deployable unit to upload to the Administration Server.</p>
+  - name: Plan
+    type: java.io.InputStream
+    descriptionHTML: >
+      <p>Select the deployment plan document to upload to the Administration Server.</p>
+
+
+- name: uploadAndUpdate
+  type: "void"
+  parameters:
+    - name: Plan
+      type: java.io.InputStream
+      descriptionHTML: >
+        <p>Select the deployment plan document to upload to the Administration Server.</p>
 
 properties:
 - name: "DeploymentPlan"

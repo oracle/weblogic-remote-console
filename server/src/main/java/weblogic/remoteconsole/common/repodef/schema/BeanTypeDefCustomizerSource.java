@@ -27,7 +27,7 @@ public class BeanTypeDefCustomizerSource {
   private BooleanValue referenceable = new BooleanValue();
   private BooleanValue ordered = new BooleanValue();
   private BooleanValue editable = new BooleanValue();
-  private BooleanValue supportsCustomFilteringDashboards = new BooleanValue(true);
+  private BooleanValue supportsFilteringDashboards = new BooleanValue(true);
 
   // The list of properties on this type that have been customized.
   public List<BeanPropertyDefCustomizerSource> getProperties() {
@@ -236,11 +236,11 @@ public class BeanTypeDefCustomizerSource {
   // Whether this type supports custom filtering dashboards.
   // e.g. we won't want to support creating custom filtering dashboards
   // for simple searches.
-  public boolean isSupportsCustomFilteringDashboards() {
-    return supportsCustomFilteringDashboards.getValue();
+  public boolean isSupportsFilteringDashboards() {
+    return supportsFilteringDashboards.getValue();
   }
 
-  public void setSupportsCustomFilteringDashboards(boolean value) {
-    supportsCustomFilteringDashboards.setValue(value);
+  public void setSupportsFilteringDashboards(boolean value) {
+    supportsFilteringDashboards.setValue(value);
   }
 }

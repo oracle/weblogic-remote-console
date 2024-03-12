@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -15,7 +15,7 @@ public class SupportedLocales {
   // the filenames, but the chances we change the set of languages is small, so this is good enough.
   // The language names are case-insensitive, so we represent everything as lowercase for comparisons.
   public static List<String> OUR_LANGUAGES =
-    Arrays.asList("en","en_US","de","de_DE","es","fr","it","ja","ko","pt_BR","zh_CN","zh_TW");
+    Arrays.asList("en","en-US","de","es","fr","it","ja","ko","pt-BR","zh-CN","zh-TW");
 
   public static String getFirstSupportedAcceptLanguage(List<Locale> locales) {
     Locale selectedLocale = getFirstSupportedAcceptLocale(locales);
@@ -23,13 +23,13 @@ public class SupportedLocales {
   }
 
   /*
-   * Given the specified Locale, return lang_country if the variant is non-null, else just lang
+   * Given the specified Locale, return 'lang-country' if the variant is non-null, else just lang
    * @param the Locale
-   * @return lang[_country]
+   * @return lang[-country]
    */
   public static String langAndCountry(Locale selectedLocale) {
     String country = selectedLocale.getCountry();
-    return selectedLocale.getLanguage() + (country.equals("") ? "" : "_" + country);
+    return selectedLocale.getLanguage() + (country.equals("") ? "" : "-" + country);
   }
 
   public static Locale getFirstSupportedAcceptLocale(List<Locale> locales) {

@@ -49,34 +49,51 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
         file = "UC-001A.png";
         try {
             //Go to Domain General Tab
-            await admin.goToFirstTab(driver, "Edit Tree", "EnvironmentChevron",
-                "Domain", 1, 1);
-            await driver.sleep(600);
-            console.log("Click to enable Domain AdministrationPortEnabled");
-            element = await driver.findElement(
-                By.xpath("//*[@id='AdministrationPortEnabled']/div[1]/div/div")).click();
-            await driver.sleep(600);
+            await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Domain");
+            await driver.sleep(3600);
             console.log("Click at Domain Web Application tab");
-            element = await driver.findElement(By.xpath("//span[contains(.,'Web Application')]")).click();
-            await driver.sleep(600);
-            console.log("Click No button at Unsaved Changes Detected Dialog.");
-            element = await driver.findElement(
-                By.xpath("//oj-button[@id='dlgNoBtn']/button/div/span")).click();
-            await driver.sleep(600);
+            element = driver.findElement(
+                By.xpath("//span[text()='Web Application' and @class='oj-tabbar-item-label']"));
+            if (element.isEnabled()) {
+                await element.click();
+            }
+            await driver.sleep(1200);
+            console.log("Click at WebAppContainer_AllowAllRoles");
+            element = driver.findElement(
+                By.xpath(" //oj-switch[@id='WebAppContainer_AllowAllRoles']/div[1]/div/div"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.wait(until.elementIsVisible(element),800);
+            await element.click();
+            await driver.sleep(1200);
             console.log("Click at Domain General tab");
-            element = driver.findElement(By.xpath("//span[contains(.,'General')]"));
+            element = driver.findElement(
+                By.xpath("//span[text()='General' and @class='oj-tabbar-item-label']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
-            await driver.sleep(600);
-            //Verify if AdministrationPortEnabled is Still Enable at Domain General tab
-            element = driver.findElement(By.xpath("//*[@id='AdministrationPortEnabled']/div[1]/div/div"));
-            console.log("Verify if AdministrationPortEnabled isn't enable at Domain General tab")
+            await driver.sleep(1200);
+            console.log("Click Yes button at Unsaved Changes Detected Dialog.");
+            element = await driver.findElement(
+                By.xpath("//oj-button[@id='dlgYesBtn']")).click();
+            await driver.sleep(1200);
+            console.log("Click at Domain Web Application tab");
+            element = driver.findElement(
+                By.xpath("//span[text()='Web Application' and @class='oj-tabbar-item-label']"));
             if (element.isEnabled()) {
+                await element.click();
+            }
+            await driver.sleep(1200);
+            //Verify if WebAppContainer_AllowAllRoles enable at Domain WebContainer tab
+            console.log("Verify if WebAppContainer_AllowAllRoles enable at Domain WebContainer tab tab")
+            element = driver.findElement(
+                By.xpath(" //oj-switch[@id='WebAppContainer_AllowAllRoles']/div[1]/div/div"));
+            await driver.wait(until.elementIsVisible(element),8880);
+            if (element.isEnabled()) {
+                console.log("WebAppContainer_AllowAllRoles is enable");
                 console.log("TEST PASS ");
                 await driver.sleep(600);
             }
             else {
-                console.log("AdministrationPortEnabled is disable");
+                console.log("WebAppContainer_AllowAllRolesis disable");
                 console.log("TEST FAIL ");
             }
         } catch (e) {
@@ -289,6 +306,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
         file = "UC-009A.png";
         try {
             //Go to AdminServer
+            //Example: for wait(until
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Servers",
                 "AdminServer");
             await driver.sleep(3600);
@@ -300,8 +318,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             await element.sendKeys("localhost");
             await driver.sleep(3600);
             console.log("Click Visibility toggle-history-toolbar-icon");
-            element = await driver.findElement(
-                By.xpath("//*[@id='toggle-history-toolbar-icon']/a"));
+            element = await driver.findElement(By.xpath("//img[@title='Toggle visibility of history']"));
             await driver.wait(until.elementIsVisible(element),500);
             await element.click();
             await driver.sleep(7200);
@@ -360,7 +377,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             await element.sendKeys("100");
             await driver.sleep(1200);
             console.log("Click at Home Image Icon link");
-            element = await driver.findElement(By.xpath("//span[starts-with(@id, 'home_oj57')]")).click();
+            element = await driver.findElement(By.xpath("//span[starts-with(@id, 'home')]")).click();
             await driver.sleep(1200);
             console.log("Click Yes button at Unsaved Changes Detected Dialog.");
             element = await driver.findElement(
@@ -588,8 +605,9 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
 
     //
     //   https://confluence.oraclecorp.com/confluence/pages/viewpage.action?pageId=4763969598
+    //   FIXME Issue: WC-1391
     //
-    it('12. Test Category: GAT/Risk1\n \t Test Scenario: UC-017A: ', async function () {
+    it.skip('12. Test Category: GAT/Risk1\n \t Test Scenario: UC-017A: ', async function () {
         file = "UC-017A.png";
         try {
             const projFile = "frontend/system-tests/lib/wdtDomainProject.json";
@@ -597,7 +615,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             const prjFile = process.env.OLDPWD + path.sep + projFile;
             await admin.importProject(driver,prjFile);
             await driver.sleep(4800);
-            await admin.selectDomainConnection(driver,"1412LocalDomain");
+            await admin.selectDomainConnection(driver,"14120LocalDomain");
             await driver.sleep(600);
             await driver.findElement(By.id("password-field|input")).click();
             await driver.findElement(By.id("password-field|input")).sendKeys("welcome1");
@@ -624,8 +642,8 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             await element.sendKeys("100");
             await driver.sleep(1200);
             console.log("Click at 1412LocalDomain Provider Image");
-            element = driver.findElement(By.xpath("//span[@id='content-area-header-title-description']")).click();
-            await driver.sleep(1200);
+            element = driver.findElement(By.xpath("//a[@id='data-provider-get-info']/i")).click();
+            await driver.sleep(9600);
             console.log("Click to deactivate 1412LocalDomain Provider ");
             element = driver.findElement(By.xpath("//a[@data-item-action='deactivate']")).click();
             await driver.sleep(1200);

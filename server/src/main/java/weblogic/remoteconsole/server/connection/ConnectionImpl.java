@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.connection;
@@ -14,6 +14,7 @@ public class ConnectionImpl implements Connection {
   private String id;
   private String domainUrl;
   private String domainName;
+  private String adminServerName;
   private WebLogicVersion weblogicVersion;
   private String consoleExtensionVersion;
   private Set<String> capabilities;
@@ -27,6 +28,7 @@ public class ConnectionImpl implements Connection {
     String id,
     String domainUrl,
     String domainName,
+    String adminServerName,
     WebLogicVersion weblogicVersion,
     String consoleExtensionVersion,
     Set<String> capabilities,
@@ -38,6 +40,7 @@ public class ConnectionImpl implements Connection {
     this.id = id;
     this.domainUrl = domainUrl;
     this.domainName = domainName;
+    this.adminServerName = adminServerName;
     this.weblogicVersion = weblogicVersion;
     this.consoleExtensionVersion = consoleExtensionVersion;
     this.capabilities = capabilities;
@@ -60,6 +63,11 @@ public class ConnectionImpl implements Connection {
   @Override
   public String getDomainName() {
     return domainName;
+  }
+
+  @Override
+  public String getAdminServerName() {
+    return adminServerName;
   }
 
   @Override

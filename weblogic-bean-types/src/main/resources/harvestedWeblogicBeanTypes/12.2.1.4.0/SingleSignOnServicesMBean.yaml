@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -80,6 +80,14 @@ properties:
       value: false
   descriptionHTML: 'Get assertion encryption enabled flag '
   name: AssertionEncryptionEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Indicates whether to use the session timeout timestamp from
+    the assertion''s subject as a condition to time out the local session.</p> '
+  name: AssertionSubjectSessionTimeoutCheckEnabled
   type: boolean
   writable: true
 - defaultValue:
@@ -472,6 +480,33 @@ properties:
   - HTTP/Artifact
   name: ServiceProviderPreferredBinding
   nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: HTTP/Redirect
+  descriptionHTML: '<p>The binding used by the Service Provider to send SAML Single
+    Logout Requests</p> '
+  legalValues:
+  - HTTP/Redirect
+  - HTTP/POST
+  name: ServiceProviderSingleLogoutBinding
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether Single Logout is enabled for the Service
+    Provider.</p> '
+  name: ServiceProviderSingleLogoutEnabled
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of allowed redirect URIs to be used by the initiating
+    Service Provider for after Logout redirection.</p> '
+  name: ServiceProviderSingleLogoutRedirectURIs
   type: java.lang.String
   writable: true
 - defaultValue:

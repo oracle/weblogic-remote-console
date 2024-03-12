@@ -1,14 +1,14 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/integration/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './table-sorter', 'wrc-frontend/microservices/perspective/perspective-memory-manager', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-input-dialog', './container-resizer', 'wrc-frontend/microservices/page-definition/types', './help-form', './wdt-form', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojcheckboxset', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader'],
-  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, ojkeyset_1, Controller, DataOperations, MessageDisplaying, TableSorter, PerspectiveMemoryManager, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, ContentAreaContainerResizer, PageDataTypes, HelpForm, WdtForm, TableCustomizerManager, DeclarativeActionsManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/common/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/types', './container-resizer', './container-accessibility', './table-templates', './table-sorter', './help-form', './wdt-form', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-input-dialog', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/common/page-definition-helper', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojcheckboxset', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader'],
+  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, ojkeyset_1, Controller, DataOperations, MessageDisplaying, PerspectiveMemoryManager, PageDataTypes, ContentAreaContainerResizer, ContentAreaContainerAccessibility, TableTemplates, TableSorter, HelpForm, WdtForm, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, TableCustomizerManager, DeclarativeActionsManager, PageDefinitionHelper, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function TableViewModel(viewParams) {
       // Declare reference to instance of the ViewModel
       // that JET creates/manages the lifecycle of. This
@@ -19,13 +19,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       this.i18n = {
         buttons: {
-          yes: {disabled: false,
+          yes: {
+            disabled: false,
             label: oj.Translations.getTranslatedString('wrc-common.buttons.yes.label')
           },
-          no: {disabled: false,
+          no: {
+            disabled: false,
             label: oj.Translations.getTranslatedString('wrc-common.buttons.no.label')
           },
-          ok: {disabled: false,
+          ok: {
+            disabled: false,
             label: oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
           },
           cancel: {
@@ -62,7 +65,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         },
         prompts: {
           unsavedChanges: {
-            needDownloading: {value: oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value')}
+            needDownloading: { value: oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value') }
           }
         },
         labels: {
@@ -79,7 +82,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           title: oj.Translations.getTranslatedString('wrc-sync-interval.dialogSync.title'),
           instructions: oj.Translations.getTranslatedString('wrc-sync-interval.dialogSync.instructions'),
           fields: {
-            interval: {value: ko.observable(''),
+            interval: {
+              value: ko.observable(''),
               label: oj.Translations.getTranslatedString('wrc-sync-interval.dialogSync.fields.interval.label')
             }
           }
@@ -88,10 +92,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           title: ko.observable(''),
           instructions: ko.observable(''),
           buttons: {
-            ok: {disabled: ko.observable(true),
+            ok: {
+              disabled: ko.observable(true),
               label: ko.observable('')
             },
-            cancel: {disabled: false,
+            cancel: {
+              disabled: false,
               label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
             }
           }
@@ -110,7 +116,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           newAction: newBean,
           onWriteContentFile: writeContentFile,
           isWdtTable: isWdtTable,
-          isShoppingCartVisible: isShoppingCartVisible,
+          isHistoryVisible: isHistoryVisible,
           onConnected: setFormContainerMaxHeight,
           onLandingPageSelected: selectLandingPage,
           onBeanPathHistoryToggled: toggleBeanPathHistory,
@@ -137,11 +143,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           onActionButtonClicked: handleActionButtonClicked,
           onActionInputButtonClicked: handleActionInputButtonClicked,
           onActionInputFormCompleted: handleActionInputFormCompleted,
-          onCheckedRowsRefreshed: refreshCheckedRowsKeySet
+          onCheckedRowsRefreshed: refreshCheckedRowsKeySet,
+          onActionConstraintsApplied: applyActionConstraints
         }
       });
 
-      this.overlayFormDialogModuleConfig = ko.observable({view: [], viewModel: null});
+      this.overlayFormDialogModuleConfig = ko.observable({ view: [], viewModel: null });
 
       this.columnDataProvider = ko.observable();
       this.tableCustomizerManager = new TableCustomizerManager(viewParams.parentRouter.data.rdjData().tableCustomizer);
@@ -206,10 +213,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.helpDataSource = ko.observableArray([]);
       this.helpDataProvider = new ArrayDataProvider(this.helpDataSource, { keyAttributes: 'Name' });
       this.helpFooterDom = ko.observable({});
+      this.hasHelpTopics = ko.observable(false);
       this.tableHelpColumns = ko.observableArray([]);
 
-      this.actionsDialog = {formLayout: { html: ko.observable({}) }};
-      this.declarativeActions = {rowSelectionRequired: false, buttons: [], checkedRows: new Set(), dataRowsCount: 0};
+      this.actionsDialog = { formLayout: { html: ko.observable({}) } };
+      this.declarativeActions = { rowSelectionRequired: false, buttons: [], checkedRows: new Set(), dataRowsCount: 0 };
       this.checkedRowsKeySet = new ojkeyset_1.ObservableKeySet();
 
       this.availableItems = [];
@@ -219,18 +227,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(viewParams.perspective.id);
       this.contentAreaContainerResizer = new ContentAreaContainerResizer(viewParams.perspective);
-      this.subscriptions = [];
-      this.signalBindings = [];
       this.confirmed = ko.observable(function (event) { });
       this.confirmationMessage = ko.observable('');
 
-      this.tableSort = {enabled: true, property: null, direction: null};
+      this.tableSort = { enabled: true, property: null, direction: null };
       this.tableSortable = ko.observable({});
 
+      this.modelConsole = { expanded: false, offsetHeight: 0 };
+      this.subscriptions = [];
+      this.signalBindings = [];
+
       self.connected = function () {
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+          const offsetHeight = parseInt(ViewModelUtils.getCustomCssProperty('table-container-resizer-offset-max-height'), 10);
+          updateModelConsole(offsetHeight);
+        }
+
         cancelSyncTimer();
+
         renderPage();
-        this.subscriptions.push(viewParams.parentRouter.data.rdjData.subscribe(renderPage.bind(self)));
+
+        this.subscriptions.push(viewParams.parentRouter.data.rdjData.subscribe(renderPage.bind(this)));
 
         if (isWdtTable()) {
           self.wdtForm = new WdtForm(viewParams);
@@ -245,24 +262,44 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           renderPage();
         }));
 
-        self.signalBindings.push(viewParams.signaling.resizeObserverTriggered.add( (resizerData) => {
+        self.signalBindings.push(viewParams.signaling.resizeObserverTriggered.add((resizerData) => {
+          setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+        }));
+
+        self.signalBindings.push(viewParams.signaling.beanPathHistoryToggled.add((source, withHistoryVisible) => {
+          setFormContainerMaxHeight(withHistoryVisible);
+        }));
+
+        self.signalBindings.push(viewParams.signaling.modelConsoleSizeChanged.add((newOffsetHeight) => {
+          updateModelConsole(newOffsetHeight);
           setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
         }));
 
         Context.getPageContext().getBusyContext().whenReady()
           .then(() => {
+            function setOnSelectedChange(navigationProperty) {
+              const ojTable = document.querySelector('.wlstable');
+              if (navigationProperty !== 'none') {
+                if (ojTable !== null) ojTable.setAttribute('on-selected-changed', '[[selectedListener]]');
+              }
+              return ojTable;
+            }
+
+            function setFormLayoutColumnCountCSSVariable(columnCount) {
+              document.documentElement.style.setProperty('--form-layout-column-count', columnCount);
+            }
+
             const pdjData = viewParams.parentRouter.data.pdjData();
-            const navigationProperty = DeclarativeActionsManager.getNavigationProperty(pdjData);
+            const navigationProperty = PageDefinitionHelper.getNavigationProperty(pdjData);
             ViewModelUtils.setTableCursor(navigationProperty);
+
+            const ojTable = setOnSelectedChange(navigationProperty);
+            ContentAreaContainerAccessibility.setTableAccessKey(ojTable, 'T');
+            ContentAreaContainerAccessibility.setBreadcrumbAccessKey(';');
+            setFormLayoutColumnCountCSSVariable(0);
+
             setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
           });
-/*
-//MLW
-        Context.getPageContext().getBusyContext().whenReady()
-          .then(() => {
-            addCheckedAllRowsSelector(viewParams.parentRouter.data.pdjData());
-          });
-*/
       };
 
       self.disconnected = function () {
@@ -290,14 +327,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         return Promise.resolve(true);
       };
 
+      function updateModelConsole(offsetHeight) {
+        self.modelConsole.expanded = (offsetHeight > 104);
+        self.modelConsole.offsetHeight = offsetHeight;
+      }
+
       function isWdtTable() {
         // The same form is used for WDT model and Property List for uniform content file handling
         return (['modeling', 'properties'].indexOf(viewParams.perspective.id) !== -1);
       }
 
-      function isShoppingCartVisible() {
-        // The shopping cart will be visible expect for the WDT and properties perspectives...
-        return (['modeling','composite','properties'].indexOf(viewParams.perspective.id) === -1);
+      function isHistoryVisible() {
+        return (!Runtime.getProperty('features.iconbarIcons.relocated') || Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name);
       }
 
       function getDeclarativeActions() {
@@ -319,8 +360,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           // fix the navtree
           viewParams.signaling.navtreeUpdated.dispatch(treeaction);
 
-          reloadRdjData();
-          renderPage();
+          reloadRdjData()
+            .then(() => {
+              renderPage();
+              refreshCheckedRowsKeySet();
+            });
         }
       }
 
@@ -345,7 +389,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         // Set a new timer interval in millis when sync interval is specified
         if (syncInterval > 0) {
-          let actionPolling = {interval: 0, maxPolls: 0};
+          let actionPolling = { interval: 0, maxPolls: 0 };
 
           const img = document.getElementById('sync-icon');
           if (img !== null && CoreUtils.isNotUndefinedNorNull(img.attributes['data-action-polling'])) {
@@ -444,6 +488,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function handleActionInputFormCompleted(reply, options) {
         if (reply.succeeded) {
+          if (self.declarativeActions['willAffectChangeManager']) {
+            const onChangeManagerModified = (resourceData) => {
+              viewParams.signaling.shoppingCartModified.dispatch(
+                'table',
+                'refresh',
+                undefined,
+                resourceData
+              );
+            };
+
+            const values = Array.from(self.declarativeActions.checkedRows);
+            if (values && values.length > 0) {
+              onChangeManagerModified(values[0]);
+            }
+          }
+
           const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(self.declarativeActions, options.action);
           DeclarativeActionsManager.onCheckedRowsSubmitted(self.declarativeActions, options);
           actionPolling['pollCount'] = 0;
@@ -467,7 +527,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             moduleConfig.viewModel.syncClick({
               target: {
                 attributes: {
-                  'data-interval': {value: actionPolling.interval}
+                  'data-interval': { value: actionPolling.interval }
                 }
               }
             });
@@ -476,6 +536,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function handleActionButtonClicked(options) {
         const rdjData = viewParams.parentRouter.data.rdjData();
+        if (options.isDeleteAction) {
+          self.declarativeActions['deleteActionCallback'] = deleteCheckedRow;
+        }
         return DeclarativeActionsManager.performActionOnCheckedRows(rdjData, self.declarativeActions, options);
       }
 
@@ -507,6 +570,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           })
           .finally(() => {
             ViewModelUtils.setPreloaderVisibility(false);
+          });
+      }
+
+      function applyActionConstraints(action) {
+        self.tableActionsStripModuleConfig
+          .then(moduleConfig => {
+            const rdjData = viewParams.parentRouter?.data?.rdjData();
+            DeclarativeActionsManager.onApplyActionConstraints(
+              rdjData.data,
+              self.declarativeActions,
+              moduleConfig.viewModel.actionButtons.buttons,
+              action
+            );
+          });
+      }
+
+      function refreshActionsStripButtons() {
+        self.tableActionsStripModuleConfig
+          .then(moduleConfig => {
+            DeclarativeActionsManager.onCheckedRowsChanged(
+              self.declarativeActions,
+              moduleConfig.viewModel.actionButtons.buttons
+            );
           });
       }
 
@@ -544,14 +630,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
       }
 
-      function setFormContainerMaxHeight(withHistoryVisible){
-        const options = {withHistoryVisible: withHistoryVisible, withHelpVisible: self.showHelp()};
-        const offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#table-container', 'table-container-resizer-offset-max-height', options);
+      function setFormContainerMaxHeight(withHistoryVisible) {
+        const options = {
+          withHistoryVisible: withHistoryVisible,
+          withHelpVisible: self.showHelp(),
+          isPolicyForm: false
+        };
+
+        let offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#table-container', 'table-container-resizer-offset-max-height', options);
+
         document.documentElement.style.setProperty('--table-container-calc-max-height', `${offsetMaxHeight}px`);
+        document.documentElement.style.setProperty('--help-table-calc-max-height', `${offsetMaxHeight}px`);
       }
 
-      function toggleBeanPathHistory (withHistoryVisible) {
+      function toggleBeanPathHistory(withHistoryVisible) {
         setFormContainerMaxHeight(withHistoryVisible);
+        viewParams.signaling.resizeObserveeNudged.dispatch('table');
         // Call function in perspective assigned to the
         // onBeanPathHistoryToggled field in viewParams.
         return viewParams.onBeanPathHistoryToggled();
@@ -573,6 +667,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
             if (!withHelpVisible) {
               renderPage();
+              refreshCheckedRowsKeySet();
+              if (self.declarativeActions.checkedRows.size > 0) {
+                refreshActionsStripButtons();
+              }
             }
           });
       }
@@ -623,7 +721,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         };
 
         const getConfirmationMessageSummary = (clipboardData, menuItemId) => {
-          let messageSummary = oj.Translations.getTranslatedString('wrc-common.messages.copiedToClipboard.detail');
+          let messageSummary = oj.Translations.getTranslatedString('wrc-common.messages.dataCopiedToClipboard.detail');
           switch (menuItemId) {
             case 'copyCellData':
               if (clipboardData === '') messageSummary = oj.Translations.getTranslatedString('wrc-common.messages.emptyCellData.detail');
@@ -690,20 +788,64 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
       };
 
+      this.hrefCellTemplateListener = function (event) {
+        event.stopImmediatePropagation();
+        const dataDefaultTemplate = TableTemplates.hrefCellTemplateListener(
+          event,
+          viewParams.parentRouter,
+          self.perspective.id
+        );
+        const ele = document.getElementById('table');
+        if (ele !== null) ele.setAttribute('data-default-template', dataDefaultTemplate);
+      };
+
+      this.htmlCellTemplateListener = function (event) {
+        const dataDefaultTemplate = TableTemplates.htmlCellTemplateListener(
+          event,
+          viewParams.parentRouter,
+          self.perspective.id
+        );
+        const ele = document.getElementById('table');
+        if (ele !== null) ele.setAttribute('data-default-template', dataDefaultTemplate);
+      };
+
       this.selectedListener = function (event) {
         let keyValue = null;
 
         if (event.type === 'selectedChanged') {
           if (this.selectedRows() !== null && this.selectedRows().values().size > 0) {
-            this.selectedRows().values().forEach((key) => {keyValue = key;});
+            this.selectedRows().values().forEach((key) => { keyValue = key; });
           }
 
           if (keyValue !== null) {
             viewParams.signaling.navtreeSelectionCleared.dispatch();
-            Router.rootInstance.go(`/${this.perspective.id}/${encodeURIComponent(keyValue)}`)
-              .then(hasChanged => {
-                if (hasChanged) viewParams.signaling.formSliceSelected.dispatch({path: keyValue});
-              });
+            const pdjData = viewParams.parentRouter.data.pdjData();
+
+            if (PageDefinitionHelper.getNavigationProperty(pdjData) !== 'none') {
+              // The following is needed because the "on-click" event
+              // fires before this selectedListener function is called.
+              // The function assigned to that "on-click" event, is
+              // where the 'data-default-template' attribute is set
+              // in the DOM. The PDJ has "identity" assigned tp the
+              // navigationProperty, so we will need to use this
+              // 'data-default-template' attribute to prevent the
+              // navigation from happening, when the user clicks
+              // the cell containing the "Download" link. JET doesn't
+              // support selection-mode="("row": "single", "column": "single")"
+              // so this selectedListener event will always get call
+              // when you click anywhere in the row :-)
+              if (event.target.getAttribute('data-default-template') === 'cellTemplate') {
+                Router.rootInstance.go(`/${this.perspective.id}/${encodeURIComponent(keyValue)}`)
+                  .then(hasChanged => {
+                    if (hasChanged) viewParams.signaling.formSliceSelected.dispatch({ path: keyValue });
+                  });
+              }
+            }
+            else {
+              const rowData = event.target.data.data[event.target.currentRow.rowIndex];
+            }
+
+            this.selectedRows(null);
           }
         }
       }.bind(this);
@@ -712,7 +854,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         return DataOperations.mbean.reload(viewParams.parentRouter.data.rdjUrl())
           .then(reply => {
             viewParams.parentRouter.data.rdjData(reply.body.data);
-            return {succeeded: true};
+            return reply;
+          })
+          .then(reply => {
+            if (self.declarativeActions['hasActionConstraints']) {
+              self.tableActionsStripModuleConfig
+                .then(moduleConfig => {
+                  DeclarativeActionsManager.onApplyActionConstraints(
+                    reply.body.data.data,
+                    self.declarativeActions,
+                    moduleConfig.viewModel.actionButtons.buttons
+                  );
+                });
+            }
+            return { succeeded: true };
           })
           .catch(response => {
             switch (response.failureType.name) {
@@ -733,7 +888,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 ViewModelUtils.failureResponseDefaultHandling(response);
                 break;
             }
-            return {succeeded: false};
+            return { succeeded: false };
           });
       }
 
@@ -745,7 +900,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 if (eventType === 'download') {
                   MessageDisplaying.displayMessage({
                     severity: 'confirmation',
-                    summary: self.wdtForm.getSummaryMessage(ViewModelUtils.isElectronApiAvailable() ? 'changesSaved': 'changesDownloaded')
+                    summary: self.wdtForm.getSummaryMessage(ViewModelUtils.isElectronApiAvailable() ? 'changesSaved' : 'changesDownloaded')
                   }, 2500);
                 }
               }
@@ -755,7 +910,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   // able to download, but not write out the model
                   // file. Call writeContentFile passing in the
                   // filepath and fileContents in reply.
-                  self.wdtForm.writeContentFile({filepath: reply.filepath, fileContents: reply.fileContents})
+                  self.wdtForm.writeContentFile({ filepath: reply.filepath, fileContents: reply.fileContents })
                     .then(reply => {
                       Logger.log(`[TABLE] self.wdtForm.writeContentFile(options) returned ${reply.succeeded}`);
                     });
@@ -778,7 +933,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
                 const dataProvider = self.wdtForm.getDataProvider();
                 const options = {
-                  dialogMessage: {name: CoreUtils.isNotUndefinedNorNull(dataProvider) ? dataProvider.name : ''}
+                  dialogMessage: { name: CoreUtils.isNotUndefinedNorNull(dataProvider) ? dataProvider.name : '' }
                 };
                 self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-unsaved-changes.titles.changesNeedDownloading.value'));
                 self.i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.needDownloading.value', '{0}').replace('{0}', options.dialogMessage.name));
@@ -812,9 +967,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         self.selectedRows.clear();
 
-        // Data used for the navtree delete action
         const resourceData = event.currentTarget.id;
-        var navigationPath = null;
+
+        deleteCheckedRow(resourceData);
+      }.bind(this);
+
+      function deleteCheckedRow(resourceData) {
+        let navigationPath = null;
 
         DataOperations.mbean.get(resourceData)
           .then(reply => {
@@ -858,7 +1017,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
           })
           .then(() => {
-            viewParams.signaling.shoppingCartModified.dispatch('table', 'delete', {isLockOwner: true, hasChanges: true, supportsChanges: true,}, event.srcElement.id);
+            viewParams.signaling.shoppingCartModified.dispatch('table', 'delete', { isLockOwner: true, hasChanges: true, supportsChanges: true, }, resourceData);
             return {
               delete: true,
               resourceData: resourceData,
@@ -877,8 +1036,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             reloadRdjData()
               .then(() => {
                 renderPage();
+                const result = removeUncheckedRow(resourceData);
+                if (result.succeeded) {
+                  self.declarativeActions.dataRowsCount = self.rdjDataProvider().data.length;
+                  refreshActionsStripButtons();
+                }
               });
           })
+/*
+//MLW
           .then(() => {
             self.tableToolbarModuleConfig.then((moduleConfig) => {
               moduleConfig.viewModel.changeManager({
@@ -888,6 +1054,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               });
             });
           })
+ */
           .catch((response) => {
             // Announce that shopping cart icon and menu need to
             // be refreshed, because the delete rejection may have
@@ -896,7 +1063,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               'table',
               'refresh',
               undefined,
-              event.srcElement.id
+              resourceData
             );
 
             if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
@@ -906,7 +1073,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           .finally(() => {
             viewParams.signaling.ancillaryContentItemCleared.dispatch('table');
           });
-      }.bind(this);
+      }
 
       function addCheckedAllRowsSelector(pdjData) {
         const table = document.getElementById('table');
@@ -922,17 +1089,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       function getColumnMetadata(perspectiveId) {
         let columnMetadata = [];
 
-        // Add table column containing delete icon as the first column
         const rdjData = viewParams.parentRouter?.data?.rdjData();
         const pdjData = viewParams.parentRouter?.data?.pdjData();
-        if (rdjData?.navigation === 'Dashboards') {
-          columnMetadata.push({ name: '_delete', field: '_delete', readonly: self.nonwritable, template: 'deleteCellTemplate', sortable: 'disabled'});
-        }
-        else if (DeclarativeActionsManager.isRowSelectionRequired(pdjData)) {
-          columnMetadata.push({ name: '_selector', field: '_selector', readonly: self.nonwritable, template: 'selectorCellTemplate', sortable: 'disabled'});
-        }
-        else if (['configuration','modeling','security','properties'].indexOf(perspectiveId) !== -1 && self.nonwritable() !== true) {
-          columnMetadata.push({ name: '_delete', field: '_delete', readonly: self.nonwritable, template: 'deleteCellTemplate', sortable: 'disabled'});
+
+        if (PageDefinitionHelper.isDeletable(rdjData)) pdjData.table.requiresRowSelection = true;
+
+        if (DeclarativeActionsManager.isRowSelectionRequired(pdjData)) {
+          // Make first column of table a checkbox
+          columnMetadata.push({
+            name: '_selector',
+            field: '_selector',
+            readonly: self.nonwritable,
+            template: 'selectorCellTemplate',
+            sortable: 'disabled'
+          });
         }
 
         return columnMetadata;
@@ -946,33 +1116,44 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
         const pdjTypes = new PageDataTypes(columns, perspectiveId);
 
+        let columnMetadata = self.columnDataProvider();
         let rows = [];
 
-        for (var j in rdjData.data) {
-          const row = rdjData.data[j];
-          let rowObj = {}, displayValue;
+        for (const j in rdjData.data) {
+          const row = rdjData.data[~~j];
+          let rowObj = {}, rowObjValue = {};
 
           for (let i = 0; i < columns.length; i++) {
             const cname = columns[i].name;
 
-            // Get the display value based on the type information
-            displayValue = {data: pdjTypes.getDisplayValue(cname, row[cname])};
-            rowObj[cname] = displayValue;
+            rowObjValue = { label: pdjTypes.getDisplayValue(cname, row[cname]) };
+
+            if (pdjTypes.isHrefType(cname)) {
+              TableTemplates.setHrefTypeRowObjValue(rowObjValue, columnMetadata, row, cname, pdjTypes, self.hrefCellTemplateListener);
+            }
+            else if (pdjTypes.isHtmlType(cname) && CoreUtils.isNotUndefinedNorNull(row[cname].value.detailsHTML)) {
+              TableTemplates.setHtmlTypeRowObjValue(rowObjValue, columnMetadata, row, cname, self.htmlCellTemplateListener);
+            }
+
+            rowObj[cname] = rowObjValue;
           }
 
           if (CoreUtils.isNotUndefinedNorNull(row.identity)) {
             rowObj['_id'] = row.identity.value.resourceData;
             rowObj['_selector'] = { _id: rowObj['_id'], headerText: 'Selector', name: '_selector', field: '_selector', template: 'selectorCellTemplate', listener: self.checkedRowsChanged };
-            rowObj['_delete'] = { _id: rowObj['_id'], headerText: 'Delete', name: '_delete', field: '_delete', template: 'deleteCellTemplate', listener: self.deleteListener };
             rows.push(rowObj);
           }
         }
+
+        self.columnDataProvider.valueWillMutate();
+        self.columnDataProvider(columnMetadata);
+        self.columnDataProvider.valueHasMutated();
 
         if (self.tableSort.property === null) self.tableSort.property = 'Name';
         if (self.tableSort.direction === null) self.tableSort.direction = 'ascending';
 
         // Enable or disable table sorting
-        self.tableSortable(self.tableSort.enabled ? {} : {sortable: 'disabled'});
+        self.tableSortable(self.tableSort.enabled ? {} : { sortable: 'disabled' });
 
         const arrayDataProvider = TableSorter.sort(rows, '_id', self.tableSort.enabled, self.tableSort.property, self.tableSort.direction);
         self.rdjDataProvider(arrayDataProvider);
@@ -993,12 +1174,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
        * @param {CustomEvent} event
        */
       this.checkedRowsChanged = (event) => {
-        function removeUncheckedRow(identity) {
-          if (self.declarativeActions.checkedRows.has(identity)) {
-            self.declarativeActions.checkedRows.delete(identity);
-          }
-        }
-
         function addCheckedRow(identity) {
           if (!self.declarativeActions.checkedRows.has(identity)) {
             self.declarativeActions.checkedRows.add(identity);
@@ -1030,16 +1205,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
         }
 
-        self.tableActionsStripModuleConfig
-          .then(moduleConfig => {
-            DeclarativeActionsManager.onCheckedRowsChanged(
-              self.declarativeActions,
-              moduleConfig.viewModel.actionButtons.buttons
-            );
-          });
+        if (self.declarativeActions['hasActionConstraints']) {
+          applyActionConstraints();
+        }
+
+        refreshActionsStripButtons();
       };
 
-      this.checkedAllRowsChanged = function (event) {
+      this.tableCellClickListener = function (event) {
+        const dataDefaultTemplate = TableTemplates.handleTableCellClickEvent(
+          event,
+          viewParams.parentRouter,
+          self.perspective.id
+        );
+        const ele = document.getElementById('table');
+        if (ele !== null) ele.setAttribute('data-default-template', dataDefaultTemplate);
       };
 
       this.checkedAllRowsChanged1 = function (event) {
@@ -1089,22 +1269,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         if (CoreUtils.isNotUndefinedNorNull(selectorState)) {
           if (CoreUtils.isUndefinedOrNull(event.currentTarget.currentRow)) {
             checkedAllRowsClickHandler(event.currentTarget, selectorState.value);
-/*
-//MLW
-          if (selectorState.value === 'none') {
-            removeAllCheckedRow(self.declarativeActions.checkedRows);
-          }
-          else if (selectorState.value === 'all') {
-            removeAllCheckedRow(self.declarativeActions.checkedRows);
-            addAllCheckedRow(self.declarativeActions.checkedRows, event.currentTarget.data.data, '_id');
-            refreshCheckedRowsKeySet();
-          }
-*/
           }
           else {
             checkedRowsClickHandler(event.currentTarget, self.declarativeActions.checkedRows.size > 0 ? 'none' : 'some');
           }
         }
+      };
+
+      this.helpTopiclinkClick = function (event) {
+        new HelpForm(
+          viewParams.parentRouter.data.pdjData(),
+          self.perspective.id
+        ).handleHelpTopicLinkClicked(event);
       };
 
       function setCheckedAllRowsSelectorState(selectorState, tooltip) {
@@ -1121,6 +1297,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             container.append(img);
           }
         }
+      }
+
+      function removeUncheckedRow(identity) {
+        const result = { succeeded: false };
+        if (self.declarativeActions.checkedRows.has(identity)) {
+          self.declarativeActions.checkedRows.delete(identity);
+          result.succeeded = true;
+        }
+        return result;
       }
 
       function getDefaultVisibleAndHiddenColumns() {
@@ -1177,20 +1362,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // Seed the table customizations via columnDataProvider
         updateColumns();
 
-        // Ordered tables disable the column sorting and display the data as returned...
+        self.tableSort.property = null;
+        self.tableSort.direction = null;
+
+        // See if CBE is controlling column sorting, or not
         if (CoreUtils.isNotUndefinedNorNull(pdjData.table.ordered) && (pdjData.table.ordered === true)) {
+          // ...it is, so disable letting the user sort the columns
           self.tableSort.enabled = false;
         }
+        else if (CoreUtils.isNotUndefinedNorNull(pdjData.table.defaultSortProperty)) {
+          // ...CBE isn't controlling column sorting and there is
+          // a default sort property, so use it.
+          self.tableSort.property = pdjData.table.defaultSortProperty;
+        }
+
+        DeclarativeActionsManager.populateDeclarativeActions(rdjData, pdjData, self.declarativeActions);
+        DeclarativeActionsManager.addDeclarativeAction('delete', rdjData, pdjData, self.declarativeActions);
+
         setRDJDataProvider(rdjData, self.perspective.id, pdjData.table.displayedColumns, pdjData.table.hiddenColumns);
 
         const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
         self.introductionHTML({ view: HtmlUtils.stringToNodeArray(bindHtml), data: self });
 
-        DeclarativeActionsManager.populateDeclarativeActions(rdjData, pdjData, self.declarativeActions);
-
         self.actionsDialog.formLayout.html({ view: HtmlUtils.stringToNodeArray('<p>'), data: self });
-
-        const settingsActions = Runtime.getSettingsActions();
 
         populateAddToArchiveSwitchValues(rdjData);
 
@@ -1203,97 +1397,37 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function createHelp(pdjData) {
+        self.hasHelpTopics(PageDefinitionHelper.hasHelpTopics(pdjData));
+
         if (CoreUtils.isUndefinedOrNull(pdjData)) {
           return;
         }
 
-        let helpData = [], pdjTypes;
-
-        const helpForm = new HelpForm(pdjData, self.perspective.id);
-        const column1 = helpForm.i18n.tables.help.columns.header.name;
-        const column2 = helpForm.i18n.tables.help.columns.header.description;
+        const helpForm = new HelpForm(
+          pdjData,
+          self.perspective.id
+        );
 
         self.tableHelpColumns(helpForm.tableHelpColumns);
 
-        if (DeclarativeActionsManager.hasActions(pdjData)) {
-          const pdjTypesHelpColumns = DeclarativeActionsManager.getPDJTypesHelpColumns(pdjData);
-
-          pdjTypes = new PageDataTypes(pdjTypesHelpColumns, self.perspective.id);
-
-          for (let i = 0; i < pdjTypesHelpColumns.length; i++) {
-            const name = pdjTypesHelpColumns[i].name;
-            const label = pdjTypes.getHelpLabel(name);
-            // Determine the help description for the property
-            const fullHelp = pdjTypes.getFullHelp(name);
-            const description = {view: HtmlUtils.stringToNodeArray(fullHelp)};
-            // Use Map to set value of "Name" and "Description"
-            // columns, in a way that honors the language locale
-            const entries = new Map([[column1, label], [column2, description]]);
-
-            helpData.push(Object.fromEntries(entries));
-          }
-        }
+        let properties = [];
 
         if (CoreUtils.isNotUndefinedNorNull(pdjData.table.displayedColumns)) {
-          pdjTypes = new PageDataTypes(pdjData.table.displayedColumns, self.perspective.id);
-
-          for (let i = 0; i < pdjData.table.displayedColumns.length; i++) {
-            const name = pdjData.table.displayedColumns[i].name;
-            const label = pdjTypes.getLabel(name);
-            // Determine the help description for the property
-            const fullHelp = pdjTypes.getFullHelp(name);
-            const description = {view: HtmlUtils.stringToNodeArray(fullHelp)};
-            // Use Map to set value of "Name" and "Description"
-            // columns, in a way that honors the language locale
-            const entries = new Map([[column1, label], [column2, description]]);
-
-            helpData.push(Object.fromEntries(entries));
-          }
+          properties = [...pdjData.table.displayedColumns];
         }
 
         if (CoreUtils.isNotUndefinedNorNull(pdjData.table.hiddenColumns)) {
-          pdjTypes = new PageDataTypes(pdjData.table.hiddenColumns, self.perspective.id);
-
-          for (let i = 0; i < pdjData.table.hiddenColumns.length; i++) {
-            const name = pdjData.table.hiddenColumns[i].name;
-            const label = pdjTypes.getLabel(name);
-
-            // Determine the help description for the property
-            const fullHelp = pdjTypes.getFullHelp(name);
-            const description = { view: HtmlUtils.stringToNodeArray(fullHelp) };
-            const entries = new Map([[column1, label], [column2, description]]);
-
-            helpData.push(Object.fromEntries(entries));
-          }
+          properties = [...properties, ...pdjData.table.hiddenColumns];
         }
 
+        const column1 = helpForm.i18n.tables.help.columns.header.name;
+        const column2 = helpForm.i18n.tables.help.columns.header.description;
+
+        const helpData = helpForm.getHelpData(properties, column1, column2);
         self.helpDataSource(helpData);
 
-        if (CoreUtils.isNotUndefinedNorNull(pdjData.helpTopics)) {
-          const div = document.createElement('div');
-          div.setAttribute('id', 'cfe-help-footer');
-          const title = document.createElement('p');
-          title.innerHTML = '<b>Related Topics:</b>';
-          div.append(title);
-          const list = document.createElement('ul');
-          div.append(list);
-
-          for (let j = 0; j < pdjData.helpTopics.length; j++) {
-            const topic = pdjData.helpTopics[j];
-            const listElement = document.createElement('li');
-            const ref = document.createElement('a');
-            ref.setAttribute('href', topic.href);
-            ref.setAttribute('target', '_blank');
-            ref.setAttribute('rel', 'noopener');
-            ref.innerText = topic.label;
-
-            listElement.append(ref);
-            list.append(listElement);
-          }
-
-          const divString = div.outerHTML;
-          self.helpFooterDom({ view: HtmlUtils.stringToNodeArray(divString), data: self });
-        }
+        const div = helpForm.render();
+        self.helpFooterDom({ view: HtmlUtils.stringToNodeArray(div.innerHTML), data: self });
       }
     }
 

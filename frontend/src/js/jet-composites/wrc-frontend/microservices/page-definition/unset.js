@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2022, 2023 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -53,7 +53,7 @@ define(['ojs/ojcore', 'ojs/ojlogger'],
         contextMenu.setAttribute('slot', 'contextMenu');
         contextMenu.setAttribute('on-oj-action', '[[contextMenuClickListener]]');
         let menuItem = document.createElement('oj-option');
-        menuItem.setAttribute('id', 'unset');
+        menuItem.setAttribute('id', `unset_${propertyName}`);
         let span = document.createElement('span');
         span.innerText = i18n.menu.label;
         menuItem.append(span);

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.connection;
@@ -22,6 +22,9 @@ public interface Connection {
 
   /** Obtain the WebLogic Version */
   public WebLogicVersion getWebLogicVersion();
+
+  /** Obtain the name of the admin server */
+  public String getAdminServerName();
 
   /**
    * Obtain the version of the console REST extension installed in the domain

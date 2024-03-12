@@ -1,13 +1,34 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'ojs/ojmodule-element', 'ojs/ojknockout',  'ojs/ojnavigationlist'],
-  function(oj, ko, ModuleElementUtils, Runtime, CoreUtils) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojmodule-element-utils',
+  'wrc-frontend/common/keyup-focuser',
+  'ojs/ojcontext',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/core/utils',
+  'ojs/ojmodule-element',
+  'ojs/ojknockout',
+  'ojs/ojnavigationlist'
+],
+  function(
+    oj,
+    ko,
+    ModuleElementUtils,
+    KeyUpFocuser,
+    Context,
+    PerspectiveMemoryManager,
+    Runtime,
+    CoreUtils
+  ) {
     function HomeViewModel(viewParams) {
       const self = this;
 
@@ -17,7 +38,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
             {id: 'gallery', iconFile: 'gallery-tabstrip-icon_24x24', disabled: false, visible: ko.observable(false), isDefault: true,
               label: oj.Translations.getTranslatedString('wrc-home.tabstrip.tabs.gallery.label')
             },
-            {id: 'startup-tasks', iconFile: 'tasks-tabstrip-icon_24x24', disabled: false, visible: ko.observable(false),
+            {id: 'startup-tasks', iconFile: 'startup-tasks-tabstrip-icon_24x24', disabled: false, visible: ko.observable(false),
               label: oj.Translations.getTranslatedString('wrc-home.tabstrip.tabs.startup-tasks.label')
             }
           ]
@@ -25,6 +46,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
       };
 
       this.tabModuleConfig = ko.observable({ view: [], viewModel: null });
+  
+      this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory('home');
 
       this.signalBindings = [];
       this.subscriptions = [];
@@ -45,7 +68,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
             })
               .then(moduleConfig => {
                 this.tabModuleConfig(moduleConfig);
-                showTabNodeExclusively(value);
+                targetTabNodeExclusively(value);
+                Context.getPageContext().getBusyContext().whenReady()
+                  .then(() => {
+                    const result = getKeyUpFocusSelector();
+                    if (result.selector !== null) {
+                      const rule = KeyUpFocuser.getLastExecutedRule(result.selector);
+                      if (rule.focusIndexValue !== -1) {
+                        $(result.selector)[rule.focusIndexValue].focus();
+                      }
+                    }
+                  });
               });
           }
           else {
@@ -60,6 +93,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
           if (CoreUtils.isNotUndefinedNorNull(tabNode)) {
             if (tabNode.id === 'startup-tasks') {
               self.i18n.tabstrip.tabs[0].visible(false);
+              tabNode.visible(options.chooser === 'use-cards');
+              if (tabNode.selected) {
+                self.tabModuleConfig().viewModel.showStartupTasks({chooser: options.chooser});
+              }
             }
             selectTabNode(tabNode);
           }
@@ -106,6 +143,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
         const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === id);
         selectTabNode(tabNode);
       };
+  
+      function getKeyUpFocusSelector() {
+        const result = {selector: null, hasFocusIndexValue: false};
+    
+        let card = document.querySelector('.startup-task-panel-card');
+    
+        if (card !== null) {
+          result.selector = '.startup-task-panel-card';
+          result.hasFocusIndexValue = true;
+        }
+
+        if (CoreUtils.isUndefinedOrNull(result.selector)) {
+          card = document.querySelector('.gallery-panel-card');
+          if (card !== null) {
+            result.selector = '.gallery-panel-card';
+            result.hasFocusIndexValue = true;
+          }
+        }
+    
+        return result;
+      }
 
       function createHomeChildRouter() {
         self.router = viewParams.parentRouter.getChildRouter('home');
@@ -114,24 +172,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
 
         self.router = viewParams.parentRouter.createChildRouter('home').configure({
           'gallery': {label: 'Gallery', value: 'gallery', isDefault: true},
-          'startup-tasks': {label: 'Tasks', value: 'startup-tasks'}
+          'startup-tasks': {label: 'Startup Tasks', value: 'startup-tasks'}
         });
       }
 
       function selectTabNode(tabNode) {
         if (!tabNode.disabled) {
-          showTabNodeExclusively(tabNode.id);
+          targetTabNodeExclusively(tabNode.id);
           // This will trigger a change event that will cause
           // our self.routerSubscription() to be called.
           self.router.go(tabNode.id);
-          const ele = document.getElementById(`${tabNode.id}-container`);
-          if (ele !== null) ele.focus();
         }
       }
-
-      function showTabNodeExclusively(tabId) {
+  
+      function targetTabNodeExclusively(tabId) {
         self.i18n.tabstrip.tabs.forEach((tab) => {
           tab.visible(tab.id === tabId);
+          tab.selected = (tab.id === tabId);
         })
       }
 
@@ -145,6 +202,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
         const index = self.i18n.tabstrip.tabs.map(tab => tab.id).indexOf(tabId);
         if (index !== -1) tabNode = self.i18n.tabstrip.tabs[index];
         return tabNode;
+      }
+
+      function getSelectedTabNode() {
+        return self.i18n.tabstrip.tabs.find(tab => tab.selected);
       }
     }
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -84,11 +84,11 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
   }
 
   private BaseBeanTypeDefImpl createTypeDefImpl(String typeName) {
-    PseudoBeanTypeDefSource pseudoTypeDefSource = getYamlReader().getPseudoBeanTypeDefSource(typeName);
+    PseudoBeanTypeDefSource pseudoTypeDefSource = getYamlReader().getPseudoBeanTypeDefSource(this, typeName);
     if (pseudoTypeDefSource != null) {
       return createPseudoTypeDefImpl(pseudoTypeDefSource);
     }
-    BeanTypeDefSource typeDefSource = getYamlReader().getBeanTypeDefSource(typeName);
+    BeanTypeDefSource typeDefSource = getYamlReader().getBeanTypeDefSource(this, typeName);
     if (typeDefSource != null) {
       return createNormalTypeDefImpl(typeDefSource);
     }

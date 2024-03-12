@@ -1,12 +1,12 @@
 /**
  * @license
- * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/integration/controller', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/data-management/cbe-data-storage', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/cbe-types', 'ojs/ojlogger'],
+define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/common/controller', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/data-management/cbe-data-storage', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', './utils', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/cbe-types', 'ojs/ojlogger'],
   function (oj, ko, ModuleElementUtils, Controller, Runtime, CbeDataStorage, DataOperations, MessageDisplaying, PageDefinitionUtils, ViewModelUtils, CoreUtils, CbeTypes, Logger) {
 
     const i18n = {
@@ -180,12 +180,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
           index: i,
           role: 'presentation',
           classes: ['oj-complete', 'oj-menu-item'],
-          id: `moreMenuItem_view_${typeName}`,
+          id: `moreMenuItem_view_${typeName + '_' + propertyName}`,
           label: i18n.menus.more.optionsSources.view.label().replace('{0}', propertyLabel),
           disabled: i18n.menus.more.optionsSources.view.disabled(),
           visible: i18n.menus.more.optionsSources.view.visible()
         });
-
         // At this point, the create option is added except if the type is a JDBC data source.
         // Once the overlay supports the wizard form, this restriction should be removed.
         if (typeName !== 'JDBCSystemResource') {
@@ -193,7 +192,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
             index: i,
             role: 'presentation',
             classes: ['oj-complete', 'oj-menu-item'],
-            id: `moreMenuItem_create_${typeName}`,
+            id: `moreMenuItem_create_${typeName + '_' + propertyName}`,
             label: i18n.menus.more.optionsSources.create.label().replace('{0}', typeLabel),
             disabled: i18n.menus.more.optionsSources.create.disabled(),
             visible: i18n.menus.more.optionsSources.create.visible()
@@ -207,7 +206,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/in
           index: i,
           role: 'presentation',
           classes: ['oj-complete', 'oj-menu-item'],
-          id: `moreMenuItem_edit_${typeName}`,
+          id: `moreMenuItem_edit_${typeName + '_' + propertyName}`,
           label: i18n.menus.more.optionsSources.edit.label().replace('{0}', identityKey),
           disabled: i18n.menus.more.optionsSources.edit.disabled(),
           visible: i18n.menus.more.optionsSources.edit.visible()

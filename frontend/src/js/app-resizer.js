@@ -1,12 +1,12 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/integration/controller', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'wrc-frontend/integration/panel_resizer'],
+define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/common/controller', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'wrc-frontend/common/panel_resizer'],
   function (ResponsiveUtils, ResponsiveKnockoutUtils, Controller, ViewModelUtils, CoreUtils, Logger) {
     const PANEL_RESIZER_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty('panel-resizer-width'), 10);
     const NAVSTRIP_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty('navstrip-max-width'), 10);
@@ -15,8 +15,12 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
     const LEFT_PANEL_MAX_WIDTH_MARGIN = 17;
     const LEFT_PANEL_MIN_WIDTH_MARGIN = 10;
     const RIGHT_PANEL_MIN_WIDTH_MARGIN = 5;
+    const ANCILLARY_CONTENT_ITEM_OFFSET_HEIGHT = 108;
+    const MESSAGE_LINE_HEIGHt = 36;
     const RIGHT_PANEL_FIXED_MIN_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty('form-container-fixed-min-width'), 10);
-    const RIGHT_PANEL_RESIZER_MAX_HEIGHT = parseInt(ViewModelUtils.getCustomCssProperty('container-resizer-offset-max-height'), 10);
+    const SPA_RESIZER_POSITION = [469];
+    const ONE_COLUMN_DIVISOR = 1.835;
+    const TWO_COLUMN_DIVISOR = 3.68;
 
     function AppResizer(globalBodySelector) {
       registerAppResizerSignalAddListeners();
@@ -25,37 +29,20 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
 
     const registerAppResizerSignalAddListeners = () => {
       Controller.getSignal('resizeObserverTriggered').add(resizerData => {
-        Logger.log(`[APP-RESIZER] resizerData=${JSON.stringify(resizerData)}`);
-        let maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
-        document.documentElement.style.setProperty('--landing-page-panel-subtree-calc-min-width', `${maxWidthVariable}px`);
-        maxWidthVariable = (NAVTREE_MIN_WIDTH + NAVSTRIP_WIDTH + PANEL_RESIZER_WIDTH + LEFT_PANEL_MAX_WIDTH_MARGIN);
-        document.documentElement.style.setProperty('--landing-page-panel-subtree-calc-max-width', `${maxWidthVariable}px`);
-        document.documentElement.style.setProperty('--landing-page-conveyor-calc-max-width', `${maxWidthVariable}px`);
-        maxWidthVariable = (resizerData.globalBody.width - (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH));
-        document.documentElement.style.setProperty('--content-area-header-calc-min-width', `${maxWidthVariable}px`);
-        maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
-        document.documentElement.style.setProperty('--content-area-body-toolbars-calc-max-width', `${maxWidthVariable}px`);
-        maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
-        document.documentElement.style.setProperty('--instructions-calc-max-width', `${maxWidthVariable}px`);
-        document.documentElement.style.setProperty('--content-area-body-content-calc-max-width', `${maxWidthVariable}px`);
-        maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
-        document.documentElement.style.setProperty('--table-container-calc-max-width', `${maxWidthVariable}px`);
-        maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH);
-        document.documentElement.style.setProperty('--beanpath-history-container-calc-min-width', `${maxWidthVariable}px`);
-        maxWidthVariable = (resizerData['right_panel'].width);
-        document.documentElement.style.setProperty('--textarea-resizable-both-calc-width', `${maxWidthVariable}px`);
-/*
-//MLW
-        setContainerOffsetMaxHeight('#form-container', '--form-container-calc-max-height');
-        setContainerOffsetMaxHeight('#table-container', '--table-container-calc-max-height');
-*/
-      });
-      Controller.getSignal('resizeObserveeNudged').add((source) => {
-        let maxWidthVariable = parseInt(ViewModelUtils.getCustomCssProperty('content-area-container-calc-min-width'), 10);
-        maxWidthVariable += (maxWidthVariable === NAVTREE_MAX_WIDTH ? -1 : 1);
-        document.documentElement.style.setProperty('--content-area-container-calc-min-width', `${maxWidthVariable}px`);
+        setContentAreaContainerCSSVariables(resizerData);
       });
 
+      Controller.getSignal('resizeObserveeNudged').add((source) => {
+        window.requestAnimationFrame((timestamp) => {
+          const togglePaddingRight = (div) => {
+            if (div !== null) {
+              const padding = ~~div.style.paddingRight.replace('px', '');
+              div.style.paddingRight = `${padding === 1 ? 0 : 1}px`;
+            }
+          };
+          togglePaddingRight(document.querySelector('.left_panel'));
+        });
+      });
     };
 
     const registerResizeObserver = (globalBodySelector) => {
@@ -65,19 +52,10 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
 
       function registerObservee(key, selector, observee) {
         globalBody.observee[key] = selector;
-        globalBody.observer.observe(observee);
+        globalBody.observer.observe(observee, { box: 'border-box' });
       }
 
-      let resizerData = {
-        'PANEL_RESIZER_WIDTH': PANEL_RESIZER_WIDTH,
-        'NAVSTRIP_WIDTH': NAVSTRIP_WIDTH,
-        'NAVTREE_MIN_WIDTH': NAVTREE_MIN_WIDTH,
-        'NAVTREE_MAX_WIDTH': NAVTREE_MAX_WIDTH,
-        'LEFT_PANEL_MAX_WIDTH_MARGIN': LEFT_PANEL_MAX_WIDTH_MARGIN,
-        'LEFT_PANEL_MIN_WIDTH_MARGIN': LEFT_PANEL_MIN_WIDTH_MARGIN,
-        'RIGHT_PANEL_RESIZER_MAX_HEIGHT': RIGHT_PANEL_RESIZER_MAX_HEIGHT,
-        'globalBody': {}
-      };
+      let resizerData = getResizerData();
 
       const ro = new ResizeObserver(entries => {
         resizerData['globalBody'] = entries[0].contentRect;
@@ -105,6 +83,7 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
         globalBody['observee'] = {};
         globalBody['observer'] = new ResizeObserver(entries => {
           for (const entry of entries) {
+//MLW            console.log(`entry.target.className=${entry.target.className}`);
             const key = (entry.target.className.includes('left_panel') ? 'left_panel' : entry.target.className);
             resizerData[key] = entry.contentRect;
           }
@@ -114,6 +93,73 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
       }
 
     };
+
+/*
+//MLW
+    function setFormInputMinWidth(columnCount) {
+      if (~~columnCount > 0) {
+        let minWidthVariable = $(window).width() - parseInt(ViewModelUtils.getCustomCssProperty('content-area-body-content-calc-max-width'), 10);
+        if (~~columnCount === 1) {
+          document.documentElement.style.setProperty('--form-input-min-width', `${Math.round((minWidthVariable / ONE_COLUMN_DIVISOR) / 16)}em`);
+          console.log(`[APP-RESIZER] --form-input-min-width=${Math.round((minWidthVariable / ONE_COLUMN_DIVISOR) / 16)}em`);
+        }
+        else if (~~columnCount === 2) {
+          document.documentElement.style.setProperty('--form-input-min-width', `${Math.round((minWidthVariable / TWO_COLUMN_DIVISOR) / 16)}em`);
+          console.log(`[APP-RESIZER] --form-input-min-width=${Math.round((minWidthVariable / TWO_COLUMN_DIVISOR) / 16)}em`);
+        }
+      }
+    }
+*/
+
+    function setContentAreaContainerCSSVariables(resizerData) {
+      if (typeof resizerData.left_panel === 'undefined') {
+        resizerData['left_panel'] = {bottom: 0, height: 0, left: 0, right: 0, top: 0, width: 0, x: 0, y: 0};
+      }
+
+      Logger.log(`[APP-RESIZER] resizerData=${JSON.stringify(resizerData)}`);
+      let maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
+      document.documentElement.style.setProperty('--landing-page-panel-subtree-calc-min-width', `${maxWidthVariable}px`);
+
+      maxWidthVariable = (NAVTREE_MIN_WIDTH + NAVSTRIP_WIDTH + PANEL_RESIZER_WIDTH + LEFT_PANEL_MAX_WIDTH_MARGIN);
+      document.documentElement.style.setProperty('--landing-page-panel-subtree-calc-max-width', `${maxWidthVariable}px`);
+      document.documentElement.style.setProperty('--landing-page-conveyor-calc-max-width', `${maxWidthVariable}px`);
+
+      maxWidthVariable = (resizerData.globalBody.width - (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH));
+      document.documentElement.style.setProperty('--content-area-header-calc-min-width', `${maxWidthVariable}px`);
+
+      maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
+      document.documentElement.style.setProperty('--content-area-body-toolbars-calc-max-width', `${maxWidthVariable}px`);
+
+      maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
+      document.documentElement.style.setProperty('--instructions-calc-max-width', `${maxWidthVariable}px`);
+      document.documentElement.style.setProperty('--content-area-body-content-calc-max-width', `${maxWidthVariable}px`);
+
+      maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
+      document.documentElement.style.setProperty('--table-container-calc-max-width', `${maxWidthVariable}px`);
+
+      maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + RIGHT_PANEL_MIN_WIDTH_MARGIN);
+      document.documentElement.style.setProperty('--help-table-calc-min-width', `${maxWidthVariable}px`);
+
+      maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH);
+      document.documentElement.style.setProperty('--beanpath-history-container-calc-min-width', `${maxWidthVariable}px`);
+
+      maxWidthVariable = (resizerData['right_panel'].width);
+      document.documentElement.style.setProperty('--textarea-resizable-both-calc-width', `${maxWidthVariable}px`);
+
+/*
+//MLW
+        setContainerOffsetMaxHeight('#form-container', '--form-container-calc-max-height');
+        setContainerOffsetMaxHeight('#table-container', '--table-container-calc-max-height');
+
+        let maxHeightVariable = ((resizerData['globalBody'].height - resizerData['right_panel'].height - getMessageLineHeight()) + ANCILLARY_CONTENT_ITEM_OFFSET_HEIGHT);
+        document.documentElement.style.setProperty('--ancillary-content-item-calc-height', `${maxHeightVariable}px`);
+*/
+    }
+
+    function getMessageLineHeight() {
+      const messageLine = document.getElementById('message-line-container');
+      return (messageLine !== null ? messageLine.offsetHeight : 0);
+    }
 
     function resizeContentAreaElements(source, newOffsetLeft, newOffsetWidth) {
       const viewPortValues = getBrowserViewPortValues();
@@ -127,12 +173,15 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
       if (source === 'closer') {
         if (newOffsetWidth === NAVTREE_MIN_WIDTH) {
           marginRightVariable = 0;
-        } else {
+        }
+        else {
           marginRightVariable = NAVSTRIP_WIDTH;
         }
-      } else if (source === 'opener') {
+      }
+      else if (source === 'opener') {
         marginRightVariable = newOffsetWidth;
-      } else if (source === 'navtree') {
+      }
+      else if (source === 'navtree') {
         marginRightVariable = 0;
       }
       document.documentElement.style.setProperty('--content-area-header-toolbar-right-margin-right', `${marginRightVariable}px`);
@@ -160,7 +209,7 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
     function getContainerOffsetTop(containerDOMSelector) {
       const getOffsetTop = element => {
         let offsetTop = 0;
-        while(element) {
+        while (element) {
           offsetTop += element.offsetTop;
           element = element.offsetParent;
         }
@@ -191,12 +240,25 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
       return viewPortValues;
     }
 
-  //public:
+    function getResizerData() {
+      return {
+        'PANEL_RESIZER_WIDTH': PANEL_RESIZER_WIDTH,
+        'NAVSTRIP_WIDTH': NAVSTRIP_WIDTH,
+        'NAVTREE_MIN_WIDTH': NAVTREE_MIN_WIDTH,
+        'NAVTREE_MAX_WIDTH': NAVTREE_MAX_WIDTH,
+        'LEFT_PANEL_MAX_WIDTH_MARGIN': LEFT_PANEL_MAX_WIDTH_MARGIN,
+        'LEFT_PANEL_MIN_WIDTH_MARGIN': LEFT_PANEL_MIN_WIDTH_MARGIN,
+        'globalBody': {}
+      };
+    }
+
+    //public:
     AppResizer.prototype = {
       PANEL_RESIZER_WIDTH: PANEL_RESIZER_WIDTH,
       NAVSTRIP_WIDTH: NAVSTRIP_WIDTH,
       NAVTREE_MIN_WIDTH: NAVTREE_MIN_WIDTH,
       NAVTREE_MAX_WIDTH: NAVTREE_MAX_WIDTH,
+      SPA_RESIZER_POSITION: SPA_RESIZER_POSITION,
       resizeTriggered: (source, newOffsetLeft, newOffsetWidth) => {
         if (newOffsetWidth > 0) {
           let minWidthVariable;

@@ -189,7 +189,7 @@ then
 fi
 
 # Make a Custom JRE (if we had modules, we could do more, but this is fine)
-jlink --output "$extra"/customjre --no-header-files --no-man-pages --compress=2 --strip-debug --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.sql,java.xml,jdk.unsupported$extra_modules
+jlink --output "$extra"/customjre --no-header-files --no-man-pages --compress=zip-6 --strip-debug --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.sql,java.xml,jdk.crypto.ec,jdk.unsupported$extra_modules
 
 mkdir -p "$extra"/backend
 cp -rp ../runnable/* "$extra"/backend
@@ -224,7 +224,7 @@ do
   shift
 done
 
-"$(npm bin)/electron-builder" -p never "$@"
+npx electron-builder -p never "$@"
 
 case "$os" in
 darwin)

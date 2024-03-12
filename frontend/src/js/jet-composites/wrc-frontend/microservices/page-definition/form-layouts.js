@@ -1,13 +1,23 @@
 /**
  * @license
- * Copyright (c) 2021, 2023 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024 Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function(oj, CoreUtils, Logger) {
+define([
+  'ojs/ojcore',
+  'wrc-frontend/common/page-definition-helper',
+  'wrc-frontend/core/utils',
+  'ojs/ojlogger'
+],
+  function(
+    oj,
+    PageDefinitionHelper,
+    CoreUtils,
+    Logger
+  ) {
     const i18n = {
       'tooltips': {
         'collapse': {'value': oj.Translations.getTranslatedString('wrc-common.tooltips.collapse.value')},
@@ -99,7 +109,10 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
     function createRawFormLayout(options) {
       const formLayout = document.createElement('oj-form-layout');
 
-      formLayout.className = 'oj-formlayout-full-width';
+      if (CoreUtils.isNotUndefinedNorNull(options.fullWidth)) {
+        formLayout.className = 'oj-formlayout-full-width';
+      }
+
       if (CoreUtils.isNotUndefinedNorNull(options.name)) {
         formLayout.setAttribute('id', options.name);
       }
@@ -127,7 +140,6 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
       options.labelEdge = options.labelEdge || 'start';
       options.wrapColSpan = options.wrapColSpan || true;
       options.isReadOnly = options.isReadOnly || false;
-      options.fullWidth = true;
 
       const formLayout = document.createElement('oj-form-layout');
 
@@ -137,7 +149,7 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
       formLayout.setAttribute('max-columns', options.maxColumns);
       formLayout.setAttribute('direction', options.direction);
 
-      if (options.fullWidth) {
+      if (CoreUtils.isNotUndefinedNorNull(options.fullWidth)) {
         formLayout.classList.add('oj-formlayout-full-width');
       }
 
@@ -153,7 +165,29 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
       return (filteredProperties.length === properties.length);
     }
 
-  //public:
+    function handleSectionExpanderEvent(node) {
+      const attr = node.attributes['data-section-id'];
+      if (CoreUtils.isNotUndefinedNorNull(attr)) {
+        const sectionId = attr.value;
+        if (CoreUtils.isNotUndefinedNorNull(sectionId)) {
+          const parentNode = document.getElementById(sectionId).parentNode;
+          if (node.classList.contains('oj-collapsible-close-icon')) {
+            node.classList.remove('oj-collapsible-close-icon');
+            node.classList.add('oj-collapsible-open-icon');
+            node.setAttribute('title', i18n.tooltips.collapse.value);
+            parentNode.style.display = 'inline-block';
+          }
+          else {
+            node.classList.remove('oj-collapsible-open-icon');
+            node.classList.add('oj-collapsible-close-icon');
+            node.setAttribute('title', i18n.tooltips.expand.value);
+            parentNode.style.display = 'none';
+          }
+        }
+      }
+    }
+    
+    //public:
     return {
       /**
        * Custom error used to indicate that a ``pdjData.sliceForm.sections`` property was not present
@@ -183,10 +217,10 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
         return rtnval;
       },
       hasCreateFormLayoutSections: function(pdjData) {
-        return CoreUtils.isNotUndefinedNorNull(pdjData?.createForm?.sections);
+        return PageDefinitionHelper.hasCreateFormSections(pdjData);
       },
       hasSliceFormLayoutSections: function(pdjData) {
-        return CoreUtils.isNotUndefinedNorNull(pdjData?.sliceForm?.sections);
+        return PageDefinitionHelper.hasSliceFormSections(pdjData);
       },
       /**
        * Determines if the value of ``key` is a property of ``pdjData.sliceForm.presentation`` or not.
@@ -224,7 +258,7 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
       },
       /**
        * Returns a ``<oj-form-layout>`` tag for a "single column" form, which has been configured using the values in ``options``.
-       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
+       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean, fullWidth?: boolean}} options
        * @returns {HTMLElement}
        */
       createSingleColumnFormLayout: function (options) {
@@ -232,7 +266,7 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
       },
       /**
        * Returns a ``<oj-form-layout>`` tag for a "two column" form, which has been configured using the values in ``options``.
-       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
+       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean, fullWidth?: boolean}} options
        * @returns {HTMLElement}
        */
       createTwoColumnFormLayout: function (options) {
@@ -289,7 +323,70 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
        * @returns {HTMLElement}
        */
       createSliceTableFormLayout: function (params) {
+        function createCellTemplate() {
+          const span = document.createElement('span');
+          span.setAttribute('data-bind', 'html: cell.data.label');
+    
+          const cellTemplate = document.createElement('template');
+          cellTemplate.setAttribute('slot', 'cellTemplate');
+          cellTemplate.setAttribute('data-oj-as', 'cell');
+    
+          cellTemplate.content.appendChild(span);
+    
+          return cellTemplate;
+        }
+  
+        function createHRefCellTemplate() {
+          const bindIf1 = document.createElement('oj-bind-if');
+          bindIf1.setAttribute('test', '[[typeof cell.data.tag !== "undefined"]]');
+
+          const link = document.createElement('a');
+          link.classList.add('cfe-table-cell-href');
+          link.setAttribute('href', '#');
+          link.setAttribute('data-column-name', '[[cell.data.name]]');
+          link.setAttribute('data-column-type', '[[cell.data.type]]');
+          link.setAttribute('on-click', '[[cell.data.listener]]');
+    
+          const span1 = document.createElement('span');
+          span1.setAttribute('data-bind', 'html: cell.data.label');
+    
+          link.append(span1);
+          bindIf1.append(link);
+  
+          const bindIf2 = document.createElement('oj-bind-if');
+          bindIf2.setAttribute('test', '[[typeof cell.data.tag === "undefined"]]');
+
+          const span2 = document.createElement('span');
+          span2.setAttribute('data-bind', 'html: cell.data.label');
+  
+          bindIf2.append(span2);
+          
+          const hrefCellTemplate = document.createElement('template');
+          hrefCellTemplate.setAttribute('slot', 'hrefCellTemplate');
+          hrefCellTemplate.setAttribute('data-oj-as', 'cell');
+    
+          hrefCellTemplate.content.appendChild(bindIf1);
+          hrefCellTemplate.content.appendChild(bindIf2);
+    
+          return hrefCellTemplate;
+        }
+  
+        function createNoDataTemplate() {
+          const noDataTemplate = document.createElement('template');
+          noDataTemplate.setAttribute('slot', 'noData');
+          return noDataTemplate
+        }
+
         const table = document.createElement('oj-table');
+  
+        const cellTemplate = createCellTemplate();
+        table.appendChild(cellTemplate);
+  
+        const hrefCellTemplate = createHRefCellTemplate();
+        table.appendChild(hrefCellTemplate);
+  
+        const noDataTemplate = createNoDataTemplate();
+        table.appendChild(noDataTemplate);
 
         const contextMenu = document.createElement('oj-menu');
         contextMenu.setAttribute('slot', 'contextMenu');
@@ -314,11 +411,6 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
 
         table.appendChild(contextMenu);
 
-        const noData = document.createElement('template');
-        noData.setAttribute('slot', 'noData');
-
-        table.appendChild(noData);
-
         return table;
       },
       /**
@@ -326,20 +418,17 @@ define(['ojs/ojcore', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
        * @param {HTMLElement} event
        */
       handleSectionExpanderClicked: function (event) {
-        const sectionId = event.target.attributes['data-section-id'].value;
-        const parentNode = document.getElementById(sectionId).parentNode;
-        if (event.target.classList.contains('oj-collapsible-close-icon')) {
-          event.target.classList.remove('oj-collapsible-close-icon');
-          event.target.classList.add('oj-collapsible-open-icon');
-          event.target.setAttribute('title', i18n.tooltips.collapse.value);
-          parentNode.style.display = 'inline-block';
-        } else {
-          event.target.classList.remove('oj-collapsible-open-icon');
-          event.target.classList.add('oj-collapsible-close-icon');
-          event.target.setAttribute('title', i18n.tooltips.expand.value);
-          parentNode.style.display = 'none';
+        let attr = event.target.attributes['data-section-id'];
+        if (CoreUtils.isNotUndefinedNorNull(attr)) {
+          handleSectionExpanderEvent(event.target);
         }
-      },
+        else {
+          attr = event.target.firstElementChild.attributes['data-section-id'];
+          if (CoreUtils.isNotUndefinedNorNull(attr)) {
+            handleSectionExpanderEvent(event.target.firstElementChild);
+          }
+        }
+      }
     };
   }
 );

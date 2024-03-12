@@ -97,19 +97,24 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         try {
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","File Stores");
             await admin.createNewMBeanFromLandingPage(driver,"testFileStore-1");
-            await driver.sleep(2400);
+            await driver.sleep(6400);
             await admin.saveToShoppingCart(driver);
-            await driver.sleep(2400);
+            await driver.sleep(6400);
             console.log("Enter directory value name = temp");
-            await driver.findElement(By.id("Directory|input")).click();
+            element = driver.findElement(By.id("Directory|input"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.sleep(6400);
             await driver.findElement(By.id("Directory|input")).sendKeys("temp");
             await admin.saveToShoppingCart(driver);
             await admin.goToFirstCompTab(driver,"Edit Tree","ServicesChevron","File Stores",1,
                 "testFileStore-1","Target");
+            await driver.sleep(2400);
             await admin.selectDropDownValue(driver,"Targets","AdminServer");
+            await driver.sleep(2400);
             console.log("Select Target for testFileStore-1 as AdminServer");
             await admin.saveToShoppingCart(driver);
             await admin.commitChanges(driver);
+            await driver.sleep(2400);
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","File Stores");
             await driver.sleep(2400);
             //await admin.deleteMBeanFromLandingPage(driver,"File Stores","testFileStore-1");
@@ -159,7 +164,7 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             console.log("Create a new JDBC Store");
             await admin.createNewMBeanObject(driver,"testJDBCStore-2",2,"configuration","Services",
                 "JDBC Stores","","","searchselect","oj-searchselect-filter-Targets|input","Targets","AdminServer");
-
+            await driver.sleep(4800);
             await services.modifyJDBCStoreGeneralTab(driver,"testJDBCStore-2","General","OFF","testJDBCSysRes-2");
             await driver.sleep(4800);
             await admin.saveAndCommitChanges(driver);
@@ -197,7 +202,7 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             await element.click();
             await driver.sleep(9600);
             console.log("Click commit button ");
-            await driver.findElement(By.xpath("//img[@id='commit-changes']")).click();
+            await driver.findElement(By.xpath("//span[@id='commit-changes']")).click();
             await driver.sleep(24000);
             await admin.deleteMBeanObject(driver,"testXMLRegistry-1","XML Registries",2,"configuration",
                 "Services","XML Registries","","","",2);

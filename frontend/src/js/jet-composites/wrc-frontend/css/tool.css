@@ -1,4 +1,4 @@
-/*! Copyright (c) 2020, 2023, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2024, Oracle and/or its affiliates. All rights reserved. */
 
 :root {
   /*
@@ -10,31 +10,54 @@
   --form-container-calc-min-width: 315px;
   --table-container-calc-max-height: 365px;
   --table-container-calc-max-width: 315px;
-  --form-input-min-width: 16em;
+  --form-container-resizer-offset-max-height: 45px;
+  --table-container-resizer-offset-max-height: 45px;
+  --total-rows-bottom: 2rem;
+  --help-table-calc-max-height: 365px;
+  --help-table-calc-min-width: 365px;
+  --form-input-min-width: 23em;
   --form-input-min-switch-width: 7.25em;
+  --form-layout-column-count: 0;
+  --instructions-calc-max-width: 335px;
+  --content-area-container-calc-min-width:  55px;
+  --content-area-container-calc-max-height:  633px;
   --content-area-body-toolbars-calc-max-width: 495px;
   --content-area-body-content-calc-max-width:  495px;
   --beanpath-history-container-calc-min-width: 495px;
   --beanpath-history-container-calc-display: none;
+  --breadcrumbs-container-calc-display: none;
   --textarea-resizable-both-calc-width: 315px;
   --overlayDialog-calc-min-width: 1135px;
+  /* DON'T CHANGE! must initially come from "dark" theme: */
+  --preferences-theme-invert-filter: .9;
+  /* DON'T CHANGE! must initially come from "light" theme: */
+  --preferences-theme-background-color: 0;
 
   /*
    * END:   JS code will make adjustments to the
    *        above custom CSS variables, at runtime.
    */
 
-  --table-form-container-width-offset: 30rem;   /* 480px; */
-  --form-container-fixed-min-width: 1060px;
+  --runtime-role-display: inline-flex;
+  --total-rows-position: fixed;
 
-  --table-container-resizer-offset-max-height: 62;
-  --form-container-resizer-offset-max-height: 42;
+  --preferences-theme-dark-invert-filter: .9;
+  --preferences-theme-dark-background-color: #262626;
+
+  --preferences-theme-light-invert-filter: 0;
+  --preferences-theme-light-background-color: 0;
+
+  --view-height-footer-fixed-height: 34px;      /* 2.125rem; */
+
   --model-console-header-height: 23px;
+  --model-console-container-height-offset: 200px;
 
   --detail-popup-background-color: #cae4ef;
-  --breadcrumb-link-color: #0275d8;
+  --breadcrumb-link-color: #02549C;
   --breadcrumb-hover-color: #01447e;
   --beanpath-background-color: #faf9f8; /* #c3b2ab; */
+
+  --disabled-color: #545454;
 
   --scrollbar-thumb-color: #837670;
   --scrollbar-track-color: #faf8f7;
@@ -42,13 +65,18 @@
 
   --form-tabstrip-converyor-calc-max-width: 275px;
   --form-table-container-min-width: 310px;
-  --instructions-calc-max-width: 335px;
   --instructions-max-height: 160px;
 
   --table-cursor: pointer;
 
   --form-input-max-width: 15em;
-  --form-input-integer-max-width: 120px;
+  --form-input-integer-min-width: 5rem;
+  --form-input-integer-max-width: 7.5rem;
+
+  --form-varying-width-min-width: 15em;
+  --form-varying-width-max-width: 25em;
+  --form-varying-width-integer-min-width: 5rem;
+  --form-varying-width-integer-max-width: 7.5rem;
 
   --min-width-35em: 35em;
   --min-width-20em: 20em;
@@ -66,6 +94,7 @@
   --width-hint-17em:  17em;  /* 272px; */
   --width-hint-18em:  18em;  /* 288px; */
   --width-hint-20em:  20em;  /* 320px; */
+  --width-hint-23em:  23em;
   --width-hint-lg:    24em;  /* 384px; */
   --width-hint-28em:  28em;  /* 448px; */
   --width-hint-30em:  30em;  /* 480px; */
@@ -85,7 +114,8 @@
   --field-highlight-border-color: black;
   --field-highlight-border-style: solid;
 
-  --dialog-background-color: #dbd5d0;
+  --dialog-body-background-color: white;
+  --dialog-header-background-color: #dbd5d0;
 
   --wdtOptionsDialog-width: 750px;
   --wdtOptionsDialog-min-height: 245px;
@@ -107,6 +137,8 @@
   --resizer-left-panel-min-width: 200px;
 
   --oj-button-outlined-chrome-text-color-disabled: #bdc3c6;
+
+  --accessibility-focus-visible-border-color: #2a6bdf;
 }
 
 ::-webkit-scrollbar {
@@ -132,17 +164,13 @@ hr {
 
 /* ruleset for runtime-role="app" data attribute */
 [data-runtime-role="app"] {
-  --runtime-role-display: inline-flex;
-  --paging-position: fixed;
-  --paging-bottom: 2rem;
+  --form-container-fixed-min-width: 1060px;
   --oj-form-layout-column-gutter: 1.5rem;
 }
 
 /* ruleset for runtime-role="tool" data attribute */
 [data-runtime-role="tool"] {
-  --runtime-role-display: none;
-  --paging-position: unset;
-  --paging-bottom: unset;
+  --form-container-fixed-min-width: 1050px;
   --oj-form-layout-column-gutter: .5rem;
 }
 
@@ -164,6 +192,15 @@ hr {
 {
   display: var(--runtime-role-display);
   align-self: self-end;
+}
+
+#table-toolbar-buttons > div > oj-button > button:focus-visible,
+#form-toolbar-buttons > oj-button > button:focus-visible,
+#form-toolbar-buttons > div > oj-button > button:focus-visible
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: -2px;
+  border-radius: .25rem;
 }
 
 #preloader-image {
@@ -194,9 +231,12 @@ hr {
 img.reload-file-icon,
 img.choose-file-icon,
 img.clear-chosen-file-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  vertical-align: middle;
+  /*
+  //MLW
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
+  */
   margin: 0.625rem 0.125rem 0 0.1875rem;
 }
 
@@ -256,36 +296,23 @@ img.option-icon
   font-size: 0.92em;    /* 11pt; */
 }
 
+#moreMenuLauncher
+{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#moreMenuLauncher:focus-visible
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: -2px;
+  border-radius: .25rem;
+}
+
 #moreMenuLauncher > img {
   height: 1.2rem;
   width: 1.2rem;
   margin-top: 0.313rem;
-}
-
-div[id="breadcrumbs-container"]
-{
-  height: 36px;
-}
-
-div[id="breadcrumbs-container"] > ul
-{
-  text-decoration: none;
-}
-
-/* Style the breadcrumb list */
-ul.breadcrumb-crosslink,
-ul.breadcrumb-link
-{
-  list-style: none;
-  line-height: 1.5rem;
-  padding-left: 0.375rem;
-}
-
-/* Display list items side by side */
-ul.breadcrumb-crosslink li,
-ul.breadcrumb-link li {
-  font-size: 0.92em;      /* 11pt; */
-  display: inline-block;
 }
 
 #beanpath-history-previous > span,
@@ -295,55 +322,118 @@ ul.breadcrumb-link li {
   vertical-align: middle;
 }
 
-/* Add a color to all links inside the list */
-ul.breadcrumb-crosslink li a,
+div[id="breadcrumbs-container"]
+{
+  margin-left: .188rem;
+  height: 2.625rem;  /* 42px; */
+}
+
+div[id="breadcrumbs-container"] ul
+{
+  text-decoration: none;
+  line-height: 2.625rem;  /* 42px; */
+}
+
 ul.breadcrumb-link li a
+{
+  color: var(--breadcrumb-link-color);
+  text-decoration: none;
+  padding: 0 .188rem;
+}
+
+ul.breadcrumb-link,
+ul.breadcrumb-crosslink
+{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.breadcrumb-link li,
+ul.breadcrumb-crosslink li
+{
+  font-size: 0.92em;      /* 11pt; */
+  display: inline-block;
+  padding: 0 .2rem;
+}
+
+ul.breadcrumb-crosslink li > a
+{
+/*
+//MLW
+  display: inline-block;
+  line-height: 2.25rem;
+
+*/
+  padding: 0 .325rem;
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb-crosslink li a
 {
   color: var(--breadcrumb-link-color);
   text-decoration: none;
 }
 
 /* Add a color on mouse-over */
-ul.breadcrumb-crosslink li a:hover,
-ul.breadcrumb-link  li a:hover
+ul.breadcrumb-link li a:hover,
+ul.breadcrumb-crosslink li a:hover
 {
   color: var(--breadcrumb-hover-color);
-  text-decoration: none;
+}
+
+ul.breadcrumb-link li a:focus,
+ul.breadcrumb-crosslink li a:focus,
+ul.breadcrumb-link li a:focus-visible,
+ul.breadcrumb-crosslink li a:focus-visible
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: 2px;
+  border-radius: .094rem;
 }
 
 /* Add a slash symbol (/) before/behind each list item */
-ul.breadcrumb-crosslink li+li::before,
-ul.breadcrumb-link li+li::before
+ul.breadcrumb-link li+li::before,
+ul.breadcrumb-crosslink li+li::before
 {
   padding: 0.125rem;
   content: "/\00a0";
 }
 
-/*
-For controlling the styling of oj-button used with most of our clickable icons
-*/
 div[id="breadcrumbs-container"] .oj-button,
 div[id="breadcrumbs-container"] .oj-button-nocomp
 {
   font-size: .92em;       /* 11pt; */
-  vertical-align: inherit;
+  display: inline-block;
+  vertical-align: unset;
+  height: 28px;
 }
 
-div[id="breadcrumbs-container"] oj-menu-button > button > div
+div[id="breadcrumbs-container"] oj-menu-button div.oj-button-label > span.oj-button-text
 {
-  display: inline-block;
-  line-height: 1rem;
+  padding-left: .325rem;
 }
 
 /* For weblogic.beanpath-history dropdown */
-#beanpath-history-container {
+div[id="beanpath-history-container"]
+{
+  width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
   min-width: calc(100vw - var(--beanpath-history-container-calc-min-width));
   max-width: fit-content;
   font-weight: 400;
   padding: 0.3125rem 0.625rem 0.3125rem 0.3125rem;
   background-color: var(--beanpath-background-color);
-  display: none;
+  display: var(--beanpath-history-container-calc-display);
 }
+
+div[id="beanpath-history-container"] > div.oj-flex-item > img
+{
+  height: 1.25rem;
+  width: 1.25rem;
+  padding: 0 .325rem 0 .15rem;
+  vertical-align: middle;
+}
+
 
 /* For combobox-one used in bean path history */
 oj-combobox-one[id="beanpath-history-entries"] > div.oj-text-field-container {
@@ -425,6 +515,10 @@ ul[id="oj-listbox-results-beanpath-history-entries"].oj-listbox-results li {
   margin-left: 10px;
 }
 
+html:not([dir="rtl"]) .oj-listbox-results-depth-1 > .oj-listbox-result-label {
+  padding-left: unset;
+}
+
 #shoppingCartImage,
 #saveToShoppingCartImage
 {
@@ -438,20 +532,22 @@ ul[id="oj-listbox-results-beanpath-history-entries"].oj-listbox-results li {
   margin-top: 0.125rem;
 }
 
-#shoppingCartMenu,
-#linksToolbarMenu,
-#suspendMenu,
-#shutdownMenu
+oj-menu[id="shoppingCartMenu"],
+oj-menu[id="linksToolbarMenu"],
+oj-menu[id="suspendMenu"],
+oj-menu[id="shutdownMenu"]
 {
   display: none;
 }
 
-#paging
+#totalRows
 {
   height: 1.75rem;
-  margin: 0.438rem 0 0 0.3125rem;
-  position: var(--paging-position);
-  bottom: var(--paging-bottom);
+  padding: 0.438rem 0 0 0.3125rem;
+  position: var(--total-rows-position);
+  bottom: var(--total-rows-bottom);
+  width: 100%;
+  background-color: #faf9f8;
 }
 
 /* Style for highlighting of form fields */
@@ -522,6 +618,14 @@ ul[id="oj-listbox-results-beanpath-history-entries"].oj-listbox-results li {
   width: calc(var(--textarea-resizable-both-calc-width) - var(--single-column-textarea-offset-width));
 }
 
+.cfe-form-field textarea {
+  resize: unset;
+}
+
+.cfe-form-field textarea {
+  resize: both;
+}
+
 .cfe-form-input-textarea > div.oj-text-field-container
 {
   overflow: auto;
@@ -545,11 +649,13 @@ div.cfe-form-select-one div.oj-text-field-container {
   min-width: var(--form-input-min-width);
 }
 
-.cfe-form-input-single-column {
+.cfe-form-input-single-column
+{
   min-width: var(--min-width-35em);
 }
 
-.cfe-form-input-two-columns {
+.cfe-form-input-two-columns
+{
   min-width: var(--min-width-15em);
 }
 
@@ -567,7 +673,7 @@ div.cfe-form-select-one div.oj-text-field-container {
 .cfe-form-select-one,
 .cfe-form-readonly-select-one
 {
-  max-width: var(--form-input-max-width);
+  width: var(--form-input-min-width);
 }
 
 .cfe-form-select-one,
@@ -576,10 +682,59 @@ div.cfe-form-select-one div.oj-text-field-container {
   min-width: var(--form-input-min-width);
 }
 
+.cfe-form-varying-width-integer
+{
+  width: var(--form-varying-width-integer-min-width);
+  min-width: var(--form-varying-width-integer-min-width);
+  max-width: var(--form-varying-width-integer-max-width);
+}
+
+.cfe-form-varying-width
+{
+  max-width: var(--form-varying-width-max-width);
+}
+
+.cfe-form-varying-width,
+.cfe-form-varying-width-integer
+{
+  display: inline-block;
+  overflow: hidden;
+  resize: horizontal;
+}
+
+.cfe-form-varying-width[contenteditable]:empty::before,
+.cfe-form-varying-width-integer[contenteditable]:empty::before
+{
+  content: "";
+  color: gray;
+}
+
 /* Make readonly field for file chooser wider than normal fields */
-.cfe-file-picker {
+.cfe-file-picker
+{
   width: var(--form-input-min-width);
-  max-width: var(--form-input-max-width);
+  max-width: var(--form-input-min-width);
+}
+
+.cfe-file-picker-23em
+{
+  width: var(--width-hint-23em);
+  max-width: var(--width-hint-23em);
+}
+
+a[data-input-type]
+{
+  display: inline-block;
+  vertical-align: middle;
+  height: 42px;
+}
+
+.cfe-content-area-body-iconbar-icon > a:focus-visible,
+a[data-input-type]:focus-visible
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: 2px;
+  border-radius: .25rem;
 }
 
 /* Removes top margin from readonly fields to achieve proper layout on page */
@@ -595,7 +750,7 @@ oj-input-text.cfe-form-readonly-text > div > div > div.oj-text-field-readonly-di
 {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
-  color: gray !important;
+  color: var(--disabled-color) !important;
   cursor: default;
   font-weight: normal;
   white-space: pre-wrap;
@@ -643,11 +798,15 @@ oj-input-text .oj-user-assistance-inline-container.oj-efficient, .oj-form-contro
   margin-left: 0.625rem;
 }
 
+.cfe-form-field {
+  display: inline-flex;
+}
+
 /* Height for the user-assistance area in the form controls */
 .cfe-form-checkboxset.oj-form-control.oj-component > .oj-user-assistance-inline-container.oj-efficient,
 .cfe-form-field > .oj-form-control.oj-component:not(.oj-switch) .oj-user-assistance-inline-container.oj-efficient
 {
-  min-height: 0rem;
+  min-height: 0;
 }
 
 /* Height for the user-assistance area for a switch in the form to ensure uniform highlight */
@@ -656,6 +815,14 @@ oj-input-text .oj-user-assistance-inline-container.oj-efficient, .oj-form-contro
   min-height: .1rem;
 }
 
+.cfe-form-field > a:focus-visible
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: -2px;
+  border-radius: .25rem;
+}
+
+.cfe-accordion-row-button,
 .cfe-delete-row-button {
   height: 1.25rem;
   width: 1.75rem;
@@ -698,13 +865,14 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
   display: none;
 }
 
-.cfe-table-form-container {
-/*
-//MLW
-  max-width: calc(100vw - var(--table-form-container-width-offset));
-  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
-  margin: 0.3125rem 0.3125rem 0 0;
-*/
+.cfe-table-cell-href:hover
+{
+  text-decoration: underline;
+}
+
+.cfe-table-cell-html:hover
+{
+  text-decoration: none;
 }
 
 .cfe-overlay-container {
@@ -727,12 +895,14 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 #table-toolbar-container
 {
   min-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+  margin-top: .325rem;
 }
 
 #form-toolbar-container,
 #table-toolbar-container
 {
   max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+  padding-left: .325rem;
 }
 
 #overlay-toolbar-container
@@ -751,15 +921,10 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 {
   min-height: 1.875rem;
   max-height: var(--instructions-max-height); /* Show vertical scrollbar, if height > 76px */
-  max-width: fit-content;
+  max-width: calc(100vw - var(--instructions-calc-max-width));
   overflow-wrap: break-word;  /* Wraps really long instructions */
   font-size: 0.92em;    /* 11pt; */
-  margin: 0.625rem 0 0.625rem 0.625rem;
-  overflow: auto;
-  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
-}
-
-#form-container {
+  padding: 0.625rem;
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
@@ -770,22 +935,42 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
   margin-top: 0.3125rem;
 }
 
+/*
+//MLW_1
 .cfe-table-content {
   max-height: calc(100vh - var(--table-container-calc-max-height));
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
+*/
 
-[class="cfe-form-content"][data-form-type="sliceForm"],
-[class="cfe-form-content"][data-form-type="sliceTable"]
+[data-pdj-content-type="sliceForm"]
 {
   min-width: var(--form-container-fixed-min-width);
 }
 
-[class="cfe-form-content"][data-form-type="sliceForm"]
+[data-pdj-content-type="sliceForm"] > table[id="help-table"],
+[data-pdj-content-type="table"] > table[id="help-table"]
+{
+  max-height: unset;
+}
+
+[data-pdj-content-type="sliceForm"] > div[id="cfe-policy-form"]
+{
+  max-height: unset;
+}
+
+[data-pdj-content-type="sliceForm"] > div[id="cfe-form"],
+[data-pdj-content-type="table"] > div[id="cfe-form"]
 {
   max-height: calc(100vh - var(--form-container-calc-max-height));
+}
+
+[data-pdj-content-type="sliceForm"]
+{
   max-width: calc(100vw - var(--content-area-body-content-calc-max-width));
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 .cfe-table-form-content {
@@ -797,25 +982,16 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 */
 }
 
-oj-table[id="help-table"],
-oj-table[id="policy-conditions-table"]
+div[id="show-advanced-fields-container"]
 {
-  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+  width: calc(100vw - var(--content-area-body-content-calc-max-width));
 }
 
-oj-table[id="policy-conditions-table"],
-oj-table.wlstable {
-  max-height: calc(100vh - var(--table-container-calc-max-height));
-  overflow: auto;
-  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
-}
-
-oj-table.wlstable {
-  max-width: calc(100vw - var(--table-container-calc-max-width));
-}
-
-oj-table.wlstable tr:not(.oj-table-body-message-row) {
-  cursor: var(--table-cursor);
+oj-switch .oj-switch-thumb:focus-visible
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: -2px;
+  border-radius: .25rem;
 }
 
 #wlsform > div > div:nth-child(+n+0) {
@@ -829,7 +1005,7 @@ oj-table.wlstable tr:not(.oj-table-body-message-row) {
 }
 
 #cfe-form > oj-form-layout > div > div:nth-child(+n+1) {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 #cfe-form > .oj-form-layout > .oj-form > .oj-flex > .oj-formlayout-nested-formlayout > .oj-form-layout > .oj-form, .oj-form-layout > .oj-form.oj-formlayout-form-across > .oj-flex > .oj-formlayout-no-label-flex-item.oj-formlayout-nested-formlayout.oj-flex-item {
@@ -838,17 +1014,19 @@ oj-table.wlstable tr:not(.oj-table-body-message-row) {
 
 .cfe-sections-form-layout-title {
   width: 99%;
-  padding: 0.125rem 0.1875rem 0.1875rem 0;
+  line-height: 1.75rem;
+  display: inline-flex;
+  margin: 0 0 .325rem 0;
   background-color: var(--form-section-title-background-color);
 }
 
 .cfe-sections-form-layout-title > a > span {
-  font-size: 1.17em;    /* 14pt; */
+  font-size: 1.2em;    /* 14pt; */
   margin-right: 0.125rem;
 }
 
 .cfe-sections-form-layout-title-text {
-  font-size: 1.0em;       /* 12pt; */
+  font-size: 1em;       /* 12pt; */
 }
 
 .cfe-sections-form-layout-title-arrow,
@@ -858,13 +1036,20 @@ oj-table.wlstable tr:not(.oj-table-body-message-row) {
   text-decoration: none;
 }
 
-.cfe-sections-form-layout-title-arrow,
-.cfe-sections-form-layout-title-text {
+.cfe-sections-form-layout-title-arrow {
+  display: inline-block;
+  font-size: 1.17em;    /* 14pt; */
+  height: 1.2rem;
+  width: 1.2rem;
   vertical-align: middle;
+  padding: 0 .188rem;
 }
 
-.cfe-sections-form-layout-title-arrow {
-  font-size: 1.17em;    /* 14pt; */
+.cfe-sections-form-layout-title-arrow:focus-visible > span
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: -2px;
+  border-radius: .25rem;
 }
 
 img.cfe-button-icon {
@@ -896,18 +1081,35 @@ img.cfe-button-icon {
   max-width: 480px;
 }
 
-#cfe-help-footer {
-  margin: 0.9375rem 0 0 0.625rem;
+oj-dialog[id="confirmDialog"] {
+  width: var(--confirmDialog-width);
+  min-height: var(--confirmDialog-min-height);
+  margin-bottom: 0.3125rem;
+  background-color: var(--dialog-body-background-color);
 }
 
-#cfe-help-footer ul {
-  margin: 0 0 0 0.9375rem;
+oj-dialog[id="actionsDialog"] {
+  width: var(--actionDialog-width);
+  min-height: var(--actionDialog-min-height);
+  background-color: var(--dialog-body-background-color);
+  border: 1px none #f8f6f5;
 }
 
-oj-dialog#actionsDialog div.oj-dialog-header h1.oj-dialog-title,
-oj-dialog#syncIntervalDialog div.oj-dialog-header h1.oj-dialog-title,
-oj-dialog#confirmDialog div.oj-dialog-header h1.oj-dialog-title,
-oj-dialog#wdtOptionsDialog div.oj-dialog-header h1.oj-dialog-title
+oj-dialog[id="syncIntervalDialog"] {
+  width: var(--syncIntervalDialog-width);
+  background-color: var(--dialog-body-background-color);
+}
+
+oj-dialog[id="wdtOptionsDialog"] {
+  width: var(--wdtOptionsDialog-width);
+  min-height: var(--wdtOptionsDialog-min-height);
+  background-color: var(--dialog-body-background-color);
+}
+
+oj-dialog[id="actionsDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="syncIntervalDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="confirmDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-header h1.oj-dialog-title
 {
   overflow: hidden;
   cursor: default;
@@ -923,10 +1125,10 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-header h1.oj-dialog-title
   padding: 0;
 }
 
-oj-dialog#actionsDialog div.oj-dialog-header,
-oj-dialog#syncIntervalDialog div.oj-dialog-header,
-oj-dialog#confirmDialog div.oj-dialog-header,
-oj-dialog#wdtOptionsDialog div.oj-dialog-header
+oj-dialog[id="actionsDialog"] div.oj-dialog-header,
+oj-dialog[id="syncIntervalDialog"] div.oj-dialog-header,
+oj-dialog[id="confirmDialog"] div.oj-dialog-header,
+oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-header
 {
   border-width: 0 0 1px 0;
   border-style: solid;
@@ -934,7 +1136,7 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-header
   display: flex;
   justify-content: space-between;
   padding: 0.25rem .75rem 0.25rem .75rem;
-  background-color: transparent;
+  background-color: var(--dialog-header-background-color);
   background-image: none;
   border-bottom-color: transparent;
   font-size: 1em;       /* 12pt; */
@@ -944,10 +1146,10 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-header
   min-height: 2.25rem;
 }
 
-oj-dialog#actionsDialog div.oj-dialog-body,
-oj-dialog#syncIntervalDialog div.oj-dialog-body,
-oj-dialog#confirmDialog div.oj-dialog-body,
-oj-dialog#wdtOptionsDialog div.oj-dialog-body
+oj-dialog[id="actionsDialog"] div.oj-dialog-body,
+oj-dialog[id="syncIntervalDialog"] div.oj-dialog-body,
+oj-dialog[id="confirmDialog"] div.oj-dialog-body,
+oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-body
 {
   position: relative;
   overflow: auto;
@@ -957,88 +1159,65 @@ oj-dialog#wdtOptionsDialog div.oj-dialog-body
   font-size: 1em;       /* 12pt; */
 }
 
-oj-dialog#syncIntervalDialog div.oj-dialog-body,
-oj-dialog#confirmDialog div.oj-dialog-body,
-oj-dialog#wdtOptionsDialog div.oj-dialog-body
+oj-dialog[id="syncIntervalDialog"] div.oj-dialog-body,
+oj-dialog[id="confirmDialog"] div.oj-dialog-body,
+oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-body
 {
   background-color: white;
 }
 
-oj-dialog#actionsDialog div.oj-dialog-body {
+oj-dialog[id="actionsDialog"] div.oj-dialog-body
+{
   background-color: #f9f7f6;
   background-color: var(--actionsDialog-background-color);
 }
 
-oj-dialog#syncIntervalDialog div.oj-dialog-content
+oj-dialog[id="syncIntervalDialog"] div.oj-dialog-content
 {
   background-color: white;
 }
 
-oj-dialog#actionsDialog div.oj-dialog-footer,
-oj-dialog#syncIntervalDialog div.oj-dialog-footer,
-oj-dialog#confirmDialog div.oj-dialog-footer,
-oj-dialog#wdtOptionsDialog div.oj-dialog-footer
+oj-dialog[id="actionsDialog"] div.oj-dialog-footer,
+oj-dialog[id="syncIntervalDialog"] div.oj-dialog-footer,
+oj-dialog[id="confirmDialog"] div.oj-dialog-footer,
+oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-footer
 {
   padding: 0 .75rem .75rem 0;
+}
+
+oj-dialog[id="syncIntervalDialog"] div.oj-dialog-footer,
+oj-dialog[id="confirmDialog"] div.oj-dialog-footer,
+oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-footer
+{
   background-color: white;
 }
 
-oj-dialog#actionsDialog div.oj-dialog-footer {
+oj-dialog[id="actionsDialog"] div.oj-dialog-footer
+{
   background-color: var(--actionsDialog-background-color);
 }
 
-oj-dialog[id="confirmDialog"] {
-  width: var(--confirmDialog-width);
-  min-height: var(--confirmDialog-min-height);
-  margin-bottom: 0.3125rem;
-  background-color: var(--dialog-background-color);
-}
-
-oj-dialog[id="actionsDialog"] {
-  width: var(--actionDialog-width);
-  min-height: var(--actionDialog-min-height);
-  background-color: var(--dialog-background-color);
-  border: 1px none #f8f6f5;
-}
-
-oj-dialog[id="syncIntervalDialog"] {
-  width: var(--syncIntervalDialog-width);
-  background-color: var(--dialog-background-color);
-}
-
-oj-dialog[id="wdtOptionsDialog"] {
-  width: var(--wdtOptionsDialog-width);
-  min-height: var(--wdtOptionsDialog-min-height);
-  background-color: var(--dialog-background-color);
-}
-
 /* Only overrides to redwood.css allowed beyond here!!! Be sure to provide a reason for each override!! */
-
 html:not([dir="rtl"]) .oj-dialog-header-close-wrapper {
   margin-right: -1rem;  /* to properly position "X" in header, which closes the */
-  margin-top: 1px;
+  margin-top: 0.063rem; /* 1px; */
 }
 
-.oj-button-icon-only, .oj-buttonset .oj-button-icon-only {
+.oj-button-icon-only,
+.oj-buttonset .oj-button-icon-only
+{
   min-width: var(--oj-button-height);
   height: 1.5rem;
 }
 
-div.oj-label-group > span {
-  vertical-align: text-top;
+div.oj-label-group > span
+{
+  vertical-align: middle;
   line-height: .7rem;
 }
 
-/*
-For controlling the padding used in pagination control beneath tables.
-*/
-.oj-pagingcontrol-nav {
-  padding: 0;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-
-html:not([dir="rtl"]) .oj-conveyorbelt-overflow-indicator.oj-start {
+html:not([dir="rtl"]) .oj-conveyorbelt-overflow-indicator.oj-start
+{
   box-shadow: 0.25rem 0 0.25rem -0.25rem hsla(30, 8.3%, 9.4%,0.2);
   margin: 0 0 0 0;
 }
@@ -1066,13 +1245,19 @@ the text characters limited to the text box width along with scrolling.
 10.0.1
   text-align: var(--oj-form-layout-start-edge-label-text-align);
 */
-.oj-label-value.oj-formlayout-labels-inline > .oj-flex > .oj-flex-item > .oj-label, .oj-formlayout-inline-label > .oj-label {
+.oj-label-value.oj-formlayout-labels-inline > .oj-flex > .oj-flex-item > .oj-label,
+.oj-formlayout-inline-label > .oj-label
+{
   width: 100%;
   box-sizing: border-box;
   text-align: left;
 }
 
-html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-start .oj-button-icon.oj-start, html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icons .oj-button-icon.oj-start, html:not([dir="rtl"]) .oj-button-text-icon-start .oj-button-icon.oj-start, html:not([dir="rtl"]) .oj-button-text-icons .oj-button-icon.oj-start {
+html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-start .oj-button-icon.oj-start,
+html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icons .oj-button-icon.oj-start,
+html:not([dir="rtl"]) .oj-button-text-icon-start .oj-button-icon.oj-start,
+html:not([dir="rtl"]) .oj-button-text-icons .oj-button-icon.oj-start
+{
   display: inline-flex;
   margin-right: 0.3125rem;  /* var(--oj-button-icon-to-text-padding); */
   margin-left: 0.3125rem;   /* var(--oj-button-icon-to-edge-padding); */
@@ -1082,40 +1267,71 @@ html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-start .oj-button-icon.o
 9.0.0 changes font-size of tabbar items, which messes up label
 for "slices". The workaround is to control it here.
 */
-div.cfe-form-tabstrip .oj-tabbar-horizontal .oj-tabbar-item-label {
+div.cfe-form-tabstrip .oj-tabbar-horizontal .oj-tabbar-item-label
+{
   font-size: 0.92em;    /* 11pt; */
-  text-align: center;
-  min-height: 1.2rem;
+  align-self: center;
+  line-height: 1.5rem;
 }
 
-div.cfe-form-tabstrip .oj-tabbar-horizontal .oj-tabbar-item-element {
+div.cfe-form-tabstrip .oj-tabbar-horizontal .oj-tabbar-item-element
+{
   box-sizing: border-box;
   min-height: 2.125rem;  /* Set height of tabbar item (includes bottom green bar) */
   margin-right: .875rem; /* Set size of margin between tabbar items */
 }
 
-/* Used to control layout for form labels */
-.oj-formlayout-labels-inline > .oj-flex > .oj-flex-item:nth-child(odd) > .oj-label .oj-label-group {
-  overflow: inherit;
-  text-align: left;
-  text-overflow: inherit;
-  line-height: 1.33rem;  /* 16pt; */
-  font-size: 0.92em;    /* 11pt; */
+/* Used to control layout for form and dialog labels */
+/* 15.1.0 Override font-size for .oj-label */
+.oj-label
+{
+  display: block;
+  color: var(--oj-label-color);
+  font-size: .92em;   /* 11pt; */
+  font-weight: var(--oj-label-font-weight);
+  line-height: var(--oj-label-line-height);
+  word-break: break-word;
 }
 
 /* Used to control layout for form values */
-.oj-formlayout-labels-inline > .oj-flex > .oj-flex-item:nth-child(even) {
+.oj-formlayout-labels-inline > .oj-flex > .oj-flex-item:nth-child(even)
+{
   text-align: left;
-  font-size: 0.92em;    /* 11pt; */
+  font-size: 1em;    /* 12pt; */
   line-height: 1.33rem;  /* 16pt; */
   height: var(--form-layout-row-height); /* Controls height of rows */
 }
 
-html:not([dir="rtl"]) .oj-navigationlist-group-item {
+.oj-formlayout-labels-inline > .oj-flex > .oj-flex-item:nth-child(odd) > .oj-label .oj-label-group
+{
+  overflow: inherit;
+  text-align: left;
+  text-overflow: inherit;
+  line-height: 1.33rem;  /* 16pt; */
+  font-size: 1em;    /* 12pt; */
+}
+
+.oj-formlayout-inline-label .oj-label-required-icon,
+.oj-formlayout-inline-label .oj-label-help-icon,
+.oj-formlayout-inline-label .oj-label-help-icon-anchor
+{
+  float: none;
+  font-size: 1.08em;   /* 13pt */
+}
+
+.oj-dialog-body .oj-formlayout-inline-label label
+{
+  font-size: 1.08em;        /* 13pt; */
+}
+
+html:not([dir="rtl"]) .oj-navigationlist-group-item
+{
   padding-right: 0;  /* space between expand/collapse arrow icon and right edge of navtree */
 }
 
-html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-end .oj-button-text, html:not([dir="rtl"]) .oj-button-text-icon-end .oj-button-text {
+html:not([dir="rtl"]) .oj-buttonset .oj-button-text-icon-end .oj-button-text,
+html:not([dir="rtl"]) .oj-button-text-icon-end .oj-button-text
+{
   padding: 0; /* remove padding around menu button */
   margin: 0;
 }
@@ -1150,8 +1366,9 @@ html:not([dir="rtl"]) .oj-formlayout-max-cols-2 .oj-formlayout-form-across > .oj
 /*
 For controlling the styling of oj-table column header
 */
-th[id="table:_hdrCol0"] {
+oj-button.cfe-delete-row-button {
   text-align: center;
+  vertical-align: text-bottom;
 }
 
 html:not([dir="rtl"]) oj-table[id="table"] .oj-table-column-header-cell,
@@ -1160,6 +1377,15 @@ html:not([dir="rtl"]) oj-table[id="table"] .oj-table-column-header-cell,
   padding: 0 0.1875rem 0 0.5rem;
   height: 1rem;
   line-height: 1rem;
+}
+
+oj-table[id="table"]
+{
+  max-width: calc(100vw - var(--table-container-calc-max-width));
+}
+
+oj-table[id="table"] tr:not(.oj-table-body-message-row) {
+  cursor: var(--table-cursor);
 }
 
 oj-table[id="table"] .oj-table-column-header {
@@ -1172,72 +1398,114 @@ oj-table[id="table"] .oj-table-column-header {
   align-items: center;
 }
 
-oj-table[id="table"] .cfe-table-column-header-selector {
+oj-table[id="table"] .cfe-table-column-header-selector
+{
   margin-left: 14px;
 }
 
-oj-table[id="table"] .cfe-table-column-header-selector > input {
+oj-table[id="table"] .cfe-table-column-header-selector > input
+{
   height: 16px;
   width: 16px;
   padding: 0;
   margin: 0;
 }
 
-oj-table[id="table"] > div.oj-table-scroller
+oj-table[id="table"] .oj-table-scroller
 {
-  height: calc(100vh - var(--table-container-calc-max-height));
+  max-height: calc(100vh - var(--table-container-calc-max-height));
+  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
 }
 
-oj-table[id="table"] > div.oj-table-scroller > table,
-oj-table[id="help-table"] > div.oj-table-scroller > table
+oj-table[id="table"] .oj-table-scroller > table
 {
   border-collapse: collapse;
 }
 
-oj-table[id="table"] > div.oj-table-scroller > table > thead > tr  th,
-oj-table[id="help-table"] > div.oj-table-scroller > table > thead > tr  th {
+oj-table[id="table"] .oj-table-scroller > table > thead > tr  th
+{
   position: sticky;
-  top: 0px;
+  top: 0;
 }
 
 table[id="help-table"]
 {
+  background-clip: padding-box;
+  border-collapse: collapse;
   table-layout: fixed;
 }
 
-table[id="help-table"] > thead > tr > th[id="help-table:_hdrCol0"]
+table[id="help-table"] > thead > th
 {
-  font-weight: bold;
-  text-align: left;
-  min-width: 8em;
-  width: 8em;
-  white-space:normal;
-  padding:5px;
+  position: sticky;
+  top: 0;
 }
 
+table[id="help-table"] > thead > tr > th[id="help-table:_hdrCol0"],
 table[id="help-table"] > thead > tr > th[id="help-table:_hdrCol1"]
 {
   font-weight: bold;
   text-align: left;
+  min-width: 12em;
+  width: 12em;
+  white-space:normal;
+  padding: .5em 1em;
 }
 
-#help-table\:2420395_0
+table[id="help-table"] > tbody
 {
-  white-space: normal;
-  padding: 5px;
-  min-width: 8em;
-  width: 8em;
+  display: inline-block;
+  min-width: calc(100vw - var(--help-table-calc-min-width));
+  height: calc(100vh - var(--help-table-calc-max-height));
+  max-height: calc(100vh - var(--help-table-calc-max-height));
+  overflow: auto;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
+table[id="help-table"] > tbody td
+{
+  border: 1px solid #d0d0d0;
+}
+
+table[id="help-table"] > tbody tr:nth-child(even){
+  background-color: #f0f0f0;
+}
+
+table[id="help-table"] > tfoot
+{
+  min-width: calc(100vw - var(--help-table-calc-min-width));
+}
+
+table[id="help-table"] > thead,
+table[id="help-table"] > tfoot
+{
+  background-color: #e2e2e2;
+}
+
+table[id="help-table"] > tfoot div
+{
+  padding: 0.325rem;
+}
+
+table[id="help-table"] > tfoot div ul {
+  margin: var(--oj-list-margin-top) 0;
+  padding: 0 30px;
+}
+
+#help-table\:2420395_0,
 #help-table\:2420395_1
 {
+  min-width: 12em;
+  width: auto;  /* 12em; */
   white-space: normal;
-  padding: 5px;
+  padding: .5em 1em;
 }
 
-.oj-formlayout-inline-label .oj-label-required-icon, .oj-formlayout-inline-label .oj-label-help-icon, .oj-formlayout-inline-label label, .oj-formlayout-inline-label .oj-label-help-icon-anchor {
-  float: none;
-  font-size: 1.08em;   /* 13pt */
+#help-table\:2420395_0 code > a:focus-visible,
+#help-table\:2420395_1 code > a:focus-visible,
+.cfe-help-table-footer > ul > li > a:focus-visible
+{
+  text-decoration: underline;
 }
 
 #overlay-form-linked-resource {
@@ -1250,7 +1518,7 @@ table[id="help-table"] > thead > tr > th[id="help-table:_hdrCol1"]
 
 oj-dialog[id="overlayFormDialog"] {
   min-width: var(--overlayDialog-calc-min-width);
-  background-color: var(--dialog-background-color);
+  background-color: var(--dialog-body-background-color);
 }
 
 oj-dialog[id="overlayFormDialog"] div.oj-dialog-header h1.oj-dialog-title
@@ -1277,7 +1545,7 @@ oj-dialog[id="overlayFormDialog"] div.oj-dialog-header
   display: flex;
   justify-content: space-between;
   padding: 0.25rem .75rem 0.25rem .75rem;
-  background-color: transparent;
+  background-color: var(--dialog-header-background-color);
   background-image: none;
   border-bottom-color: transparent;
   font-size: 1em;       /* 12pt; */
@@ -1328,14 +1596,21 @@ The workaround is to create our own cfe-flex-items-pad class
   padding: 0;
 }
 
-#wdt-model-designer-container,
+.vertical-gripper:focus-visible
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: -2px;
+  border-radius: .25rem;
+}
+
 #spa-resizer {
   min-width: calc(100vw - var(--form-container-calc-min-width));
+  height: fit-content;
 }
 
 .resizer_panel .vertical-gripper {
   min-width: 10px;
-  height: 100vh;
+  height: calc(100vh - 70px);
   /* path assigned to url attribute is relative to wrc-frontend/css directory */
   background: url("../images/splitter-bkgrd-image-vert-gry_7x28.png");
   background-repeat: repeat;
@@ -1351,16 +1626,34 @@ The workaround is to create our own cfe-flex-items-pad class
 .left_panel
 {
   width: 100%;    /* Keeps navtree expand/collapse icons right-aligned */
+  height: fit-content;
 }
 
 #table-customizer {
   display: none;
 }
 
-.table-customizer-expander {
-  display: flex;
+.cfe-table-customizer
+{
+  line-height: 2.5rem;
+}
+
+.cfe-table-customizer:hover {
+  background-color: rgba(0, 0, 0, .05);
+}
+
+.cfe-table-customizer > a:focus-visible
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: 2px;
+  border-radius: .12rem;
+}
+
+.table-customizer-expander
+{
+  display: inline-flex;
   align-items: center;
-  margin-left: 0.313rem;
+  border-radius: var(--oj-button-border-radius);
 }
 
 .table-customizer-expander,
@@ -1427,6 +1720,7 @@ oj-list-view[id="unselectedColumnList"] .oj-listview-item-layout,
 oj-list-view[id="selectedColumnList"]  .oj-listview-item-layout
 {
   min-height: .5rem;
+  padding: unset;
 }
 
 div[id="menu-button-container"] .oj-button,
@@ -1436,6 +1730,15 @@ div[id="menu-button-container"] .oj-button-nocomp
   font-size: 1.0em;       /* 12pt; */
   display: inline-flex;
   vertical-align: baseline;
+}
+
+.cfe-ux-ico-iconfont-20 {
+  font-size: 2em;  /* 18pt; */
+  padding: .15rem;
+}
+
+.cfe-ux-ico-iconfont-24 {
+  font-size: 2em;  /* 24pt; */
 }
 
 .cfe-iconbar {
@@ -1452,11 +1755,23 @@ div[id="menu-button-container"] .oj-button-nocomp
   margin: 0 0.188rem 0 0;
 }
 
+div.cfe-actions-strip-container > oj-button > button:hover
+{
+  background-color: rgba(0,0,0,.12);
+}
+
+div.cfe-actions-strip-container > oj-button > button:focus-visible
+{
+  outline: 2px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: -2px;
+  border-radius: .25rem;
+}
+
 .cfe-actions-strip-container,
 .cfe-buttonset
 {
   position: sticky;
-/*  margin: 0.313rem 0 0 0; */
+  /*  margin: 0.313rem 0 0 0; */
   background-color: #eaeaea;  /* #f3f3f3; */
   width: 100%;
 }
@@ -1485,4 +1800,3 @@ div[id="menu-button-container"] .oj-button-nocomp
 .cfe-button-menu > a > img {
   vertical-align: text-top;
 }
-

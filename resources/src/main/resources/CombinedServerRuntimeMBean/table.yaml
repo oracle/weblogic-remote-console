@@ -3,6 +3,9 @@
 introductionHTML: >
   <p>A server is an instance of WebLogic Server that runs in its own Java Virtual Machine (JVM) and has its own configuration.</p>
   <p>This page includes the monitoring data for each configured and/or running server in the current WebLogic Server domain.</p>
+  <p>Note: a managed server's State is 'Unreachable' when the adminstation server is unable to communicate with it.
+  You can navigate to the managed server to get more information about its state.  You can also customize this table
+  to display the 'Server Life Cycle State' column, however doing so negatively impact the performance of this page.</p>
 
 actions:
 - name: "start"
