@@ -12,20 +12,20 @@
     <title>Check log files :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1697403033" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1710208437" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1697403033"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1710208437"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1697403033"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1697403033"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1710208437"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1710208437"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1697403033"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1710208437"></script>
 
     
   </div>
@@ -549,27 +549,6 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/develop/alternative-logging/" title="Use an alternative logging configuration file" class="dd-item ">
-        <a href="/weblogic-remote-console/develop/alternative-logging/">
-        Use an alternative logging configuration file
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
       <li data-nav-id="/weblogic-remote-console/develop/docs-contribute/" title="Contribute to the documentation" class="dd-item ">
         <a href="/weblogic-remote-console/develop/docs-contribute/">
         Contribute to the documentation
@@ -804,7 +783,7 @@
 <p>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.</p>
 <h2 id="front-end">Front end</h2>
 <p>To view the log file for issues related to the front end of the WebLogic Remote Console:</p>
-<p>Open <strong>View</strong> &gt; <strong>Toggle Developer Tools</strong> and select the <strong>Console</strong> tab.</p>
+<p>Open <strong>Help</strong> &gt; <strong>Toggle Developer Tools</strong> and select the <strong>Console</strong> tab.</p>
 <h2 id="back-end">Back end</h2>
 <p>To view the log file for issues related to the back end of the WebLogic Remote Console:</p>
 <p>Open the <code>out.log</code> file in a text editor. The <code>out.log</code> file is located in:</p>
@@ -813,9 +792,9 @@
 <li>macOS: <code>/Users/&lt;user&gt;/Library/Application Support/weblogic-remote-console/out.log</code></li>
 <li>Windows: <code>C:\Users\&lt;user&gt;\AppData\Roaming\weblogic-remote-console\out.log</code></li>
 </ul>
-<p><code>out.log</code> maintains log entries for the current session of the WebLogic Remote Console. When you open a session, the log entries from the previous session are moved to a new file marked by date: <code>out-yyyy-mm-dd</code> (in the same folder as <code>out.log</code>).</p>
+<p><code>out.log</code> maintains log entries for the current session of the WebLogic Remote Console. When you open a new session, the log entries from the previous session are moved to a new file marked by date: <code>out-yyyy-mm-dd.log</code> (in the same folder as <code>out.log</code>).</p>
 
-<div class="notices tip" ><p>If you want to change the default logging configuration for back end log files, see <a href="/weblogic-remote-console/develop/alternative-logging/">Use an alternative logging configuration file</a>.</p>
+<div class="notices tip" ><p>If you want to change the default logging configuration for back end log files, see <a href="/weblogic-remote-console/userguide/advanced-settings/#altlog">Specify a custom logging configuration file</a>.</p>
 </div>
 
 
@@ -1182,22 +1161,6 @@
             
         
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
             
         
                     
@@ -1303,19 +1266,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1697403033"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1710208437"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1697403033"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1710208437"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1697403033"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1710208437"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

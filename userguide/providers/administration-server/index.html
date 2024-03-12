@@ -12,20 +12,20 @@
     <title>Administration Servers :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1697403033" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1710208437" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1697403033"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1710208437"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1697403033"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1697403033"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1710208437"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1710208437"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1697403033"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1710208437"></script>
 
     
   </div>
@@ -549,27 +549,6 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/develop/alternative-logging/" title="Use an alternative logging configuration file" class="dd-item ">
-        <a href="/weblogic-remote-console/develop/alternative-logging/">
-        Use an alternative logging configuration file
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
       <li data-nav-id="/weblogic-remote-console/develop/docs-contribute/" title="Contribute to the documentation" class="dd-item ">
         <a href="/weblogic-remote-console/develop/docs-contribute/">
         Contribute to the documentation
@@ -802,6 +781,7 @@
         <li><a href="#install-an-application">Install an application</a></li>
         <li><a href="#start-an-application">Start an application</a></li>
         <li><a href="#stop-an-application">Stop an application</a></li>
+        <li><a href="#app-test">Test application deployment</a></li>
         <li><a href="#view-an-applications-current-state">View an application&rsquo;s current state</a></li>
         <li><a href="#review-an-applications-runtime-statistics">Review an application&rsquo;s runtime statistics</a></li>
         <li><a href="#deployment-plans">Deployment Plans</a></li>
@@ -870,6 +850,32 @@ As with the Administration Console, your management capabilities will be limited
 <div class="notices tip" ><p>You can use the WebLogic Remote Console to manage a WebLogic Server domain running on Kubernetes. For details about how to set up access to WebLogic Server domains running on Kubernetes, see <a href="https://oracle.github.io/weblogic-kubernetes-operator/managing-domains/accessing-the-domain/remote-admin-console/">Use the Remote Console</a> in the <em>WebLogic Kubernetes Operator User Guide</em>.</p>
 </div>
 
+<p>The Administration Server provider is split into multiple perspectives, each of which focuses on a different management area for a WebLogic domain:</p>
+<ul>
+<li><strong>Edit Tree</strong>: an editable view of the WebLogic Server domain. Enter this perspective when you want to make and commit changes to the domain.</li>
+<li><strong>Configuration Tree</strong>: a read-only view of the WebLogic Server domain. Enter this perspective if you want to see the current settings of the domain, without making any changes.</li>
+<li><strong>Monitoring Tree</strong>: an overview of the runtime statistics for the running domain. You can view statistics by server or aggregated across servers. For example, applications running on Server1  vs. applications running on one or more servers. The Monitoring Tree also provides some control operations such as starting or stopping servers or applications.</li>
+<li><strong>Security Data Tree</strong>: an editable view of the security providers' data in the security realm. This includes users, groups, policies, and so on.</li>
+</ul>
+
+<div class="notices note" ><p>While the Edit Tree and the Configuration Tree perspectives look similar, they are generated from two separate collections of configuration MBeans, which results in important and distinct nuances between the two perspectives:</p>
+<ol>
+<li>
+<p>Changes made in the Edit Tree perspective do not appear in the Configuration Tree perspective until you commit them, or for non-dynamic changes, until you restart the server.</p>
+</li>
+<li>
+<p>Certain dynamically computed domain contents do not appear in the Edit Tree. For example,</p>
+<ul>
+<li>Dynamic clusters (and their servers)</li>
+<li>Situational configurations</li>
+<li>Changes made from the command line using system properties</li>
+<li>Changes to some production mode-related settings</li>
+</ul>
+</li>
+</ol>
+<p>For more information on the differences between editable Configuration MBeans and read-only Configuration MBeans, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/domcf/changes.html#GUID-223E202F-DA06-45C3-B297-E66655F4E9AB">Managing Configuration Changes</a> in Understanding Domain Configuration for Oracle WebLogic Server.</p>
+</div>
+
 <h2 id="changes_adminserver">Edit a WebLogic Administration Server</h2>
 <p>Editing a domain in the WebLogic Remote Console is similar in process to the Administration Console. When you start editing a domain, a configuration lock is created that blocks other users from making simultaneous changes. Once you&rsquo;re satisfied with your changes, you can activate these changes and perpetuate them to the Administration and Management Servers.</p>
 
@@ -894,7 +900,7 @@ As with the Administration Console, your management capabilities will be limited
 
 <h3 id="shopping_cart">Shopping cart</h3>
 <p>The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely.</p>
-<p>If you installed the console extension, <code>console-rest-ext-6.0.war</code>, then you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager.</p>
+<p>If you installed the console extension, <code>console-rest-ext-7.0.war</code>, then you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager.</p>
 <p>Open the Shopping Cart menu and click <strong>View Changes</strong> to see your pending changes.</p>
 <p>Some changes can be activated immediately (dynamic) while other changes require a server restart to activate (non-dynamic). When you need to activate non-dynamic changes, navigate to the <strong>Environment</strong> &gt; <strong>Servers</strong> node in the Monitoring perspective to see which servers need a restart.</p>
 <p>If you need to undo a change, you must discard all Shopping Cart contents or manually revert the change in the Edit Tree perspective.</p>
@@ -1008,6 +1014,20 @@ As with the Administration Console, your management capabilities will be limited
 <li><strong>Force stop now</strong>: to stop the application immediately, regardless of the work that is being performed and the users that are connected.</li>
 <li><strong>Servicing non-administration requests</strong>: to stop the application once all its work has finished, but to then put the application in Administration Mode so it remains accessible for administrative purposes.</li>
 </ul>
+</li>
+</ol>
+<h3 id="app-test">Test application deployment</h3>
+<p>After you deploy an application, you may want to confirm that it was deployed successfully.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, navigate to <strong>Environment</strong> &gt; <strong>Servers</strong> &gt; <em>myServer</em> &gt; <strong>Deployments</strong> &gt; <strong>Application Runtimes</strong> &gt; <em>myApp</em> &gt; <strong>Component Runtimes</strong> &gt; <em>myServer/myApp</em> &gt; <strong>Servlets</strong>.</p>
+</li>
+<li>
+<p>Construct a URL using the target server address plus the <code>ContextPath</code> and <code>Name</code> values from the Servlets table. For example, for an application deployed on the Administration Server, a test URL might look like <code>http://adminserver:7001/myapp/welcome</code>.</p>
+<p><strong>Note</strong>: Remember to consider any changes you made to network channels that may affect the application deployment. For example, the application may be on a different port.</p>
+</li>
+<li>
+<p>Enter the URL into your browser. If the page loads correctly, then your application was deployed successfully.</p>
 </li>
 </ol>
 <h3 id="view-an-applications-current-state">View an application&rsquo;s current state</h3>
@@ -1436,22 +1456,6 @@ As with the Administration Console, your management capabilities will be limited
             
         
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
             
         
                     
@@ -1557,19 +1561,19 @@ As with the Administration Console, your management capabilities will be limited
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1697403033"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1710208437"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1697403033"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1710208437"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1697403033"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1710208437"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

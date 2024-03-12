@@ -12,20 +12,20 @@
     <title>Editing security data :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1697403033" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1697403033" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1710208437" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1697403033"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1710208437"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1697403033"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1697403033"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1710208437"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1710208437"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1697403033"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1710208437"></script>
 
     
   </div>
@@ -549,27 +549,6 @@
  
   
     
-      <li data-nav-id="/weblogic-remote-console/develop/alternative-logging/" title="Use an alternative logging configuration file" class="dd-item ">
-        <a href="/weblogic-remote-console/develop/alternative-logging/">
-        Use an alternative logging configuration file
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
       <li data-nav-id="/weblogic-remote-console/develop/docs-contribute/" title="Contribute to the documentation" class="dd-item ">
         <a href="/weblogic-remote-console/develop/docs-contribute/">
         Contribute to the documentation
@@ -929,7 +908,7 @@
 <li>Click <strong>New</strong>.</li>
 <li>Enter a name for the new scoped role and click <strong>Create</strong>.</li>
 </ol>
-<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses We recommend that whenever possible, that you use the Group condition which grants the security role to all members of a specified group. See <a href="#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
+<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible you use the Group condition which grants the security role to all members of a specified group. See <a href="#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
 <p>For a description of conditions in the Predicate List, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-06D3F08F-5A98-4649-A3F4-5D08B76C72CD">Security Role Conditions</a></p>
 <h3 id="sec_policies">Security policies</h3>
 <p>A security policy specifies the conditions that users, groups, or roles must meet to access a resource. Policies must have one or more conditions and you can combine conditions to create complex policies for more dynamic access control.</p>
@@ -967,7 +946,7 @@ You can only edit the arguments of the condition. If you want to use a different
 <p>By default, a new condition is added as a simple condition at the top of the list of conditions. To insert a new condition elsewhere, select an existing condition and then click Add Condition. You&rsquo;ll get a dropdown list with options to add the new condition either above or below the selected condition. The order of conditions is not meaningful to how the policy is interpreted.</p>
 <p>A policy can contain multiple simple or compound conditions or a mix of simple and compound conditions. You can also nest compound conditions.</p>
 
-<div class="notices tip" ><p>Why use compound conditions? Consider this scenario: a resource exists where you want Administrators to always have access, but Deployers to only have access between 9 am and 5 pm. The following policy would address both requirements.</p>
+<div class="notices tip" ><p>Why should you use compound conditions? Consider this scenario: a resource exists where you want Administrators to always have access, but Deployers to only have access between 9 am and 5 pm. The following policy would address both requirements.</p>
 <ul>
 <li>
 <p>Condition 1 (simple): Role: Admin</p>
@@ -1552,22 +1531,6 @@ Removing a credential from the WebLogic Remote Console will not affect the user 
             
         
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
             
         
                     
@@ -1673,19 +1636,19 @@ Removing a credential from the WebLogic Remote Console will not affect the user 
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1697403033"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1710208437"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1697403033"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1697403033"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1710208437"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1697403033"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1710208437"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

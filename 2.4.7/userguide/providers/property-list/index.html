@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.82.0" />
+    <meta name="description" content="How to configure property lists in the WebLogic Remote Console">
+
+
+    <link rel="icon" href="/weblogic-remote-console/2.4.7/images/logo.png" type="image/png">
+
+    <title>Property lists :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/2.4.7/css/nucleus.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/fontawesome-all.min.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/hybrid.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/featherlight.min.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/perfect-scrollbar.min.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/auto-complete.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/atom-one-dark-reasonable.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/theme.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/tabs.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/hugo-theme.css?1710208440" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/2.4.7/js/jquery-3.6.0.min.js?1710208440"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/2.4.7/userguide/providers/property-list/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.7">
+  <img src="https://oracle.github.io/weblogic-remote-console/2.4.7/images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/2.4.7/js/lunr.min.js?1710208440"></script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.7/js/auto-complete.js?1710208440"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.7";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.7/js/search.js?1710208440"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/setup/" title="Get started" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/setup/">
+          Get started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/setup/console/" title="Explore the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/setup/console/">
+        Explore the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/setup/admin-console-diff/" title="Differences with the Administration Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/setup/admin-console-diff/">
+        Differences with the Administration Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/" title="User guide" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/userguide/">
+          User guide
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/projects/" title="Projects" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/projects/">
+        Projects
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/" title="Provider types" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/userguide/providers/">
+          Provider types
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/administration-server/" title="Administration Servers" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/userguide/providers/administration-server/">
+          Administration Servers
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/administration-server/security-data/" title="Editing security data" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/providers/administration-server/security-data/">
+        Editing security data
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/property-list/" title="Property lists" class="dd-item active">
+        <a href="/weblogic-remote-console/2.4.7/userguide/providers/property-list/">
+        Property lists
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/wdt-model/" title="WDT model files" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/providers/wdt-model/">
+        WDT model files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/wdt-composite/" title="WDT composite models" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/providers/wdt-composite/">
+        WDT composite models
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/dashboards/" title="Generate dashboards" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/dashboards/">
+        Generate dashboards
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/advanced-settings/" title="Customize settings" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/advanced-settings/">
+        Customize settings
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/upgrade/" title="Upgrade the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/upgrade/">
+        Upgrade the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/logging/" title="Check log files" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/logging/">
+        Check log files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/role-access/">
+        Understand access discrepancies
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/develop/" title="Development" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/develop/">
+          Development
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/develop/build-source/" title="Build from source" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/develop/build-source/">
+        Build from source
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/develop/contribute/" title="Contribute to WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/develop/contribute/">
+        Contribute to WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/develop/alternative-logging/" title="Use an alternative logging configuration file" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/develop/alternative-logging/">
+        Use an alternative logging configuration file
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/develop/docs-contribute/" title="Contribute to the documentation" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/develop/docs-contribute/">
+        Contribute to the documentation
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/reference/" title="Reference" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/reference/">
+          Reference
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/reference/faqs/" title="Frequently asked questions" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/reference/faqs/">
+        Frequently asked questions
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/reference/known_issues/" title="Known issues" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/reference/known_issues/">
+        Known issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/reference/troubleshoot/" title="Troubleshoot issues" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/reference/troubleshoot/">
+        Troubleshoot issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/reference/security-warnings/" title="Review security issues" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/reference/security-warnings/">
+        Review security issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 2.4.7.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/2.4.7/'>WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.7/userguide/'>User guide</a> > <a href='/weblogic-remote-console/2.4.7/userguide/providers/'>Provider types</a> > Property lists
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#create-a-new-property-list">Create a new property list</a></li>
+    <li><a href="#upload-an-existing-property-list">Upload an existing property list</a></li>
+    <li><a href="#edit-a-property-list">Edit a property list</a></li>
+    <li><a href="#delete-a-property-list">Delete a property list</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Property lists
+            </h1>
+          
+
+        
+
+
+<p>Property lists are an editable set of key-value pairs.</p>
+<p>You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a <a href="/weblogic-remote-console/2.4.7/userguide/providers/wdt-model/#model_tokens">WDT model token</a> and edit token values from within the property list.</p>
+<h2 id="create-a-new-property-list">Create a new property list</h2>
+<ol>
+<li>Open the Providers drawer and beside the project name, click ⋮. Select <strong>Create Provider for New Property List</strong>.</li>
+<li>Enter a name for the property list provider. This is the name that will appear in the Project list of providers so you can identify which provider you&rsquo;re working on.</li>
+<li>Enter a name for the property list file in the <strong>Property List Filename</strong> field. Include .properties or .props at the end of the file name.</li>
+<li>Click <img src="/weblogic-remote-console/images/icons/choose-directory-icon-blk_24x24.png" alt="Upload file"> and browse to the directory where you want to save the new property list file.</li>
+<li>Click <strong>OK</strong> to create the file.</li>
+</ol>
+<h2 id="upload-an-existing-property-list">Upload an existing property list</h2>
+<p>If you&rsquo;ve already created a property list file, you can upload it to WebLogic Remote Console where you can continue to edit it.</p>
+<p>Property lists are generally <code>.properties</code>  or <code>.props</code> files though the WebLogic Remote Console supports other text file formats. In any case, each key-value pair must be on a new line and names and values must be separated by <code>=</code>, <code>:</code>, or spaces. For example, <code>key=value</code> / <code>key:value</code> / <code>key value</code>. See <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Properties.html#load(java.io.Reader)">Properties (JDK 17)</a> for more information on Java property list formatting.</p>
+<ol>
+<li>Open the Providers drawer and beside the project name, click ⋮. Select <strong>Add Property List Provider</strong>.</li>
+<li>Enter a name for the property list provider. This is the name that will appear in the Project list of providers so you can identify which provider you&rsquo;re working on.</li>
+<li>Click <img src="/weblogic-remote-console/images/icons/choose-file-icon-blk_24x24.png" alt="Upload file"> and browse to the property list file.</li>
+<li>Click <strong>OK</strong> to upload the file.</li>
+</ol>
+<h2 id="edit-a-property-list">Edit a property list</h2>
+<p>If the property list you edit is connected to a WDT model file as a <a href="/weblogic-remote-console/2.4.7/userguide/providers/wdt-model/#wdt_variables">WDT variable</a>, any changes you make to a property <em>name</em> will not be reflected in the WDT model file. The WDT model file assumes you&rsquo;ve added an entirely new property and the former WDT variable becomes a standalone WDT model token that&rsquo;s not associated with the property list.</p>
+<ol>
+<li>Open the Providers drawer and select the property list you want to edit.</li>
+<li>Click <strong>Property List Editor</strong> and then the <strong>Properties</strong> node.</li>
+<li>Click the + in the table header row to add a new row to the table.</li>
+<li>Enter a new property name and property value.</li>
+<li>To delete a row, click  beside the property row that you want to delete.</li>
+<li>You can also reorder the properties alphabetically (or reverse-alphabetically) by clicking the arrows in the title bar.</li>
+<li>Click <strong>Save Now</strong> to save your changes to the property list file.</li>
+</ol>
+<h2 id="delete-a-property-list">Delete a property list</h2>
+<p>This will only remove the property list from the WebLogic Remote Console. The file will remain in the location designated on your computer.</p>
+<p>If you delete a property list that&rsquo;s connected to a WDT model file, the WDT model file will remain unchanged but all WDT variables are converted to standalone WDT model tokens.</p>
+<ol>
+<li>Open the Providers drawer and beside the property list you want to delete, click the <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon"> icon.</li>
+</ol>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.7/userguide/providers/administration-server/security-data/" title="Editing security data"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/2.4.7/userguide/providers/wdt-model/" title="WDT model files" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/2.4.7/js/clipboard.min.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/perfect-scrollbar.min.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/perfect-scrollbar.jquery.min.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/jquery.sticky.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/featherlight.min.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/highlight.pack.js?1710208440"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/2.4.7/js/modernizr.custom-3.6.0.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/learn.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/hugo-learn.js?1710208440"></script>
+    
+        
+            <script src="/weblogic-remote-console/2.4.7/mermaid/mermaid.js?1710208440"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

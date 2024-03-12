@@ -37,7 +37,7 @@ Dashboards are only available for Administration Server providers (in the Monito
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/advanced-settings/</guid>
       <description>You can customize the settings of the WebLogic Remote Console to fit your needs.
  In the WebLogic Remote Console, go to File &amp;gt; Settings. (WebLogic Remote Console &amp;gt; Settings on macOS). Choose a section tab and make your changes as needed. Click Save to apply your changes.  Customizations include:
- Networking  Connect to a WebLogic domain using SSL/TLS  Configure a proxy server Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain    Other Java System Properties  Set the SameSite cookie attribute if required for web browser support  Specify an alternative location for the JDK    Networking The Networking section manages connection related settings for the WebLogic Remote Console.</description>
+ Networking  Connect to a WebLogic domain using SSL/TLS  Configure a proxy server Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain    Other Java System Properties  Set the SameSite cookie attribute if required for web browser support  Specify an alternative location for the JDK Specify a custom logging configuration file    Networking The Networking section manages connection related settings for the WebLogic Remote Console.</description>
     </item>
     
     <item>
@@ -60,7 +60,7 @@ Delete and replace any previous versions of the extension. Keeping multiple vers
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/logging/</guid>
       <description>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.
 Front end To view the log file for issues related to the front end of the WebLogic Remote Console:
-Open View &amp;gt; Toggle Developer Tools and select the Console tab.
+Open Help &amp;gt; Toggle Developer Tools and select the Console tab.
 Back end To view the log file for issues related to the back end of the WebLogic Remote Console:
 Open the out.log file in a text editor.</description>
     </item>

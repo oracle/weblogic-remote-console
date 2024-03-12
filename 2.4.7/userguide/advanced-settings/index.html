@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.82.0" />
+    <meta name="description" content="A description of settings you can configure in the WebLogic Remote Console.">
+
+
+    <link rel="icon" href="/weblogic-remote-console/2.4.7/images/logo.png" type="image/png">
+
+    <title>Customize settings :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/2.4.7/css/nucleus.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/fontawesome-all.min.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/hybrid.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/featherlight.min.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/perfect-scrollbar.min.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/auto-complete.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/atom-one-dark-reasonable.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/theme.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/tabs.css?1710208440" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.7/css/hugo-theme.css?1710208440" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/2.4.7/js/jquery-3.6.0.min.js?1710208440"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/2.4.7/userguide/advanced-settings/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.7">
+  <img src="https://oracle.github.io/weblogic-remote-console/2.4.7/images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/2.4.7/js/lunr.min.js?1710208440"></script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.7/js/auto-complete.js?1710208440"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.7";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.7/js/search.js?1710208440"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/setup/" title="Get started" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/setup/">
+          Get started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/setup/console/" title="Explore the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/setup/console/">
+        Explore the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/setup/admin-console-diff/" title="Differences with the Administration Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/setup/admin-console-diff/">
+        Differences with the Administration Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/" title="User guide" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/userguide/">
+          User guide
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/projects/" title="Projects" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/projects/">
+        Projects
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/" title="Provider types" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/userguide/providers/">
+          Provider types
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/administration-server/" title="Administration Servers" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/userguide/providers/administration-server/">
+          Administration Servers
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/administration-server/security-data/" title="Editing security data" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/providers/administration-server/security-data/">
+        Editing security data
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/property-list/" title="Property lists" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/providers/property-list/">
+        Property lists
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/wdt-model/" title="WDT model files" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/providers/wdt-model/">
+        WDT model files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/providers/wdt-composite/" title="WDT composite models" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/providers/wdt-composite/">
+        WDT composite models
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/dashboards/" title="Generate dashboards" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/dashboards/">
+        Generate dashboards
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/advanced-settings/" title="Customize settings" class="dd-item active">
+        <a href="/weblogic-remote-console/2.4.7/userguide/advanced-settings/">
+        Customize settings
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/upgrade/" title="Upgrade the WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/upgrade/">
+        Upgrade the WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/logging/" title="Check log files" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/logging/">
+        Check log files
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/userguide/role-access/">
+        Understand access discrepancies
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/develop/" title="Development" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/develop/">
+          Development
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/develop/build-source/" title="Build from source" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/develop/build-source/">
+        Build from source
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/develop/contribute/" title="Contribute to WebLogic Remote Console" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/develop/contribute/">
+        Contribute to WebLogic Remote Console
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/develop/alternative-logging/" title="Use an alternative logging configuration file" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/develop/alternative-logging/">
+        Use an alternative logging configuration file
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/develop/docs-contribute/" title="Contribute to the documentation" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/develop/docs-contribute/">
+        Contribute to the documentation
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.7/reference/" title="Reference" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.7/reference/">
+          Reference
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/reference/faqs/" title="Frequently asked questions" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/reference/faqs/">
+        Frequently asked questions
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/reference/known_issues/" title="Known issues" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/reference/known_issues/">
+        Known issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/reference/troubleshoot/" title="Troubleshoot issues" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/reference/troubleshoot/">
+        Troubleshoot issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/weblogic-remote-console/2.4.7/reference/security-warnings/" title="Review security issues" class="dd-item ">
+        <a href="/weblogic-remote-console/2.4.7/reference/security-warnings/">
+        Review security issues
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 2.4.7.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/2.4.7/'>WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.7/userguide/'>User guide</a> > Customize settings
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#networking">Networking</a>
+      <ul>
+        <li><a href="#ssl">Connect to a WebLogic domain using SSL/TLS</a></li>
+        <li><a href="#proxy">Configure a proxy server</a></li>
+        <li><a href="#network_timeout">Change the network timeout settings for the server</a></li>
+        <li><a href="#hostname">Disable host name verification in the connections to the WebLogic domain</a></li>
+      </ul>
+    </li>
+    <li><a href="#other-java-system-properties">Other Java System Properties</a>
+      <ul>
+        <li><a href="#samesite">Set the SameSite cookie attribute if required for web browser support</a></li>
+        <li><a href="#altjdk">Specify an alternative location for the JDK</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Customize settings
+            </h1>
+          
+
+        
+
+
+<p>You can customize the settings of the WebLogic Remote Console to fit your needs.</p>
+<ol>
+<li>In the WebLogic Remote Console, go to <strong>File</strong> &gt; <strong>Settings</strong>. (<strong>WebLogic Remote Console</strong> &gt; <strong>Settings</strong> on macOS).</li>
+<li>Choose a section tab and make your changes as needed.</li>
+<li>Click <strong>Save</strong> to apply your changes.</li>
+</ol>
+<p>Customizations include:</p>
+<ul>
+<li>Networking
+<ul>
+<li><a href="#ssl">Connect to a WebLogic domain using SSL/TLS </a></li>
+<li><a href="#proxy">Configure a proxy server</a></li>
+<li><a href="#network_timeout">Change the network timeout settings for the server </a></li>
+<li><a href="#hostname">Disable host name verification in the connections to the WebLogic domain </a></li>
+</ul>
+</li>
+<li>Other Java System Properties
+<ul>
+<li><a href="#samesite">Set the SameSite cookie attribute if required for web browser support </a></li>
+<li><a href="#altjdk">Specify an alternative location for the JDK</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="networking">Networking</h2>
+<p>The <strong>Networking</strong> section manages connection related settings for the WebLogic Remote Console.</p>
+<p>You can learn about other system properties related to networking at <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/net/doc-files/net-properties.html">Networking Properties</a> in the Java Platform, SE and JDK 11 API Specification. To avoid unexpected behavior, make sure your settings don&rsquo;t conflict with each other.</p>
+<h3 id="ssl">Connect to a WebLogic domain using SSL/TLS</h3>
+<p>If you specify HTTPS for the domain URL in the Connect to WebLogic Domain window, then the WebLogic Remote Console uses SSL/TLS to communicate with the WebLogic domain.</p>
+<p>The SSL/TLS connection requires trust in the WebLogic domain, where the trust configuration is handled by the underlying JDK JSSE support. By default, the JDK uses the <code>cacerts</code> truststore provided with the JDK. If the WebLogic domain requires additional trust, separate trust, or is using the WebLogic demo trust (<code>demotrust.jks</code>), then you&rsquo;ll need to configure SSL/TLS trust using one of these options:</p>
+<ul>
+<li>
+<p>Import the required trust certificates into the <code>cacerts</code> truststore supplied with the JDK using <a href="https://docs.oracle.com/en/java/javase/11/tools/keytool.html">the <code>keytool</code> command</a>.</p>
+</li>
+<li>
+<p>Configure the type and location of the trust store.</p>
+<ol>
+<li>In the WebLogic Remote Console, go to <strong>File</strong> &gt; <strong>Settings</strong>. (<strong>WebLogic Remote Console</strong> &gt; <strong>Settings</strong> on macOS).</li>
+<li>Under the <strong>Networking</strong> section, in the Trust Store Type field, enter the algorithm name for your trust store. See <a href="https://docs.oracle.com/en/java/javase/20/security/oracle-providers.html#GUID-FE2D2E28-C991-4EF9-9DBE-2A4982726313">JDK Providers Documentation</a> for specific algorithm names. Depending on the Trust Store Type that you provide, additional fields may appear.
+<ol>
+<li>Click <strong>Choose a trust store file</strong> to browse to the file location of your trust store.</li>
+<li>Click <strong>Change</strong> beside <strong>Trust Store Key</strong>. Enter the secret for your trust store key and click <strong>Save</strong> to add the secret.</li>
+</ol>
+</li>
+<li>Click <strong>Save</strong> to apply your changes.</li>
+</ol>
+</li>
+</ul>
+<h3 id="proxy">Configure a proxy server</h3>
+<p>You may need to configure settings for a proxy server to facilitate communication between a WebLogic Server domain that resides in a different network and the WebLogic Remote Console. You can configure a global proxy server that applies to all administration server connections or assign proxy server settings individually to each administration server connection. You can also configure a combination of global and individual settings; the individual proxy server settings will supersede the global proxy server settings.</p>
+<h4 id="configure-global-proxy-server-settings">Configure global proxy server settings</h4>
+<ol>
+<li>In the WebLogic Remote Console, go to <strong>File</strong> &gt; <strong>Settings</strong>. (<strong>WebLogic Remote Console</strong> &gt; <strong>Settings</strong> on macOS).</li>
+<li>Under the <strong>Networking</strong> section, in the <strong>Proxy Address</strong> field, enter the address of the proxy server, including both the host name and port.</li>
+<li>Click <strong>Save</strong> to apply your changes.</li>
+</ol>
+<p>This proxy server will apply to all administration server connections (unless superseded by an individual proxy server setting).</p>
+<p>Because you can also use Java system properties to configure proxy server settings, it is technically possible to create multiple <em>global</em> proxy servers. We do not recommend this as configuring multiple global proxy servers can lead to unexpected behavior. The proxy server value in the Settings dialog box takes precedence over all other global proxy server settings. Additionally, if you use Java system properties to add one proxy server that uses HTTPS and another that uses SOCKS, the WebLogic Remote Console will ignore the SOCKS proxy server.</p>
+<h4 id="configure-individual-proxy-server-settings">Configure individual proxy server settings</h4>
+<ol>
+<li>
+<p>Open the Providers drawer.</p>
+</li>
+<li>
+<p>Beside the Administration Server provider where you want to configure a proxy server, click the <img src="/weblogic-remote-console/images/icons/data-providers-info-icon-brn_24x24.png" alt="Settings icon"> Settings icon.</p>
+</li>
+<li>
+<p>In the <strong>Proxy Override</strong> field, enter the address of the proxy server, including both the host name and port.</p>
+<p><strong>NOTE</strong>: If you want the WebLogic Remote Console to make a direct connection and bypass a global proxy server setting, enter <code>DIRECT</code>.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong>.</p>
+</li>
+</ol>
+<p>Individual proxy server settings take precedence over global proxy server settings.</p>
+<h3 id="network_timeout">Change the network timeout settings for the server</h3>
+<p>You can change the default settings for the connection and read timeout limits used with a WebLogic domain from the WebLogic Remote Console.</p>
+<ol>
+<li>In the WebLogic Remote Console, go to <strong>File</strong> &gt; <strong>Settings</strong>. (<strong>WebLogic Remote Console</strong> &gt; <strong>Settings</strong> on macOS).</li>
+<li>Under the <strong>Networking</strong> section, in the <strong>Administration Server Connection Timeout</strong> field, specify an interval (in milliseconds) to determine how long the WebLogic Remote Console should wait when for a successful connection to a domain. The default is 10 seconds (10 000 milliseconds).</li>
+<li>Then, in the <strong>Administration Server Read Timeout</strong> field, specify an interval (in milliseconds) to determine how long the WebLogic Remote Console should wait for a response from the server.  The default is 20 seconds (20 000 milliseconds).</li>
+<li>Click <strong>Save</strong> to apply your changes.</li>
+</ol>
+<p>When changing network timeout settings, the primary impact will be to the response time for Console threads, while the application will show no data when a timeout occurs. Timeouts are more likely to occur during requests where WebLogic Server experiences longer initialization or execution times, such as during runtime monitoring actions of servers.</p>
+<h3 id="hostname">Disable host name verification in the connections to the WebLogic domain</h3>
+<p>When using WebLogic demo trust to connect to the WebLogic domain, you may need to disable host name verification. Disabling host name verification causes the WebLogic Remote Console to skip the verification check of ensuring that the host name in the URL to which a connection is made matches the host name in the digital certificate that the server sends back as part of the SSL connection.</p>
+
+<div class="notices note" ><p>We do not recommend using the demo certificates or turning off host name verification in production environments.</p>
+</div>
+
+<ol>
+<li>In the WebLogic Remote Console, go to <strong>File</strong> &gt; <strong>Settings</strong>. (<strong>WebLogic Remote Console</strong> &gt; <strong>Settings</strong> on macOS).</li>
+<li>Under the <strong>Networking</strong> section, under <strong>Disable Host Name Verification?</strong>, select <strong>Yes</strong> or <strong>No</strong> to enable or disable host name verification, respectively.</li>
+<li>Click <strong>Save</strong> to apply your changes.</li>
+</ol>
+<h2 id="other-java-system-properties">Other Java System Properties</h2>
+<p>The <strong>Other Java System Properties</strong> section lets you use Java system properties to customize the WebLogic Remote Console if a specific setting is not available elsewhere in the Settings dialog box.</p>
+<p>Open the Settings dialog box and select the <strong>Other Java System Properties</strong> section. Click <strong>+</strong> to add a new row and enter the Java system property as a name-value pair, separated by <code>=</code>. For example, <code>server.port=8092</code>.</p>
+<p>To delete a property, select the row and click <strong>-</strong>.</p>
+
+<div class="notices note" ><p>If an equivalent setting already exists in the Settings dialog box, we recommend using that configuration option instead of the Java system property. For example, use the <strong>Proxy Address</strong> option under <strong>Networking</strong> rather than <code>https.proxyHost</code> and <code>https.proxyPort</code>.</p>
+</div>
+
+<h3 id="samesite">Set the SameSite cookie attribute if required for web browser support</h3>
+<p>When the WebLogic Remote Console establishes a connection with the WebLogic Domain, a HTTP Cookie is established with the Web Browser session.</p>
+<p>For security reasons, the <code>SameSite</code> attribute of the HTTP Cookie may need to be set for the Web Browser to accept the HTTP session Cookie. There are two settings that control the Remote Console behavior:</p>
+<ol>
+<li>In the WebLogic Remote Console, go to <strong>File</strong> &gt; <strong>Settings</strong>. (<strong>WebLogic Remote Console</strong> &gt; <strong>Settings</strong> on macOS).</li>
+<li>Under the <strong>Other Java System Properties</strong> section, click <strong>+</strong> to add a new row and enter <code>console.enableSameSiteCookieValue=true</code> to include the <code>SameSite</code> attribute in the HTTP Cookie.</li>
+<li>click <strong>+</strong> again and add <code>console.valueSameSiteCookie=&lt;value&gt;</code> to specify the value of the <code>SameSite</code> attribute. Possible values are <code>Strict</code> or <code>Lax</code>. The default is <code>Lax</code>.</li>
+<li>Click <strong>Save</strong> to apply your changes.</li>
+</ol>
+<h3 id="altjdk">Specify an alternative location for the JDK</h3>
+<p>You can configure the WebLogic Remote Console to use a JDK at a different location.</p>
+<ol>
+<li>In the WebLogic Remote Console, go to <strong>File</strong> &gt; <strong>Settings</strong>. (<strong>WebLogic Remote Console</strong> &gt; <strong>Settings</strong> on macOS).</li>
+<li>Under the <strong>Other Java System Properties</strong> section, click <strong>+</strong> to add a new row and enter <code>javaPath=&lt;pathToJDK&gt;</code>.</li>
+<li>Click <strong>Save</strong> to apply your changes.</li>
+</ol>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.7/userguide/dashboards/" title="Generate dashboards"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/2.4.7/userguide/upgrade/" title="Upgrade the WebLogic Remote Console" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/2.4.7/js/clipboard.min.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/perfect-scrollbar.min.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/perfect-scrollbar.jquery.min.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/jquery.sticky.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/featherlight.min.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/highlight.pack.js?1710208440"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/2.4.7/js/modernizr.custom-3.6.0.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/learn.js?1710208440"></script>
+    <script src="/weblogic-remote-console/2.4.7/js/hugo-learn.js?1710208440"></script>
+    
+        
+            <script src="/weblogic-remote-console/2.4.7/mermaid/mermaid.js?1710208440"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

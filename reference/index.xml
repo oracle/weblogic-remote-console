@@ -24,8 +24,8 @@ Can I connect the WebLogic Remote Console to domains running in WebLogic on Orac
       
       <guid>https://oracle.github.io/weblogic-remote-console/reference/known_issues/</guid>
       <description>This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.
-Limitations In the current release of WebLogic Remote Console, you are unable to:
- Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.  Limited MBean property support The WebLogic Remote Console includes the vast majority of the MBean properties that the WebLogic Server Administration Console supports. However, because of limitations in the WebLogic REST API, some are missing, including some that are deprecated.</description>
+Limitations In the current release of WebLogic Remote Console, you cannot:
+ Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console. Test automatically if an application was successfully deployed. See Test Application Deployment for a manual option. Reorder security providers in WDT model file providers. However, you can download the WDT model file and edit the YAML file manually to rearrange the order of the security providers.</description>
     </item>
     
     <item>

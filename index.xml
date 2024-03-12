@@ -14,7 +14,7 @@
       
       <guid>https://oracle.github.io/weblogic-remote-console/develop/build-source/</guid>
       <description>Prerequisites Before you can build the WebLogic Remote Console, you need to install the following software in your local build environment:
- Java SE 11 Maven 3.6.1+ nodejs 14.16+ This download includes npm. Oracle JET 14.1.0 client libraries To install the required Oracle JET software, run npm install --location=global @oracle/ojet-cli@~14.1.0. On Linux and macOS, you will need to use sudo.  You can verify you&amp;rsquo;ve installed the correct versions of the listed software by running the following commands:</description>
+ Java SE 11+ Maven 3.6.1+ Node.js 14.16+ This download includes npm. Oracle JET 15.1.0 client libraries To install the required Oracle JET software, run npm install --location=global @oracle/ojet-cli@~15.1.0. On Linux and macOS, you will need to use sudo.  You can verify you&amp;rsquo;ve installed the correct versions of the listed software by running the following commands:</description>
     </item>
     
     <item>
@@ -69,8 +69,8 @@ Contributing to the WebLogic Remote Console repository Pull requests can be made
       
       <guid>https://oracle.github.io/weblogic-remote-console/reference/known_issues/</guid>
       <description>This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.
-Limitations In the current release of WebLogic Remote Console, you are unable to:
- Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.  Limited MBean property support The WebLogic Remote Console includes the vast majority of the MBean properties that the WebLogic Server Administration Console supports. However, because of limitations in the WebLogic REST API, some are missing, including some that are deprecated.</description>
+Limitations In the current release of WebLogic Remote Console, you cannot:
+ Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console. Test automatically if an application was successfully deployed. See Test Application Deployment for a manual option. Reorder security providers in WDT model file providers. However, you can download the WDT model file and edit the YAML file manually to rearrange the order of the security providers.</description>
     </item>
     
     <item>
@@ -113,7 +113,7 @@ Create a new property list  Open the Providers drawer and beside the project nam
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/advanced-settings/</guid>
       <description>You can customize the settings of the WebLogic Remote Console to fit your needs.
  In the WebLogic Remote Console, go to File &amp;gt; Settings. (WebLogic Remote Console &amp;gt; Settings on macOS). Choose a section tab and make your changes as needed. Click Save to apply your changes.  Customizations include:
- Networking  Connect to a WebLogic domain using SSL/TLS  Configure a proxy server Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain    Other Java System Properties  Set the SameSite cookie attribute if required for web browser support  Specify an alternative location for the JDK    Networking The Networking section manages connection related settings for the WebLogic Remote Console.</description>
+ Networking  Connect to a WebLogic domain using SSL/TLS  Configure a proxy server Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain    Other Java System Properties  Set the SameSite cookie attribute if required for web browser support  Specify an alternative location for the JDK Specify a custom logging configuration file    Networking The Networking section manages connection related settings for the WebLogic Remote Console.</description>
     </item>
     
     <item>
@@ -124,18 +124,6 @@ Create a new property list  Open the Providers drawer and beside the project nam
       <guid>https://oracle.github.io/weblogic-remote-console/reference/troubleshoot/</guid>
       <description>Learn how to prevent and recover from issues in the WebLogic Remote Console.
 Basic troubleshooting steps  Review Known issues to see if there is a workaround. Check the log files for errors. The WebLogic Remote Console provides log files for both front and back end processes. See Check Log Files to learn how to access these files. Update to the latest versions of the WebLogic Remote Console and the WebLogic Remote Console extension.</description>
-    </item>
-    
-    <item>
-      <title>Use an alternative logging configuration file</title>
-      <link>https://oracle.github.io/weblogic-remote-console/develop/alternative-logging/</link>
-      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://oracle.github.io/weblogic-remote-console/develop/alternative-logging/</guid>
-      <description>By default, the WebLogic Remote Console uses the logging.properties file inside the runnable/console-backend-server-{version}.jar file.
-If the default configuration is sufficient, then you don&amp;rsquo;t need to do anything. However, if you want to tweak the logger configuration without regenerating the runnable/console-backend-server-{version}.jar file, you can pass the -Djava.util.logging.config.file=&amp;lt;path-to-logging.properties&amp;gt; Java system property when starting the console.
-For example:
--Djava.util.logging.config.file=runnable/etc/logging.properties If there is a problem using the specified path, then the logging.properties inside the runnable/console-backend-server-{version}.</description>
     </item>
     
     <item>
@@ -193,7 +181,7 @@ The WebLogic Remote Console assumes WDT model files are in YAML format. If you u
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/logging/</guid>
       <description>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.
 Front end To view the log file for issues related to the front end of the WebLogic Remote Console:
-Open View &amp;gt; Toggle Developer Tools and select the Console tab.
+Open Help &amp;gt; Toggle Developer Tools and select the Console tab.
 Back end To view the log file for issues related to the back end of the WebLogic Remote Console:
 Open the out.log file in a text editor.</description>
     </item>
