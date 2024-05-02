@@ -1,0 +1,58 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Bean to configure Federation configuration to be used. '
+name: weblogic.coherence.descriptor.wl.CoherenceFederationParamsBean
+properties:
+- defaultValue:
+    value:
+      value: none
+  descriptionHTML: '<p>The federation topology. </p> '
+  legalValues:
+  - none
+  - active-active
+  - active-passive
+  - passive-active
+  name: FederationTopology
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 7574
+  descriptionHTML: '<p>The Coherence Cluster Listen Port of the remote participant.
+    </p> '
+  name: RemoteCoherenceClusterListenPort
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Coherence Cluster Name of the remote participant cluster.
+    </p> '
+  name: RemoteCoherenceClusterName
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of remote participant hosts, who will be added as
+    participants in the federation topology. </p> '
+  name: RemoteParticipantHosts
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

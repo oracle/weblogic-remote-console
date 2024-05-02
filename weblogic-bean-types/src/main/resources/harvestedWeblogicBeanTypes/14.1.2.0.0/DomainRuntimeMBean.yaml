@@ -1,0 +1,195 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for monitoring a WebLogic domain. A domain
+  may contain zero or more clusters. A cluster may be looked up by a logical name.</p> '
+name: weblogic.management.runtime.DomainRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The time when the domain became active.</p> '
+  name: ActivationTime
+  type: java.util.Date
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns a service from which it is possible to determine the
+    state applications throughout the domain.</p> '
+  name: AppRuntimeStateRuntime
+  relationship: containment
+  type: weblogic.management.runtime.AppRuntimeStateRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: BatchJobRepositoryRuntime
+  relationship: containment
+  type: weblogic.management.runtime.BatchJobRepositoryRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 CoherenceServerLifeCycleRuntimeMBean has been deprecated '
+  descriptionHTML: '<p>The <code>CoherenceServerLifecycleRuntimeMBean</code> for all
+    configured Coherence servers in the domain.</p> '
+  name: CoherenceServerLifeCycleRuntimes
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.CoherenceServerLifeCycleRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: '14.1.2.0.0 '
+  descriptionHTML: '<p>Return the MBean which provides access to console runtime services.</p> '
+  name: ConsoleRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ConsoleRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the domain partition runtime MBean for the "current"
+    partition</p> '
+  excludeFromRest: ' '
+  name: CurrentDomainPartitionRuntime
+  relationship: reference
+  supported: false
+  type: weblogic.management.runtime.DomainPartitionRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 '
+  descriptionHTML: '<p>Provides access to the service interface to the interface that
+    is used to deploy new customer applications or modules into this domain.</p> '
+  name: DeployerRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.DeployerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to the service interface to the interface that
+    is used to deploy new customer applications or modules into this domain.</p> '
+  name: DeploymentManager
+  relationship: containment
+  type: weblogic.management.runtime.DeploymentManagerMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns domain partition runtimes.</p> '
+  excludeFromRest: ' '
+  name: DomainPartitionRuntimes
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.DomainPartitionRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the Domain Security runtime MBean.</p> '
+  name: DomainSecurityRuntime
+  relationship: containment
+  type: weblogic.management.runtime.DomainSecurityRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to the service interface used to manage named
+    edit sessions in this domain.</p> '
+  name: EditSessionConfigurationManager
+  relationship: containment
+  type: weblogic.management.runtime.EditSessionConfigurationManagerMBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ElasticServiceManagerRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ElasticServiceManagerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the MBean which provides access to the control interface
+    for WLS server logging.</p> '
+  name: LogRuntime
+  relationship: containment
+  type: weblogic.management.runtime.LogRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MessageDrivenControlEJBRuntimeMBean for this server.</p> '
+  name: MessageDrivenControlEJBRuntime
+  relationship: containment
+  type: weblogic.management.runtime.MessageDrivenControlEJBRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the service used for coordinating the migraiton of
+    migratable services.</p> '
+  name: MigratableServiceCoordinatorRuntime
+  relationship: containment
+  type: weblogic.management.runtime.MigratableServiceCoordinatorRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns a history of server migrations. Each array element
+    represents a past or an ongoing migration.</p> '
+  name: MigrationDataRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.MigrationDataRuntimeMBean
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The user-specified name of this MBean instance.</p>  <p>This
+    name is included as one of the key properties in the MBean''s <code>javax.management.ObjectName</code>:</p>  <p><code>Name=<i>user-specified-name</i></code></p> '
+  key: true
+  name: Name
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to the NodeManagerRuntimeMBeans useful for
+    checking NodeManager reachability</p> '
+  name: NodeManagerRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.NodeManagerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: PolicySubjectManagerRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WseePolicySubjectManagerRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns life cycle runtimes for domain-level resource groups.</p> '
+  excludeFromRest: ' '
+  name: ResourceGroupLifeCycleRuntimes
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.ResourceGroupLifeCycleRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: RolloutService
+  relationship: containment
+  type: weblogic.management.runtime.RolloutServiceRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the MBean which provides access to the monitoring statistics
+    for WLS SNMP Agent.</p> '
+  name: SNMPAgentRuntime
+  relationship: containment
+  type: weblogic.management.runtime.SNMPAgentRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The <code>ServerLifecycleRuntimeMBean</code> for all configured
+    servers in the domain.</p> '
+  name: ServerLifeCycleRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.ServerLifeCycleRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns all the service migrations done in the domain</p> '
+  name: ServiceMigrationDataRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.ServiceMigrationDataRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The <code>SystemComponentLifecycleRuntimeMBean</code> for all
+    configured System Components in the domain.</p> '
+  name: SystemComponentLifeCycleRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.SystemComponentLifeCycleRuntimeMBean

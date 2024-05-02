@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -151,7 +151,7 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
         // Look for an existing project with the same 
         // id, inside the projects module-scoped 
         // variable.
-        const index = projects.map(item => item.name).indexOf(project.name);
+        const index = projects.findIndex(item => item.name === project.name);
         if (index !== -1) {
           // Found one, so update it from project.
           project.id = projects[index].id;
@@ -261,7 +261,7 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
 
       erase: function(project) {
         if (CoreUtils.isNotUndefinedNorNull(project)) {
-          const index = projects.map(item => item.name).indexOf(project.name);
+          const index = projects.findIndex(item => item.name === project.name);
           if (index !== -1) {
             projects[index].removeAllDataProviders();
             projects.splice(index, 1);
@@ -343,7 +343,7 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
 
       renameProject: function (oldName, newName) {
         if (oldName === '(unnamed)') oldName = '(Unnamed Project)';
-        const index = projects.map(item => item.name).indexOf(oldName);
+        const index = projects.findIndex(item => item.name === oldName);
         if (index !== -1) {
           projects[index].name = newName;
         }

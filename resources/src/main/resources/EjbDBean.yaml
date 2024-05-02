@@ -1,0 +1,26 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+derivedTypes:
+- weblogic.management.descriptor.EntityEjbDBean
+- weblogic.management.descriptor.MessageDrivenEjbDBean
+- weblogic.management.descriptor.SessionEjbDBean
+name: weblogic.management.descriptor.EjbDBean
+properties:
+- name: EjbClass
+  type: java.lang.String
+  descriptionHTML: >
+    The EJB's classname.
+- name: WeblogicEnterpriseBean
+  type: weblogic.management.descriptor.WeblogicEnterpriseBeanDBean
+  relationship: containment
+- name: TransactionDescriptor
+  type: weblogic.management.descriptor.TransactionDescriptorDBean
+  relationship: containment
+- name: EnvEntries
+  type: weblogic.management.descriptor.EnvEntryDBean
+  array: true
+  relationship: containment

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -15,6 +15,8 @@ import weblogic.remoteconsole.common.utils.ListUtils;
  */
 public class CustomSliceTableDef implements SliceTableDef {
   private CustomPageDef pageDef = new CustomPageDef();
+  private boolean setReadOnly = false;
+  private boolean readOnly;
   private List<PagePropertyDef> displayedColumnDefs = new ArrayList<>();
   private List<PagePropertyDef> hiddenColumnDefs = new ArrayList<>();
   private List<PagePropertyDef> allPropertyDefs = new ArrayList<>();
@@ -27,11 +29,35 @@ public class CustomSliceTableDef implements SliceTableDef {
 
   public CustomSliceTableDef(SliceTableDef toClone) {
     pageDef = new CustomPageDef(toClone);
+    readOnly = toClone.isReadOnly();
     getDisplayedColumnDefs().addAll(ListUtils.nonNull(toClone.getDisplayedColumnDefs()));
     getHiddenColumnDefs().addAll(ListUtils.nonNull(toClone.getHiddenColumnDefs()));
     computeAllPropertyDefs();
     setGetTableRowsMethod(toClone.getGetTableRowsMethod());
     setUseRowIdentities(toClone.isUseRowIdentities());
+  }
+
+  @Override
+  public boolean isReadOnly() {
+    if (setReadOnly) {
+      return readOnly;
+    }
+    for (PagePropertyDef propertyDef : getAllPropertyDefs()) {
+      if (propertyDef.isUpdateWritable()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public void setReadOnly(boolean val) {
+    readOnly = val;
+    setReadOnly = true;
+  }
+
+  public CustomSliceTableDef readOnly(boolean val) {
+    setReadOnly(val);
+    return this;
   }
 
   @Override

@@ -8,6 +8,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -26,6 +28,7 @@ import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.connection.Connection;
 import weblogic.remoteconsole.server.connection.ConnectionManager;
+import weblogic.remoteconsole.server.filter.ClientAuthHeader;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestDomainRuntimePageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestEditPageRepo;
@@ -72,6 +75,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private Root viewRoot;
   private Root monitoringRoot;
   private Root securityDataRoot;
+  private Timer localConnectionTimer = null;
+  private volatile ClientAuthHeader clientAuthHeader = null;
   private static LocalConnectionInfoFetcher localConnectionInfoFetcher;
 
   public AdminServerDataProviderImpl(
@@ -335,20 +340,31 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       // Ensure that a provider used for SSO has the token available!
       if (isLocal() && (localConnectionInfoFetcher != null)) {
         url = localConnectionInfoFetcher.fetchURL();
-        authorizationHeader = "Bearer " + localConnectionInfoFetcher.fetchToken();
+        String token = localConnectionInfoFetcher.fetchToken();
+        if ((token == null) || token.isBlank()) {
+          throw new FailedRequestException(Response.Status.UNAUTHORIZED.getStatusCode(), getTokenUnavailable(ic));
+        }
+        authorizationHeader = "Bearer " + token;
       }
       if ((getSsoTokenId() != null) && !isSsoTokenAvailable()) {
         throw new FailedRequestException(Response.Status.UNAUTHORIZED.getStatusCode(), getTokenUnavailable(ic));
       }
+      ClientAuthHeader authHeader = new ClientAuthHeader(authorizationHeader);
       ConnectionManager.ConnectionResponse result =
         CONNECTION_MANAGER.tryConnection(
           url,
-          authorizationHeader,
+          authHeader,
           ic.getLocales(),
           isInsecureConnection,
           getProxyOverride()
         );
       if (result.isSuccess()) {
+        // Save the auth header and when needed start local connection timer
+        clientAuthHeader = authHeader;
+        if (isLocal()) {
+          startLocalConnectionTimer();
+        }
+        // Setup the connection
         isLastConnectionAttemptSuccessful = true;
         isAnyConnectionAttemptSuccessful = true;
         connectionId = result.getConnectionId();
@@ -395,6 +411,10 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     if (connectionId != null) {
       CONNECTION_MANAGER.removeConnection(connectionId);
       connectionId = null;
+    }
+    clientAuthHeader = null;
+    if (isLocal()) {
+      cancelLocalConnectionTimer();
     }
   }
 
@@ -513,6 +533,52 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     return true;
   }
 
+  private boolean refreshLocalConnectionToken() {
+    ClientAuthHeader localAuthHeader = clientAuthHeader;
+    if (isLocal() && (localConnectionInfoFetcher != null) && (localAuthHeader != null)) {
+      String token = localConnectionInfoFetcher.fetchToken();
+      if ((token == null) || token.isBlank()) {
+        LOGGER.fine("Unable to refreshed local connection token - unavailable!");
+        return false;
+      }
+      authorizationHeader = "Bearer " + token;
+      localAuthHeader.setAuthHeader(authorizationHeader);
+      LOGGER.fine("Refreshed local connection token!");
+      return true;
+    }
+    return false;
+  }
+
+  private synchronized void startLocalConnectionTimer() {
+    if (isLocal() && (localConnectionInfoFetcher != null)) {
+      int timeoutMins = localConnectionInfoFetcher.fetchTokenTimeoutMins();
+      long timeoutMillis = ((timeoutMins < 5) ? timeoutMins : (timeoutMins - 3)) * 60000L;
+      cancelLocalConnectionTimer();
+      localConnectionTimer = new Timer("WRCLocalConnectionTimer", true);
+      localConnectionTimer.schedule(new LocalConnectionTimer(), timeoutMillis);
+      LOGGER.fine("Started local connection timer with interval millis: " + timeoutMillis);
+    }
+  }
+
+  private synchronized void cancelLocalConnectionTimer() {
+    if (isLocal() && (localConnectionTimer != null)) {
+      localConnectionTimer.cancel();
+      localConnectionTimer = null;
+      LOGGER.fine("Canceled local connection timer!");
+    }
+  }
+
+  // Refresh the token used by a local connection
+  private class LocalConnectionTimer extends TimerTask {
+    public void run() {
+      LOGGER.fine("LocalConnectionTimer executing...");
+      if (refreshLocalConnectionToken()) {
+        startLocalConnectionTimer();
+        LOGGER.fine("LocalConnectionTimer complete!");
+      }
+    }
+  }
+
   private class DomainStatusGetter {
     private JsonObjectBuilder builder = Json.createObjectBuilder();
     private Connection connection;
@@ -523,6 +589,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     private LocalizableString linkLabel;
     private String linkHref;
     private String linkResourceData;
+    private LocalizableString detailsLabel;
+    private String detailsMessage;
 
     private DomainStatusGetter(Connection connection, InvocationContext ic) {
       this.connection = connection;
@@ -550,6 +618,12 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
             linkBuilder.add("resourceData", linkResourceData);
           }
           builder.add("link", linkBuilder);
+        }
+        if ((detailsLabel != null) && (detailsMessage != null)) {
+          JsonObjectBuilder detailsBuilder =
+            Json.createObjectBuilder().add("label", ic.getLocalizer().localizeString(detailsLabel));
+          detailsBuilder.add("message", detailsMessage);
+          builder.add("messageDetails", detailsBuilder);
         }
       }
       return builder.build();
@@ -585,16 +659,21 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         }
         // WebLogic REST delegation does not work
         // e.g. because the DefaultIdentityAsserter's ActiveTypes doesn't include weblogic-jwt-token
+        JsonObject entityAsJson = ResponseHelper.getEntityAsJson(response);
         LOGGER.finest(
           "testWebLogicRestDelegation failed:"
           + " " + response.getStatus()
-          + " " + ResponseHelper.getEntityAsString(response)
+          + " " + ((entityAsJson != null) ? entityAsJson.toString() : ResponseHelper.getEntityAsString(response))
         );
         severity = "error";
         messageLabel = LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_MESSAGE;
         setExternalLink(
           LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_LINK,
           ConsoleBackendRuntimeConfig.getDocumentationSite() + "/reference/troubleshoot/#rest-communication"
+        );
+        setMessageDetails(
+          LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_DETAILS_LABEL,
+          entityAsJson
         );
         return;
       } catch (Exception exc) {
@@ -745,9 +824,39 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       linkHref = href;
       linkResourceData = null;
     }
+
+    private void setMessageDetails(LocalizableString label, JsonObject entityAsJson) {
+      if ((entityAsJson != null) && entityAsJson.containsKey("messages")) {
+        JsonArray messagesJson = entityAsJson.getJsonArray("messages");
+        if (messagesJson != null) {
+          String details = "";
+          boolean firstMessage = true;
+          for (int i = 0; i < messagesJson.size(); i++) {
+            JsonObject messageJson = messagesJson.getJsonObject(i);
+            if ((messageJson != null) && messageJson.containsKey("message")) {
+              String message = messageJson.getString("message");
+              if ((message != null) && !message.isBlank()) {
+                if (!firstMessage) {
+                  details += " - ";
+                } else {
+                  firstMessage = false;
+                }
+                details += message;
+              }
+            }
+          }
+          if (!details.isEmpty()) {
+            detailsLabel = label;
+            detailsMessage = details;
+          }
+        }
+      }
+    }
   }
 
   public static interface LocalConnectionInfoFetcher {
+    int fetchTokenTimeoutMins();
+
     String fetchToken();
 
     String fetchURL();

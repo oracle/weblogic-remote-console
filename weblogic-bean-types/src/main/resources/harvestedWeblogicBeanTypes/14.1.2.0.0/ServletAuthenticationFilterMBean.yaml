@@ -1,0 +1,17 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.AuthenticationProviderMBean
+derivedTypes:
+- weblogic.security.providers.authentication.OIDCIdentityAsserterMBean
+- com.bea.security.saml2.providers.SAML2IdentityAsserterMBean
+- weblogic.security.providers.authentication.NegotiateIdentityAsserterMBean
+- weblogic.security.providers.saml.SAMLIdentityAsserterV2MBean
+descriptionHTML: 'The SSPI MBean that all Servlet Authentication Filter providers
+  must extend. This MBean is just a marker interface. It has no methods on it. '
+name: weblogic.management.security.authentication.ServletAuthenticationFilterMBean
+properties: [
+  ]

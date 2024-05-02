@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.IdentityDomainAwareProviderMBean
+derivedTypes:
+- weblogic.security.providers.authentication.VirtualUserAuthenticatorMBean
+- weblogic.security.providers.authentication.DefaultAuthenticatorMBean
+descriptionHTML: 'Defines methods used to get/set the multiple identity domains attribute
+  used to determine the identity domains that an authenticator or identity asserter
+  handles. '
+name: weblogic.management.security.authentication.MultiIdentityDomainAuthenticatorMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns the names of the identity domains. '
+  name: IdentityDomains
+  type: java.lang.String
+  writable: true

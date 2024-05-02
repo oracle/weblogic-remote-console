@@ -39,6 +39,11 @@ define([
       this.perspective = viewParams.perspective;
 
       this.i18n = {
+        ariaLabel: {
+          icons: {
+            landing: {value: oj.Translations.getTranslatedString('wrc-common.ariaLabel.icons.landing.value')}
+          }
+        },
         buttons: {
           'new': { id: 'new', iconFile: 'new-icon-blk_24x24', disabled: false, visible: ko.observable(true),
             label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.new.label')

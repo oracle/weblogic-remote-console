@@ -7,12 +7,12 @@
 <oj-module config="[[tableCustomizerModuleConfig]]"></oj-module>
 
 <oj-bind-if test="[[showInstructions]]">
-  <div id="intro" class="cfe-table-form-instructions">
+  <div id="intro">
     <oj-bind-dom config="[[introductionHTML]]"></oj-bind-dom>
   </div>
 </oj-bind-if>
 
-<div class="cfe-table-form-content-header oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+<div aria-labelledby="intro" class="cfe-table-form-content-header oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
   <oj-module config="[[formTabStripModuleConfig]]"></oj-module>
   <oj-module config="[[formActionsStripModuleConfig]]"></oj-module>
 

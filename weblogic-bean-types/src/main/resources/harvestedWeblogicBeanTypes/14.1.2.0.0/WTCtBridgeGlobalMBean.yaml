@@ -1,0 +1,190 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This interface provides access to the WTC tBridge Global configuration
+  attributes. The methods defined herein are applicable for tBridge configuration
+  at the WLS domain level.</p> '
+name: weblogic.management.configuration.WTCtBridgeGlobalMBean
+properties:
+- defaultValue:
+    value:
+      value: 'NO'
+  descriptionHTML: '<p>Specifies whether non-standard data types are allowed to pass
+    through this Tuxedo queuing bridge.</p>  <p>A value of <code>NO</code> means that
+    non standard types are rejected and placed onto a specified error location; a
+    value of <code>YES</code> means that non-standard types are placed on the target
+    location as BLOBs with a tag indicating the original type.</p>  <p><i>Note:</i>
+    Standard types are: ASCII text (TextMessage, STRING), or BLOB (BytesMessage, CARRAY).</p> '
+  legalValues:
+  - 'Yes'
+  - 'No'
+  name: AllowNonStandardTypes
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: DEFAULT
+  descriptionHTML: '<p>The reply delivery mode to associate with a message when placing
+    messages onto the target location.</p>  <p style="font-weight: bold">Usage Notes:</p>  <ul>
+    <li>Use when messages are being redirected to Tuxedo/Q from JMS and the <code>JMS_BEA_TuxGtway_Tuxedo_ReplyDeliveryMode</code>
+    property is not set for a message. </li>  <li>If the <code>defaultReplyDeliveryMode</code>
+    and <code>JMS_BEA_TuxGtway_Tuxedo_ReplyDeliveryMode</code> are not set, the default
+    semantics defined for Tuxedo are enforced by the Tuxedo/Q subsystem. </li> </ul> '
+  legalValues:
+  - PERSIST
+  - NONPERSIST
+  - DEFAULT
+  name: DefaultReplyDeliveryMode
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: NONPERSIST
+  descriptionHTML: '<p>The delivery mode to use when placing messages onto the target
+    location.</p>  <p>If this value is not specified, the message is placed on the
+    target location with the same delivery mode specified from the source location.</p>  <p><i>Note:</i>
+    This value overrides any delivery mode associated with a message.</p> '
+  legalValues:
+  - PERSIST
+  - NONPERSIST
+  name: DeliveryModeOverride
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.jms.XAConnectionFactory
+  descriptionHTML: '<p>The name of the JMS connection factory.</p>  <p><b>Example:</b>
+    <code>weblogic.jms.ConnectionFactory</code></p> '
+  name: JmsFactory
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The mapping of priorities from JMS to Tuxedo. The default JMS
+    To Tux Priority Map is: <code>0:1 | 1:12 | 2:23 | 3:34 | 4:45 |5:56 | 6:67 | 7:78
+    | 8:89 | 9:100</code></p>  <p><b>Examples:</b> <code>0:1 | 1:12 | 2:23 | 3:34
+    | 4:45 | 5:56 | 6:67 | 7:78 | 8:89 | 9:100 or 0:1-10|1:11-20|2:21-30|3:31-40|4:41-50|5:51-60|6:61-70|7:71-80|8:81-90|9:91-100</code></p>  <p><b>Note:</b>
+    The are 10 possible JMS priorities(0=&gt;9) which can be paired to 100 possible
+    Tuxedo priorities(1=&gt;100). A mapping consists of a "|" separated list of value-to-range
+    pairs (jmsvalue:tuxrange) where pairs are separated by ":" and ranges are separated
+    by "-".</p> '
+  name: JmsToTuxPriorityMap
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.jndi.WLInitialContextFactory
+  descriptionHTML: '<p>The name of the JNDI lookup factory.</p>  <p><b>Example:</b>
+    <code>weblogic.jndi.WLInitialContextFactory</code></p> '
+  name: JndiFactory
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of attempts to redirect a message before this Tuxedo
+    queuing bridge places the message in the specified error location and logs an
+    error.</p>  <p><b>Range of Values:</b> Between 0 and a positive 32-bit integer.</p> '
+  name: Retries
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>The minimum number of milliseconds this Tuxedo queuing bridge
+    waits before redirecting a message after a failure.</p>  <p><i>Note:</i> During
+    this waiting period, no other messages are redirected from the thread. Other threads
+    may continue to redirect messages.</p>  <p><b>Range of Values:</b> Between <code>0</code>
+    and a positive 32-bit integer.</p> '
+  name: RetryDelay
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>The number of timeout seconds for an entire redirection when
+    this Tuxedo queuing bridge places a message on the target location. A value of
+    <code>0</code> specifies an infinite wait.</p>  <p><b>Range of Values:</b> Between
+    <code>0</code> and a positive 32-bit integer.</p> '
+  name: Timeout
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 'NO'
+  descriptionHTML: '<p>Specifies whether this Tuxedo queuing bridge should use transactions
+    when retrieving messages from a source location and when placing messages on a
+    target location.</p>  <p>A value of <code>YES</code> means that transactions are
+    used for both operations; a value of <code>NO</code> means that transactions are
+    not used for either operation.</p>  <p><i>Note:</i> Transactional is not supported
+    in this release.</p> '
+  legalValues:
+  - 'Yes'
+  - 'No'
+  name: Transactional
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the Tuxedo queue used to store a message that cannot
+    be redirected to a Tuxedo/Q source queue.</p>  <p>If not specified, all messages
+    not redirected are lost. If the message cannot be placed into the <code>TuxErrorQueue</code>,
+    an error is logged and the message is lost.</p>  <p><i>Note:</i> This queue is
+    in the same queue space as the source queue.</p> '
+  name: TuxErrorQueue
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: tuxedo.services.TuxedoConnection
+  descriptionHTML: '<p>The name of the Tuxedo connection factory.</p>  <p><b>Example:</b>
+    <code>tuxedo.services.TuxedoConnection</code></p> '
+  name: TuxFactory
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The mapping of priorities to map from Tuxedo to JMS. The default
+    JMS To Tux Priority Map is: <code>1-10:0 | 11-20:1 | 21-30:2 | 31-40:3| 41-50:4|
+    51-60:5 | 61-70:6 | 71-80:7 | 81-90:8 | 91-100:9</code></p>  <p><b>Examples:</b>
+    <code>1:0 | 12:1 | 23:2 | 34:3 | 45:4 | 56:5 | 67:6 | 78:7 | 89:8 | 100:9 or 20:0-1
+    | 40:2-3 | 60:4-5 | 80:6-7 | 100:8-9</code></p>  <p><i>Note:</i> The are 100 possible
+    Tuxedo priorities(1=&gt;100) which can be paired to 10 possible JMS priorities(0=&gt;9).
+    A mapping consists of a "|" separated list of value-to-range pairs (tuxvalue:jmsrange)
+    where pairs are separated by ":" and ranges are separated by "-".</p> '
+  name: TuxToJmsPriorityMap
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The user identity for all messages handled by this Tuxedo queuing
+    bridge for ACL checks when security is configured.</p>  <p>All messages assume
+    this identity until the security/authentication contexts are passed between the
+    subsystems. Until the security contexts are passed, there is no secure method
+    to identify who generated a message received from the source location.</p>  <p><i>Note:</i>
+    The <code>user</code> argument may be specified as either a user name or a user
+    identification number (uid).</p> '
+  name: UserId
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the location used to store WebLogic Server JMS
+    messages when a message cannot be redirected.</p>  <p>If not specified, all messages
+    not redirected are lost. If the message cannot be placed into <code>WlsErrorDestination</code>
+    for any reason, an error is logged and the message is lost.</p> '
+  name: WlsErrorDestination
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

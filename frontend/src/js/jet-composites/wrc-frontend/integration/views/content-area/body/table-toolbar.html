@@ -33,9 +33,9 @@
 
           <!-- Customize button is always visible on a table toolbar -->
           <div class="cfe-table-customizer">
-            <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed">
+            <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed" accesskey="'">
               <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png', alt: i18n.buttons.customize.label}"/>
-              <span class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
+              <span aria-hidden="true" class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
               <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
             </a>
           </div>
@@ -72,8 +72,9 @@
             href="#"
             on-click="[[landingPageClick]]"
             accesskey="L"
+            :aria-label="[[i18n.ariaLabel.icons.landing.value]]"
           >
-            <img id="landing-page-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.landing.iconFile + '.png', alt: i18n.icons.landing.tooltip, 'title': i18n.icons.landing.tooltip}"/>
+            <img id="landing-page-icon" aria-hidden="true" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.landing.iconFile + '.png', alt: i18n.icons.landing.tooltip, 'title': i18n.icons.landing.tooltip}"/>
           </a>
         </div>
 

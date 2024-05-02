@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <deployment-plan xmlns="http://xmlns.oracle.com/weblogic/deployment-plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/deployment-plan http://xmlns.oracle.com/weblogic/deployment-plan/1.0/deployment-plan.xsd">
-  <application-name>WarEar.ear</application-name>
+  <application-name>WarEar</application-name>
   <variable-definition>
     <variable>
-      <name>ServletDescriptor_archived_war_ear_ServletName_17084116624870</name>
+      <name>ServletDescriptor_archived_war_ear_ServletName_17127295429370</name>
       <value>archived_war_ear</value>
     </variable>
   </variable-definition>
@@ -30,7 +30,7 @@
       <root-element>weblogic-web-app</root-element>
       <uri>WEB-INF/weblogic.xml</uri>
       <variable-assignment>
-        <name>ServletDescriptor_archived_war_ear_ServletName_17084116624870</name>
+        <name>ServletDescriptor_archived_war_ear_ServletName_17127295429370</name>
         <xpath>/weblogic-web-app/servlet-descriptor/[servlet-name="archived_war_ear"]/servlet-name</xpath>
         <origin>planbased</origin>
       </variable-assignment>
@@ -40,5 +40,5 @@
       <uri>WEB-INF/web.xml</uri>
     </module-descriptor>
   </module-override>
-  <config-root>/Users/davinguy/Oracle/newConsole/domains/141200/WLSLoad33_jdk21/domain.run/./config/deployments/WarEar.ear/plan</config-root>
+  <config-root>servers/AdminServer/upload/WarEar/plan</config-root>
 </deployment-plan>

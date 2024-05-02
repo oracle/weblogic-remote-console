@@ -1,0 +1,16 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
+
+editable: true
+disableMBeanJavadoc: true
+supportsFilteringDashboards: false
+
+properties:
+- name: Name
+  helpHTML: The outbound connection pool group's name.
+- name: EnableAccessOutsideApp
+  label: Access Outside App Enabled
+- name: EnableGlobalAccessToClasses
+  label: Global Access To Classes Enabled

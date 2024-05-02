@@ -1,0 +1,50 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.AuthenticationProviderMBean
+derivedTypes:
+- weblogic.security.providers.authentication.OIDCIdentityAsserterMBean
+- com.bea.security.saml2.providers.SAML2IdentityAsserterMBean
+- weblogic.security.providers.authentication.DefaultIdentityAsserterMBean
+- weblogic.security.providers.authentication.NegotiateIdentityAsserterMBean
+- weblogic.security.providers.saml.SAMLIdentityAsserterV2MBean
+- weblogic.security.providers.authentication.OracleIdentityCloudIntegratorMBean
+- weblogic.security.providers.authentication.LDAPX509IdentityAsserterMBean
+descriptionHTML: 'The SSPI MBean that all Identity Assertion providers must extend.
+  This MBean enables an Identity Assertion provider to specify the token types for
+  which it is capable of asserting identity. '
+name: weblogic.management.security.authentication.IdentityAsserterMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns the token types that the Identity Assertion provider is
+    currently configured to process. '
+  name: ActiveTypes
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether the tokens that are passed to the Identity Assertion
+    provider will be base64 decoded first.  If <code>false</code> then the server
+    will not base64 decode the token before passing it to the identity asserter. This
+    defaults to <code>true</code> for backwards compatibility but most providers will
+    probably want to set this to <code>false</code>. '
+  name: Base64DecodingRequired
+  restartNeeded: true
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the list of token types supported by the Identity Assertion
+    provider.</p>  <p>To see a list of default token types, refer the Javadoc for
+    <code>weblogic.security.spi.IdentityAsserter</code></p> '
+  name: SupportedTypes
+  transient: true
+  type: java.lang.String

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import javax.ws.rs.container.ContainerRequestContext;
 
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -22,7 +21,8 @@ import weblogic.remoteconsole.server.providers.ProviderManager;
  * session.
 */
 public class Frontend {
-  private String id = UUID.randomUUID().toString();
+  private String id;
+  private String subId;
   private long lastRequestTime;
   private ProviderManager pm = new ProviderManager();
   private static boolean isSameSiteCookieEnabled =
@@ -31,14 +31,25 @@ public class Frontend {
     ConsoleBackendRuntimeConfig.getSameSiteCookieValue();
   private Map<String, StoredDataObject> storedData = new HashMap<>();
 
-  public Frontend(String id) {
-    if (id != null) {
-      this.id = id;
-    }
+  public Frontend(String id, String subId) {
+    this.id = id;
+    this.subId = subId;
   }
 
   public String getID() {
     return id;
+  }
+
+  public String getSubID() {
+    return subId;
+  }
+
+  public String getFullID() {
+    return makeFullID(id, subId);
+  }
+
+  public static String makeFullID(String id, String subId) {
+    return id + "-" + subId;
   }
 
   public void setLastRequestTime() {

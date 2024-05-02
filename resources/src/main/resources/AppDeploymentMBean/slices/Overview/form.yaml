@@ -10,12 +10,13 @@ properties:
   - name: "ModuleType"
   - name: "DeploymentOrder"
   - name: "SecurityDDModel"
-  - name: "DeploymentPrincipalName"
   - name: "InstallDir"
+  - name: "PlanDir"
   - name: "SourcePath"
   - name: "PlanPath"
   - name: "StagingMode"
   - name: "PlanStagingMode"
+  - name: "DeploymentPrincipalName"
   - name: "CacheInAppDirectory"
 
 helpTopics:

@@ -1,0 +1,15 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.XMLCacheMonitorRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface is used to monitor the external XML entity cache.  In
+  particular, the methods of this interface return information about the cumulative
+  activity of the cache since WebLogic Server was started. '
+name: weblogic.management.runtime.XMLCacheCumulativeRuntimeMBean
+properties: [
+  ]

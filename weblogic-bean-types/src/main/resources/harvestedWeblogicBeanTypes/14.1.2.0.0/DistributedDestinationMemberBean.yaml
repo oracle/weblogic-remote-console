@@ -1,0 +1,41 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.NamedEntityBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This bean defines common properties of distributed destination
+  members. Distributed destination members can be members of queues or topics.</p> '
+name: weblogic.j2ee.descriptor.wl.DistributedDestinationMemberBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  deprecated: '9.0.0.0 Replaced by weblogic.j2ee.descriptor.wl.DistributedDestinationMemberBean.getName() '
+  descriptionHTML: 'This attribute is only used by the JMS interop module. <p> The
+    name of the destination that is to be a member of the distributed destination.
+    </p>  <p>Note that this is the real name of the destination (e.g. the name as
+    retrieved by getName()), not the destination-name element of the destination (e.g.
+    the name as retrieved by getJMSCreateDestinationIdentifier()). </p> <p> This field
+    is only used by the JMS interop module.  All other modules may not set this field.  In
+    all other modules the name of the DistributedDestinationMemberBean itself is the
+    name of the queue to be used by this destination </p> '
+  name: PhysicalDestinationName
+  nullable: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p> The weight of a distributed destination member is a measure
+    of its ability to handle message load, compared to the other member destinations
+    in the same distributed set. </p> <!-- Gets the weight element --> '
+  name: Weight
+  type: int
+  writable: true
+roles:
+  allowed:
+  - Deployer

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -19,6 +19,8 @@ import weblogic.remoteconsole.common.utils.Path;
  */
 class NavTreeReader extends PageReader {
 
+  SearchManager searchManager = new SearchManager();
+
   NavTreeReader(InvocationContext invocationContext) {
     super(invocationContext);
   }
@@ -32,27 +34,28 @@ class NavTreeReader extends PageReader {
   Response<List<NavTreeNode>> expandNavTreeNodes(List<NavTreeNode> nodesToExpand) {
     Response<List<NavTreeNode>> response = new Response<>();
     try {
-      Response<BeanReaderRepoSearchResults> searchResponse = performSearch(nodesToExpand);
+      Response<Void> searchResponse = performSearch(nodesToExpand);
       if (!searchResponse.isSuccess()) {
         return response.copyUnsuccessfulResponse(searchResponse);
       }
-      return response.setSuccess(expandNodes(searchResponse.getResults(), nodesToExpand));
+      return response.setSuccess(expandNodes(nodesToExpand));
     } catch (UnsuccessfulResponseException e) {
       return response.copyUnsuccessfulResponse(e.getUnsuccessfulResponse());
     }
   }
 
-  private List<NavTreeNode> expandNodes(BeanReaderRepoSearchResults searchResults, List<NavTreeNode> nodesToExpand) {
-    NodeExpander nodeExpander = new NodeExpander(searchResults);
+  private Response<Void> performSearch(List<NavTreeNode> nodesToExpand) {
+    SearchBuilder searchBuilder = new SearchBuilder();
+    searchBuilder.addNodesToExpand(new Path(), getRootNodeDefs(), nodesToExpand);
+    return searchManager.performSearch();
+  }
+
+  private List<NavTreeNode> expandNodes(List<NavTreeNode> nodesToExpand) {
+    NodeExpander nodeExpander = new NodeExpander();
     return nodeExpander.expandNodes(new Path(), getRootNodeDefs(), nodesToExpand);
   }
 
   private class NodeExpander {
-    private BeanReaderRepoSearchResults searchResults;
-
-    private NodeExpander(BeanReaderRepoSearchResults searchResults) {
-      this.searchResults = searchResults;
-    }
 
     private List<NavTreeNode> expandNodes(
       Path parentNavTreePath,
@@ -135,7 +138,7 @@ class NavTreeReader extends PageReader {
     ) {
       Response<List<BeanSearchResults>> getCollectionResponse =
         getCollectionResults(
-          searchResults,
+          getSearchResults(navTreePath.getLastSegment().getBeanTreePath()),
           nodeToComplete.getResourceData(),
           List.of(nodeToComplete.getResourceData().getTypeDef().getIdentityPropertyDef())
         );
@@ -237,7 +240,7 @@ class NavTreeReader extends PageReader {
         nodeToComplete.setType(NavTreeNode.Type.SINGLETON);
       }
       BeanSearchResults singletonResults =
-        searchResults.getBean(nodeToComplete.getResourceData());
+        getSearchResults(beanPath).getBean(nodeToComplete.getResourceData());
       if (singletonResults != null) {
         // singleton currently exists.
         // we want a node for it, and its child nodes
@@ -283,29 +286,23 @@ class NavTreeReader extends PageReader {
     }
   
     private BeanTypeDef getChildTypeDef(NavTreeNode nodeToComplete) {
-      Response<BeanTypeDef> response = getActualTypeDef(nodeToComplete.getResourceData(), searchResults);
+      Response<BeanTypeDef> response =
+        getActualTypeDef(
+          nodeToComplete.getResourceData(),
+          getSearchResults(nodeToComplete.getResourceData())
+        );
       if (!response.isSuccess()) {
         throw new UnsuccessfulResponseException(response);
       }
       return response.getResults();
     }
-  }
 
-  private Response<BeanReaderRepoSearchResults> performSearch(List<NavTreeNode> nodesToExpand) {
-    SearchBuilder searchBuilder = new SearchBuilder();
-    searchBuilder.addNodesToExpand(new Path(), getRootNodeDefs(), nodesToExpand);
-    return searchBuilder.getBuilder().search();
+    private BeanReaderRepoSearchResults getSearchResults(BeanTreePath btp) {
+      return searchManager.getSearchWrapper(btp).getSearchResults();
+    }
   }
 
   private class SearchBuilder {
-
-    // Since nav tree nodes never display whether a property is set, we don't need to fetch it:
-    private BeanReaderRepoSearchBuilder builder =
-      getBeanRepo().asBeanReaderRepo().createSearchBuilder(getInvocationContext(), false);
-  
-    private BeanReaderRepoSearchBuilder getBuilder() {
-      return builder;
-    }
 
     private void addNodesToExpand(
       Path parentNavTreePath,
@@ -331,7 +328,7 @@ class NavTreeReader extends PageReader {
       if (nodeDef.isChildNodeDef()) {
         BeanTreePath beanPath = navTreePath.getLastSegment().getBeanTreePath();
         BeanTypeDef typeDef = beanPath.getTypeDef();
-        addCollectionToSearch(getBuilder(), beanPath, List.of(typeDef.getIdentityPropertyDef()));
+        addCollectionToSearch(getSearchBuilder(beanPath), beanPath, List.of(typeDef.getIdentityPropertyDef()));
         if (beanPath.isCollection()) {
           addCollectionNodeChildrenToExpand(navTreePath, nodeDef.asChildNodeDef(), nodeToExpand);
         } else {
@@ -389,6 +386,10 @@ class NavTreeReader extends PageReader {
         );
       }
     }
+
+    private BeanReaderRepoSearchBuilder getSearchBuilder(BeanTreePath btp) {
+      return searchManager.getSearchWrapper(btp).getSearchBuilder();
+    }
   }
 
   private NavTreeNode findNodeToExpand(NavTreeNodeDef nodeDef, List<NavTreeNode> nodesToExpand) {
@@ -424,6 +425,134 @@ class NavTreeReader extends PageReader {
       return allNodeDefs;
     } else {
       return getNodeDefs(typeDef);
+    }
+  }
+
+  // This works around a huge nav tree performance issue for nodes that
+  // represent beans inside a deployment.
+  //
+  // The nav tree request body looks like:
+  //   app deployments
+  //     app1
+  //       configuration
+  //         deployments
+  //           ...
+  //     app2
+  //       configuration
+  //       deployments
+  //         ...
+  //   other stuff
+  //
+  // If we turned this into a single normal WLS REST search request, we'd get:
+  //
+  //  app deployments (not filtered - returns all of them)
+  //    configuration
+  //      deployments
+  //        ...
+  //  other stuff
+  //
+  // This forces us to read all of the deployments' archives.
+  // This is a huge performance problem and uses a ton of cached memory.
+  // It takes so long that the nav tree requests for SOA domains time out,
+  // making the nav tree unusable.
+  //
+  // This class turns this into two separate WLS REST search requests:
+  //
+  // primary search:
+  //
+  //   app deployments (not filtered - returns all of them)
+  //   other stuff
+  //
+  // secondary search for the nodes that require parsing a deployment's archive:
+  //
+  //   app deployments (name = app1, app2)
+  //     configuration
+  //     deployments
+  //       ...
+  //
+  // This prevents us from reading all the deployments in when we need
+  // to look inside one of them.  The downside is that it uses two
+  // search RPCs.  This ends up being a win for this use case.
+  //
+  // Note: normally we would not special case particular types inside
+  // the CBE infra.  However, this is the only kind of mbean that
+  // needs this special handling today, and it would be hard to make
+  // this code generic and yaml driven.  Also, long term, we want to
+  // completely rework the nav tree so that the CBE keeps an in-memory cache
+  // of the opened nodes.  When we do that, this work around will go away.
+  // Given all that, we decided to hack the CBE infra for this use case for now.
+  private class SearchManager {
+    private SearchWrapper primarySearch = new SearchWrapper();
+    private SearchWrapper parsedDeploymentsSearch = new SearchWrapper();
+
+    private SearchWrapper getSearchWrapper(BeanTreePath btp) {
+      if (needsParsedDeployment(btp)) {
+        return parsedDeploymentsSearch;
+      } else {
+        return primarySearch;
+      }
+    }
+
+    private Response<Void> performSearch() {
+      Response<Void> response = new Response<>();
+      {
+        Response<Void> searchResponse = primarySearch.performSearch();
+        if (!searchResponse.isSuccess()) {
+          return response.copyUnsuccessfulResponse(searchResponse);
+        }
+      }
+      {
+        Response<Void> searchResponse = parsedDeploymentsSearch.performSearch();
+        if (!searchResponse.isSuccess()) {
+          return response.copyUnsuccessfulResponse(searchResponse);
+        }
+      }
+      return response.setSuccess(null);
+    }
+
+    private boolean needsParsedDeployment(BeanTreePath btp) {
+      // Requires a parsed deployment if it's a child resource of a DeploymentDBean, i.e. matches:
+      //   DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<app>/Configuration/Deployment/...
+      List<String> c = btp.getPath().getComponents();
+      if (
+        c.size() > 6
+          && "Deployment".equals(c.get(5))
+          && "Configuration".equals(c.get(4))
+          && "AppDeploymentRuntimes".equals(c.get(2))
+      ) {
+        return true;
+      }
+      return false;
+    }
+  }
+
+  private class SearchWrapper {
+    private BeanReaderRepoSearchBuilder searchBuilder;
+    private BeanReaderRepoSearchResults searchResults;
+
+    private BeanReaderRepoSearchBuilder getSearchBuilder() {
+      if (searchBuilder == null) {
+        // Since nav tree nodes never display whether a property is set, we don't need to fetch it:
+        searchBuilder =
+          getBeanRepo().asBeanReaderRepo().createSearchBuilder(getInvocationContext(), false);
+      }
+      return searchBuilder;
+    }
+
+    private Response<Void> performSearch() {
+      Response<Void> response = new Response<>();
+      if (searchBuilder != null) {
+        Response<BeanReaderRepoSearchResults> searchResponse = searchBuilder.search();
+        if (!searchResponse.isSuccess()) {
+          return response.copyUnsuccessfulResponse(searchResponse);
+        }
+        searchResults = searchResponse.getResults();
+      }
+      return response.setSuccess(null);
+    }
+
+    private BeanReaderRepoSearchResults getSearchResults() {
+      return searchResults;
     }
   }
 

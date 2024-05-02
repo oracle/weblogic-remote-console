@@ -1,0 +1,35 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Use this interface to configure an image action, which will be
+  sent when a diagnostic policy evaluates to <code>true</code>.</p> <p>Note: As of
+  WebLogic Server 12.2.1, the terms <i>watch</i> and <i>notification</i> are replaced
+  by <i>policy</i> and <i>action</i>, respectively. However, the definition of these
+  terms has not changed.</p> '
+name: weblogic.diagnostics.descriptor.WLDFImageNotificationBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  deprecated: '12.2.1.1.0 '
+  descriptionHTML: '<p>The directory where diagnostic images are stored. The default
+    directory, relative to a server''s root directory, is <code>./logs/diagnostic_images</code>.</p> '
+  name: ImageDirectory
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The length of time, in minutes, during which no diagnostic
+    images requests will be accepted; that is, the minimum amount of time between
+    image capture requests.</p> '
+  name: ImageLockout
+  type: int
+  writable: true
+roles:
+  allowed:
+  - Deployer

@@ -1,0 +1,601 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean represents configuration for SAML 2.0-based local
+  site Single Sign-On Services.</p> '
+name: weblogic.management.configuration.SingleSignOnServicesMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'List of hosts to compare against the host in the SAML SP target
+    redirect URL. When the list is empty, the target redirect URL will not be checked. '
+  name: AllowedTargetHosts
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 10000
+  descriptionHTML: '<p>The maximum size of the artifact cache.</p>  <p>This cache
+    contains the artifacts issued by the local site that are awaiting referencing
+    by a partner.  Specify ''0'' to indicate that the cache is unbounded.</p> '
+  name: ArtifactMaxCacheSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The maximum timeout (in seconds) of artifacts stored in the
+    local cache.</p>  <p>This cache stores artifacts issued by the local site that
+    are awaiting referencing by a partner. Artifacts that reach this maximum timeout
+    duration are expired in the local cache even if no reference request has been
+    received from the partner.  If a reference request is subsequently received from
+    the partner, the cache behaves as if the artifact had never been generated.</p> '
+  name: ArtifactTimeout
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The keystore alias for the certificate and private key to be
+    used to encrypt and decrypt SAML Assertions.</p>  <p> The certificate is published
+    in the SP metadata, which will be used by an external SP to encrypt SAML assertions.</p>  <p>The
+    private key is used to decrypt assertions. If the alias is not specified, the
+    server''s configured SSL identity alias is used by default.</p> '
+  name: AssertionEncryptionDecryptionKeyAlias
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The passphrase used to retrieve the local site''s Assertion
+    key from the keystore.</p> '
+  encrypted: true
+  name: AssertionEncryptionDecryptionKeyPassPhrase
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The encrypted passphrase used to retrieve the local site''s
+    Assertion key from the keystore.</p>  <p>To set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: AssertionEncryptionDecryptionKeyPassPhraseEncrypted
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Get assertion encryption enabled flag '
+  name: AssertionEncryptionEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Indicates whether to use the session timeout timestamp from
+    the assertion''s subject as a condition to time out the local session.</p> '
+  name: AssertionSubjectSessionTimeoutCheckEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 10000
+  descriptionHTML: '<p>The maximum size of the authentication request cache.</p>  <p>This
+    cache stores documents issued by the local Service Provider that are awaiting
+    response from a partner Identity Provider.  </p>  <p>Specify ''0'' to indicate
+    that the cache is unbounded.</p> '
+  name: AuthnRequestMaxCacheSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The maximum timeout (in seconds) of &lt;AuthnRequest&gt; documents
+    stored in the local cache.</p>  <p>This cache stores documents issued by the local
+    Service provider that are awaiting response from a partner Identity Provider.
+    Documents that reach this maximum timeout duration are expired from the local
+    cache even if no response is received from the Identity Provider.  If a response
+    is subsequently returned by the Identity Provider, the cache behaves as if the
+    &lt;AuthnRequest&gt; had never been generated.</p> '
+  name: AuthnRequestTimeout
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The password used to assign Basic Authentication credentials
+    to outgoing HTTPS connections</p> '
+  encrypted: true
+  name: BasicAuthPassword
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The encrypted password used assign Basic Authentication credentials
+    to outgoing HTTPS connections.</p>  <p>To set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: BasicAuthPasswordEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The username that is used to assign Basic authentication credentials
+    to outgoing HTTPS connections. '
+  name: BasicAuthUsername
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The contact person''s company name.</p> '
+  name: ContactPersonCompany
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The contact person''s e-mail address.</p> '
+  name: ContactPersonEmailAddress
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The contact person given (first) name.</p> '
+  name: ContactPersonGivenName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The contact person surname (last name).</p> '
+  name: ContactPersonSurName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The contact person''s telephone number.</p> '
+  name: ContactPersonTelephoneNumber
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The contact person type.</p> '
+  name: ContactPersonType
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: aes128-gcm
+  descriptionHTML: 'Get the preferred data encryption algorithm for SAML assertion
+    encryption. This algorithm is used if it is found in the Service Provider''s metadata
+    or if the Service Partner''s metadata does not include any data encryption algorithm. '
+  name: DataEncryptionAlgorithm
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The Service Provider''s default URL.</p>  <p>When an unsolicited
+    SSO response arrives at the Service Provider without an accompanying target URL,
+    the user (if authenticated) is redirected to this default URL.</p> '
+  name: DefaultURL
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The string that uniquely identifies the local site.</p> '
+  name: EntityID
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: 'Gets the Error Path URL.  Partner sites may redirect users to
+    this URL for more information if SSO fails. '
+  exclude: true
+  name: ErrorPath
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the Identity Provider must authenticate users
+    directly and not use a previous security context. The default is <code>false</code>.
+    </p>  <p>Note the following:</p> <ol> <li>If the user is already authenticated
+    at the Identity Provider site and <code>ForceAuthn</code> is set to <code>true</code>,
+    the user is forced to authenticate again at the Identity Provider site.</li> <li>Setting
+    both <code>ForceAuthn</code> and <code>IsPassive</code> to <code>true</code> --
+    that is, Force Authentication and Passive are enabled -- is an invalid configuration
+    that causes WebLogic server to generate an exception and also causes the single
+    sign-on session to fail.</li> </ol> '
+  name: ForceAuthn
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the Artifact binding is enabled for the Identity
+    Provider.</p> '
+  name: IdentityProviderArtifactBindingEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the local site is enabled for the Identity
+    Provider role.</p> '
+  name: IdentityProviderEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the POST binding is enabled for the Identity
+    Provider.</p> '
+  name: IdentityProviderPOSTBindingEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: None
+  descriptionHTML: '<p>Specifies the preferred binding type for endpoints of the Identity
+    Provider services. Must be set to <code>None</code>, <code>HTTP/POST</code>, <code>HTTP/Artifact</code>,
+    or <code>HTTP/Redirect</code>.</p> '
+  legalValues:
+  - None
+  - HTTP/POST
+  - HTTP/Artifact
+  - HTTP/Redirect
+  name: IdentityProviderPreferredBinding
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the Redirect binding is enabled for the Identity
+    Provider.</p> '
+  name: IdentityProviderRedirectBindingEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: rsa-oaep
+  descriptionHTML: 'Get the preferred key encryption algorithm for SAML assertion
+    encryption. This algorithm is used if it is found in the Service Provider''s metadata
+    or if the Service Partner''s metadata does not include any key encryption algorithm. '
+  name: KeyEncryptionAlgorithm
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: 'The name of the query parameter to be used for conveying the login-return
+    URL to the login form web application. '
+  name: LoginReturnQueryParameter
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: /saml2/idp/login
+  descriptionHTML: '<p>The URL of the login form web application to which unauthenticated
+    requests are directed.</p>  <p>By default, the login URL is <code>/saml2/idp/login</code>
+    using Basic authentication. Typically you specify this URL if you are using a
+    custom login web application.</p> '
+  name: LoginURL
+  nullable: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - aes128-gcm
+      - aes192-gcm
+      - aes256-gcm
+      - aes128-cbc
+      - aes192-cbc
+      - aes256-cbc
+      - rsa-oaep
+      - rsa-oaep-mgf1p
+  descriptionHTML: ' '
+  name: MetadataEncryptionAlgorithms
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The organization name.</p>  <p>This string specifies the name
+    of the organization to which a user may refer for obtaining additional information
+    about the local site.</p> '
+  name: OrganizationName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The organization URL.</p>  <p>This string specifies a location
+    to which a user may refer for information about the local site. This string is
+    not used by SAML 2.0 services for the actual handling or processing of messages.</p> '
+  name: OrganizationURL
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the POST one-use check is enabled.</p>  <p>If
+    set, the local site POST binding endpoints will store identifiers of all inbound
+    documents to ensure that those documents are not presented more than once.</p> '
+  name: POSTOneUseCheckEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Determines whether the Identity Provider and the user must
+    not take control of the user interface from the requester and interact with the
+    user in a noticeable fashion. The default setting is <code>false</code>.</p>  <p>The
+    WebLogic Server SAML 2.0 services generate an exception if Passive (<code>IsPassive</code>)
+    is enabled and the end user is not already authenticated at the Identity Provider
+    site.  In this situation, web single sign-on fails.</p> '
+  name: Passive
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The published site URL.</p>  <p>When publishing SAML 2.0 metadata,
+    this URL is used as a base URL to construct endpoint URLs for the various SAML
+    2.0 services.  The published site URL is also used during request processing to
+    generate and/or parse various URLs.</p>  <p>The hostname and port portion of the
+    URL should be the hostname and port at which the server is visible externally;
+    this may not be the same as the hostname and port by which the server is known
+    locally. If you are configuring SAML 2.0 services in a cluster, the hostname and
+    port may correspond to the load balancer or proxy server that distributes client
+    requests to servers in the cluster.</p>  <p>The remainder of the URL should be
+    a single path component corresponding to the application context at which the
+    SAML 2.0 services application is deployed (typically <code>/saml2</code>).</p> '
+  name: PublishedSiteURL
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the recipient/destination check is enabled.
+    When true, the recipient of the SAML Request/Response must match the URL in the
+    HTTP Request.</p> '
+  name: RecipientCheckEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the persistent cache (LDAP or RDBMS) is used
+    for storing SAML 2.0 artifacts and authentication requests.</p>  <p>RDBMS is required
+    by the SAML 2.0 security providers in production environments.  Use LDAP only
+    in development environments.</p>  <p>If this is not set, artifacts and requests
+    are saved in memory.</p>  <p>If you are configuring SAML 2.0 services for two
+    or more WebLogic Server instances in a domain, you must enable the replicated
+    cache individually on each server.  In addition, if you are configuring SAML 2.0
+    services in a cluster, each Managed Server must also be configured individually.</p> '
+  name: ReplicatedCacheEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The keystore alias for the key to be used when signing documents.</p>  <p>The
+    key is used to generate signatures on all the outgoing documents, such as authentication
+    requests and responses. If you do not specify an alias, the server''s configured
+    SSL private key alias from the server''s SSL configuration is used by default.</p> '
+  name: SSOSigningKeyAlias
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The passphrase used to retrieve the local site''s SSO signing
+    key from the keystore.</p>  <p>If you do not specify a keystore alias and passphrase,
+    the server''s configured private key alias and private key passphrase from the
+    server''s SSL configuration is used by default.</p> '
+  encrypted: true
+  name: SSOSigningKeyPassPhrase
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The encrypted passphrase used to retrieve the local site''s
+    SSO signing key from the keystore.</p>  <p>To set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: SSOSigningKeyPassPhraseEncrypted
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Specifies whether the Artifact binding is enabled for the Service
+    Provider. '
+  name: ServiceProviderArtifactBindingEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the local site is enabled for the Service
+    Provider role.</p>  <p>This attribute must be enabled in order to publish the
+    metadata file.</p> '
+  name: ServiceProviderEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Specifies whether the POST binding is enabled for the Service
+    Provider. '
+  name: ServiceProviderPOSTBindingEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: None
+  descriptionHTML: 'Specifies the preferred binding type for endpoints of Service
+    Provider services. Must be set to "None", "POST", or "Artifact". '
+  legalValues:
+  - None
+  - HTTP/POST
+  - HTTP/Artifact
+  name: ServiceProviderPreferredBinding
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: HTTP/Redirect
+  descriptionHTML: '<p>The binding used by the Service Provider to send SAML Single
+    Logout Requests</p> '
+  legalValues:
+  - HTTP/Redirect
+  - HTTP/POST
+  name: ServiceProviderSingleLogoutBinding
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether Single Logout is enabled for the Service
+    Provider.</p> '
+  name: ServiceProviderSingleLogoutEnabled
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of allowed redirect URIs to be used by the initiating
+    Service Provider for after Logout redirection.</p> '
+  name: ServiceProviderSingleLogoutRedirectURIs
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether authentication requests must be signed.  If
+    set, all outgoing authentication requests are signed.</p> '
+  name: SignAuthnRequests
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The string alias used to store and retrieve the server''s private
+    key, which is used to establish outgoing TLS/SSL connections.</p>  <p>If you do
+    not specify an alias, the server''s configured SSL private key alias from the
+    server''s SSL configuration is used for the TLS alias by default.</p> '
+  name: TransportLayerSecurityKeyAlias
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The passphrase used to retrieve the server''s private key from
+    the keystore.</p>  <p>If you do not specify either an alias or a passphrase, the
+    server''s configured SSL private key alias and private key passphrase from the
+    server''s SSL configuration is used for the TLS alias and passphrase by default.</p> '
+  encrypted: true
+  name: TransportLayerSecurityKeyPassPhrase
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The encrypted passphrase used to retrieve the local site''s
+    TLS/SSL key from the keystore.</p>  <p>To set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: TransportLayerSecurityKeyPassPhraseEncrypted
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether incoming artifact requests must be signed.
+    </p>  <p>This attribute can be set if the Artifact binding is enabled.</p> '
+  name: WantArtifactRequestsSigned
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether incoming SAML 2.0 assertions must be signed.</p> '
+  name: WantAssertionsSigned
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Specifies whether incoming authentication requests must be signed.
+    If set, authentication requests that are not signed are not accepted. '
+  name: WantAuthnRequestsSigned
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether Basic Authentication client authentication
+    is required.</p>  <p>If enabled, callers to HTTPS bindings of the local site must
+    specify a Basic authentication header, and the username and password must be validated
+    against the Basic authentication values of the binding client partner.</p> '
+  name: WantBasicAuthClientAuthentication
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the inbound SAML 2.0 Responses must be signed.</p> '
+  name: WantResponsesSigned
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether TLS/SSL client authentication is required.</p>  <p>If
+    enabled, callers to TLS/SSL bindings of the local site must specify client authentication
+    (two-way SSL), and the identity specified must validate against the TLS certificate
+    of the binding client partner.</p> '
+  name: WantTransportLayerSecurityClientAuthentication
+  type: boolean
+  writable: true

@@ -1,0 +1,52 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'ManagedThreadFactory Runtime information. It can be the information
+  of a partition level MTF, an application level MTF or a regular JSR236 MTF. '
+name: weblogic.management.runtime.ManagedThreadFactoryRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the name of the application this ManagedThreadFactory is
+    associated with</p> '
+  name: ApplicationName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of completed threads.</p> '
+  name: CompletedThreadsCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the name of the module this ManagedThreadFactory is associated
+    with</p> '
+  name: ModuleName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the name of the partition this ManagedThreadFactory is
+    associated with</p> '
+  excludeFromRest: ' '
+  name: PartitionName
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of newThread method invocations that have been rejected
+    because the limit of running threads was exceeded. </p> '
+  name: RejectedNewThreadRequests
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of running threads.</p> '
+  name: RunningThreadsCount
+  type: int
+roles:
+  allowed:
+  - Operator

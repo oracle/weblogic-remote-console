@@ -3,7 +3,7 @@
  The Universal Permissive License (UPL), Version 1.0
 -->
 
-<div id="content-area-header-container" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+<div role="region" :aria-label="[[i18n.ariaLabel.region.value]]" id="content-area-header-container" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
   <!-- row 1 -->
   <div id="content-area-header-title" class="oj-flex-item">
     <span id="content-area-header-title-label" data-bind="text: [[headerTitle.label()]]"></span>
@@ -12,8 +12,9 @@
         id="data-provider-get-info"
         href="#"
         on-click="[[dataProviderIconClickHandler]]"
+        :title="[[i18n.ariaLabel.popup.value]]"
       >
-        <span :class="[[headerTitle.classList()]]"></span>
+        <span :class="[[headerTitle.classList()]]" role="img" aria-hidden="true"></span>
       </a>
       <span id="content-area-header-title-description" data-bind="text: [[headerTitle.description()]]"></span>
     </oj-bind-if>
@@ -53,7 +54,7 @@
 
 <oj-popup id="headerTitleProviderActionsPopup" initial-focus="firstFocusable">
   <oj-bind-if test="[[headerTitle.visible]]">
-    <span :id="[[headerTitle.provider().id + '-iconbar']]" class="cfe-project-provider-iconbar oj-navigationlist-item-end">
+    <span :id="[[headerTitle.provider().id + '-header-title-iconbar']]" class="cfe-project-provider-iconbar oj-navigationlist-item-end">
       <a href="#" data-item-action="info" :data-item-type="[[headerTitle.provider().type]]" :data-item-id="[[headerTitle.provider().id]]" on-click="[[connectionsModelsIconBarClickListener]]">
         <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.info.iconFile + '.png', 'title': i18n.icons.info.tooltip, alt: i18n.icons.info.tooltip}" />
       </a>

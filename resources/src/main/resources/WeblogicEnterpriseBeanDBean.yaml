@@ -1,0 +1,58 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+derivedTypes: []
+name: weblogic.management.descriptor.WeblogicEnterpriseBeanDBean
+properties:
+- name: CreateAsPrincipalName
+  type: java.lang.String
+  descriptionHTML: >
+    The principal to be used when <code>ejbCreate</code> would
+    otherwise run with an anonymous principal.
+  writable: true
+- name: DispatchPolicy
+  type: java.lang.String
+  descriptionHTML: >
+    Designates which server execute thread pool the EJB should run in.
+  writable: true
+  redeployNeeded: true
+- name: JNDIName
+  type: java.lang.String
+  descriptionHTML: >
+    The JNDI name of an EJB, resource, or reference in WebLogic Server.
+  writable: true
+  redeployNeeded: true
+- name: LocalJNDIName
+  type: java.lang.String
+  descriptionHTML: >
+    The JNDI name for a bean's local Home.
+  writable: true
+  redeployNeeded: true
+- name: NetworkAccessPoint
+  type: java.lang.String
+  descriptionHTML: >
+    Custom network channel that the EJB uses for network communications.
+  writable: true
+- name: PassivateAsPrincipalName
+  type: java.lang.String
+  descriptionHTML: >
+    The principal to be used when <code>ejbPassivate</code> would
+    otherwise run with an anonymous principal.
+  writable: true
+- name: RemoveAsPrincipalName
+  type: java.lang.String
+  descriptionHTML: >
+    The principal to be used when <code>ejbRemove</code> would
+    otherwise run with an anonymous principal.
+  writable: true
+- name: RunAsPrincipalName
+  type: java.lang.String
+  descriptionHTML: >
+    The security principal to be used as the <code>run-as</code>
+    principal for a bean that has <code>security-identity</code> specified
+    in its <code>ejb-jar.xml</code> file.
+  writable: true
+  redeployNeeded: true

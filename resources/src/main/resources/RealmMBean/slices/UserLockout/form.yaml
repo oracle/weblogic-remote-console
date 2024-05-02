@@ -1,0 +1,30 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Password guessing is a common type of security attack. In this type of
+  attack, a hacker attempts to log in to a computer using various
+  combinations of usernames and passwords. Weblogic Server provides a set of
+  attributes to protect user accounts from intruders. This page allows us to
+  define how user lockouts will be handled in this security realm.</p>
+
+properties:
+- name: UserLockoutManager.LockoutEnabled
+  label: "Lockout Enabled"
+- name: UserLockoutManager.LockoutThreshold
+  label: "Lockout Threshold"
+- name: UserLockoutManager.LockoutDuration
+  label: "Lockout Duration"
+- name: UserLockoutManager.LockoutResetDuration
+  label: "Lockout Reset Duration"
+- name: UserLockoutManager.LockoutCacheSize
+  label: "Lockout Cache Size"
+- name: UserLockoutManager.LockoutGCThreshold
+  label: "Lockout GC Threshold"
+helpTopics:
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Protecting User Accounts"
+  href: "secmg/domain.html#SECMG414"
+  type: "edocs"

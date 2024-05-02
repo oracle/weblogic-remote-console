@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -27,7 +27,6 @@ import weblogic.remoteconsole.server.repo.Response;
  */
 public class WebLogicRestRuntimeTreeBeanRepo extends WebLogicRestBeanRepo implements BeanEditorRepo {
   private static final String SERVER_CONFIG = "serverConfig";
-  private static final Path SERVER_CONFIG_PATH = new Path(SERVER_CONFIG);
   private static final boolean EXPANDED_VALUES_FALSE = false; // the runtime tree doesn't support expanded values
   private static final boolean SAVE_CHANGES_FALSE = false; // the runtime tree doesn't support config transactions
   private static final boolean ASYNC_FALSE = false;
@@ -48,7 +47,7 @@ public class WebLogicRestRuntimeTreeBeanRepo extends WebLogicRestBeanRepo implem
     Response<JsonObject> postResponse =
       WebLogicRestInvoker.post(
         ic,
-        SERVER_CONFIG_PATH.childPath(getTreeRelativeRestPath(propertyValues.getBeanTreePath())),
+        getRestPath(propertyValues.getBeanTreePath()),
         propertyValuesToJson(propertyValues),
         EXPANDED_VALUES_FALSE,
         SAVE_CHANGES_FALSE,
@@ -65,7 +64,7 @@ public class WebLogicRestRuntimeTreeBeanRepo extends WebLogicRestBeanRepo implem
     Response<JsonObject> postResponse =
       WebLogicRestInvoker.post(
         ic,
-        SERVER_CONFIG_PATH.childPath(getTreeRelativeRestPath(beanTreePath)),
+        getRestPath(beanTreePath),
         propertyValuesToJson(propertyValues),
         EXPANDED_VALUES_FALSE,
         SAVE_CHANGES_FALSE,
@@ -81,7 +80,7 @@ public class WebLogicRestRuntimeTreeBeanRepo extends WebLogicRestBeanRepo implem
     Response<JsonObject> deleteResponse =
       WebLogicRestInvoker.delete(
         ic,
-        SERVER_CONFIG_PATH.childPath(getTreeRelativeRestPath(beanTreePath)),
+        getRestPath(beanTreePath),
         SAVE_CHANGES_FALSE,
         beanTreePath.isAsyncDelete()
       );
@@ -100,5 +99,12 @@ public class WebLogicRestRuntimeTreeBeanRepo extends WebLogicRestBeanRepo implem
       );
     }
     return builder.build();
+  }
+
+  private Path getRestPath(BeanTreePath beanTreePath) {
+    String rootBeanName = beanTreePath.getPath().getFirstComponent();
+    Path restPath = new Path(getWebLogicRestTreeName(rootBeanName));
+    restPath.addPath(getTreeRelativeRestPath(beanTreePath));
+    return restPath;
   }
 }

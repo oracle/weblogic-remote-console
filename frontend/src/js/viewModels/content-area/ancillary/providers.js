@@ -56,13 +56,24 @@ define([
   ) {
     function ProvidersTemplate(viewParams) {
       const self = this;
-      
+
       const PROVIDER_ACTIVATED_COLOR = getComputedStyle(document.documentElement).getPropertyValue('--provider-activated-color');
       const PROVIDER_DEACTIVATED_COLOR = getComputedStyle(document.documentElement).getPropertyValue('--provider-deactivated-color');
-      
+
       var connectionsModels = ko.observableArray([]);
-      
+
       this.i18n = {
+        ariaLabel: {
+          connectionsModels: {
+            value: oj.Translations.getTranslatedString('wrc-data-providers.ariaLabel.connectionModels.value')
+          },
+          filePath: {
+            value: oj.Translations.getTranslatedString('wrc-data-providers.ariaLabel.filePath.value')
+          },
+          insecureCheckbox: {
+            value: oj.Translations.getTranslatedString('wrc-data-providers.ariaLabel.insecureCheckbox.value')
+          }
+        },
         'popups': {
           'info': {
             'provider': {
@@ -248,13 +259,13 @@ define([
           'tooltip': ko.observable('')
         }
       };
-      
+
       // Content for a new property list dataprovider
       const newPropertyListContentFileData = '# Property List\n';
-      
+
       // START: knockout observables referenced in view
       this.connectionsModelsSelectedItem = ko.observable('');
-      
+
       // Need to initialize observable with valid, throw
       // away data, because the view (dataproviders.html)
       // has <oj-bind-if> elements that use it in test
@@ -355,7 +366,7 @@ define([
 
         self.signalBindings.push(binding);
 
-        getProviderHelpData();
+        setProviderHelpData();
       }.bind(this);
 
       this.disconnected = function () {
@@ -424,6 +435,45 @@ define([
         sortConnectionModels();
       };
 
+      this.isPollingWhenQuiesced = function (dataProvider) {
+        return (
+          CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus) &&
+          dataProvider.domainStatus.pollWhenQuiesced
+        );
+      };
+
+      this.onDeactivateDataProvider = function(dataProvider, action) {
+        return new Promise((resolve, reject) => {
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider) && dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+            ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
+              .then(reply => {
+                if (reply === null) {
+                  resolve(reply);
+                }
+                else if (reply) {
+                  self.canExitCallback = undefined;
+                  performDeactivateAction(dataProvider);
+                  resolve(reply);
+                }
+                else {
+                  performDeactivateAction(dataProvider);
+                  resolve(reply);
+                }
+              })
+              .catch(failure => {
+                reject(failure);
+              })
+              .finally(() => {
+                self.providerIconbar.deactivateListItem(dataProvider.id);
+              });
+          }
+          else {
+            resolve();
+          }
+
+        });
+      };
+
       this.connectionsModelsIconBarClickListener = function(event) {
         const action = event.currentTarget.attributes['data-item-action'].value;
 
@@ -457,7 +507,7 @@ define([
             if (popup !== null) {
               if (popup.isOpen()) popup.close();
               self.providerInfo.type(dataProvider.type);
-              self.providerInfo.state(dataProvider.state);
+              self.providerInfo.state(self.isPollingWhenQuiesced(dataProvider) ? CoreTypes.Domain.ConnectState.CONNECTED.name : dataProvider.state);
               showDataProviderInfo(dataProvider, popup, launcherSelector);
             }
           }
@@ -480,27 +530,15 @@ define([
         }
         else if (action === 'deactivate') {
           const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
-          if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
-            ViewModelUtils.abandonUnsavedChanges(action, self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
-              .then(reply => {
-                if (reply === null)  {
-                  ViewModelUtils.cancelEventPropagation(event);
-                }
-                else if (reply) {
-                  self.canExitCallback = undefined;
-                  performDeactivateAction(dataProvider);
-                }
-                else {
-                  performDeactivateAction(dataProvider);
-                }
-              })
-              .catch(failure => {
-                ViewModelUtils.failureResponseDefaultHandling(failure);
-              })
-              .finally(() => {
-                self.providerIconbar.deactivateListItem(dataProvider.id);
-              });
-          }
+          self.onDeactivateDataProvider(dataProvider, action)
+            .then(reply => {
+              if (reply === null) {
+                ViewModelUtils.cancelEventPropagation(event);
+              }
+            })
+            .catch(failure => {
+              ViewModelUtils.failureResponseDefaultHandling(failure);
+            });
         }
         else if (action === 'delete') {
           if (ViewModelUtils.isElectronApiAvailable()) {
@@ -633,70 +671,72 @@ define([
           await CoreUtils.asyncForEach(dataProviders, async (dataProvider) => {
             switch(dataProvider.type) {
               case DataProvider.prototype.Type.ADMINSERVER.name: {
-                  DataProviderManager.removeAdminServerConnection(dataProvider)
-                    .then( result => {
-                      if (result.succeeded) {
-                        viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
-                      }
-                      else {
-                        ViewModelUtils.failureResponseDefaultHandling(result.failure);
-                      }
-                    })
-                    .catch(response => {
-                      ViewModelUtils.failureResponseDefaultHandling(response.failure);
-                    });
-                }
+                DataProviderManager.removeAdminServerConnection(dataProvider)
+                  .then( result => {
+                    if (result.succeeded) {
+                      // Make sure the pollWhenQuiesced dataProviders stop polling
+                      clearDomainStatus(dataProvider);
+                      viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
+                    }
+                    else {
+                      ViewModelUtils.failureResponseDefaultHandling(result.failure);
+                    }
+                  })
+                  .catch(response => {
+                    ViewModelUtils.failureResponseDefaultHandling(response.failure);
+                  });
+              }
                 break;
               case DataProvider.prototype.Type.MODEL.name: {
-                  submitWDTModelChanges(dataProvider)
-                    .then(result => {
-                      DataProviderManager.removeWDTModel(dataProvider)
-                        .then(result => {
-                          if (result.succeeded) {
-                            viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
-                          }
-                          else {
-                            ViewModelUtils.failureResponseDefaultHandling(result.failure);
-                          }
-                        })
-                        .catch(response => {
-                          ViewModelUtils.failureResponseDefaultHandling(response.failure);
-                        });
-                    })
-                    .catch(failure => {
-                      ViewModelUtils.failureResponseDefaultHandling(failure);
-                    });
-                }
+                submitWDTModelChanges(dataProvider)
+                  .then(result => {
+                    DataProviderManager.removeWDTModel(dataProvider)
+                      .then(result => {
+                        if (result.succeeded) {
+                          viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
+                        }
+                        else {
+                          ViewModelUtils.failureResponseDefaultHandling(result.failure);
+                        }
+                      })
+                      .catch(response => {
+                        ViewModelUtils.failureResponseDefaultHandling(response.failure);
+                      });
+                  })
+                  .catch(failure => {
+                    ViewModelUtils.failureResponseDefaultHandling(failure);
+                  });
+              }
                 break;
               case DataProvider.prototype.Type.COMPOSITE.name: {
-                  DataProviderManager.removeWDTCompositeModel(dataProvider)
-                    .then( result => {
-                      if (result.succeeded) {
-                        viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
-                      }
-                      else {
-                        ViewModelUtils.failureResponseDefaultHandling(result.failure);
-                      }
-                    })
-                    .catch(response => {
-                      ViewModelUtils.failureResponseDefaultHandling(response.failure);
-                    });
-                }
+                DataProviderManager.removeWDTCompositeModel(dataProvider)
+                  .then( result => {
+                    if (result.succeeded) {
+                      viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
+                    }
+                    else {
+                      ViewModelUtils.failureResponseDefaultHandling(result.failure);
+                    }
+                  })
+                  .catch(response => {
+                    ViewModelUtils.failureResponseDefaultHandling(response.failure);
+                  });
+              }
                 break;
               case DataProvider.prototype.Type.PROPERTIES.name: {
-                  DataProviderManager.removePropertyList(dataProvider)
-                    .then( result => {
-                      if (result.succeeded) {
-                        viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
-                      }
-                      else {
-                        ViewModelUtils.failureResponseDefaultHandling(result.failure);
-                      }
-                    })
-                    .catch(response => {
-                      ViewModelUtils.failureResponseDefaultHandling(response.failure);
-                    });
-                }
+                DataProviderManager.removePropertyList(dataProvider)
+                  .then( result => {
+                    if (result.succeeded) {
+                      viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
+                    }
+                    else {
+                      ViewModelUtils.failureResponseDefaultHandling(result.failure);
+                    }
+                  })
+                  .catch(response => {
+                    ViewModelUtils.failureResponseDefaultHandling(response.failure);
+                  });
+              }
                 break;
             }
           });
@@ -709,7 +749,7 @@ define([
           return Promise.resolve();
         }
       }
-      
+
       function quiesceDataProviders(dataProviders) {
         const start = async () => {
           await CoreUtils.asyncForEach(dataProviders, async (dataProvider) => {
@@ -717,25 +757,28 @@ define([
               .then( result => {
                 if (result.succeeded) {
                   clearDomainStatus(dataProvider);
-                  viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
-                  viewParams.onDataProviderRemoved(dataProvider);
-                  if (dataProvider.type !== DataProvider.prototype.Type.ADMINSERVER.name) {
-                    delete dataProvider['fileContents'];
-                    delete self.contentFiles[dataProvider.id];
-                  }
+                  performPollingAgnosticQuiesceActions(dataProvider);
                 }
                 else {
                   ViewModelUtils.failureResponseDefaultHandling(result.failure);
                 }
               })
               .catch(response => {
-                ViewModelUtils.failureResponseDefaultHandling(response.failure);
+                if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
+                  ViewModelUtils.failureResponseDefaultHandling(response, 'error');
+                }
+                else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failure)) {
+                  ViewModelUtils.failureResponseDefaultHandling(response.failure);
+                }
+                else {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                }
               });
           });
         };
         return Promise.resolve(start());
       }
-      
+
       /**
        *
        * @param {DataProvider[]} dataProviders
@@ -759,7 +802,7 @@ define([
           }
         });
       }
-      
+
       /**
        * Returns a new instance of a DialogFields class, for a given ``dataProviderType``.
        * @param {DataProvider.prototype.Type} dataProviderType
@@ -773,7 +816,7 @@ define([
         dialogFields.putValue('type', dataProviderType.name);
         dialogFields.putValue('readonly', CoreUtils.isUndefinedOrNull(window.electron_api));
         dialogFields.putValue('selectProps', false);
-        
+
         switch(dataProviderType) {
           case DataProvider.prototype.Type.ADMINSERVER:
             dialogFields.putValue('url', 'http://localhost:7001');
@@ -794,10 +837,10 @@ define([
             dialogFields.putValue('modelProviders', []);
             break;
         }
-        
+
         return dialogFields;
       }
-      
+
       /**
        *
        * @param {DataProvider} dataProvider
@@ -815,7 +858,7 @@ define([
         // an Electron app (false), not not (true).
         dialogFields.putValue('readonly', CoreUtils.isUndefinedOrNull(window.electron_api));
         dialogFields.putValue('selectProps', false);
-        
+
         switch(dataProvider.type) {
           case DataProvider.prototype.Type.ADMINSERVER.name:
             dialogFields.putValue('url', dataProvider.url);
@@ -838,7 +881,7 @@ define([
         }
         return dialogFields;
       }
-      
+
       /**
        *
        * @param {DataProvider.prototype.Type} dataProviderType
@@ -878,7 +921,7 @@ define([
         setDataProvidersClassField([dataProvider]);
         return dataProvider;
       }
-      
+
       /**
        *
        * @param {DataProvider} dataProvider
@@ -909,7 +952,7 @@ define([
           }
         }
       }
-      
+
       /**
        *
        * @param {DataProvider} dataProvider
@@ -925,7 +968,7 @@ define([
             dataProvider.beanTrees[i].provider['name'] = dialogFields.name;
           }
         }
-        
+
         switch(dataProvider.type) {
           case DataProvider.prototype.Type.ADMINSERVER.name:
             dataProvider.putValue('url', dialogFields.url);
@@ -959,21 +1002,21 @@ define([
             dataProvider.putValue('models', getWDTModelNames(dialogFields.modelProviders));
             break;
         }
-        
+
         return dataProvider;
       }
-      
+
       /**
        *
        * @param {DataProvider} newDataProvider
        * @private
        */
       function addConnectionsModels(newDataProvider){
-        const index = connectionsModels().map(dataProvider => dataProvider.id).indexOf(newDataProvider.id);
+        const index = connectionsModels().findIndex(dataProvider => dataProvider.id === newDataProvider.id);
         if (index === -1) connectionsModels.push(newDataProvider);
         self.providerIconbar.addProviderListItem(newDataProvider.id);
       }
-      
+
       /**
        *
        * @param {DataProvider} newDataProvider
@@ -983,8 +1026,8 @@ define([
         if (newDataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name && !newDataProvider.lastConnectionAttemptSuccessful) {
           return;
         }
-        
-        const index = connectionsModels().map(dataProvider => dataProvider.id).indexOf(newDataProvider.id);
+
+        const index = connectionsModels().findIndex(dataProvider => dataProvider.id === newDataProvider.id);
         if (index === -1) connectionsModels.push(newDataProvider);
         loadConnectionsModels();
 
@@ -994,42 +1037,42 @@ define([
             setListItemColor(listItems);
           }
         };
-        
+
         setTimeout(onTimeout.bind(undefined, self.providerIconbar, connectionsModels()), 5);
       }
-      
+
       /**
        *
        * @param {DataProvider} newDataProvider
        * @private
        */
       function replaceConnectionsModels(newDataProvider) {
-        const index = connectionsModels().map(dataProvider => dataProvider.id).indexOf(newDataProvider.id);
+        const index = connectionsModels().findIndex(dataProvider => dataProvider.id === newDataProvider.id);
         if (index !== -1) {
           setDataProvidersClassField([newDataProvider]);
           connectionsModels()[index] = newDataProvider;
           setListItemColor([newDataProvider]);
         }
       }
-      
+
       /**
        *
        * @param {string} listItemId
        * @private
        */
       function deleteConnectionsModels(listItemId){
-        const index = connectionsModels().map(dataProvider => dataProvider.id).indexOf(listItemId);
+        const index = connectionsModels().findIndex(dataProvider => dataProvider.id === listItemId);
         if (index !== -1) {
           connectionsModels.valueWillMutate();
           connectionsModels().splice(index, 1);
           connectionsModels.valueHasMutated();
         }
       }
-      
+
       function quiesceConnectionsModels(dataProviders){
         let quiescedCount = 0;
         for (const dataProvider of dataProviders) {
-          const index = connectionsModels().map(item => item.id).indexOf(dataProvider.id);
+          const index = connectionsModels().findIndex(item => item.id === dataProvider.id);
           if (index !== -1) {
             connectionsModels.valueWillMutate();
             connectionsModels()[index].state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
@@ -1050,11 +1093,11 @@ define([
           );
         }
       }
-      
+
       function clearConnectionsModels() {
         connectionsModels.removeAll();
       }
-      
+
       function sortConnectionModels() {
         connectionsModels.sort((left, right) => {
           if (left.type < right.type)
@@ -1064,37 +1107,37 @@ define([
           return 0;
         });
         loadConnectionsModels();
-        
+
         const onTimeout = (iconbar, listItems) => {
           if (listItems.length > 0) {
             iconbar.addEventListeners(listItems);
             setListItemColor(listItems);
           }
         };
-        
+
         setTimeout(onTimeout.bind(undefined, self.providerIconbar, connectionsModels()), 5);
       }
-      
+
       function setResponseMessageVisibility(selector, visible) {
         const div = document.getElementById(selector);
         if (div !== null) {
           div.style.display = (visible ? 'inline-flex' : 'none');
         }
       }
-      
+
       function setListItemColor(dataProviders) {
         for (const i in dataProviders) {
           $(`#${dataProviders[i].id} span.cfe-provider-icon`).css('color', (dataProviders[i].state === CoreTypes.Domain.ConnectState.CONNECTED.name ? PROVIDER_ACTIVATED_COLOR : PROVIDER_DEACTIVATED_COLOR));
           $(`#${dataProviders[i].id} span.oj-navigationlist-item-label`).css('color', (dataProviders[i].state === CoreTypes.Domain.ConnectState.CONNECTED.name ? PROVIDER_ACTIVATED_COLOR : PROVIDER_DEACTIVATED_COLOR));
         }
       }
-      
+
       function handleSsoTokenExpired(dataProvider) {
         // Deactivate (disconnect) the data provider when the token expires
         Logger.info(`[PROVIDERS] handleSsoTokenExpired() ${dataProvider.name} (${dataProvider.id})`);
         performDeactivateAction(dataProvider);
       }
-      
+
       function handleSsoPollingCompleted(dataProvider) {
         Logger.info(`[PROVIDERS] handleSsoPollingCompleted() ${dataProvider.name} (${dataProvider.expires})`);
         // Handle the token not found by deleting the sso data provider...
@@ -1106,7 +1149,7 @@ define([
         Logger.info(`[PROVIDERS] handleSsoPollingCompleted() switch to ${dataProvider.name} (${dataProvider.url})`);
         switchSsoAdminServerConnection(dataProvider);
       }
-      
+
       function handleSsoPollingFailed(dataProvider) {
         clearSsoTokenState(dataProvider);
         // Set the state as connected so the remove will delete the data provider from the backend
@@ -1128,14 +1171,12 @@ define([
             Logger.info(`[PROVIDERS] handleSsoPollingFailed() ${dataProvider.name}: ${response.failure}`);
           });
       }
-      
+
       function clearDomainStatus(dataProvider) {
         DataProviderManager.cancelDomainStatusTimer(dataProvider);
-        if (CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus)) {
-          viewParams.signaling.domainStatusPollingCompleted.dispatch({});
-        }
+        viewParams.signaling.domainStatusPollingCompleted.dispatch({});
       }
-      
+
       function clearSsoTokenState(dataProvider) {
         // Clear the sso data provider of the token in the event of a connection/token issue
         Logger.info(`[PROVIDERS] clearSsoTokenState() ${dataProvider.name} (${dataProvider.id})`);
@@ -1146,7 +1187,7 @@ define([
           delete dataProvider.status.ssologin;
         }
       }
-      
+
       function switchSsoAdminServerConnection(dataProvider) {
         const curDataProvider = DataProviderManager.getLastActivatedDataProvider();
         if (CoreUtils.isNotUndefinedNorNull(curDataProvider)) {
@@ -1179,7 +1220,7 @@ define([
         // Continue with sso data provider
         selectSsoAdminServerConnection(dataProvider);
       }
-      
+
       function selectSsoAdminServerConnection(dataProvider) {
         // Calculate the timeout by factoring clock skew and compensating for token processing time
         const tokenClockSkew = Runtime.getSsoTokenClockSkew();
@@ -1191,14 +1232,14 @@ define([
         // Setup the token expiration timer...
         dataProvider.putValue('timerExpiredSignal', viewParams.signaling.ssoTokenExpired);
         DataProviderManager.startDataProviderSsoTokenTimer(dataProvider, (tokenExpires * 1000));
-        
+
         // Indicate the login is complete...
         dispatchCompleteSsoAdminServerConnection(dataProvider);
-        
+
         // Start the data provider...
         startSsoAdminServerConnection(dataProvider);
       }
-      
+
       function dispatchCompleteSsoAdminServerConnection(dataProvider) {
         if (ViewModelUtils.isElectronApiAvailable()) {
           window.electron_api.ipc.invoke('complete-login', {name: dataProvider.name})
@@ -1208,7 +1249,7 @@ define([
             });
         }
       }
-      
+
       function startSsoAdminServerConnection(dataProvider) {
         // Establish the connection using the sso token...
         DataProviderManager.useSsoAdminServerConnection(dataProvider)
@@ -1235,7 +1276,7 @@ define([
             ViewModelUtils.failureResponseDefaultHandling(response);
           });
       }
-      
+
       // Perform login handling for an admin server connection using sso setup and
       // return false when the data provider does not require the login handling...
       function performAdminServerConnectionSsoLogin(dataProvider) {
@@ -1243,24 +1284,24 @@ define([
           // Skip login when the data provider is not set for sso
           return false;
         }
-        
+
         // IFF already connected then return to activate the data provider
         if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
           return false;
         }
-        
+
         // Clear out any current SSO token handling if SSO login already in progress on the data provider
         if (CoreUtils.isNotUndefinedNorNull(dataProvider?.status?.ssoid) && (dataProvider.status.ssoid !== '')) {
           clearSsoTokenState(dataProvider);
         }
-        
+
         // Check and add back the provider into the dataproviders if the provider was previously deactivated
         if (CoreUtils.isUndefinedOrNull(DataProviderManager.getDataProviderById(dataProvider.id))) {
           dataProvider = DataProviderManager.createAdminServerConnection(DataProviderManager.getEntryFromDataProvider(dataProvider));
           dataProvider.state = CoreTypes.Domain.ConnectState.DISCONNECTED.name;
           replaceConnectionsModels(dataProvider);
         }
-        
+
         Logger.info(`[PROVIDERS] performAdminServerConnectionSsoLogin() ${dataProvider.name}`);
         DataProviderManager.activateSsoAdminServerConnection(dataProvider)
           .then(reply => {
@@ -1322,37 +1363,37 @@ define([
           .catch(response => {
             ViewModelUtils.failureResponseDefaultHandling(response);
           });
-        
+
         return true;
       }
-      
+
       function errorPerformAdminServerConnectionSsoLogin(dataProvider, response) {
         setListItemColor([dataProvider]);
         self.responseMessage(`${response}`);
         setResponseMessageVisibility('connection-response-message', true);
         editAdminServerConnection(dataProvider);
       }
-      
+
       // Handle the SSO setting before connection dialog box displayed
       function setSsoAdminServerConnectionState(checkbox) {
         ProvidersDialog.updateSsoDependentFields(checkbox.length > 0);
       }
-      
+
       function addAdminServerConnection(dialogParams){
         dialogParams['help'] = {providerType: 'AdminServerConnection'};
-        
+
         const entryValues = getDialogFields(DataProvider.prototype.Type.ADMINSERVER);
         self.dialogFields(entryValues);
         dialogParams.insecure = self.dialogFields().insecureCheckbox;
-        
+
         self.i18n.dialog.title(self.i18n.titles.add.connections.value);
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.connections.add.value'));
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
-        
+
         setSsoAdminServerConnectionState(self.dialogFields().ssoCheckbox);
         self.responseMessage('');
         setResponseMessageVisibility('connection-response-message',false);
-        
+
         ProvidersDialog.showProvidersDialog('AddAdminServerConnection', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
@@ -1363,7 +1404,7 @@ define([
             }
           });
       }
-      
+
       function getNewWDTModelDataByTemplate(template) {
         let data = Runtime.getWDTModelDomainTemplate();
         if (CoreUtils.isNotUndefinedNorNull(template) && ['domain', 'sparse'].includes(template)) {
@@ -1371,7 +1412,7 @@ define([
         }
         return data;
       }
-      
+
       /**
        * Displays the dialog box used to add a WDT Model provider, for a "new" or "existing" WDT model file.
        * <p>NOTE: The same dialog box is used to edit a WDT Model provider.</p>
@@ -1380,45 +1421,45 @@ define([
        */
       function addWDTModel(dialogParams) {
         dialogParams['help'] = {providerType: 'WDTModel'};
-        
+
         const entryValues = getDialogFields(DataProvider.prototype.Type.MODEL);
         entryValues['action'] = dialogParams.action;
         entryValues['checkbox'] = (dialogParams.action === 'new');
         entryValues.file = (dialogParams.action === 'existing' ? '' : 'new-wdt-model.yaml');
         entryValues.readonly = (dialogParams.action === 'existing');
-        
+
         self.dialogFields(entryValues);
-        
+
         const actionSwitch = (value) => ({
           'new': 'new',
           'existing': 'add'
         })[value];
         const actionPart = actionSwitch(dialogParams.action);
-        
+
         self.i18n.dialog.title(self.i18n.titles[actionPart].models.value);
         self.i18n.dialog.nameLabel(self.i18n.labels.models.name.value);
         self.i18n.dialog.fileLabel(self.i18n.labels.models.file.value);
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString(`wrc-data-providers.instructions.models.${actionPart}.value`));
         self.i18n.dialog.iconFile(dialogParams.action === 'existing' ? self.i18n.icons.choose.iconFile : self.i18n.icons.pick.iconFile);
         self.i18n.dialog.tooltip(dialogParams.action === 'existing' ? self.i18n.icons.choose.tooltip : self.i18n.icons.pick.tooltip);
-        
+
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
-        
+
         self.useSparseTemplate([]);
         self.responseMessage('');
         setResponseMessageVisibility('model-response-message',false);
-        
+
         // Set modelFile observable to "", which will make
         // clicking the "OK" button a no-op, until the end
         // user clicks the directory tree icon
         // (dialogParams.action = "new"), or the download
         // icon (dialogParams.action = "existing").
         self.contentFile('');
-        
+
         // Setup the Property List selection values
         self.propProviderSelectedValue(self.dialogFields().propProvider);
         self.propProvidersDataProvider.data = getAvailablePropertyLists();
-        
+
         ProvidersDialog.showProvidersDialog('AddWDTModel', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
@@ -1457,28 +1498,28 @@ define([
             }
           });
       }
-      
+
       /**
        * Displays the dialog box used to add a WDT Composite Model provider.
        * @private
        */
       function addWDTCompositeModel(dialogParams) {
         dialogParams['help'] = {providerType: 'WDTCompositeModel'};
-        
+
         const entryValues = getDialogFields(DataProvider.prototype.Type.COMPOSITE);
         self.dialogFields(entryValues);
-        
+
         self.i18n.dialog.title(self.i18n.titles.add.composite.value);
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.composite.add.value'));
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
-        
+
         self.responseMessage('');
         setResponseMessageVisibility('model-composite-response-message',false);
-        
+
         // Setup the WDT Composite Model dialog values
         self.wdtProvidersSelectedValues(self.dialogFields().modelProviders);
         self.wdtProvidersDataProvider.data = getAvailableWDTModels();
-        
+
         ProvidersDialog.showProvidersDialog('AddWDTCompositeModel', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
@@ -1494,7 +1535,7 @@ define([
             }
           });
       }
-      
+
       /**
        * Displays the dialog box used to add a Property List provider.
        * Uses the WDT model dialog box without checkbox for new property list.
@@ -1502,38 +1543,38 @@ define([
        */
       function addPropertyList(dialogParams) {
         dialogParams['help'] = {providerType: 'PropertyList'};
-        
+
         const entryValues = getDialogFields(DataProvider.prototype.Type.PROPERTIES);
         entryValues['action'] = dialogParams.action;
         entryValues['checkbox'] = false;
         entryValues.file = (dialogParams.action === 'existing' ? '' : 'new-property-list.props');
         entryValues.readonly = (dialogParams.action === 'existing');
-        
+
         self.dialogFields(entryValues);
-        
+
         const actionSwitch = (value) => ({
           'new': 'new',
           'existing': 'add'
         })[value];
         const actionPart = actionSwitch(dialogParams.action);
-        
+
         self.i18n.dialog.title(self.i18n.titles[actionPart].proplist.value);
         self.i18n.dialog.nameLabel(self.i18n.labels.proplist.name.value);
         self.i18n.dialog.fileLabel(self.i18n.labels.proplist.file.value);
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString(`wrc-data-providers.instructions.proplist.${actionPart}.value`));
         self.i18n.dialog.iconFile(dialogParams.action === 'existing' ? self.i18n.icons.choose.iconFile : self.i18n.icons.pick.iconFile);
         self.i18n.dialog.tooltip(dialogParams.action === 'existing' ? self.i18n.icons.choose.tooltip : self.i18n.icons.pick.tooltip);
-        
+
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
-        
+
         self.responseMessage('');
         setResponseMessageVisibility('model-response-message',false);
-        
+
         // Set the file observable to "", which will make
         // clicking the "OK" button a no-op, until the end
         // user clicks the directory tree icon
         self.contentFile('');
-        
+
         ProvidersDialog.showProvidersDialog('AddPropertyList', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
@@ -1565,7 +1606,7 @@ define([
             }
           });
       }
-      
+
       /**
        * Return the array of WDT Models currently available from the list of dataproviders.
        * @private
@@ -1582,7 +1623,7 @@ define([
         });
         return wdtModels;
       }
-      
+
       /**
        * Return the array of Model names based on the array of dataprovider ids.
        * @private
@@ -1594,7 +1635,7 @@ define([
         });
         return models;
       }
-      
+
       /**
        * Return the array of dataprovider ids or array of dataproviders based on the array of Model names.
        * @private
@@ -1611,7 +1652,7 @@ define([
         }
         return modelProviders;
       }
-      
+
       /**
        * Return the array of Property Lists currently available from the list of dataproviders.
        * @private
@@ -1632,7 +1673,7 @@ define([
         propertyLists.push({ value: '', label: self.i18n.labels.dropdown.none.value});
         return propertyLists;
       }
-      
+
       /**
        * Return an array of Property List names based on the single dataprovider id
        * as the backend model provider allows multiple references to be specified.
@@ -1648,7 +1689,7 @@ define([
         }
         return propertyNames;
       }
-      
+
       /**
        * Check if there is a property list name entry in the array of property list names.
        * @private
@@ -1656,7 +1697,7 @@ define([
       function isPropertyListSpecified(propListNames) {
         return (CoreUtils.isNotUndefinedNorNull(propListNames) && CoreUtils.isNotUndefinedNorNull(propListNames[0]));
       }
-      
+
       /**
        * Return the dataprovider id or the dataprovider based on first Property List name.
        *
@@ -1673,7 +1714,7 @@ define([
         }
         return (isDataProvider ? null : '');
       }
-      
+
       function isUniqueDataProviderName(selector) {
         const dialogFields = self.dialogFields();
         const result = connectionsModels().filter(dataProvider => dataProvider.name === dialogFields.name && dataProvider.id !== dialogFields.id);
@@ -1683,24 +1724,24 @@ define([
         }
         return (result.length === 0);
       }
-      
+
       function getBooleanSettingChanged(setting, checkboxLength) {
         // See if the setting changed from previous state
         // IFF setting is available and true, determine if the checkbox in unchecked
         // Otherwise determine if the checkbox is checked
         return (setting ? (checkboxLength <= 0) : (checkboxLength > 0));
       }
-      
+
       function editAdminServerConnection(dataProvider) {
         const entryValues = createDialogFields(dataProvider);
         self.dialogFields(entryValues);
-        
+
         setSsoAdminServerConnectionState(self.dialogFields().ssoCheckbox);
-        
+
         self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.connections.value'));
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.connections.edit.value'));
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
-        
+
         const dialogParams = {
           type: dataProvider.type,
           id: dataProvider.id,
@@ -1708,7 +1749,7 @@ define([
           insecure: self.dialogFields().insecureCheckbox,
           help: {providerType: 'AdminServerConnection'}
         };
-        
+
         ProvidersDialog.showProvidersDialog('EditAdminServerConnection', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
@@ -1745,6 +1786,8 @@ define([
               }
               else {
                 dataProvider = editUpdateDataProvider(dataProvider, self.dialogFields());
+                self.responseMessage('');
+                setResponseMessageVisibility('connection-response-message', false);
                 // Dispatch the dataProviderSelected singal using navtreeReset as true
                 selectAdminServerConnection(dataProvider, true);
               }
@@ -1756,7 +1799,7 @@ define([
             }
           });
       }
-      
+
       /**
        * Displays the dialog box used to edit a WDT Model provider.
        * <p>NOTE: The same dialog box is used to add a WDT Model provider.</p>
@@ -1767,7 +1810,7 @@ define([
         const entryValues = createDialogFields(dataProvider);
         entryValues['action'] = 'existing';
         self.dialogFields(entryValues);
-        
+
         self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.models.value'));
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.models.edit.value'));
         self.i18n.dialog.nameLabel(self.i18n.labels.models.name.value);
@@ -1775,23 +1818,23 @@ define([
         self.i18n.dialog.iconFile(self.i18n.icons.choose.iconFile);
         self.i18n.dialog.tooltip(self.i18n.icons.choose.tooltip);
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
-        
+
         const dialogParams = {
           type: dataProvider.type,
           id: dataProvider.id,
           accepts: 'application/yaml,application/x-yaml,application/json',
           help: {providerType: 'WDTModel'}
         };
-        
+
         self.connectionsModelsSelectedItem(null);
-        
+
         // Set the dialog box based on createDialogFields()
         self.contentFile(self.dialogFields().file);
-        
+
         // Setup the Property List selection values
         self.propProviderSelectedValue(self.dialogFields().propProvider);
         self.propProvidersDataProvider.data = getAvailablePropertyLists();
-        
+
         // Finally, we need to show the "Edit WDT Model" dialog,
         // mainly for the purpose of getting the model file.
         ProvidersDialog.showProvidersDialog('EditWDTModel', dialogParams, self.i18n, isUniqueDataProviderName)
@@ -1854,7 +1897,7 @@ define([
             }
           });
       }
-      
+
       function editUpdateWDTModel(dataProvider) {
         dataProvider = editUpdateDataProvider(dataProvider, self.dialogFields());
         if (CoreUtils.isNotUndefinedNorNull(dataProvider.file)) {
@@ -1862,7 +1905,7 @@ define([
           selectWDTModel(dataProvider, true);
         }
       }
-      
+
       /**
        * Displays the dialog box used to edit a WDT Composite Model provider.
        * <p>NOTE: The same dialog box is used to add a WDT Composite Model provider.</p>
@@ -1872,20 +1915,20 @@ define([
       function editWDTCompositeModel(dataProvider) {
         const entryValues = createDialogFields(dataProvider);
         self.dialogFields(entryValues);
-        
+
         self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.composite.value'));
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.composite.edit.value'));
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
-        
+
         const dialogParams = {
           type: dataProvider.type,
           id: dataProvider.id,
           accepts: 'application/yaml,application/x-yaml,application/json',
           help: {providerType: 'WDTCompositeModel'}
         };
-        
+
         self.connectionsModelsSelectedItem(null);
-        
+
         // Setup the WDT Composite Model dialog values
         self.wdtProvidersSelectedValues(self.dialogFields().modelProviders);
         if (!modelProvidersEqual(dataProvider, self.dialogFields())) {
@@ -1893,7 +1936,7 @@ define([
           self.wdtProvidersSelectedValues([]);
         }
         self.wdtProvidersDataProvider.data = getAvailableWDTModels();
-        
+
         ProvidersDialog.showProvidersDialog('EditWDTCompositeModel', dialogParams, self.i18n, isUniqueDataProviderName)
           .then(reply => {
             if (reply) {
@@ -1929,7 +1972,7 @@ define([
                 // Dispatch the dataProviderSelected singal using navtreeReset as true
                 selectWDTCompositeModel(dataProvider, true);
               }
-              
+
             }
             else {
               revertDialogFields(dataProvider);
@@ -1939,7 +1982,7 @@ define([
             }
           });
       }
-      
+
       // Determine if the list of model provider ids are the same
       function modelProvidersEqual(dataProvider, dialogFields) {
         // If the composite has no model providers, return true
@@ -1951,7 +1994,7 @@ define([
         const other = dialogFields.modelProviders;
         return ((other.length === prov.length) && other.every((val, idx) => val === prov[idx]));
       }
-      
+
       /**
        * Displays the dialog box used to edit a Property List provider.
        * Uses the WDT model dialog box.
@@ -1962,7 +2005,7 @@ define([
         const entryValues = createDialogFields(dataProvider);
         entryValues['action'] = 'existing';
         self.dialogFields(entryValues);
-        
+
         self.i18n.dialog.title(oj.Translations.getTranslatedString('wrc-data-providers.titles.edit.proplist.value'));
         self.i18n.dialog.instructions(oj.Translations.getTranslatedString('wrc-data-providers.instructions.proplist.edit.value'));
         self.i18n.dialog.nameLabel(self.i18n.labels.proplist.name.value);
@@ -1970,19 +2013,19 @@ define([
         self.i18n.dialog.iconFile(self.i18n.icons.choose.iconFile);
         self.i18n.dialog.tooltip(self.i18n.icons.choose.tooltip);
         self.i18n.buttons.ok.label(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'));
-        
+
         const dialogParams = {
           type: dataProvider.type,
           id: dataProvider.id,
           accepts: 'text/plain',
           help: {providerType: 'PropertyList'}
         };
-        
+
         self.connectionsModelsSelectedItem(null);
-        
+
         // Set the dialog box based on createDialogFields()
         self.contentFile(self.dialogFields().file);
-        
+
         // Finally, we need to show the "Edit Property List" dialog,
         // mainly for the purpose of getting the properties file.
         ProvidersDialog.showProvidersDialog('EditPropertyList', dialogParams, self.i18n, isUniqueDataProviderName)
@@ -2027,7 +2070,7 @@ define([
             }
           });
       }
-      
+
       function editRemovedDataProvider(dataProvider) {
         replaceConnectionsModels(dataProvider);
         // Signal provider removal to ensure proper state until activate
@@ -2036,7 +2079,7 @@ define([
         viewParams.onElectronApiSignalDispatched('project-changing');
         viewParams.onCachedStateChanged();
       }
-      
+
       function editUpdateDataProvider(dataProvider, dialogFields) {
         dataProvider = updateDataProvider(dataProvider, dialogFields);
         updateConnectionsModels(dataProvider);
@@ -2046,7 +2089,7 @@ define([
         }
         return dataProvider;
       }
-      
+
       function editDataProvider(dataProvider) {
         switch (dataProvider.type) {
           case DataProvider.prototype.Type.ADMINSERVER.name:
@@ -2063,7 +2106,7 @@ define([
             break;
         }
       }
-      
+
       function removeDataProvider(dataProvider) {
         switch (dataProvider.type) {
           case DataProvider.prototype.Type.ADMINSERVER.name:
@@ -2076,7 +2119,7 @@ define([
             return DataProviderManager.removePropertyList(dataProvider);
         }
       }
-      
+
       function uploadDataProviderFormData(dataProvider, formData) {
         switch (dataProvider.type) {
           case DataProvider.prototype.Type.MODEL.name:
@@ -2085,7 +2128,7 @@ define([
             return DataProviderManager.uploadPropertyList(dataProvider, formData);
         }
       }
-      
+
       /**
        *
        * @returns {Promise<any>}
@@ -2112,7 +2155,7 @@ define([
             });
         });
       }
-      
+
       // FortifyIssueSuppression(746F19A7EC928D5E62A6C45F83A91498) Password Management: Password in Comment
       // Not a password, just a comment
       /**
@@ -2134,7 +2177,7 @@ define([
           return Promise.resolve(reply);
         }
       }
-      
+
       function deleteAction(dialogParams) {
         const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
         ViewModelUtils.abandonUnsavedChanges('delete', self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
@@ -2154,7 +2197,7 @@ define([
             ViewModelUtils.failureResponseDefaultHandling(failure);
           });
       }
-      
+
       function editAction(dialogParams) {
         const dataProvider = connectionsModels().find(item => item.id === dialogParams.id);
         ViewModelUtils.abandonUnsavedChanges('edit', self.canExitCallback, {dialogMessage: {name: dataProvider.name }})
@@ -2174,15 +2217,15 @@ define([
             ViewModelUtils.failureResponseDefaultHandling(failure);
           });
       }
-      
+
       function isSelectedDataProvider(dataProvider) {
         const lastActivatedDataProvider = DataProviderManager.getLastActivatedDataProvider();
         return (CoreUtils.isUndefinedOrNull(lastActivatedDataProvider) ? false : lastActivatedDataProvider.id === dataProvider.id)
       }
-      
+
       function performEditAction(dataProvider, dialogParams) {
         self.responseMessage('');
-        
+
         switch(dialogParams.type) {
           case DataProvider.prototype.Type.ADMINSERVER.name:
             setResponseMessageVisibility('connection-response-message', false);
@@ -2197,24 +2240,41 @@ define([
         }
         editDataProvider(dataProvider);
       }
-      
+
+      function performPollingAgnosticQuiesceActions(dataProvider) {
+        viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
+        viewParams.onDataProviderRemoved(dataProvider);
+        if (dataProvider.type !== DataProvider.prototype.Type.ADMINSERVER.name) {
+          delete dataProvider['fileContents'];
+          delete self.contentFiles[dataProvider.id];
+        }
+      }
+
       function performDeactivateAction(dataProvider) {
         const dataProviders = [dataProvider];
+
         if (dataProvider.type !== DataProvider.prototype.Type.ADMINSERVER.name) {
           const propertiesDataProvider = getPropertyListProvider(dataProvider.properties, true);
           if (CoreUtils.isNotUndefinedNorNull(propertiesDataProvider)) {
             dataProviders.push(propertiesDataProvider);
           }
         }
-        quiesceDataProviders(dataProviders)
-          .then(() =>{
-            quiesceConnectionsModels(dataProviders);
-          })
-          .catch(response => {
-            ViewModelUtils.failureResponseDefaultHandling(response);
-          });
+
+        if (self.isPollingWhenQuiesced(dataProvider)) {
+          performPollingAgnosticQuiesceActions(dataProvider);
+          quiesceConnectionsModels(dataProviders);
+        }
+        else {
+          quiesceDataProviders(dataProviders)
+            .then(() =>{
+              quiesceConnectionsModels(dataProviders);
+            })
+            .catch(response => {
+              ViewModelUtils.failureResponseDefaultHandling(response);
+            });
+        }
       }
-      
+
       function performDeleteAction(dataProvider) {
         deactivateDataProviders([dataProvider])
           .then(() =>{
@@ -2227,7 +2287,7 @@ define([
             ViewModelUtils.failureResponseDefaultHandling(response);
           });
       }
-      
+
       function changeConnectionsModelsSelectedItem(dataProvider, navtreeReset = false) {
         if (CoreUtils.isNotUndefinedNorNull(dataProvider) && self.providerIconbar.getDataItemActions().length === 0) {
           // Choose what to do next, based on the type
@@ -2274,14 +2334,14 @@ define([
           }
         }
       }
-      
+
       function selectAdminServerConnection(dataProvider, navtreeReset = false) {
         // Check/Perform login handling on a dataprovider with sso setup,
         // otherwise continue through and select the data provider...
         if (performAdminServerConnectionSsoLogin(dataProvider)) return;
-        
+
         const lastActivatedDataProvider = DataProviderManager.getLastActivatedDataProvider();
-        
+
         if (dataProvider.state === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
           DataProviderManager.activateAdminServerConnection(dataProvider)
             .then(reply => {
@@ -2310,13 +2370,13 @@ define([
           activateDataProvider(dataProvider, lastActivatedDataProvider);
         }
       }
-      
+
       function selectWDTModel(dataProvider, navtreeReset = false) {
         // Check the property list reference on the model
         // and then select the model provider...
         checkPropertyListSelectWDTModel(dataProvider, navtreeReset);
       }
-      
+
       /**
        * Common logic to select the data providers using file content
        * deal with the creating the form data and doing the upload.
@@ -2358,7 +2418,7 @@ define([
           }
         }
       }
-      
+
       function selectWDTCompositeModel(dataProvider, navtreeReset = false) {
         const lastActivatedDataProvider = DataProviderManager.getLastActivatedDataProvider();
         if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
@@ -2366,7 +2426,7 @@ define([
           activateDataProvider(dataProvider, lastActivatedDataProvider);
           return;
         }
-        
+
         // Check and map the models to their dataproviders and if unable
         // to map the model names 1-1, have the user edit the composite...
         if (CoreUtils.isUndefinedOrNull(dataProvider['modelProviders'])) {
@@ -2381,7 +2441,7 @@ define([
           // Set the list of dataproviders used to create the composite dataprovider
           dataProvider['modelProviders'] = dataproviders;
         }
-        
+
         // IFF all the model dataproviders are not ready then upload the model files...
         const modelProviders = getWDTModelProviders(dataProvider.models, true);
         if (!modelProviders.every(isProviderContentReady)) {
@@ -2423,12 +2483,12 @@ define([
             });
         }
       }
-      
+
       function selectPropertyList(dataProvider, navtreeReset = false) {
         // Perform the file content handling and select the provider
         selectContentFileProvider(dataProvider, navtreeReset);
       }
-      
+
       function createContentFileBlob(dataProvider, navtreeReset) {
         const blob = self.contentFiles[dataProvider.id];
         if (CoreUtils.isNotUndefinedNorNull(blob)) {
@@ -2509,7 +2569,7 @@ define([
           }
         }
       }
-      
+
       function sendContentFileFormData(dataProvider, formData, navtreeReset) {
         uploadDataProviderFormData(dataProvider, formData)
           .then(reply => {
@@ -2536,6 +2596,7 @@ define([
             delete dataProvider['fileContents'];
             let responseErrorMessages = {html: '<p/>'};
             if (CoreUtils.isError(response)) {
+              response['body'] = {messages: []};
               response.body.messages.push({message: response});
             }
             else if (response.transport.status === 0) {
@@ -2550,13 +2611,13 @@ define([
             editDataProvider(dataProvider);
           });
       }
-      
+
       function useSucceededHandler(dataProvider, navtreeReset) {
         viewParams.onSetUnnamedProject();
         const lastActivatedDataProvider = DataProviderManager.getLastActivatedDataProvider();
         activateDataProvider(dataProvider, lastActivatedDataProvider, navtreeReset);
       }
-      
+
       function activateDataProvider(dataProvider, lastActivatedDataProvider, navtreeReset = false) {
         // Set color of list item for data provider,
         // to indicate that it has been activated.
@@ -2576,11 +2637,16 @@ define([
         if (CoreUtils.isNotUndefinedNorNull(lastActivatedDataProvider)) {
           clearDomainStatus(lastActivatedDataProvider);
         }
+        else if (dataProvider.type !== DataProvider.prototype.Type.ADMINSERVER.name) {
+          viewParams.signaling.domainStatusPollingCompleted.dispatch({});
+        }
+
         // Do some specific handling if it's a ADMINSERVER
         // data provider type.
         if (dataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name) {
           Runtime.setWebLogicUsername(dataProvider.username);
           if (CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus)) {
+            dataProvider.domainStatus['pollWhenQuiesced'] = false;
             DataProviderManager.startDataProviderStatusPolling(dataProvider, pollDomainStatus);
           }
           // Send signal about domain being changed, if
@@ -2601,7 +2667,7 @@ define([
         // Select 'dataproviders' tab strip and collapse console Kiosk
         viewParams.signaling.ancillaryContentItemCleared.dispatch('providers');
       }
-      
+
       function removeSucceededHandler(dataProvider, showDialog = true) {
         // Remove from instance-scoped observable array.
         deleteConnectionsModels(dataProvider.id);
@@ -2623,7 +2689,7 @@ define([
         // Send signal about data provider being deleted.
         viewParams.signaling.dataProviderRemoved.dispatch(dataProvider);
       }
-      
+
       function getContentFileFormData(dataProvider) {
         const formData = new FormData();
         // Add multipart section for the file contents
@@ -2632,30 +2698,30 @@ define([
           new Blob([dataProvider.fileContents]),
           dataProvider.file
         );
-        
+
         // Create the data section specifying the name as the provider id
         const data = {
           name: dataProvider.id
         };
-        
+
         // Add the property list reference when specified on the dataprovider
         if (CoreUtils.isNotUndefinedNorNull(dataProvider.propProvider) && (dataProvider.propProvider !== '')) {
           data['propertyLists'] = [dataProvider.propProvider];
         }
-        
+
         // Add the multipart form data section
         formData.append(
           'data', JSON.stringify(data)
         );
-        
+
         return formData;
       }
-      
+
       function readContentFile(dataProvider, blob) {
         return new Promise((resolve, reject) => {
           // Declare reader for reading model file.
           const reader = new FileReader();
-          
+
           // Callback that will be called when the
           // reader.readAsText() function is called.
           // The blob argument will contain the
@@ -2672,26 +2738,26 @@ define([
                 });
             };
           })(blob);
-          
+
           // Read in model file as a data URL.
           reader.readAsText(blob);
         });
       }
-      
+
       async function createUploadContentFileFormData(dataProvider, blob = null) {
         const contentFileBlob = (CoreUtils.isUndefinedOrNull(blob) ? self.contentFiles[dataProvider.id] : blob);
         const reply = await readContentFile(dataProvider, contentFileBlob)
         dataProvider['fileContents'] = reply.body.data;
         return getContentFileFormData(dataProvider);
       }
-      
+
       // Checks if provider content is ready for a WDT Model or Property List provider
       function isProviderContentReady(dataProvider) {
         // Check if the dataprovider is already connected and has the content file
         return ((dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name)
           && CoreUtils.isNotUndefinedNorNull(dataProvider['fileContents']));
       }
-      
+
       function uploadCompositeModelFiles(compositeProvider, modelProviders, navtreeReset) {
         CoreUtils.asyncForEach(modelProviders, uploadModelProviderContentFile)
           .then(() => {
@@ -2702,7 +2768,7 @@ define([
             ViewModelUtils.failureResponseDefaultHandling(getUploadContentFileFailure(error), 'error');
           });
       }
-      
+
       function getUploadContentFileFailure(error) {
         var failure = error;
         if (CoreUtils.isError(error) && CoreUtils.isNotUndefinedNorNull(error.message)) {
@@ -2715,7 +2781,7 @@ define([
         }
         return failure;
       }
-      
+
       async function uploadModelProviderContentFile(modelProvider) {
         // Check and attempt to upload the property list first when a reference exists
         // If there is a failure to upload properties, display the message and continue...
@@ -2730,18 +2796,18 @@ define([
               });
           }
         }
-        
+
         // Now upload the model file...
         self.i18n.messages.upload.failed.detail = oj.Translations.getTranslatedString('wrc-data-providers.messages.upload.failed.detail', '{0}');
         await uploadProviderContentFile(modelProvider);
       }
-      
+
       async function uploadProviderContentFile(dataprovider) {
         // Skip upload when the dataprovider is ready...
         if (isProviderContentReady(dataprovider)) {
           return Promise.resolve(true);
         }
-        
+
         // Otherwise read the content file for the dataprovider and upload...
         const response = await window.electron_api.ipc.invoke('file-reading', {filepath: dataprovider.file, allowDialog: false});
         Logger.info(`[PROVIDERS] uploadProviderContentFile() 'file-reading' file=${response.file}`);
@@ -2768,7 +2834,7 @@ define([
             return Promise.reject(failure);
           });
       }
-      
+
       // Check the referenced property list from the model for upload then select the model
       async function checkPropertyListSelectWDTModel(modelProvider, navtreeReset = false) {
         // Check and map the properties reference to the property list dataprovider...
@@ -2785,7 +2851,7 @@ define([
             });
           modelProvider['propProvider'] = propProviderId;
         }
-        
+
         // IFF the property list was specified but the provider was not found then display this information
         if (CoreUtils.isUndefinedOrNull(propProvider) && isPropertyListSpecified(modelProvider.properties)) {
           MessageDisplaying.displayMessage({
@@ -2793,7 +2859,7 @@ define([
             summary: self.i18n.messages.response.propListNotFound.detail.replace('{0}', modelProvider.properties[0])
           }, 5000);
         }
-        
+
         // Where there is a property list reference, attempt to upload the properties
         // but if there are any problems, just display the failure and continue since the
         // property list is not required for the WDT model...
@@ -2816,11 +2882,11 @@ define([
               });
           }
         }
-        
+
         // Now go an perform the file content handling and select the model provider!
         selectContentFileProvider(modelProvider, navtreeReset);
       }
-      
+
       this.connectionsModelsSelectedItemChanged = function(event) {
         // Only do something if user actually clicked a
         // list item. self.connectionsModelsSelectedItem
@@ -2830,7 +2896,7 @@ define([
         // list control.
         if (self.connectionsModelsSelectedItem() !== null) {
           self.connectionsModelsSelectedItem(null);
-          
+
           const dataProvider = connectionsModels().find(item => item.id === event.target.currentItem);
           const lastActivatedDataProvider = DataProviderManager.getLastActivatedDataProvider();
 
@@ -2865,13 +2931,13 @@ define([
           }
         }
       };
-      
+
       this.helpIconClick = function (event) {
         if (CoreUtils.isNotUndefinedNorNull(self.dialogHelp)) {
           self.dialogHelp.display(event);
         }
       };
-      
+
       function initializeDialogFields() {
         return {
           id: '0123456789012',
@@ -2880,8 +2946,8 @@ define([
           ssoOption: (Runtime.isConfiguredSso() && ViewModelUtils.isElectronApiAvailable())
         };
       }
-      
-      function getProviderHelpData() {
+
+      function setProviderHelpData() {
         DataProviderManager.getDataProviderHelp()
           .then(result => {
             if (result.succeeded) {
@@ -2892,7 +2958,7 @@ define([
             ViewModelUtils.failureResponseDefaultHandling(response.failure);
           });
       }
-      
+
       function pollDomainStatus(dataProvider) {
         function handleResponseFailure(response) {
           if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
@@ -2907,11 +2973,8 @@ define([
             }
           }
         }
-        
-        if (dataProvider.connectivity === CoreTypes.Console.RuntimeMode.DETACHED.name) {
-          clearDomainStatus(dataProvider);
-        }
-        else if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+
+        function performDomainStatusPolling(dataProvider) {
           DataProviderManager.pollDomainStatus(dataProvider)
             .then(reply => {
               viewParams.signaling.domainStatusPollingCompleted.dispatch(reply.body.data);
@@ -2934,10 +2997,23 @@ define([
                 }
               }
             });
+
         }
-        
+
+        if (dataProvider.domainStatus.pollWhenQuiesced) {
+          performDomainStatusPolling(dataProvider);
+        }
+        else {
+          if (dataProvider.connectivity === CoreTypes.Console.RuntimeMode.DETACHED.name) {
+            clearDomainStatus(dataProvider);
+          }
+          else if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
+            performDomainStatusPolling(dataProvider);
+          }
+        }
+
       }
-      
+
       /**
        *
        * @param {string} filepath
@@ -2949,7 +3025,7 @@ define([
         const data = getNewWDTModelDataByTemplate(self.useSparseTemplate().length > 0 ? 'sparse' : 'domain');
         return createNewContentFile(data, filepath, channel, dataprovider);
       }
-      
+
       function createNewContentFile(data, filepath, channel = 'file-creating', dataprovider = null) {
         if (ViewModelUtils.isElectronApiAvailable()) {
           if (filepath !== '') {
@@ -2972,7 +3048,7 @@ define([
         }
         return data;
       }
-      
+
       // Check the dataprovider file path against the path of the file created
       function checkDataproviderFilePath(dataprovider, filePath) {
         if (CoreUtils.isNotUndefinedNorNull(dataprovider.file)) {
@@ -2984,7 +3060,7 @@ define([
           }
         }
       }
-      
+
       this.chooseFileClickHandler = (event) => {
         const fileType = event.currentTarget.attributes['data-input-type'].value;
         if (ViewModelUtils.isElectronApiAvailable()) {
@@ -3019,7 +3095,7 @@ define([
           event.preventDefault();
         }
       };
-      
+
       this.chooseFileChangeHandler = function(event) {
         const files = event.currentTarget.files;
         if (files.length > 0) {
@@ -3039,7 +3115,7 @@ define([
           chooser.val('');
         }
       };
-      
+
       this.reloadFileClickListener = function(event) {
         const dataProvider = connectionsModels().find(item => item.id === self.dialogFields().id);
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
@@ -3049,21 +3125,21 @@ define([
           dlgOkBtn12.trigger('click');
         }
       };
-      
+
       this.isReloadable = () => {
         return ViewModelUtils.isElectronApiAvailable();
       };
-      
+
       function onMouseEnter(event) {
         const listItemId = event.currentTarget.attributes['id'].value;
         $(`#${listItemId}-iconbar`).css({'visibility':'visible'});
       }
-      
+
       function onMouseLeave(event) {
         const listItemId = event.currentTarget.attributes['id'].value;
         $(`#${listItemId}-iconbar`).css({'visibility':'hidden'});
       }
-      
+
       function addEventListeners() {
         connectionsModels().forEach((item) => {
           $(`#${item.id}`)
@@ -3071,7 +3147,7 @@ define([
             .on('mouseleave', onMouseLeave);
         });
       }
-      
+
       function removeEventListeners() {
         connectionsModels().forEach((item) => {
           $(`#${item.id}`)
@@ -3079,9 +3155,9 @@ define([
             .off('mouseleave', onMouseLeave);
         });
       }
-      
+
     }
-    
+
     return ProvidersTemplate;
   }
 );

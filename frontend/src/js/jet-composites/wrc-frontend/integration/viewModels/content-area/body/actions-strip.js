@@ -7,8 +7,29 @@
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout'],
-  function (oj, ko, HtmlUtils, MessageDisplaying, DeclarativeActionsManager, ViewModelUtils, CoreUtils, Logger) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojhtmlutils',
+  'wrc-frontend/apis/message-displaying',
+  'wrc-frontend/microservices/actions-management/declarative-actions-manager',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/utils',
+  'wrc-frontend/core/types',
+  'ojs/ojlogger',
+  'ojs/ojknockout'
+],
+  function (
+    oj,
+    ko,
+    HtmlUtils,
+    MessageDisplaying,
+    DeclarativeActionsManager,
+    ViewModelUtils,
+    CoreUtils,
+    CoreTypes,
+    Logger
+  ) {
 
     function ActionsStrip(viewParams) {
       const self = this;
@@ -68,7 +89,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
           }
           else {
             if (CoreUtils.isNotUndefinedNorNull(reply.messages)) {
-              MessageDisplaying.displayResponseMessages(reply.messages);
+              if (CoreUtils.isNotUndefinedNorNull(reply.messages[0]) && (reply.messages[0].severity === 'info')) {
+                MessageDisplaying.displayMessagesAsHTML(reply.messages, '', reply.messages[0].severity);
+              }
+              else {
+                MessageDisplaying.displayResponseMessages(reply.messages);
+              }
             }
             else {
               MessageDisplaying.displayMessage(reply.data, 5000);
@@ -77,6 +103,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
           if (reply.succeeded) {
             viewParams.onActionInputFormCompleted(reply, options);
+          }
+        }
+
+      };
+
+      this.handleActionButtonClickedFailure = function (failure, options) {
+        if (CoreUtils.isNotUndefinedNorNull(failure)) {
+          if (CoreUtils.isNotUndefinedNorNull(failure.transport)) {
+            if (failure.failureType === CoreTypes.FailureType.CBE_REST_API) {
+              if (failure.transport.status !== 404) Logger.error(JSON.stringify(failure));
+            }
+            else {
+              ViewModelUtils.failureResponseDefaultHandling(failure);
+            }
+          }
+          else if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
+            MessageDisplaying.displayResponseMessages(failure.messages);
+          }
+          else {
+            ViewModelUtils.failureResponseDefaultHandling(failure);
           }
         }
 
@@ -94,7 +140,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
         const pdjData = viewParams.parentRouter.data.pdjData();
         const rdjData = viewParams.parentRouter.data.rdjData();
-  
+
         const hasActionInputForm = DeclarativeActionsManager.hasActionInputForm(rdjData.actions, options.action);
 
         if (hasActionInputForm) {
@@ -113,21 +159,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
 
               if (reply.succeeded) {
                 const declarativeActions = viewParams.getDeclarativeActions();
-                const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(declarativeActions, options.action);
+                const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(rdjData, declarativeActions, options.action);
+
+                if (CoreUtils.isNotUndefinedNorNull(options.pollingIntervalOverride)) {
+                  actionPolling.interval = options.pollingIntervalOverride;
+                }
+
                 if (actionPolling.interval > 0) {
                   actionPolling['pollCount'] = 0;
                   viewParams.onActionPollingStarted(actionPolling);
                 }
                 viewParams.onCheckedRowsRefreshed();
+                viewParams.onActionButtonsRefreshed();
               }
             })
             .catch(failure => {
-              if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
-                MessageDisplaying.displayResponseMessages(failure.messages);
-              }
-              else {
-                ViewModelUtils.failureResponseDefaultHandling(failure);
-              }
+              self.handleActionButtonClickedFailure(failure, options);
             })
             .finally(() => {
               ViewModelUtils.setPreloaderVisibility(false);
@@ -152,6 +199,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'wrc-frontend/apis/message-
         };
         self.actionButtonClicked(fauxEvent);
       };
+
 
     }
 

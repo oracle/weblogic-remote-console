@@ -1,0 +1,35 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.AppDeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean is used to configure a DBClientDataDirectory module which
+  contains an archive file or exploded archive directories that may contain tnsnames.ora,
+  server trust keystores, client identity keystores, Oracle wallets, and/or other
+  data that are needed to connect to a database. All file types are optional. '
+name: weblogic.management.configuration.DBClientDataDirectoryMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The path to the DBClientData''s install-root directory, relative
+    to the domain/config/dbclientdata directory, by default.</p> <p>When the installation
+    directory is specified, SourcePath is derived from this path and need not be specified.</p>
+    <p>The default value for this is the name of the DBClientData deployment.</p> '
+  name: InstallDir
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The path to the source of the deployable unit on the Administration
+    Server.</p> <p>Rules:</p> <p>If the source path is relative, it is resolved relative
+    to <code><i>InstallDir</i></code> if InstallDir is not null; otherwise, it is
+    resolved relative to the domain/config/dbclientdata directory.</p>  <p>Use AbsoluteSourcePath
+    to get a fully resolved value.</p> '
+  name: SourcePath
+  type: java.lang.String
+roles:
+  allowed:
+  - Deployer

@@ -29,11 +29,11 @@
     </oj-option>
     <oj-option>---</oj-option>
     <oj-option :id="[[i18n.menus.shoppingcart.discard.id]]" value="[[i18n.menus.shoppingcart.discard.id]]" disabled="[[i18n.menus.shoppingcart.commit.disabled()]]">
-      <span id="discard-changes" class="oj-ux-ico-cart-abandon cfe-ux-ico-iconfont-24" data-bind="attr: {'title': i18n.menus.shoppingcart.discard.label}"></span>
+      <span role="img" aria-hidden="true" id="discard-changes" class="oj-ux-ico-cart-abandon cfe-ux-ico-iconfont-24" data-bind="attr: {'title': i18n.menus.shoppingcart.discard.label}"></span>
       <span><oj-bind-text value="[[i18n.menus.shoppingcart.discard.label]]"></oj-bind-text></span>
     </oj-option>
     <oj-option :id="[[i18n.menus.shoppingcart.commit.id]]" value="[[i18n.menus.shoppingcart.commit.id]]" disabled="[[i18n.menus.shoppingcart.commit.disabled()]]" visible="[[i18n.menus.shoppingcart.commit.visible()]]">
-      <span id="commit-changes" class="oj-ux-ico-cart-add cfe-ux-ico-iconfont-24" data-bind="attr: {'title': i18n.menus.shoppingcart.commit.label}"></span>
+      <span role="img" aria-hidden="true" id="commit-changes" class="oj-ux-ico-cart-add cfe-ux-ico-iconfont-24" data-bind="attr: {'title': i18n.menus.shoppingcart.commit.label}"></span>
       <span><oj-bind-text value="[[i18n.menus.shoppingcart.commit.label]]"></oj-bind-text></span>
     </oj-option>
   </oj-menu>

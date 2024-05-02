@@ -1,0 +1,32 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Monitoring information for Capacity which defines the maximum number
+  of requests that can be enqueued by all the work managers that share it. '
+name: weblogic.management.runtime.CapacityRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the number of additional requests that can be scheduled
+    before the capacity constraint limit is reached. '
+  name: AvailableCapacity
+  type: int
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'Total number of requests that can be enqueued. '
+  name: Count
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the total number of in-progress requests which is the
+    sum of requests in the queue waiting for a thread + requests already executing
+    for this capacity constraint. '
+  name: InProgressRequests
+  type: int

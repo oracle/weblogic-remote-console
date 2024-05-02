@@ -1,0 +1,65 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.LogFileMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Aggregates the logging attributes for the WebServerMBean. '
+name: weblogic.management.configuration.WebServerLogMBean
+properties:
+- defaultValue:
+    value:
+      value: date time cs-method cs-uri sc-status
+  descriptionHTML: '<p>Returns the list of fields specified for the <code>extended</code>
+    logging format for access.log. </p> '
+  name: ELFFields
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The name of the log file.</p> '
+  name: FileName
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: common
+  descriptionHTML: '<p>The format of the HTTP log file. Both formats are defined by
+    the W3C. With the extended log format, you use server directives in the log file
+    to customize the information that the server records.</p> '
+  legalValues:
+  - common
+  - extended
+  name: LogFileFormat
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the time stamps for HTTP log messages are
+    in Greenwich Mean Time (GMT) regardless of the local time zone that the host computer
+    specifies.</p>  <p>Use this method to comply with the W3C specification for Extended
+    Format log files. The specification states that all time stamps for Extended Format
+    log entries be in GMT.</p>  <p>This method applies only if you have specified
+    the <code>extended</code> message format.</p> '
+  name: LogTimeInGMT
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Indicates whether this server logs HTTP requests. (The remaining
+    fields on this page are relevant only if you select this check box.)</p>  <p>Gets
+    the loggingEnabled attribute of the WebServerMBean object.</p> '
+  name: LoggingEnabled
+  type: boolean
+  writable: true

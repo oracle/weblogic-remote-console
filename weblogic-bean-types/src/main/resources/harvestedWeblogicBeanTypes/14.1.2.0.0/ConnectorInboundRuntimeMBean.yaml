@@ -1,0 +1,36 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class is used for monitoring inbound connections of resource
+  adapters. '
+name: weblogic.management.runtime.ConnectorInboundRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The activation spec class.</p> '
+  name: ActivationSpecClass
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Return all MDB pools that were activated for the resource adapter.</p> '
+  name: MDBRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.MessageDrivenEJBRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The message listener type.</p> '
+  name: MsgListenerType
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the state of the Inbound connection. The values that
+    are returned are : "Running" and "Suspended".</p> '
+  name: State
+  type: java.lang.String

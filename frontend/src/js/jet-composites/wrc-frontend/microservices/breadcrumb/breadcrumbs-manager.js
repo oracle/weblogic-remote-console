@@ -7,6 +7,7 @@
 'use strict';
 
 define([
+  'ojs/ojcore',
   'knockout',
   'ojs/ojarraydataprovider',
   'wrc-frontend/microservices/perspective/perspective-memory-manager',
@@ -16,6 +17,7 @@ define([
   'ojs/ojlogger'
 ],
   function (
+    oj,
     ko,
     ArrayDataProvider,
     PerspectiveMemoryManager,
@@ -139,6 +141,8 @@ define([
 
         const div = document.createElement('div');
         div.setAttribute('id', 'breadcrumbs-container');
+        div.setAttribute('role', 'region');
+        div.setAttribute('aria-label', oj.Translations.getTranslatedString('wrc-perspective.ariaLabel.region.breadcrumbs.value'));
         div.setAttribute('on-click', '[[accessKeyClick]]');
         const ul = document.createElement('ul');
         if (this.navigatorVisible) {

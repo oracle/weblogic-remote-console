@@ -21,6 +21,7 @@ define([
   'wrc-frontend/integration/viewModels/utils',
   'wrc-frontend/core/utils',
   'wrc-frontend/core/types',
+  'ojs/ojlogger',
   'ojs/ojknockout',
   'ojs/ojnavigationlist',
   'ojs/ojdialog',
@@ -39,14 +40,20 @@ define([
   Runtime,
   ViewModelUtils,
   CoreUtils,
-  CoreTypes
+  CoreTypes,
+  Logger
 ) {
   function NavtreeViewModel(context) {
     const self = this;
 
     const signaling = Controller.getSignaling();
-  
+
     this.i18n = {
+      ariaLabel: {
+        'navtree': {
+          'value': oj.Translations.getTranslatedString('wrc-navigation.ariaLabel.navtree.value')
+        }
+      },
       icons: {
         'more': {
           iconFile: 'more-vertical-blk-24x24',
@@ -55,16 +62,21 @@ define([
       },
       menus: {
         navtree: {
-          'collapseAll': {id: 'collapse-all', iconFile: 'navtree-collapse-all-blk_24x24', visible: ko.observable(true), disabled: false,
+          'collapseAll': {
+            id: 'collapse-all',
+            iconFile: 'navtree-collapse-all-blk_24x24',
+            visible: ko.observable(true),
+            disabled: false,
             label: oj.Translations.getTranslatedString('wrc-navtree-toolbar.menu.collapseAll.value')
           },
-          'useTreeMenusAsRootNodes': {id: 'use-tree-menus-as-root-nodes', visible: ko.observable(false), disabled: false,
+          'useTreeMenusAsRootNodes': {
+            id: 'use-tree-menus-as-root-nodes', visible: ko.observable(false), disabled: false,
             label: oj.Translations.getTranslatedString('wrc-navtree-toolbar.menu.useTreeMenusAsRootNodes.value')
           }
         }
       }
     };
-  
+
     let router = Controller.getRootRouter();
 
     this.perspective = ko.observable(context.properties.perspective);
@@ -72,7 +84,7 @@ define([
 
     this.condensedNodes = {};
     this.menuSelectOneSelectedItem = ko.observable(['off']);
-  
+
     this.selectedItem = ko.observable();
     // Must be set before getExpandedSet() call is made
     this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(
@@ -128,7 +140,20 @@ define([
               }
             })
             .catch((response) => {
-              ViewModelUtils.failureResponseDefaultHandling(response);
+              if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
+                ViewModelUtils.failureResponseDefaultHandling(response, 'error');
+              }
+              else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
+                if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                  if (response.transport.status !== 404) Logger.error(JSON.stringify(response));
+                }
+                else if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
+                  Logger.error(JSON.stringify(response));
+                }
+                else {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                }
+              }
             })
             .finally(() => {
               if (resolveBusyState) resolveBusyState();
@@ -161,7 +186,12 @@ define([
                   this.selectedItem(null);
                 })
                 .catch((response) => {
-                  ViewModelUtils.failureResponseDefaultHandling(response);
+                  if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
+                    ViewModelUtils.failureResponseDefaultHandling(response, 'error');
+                  }
+                  else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
+                    ViewModelUtils.failureResponseDefaultHandling(response);
+                  }
                 })
                 .finally(() => {
                   if (resolveBusyState) resolveBusyState();
@@ -201,7 +231,21 @@ define([
             }
           }
 
-          this.navtreeManager.populateNodeSet(this.selectedItem(), encodedSelectedItem);
+          this.navtreeManager.populateNodeSet(this.selectedItem(), encodedSelectedItem)
+            .catch(response => {
+              if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
+                ViewModelUtils.failureResponseDefaultHandling(response, 'error');
+              }
+              else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
+                if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                  if (response.transport.status !== 404) Logger.error(JSON.stringify(response));
+                }
+                else {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                }
+              }
+            });
+
         }
       });
 
@@ -256,7 +300,17 @@ define([
                   this.navtreeManager.updateTreeView();
                 })
                 .catch((response) => {
-                  ViewModelUtils.failureResponseDefaultHandling(response);
+                  if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
+                    ViewModelUtils.failureResponseDefaultHandling(response, 'error');
+                  }
+                  else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
+                    if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                      if (response.transport.status !== 404) Logger.error(JSON.stringify(response));
+                    }
+                    else {
+                      ViewModelUtils.failureResponseDefaultHandling(response);
+                    }
+                  }
                 })
                 .finally(() => {
                   if (resolveBusyState) resolveBusyState();
@@ -330,7 +384,7 @@ define([
 
       self.signalBindings = [];
     }.bind(this);
-  
+
     this.launchMoreMenu = function (event) {
       NavtreeToolbar.launchMoreMenu(event);
     }.bind(this);
@@ -338,20 +392,11 @@ define([
     this.moreMenuClickListener = function (event) {
       NavtreeToolbar.moreMenuClickListener(event, this);
     }.bind(this);
-    
+
     this.menuSelectOneMenuAction = function (event) {
       NavtreeToolbar.menuSelectOneMenuAction(event, this);
     }.bind(this);
 
-    this.onKeyUp = (event) => {
-      if (event.key === 'ArrowLeft' && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
-        const ele = document.querySelector('#navstrip');
-        if (ele !== null) {
-          $(ele).focus();
-        }
-      }
-    };
-  
     this.itemSelectable = function (context) {
       // selectable is true by default
       // DON'T USE optional chaining, here!! It's not supported
@@ -374,8 +419,6 @@ define([
         // ahead and remove it.
         delete self.beanTree['signal'];
       }
-  
-      self.perspectiveMemory.navtree['lastFocusNode'] = document.activeElement;
 
       expandClickedNode.call(self, event.detail.key);
     };
@@ -389,14 +432,12 @@ define([
       self.perspectiveMemory.navtree.keySet = self.expanded;
 
       resizeNavTreeContainer();
-
-      setFocusVerticalGripper();
     };
 
     /**
      * Supress collapse event when an already expanded node in the tree is selected. Without doing this, the selected node would
-     * collapse before expanding again (due to onSelect dispatching a signal) 
-     * 
+     * collapse before expanding again (due to onSelect dispatching a signal)
+     *
      * @param {CustomEvent} event
      */
     this.beforeCollapse = function (event) {
@@ -412,9 +453,19 @@ define([
       }
     };
 
-    this.beforeSelect = (event) => {};
+    this.beforeSelect = (event) => {
+    };
 
     this.onSelect = function (event) {
+      function setFocusSelectedNode(event) {
+        if (CoreUtils.isNotUndefinedNorNull(event.detail.originalEvent) &&
+          event.detail.originalEvent.type === 'keydown' &&
+          event.detail.originalEvent.key === 'Enter'
+        ) {
+          event.detail.originalEvent.target.focus();
+        }
+      }
+
       const nodeId = event.detail.value;
       if (nodeId !== null && nodeId !== '') {
         signaling.ancillaryContentItemCleared.dispatch('navtree');
@@ -433,32 +484,36 @@ define([
             const path = encodeURIComponent(resourceData);
             ViewModelUtils.goToRouterPath(router, `/${self.beanTree.type}/${path}`, self.canExitCallback);
             signaling.navtreeSelectionChanged.dispatch('navtree', node, self.beanTree);
+            setFocusSelectedNode(event);
           }
         }
       }
     };
 
-    function setFocusSelectedNode(node) {
-      if (node !== null) {
-        const li = node.querySelector('li.oj-expanded .oj-selected');
-        if (li !== null) {
-          li.focus();
+    this.hiddenAccessKeyClickHandler = (event) => {
+      const nav = document.querySelector('#nav');
+      if (nav !== null) {
+        if (nav.currentItem !== null) {
+          nav.dispatchEvent(new Event('keyup', {key: 'Enter', bubbles: true}));
+          nav.focus();
+        }
+        else if (nav.selection !== null) {
+          const link = nav.querySelector('[aria-selected=true]');
+          if (link !== null) {
+            link.focus();
+          }
+          else {
+            nav.focus();
+          }
+        }
+        else {
+          nav.focus();
         }
       }
-    }
-
-    this.hiddenAccessKeyClickHandler = (event) => {
-      const node = document.querySelector('#nav');
-      setFocusSelectedNode(node);
     };
 
-    function setFocusVerticalGripper(cssSelector = '.vertical-gripper') {
-      const ele = document.querySelector(cssSelector);
-      if (ele !== null) $(ele).focus();
-    }
-
     function setMaxHeightCSSCustomVariable(cssDOMSelector) {
-      const messageLine =  document.getElementById('message-line-container');
+      const messageLine = document.getElementById('message-line-container');
       let maxHeightVariable = (messageLine !== null ? messageLine.offsetHeight : 0);
       const offsetMaxHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navtree-offset-max-height'), 10);
       maxHeightVariable += offsetMaxHeight;
@@ -512,6 +567,7 @@ define([
       }
       return self.perspectiveMemory.navtree.keySet;
     }
+
   }
 
   return NavtreeViewModel;

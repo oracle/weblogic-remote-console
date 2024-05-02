@@ -1,0 +1,15 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.EjbDBean
+derivedTypes: []
+name: weblogic.management.descriptor.MessageDrivenEjbDBean
+properties:
+- name: Pool
+  type: weblogic.management.descriptor.PoolDBean
+  relationship: containment
+- name: MessageDrivenDescriptor
+  type: weblogic.management.descriptor.MessageDrivenDescriptorDBean
+  relationship: containment

@@ -572,7 +572,7 @@ module.exports = function (driver, file) {
             await driver.sleep(6400);
             if (extraField == "searchselect") {
                 await this.selectDropDownList(driver,fieldTwo,itemList,fieldThree);
-                await driver.sleep(300);
+                await driver.sleep(3000);
             }
             if (extraField == "input") {
                 await driver.sleep(1200);
@@ -584,7 +584,18 @@ module.exports = function (driver, file) {
                     await element.sendKeys(fieldTwo);
                 }
             }
-            await this.saveAndCommitChanges(driver);
+            if (levelTwoLink =='JDBC Stores') {
+                console.log("Click Create button to save "+objectMBeanName+" to Shopping Cart");
+                element = driver.findElement(
+                    By.xpath("//*[@id='[[i18n.buttons.save.id]]']/button"));
+                await driver.sleep(3600);
+                if (element.isEnabled()) {
+                    await element.click();
+                }
+            }
+            else {
+                await this.saveAndCommitChanges(driver);
+            }
             await driver.sleep(9600);
         },
 
@@ -659,6 +670,7 @@ module.exports = function (driver, file) {
             console.log("Select object at "+objLocation+" row to delete from Object table");
             element =  driver.findElement(By.xpath("//tr["+objLocation+"]/td/oj-selector/span/input"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.sleep(1200);
             await element.click();
             await driver.sleep(1200);
             console.log("Click Delete button");
@@ -1216,7 +1228,7 @@ module.exports = function (driver, file) {
             }
             console.log("Click View Changes menu");
             await driver.sleep(1200);
-            await driver.findElement(By.linkText("View Changes")).click();
+            await driver.findElement(By.linkText("View Changes...")).click();
             await driver.sleep(1200);
         },
 

@@ -8,11 +8,15 @@
 'use strict';
 
 define([
+  'ojs/ojcore',
   'wrc-frontend/microservices/page-definition/types',
+  'wrc-frontend/core/runtime',
   'wrc-frontend/core/utils'
 ],
   function(
+    oj,
     PageDataTypes,
+    Runtime,
     CoreUtils
   ){
     function hasParentRouter(viewParams) {
@@ -85,7 +89,17 @@ define([
         pdjData.helpTopics.length > 0
       );
     }
-    
+
+    function hasIntroductionHTML(pdjData) {
+      return (CoreUtils.isNotUndefinedNorNull(pdjData) &&
+        CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML));
+    }
+
+    function hasIntroduction(pdjData) {
+      return (CoreUtils.isNotUndefinedNorNull(pdjData) &&
+        CoreUtils.isNotUndefinedNorNull(pdjData.introduction));
+    }
+
     function isPDJReadOnly(pdjData) {
       const isCreateForm = hasCreateForm(pdjData);
       const isSliceForm = hasSliceForm(pdjData);
@@ -202,7 +216,16 @@ define([
       }
       return rtnval;
     }
-    
+
+    function hasUsedIfs(pdjData) {
+      let rtnval = false;
+      if (hasSliceFormProperties(pdjData)) {
+        const usedIfProperties = pdjData.sliceForm.properties.filter(property => CoreUtils.isNotUndefinedNorNull(property.usedIf));
+        rtnval = (usedIfProperties.length > 0);
+      }
+      return rtnval;
+    }
+
     function getNavigationProperty(pdjData) {
       let rtnval = 'none';
       if (CoreUtils.isNotUndefinedNorNull(pdjData.table)) {
@@ -242,6 +265,136 @@ define([
       return new PageDataTypes(properties, perspectiveId);
     }
 
+    function createIntroduction(pdjData, rdjData, cssSelector = '#intro') {
+      function addMissingMatchTags(matches) {
+        for (let i = 0; i < matches.length; i++) {
+          // Remove leading and trailing whitespace
+          matches[i] = matches[i].replace(/^[\s]+|[\s]+$/, '');
+          // Remove whitespace immediately after <p>
+          matches[i] = matches[i].replace(/<p>\s{1,}/, '<p>');
+          // Remove whitespace immediately before </p>
+          matches[i] = matches[i].replace(/\s{1,}<\/p>/, '</p>');
+          if (!matches[i].startsWith('<p>')) matches[i] = `<p>${matches[i]}`;
+          if (matches[i].slice(-4) !== '</p>') matches[i] = `${matches[i]}</p>`;
+        }
+      }
+
+      function getLongestArray(arrays) {
+        const result = {index: -1, length: -1};
+        arrays.forEach((array, index) => {
+          if (array.length >= result.length) {
+            result.index = index;
+            result.length = array.length;
+          }
+        });
+        return arrays[result.index === -1 ? 0 : result.index];
+      }
+
+      function convertToIntroduction(bindHtml) {
+        const STARTS_WITH_USE_REGEX = /(.+)?(?<p>\s{0,}Use.+?<\/p>)(.+)?/;
+        const STARTS_WITH_THIS_REGEX = /(.+)?(?<p>\s{0,}This.+?<\/p>)(.+)?/;
+        const STARTS_WITH_MANAGES_REGEX = /(.+)?(<p>\s{0,}Manages.+?<\/p>)(.+)?/;
+        const STARTS_WITH_THE_REGEX = /(\s{0,}<p>\s{0,}The.+page.+?<\/p>)?(\s{0,}<p>\s{0,}The.+page.+<\/p>)?(<p>The.+page.+)/;
+        const STARTS_WITH_WRITE_REGEX = /(.+)?(?<p>\s{0,}Write.+?<\/p>)(.+)?/;
+
+        const introduction = {};
+        // A newlines is not an HTML tag, so get rid of them!
+        bindHtml = bindHtml.replace(/\r\n|\n|'\n|\r/gm, '');
+        // Replace multiple spaces with one space
+        bindHtml = bindHtml.replace(/\s{2,}/gm, ' ');
+
+        const startsWithUseMatches = bindHtml.split(STARTS_WITH_USE_REGEX).filter(x => typeof x !== 'undefined' && x.trim() !== '<p>' && x.trim() !== '');
+        addMissingMatchTags(startsWithUseMatches);
+
+        const startsWithThisMatches = bindHtml.split(STARTS_WITH_THIS_REGEX).filter(x => typeof x !== 'undefined' && x.trim() !== '<p>' && x.trim() !== '');
+        addMissingMatchTags(startsWithThisMatches);
+
+        const startsWithManagesMatches = bindHtml.split(STARTS_WITH_MANAGES_REGEX).filter(x => typeof x !== 'undefined' && x.trim() !== '<p>' && x.trim() !== '');
+        addMissingMatchTags(startsWithManagesMatches);
+
+        const startsWithTheMatches = bindHtml.split(STARTS_WITH_THE_REGEX).filter(x => typeof x !== 'undefined' && x.trim() !== '<p>' && x.trim() !== '');
+        addMissingMatchTags(startsWithTheMatches);
+
+        const startsWithWriteMatches = bindHtml.split(STARTS_WITH_WRITE_REGEX).filter(x => typeof x !== 'undefined' && x.trim() !== '<p>' && x.trim() !== '');
+        addMissingMatchTags(startsWithWriteMatches);
+
+        const splitParts = getLongestArray([startsWithUseMatches, startsWithThisMatches, startsWithTheMatches, startsWithManagesMatches, startsWithWriteMatches]);
+
+        if (splitParts.length > 0) {
+          const index = splitParts.findIndex(part => part.startsWith('<p>This') || part.startsWith('<p>Use') || part.startsWith('<p>The') || part.startsWith('<p>Manages') || part.startsWith('<p>Write'));
+
+          if (index !== -1) {
+            const statement = splitParts.splice(index, 1);
+            splitParts.unshift(statement);
+            introduction['statementHTML'] = splitParts[0];
+            if (splitParts.length > 1) introduction['infoHTML'] = splitParts.join('');
+          }
+          else {
+            introduction['statementHTML'] = bindHtml;
+          }
+        }
+        else {
+          introduction['statementHTML'] = bindHtml;
+        }
+        // Return the introduction JS object
+        return introduction;
+      }
+
+      function populateFromIntroductionHTML(pdjData, rdjData, cssSelector) {
+        let bindHtml = (CoreUtils.isNotUndefinedNorNull(rdjData.introductionHTML) ? rdjData.introductionHTML : pdjData.introductionHTML);
+        bindHtml = (CoreUtils.isNotUndefinedNorNull(bindHtml) ? bindHtml : '<p>');
+
+        const div = document.querySelector(cssSelector);
+        if (div !== null) {
+          const featureDisabled = Runtime.getProperty('features.pageInfo.disabled');
+          if (!featureDisabled) {
+            const introduction = convertToIntroduction(bindHtml);
+            if (introduction.statementHTML) {
+              bindHtml = populateFromIntroduction(introduction);
+            }
+            div.classList.add('cfe-introduction');
+          }
+          else {
+            div.classList.add('cfe-table-form-instructions');
+          }
+        }
+
+        return bindHtml;
+      }
+
+      function populateFromIntroduction(introduction) {
+        let bindHtml = '';
+
+        if (introduction?.infoHTML) {
+          bindHtml += '<div tabindex="0" class="oj-ux-ico-information cfe-page-info-icon" title="' + oj.Translations.getTranslatedString('wrc-common.tooltips.pageInfo.value') + '" on-keyup="[[infoIconKeyUp]]" on-click="[[infoIconClick]]">';
+          bindHtml += '<div class="cfe-page-info-popup">';
+          bindHtml += introduction.infoHTML;
+          bindHtml += '</div>';
+          bindHtml += '</div>';
+        }
+
+        bindHtml += `<div class="cfe-introduction-statement">${introduction.statementHTML}</div>`;
+
+        return bindHtml;
+      }
+
+      let intro = '<p>';
+
+      if (!Runtime.getProperty('features.pageInfo.disabled')) {
+        if (hasIntroduction(pdjData)) {
+          intro = populateFromIntroduction(pdjData.introduction);
+        }
+        else if (hasIntroductionHTML(pdjData)) {
+          intro = populateFromIntroductionHTML(pdjData, rdjData, cssSelector);
+        }
+      }
+      else if (hasIntroductionHTML(pdjData)) {
+        intro = populateFromIntroductionHTML(pdjData, rdjData, cssSelector);
+      }
+
+      return intro;
+    }
+
     function getSliceTableDisplayedColumns(pdjData) {
       let displayedColumns = [];
       if (hasSliceTable(pdjData)) {
@@ -251,7 +404,7 @@ define([
       }
       return displayedColumns;
     }
-  
+
     function getSliceTableHiddenColumns(pdjData) {
       let hiddenColumns = [];
       if (hasSliceTable(pdjData)) {
@@ -261,7 +414,7 @@ define([
       }
       return hiddenColumns;
     }
-  
+
   //public:
     return {
       hasParentRouter: hasParentRouter,
@@ -287,8 +440,10 @@ define([
       hasReadOnlyFormLayout: hasReadOnlyFormLayout,
       hasPolicyExpressionSliceLayout: hasPolicyExpressionSliceLayout,
       isDeletable: isDeletable,
+      hasUsedIfs: hasUsedIfs,
       getNavigationProperty: getNavigationProperty,
-      createPageDefinitionTypes: createPageDefinitionTypes
+      createPageDefinitionTypes: createPageDefinitionTypes,
+      createIntroduction: createIntroduction
     };
   }
 );

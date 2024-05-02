@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -152,7 +152,8 @@ const WindowManagement = (() => {
       },
       {
         id: 'view',
-        label: `${I18NUtils.get('wrc-electron.menus.view.label')}`,
+        label: `${OSUtils.isWinOS() ? '&' : ''}${I18NUtils.get('wrc-electron.menus.view.label')}`,
+        role: 'viewMenu',
         submenu: [
           {
             label: `${I18NUtils.get('wrc-electron.menus.view.reload.label')}`,
@@ -164,15 +165,18 @@ const WindowManagement = (() => {
           { type: 'separator' },
           {
             label: `${I18NUtils.get('wrc-electron.menus.view.resetZoom.label')}`,
-            role: 'resetZoom'
+            role: 'resetZoom',
+            enabled: false
           },
           {
             label: `${I18NUtils.get('wrc-electron.menus.view.zoomIn.label')}`,
-            role: 'zoomIn'
+            role: 'zoomIn',
+            enabled: false
           },
           {
             label: `${I18NUtils.get('wrc-electron.menus.view.zoomOut.label')}`,
-            role: 'zoomOut'
+            role: 'zoomOut',
+            enabled: false
           },
           {
             type: 'separator'
@@ -517,7 +521,7 @@ const WindowManagement = (() => {
               .catch(err => {
                 showConnectionIssueMessageBox(
                   `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.connectionIssue.title')}`,
-                  `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.connectionIssue.message')}`
+                  `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.connectionIssue.message')}`,
                     [`${I18NUtils.get('wrc-common.buttons.ok.label')}`]
                 );
               });
@@ -771,10 +775,9 @@ const WindowManagement = (() => {
       if (_params.supportsUpgradeCheck) {
         AutoUpdateUtils.checkForUpdates()
           .then(result => {
-            newVersion = result.versionInfo.version;
+            newVersion = (result !== null ? result.versionInfo.version : null);
             if (newVersion !== _params.version) {
-              if (_window)
-                generateAppMenu()
+              if (_window) generateAppMenu()
             }
           });
       }

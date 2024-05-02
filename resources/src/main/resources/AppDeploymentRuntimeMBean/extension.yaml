@@ -177,7 +177,6 @@ actions:
     descriptionHTML: >
       <p>Select the deployment plan document to upload to the Administration Server.</p>
 
-
 - name: uploadAndUpdate
   type: "void"
   parameters:
@@ -187,8 +186,8 @@ actions:
         <p>Select the deployment plan document to upload to the Administration Server.</p>
 
 properties:
-- name: "DeploymentPlan"
-  type: weblogic.management.runtime.DeploymentPlanRuntimeMBean
+- name: "Configuration"
+  type: weblogic.management.runtime.DeploymentConfigurationRuntimeMBean
   relationship: containment
 - name: "State"
   type: weblogic.management.runtime.DeploymentStateRuntimeMBean

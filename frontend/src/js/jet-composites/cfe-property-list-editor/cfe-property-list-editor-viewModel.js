@@ -138,7 +138,7 @@ function (
           const data = event.detail.rowContext.item.data;
           // Look for property list item with a uid value that
           // matches data.uid.
-          const index = self.propertiesContent.value.map(property => property.uid).indexOf(data.uid);
+          const index = self.propertiesContent.value.findIndex(property => property.uid === data.uid);
           if (index !== -1) {
             // Found one, so see if end user is trying to do
             // something invalid, which is make the in "Name"
@@ -186,7 +186,7 @@ function (
             const attributesChanged = [];
             // Look for index of propertyListSnapshot item with a uid
             // that matches property.uid.
-            const index = self.propertyListSnapshot.map(item => item.uid).indexOf(property.uid);
+            const index = self.propertyListSnapshot.findIndex(item => item.uid === property.uid);
             if (index !== -1) {
               // Found it, so see whether Name or Value was updated
               if (self.propertyListSnapshot[index].name !== property.Name) attributesChanged.push('Name');
@@ -222,7 +222,7 @@ function (
         if (results.details.length > 0) {
           const filtered = self.propertyListSnapshot.filter(item => item.action !== 'deleted');
           filtered.forEach((item) => {
-            const index = properties.map(property => property.uid).indexOf(item.uid);
+            const index = properties.findIndex(property => property.uid === item.uid);
             if (index !== -1 && properties[index].Name.trim() !== '') {
               results.values[properties[index].Name] = properties[index].Value;
             }
@@ -237,7 +237,7 @@ function (
         // Remove propertyListSnapshot items with action === 'deleted'
         self.propertyListSnapshot = self.propertyListSnapshot.filter(item => item.action !== 'deleted');
         properties.forEach((property) => {
-          const index = self.propertyListSnapshot.map(item => item.uid).indexOf(property.uid);
+          const index = self.propertyListSnapshot.findIndex(item => item.uid === property.uid);
           if (index !== -1) {
             // Update self.propertyListSnapshot item
             self.propertyListSnapshot[index].name = property.Name;

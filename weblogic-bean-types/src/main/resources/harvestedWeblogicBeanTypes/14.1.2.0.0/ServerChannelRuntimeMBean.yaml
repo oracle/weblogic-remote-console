@@ -1,0 +1,69 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Runtime information for NetworkAccessPoints or "Channels". '
+name: weblogic.management.runtime.ServerChannelRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of sockets that have been accepted on this channel.
+    This includes sockets both past and present so gives a good idea of the connection
+    rate to the server.</p> '
+  name: AcceptCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Associated virtual-target name with this channel. This may
+    be null.</p> '
+  name: AssociatedVirtualTargetName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of bytes received on this channel.</p> '
+  name: BytesReceivedCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of bytes sent on this channel.</p> '
+  name: BytesSentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The channel name of this channel.</p> '
+  name: ChannelName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of active connections and sockets associated with
+    this channel.</p> '
+  name: ConnectionsCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of messages received on this channel.</p> '
+  name: MessagesReceivedCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of messages sent on this channel.</p> '
+  name: MessagesSentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The physical URL that this channel is listening on.</p> '
+  name: PublicURL
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The active connections and sockets associated with this channel.</p> '
+  excludeFromRest: No default REST mapping for ServerConnectionRuntime
+  name: ServerConnectionRuntimes
+  supported: false
+  type: weblogic.management.runtime.ServerConnectionRuntime

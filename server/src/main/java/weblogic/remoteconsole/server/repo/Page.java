@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -19,6 +19,7 @@ public class Page {
   private Path navTreePath = new Path();
   private Path beanTreePath = new Path();
   private BeanTreePath self = null;
+  private boolean forceReadOnly = false;
   private List<BeanTreePath> breadCrumbs = new ArrayList<>();
   private List<Link> links = new ArrayList<>();
   private ChangeManagerStatus changeManagerStatus = null;
@@ -62,6 +63,35 @@ public class Page {
 
   public void setSelf(BeanTreePath val) {
     self = val;
+  }
+
+  public void forceReadOnly() {
+    forceReadOnly = true;
+  }
+
+  public String getBeanTreePathKind() {
+    if (self.isOptionalSingleton()) {
+      if (!forceReadOnly) {
+        if (self.isCreatable()) {
+          return "creatableOptionalSingleton";
+        }
+        if (self.isDeletable()) {
+          return "deletableOptionalSingleton";
+        }
+      }
+      return "nonCreatableOptionalSingleton";
+    } else if (self.isCollection()) {
+      if (!forceReadOnly) {
+        if (self.isCreatable()) {
+          return "creatableCollection";
+        }
+        if (self.isDeletable()) {
+          return "deletableCollection";
+        }
+      }
+      return "nonCreatableCollection";
+    }
+    return null; // This isn't a kind the CFE needs to know about today
   }
 
   // The bean tree paths of this bean and all of its parent beans that have pages.

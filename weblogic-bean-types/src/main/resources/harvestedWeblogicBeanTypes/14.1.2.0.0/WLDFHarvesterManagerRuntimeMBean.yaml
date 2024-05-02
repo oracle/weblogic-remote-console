@@ -1,0 +1,62 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Provides statistical information relative to a particular configured
+  Harvester instance, and a means to retreive an on-demand snapshot of configured
+  attribute values.</p> '
+name: weblogic.management.runtime.WLDFHarvesterManagerRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The average amount of time, in nanoseconds, spent in sampling
+    cycles.</p> '
+  name: AverageSamplingTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of collected data samples in the current snapshot.</p> '
+  name: CurrentDataSampleCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The elapsed time, in nanoseconds, of a snapshot.</p> '
+  name: CurrentSnapshotElapsedTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The start time, in milliseconds, of the latest archived snapshot.</p> '
+  name: CurrentSnapshotStartTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The maximum observed sampling time, in nanoseconds.</p> '
+  name: MaximumSamplingTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The minimum observed sampling time, in nanoseconds.</p> '
+  name: MinimumSamplingTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of configured data samples that have been collected
+    and archived so far in this server session.</p> '
+  name: TotalDataSampleCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of periodic sampling cycles taken thus far.</p> '
+  name: TotalSamplingCycles
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total amount of observed time, in nanoseconds, spent in
+    sampling cycles.</p> '
+  name: TotalSamplingTime
+  type: long

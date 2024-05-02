@@ -1,0 +1,20 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Use this interface to define an SNMP action, which is sent when
+  a diagnostic policy evaluates to <code>true</code>.</p> <p>Note: As of WebLogic
+  Server 12.2.1, the terms <i>watch</i> and <i>notification</i> are replaced by <i>policy</i>
+  and <i>action</i>, respectively. However, the definition of these terms has not
+  changed.</p> '
+name: weblogic.diagnostics.descriptor.WLDFSNMPNotificationBean
+properties: [
+  ]
+roles:
+  allowed:
+  - Deployer

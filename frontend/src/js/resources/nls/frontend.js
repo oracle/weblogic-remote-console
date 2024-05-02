@@ -4,6 +4,11 @@ define({
       "text": {
         "appName": "WebLogic Remote Console"
       },
+      "region": {
+        "ariaLabel": {
+          "value": "Application Header"
+        }
+      },
       "icons": {
         "navtree": {
           "toggler": {
@@ -40,6 +45,11 @@ define({
           "dark": {
             "value": "Dark"
           }
+        }
+      },
+      "tooltips": {
+        "appName": {
+          "value": "Click to reset WebLogic Remote Console"
         }
       }
     },
@@ -271,18 +281,29 @@ define({
       }
     },
     "wrc-data-providers": {
+      "ariaLabel": {
+        "connectionModels": {
+          "value": "Providers List"
+        },
+        "filePath": {
+          "value": "File Path"
+        },
+        "insecureCheckbox": {
+          "value": "Use Insecure Connection"
+        }
+      },
       "icons": {
         "info": {
-          "tooltip": "Get Info"
+          "tooltip": "Get info on this provider"
         },
         "edit": {
-          "tooltip": "Manage"
+          "tooltip": "Manage settings for this provider"
         },
         "deactivate": {
-          "tooltip": "Deactivate"
+          "tooltip": "Deactivate this provider"
         },
         "delete": {
-          "tooltip": "Remove"
+          "tooltip": "Remove this provider"
         }
       },
       "labels": {
@@ -498,6 +519,9 @@ define({
           },
           "edit": {
             "value": "Modify connectivity settings for connection provider."
+          },
+          "deactivate": {
+            "value": "Deactivate connection provider and cease domain status polling."
           }
         },
         "models": {
@@ -718,18 +742,24 @@ define({
       }
     },
     "wrc-navigation": {
-      "navstrip": {
-        "ariaLabel": {
-          "value": "Navigation Strip"
-        }
-      },
-      "navtree": {
-        "ariaLabel": {
-          "value": "Navigation Tree"
-        }
+      "ariaLabel": {
+        "navstrip": { "value": "Provider Trees Menu"},
+        "navtree": { "value": "Provider Tree Navigator"},
+        "panelResizer": { "value": "Provider Tree Navigator Resizer"}
       }
     },
     "wrc-content-area-header": {
+      "ariaLabel": {
+        "button": {
+          "home": { "value": "Home. Return to page containing the provider's trees"}
+        },
+        "region": {
+          "title": { "value": "Content Area Header"}
+        },
+        "popup": {
+          "provider": { "value": "Provider Actions"}
+        }
+      },
       "title": {
         "home": "Home",
         "configuration": "Edit Tree",
@@ -745,6 +775,18 @@ define({
           "home": {
             "label": "Home"
           }
+        }
+      },
+      "icons": {
+        "shoppingcart": {
+          "tooltip": "Click to view shopping cart actions"
+        }
+      },
+      "menu": {
+        "shoppingcart": {
+          "view": { "label": "View Changes..."},
+          "discard": { "label": "Discard Changes"},
+          "commit": { "label": "Commit Changes"}
         }
       }
     },
@@ -863,6 +905,13 @@ define({
       }
     },
     "wrc-perspective": {
+      "ariaLabel": {
+        "region": {
+          "breadcrumbs": {
+            "value": "Breadcrumbs"
+          }
+        }
+      },
       "icons": {
         "history": {
           "tooltip": "History"
@@ -909,7 +958,28 @@ define({
         }
       }
     },
+    "wrc-landing": {
+      "ariaLabel": {
+        "cards": {
+          "panel": {
+            "value": "Landing Page"
+          }
+        },
+        "cardLinks": {
+          "panel": {
+            "value": "Landing Page Links"
+          }
+        }
+      }
+    },
     "wrc-gallery": {
+      "ariaLabel": {
+        "cards": {
+          "panel": {
+            "value": "Provider Trees"
+          }
+        }
+      },
       "cards": {
         "configuration": {
           "label": "Edit Tree",
@@ -942,6 +1012,13 @@ define({
       }
     },
     "wrc-startup-tasks": {
+      "ariaLabel": {
+        "cards": {
+          "panel": {
+            "value": "Startup Tasks"
+          }
+        }
+      },
       "cards": {
         "addAdminServer": {
           "label": "Add Admin Server Connection Provider",
@@ -1034,22 +1111,6 @@ define({
         },
         "syncInterval": {
           "tooltip": "Set Auto-Reload Interval"
-        },
-        "shoppingcart": {
-          "tooltip": "Click to view actions for cart"
-        }
-      },
-      "menu": {
-        "shoppingcart": {
-          "view": {
-            "label": "View Changes"
-          },
-          "discard": {
-            "label": "Discard Changes"
-          },
-          "commit": {
-            "label": "Commit Changes"
-          }
         }
       },
       "instructions": {
@@ -1087,20 +1148,25 @@ define({
       }
     },
     "wrc-table-customizer": {
-      "labels": {
-        "available": {
-          "value": "Available Columns"
+      "ariaLabel": {
+        "availableColumns": {
+          "title": { "value": "Available Columns"},
+          "list": { "value": "Available Columns List"},
+          "listItem": { "value": "Available Columns List Item"}
         },
-        "selected": {
-          "value": "Selected Columns"
-        }
-      },
-      "messages": {
-        "action": {
-          "needAtLeastOneColumn": {
-            "title": "Insufficient Columns",
-            "detail": "At least one selected column is required."
-          }
+        "selectedColumns": {
+          "title": { "value": "Selected Columns"},
+          "list": { "value": "Selected Columns List"},
+          "listItem": { "value": "Selected Columns List Item"}
+        },
+        "button": {
+          "addToRight": {"value": "Move checked items in Available Columns list to Selected Columns list"},
+          "addAllRight": {"value": "Move all items in Available Columns list to Selected Columns list"},
+          "removeRight": {"value": "Move checked items in Selected Columns list to Available Columns list"},
+          "removeAll": {"value": "Move all items in Selected Columns list to Available Columns list"},
+          "reset": {"value": "Restore columns in Selected Columns list to those present when table customizer was toggled open."},
+          "apply": {"value": "Apply column customizations to table"},
+          "cancel": {"value": "Cancel all column customizations"}
         }
       }
     },
@@ -1156,22 +1222,6 @@ define({
         },
         "syncInterval": {
           "tooltip": "Set Auto-Reload Interval"
-        },
-        "shoppingcart": {
-          "tooltip": "Click to view actions for cart"
-        }
-      },
-      "menu": {
-        "shoppingcart": {
-          "view": {
-            "label": "View Changes"
-          },
-          "discard": {
-            "label": "Discard Changes"
-          },
-          "commit": {
-            "label": "Commit Changes"
-          }
         }
       }
     },
@@ -1406,6 +1456,16 @@ define({
       }
     },
     "wrc-common": {
+      "ariaLabel": {
+        "icons": {
+          "landing": {
+            "value": "Return to provider tree's Landing Page."
+          },
+          "reset": {
+            "value": "Reset page values"
+          }
+        }
+      },
       "buttons": {
         "action": {
           "label": "Action"
@@ -1534,6 +1594,9 @@ define({
         },
         "recentPages": {
           "value": "Toggle visibility of history"
+        },
+        "pageInfo": {
+          "value": "Click to pin and unpin"
         }
       },
       "menu": {
@@ -1553,6 +1616,9 @@ define({
         },
         "error": {
           "value": "Error"
+        },
+        "alerts": {
+          "value": "Alerts"
         }
       },
       "placeholders": {
@@ -1873,6 +1939,16 @@ define({
         }
       }
     },
+    "wrc-confirm-dialogs": {
+      "adminServerShutdown": {
+        "title": {
+          "value": "Confirmation"
+        },
+        "prompt": {
+          "value": "Shutting down the <b>{0}</b> will reset the current provider. Continue?"
+        }
+      }
+    },
     "wrc-change-manager": {
       "messages": {
         "cannotGetLockState": {
@@ -1901,7 +1977,7 @@ define({
       "messages": {
         "connectionRefused": {
           "summary": "Connection Issue",
-          "details": "Having trouble sending and receiving data from provider! Please ensure it and the CBE are accessible, and try again."
+          "details": "Having trouble sending and receiving data from provider! Please ensure it and the CBE are accessible, before continuing."
         },
         "pathNotFound": {
           "summary": "Path Not Found",
@@ -1910,6 +1986,11 @@ define({
       }
     },
     "wrc-message-line": {
+      "ariaLabel": {
+        "region": {
+          "value": "Message Line"
+        }
+      },
       "menus": {
         "more": {
           "clear": {
@@ -1924,32 +2005,30 @@ define({
             }
           }
         }
+      },
+      "messages": {
+        "adminServerShutdown": {
+          "details": " Unable to connect to the WebLogic domain's administration server."
+        },
+        "shutdownSequenceError": {
+          "details": "Shut down the managed servers then shut down the administration server."
+        }
       }
     },
     "wrc-alerts": {
       "menus": {
         "alerts": {
           "error": {
-            "value": "You have {0} high-priority error {1}"
+            "value": "You have {0} high-priority error alert(s)"
           },
           "warning": {
-            "value": "You have {0} high-priority warning {1}"
+            "value": "You have {0} high-priority warning alert(s)"
           },
           "info": {
-            "value": "You have {0} high-priority information {1}"
+            "value": "You have {0} high-priority information alert(s)"
           },
           "view": {
             "value": "View Alerts"
-          }
-        }
-      },
-      "labels": {
-        "alerts": {
-          "singular": {
-            "value": "alert"
-          },
-          "plural": {
-            "value": "alerts"
           }
         }
       }

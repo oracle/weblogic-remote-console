@@ -1,0 +1,41 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This interface provides access to all the runtime MBeans for
+  the WebLogic Diagnostic Framework (WLDF).</p> '
+name: weblogic.management.runtime.WLDFPartitionRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MBean that represents this partition''s view of its diagnostic
+    accessor.</p> '
+  name: WLDFPartitionAccessRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFPartitionAccessRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MBean that represents this partition''s view of its diagnostic
+    harvester.</p> '
+  name: WLDFPartitionHarvesterRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFPartitionHarvesterRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MBean that represents this partition''s view of its diagnostic
+    image source.</p> '
+  name: WLDFPartitionImageRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFPartitionImageRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MBean that represents this partition''s view of its diagnostic
+    policy and action component.</p> '
+  name: WLDFWatchNotificationRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFWatchNotificationRuntimeMBean

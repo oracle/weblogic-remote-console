@@ -1,0 +1,105 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'The top of the JDBC data source bean tree. <p> JDBC data sources
+  all have a JDBCDataSourceBean as their root bean (a bean with no parent).  The schema
+  namespace that corresponds to this bean is "http://xmlns.oracle.com/weblogic/jdbc-data-source"
+  </p> '
+name: weblogic.j2ee.descriptor.wl.JDBCDataSourceBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'The data source type. Valid types are: <ul> <li>GENERIC - generic
+    data source</li> <li>MDS - multi data source</li> <li>AGL - Active GridLink data
+    source</li> <li>UCP - Universal Connection Pool data source</li> <li>PROXY - proxy
+    for multiple tenant data sources</li> </ul> '
+  legalValues:
+  - GENERIC
+  - MDS
+  - AGL
+  - UCP
+  - PROXY
+  name: DatasourceType
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the Id value '
+  name: Id
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Internal Use only, applications must not attempt to configure
+    or use this. '
+  name: InternalProperties
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.JDBCPropertiesBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the connection pool parameters of this data source  <p> Configuration
+    parameters for this data source''s connection pool are specified using the connection
+    pool parameters bean. </p> '
+  name: JDBCConnectionPoolParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.JDBCConnectionPoolParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the basic usage parameters of this data source  <p> Configuration
+    parameters for the basic usage of this data source are specified using the data
+    source parameters bean. </p> '
+  name: JDBCDataSourceParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.JDBCDataSourceParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the driver parameters of this data source  <p> Configuration
+    parameters for the JDBC Driver used by this data source are specified using the
+    driver parameters bean. </p> '
+  name: JDBCDriverParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.JDBCDriverParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the Oracle-related parameters of this data source  <p> Configuration
+    parameters for this data source''s Oracle-related behavior are specified using
+    the Oracle parameters bean. </p> '
+  name: JDBCOracleParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.JDBCOracleParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the XA-related parameters of this data source  <p> Configuration
+    parameters for this data source''s XA-related behavior are specified using the
+    XA parameters bean. </p> '
+  name: JDBCXAParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.JDBCXAParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: 'A unique name that identifies this data source in the WebLogic
+    domain. '
+  key: true
+  name: Name
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "version" attribute '
+  name: Version
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

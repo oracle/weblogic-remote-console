@@ -1,0 +1,154 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.WseeBaseOperationRuntimeMBean
+descriptionHTML: '<p>Describes Web Service operation state, such as deployment state
+  and runtime statistics.  The derived MBean determines whether this state is for
+  a single operation or whether it is aggregated across operations.</p>  <p>This MBean
+  can describe the operation(s) on a web service client or service.  Request statistics
+  relate to outgoing requests on a client or incoming requests on a service. Response
+  statistics relate to an incoming response on a client or an outgoing response on
+  a service.</p> <p>Time values are reported in milliseconds.</p> '
+name: weblogic.management.runtime.WseeAggregatableBaseOperationRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Average operation dispatch time for the current measurement
+    period.</p>  <p>Dispatch time refers to the time for WebLogic Server to process
+    the invocation.</p>  <p>The measurement period typically starts when WebLogic
+    Server is first started.</p> '
+  name: DispatchTimeAverage
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Longest operation dispatch time for the current measurement
+    period.</p>  <p>Dispatch time refers to the time for WebLogic Server to process
+    the invocation.</p>  <p>The measurement period typically starts when WebLogic
+    Server is first started.</p> '
+  name: DispatchTimeHigh
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Shortest operation dispatch time for the current measurement
+    period.</p>  <p>Dispatch time refers to the time for WebLogic Server to process
+    the invocation.</p>  <p>The measurement period typically starts when WebLogic
+    Server is first started.</p> '
+  name: DispatchTimeLow
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Total time for all operation dispatches in the current measurement
+    period.</p>  <p>Dispatch time refers to the time for WebLogic Server to process
+    the invocation.</p>  <p>The measurement period typically starts when WebLogic
+    Server is first started.</p> '
+  name: DispatchTimeTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Number of errors sending or receiving a request. '
+  name: ErrorCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Average operation execution time.</p> '
+  name: ExecutionTimeAverage
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Longest operation execution time.</p> '
+  name: ExecutionTimeHigh
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Shortest operation execution time.</p> '
+  name: ExecutionTimeLow
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Total time for all operation executions.</p> '
+  name: ExecutionTimeTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Total number of operation invocations in the current measurement
+    period.</p>  <p>The measurement period typically starts when WebLogic Server is
+    first started.</p> '
+  name: InvocationCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Last error that occurred processing a request. '
+  name: LastError
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Time on WebLogic Server of the last error for a request (sending
+    or receiving) was detected expressed as the number of milliseconds since midnight,
+    January 1, 1970 UTC. '
+  name: LastErrorTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Time of the last operation request to be sent or received (or
+    0 if no requests have been sent or received).</p> '
+  name: LastInvocationTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Last response error to arrive for this client/service (or null
+    if no errors have occurred). '
+  name: LastResponseError
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Time on WebLogic Server of the last error sending or receiving
+    a response (or 0 if no failures have occurred) expressed as the number of milliseconds
+    since midnight, January 1, 1970 UTC. '
+  name: LastResponseErrorTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Time on WebLogic Server of the last response to arrive for this
+    client/service (or 0 if no responses have been received) expressed as the number
+    of milliseconds since midnight, January 1, 1970 UTC. '
+  name: LastResponseTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Total number of oresponses generated from operation invocations.</p> '
+  name: ResponseCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Total number of errors from responses generated from operation
+    invocations.</p> '
+  name: ResponseErrorCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Average response time from the responses generated from operation
+    invocations. </p> '
+  name: ResponseTimeAverage
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Longest response time from the responses generated from operation
+    invocations.</p> '
+  name: ResponseTimeHigh
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Lowest response time from the responses generated from operation
+    invocations.</p> '
+  name: ResponseTimeLow
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Total time for all responses generated from operation invocations.</p> '
+  name: ResponseTimeTotal
+  type: long

@@ -18,7 +18,7 @@ define(['wrc-frontend/core/utils'],
         if (!selectOnly) {
           if (nodeList !== null) {
             const arr = Array.from(nodeList);
-            const index = arr.map(node => node.readonly).indexOf(false);
+            const index = arr.findIndex(node => node.readonly === false);
             if (index !== -1) arr[index].focus();
           }
         }

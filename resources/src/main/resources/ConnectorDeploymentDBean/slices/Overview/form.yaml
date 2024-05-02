@@ -1,0 +1,20 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+customizePageMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePage
+customizePageDefMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePageDef
+
+introductionHTML: >
+  <p>Use this page to see an overview of this resource adapter.</p>
+
+properties:
+- name: Name
+- name: ModuleType
+
+helpTopics:
+- label: "Developing Applications for Oracle WebLogic Server"
+  href: "wlprg/index.html"
+  type: "edocs"
+- label: "Deploying Applications to Oracle WebLogic Server"
+  href: "depgd/index.html"
+  type: "edocs"

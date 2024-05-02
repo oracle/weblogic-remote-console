@@ -47,7 +47,7 @@ define([
 
     /**
      *
-     * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
+     * @param {{name: string, labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
      * @param pdjTypes
      * @param rdjData
      * @param sections
@@ -59,7 +59,7 @@ define([
       // Upsert the values of the "name", "direction"
       // and "isReadOnly" properties, in the options
       // parameter.
-      options['name'] = 'wlsform';
+      options['name'] = options['name'] || 'wlsform';
       options['direction'] = 'row';
 
       // Create the outer-most <pj-form-layout> that
@@ -102,7 +102,7 @@ define([
 
     /**
      *
-     * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
+     * @param {{name: string, labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
      * @returns {HTMLElement}
      * @private
      */
@@ -131,7 +131,7 @@ define([
 
     /**
      *
-     * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
+     * @param {{name: string, labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
      * @returns {HTMLElement}
      */
     function createFormLayout(options) {
@@ -250,7 +250,7 @@ define([
       },
       /**
        * Returns a ``<oj-form-layout>`` tag for a "single column, checkboxes only" form, which has been configured using the values in ``options``.
-       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
+       * @param {{name: string, labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
        * @returns {HTMLElement}
        */
       createCheckBoxesFormLayout: function (options) {
@@ -258,7 +258,7 @@ define([
       },
       /**
        * Returns a ``<oj-form-layout>`` tag for a "single column" form, which has been configured using the values in ``options``.
-       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean, fullWidth?: boolean}} options
+       * @param {{name: string, labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean, fullWidth?: boolean}} options
        * @returns {HTMLElement}
        */
       createSingleColumnFormLayout: function (options) {
@@ -266,7 +266,7 @@ define([
       },
       /**
        * Returns a ``<oj-form-layout>`` tag for a "two column" form, which has been configured using the values in ``options``.
-       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean, fullWidth?: boolean}} options
+       * @param {{name: string, labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean, fullWidth?: boolean}} options
        * @returns {HTMLElement}
        */
       createTwoColumnFormLayout: function (options) {
@@ -274,7 +274,7 @@ define([
       },
       /**
        * Returns a ``<oj-form-layout>`` tag for a "wizard" form, which has been configured using the values in ``options``.
-       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
+       * @param {{name: string, labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
        * @returns {HTMLElement}
        */
       createWizardFormLayout: function (options) {
@@ -282,7 +282,7 @@ define([
       },
       /**
        * Returns a ``<oj-form-layout>`` tag that has nested ``<oj-form-layout>`` tags for each section item in the ``pdjData.sliceForm.sections`` array.
-       * @param {{labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
+       * @param {{name: string, labelWidthPcnt: string, maxColumns: string, name?: string, direction?: "row"|"column", wrapColSpan?: boolean, labelEdge?: "inside"|"start"|"top", isReadOnly?: boolean}} options
        * @param {object} pdjTypes - A ``pdjTypes`` instance for the properties in the ``pdjData`` parameter
        * @param {object} rdjData - The RDJ data for the form slice
        * @param {object} pdjData - The PDJ data for the form slice

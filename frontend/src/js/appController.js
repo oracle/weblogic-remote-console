@@ -59,6 +59,11 @@ define([
       const self = this;
       
       this.i18n = {
+        'ariaLabel': {
+          'panelResizer': {
+            'value': oj.Translations.getTranslatedString('wrc-navigation.ariaLabel.panelResizer.value')
+          }
+        },
         buttons: {
           yes: {
             disabled: false,
@@ -88,11 +93,6 @@ define([
           title: ko.observable(''),
           instructions: ko.observable(''),
           prompt: ko.observable('')
-        },
-        'navtree': {
-          ariaLabel: {
-            value: oj.Translations.getTranslatedString('wrc-navigation.navtree.ariaLabel.value')
-          }
         }
       };
       
@@ -239,7 +239,6 @@ define([
                   div.style.display = 'none';
                   break;
               }
-//MLW              if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) router.go('home');
             }
           });
           
@@ -397,8 +396,6 @@ define([
         Controller.getSignal('tabStripTabSelected').dispatch(tabId, 'startup-tasks', options);
         setTableFormContainerVisibility(true);
         Controller.getSignal('ancillaryContentItemSelected').dispatch(source, tabId, options);
-
-//MLW        self.router.go('home');
       }
       
       Context.getPageContext().getBusyContext().whenReady()

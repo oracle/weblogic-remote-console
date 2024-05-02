@@ -1,0 +1,59 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.management.runtime.SpringRuntimeMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The Spring ApplicationContext runtime bean definitions.</p> '
+  name: SpringApplicationContextRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.SpringApplicationContextRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The Spring bean definitions.</p> '
+  name: SpringBeanDefinitionRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.SpringBeanDefinitionRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The Spring TransactionManager runtime bean definitions.</p> '
+  name: SpringTransactionManagerRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.SpringTransactionManagerRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The Spring TransactionTemplate runtime bean definitions.</p> '
+  name: SpringTransactionTemplateRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.SpringTransactionTemplateRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the version number of the Spring Framework.</p> '
+  name: SpringVersion
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The Spring ViewResolver runtime bean definitions.</p> '
+  name: SpringViewResolverRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.SpringViewResolverRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The Spring View runtime bean definitions.</p> '
+  name: SpringViewRuntimeMBeans
+  relationship: containment
+  type: weblogic.management.runtime.SpringViewRuntimeMBean

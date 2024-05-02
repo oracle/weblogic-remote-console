@@ -1,0 +1,20 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.descriptor.ConnectionDefinitionPropertiesDBean
+derivedTypes: []
+name: weblogic.management.descriptor.OutboundConnectionPoolGroupDBean
+
+properties:
+- name: Properties
+  type: weblogic.management.descriptor.ConfigPropertyDBean
+  array: true
+  relationship: containment
+- name: OutboundConnectionPoolInstances
+  type: weblogic.management.descriptor.OutboundConnectionPoolInstanceDBean
+  array: true
+  relationship: containment
+  creators:
+  - weblogic.management.descriptor.OutboundConnectionPoolInstanceDBean

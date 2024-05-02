@@ -191,7 +191,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
   
       function setIconbarIconsEnablement(iconbarIcon, state) {
         if (CoreUtils.isNotUndefinedNorNull(iconbarIcon)) {
-          const index = self.i18n.tabstrip.tabs().map(item => item.id).indexOf(iconbarIcon.id);
+          const index = self.i18n.tabstrip.tabs().findIndex(item => item.id === iconbarIcon.id);
           if (index !== -1) {
             self.i18n.tabstrip.tabs()[index].disabled(state);
           }
@@ -352,7 +352,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       }
 
       function createChangeManagerDOM(content){
-        let bindHtml = '<table id=\'change-manager-table\'>';
+        let bindHtml = '<table id=\'change-manager-table\' aria-hidden=\'true\'>';
         for (const [key, value] of Object.entries(content)) {
           bindHtml += '<tr>';
           bindHtml += '<td class=\'table-key\'>' + key + '</td><td>' + value + '</td>';
@@ -365,7 +365,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       function createAdditionsDOM(content){
         let bindHtml = '<p/>';
         if (content.length > 0) {
-          bindHtml = '<table id=\'additions-table\'>';
+          bindHtml = '<table id=\'additions-table\' aria-hidden=\'true\'>';
 
           let data = {};
 
@@ -404,7 +404,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
 
         let bindHtml = '<p/>';
         if (content.length > 0) {
-          bindHtml = '<table id=\'modifications-table\'>';
+          bindHtml = '<table id=\'modifications-table\' aria-hidden=\'true\'>';
 
           let identityKeyHtml = '', identityProperty = '', pathLinkMap = {}, pathLink = '', pathKey;
 
@@ -486,7 +486,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       function createRemovalsDOM(content){
         let bindHtml = '<p/>';
         if (content.length > 0) {
-          bindHtml = '<table id=\'removals-table\'>';
+          bindHtml = '<table id=\'removals-table\' aria-hidden=\'true\'>';
 
           let data = {};
 
@@ -507,7 +507,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 
       function createRestartDOM(content){
         let bindHtml = '<p/>';
         if (content.length > 0) {
-          bindHtml = '<table id=\'restart-table\'>';
+          bindHtml = '<table id=\'restart-table\' aria-hidden=\'true\'>';
 
           let data = {};
 

@@ -1,0 +1,240 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JaxRsMonitoringInfoRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This the runtime server MBean for a JAX-RS application. There can
+  be more than one JAX-RS application per Web Application. The list of available JAX-RS
+  applications can be got through the method <code>public JaxRsApplicationMBean[]
+  getJaxRsApplications() at weblogic.management.runtime.WebAppComponentRuntimeMBean</code>
+  The lookup method to find a specific JAX-RS application with given name is <code>public
+  JaxRsApplicationMBean lookupJaxRsApplication(String name)</code> '
+name: weblogic.management.runtime.JaxRsApplicationRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Get all JAX-RS/Jersey component and provider classes registered
+    either explicitly or via discovery (e.g. class-path scanning, from META-INF/services
+    entries) '
+  excludeFromRest: No default REST mapping for Set<String>
+  name: AllRegisteredClasses
+  supported: false
+  type: java.util.Set
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the application class used for configuration of Jersey application. '
+  name: ApplicationClass
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 Currently not supported. '
+  descriptionHTML: '<p>Indicates whether this JAX-RS application is currently enabled
+    </p> '
+  name: ApplicationEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the application name. '
+  name: ApplicationName
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 Use JaxRsExceptionMapperStatisticsRuntimeMBean.getUnsuccessfulMappings()
+    instead. '
+  descriptionHTML: '<p>Provides the errors count, the number of un-handled exceptions
+    from the JAX-RS application</p> '
+  name: ErrorCount
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Get statistics about registered exception mappers. '
+  name: ExceptionMapperStatistics
+  relationship: containment
+  type: weblogic.management.runtime.JaxRsExceptionMapperStatisticsRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Provides map with all method names(String) as keys and their
+    count(long) as values</p> '
+  excludeFromRest: No default REST mapping for HashMap
+  name: HttpMethodCounts
+  supported: false
+  type: java.util.HashMap
+- array: true
+  defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Provides details of the last error. It returns null if there
+    is not exception yet</p> '
+  name: LastErrorDetails
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Provides the exception mapper class used against the last error
+    (if any) occurred. It returns null if no error has been mapped yet.</p> '
+  name: LastErrorMapper
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Provides the date-time at which the last error(if any) occurred</p> '
+  name: LastErrorTime
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 '
+  descriptionHTML: '<p>Provides the http method name of the last request</p> '
+  name: LastHttpMethod
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 Use JaxRsResponseStatisticsRuntimeMBean.getLastResponseCode()
+    instead. '
+  descriptionHTML: '<p>Provides the response code of the last response. Returns -1
+    if there is no response yet.</p> '
+  name: LastResponseCode
+  supported: false
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the map of configuration properties converted to strings. '
+  excludeFromRest: No default REST mapping for Map<String,String>
+  name: Properties
+  supported: false
+  type: java.util.Map
+- defaultValue: {
+    }
+  descriptionHTML: 'Get a set of string names of resource classes registered by the
+    user. '
+  excludeFromRest: No default REST mapping for Set<String>
+  name: RegisteredClasses
+  supported: false
+  type: java.util.Set
+- defaultValue: {
+    }
+  descriptionHTML: 'Get a set of string names of classes of user registered instances. '
+  excludeFromRest: No default REST mapping for Set<String>
+  name: RegisteredInstances
+  supported: false
+  type: java.util.Set
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the global application statistics of request execution. The
+    statistics are not bound any specific resource or resource method and contains
+    information about all requests that application handles. '
+  name: RequestStatistics
+  relationship: containment
+  type: weblogic.management.runtime.JaxRsExecutionStatisticsRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 Use getProperties() / getApplicationClass() instead. '
+  descriptionHTML: '<p>Provides the resource config MBean of the JAX-RS application.</p>
+    <p> Every JAX-RS application is configured through a resource config. There are
+    several types of resource configs available in Jersey. This method gets the details
+    of the corresponding resource config created by Jersey for this JAX-RS application.
+    </p> '
+  name: ResourceConfig
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.JaxRsResourceConfigTypeRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the WSM resource pattern for this JAX-RS application. '
+  name: ResourcePattern
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 Use JaxRsResponseStatisticsRuntimeMBean.getResponseCodes()
+    instead. '
+  descriptionHTML: '<p>Provides map with all response codes(int) as keys and their
+    count(long) as values</p> '
+  excludeFromRest: No default REST mapping for HashMap
+  name: ResponseCodeCounts
+  supported: false
+  type: java.util.HashMap
+- defaultValue: {
+    }
+  descriptionHTML: 'Get global application response statistics. The statistics are
+    not bound any specific resource or resource method and contains information about
+    all responses that application creates. '
+  name: ResponseStatistics
+  relationship: containment
+  type: weblogic.management.runtime.JaxRsResponseStatisticsRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Retrieve the root path for this JAX-RS Application.  The path
+    consists of (servlet) context path + application (servlet or filter) path. '
+  name: RootPath
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 Use getRootResourcesByClass() instead. '
+  descriptionHTML: '<p>Provides the array of root resources MBean</p> <p/> <p>Every
+    JAX-RS application contains 1 or more root resources. '
+  name: RootResources
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.JaxRsResourceRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Get the statistics for each resource Class that is deployed in
+    the application. Note that one resource class can serve request matched to different
+    URIs. The array contains resource classes which are registered in the resource
+    model plus resource classes of sub resources returned from sub resource locators. '
+  name: RootResourcesByClass
+  relationship: containment
+  type: weblogic.management.runtime.JaxRsResourceRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Get the statistics for each URI that is exposed in the application.
+    The array URIs that are available in application without URIs available in sub
+    resource locators and URIs that are available trough sub resource locators and
+    were already matched by any request. '
+  name: RootResourcesByUri
+  relationship: containment
+  type: weblogic.management.runtime.JaxRsUriRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the MBean of the servlet that handles the corresponding
+    JAX-RS application.</p> <p>Users can get the servlet related metrics from the
+    returned ServletRuntimeMBean </p> '
+  name: Servlet
+  relationship: containment
+  type: weblogic.management.runtime.ServletRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the start time of the application (when application was initialized). '
+  name: StartTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Indicates whether this JAX-RS application currently has WADL generation
+    enabled. '
+  name: WadlGenerationEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Retrieve the WADL URI for this JAX-RS Application. '
+  name: WadlUrl
+  type: java.lang.String
+roles:
+  allowed:
+  - Operator

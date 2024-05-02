@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -111,7 +111,7 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
       },
       upsertDataProvider: function(dataProvider) {
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
-          const index = this.dataProviders.map(item =>item.id).indexOf(dataProvider.id);
+          const index = this.dataProviders.findIndex(item =>item.id === dataProvider.id);
           if (index !== -1) {
             this.dataProviders[index] = dataProvider;
           }
@@ -127,7 +127,7 @@ define(['wrc-frontend/microservices/provider-management/data-provider-manager', 
       removeDataProvider: function(dataProvider) {
         if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
           if (CoreUtils.isNotUndefinedNorNull(dataProvider.id) && this.dataProviders.length > 0) {
-            const index = this.dataProviders.map(item => item.id).indexOf(dataProvider.id);
+            const index = this.dataProviders.findIndex(item => item.id === dataProvider.id);
             if (index !== -1) {
               // Do a physical removal of dataProvider
               // from project's dataProviders, This has

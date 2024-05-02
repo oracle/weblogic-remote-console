@@ -72,6 +72,7 @@ define([
       autoDownloadRequested: new signals.Signal(),
       formInputMinWidthChanged: new signals.Signal(),
       formSliceSelected: new signals.Signal(),
+      adminServerShutdown: new signals.Signal(),
       backendDataReloaded: new signals.Signal(),
       backendConnectionLost: new signals.Signal(),
       backendConnectionRefused: new signals.Signal(),

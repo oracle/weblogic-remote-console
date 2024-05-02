@@ -66,7 +66,7 @@ define([
 
           const ref = document.createElement('a');
           ref.setAttribute('href', '#');
-          ref.setAttribute('on-click', '[[helpTopiclinkClick]]');
+          ref.setAttribute('on-click', '[[helpTopicLinkClick]]');
           ref.setAttribute('data-external-help-link', topic.href);
           ref.innerText = topic.label;
 

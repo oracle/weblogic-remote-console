@@ -1,0 +1,36 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+derivedTypes: []
+name: weblogic.management.descriptor.EntityCacheDBean
+properties:
+- name: IdleTimeoutSeconds
+  type: int
+  descriptionHTML: >
+    <p>The idle timeout, in seconds.</p>
+    <p>The default value is 600.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 600
+- name: MaxBeansInCache
+  type: int
+  descriptionHTML: >
+    <p>The maximum number of beans in the cache.</p>
+    <p>The default value is 1000.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 1000
+- name: ReadTimeoutSeconds
+  type: int
+  descriptionHTML: >
+    <p>The read timeout, in seconds.</p>
+    <p>The default value is 600.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 600

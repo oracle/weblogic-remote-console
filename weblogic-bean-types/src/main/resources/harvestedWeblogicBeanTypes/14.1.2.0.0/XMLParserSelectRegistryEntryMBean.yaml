@@ -1,0 +1,98 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>A Parser Select Entry specifies the SAX/DOM parser factory implementation
+  classes for a particular document type.</p>  <p>By default, WebLogic server uses
+  either the built-in (out-of-the-box) or default SAX/DOM parser factory implementation
+  classes when it parses an XML document.  However, you can specify that particular
+  XML documents, based on their public IDs, system IDs, or root elements, use different
+  parser factory implementation classes than the default.  You do this by first creating
+  an XML Registry and then creating a Parser Select entry and specifying how to identify
+  the document and then the desired implementation classes.</p>   <p>The XML document
+  type is identified by one or more of the following:</p>  <ul> <li> a public ID (e.g,
+  "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN"</li> <li>a system
+  ID (e.g, "http://java.sun.com/j2ee/dtds/ejb-jar_2_0.dtd")</li> <li>a document root
+  tag name (e.g., "ejb-jar")</li> </ul>  <p>This configuration information is used
+  by the WebLogic JAXP implementation to choose the appropriate parser factories (SAX
+  and DOM).</p> '
+name: weblogic.management.configuration.XMLParserSelectRegistryEntryMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the fully qualified name of the class that implements
+    the <code>DocumentBuilderFactory</code> API</p>  <p>When WebLogic Server begins
+    to parse an XML document identified by either the public ID, system ID, or root
+    element specified in this entry, and the applications specifies it wants a DOM
+    parser, then WebLogic Server uses this implementation class when using the javax.xml.parsers.DocumentBuilderFactory
+    to obtain the DOM parser.</p> '
+  name: DocumentBuilderFactory
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: '<p>Provides the class name of any custom XML parser that is associated
+    with this parser select entry.</p>  <p>Return class name of any custom XML parser
+    that is associated with the registry entry.</p> '
+  name: ParserClassName
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the public ID of the XML document type for which
+    this XML registry entry is being configured.</p>  <p>When WebLogic Server starts
+    to parse an XML document that is identified with this public ID, it uses the SAX
+    or DOM parser factory implementation class specified by this registry entry, rather
+    than the built-in or default, when obtaining a SAX or DOM parser.</p> '
+  name: PublicId
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the root element of the XML document type for which
+    this XML registry entry is being configured.</p>  <p>When WebLogic Server starts
+    to parse an XML document that is identified with this root element, it uses the
+    SAX or DOM parser factory implementation class specified by this registry entry,
+    rather than the built-in or default, when obtaining a SAX or DOM parser.</p> '
+  name: RootElementTag
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the fully qualified name of the class that implements
+    the <code>SAXParserFactory</code> API.</p>  <p>When WebLogic Server begins to
+    parse an XML document identified by either the public ID, system ID, or root element
+    specified in this entry, and the applications specifies it wants a SAX parser,
+    then WebLogic Server uses this implementation class when using the javax.xml.parsers.SAXParserFactory
+    to obtain the SAX parser.</p> '
+  name: SAXParserFactory
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the system ID of the XML document type for which
+    this XML registry entry is being configured.</p>  <p>When WebLogic Server starts
+    to parse an XML document that is identified with this system ID, it uses the SAX
+    or DOM parser factory implementation class specified by this registry entry, rather
+    than the built-in or default, when obtaining a SAX or DOM parser.</p> '
+  name: SystemId
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the fully qualified name of the class that implements
+    the <code>TransformerFactory</code> API.</p>  <p>When WebLogic Server begins to
+    transform an XML document identified by either the public ID, system ID, or root
+    element specified in this entry, then WebLogic Server uses this implementation
+    class when using the javax.xml.transform.TranformerFactory factory to obtain a
+    Transformer object.</p> '
+  name: TransformerFactory
+  type: java.lang.String
+  writable: true

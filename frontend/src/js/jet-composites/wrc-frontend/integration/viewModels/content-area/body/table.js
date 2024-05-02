@@ -7,7 +7,46 @@
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'wrc-frontend/common/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/types', './container-resizer', './container-accessibility', './table-templates', './table-sorter', './help-form', './wdt-form', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-input-dialog', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/common/page-definition-helper', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojdialog', 'ojs/ojcheckboxset', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader'],
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojrouter',
+  'ojs/ojmodule-element-utils',
+  'ojs/ojarraydataprovider',
+  'ojs/ojhtmlutils',
+  'ojs/ojknockout-keyset',
+  'wrc-frontend/common/controller',
+  'wrc-frontend/apis/data-operations',
+  'wrc-frontend/apis/message-displaying',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/microservices/page-definition/types',
+  './container-resizer',
+  './container-accessibility',
+  './table-templates',
+  './table-sorter',
+  './help-form',
+  './wdt-form',
+  './unsaved-changes-dialog',
+  './set-sync-interval-dialog',
+  './actions-input-dialog',
+  'wrc-frontend/microservices/customize/table-manager',
+  'wrc-frontend/microservices/actions-management/declarative-actions-manager',
+  'wrc-frontend/common/page-definition-helper',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/utils',
+  'wrc-frontend/core/types',
+  'wrc-frontend/core/runtime',
+  'ojs/ojcontext',
+  'ojs/ojlogger',
+  'ojs/ojknockout',
+  'ojs/ojtable',
+  'ojs/ojbinddom',
+  'ojs/ojdialog',
+  'ojs/ojcheckboxset',
+  'ojs/ojmodule-element',
+  'ojs/ojmodule',
+  'cfe-multi-select/loader'
+],
   function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, ojkeyset_1, Controller, DataOperations, MessageDisplaying, PerspectiveMemoryManager, PageDataTypes, ContentAreaContainerResizer, ContentAreaContainerAccessibility, TableTemplates, TableSorter, HelpForm, WdtForm, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, TableCustomizerManager, DeclarativeActionsManager, PageDefinitionHelper, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function TableViewModel(viewParams) {
       // Declare reference to instance of the ViewModel
@@ -117,7 +156,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           onWriteContentFile: writeContentFile,
           isWdtTable: isWdtTable,
           isHistoryVisible: isHistoryVisible,
-          onConnected: setFormContainerMaxHeight,
           onLandingPageSelected: selectLandingPage,
           onBeanPathHistoryToggled: toggleBeanPathHistory,
           onHelpPageToggled: toggleHelpPage,
@@ -138,9 +176,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           signaling: viewParams.signaling,
           perspective: viewParams.perspective,
           getDeclarativeActions: getDeclarativeActions,
+          onAdminServerShutdown: handleAdminServerShutdown,
           onSyncClicked: setSyncInterval,
           onActionPollingStarted: startActionPolling,
           onActionButtonClicked: handleActionButtonClicked,
+          onActionButtonsRefreshed: refreshActionsStripButtons,
           onActionInputButtonClicked: handleActionInputButtonClicked,
           onActionInputFormCompleted: handleActionInputFormCompleted,
           onCheckedRowsRefreshed: refreshCheckedRowsKeySet,
@@ -273,6 +313,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         self.signalBindings.push(viewParams.signaling.modelConsoleSizeChanged.add((newOffsetHeight) => {
           updateModelConsole(newOffsetHeight);
           setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
+        }));
+
+        self.signalBindings.push(viewParams.signaling.backendDataReloaded.add(() => {
+          const treeaction = {
+            isEdit: false,
+            path: decodeURIComponent(viewParams.parentRouter.data.rawPath())
+          };
+
+          // fix the navtree
+          viewParams.signaling.navtreeUpdated.dispatch(treeaction);
+
+          reloadRdjData()
+            .then(() => {
+              renderPage();
+              refreshCheckedRowsKeySet();
+            });
         }));
 
         Context.getPageContext().getBusyContext().whenReady()
@@ -470,7 +526,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             .then(reply => {
               if (reply.succeeded) {
                 actionPolling.pollCount += 1;
-                onActionPollingIntervalCompleted()
+                onActionPollingIntervalCompleted();
               }
               else {
                 // The call to reloadRdjData() returned a reply
@@ -504,10 +560,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             }
           }
 
-          const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(self.declarativeActions, options.action);
-          DeclarativeActionsManager.onCheckedRowsSubmitted(self.declarativeActions, options);
-          actionPolling['pollCount'] = 0;
-          startActionPolling(actionPolling);
+          const rdjData = viewParams.parentRouter.data.rdjData();
+          const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(rdjData, self.declarativeActions, options.action);
+
+          if (actionPolling.interval > 0) {
+            DeclarativeActionsManager.onCheckedRowsSubmitted(self.declarativeActions, options);
+            actionPolling['pollCount'] = 0;
+            startActionPolling(actionPolling);
+          }
         }
       }
 
@@ -532,6 +592,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               }
             });
           });
+      }
+
+      function setCheckedRowsDisabledState(state) {
+        const nodeList = document.querySelectorAll('#table .oj-selectorbox');
+        if (nodeList !== null) {
+          const arr = Array.from(nodeList);
+          arr.forEach((node) => {
+            if (state)
+              node.setAttribute('disabled', '');
+            else
+              node.removeAttribute('disabled');
+          });
+        }
+      }
+
+      function handleAdminServerShutdown() {
+        viewParams.signaling.adminServerShutdown.dispatch();
+        viewParams.signaling.modeChanged.dispatch(CoreTypes.Console.RuntimeMode.DETACHED.name);
       }
 
       function handleActionButtonClicked(options) {
@@ -561,12 +639,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               });
           })
           .catch(failure => {
-            if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
-              MessageDisplaying.displayResponseMessages(failure.messages);
-            }
-            else {
-              ViewModelUtils.failureResponseDefaultHandling(failure);
-            }
+            self.tableActionsStripModuleConfig
+              .then(moduleConfig => {
+                moduleConfig.viewModel.handleActionButtonClickedFailure(failure, options);
+              });
           })
           .finally(() => {
             ViewModelUtils.setPreloaderVisibility(false);
@@ -782,10 +858,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             const ele = document.getElementById('table');
             if (ele !== null) {
               ele.setAttribute('data-clipboard-copycelldata', target.innerText);
-              ele.setAttribute('data-clipboard-copyrowdata', target.parentElement.innerText.replace(/^\t/, ''));
+              ele.setAttribute('data-clipboard-copyrowdata', target.parentElement.parentElement.innerText.replace(/^\t/, ''));
             }
           }
         }
+      };
+
+      this.infoIconKeyUp = (event) => {
+        ViewModelUtils.infoIconHTMLEventListener(event);
+      };
+
+      this.infoIconClick = (event) => {
+        ViewModelUtils.infoIconHTMLEventListener(event);
       };
 
       this.hrefCellTemplateListener = function (event) {
@@ -882,7 +966,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 viewParams.onLandingPageSelected();
                 break;
               case CoreTypes.FailureType.CBE_REST_API.name:
-                MessageDisplaying.displayResponseMessages(response.body.messages);
+                Logger.error(JSON.stringify(response));
                 break;
               default:
                 ViewModelUtils.failureResponseDefaultHandling(response);
@@ -963,7 +1047,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       this.deleteListener = function (event) {
         // prevent row from being selected as a result of the delete button being clicked
-        event.stopPropagation();
+        event.preventDefault();
 
         self.selectedRows.clear();
 
@@ -1009,7 +1093,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               const modelArchive = dataProvider.extensions.wktui.modelArchive;
               self.wdtForm.deleteModelArchivePaths(dataProvider, modelArchive);
               delete dataProvider['modelArchivePaths'];
-              const index = rdjData.data.map(item => item.identity.value.resourceData).indexOf(resourceData);
+              const index = rdjData.data.findIndex(item => item.identity.value.resourceData === resourceData);
               if (index !== -1) {
                 const key = rdjData.data[index]['Name'].value;
                 self.perspectiveMemory.removeAddToArchiveSwitchValue.call(self.perspectiveMemory, key);
@@ -1276,7 +1360,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
       };
 
-      this.helpTopiclinkClick = function (event) {
+      this.helpTopicLinkClick = function (event) {
         new HelpForm(
           viewParams.parentRouter.data.pdjData(),
           self.perspective.id
@@ -1381,7 +1465,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         setRDJDataProvider(rdjData, self.perspective.id, pdjData.table.displayedColumns, pdjData.table.hiddenColumns);
 
-        const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
+        const bindHtml = PageDefinitionHelper.createIntroduction(pdjData, rdjData);
         self.introductionHTML({ view: HtmlUtils.stringToNodeArray(bindHtml), data: self });
 
         self.actionsDialog.formLayout.html({ view: HtmlUtils.stringToNodeArray('<p>'), data: self });
@@ -1389,11 +1473,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         populateAddToArchiveSwitchValues(rdjData);
 
         createHelp(pdjData);
-      }
-
-      function getIntroductionHtml(pdjIntro, rdjIntro) {
-        const bindHtml = (CoreUtils.isNotUndefinedNorNull(rdjIntro) ? rdjIntro : pdjIntro);
-        return (CoreUtils.isNotUndefinedNorNull(bindHtml) ? bindHtml : '<p>');
       }
 
       function createHelp(pdjData) {

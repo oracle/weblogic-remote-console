@@ -1,0 +1,36 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: 'An XML config-propertiesType(@http://www.bea.com/ns/weblogic/90).
+  This is a complex type. '
+name: weblogic.j2ee.descriptor.wl.ConfigPropertiesBean
+properties:
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.ConfigPropertyBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Gets array of all "property" elements '
+  exclude: true
+  name: Properties
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.ConfigPropertyBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "id" attribute '
+  exclude: true
+  name: Id
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

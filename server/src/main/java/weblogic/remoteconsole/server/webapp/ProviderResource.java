@@ -154,17 +154,18 @@ public class ProviderResource extends BaseResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/help")
-  public JsonObject getAllHelp(@Context ResourceContext resourceContext) {
+  public Response getAllHelp(@Context ResourceContext resourceContext) {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     InvocationContext ic = WebAppUtils.getInvocationContextFromResourceContext(resourceContext);
     ret.add("data", ProviderManager.getAllHelp(ic));
-    return ret.build();
+    return WebAppUtils.addCookieFromContext(resourceContext,
+      Response.ok(ret.build(), MediaType.APPLICATION_JSON)).build();
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/" + AdminServerDataProviderImpl.TYPE_NAME)
-  public JsonArray getProviderInfoAdminServerDataProviders(
+  public Response getProviderInfoAdminServerDataProviders(
     @Context ResourceContext resourceContext) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
     ProviderManager pm = ProviderManager.getFromContext(resourceContext);
@@ -174,13 +175,14 @@ public class ProviderResource extends BaseResource {
         builder.add(prov.toJSON(ic));
       }
     }
-    return builder.build();
+    return WebAppUtils.addCookieFromContext(resourceContext,
+      Response.ok(builder.build(), MediaType.APPLICATION_JSON)).build();
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/" + WDTModelDataProviderImpl.TYPE_NAME)
-  public JsonArray getProviderInfoWDTModelDataProviders(
+  public Response getProviderInfoWDTModelDataProviders(
     @Context ResourceContext resourceContext) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
     ProviderManager pm = ProviderManager.getFromContext(resourceContext);
@@ -190,13 +192,14 @@ public class ProviderResource extends BaseResource {
         builder.add(prov.toJSON(ic));
       }
     }
-    return builder.build();
+    return WebAppUtils.addCookieFromContext(resourceContext,
+      Response.ok(builder.build(), MediaType.APPLICATION_JSON)).build();
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/" + WDTCompositeDataProviderImpl.TYPE_NAME)
-  public JsonArray getProviderInfoWDTCompositeDataProviders(
+  public Response getProviderInfoWDTCompositeDataProviders(
     @Context ResourceContext resourceContext) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
     ProviderManager pm = ProviderManager.getFromContext(resourceContext);
@@ -206,13 +209,14 @@ public class ProviderResource extends BaseResource {
         builder.add(prov.toJSON(ic));
       }
     }
-    return builder.build();
+    return WebAppUtils.addCookieFromContext(resourceContext,
+      Response.ok(builder.build(), MediaType.APPLICATION_JSON)).build();
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/" + PropertyListDataProviderImpl.TYPE_NAME)
-  public JsonArray getProviderInfoPropertyListDataProviders(
+  public Response getProviderInfoPropertyListDataProviders(
     @Context ResourceContext resourceContext) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
     ProviderManager pm = ProviderManager.getFromContext(resourceContext);
@@ -222,12 +226,13 @@ public class ProviderResource extends BaseResource {
         builder.add(prov.toJSON(ic));
       }
     }
-    return builder.build();
+    return WebAppUtils.addCookieFromContext(resourceContext,
+      Response.ok(builder.build(), MediaType.APPLICATION_JSON)).build();
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public JsonArray getProviderInfoAll(
+  public Response getProviderInfoAll(
     @Context ResourceContext resourceContext) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
     ProviderManager pm = ProviderManager.getFromContext(resourceContext);
@@ -235,7 +240,8 @@ public class ProviderResource extends BaseResource {
     for (Provider prov : pm.getAll()) {
       builder.add(prov.toJSON(ic));
     }
-    return builder.build();
+    return WebAppUtils.addCookieFromContext(resourceContext,
+      Response.ok(builder.build(), MediaType.APPLICATION_JSON)).build();
   }
 
   @DELETE

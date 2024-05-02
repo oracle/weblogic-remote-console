@@ -1,0 +1,21 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: createCollectionChild
+  type: "void" # tbd - shouldn't it be a reference to the new instance
+  descriptionHTML: "Create a new instance in this outbound connection pool group"
+  parameters:
+  - name: Name
+    type: java.lang.String
+
+baseTypes:
+- weblogic.management.descriptor.ConnectionDefinitionPropertiesDBean
+derivedTypes: []
+name: weblogic.management.descriptor.OutboundConnectionPoolInstanceDBean
+
+properties:
+- name: Properties
+  type: weblogic.management.descriptor.ConfigPropertyDBean
+  array: true
+  relationship: containment

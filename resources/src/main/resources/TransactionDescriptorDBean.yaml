@@ -1,0 +1,18 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+derivedTypes: []
+name: weblogic.management.descriptor.TransactionDescriptorDBean
+properties:
+- name: TransTimeoutSeconds
+  type: int
+  descriptionHTML: >
+    <p>The transaction timeout value, in seconds.</p>
+    <p>The default value is 0.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 0

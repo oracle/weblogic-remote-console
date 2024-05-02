@@ -1,0 +1,51 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p> Configures an action that can record a customized log record
+  using the WebLogic Server <code>NonCatalogLogger</code>. The custom log message
+  set via setMessage(String) can be either a literal String or a compound EL expression.
+  </p> '
+name: weblogic.diagnostics.descriptor.WLDFLogActionBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the customized log message for this action.</p> '
+  name: Message
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Notice
+  descriptionHTML: '<p>The severity of the log message recorded by this action.</p>  default
+    weblogic.i18n.logging.Severities.NOTICE_TEXT legalValues weblogic.i18n.logging.Severities.INFO_TEXT,
+    weblogic.i18n.logging.Severities.WARNING_TEXT, weblogic.i18n.logging.Severities.ERROR_TEXT,
+    weblogic.i18n.logging.Severities.NOTICE_TEXT, weblogic.i18n.logging.Severities.CRITICAL_TEXT,
+    weblogic.i18n.logging.Severities.ALERT_TEXT, weblogic.i18n.logging.Severities.EMERGENCY_TEXT '
+  legalValues:
+  - Info
+  - Warning
+  - Error
+  - Notice
+  - Critical
+  - Alert
+  - Emergency
+  name: Severity
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the customized log message for this action.</p> '
+  name: SubsystemName
+  nullable: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

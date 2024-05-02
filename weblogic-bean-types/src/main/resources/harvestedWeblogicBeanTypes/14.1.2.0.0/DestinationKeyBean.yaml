@@ -1,0 +1,70 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.NamedEntityBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Destination Key beans control the sorting criteria of JMS destinations '
+name: weblogic.j2ee.descriptor.wl.DestinationKeyBean
+properties:
+- defaultValue:
+    value:
+      value: String
+  descriptionHTML: '<p>The expected property type for this destination key. </p>  Gets
+    the "key-type" element '
+  legalValues:
+  - Boolean
+  - Byte
+  - Short
+  - Int
+  - Long
+  - Float
+  - Double
+  - String
+  name: KeyType
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: JMSMessageID
+  descriptionHTML: '<p>Specifies a message property name or the name of a message
+    header field on which to sort messages. Message header field keys ignore the key
+    type and reference message header fields rather than message properties. </p>  <p><i>Note:</i>
+    For better performance, use message header fields as sorting keys, rather than
+    message properties. </p>  <p><i>Range of Values:</i> </p>  <p>The JMS Property
+    name (including user properties) or message header fields that can be sorted on
+    are:</p> <ul> <li> JMSMessageID</li> <li> JMSTimestamp</li> <li> JMSCorrelationID</li>
+    <li> JMSPriority</li> <li> JMSExpiration</li> <li> JMSType</li> <li> JMSRedelivered</li>
+    <li> JMSDeliveryTime</li> <li> JMS_BEA_Size</li> <li> JMS_BEA_UnitOfOrder</li>
+    </ul>   <p>This attribute is not dynamically configurable. Gets the "property"
+    element</p> '
+  name: Property
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Ascending
+  descriptionHTML: '<p>The direction (Ascending or Descending) in which this key will
+    sort messages. </p>  <p>Selecting the <i>Ascending</i> option for the JMSMessageID
+    property implies a FIFO (first in, first out) sort order (the default for destinations).
+    Select the <i>Descending</i> option for a LIFO (last in, first out) sort order.
+    </p>  <p>This attribute is not dynamically configurable. </p>  <p>Gets the "sort-order"
+    element.</p> '
+  legalValues:
+  - Ascending
+  - Descending
+  name: SortOrder
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

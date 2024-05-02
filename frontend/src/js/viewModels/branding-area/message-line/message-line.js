@@ -28,6 +28,11 @@ define([
       const self = this;
 
       this.i18n = {
+        'ariaLabel': {
+          'region': {
+            'value': oj.Translations.getTranslatedString('wrc-message-line.ariaLabel.region.value')
+          }
+        },
         icons: {
           'more': {
             iconFile: ko.observable('more-vertical-wht-18x24'),
@@ -64,7 +69,11 @@ define([
         severity: ko.observable('none'),
         link: {
           label: ko.observable()
-        }
+        },
+        details: {
+          label: ko.observable()
+        },
+        pollWhenQuiesced: false
       };
 
       this.signalBindings = [];
@@ -85,6 +94,10 @@ define([
         self.signalBindings.push(binding);
 
         binding = viewParams.signaling.domainStatusPollingCompleted.add((data) => {
+          function getPollWhenQuiesced(data) {
+            return (data.messageHTML ? data.messageHTML.startsWith('Unable to connect to the WebLogic domain') : false);
+          }
+
           if (CoreUtils.isNotUndefinedNorNull(data) && Object.keys(data).length > 0) {
             setMessageCenterAlerts(data)
               .then((counts) => {
@@ -94,7 +107,12 @@ define([
                 // setHeaderMessageLine(data) line, though!
                 if (!Runtime.getProperty('features.appAlerts.disabled')) data = getMockupMessageLine(3);
                 setHeaderMessageLine(data);
-                viewParams.onAlertsReceived({alerts: data.alerts, counts: counts});
+                if (getPollWhenQuiesced(data)) {
+                  viewParams.signaling.adminServerShutdown.dispatch();
+                }
+                else {
+                  viewParams.onAlertsReceived({alerts: data.alerts, counts: counts});
+                }
               });
           }
           else {
@@ -107,9 +125,9 @@ define([
         binding = viewParams.signaling.backendConnectionLost.add(() => {
           clearHeaderMessageLine();
         });
-  
+
         self.signalBindings.push(binding);
-  
+
       }.bind(this);
 
       this.disconnected = function () {
@@ -121,7 +139,7 @@ define([
         // the JS engine.
         self.signalBindings = [];
       }.bind(this);
-  
+
       function setMessageCenterAlerts(data) {
         return new Promise(function (resolve) {
           const highPriority = {
@@ -133,7 +151,7 @@ define([
           resolve(highPriority);
         });
       }
-  
+
       function getMockupMessageLine(index) {
         function getMessageLineIndex(min, max) {
           min = Math.ceil(min);
@@ -191,7 +209,7 @@ define([
             severity: 'info'
           }
         ];
-    
+
         if (typeof index !== 'undefined') {
           return messageLines[index];
         }
@@ -199,7 +217,7 @@ define([
           return messageLines[getMessageLineIndex(0, messageLines.length - 1)];
         }
       }
-  
+
       this.messageLineLinkClickHandler = (event) => {
         if (CoreUtils.isNotUndefinedNorNull(self.messageLine.link.href)) {
           openHRefIfPresent(self.messageLine.link.href);
@@ -210,12 +228,23 @@ define([
           viewParams.signaling.galleryItemSelected.dispatch(perspectiveId);
         }
       };
-  
+
+      this.messageLineDetailsClickHandler = (event) => {
+        if (CoreUtils.isNotUndefinedNorNull(self.messageLine.details.messageDetails)) {
+          const displayMessage = {
+            severity: (self.messageLine.details.messageSeverity || 'error'),
+            summary: self.messageLine.message(),
+            detail: self.messageLine.details.messageDetails
+          };
+          ViewModelUtils.displayResponseMessage(displayMessage);
+        }
+      };
+
       this.launchMoreMenu = function (event) {
         event.preventDefault();
         document.getElementById('messageLineMoreMenu').open(event);
       }.bind(this);
-  
+
       this.moreMenuClickListener = (event) => {
         switch (event.target.value) {
           case 'clear':
@@ -227,7 +256,7 @@ define([
             break;
         }
       };
-  
+
       function openHRefIfPresent(url) {
         if (!CoreUtils.isValidUrl(url)) return;
 
@@ -238,10 +267,12 @@ define([
           window.open(url, '_blank', 'noopener noreferrer');
         }
       }
-  
+
       function setHeaderMessageLine(obj) {
         delete self.messageLine.link.resourceData;
         delete self.messageLine.link.href;
+        delete self.messageLine.details.messageDetails;
+        delete self.messageLine.details.messageSeverity;
 
         if (CoreUtils.isNotUndefinedNorNull(obj.messageHTML)) {
           self.messageLine.message(obj.messageHTML);
@@ -252,7 +283,7 @@ define([
         else {
           self.messageLine.message('');
         }
-    
+
         if (CoreUtils.isNotUndefinedNorNull(obj.link)) {
           self.messageLine.link.label(obj.link.label);
           if (CoreUtils.isNotUndefinedNorNull(obj.link.resourceData)) self.messageLine.link['resourceData'] = obj.link.resourceData;
@@ -261,20 +292,32 @@ define([
         else {
           self.messageLine.link.label('');
         }
+
+        if (CoreUtils.isNotUndefinedNorNull(obj.messageDetails)) {
+          self.messageLine.details.label(obj.messageDetails.label);
+          self.messageLine.details['messageDetails'] = obj.messageDetails.message;
+          self.messageLine.details['messageSeverity'] = obj.severity;
+        }
+        else {
+          self.messageLine.details.label('');
+        }
       }
-  
+
       this.clearIconClickListener = (event) => {
         clearHeaderMessageLine();
       };
-  
+
       function clearHeaderMessageLine() {
         self.messageLine.message('');
         self.messageLine.link.label('');
         delete self.messageLine.link.resourceData;
         delete self.messageLine.link.href;
+        self.messageLine.details.label('');
+        delete self.messageLine.details.messageDetails;
+        delete self.messageLine.details.messageSeverity;
       }
     }
-  
+
     return MessageLineTemplate;
   }
 );

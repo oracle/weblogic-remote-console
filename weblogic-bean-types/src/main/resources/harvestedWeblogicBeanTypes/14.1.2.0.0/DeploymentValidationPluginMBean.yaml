@@ -1,0 +1,32 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Specifies the deployment validation plug-in configuration attributes.
+  The plug-in factory must have a no-argument constructor and must implement this
+  interface: weblogic.deployment.configuration.DeploymentValidationPluginFactory '
+name: weblogic.management.configuration.DeploymentValidationPluginMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the classname of the plug-in factory used for validation.
+    This is a fully qualified name. The class must be in the Administration Server
+    classpath. </p> '
+  name: FactoryClassname
+  type: java.lang.String
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.ParameterMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the parameters used to configure the plug-in factory used
+    for validation. </p> '
+  name: Parameters
+  relationship: containment
+  type: weblogic.management.configuration.ParameterMBean

@@ -5,6 +5,7 @@ package weblogic.remoteconsole.server.filter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -101,11 +102,11 @@ public class SessionFilter implements ContainerRequestFilter {
     }
 
     Frontend frontend = null;
+    String windowId = requestContext.getHeaderString("Unique-Id");
     if (requestServletContext != null) {
-      String frontendId = requestServletContext.getSession().getId();
-      frontend = FrontendManager.find(frontendId);
+      frontend = FrontendManager.find(requestServletContext.getSession().getId(), windowId);
       if (frontend == null) {
-        frontend = FrontendManager.create(frontendId);
+        frontend = FrontendManager.create(requestServletContext.getSession().getId(), windowId);
       }
     } else {
       // Look for the session id and setup the request context property
@@ -118,21 +119,17 @@ public class SessionFilter implements ContainerRequestFilter {
       }
       if (sessionId == null) {
         // Create frontend instance
-        LOGGER.fine("Creating a new frontend");
-        frontend = FrontendManager.create();
+        LOGGER.fine("Creating a new frontend, because the session id is null");
+        frontend = FrontendManager.create(UUID.randomUUID().toString(), windowId);
         WebAppUtils.storeCookieInContext(requestContext, frontend);
       } else {
-        frontend = FrontendManager.find(sessionId.getValue());
+        frontend = FrontendManager.find(sessionId.getValue(), windowId);
         if (frontend == null) {
-          frontend = FrontendManager.create();
-          WebAppUtils.storeCookieInContext(requestContext, frontend);
-          requestContext.abortWith(
-            WebAppUtils.addCookieFromRequestContext(
-            requestContext,
-            Response.status(Status.FORBIDDEN)
-          ).build());
-          LOGGER.fine("Aborted Console Backend request due to bad session!");
-          return;
+          LOGGER.fine("Creating a new frontend, because we can't find the sessionId/windowId combo");
+          // We have a session ID and we're going to assume it is legit (no
+          // reason not to) but couldn't find the sessionId/windowId combo.
+          // We'll make a new frontend using the combo
+          frontend = FrontendManager.create(sessionId.getValue(), windowId);
         }
       }
     }

@@ -36,13 +36,11 @@ It's simple to install the WebLogic Remote Console and get up and running within
 
 ***
 ### What's new
-The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.8. This release was published in March 2024.
+The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.9. <!--This release was published in March 2024.-->
 
 **New features**
 
-* Adds support for reordering security providers in Administration Server providers
-* New built-in Dashboards 
-* UI improvements including a new Providers menu
+* Simplified configuration for application deployment
 
 ***
 

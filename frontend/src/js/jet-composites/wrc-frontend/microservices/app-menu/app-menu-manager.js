@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -31,7 +31,7 @@ function (
             appMenuTemplate['menus'] = config['appMenu']['menus'];
             if (Array.isArray(appMenuTemplate.menus)) {
               for (const entry of appMenuTemplate.menuLaunchers) {
-                const index = appMenuTemplate.menus.map(item => item.id).indexOf(entry.menu.id);
+                const index = appMenuTemplate.menus.findIndex(item => item.id === entry.menu.id);
                 if (index !== -1) {
                   const menu = new Menu(appMenuTemplate.menus[index].id, appMenuTemplate.menus[index].label);
                   menu.iconFile(appMenuTemplate.menus[index].iconFile);

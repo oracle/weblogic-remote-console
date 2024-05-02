@@ -19,6 +19,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 	function (YamlParser, ConfigFileContents, BaseUrl, CoreTypes, CoreUtils, Logger) {
 		let properties = {}, config = {};
 		
+                properties['unique-id'] = new Date().getTime()
 		properties['console-frontend.mode'] = CoreTypes.Console.RuntimeMode.DETACHED.name;
 		properties['console-frontend.isReadOnly'] = false;
 		properties['console-backend.providerId'] = '';
@@ -34,6 +35,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 		properties['features.theme.disabled'] = true;
 		properties['features.whatsNew.disabled'] = true;
 		properties['features.howDoI.disabled'] = true;
+		properties['features.pageInfo.disabled'] = true;
 		properties['features.iconbarIcons.relocated'] = false;
 		
 		YamlParser.parse(ConfigFileContents)
@@ -63,6 +65,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				properties['features.appAlerts.disabled'] = config['features']['appAlerts']['disabled'];
 				properties['features.theme.disabled'] = config['features']['theme']['disabled'];
 				properties['features.whatsNew.disabled'] = config['features']['whatsNew']['disabled'];
+				properties['features.pageInfo.disabled'] = config['features']['pageInfo']['disabled'];
 				properties['features.howDoI.disabled'] = config['features']['howDoI']['disabled'];
 				properties['features.iconbarIcons.relocated'] = config['features']['iconbarIcons']['relocated'];
 				properties['preferences.providerManagement.location'] = config['preferences']['providerManagement']['location'];
@@ -83,6 +86,10 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 			return getBackendUrl() + '/api';
 		}
 		
+		function getUniqueId() {
+                  return properties['unique-id']
+                }
+
 		/**
 		 * return backend URL
 		 * @returns URL to backend (i.e. no /api)
@@ -149,6 +156,10 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 			},
 			
 			getBackendUrl: getBackendUrl,
+
+			getUniqueId: function () {
+				return getUniqueId();
+			},
 			
 			setBackendUrl: (value) => {
 				properties['console-backend.url'] = value;

@@ -1,0 +1,74 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This class represents the reliable messaging delivery policy for
+  the current WebLogic Server as both a sender and a receiver of a reliable SOAP message
+  to and from a Web service running on a different WebLogic Server. <p> Reliable messaging
+  is a framework for applications running in WebLogic Server to asynchronously and
+  reliably invoke a Web service running in a different WebLogic Server.  Reliable
+  messaging works only between WebLogic Servers.  This class encapsulates the default
+  reliable messaging parameters for an application running in this WebLogic Server
+  instance that both sends and receives a SOAP message reliably. These parameters
+  include the number of times to retry sending the message, the time to wait between
+  retries, the persistent store for the reliable message, and so on. </p> '
+name: weblogic.management.configuration.WSReliableDeliveryPolicyMBean
+properties:
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>The default maximum number of times that the sender runtime
+    should attempt to redeliver a message that the receiver WebLogic Server has not
+    yet acknowledged.</p>  <p>The default maximum number of times that the sender
+    should attempt to redeliver a message that the receiver WebLogic Web service has
+    not yet acknowledged.</p> '
+  name: DefaultRetryCount
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 6
+  descriptionHTML: '<p>The default minimum number of seconds that the sender runtime
+    should wait between retries if the receiver does not send an acknowledgement of
+    receiving the message, or if the sender runtime detects a communications error
+    while attempting to send a message.</p>  <p>The default minimum number of seconds
+    that the sender should wait between retries if the receiver does not send an acknowledgement
+    of receiving the message, or if the sender detects a communications error while
+    attempting to send a message.</p> '
+  name: DefaultRetryInterval
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 360
+  descriptionHTML: '<p>The default number of seconds that the receiver of the reliable
+    message should persist the history of the reliable message in its store.</p>  <p>The
+    default minimum number of seconds that the receiver of the reliably sent message
+    should persist the message in its storage.</p>  <p>If the DefaultTimeToLive number
+    of message have passed since the message was first sent, the sender should not
+    resent a message with the same message id.</p>  <p>If a sender cannot send a message
+    successfully before the DefaultTimeToLive has passed, the sender should report
+    a delivery failure. The receiver, after recovering from a crash, will not dispatch
+    saved messages that have expired.</p> '
+  name: DefaultTimeToLive
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JMS server used by WebLogic Server, in its role as a sender,
+    to persist the reliable messages that it sends, or the JMS server used by the
+    receiver WebLogic Server to persist the history of a reliable message sent by
+    a sender.</p> '
+  name: JMSServer
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.JMSServerMBean
+  writable: true

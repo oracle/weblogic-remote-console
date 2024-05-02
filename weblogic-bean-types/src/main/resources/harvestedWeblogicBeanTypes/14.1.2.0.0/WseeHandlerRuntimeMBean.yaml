@@ -1,0 +1,36 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Provides runtime information about a SOAP message handler that
+  has been associated with a Web service.</p>  <p>SOAP message handlers are used to
+  intercept both the inbound (request) and outbound (response) SOAP messages so that
+  extra processing can be done on the messages. Programmers specify SOAP message handlers
+  for a Web Service using the @SOAPMessageHandlers and @HandlerChain JWS annotations.</p> '
+name: weblogic.management.runtime.WseeHandlerRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the fully qualified name of the class that implements
+    this SOAP handler.</p>  <p>This class implements the javax.xml.ws.handler.LogicalHandler
+    class for JAX-WS. This class contains methods that programmers implement to process
+    the request and response SOAP messages resulting from the invoke of a Web service
+    operation. </p> '
+  excludeFromRest: No default REST mapping for Class
+  name: HandlerClass
+  supported: false
+  type: java.lang.Class
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the SOAP headers that can be processed by this SOAP
+    message handler.</p> '
+  excludeFromRest: No default REST mapping for QName
+  name: Headers
+  supported: false
+  type: javax.xml.namespace.QName

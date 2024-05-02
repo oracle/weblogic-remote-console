@@ -1,0 +1,26 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+derivedTypes: []
+name: weblogic.management.descriptor.ConfigPropertyDBean
+properties:
+- name: Name
+  type: java.lang.String
+  descriptionHTML: >
+    The name of this configuration property.
+- name: Type
+  type: java.lang.String
+  descriptionHTML: >
+    The type of this configuration property.
+- name: Value
+  type: java.lang.String
+  descriptionHTML: >
+    The configuration property value.
+  writable: true
+- name: SupportsDynamicUpdates
+  type: boolean
+  descriptionHTML: >
+    Specifies if the configuration property supports dynamic updates.

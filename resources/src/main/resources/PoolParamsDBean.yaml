@@ -1,0 +1,151 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+derivedTypes:
+- weblogic.management.descriptor.ConnectionDefinitionPropertiesDBean
+name: weblogic.management.descriptor.PoolParamsDBean
+# Can't just specify weblogic.j2ee.descriptor.wl.PoolParamsBean as a base type
+# since it @excludes all the properties.  Repeat them here instead:
+properties:
+- name: CapacityIncrement
+  type: int
+  descriptionHTML: >
+    <p>The number of connections created when new connections are added to the connection pool.</p>
+    <p>The default value is 1.</p>
+  defaultValue:
+    value:
+      value: 1
+  writable: true
+  redeployNeeded: true
+- name: ConnectionCreationRetryFrequencySeconds
+  type: int
+  descriptionHTML: >
+    <p>The number of seconds between attempts to establish connections to the database.
+    Applies to data sources created at server startup when the database is unavailable.</p>
+    <p>The default value is 0.</p>
+  defaultValue:
+    value:
+      value: 0
+  writable: true
+  redeployNeeded: true
+- name: ConnectionReserveTimeoutSeconds
+  type: int
+  descriptionHTML: >
+    <p>The Connection Reserve Timeout Seconds of this outbound connection.</p>
+    <p>The default value is -1.</p>
+  defaultValue:
+    value:
+      value: -1
+  writable: true
+- name: HighestNumUnavailable
+  type: int
+  descriptionHTML: >
+    <p>The Highest Num Unavailable of this outbound connection.</p>
+    <p>The defalut value is 0.</p>
+  defaultValue:
+    value:
+      value: 0
+  writable: true
+  redeployNeeded: true
+- name: HighestNumWaiters
+  type: int
+  descriptionHTML: >
+    <p>The Highest Num Waiters of this outbound connection.</p>
+    <p>The default value is 0.</p>
+  defaultValue:
+    value:
+      value: 0
+  writable: true
+- name: InitialCapacity
+  type: int
+  descriptionHTML: >
+    <p>The initial number of connections in the pool.</p>
+    <p>The default value is 1.</p>
+  defaultValue:
+    value:
+      value: 1
+  writable: true
+  redeployNeeded: true
+- name: MaxCapacity
+  type: int
+  descriptionHTML: >
+    <p>The maximum number of connections in the pool.</p>
+    <p>The default value is 10.</p>
+  defaultValue:
+    value:
+      value: 10
+  writable: true
+- name: MatchConnectionsSupported
+  type: boolean
+  descriptionHTML: >
+    <p>Match Connections Supported flag of this outbound connection.</p>
+    <p>The default value is true.</p>
+  defaultValue:
+    value:
+      value: true
+  writable: true
+- name: ShrinkingEnabled
+  type: boolean
+  descriptionHTML: >
+    <p>Should unused connections be removed from the pool?</p>
+    <p>The default value is true.</p>
+  defaultValue:
+    value:
+      value: true
+  writable: true
+  redeployNeeded: true
+- name: ShrinkFrequencySeconds
+  type: int
+  descriptionHTML: >
+    <p>The number of seconds to wait before shrinking a connection pool
+    that has incrementally increased to meet demand. (You must also enable
+    connection pool shrinking.)</p>
+    <p>The default value is 900.</p>
+  defaultValue:
+    value:
+      value: 900
+  writable: true
+  redeployNeeded: true
+- name: TestConnectionsOnCreate
+  type: boolean
+  descriptionHTML: >
+    <p>Should connections be tested when they are created?</p>
+    <p>The default value is false.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+  redeployNeeded: true
+- name: TestConnectionsOnRelease
+  type: boolean
+  descriptionHTML: >
+    <p>Should connections be tested when they are released?</p>
+    <p>The default value is false.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+  redeployNeeded: true
+- name: TestConnectionsOnReserve
+  type: boolean
+  descriptionHTML: >
+    <p>Should connections be tested when they are reserved?</p>
+    <p>The default value is false.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+  redeployNeeded: true
+- name: TestFrequencySeconds
+  type: int
+  descriptionHTML: >
+    <p>The frequency, in seconds, to test connections in this outbound connection pool.</p>
+    <p>The default value is 0.</p>
+  defaultValue:
+    value:
+      value: 0
+  writable: true
+  redeployNeeded: true

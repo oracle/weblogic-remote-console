@@ -24,6 +24,7 @@ define([
   'wrc-frontend/integration/viewModels/utils',
   'wrc-frontend/core/runtime',
   'wrc-frontend/core/utils',
+  'wrc-frontend/core/types',
   'ojs/ojlogger',
   'ojs/ojknockout',
   'ojs/ojbinddom',
@@ -46,10 +47,26 @@ define([
     ViewModelUtils,
     Runtime,
     CoreUtils,
+    CoreTypes,
     Logger
   ){
     function LandingPageTemplate(viewParams) {
       const self = this;
+
+      this.i18n = {
+        'ariaLabel': {
+          'cards': {
+            'panel': {
+              'value': oj.Translations.getTranslatedString('wrc-landing.ariaLabel.cards.panel.value')
+            }
+          },
+          'cardLinks': {
+            'panel': {
+              'value': oj.Translations.getTranslatedString('wrc-landing.ariaLabel.cardLinks.panel.value')
+            }
+          }
+        }
+      };
 
       // START: knockout observables referenced in landing.html
       this.perspectiveGroups = ko.observableArray();
@@ -104,6 +121,23 @@ define([
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.backendDataReloaded.add(() => {
+          const keySet = self.perspectiveMemory.navtree?.keySet();
+          if (CoreUtils.isNotUndefinedNorNull(keySet)) {
+            if (keySet.keys.keys.size > 0) {
+              const treeaction = {
+                isEdit: false,
+                path: Array.from(keySet.keys.keys).at(-1)
+              };
+
+              // fix the navtree
+              viewParams.signaling.navtreeUpdated.dispatch(treeaction);
+            }
+          }
+        });
+
+        self.signalBindings.push(binding);
+
         switchPerspective(self.perspective.id);
         setMaxHeightCSSCustomVariable('--landing-page-panel-subtree-calc-max-height');
       }.bind(this);
@@ -125,12 +159,12 @@ define([
 
       this.registerLandingPageCardKeyUpFocuser = (id) => {
         let result = KeyUpFocuser.getKeyUpCallback(id);
-        
+
         if (!result.alreadyRegistered) {
           const options = {
             focusItems: self.perspectiveGroups().map(({name}) => name)
           };
-          
+
           result = KeyUpFocuser.register(
             id,
             {
@@ -149,18 +183,18 @@ define([
             options
           );
         }
-        
+
         return result.keyUpCallback;
       };
-      
+
       this.registerLandingPageSubtreeCardKeyUpFocuser = (id) => {
         let result = KeyUpFocuser.getKeyUpCallback(id);
-        
+
         if (!result.alreadyRegistered) {
           const options = {
             focusItems: self.subtreeItemChildren().map(({label}) => label)
           };
-          
+
           result = KeyUpFocuser.register(
             id,
             {
@@ -173,7 +207,7 @@ define([
             options
           );
         }
-        
+
         return result.keyUpCallback;
       };
 
@@ -193,7 +227,7 @@ define([
 
       function onKeyUpFocuserActionSelect(event) {
         const pathValue = event.currentTarget.firstElementChild.children[0].id;
-        
+
         if (CoreUtils.isNotUndefinedNorNull(pathValue)) {
           const fauxEvent = {currentTarget: {children: [{id: pathValue}]}};
           self.perspectiveGroupSubtreeItemClickHandler(fauxEvent);
@@ -213,67 +247,84 @@ define([
           else{
             rule = KeyUpFocuser.getLastExecutedRule(id);
           }
-          $(id)[rule.focusIndexValue].focus();
+          if (rule.focusIndexValue !== -1 &&
+            CoreUtils.isNotUndefinedNorNull($(id)[rule.focusIndexValue])
+          ) {
+            $(id)[rule.focusIndexValue].focus();
+          }
         }
-        
+
         if (CoreUtils.isNotUndefinedNorNull(self.dataProvider)) {
           ViewModelUtils.setPreloaderVisibility(true);
           const beanTree = self.dataProvider.getBeanTreeByPerspectiveId(
             self.perspective.id
           );
-          getRootContents(beanTree)
-            .then((rootContents) => {
-              return expandGroups(beanTree, rootContents);
-            })
-            .then((rootContents) => {
-              self.treeModel = rootContents;
-              // Determine if there is a single non-expandable root and thus
-              // display a single group item which points to the resource data
-              if ((rootContents.contents.length === 1) &&
-                (rootContents.contents[0].expandable === false) &&
-                CoreUtils.isNotUndefinedNorNull(rootContents.contents[0].resourceData)) {
-                self.perspectiveGroups([{
-                    name: rootContents.contents[0].name,
-                    label: rootContents.contents[0].resourceData.label,
-                    path: rootContents.contents[0].resourceData.resourceData
-                  }]
-                );
-              }
-              else if (rootContents.contents.length > 0) {
-                self.perspectiveGroups(
-                  convertRootContentsToGroups(rootContents.contents)
-                );
-              }
+          if (CoreUtils.isNotUndefinedNorNull(beanTree)) {
+            getRootContents(beanTree)
+              .then((rootContents) => {
+                return expandGroups(beanTree, rootContents);
+              })
+              .then((rootContents) => {
+                self.treeModel = rootContents;
+                // Determine if there is a single non-expandable root and thus
+                // display a single group item which points to the resource data
+                if ((rootContents.contents.length === 1) &&
+                  (rootContents.contents[0].expandable === false) &&
+                  CoreUtils.isNotUndefinedNorNull(rootContents.contents[0].resourceData)) {
+                  self.perspectiveGroups([{
+                      name: rootContents.contents[0].name,
+                      label: rootContents.contents[0].resourceData.label,
+                      path: rootContents.contents[0].resourceData.resourceData
+                    }]
+                  );
+                }
+                else if (rootContents.contents.length > 0) {
+                  self.perspectiveGroups(
+                    convertRootContentsToGroups(rootContents.contents)
+                  );
+                }
 
-              const expandableName = self.perspectiveMemory.expandableName.call(
-                self.perspectiveMemory
-              );
-              if (expandableName !== null) {
-                const fauxEvent = {
-                  currentTarget: {
-                    children: [{ id: expandableName, attributes: [] }],
-                  },
-                };
-                self.landingPanelClickHandler(fauxEvent);
-                selectFocusIndexValueItem('.landing-page-card', expandableName);
-              }
-              else if (landingPageCardsPresent()) {
-                setPagePanelSubtreeVisibility(false);
-                selectFocusIndexValueItem('.landing-page-card', expandableName);
-              }
-            })
-            .then(() => {
-              self.recentPagesModuleConfig
-                .then(moduleConfig => {
-                  moduleConfig.viewModel.setBeanTree(beanTree);
-                });
-            })
-            .catch(response => {
-              ViewModelUtils.failureResponseDefaultHandling(response);
-            })
-            .finally(() => {
-              ViewModelUtils.setPreloaderVisibility(false);
-            });
+                const expandableName = self.perspectiveMemory.expandableName.call(
+                  self.perspectiveMemory
+                );
+                if (expandableName !== null) {
+                  const fauxEvent = {
+                    currentTarget: {
+                      children: [{ id: expandableName, attributes: [] }],
+                    },
+                  };
+                  self.landingPanelClickHandler(fauxEvent);
+                  selectFocusIndexValueItem('.landing-page-card', expandableName);
+                }
+                else if (landingPageCardsPresent()) {
+                  setPagePanelSubtreeVisibility(false);
+                  selectFocusIndexValueItem('.landing-page-card', expandableName);
+                }
+              })
+              .then(() => {
+                self.recentPagesModuleConfig
+                  .then(moduleConfig => {
+                    moduleConfig.viewModel.setBeanTree(beanTree);
+                  });
+              })
+              .catch(response => {
+                if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
+                  ViewModelUtils.failureResponseDefaultHandling(response, 'error');
+                }
+                else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
+                  if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                    if (response.transport.status !== 404) Logger.error(JSON.stringify(response));
+                  }
+                  else {
+                    ViewModelUtils.failureResponseDefaultHandling(response);
+                  }
+                }
+              })
+              .finally(() => {
+                ViewModelUtils.setPreloaderVisibility(false);
+              });
+
+          }
         }
       }
 
@@ -382,7 +433,20 @@ define([
                 resolve({contents: rootTreeModel});
               })
               .catch(response => {
-                ViewModelUtils.failureResponseDefaultHandling(response);
+                if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
+                  ViewModelUtils.failureResponseDefaultHandling(response, 'error');
+                }
+                else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
+                  if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                    if (response.transport.status !== 404) Logger.error(JSON.stringify(response));
+                  }
+                  else {
+                    ViewModelUtils.failureResponseDefaultHandling(response);
+                  }
+                }
+              })
+              .finally(() => {
+                ViewModelUtils.setPreloaderVisibility(false);
               });
           }
           else {
@@ -550,7 +614,7 @@ define([
             }
           }
         }
-        
+
         viewParams.signaling.ancillaryContentItemCleared.dispatch('landing');
         // The id attribute with the perspectiveId assigned
         // to it, is on the first child element of the
@@ -566,7 +630,7 @@ define([
 
         const path = event.currentTarget.children[0].attributes['data-path'];
         let pathValue = getPerspectiveGroupPathValue(value, path);
-        
+
         if (CoreUtils.isNotUndefinedNorNull(pathValue)) {
           const fauxEvent = {currentTarget: {children: [{id: pathValue}]}};
           self.perspectiveGroupSubtreeItemClickHandler(fauxEvent);
@@ -620,7 +684,7 @@ define([
         const focusIndexValue = self.perspectiveGroups().map(item => item.name).indexOf(groupName);
         KeyUpFocuser.setLastExecutedRule('.landing-page-card', {focusIndexValue: focusIndexValue});
       }
-      
+
       // Get subgroups by looking for the non-selectable items from the supplied
       // subtree page items. When non-selectable items exist, expand those subgroups
       // using the navtree and then for each subgroup expanded, replace the original

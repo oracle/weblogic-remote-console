@@ -1,0 +1,30 @@
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: []
+name: weblogic.management.runtime.DeploymentConfigurationRuntimeMBean
+roles:
+  allowed:
+  - Deployer
+  - Operator
+properties:
+- name: Deployment
+  type: weblogic.management.descriptor.DeploymentDBean
+  relationship: containment
+- name: DeploymentPlan
+  type: weblogic.management.descriptor.DeploymentPlanRuntimeMBean
+  relationship: containment
+- name: Name
+  type: java.lang.String
+  descriptionHTML: Gets the "application-name" element
+- name: PlanPath
+  type: java.lang.String
+  descriptionHTML: >
+    The fully resolved location of this application's deployment plan on the Administration Server.
+- name: AutoDeployedApp
+  type: boolean
+  descriptionHTML:  >
+    Whether the application was autodeployed
+    (regardless of whether the application was autodeployed in this session or not).

@@ -1,0 +1,42 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.SystemResourceMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This bean defines a system-level JDBC resource.  It links a separate
+  descriptor that specifies the definition.</p> '
+name: weblogic.management.configuration.JDBCSystemResourceMBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The name of the file containing this configuration.  This is
+    a relative name rooted at <code>DOMAIN_DIR/config</code>.  By default the file
+    resides in the <code>jdbc</code> subdirectory and derives its name from the bean
+    name using the following pattern:</p>  <p><code>&lt;beanName&gt;.xml</code></p>  <p>Note
+    that this is a read-only property that can only be set when the bean is created.</p> '
+  name: DescriptorFileName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: JDBCResource
+  relationship: containment
+  transient: true
+  type: weblogic.j2ee.descriptor.wl.JDBCDataSourceBean
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The user-specified name of this MBean instance.</p>  <p>This
+    name is included as one of the key properties in the MBean''s <code>javax.management.ObjectName</code>:</p>  <p><code>Name=<i>user-specified-name</i></code></p> '
+  key: true
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

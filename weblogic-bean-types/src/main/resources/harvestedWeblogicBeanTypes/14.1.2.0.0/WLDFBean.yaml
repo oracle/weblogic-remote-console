@@ -1,0 +1,32 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes:
+- weblogic.diagnostics.descriptor.WLDFResourceBean
+- weblogic.diagnostics.descriptor.WLDFInstrumentationMonitorBean
+- weblogic.diagnostics.descriptor.WLDFWatchBean
+- weblogic.diagnostics.descriptor.WLDFHarvestedTypeBean
+- weblogic.diagnostics.descriptor.WLDFInstrumentationBean
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+- weblogic.diagnostics.descriptor.WLDFScheduleBean
+- weblogic.diagnostics.descriptor.WLDFWatchNotificationBean
+- weblogic.diagnostics.descriptor.WLDFConfigurationPropertyBean
+- weblogic.diagnostics.descriptor.WLDFHarvesterBean
+descriptionHTML: '<p>This abstract bean is the base interface for all WLDF*Bean interfaces.</p> '
+name: weblogic.diagnostics.descriptor.WLDFBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Return the unique id of this bean instance.</p> '
+  name: Id
+  type: long
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The name of the WebLogic Diagnostic Framework (WLDF) bean.</p> '
+  key: true
+  name: Name
+  type: java.lang.String

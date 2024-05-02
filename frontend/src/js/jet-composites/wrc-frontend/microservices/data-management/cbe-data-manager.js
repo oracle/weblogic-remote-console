@@ -46,15 +46,15 @@ define([
         }
       }
     };
-    
+
     function getServiceConfigComponentURL(serviceType, serviceComponentType, uri){
       const serviceConfig = Runtime.getServiceConfig(serviceType);
-      
+
       if (CoreUtils.isUndefinedOrNull(serviceConfig)) throw new this.ServiceTypeNotFoundError(i18n.messages.serviceNotDefined.detail.replace('{0}', serviceType.name));
-      
+
       return Runtime.getBackendUrl() + uri; // BaseUrl() + uri; //serviceConfig.path + "/" + serviceComponentType.name + "/" + uri;
     }
-    
+
     function getUriById (serviceType, serviceComponentType, id){
       const serviceConfig = Runtime.getServiceConfig(serviceType);
       if (CoreUtils.isUndefinedOrNull(serviceConfig)) throw new this.ServiceTypeNotFoundError(i18n.messages.serviceNotDefined.detail.replace('{0}', serviceType.name));
@@ -65,26 +65,26 @@ define([
       }
       return Runtime.getBaseUrl() + path + component.uri;
     }
-    
+
     function getUrlBySelector (serviceType, serviceComponentType, selector) {
       let url;
-      
+
       if (CoreUtils.isNotUndefinedNorNull(selector.id)) {
         url = getUriById.call(this, serviceType, serviceComponentType, selector.id);
       }
       else if (CoreUtils.isNotUndefinedNorNull(selector.uri)) {
         url = getServiceConfigComponentURL.call(this, serviceType, serviceComponentType, selector.uri);
       }
-      
+
       return url;
     }
-    
+
     function getUrlByServiceType(serviceType) {
       const serviceConfig = Runtime.getServiceConfig(serviceType);
       if (CoreUtils.isUndefinedOrNull(serviceConfig)) throw new this.ServiceTypeNotFoundError(i18n.messages.cfeApi.serviceNotDefined.detail.replace('{0}', serviceType.name));
       return Runtime.getBaseUrl() + serviceConfig.path;
     }
-    
+
     /**
      * Returns a ``url`` based on the contents of the ``options`` parameter.
      * @param {{serviceType: ServiceType, serviceComponentType: ServiceComponentType, id: string}|{serviceType: ServiceType, serviceComponentType: ServiceComponentType, uri: string}|{url: string}} options
@@ -115,7 +115,7 @@ define([
       }
       return url;
     }
-    
+
     /**
      * Returns the data or error returned from the CBE REST API
      * @param {*} options
@@ -179,7 +179,7 @@ define([
           });
       });
     }
-    
+
     /**
      * Deletes the data or error returned from the CBE REST API
      * @param {*} options
@@ -243,7 +243,7 @@ define([
           });
       });
     }
-    
+
     /**
      *
      * @param {{serviceType: ServiceType, serviceComponentType: ServiceComponentType, uri: string}|{url: string}} options
@@ -308,7 +308,7 @@ define([
           });
       });
     }
-    
+
     /**
      *
      * @param {object} dataPayload
@@ -376,20 +376,20 @@ define([
           }
         });
     }
-    
+
     function getResponseJSONMessages(responseJSON) {
       let messages = [];
       if (typeof responseJSON !== 'undefined' && typeof responseJSON.messages !== 'undefined') {
         responseJSON.messages.forEach((message) => {
           if (typeof message.message !== 'undefined') {
-            messages = [message];
+            messages.push(message);
           }
           else if (typeof message.property === 'undefined') {
             if (message.message.indexOf('{') !== -1)
               messages = JSON.parse(message.message);
             else
               messages.push(message);
-            
+
             if (typeof messages.messages !== 'undefined') {
               messages = messages.messages;
             }
@@ -398,17 +398,17 @@ define([
       }
       return messages;
     }
-    
+
     function hasResponseMessages(data) {
       return (typeof data !== 'undefined' && typeof data.responseJSON !== 'undefined' && typeof data.responseJSON.messages !== 'undefined');
     }
-    
+
     function getSessionToken(responseSessionToken) {
       let sessionToken = Runtime.getProperty('X-Session-Token');
       if (responseSessionToken) sessionToken = responseSessionToken;
       return sessionToken;
     }
-    
+
     function getDefaultProfile() {
       return {
         id: null,
@@ -460,12 +460,12 @@ define([
         imageDataUrl: ''
       };
     }
-    
+
     function getCurrentProfile() {
       const id = localStorage.getItem('wrc-app.profile.current');
       return localStorage.getItem(`wrc-app.profile.registry.${id}`);
     }
-    
+
     function getImageDataUrl(id) {
       let data = localStorage.getItem(`wrc-app.profile.registry.${id}`);
       if (data !== null) {
@@ -474,13 +474,13 @@ define([
       }
       return data;
     }
-    
+
     function loadCurrentProfile() {
       let profile = JSON.stringify(getDefaultProfile());
       return new Promise((resolve, reject) => {
         try {
           const data = getCurrentProfile();
-          
+
           if (data !== null) {
             profile = data;
           }
@@ -507,18 +507,18 @@ define([
         }
       });
     }
-    
+
     function loadProfile(id) {
       let profile = JSON.stringify(getDefaultProfile());
       return new Promise((resolve, reject) => {
         try {
           let data = null;
           const messages = [];
-          
+
           if (CoreUtils.isNotUndefinedNorNull(id)) {
             data = localStorage.getItem(`wrc-app.profile.registry.${id}`);
           }
-          
+
           if (data !== null) {
             profile = data;
           }
@@ -545,7 +545,7 @@ define([
         }
       });
     }
-    
+
     //public:
     return {
       mockupAlerts: function (uri) {
@@ -583,7 +583,7 @@ define([
         Error.captureStackTrace(this, this.constructor);
         if (extra) this.extra = extra;
       },
-      
+
       /**
        * Determine if any data will be retrieved for a given ``uri``
        * <p>There are scenarios (like cross-links) where the CFE needs to make sure the link to a page in a different perspective is actually going to call up that page, before the other perspective is even loaded. If you don't do this, you're going to end up with a blank content area when there is no data behind the URL.</p>
@@ -593,7 +593,7 @@ define([
       testUri: function (uri) {
         return getData.call(this, {url: `${Runtime.getBackendUrl()}${uri}` });
       },
-      
+
       /**
        * Returns aggregation of data for a RDJ and it's associated PDJ.
        * @param {string} uri
@@ -643,7 +643,7 @@ define([
             });
         });
       },
-      
+
       postAggregatedData: function (uri, dataPayload) {
         return new Promise((resolve, reject) => {
           let rdjUrl = uri;
@@ -688,7 +688,7 @@ define([
             });
         });
       },
-      
+
       /**
        *
        * @param {string} uri
@@ -738,7 +738,7 @@ define([
             });
         });
       },
-      
+
       /**
        *
        * @param {{serviceType: ServiceType, serviceComponentType: ServiceComponentType, uri: string}|{url: string}} options
@@ -748,7 +748,7 @@ define([
       postData: function (options, dataPayload) {
         return postData.call(this, options, dataPayload);
       },
-      
+
       /**
        *
        * @param {string} url
@@ -775,6 +775,7 @@ define([
               if (sessionToken) {
                 jqXHR.setRequestHeader('X-Session-Token', sessionToken);
               }
+              jqXHR.setRequestHeader('Unique-Id', Runtime.getUniqueId());
             },
             xhrFields: { withCredentials: true },
           });
@@ -783,14 +784,23 @@ define([
           // and response body.
           jqXHR
             .then((data, textStatus, jqXHR) => {
+              const responseBody = jqXHR.responseJSON;
+              let messages = [];
+              if (responseBody.messages) {
+                messages = JSON.parse(JSON.stringify(responseBody.messages));
+                delete responseBody.messages;
+              }
+              else {
+                messages = getResponseJSONMessages(jqXHR.responseJSON.data);
+              }
               resolve({
                 transport: {
                   status: jqXHR.status,
                   statusText: jqXHR.statusText
                 },
                 body: {
-                  data: jqXHR.responseJSON,
-                  messages: getResponseJSONMessages(jqXHR.responseJSON.data)
+                  data: responseBody,
+                  messages: messages
                 }
               });
             })
@@ -816,7 +826,7 @@ define([
             });
         });
       },
-      
+
       /**
        *
        * @param {string} uri
@@ -828,7 +838,7 @@ define([
         const reloadUri = url.toString();
         return getData.call(this, {url: reloadUri});
       },
-      
+
       /**
        *
        * @param {string} uri
@@ -838,7 +848,69 @@ define([
         const url = `${Runtime.getBackendUrl()}${uri}`;
         return getData.call(this, {url: url});
       },
-      
+
+      downloadFile: function (uri) {
+        const url = `${Runtime.getBackendUrl()}${uri}`;
+        return getData.call(this, {url: url});
+      },
+
+      downloadLog: function (url) {
+        return new Promise(function (resolve, reject) {
+          if (!url.startsWith(Runtime.getBackendUrl())) {
+            url = `${Runtime.getBackendUrl()}${url}`;
+          }
+          HttpAdapter.getHRef(url)
+            .then(reply => {
+              resolve(reply);
+            })
+            .catch(response => {
+              const reply = {
+                body: {
+                  data: {}
+                }
+              };
+              if (CoreUtils.isNotUndefinedNorNull(response.status)) {
+                // This means the reject was not from
+                // a JavaScript Error being thrown
+                reply['failureType'] = CoreTypes.FailureType.CBE_REST_API;
+                reply['failureReason'] = response.statusText;
+                reply['transport'] = {
+                  status: response.status,
+                  statusText: response.statusText
+                };
+                return response.json()
+                  .then(responseJSON => {
+                    reply.body['messages'] = responseJSON.messages;
+                    reject(reply);
+                  })
+                  .catch(error => {
+                    // Response body does not contain JSON, so
+                    // just set reply.body["messages"] = [] to
+                    // honor the interface contract, when failure
+                    // type is CBE_REST_API.
+                    reply.body['messages'] = [];
+                    // Rethrow for handling by upstream code
+                    reject(reply);
+                  });
+              }
+              else {
+                // Reject came from a JavaScript Error being thrown.
+                // The response will be the JavaScript Error object
+                const reply = {failureReason: response};
+                if (response.message === CoreTypes.TypeErrors.FETCH_FAILURE) {
+                  reply['failureType'] = CoreTypes.FailureType.CONNECTION_REFUSED;
+                }
+                else {
+                  reply['failureType'] = CoreTypes.FailureType.UNEXPECTED;
+                }
+                // Rethrow for handling by upstream code
+                reject(reply);
+              }
+            });
+
+        });
+      },
+
       /**
        *
        * @param {string} url
@@ -904,7 +976,7 @@ define([
             });
         });
       },
-      
+
       /**
        * Returns information about the session the CBE has with a WLS domain it is connected to
        * @param {string} uri - Resource path sent to CBE REST API endpoint. This does not include the ``scheme://host:port`` portion of the URL.
@@ -913,7 +985,7 @@ define([
       getChangeManagerData: function (uri) {
         return getData.call(this, {url: `${Runtime.getBackendUrl()}${uri}`});
       },
-      
+
       /**
        * Update edit session the CBE has with a WLS domain it is connected to.
        * <p>This method is used fot both committing and discarding previously saved changes.</p>
@@ -923,7 +995,7 @@ define([
       postChangeManagerData: function (uri) {
         return postData.call(this, {url: `${Runtime.getBackendUrl()}${uri}`}, {});
       },
-      
+
       /**
        * Sends data pertaining to a lifecycle action to the CBE REST API.
        * @param {string} uri - Resource path sent to CBE REST API endpoint. This does not include the ``scheme://host:port`` portion of the URL.
@@ -938,7 +1010,7 @@ define([
             return Promise.resolve(reply);
           });
       },
-      
+
       /**
        * Sends a ``multipart/form-data`` POST request to the CBE REST endpoint
        * @param {string} url - URL for endpoint accepting ``multipart/form-data`` POST requests
@@ -956,6 +1028,7 @@ define([
               if (sessionToken) {
                 jqXHR.setRequestHeader('X-Session-Token', sessionToken);
               }
+              jqXHR.setRequestHeader('Unique-Id', Runtime.getUniqueId());
             },
             data: formData,
             processData: false,
@@ -980,7 +1053,7 @@ define([
                 },
                 body: {
                   data: data,
-                  messages: []
+                  messages: getResponseJSONMessages(jqXHR.responseJSON)
                 }
               });
             })
@@ -1006,7 +1079,7 @@ define([
             });
         });
       },
-      
+
       getMessageCenterData: function (uri) {
         return new Promise((resolve) => {
           let rdjUrl = uri;
@@ -1029,7 +1102,7 @@ define([
           }
         });
       },
-      
+
       /**
        *
        * @param {string} url
@@ -1079,7 +1152,7 @@ define([
         });
         return response;
       },
-      
+
       /**
        * Returns navtree data for a given ``navtreeUri`` and ``navtreeData`` object.
        * <p>Note that this uses an HTTP POST to get data, not an HTTP GET. Assign ``{}`` (and empty JS object) to ``navtreeData`` to get the "root" nodes of a given navtree.</p>
@@ -1107,7 +1180,7 @@ define([
       getNavtreeData: function(navtreeUri, treeModel) {
         return postData.call(this, {url: Runtime.getBackendUrl() + navtreeUri}, treeModel);
       },
-      
+
       /**
        *
        * @param {ServiceType} serviceType
@@ -1117,7 +1190,7 @@ define([
         const url = getUrlByServiceType.call(this, serviceType);
         return getData.call(this, {url: url});
       },
-      
+
       /**
        *
        * @param {object} dataPayload
@@ -1136,7 +1209,7 @@ define([
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return postReplyConnectionData(dataPayload, authorization, `${url}`);
       },
-      
+
       /**
        *
        * @param {string} dataProviderId
@@ -1155,6 +1228,7 @@ define([
               if (sessionToken) {
                 jqXHR.setRequestHeader('X-Session-Token', sessionToken);
               }
+              jqXHR.setRequestHeader('Unique-Id', Runtime.getUniqueId());
             },
             xhrFields: { withCredentials: true },
             async: false
@@ -1197,12 +1271,12 @@ define([
             });
         });
       },
-      
+
       pollDomainStatusData: function (dataProvider) {
         const url = `${Runtime.getBaseUrl()}/${dataProvider.id}/domainStatus`;
         return getData.call(this, {url: `${url}`});
       },
-      
+
       /**
        *
        * @param {string} ssoid
@@ -1214,7 +1288,7 @@ define([
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.TOKEN);
         return getData.call(this, {url: `${url}?ssoid=${ssoid}`});
       },
-      
+
       /**
        *
        * @param {string} dataProviderId
@@ -1226,7 +1300,7 @@ define([
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return deleteData.call(this, {url: `${url}/AdminServerConnection/${dataProviderId}`});
       },
-      
+
       getSliceData: function(uri) {
         return new Promise((resolve, reject) => {
           const rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
@@ -1268,7 +1342,7 @@ define([
             });
         });
       },
-      
+
       getBundle: function (url) {
         return new Promise((resolve, reject) => {
           const jqXHR = $.ajax({
@@ -1314,12 +1388,12 @@ define([
             });
         });
       },
-      
+
       uploadProviderFormData: function(formData, providerType) {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return this.postMultipartFormData(`${url}/${providerType}`, formData);
       },
-      
+
       downloadProviderData: function(uri) {
         return new Promise((resolve, reject) => {
           const jqXHR = $.ajax({
@@ -1329,10 +1403,11 @@ define([
               if (Runtime.getProperty('X-Session-Token')) {
                 jqXHR.setRequestHeader('X-Session-Token', Runtime.getProperty('X-Session-Token'));
               }
+              jqXHR.setRequestHeader('Unique-Id', Runtime.getUniqueId());
             },
             xhrFields: { withCredentials: true }
           });
-          
+
           jqXHR
             .then((data, textStatus, jqXHR) => {
               resolve({
@@ -1368,7 +1443,7 @@ define([
             });
         });
       },
-      
+
       /**
        *
        * @param {string} dataProviderId
@@ -1381,7 +1456,7 @@ define([
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return getData.call(this, {url: `${url}/${providerType}/${dataProviderId}`});
       },
-      
+
       /**
        *
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
@@ -1392,7 +1467,7 @@ define([
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return getData.call(this, {url: `${url}/help`});
       },
-      
+
       /**
        *
        * @param {string} dataProviderId
@@ -1405,7 +1480,7 @@ define([
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return deleteData.call(this, {url: `${url}/${providerType}/${dataProviderId}`});
       },
-      
+
       /**
        * Test the WDT Composite Model provider
        * @param {string} dataProviderId
@@ -1415,7 +1490,7 @@ define([
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return getData.call(this, {url: `${url}/WDTCompositeModel/${dataProviderId}?action=test`});
       },
-      
+
       /**
        * Delete the WDT Composite Model proivider
        * @param {string} dataProviderId
@@ -1425,12 +1500,12 @@ define([
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return deleteData.call(this, {url: `${url}/WDTCompositeModel/${dataProviderId}`});
       },
-      
+
       listDataProviders: function() {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return getData.call(this, {url: url});
       },
-      
+
       /**
        * submitPolicy is used by DataOperation for submitting any policy change.
        * @param uri
@@ -1444,7 +1519,7 @@ define([
         }
         return postData.call(this, {url: rdjUrl}, dataPayload);
       },
-      
+
       getAppMenu: () => {
         return new Promise( (resolve, reject) => {
           YamlParser.parse(AppMenuFileContents)
@@ -1472,13 +1547,13 @@ define([
             });
         });
       },
-      
+
       getDefaultAppProfile: () => {
         return new Promise((resolve, reject) => {
           resolve(getDefaultProfile());
         });
       },
-      
+
       setCurrentAppProfile: (id) => {
         return new Promise((resolve, reject) => {
           try {
@@ -1504,7 +1579,7 @@ define([
           }
         });
       },
-      
+
       getAppProfilesList: (defaultImageDataUrl) => {
         return new Promise((resolve, reject) => {
           const reply = {
@@ -1513,7 +1588,7 @@ define([
               messages: []
             }
           };
-          
+
           for (let index = 0; index < localStorage.length; index++) {
             // FortifyIssueSuppression Key Management: Empty Encryption Key
             // This is a variable name for a name/value pair, not security-related
@@ -1544,7 +1619,7 @@ define([
               }
             }
           }
-          
+
           if (reply.body.messages.length === 0) {
             resolve(reply);
           }
@@ -1560,14 +1635,14 @@ define([
           }
         });
       },
-      
+
       createAppProfile: (id, data) => {
         return new Promise((resolve, reject) => {
           const messages = [];
           if (CoreUtils.isUndefinedOrNull(id)) {
             messages.push({severity: 'error', summary: 'Required Fields Missing', detail: 'id parameter cannot be null or undefined!'});
           }
-          
+
           try {
             if (messages.length === 0) {
               data.id = id;
@@ -1609,12 +1684,12 @@ define([
             });
           }
         });
-        
+
       },
-      
+
       updateAppProfile: (id, data) => {
         function updateFields(data, profile) {
-          
+
           if (data.general) {
             profile['general'] = {};
             if (data.general.account) {
@@ -1631,21 +1706,21 @@ define([
           if (data.preferences) profile['preferences'] = data.preferences;
           if (data.properties) profile['properties'] = data.properties;
         }
-        
+
         return new Promise((resolve, reject) => {
           try {
             const messages = [];
             let profile = localStorage.getItem(`wrc-app.profile.registry.${id}`);
-            
+
             if (profile === null) {
               profile = JSON.stringify(getDefaultProfile());
             }
-            
+
             if (profile !== null) {
               updateFields(data, JSON.parse(profile));
               localStorage.setItem(`wrc-app.profile.registry.${id}`, JSON.stringify(profile));
             }
-            
+
             resolve({
               transport: {
                 status: 200,
@@ -1673,7 +1748,7 @@ define([
           }
         });
       },
-      
+
       clearAppProfileImage: (id) => {
         return new Promise((resolve, reject) => {
           try {
@@ -1706,27 +1781,27 @@ define([
           }
         });
       },
-      
+
       replaceAppProfileImage: (id, file) => {
         return new Promise((resolve, reject) => {
           try {
             const messages = [];
             let data = localStorage.getItem(`wrc-app.profile.registry.${id}`);
-            
+
             if (CoreUtils.isNotUndefinedNorNull(file)) {
               if (file.size < 1 || file.size > (65535 / 1.75 | 0)) {
                 messages.push({severity: 'error', summary: 'File Empty or Too Large', detail: `Image size must be between 1 and ${65535 / 1.75 | 0} bytes! Value encountered: ${file.size} bytes.`});
               }
-              
+
               if (!file.type.startsWith('image/')) {
                 messages.push({severity: 'error', summary: 'File Has Incorrect Media Type', detail: `Media type for file must begin with "image/"! Value encountered: ${file.type}`});
               }
             }
-            
+
             if (messages.length === 0) {
               if (CoreUtils.isNotUndefinedNorNull(file)) {
                 const reader = new FileReader();
-                
+
                 reader.onload = (function (theBlob) {
                   return function (event) {
                     const reply = {
@@ -1748,7 +1823,7 @@ define([
                     resolve(reply);
                   };
                 })(file);
-                
+
                 reader.readAsDataURL(file);
               }
             }
@@ -1766,7 +1841,7 @@ define([
                 failureReason: 'Replace Image Failed'
               });
             }
-            
+
           }
           catch (errorThrown) {
             reject({
@@ -1813,10 +1888,10 @@ define([
           try {
             const messages = [];
             let profile = JSON.stringify(getDefaultProfile());
-            
+
             if (CoreUtils.isNotUndefinedNorNull(id)) {
               const data = localStorage.getItem(`wrc-app.profile.registry.${id}`);
-              
+
               if (data !== null) {
                 localStorage.setItem('wrc-app.profile.current', id);
                 profile = data;
@@ -1899,11 +1974,11 @@ define([
           try {
             const data = localStorage.getItem(`wrc-app.profile.registry.${id}`);
             const profile = (data === null ? getDefaultProfile() : JSON.parse(data));
-            
+
             profile.preferences.theme = theme;
             localStorage.setItem(`wrc-app.profile.registry.${id}`, JSON.stringify(profile));
             localStorage.setItem('wrc-app.profile.current', id);
-            
+
             resolve({
               transport: {
                 status: 200,
@@ -1927,8 +2002,8 @@ define([
           }
         });
       }
-      
+
     };
-    
+
   }
 );

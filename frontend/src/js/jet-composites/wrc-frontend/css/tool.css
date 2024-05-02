@@ -19,6 +19,8 @@
   --form-input-min-switch-width: 7.25em;
   --form-layout-column-count: 0;
   --instructions-calc-max-width: 335px;
+  --introduction-calc-max-width: 335px;
+  --page-info-popup-toggle-state: hidden;
   --content-area-container-calc-min-width:  55px;
   --content-area-container-calc-max-height:  633px;
   --content-area-body-toolbars-calc-max-width: 495px;
@@ -65,7 +67,11 @@
 
   --form-tabstrip-converyor-calc-max-width: 275px;
   --form-table-container-min-width: 310px;
-  --instructions-max-height: 160px;
+
+  --introduction-max-height: 100px;
+  --page-info-popup-background-color: rgba(170,157,148,.90); /* #aa9d94; */
+  --page-info-popup-color: #fefefe;
+  --page-info-popup-max-height: 230px;
 
   --table-cursor: pointer;
 
@@ -105,7 +111,7 @@
   --width-hint-45em:  45em;  /* 720px; */
 
   --input-text-wide-width: 18rem;
-  --single-select-one-wide-width: 39.375em;       /* 630px; */
+  --single-select-one-wide-width: 18em;           /* 288px; */
   --single-select-one-md-width: 15.625em;         /* 250px; */
   --single-column-textarea-offset-width: 14.5rem; /* 232px */
 
@@ -138,7 +144,7 @@
 
   --oj-button-outlined-chrome-text-color-disabled: #bdc3c6;
 
-  --accessibility-focus-visible-border-color: #2a6bdf;
+  --accessibility-focus-visible-border-color: #0f44a3;
 }
 
 ::-webkit-scrollbar {
@@ -164,7 +170,7 @@ hr {
 
 /* ruleset for runtime-role="app" data attribute */
 [data-runtime-role="app"] {
-  --form-container-fixed-min-width: 1060px;
+  --form-container-fixed-min-width: 1070px;
   --oj-form-layout-column-gutter: 1.5rem;
 }
 
@@ -175,10 +181,12 @@ hr {
 }
 
 #form-toolbar-buttons > div[id='form-toolbar-save-button'],
+#overlay-form-toolbar-buttons > div[id='overlay-form-toolbar-save-button'],
 #form-toolbar-icons > div > div[id='landing-page-toolbar-icon'],
 #form-toolbar-icons > div > div.toolbar-separator-vertical,
 #form-toolbar-icons > div > div[id='toggle-history-toolbar-icon'],
 #form-toolbar-icons > div > div[id='page-help-toolbar-icon'],
+#overlay-form-toolbar-icons > div > div[id='overlay-page-help-toolbar-icon'],
 #form-toolbar-icons > div > div[id='sync-toolbar-icon'],
 #form-toolbar-icons > div > div[id='sync-interval-toolbar-icon'],
 #form-toolbar-icons > div > div[id='shoppingcart-toolbar-icon'],
@@ -196,7 +204,8 @@ hr {
 
 #table-toolbar-buttons > div > oj-button > button:focus-visible,
 #form-toolbar-buttons > oj-button > button:focus-visible,
-#form-toolbar-buttons > div > oj-button > button:focus-visible
+#form-toolbar-buttons > div > oj-button > button:focus-visible,
+#overlay-form-toolbar-buttons > div > oj-button > button:focus-visible
 {
   outline: 2px solid var(--accessibility-focus-visible-border-color);
   outline-offset: -2px;
@@ -347,6 +356,11 @@ ul.breadcrumb-crosslink
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+ul.breadcrumb-crosslink oj-menu-button > button > div
+{
+  background-color: #e8e8e8;
 }
 
 ul.breadcrumb-link li,
@@ -612,6 +626,7 @@ oj-menu[id="shutdownMenu"]
 }
 
 #ThreadStackDump > div.oj-text-field-container,
+#ServerLifeCycleRuntime_ConnectionStatus_StackTrace > div.oj-text-field-container,
 #DeploymentPlan > div.oj-text-field-container
 {
   font-size: 0.92em;        /* 11pt; */
@@ -919,14 +934,76 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 
 .cfe-table-form-instructions
 {
-  min-height: 1.875rem;
-  max-height: var(--instructions-max-height); /* Show vertical scrollbar, if height > 76px */
-  max-width: calc(100vw - var(--instructions-calc-max-width));
-  overflow-wrap: break-word;  /* Wraps really long instructions */
   font-size: 0.92em;    /* 11pt; */
-  padding: 0.625rem;
+  padding: 0.325rem;
+  min-height: 1.875rem;
+  max-height: var(--introduction-max-height);
+  max-width: calc(100vw - var(--introduction-calc-max-width));
+  margin-bottom: .625rem;
+  overflow: auto;
+  overflow-wrap: break-word;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.cfe-introduction
+{
+  display: inline-flex;
+  font-size: .8em;
+  padding: 0.325rem;
+  max-height: var(--introduction-max-height);
+  width: calc(100vw - var(--introduction-calc-max-width));
+  overflow-wrap: break-word;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.cfe-page-info-icon
+{
+  align-self: flex-start;
+  max-width: 24px;
+  max-height: 24px;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: .063rem;
+  position: relative;
+}
+
+.cfe-page-info-icon .cfe-page-info-popup
+{
+  visibility: var(--page-info-popup-toggle-state);
+  width: calc(100vw - var(--instructions-calc-max-width));
+  max-height: var(--page-info-popup-max-height);
+  background-color: var(--page-info-popup-background-color);
+  color: var(--page-info-popup-color);
+  margin-left: .188rem;
+  padding: .5rem;
+  font-family: Oracle Sans;
+  font-size: initial;
+  font-weight: 500;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  overflow-wrap: break-word;
   overflow: auto;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+  z-index: 1;
+}
+
+.cfe-page-info-icon:hover .cfe-page-info-popup
+{
+  visibility: visible;
+}
+
+.cfe-introduction-statement
+{
+  align-self: flex-start;
+  padding: 0 .15rem .325rem .15rem;
+  font-size: initial;
+}
+
+.cfe-introduction-statement > p
+{
+  margin: 0;
+  padding: 0;
 }
 
 .cfe-table-content,
@@ -1509,7 +1586,7 @@ table[id="help-table"] > tfoot div ul {
 }
 
 #overlay-form-linked-resource {
-  margin: 0.625rem 0 0.3125rem 0;
+  margin: 0.625rem;
 }
 
 .cfe-overlay-form-dialog-toolbar {
@@ -1560,7 +1637,7 @@ oj-dialog[id="overlayFormDialog"] div.oj-dialog-body
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 0 0.625rem 0 0.3125rem;
+  padding: 0 0 0 0.325rem;
   text-align: start;
   font-size: 1em;       /* 12pt; */
 }

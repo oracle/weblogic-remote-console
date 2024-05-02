@@ -208,13 +208,13 @@ define([
               result = KeyUpFocuser.register(
                 id,
                 {},
-                /*
-                //MLW
-                                {
-                                  ArrowRight: {key: 'ArrowRight', action: 'click'},
-                                  ArrowLeft: {key: 'ArrowLeft', action: 'click'}
-                                },
-                 */
+/*
+//MLW
+                {
+                  ArrowRight: {key: 'ArrowRight', action: 'click'},
+                  ArrowLeft: {key: 'ArrowLeft', action: 'click'}
+                },
+ */
                 options
               );
             }
@@ -303,15 +303,15 @@ define([
           'settings': {callback: appMenuAction, options: {}},
           'preferences': {callback: appMenuAction, options: {}},
           'resetWindow': {callback: windowMenuAction, options: {}},
-          /*
-					//MLW
-										'copyText': {callback: copyTableMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
-										'copyJSON': {callback: copyTableMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
-										'copyYAML': {callback: copyTableMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
-										'exportAsText': {callback: exportTableAsMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
-										'exportAsJSON': {callback: exportTableAsMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
-										'exportAsYAML': {callback: exportTableAsMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
-					*/
+/*
+//MLW
+          'copyText': {callback: copyTableMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
+          'copyJSON': {callback: copyTableMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
+          'copyYAML': {callback: copyTableMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
+          'exportAsText': {callback: exportTableAsMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
+          'exportAsJSON': {callback: exportTableAsMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
+          'exportAsYAML': {callback: exportTableAsMenuAction, options: {event: event, selector: 'oj-table.cfe-table'}},
+*/
           'selectAll': {callback: editMenuAction, options: {event: event}},
           'startUpTask': {callback: goMenuAction, options: {chooser: Runtime.getStartupTaskChooser()}},
           'providersDrawer': {callback: goMenuAction, options: {selector: '#provider-management-iconbar-icon'}},

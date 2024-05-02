@@ -142,7 +142,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
      */
     function createMoreMenuParams(propertyName, propertyValue, optionsSources) {
       function addBeforeAfterDividerClasses() {
-        const index = params.menuItems.map(menuItem => menuItem.label).indexOf('---');
+        const index = params.menuItems.findIndex(menuItem => menuItem.label === '---');
         if (index !== -1) {
           params.menuItems[index - (params.menuItems[index - 1].visible ? 1 : 2)].classes.push('oj-menu-item-before-divider');
           params.menuItems[index + 1].classes.push('oj-menu-item-after-divider');
@@ -388,6 +388,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
                     label: optionsSourceConfig.property.name
                   },
                   formLayout: {
+                    options: {name: 'overlay-wlsform'},
                     minWidth: parseInt(ViewModelUtils.getCustomCssProperty('overlayDialog-min-width'), 10)
                   },
                   onSaveSuceeded: updateShoppingCartCallback,

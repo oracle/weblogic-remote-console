@@ -2,7 +2,7 @@
 Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
-<div id="header-container">
+<div id="header-container" role="region" :aria-label="[[i18n.app.region.ariaLabel.value]]">
 
   <div class="oj-flex oj-sm-flex-items-initial">
 
@@ -12,12 +12,9 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates.
     <div id="branding-area-title-container">
       <oj-module config="[[appMenuModuleConfig]]"></oj-module>
 
-      <a href="/" id="app-reset-link">
-        <span :class="[[appInfoTitleClass]]">
-          <oj-bind-text value="[[appName]]"></oj-bind-text>
-          <span :class="[[appInfoTitleClass]]">
-            <oj-bind-text value="[[i18n.app.version.value]]"></oj-bind-text>
-          </span>
+      <a aria-hidden="true" href="#" id="app-reset-link" on-click="[[brandingAreaAppRestClickListener]]">
+        <span :class="[[appInfoTitleClass]]" :title="[[i18n.app.tooltip.value]]">
+          <span aria-hidden="true" data-bind="text: `${appName} ${i18n.app.version.value}`"></span>
         </span>
       </a>
     </div>

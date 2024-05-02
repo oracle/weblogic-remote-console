@@ -1,0 +1,54 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.WebsocketMessageStatisticsRuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.WebsocketApplicationRuntimeMBean
+- weblogic.management.runtime.WebsocketEndpointRuntimeMBean
+descriptionHTML: 'MBean containing properties shared between application and endpoint
+  MBeans. '
+name: weblogic.management.runtime.WebsocketBaseRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Get an MBean containing binary message statistics. '
+  name: BinaryMessageStatisticsRuntimeMBean
+  relationship: containment
+  type: weblogic.management.runtime.WebsocketMessageStatisticsRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Get an MBean containing control message statistics. '
+  name: ControlMessageStatisticsRuntimeMBean
+  relationship: containment
+  type: weblogic.management.runtime.WebsocketMessageStatisticsRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Get the list of throwable class name and count pairs. These pairs
+    represent errors and the number of times they have occurred. '
+  excludeFromRest: No default REST mapping for WebsocketErrorCount
+  name: ErrorCounts
+  supported: false
+  type: weblogic.management.runtime.WebsocketErrorCount
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the maximal number of open sessions since the start of monitoring. '
+  name: MaximalOpenSessionsCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the number of currently open sessions. '
+  name: OpenSessionsCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Get an MBean containing text message statistics. '
+  name: TextMessageStatisticsRuntimeMBean
+  relationship: containment
+  type: weblogic.management.runtime.WebsocketMessageStatisticsRuntimeMBean
+roles:
+  allowed:
+  - Operator

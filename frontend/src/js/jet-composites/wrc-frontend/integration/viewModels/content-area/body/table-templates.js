@@ -49,12 +49,12 @@ define([
 				window.open(url, '_blank', 'noopener noreferrer');
 			}
 		}
-		
+
 		function downloadHRef(atag, pdjTypes) {
 			const attributes = pdjTypes.extractNodeAttributes(HtmlUtils.stringToNodeArray(atag));
 			if (attributes.download) {
 				const options = {
-					href: `${Runtime.getBackendUrl()}${attributes.href}`,
+					href: attributes.href,
 					filepath: attributes.download,
 					target: attributes.target,
 					mediaType: attributes.type
@@ -65,7 +65,7 @@ define([
 
 		function onHRefTableCellClicked(row, columnName, pdjTypes, parentRouter) {
 			let dataDefaultTemplate = 'cellTemplate';
-			
+
 			if (CoreUtils.isNotUndefinedNorNull(row[columnName].value.href)) {
 				if (row[columnName].value.href.endsWith('</a>')) {
 					downloadHRef(row[columnName].value.href, pdjTypes);
@@ -82,12 +82,12 @@ define([
 
 			return dataDefaultTemplate;
 		}
-		
+
 		function onHtmlTableCellClicked(row, columnName, id) {
 /*
 //MLW
 			const tr = document.querySelector(`tr:has(#${id})`);
-	
+
 			let toggleState = event.target.attributes['data-toggle-state'];
 			if (CoreUtils.isUndefinedOrNull(toggleState)) {
 				toggleState = {value: 'collapsed'};
@@ -105,7 +105,7 @@ define([
 					rtnval = (pdjData.table.displayedColumns.filter(item => item.type === 'href').length > 0);
 				}
 			}
-			
+
 			if (!rtnval) {
 				rtnval = PageDefinitionHelper.hasSliceTable(pdjData);
 				if (rtnval) {
@@ -119,7 +119,7 @@ define([
 
 		function hasHRefProperties(pdjData) {
 			let rtnval = PageDefinitionHelper.hasSliceFormProperties(pdjData);
-			
+
 			if (rtnval) {
 				rtnval = (pdjData.sliceForm.properties.filter(item => item.type === 'href').length > 0);
 			}
@@ -132,7 +132,7 @@ define([
 			hasHRefProperties: hasHRefProperties,
 			hasDownloadHRef: hasDownloadHRef,
 			setHrefTypeRowObjValue: function (rowObjValue, columnMetadata, row, cname, pdjTypes, templateListenerCallback) {
-				const index = columnMetadata.map(item => item.name).indexOf(cname);
+				const index = columnMetadata.findIndex(item => item.name === cname);
 				if (index !== -1) {
 					const rdjValue = row[cname].value;
 					if (CoreUtils.isNotUndefinedNorNull(rdjValue.href)) {
@@ -172,7 +172,7 @@ define([
 			},
 
 			setHtmlTypeRowObjValue: function (rowObjValue, columnMetadata, row, cname, templateListenerCallback) {
-				const index = columnMetadata.map(item => item.name).indexOf(cname);
+				const index = columnMetadata.findIndex(item => item.name === cname);
 				if (index !== -1) {
 					columnMetadata[index]['template'] = 'htmlCellTemplate';
 					rowObjValue['name'] = cname;
@@ -190,19 +190,22 @@ define([
 					const pdjData =  parentRouter.data.pdjData();
 					if (PageDefinitionHelper.hasTable(pdjData)) {
 						let columns = pdjData.table.displayedColumns;
-						
+
 						if (CoreUtils.isNotUndefinedNorNull(pdjData.table.hiddenColumns)) {
 							columns = columns.concat(pdjData.table.hiddenColumns);
 						}
-						
+
 						const pdjTypes = new PageDataTypes(columns, perspectiveId);
 						const cellIndex = event.target.offsetParent.cellIndex;
-						
-						if (CoreUtils.isNotUndefinedNorNull(cellIndex)) {
+
+						if (CoreUtils.isNotUndefinedNorNull(cellIndex) &&
+							CoreUtils.isNotUndefinedNorNull(columns[cellIndex]) &&
+							CoreUtils.isNotUndefinedNorNull(columns[cellIndex].name)
+						) {
 							const columnName = columns[cellIndex].name;
 							const rdjData =  parentRouter.data.rdjData();
 							const rowIndex =  event.currentTarget?.currentRow?.rowIndex;
-							
+
 							if (CoreUtils.isNotUndefinedNorNull(rowIndex)) {
 								if (pdjTypes.isHrefType(columnName)) {
 									dataDefaultTemplate = onHRefTableCellClicked(rdjData.data[rowIndex], columnName, pdjTypes, parentRouter);
@@ -224,19 +227,19 @@ define([
 
 				if (PageDefinitionHelper.hasSliceTable(pdjData)) {
 					let columns = pdjData.sliceTable.displayedColumns;
-					
+
 					if (CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable.hiddenColumns)) {
 						columns = columns.concat(pdjData.sliceTable.hiddenColumns);
 					}
-					
+
 					const pdjTypes = new PageDataTypes(columns, perspectiveId);
 					const cellIndex = event.target.offsetParent.cellIndex;
-					
+
 					if (CoreUtils.isNotUndefinedNorNull(cellIndex)) {
 						const columnName = columns[cellIndex].name;
 						const rdjData = parentRouter.data.rdjData();
 						const rowIndex = event.currentTarget?.currentRow?.rowIndex;
-						
+
 						if (CoreUtils.isNotUndefinedNorNull(rowIndex)) {
 							if (pdjTypes.isHrefType(columnName)) {
 								dataDefaultTemplate = onHRefTableCellClicked(rdjData.data[rowIndex], columnName, pdjTypes, parentRouter);
@@ -250,22 +253,22 @@ define([
 
 				return dataDefaultTemplate;
 			},
-			
+
 			hrefCellTemplateListener: function (event, parentRouter, perspectiveId) {
 				let dataDefaultTemplate = 'cellTemplate';
 				// Prevent row from being selected when <a>
 				// element is clicked.
 				event.preventDefault();
-				
+
 				let cellIndex = event.target.offsetParent.cellIndex;
-				
+
 				if (cellIndex !== -1) {
 					const pdjData =  parentRouter.data.pdjData();
 					const pdjTypes = PageDefinitionHelper.createPageDefinitionTypes(pdjData, perspectiveId);
 					if (CoreUtils.isNotUndefinedNorNull(pdjTypes)) {
 						const columnName = event.target.offsetParent.offsetParent.columns[cellIndex].name;
 						const rdjData =  parentRouter.data.rdjData();
-						
+
 						if (pdjTypes.isHrefType(columnName)) {
 							dataDefaultTemplate = onHRefTableCellClicked(rdjData.data[event.target.offsetParent.offsetParent.currentRow.rowIndex], columnName, pdjTypes, parentRouter);
 						}
@@ -273,22 +276,22 @@ define([
 				}
 				return dataDefaultTemplate;
 			},
-			
+
 			htmlCellTemplateListener: function (event, parentRouter, perspectiveId) {
 				let dataDefaultTemplate = 'cellTemplate';
 				// Prevent row from being selected when <a>
 				// element is clicked.
 				event.preventDefault();
-				
+
 				const cellIndex = event.target.offsetParent.cellIndex;
-				
+
 				if (cellIndex !== -1) {
 					const pdjData =  parentRouter.data.pdjData();
 					const pdjTypes = PageDefinitionHelper.createPageDefinitionTypes(pdjData, perspectiveId);
 					if (CoreUtils.isNotUndefinedNorNull(pdjTypes)) {
 						const columnName = event.target.offsetParent.offsetParent.columns[cellIndex].name;
 						const rdjData =  parentRouter.data.rdjData();
-						
+
 						if (pdjTypes.isHtmlType(columnName)) {
 							dataDefaultTemplate = onHtmlTableCellClicked(rdjData.data[event.target.offsetParent.offsetParent.currentRow.rowIndex], columnName, event.target.offsetParent.id);
 						}

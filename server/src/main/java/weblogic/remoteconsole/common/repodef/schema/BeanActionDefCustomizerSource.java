@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -17,6 +17,8 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   private StringValue name = new StringValue();
   private StringValue label = new StringValue();
   private StringValue helpLabel = new StringValue();
+  private StringValue successMessage = new StringValue();
+  private StringValue failureMessage = new StringValue();
   private StringValue helpSummaryHTML = new StringValue();
   private StringValue helpDetailsHTML = new StringValue();
   private StringValue helpHTML = new StringValue();
@@ -32,6 +34,8 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
     // don't merge name - it's fixed by whoever created this instance
     super.merge(from, fromContainedBeanPath);
     label.merge(from.label, fromContainedBeanPath);
+    successMessage.merge(from.successMessage, fromContainedBeanPath);
+    failureMessage.merge(from.failureMessage, fromContainedBeanPath);
     helpLabel.merge(from.helpLabel, fromContainedBeanPath);
     actionMethod.merge(from.actionMethod, fromContainedBeanPath);
     definition.merge(from.definition, fromContainedBeanPath);
@@ -102,6 +106,26 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
 
   public void setHelpLabel(String value) {
     this.helpLabel.setValue(value);
+  }
+
+  // The english label to display when this action succeeds.
+  // {0} contains the name of the bean.
+  public String getSuccessMessage() {
+    return successMessage.getValue();
+  }
+
+  public void setSuccessMessage(String value) {
+    this.successMessage.setValue(value);
+  }
+
+  // The english label to display when this action fails.
+  // {0} contains the name of the bean.
+  public String getFailureMessage() {
+    return failureMessage.getValue();
+  }
+
+  public void setFailureMessage(String value) {
+    this.failureMessage.setValue(value);
   }
 
   // The help summary for this attribute.

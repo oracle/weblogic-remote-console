@@ -7,7 +7,6 @@ slices:
   - name: General
   - name: Warnings
   - name: Filter
-  # - name: UnlockUser
   - name: EmbeddedLDAP
   # - name: Roles
   # - name: Policies

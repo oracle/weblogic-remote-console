@@ -250,7 +250,7 @@ define(['jquery'],
         if (pos1 < self.limit.leftUpper) {
           pos1 = self.limit.leftUpper + 1;
         }
-        event.stopPropagation();
+        event.preventDefault();
         self.position(pos1, true);
       });
 

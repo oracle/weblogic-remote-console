@@ -1,0 +1,296 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean defines a network channel.   A network channel is used
+  to configure additional ports for a server beyond its default listen ports.   Network
+  channels do not support IIOP. <p> A network channel can be targeted at multiple
+  clusters and servers. Targeting a channel at a cluster targets it at every server
+  that is a member of that cluster. A server can support multiple channels.</p> A
+  server can fine-tune its network channel settings by using a NetworkAccessPointMBean.  The
+  NetworkAccessPointMBean also servers to set the listen address and external DNS
+  name that a server uses for a particular channel. <p> A server serves up to three
+  default listen ports: ServerMBean ListenPort, ServerMBean AdministrationPort, and
+  SSLMBean ListenPort. The default listen ports form implicit channel(s) of weight
+  50.</p> <p> A network channel also defines the creation of server-to-server connections.
+  If a server is initiating a new connection to another server, the highest weighted
+  common (same named) channel that supports the desired protocol is used to determine
+  which port to contact.</p> '
+name: weblogic.management.configuration.NetworkChannelMBean
+properties:
+- defaultValue:
+    value:
+      value: 50
+  descriptionHTML: '<p>Allowed backlog of connection requests on the listen port(s).
+    Individual servers may override this value using a NetworkAccessPointMBean. Setting
+    the backlog to 0 may prevent accepting any incoming connection on some of the
+    OS.</p> '
+  name: AcceptBacklog
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Bind new outgoing server side T3 or T3S connections to the
+    server channel''s listen address. Other protocols ignore this field. This field
+    is ignored for connections initiated via URLs, it takes effect if and only if
+    the connection was initiated by accessing a remote reference (such as an EJB or
+    RMI stub.)</p> '
+  name: BoundOutgoingEnabled
+  type: boolean
+- defaultValue:
+    value:
+      value: false
+  deprecated: '12.2.1.2.0 '
+  descriptionHTML: '<p>Indicates whether plaintext (non-SSL) COM traffic is enabled.</p> '
+  name: COMEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 50
+  descriptionHTML: '<p>A weight to give this channel when creating server-to-server
+    connections.</p> '
+  name: ChannelWeight
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>This channel''s cluster address. If this is not set, the cluster
+    address from the cluster configuration is used in its place.</p> '
+  name: ClusterAddress
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  deprecated: '12.2.1.2.0 '
+  descriptionHTML: '<p>The maximum number of seconds spent waiting for a complete
+    COM message to be received. This attribute helps guard against denial of service
+    attacks in which a caller indicates that they will be sending a message of a certain
+    size which they never finish sending. Individual servers may override this value
+    using a NetworkAccessPointMBean.</p> '
+  name: CompleteCOMMessageTimeout
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>The maximum number of seconds spent waiting for a complete
+    HTTP message to be received. This attribute helps guard against denial of service
+    attacks in which a caller indicates that they will be sending a message of a certain
+    size which they never finish sending. Individual servers may override this value
+    using a NetworkAccessPointMBean.</p> '
+  name: CompleteHTTPMessageTimeout
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>The maximum number of seconds spent waiting for a complete
+    T3 message to be received. This attribute helps guard against denial of service
+    attacks in which a caller indicates that they will be sending a message of a certain
+    size which they never finish sending. Individual servers may override this value
+    using a NetworkAccessPointMBean.</p> '
+  name: CompleteT3MessageTimeout
+  type: int
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The encrypted password for the default IIOP user.</p>  <p>To
+    set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p> '
+  encrypted: true
+  name: DefaultIIOPPasswordEncrypted
+  restartNeeded: true
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Optional short description of this channel for console display
+    purposes. For long descriptions, use the "Notes" field.</p> '
+  name: Description
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether or not plaintext (non-SSL) HTTP traffic is enabled.</p> '
+  name: HTTPEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether or not secure (SSL) HTTP traffic is enabled.</p> '
+  name: HTTPSEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 8001
+  descriptionHTML: '<p>The plaintext (non-SSL) listen port for the channel. Individual
+    servers may override this value, but may not enable the port if disabled here
+    and may not disable the port if enabled here. Individual servers may override
+    this value using a NetworkAccessPointMBean.</p> '
+  name: ListenPort
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether or not plaintext port is enabled for the channel.</p> '
+  name: ListenPortEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 5000
+  descriptionHTML: '<p>The login timeout for the server, in milliseconds. This value
+    must be equal to or greater than 0. Individual servers may override this value
+    using a NetworkAccessPointMBean.</p> '
+  name: LoginTimeoutMillis
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 25000
+  descriptionHTML: '<p>Duration allowed for an SSL login sequence. If the duration
+    is exceeded, the login is timed out. 0 to disable. Individual servers may override
+    this value using a NetworkAccessPointMBean.</p> '
+  name: LoginTimeoutMillisSSL
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10000000
+  deprecated: '12.2.1.2.0 '
+  descriptionHTML: '<p>The maximum COM message size allowable in a message header.
+    This attribute attempts to prevent a denial of service attack whereby a caller
+    attempts to force the server to allocate more memory than is available thereby
+    keeping the server from responding quickly to other requests. Individual servers
+    may override this value using a NetworkAccessPointMBean.</p> '
+  name: MaxCOMMessageSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10000000
+  descriptionHTML: '<p>The maximum HTTP message size allowable in a message header.
+    This attribute attempts to prevent a denial of service attack whereby a caller
+    attempts to force the server to allocate more memory than is available thereby
+    keeping the server from responding quickly to other requests. Individual servers
+    may override this value using a NetworkAccessPointMBean.</p> '
+  name: MaxHTTPMessageSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 10000000
+  descriptionHTML: '<p>The maximum T3 message size allowable in a message header.
+    This attribute attempts to prevent a denial of service attack whereby a caller
+    attempts to force the server to allocate more memory than is available thereby
+    keeping the server from responding quickly to other requests. Individual servers
+    may override this value using a NetworkAccessPointMBean.</p> '
+  name: MaxT3MessageSize
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the channel. The name must not start with ".WL".</p> '
+  key: true
+  name: Name
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether or not new server-to-server connections may consider
+    this channel when initiating.</p> '
+  name: OutgoingEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 8002
+  descriptionHTML: '<p>The SSL listen port for the channel. Individual server''s may
+    override this value, but may not enable the port if disabled here and may not
+    disable the port if enabled here. SSL must be configured and enabled for this
+    port to work. Individual servers may override this value using a NetworkAccessPointMBean.</p> '
+  name: SSLListenPort
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether or not SSL port is enabled for the channel. SSL must
+    be configured and enabled in addition to this setting for the SSL port to work.</p> '
+  name: SSLListenPortEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether or not plaintext (non-SSL) T3 traffic is enabled. Note
+    that it is not possible to disable T3 traffic on the default channel(s).</p> '
+  name: T3Enabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether or not secure T3 traffic is enabled. Note that it is
+    not possible to disable T3 traffic on the default channel(s).</p> '
+  name: T3SEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 45
+  descriptionHTML: '<p>Interval (in seconds) at which to ping an http-tunneled client
+    to see if its still alive. Individual servers may override this value using a
+    NetworkAccessPointMBean.</p> '
+  name: TunnelingClientPingSecs
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 40
+  descriptionHTML: '<p>Duration (in seconds) after which a missing http-tunneled client
+    is considered dead. Individual servers may override this value using a NetworkAccessPointMBean.</p> '
+  name: TunnelingClientTimeoutSecs
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables tunneling via http.</p> '
+  name: TunnelingEnabled
+  type: boolean
+  writable: true

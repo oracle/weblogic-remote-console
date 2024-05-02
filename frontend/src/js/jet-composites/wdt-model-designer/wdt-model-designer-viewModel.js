@@ -248,7 +248,7 @@ define([
             YamlParser.parse(modelContent)
               .then(fileContents => {
                 const injectDomainInfoProps = modelContent.replace(/\s/g, '') === context.properties.modelTemplate.domain.replace(/\s/g, '');
-                const index = dataProvider.modelProperties.map(property => property.Name).indexOf('WebLogicAdminUserName');
+                const index = dataProvider.modelProperties.findIndex(property => property.Name === 'WebLogicAdminUserName');
                 if (index === -1 &&  injectDomainInfoProps){
                   modelContent = '';
                 }
@@ -426,7 +426,7 @@ define([
       this.deactivateProvider = (dataProvider) => {
         if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {
           // Determine if dataProvider is in self.activatedProviders
-          const index = self.activatedProviders.map(item => item.id).indexOf(dataProvider.id);
+          const index = self.activatedProviders.findIndex(item => item.id === dataProvider.id);
           if (index !== -1) {
             const start = async (index) => {
               // It is, so go ahead and ask DataProviderManager
@@ -497,12 +497,13 @@ define([
       function setContentAreaContainerCSSVariables(container) {
         const PANEL_RESIZER_WIDTH = 10;
         const PADDING_LEFT = 10;
+        const INFO_ICON_WIDTH = 30;
 
         const navigationAreaWidth = Math.round($('#navlistcontainer').outerWidth()) + Math.round($('#navtree-container').outerWidth()) + PANEL_RESIZER_WIDTH;
         const maxWidthVariable = (container.offsetParent ? container.offsetParent.offsetWidth : 0) - navigationAreaWidth;
         document.documentElement.style.setProperty('--wdt-model-designer-content-offset-width', `${maxWidthVariable}px`);
 
-        document.documentElement.style.setProperty('--instructions-calc-max-width', `${navigationAreaWidth}px`);
+        document.documentElement.style.setProperty('--instructions-calc-max-width', `${navigationAreaWidth + INFO_ICON_WIDTH}px`);
         document.documentElement.style.setProperty('--content-area-body-toolbars-calc-max-width', `${navigationAreaWidth + PADDING_LEFT}px`);
         document.documentElement.style.setProperty('--content-area-body-content-calc-max-width', `${navigationAreaWidth + PADDING_LEFT}px`);
         document.documentElement.style.setProperty('--table-container-calc-max-width', `${navigationAreaWidth + PADDING_LEFT}px`);
@@ -524,7 +525,7 @@ define([
           else {
             const adminUserName = dataProvider?.fileContents?.domainInfo?.AdminUserName;
             if (adminUserName && adminUserName === '@@PROP:WebLogicAdminUserName@@') {
-              const index = dataProvider.modelProperties.map(property => property.Name).indexOf('WebLogicAdminUserName');
+              const index = dataProvider.modelProperties.findIndex(property => property.Name === 'WebLogicAdminUserName');
               if (index === -1) addModelProperty(reply.body.data, 'WebLogicAdminUserName');
             }
             // FortifyIssueSuppression Password Management: Hardcoded Password
@@ -533,7 +534,7 @@ define([
             // FortifyIssueSuppression Password Management: Hardcoded Password
             // Not a password, just a variable name
             if (adminPassword && adminPassword === '@@PROP:WebLogicAdminPassword@@') {
-              const index = dataProvider.modelProperties.map(property => property.Name).indexOf('WebLogicAdminPassword');
+              const index = dataProvider.modelProperties.findIndex(property => property.Name === 'WebLogicAdminPassword');
               if (index === -1) addModelProperty(reply.body.data, 'WebLogicAdminPassword');
             }
           }
@@ -551,7 +552,7 @@ define([
 
       function addModelProperty(modelProperties, propertyName, propertyValue = '') {
         if (modelProperties) {
-          const index = modelProperties.map(property => property.Name).indexOf(propertyName);
+          const index = modelProperties.findIndex(property => property.Name === propertyName);
           if (index === -1) {
             const property = {
               uid: getNextUID(modelProperties),
@@ -567,7 +568,7 @@ define([
       function removeModelProperty(modelProperties, propertyName) {
         if (CoreUtils.isNotUndefinedNorNull(propertyName)) {
           if (modelProperties) {
-            const index = modelProperties.map(property => property.Name).indexOf(propertyName);
+            const index = modelProperties.findIndex(property => property.Name === propertyName);
             if (index !== -1) {
               modelProperties.splice(index, 1);
             }
@@ -629,7 +630,7 @@ define([
               // For now, the cache of activated providers is
               // being managed by the WDT Model Designer, so go
               // ahead and add the activated provider to it.
-              const index = self.activatedProviders.map(item => item.id).indexOf(dataProvider.id);
+              const index = self.activatedProviders.findIndex(item => item.id === dataProvider.id);
               if (index === -1) self.activatedProviders.push(dataProvider);
             })
             .finally(() => {

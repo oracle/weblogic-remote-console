@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -34,6 +34,8 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
   private LocalizableString detailedHelpHTML;
   private LocalizableString label;
   private LocalizableString helpLabel;
+  private LocalizableString successMessage;
+  private LocalizableString failureMessage;
   private ActionInputFormDefImpl inputFormDefImpl;
   private PageActionExternalHelpDefImpl externalHelpDefImpl;
   private List<PageActionDefImpl> actionDefImpls = new ArrayList<>();
@@ -117,7 +119,7 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
     initializePollingDef();
     // Initialize the label after the actions since the i18n key depends
     // on whether this action contains actions or not.
-    initializeLabels();
+    initializeMessagesAndLabels();
     initializeHelp();
     createInputFormDefImpl();
   }
@@ -149,6 +151,16 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
   @Override
   public LocalizableString getLabel() {
     return this.label;
+  }
+
+  @Override
+  public LocalizableString getSuccessMessage() {
+    return this.successMessage;
+  }
+
+  @Override
+  public LocalizableString getFailureMessage() {
+    return this.failureMessage;
   }
 
   @Override
@@ -322,9 +334,23 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
     return actionDefImpl;
   }
 
-  private void initializeLabels() {
-    this.label = new LocalizableString(getLabelLocalizationKey(), computeEnglishLabel());
-    this.helpLabel = new LocalizableString(getHelpLabelLocalizationKey(), computeEnglishHelpLabel());
+  private void initializeMessagesAndLabels() {
+    this.label =
+      new LocalizableString(getLabelLocalizationKey(), computeEnglishLabel());
+    this.helpLabel =
+      new LocalizableString(getHelpLabelLocalizationKey(), computeEnglishHelpLabel());
+    {
+      String message = getCustomizerSource().getSuccessMessage();
+      if (!StringUtils.isEmpty(message)) {
+        this.successMessage = new LocalizableString(getSuccessMessageLocalizationKey(), message);
+      }
+    }
+    {
+      String message = getCustomizerSource().getFailureMessage();
+      if (!StringUtils.isEmpty(message)) {
+        this.failureMessage = new LocalizableString(getFailureMessageLocalizationKey(), message);
+      }
+    }
   }
 
   private String computeEnglishLabel() {
@@ -372,6 +398,14 @@ class PageActionDefImpl extends BeanActionDefImpl implements PageActionDef {
 
   private String getHelpLabelLocalizationKey() {
     return getLocalizationKey("helpLabel");
+  }
+
+  private String getSuccessMessageLocalizationKey() {
+    return getLocalizationKey("successMessage");
+  }
+
+  private String getFailureMessageLocalizationKey() {
+    return getLocalizationKey("failureMessage");
   }
 
   @Override

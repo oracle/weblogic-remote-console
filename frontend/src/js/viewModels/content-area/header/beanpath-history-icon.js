@@ -85,7 +85,12 @@ function (
       }.bind(this);
 
       this.contentAreaHeaderIconClickHandler = (event) => {
+        // Set visible to false if self.perspectiveMemory
+        // is undefined. Otherwise, set it to whatever value
+        // is assigned to self.perspectiveMemory.beanPathHistory.visibility
         const visible = (CoreUtils.isUndefinedOrNull(self.perspectiveMemory) ? false : self.perspectiveMemory.historyVisibility());
+        // Need to negate value of visible, because the click
+        // even is exclusively for toggling the state.
         onIconbarIconClicked(!visible);
       };
 
@@ -97,7 +102,7 @@ function (
       };
 
       this.getIconbarIconVisibility = function (iconId) {
-        return self.i18n.icons[iconId].visible();
+        return (self.getIconbarIconToggleState(iconId) === 'inline-flex');
       };
 
       this.getIconbarIconToggleState = function (iconId) {
@@ -108,11 +113,13 @@ function (
         ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)
           .then(reply => {
             if (reply) {
+              // Use self.perspectiveMemory, if it's not undefined
               if (CoreUtils.isNotUndefinedNorNull(self.perspectiveMemory)) {
-                // This is the only place where visible should be
-                // negated!! That is because this click event is
-                // exclusively for "toggling" the state of the
-                // recent-pages view and view model!!
+                // ..it's not, so set self.perspectiveMemory.beanPathHistory.visibility
+                // based on the following:
+                //
+                // Set it to true, if visible === true and self.perspectiveMemory.beanPathHistory.visibility === true
+                // Otherwise, set it to whatever value visible is.
                 self.perspectiveMemory.setHistoryVisibility(visible && self.perspectiveMemory.historyVisibility() ? true: visible);
               }
               setIconbarIconToggleState('--beanpath-history-container-calc-display', visible);

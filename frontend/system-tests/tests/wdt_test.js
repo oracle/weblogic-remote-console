@@ -93,7 +93,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
             await driver.sleep(4800);
 
             console.log("Click Home Image");
-            await driver.findElement(By.xpath("//span[starts-with(@id, 'home')]")).click();
+            await driver.findElement(By.xpath("//*[starts-with(@id, 'home')]")).click();
             await driver.sleep(4800);
             console.log("Click WDT Model Tree");
             await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
@@ -159,7 +159,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//img[@alt='WDT Composite Model']")).click();
 
                 console.log("Click Landing Page");
-                await driver.findElement(By.xpath("//section[@id='landing-page-cards']/div/oj-conveyor-belt/div[4]/div/div[3]/a")).click();
+                await driver.findElement(By.xpath("//*[@id='landing-page-cards']/div/oj-conveyor-belt/div[4]/div/div[3]/a")).click();
                 console.log("Click Navtree Environment");
                 await driver.findElement(By.xpath("//span[contains(.,'Environment')]")).click();
                 await driver.sleep(2400);

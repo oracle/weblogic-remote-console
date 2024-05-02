@@ -1,0 +1,68 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.SizeParamsBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: HighestNumUnavailable
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: HighestNumWaiters
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ShrinkingEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: CapacityIncrement
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ShrinkPeriodMinutes
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: InitialCapacity
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ShrinkFrequencySeconds
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: MaxCapacity
+  restartNeeded: true
+  type: int
+  writable: true

@@ -121,7 +121,7 @@ module.exports = function (driver, file) {
         goToServerPage: async function (driver) {
             console.log("Click Home Image link");
             await driver.sleep(2400);
-            await driver.findElement(By.xpath("//span[starts-with(@id,'home')]")).click();
+            await driver.findElement(By.xpath("//*[starts-with(@id,'home')]")).click();
             await driver.sleep(800);
             console.log("Click Config View Tree");
             await driver.findElement(By.xpath("//div[@id='view-gallery-panel-card']")).click();

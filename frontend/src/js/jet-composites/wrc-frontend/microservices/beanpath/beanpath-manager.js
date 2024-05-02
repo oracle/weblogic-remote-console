@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -15,6 +15,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(beanTree.type, beanTree.provider.id);
       this.beanPathHistory = ko.observableArray(getInitialBeanPathItems.call(this, beanTree));
       this.beanPathHistoryOptions = getBeanPathHistoryOptions(this.beanPathHistory);
+      this.beanPathHistoryCount(this.beanPathHistory().length);
     }
 
     function getInitialBeanPathItems(beanTree) {

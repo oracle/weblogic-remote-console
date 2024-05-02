@@ -4,13 +4,22 @@ Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 -->
 
 <oj-bind-if test="[[messageLine.message() !== '']]">
-  <div id="message-line-container" class="oj-flex oj-sm-flex-items-initial" :data-severity="[[messageLine.severity()]]">
+  <div id="message-line-container" role="region" :aria-label="[[i18n.ariaLabel.region.value]]" class="oj-flex oj-sm-flex-items-initial" :data-severity="[[messageLine.severity()]]">
     <div class="oj-flex-item" data-bind="html: messageLine.message()"></div>
     <oj-bind-if test="[[messageLine.link.label() !== '']]">
       <div class="oj-flex-item oj-helper-margin-start-auto cfe-message-line-link-button">
         <a href="#" on-click="[[messageLineLinkClickHandler]]">
           <span>
             <oj-bind-text value="[[messageLine.link.label()]]"></oj-bind-text>
+          </span>
+        </a>
+      </div>
+    </oj-bind-if>
+    <oj-bind-if test="[[messageLine.details.label() !== '']]">
+      <div class="oj-flex-item cfe-message-line-details-button">
+        <a href="#" on-click="[[messageLineDetailsClickHandler]]">
+          <span>
+            <oj-bind-text value="[[messageLine.details.label()]]"></oj-bind-text>
           </span>
         </a>
       </div>

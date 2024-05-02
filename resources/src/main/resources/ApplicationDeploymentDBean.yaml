@@ -1,0 +1,20 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.descriptor.DeploymentDBean
+derivedTypes: []
+name: weblogic.management.descriptor.ApplicationDeploymentDBean
+properties:
+- name: Subdeployments
+  type: weblogic.management.descriptor.DeploymentDBean
+  array: true
+  relationship: containment
+- name: SessionDescriptor
+  type: weblogic.management.descriptor.SessionDescriptorDBean
+  relationship: containment
+- name: EnvEntries
+  type: weblogic.management.descriptor.EnvEntryDBean
+  array: true
+  relationship: containment

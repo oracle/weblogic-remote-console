@@ -29,9 +29,14 @@ function (
       const self = this;
 
       this.i18n = {
+        ariaLabel: {
+          button: {
+            home: { value: oj.Translations.getTranslatedString('wrc-content-area-header.ariaLabel.button.home.value')}
+          }
+        },
         buttons: {
           home: {
-            id: 'home', image: 'home-icon-blk_24x24', disabled: ko.observable(false), visible: ko.observable(false),
+            id: 'home', iconFile: 'fa fa-home', disabled: ko.observable(false), visible: ko.observable(false),
             label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label')
           }
         }
@@ -69,9 +74,9 @@ function (
             viewParams.signaling.beanTreeChanged.dispatch({name: 'home', type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name, type: dataProvider.type}});
           }
         });
-  
+
         self.signalBindings.push(binding);
-  
+
         binding = viewParams.signaling.projectSwitched.add((fromProject) => {
           setToolbarButtonDisabledState('home', true);
         });
@@ -107,7 +112,7 @@ function (
         self.signalBindings = [];
 
       }.bind(this);
-  
+
       this.onKeyUp = (event) => {
         if (event.key === 'ArrowLeft' && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
           let ele = document.querySelector('#nav');
@@ -177,7 +182,9 @@ function (
         if (CoreUtils.isNotUndefinedNorNull(result.selector)) {
           if (result.hasFocusIndexValue) {
             const rule = KeyUpFocuser.getLastExecutedRule(result.selector);
-            if (rule.focusIndexValue !== -1) {
+            if (rule.focusIndexValue !== -1 &&
+              CoreUtils.isNotUndefinedNorNull($(result.selector)[rule.focusIndexValue])
+            ) {
               KeyUpFocuser.setFocusItems(result.selector, {focusItems: []});
               $(result.selector)[rule.focusIndexValue].focus();
             }
@@ -190,9 +197,9 @@ function (
 
       function getKeyUpFocusSelector() {
         const result = {selector: null, hasFocusIndexValue: false};
-    
+
         let ele = document.querySelector('#breadcrumbs-container > ul > li');
-    
+
         if (CoreUtils.isNotUndefinedNorNull(ele)) {
           result.selector = '#breadcrumbs-container > ul > li';
           if (document.querySelector('#breadcrumbs-container > ul > li oj-menu-button') !== null) {
@@ -201,7 +208,7 @@ function (
         }
         else {
           ele = document.querySelector('.landing-page-panel-subtree-card');
-      
+
           if (CoreUtils.isNotUndefinedNorNull(ele)) {
             result.selector = '.landing-page-panel-subtree-card';
             result.hasFocusIndexValue = true;
@@ -222,7 +229,7 @@ function (
             }
           }
         }
-    
+
         if (CoreUtils.isUndefinedOrNull(result.selector)) {
           switch (Runtime.getStartupTaskChooser()) {
             case 'use-dialog':
@@ -235,7 +242,7 @@ function (
               break;
           }
         }
-    
+
         return result;
       }
 

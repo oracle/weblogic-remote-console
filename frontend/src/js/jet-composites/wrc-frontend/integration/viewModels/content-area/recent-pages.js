@@ -71,14 +71,17 @@ define([
 			this.beanPathHistoryCount = ko.observable(0);
 			this.beanPathManager = undefined;
 			this.beanPathHistoryOptions = ko.observable([]);
-			// END:   knockout observables referenced in view file
+			// END:   knockout observables referenced in the view file
 
 			this.signalBindings = [];
 
 			this.connected = function() {
 				this.selectedBeanPathSubscription = this.selectedBeanPath.subscribe(function (newValue) {
 					if (newValue !== null) {
-						viewParams.signaling.selectedBeanPathChanged.dispatch(newValue);
+						const historyEntry = this.beanPathManager.beanPathHistory().find(historyEntry => historyEntry.value === newValue);
+						if (CoreUtils.isNotUndefinedNorNull(historyEntry)) {
+							visitBeanPathHistoryEntry(historyEntry);
+						}
 						this.selectedBeanPath(null);
 					}
 				}.bind(this));
@@ -92,42 +95,46 @@ define([
 				});
 
 				self.signalBindings.push(binding);
-				
+
 				binding = viewParams.signaling.dataProviderRemoved.add(dataProvider => {
-					self.beanPathManager.resetHistoryEntries(dataProvider)
-						.then(result => {
-							if (result.succeeded) {
-								this.beanPathHistoryOptions([]);
-								this.beanPathHistoryCount(0);
-							}
-						});
+					if (CoreUtils.isNotUndefinedNorNull(self.beanPathManager)) {
+						self.beanPathManager.resetHistoryEntries(dataProvider)
+							.then(result => {
+								if (result.succeeded) {
+									this.beanPathHistoryOptions([]);
+									this.beanPathHistoryCount(0);
+								}
+							});
+					}
 				});
-				
+
 				self.signalBindings.push(binding);
-				
+
 				binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager, pathParam) => {
-					if (eventType === 'delete') self.beanPathManager.removeBeanPath(pathParam);
+					if (CoreUtils.isNotUndefinedNorNull(self.beanPathManager)) {
+						if (eventType === 'delete') self.beanPathManager.removeBeanPath(pathParam);
+					}
 				});
-				
+
 				self.signalBindings.push(binding);
-				
+
 				binding = viewParams.signaling.unsavedChangesDetected.add((exitFormCallback) => {
 					self.canExitCallback = exitFormCallback;
 				});
-				
+
 				self.signalBindings.push(binding);
 
 			}.bind(this);
-			
+
 			this.disconnected = function () {
 				let dispose = function (obj) {
 					if (obj && typeof obj.dispose === 'function') {
 						obj.dispose();
 					}
 				};
-				
+
 				dispose(this.selectedBeanPathSubscription);
-				
+
 				// Detach all signal "add" bindings.
 				self.signalBindings.forEach(binding => { binding.detach(); });
 
@@ -156,17 +163,34 @@ define([
 				function setBeanPathHistoryObservables(beanPathManager) {
 					const historyEntries = beanPathManager.getHistoryEntries();
 					self.beanPathHistoryOptions(historyEntries);
-					self.beanPathHistoryCount(historyEntries.length);
 				}
 
 				if (CoreUtils.isNotUndefinedNorNull(beanTree)) {
 					if (CoreUtils.isUndefinedOrNull(this.beanPathManager)) {
+						// This means we need to create a BeanPathManager using
+						// the beanTree function argument. The second constructor
+						// argument is the knockout observable that will hold the
+						// count of history entries. The beanPathManager is a
+						// module-scoped variable, but it's methods have access
+						// to data that is provider-scoped. This means that the
+						// second constructor argument will be getting updated
+						// with a provider-scoped value.
 						this.beanPathManager = new BeanPathManager(beanTree, this.beanPathHistoryCount);
+						// Next, we need to use the new BeanPathHistory instance
+						// to call function that sets the knockout observables
+						// referenced in the view file.
 						setBeanPathHistoryObservables(this.beanPathManager);
 					}
 
+					// The beanPathManager module-scoped variable will not be
+					// undefined, but it may have a beanTree that's different
+					// from the beanTree passed as a function parameter.
 					if (this.beanPathManager.beanTree.type !== beanTree.type) {
+						// Here, we also need to create a BeanPathManager using
+						// the beanTree function argument.
 						this.beanPathManager = new BeanPathManager(beanTree, this.beanPathHistoryCount);
+						// We also need to call function that sets the knockout
+						// observables referenced in the view file.
 						setBeanPathHistoryObservables(this.beanPathManager);
 					}
 				}
@@ -179,6 +203,15 @@ define([
 			this.onIconbarIconClicked = function (visible) {
 				setIconbarIconToggleState('--beanpath-history-container-calc-display', visible);
 			}.bind(this);
+
+			this.hiddenAccessKeyClickHandler = (event) => {
+				const state = getComputedStyle(document.documentElement).getPropertyValue('--beanpath-history-container-calc-display');
+				if (state === 'inline-flex') {
+					const selector = '#beanpath-history-entries input.oj-combobox-input';
+					const input = document.querySelector(selector);
+					if (input !== null) input.focus();
+				}
+			};
 
 			function setIconbarIconToggleState(cssVariableName, visible) {
 				// Declare return variable using default values
@@ -199,6 +232,50 @@ define([
 				// Set focus to dropdown, if it is visible
 				if (visible) $('#beanpath-history-entries').focus();
 				viewParams.signaling.beanPathHistoryToggled.dispatch('recent-pages', visible);
+			}
+
+			function visitBeanPathHistoryEntry(historyEntry) {
+				const perspective = PerspectiveManager.getById(historyEntry.perspective.id);
+
+				if (self.beanPathManager.beanTree.type === perspective.id) {
+					ViewModelUtils.goToRouterPath(viewParams.parentRouter, `/${perspective.id}/${encodeURIComponent(historyEntry.value)}`, self.canExitCallback);
+				}
+				else {
+					if (CoreUtils.isNotUndefinedNorNull(perspective)) {
+						ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)
+							.then(reply => {
+								if (reply) {
+									ViewModelUtils.setPreloaderVisibility(true);
+									DataOperations.mbean.test(historyEntry.value)
+										.then(reply => {
+											viewParams.signaling.perspectiveSelected.dispatch(perspective);
+											viewParams.parentRouter.go(`/${perspective.id}/${encodeURIComponent(historyEntry.value)}`);
+											viewParams.signaling.galleryItemSelected.dispatch(perspective.id);
+										})
+										.catch(response => {
+											if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+												MessageDisplaying.displayMessage(
+													{
+														severity: 'info',
+														summary: event.target.attributes['data-notFoundMessage'].value
+													},
+													2500
+												);
+											}
+											else {
+												ViewModelUtils.failureResponseDefaultHandling(response);
+											}
+										})
+										.finally(() => {
+											ViewModelUtils.setPreloaderVisibility(false);
+										});
+								}
+							})
+							.catch(failure => {
+								ViewModelUtils.failureResponseDefaultHandling(failure);
+							});
+					}
+				}
 			}
 
 		}

@@ -1,0 +1,22 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+customizePageMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePage
+customizePageDefMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePageDef
+
+introductionHTML: >
+  <p>Use this page to manage this resource adapter bean property.</p>
+
+properties:
+- name: Name
+- name: Type
+- name: Value
+- name: SupportsDynamicUpdates
+
+helpTopics:
+- label: "Creating and Configuring Resource Adapters"
+  href: "adapt/creating.html"
+  type: "edocs"
+- label: "Developing Resource Adapters for Oracle WebLogic Server"
+  href: "adapt/index.html"
+  type: "edocs"

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -137,7 +137,7 @@ define(['ojs/ojlogger'],
         // Get index of matching attribute, in case we need to delete
         // it from this.backingData.properties. index will be something
         // other that -1, if that is the case.
-        const index = this.backingData.properties.map(property => property.name).indexOf(fieldName);
+        const index = this.backingData.properties.findIndex(property => property.name === fieldName);
         if (index !== -1) this.backingData.properties.splice(index, 1);
       },
 
@@ -146,7 +146,7 @@ define(['ojs/ojlogger'],
           // Append properties to this.backingData.properties. Use
           // push instead of concat, to avoid appending duplicates
           properties.forEach((property) => {
-            const index = this.backingData.properties.map(property1 => property1.name).indexOf(property.name);
+            const index = this.backingData.properties.findIndex(property1 => property1.name === property.name);
             if (index === -1) this.backingData.properties.push(property);
           });
         }

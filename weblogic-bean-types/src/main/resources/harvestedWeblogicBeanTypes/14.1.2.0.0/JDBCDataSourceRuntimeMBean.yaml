@@ -1,0 +1,324 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.ComponentRuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.JDBCUCPDataSourceRuntimeMBean
+- weblogic.management.runtime.JDBCAbstractDataSourceRuntimeMBean
+- weblogic.management.runtime.JDBCOracleDataSourceRuntimeMBean
+descriptionHTML: '<p>This class is used for monitoring a WebLogic JDBC Data Source
+  and its associated connection pool.</p> '
+name: weblogic.management.runtime.JDBCDataSourceRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Average number of active connections in this instance of the
+    data source.</p>  <p>Active connections are connections in use by an application.  This
+    value is only valid if the resource is configured to allow shrinking.</p> '
+  name: ActiveConnectionsAverageCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of connections currently in use by applications.</p> '
+  name: ActiveConnectionsCurrentCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Highest number of active database connections in this instance
+    of the data source since the data source was instantiated. </p>  <p>Active connections
+    are connections in use by an application.</p> '
+  name: ActiveConnectionsHighCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative total number of commit outcome query retries
+    conducted before resolving the outcome or exceeding the retry seconds in this
+    data source since the data source was deployed.</p> '
+  name: CommitOutcomeRetryTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The average amount of time, in milliseconds, that it takes
+    to create a physical connection to the database.</p>  <p>The value is calculated
+    as summary of all times to connect divided by the total number of connections.</p> '
+  name: ConnectionDelayTime
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative total number of database connections created
+    in this data source since the data source was deployed.</p> '
+  name: ConnectionsTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current count of JDBC connections in the connection pool
+    in the data source.</p> '
+  name: CurrCapacity
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Highest number of database connections available or in use
+    (current capacity) in this instance of the data source since the data source was
+    deployed.</p> '
+  name: CurrCapacityHighCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The product name of the database that this data source is
+    connected to. </p> '
+  name: DatabaseProductName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The product version of the database that this data source
+    is connected to. </p> '
+  name: DatabaseProductVersion
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The product name of the JDBC driver that this data source
+    is configured to use. </p> '
+  name: DriverName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The version of the JDBC driver that this data source is configured
+    to use. </p> '
+  name: DriverVersion
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the data source is enabled or disabled:</p>  <ul>
+    <li><code>true</code> if the data source is enabled.</li> <li><code>false</code>
+    if the data source is disabled.</li> </ul> '
+  name: Enabled
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of repurpose errors that have occurred since the
+    datasource was deployed.</p> '
+  name: FailedRepurposeCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative, running count of requests for a connection
+    from this data source that could not be fulfilled.</p> '
+  name: FailedReserveRequestCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of times that the data source attempted to refresh
+    a database connection and failed.</p>  <p>Failures may occur when the database
+    is unavailable or when the network connection to the database is interrupted.</p> '
+  name: FailuresToReconnectCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Highest number of database connections that were idle and available
+    to be used by an application at any time in this instance of the data source since
+    the data source was deployed.</p> '
+  name: HighestNumAvailable
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Highest number of database connections that were in use by
+    applications or being tested by the system in this instance of the data source
+    since the data source was deployed.</p> '
+  name: HighestNumUnavailable
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the JDBCDriverRuntimeMBean associated with this data source.</p> '
+  name: JDBCDriverRuntime
+  relationship: containment
+  type: weblogic.management.runtime.JDBCDriverRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the statistics for replay only if the datasource is using
+    an Oracle replay driver for 12.1.0.2 and later.  Otherwise, null is returned.
+    The statistics are a snapshort.  To update the snapshot, call refreshStatistics()
+    on the mbean.</p> '
+  name: JDBCReplayStatisticsRuntimeMBean
+  relationship: containment
+  type: weblogic.management.runtime.JDBCReplayStatisticsRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the last datasource Task</p> '
+  name: LastTask
+  relationship: reference
+  type: weblogic.management.runtime.JDBCDataSourceTaskRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of leaked connections. A leaked connection is a
+    connection that was reserved from the data source but was not returned to the
+    data source by calling <code>close()</code>.</p> '
+  name: LeakedConnectionCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of database connections that are currently idle
+    and  available to be used by applications in this instance of the data source.</p> '
+  name: NumAvailable
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of connections currently in use by applications
+    or being tested in this instance of the data source.</p> '
+  name: NumUnavailable
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative, running count of the number of times that the
+    statement cache was accessed.</p> '
+  name: PrepStmtCacheAccessCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative, running count of the number of statements added
+    to the statement cache.</p>  <p>Each connection in the connection pool has its
+    own cache of statements. This number is the sum of the number of statements added
+    to the caches for all connections in the connection pool.</p> '
+  name: PrepStmtCacheAddCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of prepared and callable statements currently cached
+    in the statement cache.</p>  <p>Each connection in the connection pool has its
+    own cache of statements. This number is the sum of the number of statements in
+    the caches for all connections in the connection pool.</p> '
+  name: PrepStmtCacheCurrentSize
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative, running count of statements discarded from
+    the cache.</p>  <p>Each connection in the connection pool has its own cache of
+    statements. This number is the sum of the number of statements that were discarded
+    from the caches for all connections in the connection pool.</p> '
+  name: PrepStmtCacheDeleteCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative, running count of the number of times that statements
+    from the cache were used.</p> '
+  name: PrepStmtCacheHitCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of times that a statement request could not be satisfied
+    with a statement from the cache.</p> '
+  name: PrepStmtCacheMissCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The list of properties for a data source that are passed to
+    the JDBC driver when creating database connections.</p>  <p>This is a privileged
+    operation that can only be invoked by an authorized user.</p> '
+  name: Properties
+  type: java.util.Properties
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of times connections have been repurposed since
+    the datasource was deployed.</p> '
+  name: RepurposeCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative, running count of requests for a connection
+    from this data source.</p> '
+  name: ReserveRequestCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative total number of commit outcomes successfully
+    resolved as committed in this data source since the data source was deployed.
+    This does not refer to the number of outcome query retries used to resolve the
+    outcomes.</p> '
+  name: ResolvedAsCommittedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative total number of commit outcomes successfully
+    resolved as not committed in this data source since the data source was deployed.
+    This does not refer to the number of outcome query retries used to resolve the
+    outcomes.</p> '
+  name: ResolvedAsNotCommittedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current state of the data source.</p> <p>Possible states
+    are:</p> <ul><li><code>Running</code> - the data source is enabled (deployed and
+    not <code>Suspended</code>). This is the normal state of the data source. This
+    state includes conditions when the database server is not available and the data
+    source is created (creation retry must be enabled) or when all connections have
+    failed connection tests (on creation, on reserve, or periodic testing).</li> <li><code>Suspended</code>
+    - the data source has been disabled.</li> <li><code>Shutdown</code> - the data
+    source is shutdown and all database connections have been closed.</li> <li><code>Overloaded</code>
+    - all resources in pool are in use.</li> <li><code>Unknown</code> - the data source
+    state is unknown.</li></ul> '
+  name: State
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Get preexisting datasource Tasks</p> '
+  name: Tasks
+  relationship: containment
+  type: weblogic.management.runtime.JDBCDataSourceTaskRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative total number of commit outcomes unsuccessfully
+    resolved in this data source since the data source was deployed. This does not
+    refer to the number of outcome query retries used to resolve the outcomes.</p> '
+  name: UnresolvedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The driver class name of the JDBC driver used to create database
+    connections. </p> '
+  name: VersionJDBCDriver
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The highest number of seconds that an application waited for
+    a connection (the longest connection reserve wait time) from this instance of
+    the connection pool since the connection pool was instantiated.</p> <p>This value
+    is updated when a completed <code>getConnection</code> request takes longer to
+    return a connection than any previous request.</p> '
+  name: WaitSecondsHighCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of connection requests waiting for a database connection.</p> '
+  name: WaitingForConnectionCurrentCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative, running count of requests for a connection
+    from this data source that had to wait before getting a connection and eventually
+    failed to get a connection.</p>  <p>Waiting connection requests can fail for a
+    variety of reasons, including waiting for longer than the ConnectionReserveTimeoutSeconds.</p> '
+  name: WaitingForConnectionFailureTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Highest number of application requests concurrently waiting
+    for a connection from this instance of the data source.</p> '
+  name: WaitingForConnectionHighCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative, running count of requests for a connection
+    from this data source that had to wait before getting a connection and eventually
+    succeeded in getting a connection.</p> '
+  name: WaitingForConnectionSuccessTotal
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The cumulative, running count of requests for a connection
+    from this data source that had to wait before getting a connection, including
+    those that eventually got a connection and those that did not get a connection.</p> '
+  name: WaitingForConnectionTotal
+  type: long

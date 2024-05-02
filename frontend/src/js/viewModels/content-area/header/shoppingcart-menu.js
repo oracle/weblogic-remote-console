@@ -2,7 +2,7 @@
  Copyright (c) 2024, Oracle and/or its affiliates.
  Licensed under The Universal Permissive License (UPL), Version 1.0
  as shown at https://oss.oracle.com/licenses/upl/
- 
+
  */
 'use strict';
 
@@ -24,7 +24,7 @@ function (
 ) {
     function ShoppingCartMenu(viewParams) {
       const self = this;
-  
+
       this.i18n = {
         icons: {
           shoppingcart: {
@@ -32,39 +32,42 @@ function (
             iconFile: ko.observable('shopping-cart-non-empty-blk_24x24'),
             visible: ko.observable(false),
             disabled: ko.observable(false),
-            tooltip: oj.Translations.getTranslatedString('wrc-ancillary-content.tabstrip.tabs.shoppingcart.label')
+            tooltip: oj.Translations.getTranslatedString('wrc-content-area-header.icons.shoppingcart.tooltip')
           }
         },
         menus: {
           shoppingcart: {
             'view': {
-              id: 'view', iconFile: '', disabled: false, visible: ko.observable(false),
-              label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.view.label')
+              id: 'view-changes', iconFile: '', disabled: false, visible: ko.observable(false),
+              label: oj.Translations.getTranslatedString('wrc-content-area-header.menu.shoppingcart.view.label')
             },
             'discard': {
               id: 'discard', iconFile: 'oj-ux-ico-cart-abandon', disabled: ko.observable(false), visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.discard.label')
+              label: oj.Translations.getTranslatedString('wrc-content-area-header.menu.shoppingcart.discard.label')
             },
             'commit': {
               id: 'commit', iconFile: 'oj-ux-ico-cart-add', disabled: ko.observable(false), visible: ko.observable(true),
-              label: oj.Translations.getTranslatedString('wrc-table-toolbar.menu.shoppingcart.commit.label')
+              label: oj.Translations.getTranslatedString('wrc-content-area-header.menu.shoppingcart.commit.label')
             }
           }
         }
       };
 
       this.changeManager = ko.observable({isLockOwner: false, hasChanges: false, supportsChanges: false});
-  
+
       this.signalBindings = [];
-  
+
       this.connected = function() {
         let binding = viewParams.signaling.shoppingCartModified.add((source, eventType, changeManager) => {
           self.setIconbarIconFile(eventType, changeManager);
+          if (eventType === 'discard') viewParams.onChangesDiscarded();
         });
-  
+
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.backendConnectionLost.add(() => { self.setIconbarIconVisibility('shoppingcart', false); });
+        binding = viewParams.signaling.backendConnectionLost.add(() => {
+          self.setIconbarIconVisibility('shoppingcart', false);
+        });
 
         self.signalBindings.push(binding);
 
@@ -100,7 +103,7 @@ function (
           self.i18n.menus.shoppingcart.commit.disabled(!newValue.hasChanges);
           self.i18n.menus.shoppingcart.discard.disabled(!newValue.hasChanges);
         });
-    
+
       }.bind(this);
 
       this.disconnected = function () {
@@ -109,29 +112,29 @@ function (
             obj.dispose();
           }
         };
-    
+
         dispose(this.changeManagerSubscription);
-    
+
         this.changeManager.dispose();
-    
+
         // Detach all signal "add" bindings.
         self.signalBindings.forEach(binding => { binding.detach(); });
-    
+
         // Reinitialize module-scoped array for storing
         // signal "add" bindings, so it can be GC'd by
         // the JS engine.
         self.signalBindings = [];
-    
+
       }.bind(this);
-  
+
       this.launchShoppingCartMenu = function(event) {
         event.preventDefault();
         document.getElementById('shoppingCartMenu').open(event);
       };
-  
+
       this.shoppingCartMenuClickListener = (event) => {
         const value = event.target.value;
-        if (value === 'view') {
+        if (value === 'view-changes') {
           viewParams.signaling.ancillaryContentItemSelected.dispatch('shoppingcart-menu', 'shoppingcart');
         }
         else {
@@ -168,14 +171,14 @@ function (
           }
         }
       };
-  
+
       this.onBeanTreeChanged = (newBeanTree) => {
         if (newBeanTree.type !== 'home') {
           self.setIconbarIconVisibility('shoppingcart', newBeanTree.type === 'configuration');
           self.setIconbarIconFile('refresh');
         }
       };
-  
+
       this.setIconbarIconVisibility = (buttonId, visible) => {
         if (Runtime.getProperty('features.iconbarIcons.relocated')) {
           self.i18n.icons[buttonId].visible(visible);
@@ -222,14 +225,14 @@ function (
             break;
         }
       };
-  
+
       function ancillaryContentItemChanged(buttonId, changeManager) {
         const iconFile = (changeManager.isLockOwner && changeManager.hasChanges ? 'shopping-cart-non-empty-tabstrip_24x24' : 'shopping-cart-empty-tabstrip_24x24');
         self.i18n.icons[buttonId].iconFile(iconFile);
       }
-  
+
     }
-  
+
     return ShoppingCartMenu;
   }
 );

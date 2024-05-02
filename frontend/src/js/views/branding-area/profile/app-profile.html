@@ -13,11 +13,11 @@ Copyright (c) 2023,2024, Oracle and/or its affiliates.
     <span class="cfe-branding-area-profile-icon"></span>
   </a>
   <a id="select-settings-tab" class="cfe-hidden-accesskey-link" href="#"
-     accesskey="," tabindex="-1" on-click="[[hiddenAccessKeyClickHandler]]"
+     accesskey="," tabindex="-1" on-click="[[hiddenAccessKeyClickHandler]]" aria-hidden="true"
   >
   </a>
   <a id="select-preferences-tab" class="cfe-hidden-accesskey-link" href="#"
-     accesskey="." tabindex="-1" on-click="[[hiddenAccessKeyClickHandler]]"
+     accesskey="." tabindex="-1" on-click="[[hiddenAccessKeyClickHandler]]" aria-hidden="true"
   >
   </a>
 </oj-bind-if>
@@ -83,7 +83,7 @@ Copyright (c) 2023,2024, Oracle and/or its affiliates.
     on-oj-before-close="[[onOjBeforeClose]]"
     on-oj-resize-stop="[[onOjResizeStop]]"
     role="dialog"
-    aria-labelledby="ui-id-6"
+    aria-labelledby="app-profile-dialog-title"
 >
 
   <div class="oj-dialog-container oj-flex-item cfe-account-profile-container">

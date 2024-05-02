@@ -128,7 +128,8 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
     return false;
   }
 
-  boolean supportsCapabilities(List<String> capabilities) {
+  @Override
+  public boolean supportsCapabilities(List<String> capabilities) {
     if (mbeansVersion.getCapabilities().contains("All")) {
       return true;
     }

@@ -1,0 +1,157 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This bean is represents a Node Manager that is associated with a
+  machine. '
+name: weblogic.management.configuration.NodeManagerMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the node manager client adapter name_version when using a
+    VMM adapter to connect to OVM or other VMM adapter providers '
+  name: Adapter
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the node manager client adapter name when using a VMM adapter
+    to connect to OVM or other VMM adapters providers '
+  name: AdapterName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the node manager client adapter version when using a VMM
+    adapter to connect to OVM or other VMM adapters providers '
+  name: AdapterVersion
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether communication with this Node Manager needs
+    to be debugged. When enabled, connections to the NodeManager from the server or
+    clients on the server will result in more information sent to the server log.</p> '
+  name: DebugEnabled
+  type: boolean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  deprecated: 'VMM client support is removed since 12.1.2 '
+  descriptionHTML: '<p>Gets a list of the names and versions of the installed Virtual
+    Machine Manager (VMM) adapters</p> '
+  name: InstalledVMMAdapters
+  supported: false
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: localhost
+  descriptionHTML: '<p>The host name or IP address of the NodeManager for the server
+    or clients on the server to use when connecting to the NodeManager instance. </p> '
+  name: ListenAddress
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 5556
+  descriptionHTML: '<p>The port number of the NodeManager for the server or clients
+    on the server to use when connecting to the NodeManager instance. </p> '
+  name: ListenPort
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 15000
+  descriptionHTML: 'Returns the timeout value to be used by NodeManagerRuntime when
+    creating a a socket connection to the agent. Default set high as SSH agent may
+    require a high connection establishment time. '
+  name: NMSocketCreateTimeoutInMillis
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: SSL
+  descriptionHTML: 'Returns the node manager type for the server or clients on the
+    server to use when connecting to the NodeManager instance. '
+  legalValues:
+  - SSH
+  - RSH
+  - Plain
+  - SSL
+  - ssh
+  - rsh
+  - ssl
+  - plain
+  name: NMType
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the node manager home directory that will be used to substitute
+    for the shell command template '
+  name: NodeManagerHome
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The password used by a Node Manager client to connect to the
+    underlying service to which the Node Manager client delegates operations.</p>  <p>When
+    you get the value of this attribute, WebLogic Server does the following:</p> <ol>
+    <li>Retrieves the value of the <code>PasswordEncrypted</code> attribute.</li>
+    <li>Decrypts the value and returns the unencrypted password as a String.</li>
+    </ol> <p>When you set the value of this attribute, WebLogic Server does the following:</p>
+    <ol> <li>Encrypts the value.</li> <li>Sets the value of the <code>PasswordEncrypted</code>
+    attribute to the encrypted value.</li> </ol> <p><b>Caution:</b> Using the (<code>Password</code>)
+    attribute is a potential security risk because the String object (which contains
+    the unencrypted password), remains in the JVM''s memory until garbage collection
+    removes it and the memory is reallocated. Depending on how memory is allocated
+    in the JVM, a significant amount of time could pass before this unencrypted data
+    is removed from memory. Therefore, you should use the <code>PasswordEncrypted()</code>
+    attribute instead.</p> '
+  encrypted: true
+  name: Password
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The encrypted Node Manager client user password.</p>  <p>To
+    set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the <code>encrypt()</code>
+    method.</p>  <p>To compare a password that a user enters with the encrypted value
+    of this attribute, go to the same WebLogic Server instance that you used to set
+    and encrypt this attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: PasswordEncrypted
+  restartNeeded: true
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the local command line to use when invoking SSH or RSH
+    node manager functions. '
+  name: ShellCommand
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Node Manager client user name used to connect to the underlying
+    service to which the client delegates operations. </p> '
+  name: UserName
+  type: java.lang.String
+  writable: true

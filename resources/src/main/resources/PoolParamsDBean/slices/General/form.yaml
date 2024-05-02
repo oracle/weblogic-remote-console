@@ -1,0 +1,32 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+customizePageMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePage
+customizePageDefMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePageDef
+
+introductionHTML: >
+  <p>Use this page to manage the pool settings of this outbound connection.</p>
+
+properties:
+- name: InitialCapacity
+- name: MaxCapacity
+- name: CapacityIncrement
+- name: ShrinkingEnabled
+- name: ShrinkFrequencySeconds
+- name: HighestNumUnavailable
+- name: HighestNumWaiters
+- name: ConnectionCreationRetryFrequencySeconds
+- name: ConnectionReserveTimeoutSeconds
+- name: TestFrequencySeconds
+- name: TestConnectionsOnCreate
+- name: TestConnectionsOnReserve
+- name: TestConnectionsOnRelease
+- name: MatchConnectionsSupported
+
+helpTopics:
+- label: "Creating and Configuring Resource Adapters"
+  href: "adapt/creating.html"
+  type: "edocs"
+- label: "Developing Resource Adapters for Oracle WebLogic Server"
+  href: "adapt/index.html"
+  type: "edocs"

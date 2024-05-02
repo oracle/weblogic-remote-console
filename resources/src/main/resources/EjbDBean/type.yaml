@@ -1,0 +1,44 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
+
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.management.descriptor.EntityEjbDBean
+  value: EntityEjb
+- type: weblogic.management.descriptor.MessageDrivenEjbDBean
+  value: MessageDrivenEjb
+- type: weblogic.management.descriptor.SingletonSessionEjbDBean
+  value: SingletonSessionEjb
+- type: weblogic.management.descriptor.StatefulSessionEjbDBean
+  value: StatefulSessionEjb
+- type: weblogic.management.descriptor.StatelessSessionEjbDBean
+  value: StatelessSessionEjb
+
+editable: true
+disableMBeanJavadoc: true
+supportsFilteringDashboards: false
+
+properties:
+- name: Name
+  helpHTML: The EJB's name.
+- name: Type
+  helpHTML: The EJB's type.
+  legalValues:
+  - value: EntityEjb
+    label: Entity EJB
+  - value: MessageDrivenEjb
+    label: Message Driven EJB
+  - value: SingletonSessionEjb
+    label: Singleton Session EJB
+  - value: StatefulSessionEjb
+    label: Stateful Session EJB
+  - value: StatelessSessionEjb
+    label: Stateless Session EJB
+children:
+- name: WeblogicEnterpriseBean
+  # TBD:
+  label: WebLogic Enterprise Bean
+- name: EnvEntries
+  label: Environment Entries

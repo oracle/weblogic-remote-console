@@ -1,0 +1,38 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes:
+- weblogic.management.configuration.WebAppComponentMBean
+descriptionHTML: '<p>A Web Deployment is any MBean that may be deployed on one or
+  more target or WebServers. Deployments of this type get deployed on web servers.
+  Any target specified through the "Targets" attribute of the deployment are deployed
+  on the default web server of that deployment. Targets specified through the "WebServers"
+  attribute of the deployment are specified in the targeted Web Server.</p> '
+name: weblogic.management.configuration.WebDeploymentMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a means to target your deployments to specific virtual
+    hosts.</p> '
+  name: VirtualHosts
+  relationship: reference
+  type: weblogic.management.configuration.VirtualHostMBean
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  deprecated: '7.0.0.0 This attribute is being replaced by VirtualHosts attribute.
+    To target  an actual web server, the ComponentMBean.Targets attribute should be
+    used. '
+  descriptionHTML: '<p>Returns a list of the targets on which this deployment is deployed.</p> '
+  name: WebServers
+  relationship: reference
+  supported: false
+  transient: true
+  type: weblogic.management.configuration.WebServerMBean
+  writable: true

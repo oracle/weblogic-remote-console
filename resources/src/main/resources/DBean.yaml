@@ -1,0 +1,23 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes:
+- weblogic.management.descriptor.ConfigPropertyDBean
+- weblogic.management.descriptor.ContainerDescriptorDBean
+- weblogic.management.descriptor.DeploymentDBean
+- weblogic.management.descriptor.EjbDBean
+- weblogic.management.descriptor.EntityCacheDBean
+- weblogic.management.descriptor.EnvEntryDBean
+- weblogic.management.descriptor.JASPICContainerDBean
+- weblogic.management.descriptor.JspDescriptorDBean
+- weblogic.management.descriptor.MessageDrivenDescriptorDBean
+- weblogic.management.descriptor.LoggingDBean
+- weblogic.management.descriptor.PoolDBean
+- weblogic.management.descriptor.PoolParamsDBean
+- weblogic.management.descriptor.StatefulSessionCacheDBean
+- weblogic.management.descriptor.TransactionDescriptorDBean
+- weblogic.management.descriptor.WeblogicEnterpriseBeantDBean
+name: weblogic.management.descriptor.DBean

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -22,61 +22,67 @@ define([
     const self = this;
 
     this.dirty = ko.observable(false);
+    this.cannotBeApplied = ko.observable(true);
 
     this.i18n = {
+      ariaLabel: {
+        availableColumns: {
+          title: {value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.availableColumns.title.value') },
+          list: {value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.availableColumns.list.value')},
+          listItem: { value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.availableColumns.listItem.value')}
+        },
+        selectedColumns: {
+          title: {value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.selectedColumns.title.value') },
+          list: {value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.selectedColumns.list.value')},
+          listItem: { value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.selectedColumns.listItem.value')}
+        },
+        button: {
+          addToRight: { value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.button.addToRight.value')},
+          addAllRight: { value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.button.addAllRight.value')},
+          removeRight: { value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.button.removeRight.value')},
+          removeAll: { value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.button.removeAll.value')},
+          reset: { value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.button.reset.value')},
+          apply: { value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.button.apply.value')},
+          cancel: { value: oj.Translations.getTranslatedString('wrc-table-customizer.ariaLabel.button.cancel.value')}
+        }
+      },
       buttons: {
         apply: {
           id: 'new',
-          disabled: false,
+          disabled: this.cannotBeApplied,
           label: oj.Translations.getTranslatedString(
             'wrc-common.buttons.apply.label'
-          ),
+          )
         },
         cancel: {
           id: 'cancel',
-          disabled: false,
+          disabled: ko.observable(true),
           label: oj.Translations.getTranslatedString(
             'wrc-common.buttons.cancel.label'
-          ),
+          )
         },
         reset: {
           id: 'reset',
           label: oj.Translations.getTranslatedString(
             'wrc-common.buttons.reset.label'
-          ),
+          )
         },
         ok: {
           id: 'ok',
           label: oj.Translations.getTranslatedString(
             'wrc-common.buttons.ok.label'
-          ),
-        },
-      },
-      messages: {
-        action: {
-          needAtLeastOneColumn: {
-            detail: oj.Translations.getTranslatedString(
-              'wrc-table-customizer.messages.action.needAtLeastOneColumn.detail'
-            ),
-            title: oj.Translations.getTranslatedString(
-              'wrc-table-customizer.messages.action.needAtLeastOneColumn.title'
-            ),
-          },
-        },
-      },
-      labels: {
-        available: {
-          value: oj.Translations.getTranslatedString(
-            'wrc-table-customizer.labels.available.value'
-          ),
-        },
-        selected: {
-          value: oj.Translations.getTranslatedString(
-            'wrc-table-customizer.labels.selected.value'
-          ),
-        },
-      },
+          )
+        }
+      }
     };
+
+    function setCannotBeApplied() {
+      self.cannotBeApplied(self.columnsRight().length === 0 || !self.dirty());
+    }
+
+    function setCancelButtonDisableState(state) {
+      self.i18n.buttons.cancel.disabled(state === false);
+    }
 
     function takeColumnsSnapshot() {
       self.columnsLeftInitial = [...self.columnsLeft()];
@@ -87,6 +93,8 @@ define([
       if (self.columnsLeftInitial) self.columnsLeft([...self.columnsLeftInitial]);
       if (self.columnsRightInitial) self.columnsRight([...self.columnsRightInitial]);
       self.dirty(false);
+      setCannotBeApplied();
+      setCancelButtonDisableState(self.dirty());
     }
 
     this.addAllButtonClick = (event) => {
@@ -100,6 +108,8 @@ define([
           self.columnsRight.push(removed);
         }
       } while (removed);
+      setCannotBeApplied();
+      setCancelButtonDisableState(self.dirty());
 
       self.selectedLeftItems.clear();
       self.selectedRightItems.clear();
@@ -107,7 +117,7 @@ define([
 
     this.removeAllButtonClick = (event) => {
       let rightColumns = [...self.columnsRight()];
-      rightColumns.reverse()
+      rightColumns.reverse();
       rightColumns.forEach(removed => {
         if (removed) {
           self.dirty(true);
@@ -115,6 +125,8 @@ define([
         }
       });
       self.columnsRight.removeAll();
+      setCannotBeApplied();
+      setCancelButtonDisableState(self.dirty());
 
       self.selectedLeftItems.clear();
       self.selectedRightItems.clear();
@@ -131,6 +143,8 @@ define([
           });
         }
       });
+      setCannotBeApplied();
+      setCancelButtonDisableState(self.dirty());
     };
 
     this.removeRightButtonClick = (event) => {
@@ -149,32 +163,29 @@ define([
           });
         }
       });
-    };
-
-    this.closeErrorButtonClick = (event) => {
-      document.getElementById('noColumnsDialog').close();
+      setCannotBeApplied();
+      setCancelButtonDisableState(self.dirty());
     };
 
     this.applyButtonClick = (event) => {
       // No action to take when control is unchanged
       if (!self.dirty()) return;
 
-      if (self.columnsRight().length === 0) {
-        document.getElementById('noColumnsDialog').open();
-      } else {
-        self.applyCustomizationsCallback(
-          self.columnsRight(),
-          self.columnsLeft(),
-          true
-        );
-        self.dirty(false);
+      self.applyCustomizationsCallback(
+        self.columnsRight(),
+        self.columnsLeft(),
+        true
+      );
 
-        self.selectedLeftItems.clear();
-        self.selectedRightItems.clear();
-        takeColumnsSnapshot();
+      self.dirty(false);
+      setCannotBeApplied();
+      setCancelButtonDisableState(self.dirty());
 
-        self.persistCustomization();
-      }
+      self.selectedLeftItems.clear();
+      self.selectedRightItems.clear();
+      takeColumnsSnapshot();
+
+      self.persistCustomization();
     };
 
     this.cancelButtonClick = (event) => {

@@ -64,6 +64,8 @@ actions:
 - name: "start"
   label: "Start"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.start
+  successMessage: Created a task to start {0}
+  failureMessage: Failed to start {0}
   polling:
     # typically starting a server takes a while
     reloadSeconds: 10
@@ -78,6 +80,8 @@ actions:
 - name: "resume"
   label: "Resume"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.resume
+  successMessage: Created a task to resume {0}
+  failureMessage: Failed to resume {0}
   polling:
     # typically resuming a server is very fast
     reloadSeconds: 5
@@ -93,6 +97,8 @@ actions:
 - name: "suspend"
   label: "Suspend when work completes"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.suspend
+  successMessage: Created a task to suspend {0}
+  failureMessage: Failed to suspend {0}
   polling:
     # typically gracefully suspending a server is fast if there isn't much in-progress work
     reloadSeconds: 5
@@ -109,6 +115,8 @@ actions:
 - name: "forceSuspend"
   label: "Force suspend now"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceSuspend
+  successMessage: Created a task to suspend {0}
+  failureMessage: Failed to suspend {0}
   polling:
     # typically force suspending a server is fast
     reloadSeconds: 5
@@ -126,6 +134,8 @@ actions:
 - name: "gracefulShutdown"
   label: "Shutdown when work completes"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.shutdown
+  successMessage: Created a task to shutdown {0}
+  failureMessage: Failed to shutdown {0}
   polling:
     # typically gracefully shutting down a server is relatively fast if there isn't much in-progress work
     reloadSeconds: 5
@@ -144,6 +154,8 @@ actions:
 - name: "forceShutdown"
   label: "Force shutdown now"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.forceShutdown
+  successMessage: Created a task to shutdown {0}
+  failureMessage: Failed to shutdown {0}
   polling:
     # typically force shutting down a server is relatively fast
     reloadSeconds: 5
@@ -163,6 +175,8 @@ actions:
 - name: "restartSSL"
   label: "Restart SSL"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.restartSSL
+  successMessage: Restarted SSL on {0}
+  failureMessage: Failed to restart SSL on {0}
   # don't configure polling since this action is synchronous
   definition:
     type: "void"
@@ -184,6 +198,8 @@ actions:
 - name: "publishSingleSignOnServices"
   label: "Publish Metadata"
   actionMethod: weblogic.remoteconsole.customizers.CombinedServerRuntimeMBeanCustomizer.publishSingleSignOnServices
+  successMessage: Published metadata for {0}
+  failureMessage: Failed to publish metadata for {0}
   # don't configure polling since this action is synchronous
   inputForm:
     introductionHTML: >

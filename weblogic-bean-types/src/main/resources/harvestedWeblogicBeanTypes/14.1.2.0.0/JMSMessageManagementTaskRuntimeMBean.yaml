@@ -1,0 +1,23 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.TaskRuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Represents a running or completed JMS message management operation.</p> '
+name: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the current number of messages processed.</p> '
+  name: MessagesCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the total number of messages being processed by the
+    operation.</p> '
+  name: MessagesTotalCount
+  type: long

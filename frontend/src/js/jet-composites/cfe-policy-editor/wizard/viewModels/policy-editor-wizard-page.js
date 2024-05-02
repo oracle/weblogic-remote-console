@@ -198,7 +198,7 @@ define([
             // but not in event.detail.value. We need the index
             // of the diff item in self.parametersOptions, so we
             // can update it with the edited value.
-            const index = self.parametersOptions.map(option => option.value).indexOf(diff[0]);
+            const index = self.parametersOptions.findIndex(option => option.value === diff[0]);
             if (index !== -1) {
               // We found it, so update the corresponding item
               // in self.parametersOptions.
@@ -219,7 +219,7 @@ define([
               // getDifference returns an array
               const diff = CoreUtils.getDifference(event.detail.previousValue, event.detail.value);
               if (diff) {
-                const index = self.parametersOptions.map(option => option.value).indexOf(diff[0]);
+                const index = self.parametersOptions.findIndex(option => option.value === diff[0]);
                 if (index === -1) self.parametersOptions.push({value: diff[0]});
               }
               self.parametersDataProvider.data = [...self.parametersOptions];
@@ -299,7 +299,7 @@ define([
         // store the security policy data is stored in will get
         // corrupted, so we need to validate the value entered
         // in the "GMT Offset" field, here.
-        const index = filteredArgumentValues.map(argumentValue => argumentValue.type).indexOf('GMTOffset');
+        const index = filteredArgumentValues.findIndex(argumentValue => argumentValue.type === 'GMTOffset');
         if (index !== -1) {
           const gmtOffsetArgument = filteredArgumentValues[index];
           if (CoreUtils.isNotUndefinedNorNull(gmtOffsetArgument.value) &&
@@ -479,7 +479,7 @@ define([
         ) {
           const predicate = self.supportedPredicatesList.find(item => item.value === policyCondition.predicate.name);
           for (const i in policyCondition.predicate['arguments']) {
-            const index = predicate['arguments'].map(item => item.displayName).indexOf(policyCondition.predicate['arguments'][i].displayName);
+            const index = predicate['arguments'].findIndex(item => item.displayName === policyCondition.predicate['arguments'][i].displayName);
             if (index !== -1) policyCondition.predicate['arguments'][i]['optional'] = predicate['arguments'][index].optional;
           }
         }

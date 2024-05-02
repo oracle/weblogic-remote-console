@@ -1,0 +1,44 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This interface is used for accessing transaction runtime characteristics
+  for recovered transactions that are associated with a particular Transaction Recovery
+  Service. '
+name: weblogic.management.runtime.JTARecoveryRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the Transaction Recovery Service is currently
+    activated on this server.</p> '
+  name: Active
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of transactions that are recovered from the
+    transaction log initially.</p> '
+  name: InitialRecoveredTransactionTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of transactions that are recovered from the
+    no transaction log initially.</p> '
+  name: InitialRecoveredUnloggedTransactionTotalCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The percentage of transactions that are recovered from the
+    transaction log initially.</p> '
+  name: RecoveredTransactionCompletionPercent
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The percentage of transactions that are recovered from the
+    no transaction log initially.</p> '
+  name: RecoveredUnloggedTransactionCompletionPercent
+  type: int

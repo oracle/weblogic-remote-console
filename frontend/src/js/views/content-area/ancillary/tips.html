@@ -11,14 +11,14 @@
   on-oj-focus="[[onOjFocus]]"
   on-oj-before-close="[[onOjBeforeClose]]"
   role="dialog"
-  aria-labelledby="ui-id-6"
+  aria-labelledby="tips-dialog-title"
 >
   <div class="oj-dialog-container oj-flex-item">
 
     <div class="oj-dialog-header oj-flex oj-sm-flex-items-initial">
       <div class="oj-flex-item ancillary-content-item-header-label">
         <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.ancillary.contentItem.iconFile + '.png', alt: i18n.icons.ancillary.contentItem.tooltip}"/>
-        <span class="oj-dialog-title" id="ui-id-6" data-bind="text: i18n.titles.ancillary.contentItem.value"></span>
+        <span class="oj-dialog-title" id="tips-dialog-title" data-bind="text: i18n.titles.ancillary.contentItem.value"></span>
       </div>
       <div title="Close" class="oj-flex-item oj-helper-margin-start-auto">
         <a class="ancillary-content-item-close-icon" on-click="[[closeIconClickHandler]]" data-bind="attr: {href: '#', 'title': i18n.icons.close.tooltip}">
@@ -37,14 +37,16 @@
         </div>
       </div>
 
-      <section id="tips-tab-cards-container" class="oj-web-applayout-max-width oj-sm-web-padding-horizontal" tabindex="0">
+      <div id="tips-tab-cards-container" role="region" :aria-label="[[i18n.icons.ancillary.contentItem.tooltip]]" class="oj-web-applayout-max-width oj-sm-web-padding-horizontal" tabindex="0">
         <div class="oj-flex oj-sm-flex-items-initial">
           <oj-bind-for-each data="[[filteredTipsCards]]">
             <template>
               <div :class="[['tips-panel-card-padding oj-flex oj-flex-item oj-sm-flex-items-1 ' + (filteredTipsCards().length > 1 ? 'oj-sm-12 oj-md-4 oj-lg-3' : 'oj-sm-9')]]">
-                <div class="tips-panel-card">
+                <div class="tips-panel-card" tabindex="0">
                   <span class="tips-card-tag" data-bind="text: $current.data.tag"></span>
+                  <span class="cfe-screen-reader-period"></span>
                   <div class="tips-card-title" data-bind="text: $current.data.title"></div>
+                  <span class="cfe-screen-reader-period"></span>
                   <div class="tips-card-content">
                     <oj-bind-dom config="[[$current.data.content]]"></oj-bind-dom>
                   </div>
@@ -53,7 +55,7 @@
             </template>
           </oj-bind-for-each>
         </div>
-      </section>
+      </div>
 
     </div>
   </div>

@@ -377,7 +377,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             await element.sendKeys("100");
             await driver.sleep(1200);
             console.log("Click at Home Image Icon link");
-            element = await driver.findElement(By.xpath("//span[starts-with(@id, 'home')]")).click();
+            element = await driver.findElement(By.xpath("//*[starts-with(@id, 'home')]")).click();
             await driver.sleep(1200);
             console.log("Click Yes button at Unsaved Changes Detected Dialog.");
             element = await driver.findElement(

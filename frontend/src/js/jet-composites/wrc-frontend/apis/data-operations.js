@@ -36,8 +36,12 @@ define([
   ) {
     function getConnectionErrorMessage(response) {
       let msg = oj.Translations.getTranslatedString('wrc-data-operations.messages.connectFailed.detail');
-      if (response?.body?.data?.messages[0]?.message)
-        msg = msg + response.body.data.messages[0].message;
+      if (response?.body?.data?.messages) {
+        if (response.body.data.messages.length > 0) msg = msg + response.body.data.messages[0].message;
+      }
+      else if (response?.body?.messages) {
+        if (response.body.messages.length > 0) msg = msg + response.body.messages[0].message;
+      }
       else {
         // Create message to display for connection error
         switch (response.transport.status) {
@@ -344,8 +348,8 @@ define([
          * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
          */
         simpleSearch: function(url, searchValue) {
-           const searchPayload = { contains: searchValue };
-           return CbeDataManager.postPayloadData(url, searchPayload, true);
+          const searchPayload = { contains: searchValue };
+          return CbeDataManager.postPayloadData(url, searchPayload, true);
         },
         /**
          *
@@ -552,12 +556,16 @@ define([
         useConnection: function (dataProvider) {
           return CbeDataManager.useConnectionData(dataProvider.id)
             .then(response => {
-              response.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.ONLINE.name;
-
+              if (CoreUtils.isUndefinedOrNull(response.body.data)) {
+                response.body.data = {};
+              }
               if (CoreUtils.isNotUndefinedNorNull(response.failureType)) {
                 if (response.transport.status === 400) response.transport.status = 401;
                 response['failureReason'] = getConnectionErrorMessage.call(this, response);
                 response.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.DETACHED.name;
+              }
+              else {
+                response.body.data['connectivity'] = CoreTypes.Console.RuntimeMode.ONLINE.name;
               }
               return response;
             });
@@ -843,6 +851,18 @@ define([
       policy: {
         submitPolicyChange: function(rdjUrl, dataPayload) {
           return CbeDataManager.submitPolicy(rdjUrl, dataPayload);
+        }
+      },
+
+      href: {
+        /**
+         * Wrapper that uses `fetch` to capture failures when downloading files.
+         * <p>Intended to be used in scenarios where &lt;a> tag is used to trigger a download, programmatically.</p>
+         * @param {{filepath: string, fileContents: string, href: string, target: string, download: string, mediaType: string}} options - JS object with properties containing data for the file to be downloaded.
+         * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+         */
+        downloadFile: (options) => {
+          return CbeDataManager.downloadLog(options.href);
         }
       },
 

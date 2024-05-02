@@ -135,6 +135,14 @@ public abstract class DeploymentUploadableCreatableBeanCollectionResource extend
       return (formProperty != null) ? formProperty.getValue().asSettable().getValue().asString().getValue() : null;
     }
 
+    protected int getIntProperty(String propertyName, boolean required) {
+      FormProperty formProperty = getFormProperty(propertyName, required);
+      if (formProperty == null) {
+        return -1;
+      }
+      return formProperty.getValue().asSettable().getValue().asInt().getValue();
+    }
+
     protected boolean getBooleanProperty(String propertyName, boolean required, boolean dflt) {
       FormProperty formProperty = getFormProperty(propertyName, required);
       return (formProperty != null) ? formProperty.getValue().asSettable().getValue().asBoolean().getValue() : dflt;

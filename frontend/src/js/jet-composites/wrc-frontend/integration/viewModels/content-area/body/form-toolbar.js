@@ -39,6 +39,11 @@ define([
       this.perspective = viewParams.perspective;
 
       this.i18n = {
+        ariaLabel: {
+          icons: {
+            landing: {value: oj.Translations.getTranslatedString('wrc-common.ariaLabel.icons.landing.value')}
+          }
+        },
         buttons: {
           'save': { id: 'save', iconFile: ko.observable('save-icon-blk_24x24'), disabled: ko.observable(false), visible: ko.observable(false),
             label: ko.observable(oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.save.label'))
@@ -95,6 +100,9 @@ define([
           },
           'help': { iconFile: 'toggle-help-on-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.help.tooltip')
+          },
+          'reset': { iconFile: 'action-reset-icon-blk_24x24', visible: ko.observable(false),
+            tooltip: oj.Translations.getTranslatedString('wrc-common.ariaLabel.icons.reset.value')
           },
           'sync': { iconFile: ko.observable('sync-off-icon-blk_24x24'),
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.sync.tooltip'),
@@ -247,7 +255,13 @@ define([
     
         return result.keyUpCallback;
       };
-  
+
+      this.resetIconKeyUp = (event) => {
+        if (event.key === 'Enter') {
+          simulateSyncIconClickEvent(event.currentTarget.firstElementChild);
+        }
+      };
+
       function onKeyUpFocuserActionSelect(event) {
         function simulateHelpIconClickEvent(event) {
           const link = document.querySelector(`#${event.target.id} > a`);
@@ -255,14 +269,6 @@ define([
             event.preventDefault();
             const event1 = new Event('click', {bubbles: true});
             link.dispatchEvent(event1);
-          }
-        }
-    
-        function simulateSyncIconClickEvent(node) {
-          event.preventDefault();
-          const attr = node.attributes['data-interval'];
-          if (CoreUtils.isNotUndefinedNorNull(attr)) {
-            handleSyncIconEvent(node);
           }
         }
 
@@ -301,6 +307,14 @@ define([
           self.i18n.buttons[button.id].disabled(button.disabled);
         });
       };
+
+      function simulateSyncIconClickEvent(node) {
+        event.preventDefault();
+        const attr = node.attributes['data-interval'];
+        if (CoreUtils.isNotUndefinedNorNull(attr)) {
+          handleSyncIconEvent(node);
+        }
+      }
 
       function resetSaveButtonDisplayState(buttons) {
         buttons.forEach((button) => {
@@ -413,6 +427,7 @@ define([
         }
 
         this.resetIconsVisibleState(self.perspective.id === 'monitoring');
+        showResetPageIcon(['configuration'].includes(self.perspective.id));
 
       }.bind(this);
 
@@ -441,6 +456,10 @@ define([
             break;
         }
         if (ele !== null) ele.style.display = displayValue;
+      }
+
+      function showResetPageIcon(value) {
+        self.i18n.icons.reset.visible(value);
       }
 
       function toggleToolbarButtonsVisibility(visible) {
@@ -588,6 +607,7 @@ define([
           toggleToolbarIconsVisibility(true);
           self.i18n.buttons.dashboard.visible(true);
           self.sliceReadOnly(false);
+          showResetPageIcon(false);
         }
       };
 
@@ -648,7 +668,7 @@ define([
       );
 
       this.customizeAction = (event) => {
-        viewParams.onCustomizeButtonClicked(event);
+        if (self.i18n.buttons.customize.visible()) viewParams.onCustomizeButtonClicked(event);
       };
     }
 

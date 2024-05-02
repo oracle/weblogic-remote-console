@@ -1,0 +1,25 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+customizePageMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePage
+customizePageDefMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePageDef
+
+introductionHTML: >
+  <p>Use this page to manage the settings of this log file.</p>
+
+properties:
+- name: LogFilename
+- name: LoggingEnabled
+- name: RotationType
+- name: NumberOfFilesLimited
+- name: FileCount
+- name: FileSizeLimit
+- name: RotateLogOnStartup
+- name: LogFileRotationDir
+- name: FileTimeSpan
+- name: RotationTime
+
+helpTopics:
+- label: "Using Logging Services for Application Logging"
+  href: "logsv/writing.html#LOGSV164"
+  type: "edocs"

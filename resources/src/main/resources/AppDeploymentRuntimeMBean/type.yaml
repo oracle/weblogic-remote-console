@@ -48,7 +48,6 @@ actions:
   definition:
     type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
 
-#createPlan
 - name: "createPlan"
   label: "Create Plan"
   disableMBeanJavadoc: true
@@ -199,9 +198,9 @@ actions:
         onlineName: plan
 
 children:
-- name: DeploymentPlan
+- name: Configuration
   requiredCapabilities:
-  - DeploymentPlans
+  - DeploymentConfiguration
 - name: State
   requiredCapabilities:
   - DeploymentState

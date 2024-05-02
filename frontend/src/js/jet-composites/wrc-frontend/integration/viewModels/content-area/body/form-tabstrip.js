@@ -73,7 +73,7 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
             
             if (pdjSlices.length > 0) {
               const rootSliceName = (sliceParam.split('.'))[0];
-              const index = pdjSlices.map(pdjSlice => pdjSlice.name).indexOf(rootSliceName);
+              const index = pdjSlices.findIndex(pdjSlice => pdjSlice.name === rootSliceName);
               if (index === -1 && pdjSlices.length > 0) {
                 // pdjSlices array does not contain rootSliceName, so
                 // set sliceParam to default slice (e.g. 'General')
@@ -299,8 +299,8 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
           }
           return rtnval;
         }
-  
-        const sliceArray = sliceName.split('.');
+
+        const sliceArray = (typeof sliceName === 'string' ? sliceName.split('.') : []);
         const tabs = buildTabArrays(pdjData);
 
         if ((tabs.length !== 1 && self.tabArrays().length === 0) || !CoreUtils.isSame(tabs, self.tabArrays()[0])) {
